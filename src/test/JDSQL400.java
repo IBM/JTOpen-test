@@ -486,7 +486,7 @@ public class JDSQL400 implements Runnable {
         //
         // For NT, this is the name of the default source.. I used the default
         // one -sample
-        // java sql400 sample jeber password
+        // java sql400 sample userid password
         //
       } catch (Throwable e) {
         if (debug)

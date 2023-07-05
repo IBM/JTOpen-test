@@ -1,0 +1,236 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// Filename:  DataAreaStressTestcase.java
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
+package test;
+
+import java.lang.Thread;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.DecimalDataArea;
+import com.ibm.as400.access.Trace;
+
+import java.math.BigDecimal;
+
+
+
+
+public class DataAreaStressTestcase 
+   extends ProxyStressTest implements Runnable 
+{
+
+// Private variables
+   private Thread thread_;
+   private boolean isRunning_;
+   private int curntThread_;
+   private CommandCall dalib_;
+
+   AS400Message[] msglist_;
+   
+   DecimalDataArea da_;
+
+   AS400 sys3_ = null; 
+      
+
+//Constructor
+   public DataAreaStressTestcase(int n) 
+   {
+      curntThread_ = n;
+      thread_ = null;
+      setup();
+      da_ = new DecimalDataArea(sys3_, "/QSYS.LIB/DATEST" + curntThread_ + ".LIB" +
+                               "/DATEST" + curntThread_ + ".DTAARA");
+      
+         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+  sys3_ = new AS400( systemName_, userId_, charPassword);
+   PasswordVault.clearPassword(charPassword);
+
+      
+   }
+
+  /**
+   Cleanup:  deletes the libraries created on the AS/400
+  **/
+
+
+   private void cleanup() 
+   {
+
+      try 
+      {
+         System.out.println("     Deleting DataArea libraries..." + "(t" + curntThread_ + ")");
+         CommandCall c= new CommandCall(sys3_); 
+	 TestDriver.deleteLibrary(c, "DATEST"+curntThread_);
+
+      }
+      catch(Exception e) 
+      {
+         System.out.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
+
+         if (Trace.isTraceOn())
+            Trace.log(Trace.ERROR, e);
+      }
+   }
+   
+
+
+
+/**
+   Runs the current thread_
+ **/
+
+   public void run() 
+   {
+
+      DecimalDataArea da2 = new DecimalDataArea( sys3_, "/QSYS.LIB/DATEST" + curntThread_ + ".LIB" +
+                                                 "/DATEST" + curntThread_ + ".DTAARA");
+      
+      int i;
+
+      //While thread_ is still running
+      while (isRunning_) 
+      {
+         //loop until user specified maxIterations is reached
+         for (i=1; i<=maxIterations_; i++) 
+         {
+            try 
+            { 
+               System.out.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
+               
+               System.out.println("     Creating DataArea..." + "(t" + curntThread_ + ")");
+
+               // Create DataArea with length of 24
+               da_.create(24, 0, new BigDecimal("0.0"), " ", "*USE");
+               
+               System.out.println("     Clearing the DataArea..." + "(t" + curntThread_ + ")");
+               // Clear the DataArea
+               da_.clear();
+
+               System.out.println("     Writing to DataArea..." + "(t" + curntThread_ + ")");
+               // Write to the DataArea
+               da_.write(new BigDecimal("1.2"));
+
+               if (da2.getLength() == 24) 
+               {
+                  System.out.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
+               }
+               else 
+               {
+                  System.out.println("     DataArea Length Invalid");
+                  System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               }
+
+            }
+            catch(Exception e) 
+            {
+               System.out.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
+               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               if (Trace.isTraceOn())
+                  Trace.log(Trace.ERROR, e);
+            }
+            // Try to delete the data area
+            try 
+            {
+               System.out.println("     Deleting DataArea..." + "(t" + curntThread_ + ")");
+               da_.delete();
+               System.out.println("   Loop #" + i + ": Delete Successful" + "(t" + curntThread_ + ")");
+            }
+            catch(Exception e) 
+            {
+               System.out.println("       DataArea delete FAILED." + "(t" + curntThread_ + ")");
+               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               if (Trace.isTraceOn())
+                  Trace.log(Trace.ERROR, e);
+            }
+
+            if (i == maxIterations_) 
+            {
+               cleanup();
+               thread_.stop();
+            }         
+         }
+      }
+
+   }
+
+  /**
+   Sets up the Library where the data area will reside
+  **/
+
+   private void setup() 
+   {
+      dalib_ = new CommandCall( sys3_, "crtlib DATEST" + curntThread_);
+
+      try 
+      {
+         System.out.println("     Creating DataArea libraries..." + "(t" + curntThread_ + ")");
+
+         if (dalib_.run() != true) 
+         {
+            // If crtlib failed, check the messages
+            msglist_ = dalib_.getMessageList();
+            if (msglist_[0].getID().equals("CPF2111")) 
+            {
+               //do nothing (ignore)
+            }
+            else
+            {
+               System.out.println("       Setup Failed."  + "(t" + curntThread_ + ")");
+               
+               if (Trace.isTraceOn())
+                  Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText());
+            }
+         }
+         
+      }
+      catch(Exception e)
+      {
+         System.out.println("      Exception during setup." + "(t" + curntThread_ + ")");
+
+         if (Trace.isTraceOn())
+            Trace.log(Trace.ERROR, e);
+      }
+      
+
+   }
+   
+
+
+/**
+   Starts the current thread_
+ **/
+
+   public void start() 
+   {
+      if (thread_ == null) 
+      {
+         thread_ = new Thread(this);
+      }
+      isRunning_ = true;
+      thread_.start();
+   }
+
+
+/**
+   Stops the current thread_
+ **/
+   public void stop() 
+   {
+
+      if ((thread_ != null) && thread_.isAlive()) 
+      {
+         thread_.stop();
+      }
+      thread_ = null;
+      isRunning_ = false;
+   }   
+}
