@@ -52,7 +52,7 @@ import com.ibm.as400.security.auth.ProfileTokenCredential;
  * Use the following parameter tags and values:
  * 
  * <pre>
- *  -system    - The iSeries server with which to connect.
+ *  -system    - The IBM i server with which to connect.
  *  -file      - The file in which to write results.  Results are always written to standard out, if this tag is specified, results are also written to this file.
  *  -run       - The run mode.  Values are 'u' for unattended variations only, 'a' for attended variations only, or 'b' for both.  The default value is 'u'.
  *  -uid       - The user profile name to use to authenticate to the server.
@@ -97,21 +97,13 @@ import com.ibm.as400.security.auth.ProfileTokenCredential;
 public abstract class TestDriver implements TestDriverI, Runnable,
     ActionListener {
 
-  // removed :  never used in non-applet case
-  //  public TextArea output_ = null;
 
   /**
    *
    */
   static final long serialVersionUID = 1L;
 
-
-
-
-
   static TestDriverTimeoutThread timeoutThread = null;
-
-  // GUI components for applets.
 
   protected String outputFileName_ = null;
   // Set of Testcase objects for this component. This is filled in by the
@@ -144,10 +136,6 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
 
   } 
-
-
-
-
   
   protected int runMode_;
   protected AS400 systemObject_ = null;
@@ -799,6 +787,24 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       out_.println("TestDriver:  Testcase " + e.nextElement() + " not found.");
     }
 
+    // Double check the setting of -system, -uid, -password
+    boolean exitError =false; 
+    if (systemName_ == null) { 
+    	exitError = true; 
+    	System.out.println("Error: -system not set");
+    }
+    
+    if (userId_ == null) { 
+    	exitError = true; 
+    	System.out.println("Error: -uid not set"); 
+    }
+    if (password_ == null) {
+    	exitError = true; 
+    	System.out.println("Error:  -pwd not set"); 
+    }
+    if (exitError)  {
+    	usage(); 
+    }
   }
 
   /**
@@ -1108,13 +1114,56 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
   }
 
-  /**
+	public static String[] usageInfo = { 
+			"The following options may be provided\n",
+			"  -system    - The IBM i server with which to connect.",
+			"  -uid       - The user profile name to use to authenticate to the server.",
+			"  -pwd       - The user profile password to use to authenticate to the server.",
+			"  -lib       - The name of the test library to create files, etc. in.  This option is used (initially) by Record-level Access.  This field can now be specified by the user as the place to put the tables/procs etc.",
+			"  -file      - The file in which to write results.  Results are always written to standard out, if this tag is specified, results are also written to this file.",
+			"  -run       - The run mode.  Values are 'u' for unattended variations only, 'a' for attended variations only, or 'b' for both.  The default value is 'u'.",
+			"  -proxy     - The proxy server system name with which to connect.",
+			"  -tc        - Testcase to be run.  If not specififed, all testcases will be run.  This token can be specified several times.",
+			"  -vars      - Variations to be run.  Several values can be specified by separating each value with a comma.  This token must be specified immediately after a -tc token, it applies to the testcase which it follows.  If not specified, all variations will be run.",
+			"  -misc      - Miscellaneous information that is passed to all testcases.",
+			"  -trace     - Categories to trace.  Multiple categories can be specified by separating each value with a comma.  The categories are datastream, diagnostic, error, information, jdbc, warning, conversion, pcml.  Category names are not case sensitive.",
+			"  -ssl       - Connect using secure sockets connections.",
+			"  -socks     - Set the system object's mustUseSockets property to true.",
+			"  -pwrSys    - A userID, password combination with SECOFR authority.",
+			"  -nothreads - Set the system object's isThreadUsed property to false.",
+			"  -mappedDrive - The local pathname which is mapped to the root IFS directory on the server.",
+			"  -printer   - The name of the printer to use for the NPPrint testcases.",
+			"  -profileToken - Generate and use a profile token for authentication.",
+			"  -serialize - Indicates that the AS400 object is to be deserialized/serialized.  A file named \"as400.ser\" is sought and, if found, deserialized into systemObject_.  Upon testcase completion, the file is (re)generated.",
+			"  -kerberos  - Use Kerberos for authentication.",
+			"  -native    - The native optimizations classes are available.",
+			"  -local     - The target system is the same system we are running on.",
+			"  -onAS400   - The client is an iSeries server.", "  -brief     - Skip long-running variations.",
+			"  -duration  - Number of seconds to run testcase.",
+			"  -pause     - Waits for the user to press enter before running the variations to obtain the jobs running on the server, depending on the class type.",
+			"  -directory - The directory where some test driver variations point to.",
+			"  -jndi      - The type of jndi used for some jdbc tests.",
+			"  -cleanup   - NLSTests can have cleanup, this flags indicates if it is needed.",
+			"  -asp       - Indicates the ASP to use for the test",
+			"  -extendedDynamic - Indicates that extended dynamic should be used for the toolbox driver", " Examples:",
+			"    java ExampleDriver", "    java ExampleDriver -system rchas57a",
+			"    java ExampleDriver -system rchas57a -file example.out -run B -uid tester -pwd secret -tc testcase1",
+			"    java ExampleDriver -system rchas57a -file example.out -run B -tc testcase1 -vars 1,2,3  -tc testcase2 -vars 3,9 -tc testcase3",
+			"    java ExampleDriver -system rchas57a -tc testcase1 -vars 3,12:25     // runs variations 3 and 12 thru 25.",
+
+	};
+
+	  /**
    * Display usage information for the Testcase. This method never returns.
    **/
   public void usage() {
     System.out
         .println("For usage guidance, refer to the class-level javadocs for the TestDriver class.");
-    System.exit(0);
+    System.out.println();
+    for (int i = 0; i < usageInfo.length; i++) { 
+    	System.out.println(usageInfo[i]);
+    }
+    System.exit(1); 
   }
 
   /**
