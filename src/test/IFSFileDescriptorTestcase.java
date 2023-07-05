@@ -1,0 +1,273 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// Filename:  IFSFileDescriptorTestcase.java
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+package test;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.IFSFileDescriptor;
+import com.ibm.as400.access.IFSFileOutputStream;
+import com.ibm.as400.access.IFSRandomAccessFile;
+
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+
+/**
+Test methods not covered by other testcases.
+**/
+public class IFSFileDescriptorTestcase extends IFSGenericTestcase
+{
+  private IFSFile ifsFile_ = null;
+  private String name_ = "/JAVATEST/AFILE";
+  private String mode_ = "rw";
+  private int share_ = IFSRandomAccessFile.SHARE_ALL;
+  private int existOption_ = IFSRandomAccessFile.OPEN_OR_CREATE;
+
+/**
+Constructor.
+**/
+  public IFSFileDescriptorTestcase (AS400 systemObject,
+        String userid, 
+          String password,
+                   Hashtable namesAndVars,
+                   int runMode,
+                   FileOutputStream fileOutputStream,
+                   String   driveLetter,
+                   AS400    pwrSys)
+    {
+        super (systemObject, userid, password,  "IFSFileDescriptorTestcase",
+            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+        ifsFile_ = new IFSFile(systemObject_, name_);
+    }
+
+/**
+Testcase setup.
+ @exception  Exception  If an exception occurs.
+**/
+  protected void setup()
+    throws Exception
+  {
+    super.setup(); 
+  }
+
+
+
+/**
+Ensure that the sync() method can be called from an IFSFileDescriptor
+object instantiated by the constructor.
+**/
+  public void Var001()
+  {
+    ///setVariation(1);
+
+    createFileInDirectory("JAVATEST", "/JAVATEST/AFILE");
+    IFSRandomAccessFile aFile = null;
+    try
+    {
+       aFile = new IFSRandomAccessFile();
+       aFile.setSystem(systemObject_);
+       aFile.setPath(name_);
+       aFile.setMode(mode_);
+       IFSFileDescriptor ahandle = aFile.getFD();
+       ahandle.sync();
+
+       succeeded();
+    }
+    catch(Exception e)
+    {
+       failed(e, "Unexpected exception occurred.");
+    }
+    try
+    {
+       aFile.close();
+    } catch(Exception e) {}
+    deleteIFSFile("/JAVATEST/AFILE");
+  }
+
+/**
+Ensure that the sync() method can be called from an IFSFileDescriptor
+object instantiated by IFSFileDescriptor(as400,name,mode).
+**/
+  public void Var002()
+  {
+    ///setVariation(2);
+
+    createFileInDirectory("JAVATEST", "/JAVATEST/AFILE");
+    IFSRandomAccessFile aFile = null;
+    try
+    {
+       aFile = new IFSRandomAccessFile(systemObject_, name_, mode_);
+       IFSFileDescriptor ahandle = aFile.getFD();
+       ahandle.sync();
+
+       succeeded();
+    }
+    catch(Exception e)
+    {
+       failed(e, "Unexpected exception occurred.");
+    }
+    try
+    {
+       aFile.close();
+    } catch(Exception e) {}
+    deleteIFSFile("/JAVATEST/AFILE");
+  }
+
+/**
+Ensure that the sync() method can be called from an IFSFileDescriptor
+object instantiated by IFSFileDescriptor(as400,name,mode,share,existOption).
+**/
+  public void Var003()
+  {
+    ///setVariation(3);
+
+    createFileInDirectory("JAVATEST", "/JAVATEST/AFILE");
+    IFSRandomAccessFile aFile = null;
+    try
+    {
+       aFile = new IFSRandomAccessFile(systemObject_, name_, mode_, share_, existOption_);
+       IFSFileDescriptor ahandle = aFile.getFD();
+       ahandle.sync();
+
+       succeeded();
+    }
+    catch(Exception e)
+    {
+       failed(e, "Unexpected exception occurred.");
+    }
+    try
+    {
+       aFile.close();
+    } catch(Exception e) {}
+    deleteIFSFile("/JAVATEST/AFILE");
+  }
+
+/**
+Ensure that the sync() method can be called from an IFSFileDescriptor
+object instantiated by IFSFileDescriptor(AS400,IFSFile,String,int,int).
+**/
+  public void Var004()
+  {
+    ///setVariation(4);
+
+    createFileInDirectory("JAVATEST", "/JAVATEST/AFILE");
+    IFSRandomAccessFile aFile = null;
+    try
+    {
+       aFile = new IFSRandomAccessFile(systemObject_, ifsFile_, mode_, share_, existOption_);
+       IFSFileDescriptor ahandle = aFile.getFD();
+       ahandle.sync();
+
+       succeeded();
+    }
+    catch(Exception e)
+    {
+       failed(e, "Unexpected exception occurred.");
+    }
+    try
+    {
+       aFile.close();
+    } catch(Exception e) {}
+    deleteIFSFile("/JAVATEST/AFILE");
+  }
+
+/**
+ Ensure that the sync() method can be called from an IFSFileOutputStream
+ object instantiated by IFSFileOutputStream constructor.
+**/
+  public void Var005()
+  {
+    ///setVariation(5);
+
+    createFileInDirectory("JAVATEST", "/JAVATEST/AFILE");
+    IFSFileOutputStream aFile = null;
+    try
+    {
+       aFile = new IFSFileOutputStream();
+       aFile.setSystem(systemObject_);
+       aFile.setPath(name_);
+       IFSFileDescriptor ahandle = aFile.getFD();
+       ahandle.sync();
+
+       succeeded();
+    }
+    catch(Exception e)
+    {
+       failed(e, "Unexpected exception occurred.");
+    }
+    try
+    {
+       aFile.close();
+    } catch(Exception e) {}
+    deleteIFSFile("/JAVATEST/AFILE");
+  }
+
+/**
+ Ensure that the sync() method can be called from an IFSFileOutputStream
+ object instantiated by IFSFileOutputStream(AS400,String,int,boolean)
+**/
+  public void Var006()
+  {
+    ///setVariation(6);
+
+    createFileInDirectory("JAVATEST", "/JAVATEST/AFILE");
+    IFSFileOutputStream aFile = null;
+    try
+    {
+       aFile = new IFSFileOutputStream(systemObject_, name_, share_, true);
+       IFSFileDescriptor ahandle = aFile.getFD();
+       ahandle.sync();
+
+       succeeded();
+    }
+    catch(Exception e)
+    {
+       failed(e, "Unexpected exception occurred.");
+    }
+    try
+    {
+       aFile.close();
+    } catch(Exception e) {}
+    deleteIFSFile("/JAVATEST/AFILE");
+  }
+
+/**
+ Ensure that the sync() method can be called from an IFSFileOutputStream
+ object instantiated by IFSFileOutputStream constructor.
+**/
+  public void Var007()
+  {
+    ///setVariation(7);
+
+    createFileInDirectory("JAVATEST", "/JAVATEST/AFILE");
+    IFSFileOutputStream aFile = null;
+    try
+    {
+       aFile = new IFSFileOutputStream(systemObject_, ifsFile_, share_, true);
+       IFSFileDescriptor ahandle = aFile.getFD();
+       ahandle.sync();
+
+       succeeded();
+    }
+    catch(Exception e)
+    {
+       failed(e, "Unexpected exception occurred.");
+    }
+    try
+    {
+       aFile.close();
+    } catch(Exception e) {}
+    deleteIFSFile("/JAVATEST/AFILE");
+  }
+
+}
