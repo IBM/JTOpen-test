@@ -1,5 +1,15 @@
 ////////////////////////////////////////////////////////////////////////
 //
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 // File Name:    JTAUDBCrash2.java
 //
 // Description:  Same as JTACrash2.java but test standard interfaces for
@@ -7,12 +17,6 @@
 //
 // Classes:      JTAUDBCrash2
 //
-////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
-//
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- ------- ---------------------------
-//                           06/14/02 JEBER    NEW PART 
 ////////////////////////////////////////////////////////////////////////
 package test;
 

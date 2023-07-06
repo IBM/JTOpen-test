@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 package test;
 
 
@@ -10,8 +20,6 @@ import java.util.Hashtable;
 
 import com.ibm.as400.access.AS400;
 import javax.sql.XADataSource;
-//import com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAResource;
-//import com.ibm.db2.jdbc.app.stdext.javax.sql.XAConnection;
 
 public class JTAInsert extends JDTestcase {
    private final static String TABLENAME = "CHARTABINS";

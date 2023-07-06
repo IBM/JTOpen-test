@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JTAStdMisc.java
@@ -7,16 +17,6 @@
 //
 // Classes:      JTAStdMisc
 //
-////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
-//
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- -------  ---------------------------
-//                           05/16/00 stimmer  Created.
-//   A1              v5r1m0t 10/26/00 v2kea447 Made changes to TIMEOUT
-//                                             to handle exceptions
-//                                             more gracefully.
-//                   v5r4m0t 01/18/06 pauldev  move isNTS to JTATestcase
 ////////////////////////////////////////////////////////////////////////
 package test;
 

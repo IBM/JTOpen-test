@@ -659,13 +659,7 @@ Creates Testcase objects for all the testcases in this component.
     {
        namesAndVars_.put("JDRegressionTestcase", new Vector());
        namesAndVars_.remove("JDBC");
-       System.out.println("------------------------------------------------------------------------------");
-       System.out.println("------------------------------------------------------------------------------");
-       System.out.println("TODO:  Add back in JDRegressionTestcase");
-       System.out.println("------------------------------------------------------------------------------");
-       System.out.println("------------------------------------------------------------------------------");
-       // TODO:  Add back in JDRegressionTestcase
-       // addTestcase(new JDRegressionTestcase(systemObject_, namesAndVars_, runMode_, fileOutputStream_, password_, systemObject_.getUserId(), pwrSysUserID_, pwrSysPassword_));
+       addTestcase(new JDRegressionTestcase(systemObject_, namesAndVars_, runMode_, fileOutputStream_, password_, systemObject_.getUserId(), pwrSysUserID_, pwrSysPassword_));
     }
 
 

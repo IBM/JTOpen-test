@@ -1,12 +1,13 @@
-////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
+///////////////////////////////////////////////////////////////////////////////
 //
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- ------- ---------------------------
-//  A1               V4R4M0F 03/31/00 stimmer Specify userid and password
-//                                            on remote datasource object.
-//  NA               v5r2m0t 06/13/02 jeber   Added constructor 
-////////////////////////////////////////////////////////////////////////
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 
 package test;
 
