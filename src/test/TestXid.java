@@ -1,15 +1,13 @@
-////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
+///////////////////////////////////////////////////////////////////////////////
 //
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- ------- ---------------------------
-//  A1                       06/02/00 stimmer Modified to implement both
-//                    com.ibm.db2.jdbc.app.jta.javax.transaction.xa.Xid
-//                                             javax.transaction.xa.Xid
-//  A2			     01/29/04 wilsonjo Changed match() to handle
-//					       parseLong exceptions
-//  A3                       12/11/2018 jeber  Removed native Xid. 
-////////////////////////////////////////////////////////////////////////
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 package test;
 
 import java.util.*;

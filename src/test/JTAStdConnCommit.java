@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JTAStdConnCommit.java
@@ -6,20 +16,6 @@
 //               JTA & JDBC Std Ext
 //
 // Classes:      JTAStdConnCommit
-//
-////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
-//
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- -------  ---------------------------
-//                   V5R1M0F 05/16/00 stimmer  Created
-//  $A1              v5r1m0  10/12/00 cnock    Toolbox can only throw SQLExceptions
-//                                             from the Connection class.
-//  $B1              v5r1m0  11/01/00 v2kea447 Cleaned up transaction in var006 as
-//                                             it wasn't cleaned up previously.
-//  $C1              v5r2m0  11/04/02 jeber    Fixed VAR006 and added comments 
-//  $C2              v5r2m0  12/27/02 jeber    Added test.. VAR007
-//                   v5r4m0t 01/18/06 pauldev  Move isNTS to JTATestcase
 //
 ////////////////////////////////////////////////////////////////////////
 package test;

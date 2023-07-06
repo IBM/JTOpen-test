@@ -8,15 +8,6 @@
 // Classes:      JTAStdBasic
 //
 ////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
-//
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- ------- ---------------------------
-//                           05/16/00 stimmer Created.
-//                           06/13/02 jeber   Added constructor for child classes
-//  A1                       09/12/02 bpwallen Added a call to XAEnd in var 4, clean up of xas
-//                  v5r4m0t  01/18/06 pauldev  move isNTS to this class
-////////////////////////////////////////////////////////////////////////
 package test;
 
 import java.sql.*;

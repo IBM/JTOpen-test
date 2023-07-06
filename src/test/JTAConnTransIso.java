@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 // Based on JDConnectionTransactionIsolation.java
 
 package test;
@@ -12,10 +22,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.sql.*;
 import java.util.Hashtable;
-// import com.ibm.db2.jdbc.app.stdext.javax.sql.DataSource;
-// import com.ibm.db2.jdbc.app.stdext.javax.sql.XADataSource;
-// import com.ibm.db2.jdbc.app.stdext.javax.sql.XAConnection;
-// import com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAResource;
 
 
 public class JTAConnTransIso

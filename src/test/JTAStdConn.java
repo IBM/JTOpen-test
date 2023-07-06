@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JTAStdConn.java
@@ -7,17 +17,6 @@
 //
 // Classes:      JTAStdConn
 //
-////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
-//
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- ------- ---------------------------
-//                   V5R1M0F 05/16/00 stimmer Created
-//  $A1              V5R2M0  10/08/02 bpwallen changed to expect the right exception for NTS
-//                   v5r4m0t 01/18/06 pauldev  Move isNTS to JTATestcase and misc toolbox fixes
-//                   v5r4m0t 01/25/06 pauldev  RC > 0 try{}
-//                   v5r4m01 02/28/06 pauldev  toolbox specific updates
-//  $B1              v6r1m0t 07/31/06 coover   Updated var 11,12 so the end properly
 ////////////////////////////////////////////////////////////////////////
 package test;
 

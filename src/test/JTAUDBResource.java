@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JTAUDBResource.java
@@ -7,14 +17,6 @@
 //
 // Classes:      JTAUDBResource
 //
-////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
-//
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- ------- ---------------------------
-//                           06/14/02 JEBER    NEW PART
-//                          2005/19/19 JEBER   Added VAR 053 (like var 17)
-//                                             for PTR 9B12364
 ////////////////////////////////////////////////////////////////////////
 package test;
 

@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JTAStdTransOrder.java
@@ -7,12 +17,6 @@
 //
 // Classes:      JTAStdTransOrder
 //
-////////////////////////////////////////////////////////////////////////
-//------------------- Maintenance-Change Activity ------------------
-//
-//  Flag  Reason     Rel Lvl   Date    PGMR     Comments
-//  ---- --------    ------- -------- ------- ---------------------------
-//                           05/16/00 stimmer Created.
 ////////////////////////////////////////////////////////////////////////
 package test;
 
