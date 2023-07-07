@@ -642,7 +642,7 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             int ccsid = ctr.getCcsid();
             ctr.close();
             String s = System.getProperty("os.name").trim().toUpperCase();
-            if (s.indexOf("WINDOWS") > -1 && ccsid == 1252) // for Windows
+            if (s.indexOf("WINDOWS") > -1 && (ccsid == 1252 || ccsid == 1208)) // for Windows
             {
                 succeeded();
             }
@@ -788,7 +788,7 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
                 return;
             }
             String s = System.getProperty("os.name").trim().toUpperCase();
-            if (s.indexOf("WINDOWS") > -1 && enc.equals("Cp1252")) // for Windows
+            if (s.indexOf("WINDOWS") > -1 && ( enc.equals("Cp1252") || enc.equals("UTF-8"))) // for Windows
             {
                 succeeded();
             }

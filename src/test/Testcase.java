@@ -524,7 +524,6 @@ public abstract class Testcase {
     else
       out = new TestOutput();
     output_ = new PrintWriter(out, true);
-    output_.println("Test 1"); 
     /* password_ = password;  */
     passwordFile_ = password; 
     encryptedPassword_ = PasswordVault.getEncryptedPassword(password);
@@ -621,11 +620,11 @@ public abstract class Testcase {
           + sqlmessage + "'\n" + "              sb '" + expectedSqlmessage
           + "'\n" + "         index = " + (messageIndex) + "\n" + comment);
       if (!condition) {
-        e.printStackTrace();
+        e.printStackTrace(System.out);
       }
     } else {
       failed(e, "Incorrect exception type :  Expected SQLException");
-      e.printStackTrace();
+      e.printStackTrace(System.out);
     }
 
   }
@@ -1454,7 +1453,7 @@ public abstract class Testcase {
       } catch (Throwable e) {
         System.out
             .println("Caught a MissingResourceException after getBundle.");
-        e.printStackTrace();
+        e.printStackTrace(System.out);
       }
 
     }
@@ -1638,7 +1637,7 @@ public abstract class Testcase {
     } catch (Exception e) {
       System.out
           .println("ERROR: Failure calling QWCRTVTM to retrieve system time.");
-      e.printStackTrace();
+      e.printStackTrace(System.out);
       return (-1);
     }
   }
@@ -1665,7 +1664,7 @@ public abstract class Testcase {
         systemVRM_ = systemObject_.getVRM();
       } catch (Exception e) {
         System.out.println("Warning:  could not get VRM");
-        e.printStackTrace();
+        e.printStackTrace(System.out);
       }
     return systemVRM_;
   }
@@ -2678,7 +2677,7 @@ public abstract class Testcase {
       fos.close();
     } catch (Exception e) {
       System.out.println("WARNING:  unexpected exception");
-      e.printStackTrace();
+      e.printStackTrace(System.out);
     }
 
   }
@@ -2945,6 +2944,19 @@ public abstract class Testcase {
           throw new Exception("Command " + command
               + " failed with no error message");
         }
+      } else {
+    	  /* Need to grant authority */ 
+    	  command = "GRTOBJAUT OBJ(JDTESTINFO/" + lockDtaaraName_
+    	  		+  ") OBJTYPE(*DTAARA) USER(*PUBLIC) AUT(*ALL)"; 
+    	  success = commandCall.run(command);
+    	  AS400Message[] messageList = commandCall.getMessageList();
+          if (messageList != null & messageList.length > 0) {
+            throw new Exception("Command " + command + " failed with "
+                + messageList[0]);
+          } else {
+            throw new Exception("Command " + command
+                + " failed with no error message");
+          }
       }
     }
 
@@ -2959,6 +2971,13 @@ public abstract class Testcase {
        success = commandCall.run(command);
        
        if (!success) { 
+    	   AS400Message[] messageList = commandCall.getMessageList(); 
+    	   
+    	   if (messageList.length > 0) {
+    		   if (messageList[0].getID().equals("CPF0991")) {  /* authority error */ 
+    			 throw new Exception("Unable to access JDTESTINFO/"+lockDtaaraName_+". Please check permissions");    
+    		   }
+    	   }
            // Find the job holding the lock and delete it if the job 
            // is more than an hour old. 
            ObjectDescription od = new ObjectDescription(system,"/QSYS.LIB/JDTESTINFO.LIB/"+lockDtaaraName_+".DTAARA");  

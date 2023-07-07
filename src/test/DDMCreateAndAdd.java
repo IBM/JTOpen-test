@@ -344,26 +344,15 @@ public class DDMCreateAndAdd extends Testcase
       CommandCall c = new CommandCall(pwrSys_);
       deleteLibrary(testLib_);
 
-      AS400Message[] msgs = c.getMessageList();
-      if (!(msgs[0].getID().equals("CPC2194") || msgs[0].getID().equals("CPC2191")
-            || msgs[0].getID().equals("CPF2110")))
-      {
-        for (int i = 0; i < msgs.length; ++i)
-        {
-          System.out.println(msgs[i]);
-        }
-      }
-/*      c.run("DLTxLIB LIB(\"" + testLib_ + "\")");
-      msgs = c.getMessageList();
-      if (!(msgs[0].getID().equals("CPC2194") || msgs[0].getID().equals("CPC2191")
-            || msgs[0].getID().equals("CPF2110")))
-      {
-        for (int i = 0; i < msgs.length; ++i)
-        {
-          System.out.println(msgs[i]);
-        }
-      }
-*/
+		AS400Message[] msgs = c.getMessageList();
+		if (msgs.length > 0) {
+			if (!(msgs[0].getID().equals("CPC2194") || msgs[0].getID().equals("CPC2191")
+					|| msgs[0].getID().equals("CPF2110"))) {
+				for (int i = 0; i < msgs.length; ++i) {
+					System.out.println(msgs[i]);
+				}
+			}
+		}
     }
     catch(Exception e)
     {
