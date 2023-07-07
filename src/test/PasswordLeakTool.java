@@ -38,6 +38,7 @@ public class PasswordLeakTool {
   static int osType = 0;
   public static final int OS_WINDOWS = 1;
   public static final int OS_IBM_I = 2;
+  public static final int OS_AIX = 3;
   static boolean debug = false;
 
   static {
@@ -46,11 +47,16 @@ public class PasswordLeakTool {
       debug = true;
     }
     javaHome = System.getProperty("java.home");
+    if (debug) {
+	System.out.println("DEBUG: java.home is "+javaHome); 
+    }
     osName = System.getProperty("os.name");
     if (osName.indexOf("Windows") == 0) {
       osType = OS_WINDOWS;
     } else if (osName.indexOf("OS/400") == 0) {
       osType = OS_IBM_I;
+    } else if (osName.indexOf("AIX") == 0) {
+      osType = OS_AIX;
     } else {
       System.out.println("PasswordLeakTool: unknown OS=" + osName);
     }
@@ -69,6 +75,7 @@ public class PasswordLeakTool {
         jdmpviewPath = javaHome + "\\bin\\jdmpview.exe";
         break;
       case OS_IBM_I:
+      case OS_AIX: 
         jdmpviewPath = javaHome + "/bin/jdmpview";
         break;
       default:
@@ -149,6 +156,9 @@ public class PasswordLeakTool {
     cmdarray[2] = filename;
 
     try {
+	if (debug) {
+	    System.out.println("DEBUG: Running :"+cmdarray[0]+" "+cmdarray[1]+" "+cmdarray[2]); 
+	}
       Process p = runtime.exec(cmdarray);
       OutputStream outputStream = p.getOutputStream();
       PrintWriter printWriter = new PrintWriter(outputStream);
@@ -164,6 +174,9 @@ public class PasswordLeakTool {
       printWriter.println("readyForCommand");
       printWriter.flush();
       String data = waitForPrompt(outputBuffer);
+      if (debug) {
+	  System.out.println("DEBUG: readForCommand returned "+data); 
+      }
 
       printWriter.println("info heap *");
       printWriter.println("readyForCommand");
@@ -171,9 +184,9 @@ public class PasswordLeakTool {
 
       data = waitForPrompt(outputBuffer);
       if (debug) {
-        System.out.println("--------------heap info----------------");
+        System.out.println("DEBUG: --------------heap info----------------");
         System.out.println(data);
-        System.out.println("--------------heap info----------------");
+        System.out.println("DEBUG: --------------heap info----------------");
       }
       // Done, cleanup
       String[][] heapInfo = getHeapInfo(data);
@@ -197,16 +210,16 @@ public class PasswordLeakTool {
                 + heapInfo[i][0] + "," + heapInfo[i][1] + "," + memoryBoundary
                 + "," + bytesToPrint + "," + matchesToDisplay;
             if (debug)
-              System.out.println("running " + findCommand);
+              System.out.println("DEUG: running " + findCommand);
             printWriter.println(findCommand);
             printWriter.println("readyForCommand");
             printWriter.flush();
 
             data = waitForPrompt(outputBuffer);
             if (debug) {
-              System.out.println("-----------------------------");
+              System.out.println("DEBUG: -----------------------------");
               System.out.println(data);
-              System.out.println("-----------------------------");
+              System.out.println("DEBUG: -----------------------------");
             }
             if (data.indexOf("#0") >= 0) {
               sb.append(data);
@@ -432,9 +445,9 @@ public class PasswordLeakTool {
     System.out.println(
         "java test.PasswordLeakTool [AS400JAVACONNECT system] [AS400JAVADATASOURCE system] [PASSWORD pwd]* [DUMP dumpfile]* [SCAN dumpfile pwd]* ");
     System.out.println(
-        "                    i.e.  AS400JAVACONNECT as400Name PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  AS400JAVACONNECT sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
-        "                    i.e.  AS400JAVADATASOURCE as400Name PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  AS400JAVADATASOURCE sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
 
   }
 

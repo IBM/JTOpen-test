@@ -52,8 +52,14 @@ public class SocketProxyMasterThread extends Thread {
       // while we can go and get ready to accept another connection.
       Socket socket;
       try {
+	printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" at accept"); 
         socket = serverSocket_.accept();
-        if (enabled_) {
+	boolean isEnabled;
+	synchronized(this) {
+	    isEnabled = enabled_; 
+	}
+        if (isEnabled) {
+	    printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" starting thread to process"); 
           SocketProxyThread socketProxyThread = new SocketProxyThread(this,
               "PROXY_THREAD_" + count, socket, serverName_, serverPort_,
               printWriter_);
@@ -64,6 +70,7 @@ public class SocketProxyMasterThread extends Thread {
           socketProxyThread.start();
           count++;
         } else {
+	    printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" not enabled"); 
           failedConnectCount_++;
           if (outputFailedAttempts != null) {
             double seconds = (System.currentTimeMillis() - startTime) / 1000.0;
@@ -180,7 +187,8 @@ public class SocketProxyMasterThread extends Thread {
   }
   
   
-  public void enable(boolean b) {
+  synchronized public void enable(boolean b) {
+      printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" enabled set to "+b); 
     enabled_ = b;
 
   }

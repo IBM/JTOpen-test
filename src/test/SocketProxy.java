@@ -19,6 +19,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.ServerSocket;
+import java.sql.*; 
 
 
 public class SocketProxy implements Runnable {
@@ -121,13 +122,15 @@ public class SocketProxy implements Runnable {
       // We will keep this thread active so we can control what is going on. 
       
       masterThread.start() ;
-      printWriter_.println("Started SocketProxyMasterThread"); 
+      Timestamp ts = new Timestamp(System.currentTimeMillis());
+      printWriter_.println(ts.toString()+":Started SocketProxyMasterThread on "+proxyPort_); 
       done =  false; 
       while (!done) { 
           Thread.sleep(100); 
       }
-      masterThread.join(); 
-      printWriter_.println("Joined with SocketProxyMasterThread"); 
+      masterThread.join();
+      ts = new Timestamp(System.currentTimeMillis());
+      printWriter_.println(ts.toString()+":Joined with SocketProxyMasterThread on "+proxyPort_); 
       
     } catch (Throwable t) {
       printWriter_.println("Throwable caught ");

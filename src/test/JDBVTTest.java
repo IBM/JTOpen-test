@@ -583,10 +583,11 @@ Handles ensuring the DatabaseMetaData interface is working correctly.
         try {
             DatabaseMetaData dmd = connection_.getMetaData();
 
+            // this result could be huge.  Only fetch the first 1000 rows
             ResultSet rs = dmd.getTables(null, null, null, null);
 
             int count = 0;
-            while (rs.next())
+            while (rs.next() && count < 1000)
                 count++;
 
             rs.close();

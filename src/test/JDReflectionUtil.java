@@ -3104,11 +3104,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
         Object returnObject = null;
 	Class thisClass =  Class.forName(classname);
     Class[] argTypes = new Class[5];
-    argTypes[0] = Integer.class; 
-    argTypes[1] = Integer.class; 
-    argTypes[2] = Integer.class; 
+    argTypes[0] = Integer.TYPE; 
+    argTypes[1] = Integer.TYPE; 
+    argTypes[2] = Integer.TYPE; 
     argTypes[3] = Class.forName("java.lang.String"); 
-    argTypes[4] = Integer.class; 
+    argTypes[4] = Integer.TYPE; 
     java.lang.reflect.Method method;
 
     method = thisClass.getMethod(methodName, argTypes);

@@ -116,18 +116,22 @@ public class TestDriverStatic
             String jtopenName = Copyright.JTOpenName; 
             int spaceIndex = jtopenName.indexOf(" "); 
             int dotIndex = jtopenName.indexOf("."); 
-            String version = jtopenName.substring(spaceIndex + 1, dotIndex); 
-            String version2 =  jtopenName.substring(dotIndex+1); 
-            int intVersion = Integer.parseInt(version);
-            
-            switch (intVersion) {
-            case 9:
-              version = "7.3.0"; 
-              break; 
-            case 10:
-              version = "7.4.0"; 
-            }
-            return version+"."+version2; 
+            if (spaceIndex >= 0 && dotIndex >= 0) { 
+				String version = jtopenName.substring(spaceIndex + 1, dotIndex);
+				String version2 = jtopenName.substring(dotIndex + 1);
+				int intVersion = Integer.parseInt(version);
+
+				switch (intVersion) {
+				case 9:
+					version = "7.3.0";
+					break;
+				case 10:
+					version = "7.4.0";
+				}
+				return version + "." + version2;
+			} else {
+				return jtopenName;
+			}
           } else {
              return "NOT AVAILABLE BUT LOAD SOURCE IS NOT DIRECTORY " ;
           }

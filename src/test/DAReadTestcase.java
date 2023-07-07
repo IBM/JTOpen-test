@@ -51,18 +51,6 @@ public class DAReadTestcase extends Testcase
 {
     // New methods were added in JTOpen 6.2 (spec version V6R1M0 PTF 4)
     private static boolean areRawBytesMethodsDefined_ = true;
-    static {
-      try {
-        areRawBytesMethodsDefined_ = TOOLBOX_PACKAGE.isCompatibleWith("6.1.0.4");
-        // V6R1M0 PTF 4 (JTOpen 6.2)
-      }
-      catch (NumberFormatException e) {
-        // This can happen if we have local versions of classes (other than what's in the main Toolbox jar file).
-        e.printStackTrace();
-        areRawBytesMethodsDefined_ = true;
-        System.out.println("Assuming Toolbox package is 6.1.0.4 or higher.");
-      }
-    }
 
     String getPaddedUser()
     {
