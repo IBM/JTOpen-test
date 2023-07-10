@@ -2,6 +2,19 @@
 //
 // JTOpen (IBM Toolbox for Java - OSS version)
 //
+// Filename:  JDDatabaseOverride.java
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
 // The source code contained herein is licensed under the IBM Public License
 // Version 1.0, which has been approved by the Open Source Initiative.
 // Copyright (C) 1997-2023 International Business Machines Corporation and
@@ -19,7 +32,6 @@
 package test;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Properties;
