@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
 import java.net.InetAddress;
 public class JDScheduler {
 
@@ -62,11 +61,11 @@ public class JDScheduler {
 
 	    // Always load the ini files 
 	    Properties iniProperties  = new Properties();
-	    FileInputStream fileInputStream = new FileInputStream("ini/netrc.ini");
+	    InputStream fileInputStream = JDRunit.loadResource("ini/netrc.ini", null); 
 	    iniProperties.load(fileInputStream);
 	    fileInputStream.close();
 
-	    fileInputStream = new FileInputStream("ini/systems.ini");
+	    fileInputStream = JDRunit.loadResource("ini/systems.ini",null);
 	    iniProperties.load(fileInputStream);
 	    fileInputStream.close();
 
@@ -79,27 +78,29 @@ public class JDScheduler {
 		if (dotIndex >= 0) {
 		    localHost=localHost.substring(0,dotIndex);
 		}
-
-		defaultId = (String) iniProperties.get("SCHEDULERID_"+localHost);
+		defaultId = getConfigProperty(iniProperties, "SCHEDULERID_"+localHost); 
 		if (defaultId == null) {
 		    defaultId="1"; 
 		    throw new Exception("ID for SCHEDULERID_"+localHost+" not found in ini/systems.ini"); 
 		}
-		system = (String) iniProperties.get("SCHEDULERDB_"+localHost);
+		system = getConfigProperty(iniProperties,"SCHEDULERDB_"+localHost);
 		if (system == null) {
 		    throw new Exception("DB for SCHEDULERDB_"+localHost+" not found in ini/systems.ini"); 
 		}
 
 		jdbcURL="jdbc:as400:"+system;
-		userid = (String) iniProperties.get("USERID");
-		password=(String) iniProperties.get("PASSWORD"); 
+		userid = getConfigProperty( iniProperties,"USERID");
+		password=getConfigProperty(iniProperties, userid+".password"); 
+		if (password == null) password=getConfigProperty( iniProperties,"PASSWORD"); 
 
 	    }
-	    adminUserid = (String) iniProperties.get("USERID");
-	    adminPassword=(String) iniProperties.get("PASSWORD"); 
+	    adminUserid = getConfigProperty( iniProperties,"USERID");
+	    adminPassword = getConfigProperty(iniProperties, adminUserid+".password"); 
+	    if (adminPassword == null) adminPassword=getConfigProperty( iniProperties,"PASSWORD"); 
 
-	    testUserid = (String) iniProperties.get("TESTUSERID");
-	    testPassword=(String) iniProperties.get("TESTPASSWORD"); 
+	    testUserid = getConfigProperty( iniProperties,"TESTUSERID");
+	    testPassword = getConfigProperty(iniProperties, testUserid+".password"); 
+	    if (testPassword == null) testPassword=getConfigProperty( iniProperties,"TESTPASSWORD"); 
 
 	    String newValue;
 	    newValue = System.getProperty("jdbcURL");
@@ -143,7 +144,18 @@ public class JDScheduler {
 	    System.out.println(usageInfo[i]);
 	}
     }
-    public static void main(String args[]) {
+    private static String getConfigProperty(Properties iniProperties, String property) {
+    	String propertyValue; 
+    	propertyValue=java.lang.System.getProperty(property); 
+    	if (propertyValue == null) { 
+    		propertyValue = System.getenv(property);
+    		if (propertyValue == null) { 
+    			propertyValue = (String) iniProperties.getProperty(property); 
+    		}
+    	}
+		return propertyValue;
+	}
+	public static void main(String args[]) {
         go(args);
     }
     public static void go(String args[]) {
@@ -467,7 +479,7 @@ public class JDScheduler {
       } else {
         throw new Exception("Unrecognized URL " + jdbcURL);
       }
-      System.out.println("Thread "+currentThread+": Requesting new connection at " + jdbcURL + "using "+userid+","+password);
+      System.out.println("Thread "+currentThread+": Requesting new connection at " + jdbcURL + " using "+userid+","+password);
       if (userid == null) {
         connection = DriverManager.getConnection(jdbcURL+";prompt = false");
       } else {

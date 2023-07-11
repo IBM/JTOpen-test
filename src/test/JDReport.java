@@ -1662,10 +1662,12 @@ public class JDReport {
       }
 
       String USERID = iniProperties.getProperty("USERID");
-      String PASSWORD = iniProperties.getProperty("PASSWORD");
+      String PASSWORD = JDRunit.getPropertyPassword(USERID); 
+      if (PASSWORD == null) PASSWORD = iniProperties.getProperty("PASSWORD");
 
       String MASTERUSERID = iniProperties.getProperty("MASTERUSERID");
-      String MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
+      String MASTERPASSWORD = JDRunit.getPropertyPassword(MASTERUSERID); 
+      if (MASTERPASSWORD == null) MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
 
       String description = (String) iniProperties.get("description");
       if (description == null) {
