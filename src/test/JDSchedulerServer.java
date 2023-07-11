@@ -572,19 +572,13 @@ public class JDSchedulerServer extends JDScheduler {
 
   }
 
-  public static void loadIniProperties(StringBuffer iniInfo) {
+  public static void loadIniProperties(StringBuffer iniInfo) throws Exception {
     if (iniProperties == null) {
       try {
         iniProperties = JDRunit.getIniProperties(iniInfo);
       } catch (Exception e2) {
         System.out.println("Exception reading ini properties");
-        e2.printStackTrace(System.out);
-        if (iniProperties == null) {
-          iniProperties = new Properties();
-          iniProperties.setProperty("USERID", "JDPWRSYS");
-          iniProperties.setProperty("PASSWORD", "tim8soup");
-          iniProperties.setProperty("EMAIL", "jeber@us.ibm.com");
-        }
+        throw e2; 
       }
 
     }
@@ -618,7 +612,7 @@ public class JDSchedulerServer extends JDScheduler {
   /* If running on IBM i, make sure the current user */
   /* has access to the objects that are being used */
 
-  public static void setupAccess(String id) {
+  public static void setupAccess(String id) throws Exception {
 
     //
     // Get a connection and try some accesses.

@@ -48,10 +48,6 @@ import java.sql.Connection;
 import java.sql.*;
 import java.util.Vector;
 
-/**
- * @author jeber
- *
- */
 public class JDPerformanceUtil {
   static boolean debug=true; 
   static String clientName = null;
