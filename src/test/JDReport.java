@@ -2162,69 +2162,6 @@ public class JDReport {
         }
 
       }
-      /*
-       * 
-       * SILENT: CREATE TABLE QGPL.JDBCMAXPTF (TS TIMESTAMP) ; DELETE FROM
-       * QGPL.JDBCMAXPTF ; GRANT ALL ON QGPL.JDBCMAXPTF TO PUBLIC WITH GRANT
-       * OPTION;
-       * 
-       * INSERT INTO QGPL.JDBCMAXPTF SELECT MAX(TS) FROM ( SELECT TIMESTAMP('20'
-       * || SUBSTRING(ODLDAT, 5,2) || SUBSTRING(ODLDAT, 1,4) || ODLTIM ) AS TS
-       * from qgpl.qjvajdbci UNION SELECT TIMESTAMP('20' || SUBSTRING(ODLDAT,
-       * 5,2) || SUBSTRING(ODLDAT, 1,4) || ODLTIM ) AS TS from qgpl.qsqclii
-       * UNION SELECT TIMESTAMP('20' || SUBSTRING(ODLDAT, 5,2) ||
-       * SUBSTRING(ODLDAT, 1,4) || ODLTIM ) AS TS from qgpl.qjvajdbci UNION
-       * SELECT TIMESTAMP('20' || SUBSTRING(ODLDAT, 5,2) || SUBSTRING(ODLDAT,
-       * 1,4) || ODLTIM ) AS TS from qgpl.qsqlejexti) AS X ;
-       * 
-       * SELECT 'NEWJDBCMAXPTF ' || VARCHAR(TS) FROM QGPL.JDBCMAXPTF quit
-       * HEREDOC # # ~jeber/bin/sql400.noprompt $TESTSYSTEM < /tmp/levelcheck.$$
-       * # if [ "$UNAME" = "OS400" ] ; then # echo job is `getjobid $$` # echo
-       * '<br>' system chgjob `getjobid $$ | sed 's/.*is //'`
-       * " LOG(4 00 *SECLVL)" system chgjob `getjobid $$ | sed 's/.*is //'`
-       * " CCSID(37)"
-       * 
-       * 
-       * java -Dprompt=false -DhideWarnings=true -DechoOff=true
-       * -DechoComments=true -Ddebug=false -Dhtml=true -Djdbc.db2.trace=trux -cp
-       * /home/jdbctest test.JDSQL400 < /tmp/levelcheck.$$ >
-       * /tmp/levelcheck.out.$$ 2> /tmp/levelcheck.error.$$ status=$? if [
-       * $status -ne 0 ] ; then echo 'Java failed with '$status cat
-       * /tmp/levelcheck.error.$$ fi rm -f /tmp/levelcheck.error.$$
-       * 
-       * # # Check to make sure that the file is not ebcdic # od -tx
-       * /tmp/levelcheck.out.$$ | grep '96a24ba5' > /dev/null status=$? if [
-       * $status -eq 0 ] ; then echo '<br>WARNING.. MUST USE
-       * -Dos400.stdio.convert=N<br>' EXTRA_JAVA_ARGS=-Dos400.stdio.convert=N
-       * 
-       * java $EXTRA_JAVA_ARGS -Dprompt=false -DhideWarnings=true -DechoOff=true
-       * -DechoComments=true -Ddebug=false -Dhtml=true -Djdbc.db2.trace=trux -cp
-       * /home/jdbctest test.JDSQL400 < /tmp/levelcheck.$$ >
-       * /tmp/levelcheck.out.$$ 2> /tmp/levelcheck.error.$$ status=$? if [
-       * $status -ne 0 ] ; then echo 'Java failed with '$status cat
-       * /tmp/levelcheck.error.$$ fi rm -f /tmp/levelcheck.error.$$
-       * 
-       * 
-       * fi
-       * 
-       * else ~jeber/bin/sql400.noprompt $TESTSYSTEM eberhard tim8soup <
-       * /tmp/levelcheck.$$ > /tmp/levelcheck.out.$$ fi #
-       * 
-       * cat /tmp/levelcheck.out.$$ JDBCMAXPTF=`grep NEWJDBCMAXPTF
-       * /tmp/levelcheck.out.$$ | sed 's/.*NEWJDBCMAXPTF \(.*\.000000\).*./\1/'`
-       * # echo JDBCMAXPTF=$JDBCMAXPTF export JDBCMAXPTF
-       * 
-       * rm /tmp/levelcheck.out.$$
-       * 
-       * rm /tmp/levelcheck.$$ else echo 'Warning: Host Server is down' fi else
-       * echo 'Warning: System is down' fi
-       * 
-       * 
-       * 
-       * 
-       * 
-       * 
-       */
 
       System.out
           .println("Generating information -- STEP 2 -- generate SQL commands");
@@ -3001,48 +2938,6 @@ public class JDReport {
       // 'JTAThread2', 'JTATransOrder', 'JTAUpdate')"' group by system order by
       // max_finish_time;'
 
-      /*
-       * 
-       * // // Update low severity problems // if [ 0 -eq 1 ] ; then grep '[^
-       * ][^ ]* *[^ ][^ ]* *[^ ]' $lowsev | sed 's/^\([^ ][^ ]*\) *\([^ ][^ ]*\)
-       * *\(.*\)/update '$SCHEMA'."+jlatest+" set failed=failed-1,
-       * notatt=notatt+1 where failed > 0 and testcase='"'"'\1'"'"'/'
-       * 
-       * 
-       * writer.println(" <h2>Testcases with low severity problems </h2> <!-- *
-       * /' writer.println(" --> <!-- * /' writer.println(" --> <table border >
-       * <!-- * /' writer.println(" --> <th>testcase<th>variation<th>reason<tr>
-       * <!-- * /'
-       * 
-       * grep '[^ ][^ ]* *[^ ][^ ]* *[^ ]' $lowsev $lowsev2 | sed 's/^.*://' |
-       * $SORT | sed 's%^\([^ ][^ ]*\) *\([^ ][^ ]*\) *\(.*\)%/* -->
-       * <td>\1<td>\2<td>\3<tr><!-- *%'
-       * 
-       * writer.println(" --> </table> <!-- * /' writer.println(" --> '
-       * 
-       * 
-       * writer.println(" <h2>Lowsev Totals </h2> <!-- * /' writer.println(" -->
-       * <!-- * /' writer.println(" --> <table border > <!-- * /'
-       * writer.println(" --> <th>reason<th>count<tr> <!-- * /'
-       * 
-       * tempfile=/tmp/counts.$$
-       * 
-       * 
-       * grep '[^ ][^ ]* *[^ ][^ ]* *[^ ]' $lowsev $lowsev2 | sed "s/'/./g" |
-       * sed 's/^[^ ][^ ]* *[^ ][^ ]* *\(.*\)/echo '"'"'\/* --> <td>'"'"' `grep
-       * -c '"'"'\1'"' $lowsev $lowsev2"'` '"'"'<td> \1 <tr><\\\!-- *\/'"'"'/' |
-       * sort -u | csh > $tempfile sort -r -n -k 4 $tempfile
-       * 
-       * if [ "$UNAME" = "OS400" ] ; then linesum=notAvailable else
-       * 
-       * linesum=~jeber/bin/linesum if [ `uname` = "Linux" ] ; then
-       * linesum=~jeber/lbin/linesum fi
-       * 
-       * sed 's/^.*<td> *\([0-9][0-9]*\) *<td>.* /\1/' $tempfile | $linesum |
-       * sed 's/^\(.*\)$/<td>\1<td><tr>/'
-       * 
-       * fi
-       */
 
       writer.println(" --> </table>                                   <!-- ");
       writer.println(" --> ");
@@ -3218,20 +3113,6 @@ public class JDReport {
 
       JDSQL400.dispResultSet(writer, rs, true, formatLatest);
 
-      // writer.println(" <h2> Latest results for '$testname+" ON
-      // '$releaseSystem' </h2> * /'
-      // echo "select min(finishtime) as finishtime, system, 'SUM' as testcase,
-      // sum(succeeded) as succeeded, sum(failed) as failed,
-      // sum(succeeded)+sum(failed) as total, round((double(100 *
-      // sum(succeeded)) / (sum(succeeded)+sum(failed))), 2) as successRate,
-      // sum(notappl) as notappl, sum(notatt) as notatt, sum(time) as time from
-      // $SCHEMA.$jlatest where system='$releaseSystem' group by system;"
-      //
-      // Do the totals without not attempted
-      //
-      // writer.println(" <br><br><img
-      // src="http://w3.rchland.ibm.com/~jda/img/jdbcmast.gif" alt="IBM - Java
-      // Data Access"> * /'
       writer.println(" <h2> Latest results for " + testname + " ON "
           + releaseSystem + " </h2>");
       rs = exQ(writer, s,
@@ -3300,58 +3181,7 @@ public class JDReport {
       writer.println(" <hr>REPORT created using<br><pre>cd /home/jdbctest\n");
       writer.println("java test.JDRunit " + initials + " REPORT </pre>");
 
-      /*
-       * writer.println(" <h2> Testcases older than latest PTF apply </h2>");
-       * 
-       * sql="select * from "+SCHEMA+"."+jlatest+" where system='"
-       * +releaseSystem+"' and finishtime  < '"
-       * +JDBCMAXPTF+"'  order by finishtime"; rs =exQ(s,sql);
-       * JDSQL400.dispResultSet(writer,rs, true);
-       * 
-       * sql= "select current_timestamp as timestamp from qsys2.qsqptabl"; rs
-       * =exQ(s,sql); JDSQL400.dispResultSet(writer,rs, true);
-       * 
-       */
 
-      /*
-       * 
-       * 
-       * if [ "$UNAME" = "OS400" ] ; then
-       * 
-       * 
-       * 
-       * echo 'Information generated<br>' cat /tmp/info.$$ | sed 's%>
-       * *\(J[TD][A-Z0-9a-z]*\)%> <a href=
-       * "http://w3.rchland.ibm.com/~jeber/e.acgi?/as400/'$TESTRELEASE'/usr/cmvc/java.pgm/yjac.jacl/test/\1.java"
-       * ></a><a
-       * href="'$URLHOME'viewSource.acgi?TEST=\1\&RELEASE='$TESTRELEASE'">V</a>
-       * <a href=
-       * "'$URLHOME'compileSource.acgi?HINTSYSTEM='$TESTSYSTEM'\&TEST=\1\&RELEASE='$TESTRELEASE'"
-       * >C</a> <a
-       * href="'$URLHOME''$RUNSCRIPT'?HINTSYSTEM='$TESTSYSTEM'\&TEST=\1"
-       * target="_blank">R</a> \1%' | sed
-       * 's%<td>\(20[01][0-9]-[0-9][0-9]-[0-9][0-9]\)
-       * \(..:..:..\).......<td>\([fxcjzlry9][1ota2pcd0\.][wfv3012hr5][^<][^<]*\
-       * )<td>%<td><a href="'$testDirectory'/out/\3/runit.\1-\2">\1
-       * \2<td>\3<td>%g' | sed
-       * 's%^<td>\([cfjrlzxy9][toacdp120\.][fwvh01235][giap234685][abpsiu65b21][
-       * ^<]*\)%<td><a href='$THISSCRIPT'?TESTSYSTEM=\1>\1</a>%' | sed
-       * 's%\(viewSource.acgi?TEST=\)\([^&]*\)\(.*\)<td>null<tr>%\1\2\3<td><a
-       * href="'$URLHOME'updateNote.acgi?FILE='$testDirectory/$notes'\&TEST=\2">
-       * U</a> <tr>%' | sed 's%NOTE\(.*\)NOTE\(.*\)\(<tr>\)%<a href=
-       * "'$URLHOME'updateNote.acgi?FILE='$testDirectory/$notes'\&TEST=\1\&NOTE=\2"
-       * >\2</a>\3%' | sed 's%/\*%%' | sed 's%\* /%%'
-       * 
-       * 
-       * echo '<hr><a href="ctdetails.acgi">DETAILS</a><hr>' echo 'Status as of
-       * '`date`'<br>'
-       * 
-       * #echo Leaving /tmp/ct.error.$$ rm /tmp/ct.error.$$ #echo Leaving
-       * /tmp/sql.commands.$$ rm /tmp/sql.commands.$$ rm /tmp/info.$$
-       * 
-       * 
-       * 
-       */
 
       writer.close();
       writer = null;

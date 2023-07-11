@@ -42,7 +42,6 @@ import com.sun.jdi.request.VMDeathRequest;
  * The JVMRunUtility run a programs in a JVM and provides information about the resources used by
  * that program.   The running program should call System.exit() to end running and allocated resources should
  * still be referenced for that they can be counted. 
- * @author jeber
  *
  */
 public class JVMRunUtility extends Thread {
