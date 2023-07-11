@@ -34,6 +34,7 @@ package test;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -142,7 +143,7 @@ public class JDRunit {
   };
 
   static String[] inheritedProperties = { "jdbc.db2.", "com.ibm.as400.access.",
-      "com.ibm.jtopenlite.", "jta.", "test.", "JDJSTP.", "debug",
+      "com.ibm.jtopenlite.", "jta.", "test.", "debug",
       "interactive", "os400.stdio", "com.ibm.cacheLocalHost", "java.net.",
       "com.sun.management.", "https.", "jdk.", };
 
@@ -693,7 +694,7 @@ public class JDRunit {
     }
     reader.close();
 
-    Properties iniProperties = getIniProperties(initials);
+    Properties iniProperties = getIniProperties(initials, iniInfo);
 
     String AS400 = getAS400(iniProperties, initials);
 
@@ -838,13 +839,12 @@ public class JDRunit {
     }
     String fromAddress = iniProperties.getProperty("EMAIL");
 
-    sendEMail(toAddress, fromAddress, subject, body);
-
+    sendEMail(toAddress, fromAddress, subject, body, iniProperties.getProperty("mail.smtp.host"));
   }
 
   public static void sendEMail(String initials, String subject, StringBuffer body) throws Exception {
 
-    Properties iniProperties = getIniProperties(initials);
+    Properties iniProperties = getIniProperties(initials, null);
 
     String fromAddress = iniProperties.getProperty("EMAIL");
     String toAddress = iniProperties.getProperty(initials + "-EMAIL");
@@ -862,16 +862,20 @@ public class JDRunit {
         }
       }
     }
-
-    sendEMail(toAddress, fromAddress, subject, body);
+    
+    sendEMail(toAddress, fromAddress, subject, body,iniProperties.getProperty("mail.smtp.host"));
 
   }
   
   public static void sendEMail(String toAddress, String fromAddress,
-      String subject, StringBuffer body) throws Exception {
-
+      String subject, StringBuffer body, String mailSmtpHost) throws Exception {
+	  if (mailSmtpHost == null ) { 
+		  System.out.println("Not sending e-mail.  mail.smtp.host not set"); 
+		  return; 
+	  }
+	  
     java.util.Properties p = System.getProperties();
-    p.put("mail.smtp.host", "us.ibm.com");
+    p.put("mail.smtp.host", mailSmtpHost);
 
     /*
      * need mail.jar and activation.jar
@@ -1381,7 +1385,7 @@ public class JDRunit {
 	System.out.println("timeoutJavaArgs="+timeoutJavaArgs); 
     }
 
-    readIni();
+    readIni(iniInfo);
     // Build the test args.
 
     int commaIndex;
@@ -1389,7 +1393,7 @@ public class JDRunit {
     //
     // Determine the base test.. This is read from testbase.ini
     //
-    FileInputStream fileInputStream = new FileInputStream("ini/testbase.ini");
+    InputStream fileInputStream = loadResource("ini/testbase.ini" , iniInfo);
     testBaseProperties = new Properties();
     testBaseProperties.load(fileInputStream);
     fileInputStream.close();
@@ -1397,20 +1401,12 @@ public class JDRunit {
     //
     // Get the list of testcases that will drop authority
     //
-    fileInputStream = new FileInputStream("ini/dropAuthority.ini");
-    iniInfo.append("echo Loading ini from ini/dropAuthority.ini\n");
+    
+    fileInputStream = loadResource("ini/dropAuthority.ini", iniInfo);
     dropAuthorityProperties = new Properties();
     dropAuthorityProperties.load(fileInputStream);
     fileInputStream.close();
 
-    //
-    // Get the list of system drives to use for IFS testcases on windows
-    //
-
-    // fileInputStream = new FileInputStream("ini/SYSTEMDRIVE.ini");
-    // systemDriveProperties = new Properties();
-    // systemDriveProperties.load(fileInputStream);
-    // fileInputStream.close();
 
     String firstTest = test;
     commaIndex = firstTest.indexOf(",");
@@ -1463,24 +1459,46 @@ public class JDRunit {
 
   }
 
-  public static Properties getIniProperties() throws Exception {
+  /* Load a resource.  The default is to load from the filesystem, then load using the classloader */ 
+  
+  public static InputStream loadResource(String iniFile, StringBuffer iniInfo) throws FileNotFoundException {
+    InputStream inputStream ;
+    File file = new File(iniFile); 
+    if (file.exists()) { 
+    	inputStream= 	new FileInputStream(iniFile);
+    	if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
+    } else {
+    	inputStream = JDRunit.class.getClassLoader().getResourceAsStream(iniFile);
+    	if (iniInfo!=null) iniInfo.append("echo loaded "+iniFile+" from classloader\n"); 
+    }
+	return inputStream;
+}
+
+/** 
+   * Reads the default ini files from the ini directory.  The files are the following
+   * <ul>
+   * <li> netrc.ini -- userids and passwords</li> 
+   * <li> notification.ini -- e-mail address to notify of status of tests</li>
+   * </ul>
+   * @return Properties read from the default ini files 
+   * @throws Exception
+   */
+  public static Properties getIniProperties(StringBuffer iniInfo) throws Exception {
     Properties iniProperties = new Properties();
 
     if (iniInfo == null)
       iniInfo = new StringBuffer();
 
     {
-      iniInfo.append("echo Loading ini from ini/netrc.ini\n");
       String filename = "ini/netrc.ini";
-      FileInputStream fileInputStream = new FileInputStream(filename);
+      InputStream fileInputStream = loadResource(filename, iniInfo);
       iniProperties.load(fileInputStream);
       fileInputStream.close();
     }
 
     {
-      iniInfo.append("echo Loading ini from ini/notification.ini\n");
       String filename = "ini/notification.ini";
-      FileInputStream fileInputStream = new FileInputStream(filename);
+      InputStream fileInputStream = loadResource(filename, iniInfo);
       iniProperties.load(fileInputStream);
       fileInputStream.close();
     }
@@ -1489,12 +1507,40 @@ public class JDRunit {
 
   }
 
-  public static Properties getIniProperties(String initials) throws Exception {
+  /** 
+   * Reads the properties files needed to configure JDRunit.
+   * This reads the following config files from the ini directory, where
+   * <RR><JJ><T> are the initialis of the test 
+   * <ul>
+   * <li> netrc.ini        -- userids and passwords</li> 
+   * <li> notification.ini -- e-mail address to notify of status of tests</li>
+   * <li> systems.ini  -- IBM i systems to test to </li> 
+   * <li> runit<RR>xxx.ini -- release specific settings</li>
+   * <li> runitxx<JJ>x.ini -- JVM specific settings </li>
+   * <li> runitxxxx<T>.ini -- test type specific settings </li> 
+   * 
+   * <ul>  
+   * </ul>
+   * The generic settings can be overwritten by providing a runit file
+   * of the following two formats.
+   * <ul>
+   * <li> runitRRJJT.hostname.ini  -- override for specific setting for the specified host
+   * <li> runitRRJJT.ini           -- override for specific RRJJT setting  
+   * </ul>
+   * @param initials   Initials of the testcase to use.  The format is
+   *                   rrjjt where rr is the release (i.e. 74,75), 
+   *                   jj is the jvm (i.e. 8S meaning JDK 8 Sun JVM)
+   *                   t  is the type of test (A meaning toolbox T meaning toolbox JDBC).  
+   * @return
+   * @throws Exception
+   */
+  public static Properties getIniProperties(String initials, StringBuffer iniInfo) throws Exception {
 
-    Properties iniProperties = getIniProperties();
+	    if (iniInfo == null)
+	        iniInfo = new StringBuffer();
 
-    if (iniInfo == null)
-      iniInfo = new StringBuffer();
+    Properties iniProperties = getIniProperties(iniInfo);
+
 
     String localHost = InetAddress.getLocalHost().getHostName().toLowerCase();
     int dotIndex = localHost.indexOf(".");
@@ -1511,32 +1557,28 @@ public class JDRunit {
 
     existFile = new File(filename);
     if (existFile.exists()) {
-      iniInfo.append("echo Loading ini from " + filename + "\n");
-      FileInputStream fileInputStream = new FileInputStream(filename);
+      InputStream fileInputStream = loadResource(filename, iniInfo); 
       iniProperties.load(fileInputStream);
       fileInputStream.close();
     } else {
       // Load from the pieces of the initals
       filename = "ini/runit" + initials.substring(0, 2) + "xxx.ini";
       {
-        iniInfo.append("echo Loading ini from " + filename + "\n");
-        FileInputStream fileInputStream = new FileInputStream(filename);
+        InputStream fileInputStream = loadResource(filename,iniInfo);
         iniProperties.load(fileInputStream);
         fileInputStream.close();
       }
 
       filename = "ini/runitxx" + initials.substring(2, 4) + "x.ini";
       {
-        iniInfo.append("echo Loading ini from " + filename + "\n");
-        FileInputStream fileInputStream = new FileInputStream(filename);
+        InputStream fileInputStream = loadResource(filename,iniInfo);
         iniProperties.load(fileInputStream);
         fileInputStream.close();
       }
 
       filename = "ini/runitxxxx" + initials.substring(4, 5) + ".ini";
       {
-        iniInfo.append("echo Loading ini from " + filename + "\n");
-        FileInputStream fileInputStream = new FileInputStream(filename);
+          InputStream fileInputStream = loadResource(filename,iniInfo);
         iniProperties.load(fileInputStream);
         fileInputStream.close();
       }
@@ -1582,8 +1624,8 @@ public class JDRunit {
 
     {
       filename = "ini/systems.ini";
-      iniInfo.append("echo Loading ini from " + filename + "\n");
-      FileInputStream fileInputStream = new FileInputStream(filename);
+      InputStream fileInputStream = loadResource(filename,iniInfo);
+
       iniProperties.load(fileInputStream);
       fileInputStream.close();
     }
@@ -1741,10 +1783,10 @@ public class JDRunit {
     return AS400;
   }
 
-  public void readIni() throws Exception {
+  public void readIni(StringBuffer iniInfo) throws Exception {
     String filename = "ini/runit" + initials + ".ini";
 
-    iniProperties = getIniProperties(initials);
+    iniProperties = getIniProperties(initials, iniInfo);
     //
     // Verify the properties
     //
@@ -1862,35 +1904,44 @@ public class JDRunit {
     }
 
     release = iniProperties.getProperty("release");
+    
     USERID = iniProperties.getProperty("USERID");
-    PASSWORD = iniProperties.getProperty("PASSWORD");
+    // See if the password is overwritten by a JVM property
+    PASSWORD = getPropertyPassword(USERID); 
+    if (PASSWORD == null) PASSWORD = iniProperties.getProperty("PASSWORD");
     MASTERUSERID = iniProperties.getProperty("MASTERUSERID");
-    MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
+    MASTERPASSWORD = getPropertyPassword(MASTERUSERID); 
+    if (MASTERPASSWORD == null) MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
     CLIWHDSN = iniProperties.getProperty("CLIWHDSN", "MEMEMEM"); //
     SRDB = CLIWHDSN.toUpperCase();
     CLIWHUID = iniProperties.getProperty("CLIWHUID", "DB2TEST");
     CLIWHPWD = iniProperties.getProperty("CLIWHPWD", "PASS2DB");
-    javaArgs += "-DCLIWHDSN=" + CLIWHDSN + " -DCLIWHUID=" + CLIWHUID
+    if (CLIWHDSN != null) { 
+    	javaArgs += "-DCLIWHDSN=" + CLIWHDSN + " -DCLIWHUID=" + CLIWHUID
         + " -DCLIWHPWD=" + CLIWHPWD + " ";
-
+    }
     CLIWGDSN = iniProperties.getProperty("CLIWGDSN", "MEMEMEM");
     CLIWGUID = iniProperties.getProperty("CLIWGUID", "DB2TEST");
     CLIWGPWD = iniProperties.getProperty("CLIWGPWD", "PASS2DB");
+    if (CLIWGDSN != null) { 
     javaArgs += "-DCLIWGDSN=" + CLIWGDSN + " -DCLIWGUID=" + CLIWGUID
         + " -DCLIWGPWD=" + CLIWGPWD + " ";
-
+    }
     CLIWLDSN = iniProperties.getProperty("CLIWLDSN", "CLIDB");
     CLIWLUID = iniProperties.getProperty("CLIWLUID", "DB2TEST");
     CLIWLPWD = iniProperties.getProperty("CLIWLPWD", "PASS2DB");
-    javaArgs += "-DCLIWLDSN=" + CLIWLDSN + " -DCLIWLUID=" + CLIWLUID
+    if (CLIWLDSN != null) { 
+    	javaArgs += "-DCLIWLDSN=" + CLIWLDSN + " -DCLIWLUID=" + CLIWLUID
         + " -DCLIWLPWD=" + CLIWLPWD + " ";
-
+    }
     CLIWZDSN = iniProperties.getProperty("CLIWZDSN", "STLEC2");
     CLIWZUID = iniProperties.getProperty("CLIWZUID", "admf001");
     CLIWZPWD = iniProperties.getProperty("CLIWZPWD", "n1cetest");
+    if (CLIWZDSN != null) {
     javaArgs += "-DCLIWZDSN=" + CLIWZDSN + " -DCLIWZUID=" + CLIWZUID
         + " -DCLIWZPWD=" + CLIWZPWD + " ";
-
+    }
+    
     if (AS400.equalsIgnoreCase(defaultSecondary)) {
       javaArgs += /* " -DAS400was="+AS400+ */ " -Djta.secondary.system=" + otherSecondary;
     } else {
@@ -2000,7 +2051,17 @@ public class JDRunit {
 
   } /* readIni */
 
-  public void setExtraJavaArgs(String extraJavaArgs) {
+  /* Read the property from the JVM or environment */ 
+  static public String getPropertyPassword(String userid) {
+	  String password = null; 
+	  password = System.getProperty(userid+".password"); 
+	  if (password == null) { 
+		  password = System.getenv(userid+".password"); 
+	  }
+	  return password; 
+  }
+
+public void setExtraJavaArgs(String extraJavaArgs) {
     if (extraJavaArgs == null) {
       this.extraJavaArgs = "";
     } else {
@@ -2082,12 +2143,6 @@ public class JDRunit {
     }
 
 
-    String paseTranslate =iniProperties.getProperty("QIBM_JDBC_PASE_TRANSLATE");
-    if (paseTranslate != null) {
-	inputVector.addElement("echo Setting QIBM_JDBC_PASE_TRANSLATE to " + paseTranslate);
-	inputVector.addElement("QIBM_JDBC_PASE_TRANSLATE=\"" + paseTranslate + "\"");
-	inputVector.addElement("export QIBM_JDBC_PASE_TRANSLATE");
-    }
 
     String newTestJar = iniProperties.getProperty("testJar");
     if (newTestJar != null) {
@@ -2097,8 +2152,7 @@ public class JDRunit {
     
 
     /* Note: sslightx.zip still needed for JDK 1.3 tests */
-    String setClasspath = "CLASSPATH="+testcaseCode+":"
-        + toolboxJar
+    String setClasspath = "CLASSPATH="+toolboxJar+":"+testcaseCode+":"
         + ":/qibm/proddata/java400/ext/translator.zip:"
         + toolsJar
         + ":/qibm/proddata/VE2/EWLMMS/classes/arm4.jar:jars/jt400Servlet.jar:jars/servlet.jar:jars/sslightx.zip:jars/jcifs.jar:jars/fscontext.jar:jars/providerutil.jar";
@@ -2120,8 +2174,8 @@ public class JDRunit {
 
       /* On windows, we copy the toolbox jar so that the original can be updated */
       /*
-       * On windows, the JVM put a lock on the jar file which prevents it from
-       * being updated
+       * On windows, the JVM puts a lock on the jar file which prevents it from
+       * being updated.
        */
       /* To get around this,we make a copy in C:\\runningJars */
       /*
@@ -2188,9 +2242,9 @@ public class JDRunit {
       } else {
         testcaseCode=System.getProperty("user.dir") +"\\"+testcaseCode; 
       }
-      setClasspath = "CLASSPATH=\"" +  testcaseCode+ ";"
+      setClasspath = "CLASSPATH=\"" + toolboxJar + ";" +  testcaseCode+ ";"
     	  + currentClasspath+";"
-          + toolboxJar + ";" + toolsJar + ";" + System.getProperty("user.dir")
+          + toolsJar + ";" + System.getProperty("user.dir")
           + "\\jars\\db2_classes.jar;" + System.getProperty("user.dir")
           + "\\jars\\fscontext.jar;" + System.getProperty("user.dir")
           + "\\jars\\providerutil.jar;" + System.getProperty("user.dir")
@@ -2375,7 +2429,16 @@ public class JDRunit {
       if (semicolonIndex > 0) {
         newPassword = newUserid.substring(semicolonIndex + 1);
         newUserid = newUserid.substring(0, semicolonIndex);
+      } else {
+         /* Check if password is in ini files or set from environment */ 
+      	String configTestUserId = iniProperties.getProperty("TESTUSERID"); 
+      	if (newUserid.equalsIgnoreCase(configTestUserId)) {
+          newPassword = getPropertyPassword(newUserid); 
+          if (newPassword == null) newPassword = iniProperties.getProperty("TESTPASSWORD");
+      	}
       }
+     
+      
       /* Check to see if profile created */
       String createdUserid = (String) rdbToCreatedUserid.get(SYSTEM);
       if (createdUserid == null || !createdUserid.equals(newUserid)) {
@@ -2864,16 +2927,13 @@ public class JDRunit {
         //
         try {
           String toAddress = iniProperties.getProperty("EMAIL");
+          if (!toAddress.equals("xxx@github.com")) { 
           String fromAddress = iniProperties.getProperty("EMAIL");
           String subject = " Severe Error Running  " + initials + " "
               + testArgs;
 
           String hostname = InetAddress.getLocalHost().getCanonicalHostName();
           hostname = hostname.toUpperCase();
-          int rchlandIndex = hostname.indexOf(".RCHLAND");
-          if (rchlandIndex > 0) {
-            hostname = hostname.substring(0, rchlandIndex);
-          }
 
           if (hostname.indexOf('.') < 0) {
             hostname = hostname + "." + getDomain(hostname);
@@ -2888,7 +2948,8 @@ public class JDRunit {
           body.append("Test output " + URLBASE + "/out/" + initials + "/runit."
               + dateStringNoSpace + "\n");
 
-          sendEMail(toAddress, fromAddress, subject, body);
+          sendEMail(toAddress, fromAddress, subject, body, iniProperties.getProperty("mail.smtp.host"));
+          }
         } catch (Exception e) {
           System.out.println("Error sending mail");
           e.printStackTrace();
