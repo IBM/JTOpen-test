@@ -106,4 +106,9 @@ The JDReport program can generate a report of the test runs for the initials.
 
 java -cp JTOpen-test.jar:jt400.jar test.JDReport 758AA 
 
+The report will be generated in ct/latest758AA.html
+
+Tests supported by JDRunit are specified in the ini/testbase.ini file. 
+
+Testcases run for regression purposes for toobox can be found in the ini/regressionBaseA.ini file
 
