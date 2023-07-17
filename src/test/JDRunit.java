@@ -16,8 +16,7 @@
 //
 // Classes:      JDRunit
 //
-// Replaces the runit shell script that is used to run testcases and
-// record the results.
+// Class to run a testcase and record the results.
 //
 // Runs regression testcases.  Should be run above the test directory
 // So that the classpath is correct and all directories are available.
@@ -192,7 +191,7 @@ public class JDRunit {
     
     property = System.getProperty("useTestJar"); 
     if (property != null && (property.toUpperCase().indexOf('N')< 0)) {
-      testcaseCode = "jt400Test.jar"; 
+      testcaseCode = "JTOpen-test.jar"; 
     }
   }
 
@@ -2149,13 +2148,18 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       testcaseCode = newTestJar; 
     }
 
+    /* Use JTOpen-test.jar if exists in the classpath. */ 
+    /* Assume that the JTOpen-test.jar is in the current directory */ 
+    String currentClassPath=System.getProperty("java.class.path"); 
+    if (currentClassPath.indexOf("JTOpen-test.jar") >= 0) { 
+    	testcaseCode = "JTOpen-test.jar"; 
+    }
     
 
-    /* Note: sslightx.zip still needed for JDK 1.3 tests */
     String setClasspath = "CLASSPATH="+toolboxJar+":"+testcaseCode+":"
         + ":/qibm/proddata/java400/ext/translator.zip:"
         + toolsJar
-        + ":/qibm/proddata/VE2/EWLMMS/classes/arm4.jar:jars/jt400Servlet.jar:jars/servlet.jar:jars/sslightx.zip:jars/jcifs.jar:jars/fscontext.jar:jars/providerutil.jar";
+        + ":jars/jcifs.jar:jars/fscontext.jar:jars/providerutil.jar";
 
     /* Only add jcc jars if addJccJars is defined */
 
@@ -2248,11 +2252,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           + "\\jars\\db2_classes.jar;" + System.getProperty("user.dir")
           + "\\jars\\fscontext.jar;" + System.getProperty("user.dir")
           + "\\jars\\providerutil.jar;" + System.getProperty("user.dir")
-          + "\\jars\\jt400Servlet.jar;" + System.getProperty("user.dir")
-          + "\\jars\\servlet.jar;" + System.getProperty("user.dir")
-          + "\\jars\\jcifs.jar;" + System.getProperty("user.dir")
-          + "\\jars\\sslightx.zip;" +
-
+          + "\\jars\\jcifs.jar;" + 
           jccJars + ";" +
 
           /*
@@ -2272,13 +2272,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       }
 
       setClasspath = "CLASSPATH=\""+testcaseCode+":" + toolboxJar + ":"
-          + toolsJar + ":" + System.getProperty("user.dir")
-          + "/jars/db2_classes.jar:" + System.getProperty("user.dir")
+          + toolsJar + ":"  + System.getProperty("user.dir")
           + "/jars/fscontext.jar:" + System.getProperty("user.dir")
           + "/jars/providerutil.jar:" + System.getProperty("user.dir")
-          + "/jars/jt400Servlet.jar:" + System.getProperty("user.dir")
-          + "/jars/servlet.jar:" + System.getProperty("user.dir")
-          + "/jars/sslightx.zip:" + System.getProperty("user.dir")
           + "/jars/jcifs.jar" + "\"";
 
       if (System.getProperty("user.name").equalsIgnoreCase("JAVA")) {
