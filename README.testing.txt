@@ -99,4 +99,11 @@ Here is an example of running the ping test with a runitxx8Ax.ini configuration 
 
 java -cp JTOpen-test.jar:jt400.jar test.JDRunit 758AA AS400JPingTest
 
+After the test completes, the results of the test are appended to a ct/runit758AA.out file 
+and a file exists in ct/out/758AA that contains the output of the run. 
+
+The JDReport program can generate a report of the test runs for the initials. 
+
+java -cp JTOpen-test.jar:jt400.jar test.JDReport 758AA 
+
 

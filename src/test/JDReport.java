@@ -1532,60 +1532,9 @@ public class JDReport {
 
   public static void readIni(String initials) throws Exception {
 
-    iniProperties = new Properties();
-    {
-      String filename = "ini/netrc.ini";
-      FileInputStream fileInputStream = new FileInputStream(filename);
-      iniProperties.load(fileInputStream);
-      fileInputStream.close();
-    }
+	StringBuffer sb = new StringBuffer(); 
+    iniProperties = JDRunit.getIniProperties(initials, sb);
 
-    {
-      String filename = "ini/systems.ini";
-      FileInputStream fileInputStream = new FileInputStream(filename);
-      iniProperties.load(fileInputStream);
-      fileInputStream.close();
-    }
-
-    {
-      String filename = "ini/runit" + initials + ".ini";
-      File iniFile = new File(filename);
-      if (iniFile.exists()) {
-        FileInputStream fileInputStream = new FileInputStream(filename);
-        iniProperties.load(fileInputStream);
-        fileInputStream.close();
-      } else {
-        // Load from the pieces of the initals
-        filename = "ini/runit" + initials.substring(0, 2) + "xxx.ini";
-        {
-          FileInputStream fileInputStream = new FileInputStream(filename);
-          iniProperties.load(fileInputStream);
-          fileInputStream.close();
-        }
-
-        filename = "ini/runitxx" + initials.substring(2, 4) + "x.ini";
-        {
-          FileInputStream fileInputStream = new FileInputStream(filename);
-          iniProperties.load(fileInputStream);
-          fileInputStream.close();
-        }
-
-        filename = "ini/runitxxxx" + initials.substring(4, 5) + ".ini";
-        {
-          FileInputStream fileInputStream = new FileInputStream(filename);
-          iniProperties.load(fileInputStream);
-          fileInputStream.close();
-        }
-
-        String description = iniProperties.getProperty("descriptionRelease")
-            + " " + iniProperties.getProperty("descriptionJVM") + " "
-            + iniProperties.getProperty("descriptionTest") + " ";
-
-        iniProperties.put("description", description);
-        iniProperties.put("defaultLibrary", "JDT" + initials);
-
-      }
-    }
 
     AS400 = iniProperties.getProperty("AS400");
     if (AS400 == null) {
