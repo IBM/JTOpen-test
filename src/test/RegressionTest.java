@@ -38,6 +38,7 @@ Main for running standalone application tests.
 **/
   public static void main(String args[])
   {
+	int failureCount = 0; 
     TestDriverStatic.brief_ = true;  // Skip long-running variations.
     try
     {
@@ -83,6 +84,7 @@ Main for running standalone application tests.
        me.init();
        me.start();
        me.stop();
+       failureCount = me.totalFail_; 
        me.destroy();
        me.cleanup(true);
     }
@@ -93,7 +95,7 @@ Main for running standalone application tests.
     }
 
     // Needed to make the virtual machine quit.
-       System.exit(0);
+       System.exit(failureCount);
   }
 
 

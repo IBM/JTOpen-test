@@ -1656,7 +1656,6 @@ public class PgmRunTestcase extends Testcase
 				failed("program is not sucessfully executed.");
 				return;
 			}
-			Thread.sleep(60000);
 			if (system.isConnected()) {
 					succeeded = true;
 					assertCondition(succeeded);

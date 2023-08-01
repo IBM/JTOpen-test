@@ -54,11 +54,14 @@ public class TestDriverStatic
       String s = System.getProperty("os.name");
       boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
       if (onI5OS) onAS400_ = true; // make sure this flag gets set
-      defaultSecurityManager_ = System.getSecurityManager(); 
-      SecurityManager sm = new TestDriverSecurityManager();
+      
+      // Setting a security manager is deprecated.  Remove. 
+      // defaultSecurityManager_ = System.getSecurityManager(); 
+      // SecurityManager sm = new TestDriverSecurityManager();
       // Do not print this out.  Causes some comparision testcases to fail
       // System.out.println("TestDriverStatic: Setting security manager to "+sm); 
-      System.setSecurityManager(sm);
+      // System.setSecurityManager(sm);
+      
       } catch (Throwable e) { 
         System.err.println("TestDriverStatic: Exception in static initializer"); 
         e.printStackTrace(System.err); 
