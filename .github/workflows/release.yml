@@ -32,7 +32,7 @@ jobs:
       run: ls -l target
 
     - name: Move dist artifact to staging directory
-      run: mkdir staging && target/JTOpen-test-${{ env.project_version }}-jar-with-dependencies.jar staging/JTOpen-test-${{ env.project_version }}.jar
+      run: mkdir staging && mv target/JTOpen-test-${{ env.project_version }}-jar-with-dependencies.jar staging/JTOpen-test-${{ env.project_version }}.jar
 
     - name: Create the release and upload artifact
       uses: softprops/action-gh-release@v1
