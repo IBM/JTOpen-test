@@ -1322,6 +1322,9 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     int totalNotAtt_ = totalVars_ - totalSuc_ - totalFail_ - totalNotAp_;
     out_.println("NOT ATTEMPTED    = " + totalNotAtt_);
     out_.println(heading1);
+    if (totalFail_ == 0) {
+    	out_.println("NO FAILURES DETECTED DURING THIS RUN"); 
+    }
   }
 
   static String arrayToString(String[] strings) {

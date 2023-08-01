@@ -5479,6 +5479,7 @@ public class AS400JDBCMDSTestcase extends Testcase
 
      Connection c = null;
      Connection c2 = null;
+     Connection c3 = null;
      AS400JDBCManagedDataSource mds0 = null;
      boolean ok = true;
 
@@ -5498,9 +5499,9 @@ public class AS400JDBCMDSTestcase extends Testcase
        cpds0.setSavePasswordWhenSerialized(true);  // eliminates the password prompt
 
        // Set connection pooling-specific properties.
-       cpds0.setInitialPoolSize(1);
-       cpds0.setMinPoolSize(1);
-       cpds0.setMaxPoolSize(1);
+       cpds0.setInitialPoolSize(2);
+       cpds0.setMinPoolSize(2);
+       cpds0.setMaxPoolSize(2);
        JDReflectionUtil.callMethod_V(cpds0,"setEnforceMaxPoolSize",true);  // enforce size limitation of pool
 
        // Set the initial context factory to use.
@@ -5523,9 +5524,11 @@ public class AS400JDBCMDSTestcase extends Testcase
        // Get a connection from the pool.
        c = ds.getConnection(systemObject_.getUserId(), charPassword);
 
+       c2 = ds.getConnection(systemObject_.getUserId(), charPassword);
+
        // Try to get another connection from the pool.
        try {
-         c2 = ds.getConnection(systemObject_.getUserId(), charPassword);
+         c3 = ds.getConnection(systemObject_.getUserId(), charPassword);
          System.out.println("Failed to throw exception.");
          ok = false;
        }
@@ -5536,19 +5539,20 @@ public class AS400JDBCMDSTestcase extends Testcase
          }
        }
 
-       // Cleanup second connection if needed.
-       if (c2 != null) {
+       // Cleanup third connection if needed.
+       if (c3 != null) {
          try { c2.close(); } catch (Exception e) { e.printStackTrace(); }
-         c2 = null;
+         c3 = null;
        }
 
        // Return the first connection to the pool.
        c.close();
+       c = null; 
 
-       c2 = ds.getConnection(systemObject_.getUserId(), charPassword);
+       c3 = ds.getConnection(systemObject_.getUserId(), charPassword);
    PasswordVault.clearPassword(charPassword);
 
-       if (ok && c2 != null)
+       if (ok && c3 != null)
          succeeded();
        else
          failed("Unexpected results.");
@@ -5561,6 +5565,9 @@ public class AS400JDBCMDSTestcase extends Testcase
      {
        if (c != null) {
          try { c.close(); } catch (Exception e) { e.printStackTrace(); }
+       }
+       if (c3 != null) {
+         try { c3.close(); } catch (Exception e) { e.printStackTrace(); }
        }
        if (c2 != null) {
          try { c2.close(); } catch (Exception e) { e.printStackTrace(); }

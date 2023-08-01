@@ -14,8 +14,10 @@
 package test;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
@@ -105,7 +107,9 @@ Ensure that IFSFileInputStream.read() returns -1 at the end of file.
     {
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, ifsPathName_);
-      assertCondition(is.read() == -1);
+      int readCount = is.read();
+      is.close(); 
+      assertCondition(readCount == -1);
     }
     catch(Exception e)
     {
@@ -242,7 +246,9 @@ starts at the end of file.
     {
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, ifsPathName_);
-      assertCondition(is.read(new byte[1]) == -1);
+      int readResult = is.read(new byte[1]);
+      is.close(); 
+      assertCondition( readResult == -1);
     }
     catch(Exception e)
     {
@@ -319,7 +325,7 @@ using IFSFileInputStream.read(byte[]).
         byte[] data2 = new byte[data.length];
         int bytesRead1 = is1.read(data1);
         int bytesRead2 = is2.read(data2);
-        assertCondition(bytesRead1 == bytesRead2 && isEqual(data1, data2));
+        assertCondition(bytesRead1 == bytesRead2 && areEqual(data1, data2));
         is2.close();
       }
       else
@@ -330,7 +336,7 @@ using IFSFileInputStream.read(byte[]).
         byte[] data2 = new byte[data.length];
         int bytesRead1 = is1.read(data1);
         int bytesRead2 = is2.read(data2);
-        assertCondition(bytesRead1 == bytesRead2 && isEqual(data1, data2));
+        assertCondition(bytesRead1 == bytesRead2 && areEqual(data1, data2));
         is2.close();
       }
       is1.close();
@@ -549,7 +555,7 @@ at the specified offset in the byte array.
         is2.read(data2, 3, 4);
         is2.close();
       }
-      assertCondition(isEqual(data1, data2));
+      assertCondition(areEqual(data1, data2));
       is1.close();
     }
     catch(Exception e)
@@ -591,7 +597,7 @@ using IFSFileInputStream.read(byte[], int, int).
         bytesRead2 = is2.read(data2, 0, data2.length);
         is2.close();
       }
-      assertCondition(bytesRead1 == bytesRead2 && isEqual(data1, data2));
+      assertCondition(bytesRead1 == bytesRead2 && areEqual(data1, data2));
       is1.close();
     }
     catch(Exception e)
@@ -831,7 +837,7 @@ using IFSRandomAccessFile.read(byte[]).
       byte[] data2 = new byte[data.length];
       int bytesRead1 = raf1.read(data1);
       int bytesRead2 = raf2.read(data2);
-      assertCondition(bytesRead1 == bytesRead2 && isEqual(data1, data2));
+      assertCondition(bytesRead1 == bytesRead2 && areEqual(data1, data2));
       raf1.close();
       raf2.close();
     }
@@ -1037,7 +1043,7 @@ at the specified offset in the byte array.
       byte[] data2 = { 0,1,2,3,4,5,6,7,8,9 };
       raf1.read(data1, 3, 4);
       raf2.read(data2, 3, 4);
-      assertCondition(isEqual(data1, data2));
+      assertCondition(areEqual(data1, data2));
       raf1.close();
       raf2.close();
     }
@@ -1073,7 +1079,7 @@ using IFSRandomAccessFile.read(byte[], int, int).
       byte[] data2 = new byte[data.length];
       int bytesRead1 = raf1.read(data1, 0, data1.length);
       int bytesRead2 = raf2.read(data2, 0, data2.length);
-      assertCondition(bytesRead1 == bytesRead2 && isEqual(data1, data2));
+      assertCondition(bytesRead1 == bytesRead2 && areEqual(data1, data2));
       raf1.close();
       raf2.close();
     }
@@ -1226,7 +1232,6 @@ using IFSRandomAccessFile.readByte().
     {
       IFSRandomAccessFile raf1 =
         new IFSRandomAccessFile(systemObject_, ifsPathName_, "r");
-      // RandomAccessFile raf2 = new RandomAccessFile(convertToPCName(ifsPathName_), "r");
       DataInput raf2 = openDataInput(ifsPathName_, "r"); 
         
       int i = 0;
@@ -1398,11 +1403,16 @@ Double value using IFSRandomAccessFile.readDouble().
     try
     {
       {
-        DataOutput file1 = openDataOutput(ifsPathName_, "rw");
+    	  
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+        DataOutput file1 = new DataOutputStream(baos); 
       file1.writeDouble(Double.MIN_VALUE);
       file1.writeDouble(0.0);
       file1.writeDouble(Double.MAX_VALUE);
-      JDReflectionUtil.callMethod_V(file1,"close");
+
+      JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+       		  ifsPathName_, baos.toByteArray()); 
+      
       }
       DataInput file1 = openDataInput(ifsPathName_, "r"); 
       // file1 = new RandomAccessFile(convertToPCName(ifsPathName_), "rw");
@@ -1482,12 +1492,15 @@ Float value using IFSRandomAccessFile.readFloat().
     try
     {
       {
-        DataOutput file1 = openDataOutput(ifsPathName_, "rw");
 
-      file1.writeFloat(Float.MIN_VALUE);
-      file1.writeFloat(0.0F);
-      file1.writeFloat(Float.MAX_VALUE);
-      JDReflectionUtil.callMethod_V(file1,"close");
+  	ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+    DataOutput file1 = new DataOutputStream(baos); 
+    file1.writeFloat(Float.MIN_VALUE);
+    file1.writeFloat(0.0F);
+    file1.writeFloat(Float.MAX_VALUE);
+
+  JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+   		  ifsPathName_, baos.toByteArray()); 
 
       }
       DataInput file1 = openDataInput(ifsPathName_, "r"); 
@@ -1665,7 +1678,7 @@ using IFSRandomAccessFile.readFully(byte[]).
       byte[] data2 = new byte[data.length];
       raf1.readFully(data1);
       raf2.readFully(data2);
-      assertCondition(isEqual(data1, data2));
+      assertCondition(areEqual(data1, data2));
       raf1.close();
       JDReflectionUtil.callMethod_V(raf2,"close");
     }
@@ -1888,7 +1901,7 @@ read at the specified offset in the byte array.
       byte[] data2 = { 0,1,2,3,4,5,6,7,8,9 };
       raf1.readFully(data1, 3, 4);
       raf2.readFully(data2, 3, 4);
-      assertCondition(isEqual(data1, data2));
+      assertCondition(areEqual(data1, data2));
       raf1.close();
       JDReflectionUtil.callMethod_V(raf2,"close");
 
@@ -1926,7 +1939,7 @@ using IFSRandomAccessFile.readFully(byte[], int, int).
       byte[] data2 = new byte[data.length];
       raf1.readFully(data1, 0, data1.length);
       raf2.readFully(data2, 0, data2.length);
-      assertCondition(isEqual(data1, data2));
+      assertCondition(areEqual(data1, data2));
       raf1.close();
       JDReflectionUtil.callMethod_V(raf2,"close");
 
@@ -1997,12 +2010,18 @@ Integer value using IFSRandomAccessFile.readInt().
     try
     {
       {
-      DataOutput file1 = openDataOutput(ifsPathName_, "rw");
+      
+      
 
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+      DataOutput file1 = new DataOutputStream(baos); 
       file1.writeInt(Integer.MIN_VALUE);
       file1.writeInt(0);
       file1.writeInt(Integer.MAX_VALUE);
-      JDReflectionUtil.callMethod_V(file1,"close");
+
+    JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+     		  ifsPathName_, baos.toByteArray()); 
+
 
       }
       DataInput file1 = openDataInput(ifsPathName_, "r"); 
@@ -2154,12 +2173,17 @@ Long value using IFSRandomAccessFile.readLong().
     try
     {
       {
-      DataOutput file1 = openDataOutput(ifsPathName_, "rw");
+      
+      
 
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+      DataOutput file1 = new DataOutputStream(baos); 
       file1.writeLong(Long.MIN_VALUE);
       file1.writeLong(0L);
       file1.writeLong(Long.MAX_VALUE);
-      JDReflectionUtil.callMethod_V(file1,"close");
+
+    JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+     		  ifsPathName_, baos.toByteArray()); 
 
       }
       DataInput file1 = openDataInput(ifsPathName_, "rw");
@@ -2243,12 +2267,17 @@ IFSRandomAccessFile.readShort().
     try
     {
       {
-      DataOutput file1 = openDataOutput(fileName, "rw");
+      
+  	ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+    DataOutput file1 = new DataOutputStream(baos); 
+    file1.writeShort(-32768);
+    file1.writeShort(0);
+    file1.writeShort(32767);
 
-      file1.writeShort(-32768);
-      file1.writeShort(0);
-      file1.writeShort(32767);
-      JDReflectionUtil.callMethod_V(file1,"close");
+  JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+   		  fileName, baos.toByteArray()); 
+
+
 
       }
       DataInput file1 = openDataInput(fileName, "rw");
@@ -2416,13 +2445,18 @@ IFSRandomAccessFile.readUnsignedShort().
     try
     {
       {
-      DataOutput file1 = openDataOutput(fileName, "rw");
+      
+  	ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+    DataOutput file1 = new DataOutputStream(baos); 
+    file1.writeShort(0);
+    file1.writeShort((short) 32767);
+    file1.writeShort((short) 32768);
+    file1.writeShort((short) 65535);
 
-      file1.writeShort(0);
-      file1.writeShort((short) 32767);
-      file1.writeShort((short) 32768);
-      file1.writeShort((short) 65535);
-      JDReflectionUtil.callMethod_V(file1,"close");
+  JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+   		  fileName, baos.toByteArray()); 
+
+
       }
       DataInput file1 = openDataInput(fileName, "rw");
       IFSRandomAccessFile file2 =
@@ -2528,9 +2562,15 @@ Read an empty UTF string using IFSRandomAccessFile.readUTF().
     try
     {
       {
-      DataOutput raf1 = openDataOutput(fileName, "rw");
-      raf1.writeUTF("");
-      JDReflectionUtil.callMethod_V(raf1,"close");
+      
+  	ByteArrayOutputStream baos = new ByteArrayOutputStream(); 
+    DataOutput file1 = new DataOutputStream(baos); 
+    file1.writeUTF("");
+
+  JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+   		  fileName, baos.toByteArray()); 
+
+
       }
       DataInput raf1 = openDataInput(fileName, "rw");
       IFSRandomAccessFile raf2 =
@@ -2587,13 +2627,17 @@ of unicode characters.
     try
     {
       {
-      DataOutput raf1 = openDataOutput(fileName, "rw");
-
-      raf1.writeUTF("Some unicode      : \u0030\u00b0\u0031\u043f\u0032\u500c\u0033");
-      raf1.writeUTF("Some more unicode : \u0030\u00b0\u0031\u043f\u0032\u500c\u0033");
-      raf1.writeUTF("Still more unicode: \u0030\u00b0\u0031\u043f\u0032\u500c\u0033");
-      JDReflectionUtil.callMethod_V(raf1,"close");
-
+    	  
+    	  ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          DataOutput raf1 =  new DataOutputStream(baos);
+       
+          raf1.writeUTF("Some unicode      : \u0030\u00b0\u0031\u043f\u0032\u500c\u0033");
+          raf1.writeUTF("Some more unicode : \u0030\u00b0\u0031\u043f\u0032\u500c\u0033");
+          raf1.writeUTF("Still more unicode: \u0030\u00b0\u0031\u043f\u0032\u500c\u0033");
+          JDReflectionUtil.callMethod_V(raf1,"close");
+  
+      JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+    		  fileName, baos.toByteArray()); 
       }
       DataInput raf1 = openDataInput(fileName, "rw");
       IFSRandomAccessFile raf2 =
@@ -2666,6 +2710,7 @@ at the end of file.
       try
       {
         text = is.read(1);
+        is.close(); 
       }
       catch(java.io.UnsupportedEncodingException e)
       {
@@ -2824,7 +2869,7 @@ at the end of file.
 
   /**
    Ensure that IFSTextFileInputStream.read() returns the String written by
-   IFSTextFileOutputStream.write(String) using CCSID 37 after rewind is called.
+   IFSTextFileOutputStream.write(String) using CCSID 37 after reset is called.
    **/
    public void Var095()
    {
@@ -2845,7 +2890,7 @@ at the end of file.
          new IFSTextFileInputStream(systemObject_, fileName);
        if (is.read(s.length()).equals(s))
        {
-         is.rewind();
+         is.reset();
          assertCondition (is.read(s.length()).equals(s));
        } else
        {
@@ -3147,7 +3192,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
      {
        IFSFile file = new IFSFile(systemObject_, fileName);
        is = new IFSFileReader(file);
-       key = is.lockBytes(1);
+       key = is.lockBytes((long)1);
        IFSFileWriter os = new IFSFileWriter(new IFSFile(systemObject_, fileName));
        os.write('5');
        failed("Exception didn't occur."+key);
@@ -3176,7 +3221,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
      {
        IFSFile file = new IFSFile(systemObject_, fileName);
        is = new IFSFileReader(file);
-       key = is.lockBytes(1);
+       key = is.lockBytes((long)1);
        is.unlockBytes(key);
        IFSFileWriter os = new IFSFileWriter(new IFSFile(systemObject_, fileName));
        os.write('5');

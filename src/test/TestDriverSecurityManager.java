@@ -29,6 +29,7 @@ public class TestDriverSecurityManager extends SecurityManager {
 		SecurityException exception = new SecurityException("Calling exit not allowed");
 		// System.err.println("TestDriverSecurityManager: exit called ");
 		// exception.printStackTrace(System.err);
+
 		throw exception;
 	}
 

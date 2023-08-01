@@ -163,30 +163,21 @@ increases by one for every byte written to the file.
     createFile(fileName);
     try
     {
+    	
+   	 StringBuffer sb = new StringBuffer(); 
+
+     for (int i = 0; i < 32; i++) { 
+           sb.append((char)('0'+i)); 
+    }
+
+     JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+   		  fileName, sb.toString().getBytes("UTF-8")); 
+     
+
       IFSRandomAccessFile file1 =
         new IFSRandomAccessFile(systemObject_, fileName, "r");
-      DataOutput file2 = openDataOutput(fileName, "rw");
-      for (int i = 0; i < 32; i++)
-        //if (file1.length() == file2.length())
-          file2.write(1);
-        //else
-          //break;
-    // Note:  This variation can fail if the client NFS noac (no cache)
-    // option is not set (or not working correctly.  We have seen this 
-    // failure on different linux boxes.  The problem is that file2 is
-    // accessed via NFS.  The writes and length may be cached on the 
-    // client.  Therefore, file1 does not see the updates until those
-    // updates are flushed to the server.  file2.close() is one way to 
-    // flush those updates.  file1 will then correctly see the updated
-    // length attribute.
-    // file1 is accessed via the java toolbox into the file server.
-    // So, the variation is being re-written to circumvent an incorrect
-    // noac NFS option.
-      //System.out.println("file1.length()= '"+file1.length()+"'");  
-      //System.out.println("file2.length()= '"+file2.length()+"'");  
-      JDReflectionUtil.callMethod_V(file2,"close"); // Close to flush/send data to server.
-      //System.out.println("file1.length()= '"+file1.length()+"'");  
-      assertCondition(file1.length() == 32);
+      
+      assertCondition(file1.length() == 32, "length of "+fileName+" is "+file1.length());
       file1.close();
     }
     catch(Exception e)
@@ -215,15 +206,19 @@ for every byte written to the file.
     createFile(fileName);
     try
     {
-      DataOutput raf = openDataOutput(fileName, "rw");
+
       IFSFile file1 =
         new IFSFile(systemObject_, fileName);
-      for (int i = 0; i < 32; i++) {
-        if (file1.length() == i)
-          raf.write(1);
-        else
-          break;
-      }
+
+   	 StringBuffer sb = new StringBuffer(); 
+
+     for (int i = 0; i < 32; i++) { 
+           sb.append((char)('0'+i)); 
+    }
+
+     JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_,  
+   		  fileName, sb.toString().getBytes("UTF-8")); 
+
       assertCondition(file1.length() == 32);
     }
     catch(Exception e)

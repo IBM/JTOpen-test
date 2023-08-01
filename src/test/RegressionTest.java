@@ -16,12 +16,9 @@ package test;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import test.TestDriver;
-import test.Testcase;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.UserSpace;
-import com.ibm.as400.access.*; // For Conv testcases
 
 
 
@@ -50,7 +47,7 @@ Main for running standalone application tests.
        System.out.println("      ProgramCall");
        System.out.println("      CommandCall");
        System.out.println("      UserSpace");
-       System.out.println("      FTP");
+       // System.out.println("      FTP");
        System.out.println("      Message");
        System.out.println("      Trace");
        System.out.println("      QSYSObjectPathName");
@@ -64,8 +61,8 @@ Main for running standalone application tests.
        System.out.println("      DataArea");
        System.out.println("      JDBC");
        System.out.println();
-       System.out.println("To run IFSTests specify the -mappedDrive parameter.");
-       System.out.println("The FTP tests assume the test files are off the current directory.");
+       // System.out.println("To run IFSTests specify the -mappedDrive parameter.");
+       // System.out.println("The FTP tests assume the test files are off the current directory.");
        System.out.println();
        System.out.println("To get the JavaProgramCall test cases to run cleanly:");
        System.out.println("   1. The AS/400 must have a JVM");
@@ -133,15 +130,6 @@ Cleanup some of the AS400 objects created during the test.
 **/
   public void cleanup(boolean dspmsg)
   {
-    if (needToCleanupJarMakerTestFiles_) {
-      try
-      {
-        // Purge the various temporary JarMaker testing files and directories.
-        JMTest.deleteTestingFilesFromLocalDirectory ();
-        needToCleanupJarMakerTestFiles_ = false;
-      }
-      catch (Exception e) { e.printStackTrace(); }
-    }
   }
 
 
@@ -286,13 +274,13 @@ Creates Testcase objects for all the testcases in this component.
 
     // See FTPTest for requirement for running the FTP testcases.  Files
     // must exist on both client and server before running the test.
-    if (testAllComponents || namesAndVars_.containsKey("FTP"))
-    {
-       namesAndVars_.put("FTPQuickVerification", new Vector());
-       namesAndVars_.remove("FTP");
-
-       addTestcase(new FTPQuickVerification(systemObject_, namesAndVars_, runMode_, fileOutputStream_, password_, systemObject_.getUserId(), "/", pwrSys_));
-    }
+    //if (testAllComponents || namesAndVars_.containsKey("FTP"))
+    //{
+    //   namesAndVars_.put("FTPQuickVerification", new Vector());
+    //   namesAndVars_.remove("FTP");
+    //
+    //    addTestcase(new FTPQuickVerification(systemObject_, namesAndVars_, runMode_, fileOutputStream_, password_, systemObject_.getUserId(), "/", pwrSys_));
+    // }
 
 
 
@@ -573,46 +561,7 @@ Creates Testcase objects for all the testcases in this component.
 
 
 
-      if (testAllComponents || namesAndVars_.containsKey("JarMaker"))
-      {
-        Vector vars;
-
-        vars = makeVector( "7" );
-        namesAndVars_.put("JMExtract", vars);
-
-        vars = makeVector( "6" );
-        namesAndVars_.put("JMSplit", vars);
-
-        vars = makeVector( "18" );
-        namesAndVars_.put("JMTBParseArgs", vars);
-
-        namesAndVars_.remove("JarMaker");
-
-        try
-        {
-          // Purge the various testing files and directories.
-          JMTest.deleteTestingFilesFromLocalDirectory ();
-          // Copy the various jarmaker testing files to the current directory.
-          JMTest.extractTestingFilesToLocalDirectory ();
-        }
-        catch(Exception e)  { e.printStackTrace(); }
-        needToCleanupJarMakerTestFiles_ = true;
-
-        try
-        {
-          addTestcase(new JMExtract(systemObject_, namesAndVars_, runMode_, fileOutputStream_));
-          addTestcase(new JMSplit(systemObject_, namesAndVars_, runMode_, fileOutputStream_));
-          addTestcase(new JMTBParseArgs(systemObject_, namesAndVars_, runMode_, fileOutputStream_));
-
-
-        }
-        catch(Exception e)
-        {
-          e.printStackTrace();
-        }
-      }
-
-
+   
 
 
 
