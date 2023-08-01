@@ -15,7 +15,7 @@ jobs:
 
     - name: Get Maven project version
       run: |
-        echo "project_version=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec  --file pom-dist.xml)" >> $GITHUB_ENV
+        echo "project_version=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec  --file pom.xml)" >> $GITHUB_ENV
         cat $GITHUB_ENV
 
     - name: Set up JDK 8
