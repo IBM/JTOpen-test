@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
-
+import java.sql.SQLException;
 import java.util.Hashtable;
 
 import jcifs.smb.SmbException;
@@ -754,7 +754,7 @@ e.printStackTrace();
 
 
 
-  InputStream getNonIFSInputStream(String ifsPathName) throws FileNotFoundException, SmbException, MalformedURLException, UnknownHostException {
+  InputStream getNonIFSInputStream(String ifsPathName) throws FileNotFoundException, SmbException, MalformedURLException, UnknownHostException, SQLException {
       InputStream fis = null; 
       if (IFSTests.IsRunningOnOS400) {
 	  fis = new FileInputStream(ifsPathName); 
@@ -786,9 +786,9 @@ e.printStackTrace();
       {
           InputStream is2 = JCIFSUtility.getFileInputStream(systemName_, userId_, encryptedPassword_, ifsPathNameX); 
 
-          OutputStream is3 = JCIFSUtility.getFileOutputStream(systemName_, userId_, encryptedPassword_, ifsPathNameX); 
+          JCIFSUtility.createFile(systemName_, userId_, encryptedPassword_, ifsPathNameX); 
           is2.close();
-          is3.close();
+          
       }
   }
 
@@ -881,9 +881,9 @@ e.printStackTrace();
     return JCIFSUtility.openDataInput(systemName_, userId_, encryptedPassword_, ifsPathNameX, mode); 
     }
 
-  public DataOutput openDataOutput(String ifsPathNameX, String mode) throws Exception  {  
-    return JCIFSUtility.openDataOutput(systemName_, userId_, encryptedPassword_, ifsPathNameX, mode); 
-    }
+//  public DataOutput openDataOutput(String ifsPathNameX, String mode) throws Exception  {  
+//    return JCIFSUtility.openDataOutput(systemName_, userId_, encryptedPassword_, ifsPathNameX, mode); 
+//     }
   
   
 }

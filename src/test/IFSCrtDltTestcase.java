@@ -399,6 +399,9 @@ the old name no longer exists.
     try
     {
       IFSFile newFile = new IFSFile(systemObject_, ifsDirName_, newName);
+      if (newFile.exists()) { 
+    	  newFile.delete(); 
+      }
       IFSFile file = new IFSFile(systemObject_, ifsPathName_);
       IFSFile oldFile = new IFSFile(systemObject_, ifsPathName_);
       long lengthBefore = file.length();

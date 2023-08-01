@@ -1610,10 +1610,6 @@ public class PgmRunTestcase extends Testcase
     
     
     //Hanging, timeout < running time
-    // In this case, the timeout set is short than running time, the expected result is connection ended.  
-    // in order not to have impact on other cases, I tried to create a user profile using JAVA profile, but failed, need to figure out why,
-    // Anyway, I temporily changed another way to create a userprofile mannually via green screen.
-    // currently I mannually create program on the server, will make it automtically created when I have time. 
 	public void Var033() {
 		boolean succeeded = false;
 		String pgmHang = PgmTimeout3_;
@@ -1622,7 +1618,7 @@ public class PgmRunTestcase extends Testcase
 		try {
 			system = new AS400(systemObject_.getSystemName(), userHang, pwdHang);
 			ProgramCall pgmCall = new ProgramCall(system, pgmHang, new ProgramParameter[]{new ProgramParameter()});
-			JDReflectionUtil.callMethod_V(pgmCall, "setTimeOut", 20);
+			JDReflectionUtil.callMethod_V(pgmCall, "setTimeOut", 10);
 			pgmCall.run();
 			failed("did not throw timeout exception");
 		} catch (Exception e) {
@@ -1638,9 +1634,6 @@ public class PgmRunTestcase extends Testcase
 	}
 
     //Hanging, timeout > running time
-	// This is opposite to the previous one, the expected result is that after the program is successfully completed, 
-	// the connection still is available. 
-    // currently I mannually create program on the server, will make it automtically created when I have time. 
 	public void Var034() {
 		boolean succeeded = false;
 		String pgmHang = PgmTimeout2_;
@@ -1650,13 +1643,12 @@ public class PgmRunTestcase extends Testcase
 		try {
 			system = new AS400(systemObject_.getSystemName(), userHang, pwdHang);
 			ProgramCall pgmCall = new ProgramCall(system, pgmHang, new ProgramParameter[]{new ProgramParameter()});
-                        JDReflectionUtil.callMethod_V(pgmCall, "setTimeOut", 50);
+                        JDReflectionUtil.callMethod_V(pgmCall, "setTimeOut", 10);
 			succeeded = pgmCall.run();
 			if (!succeeded) {
 				failed("program is not sucessfully executed.");
 				return;
 			}
-			Thread.sleep(60000);
 			if (system.isConnected()) {
 					succeeded = true;
 					assertCondition(succeeded);

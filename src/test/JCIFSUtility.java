@@ -1,3 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// Filename:  JDTestDriverSecurityManager.java
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
 
 package test;
 
@@ -11,6 +23,7 @@ package test;
 
 import java.io.BufferedReader;
 import java.io.DataInput;
+import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,6 +35,14 @@ import java.io.RandomAccessFile;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Hashtable;
 
@@ -36,7 +57,9 @@ import jcifs.smb.*;
 public class JCIFSUtility {
 
   public static boolean debug = false;
-
+  public static boolean useJdbc = true;
+private static Connection jdbcConnection_;
+private static Blob blob; 
   static {
     String debugString = System.getProperty("debug");
     if (debugString != null) {
@@ -51,6 +74,8 @@ public class JCIFSUtility {
     // Turn on extended security.
     jcifs.Config.setProperty("jcifs.util.loglevel","3"); 
     jcifs.Config.setProperty("jcifs.smb.client.useExtendedSecurity", "true");
+    jcifs.Config.setProperty("jcifs.smb.lmCompatibility",  "3"); 
+    
     
   }
 
@@ -77,6 +102,17 @@ public class JCIFSUtility {
 
   public static void createFile(String system, String userId, char[] encryptedPassword,
       String filename, byte[] data) throws Exception {
+	  
+	  if (useJdbc) { 
+		  if (jdbcConnection_ == null) {
+			  setupJdbcConnection(system, userId, encryptedPassword); 
+		  }
+		  PreparedStatement ps = jdbcConnection_.prepareStatement("CALL IFS_WRITE_BINARY(?,?,819,'REPLACE')"); 
+		  ps.setString(1, filename);
+		  ps.setBytes(2, data); 
+		  ps.execute();
+		  ps.close(); 
+	  } else { 
     SmbFileOutputStream outputStream = null;
 
     String url;
@@ -125,10 +161,21 @@ public class JCIFSUtility {
       }
       throw e;
     }
-
+	  }	
   }
 
-  public static void deleteFile(String system, String userId, char[] encryptedPassword,
+  private static void setupJdbcConnection(String system, String userId, char[] encryptedPassword) throws SQLException {
+	  
+	  char[] charPassword = PasswordVault.decryptPassword(encryptedPassword); 
+	    // For now use the string.. In the future, this will be removed. 
+	    String password = new String(charPassword); 
+	     PasswordVault.clearPassword(charPassword);
+	  jdbcConnection_ = DriverManager.getConnection("jdbc:as400:"+system, userId, password); 
+
+	
+}
+
+public static void deleteFile(String system, String userId, char[] encryptedPassword,
       String filename) throws Exception {
     SmbFile smbFile = null;
 
@@ -299,51 +346,68 @@ public class JCIFSUtility {
 
   public static boolean deleteDirectory(String system, String userId,
       char[] encryptedPassword, String filename) throws Exception {
-    SmbFile smbFile = null;
 
-    system = fullyQualifySystem(system);
-    String url = getUrl(system, userId, encryptedPassword, filename);
+    if (useJdbc) { 
+    	if (jdbcConnection_ == null) { 
+    		setupJdbcConnection(system, userId, encryptedPassword);
+    	}
+    	
+    	Statement s = jdbcConnection_.createStatement(); 
+    	s.executeUpdate("CALL QSYS2.QCMDEXC('QSH CMD(''rm -fr "+filename+"'')')"); 
+    	s.close(); 
+    	return true; 
+    } else { 
+        SmbFile smbFile = null;
 
-    if (debug)
-      System.out.println("JCIFSUtility.debug:  deleteFile url=" + url);
-    smbFile = new SmbFile(url);
-    if (smbFile.exists()) {
-      if (smbFile.isDirectory()) {
-        recursiveDelete(smbFile);
-      }
-    }
-    smbFile = new SmbFile(url);
-    if (smbFile.exists()) {
-      System.out.println("Delete of " + url + " failed");
-      return false;
-    }
-    return true;
-
+	    system = fullyQualifySystem(system);
+	    String url = getUrl(system, userId, encryptedPassword, filename);
+	
+	    if (debug)
+	      System.out.println("JCIFSUtility.debug:  deleteFile url=" + url);
+	    smbFile = new SmbFile(url);
+	    if (smbFile.exists()) {
+	      if (smbFile.isDirectory()) {
+	        recursiveDelete(smbFile);
+	      }
+	    }
+	    smbFile = new SmbFile(url);
+	    if (smbFile.exists()) {
+	      System.out.println("Delete of " + url + " failed");
+	      return false;
+	    }
+	    return true;
+    }	
   }
 
   public static DataInput openDataInput(String system, String userId,
       char[] encryptedPassword, String filename, String mode)
       throws MalformedURLException, SmbException, UnknownHostException,
-      FileNotFoundException {
+      FileNotFoundException, SQLException {
 
     system = fullyQualifySystem(system);
 
     if (system.equals("localhost")) {
       return new RandomAccessFile(filename, mode);
     } else {
-
-      String url = getUrl(system, userId, encryptedPassword, filename);
-      SmbFile smbFile = new SmbFile(url);
-
-      if (debug)
-        System.out.println("JCIFSUtility.debug:  openDataInput url=" + url);
-      return new SmbRandomAccessFile(smbFile, mode);
+    	if (useJdbc) { 
+    		
+    		InputStream inputStream = getFileInputStream(system, userId, encryptedPassword, filename);
+    		return new DataInputStream(inputStream); 
+    	} else {
+	      String url = getUrl(system, userId, encryptedPassword, filename);
+	      SmbFile smbFile = new SmbFile(url);
+	
+	      if (debug)
+	        System.out.println("JCIFSUtility.debug:  openDataInput url=" + url);
+	      return new SmbRandomAccessFile(smbFile, mode);
+    	}
     }
   }
 
   public static DataOutput openDataOutput(String system, String userId,
       char[] encryptedPassword, String filename, String mode)
       throws MalformedURLException, SmbException, UnknownHostException {
+	  
     system = fullyQualifySystem(system);
     String url = getUrl(system, userId, encryptedPassword, filename);
     SmbFile smbFile = new SmbFile(url);
@@ -351,7 +415,6 @@ public class JCIFSUtility {
     if (debug)
       System.out.println("JCIFSUtility.debug:  openDataOutput url=" + url);
     return new SmbRandomAccessFile(smbFile, mode);
-
   }
 
   SmbFileOutputStream outputStream = null;
@@ -513,13 +576,36 @@ public class JCIFSUtility {
 
   public static InputStream getFileInputStream(String system, String userId,
       char[] encryptedPassword, String ifsPathName) throws SmbException,
-      MalformedURLException, UnknownHostException, FileNotFoundException {
+      MalformedURLException, UnknownHostException, FileNotFoundException, SQLException {
     InputStream fis = null;
 
-    if (system == "localhost") {
-      // System.out.println("Using local input stream");
-      fis = new FileInputStream(ifsPathName);
-    } else {
+	if (system == "localhost") {
+		// System.out.println("Using local input stream");
+		fis = new FileInputStream(ifsPathName);
+	} else {
+		if (useJdbc) {
+			if (jdbcConnection_ == null) {
+				setupJdbcConnection(system, userId, encryptedPassword);
+			}
+			String sql = "SELECT LINE FROM TABLE(QSYS2.IFS_READ_BINARY(?))";
+			PreparedStatement ps = jdbcConnection_.prepareStatement(sql);
+			ps.setString(1, ifsPathName);
+			;
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				blob = rs.getBlob(1);
+				
+			} else {
+				SQLWarning rsWarning = rs.getWarnings(); 
+				if (rsWarning != null) { throw rsWarning; }; 
+				SQLWarning psWarning = ps.getWarnings(); 
+				if (psWarning != null) { throw psWarning; }; 
+                
+				// File is empty
+				blob = jdbcConnection_.createBlob(); 
+			}
+			fis = blob.getBinaryStream();
+		} else { 
       String url = getUrl(system, userId, encryptedPassword, ifsPathName);
 
       if (debug)
@@ -531,6 +617,7 @@ public class JCIFSUtility {
         System.err.println("Exception on new SmbFileInputStream(" + url + ")");
         throw e;
       }
+    	}	
     }
     return fis;
   }
@@ -587,11 +674,40 @@ public class JCIFSUtility {
 
   public static boolean fileExists(String system, String userId,
       char[] encryptedPassword, String filename)
-      throws MalformedURLException, SmbException {
+      throws MalformedURLException, SmbException, SQLException {
+	  
+	  
+	  if (useJdbc) {
+		  	boolean result; 
+			if (jdbcConnection_ == null) {
+				setupJdbcConnection(system, userId, encryptedPassword);
+			}
+			String sql = "SELECT LINE FROM TABLE(QSYS2.IFS_READ_BINARY(?))";
+			PreparedStatement ps = jdbcConnection_.prepareStatement(sql);
+			ps.setString(1, filename);
+			;
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return true; 
+				
+			} else {
+				SQLWarning rsWarning = rs.getWarnings(); 
+				if (rsWarning != null) { return false;  }; 
+				SQLWarning psWarning = ps.getWarnings(); 
+				if (psWarning != null) { return false; }; 
+              
+				// File is empty
+			return true;  
+			}
+			
+		} else { 
     String url = getUrl(system, userId, encryptedPassword, filename);
 
     SmbFile smbFile = new SmbFile(url);
     return smbFile.exists();
+    
+    
+		}
   }
 
   public static long fileLength(String system, String userId, char[] encryptedPassword,
@@ -603,7 +719,35 @@ public class JCIFSUtility {
   }
 
   public static boolean checkExpectedRead2(String system, String userId,
-      char[] encryptedPassword, String ifsPathName, int x1, int x2) throws IOException {
+      char[] encryptedPassword, String ifsPathName, int x1, int x2) throws IOException, SQLException {
+	  if (useJdbc) { 
+		  
+		  
+			if (jdbcConnection_ == null) {
+				setupJdbcConnection(system, userId, encryptedPassword);
+			}
+			String sql = "SELECT LINE FROM TABLE(QSYS2.IFS_READ_BINARY(?))";
+			PreparedStatement ps = jdbcConnection_.prepareStatement(sql);
+			ps.setString(1, ifsPathName);
+			
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				Blob blob = rs.getBlob(1); 
+				if (blob.length() < 2) {
+					return false; 
+				} else {
+					byte[] bytes = blob.getBytes(1,2); 
+					if (bytes[0] == x1 && bytes[1] == x2) {
+						return true; 
+					} else { 
+						return false; 
+					}
+				}
+			} else {
+				ps.close(); 
+				return false; 
+			}
+	  } else { 
     String url = getUrl(system, userId, encryptedPassword, ifsPathName);
 
     if (debug)
@@ -613,6 +757,7 @@ public class JCIFSUtility {
     boolean passed =    fis.read() == x1 && fis.read() == x2;
     fis.close(); 
     return passed; 
+	  }
   }
 
 }

@@ -16,6 +16,7 @@ package test;
 
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Hashtable;
 
 import com.ibm.as400.access.AS400;
@@ -73,9 +74,10 @@ Write every possible byte to a file using IFSFileOutputStream.write(int).
 **/
   public void Var001()
   {
+	  IFSFileOutputStream os = null; 
     try
     {
-      IFSFileOutputStream os =
+      os =
         new IFSFileOutputStream(systemObject_, ifsPathName_);
       byte[] data = new byte[256];
       int i = 0;
@@ -95,8 +97,14 @@ Write every possible byte to a file using IFSFileOutputStream.write(int).
     catch(Exception e)
     {
       failed(e);
-    }
-    deleteFile(ifsPathName_);
+	}
+	if (os != null) {
+		try {
+			os.close();
+		} catch (IOException e) {
+		}
+	}
+	deleteFile(ifsPathName_);
   }
 
 /**
@@ -134,6 +142,7 @@ argument one has length zero.
       long lengthBefore = file.length();
       os.write(new byte[0]);
       long lengthAfter = file.length();
+      os.close(); 
       assertCondition(lengthBefore == lengthAfter);
     }
     catch(Exception e)
@@ -163,6 +172,7 @@ Write every possible byte to a file using IFSFileOutputStream.write(byte[]).
       i = 0;
       while (i < data.length && raf.readByte() == data[i])
         i++;
+      os.close(); 
       assertCondition(i == data.length);
     }
     catch(Exception e)
@@ -617,7 +627,7 @@ IFSRandomAccessFile.writeBytes(String).
         data2[i] = (byte) (s.charAt(i) & 0xff);
       }
       file2.read(data1);
-      assertCondition(isEqual(data1, data2));
+      assertCondition(areEqual(data1, data2));
       file2.close();
     }
     catch(Exception e)
@@ -945,7 +955,10 @@ Test IFSFileOutputStream.flush().
         new IFSFileInputStream(systemObject_, ifsPathName_);
       os.write(1);
       os.flush();
-      assertCondition(is.read() == 1);
+      int readCount = is.read(); 
+      os.close(); 
+      is.close(); 
+      assertCondition(readCount  == 1);
     }
     catch(Exception e)
     {
@@ -1208,6 +1221,7 @@ Test IFSFileWriter.flush().
       os.flush();
       char firstChar = (char)is.read();
       ///if (DEBUG) System.out.println("First char: " + firstChar);
+      os.close(); 
       assertCondition(firstChar == '1');
     }
     catch(Exception e)
