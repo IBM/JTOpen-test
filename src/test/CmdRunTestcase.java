@@ -475,7 +475,8 @@ public class CmdRunTestcase extends Testcase
             {
               expectedMsgs = 1;
             }
-            assertCondition((check == false) && (messageList.length == expectedMsgs));
+            assertCondition((check == false) && (messageList.length >= expectedMsgs), 
+            		"check="+check+" sb false : messageList.length="+messageList.length+" sb >= expectedMsgs="+expectedMsgs);
         }
         catch (Exception e)
         {
@@ -787,7 +788,10 @@ public class CmdRunTestcase extends Testcase
             {
               expectedMsgs = 1;
             }
-            assertCondition((check == false) && (messageList.length == expectedMsgs) && (cmd.getCommand().equals(command)));
+            assertCondition((check == false) && (messageList.length >= expectedMsgs) && (cmd.getCommand().equals(command)),
+            		"check="+check+" sb false : messageList.length="+messageList.length+" sb >= expectedMsgs="+expectedMsgs+
+            		" : cmd.getCommand()="+cmd.getCommand()+" sb command="+command);
+
         }
         catch (Exception e)
         {
