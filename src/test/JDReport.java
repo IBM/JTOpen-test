@@ -959,7 +959,7 @@ public class JDReport {
 
     String[] java17Strings = { "C6" };
     totalRunMinutes += addSection(writer, sortedSet,
-        "JAVA 17 TESTING " + toolboxInfo+ " " + nativeInfo, java11Strings,
+        "JAVA 17 TESTING " + toolboxInfo+ " " + nativeInfo, java17Strings,
         toolboxTimestamp);
 
 
