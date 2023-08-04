@@ -461,7 +461,7 @@ public class CmdRunTestcase extends Testcase
     {
         try
         {
-            CommandCall cmd = new CommandCall(systemObject_, "PING RCHAS000 NBRPKT(5)");
+            CommandCall cmd = new CommandCall(systemObject_, "PING RCHAS000. NBRPKT(5)");
             boolean check = cmd.run();
             if (DEBUG) printMessages(cmd);
             AS400Message[] messageList = cmd.getMessageList();
@@ -774,7 +774,7 @@ public class CmdRunTestcase extends Testcase
         try
         {
             CommandCall cmd = new CommandCall(systemObject_);
-            String command = "PING RCHAS000 NBRPKT(5)";
+            String command = "PING RCHAS000. NBRPKT(5)";
             boolean check = cmd.run(command);
             if (DEBUG) printMessages(cmd);
             AS400Message[] messageList = cmd.getMessageList();
