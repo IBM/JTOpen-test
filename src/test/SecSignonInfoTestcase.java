@@ -266,12 +266,8 @@ public class SecSignonInfoTestcase extends Testcase
 	
 	 /** 
      * Use system value QPWDEXPWRN to return expire warning days.
-    **/
+     **/
 	public void Var010() {
-		if(getSystemVRM()<=VRM_V5R4M0){
-			notApplicable("This capability is supported with V6R1M0 and later systems with V6R1M0 5761SS1 PTF SI48808 or V7R1M0 5770SS1 PTF SI48809.");
-			return;// Add by Guang Ming Pi/China/IBM. This feature was not supported on v5r4, and return statement was missed.
-		}
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 		AS400 sys = new AS400(systemName_, userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
@@ -285,8 +281,24 @@ public class SecSignonInfoTestcase extends Testcase
 			failed(e, "Unexpected exception");
 		}
 	}
+
 	
-//	public void Var011() {
+	 /** 
+     * Test isAdditionalAuthenticationFactorAccepted
+     **/
+	public void Var011() {
+	
+		try {
+			boolean accepted = JDReflectionUtil.callStaticMethod_B("com.ibm.as400.access.AS400","isAdditionalAuthenticationFactorAccepted", systemName_);
+			
+			assertCondition(accepted == false); 
+		} catch (Exception e) {
+			failed(e, "Unexpected exception");
+		}
+	}
+	
+
+//	public void Var012() {
 //  char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 //		AS400 sys = new AS400(systemName_, userId_, charPassword);
 //   PasswordVault.clearPassword(charPassword);

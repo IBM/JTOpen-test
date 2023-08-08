@@ -1,0 +1,44 @@
+
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      name: Check out
+
+    - name: Get Maven project version
+      run: |
+        echo "project_version=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec  --file pom.xml)" >> $GITHUB_ENV
+        cat $GITHUB_ENV
+
+    - name: Set up JDK 8
+      uses: actions/setup-java@v3
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven (Java 8)
+      run: mvn -B package --file pom.xml
+
+    - name: List target directory
+      run: ls -l target
+
+    - name: Move dist artifact to staging directory
+      run: mkdir staging && mv target/JTOpen-test-${{ env.project_version }}-jar-with-dependencies.jar staging/JTOpen-test-${{ env.project_version }}.jar
+
+    - name: Create the release and upload artifact
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ env.project_version }}
+        name: v${{ env.project_version }}
+        files: |
+          staging/JTOpen-test-${{ env.project_version }}.jar
+

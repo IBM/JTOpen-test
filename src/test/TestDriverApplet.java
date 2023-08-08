@@ -1452,7 +1452,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
 
     
     public void start() { 
-    	
+    	run(); 
     }
     public void stop() { 
     	

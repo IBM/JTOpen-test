@@ -2159,7 +2159,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     String setClasspath = "CLASSPATH="+toolboxJar+":"+testcaseCode+":"
         + ":/qibm/proddata/java400/ext/translator.zip:"
         + toolsJar
-        + ":jars/jcifs.jar:jars/fscontext.jar:jars/providerutil.jar";
+        + ":jars/servlet.jar:jars/jcifs.jar:jars/fscontext.jar:jars/providerutil.jar";
 
     /* Only add jcc jars if addJccJars is defined */
 
@@ -2252,6 +2252,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           + "\\jars\\db2_classes.jar;" + System.getProperty("user.dir")
           + "\\jars\\fscontext.jar;" + System.getProperty("user.dir")
           + "\\jars\\providerutil.jar;" + System.getProperty("user.dir")
+          + "\\jars\\servlet.jar;" + System.getProperty("user.dir")
           + "\\jars\\jcifs.jar;" + 
           jccJars + ";" +
 
@@ -2275,6 +2276,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           + toolsJar + ":"  + System.getProperty("user.dir")
           + "/jars/fscontext.jar:" + System.getProperty("user.dir")
           + "/jars/providerutil.jar:" + System.getProperty("user.dir")
+          + "/jars/servlet.jar:" + System.getProperty("user.dir")
           + "/jars/jcifs.jar" + "\"";
 
       if (System.getProperty("user.name").equalsIgnoreCase("JAVA")) {
