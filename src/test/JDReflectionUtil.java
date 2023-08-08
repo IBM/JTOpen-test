@@ -3339,11 +3339,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      
 
     /**
-     * call a static method whihc returns an int.
+     * call a static method which returns an int.
      *
      * Examples
      *
-     *  JDReflectionUtil.callStaticMethod_O("", "newInstance");
+     *  JDReflectionUtil.callStaticMethod_I("", "newInstance");
      */
 
      public static int callStaticMethod_I(String classname, String methodName) throws Exception {
@@ -3370,6 +3370,40 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
           return 0; 
         }
      }
+
+     /**
+      * call a static method which returns an boolean.
+      *
+      * Examples
+      *
+      *  JDReflectionUtil.callStaticMethod_B("", "newInstance");
+      */
+
+      public static boolean callStaticMethod_B(String classname, String methodName, String arg) throws Exception {
+
+         Object returnObject = null;
+         Class thisClass =  Class.forName(classname);
+
+         java.lang.reflect.Method method;
+
+         Class[] argTypes = new Class[1];
+         argTypes[0] = Class.forName("java.lang.String"); 
+         method = thisClass.getMethod(methodName, argTypes);
+         method.setAccessible(true); //allow toolbox proxy methods to be invoked
+         Object[] args = new Object[1];
+         args[0] = arg; 
+         try {
+             returnObject =  method.invoke(null, args);
+         } catch (java.lang.reflect.InvocationTargetException ite) {
+             handleIte(ite);
+
+         }
+         if (returnObject != null) { 
+           return ((Boolean)returnObject).booleanValue();
+         } else {
+           return false; 
+         }
+      }
 
 
 

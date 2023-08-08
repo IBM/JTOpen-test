@@ -3917,11 +3917,9 @@ public class MessageQueueRFTestcase extends Testcase {
       }
       g.setSelectionValue(RMessageQueue.SELECTION_CRITERIA, null);
       g.refreshContents();
-      if (g.getListLength() != 50)// Change by Guang Ming Pi/China/IBM, the
-                                  // value changes from 100 to 50 because of msg
+      if (g.getListLength() != 50)// The value changes from 100 to 50 because of msg
                                   // buffer changed by PCML file and the
-                                  // underlying system API, more details, see
-                                  // CPS 954QAF
+                                  // underlying system API.
       {
         failed("Bad list length returned.");
         return;
