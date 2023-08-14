@@ -21,7 +21,11 @@
 package test;
 
 import com.ibm.as400.access.AS400;
+
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.io.StringWriter;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -633,6 +637,9 @@ is closed.
               }
             } 
 
+            
+            
+
 
   public void forceConnectionWarning(Connection c, String warning, StringBuffer sb)
       throws SQLException {
@@ -741,6 +748,86 @@ is closed.
 	  }
       }
 
+      /**
+       * Verify that warning objects are not created 
+       */
+     public void Var021() {
+   	  if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+	      notApplicable("Not written yet"); 
+	  } else {
+      	PrintStream savedOut = System.out; 
+          try {
+        	boolean passed = true; 
+        	StringBuffer sb = new StringBuffer(); 
+
+        	ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); 
+        	System.setOut(new PrintStream(outputStream)); 
+       	
+        			
+            String expected = "NONE"; 
+            Connection c = testDriver_.getConnection (baseURL_+";ignore warnings=0100C;toolbox trace=all", userId_, encryptedPassword_);
+            
+            String warning = executeCallAndGetWarnings(c, "CALL "+procedure_);
+            if (!expected.equals(warning)) {
+            	passed = false; 
+            	sb.append("\nExpected '"+expected+"' got '"+warning+"'"); 
+            }
+            c. close(); 
+            c = testDriver_.getConnection (baseURL_+";ignore warnings=0100C;toolbox trace=none", userId_, encryptedPassword_);
+            c.close(); 
+            System.setOut(savedOut);
+            savedOut = null; 
+            
+            String traceOut = new String(outputStream.toByteArray()); 
+            // System.out.println("----------------------Trace begin ----------------"); 
+            // System.out.println(traceOut); 
+            // System.out.println("----------------------Trace end ----------------"); 
+            if (traceOut.length() < 100) { 
+            	passed = false; 
+            	sb.append("\nTrace is too small.  Update jt400.jar"); 
+            	sb.append(traceOut); 
+            }
+            int traceIndex = traceOut.indexOf("com.ibm.as400.access.JDError.getSQLWarning");
+            if (traceIndex > 0) { 
+            	passed=false; 
+            	sb.append("\nError Warning was constructed!!! Trace has "); 
+            	sb.append("\n"); 
+            	int endIndex = traceIndex-365+4000; 
+            	if (traceOut.length() > endIndex) { 
+            		endIndex = traceOut.length(); 
+            	}
+            	sb.append(traceOut.substring(traceIndex-365,endIndex)); 
+            }
+            assertCondition(passed, sb );
+          }
+          catch(Exception e) {
+            failed(e, "Unexpected Exception");
+          } finally {
+        	  if (savedOut != null) { 
+        		  System.setOut(savedOut);
+        	  }
+          }
+      } 
+     }
+      
+     /**
+      * Verify that the warning is ignored when using "ignore warnings" property
+      */
+     public void Var022() {
+         try {
+           String expected = "NONE"; 
+           Connection c = testDriver_.getConnection (baseURL_+";ignore warnings=all", userId_, encryptedPassword_);
+           
+           String warning = executeCallAndGetWarnings(c, "CALL "+procedure_);
+           assertCondition(expected.equals(warning), "Expected '"+expected+"' got '"+warning+"'");
+           c. close(); 
+         }
+         catch(Exception e) {
+           failed(e, "Unexpected Exception");
+         }
+     } 
+
+      
       
 }
 

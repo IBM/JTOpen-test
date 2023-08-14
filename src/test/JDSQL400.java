@@ -2844,7 +2844,8 @@ public class JDSQL400 implements Runnable {
 
             if (variable != null) {
               putUserVariable(variableName, variable);
-              out.println(variableName + "=" + variable.toString());
+              printUnicodeString(out,variableName + "=" + variable.toString());
+	      out.println(); 
             } else {
               out.println("ERROR:  Method not found or output is null");
             }
@@ -2860,7 +2861,8 @@ public class JDSQL400 implements Runnable {
 
               if (variable != null) {
                 putUserVariable(variableName, variable);
-                out.println(variableName + "=" + variable.toString());
+                printUnicodeString(out, variableName + "=" + variable.toString());
+		out.println(); 
               } else {
                 out.println("ERROR:  Unable to get parameter ");
               }
