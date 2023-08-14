@@ -275,10 +275,6 @@ Creates the testcases.
                                              namesAndVars_, runMode_, fileOutputStream_, 
                                              password_));
 
-      addTestcase (new JDConnectionEWLM (systemObject_,
-                                             namesAndVars_, runMode_, fileOutputStream_, 
-                                             password_));
-
 
       addTestcase (new JDConnectionCreateXXX (systemObject_,
                                              namesAndVars_, runMode_, fileOutputStream_, 
