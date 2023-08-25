@@ -1732,8 +1732,7 @@ public class JDReport {
           URL[] urls = new URL[1];
           // Look for activation.jar
           String[] jt400JarLocations = { "/home/jdbctest/jars/jt400.jar",
-              "jars/jt400.jar",
-              "C:\\etlocalinst\\cygwin\\home\\jdbctest\\jars\\jt400.jar", };
+              "jars/jt400.jar", };
           for (int i = 0; i < jt400JarLocations.length
               && urls[0] == null; i++) {
             File tryFile = new File(jt400JarLocations[i]);

@@ -2090,7 +2090,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
    * appropriate location.  Returns the number of failures. 
    */
   public int go() throws Exception {
-     
+    
     int failedCount = 0; 
     boolean forceReport = false;
     String osname = System.getProperty("os.name");
@@ -2106,6 +2106,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     }
     String results = "ct/runit" + initials + ".out";
     boolean fatalError = false;
+    boolean isWindows = iniProperties.getProperty("CLIENTOS", "AS400").equals("WINDOWS"); 
     String fatalErrorString = "";
     String fatalErrorMessage = "";
     boolean isClassic = System.getProperty("java.vm.name").indexOf("Classic") >= 0;
@@ -2140,9 +2141,24 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     String classpath = iniProperties.getProperty("classpath");
     if (classpath != null) {
-	    inputVector.addElement("CLASSPATH=" + classpath);
+    	if (isWindows) { 
+    		inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
+	        inputVector.addElement("CLASSPATH='" + classpath+"'");
+    	} else {
+    		inputVector.addElement("echo setting classpath using CLASSPATH="+classpath);
+	        inputVector.addElement("CLASSPATH=" + classpath);
+    	}
     } else {
-      inputVector.addElement("CLASSPATH=.");
+    	if (isWindows) { 
+    		/* Just inherit the classpath.  */ 
+    		classpath = System.getProperty("java.class.path"); 
+    		inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
+	        inputVector.addElement("CLASSPATH='.;" + classpath+"'");
+    		
+    	} else { 
+    	   inputVector.addElement("echo setting classpath using CLASSPATH=.");
+           inputVector.addElement("CLASSPATH=.");
+    	}
     }
 
     inputVector.addElement("echo Setting JAVA_HOME to " + javaHome);
@@ -2173,6 +2189,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         + toolsJar
         + ":jars/servlet.jar:jars/jcifs.jar:jars/fscontext.jar:jars/providerutil.jar";
 
+    
     /* Only add jcc jars if addJccJars is defined */
 
     if (iniProperties.getProperty("addJccJars") != null) {
@@ -2186,7 +2203,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       setClasspath += ":" + jtopenliteJar;
     }
 
-    if (iniProperties.getProperty("CLIENTOS", "AS400").equals("WINDOWS")) {
+    if (isWindows) {
 
       /* On windows, we copy the toolbox jar so that the original can be updated */
       /*
@@ -2375,11 +2392,11 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     } /* not linux or windows */
 
-    inputVector.addElement("echo " + setClasspath);
+    inputVector.addElement("echo '" + setClasspath+"'");
     inputVector.addElement(setClasspath);
     inputVector.addElement("export CLASSPATH");
     inputVector.addElement("date");
-    inputVector.addElement("echo CLASSPATH is $CLASSPATH");
+    inputVector.addElement("echo CLASSPATH is \"$CLASSPATH\"");
     inputVector.addElement("echo PATH is $PATH");
     String shellBinary = iniProperties.getProperty("shell");
     inputVector.addElement("echo SHELL should be " + shellBinary);
