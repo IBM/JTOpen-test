@@ -31,6 +31,7 @@
 package test;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -1468,7 +1469,13 @@ public class JDRunit {
     	if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
     } else {
     	inputStream = JDRunit.class.getClassLoader().getResourceAsStream(iniFile);
-    	if (iniInfo!=null) iniInfo.append("echo loaded "+iniFile+" from classloader\n"); 
+    	if (inputStream != null) { 
+    		if (iniInfo!=null) iniInfo.append("echo loaded "+iniFile+" from classloader\n"); 
+    	} else {
+    		if (iniInfo!=null) iniInfo.append("echo unable to load "+iniFile+" from classloader\n"); 
+    		byte[] emptyBuffer = new byte[0];
+    		inputStream = new ByteArrayInputStream(emptyBuffer);
+    	}
     }
 	return inputStream;
 }
@@ -1501,7 +1508,9 @@ public class JDRunit {
       iniProperties.load(fileInputStream);
       fileInputStream.close();
     }
-
+    if (debug) { 
+    	System.out.println(iniInfo.toString()); 
+    }
     return iniProperties;
 
   }
@@ -1560,7 +1569,7 @@ public class JDRunit {
       iniProperties.load(fileInputStream);
       fileInputStream.close();
     } else {
-      // Load from the pieces of the initals
+      // Load from the classpath the pieces of the initals
       filename = "ini/runit" + initials.substring(0, 2) + "xxx.ini";
       {
         InputStream fileInputStream = loadResource(filename,iniInfo);
@@ -1641,6 +1650,9 @@ public class JDRunit {
       }
     }
 
+    if (debug) {
+	System.out.println("iniInfo contains: "+iniInfo.toString()); 
+    } 
     return iniProperties;
   }
 
@@ -2257,20 +2269,21 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       }
 
       String currentClasspath = System.getProperty("java.class.path");
+
       
       if (testcaseCode.indexOf(".jar") < 0) {
         testcaseCode=System.getProperty("user.dir"); 
       } else {
-        testcaseCode=System.getProperty("user.dir") +"\\"+testcaseCode; 
+        testcaseCode=System.getProperty("user.dir") +File.separator+testcaseCode; 
       }
       setClasspath = "CLASSPATH=\"" + toolboxJar + ";" +  testcaseCode+ ";"
     	  + currentClasspath+";"
           + toolsJar + ";" + System.getProperty("user.dir")
-          + "\\jars\\db2_classes.jar;" + System.getProperty("user.dir")
-          + "\\jars\\fscontext.jar;" + System.getProperty("user.dir")
-          + "\\jars\\providerutil.jar;" + System.getProperty("user.dir")
-          + "\\jars\\servlet.jar;" + System.getProperty("user.dir")
-          + "\\jars\\jcifs.jar;" + 
+          + ""+File.separator+"jars"+File.separator+"db2_classes.jar;" + System.getProperty("user.dir")
+          + ""+File.separator+"jars"+File.separator+"fscontext.jar;" + System.getProperty("user.dir")
+          + ""+File.separator+"jars"+File.separator+"providerutil.jar;" + System.getProperty("user.dir")
+          + ""+File.separator+"jars"+File.separator+"servlet.jar;" + System.getProperty("user.dir")
+          + ""+File.separator+"jars"+File.separator+"jcifs.jar;" + 
           jccJars + ";" +
 
           /*
@@ -2638,7 +2651,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         // Get CYGWIN location from user.dir
         //
         String userDir = System.getProperty("user.dir");
-        int homeIndex = userDir.indexOf("\\home\\");
+        int homeIndex = userDir.indexOf(""+File.separator+"home"+File.separator+"");
         if (homeIndex >= 0) { 
              cmdArray1[0] = userDir.substring(0, homeIndex)
                 + cmdArray1[0].replace('/', '\\');
@@ -3450,30 +3463,31 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     }
   }
 
-  public static Hashtable readTodo() {
-    Hashtable returnHashtable = new Hashtable();
+	public static Hashtable readTodo() {
+		Hashtable returnHashtable = new Hashtable();
 
-    try {
-      FileInputStream fileInputStream = new FileInputStream("ini/TODO.ini");
-      BufferedReader reader = new BufferedReader(new InputStreamReader(
-          fileInputStream));
-      String line = reader.readLine();
-      while (line != null) {
-        line = line.trim();
-        if (line.indexOf("#") == 0) {
-          // skip comment
-        } else {
-          returnHashtable.put(line, line);
-        }
-        line = reader.readLine();
-      }
-      fileInputStream.close();
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return returnHashtable;
-  }
+		try {
+			File todoFile = new File("ini/TODO.ini");
+			if (todoFile.exists()) {
+				FileInputStream fileInputStream = new FileInputStream("ini/TODO.ini");
+				BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
+				String line = reader.readLine();
+				while (line != null) {
+					line = line.trim();
+					if (line.indexOf("#") == 0) {
+						// skip comment
+					} else {
+						returnHashtable.put(line, line);
+					}
+					line = reader.readLine();
+				}
+				fileInputStream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return returnHashtable;
+	}
 
   public static boolean vectorContainsString(Vector hangMessagesFound,
       String string) {
