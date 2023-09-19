@@ -288,7 +288,7 @@ output_.println(getName()+" loop "+i);
 	    splfList.setQueueFilter("/QSYS.LIB/%ALL%.LIB/%ALL%.OUTQ");
       splfList.openAsynchronously();
       splfList.waitForListToComplete();
-      Printer splf = (Printer)splfList.getObject(0);
+      PrintObject  splf = splfList.getObject(0);
       if (splf != null)
       {
         System.out.println(splf.getStringAttribute(PrintObject.ATTR_SPOOLFILE));
