@@ -201,7 +201,7 @@ w/ connection open
 
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(select_);
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet"); 
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet"); 
 			
 		JDReflectionUtil.callMethod_V(crs,"populate",rs);
 		int rowCount = 0;
@@ -234,7 +234,7 @@ w/ connection open, then closed
 
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(select_);
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"populate",rs);
 		rs.close();
 		stmt.close();
@@ -269,7 +269,7 @@ Should throw an exception.
 
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(select_);
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		rs.close();
 		stmt.close();
 		conn.close();
@@ -297,7 +297,7 @@ execute()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
@@ -325,7 +325,7 @@ execute()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setUrl(baseURL_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
@@ -353,7 +353,7 @@ execute()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setConnection",conn_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
@@ -384,7 +384,7 @@ execute()
 	    {
 		Connection conn = DriverManager.getConnection(baseURL_);
 		conn.close();
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setConnection",conn);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
@@ -409,9 +409,9 @@ execute(String)
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
-		crs.execute(conn_);
+		JDReflectionUtil.callMethod_V(crs, "execute",conn_);
 		int rowCount = 0;
 		while (JDReflectionUtil.callMethod_B(crs,"next"))
 		{
@@ -438,9 +438,9 @@ w/ a closed connection
 	    {
 		Connection conn = DriverManager.getConnection(baseURL_);
 		conn.close();
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
-		crs.execute(conn);
+		JDReflectionUtil.callMethod_V(crs, "execute",conn);
 		failed("No SQLException thrown");
 	    }
 	    catch (SQLException e)
@@ -464,7 +464,7 @@ execute(int)
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"execute",2);
@@ -493,7 +493,7 @@ w/ -1
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"execute",-1);
@@ -517,7 +517,7 @@ getCommand()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getCommand()==null);
 	    }
 	    catch (Exception e)
@@ -534,7 +534,7 @@ getCommand()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		assertCondition(crs.getCommand()==select_);
 	    }
@@ -552,7 +552,7 @@ getDataSourceName()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getDataSourceName()==null);
 	    }
 	    catch (Exception e)
@@ -569,7 +569,7 @@ getDataSourceName()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		assertCondition(crs.getDataSourceName()==jndiName_);
 	    }
@@ -588,7 +588,7 @@ it appears the default is for escape processing to be on.
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getEscapeProcessing());
 	    }
 	    catch (Exception e)
@@ -606,7 +606,7 @@ getEscapeProcessing()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setEscapeProcessing(false);
 		assertCondition(!crs.getEscapeProcessing());
 	    }
@@ -625,7 +625,7 @@ default is 0
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getMaxFieldSize() == 0);
 	    }
 	    catch (Exception e)
@@ -643,7 +643,7 @@ getMaxFieldSize()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setMaxFieldSize(16);
 		assertCondition(crs.getMaxFieldSize() == 16);
 	    }
@@ -663,7 +663,7 @@ w/ a negative size
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setMaxFieldSize(-16);
 		failed("No SQLException thrown");
 	    }
@@ -686,7 +686,7 @@ default is 0
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getMaxRows() == 0);
 	    }
 	    catch (Exception e)
@@ -704,7 +704,7 @@ getMaxRows()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setMaxRows(16);
 		assertCondition(crs.getMaxRows() == 16);
 	    }
@@ -724,7 +724,7 @@ w/ a negative size
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setMaxRows(-16);
 		failed("No SQLException thrown");
 	    }
@@ -746,7 +746,7 @@ getPassword()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getPassword() == null);
 	    }
 	    catch (Exception e)
@@ -764,7 +764,7 @@ setPassword()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setPassword("test");
 		assertCondition(crs.getPassword().equals("test"));
 	    }
@@ -783,7 +783,7 @@ getQueryTimeout()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getQueryTimeout() == 0);
 	    }
 	    catch (Exception e)
@@ -801,7 +801,7 @@ getQueryTimeout()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setQueryTimeout(5);
 		assertCondition(crs.getQueryTimeout() == 5);
 	    }
@@ -821,7 +821,7 @@ w/ a negative value
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setQueryTimeout(-5);
 		failed("No SQLException thrown");
 	    }
@@ -843,7 +843,7 @@ getTransactionIsolation()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getTransactionIsolation() == Connection.TRANSACTION_READ_UNCOMMITTED);
 	    }
 	    catch (Exception e)
@@ -861,7 +861,7 @@ getTransactionIsolation()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
 		assertCondition(crs.getTransactionIsolation() == Connection.TRANSACTION_REPEATABLE_READ);
 	    }
@@ -879,7 +879,7 @@ getUrl()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getUrl() == null);
 	    }
 	    catch (Exception e)
@@ -897,7 +897,7 @@ getUrl()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setUrl(baseURL_);
 		assertCondition(crs.getUrl().equals(baseURL_));
 	    }
@@ -915,7 +915,7 @@ getUsername()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.getUsername() == null);
 	    }
 	    catch (Exception e)
@@ -933,7 +933,7 @@ getUsername()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setUsername("JAVA");
 		assertCondition(crs.getUsername().equals("JAVA"));
 	    }
@@ -952,7 +952,7 @@ default is true
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		assertCondition(crs.isReadOnly());
 	    }
 	    catch (Exception e)
@@ -970,7 +970,7 @@ isReadOnly()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		crs.setReadOnly(false);
 		assertCondition(!crs.isReadOnly());
 	    }
@@ -988,8 +988,8 @@ getTableName()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
-		assertCondition(crs.getTableName() == null);
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		assertCondition(JDReflectionUtil.callMethod_S(crs,"getTableName") == null);
 	    }
 	    catch (Exception e)
 	    {
@@ -1007,9 +1007,9 @@ getTableName()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
-		crs.setTableName(TABLE_);
-		assertCondition(crs.getTableName().equals(TABLE_));
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
+		assertCondition(JDReflectionUtil.callMethod_S(crs,"getTableName").equals(TABLE_));
 	    }
 	    catch (Exception e)
 	    {
@@ -1028,7 +1028,7 @@ acceptChanges()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
@@ -1038,8 +1038,8 @@ acceptChanges()
 		crs.insertRow();
 		crs.moveToCurrentRow();
 		boolean check1 = crs.rowInserted();
-		crs.setTableName(TABLE_);
-		crs.acceptChanges();
+		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
+		JDReflectionUtil.callMethod_V(crs,"acceptChanges");
 		JDReflectionUtil.callMethod_V(crs,"execute");
 
 		int rowCount = 0;
@@ -1069,7 +1069,7 @@ rowInserted()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
@@ -1082,8 +1082,8 @@ rowInserted()
 		crs.last();
 		JDReflectionUtil.callMethod_V(crs,"cancelRowInsert");
 		boolean check2 = crs.rowInserted();
-		crs.setTableName(TABLE_);
-		crs.acceptChanges();
+		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
+		JDReflectionUtil.callMethod_V(crs,"acceptChanges");
 		JDReflectionUtil.callMethod_V(crs,"execute");
 
 		int rowCount = 0;
@@ -1114,15 +1114,15 @@ acceptChanges()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
 		JDReflectionUtil.callMethod_B(crs,"next");
 		crs.deleteRow();
 		boolean check1 = crs.rowDeleted();
-		crs.setTableName(TABLE_);
-		crs.acceptChanges();
+		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
+		JDReflectionUtil.callMethod_V(crs,"acceptChanges");
 		JDReflectionUtil.callMethod_V(crs,"execute");
 
 		int rowCount = 0;
@@ -1151,20 +1151,20 @@ acceptChanges()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
 		JDReflectionUtil.callMethod_B(crs,"next");
 		crs.deleteRow();
 		boolean check1 = crs.rowDeleted();
-		crs.setShowDeleted(true);
+		JDReflectionUtil.callMethod_V(crs,"setShowDeleted",true);
 		crs.beforeFirst();
 		JDReflectionUtil.callMethod_B(crs,"next");
 		JDReflectionUtil.callMethod_V(crs,"cancelRowDelete");
 		boolean check2 = crs.rowDeleted();
-		crs.setTableName(TABLE_);
-		crs.acceptChanges();
+		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
+		JDReflectionUtil.callMethod_V(crs,"acceptChanges");
 		JDReflectionUtil.callMethod_V(crs,"execute");
 		int rowCount = 0;
 		while (JDReflectionUtil.callMethod_B(crs,"next"))
@@ -1192,7 +1192,7 @@ acceptChanges()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
@@ -1200,8 +1200,8 @@ acceptChanges()
 		crs.updateString(1, "ZERO");
 		crs.updateRow();
 		boolean check1 = crs.rowUpdated();
-		crs.setTableName(TABLE_);
-		crs.acceptChanges();
+		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
+		JDReflectionUtil.callMethod_V(crs,"acceptChanges");
 		JDReflectionUtil.callMethod_V(crs,"execute");
 		JDReflectionUtil.callMethod_B(crs,"next");
 		assertCondition(crs.getString(1).equals("ZERO")  && check1);
@@ -1225,7 +1225,7 @@ acceptChanges()
 	if (checkNative()) {
 	    try
 	    {
-		CachedRowSet crs = (CachedRowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
+		RowSet crs = (RowSet) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2CachedRowSet");
 		JDReflectionUtil.callMethod_V(crs,"setDataSourceName",jndiName_);
 		JDReflectionUtil.callMethod_V(crs,"setCommand",select_);
 		JDReflectionUtil.callMethod_V(crs,"execute");
@@ -1234,8 +1234,8 @@ acceptChanges()
 		crs.cancelRowUpdates();
 		crs.updateRow();
 		boolean check1 = crs.rowUpdated();
-		crs.setTableName(TABLE_);
-		crs.acceptChanges();
+		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
+		JDReflectionUtil.callMethod_V(crs,"acceptChanges");
 		JDReflectionUtil.callMethod_V(crs,"execute");
 		JDReflectionUtil.callMethod_B(crs,"next");
 		assertCondition(crs.getString(1).equals("ZERO") && !check1);

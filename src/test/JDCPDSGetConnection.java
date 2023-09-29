@@ -40,7 +40,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable;
 
-import javax.sql.DataSource;
+import javax.sql.ConnectionPoolDataSource;
+import javax.sql.PooledConnection;
 
 import com.ibm.as400.access.AS400;
 
@@ -61,8 +62,8 @@ extends JDTestcase {
 
 
     // Private data.
-    private DataSource dataSource_;
-    private Object pc;
+    private ConnectionPoolDataSource connectionPoolDataSource_;
+    private PooledConnection pc;
 
     // Protected data.
     //protected String system_;
@@ -98,7 +99,7 @@ Performs setup needed before running variations.
     throws Exception
     {
         if (isJdbc20StdExt()) {
-            dataSource_ = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2ConnectionPoolDataSource");
+            connectionPoolDataSource_ = (ConnectionPoolDataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2ConnectionPoolDataSource");
         }
     }
 
@@ -118,8 +119,8 @@ will get created.
    {
       if (checkJdbc20StdExt ()) {
          try {
-            pc = JDReflectionUtil.callMethod_O(dataSource_,"getPooledConnection");
-            Connection conn_ = (Connection)JDReflectionUtil.callMethod_O(pc,"getConnection");
+            pc = connectionPoolDataSource_.getPooledConnection();
+            Connection conn_ = pc.getConnection();
 
             // Run a query.
             Statement s = conn_.createStatement ();
@@ -143,9 +144,9 @@ getConnection() - Should throw an exception when the databasename is set but not
     {
         if (checkJdbc20StdExt()) {
             try {
-                JDReflectionUtil.callMethod_V(dataSource_,"setDatabaseName","invaliddatabasename");
-                pc = JDReflectionUtil.callMethod_O(dataSource_,"getPooledConnection");
-                Connection conn_ = (Connection)(Connection)JDReflectionUtil.callMethod_O(pc,"getConnection");
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName","invaliddatabasename");
+                pc = connectionPoolDataSource_.getPooledConnection();
+                Connection conn_ = (Connection)pc.getConnection();
                 failed("Did not throw exception but got "+conn_);
             }
             catch (Exception e) {
@@ -161,12 +162,13 @@ getConnection() - Should work when the valid databasename is set.
     {
         if (checkJdbc20StdExt()) {
             try {
-                JDReflectionUtil.callMethod_V(dataSource_,"setDatabaseName",system_);
-		JDReflectionUtil.callMethod_V(dataSource_,"setUser",userId_);
-		JDReflectionUtil.callMethod_V(dataSource_,"setPassword",passwordFile_);
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
+		JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser",userId_);
+		JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",passwordFile_);
 
-                pc = JDReflectionUtil.callMethod_O(dataSource_,"getPooledConnection");
-                Connection conn_ = (Connection)JDReflectionUtil.callMethod_O(pc,"getConnection");
+
+                pc = connectionPoolDataSource_.getPooledConnection();
+                Connection conn_ = pc.getConnection();
 
                 // Run a query.
                 Statement s = conn_.createStatement ();
@@ -191,11 +193,14 @@ getConnection(userid,pwd) - Should throw an exception when the userid is not val
     {
         if (checkJdbc20StdExt()) {
             try {
-                JDReflectionUtil.callMethod_V(dataSource_,"setDatabaseName",system_);
-                JDReflectionUtil.callMethod_V(dataSource_,"setUser","invalidusername");
-                JDReflectionUtil.callMethod_V(dataSource_,"setPassword",passwordFile_);
-                pc = JDReflectionUtil.callMethod_O(dataSource_,"getPooledConnection");
-                JDReflectionUtil.callMethod_O(pc,"getConnection");
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser","invalidusername");
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",passwordFile_);
+                
+
+                pc = connectionPoolDataSource_.getPooledConnection();
+                pc.getConnection();
+
                 failed("Did not throw exception");
             }
             catch (Exception e) {
@@ -211,11 +216,13 @@ getConnection(userid,pwd) - Should throw an exception when the password is not v
     {
         if (checkJdbc20StdExt()) {
             try {
-                JDReflectionUtil.callMethod_V(dataSource_,"setDatabaseName",system_);
-                JDReflectionUtil.callMethod_V(dataSource_,"setUser",userId_);
-                JDReflectionUtil.callMethod_V(dataSource_,"setPassword","invalidpassword");
-                pc = JDReflectionUtil.callMethod_O(dataSource_,"getPooledConnection");
-                JDReflectionUtil.callMethod_O(pc,"getConnection");
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser",userId_);
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword","invalidpassword");
+                
+                pc = connectionPoolDataSource_.getPooledConnection();
+                pc.getConnection();
+
                 failed("Did not throw exception");
             }
             catch (Exception e) {
@@ -231,11 +238,12 @@ getConnection(userid,pwd) - Should work with valid userid,pwd.
     {
         if (checkJdbc20StdExt()) {
             try {
-                JDReflectionUtil.callMethod_V(dataSource_,"setDatabaseName",system_);
-                JDReflectionUtil.callMethod_V(dataSource_,"setUser",userId_);
-                JDReflectionUtil.callMethod_V(dataSource_,"setPassword",passwordFile_);
-                pc = JDReflectionUtil.callMethod_O(dataSource_,"getPooledConnection");
-                Connection conn_ = (Connection)JDReflectionUtil.callMethod_O(pc,"getConnection");
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser",userId_);
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",passwordFile_);
+
+                pc =connectionPoolDataSource_.getPooledConnection();
+                Connection conn_ = pc.getConnection();
 
                 // Run a query.
                 Statement s = conn_.createStatement ();
