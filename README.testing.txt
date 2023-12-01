@@ -73,7 +73,9 @@ JDRunit setup.
 
 1.  Create a directory to be used for testing (i.e. /home/toolboxTest
 2.  Copy JTOpen-test.jar into this directory. 
+    (i.e. curl -L -o JTOpen-test.jar https://github.com/IBM/JTOpen-test/releases/download/v1.0.3/JTOpen-test-1.0.3.jar )
 3.  Copy a version of jt400.jar into this directory. 
+    (i.e. curl -L -o jt400.jar https://github.com/IBM/JTOpen/releases/download/v20.0.6/jt400-20.0.6-java8.jar )
 4.  Change your current directory into this directory
     cd /home/toolboxTest
 5.  Create a ini directory to hold configuration files
