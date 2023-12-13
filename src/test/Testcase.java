@@ -3150,7 +3150,7 @@ public abstract class Testcase {
   protected boolean checkAdditionalAuthenticationFactor(String systemname)  {
 	boolean supported = false; 
 	try {
-		supported = AS400.isAdditionalAuthenticationFactorAccepted(systemname);
+		supported = JDReflectionUtil.callStaticMethod_B("com.ibm.as400.access.AS400", "isAdditionalAuthenticationFactorAccepted", systemname);
 	} catch (Exception e) {
 		System.out.println("Unexpected exception"); // TODO Auto-generated catch block
 		e.printStackTrace(System.out);

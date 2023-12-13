@@ -2417,7 +2417,7 @@ AS400.addPasswordCacheEntry(systemName_, "", charPassword);
 				initMfaUser(); 
 				sb.append("new AS400("+systemObject_.getSystemName()+","+
 						mfaUserid_+","+ new String(mfaPassword_)+",000000\n"); 
-				AS400 as400 = new AS400(systemObject_.getSystemName(),
+				AS400 as400 = (AS400) JDReflectionUtil.createObject("com.ibm.as400.access.AS400",systemObject_.getSystemName(),
 						mfaUserid_, mfaPassword_, "0000000".toCharArray());
 				
 				assertCondition(false, sb); 
@@ -2440,8 +2440,9 @@ AS400.addPasswordCacheEntry(systemName_, "", charPassword);
 				initMfaUser(); 
 				sb.append("new AS400("+systemObject_.getSystemName()+","+
 						mfaUserid_+","+ new String(mfaPassword_)+"," + new String(mfaFactor_)+"\n"); 
-				AS400 as400 = new AS400(systemObject_.getSystemName(),
+				AS400 as400 = (AS400) JDReflectionUtil.createObject("com.ibm.as400.access.AS400",systemObject_.getSystemName(),
 						mfaUserid_, mfaPassword_, mfaFactor_);
+
 				as400.connectService(AS400.COMMAND);
 				as400.connectService(AS400.DATAQUEUE);
 				as400.connectService(AS400.DATABASE);
@@ -2527,7 +2528,7 @@ AS400.addPasswordCacheEntry(systemName_, "", charPassword);
 						mfaUserid_, mfaPassword_);
 				sb.append("Setting af to 000000\n"); 
 				as400.setGuiAvailable(false);
-				as400.setAdditionalAuthenticationFactor("000000".toCharArray());
+				JDReflectionUtil.callMethod_V(as400, "setAdditionalAuthenticationFactor", "000000".toCharArray());
 				as400.connectService(AS400.SIGNON);
 				as400.connectService(AS400.DATAQUEUE);
 				as400.connectService(AS400.DATABASE);
@@ -2555,7 +2556,7 @@ AS400.addPasswordCacheEntry(systemName_, "", charPassword);
 				AS400 as400 = new AS400(systemObject_.getSystemName(),
 						mfaUserid_, mfaPassword_);
 				as400.setGuiAvailable(false);
-				as400.setAdditionalAuthenticationFactor(mfaFactor_);
+				JDReflectionUtil.callMethod_V(as400, "setAdditionalAuthenticationFactor",mfaFactor_); 
 				as400.connectService(AS400.COMMAND);
 				as400.connectService(AS400.DATAQUEUE);
 				as400.connectService(AS400.DATABASE);

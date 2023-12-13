@@ -5539,7 +5539,8 @@ notApplicable("SSLight Testcase");
 
 			try {
 				 initMfaUser(); 
-				AS400JDBCDataSource ds = new AS400JDBCDataSource(systemObject_.getSystemName(),
+				AS400JDBCDataSource ds = (AS400JDBCDataSource) 
+						JDReflectionUtil.createObject("com.ibm.as400.access.AS400JDBCDataSource", systemObject_.getSystemName(),
 						mfaUserid_, mfaPassword_, mfaFactor_);
 				
 				Connection c= ds.getConnection();
@@ -5568,7 +5569,7 @@ notApplicable("SSLight Testcase");
 				 initMfaUser(); 
 				AS400JDBCDataSource ds = new AS400JDBCDataSource(systemObject_.getSystemName());
 				
-				Connection c= ds.getConnection(
+				Connection c= (Connection) JDReflectionUtil.callMethod_O(ds,"getConnection",
 						mfaUserid_, mfaPassword_, mfaFactor_);
 				
 				 Statement s = c.createStatement();
