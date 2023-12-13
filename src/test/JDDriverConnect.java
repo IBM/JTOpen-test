@@ -72,7 +72,6 @@ public class JDDriverConnect extends JDTestcase {
   int jdk_;
   private String      powerUserID_;
   private String      powerPassword_;
-
   /**
    * Constructor.
    **/
@@ -2798,8 +2797,6 @@ public class JDDriverConnect extends JDTestcase {
 		      s.close(); 
 		  }
 		  connection.close();
-
-
 		  assertCondition(passed, sb); 
 		  
 	      } catch (Exception e) {
@@ -2811,7 +2808,31 @@ public class JDDriverConnect extends JDTestcase {
       } /* checkToolbox */
   } /* Var058 */ 
 
-  public void Var059() { notApplicable();}
+  /* Var059 Check that a connection can be established using an additional authentication factor */ 
+  public void Var059() {
+	  if (checkToolbox()) {
+		  String systemName = systemObject_.getSystemName(); 
+		  if (checkAdditionalAuthenticationFactor(systemName)) {
+			  try { 
+				 initMfaUser(); 
+				 String mfaFactorString = new String(mfaFactor_); 
+				 Connection c = DriverManager.getConnection(
+						 "jdbc:as400:"+ systemName+";additionalAuthenticationFactor="+mfaFactorString,
+						 mfaUserid_, 
+						 new String(mfaPassword_)); 
+				 Statement s = c.createStatement();
+				 ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
+				 rs.next();
+				 String currentUser = rs.getString(1); 
+				 System.out.println("current MFA user is "+currentUser); 
+				 assertCondition(c != null && mfaUserid_.equalsIgnoreCase(currentUser), 
+						 "currentUser="+currentUser+" MFAUserID="+mfaUserid_);
+			  } catch (Exception e) {
+				  failed(e, "unexpected exception");
+		      }
+		  }
+	  }
+  }
   public void Var060() { notApplicable();}
   public void Var061() { notApplicable();}
   public void Var062() { notApplicable();}
