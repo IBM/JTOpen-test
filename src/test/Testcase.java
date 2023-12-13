@@ -34,6 +34,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Properties; 
 import java.util.ResourceBundle;
 import java.util.Vector;
 import java.util.TimeZone;
@@ -43,6 +44,7 @@ import javax.transaction.xa.XAException;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.Job;
@@ -126,6 +128,14 @@ public abstract class Testcase {
   protected boolean isLocal_ = false;
   protected boolean onAS400_ = TestDriver.onAS400_;
   String asp_ = null;
+
+  boolean mfaInitialized = false; 
+  
+  Object googleAuthenticator_ = null; 
+  protected String mfaSecret_; 
+  protected String mfaUserid_;
+  protected char[] mfaPassword_; 
+  protected char[] mfaFactor_;
 
   // Any output should be written here.
   protected PrintWriter output_;
@@ -3130,5 +3140,71 @@ public abstract class Testcase {
       }
     }
   }
+  
+  /**
+   * Checks if the system supports the additional authentication factor. If not, this will report "not
+   * applicable".
+ * @throws AS400SecurityException 
+ * @throws IOException 
+   **/
+  protected boolean checkAdditionalAuthenticationFactor(String systemname)  {
+	boolean supported = false; 
+	try {
+		supported = AS400.isAdditionalAuthenticationFactorAccepted(systemname);
+	} catch (Exception e) {
+		System.out.println("Unexpected exception"); // TODO Auto-generated catch block
+		e.printStackTrace(System.out);
+	} 
+    if (!supported) {
+      notApplicable("Toolbox JDBC Driver variation.");
+      return false;
+    } else
+      return true;
+  }
 
+
+  void initMfaUser() throws Exception { 
+	  if (!mfaInitialized) {
+		  // For this to be used,  googleauth-1.5.0.jar and commons-codec-1.16.0.jar must in the classpath.
+		  // The authentication information is read from ini/netrc.ini and must match the configuration
+		  // on the system. 
+		  googleAuthenticator_ = JDReflectionUtil.createObject("com.warrenstrange.googleauth.GoogleAuthenticator");
+		  StringBuffer iniInfo = new StringBuffer();
+		  Properties properties = new Properties(); 
+	      InputStream fileInputStream = JDRunit.loadResource("ini/netrc.ini", iniInfo);
+	      properties.load(fileInputStream);
+	      fileInputStream.close();
+
+	      mfaUserid_ = properties.getProperty("MFAUSERID"); 
+	      String password  = properties.getProperty("MFAPASSWORD");
+	      if (password != null) { 
+	    	  mfaPassword_ = password.toCharArray(); 
+	      } else {
+	    	  mfaPassword_ = null; 
+	      }
+	      mfaSecret_ = properties.getProperty("MFASECRET");
+	      
+	      if (mfaUserid_ == null)   throw new Exception("MFAUSERID not in netrc.ini"); 
+	      if (mfaPassword_ == null) throw new Exception("MFAPASSWORD not in netrc.ini"); 
+	      if (mfaSecret_ == null)   throw new Exception("MFASECRET not in netrc.ini"); 
+
+		  mfaInitialized=true; 
+	  }
+	  // Make sure that MFA is reset 
+	  if (systemName_ == null) { 
+		  systemName_ = systemObject_.getSystemName(); 
+	  }
+	  AS400 authAs400 = new AS400(systemName_,pwrSysUserID_, PasswordVault.decryptPassword(pwrSysEncryptedPassword_)); 
+	  CommandCall cc = new CommandCall(authAs400); 
+	  String command = "CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(*NONE)   ";
+	  cc.run(command); 
+	  command = "CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(1)   ";
+	  cc.run(command); 
+	  String mfaFactorString = ""+JDReflectionUtil.callMethod_I(googleAuthenticator_,  "getTotpPassword", mfaSecret_);
+	  while (mfaFactorString.length() < 6) {
+		  mfaFactorString = "0"+mfaFactorString; 
+	  }
+	  mfaFactor_ = mfaFactorString.toCharArray(); 
+	  
+  }
 }

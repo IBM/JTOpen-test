@@ -14,8 +14,14 @@
 package test;
 
 import java.net.InetAddress;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400JDBCDataSource;
 import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.Job;
 
 /**
  Testcase SecSignonTestcase.
@@ -2398,4 +2404,225 @@ AS400.addPasswordCacheEntry(systemName_, "", charPassword);
             failed(e, "Unexpected exception");
         }
     }
+
+    /* Connect using bad additional authentication factor */ 
+	public void Var055() {
+		String systemName = systemObject_.getSystemName();
+		if (checkAdditionalAuthenticationFactor(systemName)) {
+			boolean passed = true; 
+			StringBuffer sb = new StringBuffer(); 
+			sb.append("Connect using bad mfa\n"); 
+			try {
+			 
+				initMfaUser(); 
+				sb.append("new AS400("+systemObject_.getSystemName()+","+
+						mfaUserid_+","+ new String(mfaPassword_)+",000000\n"); 
+				AS400 as400 = new AS400(systemObject_.getSystemName(),
+						mfaUserid_, mfaPassword_, "0000000".toCharArray());
+				
+				assertCondition(false, sb); 
+				
+			} catch (Exception e) {
+				assertExceptionContains(e, "Password is incorrect", sb);
+			}
+		}
+	}    
+
+    /* Connect using additional authentication factor */ 
+	public void Var056() {
+		String systemName = systemObject_.getSystemName();
+		if (checkAdditionalAuthenticationFactor(systemName)) {
+			boolean passed = true; 
+			StringBuffer sb = new StringBuffer(); 
+			sb.append("Connect using mfa\n"); 
+			try {
+			 
+				initMfaUser(); 
+				sb.append("new AS400("+systemObject_.getSystemName()+","+
+						mfaUserid_+","+ new String(mfaPassword_)+"," + new String(mfaFactor_)+"\n"); 
+				AS400 as400 = new AS400(systemObject_.getSystemName(),
+						mfaUserid_, mfaPassword_, mfaFactor_);
+				as400.connectService(AS400.COMMAND);
+				as400.connectService(AS400.DATAQUEUE);
+				as400.connectService(AS400.DATABASE);
+				
+				Job[] commandJobs = as400.getJobs(AS400.COMMAND);
+				if (commandJobs == null) { 
+					sb.append("command jobs not available -- null\n");
+					passed = false; 
+				} else {
+					if (commandJobs.length == 0) { 
+						sb.append("command jobs not available -- 0 length\n");
+						passed = false; 
+					} else { 
+						Job job = commandJobs[0]; 
+						String expected = "QZRCSRVS"; 
+						String jobname = job.getName();
+						if(jobname.indexOf(expected) < 0) {
+							sb.append("command job "+jobname+" does not have "+expected+"\n"); 
+							passed = false; 
+						}
+					}
+				}
+				Job[] dataqueueJobs = as400.getJobs(AS400.DATAQUEUE);
+				if (dataqueueJobs == null) { 
+					sb.append("dataqueue jobs not available -- null\n");
+					passed = false; 
+				} else {
+					if (dataqueueJobs.length == 0) { 
+						sb.append("dataqueue jobs not available -- 0 length\n");
+						passed = false; 
+					} else { 
+						Job job = dataqueueJobs[0]; 
+						String expected = "QZHQSSRV"; 
+						String jobname = job.getName();
+						if(jobname.indexOf(expected) < 0) {
+							sb.append("dataqueue job "+jobname+" does not have "+expected+"\n"); 
+							passed = false; 
+						}
+					}
+				}
+				
+				Job[] databaseJobs = as400.getJobs(AS400.DATABASE);
+				if (databaseJobs == null) { 
+					sb.append("database jobs not available -- null\n");
+					passed = false; 
+				} else {
+					if (databaseJobs.length == 0) { 
+						sb.append("database jobs not available -- 0 length\n");
+						passed = false; 
+					} else { 
+						Job job = databaseJobs[0]; 
+						String expected = "QZDASOINIT"; 
+						String jobname = job.getName();
+						if(jobname.indexOf(expected) < 0) {
+							sb.append("database job "+jobname+" does not have "+expected+"\n"); 
+							passed = false; 
+						}
+					}
+				}
+				as400.disconnectAllServices();
+				
+				assertCondition(passed, sb); 
+				
+			} catch (Exception e) {
+				failed(e, "Unexpected exception "+sb.toString());
+			}
+		}
+	}    
+    
+	/* Connect using bad MFA */ 
+	public void Var057() {
+		String systemName = systemObject_.getSystemName();
+		if (checkAdditionalAuthenticationFactor(systemName)) {
+			boolean passed = true; 
+			StringBuffer sb = new StringBuffer(); 
+			sb.append("Connect using bad mfa\n"); 
+			try {
+			 
+				initMfaUser(); 
+				sb.append("new AS400("+systemObject_.getSystemName()+","+
+						mfaUserid_+")\n"); 
+				AS400 as400 = new AS400(systemObject_.getSystemName(),
+						mfaUserid_, mfaPassword_);
+				sb.append("Setting af to 000000\n"); 
+				as400.setGuiAvailable(false);
+				as400.setAdditionalAuthenticationFactor("000000".toCharArray());
+				as400.connectService(AS400.SIGNON);
+				as400.connectService(AS400.DATAQUEUE);
+				as400.connectService(AS400.DATABASE);
+				
+				assertCondition(false, sb); 
+				
+			} catch (Exception e) {
+				assertExceptionContains(e, "Password is incorrect", sb);
+			}
+		}
+	}    
+
+    /* Connect using additional authentication factor */ 
+	public void Var058() {
+		String systemName = systemObject_.getSystemName();
+		if (checkAdditionalAuthenticationFactor(systemName)) {
+			boolean passed = true; 
+			StringBuffer sb = new StringBuffer(); 
+			sb.append("Connect using mfa\n"); 
+			try {
+			 
+				initMfaUser(); 
+				sb.append("new AS400("+systemObject_.getSystemName()+","+
+						mfaUserid_+","+ new String(mfaPassword_)+")\n"); 
+				AS400 as400 = new AS400(systemObject_.getSystemName(),
+						mfaUserid_, mfaPassword_);
+				as400.setGuiAvailable(false);
+				as400.setAdditionalAuthenticationFactor(mfaFactor_);
+				as400.connectService(AS400.COMMAND);
+				as400.connectService(AS400.DATAQUEUE);
+				as400.connectService(AS400.DATABASE);
+				
+				Job[] commandJobs = as400.getJobs(AS400.COMMAND);
+				if (commandJobs == null) { 
+					sb.append("command jobs not available -- null\n");
+					passed = false; 
+				} else {
+					if (commandJobs.length == 0) { 
+						sb.append("command jobs not available -- 0 length\n");
+						passed = false; 
+					} else { 
+						Job job = commandJobs[0]; 
+						String expected = "QZRCSRVS"; 
+						String jobname = job.getName();
+						if(jobname.indexOf(expected) < 0) {
+							sb.append("command job "+jobname+" does not have "+expected+"\n"); 
+							passed = false; 
+						}
+					}
+				}
+				Job[] dataqueueJobs = as400.getJobs(AS400.DATAQUEUE);
+				if (dataqueueJobs == null) { 
+					sb.append("dataqueue jobs not available -- null\n");
+					passed = false; 
+				} else {
+					if (dataqueueJobs.length == 0) { 
+						sb.append("dataqueue jobs not available -- 0 length\n");
+						passed = false; 
+					} else { 
+						Job job = dataqueueJobs[0]; 
+						String expected = "QZHQSSRV"; 
+						String jobname = job.getName();
+						if(jobname.indexOf(expected) < 0) {
+							sb.append("dataqueue job "+jobname+" does not have "+expected+"\n"); 
+							passed = false; 
+						}
+					}
+				}
+				
+				Job[] databaseJobs = as400.getJobs(AS400.DATABASE);
+				if (databaseJobs == null) { 
+					sb.append("database jobs not available -- null\n");
+					passed = false; 
+				} else {
+					if (databaseJobs.length == 0) { 
+						sb.append("database jobs not available -- 0 length\n");
+						passed = false; 
+					} else { 
+						Job job = databaseJobs[0]; 
+						String expected = "QZDASOINIT"; 
+						String jobname = job.getName();
+						if(jobname.indexOf(expected) < 0) {
+							sb.append("database job "+jobname+" does not have "+expected+"\n"); 
+							passed = false; 
+						}
+					}
+				}
+				as400.disconnectAllServices();
+				
+				assertCondition(passed, sb); 
+				
+			} catch (Exception e) {
+				failed(e, "Unexpected exception "+sb.toString());
+			}
+		}
+	}    
+
 }
