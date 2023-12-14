@@ -3152,11 +3152,11 @@ public abstract class Testcase {
 	try {
 		supported = JDReflectionUtil.callStaticMethod_B("com.ibm.as400.access.AS400", "isAdditionalAuthenticationFactorAccepted", systemname);
 	} catch (Exception e) {
-		System.out.println("Unexpected exception"); // TODO Auto-generated catch block
+		System.out.println("Unexpected exception"); 
 		e.printStackTrace(System.out);
 	} 
     if (!supported) {
-      notApplicable("Toolbox JDBC Driver variation.");
+      notApplicable("Additional Authentication Factor variation.");
       return false;
     } else
       return true;
