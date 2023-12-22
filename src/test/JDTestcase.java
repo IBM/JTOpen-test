@@ -16,6 +16,7 @@ package test;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.AS400JDBCTimestamp;
+import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.IFSFile;
 
 
@@ -421,7 +422,8 @@ public class JDTestcase extends Testcase {
       return true;
   }
 
-  
+
+
   
   /**
    * Checks if we are using the toolbox driver with at least the specified driver fix date.

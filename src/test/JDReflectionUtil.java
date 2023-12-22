@@ -17,8 +17,13 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.lang.reflect.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Hashtable;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400JDBCDataSource;
+
 import java.util.Enumeration;
 
 /**
@@ -167,6 +172,16 @@ public class JDReflectionUtil {
     *
     *  Object o = callMethod_O(ds, ... ");
     */
+    
+	public static Object callMethod_O(Object o, String methodName, String p1,
+			char[] p2, char[] p3) throws Exception {
+		Class[] argTypes = new Class[3]; 
+		argTypes[0]=Class.forName("java.lang.String"); 
+		argTypes[1]=Class.forName("[C"); 
+		argTypes[2]=Class.forName("[C"); 
+		return callMethod_O(o, methodName, argTypes, p1,p2,p3); 
+	}
+
     public static Object callMethod_O(Object o, String methodName, Class[] argTypes, Object p1, Object p2, Object p3 ) throws Exception {
 	java.lang.reflect.Method method;
 
@@ -3595,6 +3610,23 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
          }
          return newObject;
       }
+
+  	public static Object  createObject(String classname, String p1, String p2, char[] p3,
+			char[] p4) throws Exception {
+  		Class[] argTypes = new Class[4]; 
+  		argTypes[0]= Class.forName("java.lang.String");	
+  		argTypes[1]= Class.forName("java.lang.String");	
+  		argTypes[2]= Class.forName("[C");	
+  		argTypes[3]= Class.forName("[C");	
+  		Object[] args = new Object[4]; 
+  		args[0]=p1;
+  		args[1]=p2;
+  		args[2]=p3;
+  		args[3]=p4;
+  		
+  		return createObject(classname, argTypes, args); 
+	}
+
 
 
      /**

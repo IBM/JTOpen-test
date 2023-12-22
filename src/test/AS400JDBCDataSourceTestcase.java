@@ -29,6 +29,7 @@ import java.sql.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameAlreadyBoundException;
+import javax.security.auth.login.CredentialException;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
@@ -82,6 +83,9 @@ public class AS400JDBCDataSourceTestcase extends Testcase
         super(systemObject, "AS400JDBCDataSourceTestcase", variationsToRun,
               runMode, fileOutputStream, password);
 
+        pwrSysUserID_ = ldapUsr; 
+        pwrSysEncryptedPassword_ = PasswordVault.encryptPassword(ldapPwd.toCharArray()); 
+        
         if (jndiType != null) {
             if (jndiType.equals("file"))
                 jndiType_ = JNDI_FILE;
@@ -5333,7 +5337,7 @@ notApplicable("SSLight Testcase");
 
     //@K3A
     /**
-    *  Validates that setLoginTimeout does not set the soTimeout propertery.  Now separate props
+    *  Validates that setLoginTimeout does not set the soTimeout property.  Now separate props
     **/
     public void Var178()
     {
@@ -5528,6 +5532,64 @@ notApplicable("SSLight Testcase");
 
     }
 
+	/* Test additional authentication factor on datasource */
+	public void Var184() {
+		String systemName = systemObject_.getSystemName();
+		if (checkAdditionalAuthenticationFactor(systemName)) {
+
+			try {
+				 initMfaUser(); 
+				AS400JDBCDataSource ds = (AS400JDBCDataSource) 
+						JDReflectionUtil.createObject("com.ibm.as400.access.AS400JDBCDataSource", systemObject_.getSystemName(),
+						mfaUserid_, mfaPassword_, mfaFactor_);
+				
+				Connection c= ds.getConnection();
+				
+				 Statement s = c.createStatement();
+				 ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
+				 rs.next();
+				 String currentUser = rs.getString(1); 
+				 System.out.println("current MFA user is "+currentUser); 
+				 assertCondition(c != null && mfaUserid_.equalsIgnoreCase(currentUser), 
+						 "currentUser="+currentUser+" MFAUserID="+mfaUserid_);
+
+			} catch (Exception e) {
+				failed(e, "Unexpected exception");
+			}
+		}
+	}    
+    
+    
+	/* Test additional authentication factor on datasource */
+	public void Var185() {
+		String systemName = systemObject_.getSystemName();
+		if (checkAdditionalAuthenticationFactor(systemName)) {
+
+			try {
+				 initMfaUser(); 
+				AS400JDBCDataSource ds = new AS400JDBCDataSource(systemObject_.getSystemName());
+				
+				Connection c= (Connection) JDReflectionUtil.callMethod_O(ds,"getConnection",
+						mfaUserid_, mfaPassword_, mfaFactor_);
+				
+				 Statement s = c.createStatement();
+				 ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
+				 rs.next();
+				 String currentUser = rs.getString(1); 
+				 System.out.println("current MFA user is "+currentUser); 
+				 assertCondition(c != null && mfaUserid_.equalsIgnoreCase(currentUser), 
+						 "currentUser="+currentUser+" MFAUserID="+mfaUserid_);
+
+			} catch (Exception e) {
+				failed(e, "Unexpected exception");
+			}
+		}
+	}    
+    
+    
+    
+    
+    
     /**
       Serializes and deserializes the data source object.
      **/
