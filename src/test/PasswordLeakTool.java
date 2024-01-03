@@ -73,6 +73,10 @@ public class PasswordLeakTool {
       switch (osType) {
       case OS_WINDOWS:
         jdmpviewPath = javaHome + "\\bin\\jdmpview.exe";
+        File f = new File(jdmpviewPath); 
+        if (! f.exists()) { 
+          jdmpviewPath = javaHome + "\\..\\bin\\jdmpview.exe";
+        }
         break;
       case OS_IBM_I:
       case OS_AIX: 

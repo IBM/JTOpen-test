@@ -571,6 +571,7 @@ specified.
 **/
     public void Var028()
     {
+    	if (checkPasswordLeak()) { 
         try {
             assertCondition (driver_.acceptsURL ("jdbc:" + subprotocol_ + "://" + system_
                 + ";user=" + userId_ + ";password=" + 
@@ -579,6 +580,7 @@ specified.
         catch (Exception e) {
             failed(e, "Unexpected exception");
         }
+    	}
     }
 
 

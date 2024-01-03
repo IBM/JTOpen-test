@@ -126,6 +126,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   protected String password_ = null;
   protected char[]  encryptedPassword_ = null;
   protected static String proxy_;
+  public static boolean checkPasswordLeak = false; 
   static {
     String propVal = System
         .getProperty("com.ibm.as400.access.AS400.proxyServer");
@@ -134,6 +135,14 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     } else
       proxy_ = "";
 
+    // Check for a leaked password
+    String checkPasswordLeakString = System.getenv("JavaPasswordLeakCheck");
+    if (checkPasswordLeakString == null) { 
+      checkPasswordLeakString = System.getProperty("JavaPasswordLeakCheck"); 
+    }
+    if (checkPasswordLeakString != null) {
+    	checkPasswordLeak = true; 
+    }
 
   } 
   
@@ -926,12 +935,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
     }
 
-    // Check for a leaked password
-    String checkPasswordLeak = System.getenv("JavaPasswordLeakCheck");
-    if (checkPasswordLeak == null) { 
-      checkPasswordLeak = System.getProperty("JavaPasswordLeakCheck"); 
-    }
-    if (checkPasswordLeak != null) {
+    if (checkPasswordLeak) {
       int leakCount = 0; 
       int leakFreeCount = 0; 
       String filename = "/tmp/passwordLeakCoreDump8.bin";

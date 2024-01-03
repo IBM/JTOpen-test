@@ -171,8 +171,11 @@ public class PasswordVault {
     return exception.substring(previousLineBreak+1, lastLineBreak); 
   }
 
-  /* Leak password a string -- needed for serveral JDBC properties testcases */ 
-  public static String decryptPasswordLeak(char[] encryptedPassword, String description) {
+  /* Leak password a string -- needed for several JDBC properties testcases */ 
+  public static String decryptPasswordLeak(char[] encryptedPassword, String description)  {
+    if (TestDriver.checkPasswordLeak) {
+      throw new IllegalArgumentException("decryptPasswordLeak called when TestDriver.checkPasswordLeak enabled"); 
+    }
     String returnString; 
     String infoString; 
     char[] passwordChars = decryptPassword(encryptedPassword);
