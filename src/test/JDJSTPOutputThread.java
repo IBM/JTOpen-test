@@ -176,30 +176,25 @@ public class JDJSTPOutputThread extends Thread {
             if (JDJSTPTestcase.debug)
               System.out.println("Checking current line: " + currentString);
 
-            if (hangMessages != null) {
-              for (int i = 0; i < hangMessages.length; i++) {
-                if (currentString.indexOf(hangMessages[i]) >= 0) {
-                  /* Don't report the hang message if part of the */
-                  /* .rxp output */
-                  if (currentString.indexOf(".rxp") < 0) {
-		      boolean exceptionFound = false;
-		      if (hangMessagesException != null) { 
-			  for (int j=0; j< hangMessagesException.length; j++) {
-			      if (currentString.indexOf(hangMessagesException[j]) >= 0) {
-				  exceptionFound = true; 
-			      }
-			  }
-		      }
-		    // Also check the exception list..
-		    // JWE // TODO 
-                    // Don't trigger
-		      if (!exceptionFound) { 
-			  synchronized (hangMessagesFound) {
-			      hangMessagesFound.addElement(currentString);
-			  }
-		      }
-
-
+			if (hangMessages != null) {
+				for (int i = 0; i < hangMessages.length; i++) {
+					if (currentString.indexOf(hangMessages[i]) >= 0) {
+						/* Don't report the hang message if part of the */
+						/* .rxp output */
+						if (currentString.indexOf(".rxp") < 0) {
+							boolean hangMessageExceptionFound = false;
+							if (hangMessagesException != null) {
+								for (int j = 0; j < hangMessagesException.length; j++) {
+									if (currentString.indexOf(hangMessagesException[j]) >= 0) {
+										hangMessageExceptionFound = true;
+									}
+								}
+							}
+							if (!hangMessageExceptionFound) {
+								synchronized (hangMessagesFound) {
+									hangMessagesFound.addElement(currentString);
+								}
+							}
 
                   }
                 }
@@ -241,19 +236,28 @@ public class JDJSTPOutputThread extends Thread {
 
             currentLine.setLength(0);
 
-            if (hangMessages != null) {
-              for (int i = 0; i < hangMessages.length; i++) {
-                if (currentString.indexOf(hangMessages[i]) >= 0) {
-                  /* Don't report the hang message if part of the */
-                  /* .rxp output */
-                  if (currentString.indexOf(".rxp") < 0) {
-
-                    synchronized (hangMessagesFound) {
-                      hangMessagesFound.addElement(currentString);
-                    }
-                  }
-                }
-              }
+			if (hangMessages != null) {
+				for (int i = 0; i < hangMessages.length; i++) {
+					if (currentString.indexOf(hangMessages[i]) >= 0) {
+						/* Don't report the hang message if part of the */
+						/* .rxp output */
+						if (currentString.indexOf(".rxp") < 0) {
+							boolean hangMessageExceptionFound = false;
+							if (hangMessagesException != null) {
+								for (int j = 0; j < hangMessagesException.length; j++) {
+									if (currentString.indexOf(hangMessagesException[j]) >= 0) {
+										hangMessageExceptionFound = true;
+									}
+								}
+							}
+							if (!hangMessageExceptionFound) {
+								synchronized (hangMessagesFound) {
+									hangMessagesFound.addElement(currentString);
+								}
+							}
+						}
+					}
+				}
             }
 
           }

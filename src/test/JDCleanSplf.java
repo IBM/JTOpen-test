@@ -801,7 +801,9 @@ public class JDCleanSplf implements PrintObjectListListener {
 				} catch (Exception e1) {
 					Timestamp ts = new Timestamp(System.currentTimeMillis());
 					String message = e1.toString();
-					if ((message.indexOf("no longer in the system") > 0) || (message.indexOf("CPF334") > 0)) {
+					if ((message.indexOf("no longer in the system") > 0) || 
+							(message.indexOf("CPF334") > 0) ||
+							(message.indexOf("CPF3303")> 0 )) {
 						/* Just ignore these messages */
 					} else {
 						synchronized (out) {
