@@ -160,7 +160,7 @@ public class JDRunit {
       "IncompatibleClassChangeError",
       "connection to \":9.0\" refused by server", };
 
-  static String[] hangMessagesException = { "User requested", };
+  static String[] hangMessagesException = { "User requested", "JVMDUMP034I"};
 
   static long globalTimeout = 3600000;
 
