@@ -3162,7 +3162,17 @@ public abstract class Testcase {
       return true;
   }
 
-
+  /** Check if password leak testing if being done.  This is used by testcases that leak passwords to Strings
+   * 
+   */
+  protected boolean checkPasswordLeak() { 
+	 if (TestDriver.checkPasswordLeak) {
+	      notApplicable("Password Leak Testing In Progress.");
+	      return false;
+	 } else {
+		 return true; 
+	 }
+  }
   void initMfaUser() throws Exception { 
 	  if (!mfaInitialized) {
 		  // For this to be used,  googleauth-1.5.0.jar and commons-codec-1.16.0.jar must in the classpath.

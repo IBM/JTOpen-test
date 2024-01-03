@@ -164,6 +164,7 @@ public class JDDriverConnect extends JDTestcase {
    * connect() - Should return a connection when the properties are null.
    **/
   public void Var003() {
+	  if (checkPasswordLeak()) {
     if (getDriver() == JDTestDriver.DRIVER_JCC) {
       notApplicable("JCC Driver does not permit null USERID");
     } else {
@@ -182,6 +183,7 @@ public class JDDriverConnect extends JDTestcase {
         failed(e, "Unexpected exception");
       }
     }
+	  }
   }
 
   /**
@@ -189,6 +191,7 @@ public class JDDriverConnect extends JDTestcase {
    * in the properties object, then we can run statements.
    **/
   public void Var004() {
+	  if (checkPasswordLeak()) {
     try {
       String url = baseURL_;
       Properties p = new Properties();
@@ -209,6 +212,7 @@ public class JDDriverConnect extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
+	  }
   }
 
   /**
@@ -216,6 +220,7 @@ public class JDDriverConnect extends JDTestcase {
    * in the URL, then we can run statements.
    **/
   public void Var005() {
+	  if (checkPasswordLeak()) {
     if (getDriver() == JDTestDriver.DRIVER_JCC) {
       notApplicable("JCC Driver does not permit null USERID");
     } else {
@@ -240,35 +245,39 @@ public class JDDriverConnect extends JDTestcase {
       }
     }
   }
-
+  }
+  
   /**
    * connect() - When a valid URL is specified, and user and password are passed
    * in both the URL and properties, then we can run statements. Verify that the
    * user and password that are used come from the URL.
    **/
   public void Var006() {
-    if (getDriver() == JDTestDriver.DRIVER_JCC) {
-      notApplicable("JCC Driver does not permit null USERID");
-    } else {
-      try {
-        String url = baseURL_ + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.6");
-        Properties p = new Properties();
-        p.put("user", "NOTUSED1");
-        p.put("password", "NOTUSED2");
+    if (checkPasswordLeak()) {
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        notApplicable("JCC Driver does not permit null USERID");
+      } else {
+        try {
+          String url = baseURL_ + ";user=" + userId_ + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.6");
+          Properties p = new Properties();
+          p.put("user", "NOTUSED1");
+          p.put("password", "NOTUSED2");
 
-        Connection c = driver_.connect(url, p);
+          Connection c = driver_.connect(url, p);
 
-        // Run a query.
-        Statement s = c.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-        boolean found = rs.next();
+          // Run a query.
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+          boolean found = rs.next();
 
-        // Close the connection.
-        c.close();
+          // Close the connection.
+          c.close();
 
-        assertCondition(found);
-      } catch (Exception e) {
-        failed(e, "Unexpected Exception");
+          assertCondition(found);
+        } catch (Exception e) {
+          failed(e, "Unexpected Exception");
+        }
       }
     }
   }
@@ -278,23 +287,24 @@ public class JDDriverConnect extends JDTestcase {
    * system, then an exception should be thrown.
    **/
   public void Var007() {
-    try {
-      String url = (isToolboxDriver()) ? "jdbc:as400://BAD_SYSTEM"
-          : "jdbc:db2://BAD_SYSTEM";
-      if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
-        url = "jdbc:jtopenlite://BAD_SYSTEM";
+    if (checkPasswordLeak()) {
+      try {
+        String url = (isToolboxDriver()) ? "jdbc:as400://BAD_SYSTEM" : "jdbc:db2://BAD_SYSTEM";
+        if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
+          url = "jdbc:jtopenlite://BAD_SYSTEM";
+        }
+        Properties p = new Properties();
+        p.put("user", userId_);
+        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.7"));
+
+        /// failed ("This variation is deactivated until the AS400 class is
+        /// serializable. -jlee 04/20/99");
+        Connection c = driver_.connect(url, p);
+
+        failed("Did not throw exception. " + c);
+      } catch (Exception e) {
+        assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-      Properties p = new Properties();
-      p.put("user", userId_);
-      p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.7"));
-
-      /// failed ("This variation is deactivated until the AS400 class is
-      /// serializable. -jlee 04/20/99");
-      Connection c = driver_.connect(url, p);
-
-      failed("Did not throw exception. " + c);
-    } catch (Exception e) {
-      assertExceptionIsInstanceOf(e, "java.sql.SQLException");
     }
   }
 
@@ -303,6 +313,7 @@ public class JDDriverConnect extends JDTestcase {
    * user, then an exception should be thrown.
    **/
   public void Var008() {
+    if (checkPasswordLeak()) { 
     try {
       String url = baseURL_;
       Properties p = new Properties();
@@ -317,6 +328,7 @@ public class JDDriverConnect extends JDTestcase {
               + c);
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    }
     }
   }
 
@@ -347,6 +359,7 @@ public class JDDriverConnect extends JDTestcase {
    * property, then a warning is posted, but we can still run statements.
    **/
   public void Var010() {
+    if (checkPasswordLeak()) { 
     if (getDriver() == JDTestDriver.DRIVER_JCC) {
       notApplicable("JCC Driver does not permit null USERID");
     } else {
@@ -374,12 +387,14 @@ public class JDDriverConnect extends JDTestcase {
       }
     }
   }
-
+  }
   /**
    * "errors" property - Set to "basic", verify that only first level text is
    * returned.
    **/
   public void Var011() {
+    if (checkPasswordLeak()) { 
+
     try {
       String url = baseURL_;
       Properties p = new Properties();
@@ -408,6 +423,7 @@ public class JDDriverConnect extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
+    }
   }
 
   /**
@@ -415,6 +431,8 @@ public class JDDriverConnect extends JDTestcase {
    * is returned.
    **/
   public void Var012() {
+    if (checkPasswordLeak()) { 
+
     if (getDriver() == JDTestDriver.DRIVER_JCC) {
       notApplicable("JCC Driver does not have 'errors' property");
     } else {
@@ -447,6 +465,7 @@ public class JDDriverConnect extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    }
   }
 
   /**
@@ -472,6 +491,8 @@ public class JDDriverConnect extends JDTestcase {
    * today. There is no network layer to the native driver.
    **/
   public void Var013() {
+    if (checkPasswordLeak()) { 
+
     if (checkNotGroupTest()) {
       if (jdk_ <= JVMInfo.JDK_142) {
         // System.out.println("The SSL testcase does not work for JDK 1.4 or
@@ -527,6 +548,7 @@ public class JDDriverConnect extends JDTestcase {
             + "keytool -import -keystore /QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/jre/lib/security/cacerts -file /tmp/eberhard.ca2 -storepass changeit");
       }
     }
+    }
   }
 
   /**
@@ -534,6 +556,8 @@ public class JDDriverConnect extends JDTestcase {
    * not turned on.
    **/
   public void Var014() {
+    if (checkPasswordLeak()) { 
+
     // @A1C Changed variation because if user has set tracing on
     // @A1C previous to this call, the code no longer turns it off.
     if (isToolboxDriver() && DriverManager.getLogWriter() != null) // @A1A @A3C
@@ -559,6 +583,7 @@ public class JDDriverConnect extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
+    }
   }
 
   /**
@@ -566,6 +591,7 @@ public class JDDriverConnect extends JDTestcase {
    * turned on.
    */
   public void Var015() {
+    if (checkPasswordLeak()) { 
 
     PrintWriter before = DriverManager.getLogWriter();
     if (isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE) {
@@ -645,13 +671,15 @@ public class JDDriverConnect extends JDTestcase {
       // else
       DriverManager.setLogWriter(before);
     }
-
+    }
   }
 
   /**
    * "driver" property - Set to "toolbox", verify that the connection works.
    */
   public void Var016() {
+    if (checkPasswordLeak()) { 
+
     try {
       if (isToolboxDriver()) {
         String url = baseURL_;
@@ -671,11 +699,14 @@ public class JDDriverConnect extends JDTestcase {
       failed(e, "Unexpected Exception");
     }
   }
+  }
 
   /**
    * "driver" property - Set to "native", verify that the connection works.
    **/
   public void Var017() {
+    if (checkPasswordLeak()) { 
+
     try {
       if ((isToolboxDriver())) // pdd native driver should load and throw exc if
                                // on windows &&
@@ -696,6 +727,7 @@ public class JDDriverConnect extends JDTestcase {
         notApplicable();
     } catch (Exception e) {
       failed(e, "Unexpected Exception connecting with native and "+userId_);
+    }
     }
   }
 
@@ -799,6 +831,8 @@ public class JDDriverConnect extends JDTestcase {
    * "driver" property to "native" should complete successfully.
    **/
   public void Var021() {
+    if (checkPasswordLeak()) { 
+
     if (!isToolboxDriver()) {
       notApplicable("connect(AS400) variation");
       return;
@@ -835,6 +869,7 @@ public class JDDriverConnect extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     }
+    }
   }
 
   /**
@@ -842,6 +877,8 @@ public class JDDriverConnect extends JDTestcase {
    * "driver" property to "toolbox" should complete successfully.
    **/
   public void Var022() {
+    if (checkPasswordLeak()) { 
+
     if (!isToolboxDriver()) {
       notApplicable("connect(AS400) variation");
       return;
@@ -880,7 +917,7 @@ public class JDDriverConnect extends JDTestcase {
       failed(e, "Unexpected exception");
     }
   }
-
+  }
   /**
    * connect(AS400, Properties, String) - Passing a null Properties object
    * should throw a null pointer exception.
@@ -1058,6 +1095,8 @@ public class JDDriverConnect extends JDTestcase {
    * setting "driver" property to "native" should complete successfully.
    **/
   public void Var028() {
+    if (checkPasswordLeak()) { 
+
     if (checkNotGroupTest()) {
       if (jdk_ <= JVMInfo.JDK_142) {
         // System.out.println("The SSL testcase does not work for JDK 1.4 or
@@ -1109,6 +1148,7 @@ public class JDDriverConnect extends JDTestcase {
         failed(e, "SSL not configured.");
       }
     }
+    }
   }
 
   /**
@@ -1116,6 +1156,8 @@ public class JDDriverConnect extends JDTestcase {
    * setting "driver" property to "toolbox" should complete successfully.
    **/
   public void Var029() {
+    if (checkPasswordLeak()) { 
+
     if (checkNotGroupTest()) {
       if (jdk_ <= JVMInfo.JDK_142) {
         // System.out.println("The SSL testcase does not work for JDK 1.4 or
@@ -1164,6 +1206,7 @@ public class JDDriverConnect extends JDTestcase {
       } catch (Exception e) {
         failed(e, "SSL not configured.");
       }
+    }
     }
   }
 
@@ -1357,6 +1400,8 @@ public class JDDriverConnect extends JDTestcase {
    * the subprotocol using equals instead of startsWith to account for this.
    **/
   public void Var036() {
+    if (checkPasswordLeak()) { 
+
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
 
@@ -1377,7 +1422,7 @@ public class JDDriverConnect extends JDTestcase {
           "connect Native Driver V5R3 variation -- native driver added 3/3/2004");
     }
   }
-
+  }
   /**
    * connect() - When a valid URL is specified, but the user and id are empty,
    * then an exception should be thrown.
@@ -1564,6 +1609,8 @@ public class JDDriverConnect extends JDTestcase {
    * then an exception should be not be thrown when workaround enabled.
    **/
   public void Var042() {
+    if (checkPasswordLeak()) { 
+
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
       enableWorkaround();
@@ -1598,13 +1645,15 @@ public class JDDriverConnect extends JDTestcase {
       notApplicable("connect Native Driver  V5R3 variation ");
       return;
     }
-
+    }
   }
 
   /**
    * Passing *CURRENT when workaround enabled.
    **/
   public void Var043() {
+    if (checkPasswordLeak()) { 
+
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
 
@@ -1642,12 +1691,14 @@ public class JDDriverConnect extends JDTestcase {
     }
 
   }
-
+  }
   /**
    * connect() - When a valid URL is specified, but the user and id are empty,
    * then an exception should be thrown.
    **/
   public void Var044() {
+    if (checkPasswordLeak()) { 
+
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
       enableWorkaround();
@@ -1682,7 +1733,7 @@ public class JDDriverConnect extends JDTestcase {
       notApplicable("connect Native Driver  V5R3 variation ");
       return;
     }
-
+    }
   }
 
   /**
@@ -1690,6 +1741,8 @@ public class JDDriverConnect extends JDTestcase {
    * *CURRENT, then an exception should be thrown.
    **/
   public void Var045() {
+    if (checkPasswordLeak()) { 
+
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
 
@@ -1727,7 +1780,7 @@ public class JDDriverConnect extends JDTestcase {
       notApplicable("connect Native Driver  V5R3 variation ");
       return;
     }
-
+    }
   }
 
   /**
@@ -1735,6 +1788,8 @@ public class JDDriverConnect extends JDTestcase {
    * *CURRENT, then an exception should be thrown.
    **/
   public void Var046() {
+    if (checkPasswordLeak()) { 
+
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
       enableWorkaround();
@@ -1770,9 +1825,11 @@ public class JDDriverConnect extends JDTestcase {
       notApplicable("connect Native Driver  V5R3 variation ");
       return;
     }
-
+    }
   }
 
+
+    
   /**
    * connect() - Should throw exception when id/pass are "" or *CURRENT With no
    * user/password in url properties
@@ -1863,6 +1920,8 @@ public class JDDriverConnect extends JDTestcase {
    * some user/password in url properties
    **/
   public void Var048() {
+    if (checkPasswordLeak()) { 
+
     /*
      * if(!JDTestDriver.getClientOS().equals( JDTestDriver.CLIENT_as400)){
      * notApplicable("i5 platform TC"); return; }
@@ -1984,6 +2043,7 @@ public class JDDriverConnect extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
+    }
 
   }
 
@@ -1992,6 +2052,8 @@ public class JDDriverConnect extends JDTestcase {
    * user/password in properties object
    **/
   public void Var049() {
+    if (checkPasswordLeak()) { 
+
     if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
       notApplicable("i5 platform TC");
       return;
@@ -2143,7 +2205,7 @@ public class JDDriverConnect extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
-
+    }
   }
 
   /**
@@ -2245,6 +2307,8 @@ public class JDDriverConnect extends JDTestcase {
    * user = false
    **/
   public void Var051() {
+    if (checkPasswordLeak()) { 
+
     if (!isToolboxDriver()) {
       notApplicable("Toolbox TC");
       return;
@@ -2364,7 +2428,7 @@ public class JDDriverConnect extends JDTestcase {
     }
 
   }
-
+  }
   /**
    * connect() - Should throw exception when id/pass are "" or *CURRENT With
    * user/password in properties object * copy of 049 but with secure current
