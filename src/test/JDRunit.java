@@ -1710,7 +1710,9 @@ public class JDRunit {
       }
 
       Statement stmt = con.createStatement();
-
+      // Make sure to follow any password indirection
+      char[] encryptedNewPassword = PasswordVault.getEncryptedPassword(newPassword);
+      newPassword=PasswordVault.decryptPasswordLeak(encryptedPassword); 
       try {
         /* Note CCSID must be 65535 for DDDMSQLCompatibility to pass */
         stmt.executeUpdate("CALL QSYS.QCMDEXC('"
