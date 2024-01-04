@@ -63,6 +63,9 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
+
+import com.ibm.as400.access.AS400JDBCDriver;
+
 import java.sql.*;
 
 public class JDRunit {
@@ -1339,9 +1342,12 @@ public class JDRunit {
   String SYSTEM;
   String SRDB;
   String USERID;
-  String PASSWORD;
+  String TEXT_PASSWORD; 
+  char[] ENCRYPTED_PASSWORD;
+  
   String MASTERUSERID;
-  String MASTERPASSWORD;
+  String TEXT_MASTERPASSWORD; 
+  char[] ENCRYPTED_MASTERPASSWORD;
   String CLIWHDSN;
   String CLIWHUID;
   String CLIWHPWD;
@@ -1657,7 +1663,7 @@ public class JDRunit {
   }
 
   public static String createProfile(String SYSTEM, String newUserid,
-      String newPassword, String userid, String password, Vector inputVector) {
+      String newPassword, String userid, char[] encryptedPassword, Vector inputVector) {
     if (newPassword == null)
       newPassword = "abc212cb";
     String sql = "notSet";
@@ -1683,23 +1689,24 @@ public class JDRunit {
       if (debug) {
         System.out.println("Debug: Class loaded " + c);
       }
-      Driver driver = (java.sql.Driver) c.newInstance();
+      AS400JDBCDriver  driver = (AS400JDBCDriver) c.newInstance();
 
-      Properties conProperties = new Properties();
-      conProperties.put("user", userid);
-      conProperties.put("password", password);
 
       Connection con;
+      char[] password = PasswordVault.decryptPassword(encryptedPassword); 
       try {
-        con = driver.connect(url, conProperties);
+        con = driver.connect(url, userid, password);
+        
       } catch (Exception e) {
         String message = e.toString();
         if (message.indexOf("cannot establish") >= 0) {
           url = "jdbc:as400:" + SYSTEM + ".rch.stglabs.ibm.com";
-          con = driver.connect(url, conProperties);
+          con = driver.connect(url, userid, password);
         } else {
           throw e;
         }
+      } finally {
+        PasswordVault.clearPassword(password);
       }
 
       Statement stmt = con.createStatement();
@@ -1918,11 +1925,16 @@ public class JDRunit {
     
     USERID = iniProperties.getProperty("USERID");
     // See if the password is overwritten by a JVM property
-    PASSWORD = getPropertyPassword(USERID); 
-    if (PASSWORD == null) PASSWORD = iniProperties.getProperty("PASSWORD");
+    
+    TEXT_PASSWORD = getPropertyPassword(USERID); 
+    if (TEXT_PASSWORD == null) TEXT_PASSWORD = iniProperties.getProperty("PASSWORD");
+    ENCRYPTED_PASSWORD = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
+    
     MASTERUSERID = iniProperties.getProperty("MASTERUSERID");
-    MASTERPASSWORD = getPropertyPassword(MASTERUSERID); 
-    if (MASTERPASSWORD == null) MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
+    TEXT_MASTERPASSWORD = getPropertyPassword(MASTERUSERID); 
+    if (TEXT_MASTERPASSWORD == null) TEXT_MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
+    ENCRYPTED_MASTERPASSWORD = PasswordVault.getEncryptedPassword(TEXT_MASTERPASSWORD); 
+    
     CLIWHDSN = iniProperties.getProperty("CLIWHDSN", "MEMEMEM"); //
     SRDB = CLIWHDSN.toUpperCase();
     CLIWHUID = iniProperties.getProperty("CLIWHUID", "DB2TEST");
@@ -2446,7 +2458,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     /* Determine if a lower level user id is needed */
     String testUserid = USERID;
-    String testPassword = PASSWORD;
+    String testPassword = TEXT_PASSWORD;
+    char[] encryptedTestPassword = ENCRYPTED_PASSWORD; 
     String newUserid = (String) dropAuthorityProperties.get(testBase);
     if (newUserid == null) {
       newUserid = (String) dropAuthorityProperties.get(test);
@@ -2474,17 +2487,19 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         /* create the profile for the test on the system */
         testUserid = newUserid;
         testPassword = createProfile(SYSTEM, newUserid, newPassword, USERID,
-            PASSWORD, inputVector);
+            ENCRYPTED_PASSWORD, inputVector);
         if (testPassword == null) {
           inputVector
               .addElement("Unable to create profile. setting password to new anyway");
           testPassword = newPassword;
         }
+        encryptedTestPassword = PasswordVault.getEncryptedPassword(newPassword); 
 
       } else {
         /* Use what was already set up */
         testUserid = newUserid;
         testPassword = (String) rdbToCreatedPassword.get(SYSTEM);
+        encryptedTestPassword = PasswordVault.getEncryptedPassword(testPassword); 
       }
 
     }
@@ -2590,7 +2605,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       javaCommand += " -rdb " + RDB;
     }
     javaCommand += " -uid  " + testUserid + " -pwd " + testPassword
-        + " -pwrSys " + USERID + "," + PASSWORD + " -directory /  -misc "
+        + " -pwrSys " + USERID + "," + TEXT_PASSWORD + " -directory /  -misc "
         + driver + "," + release + iaspArgs;
     if (finalArgs != null && finalArgs.length() > 0) {
       javaCommand = javaCommand + " " + finalArgs;
@@ -3116,8 +3131,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
           try {
             System.out.println("Attempting to call " + killCommand);
+            String password = PasswordVault.decryptPasswordLeak(ENCRYPTED_PASSWORD);
             Connection conn = DriverManager.getConnection("jdbc:db2:localhost",
-                USERID, PASSWORD);
+                USERID, password);
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(killCommand);
             conn.close();
@@ -3291,12 +3307,13 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       try {
         if (disabledProfile.equals(USERID)) {
           System.out.println("JDRunit: Reset profile " + USERID);
-          resetId("jdbc:db2:localhost", MASTERUSERID, MASTERPASSWORD, USERID,
-              PASSWORD);
+          
+          resetId("jdbc:db2:localhost", MASTERUSERID, ENCRYPTED_MASTERPASSWORD, USERID,
+              ENCRYPTED_PASSWORD);
         } else if (disabledProfile.equals(testUserid)) {
           System.out.println("JDRunit: Reset profile " + testUserid);
-          resetId("jdbc:db2:localhost", MASTERUSERID, MASTERPASSWORD,
-              testUserid, testPassword);
+          resetId("jdbc:db2:localhost", MASTERUSERID, ENCRYPTED_MASTERPASSWORD,
+              testUserid, encryptedTestPassword);
 
         } else {
           System.out.println("JDRunit: UNABLE TO RESET PROFILE "
@@ -3654,9 +3671,10 @@ public void setExtraJavaArgs(String extraJavaArgs) {
   }
 
   public static void resetId(String jdbcUrl, String adminUserid,
-      String adminPassword, String testUserid, String testPassword) {
+      char[] encryptedAdminPassword, String testUserid, char[] encryptedTestPassword) {
 
     try {
+      String adminPassword = PasswordVault.decryptPasswordLeak(encryptedAdminPassword);
       Connection con = DriverManager.getConnection(jdbcUrl, adminUserid,
           adminPassword);
       Statement stmt = con.createStatement();
@@ -3689,6 +3707,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         }
       }
       /* It should always be safe to blindly enable the profile */
+      String testPassword = PasswordVault.decryptPasswordLeak(encryptedTestPassword); 
       stmt.executeUpdate("CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + testUserid
           + ") PASSWORD(" + testPassword + ") STATUS(*ENABLED) ')");
 

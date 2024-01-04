@@ -539,9 +539,10 @@ public class JDSchedulerServer extends JDScheduler {
             String adminPassword1 = iniProperties.getProperty("PASSWORD");
 
             if (id.equalsIgnoreCase(testUserid1)) {
-
-              JDRunit.resetId(jdbcURL, adminUserid1, adminPassword1,
-                  testUserid1, testPassword1);
+              char[] encryptedAdminPassword = PasswordVault.getEncryptedPassword(adminPassword1);
+              char[] encryptedTestPassword = PasswordVault.getEncryptedPassword(testPassword1);
+              JDRunit.resetId(jdbcURL, adminUserid1, encryptedAdminPassword,
+                  testUserid1, encryptedTestPassword);
             }
 
           }
