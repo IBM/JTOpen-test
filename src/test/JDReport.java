@@ -1722,8 +1722,8 @@ public class JDReport {
             writer.close(); 
             throw e;
           } else {
-            JDRunit.resetId("jdbc:db2:*LOCAL", MASTERUSERID, MASTERPASSWORD,
-                USERID, PASSWORD);
+            JDRunit.resetId("jdbc:db2:*LOCAL", MASTERUSERID, encryptedMasterPassword,
+                USERID, encryptedPassword);
             /* try again to get connection */
             connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,
                 PASSWORD);
