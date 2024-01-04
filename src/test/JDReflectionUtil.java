@@ -173,14 +173,21 @@ public class JDReflectionUtil {
     *  Object o = callMethod_O(ds, ... ");
     */
     
-	public static Object callMethod_O(Object o, String methodName, String p1,
-			char[] p2, char[] p3) throws Exception {
-		Class[] argTypes = new Class[3]; 
-		argTypes[0]=Class.forName("java.lang.String"); 
-		argTypes[1]=Class.forName("[C"); 
-		argTypes[2]=Class.forName("[C"); 
-		return callMethod_O(o, methodName, argTypes, p1,p2,p3); 
-	}
+   public static Object callMethod_O(Object o, String methodName, String p1, char[] p2, char[] p3) throws Exception {
+     Class[] argTypes = new Class[3];
+     argTypes[0] = Class.forName("java.lang.String");
+     argTypes[1] = Class.forName("[C");
+     argTypes[2] = Class.forName("[C");
+     return callMethod_O(o, methodName, argTypes, p1, p2, p3);
+   }
+
+   public static Object callMethod_O(Object o, String methodName, String p1, String p2, char[] p3) throws Exception {
+     Class[] argTypes = new Class[3];
+     argTypes[0] = Class.forName("java.lang.String");
+     argTypes[1] = Class.forName("java.lang.String");
+     argTypes[2] = Class.forName("[C");
+     return callMethod_O(o, methodName, argTypes, p1, p2, p3);
+   }
 
     public static Object callMethod_O(Object o, String methodName, Class[] argTypes, Object p1, Object p2, Object p3 ) throws Exception {
 	java.lang.reflect.Method method;

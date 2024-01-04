@@ -63,8 +63,7 @@ public class JDStatementExceptions extends JDTestcase {
     super(systemObject, "JDStatementExceptions", namesAndVars, runMode,
         fileOutputStream, password);
     pwrSysUserID_ = pwrSysUserID;
-    pwrSysPasswordFile_ = pwrSysPassword;
-    pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPasswordFile_);
+    pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPassword);
   }
 
   /**

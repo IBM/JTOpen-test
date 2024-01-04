@@ -49,6 +49,7 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.ISeriesNetServer;
 import com.ibm.as400.access.ISeriesNetServerFileShare;
 
@@ -165,15 +166,13 @@ private static Blob blob;
   }
 
   private static void setupJdbcConnection(String system, String userId, char[] encryptedPassword) throws SQLException {
-	  
-	  char[] charPassword = PasswordVault.decryptPassword(encryptedPassword); 
-	    // For now use the string.. In the future, this will be removed. 
-	    String password = new String(charPassword); 
-	     PasswordVault.clearPassword(charPassword);
-	  jdbcConnection_ = DriverManager.getConnection("jdbc:as400:"+system, userId, password); 
 
-	
-}
+    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword);
+    AS400JDBCDriver driver = new AS400JDBCDriver();
+    jdbcConnection_ = driver.connect("jdbc:as400:" + system, userId, charPassword);
+    PasswordVault.clearPassword(charPassword);
+
+  }
 
 public static void deleteFile(String system, String userId, char[] encryptedPassword,
       String filename) throws Exception {

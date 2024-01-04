@@ -1405,23 +1405,20 @@ public abstract class JDTestDriver extends TestDriver {
       if (testInfo == null)
 	  testInfo = calculateTestInfoFromStack();
 
-    // TODO:  Do not connect using driverManager for native Driver
-      char[] pwdChars = PasswordVault.decryptPassword(encryptedPwd);
       url = fixupUrl(url);
 
       Connection connection = null;
       if ((driver_ == DRIVER_NATIVE) || (driver_ == DRIVER_NATIVE_RMI)) {
 	  if (connType_ == Testcase.CONN_DEFAULT) {
-	      String pwd = new String(pwdChars);
+	      String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd); 
 	      try { 
 		  connection = DriverManager.getConnection(url, uid, pwd);
 	      } catch (SQLException sqlex) {
 		  System.out.println("Error connecting with "+url+" "+uid+" "+pwd); 
-		  PasswordVault.clearPassword(pwdChars); 
 		  throw sqlex; 
 	      }
 	  } else {
-	      String pwd = new String(pwdChars);
+	    String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd); 
 	      JDTestDriver_NativeDriverMethods nativeDriverMethods = new JDTestDriver_NativeDriverMethods();
 	      nativeDriverMethods.setDefSchemaSet(defSchemaSet);
 	      connection = nativeDriverMethods.getConnection(url, uid, pwd, driver_,
@@ -1456,7 +1453,7 @@ public abstract class JDTestDriver extends TestDriver {
 		  url = url.substring(0, removeIndex + 1)
 		    + url.substring(removeIndex + 2);
 	      }
-	      String pwd = new String(pwdChars);
+              String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd); 
 
 	      System.out.println("Connecting using jcc to " + url + " using " + uid
 				 + " pwd=" + pwd);
@@ -1486,8 +1483,10 @@ public abstract class JDTestDriver extends TestDriver {
         }
 
         if (url.indexOf(":as400:") > 0) {
-
+          // TODO:  Do not connect using driverManager for native Driver
+          char[] pwdChars = PasswordVault.decryptPassword(encryptedPwd);
           connection = as400JdbcDriver_.connect(url, uid, pwdChars);
+          PasswordVault.clearPassword(pwdChars); 
 
         } else {
           throw new Exception(":as400: not in url: " + url);
@@ -1495,7 +1494,6 @@ public abstract class JDTestDriver extends TestDriver {
 
       }
     }
-    PasswordVault.clearPassword(pwdChars); 
     postConnectProcessing(connection, testInfo);
     return connection;
   }

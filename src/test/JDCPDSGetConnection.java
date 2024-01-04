@@ -164,7 +164,9 @@ getConnection() - Should work when the valid databasename is set.
             try {
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
 		JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser",userId_);
-		JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",passwordFile_);
+		char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+		JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",charPassword);
+		PasswordVault.clearPassword(charPassword);
 
 
                 pc = connectionPoolDataSource_.getPooledConnection();
@@ -195,8 +197,10 @@ getConnection(userid,pwd) - Should throw an exception when the userid is not val
             try {
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser","invalidusername");
-                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",passwordFile_);
-                
+                char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",charPassword);
+                PasswordVault.clearPassword(charPassword);
+                  
 
                 pc = connectionPoolDataSource_.getPooledConnection();
                 pc.getConnection();
@@ -240,7 +244,9 @@ getConnection(userid,pwd) - Should work with valid userid,pwd.
             try {
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser",userId_);
-                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",passwordFile_);
+                char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",charPassword);
+                PasswordVault.clearPassword(charPassword);
 
                 pc =connectionPoolDataSource_.getPooledConnection();
                 Connection conn_ = pc.getConnection();

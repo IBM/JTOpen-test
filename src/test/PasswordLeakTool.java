@@ -226,6 +226,8 @@ public class PasswordLeakTool {
               System.out.println("DEBUG: -----------------------------");
             }
             if (data.indexOf("#0") >= 0) {
+              sb.append("Found "+searchHexStrings[j]+" in heap #"+i+"\n"); 
+              sb.append("Find command="+findCommand+"\n"); 
               sb.append(data);
             }
           }
@@ -452,6 +454,10 @@ public class PasswordLeakTool {
         "                    i.e.  AS400JAVACONNECT sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
         "                    i.e.  AS400JAVADATASOURCE sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+    System.out.println(
+        "                    i.e.  AS400JAVAJDBC sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+    System.out.println(
+        "                    i.e.  DB2JAVAJDBC sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
 
   }
 
@@ -549,6 +555,27 @@ public class PasswordLeakTool {
 
           AS400JDBCDriver driver = new AS400JDBCDriver(); 
           Connection c = driver.connect("jdbc:as400:"+args[i],  "JAVA", passwordArray);
+          Arrays.fill(passwordArray, '\0');
+          Statement s = c.createStatement(); 
+          ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
+          rs.next(); 
+          String currentUser = rs.getString(1); 
+          System.out.println("JDBC connection to "+args[i]+" created and CURRENT USER is "+currentUser); 
+          
+        } else if (command.equalsIgnoreCase("DB2JAVAJDBC")) {
+          i++;
+          char[] passwordArray = new char[8];
+          passwordArray[4] = 't';
+          passwordArray[5] = 'e';
+          passwordArray[6] = 'a';
+          passwordArray[7] = 'm';
+          passwordArray[0] = 'j';
+          passwordArray[1] = '8';
+          passwordArray[2] = 'v';
+          passwordArray[3] = 'a';
+
+          Object driver = JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
+          Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", "jdbc:as400:"+args[i],  "JAVA", passwordArray);
           Arrays.fill(passwordArray, '\0');
           Statement s = c.createStatement(); 
           ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 

@@ -47,7 +47,7 @@ public class NetServerConnectionTestcase extends Testcase
 
         pwrSys_ = pwrSys;
 	pwrSysUserID_ = pwrUserid;
-	pwrSysPasswordFile_ = pwrPassword; 
+	
 	pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrPassword); 
 
     }
