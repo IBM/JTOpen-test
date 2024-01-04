@@ -81,7 +81,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
         pwrSysUserID_ = pwrUID;   //@H2A
-        pwrSysPasswordFile_ = pwrPwd;   //@H2A
         pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrPwd); 
     }
 

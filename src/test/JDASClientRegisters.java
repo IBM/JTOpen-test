@@ -51,7 +51,7 @@ public class JDASClientRegisters extends JDASTestcase {
   public void setup() {
     systemName = systemObject_.getSystemName(); 
     password="PasswordLeak.JDASClientRegisters"; 
-    password = new String(PasswordVault.decryptPassword(encryptedPassword_)); 
+    password = PasswordVault.decryptPasswordLeak(encryptedPassword_); 
 
   }
 

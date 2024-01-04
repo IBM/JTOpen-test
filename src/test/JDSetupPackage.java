@@ -137,11 +137,8 @@ public class JDSetupPackage
         Properties properties = new Properties ();
         properties.put ("user", systemObject.getUserId ());
         String password = "passwordLeak.JDSetupPackage"; 
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword); 
-        // For now use the string.. In the future, this will be removed. 
-        password = new String(charPassword); 
-        PasswordVault.clearPassword(charPassword);
-
+        password = PasswordVault.decryptPasswordLeak(encryptedPassword); 
+ 
         properties.put ("password", password);
         properties.put ("extended dynamic", "true");
         properties.put ("package", packageName);

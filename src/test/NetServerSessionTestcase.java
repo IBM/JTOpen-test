@@ -46,8 +46,8 @@ public class NetServerSessionTestcase extends Testcase
         super(systemObject, "NetServerSessionTestcase", namesAndVars, runMode, fileOutputStream, password);
         pwrSys_ = pwrSys;                                     //@A1A
 	pwrSysUserID_ = pwrUserid;
-	pwrSysPasswordFile_ = pwrPassword; 
-	pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPasswordFile_);
+	
+	pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrPassword);
     }
 
     /**

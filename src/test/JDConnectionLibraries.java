@@ -67,7 +67,6 @@ extends JDTestcase implements TimeoutThreadCallback {
     super(systemObject, "JDConnectionLibraries", namesAndVars, runMode,
         fileOutputStream, password);
     pwrSysUserID_ = pwrUserId; // @C1A
-    pwrSysPasswordFile_ = pwrPwd; // @C1A
     pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrPwd);
 
 	}

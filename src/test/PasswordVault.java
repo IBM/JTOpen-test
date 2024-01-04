@@ -29,15 +29,15 @@ import java.util.Hashtable;
 public class PasswordVault {
   static Hashtable systemToUser = new Hashtable();
 
-	public static void setPassword(String system, String userid, char[] password) {
-		char[] encryptedPassword = encryptPassword(password);
-		Hashtable userToPassword = (Hashtable) systemToUser.get(system);
-		if (userToPassword == null) {
-			userToPassword = new Hashtable();
-			systemToUser.put(system, userToPassword);
-		}
-		userToPassword.put(userid, encryptedPassword);
-	}
+  public static void setPassword(String system, String userid, char[] password) {
+    char[] encryptedPassword = encryptPassword(password);
+    Hashtable userToPassword = (Hashtable) systemToUser.get(system);
+    if (userToPassword == null) {
+      userToPassword = new Hashtable();
+      systemToUser.put(system, userToPassword);
+    }
+    userToPassword.put(userid, encryptedPassword);
+  }
 
   public static void setPasswordFromIniFile(String system, String userid,
       String passwordFile) throws Exception {
@@ -64,7 +64,8 @@ public class PasswordVault {
     }
     // Determine the actual length
     setPassword(system, userid, password);
-
+    clearPassword(buffer); 
+    clearPassword(password);
   }
 
   /* Portability for use to get old password or new password from file */

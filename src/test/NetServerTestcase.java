@@ -48,8 +48,8 @@ public class NetServerTestcase extends Testcase
         super(systemObject, "NetServerTestcase", namesAndVars, runMode, fileOutputStream, password);
         pwrSys_ = pwrSys;
 	pwrSysUserID_ = pwrUserid;
-	pwrSysPasswordFile_ = pwrPassword; 
-  pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPasswordFile_);
+	
+  pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrPassword);
         if(pwrSys == null)
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
 

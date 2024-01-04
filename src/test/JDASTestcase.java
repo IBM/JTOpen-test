@@ -2561,7 +2561,6 @@ public class JDASTestcase extends JDTestcase {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
  password);
     pwrSysUserID_ = pwrSysUserID;
-    pwrSysPasswordFile_ = pwrSysPassword;
     pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPassword); 
   }
 
@@ -2644,7 +2643,6 @@ public class JDASTestcase extends JDTestcase {
    
    AS400JDBCDataSource ds = new AS400JDBCDataSource(system, systemObject_.getUserId(), 
        PasswordVault.decryptPassword(encryptedPassword_));
-   // jdbc:as400://sq740.rch.stglabs.ibm.com;user=EBERHARD;password=tim8soup;enableClientAffinitiesList=1;transaction isolation=serializable
    
    Enumeration e = h.keys(); 
    while (e.hasMoreElements()) { 

@@ -1278,12 +1278,12 @@ public class JDStatementStressTest extends JDTestcase {
     if (getDriver() == JDTestDriver.DRIVER_JCC) {
       // JCC doesn't have these properties
       connection_ = DriverManager.getConnection(baseURL_,
-          systemObject_.getUserId(),  new String(PasswordVault.decryptPassword(encryptedPassword_)));
+          systemObject_.getUserId(),  PasswordVault.decryptPasswordLeak(encryptedPassword_));
 
     } else {
       connection_ = DriverManager.getConnection(
           baseURL_ + ";errors=full;lazy close=true", systemObject_.getUserId(),
-           new String(PasswordVault.decryptPassword(encryptedPassword_)));
+          PasswordVault.decryptPasswordLeak(encryptedPassword_));
     }
 
     statement_ = connection_.createStatement();

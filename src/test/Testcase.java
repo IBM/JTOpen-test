@@ -109,8 +109,6 @@ public abstract class Testcase {
   /* At the testcase level, the password should be passed as a .txt file from */
   /* which the password will be read to get the encrypted password */
   /* In the constructors, a string password will continue to be passed */ 
-  /* private String password_ = null;  */
-  protected String passwordFile_ = null; 
   protected char[] encryptedPassword_ = null ;
   protected String proxy_ = "";
   protected int runMode_ = BOTH;
@@ -119,8 +117,6 @@ public abstract class Testcase {
   protected AS400 sameSys_ = null; // system object that shares the same id as
                                    // the current user id
   protected String pwrSysUserID_ = null;
-  /* protected String pwrSysPassword_ = null; */
-  protected String pwrSysPasswordFile_ = null;
   protected char[] pwrSysEncryptedPassword_ = null;
   protected Vector variationsToRun_ = null;
   protected boolean mustUseSockets_ = false;
@@ -283,7 +279,6 @@ public abstract class Testcase {
       String password, AS400 pwrSys, String pwrSysPwd) {
     this(system, name, (Vector) namesAndVars.get(name), runMode,
         fileOutputStream,  password);
-    pwrSysPasswordFile_ = pwrSysPwd;
     pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPwd);
     pwrSys_ = pwrSys;
     if (pwrSys_ != null) {
@@ -487,7 +482,6 @@ public abstract class Testcase {
         fileOutputStream,  password);
     pwrSysUserID_ = pwrSysUid;
     pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPwd);
-    pwrSysPasswordFile_ = pwrSysPwd;
     char[] pwrSysPasswordChars = PasswordVault.decryptPassword(pwrSysEncryptedPassword_); 
     pwrSys_ = new AS400(systemObject_.getSystemName(), pwrSysUserID_, pwrSysPasswordChars);
     PasswordVault.clearPassword(pwrSysPasswordChars); 
@@ -534,8 +528,6 @@ public abstract class Testcase {
     else
       out = new TestOutput();
     output_ = new PrintWriter(out, true);
-    /* password_ = password;  */
-    passwordFile_ = password; 
     encryptedPassword_ = PasswordVault.getEncryptedPassword(password);
 
     testLib_ = null;
@@ -2334,8 +2326,6 @@ public abstract class Testcase {
 
     systemName_ = systemName;
     userId_ = userId;
-    /* password_ = password;  */ 
-    passwordFile_ = password;
     encryptedPassword_ = PasswordVault.getEncryptedPassword(password);
     proxy_ = proxy;
     mustUseSockets_ = mustUseSockets;
@@ -2385,7 +2375,6 @@ public abstract class Testcase {
         mustUseSockets, isNative, isLocal, onAS400, namesAndVars, runMode,
         fileOutputStream);
     pwrSysUserID_ = pwrSysUserID;
-    pwrSysPasswordFile_ = pwrSysPassword;
     pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPassword);
 
   }
