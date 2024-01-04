@@ -1611,13 +1611,20 @@ public class JDReport {
       }
 
       String USERID = iniProperties.getProperty("USERID");
+      char[] encryptedPassword; 
+      {
       String PASSWORD = JDRunit.getPropertyPassword(USERID); 
       if (PASSWORD == null) PASSWORD = iniProperties.getProperty("PASSWORD");
-
+      encryptedPassword = PasswordVault.getEncryptedPassword(PASSWORD);
+      }
+      
       String MASTERUSERID = iniProperties.getProperty("MASTERUSERID");
-      String MASTERPASSWORD = JDRunit.getPropertyPassword(MASTERUSERID); 
-      if (MASTERPASSWORD == null) MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
-
+      char[] encryptedMasterPassword; 
+      {
+        String MASTERPASSWORD = JDRunit.getPropertyPassword(MASTERUSERID); 
+        if (MASTERPASSWORD == null) MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
+        encryptedMasterPassword = PasswordVault.getEncryptedPassword(MASTERPASSWORD); 
+      } 
       String description = (String) iniProperties.get("description");
       if (description == null) {
         description = "Description not set in runit" + initials + ".ini";
@@ -1704,6 +1711,8 @@ public class JDReport {
 
       if (on400) {
         Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
+        String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
+        String MASTERPASSWORD = PasswordVault.decryptPasswordLeak(encryptedMasterPassword) ; 
         try {
           connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,
               PASSWORD);
@@ -1771,6 +1780,8 @@ public class JDReport {
           }
           System.out.println("-------------");
         }
+        String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
+        String MASTERPASSWORD = PasswordVault.decryptPasswordLeak(encryptedMasterPassword) ; 
 
         try {
           System.out.println("Connecting to " + AS400);
