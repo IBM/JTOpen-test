@@ -1500,9 +1500,12 @@ public abstract class JDTestDriver extends TestDriver {
         }
 
         if (url.indexOf(":as400:") > 0) {
-          // TODO:  Do not connect using driverManager for native Driver
           char[] pwdChars = PasswordVault.decryptPassword(encryptedPwd);
-          connection = as400JdbcDriver_.connect(url, uid, pwdChars);
+          try { 
+            connection = as400JdbcDriver_.connect(url, uid, pwdChars);
+          } catch (Exception e) { 
+            System.out.println("Unable to connect using as400JdbcDriver_.connect("+url+","+uid+","+new String(pwdChars)+")"); 
+          }
           PasswordVault.clearPassword(pwdChars); 
 
         } else {
