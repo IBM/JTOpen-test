@@ -1400,6 +1400,25 @@ public abstract class JDTestDriver extends TestDriver {
     return getConnection(url, uid, encryptedPwd, null);
   }
 
+  /** Attempt to get a native connection using an encrypted password.  If fails, fails back to non-secure DriverManager 
+   * @throws SQLException */ 
+  public static Connection getNativeConnection(String url, String uid, char[] encryptedPwd) throws SQLException {
+    Connection connection = null;
+    try {
+      Object nativeDriver = JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
+      char[] pwdChars = PasswordVault.decryptPassword(encryptedPwd);
+      connection = (Connection) JDReflectionUtil.callMethod_O(nativeDriver, "connect", url, uid, pwdChars);
+      PasswordVault.clearPassword(pwdChars);
+    } catch (Exception e) {
+      System.out.println("Warning: unable to get native connection using secure password");
+      e.printStackTrace(System.out);
+      String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd);
+      connection = DriverManager.getConnection(url, uid, pwd);
+
+    }
+    return connection;
+  }
+
   public Connection getConnection(String url, String uid, char[] encryptedPwd,
 				  String testInfo) throws Exception {
       if (testInfo == null)
@@ -1410,18 +1429,16 @@ public abstract class JDTestDriver extends TestDriver {
       Connection connection = null;
       if ((driver_ == DRIVER_NATIVE) || (driver_ == DRIVER_NATIVE_RMI)) {
 	  if (connType_ == Testcase.CONN_DEFAULT) {
-	      String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd); 
 	      try { 
-		  connection = DriverManager.getConnection(url, uid, pwd);
+		  connection = getNativeConnection(url, uid, encryptedPwd);
 	      } catch (SQLException sqlex) {
 		  System.out.println("Error connecting with "+url+" "+uid+" "+pwd); 
 		  throw sqlex; 
 	      }
 	  } else {
-	    String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd); 
 	      JDTestDriver_NativeDriverMethods nativeDriverMethods = new JDTestDriver_NativeDriverMethods();
 	      nativeDriverMethods.setDefSchemaSet(defSchemaSet);
-	      connection = nativeDriverMethods.getConnection(url, uid, pwd, driver_,
+	      connection = nativeDriverMethods.getConnection(url, uid, encryptedPwd, driver_,
 							     connType_);
 	      defSchemaSet = nativeDriverMethods.getDefSchemaSet();
 

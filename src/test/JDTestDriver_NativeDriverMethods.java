@@ -275,17 +275,29 @@ for default testing. Else returns pooled or XA connection
 @exception  Exception  If an exception occurs.
 **/
 
-   public Connection getConnection (String url, String uid, String pwd, int driver, int connectionType) throws Exception
+   public Connection getConnection (String url, String uid, char[] encryptedPassword, int driver, int connectionType) throws Exception
    {
       int connType_ = connectionType;
 
          if (connType_ == Testcase.CONN_POOLED)
          {
+             char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword);
         	 Object dataSource = JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2ConnectionPoolDataSource"); 
         	 JDReflectionUtil.callMethod_V(dataSource,  "setDataSourceName","JDTestDriver");
         	 JDReflectionUtil.callMethod_V(dataSource,  "setDescription","JDBC Test Bucket, Pooled Connection Option");
             setDataSourceProperty(dataSource, "user", uid);
-            setDataSourceProperty(dataSource, "password", pwd);
+            try {
+              JDReflectionUtil.callMethod_V(dataSource, "setPassword",passwordChars);
+            } catch (Exception ex) { 
+              System.out.println("Warning: unable to get native pooled connection using secure password");
+              ex.printStackTrace(System.out);
+              String pwd = PasswordVault.decryptPasswordLeak(encryptedPassword); 
+              setDataSourceProperty(dataSource, "password", pwd);
+            } finally {
+              PasswordVault.clearPassword(passwordChars);; 
+            }
+            
+            
             if (handleURLProcessing(url, dataSource)) {
             	Object pooledConn = JDReflectionUtil.callMethod_O(dataSource, "getPooledConnection"); 
                
@@ -327,7 +339,18 @@ for default testing. Else returns pooled or XA connection
             JDReflectionUtil.callMethod_V(xaDS,  "setDescription", "JDBC Test Bucket, Transaction Option");
 
             setDataSourceProperty(xaDS, "user", uid);
-            setDataSourceProperty(xaDS, "password", pwd);
+            char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword);
+            try {
+              JDReflectionUtil.callMethod_V(xaDS, "setPassword",passwordChars);
+            } catch (Exception ex) { 
+              System.out.println("Warning: unable to get native XA connection using secure password");
+              ex.printStackTrace(System.out);
+              String pwd = PasswordVault.decryptPasswordLeak(encryptedPassword); 
+              setDataSourceProperty(xaDS, "password", pwd);
+            } finally {
+              PasswordVault.clearPassword(passwordChars);; 
+            }
+            
             if (handleURLProcessing(url, xaDS)) {
             	Object xaConn = JDReflectionUtil.callMethod_O(xaDS,  "getXAConnection"); 
                // Add a listener that always closes the connections so that
