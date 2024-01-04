@@ -14,6 +14,7 @@
 package test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -28,7 +29,8 @@ import java.util.Hashtable;
 
 public class PasswordVault {
   static Hashtable systemToUser = new Hashtable();
-
+  static Hashtable encryptedHashtable = new Hashtable(); 
+  
   public static void setPassword(String system, String userid, char[] password) {
     char[] encryptedPassword = encryptPassword(password);
     Hashtable userToPassword = (Hashtable) systemToUser.get(system);
@@ -41,71 +43,57 @@ public class PasswordVault {
 
   public static void setPasswordFromIniFile(String system, String userid,
       String passwordFile) throws Exception {
-    // Open the file and read the chars. Assumes 7 bit ASCII.
-    char[] password = null;
-    File file = new File("ini/" + passwordFile);
-    if (!file.exists()) {
-      throw new Exception(
-          "Password file " + file.getAbsolutePath() + " does not exist");
-    }
-
-    FileReader fileReader = new FileReader(file);
-    char[] buffer = new char[80];
-    int maxLen = fileReader.read(buffer);
-    int len = 0;
-
-    while (len < maxLen && (buffer[len] >= 0x20)) {
-      len++;
-    }
-    ;
-    password = new char[len];
-    for (int i = 0; i < len; i++) {
-      password[i] = buffer[i];
-    }
-    // Determine the actual length
+    char[] encryptedPassword = getEncryptedPassword(passwordFile); 
+    char[] password = decryptPassword(encryptedPassword); 
     setPassword(system, userid, password);
-    clearPassword(buffer); 
-    clearPassword(password);
+    clearPassword(password); 
   }
 
   /* Portability for use to get old password or new password from file */
   public static char[] getEncryptedPassword(String passwordName) {
-    
-    char[] password = null;
-    if (passwordName ==null) return null; 
-    if (passwordName.endsWith(".txt")) {
-      try {
-        File file = new File("ini/" + passwordName);
-        if (!file.exists()) {
-          throw new Exception(
-              "Password file " + file.getAbsolutePath() + " does not exist");
-        }
+    char[] encryptedPassword;
+    encryptedPassword = (char[]) encryptedHashtable.get(passwordName);
+    if (encryptedPassword == null) {
+      char[] password = null;
+      if (passwordName == null)
+        return null;
+      if (passwordName.endsWith(".txt")) {
+        try {
+          File file = new File("ini/" + passwordName);
+          if (!file.exists()) {
+            throw new Exception("Password file " + file.getAbsolutePath() + " does not exist");
+          }
 
-        FileReader fileReader = new FileReader(file);
-        char[] buffer = new char[80];
-        int maxLen = fileReader.read(buffer);
-        fileReader.close(); 
-        int len = 0;
+          // Note: do not use a FileReader as it uses buffers that are not cleared.
+          FileInputStream fileInputStream = new FileInputStream(file);
+          char[] buffer = new char[80];
+          int len = 0;
 
-        while (len < maxLen && (buffer[len] >= 0x20)) {
-          len++;
+          int character = fileInputStream.read();
+          while (character >= 0x20 && len < buffer.length) {
+            buffer[len] = (char) character;
+            len++;
+            character = fileInputStream.read();
+          }
+          fileInputStream.close();
+
+          password = new char[len];
+          for (int i = 0; i < len; i++) {
+            password[i] = buffer[i];
+          }
+          clearPassword(buffer);
+        } catch (Exception e) {
+          e.printStackTrace(System.out);
+          password = passwordName.toCharArray();
         }
-        ;
-        password = new char[len];
-        for (int i = 0; i < len; i++) {
-          password[i] = buffer[i];
-        }
-        clearPassword(buffer);
-      } catch (Exception e) {
-        e.printStackTrace(System.out);
+      } else {
         password = passwordName.toCharArray();
       }
-    } else {
-      password = passwordName.toCharArray();
+      encryptedPassword = encryptPassword(password);
+      encryptedHashtable.put(passwordName, encryptedPassword);
+      clearPassword(password);
     }
-    char[] encryptedPassword = encryptPassword(password);
-    clearPassword(password);
-    return encryptedPassword ;
+    return encryptedPassword;
   }
 
   public static char[] getPassword(String system, String userid) {
@@ -193,6 +181,8 @@ public class PasswordVault {
     int failedCount = 0;
     for (int i = 0; i < testStrings.length; i++) {
       try {
+        // Reset the cache
+        encryptedHashtable.clear(); 
         char[] chars = testStrings[i].toCharArray();
         setPassword("as400", "JAVA", chars);
         String backPassword = new String(getPassword("as400", "JAVA"));

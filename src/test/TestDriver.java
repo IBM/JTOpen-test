@@ -941,9 +941,17 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       String filename = "/tmp/passwordLeakCoreDump8.bin";
       long startMillis = System.currentTimeMillis(); 
       PasswordLeakTool.forceDump(filename);
-      String [] passwords = new String[2]; 
-      passwords[0]=new String(PasswordVault.decryptPassword(encryptedPassword_));
-      passwords[1]=new String(PasswordVault.decryptPassword(pwrSysEncryptedPassword_));
+      String [] passwords ;
+      String password = new String(PasswordVault.decryptPassword(encryptedPassword_));
+      String pwrPassword = new String(PasswordVault.decryptPassword(pwrSysEncryptedPassword_));
+      if (password.equals(pwrPassword)) {
+        passwords = new String[1]; 
+        passwords[0]=password;
+      } else {
+        passwords = new String[2]; 
+        passwords[0]=password;
+        passwords[1]=pwrPassword;
+      }
       String leakInfo = PasswordLeakTool.scanDumpForPasswords(filename, passwords );
       if (leakInfo == null) { 
         leakFreeCount++; 

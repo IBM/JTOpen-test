@@ -226,7 +226,7 @@ public class PasswordLeakTool {
               System.out.println("DEBUG: -----------------------------");
             }
             if (data.indexOf("#0") >= 0) {
-              sb.append("Found "+searchHexStrings[j]+" in heap #"+i+"\n"); 
+              sb.append("Found "+searchHexStrings[j]+" in heap #"+i+" searchstring #"+j+" password #"+k+"\n"); 
               sb.append("Find command="+findCommand+"\n"); 
               sb.append(data);
             }
