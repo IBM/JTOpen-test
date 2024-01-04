@@ -1432,7 +1432,7 @@ public abstract class JDTestDriver extends TestDriver {
 	      try { 
 		  connection = getNativeConnection(url, uid, encryptedPwd);
 	      } catch (SQLException sqlex) {
-		  System.out.println("Error connecting with "+url+" "+uid+" "+pwd); 
+		  System.out.println("Error connecting with "+url+" "+uid); 
 		  throw sqlex; 
 	      }
 	  } else {
