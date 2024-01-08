@@ -705,7 +705,7 @@ public class JDReport {
 
     File[] files = directory.listFiles();
 
-    TreeSet sortedSet = new TreeSet();
+    TreeSet<String> sortedSet = new TreeSet<String>();
     if (files != null) {
       for (int i = 0; i < files.length; i++) {
         String name = files[i].getName();
@@ -748,7 +748,7 @@ public class JDReport {
     sb.append(formatHeader());
     sb.append("\n");
     double totalRunMinutes = 0.0;
-    Iterator iterator = sortedSet.iterator();
+    Iterator<String> iterator = sortedSet.iterator();
     while (iterator.hasNext()) {
       String next = (String) iterator.next();
       if (isMustRun(next)) {
@@ -896,6 +896,7 @@ public class JDReport {
 
     }
 
+    /*
     Timestamp jccTimestamp = null;
     Timestamp jccBuildTimestamp = null;
     String jccInfo = "No Jar Info";
@@ -913,6 +914,7 @@ public class JDReport {
       }
 
     }
+    */
 
     String[] jdbcToolboxSuffixes = { "T.html", "X.html", "I.html", "H.html",
         "Q.html", "1.html", "2.html", "P.html", };
@@ -1002,7 +1004,7 @@ public class JDReport {
 
     File[] files = directory.listFiles();
 
-    TreeSet sortedSet = new TreeSet();
+    TreeSet<String> sortedSet = new TreeSet<String>();
 
     for (int i = 0; i < files.length; i++) {
       String name = files[i].getName();
@@ -1163,7 +1165,7 @@ public class JDReport {
 
     File[] files = directory.listFiles();
 
-    TreeSet sortedSet = new TreeSet();
+    TreeSet<String> sortedSet = new TreeSet<String>();
 
     for (int i = 0; i < files.length; i++) {
       String name = files[i].getName();
@@ -1261,8 +1263,8 @@ public class JDReport {
 
     File[] files = directory.listFiles();
 
-    TreeSet sortedSet = new TreeSet();
-    TreeSet jvmSortedSet = new TreeSet();
+    TreeSet<String> sortedSet = new TreeSet<String>();
+    TreeSet<String> jvmSortedSet = new TreeSet<String>();
 
     for (int i = 0; (files != null) && (i < files.length); i++) {
       String name = files[i].getName();
@@ -1309,7 +1311,7 @@ public class JDReport {
     writer.println("<a href=\"index.html\">base view</a> ");
     writer.println("<br>");
 
-    Iterator iterator = jvmSortedSet.iterator();
+    Iterator<String> iterator = jvmSortedSet.iterator();
     while (iterator.hasNext()) {
 
       String jvm = (String) iterator.next();
@@ -1331,7 +1333,7 @@ public class JDReport {
   }
 
   // return the run minutes
-  public static double addJvmSection(PrintWriter writer, TreeSet sortedSet,
+  public static double addJvmSection(PrintWriter writer, TreeSet<String> sortedSet,
       String header, String jvm, Timestamp jarTimestamp) {
     int sectionCount = 0;
     StringBuffer sb = new StringBuffer();
@@ -1340,7 +1342,7 @@ public class JDReport {
     sb.append("<table border>\n");
     sb.append(formatHeader());
     sb.append("\n");
-    Iterator iterator = sortedSet.iterator();
+    Iterator<String> iterator = sortedSet.iterator();
     while (iterator.hasNext()) {
       String next = (String) iterator.next();
       // System.out.println("... looking at "+next);
@@ -1373,7 +1375,7 @@ public class JDReport {
   }
 
   // return the run minutes
-  public static double addSection(PrintWriter writer, TreeSet sortedSet,
+  public static double addSection(PrintWriter writer, TreeSet<String> sortedSet,
       String header, String[] suffixes, Timestamp jarTimestamp) {
     int sectionCount = 0;
     StringBuffer sb = new StringBuffer();
@@ -1382,7 +1384,7 @@ public class JDReport {
     sb.append("<table border>\n");
     sb.append(formatHeader());
     sb.append("\n");
-    Iterator iterator = sortedSet.iterator();
+    Iterator<String> iterator = sortedSet.iterator();
     while (iterator.hasNext()) {
       String next = (String) iterator.next();
       for (int i = 0; i < suffixes.length; i++) {
@@ -1565,7 +1567,7 @@ public class JDReport {
 
   public static Timestamp getBuildTimestamp(File inJarFile) throws IOException {
     JarFile jarfile = new JarFile(inJarFile);
-    Enumeration entries = jarfile.entries();
+    Enumeration<?> entries = jarfile.entries();
     long maxTime = 0;
     while (entries.hasMoreElements()) {
       JarEntry entry = (JarEntry) entries.nextElement();
@@ -1573,6 +1575,7 @@ public class JDReport {
       if (entryTime > maxTime)
         maxTime = entryTime;
     }
+    jarfile.close(); 
     return new Timestamp(maxTime);
   }
 
@@ -1583,7 +1586,7 @@ public class JDReport {
       boolean resetRegression = false;
       long regressionDays = 0;
       long regressionEarliestTime = 0;
-      Vector newRunitOut = null;
+      Vector<String> newRunitOut = null;
       ClassLoader loader = null;
       Driver driver = null;
       boolean on400 = false;
@@ -1604,7 +1607,7 @@ public class JDReport {
               - regressionDays * 24 * 60 * 60 * 1000;
           Timestamp ts = new Timestamp(regressionEarliestTime);
           System.out.println("Keeping older than " + ts);
-          newRunitOut = new Vector();
+          newRunitOut = new Vector<String>();
         } else {
           throw new Exception("Unrecognized option " + args[1]);
         }
@@ -1712,7 +1715,6 @@ public class JDReport {
       if (on400) {
         Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
         String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
-        String MASTERPASSWORD = PasswordVault.decryptPasswordLeak(encryptedMasterPassword) ; 
         try {
           connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,
               PASSWORD);
@@ -1758,12 +1760,12 @@ public class JDReport {
           }
 
           loader = new URLClassLoader(urls);
-          Class driverClass = loader
+          Class<?> driverClass = loader
               .loadClass("com.ibm.as400.access.AS400JDBCDriver");
 
-          Class[] parameterTypes = new Class[0];
+          Class<?>[] parameterTypes = new Class<?>[0];
 
-          Constructor driverConstructor = driverClass
+          Constructor<?> driverConstructor = driverClass
               .getConstructor(parameterTypes);
 
           Object[] parameters = new Object[0];
@@ -1773,7 +1775,7 @@ public class JDReport {
           System.out.println("Registering driver " + driver);
           DriverManager.registerDriver(driver);
           System.out.println("Registered drivers");
-          Enumeration enumeration = DriverManager.getDrivers();
+          Enumeration<?> enumeration = DriverManager.getDrivers();
           while (enumeration.hasMoreElements()) {
             Object x = enumeration.nextElement();
             System.out.println(x);
@@ -1781,7 +1783,6 @@ public class JDReport {
           System.out.println("-------------");
         }
         String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
-        String MASTERPASSWORD = PasswordVault.decryptPasswordLeak(encryptedMasterPassword) ; 
 
         try {
           System.out.println("Connecting to " + AS400);
@@ -1797,7 +1798,7 @@ public class JDReport {
             System.out.println("Unable to find driver");
             sqlex.printStackTrace(System.out);
             System.out.println("loaded drivers are ");
-            Enumeration enumeration = DriverManager.getDrivers();
+            Enumeration<?> enumeration = DriverManager.getDrivers();
             while (enumeration.hasMoreElements()) {
               Object x = enumeration.nextElement();
               System.out.println(x);
@@ -2183,7 +2184,7 @@ public class JDReport {
           + " (NOTATT ASC , SYSTEM ASC , TESTCASE ASC ) WITH 0 DISTINCT VALUES");
 
       /* read the current list of inserted entries from rawfile */
-      Hashtable insertedHashtable = new Hashtable();
+      Hashtable<String, Hashtable<Timestamp, Timestamp>> insertedHashtable = new Hashtable<String, Hashtable<Timestamp, Timestamp>>();
 
       rs = exQ(writer, s,
           "select FINISHTIME, TESTCASE from " + SCHEMA + "." + rawfile);
@@ -2191,9 +2192,9 @@ public class JDReport {
         Timestamp ts = rs.getTimestamp(1);
         String testcase = rs.getString(2);
 
-        Hashtable h2 = (Hashtable) insertedHashtable.get(testcase);
+        Hashtable<Timestamp, Timestamp> h2 = (Hashtable<Timestamp, Timestamp>) insertedHashtable.get(testcase);
         if (h2 == null) {
-          h2 = new Hashtable();
+          h2 = new Hashtable<Timestamp, Timestamp>();
           insertedHashtable.put(testcase, h2);
         }
         h2.put(ts, ts);
@@ -2324,7 +2325,7 @@ public class JDReport {
                               }
                             }
                             boolean found = false;
-                            Hashtable ht = (Hashtable) insertedHashtable
+                            Hashtable<Timestamp, Timestamp> ht = (Hashtable<Timestamp,Timestamp>) insertedHashtable
                                 .get(testcase);
                             if (ht != null) {
                               Object x = ht.get(ts);
@@ -2336,7 +2337,7 @@ public class JDReport {
                                 found = true;
                               }
                             } else {
-                              ht = new Hashtable();
+                              ht = new Hashtable<Timestamp, Timestamp>();
                               insertedHashtable.put(testcase, ht);
                             }
                             if (!found) {
@@ -2429,7 +2430,7 @@ public class JDReport {
         PrintWriter fileWriter = new PrintWriter(
             new FileWriter(outfile + ".new"));
         if (newRunitOut != null) {
-          Enumeration enumeration = newRunitOut.elements();
+          Enumeration<String> enumeration = newRunitOut.elements();
           while (enumeration.hasMoreElements()) {
             fileWriter.println(enumeration.nextElement());
           }

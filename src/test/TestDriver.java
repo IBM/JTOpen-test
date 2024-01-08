@@ -33,14 +33,12 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.Date; 
 import java.util.jar.*;
-import java.net.*;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.SecureAS400;
 import com.ibm.as400.access.Trace;
-import com.ibm.as400.data.PcmlMessageLog;
 
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 
@@ -108,17 +106,17 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   protected String outputFileName_ = null;
   // Set of Testcase objects for this component. This is filled in by the
   // createTestcases() method.
-  protected Vector testcases_ = new Vector();
-  protected Vector skipTestcases_ = new Vector();
-  Vector testcaseResults = new Vector();
-  static Vector staticTestcaseResults = new Vector();
+  protected Vector<Testcase> testcases_ = new Vector<Testcase>();
+  protected Vector<String> skipTestcases_ = new Vector<String>();
+  Vector<String[]> testcaseResults = new Vector<String[]>();
+  static Vector<String[]> staticTestcaseResults = new Vector<String[]>();
   // The following set of variables are passed to each testcase when running it.
   protected FileOutputStream fileOutputStream_ = null;
   protected String misc_ = null;
   protected String asp_ = null;
   // Testcase names and variations to run. Key is the testcase name, elements
   // are an array of variations to run.
-  protected Hashtable namesAndVars_ = new Hashtable();
+  protected Hashtable<String, Vector<String>> namesAndVars_ = new Hashtable<String, Vector<String>>();
   protected String systemName_ = null;
   // RDB to use for remote access testing
   protected String rdbName_ = null;
@@ -389,9 +387,9 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     pwrSysUserID_ = null;
     pwrSysPassword_ = null;
     pwrSysEncryptedPassword_ = null;
-    namesAndVars_ = new Hashtable();
-    testcases_ = new Vector();
-    skipTestcases_ = new Vector();
+    namesAndVars_ = new Hashtable<String, Vector<String>>();
+    testcases_ = new Vector<Testcase>();
+    skipTestcases_ = new Vector<String>();
     outputFileName_ = null;
     fileOutputStream_ = null;
     noThreads_ = false;
@@ -413,7 +411,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
     // Parse the command line parameters.
     String name = null;
-    Vector variations = null;
+    Vector<String> variations = null;
     StringTokenizer vars = null;
     int state = START;
     for (int i = 0; i < args.length; ++i) {
@@ -532,13 +530,13 @@ public abstract class TestDriver implements TestDriverI, Runnable,
           state = PARSE_VARIATIONS;
         } else {
           // Add last testcase with no vars.
-          namesAndVars_.put(name, new Vector());
+          namesAndVars_.put(name, new Vector<String>());
           state = START;
           --i; // Reparse this token.
         }
         break;
       case PARSE_VARIATIONS:
-        variations = new Vector();
+        variations = new Vector<String>();
         vars = new StringTokenizer(arg, ",");
         while (vars.hasMoreTokens()) {
           String token = vars.nextToken();
@@ -595,10 +593,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
           else if (category.equalsIgnoreCase("information"))
             Trace.setTraceInformationOn(true);
           else if (category.equalsIgnoreCase("jdbc")) {
-            java.sql.DriverManager.setLogStream(System.out);
-            // Note: The above method is deprecated starting in JDK 1.2.
-            // However, JDK 1.2 isn't yet available for AIX, so for now
-            // keep using it.
+            Trace.setTraceJDBCOn(true);
           } else if (category.equalsIgnoreCase("proxy"))
             Trace.setTraceProxyOn(true);
           else if (category.equalsIgnoreCase("warning"))
@@ -608,8 +603,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
           else if (category.equalsIgnoreCase("thread"))
             Trace.setTraceThreadOn(true);
           else if (category.equalsIgnoreCase("pcml")) {
-            PcmlMessageLog.setTraceEnabled(true);
-            PcmlMessageLog.setLogStream(System.out);
+            Trace.setTracePCMLOn(true);; 
           } else if (category.equalsIgnoreCase("all"))
             Trace.setTraceAllOn(true);
           else
@@ -680,7 +674,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     // Throw an exception if an argument specification is incomplete.
     switch (state) {
     case CHECK_FOR_VARIATIONS:
-      namesAndVars_.put(name, new Vector()); // Add last testcase with no vars.
+      namesAndVars_.put(name, new Vector<String>()); // Add last testcase with no vars.
       break;
     case PARSE_SYSTEM:
       throw new Exception("Incomplete system name specification.");
@@ -792,7 +786,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     createTestcases();
 
     // Report invalid testcase names.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();) {
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();) {
       out_.println("TestDriver:  Testcase " + e.nextElement() + " not found.");
     }
 
@@ -871,7 +865,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
     // Run each testcase.
     try {
-      for (Enumeration e = testcases_.elements(); e.hasMoreElements();) {
+      for (Enumeration<Testcase> e = testcases_.elements(); e.hasMoreElements();) {
         Testcase tc = (Testcase) e.nextElement();
         start_ = System.currentTimeMillis();
         tc.run();
@@ -912,7 +906,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     }
 
     // Output status for each testcase.
-    for (Enumeration e = testcases_.elements(); e.hasMoreElements();) {
+    for (Enumeration<Testcase> e = testcases_.elements(); e.hasMoreElements();) {
       Testcase tc = (Testcase) e.nextElement();
       tc.outputResults();
       // Also add the number from each testcase (e.g JDConnectionClose) to the
@@ -982,7 +976,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
     // Record the skipped testcases
 
-    for (Enumeration e = skipTestcases_.elements(); e.hasMoreElements();) {
+    for (Enumeration<String> e = skipTestcases_.elements(); e.hasMoreElements();) {
       String tc = (String) e.nextElement();
 
       totalTime_ += 0;
@@ -1236,12 +1230,13 @@ public abstract class TestDriver implements TestDriverI, Runnable,
         Date classDate = new Date(jarEntry.getTime());
         out_.println("TOOLBOX BUILD DATE   = "
             + TestDriverStatic.timeStampFormatter_.format(classDate));
+        jarFile.close(); 
       } catch (Exception e) {
       }
     }
 
     try {
-      Class driver = Class.forName("com.ibm.as400.access.AS400JDBCDriver");
+      Class<?> driver = Class.forName("com.ibm.as400.access.AS400JDBCDriver");
       Field majorVersion = driver.getDeclaredField("JDBC_MAJOR_VERSION_");
       Field minorVersion = driver.getDeclaredField("JDBC_MINOR_VERSION_");
       out_.println("JDBC VERSION         = " + majorVersion.getInt(null) + "."
@@ -1263,6 +1258,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
         Date classDate = new Date(jarEntry.getTime());
         out_.println("TEST JAR BUILD DATE  = "
             + TestDriverStatic.timeStampFormatter_.format(classDate));
+        jarFile.close(); 
       } catch (Exception e) {
       }
     }
@@ -1288,6 +1284,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
             Date classDate = new Date(jarEntry.getTime());
             out_.println("NATIVE BUILD DATE   = "
                 + TestDriverStatic.timeStampFormatter_.format(classDate));
+            jarFile.close(); 
           }
         } catch (Exception e) {
 
@@ -1297,7 +1294,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       }
 
       try {
-        Class driver = Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
+        Class<?> driver = Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
         Field releaseString = driver.getDeclaredField("RELEASE_STRING");
         out_.println("NATIVE JDBC VERSION = " + releaseString.get(null));
       } catch (Exception e) {
@@ -1522,7 +1519,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     return isExtendedDynamic_;
   }
 
-  public Vector getTestcaseResults() {
+  public Vector<String[]> getTestcaseResults() {
     return testcaseResults;
   }
 
@@ -1531,7 +1528,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
    * @return A vector containing the results. Each result is a String[] with
    *         0-Name, 1-success, 2-failed, 3-notappli, 4-time.
    */
-  static public Vector getStaticTestcaseResults() {
+  static public Vector<String[]> getStaticTestcaseResults() {
     return staticTestcaseResults;
   }
 
