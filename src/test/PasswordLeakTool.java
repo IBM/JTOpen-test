@@ -24,6 +24,9 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
 
+import javax.crypto.*;
+import javax.crypto.spec.*;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 import com.ibm.as400.access.AS400JDBCDriver;
@@ -453,7 +456,9 @@ public class PasswordLeakTool {
 
   public static void usage() {
     System.out.println(
-        "java test.PasswordLeakTool [AS400JAVACONNECT system] [AS400JAVADATASOURCE system] [PASSWORD pwd]* [DUMP dumpfile]* [SCAN dumpfile pwd]* ");
+        "java test.PasswordLeakTool [AS400JAVACONNECT system] [AS400JAVADATASOURCE system] [PASSWORD pwd]* " +
+        "[ENCRYPTPASSWORD] [DECRYPTPASSWORD] "
+        + "[DUMP dumpfile]* [SCAN dumpfile pwd]* ");
     System.out.println(
         "                    i.e.  AS400JAVACONNECT sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
@@ -463,10 +468,22 @@ public class PasswordLeakTool {
     System.out.println(
         "                    i.e.  DB2JAVAJDBC sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
 
+    System.out.println(
+        "                    i.e.  ENCRYPTPASSWORD DECRYPTPASSWORD DUMP /tmp/dumpFile.txt  SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+
   }
 
   public static AS400JDBCDataSource ds = null; 
   public static void main(String[] args) {
+    
+    String TRANSFORMATION = "AES/CBC/PKCS5Padding";
+    String ALGORITHM = "AES";
+
+    byte[] encryptedPassword = null;
+    Cipher cipher = null;
+    IvParameterSpec iv  = null;
+    SecretKey secretKey  = null;
+
     if (args.length == 0) {
       usage();
     }
@@ -587,6 +604,46 @@ public class PasswordLeakTool {
           rs.next(); 
           String currentUser = rs.getString(1); 
           System.out.println("JDBC connection to "+args[i]+" created and CURRENT USER is "+currentUser); 
+
+        } else if (command.equalsIgnoreCase("ENCRYPTPASSWORD")) {
+          i++;
+          char[] passwordArray = new char[8];
+          passwordArray[4] = 't';
+          passwordArray[5] = 'e';
+          passwordArray[6] = 'a';
+          passwordArray[7] = 'm';
+          passwordArray[0] = 'j';
+          passwordArray[1] = '8';
+          passwordArray[2] = 'v';
+          passwordArray[3] = 'a';
+
+          KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
+          secretKey = keyGenerator.generateKey();
+          byte[] seed = { 0x12, 0x34, 0x56, 0x78, (byte) 0x9a, (byte) 0xbc, (byte) 0xcd, (byte) 0xde, 0x12, 0x34, 0x56,
+              0x78, (byte) 0x9a, (byte) 0xbc, (byte) 0xcd, (byte) 0xde };
+          iv = new IvParameterSpec(seed);
+          cipher = Cipher.getInstance(TRANSFORMATION);
+          cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
+          byte[] input = new byte[passwordArray.length * 2];
+          for (int j = 0; j < passwordArray.length; j++) {
+            input[j * 2] = (byte) (passwordArray[j] >> 8);
+            input[j * 2 + 1] = (byte) (passwordArray[j] & 0xFF);
+          }
+          encryptedPassword = cipher.doFinal(input);
+          Arrays.fill(input, (byte) 0); /* Clear intermediary storage */          
+          Arrays.fill(passwordArray, '\0');
+
+        }  else if (command.equalsIgnoreCase("DECRYPTPASSWORD")) {
+
+          cipher = Cipher.getInstance(TRANSFORMATION);
+          cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
+          byte[] outputBytes = cipher.doFinal(encryptedPassword);
+          char[] outputChars = new char[outputBytes.length / 2];
+          for (int j = 0; j < outputChars.length; j++) {
+                  outputChars[j] = (char) ((outputBytes[2 * j] << 8) + outputBytes[2 * j + 1]);
+          }
+          Arrays.fill(outputBytes, (byte) 0); /* Clear intermediary storage */
+
           
         } else {
           System.out.println("Invalid command " + command);
