@@ -76,6 +76,7 @@ public class JDRunit {
   static Hashtable rdbToCreatedUserid = new Hashtable();
   static Hashtable rdbToCreatedPassword = new Hashtable();
   static boolean debug = false;
+  static boolean passwordDebug = false; 
   static ServerSocket socket;
   static Runtime runtime;
   static int pid = 0;
@@ -184,6 +185,13 @@ public class JDRunit {
       debug = true;
       System.out.println("JDRunit: debug is on");
     }
+
+    property = System.getProperty("passwordDebug");
+    if (property != null) {
+      passwordDebug = true;
+      System.out.println("JDRunit: passwordDebug is on");
+    }
+
     if (debug) {
       System.out.println("JDRunit:  file.encoding is "
           + System.getProperty("file.encoding"));
@@ -872,11 +880,11 @@ public class JDRunit {
   
   public static void sendEMail(String toAddress, String fromAddress,
       String subject, StringBuffer body, String mailSmtpHost) throws Exception {
-	  if (mailSmtpHost == null ) { 
-		  System.out.println("Not sending e-mail.  mail.smtp.host not set"); 
-		  return; 
-	  }
-	  
+          if (mailSmtpHost == null ) { 
+                  System.out.println("Not sending e-mail.  mail.smtp.host not set"); 
+                  return; 
+          }
+          
     java.util.Properties p = System.getProperties();
     p.put("mail.smtp.host", mailSmtpHost);
 
@@ -1385,10 +1393,10 @@ public class JDRunit {
 
 
     if (test.indexOf("Limits") >= 0) {
-	System.out.println("JDRunit increasing timeout for Limits test"); 
-	timeout =  globalTimeout * 3;
-	timeoutJavaArgs = " -Dtimeout=" + timeout+" ";
-	System.out.println("timeoutJavaArgs="+timeoutJavaArgs); 
+        System.out.println("JDRunit increasing timeout for Limits test"); 
+        timeout =  globalTimeout * 3;
+        timeoutJavaArgs = " -Dtimeout=" + timeout+" ";
+        System.out.println("timeoutJavaArgs="+timeoutJavaArgs); 
     }
 
     readIni(iniInfo);
@@ -1471,19 +1479,19 @@ public class JDRunit {
     InputStream inputStream ;
     File file = new File(iniFile); 
     if (file.exists()) { 
-    	inputStream= 	new FileInputStream(iniFile);
-    	if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
+        inputStream=    new FileInputStream(iniFile);
+        if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
     } else {
-    	inputStream = JDRunit.class.getClassLoader().getResourceAsStream(iniFile);
-    	if (inputStream != null) { 
-    		if (iniInfo!=null) iniInfo.append("echo loaded "+iniFile+" from classloader\n"); 
-    	} else {
-    		if (iniInfo!=null) iniInfo.append("echo unable to load "+iniFile+" from classloader\n"); 
-    		byte[] emptyBuffer = new byte[0];
-    		inputStream = new ByteArrayInputStream(emptyBuffer);
-    	}
+        inputStream = JDRunit.class.getClassLoader().getResourceAsStream(iniFile);
+        if (inputStream != null) { 
+                if (iniInfo!=null) iniInfo.append("echo loaded "+iniFile+" from classloader\n"); 
+        } else {
+                if (iniInfo!=null) iniInfo.append("echo unable to load "+iniFile+" from classloader\n"); 
+                byte[] emptyBuffer = new byte[0];
+                inputStream = new ByteArrayInputStream(emptyBuffer);
+        }
     }
-	return inputStream;
+        return inputStream;
 }
 
 /** 
@@ -1515,7 +1523,7 @@ public class JDRunit {
       fileInputStream.close();
     }
     if (debug) { 
-    	System.out.println(iniInfo.toString()); 
+        System.out.println(iniInfo.toString()); 
     }
     return iniProperties;
 
@@ -1550,8 +1558,8 @@ public class JDRunit {
    */
   public static Properties getIniProperties(String initials, StringBuffer iniInfo) throws Exception {
 
-	    if (iniInfo == null)
-	        iniInfo = new StringBuffer();
+            if (iniInfo == null)
+                iniInfo = new StringBuffer();
 
     Properties iniProperties = getIniProperties(iniInfo);
 
@@ -1657,7 +1665,7 @@ public class JDRunit {
     }
 
     if (debug) {
-	System.out.println("iniInfo contains: "+iniInfo.toString()); 
+        System.out.println("iniInfo contains: "+iniInfo.toString()); 
     } 
     return iniProperties;
   }
@@ -1689,19 +1697,20 @@ public class JDRunit {
       if (debug) {
         System.out.println("Debug: Class loaded " + c);
       }
-      AS400JDBCDriver  driver = (AS400JDBCDriver) c.newInstance();
+      Object driver =  c.newInstance();
 
 
       Connection con;
       char[] password = PasswordVault.decryptPassword(encryptedPassword); 
       try {
-        con = driver.connect(url, userid, password);
+        con = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", url, userid, password);
         
       } catch (Exception e) {
         String message = e.toString();
         if (message.indexOf("cannot establish") >= 0) {
           url = "jdbc:as400:" + SYSTEM + ".rch.stglabs.ibm.com";
-          con = driver.connect(url, userid, password);
+          con = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", url, userid, password);
+
         } else {
           throw e;
         }
@@ -1710,17 +1719,26 @@ public class JDRunit {
       }
 
       Statement stmt = con.createStatement();
+      // Disable password leak check
+      try { 
+          TestDriver.checkPasswordLeak = false;
+      } catch (NoClassDefFoundError error) {
+          // Just ignore error 
+      }
       // Make sure to follow any password indirection
+      if(passwordDebug) System.out.println("passwordDebug: Calling PasswordVault.getEncryptedPassword("+newPassword+")"); 
       char[] encryptedNewPassword = PasswordVault.getEncryptedPassword(newPassword);
-      newPassword=PasswordVault.decryptPasswordLeak(encryptedPassword); 
+      String rawPassword=PasswordVault.decryptPasswordLeak(encryptedNewPassword); 
       try {
         /* Note CCSID must be 65535 for DDDMSQLCompatibility to pass */
-        stmt.executeUpdate("CALL QSYS.QCMDEXC('"
+        sql="CALL QSYS.QCMDEXC('"
             + "CRTUSRPRF USRPRF("
             + newUserid
             + ") PASSWORD("
-            + newPassword
-            + ") TEXT(''Toolbox testing profile'') ACGCDE(514648897) CCSID(65535)                                                                 ',   0000000160.00000)");
+            + rawPassword
+            + ") TEXT(''Toolbox testing profile'') ACGCDE(514648897) CCSID(65535)                                                                 ',   0000000160.00000)";
+      if (passwordDebug) System.out.println("passwordDebug: SQL="+sql); 
+        stmt.executeUpdate(sql);
       } catch (Exception e) {
         // ignore an error from the create
       }
@@ -1728,14 +1746,16 @@ public class JDRunit {
           + "CHGUSRPRF USRPRF("
           + newUserid
           + ") PASSWORD(BOGUS7)                                                                        ',   0000000060.00000)";
+      if (passwordDebug) System.out.println("passwordDebug: SQL="+sql); 
       stmt.executeUpdate(sql);
 
       sql = "CALL QSYS.QCMDEXC('"
           + "CHGUSRPRF USRPRF("
           + newUserid
           + ") PASSWORD("
-          + newPassword
+          + rawPassword
           + ")  STATUS(*ENABLED) PWDEXPITV(90)                                                                                      ',   0000000100.00000)";
+      if (passwordDebug) System.out.println("passwordDebug: SQL="+sql);
       stmt.executeUpdate(sql);
 
       con.close();
@@ -1854,7 +1874,7 @@ public class JDRunit {
     driver = iniProperties.getProperty("driver", "native");
     jaCoCo = iniProperties.getProperty("JaCoCo", "false");
     if (jaCoCo.equals("true")) {
-	useJaCoCo=true; 
+        useJaCoCo=true; 
     } 
 
 
@@ -1873,7 +1893,7 @@ public class JDRunit {
     SYSTEM = SYSTEM.toUpperCase();
 
     if (driver.equals("native")) {
-	SYSTEM = JDDatabaseOverride.getDatabaseNameFromSystemName(SYSTEM); 
+        SYSTEM = JDDatabaseOverride.getDatabaseNameFromSystemName(SYSTEM); 
     } 
 
 
@@ -1899,7 +1919,7 @@ public class JDRunit {
     if (javaArgs.length() == 0) {
       javaArgs = timeoutJavaArgs + defaultJavaArgs;
     } else {
-	System.out.println("Adding timeoutJavaArgs("+timeoutJavaArgs+")"); 
+        System.out.println("Adding timeoutJavaArgs("+timeoutJavaArgs+")"); 
       javaArgs += timeoutJavaArgs;
     }
 
@@ -1942,7 +1962,7 @@ public class JDRunit {
     CLIWHUID = iniProperties.getProperty("CLIWHUID", "DB2TEST");
     CLIWHPWD = iniProperties.getProperty("CLIWHPWD", "PASS2DB");
     if (CLIWHDSN != null) { 
-    	javaArgs += "-DCLIWHDSN=" + CLIWHDSN + " -DCLIWHUID=" + CLIWHUID
+        javaArgs += "-DCLIWHDSN=" + CLIWHDSN + " -DCLIWHUID=" + CLIWHUID
         + " -DCLIWHPWD=" + CLIWHPWD + " ";
     }
     CLIWGDSN = iniProperties.getProperty("CLIWGDSN", "MEMEMEM");
@@ -1956,7 +1976,7 @@ public class JDRunit {
     CLIWLUID = iniProperties.getProperty("CLIWLUID", "DB2TEST");
     CLIWLPWD = iniProperties.getProperty("CLIWLPWD", "PASS2DB");
     if (CLIWLDSN != null) { 
-    	javaArgs += "-DCLIWLDSN=" + CLIWLDSN + " -DCLIWLUID=" + CLIWLUID
+        javaArgs += "-DCLIWLDSN=" + CLIWLDSN + " -DCLIWLUID=" + CLIWLUID
         + " -DCLIWLPWD=" + CLIWLPWD + " ";
     }
     CLIWZDSN = iniProperties.getProperty("CLIWZDSN", "STLEC2");
@@ -2078,12 +2098,12 @@ public class JDRunit {
 
   /* Read the property from the JVM or environment */ 
   static public String getPropertyPassword(String userid) {
-	  String password = null; 
-	  password = System.getProperty(userid+".password"); 
-	  if (password == null) { 
-		  password = System.getenv(userid+".password"); 
-	  }
-	  return password; 
+          String password = null; 
+          password = System.getProperty(userid+".password"); 
+          if (password == null) { 
+                  password = System.getenv(userid+".password"); 
+          }
+          return password; 
   }
 
 public void setExtraJavaArgs(String extraJavaArgs) {
@@ -2155,32 +2175,32 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     String classpath = iniProperties.getProperty("classpath");
     if (classpath != null) {
-    	if (isWindows) { 
-    		inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
-	        inputVector.addElement("CLASSPATH='" + classpath+"'");
-    	} else {
-    		inputVector.addElement("echo setting classpath using CLASSPATH="+classpath);
-	        inputVector.addElement("CLASSPATH=" + classpath);
-    	}
+        if (isWindows) { 
+                inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
+                inputVector.addElement("CLASSPATH='" + classpath+"'");
+        } else {
+                inputVector.addElement("echo setting classpath using CLASSPATH="+classpath);
+                inputVector.addElement("CLASSPATH=" + classpath);
+        }
     } else {
-    	if (isWindows) { 
-    		/* Just inherit the classpath.  */ 
-    		classpath = System.getProperty("java.class.path"); 
-    		inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
-	        inputVector.addElement("CLASSPATH='.;" + classpath+"'");
-    		
-    	} else { 
-    	   inputVector.addElement("echo setting classpath using CLASSPATH=.");
+        if (isWindows) { 
+                /* Just inherit the classpath.  */ 
+                classpath = System.getProperty("java.class.path"); 
+                inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
+                inputVector.addElement("CLASSPATH='.;" + classpath+"'");
+                
+        } else { 
+           inputVector.addElement("echo setting classpath using CLASSPATH=.");
            inputVector.addElement("CLASSPATH=.");
-    	}
+        }
     }
 
     inputVector.addElement("echo Setting JAVA_HOME to " + javaHome);
     inputVector.addElement("JAVA_HOME=\"" + javaHome + "\"");
     inputVector.addElement("export JAVA_HOME");
     if (javaHome.indexOf("/QOpenSys/pkgs/lib/jvm") >=0) {
-	inputVector.addElement("PATH="+javaHome+"/bin:$PATH");
-	inputVector.addElement("export PATH"); 
+        inputVector.addElement("PATH="+javaHome+"/bin:$PATH");
+        inputVector.addElement("export PATH"); 
     }
 
 
@@ -2194,7 +2214,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     /* Assume that the JTOpen-test.jar is in the current directory */ 
     String currentClassPath=System.getProperty("java.class.path"); 
     if (currentClassPath.indexOf("JTOpen-test.jar") >= 0) { 
-    	testcaseCode = "JTOpen-test.jar"; 
+        testcaseCode = "JTOpen-test.jar"; 
     }
     
 
@@ -2291,7 +2311,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         testcaseCode=System.getProperty("user.dir") +File.separator+testcaseCode; 
       }
       setClasspath = "CLASSPATH=\"" + toolboxJar + ";" +  testcaseCode+ ";"
-    	  + currentClasspath+";"
+          + currentClasspath+";"
           + toolsJar + ";" + System.getProperty("user.dir")
           + ""+File.separator+"jars"+File.separator+"db2_classes.jar;" + System.getProperty("user.dir")
           + ""+File.separator+"jars"+File.separator+"fscontext.jar;" + System.getProperty("user.dir")
@@ -2342,9 +2362,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       /* Not LINUX or WINDOWS -- must be OS400 */
       /* inputVector.addElement("echo SYSTEM WRKSYSSTS"); */
       /* inputVector.addElement("system wrksyssts"); */
-	if (javaHome.indexOf("/QOpenSys/pkgs/lib/jvm") >=0) {
-	    setClasspath=setClasspath+"\":/QIBM/ProdData/OS400/Java400/ext/db2_classes11.jar\"";
-	} 
+        if (javaHome.indexOf("/QOpenSys/pkgs/lib/jvm") >=0) {
+            setClasspath=setClasspath+"\":/QIBM/ProdData/OS400/Java400/ext/db2_classes11.jar\"";
+        } 
 
 
       /* Setup VNC and use it */
@@ -2370,9 +2390,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         inputVector.addElement("chmod 700 ~/.vnc/passwd");
 
         inputVector.addElement("touch " + TMP + "/vncstart.out");
-	String vncServerCommand = "/QOpenSys/QIBM/ProdData/DeveloperTools/vnc/vncserver "
+        String vncServerCommand = "/QOpenSys/QIBM/ProdData/DeveloperTools/vnc/vncserver "
                 + display + "  -SecurityTypes=VncAuth  > " + TMP + "/vncstart.out 2>&1";
-	inputVector.addElement("Starting VNC server with "+vncServerCommand); 
+        inputVector.addElement("Starting VNC server with "+vncServerCommand); 
         inputVector
             .addElement(vncServerCommand);
 
@@ -2467,18 +2487,24 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       newUserid = (String) dropAuthorityProperties.get(test);
     }
     if (newUserid != null) {
-      String newPassword = "j8vateam";
+      String newPassword = "javaPassword.txt";
       int semicolonIndex = newUserid.indexOf(';');
       if (semicolonIndex > 0) {
         newPassword = newUserid.substring(semicolonIndex + 1);
+        if (passwordDebug) System.out.println("passwordDebug: newPassword("+newPassword+") set from ; in "+newUserid); 
         newUserid = newUserid.substring(0, semicolonIndex);
       } else {
          /* Check if password is in ini files or set from environment */ 
-      	String configTestUserId = iniProperties.getProperty("TESTUSERID"); 
-      	if (newUserid.equalsIgnoreCase(configTestUserId)) {
+        String configTestUserId = iniProperties.getProperty("TESTUSERID"); 
+        if (newUserid.equalsIgnoreCase(configTestUserId)) {
           newPassword = getPropertyPassword(newUserid); 
-          if (newPassword == null) newPassword = iniProperties.getProperty("TESTPASSWORD");
-      	}
+          if (newPassword == null) {
+              newPassword = iniProperties.getProperty("TESTPASSWORD");
+              if (passwordDebug) System.out.println("passwordDebug: newPassword("+newPassword+") set from TESTPASSWORD"); 
+          } else { 
+              if (passwordDebug) System.out.println("passwordDebug: newPassword("+newPassword+") set from TESTUSERID="+newUserid);
+          }
+        }
       }
      
       
@@ -2594,11 +2620,11 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         + savefileName + " -Dtest.parentJob=" + parentJob + " " + javaArgs;
 
     if (useJaCoCo) {
-	File destDir = new File("/home/jdbctest/jacoco/"+initials);
-	if (!destDir.exists()) {
-	    destDir.mkdir(); 
-	}
-	javaArgs = "-javaagent:/home/jdbctest/jacoco/lib/jacocoagent.jar=destfile=/home/jdbctest/jacoco/"+initials+"/"+test+".exec,includes=com.ibm.as400.access.* " + javaArgs; 
+        File destDir = new File("/home/jdbctest/jacoco/"+initials);
+        if (!destDir.exists()) {
+            destDir.mkdir(); 
+        }
+        javaArgs = "-javaagent:/home/jdbctest/jacoco/lib/jacocoagent.jar=destfile=/home/jdbctest/jacoco/"+initials+"/"+test+".exec,includes=com.ibm.as400.access.* " + javaArgs; 
     } 
 
     String javaCommand = "java " + javaArgs + " " + testArgs + " -lib "
@@ -2618,7 +2644,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       if (proxyIndex >= 0) {
         String loopbackInfo = finalArgs.substring(proxyIndex + 6).trim();
         if (loopbackInfo.indexOf("loopback") == 0) {
-	    
+            
           startLoopbackProxy(toolboxJar);
         } else {
           System.out.println("WARNING.  DID NOT HANDLE PROXY in " + finalArgs
@@ -2673,7 +2699,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
              cmdArray1[0] = userDir.substring(0, homeIndex)
                 + cmdArray1[0].replace('/', '\\');
         } else {
-        	 cmdArray1[0] = "C:\\etlocalinst\\cygwin"+  cmdArray1[0].replace('/', '\\');
+                 cmdArray1[0] = "C:\\etlocalinst\\cygwin"+  cmdArray1[0].replace('/', '\\');
         }
       }
 
@@ -3458,8 +3484,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     String doReport = System.getenv("REPORT");
     if (doReport !=  null) {
-	System.out.println("Running report since REPORT envvar set");
-	forceReport=true; 
+        System.out.println("Running report since REPORT envvar set");
+        forceReport=true; 
     }
 
     if (forceReport) {
@@ -3482,31 +3508,31 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     }
   }
 
-	public static Hashtable readTodo() {
-		Hashtable returnHashtable = new Hashtable();
+        public static Hashtable readTodo() {
+                Hashtable returnHashtable = new Hashtable();
 
-		try {
-			File todoFile = new File("ini/TODO.ini");
-			if (todoFile.exists()) {
-				FileInputStream fileInputStream = new FileInputStream("ini/TODO.ini");
-				BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
-				String line = reader.readLine();
-				while (line != null) {
-					line = line.trim();
-					if (line.indexOf("#") == 0) {
-						// skip comment
-					} else {
-						returnHashtable.put(line, line);
-					}
-					line = reader.readLine();
-				}
-				fileInputStream.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return returnHashtable;
-	}
+                try {
+                        File todoFile = new File("ini/TODO.ini");
+                        if (todoFile.exists()) {
+                                FileInputStream fileInputStream = new FileInputStream("ini/TODO.ini");
+                                BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
+                                String line = reader.readLine();
+                                while (line != null) {
+                                        line = line.trim();
+                                        if (line.indexOf("#") == 0) {
+                                                // skip comment
+                                        } else {
+                                                returnHashtable.put(line, line);
+                                        }
+                                        line = reader.readLine();
+                                }
+                                fileInputStream.close();
+                        }
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+                return returnHashtable;
+        }
 
   public static boolean vectorContainsString(Vector hangMessagesFound,
       String string) {
@@ -3648,8 +3674,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     try {
        
       
-	String command = "java -classpath "+testcaseCode+":"+jt400jar+" com.ibm.as400.access.ProxyServer"; 
-	System.out.println("JDRunit: starting ProxyServer on default port using: "+command); 
+        String command = "java -classpath "+testcaseCode+":"+jt400jar+" com.ibm.as400.access.ProxyServer"; 
+        System.out.println("JDRunit: starting ProxyServer on default port using: "+command); 
       // Need to include /home/jdbctest because the source for the serialized
       // lobs is located there.
       runtime1
@@ -3688,7 +3714,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       stmt.executeUpdate("CALL QSYS2.QCMDEXC(' DSPUSRPRF USRPRF("+testUserid+") OUTPUT(*OUTFILE) OUTFILE(QTEMP/DSPUSRPRF)  ')");
 
       ResultSet rs = stmt
-	.executeQuery("select UPSTAT, UPPWEX, " +
+        .executeQuery("select UPSTAT, UPPWEX, " +
              "TIMESTAMP('20'|| SUBSTRING(UPEXPD,1,2) || '-' || SUBSTRING(UPEXPD,3,2) || '-' || SUBSTRING(UPEXPD,5,2)),"+
               "CURRENT TIMESTAMP from QTEMP.DSPUSRPRF");
       rs.next();
@@ -3701,17 +3727,21 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       /* Only change the password if expired */
       if (expiredPassword  ) {
         try {
-          System.out.println("Setting password to garbage so it can be reset"); 
-          stmt.executeUpdate("CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF("
-              + testUserid + ") PASSWORD(GARBAGE) STATUS(*ENABLED) ')");
+          System.out.println("Setting password to garbage so it can be reset");
+          String sql="CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF("
+              + testUserid + ") PASSWORD(GARBAGE) STATUS(*ENABLED) ')";
+          if (passwordDebug) System.out.println("passwordDebug: SQL="+sql); 
+          stmt.executeUpdate(sql);
         } catch (Exception e) {
           // Ignore first
         }
       }
       /* It should always be safe to blindly enable the profile */
-      String testPassword = PasswordVault.decryptPasswordLeak(encryptedTestPassword); 
-      stmt.executeUpdate("CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + testUserid
-          + ") PASSWORD(" + testPassword + ") STATUS(*ENABLED) ')");
+      String testPassword = PasswordVault.decryptPasswordLeak(encryptedTestPassword);
+      String sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + testUserid
+          + ") PASSWORD(" + testPassword + ") STATUS(*ENABLED) ')";
+      if (passwordDebug) System.out.println("passwordDebug: SQL="+sql); 
+      stmt.executeUpdate(sql);
 
       con.close();
     } catch (Exception e) {

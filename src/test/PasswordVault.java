@@ -30,7 +30,15 @@ import java.util.Hashtable;
 public class PasswordVault {
   static Hashtable systemToUser = new Hashtable();
   static Hashtable encryptedHashtable = new Hashtable(); 
-  
+  static boolean passwordDebug = false; 
+  static {
+      String property = System.getProperty("passwordDebug");
+      if (property != null) {
+	  passwordDebug = true;
+	  System.out.println("JDRunit: passwordDebug is on");
+      }
+  }
+
   public static void setPassword(String system, String userid, char[] password) {
     char[] encryptedPassword = encryptPassword(password);
     Hashtable userToPassword = (Hashtable) systemToUser.get(system);
@@ -91,7 +99,10 @@ public class PasswordVault {
       }
       encryptedPassword = encryptPassword(password);
       encryptedHashtable.put(passwordName, encryptedPassword);
+      if (passwordDebug) System.out.println("passwordDebug: encryptedHashtable.put("+passwordName+") for "+ new String(password)); 
       clearPassword(password);
+    } else {
+      if (passwordDebug) System.out.println("passwordDebug: encryptedHashtable.get("+passwordName+") for "+ new String( decryptPassword(encryptedPassword))); 
     }
     return encryptedPassword;
   }
@@ -162,9 +173,14 @@ public class PasswordVault {
 
   /* Leak password a string -- needed for several JDBC properties testcases */ 
   public static String decryptPasswordLeak(char[] encryptedPassword, String description)  {
-    if (TestDriver.checkPasswordLeak) {
-      throw new IllegalArgumentException("decryptPasswordLeak called when TestDriver.checkPasswordLeak enabled"); 
-    }
+      try { 
+	  if (TestDriver.checkPasswordLeak) {
+	      throw new IllegalArgumentException("decryptPasswordLeak called when TestDriver.checkPasswordLeak enabled"); 
+	  }
+      } catch (NoClassDefFoundError error) {
+	  // Just ignore error 
+      }
+
     String returnString; 
     String infoString; 
     char[] passwordChars = decryptPassword(encryptedPassword);

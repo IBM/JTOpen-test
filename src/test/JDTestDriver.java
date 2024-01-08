@@ -184,7 +184,7 @@ public abstract class JDTestDriver extends TestDriver {
   private int driver_ = DRIVER_NONE;
   private int subDriver_ = DRIVER_NONE;
   private int db_ = DB_SYSTEMI;
-  static Class driverManager_ = null;
+  static Class<?> driverManager_ = null;
   private boolean lobSupport_;
   private boolean datalinkSupport_;
   private boolean returnValueSupport_; 
@@ -998,7 +998,7 @@ public abstract class JDTestDriver extends TestDriver {
     System.out.println("JDTestDriver.registerDriver() called with "
         + driverName);
     try {
-      Class clazz = Class.forName(driverName);
+      Class<?> clazz = Class.forName(driverName);
 
       // For now we have to do this the hard way....
       if (driver == DRIVER_NATIVE_RMI)
@@ -1404,13 +1404,19 @@ public abstract class JDTestDriver extends TestDriver {
    * @throws SQLException */ 
   public static Connection getNativeConnection(String url, String uid, char[] encryptedPwd) throws SQLException {
     Connection connection = null;
+    char[] pwdChars = null; 
     try {
       Object nativeDriver = JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
-      char[] pwdChars = PasswordVault.decryptPassword(encryptedPwd);
+      pwdChars = PasswordVault.decryptPassword(encryptedPwd);
       connection = (Connection) JDReflectionUtil.callMethod_O(nativeDriver, "connect", url, uid, pwdChars);
       PasswordVault.clearPassword(pwdChars);
     } catch (Exception e) {
-      System.out.println("Warning: unable to get native connection using secure password");
+      String attemptedPassword;
+      if (pwdChars != null) 
+          attemptedPassword = new String(pwdChars); 
+      else
+          attemptedPassword = "null"; 
+      System.out.println("Warning: unable to get native connection using secure password = "+attemptedPassword+" uid="+uid+" url="+url);
       e.printStackTrace(System.out);
       String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd);
       connection = DriverManager.getConnection(url, uid, pwd);
@@ -1744,7 +1750,7 @@ public abstract class JDTestDriver extends TestDriver {
 
   }
 
-  static Hashtable tableDefinitions = new Hashtable();
+  static Hashtable<String, String> tableDefinitions = new Hashtable<String, String>();
 
   static void initTable(Statement s, String tableName, String tableDefinition)
       throws SQLException {
@@ -1823,7 +1829,7 @@ public abstract class JDTestDriver extends TestDriver {
     }
   }
 
-  static Hashtable triggerDefinitions = new Hashtable();
+  static Hashtable<String, String> triggerDefinitions = new Hashtable<String, String>();
 
   static void initTrigger(Statement s, String triggerName,
       String triggerDefinition, StringBuffer sb) throws SQLException {

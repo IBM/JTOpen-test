@@ -100,7 +100,7 @@ public class PasswordLeakTool {
       System.out.println("forceDump(" + filename + ") no op");
       System.out.println("Not ibmJVM:  properties are");
       Properties p = System.getProperties();
-      Enumeration e = p.keys();
+      Enumeration<?> e = p.keys();
       while (e.hasMoreElements()) {
         String key = (String) e.nextElement();
         String value = p.getProperty(key);
@@ -118,6 +118,9 @@ public class PasswordLeakTool {
       File dumpFile = new File(osFilename);
       if (dumpFile.exists()) {
         deleted = dumpFile.delete();
+        if (!deleted) {
+          System.out.println("Warning: Unabled to delete "+dumpFile.getCanonicalPath()); 
+        }
       }
       long startMillis = System.currentTimeMillis();
       String realDumpFile = (String) JDReflectionUtil.callStaticMethod_O(
@@ -159,10 +162,9 @@ public class PasswordLeakTool {
     cmdarray[1] = "-core";
     cmdarray[2] = filename;
 
+    System.out.println("PasswordLeakTool.scanDumpForPasswords: running"); 
     try {
-	if (debug) {
-	    System.out.println("DEBUG: Running :"+cmdarray[0]+" "+cmdarray[1]+" "+cmdarray[2]); 
-	}
+      System.out.println("PasswordLeakTool.scanDumpForPasswords Running :"+cmdarray[0]+" "+cmdarray[1]+" "+cmdarray[2]); 
       Process p = runtime.exec(cmdarray);
       OutputStream outputStream = p.getOutputStream();
       PrintWriter printWriter = new PrintWriter(outputStream);
@@ -213,8 +215,8 @@ public class PasswordLeakTool {
             String findCommand = "find " + searchHexStrings[j] + ","
                 + heapInfo[i][0] + "," + heapInfo[i][1] + "," + memoryBoundary
                 + "," + bytesToPrint + "," + matchesToDisplay;
-            if (debug)
-              System.out.println("DEUG: running " + findCommand);
+           
+            System.out.println("PasswordLeakTool.scanDumpForPasswords: running " + findCommand);
             printWriter.println(findCommand);
             printWriter.println("readyForCommand");
             printWriter.flush();
@@ -226,7 +228,9 @@ public class PasswordLeakTool {
               System.out.println("DEBUG: -----------------------------");
             }
             if (data.indexOf("#0") >= 0) {
-              sb.append("Found "+searchHexStrings[j]+" in heap #"+i+" searchstring #"+j+" password #"+k+"\n"); 
+              String info="Found "+searchHexStrings[j]+" in heap #"+i+" searchstring #"+j+" password #"+k+"\n";
+              System.out.println("PasswordLeakTool.scanDumpForPasswords: "+info); 
+              sb.append(info); 
               sb.append("Find command="+findCommand+"\n"); 
               sb.append(data);
             }
@@ -238,7 +242,7 @@ public class PasswordLeakTool {
       printWriter.println("exit");
       printWriter.flush();
       Thread.sleep(250);
-      System.out.println("Destroying process");
+      System.out.println("PasswordLeakTool.scanDumpForPasswords: Destroying process");
       p.destroy();
       cmdStdoutThread.join();
       stderrThread.join();
@@ -371,7 +375,7 @@ public class PasswordLeakTool {
     return '?';
   }
 
-  private static void dumpHeapInfo(String[][] heapInfo) {
+  public static void dumpHeapInfo(String[][] heapInfo) {
     System.out.println("There are " + heapInfo.length + " heaps");
     for (int i = 0; i < heapInfo.length; i++) {
       System.out
@@ -387,7 +391,7 @@ public class PasswordLeakTool {
   public static final String heapLengthEndString = " bytes)";
 
   private static String[][] getHeapInfo(String data) {
-    Vector v = new Vector();
+    Vector<String[]> v = new Vector<String[]>();
     int heapExtentIndex = data.indexOf(heapExtentString);
     while (heapExtentIndex > 0) {
       int heapStartBeginIndex = heapExtentIndex + heapExtentString.length();
@@ -526,6 +530,7 @@ public class PasswordLeakTool {
           as400.passwordLevel();
           as400.passwordLevel();
           as400.passwordLevel();
+          as400.close(); 
         } else if (command.equalsIgnoreCase("AS400JAVADATASOURCE")) {
           i++;
           char[] passwordArray = new char[8];
