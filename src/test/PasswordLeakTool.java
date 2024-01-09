@@ -606,7 +606,6 @@ public class PasswordLeakTool {
           System.out.println("JDBC connection to "+args[i]+" created and CURRENT USER is "+currentUser); 
 
         } else if (command.equalsIgnoreCase("ENCRYPTPASSWORD")) {
-          i++;
           char[] passwordArray = new char[8];
           passwordArray[4] = 't';
           passwordArray[5] = 'e';
@@ -643,7 +642,7 @@ public class PasswordLeakTool {
                   outputChars[j] = (char) ((outputBytes[2 * j] << 8) + outputBytes[2 * j + 1]);
           }
           Arrays.fill(outputBytes, (byte) 0); /* Clear intermediary storage */
-
+          Arrays.fill(outputChars, '\0');     /* Clean encrypted output */ 
           
         } else {
           System.out.println("Invalid command " + command);
