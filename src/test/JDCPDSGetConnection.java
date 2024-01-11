@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCPDSGetConnection.java
@@ -24,20 +18,14 @@
 // Classes:      JDCPDSGetConnection
 //
 ////////////////////////////////////////////////////////////////////////
-//
-//
-// Release     Date        Userid    Comments
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test;
-
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Hashtable;
 
 import javax.sql.ConnectionPoolDataSource;
@@ -74,7 +62,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDCPDSGetConnection (AS400 systemObject,
-                                Hashtable namesAndVars,
+                                Hashtable<?,?> namesAndVars,
                                 int runMode,
                                 FileOutputStream fileOutputStream,
                                 
@@ -164,10 +152,15 @@ getConnection() - Should work when the valid databasename is set.
             try {
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
 		JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser",userId_);
-		char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-		JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",charPassword);
-		PasswordVault.clearPassword(charPassword);
-
+		try {
+		  char[] password = PasswordVault.decryptPassword(encryptedPassword_);
+		  JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",password);
+		  Arrays.fill(password,'\0');
+	                
+		} catch (Exception e) { 
+		  String password = PasswordVault.decryptPasswordLeak(encryptedPassword_);
+		  JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",password);
+		}
 
                 pc = connectionPoolDataSource_.getPooledConnection();
                 Connection conn_ = pc.getConnection();
@@ -197,10 +190,16 @@ getConnection(userid,pwd) - Should throw an exception when the userid is not val
             try {
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser","invalidusername");
-                char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",charPassword);
-                PasswordVault.clearPassword(charPassword);
-                  
+                try {
+                  char[] password = PasswordVault.decryptPassword(encryptedPassword_);
+                  JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",password);
+                  Arrays.fill(password,'\0');
+                        
+                } catch (Exception e) { 
+                  String password = PasswordVault.decryptPasswordLeak(encryptedPassword_);
+                  JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",password);
+                }
+                
 
                 pc = connectionPoolDataSource_.getPooledConnection();
                 pc.getConnection();
@@ -244,9 +243,15 @@ getConnection(userid,pwd) - Should work with valid userid,pwd.
             try {
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setDatabaseName",system_);
                 JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setUser",userId_);
-                char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-                JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",charPassword);
-                PasswordVault.clearPassword(charPassword);
+                try {
+                  char[] password = PasswordVault.decryptPassword(encryptedPassword_);
+                  JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",password);
+                  Arrays.fill(password,'\0');
+                        
+                } catch (Exception e) { 
+                  String password = PasswordVault.decryptPasswordLeak(encryptedPassword_);
+                  JDReflectionUtil.callMethod_V(connectionPoolDataSource_,"setPassword",password);
+                }
 
                 pc =connectionPoolDataSource_.getPooledConnection();
                 Connection conn_ = pc.getConnection();

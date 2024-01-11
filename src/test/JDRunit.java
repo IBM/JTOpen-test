@@ -3700,15 +3700,15 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
   public static void resetId(String jdbcUrl, String adminUserid,
       char[] encryptedAdminPassword, String testUserid, char[] encryptedTestPassword) {
-
+    String adminPassword = null; 
     try {
-      String adminPassword = PasswordVault.decryptPasswordLeak(encryptedAdminPassword);
+      adminPassword = PasswordVault.decryptPasswordLeak(encryptedAdminPassword);
       Connection con = DriverManager.getConnection(jdbcUrl, adminUserid,
           adminPassword);
       Statement stmt = con.createStatement();
 
       /* Check the profile. If the password has expired, */
-      /* reset it by temporarily chaning to something else */
+      /* reset it by temporarily changing to something else */
       /* while locking the profile */
 
       stmt.executeUpdate("CALL QSYS2.QCMDEXC(' DSPUSRPRF USRPRF("+testUserid+") OUTPUT(*OUTFILE) OUTFILE(QTEMP/DSPUSRPRF)  ')");
@@ -3745,7 +3745,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
       con.close();
     } catch (Exception e) {
-      System.out.println("Reset failed adminUserid=" + adminUserid);
+      System.out.println("Reset failed using "+jdbcUrl+" adminUserid=" + adminUserid+" password="+adminPassword);
       e.printStackTrace(System.out);
       if (on400) {
         JDJobName.sendProgramMessage("Reset of profile " + testUserid

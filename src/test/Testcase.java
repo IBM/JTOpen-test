@@ -56,6 +56,7 @@ import com.ibm.as400.access.ReturnCodeException;
 import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
 import com.ibm.as400.access.CharConverter;
+import com.ibm.as400.access.CharacterDataArea;
 import com.ibm.as400.access.BinaryConverter;
 import com.ibm.as400.access.DateTimeConverter;
 
@@ -3018,8 +3019,7 @@ public abstract class Testcase {
       // QSYSObjectPathName path = new QSYSObjectPathName("JDTESTINFO",	lockDtaaraName_, "DTAARA");
       // CharacterDataArea dataArea = new CharacterDataArea(system, path.getPath());
       // String data = dataArea.read().trim();
-      Object dataArea = JDReflectionUtil.createObject("com.ibm.as400.access.CharacterDataArea","/QSYS.LIB/JDTESTINFO.LIB/"+lockDtaaraName_+".DTAARA");
-      
+      CharacterDataArea dataArea = new CharacterDataArea(systemObject_, "/QSYS.LIB/JDTESTINFO.LIB/"+lockDtaaraName_+".DTAARA");
       // Read from the data area.
       String data = JDReflectionUtil.callMethod_S(dataArea, "read").trim();
       System.out.println(" DATA AREA JDTESTINFO/" + lockDtaaraName

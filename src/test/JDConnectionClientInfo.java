@@ -34,6 +34,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.sql.SQLWarning;
@@ -49,7 +50,6 @@ extends JDTestcase {
     // Private data.
     private              Connection     closedConnection_;
     private              String         pwrUID_ = null;     //@A1A
-    private              String         pwrPwd_ = null;     //@A1A
     private              char[]         encryptedPwrPwd_ = null; 
 
 
@@ -68,7 +68,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
         pwrUID_ = pwrUID;   //@A1A
-        pwrPwd_ = pwrPwd;   //@A1A
         encryptedPwrPwd_ = PasswordVault.getEncryptedPassword(pwrPwd);
     }
 
@@ -849,7 +848,9 @@ Performs cleanup needed after running variations.
       sb.append("-- Added 10/19/2021 for issue 67424/CPS C7GCHE");
       try {
         boolean passed = true;
-        AS400 pwrAS400 = new AS400("localhost", pwrUID_, pwrPwd_);
+        char[] pwrPwd = PasswordVault.decryptPassword(encryptedPwrPwd_); 
+        AS400 pwrAS400 = new AS400("localhost", pwrUID_, pwrPwd);
+        Arrays.fill(pwrPwd,'\0'); 
         CommandCall pwrCommand = new CommandCall(pwrAS400);
 
         sb.append("\nCreating profile "+testProfile);
@@ -906,14 +907,17 @@ Performs cleanup needed after running variations.
      * 
      */ 
   public void Var010() {
-    if (checkNative()) {
+    if (checkNative() ) {
       String testProfile = "ISSUE67424";
       String testPassword = "J8VATEAM";
       StringBuffer sb = new StringBuffer();
       sb.append("-- Added 10/19/2021 for issue 67424/CPS C7GCHE");
       try {
         boolean passed = true;
-        AS400 pwrAS400 = new AS400("localhost", pwrUID_, pwrPwd_);
+        char[] pwrPwd = PasswordVault.decryptPassword(encryptedPwrPwd_); 
+        AS400 pwrAS400 = new AS400("localhost", pwrUID_, pwrPwd);
+        Arrays.fill(pwrPwd,'\0'); 
+
         CommandCall pwrCommand = new CommandCall(pwrAS400);
 
         sb.append("\nCreating profile "+testProfile);
