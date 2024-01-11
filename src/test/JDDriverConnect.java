@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDriverConnect.java
@@ -24,15 +18,10 @@
 // Classes:      JDDriverConnect
 //
 ////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test;
 
 import com.ibm.as400.access.AS400;
-import java.awt.TextArea;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -71,7 +60,7 @@ public class JDDriverConnect extends JDTestcase {
   String letter_;
   int jdk_;
   private String      powerUserID_;
-  private String      powerPassword_;
+  private char[]      encryptedPowerPassword_;
   /**
    * Constructor.
    **/
@@ -91,7 +80,7 @@ public class JDDriverConnect extends JDTestcase {
         systemObject_ = systemObject;
 
         powerUserID_   = powerUserID;
-        powerPassword_ = powerPassword;
+        encryptedPowerPassword_ = PasswordVault.getEncryptedPassword(powerPassword);
     }
 
 
@@ -2067,9 +2056,9 @@ public class JDDriverConnect extends JDTestcase {
 
       String url = baseURL_;
       Connection conn1 = null;
-
+      String passwordLeak = PasswordVault.decryptPasswordLeak(testDriver_.pwrSysEncryptedPassword_,"JDDriverConnect Var049"); 
       Connection pwrConn = DriverManager.getConnection(url,
-          testDriver_.pwrSysUserID_, testDriver_.pwrSysPassword_);// use current
+          testDriver_.pwrSysUserID_, passwordLeak);// use current
 
       String stats = "";
 
@@ -2916,7 +2905,7 @@ public class JDDriverConnect extends JDTestcase {
    */
 
   public void Var071() {
-    if (checkNotGroupTest()) {
+    if (checkPasswordLeak() && checkNotGroupTest()) {
       // If we are running with the toolbox driver and the jt400Native.jar
       // then this testcase will fail prior to V7R2. Mark as successful
       // if prior to V7R2.
@@ -2977,8 +2966,8 @@ public class JDDriverConnect extends JDTestcase {
             && getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
           expectedBadConnectException = "Processing of the SQL statement ended";
         }
-
-        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", powerUserID_, powerPassword_);
+        String powerPassword = PasswordVault.decryptPasswordLeak(encryptedPowerPassword_); 
+        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", powerUserID_, powerPassword);
 
 
         // Delete and recreate the bad profile
@@ -3044,7 +3033,7 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   public void Var072() {
-    if (checkNotGroupTest()) {
+    if (checkNotGroupTest() && checkPasswordLeak()) {
       String added = " -- added 01/03/2012 connect after connect with bad profile (because of bad library list entry) CPS 8P6TF6  PTFs 61:SI45605,71:SI45604 ";
 
       // If we are running with the toolbox driver and the jt400Native.jar
@@ -3098,7 +3087,8 @@ public class JDDriverConnect extends JDTestcase {
            */
 
         }
-        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", powerUserID_, powerPassword_);
+        String powerPassword = PasswordVault.decryptPasswordLeak(encryptedPowerPassword_); 
+        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", powerUserID_, powerPassword);
 
 
         // Delete and recreate the bad profile

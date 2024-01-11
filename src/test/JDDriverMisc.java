@@ -11,21 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDriverMisc.java
 //
 // Classes:      JDDriverMisc
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -36,7 +26,6 @@ import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -386,15 +375,8 @@ extends JDTestcase
                 DriverManager.registerDriver(drvr2);
                 Connection c1;
                 Connection c2;
-		if (getRelease() >=    JDTestDriver.RELEASE_V5R3M0) {
-		    /* In V5R3 we don't permit to connect with blank because */
-		    /* this could be considered a security hole */
-		    c1 = DriverManager.getConnection("jdbc:db2:*local;errors=full", null, "");
-		    c2 = DriverManager.getConnection("jdbc:db2:*local;errors=full", null, "");
-		} else {
-		    c1 = DriverManager.getConnection("jdbc:db2:*local", "", "");
-		    c2 = DriverManager.getConnection("jdbc:db2:*local", "", "");
-		}
+		    c1 = DriverManager.getConnection("jdbc:db2:*local;errors=full", null, null);
+		    c2 = DriverManager.getConnection("jdbc:db2:*local;errors=full", null, null);
                 c1.close();
                 c2.close();
                 assertCondition(true);
@@ -425,11 +407,7 @@ extends JDTestcase
             {
 
                 Connection c ;
-		if (getRelease() >=    JDTestDriver.RELEASE_V5R3M0) {
-		    c = DriverManager.getConnection("jdbc:db2:*local;errors=full", null, "");
-		} else {
-		    c = DriverManager.getConnection("jdbc:db2:*local;errors=full", "", "");
-		}
+                c = DriverManager.getConnection("jdbc:db2:*local;errors=full", null, null);
                 Statement s = c.createStatement();
                 ResultSet rs = s.executeQuery("SELECT * FROM QSYS2.SYSPROCS");
 

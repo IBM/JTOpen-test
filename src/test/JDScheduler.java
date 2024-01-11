@@ -94,9 +94,11 @@ public class JDScheduler {
         jdbcURL = "jdbc:as400:" + system;
         userid = getConfigProperty(iniProperties, "USERID");
         password = getConfigProperty(iniProperties, userid + ".password");
-        if (password == null)
+        if (password == null) {
           password = getConfigProperty(iniProperties, "PASSWORD");
-
+          char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
+          password = PasswordVault.decryptPasswordLeak(encryptedPassword);
+        }
       }
       adminUserid = getConfigProperty(iniProperties, "USERID");
       adminPassword = getConfigProperty(iniProperties, adminUserid + ".password");

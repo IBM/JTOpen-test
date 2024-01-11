@@ -15,7 +15,6 @@ package test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -28,9 +27,10 @@ import java.util.Hashtable;
 /* exposed in memory.  In the future, encryption should be used. */
 
 public class PasswordVault {
-  static Hashtable systemToUser = new Hashtable();
-  static Hashtable encryptedHashtable = new Hashtable(); 
-  static boolean passwordDebug = false; 
+  static Hashtable<String, Hashtable<String, char[]>> systemToUser = new Hashtable<String, Hashtable<String, char[]>>();
+  static Hashtable<String, char[]> encryptedHashtable = new Hashtable<String, char[]>(); 
+  static boolean passwordDebug = false;
+  public static String globalString = null; 
   static {
       String property = System.getProperty("passwordDebug");
       if (property != null) {
@@ -41,9 +41,9 @@ public class PasswordVault {
 
   public static void setPassword(String system, String userid, char[] password) {
     char[] encryptedPassword = encryptPassword(password);
-    Hashtable userToPassword = (Hashtable) systemToUser.get(system);
+    Hashtable<String, char[]> userToPassword = systemToUser.get(system);
     if (userToPassword == null) {
-      userToPassword = new Hashtable();
+      userToPassword = new Hashtable<String, char[]>();
       systemToUser.put(system, userToPassword);
     }
     userToPassword.put(userid, encryptedPassword);
@@ -60,7 +60,7 @@ public class PasswordVault {
   /* Portability for use to get old password or new password from file */
   public static char[] getEncryptedPassword(String passwordName) {
     char[] encryptedPassword;
-    encryptedPassword = (char[]) encryptedHashtable.get(passwordName);
+    encryptedPassword = encryptedHashtable.get(passwordName);
     if (encryptedPassword == null) {
       char[] password = null;
       if (passwordName == null)
@@ -108,7 +108,7 @@ public class PasswordVault {
   }
 
   public static char[] getPassword(String system, String userid) {
-    Hashtable userToPassword = (Hashtable) systemToUser.get(system);
+    Hashtable<?,?> userToPassword = (Hashtable<?,?>) systemToUser.get(system);
     if (userToPassword == null) {
       return null;
     } else {
@@ -122,7 +122,7 @@ public class PasswordVault {
   }
 
   public static char[] getEncryptedPassword(String system, String userid) {
-    Hashtable userToPassword = (Hashtable) systemToUser.get(system);
+    Hashtable<?, ?> userToPassword = systemToUser.get(system);
     if (userToPassword == null) {
       return null;
     } else {
@@ -180,12 +180,13 @@ public class PasswordVault {
       } catch (NoClassDefFoundError error) {
 	  // Just ignore error 
       }
-
+      if (encryptedPassword == null) return null; 
     String returnString; 
     String infoString; 
     char[] passwordChars = decryptPassword(encryptedPassword);
     returnString = new String(passwordChars); 
     infoString = returnString+":PasswordLeaked:"+description; 
+    globalString  = infoString; 
     return returnString; 
     
   }

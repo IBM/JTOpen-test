@@ -597,7 +597,7 @@ public class PasswordLeakTool {
           passwordArray[3] = 'a';
 
           Object driver = JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
-          Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", "jdbc:as400:"+args[i],  "JAVA", passwordArray);
+          Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", "jdbc:db2:"+args[i],  "JAVA", passwordArray);
           Arrays.fill(passwordArray, '\0');
           Statement s = c.createStatement(); 
           ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 

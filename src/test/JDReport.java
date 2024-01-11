@@ -1719,6 +1719,7 @@ public class JDReport {
           connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,
               PASSWORD);
         } catch (Exception e) {
+          System.out.println("Failed to connect using "+USERID+","+PASSWORD); 
           String eMessage = e.toString().toLowerCase();
           if (eMessage.indexOf("authorization failure") < 0) {
             writer.close(); 

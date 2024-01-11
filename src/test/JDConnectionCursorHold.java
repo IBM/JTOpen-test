@@ -3064,6 +3064,7 @@ to false, so the result set should not be able to be used after a rollback in th
 
   // Get a connection using properties
   public void Var073() {
+    if (checkPasswordLeak()) { 
       StringBuffer sb = new StringBuffer("Get a connection using properties\n"); 
     try {
       Properties properties = new Properties();
@@ -3093,26 +3094,27 @@ to false, so the result set should not be able to be used after a rollback in th
       failed(e, "Unexpected Exception "+sb.toString());
     }
     // }
+    }
   }
 
   // Get a connection using properties
   public void Var074() {
+    if (checkPasswordLeak()) {
+      try {
+        Properties properties = new Properties();
+        properties.put("CURSORHOLD", "0");
+        properties.put("user", userId_);
+        properties.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDConnectionCursorHold.74"));
+        Connection c = DriverManager.getConnection(baseURL_, properties);
 
-    try {
-      Properties properties = new Properties();
-      properties.put("CURSORHOLD", "0");
-      properties.put("user", userId_);
-      properties.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDConnectionCursorHold.74"));
-      Connection c = DriverManager.getConnection(baseURL_, properties);
+        c.commit();
+        c.close();
 
-      c.commit();
-      c.close();
-
-      assertCondition(true);
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
+        assertCondition(true);
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception");
+      }
     }
-    // }
   }
 
 }

@@ -68,7 +68,9 @@ Constructor.
                namesAndVars, runMode, fileOutputStream, password);
                
         iasp_ = iasp;
-        userid_ = systemObject.getUserId();                 
+        userid_ = systemObject.getUserId();  
+        char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
+        password = PasswordVault.decryptPasswordLeak(encryptedPassword); 
         password_1 = password;
         system_1 = systemObject;
         

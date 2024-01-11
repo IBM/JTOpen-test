@@ -1416,8 +1416,10 @@ public abstract class JDTestDriver extends TestDriver {
           attemptedPassword = new String(pwdChars); 
       else
           attemptedPassword = "null"; 
+      if ( !"BOGUSID".equals(uid)) {
       System.out.println("Warning: unable to get native connection using secure password = "+attemptedPassword+" uid="+uid+" url="+url);
       e.printStackTrace(System.out);
+      }
       String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd);
       connection = DriverManager.getConnection(url, uid, pwd);
 

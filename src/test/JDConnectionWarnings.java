@@ -25,7 +25,6 @@ import com.ibm.as400.access.AS400;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.io.StringWriter;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -63,7 +62,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDConnectionWarnings (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<?,?> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -814,6 +813,9 @@ is closed.
       * Verify that the warning is ignored when using "ignore warnings" property
       */
      public void Var022() {
+       if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+         notApplicable("Native does not support ALL"); 
+       } else { 
          try {
            String expected = "NONE"; 
            Connection c = testDriver_.getConnection (baseURL_+";ignore warnings=all", userId_, encryptedPassword_);
@@ -826,6 +828,7 @@ is closed.
            failed(e, "Unexpected Exception");
          }
      } 
+     }
 
       
       

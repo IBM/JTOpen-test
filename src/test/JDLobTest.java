@@ -105,8 +105,11 @@ extends JDTestDriver {
 
         // Initialization.
         String baseUrl = getBaseURL(); 
+        char[] encryptedPassword = PasswordVault.getEncryptedPassword(password_);
+        String password = PasswordVault.decryptPasswordLeak(encryptedPassword); 
+
         Connection connection = DriverManager.getConnection (baseUrl,
-                                                             systemObject_.getUserId (), password_);
+                                                             systemObject_.getUserId (), password);
 
         if (testLib_ != null) {  // @E1A
             COLLECTION = testLib_;

@@ -802,8 +802,9 @@ public class JDCleanSplf implements PrintObjectListListener {
 					Timestamp ts = new Timestamp(System.currentTimeMillis());
 					String message = e1.toString();
 					if ((message.indexOf("no longer in the system") > 0) || 
-							(message.indexOf("CPF334") > 0) ||
-							(message.indexOf("CPF3303")> 0 )) {
+							(message.indexOf("CPF334") > 0) ||    /*Various spool error messages */
+							(message.indexOf("CPF3C40") > 0 ) ||  /*Spooled File not found */ 
+							(message.indexOf("CPF3303")> 0 )) {   /* File not found in job */ 
 						/* Just ignore these messages */
 					} else {
 						synchronized (out) {
