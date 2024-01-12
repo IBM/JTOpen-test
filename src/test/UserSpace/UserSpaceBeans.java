@@ -668,6 +668,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(us);
             s.flush();
+            s.close(); 
             try
             {
                 // Deserialize us from a file.
@@ -909,6 +910,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(aUserSpace);
             s.flush();
+            s.close();
             try
             {
                 // Deserialize a UserSpace from a file.

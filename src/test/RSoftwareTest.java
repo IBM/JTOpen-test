@@ -16,6 +16,13 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceListener;
+
+import test.RSoftware.RSoftwareResourceBasicTestcase;
+import test.RSoftware.RSoftwareResourceBeanInfoTestcase;
+import test.RSoftware.RSoftwareResourceBufferedResourceTestcase;
+import test.RSoftware.RSoftwareResourceGenericAttributeTestcase;
+import test.RSoftware.RSoftwareResourceSpecificAttributeTestcase;
+
 import com.ibm.as400.resource.ResourceListEvent;
 import com.ibm.as400.resource.ResourceListListener;
 import java.beans.PropertyChangeEvent;
@@ -45,7 +52,7 @@ extends TestDriver
 
 
     private static final String serializeFilename_ = "RSoftwareTest.ser";
-    static String JC1ProductID_ = null;
+    public static String JC1ProductID_ = null;
 
 
 

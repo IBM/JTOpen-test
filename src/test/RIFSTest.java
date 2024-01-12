@@ -17,6 +17,20 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceListener;
+
+import test.RIFS.RIFSFileBasicTestcase;
+import test.RIFS.RIFSFileBeanInfoTestcase;
+import test.RIFS.RIFSFileBufferedResourceTestcase;
+import test.RIFS.RIFSFileDeleteTestcase;
+import test.RIFS.RIFSFileGenericAttributeTestcase;
+import test.RIFS.RIFSFileListBasicTestcase;
+import test.RIFS.RIFSFileListBeanInfoTestcase;
+import test.RIFS.RIFSFileListResourceListTestcase;
+import test.RIFS.RIFSFileListSelectionTestcase;
+import test.RIFS.RIFSFileListSortTestcase;
+import test.RIFS.RIFSFileSpecificAttributeAtoITestcase;
+import test.RIFS.RIFSFileSpecificAttributeLtoPTestcase;
+
 import com.ibm.as400.resource.ResourceListEvent;
 import com.ibm.as400.resource.ResourceListListener;
 import java.beans.PropertyChangeEvent;

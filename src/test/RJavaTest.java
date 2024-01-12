@@ -21,6 +21,13 @@ import com.ibm.as400.access.IFSFileOutputStream;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceListener;
+
+import test.RJava.RJavaProgramBasicTestcase;
+import test.RJava.RJavaProgramBeanInfoTestcase;
+import test.RJava.RJavaProgramBufferedResourceTestcase;
+import test.RJava.RJavaProgramGenericAttributeTestcase;
+import test.RJava.RJavaProgramSpecificAttributeTestcase;
+
 import com.ibm.as400.resource.ResourceListEvent;
 import com.ibm.as400.resource.ResourceListListener;
 import java.beans.PropertyChangeEvent;
@@ -293,7 +300,7 @@ Serializes and deserializes an object.
 
 
 
-    static boolean createJavaProgram(AS400 system, String path)
+    public static boolean createJavaProgram(AS400 system, String path)
     {
         try {
             CommandCall cc = new CommandCall(system);

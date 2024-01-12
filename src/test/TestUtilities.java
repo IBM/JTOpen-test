@@ -35,7 +35,7 @@ import java.util.Enumeration;
 The TestUtilities class provides some common routines for
 testing visual components.
 **/
-class TestUtilities
+public class TestUtilities
 {
 
 

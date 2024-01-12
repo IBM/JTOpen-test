@@ -16,7 +16,6 @@ package test;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.AS400JDBCTimestamp;
-import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.IFSFile;
 
 
@@ -99,7 +98,7 @@ public class JDTestcase extends Testcase {
   static Object timeUnitSeconds = null;
   boolean toolboxNative = false;
 
-  JDSupportedFeatures supportedFeatures_;
+  protected JDSupportedFeatures supportedFeatures_;
 
   private boolean isOpenJdk = false;
 

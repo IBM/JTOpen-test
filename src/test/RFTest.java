@@ -21,6 +21,13 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.RF.RFEvents;
+import test.RF.RFMisc;
+import test.RF.RFNewRecord;
+import test.RF.RFRecord;
+import test.RF.RFRecordMisc;
+import test.RF.RFSerialization;
+
 /**
 Test driver for the record format component. The record format component
 includes the RecordFormat and Record classes.

@@ -30,7 +30,7 @@ import com.ibm.as400.vaccess.VQueuedMessage;
  * The MessageSandbox class provides some common routines for testing messages
  * in the visual components.
  **/
-class MessageSandbox {
+public class MessageSandbox {
   /**
    * Setting this to false can make testing much quicker, but it eliminates
    * cleanup.

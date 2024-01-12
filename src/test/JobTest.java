@@ -30,6 +30,13 @@
 
 package test;
 
+import test.Job.DateTimeConverterTestcase;
+import test.Job.JobListBeans;
+import test.Job.JobListTestcase;
+import test.Job.JobLogBeans;
+import test.Job.JobLogTestcase;
+import test.Job.JobUnattendedTestcase;
+
 /**
  The JobInfoTestDriver class provides a test driver to execute testcases.  Please create a user profile whose name is "TSTJOBUSR1" and signon to the iSeries server with the user name before executing the test driver.
  <p>This test driver tests the following testcase:

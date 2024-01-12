@@ -19,6 +19,11 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.ServiceProgram.ServiceProgramCallBeanInfoTestcase;
+import test.ServiceProgram.ServiceProgramCallBeans;
+import test.ServiceProgram.ServiceProgramCallTestcase;
+import test.ServiceProgram.ServiceProgramCallUnattendedTestcase;
+
 /**
  The ServiceProgramCallTest class provides the test driver for the testcase files.
  <p>The test driver contains two testcase files:

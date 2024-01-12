@@ -13,6 +13,9 @@
 
 package test;
 
+import test.Message.MessageFileBeansTestcase;
+import test.Message.MessageFileTestcase;
+
 /**
  Test driver for the Message File class.  For security tests to be run in unattended mode, a AS400 userid/password with *SECADM authority must be passed on the -pwrSys parameter (ie -pwrSys uid,pwd).
  **/
