@@ -20,6 +20,11 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.access.SystemProperties;
 
+import test.Cmd.CmdBeans;
+import test.Cmd.CmdConstructor;
+import test.Cmd.CmdOnThreadTestcase;
+import test.Cmd.CmdRunTestcase;
+
 /**
  The CmdTest class tests the CommandCall class.
  **/
@@ -29,7 +34,7 @@ public class CmdTest extends TestDriver
    * 
    */
   private static final long serialVersionUID = 1L;
-    static boolean assumeCommandsThreadSafe_ = false;
+    public static boolean assumeCommandsThreadSafe_ = false;
 
     // Determine if testcase is running on an iSeries server.
     static

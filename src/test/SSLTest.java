@@ -19,6 +19,19 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.SSL.SSLChangePasswordTestcase;
+import test.SSL.SSLChgPwdDialogTestcase;
+import test.SSL.SSLConnectTestcase;
+import test.SSL.SSLCtorTestcase;
+import test.SSL.SSLEventTestcase;
+import test.SSL.SSLPortMapperTestcase;
+import test.SSL.SSLPropertyTestcase;
+import test.SSL.SSLSerializeTestcase;
+import test.SSL.SSLSignonInfoTestcase;
+import test.SSL.SSLSignonTestcase;
+import test.SSL.SSLValidatePasswordTestcase;
+import test.SSL.SSLVrmTestcase;
+
 /**
  Test driver for the SecureAS400 and associated classes.  Refer to TestDriver for calling syntax.
  **/
@@ -107,18 +120,18 @@ public class SSLTest extends TestDriver
         // SSLPortMapperTestcase needs to be first to insure proper initial value testing.
         Testcase[] testcases =
         {
-            new SSLPortMapperTestcase(),
-            new SSLCtorTestcase(),
-            new SSLSignonTestcase(),
-            new SSLChgPwdDialogTestcase(),
-            new SSLVrmTestcase(),
-            new SSLSignonInfoTestcase(),
-            new SSLConnectTestcase(),
             new SSLChangePasswordTestcase(),
-            new SSLValidatePasswordTestcase(),
+            new SSLChgPwdDialogTestcase(),
+            new SSLConnectTestcase(),
+            new SSLCtorTestcase(),
+            new SSLEventTestcase(),
+            new SSLPortMapperTestcase(),
             new SSLPropertyTestcase(),
             new SSLSerializeTestcase(),
-            new SSLEventTestcase()
+            new SSLSignonTestcase(),
+            new SSLSignonInfoTestcase(),
+            new SSLValidatePasswordTestcase(),
+            new SSLVrmTestcase(),
         };
 
         for (int i = 0; i < testcases.length; ++i)

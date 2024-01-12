@@ -20,6 +20,18 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Job;
 
+import test.DA.DABeansTestcase;
+import test.DA.DAClearTestcase;
+import test.DA.DACreateTestcase;
+import test.DA.DACtorTestcase;
+import test.DA.DADeleteTestcase;
+import test.DA.DAGetSetTestcase;
+import test.DA.DAP9934437Testcase;
+import test.DA.DAReadTestcase;
+import test.DA.DASerializeTestcase;
+import test.DA.DATypeTestcase;
+import test.DA.DAWriteTestcase;
+
 /**
  Test driver for the DA (data area) component.  For security tests to be run in unattended mode, a AS400 userid/password with *SECADM authority must be passed on the -misc parameter (ie -misc uid,pwd).  If not specified, these tests will not be attempted in unattended mode.  If not specified and running attended, a sign-on will be displayed.  To exclude all testcase variations which drop connection, specify "NoDropper" as the third argument of the -misc parameter.  To run with native optimization, specify "Native" as the third argument of the -misc parameter.  See TestDriver for remaining calling syntax.
  **/

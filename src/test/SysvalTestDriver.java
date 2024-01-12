@@ -13,6 +13,22 @@
 
 package test;
 
+import test.Sysval.SysvalBeanInfoTestcase;
+import test.Sysval.SysvalCtorTestcase;
+import test.Sysval.SysvalExtendedTestcase;
+import test.Sysval.SysvalGetSetTestcase;
+import test.Sysval.SysvalGroupBeanInfoTestcase;
+import test.Sysval.SysvalGroupCtorTestcase;
+import test.Sysval.SysvalGroupTestcase;
+import test.Sysval.SysvalListBeanInfoTestcase;
+import test.Sysval.SysvalListCtorTestcase;
+import test.Sysval.SysvalListGetSetTestcase;
+import test.Sysval.SysvalListSerialization;
+import test.Sysval.SysvalP9907639;
+import test.Sysval.SysvalP9928495;
+import test.Sysval.SysvalReleaseTestcase;
+import test.Sysval.SysvalSerialization;
+
 /**
  The SysvalTestDriver class provides a test driver to execute testcases.
  <p>This test driver tests the following testcases:

@@ -19,6 +19,13 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.UserSpace.UserSpaceBeans;
+import test.UserSpace.UserSpaceChgAttrTestcase;
+import test.UserSpace.UserSpaceCrtDltTestcase;
+import test.UserSpace.UserSpacePgmCallTestcase;
+import test.UserSpace.UserSpaceReadTestcase;
+import test.UserSpace.UserSpaceWriteTestcase;
+
 /**
  Test driver for the User Space component.
  <p>If needed objects created during test can be deleted manually by using the following commands:

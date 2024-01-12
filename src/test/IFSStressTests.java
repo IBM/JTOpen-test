@@ -18,6 +18,8 @@ import com.ibm.as400.access.AS400;            //@A1A
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.IFS.IFSStressTestcase;
+
 import java.io.*;
 import java.util.Enumeration;
 

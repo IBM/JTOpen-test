@@ -206,7 +206,7 @@ public abstract class Testcase {
     }
   }
 
-  static final Package TOOLBOX_PACKAGE = Package
+  protected static final Package TOOLBOX_PACKAGE = Package
       .getPackage("com.ibm.as400.access");
 
   protected Testcase() {
@@ -2660,7 +2660,7 @@ public abstract class Testcase {
       return true;
     }
   }
-  boolean checkNotGroupTest() {
+  public boolean checkNotGroupTest() {
     if (isNotGroupTest()) {
       System.out.println("System ("+hostname+") is not group test system");
       return true; 
@@ -3162,7 +3162,7 @@ public abstract class Testcase {
 		 return true; 
 	 }
   }
-  void initMfaUser() throws Exception { 
+  public void initMfaUser() throws Exception { 
 	  if (!mfaInitialized) {
 		  // For this to be used,  googleauth-1.5.0.jar and commons-codec-1.16.0.jar must in the classpath.
 		  // The authentication information is read from ini/netrc.ini and must match the configuration

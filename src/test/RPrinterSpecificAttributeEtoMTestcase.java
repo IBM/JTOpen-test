@@ -16,6 +16,9 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.QSYSObjectPathName;
 import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceMetaData;
+
+import test.User.UserGenericAttributeTestcase;
+
 import com.ibm.as400.resource.RPrinter;
 
 import java.io.ByteArrayInputStream;

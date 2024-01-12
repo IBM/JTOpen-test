@@ -16,6 +16,11 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Trace;
+
+import test.DDM.DDMProxyStressTestcase;
+import test.IFS.IFSProxyStressTestcase;
+import test.UserSpace.UserSpaceStressTestcase;
+
 import com.ibm.as400.access.CommandLineArguments;
 
 import java.sql.*;

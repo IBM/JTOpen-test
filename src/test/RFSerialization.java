@@ -21,6 +21,10 @@ import java.io.FileInputStream;
 import java.util.Vector;
 import com.ibm.as400.access.*;
 
+import test.DDM.DDMChar10NoKeyFormat;
+import test.DDM.DDMPropertyChangeListener;
+import test.DDM.DDMVetoableChangeListener;
+
 /**
  *Testcase RFSerialization.  This test class verifies the abillity to
  *serialize and deserialize RecordFormat and Record objects.

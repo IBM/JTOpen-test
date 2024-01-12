@@ -22,6 +22,8 @@ import java.math.BigDecimal;
 import com.ibm.as400.access.*;
 import com.ibm.as400.access.ObjectDescription; ///
 
+import test.DDM.DDMFormat1Field0Key;
+
 /**
  *Testcase NLSDDMTestcase.  This test class verifies the use of DBCS Strings
  *in selected DDM testcase variations.

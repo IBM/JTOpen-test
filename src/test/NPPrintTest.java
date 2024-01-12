@@ -22,6 +22,8 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Job;
 
+import test.NP.*;
+
 /**
  * Test driver for the Print component.
  *

@@ -547,7 +547,7 @@ public class PasswordLeakTool {
           as400.passwordLevel();
           as400.passwordLevel();
           as400.passwordLevel();
-          as400.close(); 
+          as400.disconnectAllServices(); 
         } else if (command.equalsIgnoreCase("AS400JAVADATASOURCE")) {
           i++;
           char[] passwordArray = new char[8];

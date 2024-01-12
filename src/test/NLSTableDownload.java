@@ -22,7 +22,7 @@ import com.ibm.as400.access.*;
   *@version 1.00
   *@author  Schuman Shao
   **/
-class NLSTableDownload extends Object
+public class NLSTableDownload extends Object
 {
 
     private AS400Server server_;
@@ -38,7 +38,7 @@ class NLSTableDownload extends Object
     /**
      * @param  system  The server to execute the program.
      **/
-    NLSTableDownload(AS400ImplRemote system)
+    public NLSTableDownload(AS400ImplRemote system)
     {
         setSystem(system);
 
@@ -52,7 +52,7 @@ class NLSTableDownload extends Object
     /**
      * connect to the previously set server.
      **/
-    void connect() throws ServerStartupException, UnknownHostException, AS400SecurityException, ConnectionDroppedException, InterruptedException, IOException
+    public void connect() throws ServerStartupException, UnknownHostException, AS400SecurityException, ConnectionDroppedException, InterruptedException, IOException
     {
         // Connect to server
         if (server_ == null)
@@ -109,7 +109,7 @@ class NLSTableDownload extends Object
     /**
      * Disconnect from the host server.
      **/
-    void disconnect()
+    public void disconnect()
     {
         if (server_ != null)
             try {
@@ -123,7 +123,7 @@ class NLSTableDownload extends Object
     /**
      * Download table
      **/
-    char[] download( int fromCCSID, int toCCSID, boolean doublebyte ) throws ConnectionDroppedException, IOException, InterruptedException
+    public char[] download( int fromCCSID, int toCCSID, boolean doublebyte ) throws ConnectionDroppedException, IOException, InterruptedException
     {
 	NLSGetTableReply NLSReply = null; 
         NLSGetTableRequest reqDs = null;

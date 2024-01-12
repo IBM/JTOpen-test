@@ -25,6 +25,15 @@ import com.ibm.as400.access.Job;
 import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
 
+import test.Sec.SecPHActionTestcase;
+import test.Sec.SecPHMiscTestcase;
+import test.Sec.SecPHPropertyTestcase;
+import test.Sec.SecPTActionTestcase;
+import test.Sec.SecPTMiscTestcase;
+import test.Sec.SecPTPropertyTestcase;
+import test.Sec.SecUPMiscTestcase;
+import test.Sec.SecUPPropertyTestcase;
+
 /**
  Test driver for the security auth package.  This includes the ProfileHandleCredential, ProfileTokenCredential, and UserProfilePrincipal components.
  NOTE TO TESTER: When running natively, specify the same userid on the "-uid" parameter, as the profile under which you are signed-on to the system.
@@ -34,10 +43,10 @@ import com.ibm.as400.access.ProgramParameter;
 public class SecAuthTest extends TestDriver
 {
   private static final long serialVersionUID = 1L;
-    static  String uid1 = "SECPTTEST1";
-    static  String pwd1 = "SECPT01PWD";
-    static  String uid2 = "SECPTTEST2";
-    static  String pwd2 = "SECPT02PWD";
+    public static  String uid1 = "SECPTTEST1";
+    public static  String pwd1 = "SECPT01PWD";
+    public static  String uid2 = "SECPTTEST2";
+    public static  String pwd2 = "SECPT02PWD";
 
     /**
      Main for running standalone application tests.
@@ -140,7 +149,7 @@ public class SecAuthTest extends TestDriver
         }
     }
 
-    static void createProfiles(AS400 pwrSys) throws Exception {
+    public static void createProfiles(AS400 pwrSys) throws Exception {
 
         CommandCall cmd = new CommandCall(pwrSys);
         cmd.run("CRTUSRPRF USRPRF(" + uid1 + ") PASSWORD(" + pwd1 + ") USRCLS(*USER) TEXT('Test profile: Robb Wiedrich 3-3856')");
@@ -148,7 +157,7 @@ public class SecAuthTest extends TestDriver
 
     }
 
-    static void deleteProfiles(AS400 pwrSys) throws Exception {
+    public static void deleteProfiles(AS400 pwrSys) throws Exception {
         CommandCall cmd = new CommandCall(pwrSys);
         cmd.run("DLTUSRPRF USRPRF(" + uid1 + ") OWNOBJOPT(*DLT)");
         cmd.run("DLTUSRPRF USRPRF(" + uid2 + ") OWNOBJOPT(*DLT)");
@@ -194,7 +203,7 @@ public class SecAuthTest extends TestDriver
      Removes a profile token from the server.
      @exception  Exception  If errors occur while removing the credential.
      **/
-    static void removeToken(AS400 sys, byte[] tkn) throws Exception
+    public static void removeToken(AS400 sys, byte[] tkn) throws Exception
     {
         ProgramParameter[] parmlist = new ProgramParameter[3];
         parmlist[0] = new ProgramParameter(new byte[] { (byte)0x5C, (byte)0xD7, (byte)0xD9, (byte)0xC6, (byte)0xE3, (byte)0xD2, (byte)0xD5, (byte)0x40, (byte)0x40, (byte)0x40 } ); // *PRFTKN
@@ -217,7 +226,7 @@ public class SecAuthTest extends TestDriver
     /**
      Return true if the byte arrays are equivalent; false otherwise.
      **/
-    static boolean compareBytes(byte[] b1, byte[] b2)
+    static public boolean compareBytes(byte[] b1, byte[] b2)
     {
         if (b1.length != b2.length) return false;
         for (int i = 0; i < b1.length; ++i)
@@ -233,7 +242,7 @@ public class SecAuthTest extends TestDriver
      @param  fDescs  The feature descriptors.
      @return  true if descriptors exist for all the names; otherwise false.
      **/
-    static boolean verifyDescriptors(String[] fNames, FeatureDescriptor[] fDescs)
+    public static boolean verifyDescriptors(String[] fNames, FeatureDescriptor[] fDescs)
     {
         boolean success = true;
         for (int i = 0; i < fNames.length && success; ++i)
