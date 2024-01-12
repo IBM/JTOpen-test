@@ -19,6 +19,7 @@ import com.ibm.as400.access.Trace;
 
 import test.DDM.DDMProxyStressTestcase;
 import test.IFS.IFSProxyStressTestcase;
+import test.ServiceProgram.ServicePgmCallStressTestcase;
 import test.UserSpace.UserSpaceStressTestcase;
 
 import com.ibm.as400.access.CommandLineArguments;

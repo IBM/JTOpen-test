@@ -452,7 +452,7 @@ public class JDSetupProcedure {
    * @param supportedFeatures
    *           What features are supported
    **/
-  static void create(AS400 system, Connection connection, String stp, 
+  public static void create(AS400 system, Connection connection, String stp, 
       JDSupportedFeatures supportedFeatures) throws Exception {
     boolean ZOS;
     boolean isLUW;
@@ -2128,7 +2128,7 @@ public class JDSetupProcedure {
    * 
    * @return The callable statement.
    **/
-  static CallableStatement prepare(Connection connection, String stp,
+  public static CallableStatement prepare(Connection connection, String stp,
       JDSupportedFeatures supportedFeatures) throws Exception {
     return connection.prepareCall(getSQLString(stp, supportedFeatures));
   }
@@ -2148,7 +2148,7 @@ public class JDSetupProcedure {
    *          Which driver is being used
    **/
 
-  static void register(CallableStatement cs, String stp, JDSupportedFeatures supportedFeatures, int driver) throws Exception {
+  public static void register(CallableStatement cs, String stp, JDSupportedFeatures supportedFeatures, int driver) throws Exception {
     if ((stp.equals(STP_CSTYPESOUT)) || (stp.equals(STP_CSTYPESOUTB))
         || (stp.equals(STP_CSTYPESOUTX)) || (stp.equals(STP_CSINOUT))
         || (stp.equals(STP_CSTYPESINOUT)) || (stp.equals(STP_CSTYPESINOUTX))
@@ -2228,7 +2228,7 @@ public class JDSetupProcedure {
    * @param  supportedFeatures
    *          What features are supported
    **/
-  static void setTypesParameters(CallableStatement cs, String stp,
+  public static void setTypesParameters(CallableStatement cs, String stp,
       JDSupportedFeatures supportedFeatures) throws Exception {
     if ((stp.equals(STP_CSTYPESIN)) || (stp.equals(STP_CSINOUT))
         || (stp.equals(STP_CSTYPESINOUT)) || (stp.equals(STP_CSTYPESINOUTX)))

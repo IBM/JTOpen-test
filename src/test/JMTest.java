@@ -14,11 +14,26 @@
 package test;
 
 import com.ibm.as400.access.AS400;
+
+import test.JM.JMAddlFiles;
+import test.JM.JMBeans;
+import test.JM.JMCcsid;
+import test.JM.JMComp;
+import test.JM.JMExtract;
+import test.JM.JMLang;
+import test.JM.JMListen;
+import test.JM.JMMakeJar;
+import test.JM.JMPackage;
+import test.JM.JMParseArgs;
+import test.JM.JMSetGet;
+import test.JM.JMSplit;
+import test.JM.JMTBMakeJar;
+import test.JM.JMTBParseArgs;
+
 import java.beans.PropertyVetoException;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Properties;
 import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -46,52 +61,52 @@ extends TestDriver
 {
 
   // Constants.
-  static final File CURRENT_DIR = new File (System.getProperty ("user.dir"));
-  static final File   CWD = CURRENT_DIR;
-  static final String LANGUAGE_DIR_NAME = "Lang";
-  static final File   LANGUAGE_DIR = new File (CWD, LANGUAGE_DIR_NAME);
-  static final String ADDLFILE_DIR_NAME = "AddlFile";
-  static final File   ADDLFILE_DIR = new File (CWD, ADDLFILE_DIR_NAME);
+  public static final File CURRENT_DIR = new File (System.getProperty ("user.dir"));
+  public static final File   CWD = CURRENT_DIR;
+  public static final String LANGUAGE_DIR_NAME = "Lang";
+  public static final File   LANGUAGE_DIR = new File (CWD, LANGUAGE_DIR_NAME);
+  public static final String ADDLFILE_DIR_NAME = "AddlFile";
+  public static final File   ADDLFILE_DIR = new File (CWD, ADDLFILE_DIR_NAME);
 
-  static final String JUNGLE_JAR_NAME = "jungle.jar";
-  static final File   JUNGLE_JAR = new File (CWD, JUNGLE_JAR_NAME);
-  static final File   JUNGLE_JAR_SMALL = new File (CWD, "jungleSmall.jar");
-  static final String JUNGLE_PACKAGE_NAME = "jungle";
+  public static final String JUNGLE_JAR_NAME = "jungle.jar";
+  public static final File   JUNGLE_JAR = new File (CWD, JUNGLE_JAR_NAME);
+  public static final File   JUNGLE_JAR_SMALL = new File (CWD, "jungleSmall.jar");
+  public static final String JUNGLE_PACKAGE_NAME = "jungle";
 
-  static final String TOOLBOX_JAR_NAME = "toolbox.jar";
-  static final File   TOOLBOX_JAR = new File (CWD, TOOLBOX_JAR_NAME);
-  static final File   TOOLBOX_JAR_SMALL = new File (CWD, "toolboxSmall.jar");
+  public static final String TOOLBOX_JAR_NAME = "toolbox.jar";
+  public static final File   TOOLBOX_JAR = new File (CWD, TOOLBOX_JAR_NAME);
+  public static final File   TOOLBOX_JAR_SMALL = new File (CWD, "toolboxSmall.jar");
 
-  static final String CLASS_PATH = System.getProperty ("java.class.path");
-  static final String FILE_SEPARATOR_STRING = System.getProperty ("file.separator");
-  static final char FILE_SEPARATOR = FILE_SEPARATOR_STRING.charAt(0);
-  static final String PATH_SEPARATOR = System.getProperty ("path.separator");
+  public static final String CLASS_PATH = System.getProperty ("java.class.path");
+  public static final String FILE_SEPARATOR_STRING = System.getProperty ("file.separator");
+  public static final char FILE_SEPARATOR = FILE_SEPARATOR_STRING.charAt(0);
+  public static final String PATH_SEPARATOR = System.getProperty ("path.separator");
 
-  static final String MANIFEST_DIR_NAME   = "META-INF";
-  static final String MANIFEST_ENTRY_NAME = "META-INF/MANIFEST.MF";
-  static final String MANIFEST_NAME_KEYWORD  = "Name:";
+  public static final String MANIFEST_DIR_NAME   = "META-INF";
+  public static final String MANIFEST_ENTRY_NAME = "META-INF/MANIFEST.MF";
+  public static final String MANIFEST_NAME_KEYWORD  = "Name:";
 
-  static final String ADDITIONAL_FILE_1_NAME = "jungle.txt";
-  static final String ADDITIONAL_FILE_2_NAME = "spider2.gif";
-  static final String ADDITIONAL_FILE_3_NAME = "sunelm.jpg";
-  static final String ADDITIONAL_FILE_4_NAME = "dolphins.jpg";
+  public static final String ADDITIONAL_FILE_1_NAME = "jungle.txt";
+  public static final String ADDITIONAL_FILE_2_NAME = "spider2.gif";
+  public static final String ADDITIONAL_FILE_3_NAME = "sunelm.jpg";
+  public static final String ADDITIONAL_FILE_4_NAME = "dolphins.jpg";
 
-  static final File ADDITIONAL_FILE_1 = new File (CWD, ADDITIONAL_FILE_1_NAME);
-  static final File ADDITIONAL_FILE_2 = new File (CWD, ADDITIONAL_FILE_2_NAME);
-  static final File ADDITIONAL_FILE_3 = new File ("Trees", ADDITIONAL_FILE_3_NAME);
-  static final File ADDITIONAL_FILE_4 = new File (ADDLFILE_DIR, ADDITIONAL_FILE_4_NAME);
+  public static final File ADDITIONAL_FILE_1 = new File (CWD, ADDITIONAL_FILE_1_NAME);
+  public static final File ADDITIONAL_FILE_2 = new File (CWD, ADDITIONAL_FILE_2_NAME);
+  public static final File ADDITIONAL_FILE_3 = new File ("Trees", ADDITIONAL_FILE_3_NAME);
+  public static final File ADDITIONAL_FILE_4 = new File (ADDLFILE_DIR, ADDITIONAL_FILE_4_NAME);
 
-  static final String COPYRIGHT_ENTRY_NAME = "com/ibm/as400/access/Copyright.class";
-  static final String PKG = "test/";
-  static final String MRI_TEMPLATE = "JMMRI.class";
+  public static final String COPYRIGHT_ENTRY_NAME = "com/ibm/as400/access/Copyright.class";
+  public static final String PKG = "test/";
+  public static final String MRI_TEMPLATE = "JMMRI.class";
 
   // Default size for splitting jars.
   private static final int SPLIT_SIZE_KBYTES = 2*1024; // kilobytes
 
-  static final boolean DEBUG = false;
-  static Vector allJungleFiles_ = null;
-  static Vector toolboxFiles_ = null;
-  static boolean foundJarMakerClassesOnClasspath_;
+  public static final boolean DEBUG = false;
+  public static Vector allJungleFiles_ = null;
+  public static Vector toolboxFiles_ = null;
+  public static boolean foundJarMakerClassesOnClasspath_;
 
 
 /**
@@ -210,7 +225,7 @@ Performs setup needed after running testcases.
    @param oldList The list of jar entry names (String's).  Assumed to be sorted.
    @return The augmented list.
    **/
-  static Vector addDirectoryEntries (Vector oldList)
+  public static Vector addDirectoryEntries (Vector oldList)
   {
     return addDirectoryEntries(oldList, true);
   }
@@ -231,7 +246,7 @@ Performs setup needed after running testcases.
    @param oldList The list of jar entry names (String's).  Assumed to be sorted.
    @return The augmented list.
    **/
-  static Vector addDirectoryEntries (Vector oldList, boolean addAllDirs)
+  public static Vector addDirectoryEntries (Vector oldList, boolean addAllDirs)
   {
     String priorPrefix = new String ("");
     Vector augmentedList = new Vector (oldList.size ());
@@ -273,7 +288,7 @@ Performs setup needed after running testcases.
 /**
 Reports whether or not two files are in fact the same file.
 **/
-    static boolean areSameFile (File file1, File file2)
+    public static boolean areSameFile (File file1, File file2)
     {
       return (file1.getAbsolutePath().equals (file2.getAbsolutePath()));
       // Note: For some reason, "File.equals()" reports false, even
@@ -665,7 +680,7 @@ This method is able to extract testing files directly from the jt400Test.jar fil
 /**
 Create a file.
 **/
-  static boolean createFile (File file)
+  public static boolean createFile (File file)
   {
     boolean succeeded = true;
     try
@@ -687,7 +702,7 @@ Create a file.
 /**
 Delete a file.
 **/
-    static boolean deleteFile (File file)
+    public static boolean deleteFile (File file)
     {
       if (file.exists ())
       {
@@ -703,14 +718,14 @@ Delete a file.
       }
       return (!file.exists ());
     }
-    static boolean deleteFile (String fileName)
+    public static boolean deleteFile (String fileName)
     {
       return deleteFile (new File (fileName));
     }
 
     // In the specified directory, deletes all files that have names
     // of the form <prefix>XXX<suffix>, where XXX is a integer number.
-    static boolean deleteSplitFiles (File directory, String prefix, String suffix)
+    public static boolean deleteSplitFiles (File directory, String prefix, String suffix)
     {
       boolean succeeded = true;
       String[] fileNames = directory.list ();  // all files in directory
@@ -748,7 +763,7 @@ Delete a file.
 Deletes the various jarmaker testing files from the current directory.
  @exception  Exception  If an exception occurs.
 **/
-    static void deleteTestingFilesFromLocalDirectory ()
+    public static void deleteTestingFilesFromLocalDirectory ()
         throws Exception
     {
       if (DEBUG)
@@ -778,7 +793,7 @@ Deletes the various jarmaker testing files from the current directory.
 /**
 Delete a directory and all its subdirectories.
 **/
-    static boolean deleteDirectory ( File dir )
+    public static boolean deleteDirectory ( File dir )
     {
       try {
         if (DEBUG && dir.exists () && !dir.isDirectory ())
@@ -795,7 +810,7 @@ Delete a directory and all its subdirectories.
       deleteFileOrDir (dir);
       return (!dir.exists ());
     }
-    static boolean deleteDirectory ( String dirName )
+    public static boolean deleteDirectory ( String dirName )
     {
       return deleteDirectory (new File (dirName));
     }
@@ -805,7 +820,7 @@ Delete a directory and all its subdirectories.
 /**
 Delete a directory or file, and all its subdirectories (if it's a directory).
 **/
-    static void deleteFileOrDir ( File fileOrDir )
+    public static void deleteFileOrDir ( File fileOrDir )
     {
       boolean isDirectory = false;
       boolean isFile = false;
@@ -864,7 +879,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
    @param filePath A file path name.
    @return         The derived jar entry name.
    **/
-  static String generateJarEntryName (File file, String basePath)
+  public static String generateJarEntryName (File file, String basePath)
   {
     // Strip off the base path, if it matches the beginning of the file path.
     String filePath = file.getAbsolutePath ();
@@ -898,7 +913,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
                    is the "base path" for the file.
    @return         The derived jar entry names (String's).
    **/
-  static Vector generateJarEntryNames (Hashtable fileList)
+  public static Vector generateJarEntryNames (Hashtable fileList)
   {
     Vector entryNames = new Vector (fileList.size ());
     Enumeration e = fileList.keys ();
@@ -1151,7 +1166,7 @@ In the returned list, files are represented as jar entrynames.
    @param sourceJarFile The source jar file.
    @return              A default destination jar file.
    **/
-  static File setupDefaultDestinationJarFile (File sourceJarFile)
+  public static File setupDefaultDestinationJarFile (File sourceJarFile)
   {
     String sourceJarName = sourceJarFile.getName ();
     int index = sourceJarName.lastIndexOf ('.');
@@ -1169,7 +1184,7 @@ In the returned list, files are represented as jar entrynames.
 /**
 Verifies that the correct files got extracted.
 **/
-    static boolean verifyExtraction (File baseDirectory, Vector subDirs, Vector expected)
+    public static boolean verifyExtraction (File baseDirectory, Vector subDirs, Vector expected)
     {
       Vector actual = new Vector ();
       if (!subDirs.contains (MANIFEST_DIR_NAME))
@@ -1189,7 +1204,7 @@ Verifies that the correct files got extracted.
                            "actualFiles", "expectedFiles");
     }
 
-    static boolean verifyExtraction (File baseDirectory, Vector expected)
+    public static boolean verifyExtraction (File baseDirectory, Vector expected)
     {
       Vector subDirs = new Vector ();
       subDirs.add (JUNGLE_PACKAGE_NAME);
@@ -1200,7 +1215,7 @@ Verifies that the correct files got extracted.
 /**
 Verifies that specific files got extracted.
 **/
-    static boolean verifyExtractionContains (File baseDirectory, Vector subDirs, Vector expected)
+    public static boolean verifyExtractionContains (File baseDirectory, Vector subDirs, Vector expected)
     {
       boolean result = true;
       Vector actual = new Vector ();
@@ -1233,7 +1248,7 @@ Verifies that specific files got extracted.
 /**
 Verifies that specific files did NOT get extracted.
 **/
-    static boolean verifyExtractionNotContains (File baseDirectory, Vector subDirs, Vector notExpected)
+    public static boolean verifyExtractionNotContains (File baseDirectory, Vector subDirs, Vector notExpected)
     {
       boolean result = true;
       Vector actual = new Vector ();
@@ -1260,7 +1275,7 @@ Verifies that specific files did NOT get extracted.
     }
 
     // Verifies that the manifest matches the actual contents of the jar.
-    static boolean validateJar (File jarFile)
+    public static boolean validateJar (File jarFile)
     {
       boolean result = true;
       try
@@ -1284,14 +1299,14 @@ Verifies that specific files did NOT get extracted.
 
     // Verifies that the manifest matches the actual contents of the jar,
     // and that its size does not exceed the specified value.
-    static boolean validateJar (File jarFile, long maxSizeKbytes)
+    public static boolean validateJar (File jarFile, long maxSizeKbytes)
     {
       return validateJar (jarFile, maxSizeKbytes, false);
     }
 
     // Verifies that the manifest matches the actual contents of the jar,
     // and that its size does not exceed the specified value.
-    static boolean validateJar (File jarFile, long maxSizeKbytes,
+    public static boolean validateJar (File jarFile, long maxSizeKbytes,
                                 boolean expectOversize)
     {
       boolean result = true;
@@ -1317,17 +1332,17 @@ Verifies that specific files did NOT get extracted.
     // and that its size does not exceed the specified value.
     // Also verifies that every entry in the source jar file occurs
     // in exactly one of the target jar files.
-    static boolean validateJars (File sourceJarFile, Vector targetJarFiles)
+    public static boolean validateJars (File sourceJarFile, Vector targetJarFiles)
     {
       return validateJars (sourceJarFile, targetJarFiles, SPLIT_SIZE_KBYTES);
     }
-    static boolean validateJars (File sourceJarFile, Vector targetJarFiles,
+    public static boolean validateJars (File sourceJarFile, Vector targetJarFiles,
                                  long maxSizeKbytes)
     {
       return validateJars (sourceJarFile, targetJarFiles, SPLIT_SIZE_KBYTES,
                            false);
     }
-    static boolean validateJars (File sourceJarFile, Vector targetJarFiles,
+    public static boolean validateJars (File sourceJarFile, Vector targetJarFiles,
                                  long maxSizeKbytes, boolean expectOversize)
     {
       boolean result = true;
@@ -1376,17 +1391,17 @@ Verifies that specific files did NOT get extracted.
 Verifies that the correct files got copied into the destination jar file,
 and that the correct entries got created in the manifest.
 **/
-    static boolean verifyJar (File destinationJar, Vector expectedContents)
+    public static boolean verifyJar (File destinationJar, Vector expectedContents)
     {
       return verifyJar (destinationJar, expectedContents, removeManifestEntry(expectedContents), false);
     }
 
-    static boolean verifyJar (File destinationJar, Vector expectedContents, boolean isToolboxJar)
+    public static boolean verifyJar (File destinationJar, Vector expectedContents, boolean isToolboxJar)
     {
       return verifyJar (destinationJar, expectedContents, removeManifestEntry(expectedContents), isToolboxJar);
     }
 
-    static boolean verifyJar (File destinationJar, Vector expectedJarEntries,
+    public static boolean verifyJar (File destinationJar, Vector expectedJarEntries,
                                  Vector expectedManifestEntries)
     {
       return verifyJar (destinationJar, expectedJarEntries, expectedManifestEntries, false);
@@ -1394,7 +1409,7 @@ and that the correct entries got created in the manifest.
 
     // Verifies that the destination jar exists, and contains the
     // expected files and nothing else.
-    static boolean verifyJar (File destinationJar, Vector expectedJarEntries,
+    public static boolean verifyJar (File destinationJar, Vector expectedJarEntries,
                               Vector expectedManifestEntries, boolean isToolboxJar)
     {
       boolean result = true;
@@ -1438,13 +1453,13 @@ and that the correct entries got created in the manifest.
       return result;
     }
 
-    static boolean verifyJarContains (File destinationJar,
+    public static boolean verifyJarContains (File destinationJar,
                                       Vector expectedJarEntries)
     {
       return verifyJarContains (destinationJar, expectedJarEntries, false);
     }
 
-    static boolean verifyJarContains (File destinationJar,
+    public static boolean verifyJarContains (File destinationJar,
                                       Vector expectedJarEntries,
                                       boolean isToolboxJar)
     {
@@ -1488,7 +1503,7 @@ and that the correct entries got created in the manifest.
       return result;
     }
 
-    static boolean verifyJarNotContains (File destinationJar,
+    public static boolean verifyJarNotContains (File destinationJar,
                                       Vector notExpectedJarEntries)
     {
       boolean result = true;

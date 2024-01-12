@@ -14,6 +14,18 @@ package test;
 
 import com.ibm.as400.data.Descriptor;
 import com.ibm.as400.data.RecordFormatDocument;
+
+import test.RM.RMConstructorTestcase;
+import test.RM.RMDescriptorTestcase;
+import test.RM.RMGetDoubleTestcase;
+import test.RM.RMGetSetValueTestcase;
+import test.RM.RMRecordConstructorTestcase;
+import test.RM.RMSetValuesTestcase;
+import test.RM.RMToByteArrayTestcase;
+import test.RM.RMToXmlTestcase;
+import test.RM.RMtoRecordFormatTestcase;
+import test.RM.RMtoRecordTestcase;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +45,7 @@ extends TestDriver
 
     // Private data.
     private static final String serializeFilename_      = "RMTest.ser";
-    static boolean jvmIsSunOrIBM_142_ = false;
+    public static boolean jvmIsSunOrIBM_142_ = false;
 
 
 /**

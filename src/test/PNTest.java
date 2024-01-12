@@ -13,6 +13,12 @@
 
 package test;
 
+import test.PN.PNAttributesTestcase;
+import test.PN.PNBeansTestcase;
+import test.PN.PNCtorTestcase;
+import test.PN.PNLocalizedObjectTypeTestcase;
+import test.PN.PNToPathTestcase;
+
 /**
  Test driver for the QSYSObjectPathName component.
  **/

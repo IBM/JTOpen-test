@@ -172,7 +172,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   protected boolean isNative_ = false;
   protected boolean isExtendedDynamic_ = false;
   protected boolean isLocal_ = false;
-  static boolean onAS400_ = false;
+  protected static boolean onAS400_ = false;
   static {
     String s = System.getProperty("os.name");
     boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;

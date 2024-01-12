@@ -19,6 +19,21 @@ import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceListener;
+
+import test.RPrint.RPrinterBasicTestcase;
+import test.RPrint.RPrinterBeanInfoTestcase;
+import test.RPrint.RPrinterBufferedResourceTestcase;
+import test.RPrint.RPrinterGenericAttributeTestcase;
+import test.RPrint.RPrinterListBasicTestcase;
+import test.RPrint.RPrinterListBeanInfoTestcase;
+import test.RPrint.RPrinterListBufferedResourceListTestcase;
+import test.RPrint.RPrinterListSelectionTestcase;
+import test.RPrint.RPrinterListSortTestcase;
+import test.RPrint.RPrinterSpecificAttributeAtoDTestcase;
+import test.RPrint.RPrinterSpecificAttributeEtoMTestcase;
+import test.RPrint.RPrinterSpecificAttributeNtoSTestcase;
+import test.RPrint.RPrinterSpecificAttributeTtoZTestcase;
+
 import com.ibm.as400.resource.ResourceListEvent;
 import com.ibm.as400.resource.ResourceListListener;
 import java.beans.PropertyChangeEvent;

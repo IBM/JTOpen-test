@@ -20,6 +20,13 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.access.SystemProperties;
 
+import test.Pgm.PgmBeans;
+import test.Pgm.PgmConstructor;
+import test.Pgm.PgmOnThreadTestcase;
+import test.Pgm.PgmParmTestcase;
+import test.Pgm.PgmRLETestcase;
+import test.Pgm.PgmRunTestcase;
+
 /**
  Test driver for the Example component.
  **/

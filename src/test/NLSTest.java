@@ -24,6 +24,19 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.NLS.NLSCmdTestcase;
+import test.NLS.NLSDATestcase;
+import test.NLS.NLSDDMTestcase;
+import test.NLS.NLSDQTestcase;
+import test.NLS.NLSIFSTestcase;
+import test.NLS.NLSJDBCTestcase;
+import test.NLS.NLSMessageFileTestcase;
+import test.NLS.NLSMessageQueueTestcase;
+import test.NLS.NLSNPTestcase;
+import test.NLS.NLSSysvalTestcase;
+import test.NLS.NLSUserSpaceTestcase;
+import test.NLS.NLSUserTestcase;
+
 /**
 Test driver for the NLS component.
 **/
@@ -31,11 +44,11 @@ public class NLSTest extends TestDriver
 {
   
   boolean cleanupFirst_ = false;
-  String pwrUid_ = userId_;  // userid with SECADM authority
-  String pwrPwd_ = password_;  // password associated with pwrUid_
-  String ifsDir_ = null;  // name of local directory, which is mapped to an IFS directory
-  static AS400 PwrSys = null;  // power system - profile thru which to do cleanup
-  static String[] args_ = null; // @E1A
+  public String pwrUid_ = userId_;  // userid with SECADM authority
+  public String pwrPwd_ = password_;  // password associated with pwrUid_
+  public String ifsDir_ = null;  // name of local directory, which is mapped to an IFS directory
+  public static AS400 PwrSys = null;  // power system - profile thru which to do cleanup
+  public static String[] args_ = null; // @E1A
 
   static final int MAXTOKENS = 5; // maximum tokens interpreted in "-misc" parameter
 

@@ -16,7 +16,11 @@ package test;
 import java.io.IOException;
 import java.io.*; 
 import java.net.UnknownHostException;
-import com.ibm.as400.access.*; 
+import com.ibm.as400.access.*;
+
+import test.NLS.NLSGetDoubleByteTableRequest;
+import test.NLS.NLSGetTableReply;
+import test.NLS.NLSGetTableRequest; 
 
 /**
   *@version 1.00
