@@ -19,6 +19,19 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.Sec.SecChangePasswordTestcase;
+import test.Sec.SecChgPwdDialogTestcase;
+import test.Sec.SecConnectTestcase;
+import test.Sec.SecCtorTestcase;
+import test.Sec.SecEventTestcase;
+import test.Sec.SecPortMapperTestcase;
+import test.Sec.SecPropertyTestcase;
+import test.Sec.SecSerializeTestcase;
+import test.Sec.SecSignonInfoTestcase;
+import test.Sec.SecSignonTestcase;
+import test.Sec.SecValidatePasswordTestcase;
+import test.Sec.SecVrmTestcase;
+
 /**
  Test driver for the system object and associated classes.  Refer to TestDriver for calling syntax.
  **/
@@ -108,18 +121,18 @@ public class SecTest extends TestDriver
         // SecPortMapperTestcase needs to be first to insure proper initial value testing.
         Testcase[] testcases =
         {
-            new SecPortMapperTestcase(),
-            new SecCtorTestcase(),
-            new SecSignonTestcase(),
+          new SecChangePasswordTestcase(),
             new SecChgPwdDialogTestcase(),
-            new SecVrmTestcase(),
-            new SecSignonInfoTestcase(),
             new SecConnectTestcase(),
-            new SecChangePasswordTestcase(),
-            new SecValidatePasswordTestcase(),
+            new SecCtorTestcase(),
+            new SecEventTestcase(),
+            new SecPortMapperTestcase(),
             new SecPropertyTestcase(),
             new SecSerializeTestcase(),
-            new SecEventTestcase()
+            new SecSignonInfoTestcase(),
+            new SecSignonTestcase(),
+            new SecValidatePasswordTestcase(),
+            new SecVrmTestcase(),
         };
 
         for (int i = 0; i < testcases.length; ++i)

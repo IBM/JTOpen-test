@@ -24,6 +24,9 @@ import java.util.Vector;
 import java.beans.PropertyVetoException;
 import com.ibm.as400.access.*;
 
+import test.DDM.DDMPropertyChangeListener;
+import test.DDM.DDMVetoableChangeListener;
+
 /**
  *Testcase RFEvents.  This test class verifies valid and invalid
  *usage of:

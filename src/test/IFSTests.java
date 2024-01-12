@@ -17,6 +17,23 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.IFS.IFSConnectTestcase;
+import test.IFS.IFSCopyTestcase;
+import test.IFS.IFSCrtDltTestcase;
+import test.IFS.IFSCtorTestcase;
+import test.IFS.IFSEventTestcase;
+import test.IFS.IFSFileAttrTestcase;
+import test.IFS.IFSFileDescriptorTestcase;
+import test.IFS.IFSJavaFileTestcase;
+import test.IFS.IFSListFilesTestcase;
+import test.IFS.IFSLockTestcase;
+import test.IFS.IFSMiscTestcase;
+import test.IFS.IFSPropertyTestcase;
+import test.IFS.IFSReadTestcase;
+import test.IFS.IFSSerializeTestcase;
+import test.IFS.IFSSystemViewTestcase;
+import test.IFS.IFSWriteTestcase;
+
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -24,7 +41,7 @@ import java.util.Random;
 
 public class IFSTests extends TestDriver
 {
-  static boolean IsRunningOnOS400 = false;
+  public static boolean IsRunningOnOS400 = false;
   public static  String COLLECTION     = "JDIFST";
 
 

@@ -138,7 +138,6 @@ public class BidiEngineWrapper {
     	char[] buf = {0x41, '(', 0x42, ')', 0x43, 0x20, 0x5D0, '(', 0x5D1, ')', 0x5D2};
     	String str = new String(buf);
     	
-    	//str = "הערת תוכן נוצרת ע-י גלר אלכס 12345 בתאריך 17.11.09 08:50";
     	str = "002c3B2E"; 
     	System.out.println(bidiTransform(str, 6,9));//8?
     	//System.out.println("TransFromLogRTLtoVisRTLEx \n"+ RLE + str + PDF + "\n > \n" + RLO + bidiTransform(str, 6,9) + PDF);//8?

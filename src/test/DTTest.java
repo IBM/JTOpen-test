@@ -19,6 +19,27 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.DT.DTArrayTestcase;
+import test.DT.DTBin1Testcase;
+import test.DT.DTBin2Testcase;
+import test.DT.DTBin4Testcase;
+import test.DT.DTBin8Testcase;
+import test.DT.DTByteArrayTestcase;
+import test.DT.DTDateTimeTestcase;
+import test.DT.DTFloat4Testcase;
+import test.DT.DTFloat8Testcase;
+import test.DT.DTInterfaceTestcase;
+import test.DT.DTPackedDoubleTestcase;
+import test.DT.DTPackedTestcase;
+import test.DT.DTStructureTestcase;
+import test.DT.DTTextTestcase;
+import test.DT.DTUnsignedBin1Testcase;
+import test.DT.DTUnsignedBin2Testcase;
+import test.DT.DTUnsignedBin4Testcase;
+import test.DT.DTUnsignedBin8Testcase;
+import test.DT.DTZonedDoubleTestcase;
+import test.DT.DTZonedTestcase;
+
 /**
  Test driver for the Data Types component.
  @see TestDriver

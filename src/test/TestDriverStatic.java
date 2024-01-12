@@ -67,7 +67,7 @@ public class TestDriverStatic
         e.printStackTrace(System.err); 
       }
     }
-    static boolean brief_ = false;
+    public static boolean brief_ = false;
     protected static int duration_ = 0;  // number of seconds to run
     static boolean pause_ = false;
     private static String implementationVersion_ = null;

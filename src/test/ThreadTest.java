@@ -14,6 +14,13 @@
 package test;
 
 import java.util.Vector;
+
+import test.Thread.CmdCallThreadTestcase;
+import test.Thread.DDMThreadTestcase;
+import test.Thread.DQThreadTestcase;
+import test.Thread.IFSThreadTestcase;
+import test.Thread.PgmCallThreadTestcase;
+
 import java.util.Enumeration;
 
 /**

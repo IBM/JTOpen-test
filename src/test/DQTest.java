@@ -21,6 +21,20 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Job;
 
+import test.DQ.DQAttributesTestcase;
+import test.DQ.DQBeansTestcase;
+import test.DQ.DQClearTestcase;
+import test.DQ.DQConnectTestcase;
+import test.DQ.DQCreateTestcase;
+import test.DQ.DQCtorTestcase;
+import test.DQ.DQDeleteTestcase;
+import test.DQ.DQKeyedPeekTestcase;
+import test.DQ.DQKeyedReadTestcase;
+import test.DQ.DQPeekTestcase;
+import test.DQ.DQReadTestcase;
+import test.DQ.DQRefreshAttributesTestcase;
+import test.DQ.DQWriteTestcase;
+
 /**
  Test driver for the DQ (data queue) component.
  <p>For security tests to be run an AS400 userid/password with *SECADM authority must be passed on the -pwrSys parameter (ie -pwrSys uid,pwd).
@@ -31,9 +45,9 @@ import com.ibm.as400.access.Job;
 public class DQTest extends TestDriver
 {
     //static final String SERVERNAME_NATIVE = "QJVACMDSRV";
-    static final String SERVERNAME_NATIVE =  "QP0ZSPWP  "; // name of server job when running natively, and the test was invoked via a shell script called on the Qshell command line
-    static final String SERVERNAME_NATIVE1 = "QJVAEXEC"; 
-    static boolean allowBigDQ = true;
+    public static final String SERVERNAME_NATIVE =  "QP0ZSPWP  "; // name of server job when running natively, and the test was invoked via a shell script called on the Qshell command line
+    public static final String SERVERNAME_NATIVE1 = "QJVAEXEC"; 
+    public static boolean allowBigDQ = true;
 
     /**
      Main for running standalone application tests.

@@ -14,28 +14,34 @@
 package test;
 
 
-import test.ConvTableCtorTestcase;
-import test.ConvTableSingleLengthTestcase;
-import test.ConvTableSingleBytesTestcase;
-import test.ConvTableSingleRoundTripTestcase;
-import test.ConvTableDoubleLengthTestcase;
-import test.ConvTableDoubleBytesTestcase;
-import test.ConvTableDoubleRoundTripTestcase;
-import test.ConvTableMixedLengthTestcase;
-import test.ConvTableMixedRoundTripTestcase;
-import test.ConvTableUnicodeRoundTripTestcase;
-import test.ConvTableBidiLengthTestcase;
-import test.ConvTableBidiBytesTestcase;
-import test.ConvTableBidiRoundTripTestcase;
-import test.ConvTableAsciiLengthTestcase;
-import test.ConvTableAsciiBytesTestcase;
-import test.ConvTableAsciiRoundTripTestcase;
-import test.ConvTableJavaTestcase;
-import test.ConvTableEncodingTestcase;
-import test.ConvTableThreadTestcase;
-import test.ConvExecutionTestcase;
-import test.ConvConverterTestcase;
-import test.ConversionMapTestcase;
+import test.Conv.ConvConverterTestcase;
+import test.Conv.ConvExecutionTestcase;
+import test.Conv.ConvP9953884;
+import test.Conv.ConvPSA89229;
+import test.Conv.ConvPSE04743;
+import test.Conv.ConvPathnameTestcase;
+import test.Conv.ConvTableAsciiBytesTestcase;
+import test.Conv.ConvTableAsciiLengthTestcase;
+import test.Conv.ConvTableAsciiRoundTripTestcase;
+import test.Conv.ConvTableBidiBytesTestcase;
+import test.Conv.ConvTableBidiLengthTestcase;
+import test.Conv.ConvTableBidiRoundTripTestcase;
+import test.Conv.ConvTableCtorTestcase;
+import test.Conv.ConvTableDoubleBytesTestcase;
+import test.Conv.ConvTableDoubleLengthTestcase;
+import test.Conv.ConvTableDoubleRoundTripTestcase;
+import test.Conv.ConvTableEncodingTestcase;
+import test.Conv.ConvTableJavaTestcase;
+import test.Conv.ConvTableMixedLengthTestcase;
+import test.Conv.ConvTableMixedRoundTripTestcase;
+import test.Conv.ConvTableReaderTestcase;
+import test.Conv.ConvTableSingleBytesTestcase;
+import test.Conv.ConvTableSingleLengthTestcase;
+import test.Conv.ConvTableSingleRoundTripTestcase;
+import test.Conv.ConvTableThreadTestcase;
+import test.Conv.ConvTableUnicodeRoundTripTestcase;
+import test.Conv.ConvTableWriterTestcase;
+import test.Conv.ConversionMapTestcase;
 
 /**
  Test driver for the Conv (text converter) component.
