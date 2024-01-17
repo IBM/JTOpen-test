@@ -60,11 +60,12 @@ public class PasswordVault {
   /* Portability for use to get old password or new password from file */
   public static char[] getEncryptedPassword(String passwordName) {
     char[] encryptedPassword;
+    if (passwordName == null)
+      return null;
+    
     encryptedPassword = encryptedHashtable.get(passwordName);
     if (encryptedPassword == null) {
       char[] password = null;
-      if (passwordName == null)
-        return null;
       if (passwordName.endsWith(".txt")) {
         try {
           File file = new File("ini/" + passwordName);
