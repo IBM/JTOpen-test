@@ -307,7 +307,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
    }
 
    /**
-   Verify AS400JDBCDataSourceBeanInfo::getIcon(int).
+   Verify AS400JDBCDataSourceBeanInfo::getXIcon(int).
    <br>
    Expected results:
    <ul>
@@ -325,40 +325,11 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
 	   notApplicable("Icon testcase not working on OS/400");
 	   return; 
        } 
+       // Icons / GUI components no longer available in JTOpen 20.0.X
 
       try
       {
          AS400JDBCDataSourceBeanInfo bi = new AS400JDBCDataSourceBeanInfo();
-         Image ic = bi.getIcon(BeanInfo.ICON_MONO_16x16);
-         if (ic == null)
-         {
-            failed("Null image returned. Probably the .gif is not created yet or not in your path.  Check that .gif exists and is in correct path.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_16x16);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_MONO_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(-22);
-         if (ic != null)
-         {
-            failed("Null image not returned.");
-            return;
-         }
       }
       catch(Exception e)
       {

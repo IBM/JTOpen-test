@@ -639,37 +639,9 @@ public class AS400FTPBeans
           Class beanclass = Class.forName("com.ibm.as400.access.AS400FTP");
           BeanInfo beaninfo = Introspector.getBeanInfo(beanclass);
 
-          Image img = beaninfo.getIcon(BeanInfo.ICON_MONO_16x16);
+          // Icons / GUI components no longer available in JTOpen 20.0.X
 
-          if (img == null)
-          {
-            failed("cannot get 16X16 mono icon");
-            return;
-          }
 
-          img = beaninfo.getIcon(BeanInfo.ICON_COLOR_16x16);
-
-          if (img == null)
-          {
-            failed("cannot get 16X16 color icon");
-            return;
-          }
-
-          img = beaninfo.getIcon(BeanInfo.ICON_MONO_32x32);
-
-          if (img == null)
-          {
-            failed("cannot get 32X32 mono icon");
-            return;
-          }
-
-          img = beaninfo.getIcon(BeanInfo.ICON_COLOR_32x32);
-
-          if (img == null)
-          {
-            failed("cannot get 32X32 coloar icon");
-            return;
-          }
 
           EventSetDescriptor[] event = beaninfo.getEventSetDescriptors();
           PropertyDescriptor[] props = beaninfo.getPropertyDescriptors();

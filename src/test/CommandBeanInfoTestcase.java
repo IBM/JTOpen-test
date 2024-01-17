@@ -13,15 +13,11 @@
 
 package test;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import java.awt.Image;
-import java.awt.AWTError;
 import java.util.Vector;
 import java.beans.BeanInfo;
-import java.beans.SimpleBeanInfo;
 import java.beans.FeatureDescriptor;
 import java.beans.BeanDescriptor;
 import java.beans.EventSetDescriptor;
@@ -42,7 +38,7 @@ CommandBeanInfoTestcase.  Verify the following public interfaces:
    <li>CommandBeanInfo::getDefaultEventIndex()
    <li>CommandBeanInfo::getDefaultPropertyIndex()
    <li>CommandBeanInfo::getEventSetDescriptors()
-   <li>CommandBeanInfo::getIcon(int)
+   <li>CommandBeanInfo::getXIcon(int)
    <li>CommandBeanInfo::getPropertyDescriptors()
    </ul>
 </ul>
@@ -406,7 +402,7 @@ public class CommandBeanInfoTestcase extends Testcase
 
 
    /**
-   Verify CommandBeanInfo::getIcon(int).
+   Verify CommandBeanInfo::getXIcon(int).
    <br>
    Expected results:
    <ul>
@@ -416,51 +412,7 @@ public class CommandBeanInfoTestcase extends Testcase
    **/
    public void Var007()
    {
-      try
-      {
-         CommandBeanInfo bi = new CommandBeanInfo();
-         Image ic = null;
-         try { ic = bi.getIcon(BeanInfo.ICON_MONO_16x16); }
-         catch (Throwable e) {
-           //e.printStackTrace();
-           notApplicable("Unable to create instance of java.awt.Image.  Assuming that no GUI is available.");
-           return;
-         }
-         if (ic == null)
-         {
-            failed("Null image returned. Probably the .gif is not created yet or not in your path.  Check that .gif exists and is in correct path.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_16x16);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_MONO_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(-22);
-         if (ic != null)
-         {
-            failed("Null image not returned.");
-            return;
-         }
-      }
-      catch(Exception e)
-      {
-         failed(e, "Unexpected exception");
-         return;
-      }
+      // Icons / GUI components no longer available in JTOpen 20.0.X
       succeeded();
    }
 

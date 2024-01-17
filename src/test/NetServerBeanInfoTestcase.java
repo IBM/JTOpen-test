@@ -41,7 +41,7 @@ NetServerBeanInfoTestcase.  Verify the following public interfaces:
    <li>NetServerBeanInfo::getDefaultEventIndex()
    <li>NetServerBeanInfo::getDefaultPropertyIndex()
    <li>NetServerBeanInfo::getEventSetDescriptors()
-   <li>NetServerBeanInfo::getIcon(int)
+   <li>NetServerBeanInfo::getXIcon(int)
    <li>NetServerBeanInfo::getPropertyDescriptors()
    </ul>
 </ul>
@@ -340,7 +340,7 @@ public class NetServerBeanInfoTestcase extends Testcase
 
 
    /**
-   Verify NetServerBeanInfo::getIcon(int).
+   Verify NetServerBeanInfo::getXIcon(int).
    <br>
    Expected results:
    <ul>
@@ -353,40 +353,7 @@ public class NetServerBeanInfoTestcase extends Testcase
       try
       {
          NetServerBeanInfo bi = new NetServerBeanInfo();
-         Image ic = bi.getIcon(BeanInfo.ICON_MONO_16x16);
-         if (ic == null)
-         {
-            /*failed("Null image returned. Probably the .gif is not created yet or not in your path.  Check that .gif exists and is in correct path.");
-            return;
-            */
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_16x16);
-         if (ic == null)
-         {  /*
-            failed("Null image returned.");
-            return;
-            */
-         }
-         ic = bi.getIcon(BeanInfo.ICON_MONO_32x32);
-         if (ic == null)
-         {  /*
-            failed("Null image returned.");
-            return;
-            */
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_32x32);
-         if (ic == null)
-         {  /*
-            failed("Null image returned.");
-            return;
-            */
-         }
-         ic = bi.getIcon(-22);
-         if (ic != null)
-         {
-            failed("Null image not returned.");
-            return;
-         }
+         // Icons / GUI components no longer available in JTOpen 20.0.X
       }
       catch(Exception e)
       {
