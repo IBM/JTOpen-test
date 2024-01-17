@@ -298,7 +298,7 @@ public class AS400JDBCConnectionPoolBeanInfoTestcase extends Testcase
    }
 
    /**
-   Verify AS400JDBCConnectionPoolBeanInfo::getIcon(int).
+   Verify AS400JDBCConnectionPoolBeanInfo::getXIcon(int).
    <br>
    Expected results:
    <ul>
@@ -309,57 +309,7 @@ public class AS400JDBCConnectionPoolBeanInfoTestcase extends Testcase
    public void Var006()
    {
        // This is no longer tested
-       if (true) { 
         assertCondition(true);
-	return;
-       }
-      try
-      {
-         AS400JDBCConnectionPoolBeanInfo bi = new AS400JDBCConnectionPoolBeanInfo();
-         Image ic = null;
-         try { ic = bi.getIcon(BeanInfo.ICON_MONO_16x16); }
-         catch (Throwable e) {
-           //e.printStackTrace();
-	     System.out.println("Unable to create instance of java.awt.Image.  Assuming that no GUI is available.");
-	     assertCondition(true); 
-           return;
-         }
-         if (ic == null)
-         {
-            failed("Null image returned. Probably the .gif is not created yet or not in your path.  Check that .gif exists and is in correct path.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_16x16);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_MONO_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(-22);
-         if (ic != null)
-         {
-            failed("Null image not returned.");
-            return;
-         }
-      }
-      catch(Exception e)
-      {
-         failed(e, "Unexpected exception");
-         return;
-      }
-      succeeded();
    }
    
    /**

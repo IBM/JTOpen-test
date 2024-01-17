@@ -131,7 +131,9 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
             }
             else
             {
-                assertCondition(f.getIcon(BeanInfo.ICON_COLOR_32x32) != null);
+              // Icons / GUI components no longer available in JTOpen 20.0.X
+
+                assertCondition(true);
             }
         }
         catch (Exception e)
@@ -155,7 +157,7 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
             }
             else
             {
-                assertCondition(f.getIcon(BeanInfo.ICON_COLOR_16x16) != null);
+                assertCondition(true);
             }
         }
         catch (Exception e)
@@ -179,7 +181,7 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
             }
             else
             {
-                assertCondition(f.getIcon(BeanInfo.ICON_MONO_32x32) != null);
+                assertCondition(true);
             }
         }
         catch (Exception e)
@@ -203,7 +205,7 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
             }
             else
             {
-                assertCondition(f.getIcon(BeanInfo.ICON_MONO_16x16) != null);
+                assertCondition(true);
             }
         }
         catch (Exception e)

@@ -104,20 +104,13 @@ public class EVListBeanInfoTestcase extends Testcase
     }
 
     /**
-     getIcon() - Pass ICON_MONO_16x16.
+     getXIcon() - Pass ICON_MONO_16x16.
      **/
     public void Var006()
     {
         try {
             EnvironmentVariableListBeanInfo ev = new EnvironmentVariableListBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test.");
-            }
-            else
-            {
-                assertCondition(ev.getIcon(BeanInfo.ICON_MONO_16x16) != null);
-            }
+                notApplicable("Icons / GUI components no longer available in JTOpen 20.0.X"); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -125,20 +118,13 @@ public class EVListBeanInfoTestcase extends Testcase
     }
 
     /**
-     getIcon() - Pass ICON_COLOR_16x16.
+     getXIcon() - Pass ICON_COLOR_16x16.
      **/
     public void Var007()
     {
         try {
             EnvironmentVariableListBeanInfo ev = new EnvironmentVariableListBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test.");
-            }
-            else
-            {
-                assertCondition(ev.getIcon(BeanInfo.ICON_COLOR_16x16) != null);
-            }
+            notApplicable("Icons / GUI components no longer available in JTOpen 20.0.X"); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -146,20 +132,13 @@ public class EVListBeanInfoTestcase extends Testcase
     }
 
     /**
-     getIcon() - Pass ICON_MONO_32x32.
+     getXIcon() - Pass ICON_MONO_32x32.
      **/
     public void Var008()
     {
         try {
             EnvironmentVariableListBeanInfo ev = new EnvironmentVariableListBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test.");
-            }
-            else
-            {
-                assertCondition(ev.getIcon(BeanInfo.ICON_MONO_32x32) != null);
-            }
+            notApplicable("Icons / GUI components no longer available in JTOpen 20.0.X"); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -173,14 +152,7 @@ public class EVListBeanInfoTestcase extends Testcase
     {
         try {
             EnvironmentVariableListBeanInfo ev = new EnvironmentVariableListBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test.");
-            }
-            else
-            {
-                assertCondition(ev.getIcon(BeanInfo.ICON_COLOR_32x32) != null);
-            }
+            notApplicable("Icons / GUI components no longer available in JTOpen 20.0.X"); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

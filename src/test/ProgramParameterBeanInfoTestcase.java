@@ -148,7 +148,9 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
-            assertCondition(f.getIcon(BeanInfo.ICON_COLOR_32x32) != null);
+            // Icons / GUI components no longer available in JTOpen 20.0.X
+
+            assertCondition(true);
         }
         catch (Error e)
         {
@@ -176,7 +178,8 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
-            assertCondition(f.getIcon(BeanInfo.ICON_COLOR_16x16) != null);
+            // Icons / GUI components no longer available in JTOpen 20.0.X
+            assertCondition(true);
         }
         catch (Error e)
         {
@@ -204,7 +207,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
-            assertCondition(f.getIcon(BeanInfo.ICON_MONO_32x32) != null);
+            assertCondition(true);
         }
         catch (Error e)
         {
@@ -232,7 +235,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
-            assertCondition(f.getIcon(BeanInfo.ICON_MONO_16x16) != null);
+            assertCondition(true);
         }
         catch (Error e)
         {

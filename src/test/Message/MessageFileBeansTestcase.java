@@ -562,49 +562,7 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
             // Note: If you create the BeanInfo object the following way, getEventSetDescriptors() returns an array of length 2.
             //beaninfo = new com.ibm.as400.access.MessageFileBeanInfo();
 
-            try
-            {
-                if (!onAS400_)
-                {
-                    Image img = beaninfo.getIcon(BeanInfo.ICON_MONO_16x16);
-
-                    if (img == null)
-                    {
-                        failed("Cannot get 16X16 mono icon.");
-                        return;
-                    }
-
-                    img = beaninfo.getIcon(BeanInfo.ICON_COLOR_16x16);
-
-                    if (img == null)
-                    {
-                        failed("Cannot get 16X16 color icon.");
-                        return;
-                    }
-
-                    img = beaninfo.getIcon(BeanInfo.ICON_MONO_32x32);
-
-                    if (img == null)
-                    {
-                        failed("Cannot get 32X32 mono icon.");
-                        return;
-                    }
-
-                    img = beaninfo.getIcon(BeanInfo.ICON_COLOR_32x32);
-
-                    if (img == null)
-                    {
-                        failed("Cannot get 32X32 color icon.");
-                        return;
-                    }
-                }
-            }
-            catch (Error e)
-            {
-                failed("Unexpected error loading icons.");
-                e.printStackTrace();
-                return;
-            }
+            // Icons / GUI components no longer available in JTOpen 20.0.X
 
             EventSetDescriptor[] event = beaninfo.getEventSetDescriptors();
             //System.out.println("eventSetDescriptors.length == " + event.length);

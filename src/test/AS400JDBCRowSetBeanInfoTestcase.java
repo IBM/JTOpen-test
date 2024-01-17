@@ -305,7 +305,7 @@ public class AS400JDBCRowSetBeanInfoTestcase extends Testcase
    }
 
    /**
-   Verify AS400JDBCRowSetBeanInfo::getIcon(int).
+   Verify AS400JDBCRowSetBeanInfo::getXIcon(int).
    <br>
    Expected results:
    <ul>
@@ -325,36 +325,7 @@ public class AS400JDBCRowSetBeanInfoTestcase extends Testcase
       try
       {
          AS400JDBCRowSetBeanInfo bi = new AS400JDBCRowSetBeanInfo();
-         Image ic = bi.getIcon(BeanInfo.ICON_MONO_16x16);
-         if (ic == null)
-         {
-            failed("Null image returned. Probably the .gif is not created yet or not in your path.  Check that .gif exists and is in correct path.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_16x16);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_MONO_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(-22);
-         if (ic != null)
-         {
-            failed("Null image not returned.");
-            return;
-         }
+         // Icons / GUI components no longer available in JTOpen 20.0.X
       }
       catch(Exception e)
       {

@@ -386,7 +386,7 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
    }
 
    /**
-   Verify AS400JDBCConnectionPoolDataSourceBeanInfo::getIcon(int)
+   Verify AS400JDBCConnectionPoolDataSourceBeanInfo::getXIcon(int)
    is returned from getAdditionalBeanInfo().
    <br>
    Expected results:
@@ -397,6 +397,8 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
    **/
    public void Var008()
    {
+       // Icons / GUI components no longer available in JTOpen 20.0.X
+
       //
       //  Variation does not work on OS/400 
       //
@@ -409,36 +411,6 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
          AS400JDBCConnectionPoolDataSourceBeanInfo bi = new AS400JDBCConnectionPoolDataSourceBeanInfo();
          BeanInfo[] bis = bi.getAdditionalBeanInfo();
 
-         Image ic = bis[0].getIcon(BeanInfo.ICON_MONO_16x16);
-         if (ic == null)
-         {
-            failed("Null image returned. Probably the .gif is not created yet or not in your path.  Check that .gif exists and is in correct path.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_16x16);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_MONO_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_32x32);
-         if (ic == null)
-         {
-            failed("Null image returned.");
-            return;
-         }
-         ic = bi.getIcon(-22);
-         if (ic != null)
-         {
-            failed("Null image not returned.");
-            return;
-         }
       }
       catch(Exception e)
       {

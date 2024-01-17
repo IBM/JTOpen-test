@@ -326,40 +326,7 @@ public class NetServerPrintShareBeanInfoTestcase extends Testcase
       try
       {
          NetServerPrintShareBeanInfo bi = new NetServerPrintShareBeanInfo();
-         Image ic = bi.getIcon(BeanInfo.ICON_MONO_16x16);
-         if (ic == null)
-         {
-            /*failed("Null image returned. Probably the .gif is not created yet or not in your path.  Check that .gif exists and is in correct path.");
-            return;
-            */
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_16x16);
-         if (ic == null)
-         {  /*
-            failed("Null image returned.");
-            return;
-            */
-         }
-         ic = bi.getIcon(BeanInfo.ICON_MONO_32x32);
-         if (ic == null)
-         {  /*
-            failed("Null image returned.");
-            return;
-            */
-         }
-         ic = bi.getIcon(BeanInfo.ICON_COLOR_32x32);
-         if (ic == null)
-         {  /*
-            failed("Null image returned.");
-            return;
-            */
-         }
-         ic = bi.getIcon(-22);
-         if (ic != null)
-         {
-            failed("Null image not returned.");
-            return;
-         }
+         // Icons / GUI components no longer available in JTOpen 20.0.X
       }
       catch(Exception e)
       {
