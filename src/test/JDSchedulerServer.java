@@ -107,8 +107,7 @@ public class JDSchedulerServer extends JDScheduler {
         JDJobName.setJobLogOption();
         thisAS400 = new AS400("localhost");
 
-        InetAddress localHost = InetAddress.getLocalHost();
-        String localhostname = localHost.getHostName().toUpperCase();
+        String localhostname = JDHostName.getHostName().toUpperCase();
 
         JDJobName.sendProgramMessage("localhostname is " + localhostname);
 
@@ -291,7 +290,7 @@ public class JDSchedulerServer extends JDScheduler {
                   loadIniProperties(null);
 
                   if (!fullMessageSent) {
-                    String localHost = InetAddress.getLocalHost().getHostName()
+                    String localHost = JDHostName.getHostName()
                         .toUpperCase();
                     int dotIndex = localHost.indexOf(".");
                     if (dotIndex >= 0) {
@@ -418,7 +417,7 @@ public class JDSchedulerServer extends JDScheduler {
 
                     String toAddress = iniProperties.getProperty("EMAIL");
                     String fromAddress = iniProperties.getProperty("EMAIL");
-                    String localHost = InetAddress.getLocalHost().getHostName()
+                    String localHost = JDHostName.getHostName()
                         .toUpperCase();
                     int dotIndex = localHost.indexOf(".");
                     if (dotIndex >= 0) {

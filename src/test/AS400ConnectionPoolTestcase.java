@@ -7207,7 +7207,7 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
 	tokenProvider.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
 	tokenProvider.setTimeoutInterval(3600);
 	tokenProvider.setUserId(userId_);
-                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+        char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
 
 	tokenProvider.setPassword(passwordChars);
 

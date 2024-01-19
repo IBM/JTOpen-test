@@ -1637,32 +1637,33 @@ public class PgmRunTestcase extends Testcase
 	}
 
     //Hanging, timeout > running time
-	public void Var034() {
-		boolean succeeded = false;
-		String pgmHang = PgmTimeout2_;
-		
+    public void Var034() {
+      boolean succeeded = false;
+      String pgmHang = PgmTimeout2_;
 
-		AS400 system = null;
-		try {
-			system = new AS400(systemObject_.getSystemName(), userHang, pwdHang);
-			ProgramCall pgmCall = new ProgramCall(system, pgmHang, new ProgramParameter[]{new ProgramParameter()});
-                        JDReflectionUtil.callMethod_V(pgmCall, "setTimeOut", 10);
-			succeeded = pgmCall.run();
-			if (!succeeded) {
-				failed("program is not sucessfully executed.");
-				return;
-			}
-			if (system.isConnected()) {
-					succeeded = true;
-					assertCondition(succeeded);
-			} else {
-				failed("connection is ended.");
-			}
-		} catch (Exception e) {
-			failed(e, "Unexpected exception");
-		} finally {
-		}
-	}
+      AS400 system = null;
+      try {
+        system = new AS400(systemObject_.getSystemName(), userHang, pwdHang);
+        ProgramCall pgmCall = new ProgramCall(system, pgmHang, new ProgramParameter[] { new ProgramParameter() });
+        JDReflectionUtil.callMethod_V(pgmCall, "setTimeOut", 15);
+        succeeded = pgmCall.run();
+        if (!succeeded) {
+          failed("program is not sucessfully executed.");
+          return;
+        }
+        if (system.isConnected()) {
+          succeeded = true;
+          assertCondition(succeeded);
+        } else {
+          failed("connection is ended.");
+        }
+      } catch (Exception e) {
+        failed(e, "Unexpected exception.  Note:  If the system is busy you may get a dropped connection error");
+      } finally {
+      }
+    }
+	
+	
 	
 	 /**
     Run a program with 36 parameters and check output parameters.

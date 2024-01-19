@@ -49,7 +49,6 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -462,11 +461,7 @@ public class JDRunit {
 
     // Check for host specific regression list. This list is used for
     // Smaller testing runs (i.e. EUT / PITT )
-    String localHost = InetAddress.getLocalHost().getHostName().toLowerCase();
-    int dotIndex = localHost.indexOf(".");
-    if (dotIndex >= 0) {
-      localHost = localHost.substring(0, dotIndex);
-    }
+    String localHost = JDHostName.getHostName().toLowerCase();
 
     String regressionFilename = "ini/regression" + initials + "." + localHost
         + ".ini";
@@ -717,11 +712,7 @@ public class JDRunit {
     // Send the e-mail -- spawning new e-mail program as needed.
     String subject;
 
-    String localHost = InetAddress.getLocalHost().getHostName().toUpperCase();
-    int dotIndex = localHost.indexOf(".");
-    if (dotIndex >= 0) {
-      localHost = localHost.substring(0, dotIndex);
-    }
+    String localHost = JDHostName.getHostName().toUpperCase();
     String testLocation = "";
     if (localHost.equals(AS400.toUpperCase()) || localHost.equals("LOCALHOST")
         || AS400.equalsIgnoreCase("localhost")) {
@@ -777,7 +768,7 @@ public class JDRunit {
     }
     body.append("SUCCESS_COUNT=" + parsedSuccessCount + "\n");
 
-    String hostname = InetAddress.getLocalHost().getCanonicalHostName();
+    String hostname = JDHostName.getHostName();
     hostname = hostname.toUpperCase();
     int rchlandIndex = hostname.indexOf(".RCHLAND");
     if (rchlandIndex > 0) {
@@ -1564,11 +1555,7 @@ public class JDRunit {
     Properties iniProperties = getIniProperties(iniInfo);
 
 
-    String localHost = InetAddress.getLocalHost().getHostName().toLowerCase();
-    int dotIndex = localHost.indexOf(".");
-    if (dotIndex >= 0) {
-      localHost = localHost.substring(0, dotIndex);
-    }
+    String localHost = JDHostName.getHostName().toLowerCase();
 
     // Use host specific file if necessary
     String filename = "ini/runit" + initials + "." + localHost + ".ini";
@@ -1655,11 +1642,7 @@ public class JDRunit {
     String AS400 = iniProperties.getProperty("AS400");
     if (AS400 == null) {
       if (System.getProperty("os.name").indexOf("400") >= 0) {
-        AS400 = InetAddress.getLocalHost().getHostName().toUpperCase();
-        dotIndex = AS400.indexOf(".");
-        if (dotIndex >= 0) {
-          AS400 = AS400.substring(0, dotIndex);
-        }
+        AS400 = JDHostName.getHostName().toUpperCase();
         iniProperties.put("AS400", AS400);
       }
     }
@@ -1795,7 +1778,7 @@ public class JDRunit {
       if (AS400 == null) {
         if (System.getProperty("os.name").indexOf("400") >= 0) {
           try {
-            AS400 = InetAddress.getLocalHost().getHostName().toUpperCase();
+            AS400 = JDHostName.getHostName().toUpperCase();
           } catch (Exception e) {
             AS400 = "localhost";
           }
@@ -3003,7 +2986,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           String subject = " Severe Error Running  " + initials + " "
               + testArgs;
 
-          String hostname = InetAddress.getLocalHost().getCanonicalHostName();
+          String hostname = JDHostName.getHostName();
           hostname = hostname.toUpperCase();
 
           if (hostname.indexOf('.') < 0) {

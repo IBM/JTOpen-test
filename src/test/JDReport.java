@@ -689,11 +689,7 @@ public class JDReport {
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
 
     if (hostname == null || hostname.length() == 0) {
-      hostname = InetAddress.getLocalHost().getHostName();
-      int dotIndex = hostname.indexOf('.');
-      if (dotIndex > 0) {
-        hostname = hostname.substring(0, dotIndex);
-      }
+      hostname = JDHostName.getHostName();
     }
 
     writer.print(
@@ -988,7 +984,7 @@ public class JDReport {
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
 
     if (hostname == null || hostname.length() == 0) {
-      hostname = InetAddress.getLocalHost().getHostName();
+      hostname =  JDHostName.getHostName();
       int dotIndex = hostname.indexOf('.');
       if (dotIndex > 0) {
         hostname = hostname.substring(0, dotIndex);
@@ -1149,7 +1145,7 @@ public class JDReport {
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
 
     if (hostname == null || hostname.length() == 0) {
-      hostname = InetAddress.getLocalHost().getHostName();
+      hostname = JDHostName.getHostName();
       int dotIndex = hostname.indexOf('.');
       if (dotIndex > 0) {
         hostname = hostname.substring(0, dotIndex);
@@ -1247,7 +1243,7 @@ public class JDReport {
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
 
     if (hostname == null || hostname.length() == 0) {
-      hostname = InetAddress.getLocalHost().getHostName();
+      hostname = JDHostName.getHostName();
       int dotIndex = hostname.indexOf('.');
       if (dotIndex > 0) {
         hostname = hostname.substring(0, dotIndex);
@@ -1541,11 +1537,7 @@ public class JDReport {
     AS400 = iniProperties.getProperty("AS400");
     if (AS400 == null) {
       if (System.getProperty("os.name").indexOf("400") >= 0) {
-        AS400 = InetAddress.getLocalHost().getHostName().toUpperCase();
-        int dotIndex = AS400.indexOf(".");
-        if (dotIndex >= 0) {
-          AS400 = AS400.substring(0, dotIndex);
-        }
+        AS400 = JDHostName.getHostName();
       } else {
         AS400 = iniProperties.getProperty(initials);
         if (AS400 == null) {
@@ -2184,6 +2176,15 @@ public class JDReport {
           + "." + rawfile
           + " (NOTATT ASC , SYSTEM ASC , TESTCASE ASC ) WITH 0 DISTINCT VALUES");
 
+      /* Cleanup up the raw file if aliases exist for the current system */ 
+      String[] aliases = JDHostName.getAliases(AS400);
+      for (int i = 0; i < aliases.length; i++) { 
+        String updateAlias = "UPDATE "+SCHEMA + "." + rawfile+" SET SYSTEM='"+AS400+"' WHERE SYSTEM='"+aliases[i]+"'";
+        System.out.println("Compensating for aliases: "+updateAlias); 
+        exUpIE(s,updateAlias); 
+      }
+      
+      
       /* read the current list of inserted entries from rawfile */
       Hashtable<String, Hashtable<Timestamp, Timestamp>> insertedHashtable = new Hashtable<String, Hashtable<Timestamp, Timestamp>>();
 

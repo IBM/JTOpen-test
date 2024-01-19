@@ -29,7 +29,6 @@ package test;
 
 import com.ibm.as400.access.AS400;
 
-import java.awt.TextArea;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -77,7 +76,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     driver_ = DriverManager.getDriver(baseURL_);
 
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-      NUMBER_OF_PROPERTIES = 101;  // tcpNoDelay 
+      NUMBER_OF_PROPERTIES = 103;  // stay alive 
       
     } else if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       int vrm_ = testDriver_.getRelease();

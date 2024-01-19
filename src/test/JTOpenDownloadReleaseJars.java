@@ -17,27 +17,17 @@ package test;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.*; 
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.Properties;
 
 public class JTOpenDownloadReleaseJars {
-
     public static String releaseUrl = "https://api.github.com/repos/IBM/JTOpen/releases"; 
-
-
-
     public static String tmpDir = "/tmp/JTOpenDownloadReleaseJars"; 
     public static String jdk14newPath = "/QIBM/proddata/OS400/jt400/lib";  
     public static String jdk16Path    = "/QIBM/proddata/OS400/jt400/lib/java6";
     public static String jdk18Path    = "/QIBM/proddata/OS400/jt400/lib/java8";
     public static String jdk9Path     = "/QIBM/proddata/OS400/jt400/lib/java9";
 
-
-
-
- 
     public static String getDownloadUrl() throws Exception {
 	String outUrl = null ;
 
@@ -63,7 +53,6 @@ public class JTOpenDownloadReleaseJars {
 	/* currently the releases are listed with the most recent first.  */
 	/* Assume that is the case (so we don't have to parse all the json */ 
 	int downloadIndex= output.indexOf("browser_download_url\"");
-	boolean searching = true;
 
 	while (downloadIndex > 0) {
 	    int firstQuoteIndex = output.indexOf('"', downloadIndex + 21);
@@ -87,21 +76,15 @@ public class JTOpenDownloadReleaseJars {
 
 
     public static void main(String args[]) {
-
-
 	try {
-
-	    boolean sendShipped = true ; 
 	    System.out.println("Usage:  java test.JTOpenDownloadReleaseJars  ");
 	    System.out.println("   Downloads the latest releast jar files from github");
-
 
 	    String jdk14Path = jdk14newPath;
 	    String jdk14nativePath = jdk14newPath;
 	    String osName = System.getProperty("os.name");
 	    System.out.println("osName is '" + osName+"'");
 	    String osVersion = System.getProperty("os.version");
-	    String jdbcUtil = "jdbc:as400:localhost"; 
 	    if (osName.equals("Windows 10") ||
 		osName.equals("Linux") ||
 		osName.equals("AIX"))  {
@@ -189,22 +172,6 @@ public class JTOpenDownloadReleaseJars {
       }
 
     }
-
-
-  private static void removeDirectory(File dir) {
-      System.out.println("Removing directory "+dir.getAbsolutePath()); 
-      File[] files = dir.listFiles(); 
-      for (int i = 0; i < files.length; i++) {
-        File file = files[i]; 
-        if (file.isDirectory()) {
-          removeDirectory(file); 
-        } else {
-          file.delete(); 
-        }
-      }
-      dir.delete(); 
-    }
-
 
 
   private static void unzip(String zipFile, String targetDir) throws IOException {

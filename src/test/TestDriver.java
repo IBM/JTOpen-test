@@ -1198,7 +1198,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     // System.getProperty("java.class.path"));
     String clientMachineName = null;
     try {
-      clientMachineName = InetAddress.getLocalHost().getHostName();
+      clientMachineName = JDHostName.getHostName();
     } catch (Exception e) {
     }
     out_.println("CLIENT NAME      = " + clientMachineName);
