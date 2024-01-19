@@ -170,7 +170,8 @@ public class TestBidiBasic{
     }
     
     public void RecreateTable(Connection conn)  throws SQLException {
-    	//errorLog_.append("\nRecreateTable()");    	
+    	//errorLog_.append("\nRecreateTable()");    
+        String sql = ""; 
     	Statement st = conn.createStatement();
     	try{
     		st.executeUpdate("DROP TABLE  "+table_name);
@@ -183,11 +184,17 @@ public class TestBidiBasic{
     	     throw e; 
     	  }
     	}
-	st.executeUpdate("CREATE TABLE "+table_name+" (I1 int, I2 int, "+column_name+" varchar(800) ccsid " + column_ccsid + ")");
+    	try { 
+    	  sql = "CREATE TABLE "+table_name+" (I1 int, I2 int, "+column_name+" varchar(800) ccsid " + column_ccsid + ")";
+	st.executeUpdate(sql);
+	sql = "GRANT ALL ON "+table_name+" TO PUBLIC";
+	st.executeUpdate(sql);
 
-	st.executeUpdate("GRANT ALL ON "+table_name+" TO PUBLIC");
-
-	st.close();    	
+	st.close();    
+    	} catch (SQLException e) { 
+    	  System.out.println("SQLException:"+e+" sql="+sql);
+    	  throw e; 
+    	}
     }
     
     
@@ -265,7 +272,7 @@ public class TestBidiBasic{
     		st.executeUpdate("DELETE FROM "+table_name);
 //    		System.out.println("SQL: " + "DELETE FROM "+table_name);
     		//st.executeUpdate("DELETE FROM "+table_name+" WHERE I1=1");
-    		//st.executeUpdate("DELETE FROM "+table_name+" WHERE "+column_name+"='ABC àáâ'");
+    		//st.executeUpdate("DELETE FROM "+table_name+" WHERE "+column_name+"='ABC ï¿½ï¿½ï¿½'");
     		st.close();    		
     	}
     	catch (SQLException sqle)
@@ -290,7 +297,7 @@ public class TestBidiBasic{
     		Statement st = db2Conn.createStatement();
     		
     		ResultSet resultSet = st.executeQuery("SELECT * FROM "+table_name);//+" WHERE I1=1");
-    		//ResultSet resultSet = st.executeQuery("SELECT * FROM "+table_name+" WHERE "+column_name+"='ABC àáâ'"); 
+    		//ResultSet resultSet = st.executeQuery("SELECT * FROM "+table_name+" WHERE "+column_name+"='ABC ï¿½ï¿½ï¿½'"); 
             java.sql.ResultSetMetaData rsmd = resultSet.getMetaData();
             int col_num = rsmd.getColumnCount();
         	while (resultSet.next()){
@@ -338,7 +345,7 @@ public class TestBidiBasic{
     		
     		st.setInt(1, 1); 
     		st.setInt(2, 4); 
-    		st.setString(3, mixed_string);//"ABC àáâ"); 
+    		st.setString(3, mixed_string);//"ABC ï¿½ï¿½ï¿½"); 
     		st.executeUpdate();
             
     		st.close();
@@ -368,7 +375,7 @@ public class TestBidiBasic{
     		
     		st.setInt(1, 1); 
     		st.setInt(2, 3); 
-    		st.setString(3, mixed_string);//"ABC àáâ"); 
+    		st.setString(3, mixed_string);//"ABC ï¿½ï¿½ï¿½"); 
     		st.executeUpdate();
             
     		st.close();
@@ -396,10 +403,10 @@ public class TestBidiBasic{
     		
     		//mixed_string
     		    		
-    		//st.executeUpdate("insert into "+table_name+" values(1, 1, 'ABC àáâ')");
+    		//st.executeUpdate("insert into "+table_name+" values(1, 1, 'ABC ï¿½ï¿½ï¿½')");
     		st.executeUpdate("insert into "+table_name+" values(1, 1, '" + mixed_string + "')");
     		st.executeUpdate("insert into "+table_name+" values(1, 2, 'xxx')");
-    		//st.executeUpdate("UPDATE "+table_name+"  SET "+column_name+"='ABC àáâ' WHERE I2=2");    		    		
+    		//st.executeUpdate("UPDATE "+table_name+"  SET "+column_name+"='ABC ï¿½ï¿½ï¿½' WHERE I2=2");    		    		
     		st.executeUpdate("UPDATE "+table_name+"  SET "+column_name+"='" + mixed_string + "' WHERE I2=2");
             
     		st.close();
@@ -528,7 +535,7 @@ public class TestBidiBasic{
     public static void check1(){
     	AS400BidiTransform abt;
     	abt = new AS400BidiTransform(424);
-    	String src = "ABC 123 àáâ";
+    	String src = "ABC 123 ï¿½ï¿½ï¿½";
     	String dst = abt.toAS400Layout(src);
     	errorLog_.append(dst+"\n");
 
@@ -561,7 +568,7 @@ public class TestBidiBasic{
     public static void check2(){
     	AS400BidiTransform abt;
     	abt = new AS400BidiTransform(424);
-    	String src = "ABC 123 àáâ";
+    	String src = "ABC 123 ï¿½ï¿½ï¿½";
     	errorLog_.append("\n\u202d"+src+"\n");
     	
     	String dst = abt.toAS400Layout(src);

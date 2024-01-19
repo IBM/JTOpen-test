@@ -2100,52 +2100,77 @@ public class JobLogTestcase extends Testcase
 
     /**
      Verifies that the message id was written to the joblog, does not verify that the message ID was valid.
+     If possible, pass the list of jobs to search.  Otherwise, all QZRCSRVS jobs will be search, possibly filling
+     the pwrSys_ job with extra messages. 
      **/
-    private boolean writeMessageSuccessful(String id, StringBuffer sb)
+    private boolean writeMessageSuccessful(String id, StringBuffer sb, Job[] jobs)
     {
         if (pwrSys_ == null)
         {
 	    sb.append("writeMessageSuccessful:  FAILED:  Power user not specified.\n");
             output_.println("Power user not specified.");
             return false;
-        }
-        try
-        {
+          }
+          try {
             JobList jobList = new JobList(pwrSys_);
-            if (usingNativeOptimizations())
-            {
-              // When running on-thread, it's a bit more difficult to determine the name of the job we're running in.
+            if (usingNativeOptimizations()) {
+              // When running on-thread, it's a bit more difficult to determine the name of
+              // the job we're running in.
               System.out.println("Running on-thread, so assuming the write message was successful.");
               return true;
             }
-            jobList.setName("QZRCSRVS");
-            Enumeration list = jobList.getJobs();
-            while (list.hasMoreElements())
-            {
-                Job j = (Job)list.nextElement();
-                String compStatus = "NOTFOUND";
-		try { 
-		    compStatus = j.getCompletionStatus();
-		} catch (Exception e) {
-		    // Ignore the job if it cannot be found
-		    
-		}
-                if (compStatus.equals(Job.COMPLETION_STATUS_NOT_COMPLETED))
-                {
-                    JobLog jq = new JobLog(pwrSys_, j.getName(), j.getUser(), j.getNumber());
-                        sb.append("Looking at job " + j.getName() + "." + j.getUser() + "." + j.getNumber()+"\n");
-                    Enumeration e = jq.getMessages();
-                    while (e.hasMoreElements())
-                    {
-                        QueuedMessage message = (QueuedMessage) e.nextElement();
-			sb.append(" messageId="+message.getID()+"\n"); 
-                        if (message.getID().equals(id.toUpperCase())) return true;
-                    }
-                }
+            Enumeration list = null; 
+            if (jobs == null) { 
+              jobList.setName("QZRCSRVS");
+              jobList.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_ACTIVE, Boolean.TRUE);
+              list = jobList.getJobs();
             }
-        }
-        catch (Exception e)
-        {
+            boolean looping; 
+            int i = 0; 
+            if (list != null) { 
+              looping = list.hasMoreElements(); 
+            } else {
+              looping = i < jobs.length; 
+            }
+            while (looping) {
+              Job j;
+              if (list != null) {
+                j = (Job) list.nextElement();
+              } else {
+                j = jobs[i];
+              }
+              String compStatus = "NOTFOUND";
+              try {
+                compStatus = j.getCompletionStatus();
+              } catch (Exception e) {
+                // Ignore the job if it cannot be found
+              }
+              if (compStatus.equals(Job.COMPLETION_STATUS_NOT_COMPLETED)) {
+                String lastId = "";
+                JobLog jq = new JobLog(pwrSys_, j.getName(), j.getUser(), j.getNumber());
+                sb.append("Looking at job " + j.getName() + "." + j.getUser() + "." + j.getNumber() + "\n");
+                Enumeration e = jq.getMessages();
+                while (e.hasMoreElements()) {
+                  QueuedMessage message = (QueuedMessage) e.nextElement();
+                  String thisId = message.getID();
+                  if (!lastId.equals(thisId)) {
+                    sb.append(" messageId=" + thisId + "\n");
+                    lastId = thisId;
+                  }
+                  if (message.getID().equals(id.toUpperCase()))
+                    return true;
+                }
+              }
+              i++;
+              if (list != null) { 
+                looping = list.hasMoreElements(); 
+              } else {
+                looping = i < jobs.length; 
+              }
+              
+            } /* looping */
+
+          } catch (Exception e) {
             output_.println("Unexpected exception on writeMessageSuccessful(" + id + "): ");
             e.printStackTrace(output_);
         }
@@ -2168,7 +2193,7 @@ public class JobLogTestcase extends Testcase
         {
             String id = "CAE0009";
             JobLog.writeMessage(pwrSys_, id, AS400Message.COMPLETION);
-	    boolean passed = writeMessageSuccessful(id,sb);
+	    boolean passed = writeMessageSuccessful(id,sb,pwrSys_.getJobs(AS400.COMMAND));
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2192,7 +2217,7 @@ public class JobLogTestcase extends Testcase
             String id = "CPFACDF";
             JobLog.writeMessage(pwrSys_, id, AS400Message.DIAGNOSTIC, (byte[])null);
             StringBuffer sb = new StringBuffer(); 
-            boolean passed = writeMessageSuccessful(id, sb); 
+            boolean passed = writeMessageSuccessful(id, sb,pwrSys_.getJobs(AS400.COMMAND)); 
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2216,7 +2241,7 @@ public class JobLogTestcase extends Testcase
             String id = "CAE0002";
             JobLog.writeMessage(systemObject_, id, AS400Message.INFORMATIONAL);
             StringBuffer sb = new StringBuffer(); 
-            boolean passed = writeMessageSuccessful(id, sb); 
+            boolean passed = writeMessageSuccessful(id, sb,systemObject_.getJobs(AS400.COMMAND)); 
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2240,7 +2265,7 @@ public class JobLogTestcase extends Testcase
         {
             JobLog.writeMessage(systemObject_, id, AS400Message.ESCAPE);
             StringBuffer sb = new StringBuffer(); 
-            boolean passed = writeMessageSuccessful(id, sb); 
+            boolean passed = writeMessageSuccessful(id, sb,systemObject_.getJobs(AS400.COMMAND)); 
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2336,7 +2361,7 @@ public class JobLogTestcase extends Testcase
             String id = "CAE9027";
             JobLog.writeMessage(systemObject_, id, AS400Message.COMPLETION,subst);
             StringBuffer sb = new StringBuffer(); 
-            boolean passed = writeMessageSuccessful(id, sb); 
+            boolean passed = writeMessageSuccessful(id, sb,systemObject_.getJobs(AS400.COMMAND)); 
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2359,7 +2384,7 @@ public class JobLogTestcase extends Testcase
                 AS400Message[] msg = cmd.getMessageList();
                 JobLog.writeMessage(systemObject_, (String)msg[0].getID(), (int)msg[0].getType(), (String)msg[0].getPath(), (byte[])msg[0].getSubstitutionData());
                 StringBuffer sb = new StringBuffer(); 
-                boolean passed = writeMessageSuccessful(msg[0].getID(), sb); 
+                boolean passed = writeMessageSuccessful(msg[0].getID(), sb,systemObject_.getJobs(AS400.COMMAND)); 
                 assertCondition(passed, sb.toString());
 
             }
@@ -2389,7 +2414,7 @@ public class JobLogTestcase extends Testcase
             String id = "CBE7016";
             JobLog.writeMessage(systemObject_, id, AS400Message.COMPLETION, "/qsys.lib/qcblmsge.msgf");
             StringBuffer sb = new StringBuffer(); 
-            boolean passed = writeMessageSuccessful(id, sb); 
+            boolean passed = writeMessageSuccessful(id, sb,systemObject_.getJobs(AS400.COMMAND)); 
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2417,7 +2442,7 @@ public class JobLogTestcase extends Testcase
             String id = "QSH0101";
             JobLog.writeMessage(systemObject_, id, AS400Message.COMPLETION,"/QSYS.LIB/QSHELL.LIB/QZSHMSGF.MSGF", subst);
             StringBuffer sb = new StringBuffer(); 
-            boolean passed = writeMessageSuccessful(id, sb); 
+            boolean passed = writeMessageSuccessful(id, sb,systemObject_.getJobs(AS400.COMMAND)); 
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2444,7 +2469,7 @@ public class JobLogTestcase extends Testcase
             String id = "CBE7001";
             JobLog.writeMessage(systemObject_, "CBE7001", AS400Message.COMPLETION,"/QSYS.LIB/QCBLMSGE.MSGF",subst);
             StringBuffer sb = new StringBuffer(); 
-            boolean passed = writeMessageSuccessful(id, sb); 
+            boolean passed = writeMessageSuccessful(id, sb,systemObject_.getJobs(AS400.COMMAND)); 
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2471,7 +2496,7 @@ public class JobLogTestcase extends Testcase
             String id = "CAE0027";
             JobLog.writeMessage(systemObject_, "CAE0027", AS400Message.COMPLETION,"/QSYS.LIB/QCPFMSG.MSGF",subst);
             StringBuffer sb = new StringBuffer(); 
-            boolean passed = writeMessageSuccessful(id, sb); 
+            boolean passed = writeMessageSuccessful(id, sb,systemObject_.getJobs(AS400.COMMAND)); 
             assertCondition(passed, sb.toString());
         }
         catch (Exception e)
@@ -2694,7 +2719,8 @@ public class JobLogTestcase extends Testcase
 	            jq.addAttributeToRetrieve( JobLog.CCSID_FOR_DATA  );                                  //1303 
 	            jq.addAttributeToRetrieve( JobLog.CCSID_CONVERSION_STATUS_DATA );                     //1304 
                
-               
+        
+	            
 	            // Keys to the tests to run 
                     Vector key = new Vector( 2 );
 		    key.add( new Integer(101) );key.add( new Integer(1) ); 

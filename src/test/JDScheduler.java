@@ -76,7 +76,7 @@ public class JDScheduler {
       String osName = System.getProperty("os.name");
       if (osName.indexOf("400") < 0) {
 
-        String localHost = InetAddress.getLocalHost().getHostName().toLowerCase();
+        String localHost = JDHostName.getHostName().toLowerCase();
         int dotIndex = localHost.indexOf(".");
         if (dotIndex >= 0) {
           localHost = localHost.substring(0, dotIndex);

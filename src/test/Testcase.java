@@ -2642,8 +2642,7 @@ public abstract class Testcase {
   boolean isNotGroupTest() { 
     if (hostname == null) { 
       try { 
-      InetAddress localhost = InetAddress.getLocalHost();
-      hostname = localhost.getHostName().toUpperCase();
+      hostname = JDHostName.getHostName().toUpperCase();
       } catch (Exception e) { 
         System.out.println("Warning:  checkNotGroupTest had failure");
         e.printStackTrace(System.out); 
@@ -3065,7 +3064,7 @@ public abstract class Testcase {
       }
 
       try {
-        command = "ON_" + InetAddress.getLocalHost().getHostName();
+        command = "ON_" + JDHostName.getHostName();
         commandCall.run(command);
       } catch (Exception e) {
         // ignore
