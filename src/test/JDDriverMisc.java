@@ -60,8 +60,6 @@ extends JDTestcase
 
     // Private data.
     private Driver      driver_;
-    private String      powerUserID_;
-    private String      powerPassword_;
 
     private int         vrm_;
 
@@ -86,12 +84,10 @@ extends JDTestcase
     {
         super (systemObject, "JDDriverMisc",
                namesAndVars, runMode, fileOutputStream, 
-               password);
+               password, powerUserID, powerPassword);
 
         systemObject_ = systemObject;
 
-        powerUserID_   = powerUserID;
-        powerPassword_ = powerPassword;
     }
 
 
@@ -132,22 +128,6 @@ extends JDTestcase
 		int expectedMajorVersion = 13;
 		// Major version is 13 for v7r5!!
 
-		//toolbox major version should be same for all versions of i5os
-		//@pdd if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
-		//    expectedMajorVersion = 7;
-		//}
-		// If running on iSeries and running V5R4, the system still has the old Jar file
-                // John Eberhard 3/19/2008
-                // When this changes, please let me know the PTF number for V5R4 which changes this
-
-                // Jeff Lee 4/22/2008
-                // The PTF numbers for V5R4 are: SI29775 (for jt400Native.jar) and SI29774 (for jt400.jar).
-		//
-
-         //       if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&
-         //       "OS/400".equals(System.getProperty("os.name"))) {
-         //       expectedMajorVersion = 7;
-         //}
 
                 assertCondition (driver_.getMajorVersion () == expectedMajorVersion,
 				 "Driver major version is "+driver_.getMajorVersion ()+
@@ -445,13 +425,13 @@ extends JDTestcase
             notApplicable("JCC doesn't have server trace");
         } else {
             if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-                if ((powerUserID_ == null) || (powerPassword_ == null)) {
+                if ((pwrSysUserID_ == null) || (pwrSysEncryptedPassword_ == null)) {
                     failed("-pwrSys uid,pwd not specified.  Need to be qsecofr to run server trace");
                     return;
                 }
                 try {
-                    String url = baseURL_ + ";server trace=63" + ";user=" + powerUserID_
-                    + ";password=" + powerPassword_;
+                    String url = baseURL_ + ";server trace=63" + ";user=" + pwrSysUserID_
+                    + ";password=" + PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
 
                     System.out.println();
                     System.out.println();
@@ -540,7 +520,7 @@ extends JDTestcase
 
         if(getDriver () == JDTestDriver.DRIVER_TOOLBOX)
         {
-            if((powerUserID_ == null) || (powerPassword_ == null))
+            if((pwrSysUserID_ == null) || (pwrSysEncryptedPassword_ == null))
             {
                 failed("-pwrSys uid,pwd not specified.  Need to be qsecofr to run server trace");
                 return;
@@ -548,8 +528,8 @@ extends JDTestcase
             try
             {
                 String url = baseURL_
-                             + ";user=" + powerUserID_
-                             + ";password=" + powerPassword_;
+                             + ";user=" + pwrSysUserID_
+                             + ";password=" + PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
 
                 System.out.println();
                 System.out.println();

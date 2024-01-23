@@ -1882,7 +1882,7 @@ public class INetServerTestcase extends Testcase
             ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
             CommandCall cmd = new CommandCall(pwrSys_);
-            if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile - Jeff Lee 3-2779')")) {
+            if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile ')")) {
               failed("Setup for this variation failed.");
               AS400Message[] messagelist = cmd.getMessageList();
               for (int i = 0; i < messagelist.length; ++i)
@@ -2722,7 +2722,7 @@ public class INetServerTestcase extends Testcase
       try
       {
         CommandCall cmd = new CommandCall(pwrSys_);
-        if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile - Jeff Lee 3-2779')")) {
+        if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile ')")) {
           System.out.println("Setup for this variation failed.");
           AS400Message[] messagelist = cmd.getMessageList();
           for (int i = 0; i < messagelist.length; ++i)

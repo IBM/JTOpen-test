@@ -910,7 +910,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * Updated 3/20/2008
    * 
    * Note: Both drivers allow this today but should probably disallow this
-   * because the output is not valid SQL (John Eberhard 3/20/2008)
+   * because the output is not valid SQL.
    * 
    * Update 12/15/2011 -- This now throws an exception because this is not valid
    * XML Update 08/09/2013 -- the XMLTEXT function returns non-XML in an XML

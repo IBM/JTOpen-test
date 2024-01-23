@@ -562,11 +562,11 @@ setNString() - Set a CLOB parameter.
                     cs=connection_.prepareCall(sql);
                     JDSetupProcedure.setTypesParameters (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_);
                     JDSetupProcedure.register (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, getDriver());
-                    JDReflectionUtil.callMethod_V(cs, "setNString", 20, "Kim Coover");
+                    JDReflectionUtil.callMethod_V(cs, "setNString", 20, "Kim Roomer");
                     cs.execute();
 
                     String p = (String) JDReflectionUtil.callMethod_O(cs,"getNString",20);
-                    assertCondition (p.equals("Kim Coover"), "p = " + p + ", AND SHOULD equal Kim Coover");
+                    assertCondition (p.equals("Kim Roomer"), "p = " + p + ", AND SHOULD equal Kim Roomer");
                 }
                 catch(Exception e)
                 {
@@ -859,12 +859,12 @@ setNString() - Set more than one parameter.
                                                      supportedFeatures_);
                 JDSetupProcedure.register (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, getDriver());
                 JDReflectionUtil.callMethod_V(cs, "setNString", 10, "K");
-                JDReflectionUtil.callMethod_V(cs, "setNString", 12, "Coover");
+                JDReflectionUtil.callMethod_V(cs, "setNString", 12, "Roomer");
                 cs.execute();
                 String s1=(String) JDReflectionUtil.callMethod_O(cs,"getNString",10);
                 String s2=(String) JDReflectionUtil.callMethod_O(cs,"getNString",12);
                 cs.close();
-                assertCondition((s1.equals("K")) && (s2.equals("Coover")));
+                assertCondition((s1.equals("K")) && (s2.equals("Roomer")));
             }
             catch(Exception e)
             {
@@ -1380,10 +1380,10 @@ setNString() - Set a CLOB parameter.
                     JDSetupProcedure.setTypesParameters (cs, JDSetupProcedure.STP_CSINOUT,
                                                          supportedFeatures_);
                     JDSetupProcedure.register (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, getDriver());
-                    JDReflectionUtil.callMethod_V(cs, "setNString", "P_CLOB", "Kim Coover");
+                    JDReflectionUtil.callMethod_V(cs, "setNString", "P_CLOB", "Kim Roomer");
                     cs.execute();
                     String p = (String) JDReflectionUtil.callMethod_O(cs,"getNString",20);
-                    assertCondition (p.equals("Kim Coover"), "p = " + p + ", AND SHOULD be Kim Coover");
+                    assertCondition (p.equals("Kim Roomer"), "p = " + p + ", AND SHOULD be Kim Roomer");
                 }
                 catch(Exception e)
                 {
@@ -1678,12 +1678,12 @@ setNString() - Set more than one parameter.
                                                      supportedFeatures_);
                 JDSetupProcedure.register (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, getDriver());
                 JDReflectionUtil.callMethod_V(cs, "setNString", "P_CHAR_1", "K");
-                JDReflectionUtil.callMethod_V(cs, "setNString", "P_VARCHAR_50", "Coover");
+                JDReflectionUtil.callMethod_V(cs, "setNString", "P_VARCHAR_50", "Roomer");
                 cs.execute();
                 String s1=(String) JDReflectionUtil.callMethod_O(cs,"getNString",10);
                 String s2=(String) JDReflectionUtil.callMethod_O(cs,"getNString",12);
                 cs.close();
-                assertCondition((s1.equals("K")) && (s2.equals("Coover")));
+                assertCondition((s1.equals("K")) && (s2.equals("Roomer")));
             }
             catch(Exception e)
             {

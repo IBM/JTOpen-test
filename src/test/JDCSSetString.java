@@ -445,12 +445,12 @@ public class JDCSSetString extends JDCSSetTestcase {
               supportedFeatures_);
           JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
               supportedFeatures_, getDriver());
-          cs.setString(20, "Kim Coover");
+          cs.setString(20, "Kim Roomer");
           cs.execute();
 
           String p = cs.getString(20);
-          assertCondition(p.equals("Kim Coover"),
-              "p = " + p + ", AND SHOULD equal Kim Coover");
+          assertCondition(p.equals("Kim Roomer"),
+              "p = " + p + ", AND SHOULD equal Kim Roomer");
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -686,12 +686,12 @@ public class JDCSSetString extends JDCSSetTestcase {
         JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
             supportedFeatures_, getDriver());
         cs.setString(10, "K");
-        cs.setString(12, "Coover");
+        cs.setString(12, "Roomer");
         cs.execute();
         String s1 = cs.getString(10);
         String s2 = cs.getString(12);
         cs.close();
-        assertCondition((s1.equals("K")) && (s2.equals("Coover")));
+        assertCondition((s1.equals("K")) && (s2.equals("Roomer")));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1105,11 +1105,11 @@ public class JDCSSetString extends JDCSSetTestcase {
               supportedFeatures_);
           JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
               supportedFeatures_, getDriver());
-          cs.setString("P_CLOB", "Kim Coover");
+          cs.setString("P_CLOB", "Kim Roomer");
           cs.execute();
           String p = cs.getString(20);
-          assertCondition(p.equals("Kim Coover"),
-              "p = " + p + ", AND SHOULD be Kim Coover");
+          assertCondition(p.equals("Kim Roomer"),
+              "p = " + p + ", AND SHOULD be Kim Roomer");
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -1344,12 +1344,12 @@ public class JDCSSetString extends JDCSSetTestcase {
         JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
             supportedFeatures_, getDriver());
         cs.setString("P_CHAR_1", "K");
-        cs.setString("P_VARCHAR_50", "Coover");
+        cs.setString("P_VARCHAR_50", "Roomer");
         cs.execute();
         String s1 = cs.getString(10);
         String s2 = cs.getString(12);
         cs.close();
-        assertCondition((s1.equals("K")) && (s2.equals("Coover")));
+        assertCondition((s1.equals("K")) && (s2.equals("Roomer")));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }

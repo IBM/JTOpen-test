@@ -74,8 +74,8 @@ private static Blob blob;
 
     // Turn on extended security.
     jcifs.Config.setProperty("jcifs.util.loglevel","3"); 
-    jcifs.Config.setProperty("jcifs.smb.client.useExtendedSecurity", "true");
-    jcifs.Config.setProperty("jcifs.smb.lmCompatibility",  "3"); 
+    jcifs.Config.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
+    jcifs.Config.setProperty("jcifs.smb.lmCompatibility",  "0"); 
     
     
   }

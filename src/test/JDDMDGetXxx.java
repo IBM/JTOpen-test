@@ -2448,16 +2448,6 @@ public class JDDMDGetXxx extends JDTestcase {
         if (getRelease() == JDTestDriver.RELEASE_V5R5M0)
           expectedVersion = 1;
 
-        // if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&
-        // getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
-        // "OS/400".equals(System.getProperty("os.name")) ) {
-        // Fixes not yet in V5R4 PTF.. For now, expected version for toolbox is
-        // expectedVersion = 0;
-
-        // Jeff Lee 4/22/2008
-        // The Toolbox PTF numbers for V5R4 are: SI29775 (for jt400Native.jar)
-        // and SI29774 (for jt400.jar).
-        // }
 
         assertCondition(dmd_.getDatabaseMinorVersion() == expectedVersion,
             "New test added by Native driver 11/2002 -> minor version reported = "

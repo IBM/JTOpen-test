@@ -256,7 +256,7 @@ other test userids can use it.
 	    try {
 		s.executeUpdate(sql); 
 	    } catch (Exception e) {
-		System.out.println("Exception on "+sql);
+		System.out.println("Warning: exception on "+sql);
 		e.printStackTrace(System.out); 
 	    } 
 
