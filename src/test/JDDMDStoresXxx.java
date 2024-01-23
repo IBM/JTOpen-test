@@ -284,17 +284,8 @@ when the connection is open.
 	    if ((getRelease() < JDTestDriver.RELEASE_V5R5M0) && (getDriver () != JDTestDriver.DRIVER_TOOLBOX)) { 
 		assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == true); // @A1C
 	    } else {
-		//if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&
-		//    getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && 
-		//    "OS/400".equals(System.getProperty("os.name"))) {
-		//    // Not fixed in toolbox V5R4 PTF yet
-		//    assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == true); // @A1C
-		//} else { 
 		    assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == false,
 				     "storesMixedCaseQuotedIdentifiers() returned true, but should return false because quoted SQL identifiers are case sensitive -- changed 12/31/2007 by native driver");
-		    // Jeff Lee 4/22/2008
-		    // The PTF numbers for V5R4 are: SI29775 (for jt400Native.jar) and SI29774 (for jt400.jar).
-		//}
 	    } 
 
 
@@ -318,17 +309,8 @@ when the connection is closed.
 	    if ((getRelease() < JDTestDriver.RELEASE_V5R5M0) && (getDriver () != JDTestDriver.DRIVER_TOOLBOX)) { 
 		assertCondition (dmd2_.storesMixedCaseQuotedIdentifiers () == true); // @A1C
 	    } else {
-		//if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&
-		//    getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && 
-		//    "OS/400".equals(System.getProperty("os.name"))) {
-		//    // Not fixed in toolbox V5R4 PTF yet 
-		//    assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == true); // @A1C
-		//} else { 
 		    assertCondition (dmd2_.storesMixedCaseQuotedIdentifiers () == false,
 				     "storesMixedCaseQuotedIdentifiers() returned true, but should return false because quoted SQL identifiers are case sensitive -- changed 12/31/2007 by native driver");
-		    // Jeff Lee 4/22/2008
-		    // The PTF numbers for V5R4 are: SI29775 (for jt400Native.jar) and SI29774 (for jt400.jar).
-		//}
 	    } 
 
         }

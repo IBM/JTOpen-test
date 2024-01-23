@@ -59,8 +59,6 @@ public class JDDriverConnect extends JDTestcase {
   private Driver driver_;
   String letter_;
   int jdk_;
-  private String      powerUserID_;
-  private char[]      encryptedPowerPassword_;
   /**
    * Constructor.
    **/
@@ -75,12 +73,10 @@ public class JDDriverConnect extends JDTestcase {
     {
         super (systemObject, "JDDriverMisc",
                namesAndVars, runMode, fileOutputStream, 
-               password);
+               password, powerUserID, powerPassword);
 
         systemObject_ = systemObject;
 
-        powerUserID_   = powerUserID;
-        encryptedPowerPassword_ = PasswordVault.getEncryptedPassword(powerPassword);
     }
 
 
@@ -2683,9 +2679,9 @@ public class JDDriverConnect extends JDTestcase {
       int exceptionCount = 0;
       int attemptCount = 0;
       Connection[][] c3 = new Connection[2][c2.length];
-
-      for (int j = 0; j < 2; j++) {
-        for (int i = 0; i < c3[j].length; i++) {
+      boolean keepLooping = true; 
+      for (int j = 0; j < 2 && keepLooping ; j++) {
+        for (int i = 0; i < c3[j].length && keepLooping; i++) {
           try {
             attemptCount++;
             System.out.println("[" + i + "] Connecting with " + goodUser);
@@ -2695,6 +2691,10 @@ public class JDDriverConnect extends JDTestcase {
           } catch (SQLException ex) {
             exceptionCount++;
             thrownException = ex;
+            String tracing = System.getProperty("com.ibm.as400.access.Trace.category"); 
+            if (tracing != null) { 
+              keepLooping = false; 
+            }
           }
         }
       }
@@ -2901,52 +2901,22 @@ public class JDDriverConnect extends JDTestcase {
 
 
   /*
-   * Connect after connecting with a bad profile. See CPS 8ASS3J
+   * Connect after connecting with a bad profile. 
    */
 
   public void Var071() {
     if (checkPasswordLeak() && checkNotGroupTest()) {
-      // If we are running with the toolbox driver and the jt400Native.jar
-      // then this testcase will fail prior to V7R2. Mark as successful
-      // if prior to V7R2.
-      if ((getRelease() < JDTestDriver.RELEASE_V7R2M0)
-          && (System.getProperty("java.class.path").toLowerCase()
-              .indexOf("jt400native") > 0)) {
-        System.out.println(
-            "Connect with bad profile not applicable for jt400Native.jar and before V7R2.  See issue 45361");
-        assertCondition(true);
-        return;
-      }
-
-      // If we are running with the toolbox driver in V6R1, we don't get an
-      // error
-      if ((isToolboxDriver())
-          && (getRelease() == JDTestDriver.RELEASE_V6R1M0)) {
-        notApplicable("Toolbox in V6R1 does not throw error");
-        return;
-      }
-
-      // Not fixed for V5R4
-
-      if ((getDriver() == JDTestDriver.DRIVER_NATIVE)
-          && (getRelease() == JDTestDriver.RELEASE_V5R4M0)) {
-        System.out.println("PTF for APAR SE45716 not created to V5R4");
-        assertCondition(true);
-        return;
-      }
 
       /* Each profile has the last letter of the library which is usually */
       /* the last letter of the test. JDRunit will not have two versions */
       /* of a testcase running with the same letter */
 
-      String added = " -- added 11/2/2010 connect after connect with bad profile native CPS 8ASS3J:SE45716  PTFs 61:SI41813,71:SI42110 ";
+      String added = " -- added 11/2/2010 connect after connect with bad profile native  PTFs 61:SI41813,71:SI42110 ";
       String goodUser = "JDBGDUSR" + letter_;
       String goodPasswd = "xyz123zyz";
       String badUser = "JDBBDUSR" + letter_;
       String badPasswd = "xyz123zyz";
       String expectedBadConnectException = "Error occurred in SQL Call Level Interface";
-      // V5R4 shows -- Connection to relational database ?LP03UT5 does not
-      // exist.
       String expectedBadConnectException2 = "does not exist";
       String expectedBadConnectException3 = "Processing of the SQL statement ended";
       Connection c1 = null;
@@ -2956,18 +2926,14 @@ public class JDDriverConnect extends JDTestcase {
 
         if (isToolboxDriver()) {
           expectedBadConnectException = "Communication link failure";
-          /*
-           * if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-           * expectedBadConnectException ="General security error"; }
-           */
         }
 
         if (getDriver() == JDTestDriver.DRIVER_NATIVE
             && getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
           expectedBadConnectException = "Processing of the SQL statement ended";
         }
-        String powerPassword = PasswordVault.decryptPasswordLeak(encryptedPowerPassword_); 
-        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", powerUserID_, powerPassword);
+        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_); 
+        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", pwrSysUserID_, powerPassword);
 
 
         // Delete and recreate the bad profile
@@ -3070,8 +3036,6 @@ public class JDDriverConnect extends JDTestcase {
       String badUser = "JDBBDUS2" + letter_;
       String badPasswd = "xyz123zyz";
       String expectedBadConnectException = "reason code is 0";
-      // V5R4 shows -- Connection to relational database ?LP03UT5 does not
-      // exist.
       String expectedBadConnectException2 = "does not exist";
       String expectedBadConnectException3 = "does not exist";
       Connection c1 = null;
@@ -3081,14 +3045,10 @@ public class JDDriverConnect extends JDTestcase {
 
         if (isToolboxDriver()) {
           expectedBadConnectException = "Communication link failure";
-          /*
-           * if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-           * expectedBadConnectException ="General security error"; }
-           */
 
         }
-        String powerPassword = PasswordVault.decryptPasswordLeak(encryptedPowerPassword_); 
-        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", powerUserID_, powerPassword);
+        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_); 
+        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", pwrSysUserID_, powerPassword);
 
 
         // Delete and recreate the bad profile
