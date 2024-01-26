@@ -1559,6 +1559,49 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
       }
    }
 
+   /**
+   Validates that getConnection() returns a valid connection object when password is set using a properties object
+   
+   AS400JDBCConnectionPoolDataSource()
+   setServerName()
+   setProperties()
+   getConnection()
+**/
+public void Var033()
+{
+   Connection c = null;
+   if (checkPasswordLeak()) {
+   try
+   {
+      AS400JDBCConnectionPoolDataSource ds = new AS400JDBCConnectionPoolDataSource();       
+      Properties properties = new Properties(); 
+      
+      ds.setServerName(systemObject_.getSystemName());   
+      properties.put("user",systemObject_.getUserId());
+      properties.put("password",  PasswordVault.decryptPasswordLeak(encryptedPassword_));
+      ds.setProperties(properties); 
+      
+      c= ds.getConnection();
+
+      if (c != null) 
+         succeeded();
+      else
+         failed("Unexpected Results.");
+   }
+   catch(Exception e)
+   {
+      failed(e, "Unexpected exception.");
+   }
+   finally
+   {
+      try
+      {
+         if (c != null) c.close();
+      }
+      catch (SQLException s) {}
+   }
+   }
+}
 
 
 
