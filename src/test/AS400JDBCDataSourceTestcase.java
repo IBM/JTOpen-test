@@ -5587,9 +5587,122 @@ notApplicable("SSLight Testcase");
 	}    
     
     
+        /**
+         * Validates that getConnection() returns a valid connection object from a
+         * properties object. See https://github.com/IBM/JTOpen/issues/157
+         * getConnection()
+         **/
+        public void Var186() {
+          if (checkPasswordLeak()) {
+            Connection c = null;
+            try {
+              Properties properties = new Properties();
+              properties.put("user", systemObject_.getUserId());
+              properties.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_));
+              AS400JDBCDataSource ds = new AS400JDBCDataSource();
+              ds.setProperties(properties);
+              ds.setServerName(systemObject_.getSystemName());
+
+              c = ds.getConnection();
+
+              assertCondition(c != null && !c.isClosed());
+            } catch (Exception e) {
+              failed(e, "Unexpected exception.");
+            } finally {
+              try {
+                if (c != null)
+                  c.close();
+              } catch (SQLException sq) {
+              }
+            }
+          }
+        }
     
-    
-    
+        /**
+         *  Validates that a datasource object (including password) can be set into JNDI,
+         *  and then instantiated from JNDI.
+         **/
+         public void Var187()
+         {
+             if (isApplet_ && jndiType_ == JNDI_FILE)                //@A7A
+             {                                        //@A7A
+                 notApplicable("Running in applet and jndiType is file"); //@A7A
+                 return;                                  //@A7A
+             }                                        //@A7A
+
+             String jndiName = "javatest/test123";
+
+             if (jndiType_ == JNDI_LDAP)                                  //@A2A
+                 jndiName = "cn=test123datasource, cn=users, ou=rochester,o=ibm,c=us"; //@A2A
+
+             // Database name is IASP name.. Don't set it. 
+             // String databaseName = "QCUSTCDT";
+             String serverName = systemObject_.getSystemName();
+             String description = "Customer Database";
+            
+             if(JDTestDriver.getClientOS() == JDTestDriver.CLIENT_as400)
+             {
+                 notApplicable("non i5 TC");
+                 return;
+             }
+             try
+             {
+                 // Create a data source to the AS/400 database.
+                 AS400JDBCDataSource dataSource = new AS400JDBCDataSource();
+                 dataSource.setServerName(serverName);
+                 dataSource.setUser(systemObject_.getUserId());
+                 char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+                 dataSource.setPassword(charPassword);
+                 PasswordVault.clearPassword(charPassword);
+                 dataSource.setPrompt(false); 
+                 
+                 // dataSource.setDatabaseName(databaseName);
+                 dataSource.setDescription(description);
+                 dataSource.setSavePasswordWhenSerialized(true); 
+                 
+                 // Bind the data source into JNDI.
+                 try
+                 {
+                     context_.bind(jndiName, dataSource);
+                 }
+                 catch (NameAlreadyBoundException n)
+                 {
+                     context_.unbind(jndiName);
+                     context_.bind(jndiName, dataSource);
+                 }
+
+                 // Return an AS400JDBCDataSource object from JNDI and get a connection.
+                 AS400JDBCDataSource jndiDataSource = (AS400JDBCDataSource) context_.lookup(jndiName);
+                 Connection connection = jndiDataSource.getConnection();
+
+                 Statement s = connection.createStatement();
+                 ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+
+                 if (rs.next() &&
+                     jndiDataSource.getServerName().equals(serverName) &&
+                     /* jndiDataSource.getDatabaseName().equals(databaseName) && */ 
+                     jndiDataSource.getDescription().equals(description))
+                     succeeded();
+                 else
+                     failed("Unexpected results.");
+             }
+             catch (Exception e)
+             {
+                 failed(e, "Unexpected exception.");
+             }
+             finally
+             {
+                 try
+                 {
+                     context_.unbind(jndiName);              // Cleanup JNDI.
+                 }
+                 catch (Exception cxt)
+                 {
+                 }
+             }
+         }
+
+
     /**
       Serializes and deserializes the data source object.
      **/
