@@ -176,7 +176,7 @@ public class JTOpenDownloadDevJars {
                 + "COLUMNS ( "
                 + "URL VARCHAR(200) CCSID 1208 PATH '$.url', "
                 + "UPDATED_AT VARCHAR(40) PATH '$.updated_at', "
-                + "BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  ))  "
+                + "BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  ))  "
                 + "ORDER BY UPDATED_AT desc FETCH FIRST 10 ROWS ONLY";
             System.out.println("FYI:  Latests artifacts are the following: "+sql); 
             ResultSet rs = stmt.executeQuery(sql);
@@ -194,11 +194,11 @@ public class JTOpenDownloadDevJars {
 		    + "COLUMNS ( "
 		    + "URL VARCHAR(200) CCSID 1208 PATH '$.url', "
 		    + "UPDATED_AT VARCHAR(40) PATH '$.updated_at', "
-		    + "BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='main' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
+		    + "BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='main' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    } else if ("ANY".equalsIgnoreCase(branch)) {
-		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  ))  ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
+		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  ))  ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    } else {
-		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='"+branch+"' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
+		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='"+branch+"' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    }
 	    System.out.println("Running to get latest artifact from BRANCH: "+sql); 
 	    rs = stmt.executeQuery(sql);
