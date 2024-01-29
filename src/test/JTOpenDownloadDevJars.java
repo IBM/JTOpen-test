@@ -164,20 +164,44 @@ public class JTOpenDownloadDevJars {
 		Class.forName("com.ibm.as400.access.AS400JDBCDriver"); 
 		connection = DriverManager.getConnection("jdbc:as400:"+system, userid, password); 
 	    }
-
-	    // run the query to get the latest URL
-	    String sql;
+	    // 
+	    // run the query to show the possible URLS. 
+            String sql;
+            Statement stmt = connection.createStatement();
+            sql = "SELECT URL,"
+                + "TIMESTAMP( SUBSTRING(UPDATED_AT,1,10) || ' ' || SUBSTRING(UPDATED_AT,12,8)) + CURRENT TIMEZONE AS UPDATED , "
+                + "CURRENT TIMEZONE as CURRENT_TIMEZONE, "
+                + " BRANCH"
+                + " FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' "
+                + "COLUMNS ( "
+                + "URL VARCHAR(200) CCSID 1208 PATH '$.url', "
+                + "UPDATED_AT VARCHAR(40) PATH '$.updated_at', "
+                + "BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  ))  "
+                + "ORDER BY UPDATED_AT desc FETCH FIRST 10 ROWS ONLY";
+            System.out.println("FYI:  Latests artifacts are the following: "+sql); 
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("URL,UPDATED_CURRENT_TIMEZONE,TIMEZONE,BRANCH"); 
+            while (rs.next()) { 
+              System.out.println(rs.getString(1)+","+rs.getTimestamp(2)+","+rs.getString(3)+","+rs.getString(4));
+            }
+            rs.close(); 
+            // run the query to get the latest URL
 	    String branch = System.getenv("BRANCH");
 	    if (branch == null) { 
-		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='main' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
+		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"',"
+		    + "'{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), "
+		    + "'$.artifacts[*]' "
+		    + "COLUMNS ( "
+		    + "URL VARCHAR(200) CCSID 1208 PATH '$.url', "
+		    + "UPDATED_AT VARCHAR(40) PATH '$.updated_at', "
+		    + "BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='main' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    } else if ("ANY".equalsIgnoreCase(branch)) {
 		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  ))  ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    } else {
 		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(40) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='"+branch+"' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    }
-	    Statement stmt = connection.createStatement();
 	    System.out.println("Running to get latest artifact from BRANCH: "+sql); 
-	    ResultSet rs = stmt.executeQuery(sql);
+	    rs = stmt.executeQuery(sql);
 	    String downloadUrl;
 	    String updatedAt;
 	    String downloadBranch; 
