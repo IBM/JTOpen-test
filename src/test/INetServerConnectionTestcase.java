@@ -71,6 +71,8 @@ public class INetServerConnectionTestcase extends Testcase
     protected void setup ()
     throws Exception
     {
+      lockSystem("NETSVR", 600);
+      super.setup();
 
 	jcifs = new JCIFSUtility(pwrSys_.getSystemName(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 
@@ -90,17 +92,10 @@ public class INetServerConnectionTestcase extends Testcase
     throws Exception
     {
 	jcifs.close(); 
-    }
-    protected void setup() throws Exception {
-      lockSystem("NETSVR", 600);
-      super.setup();
+	      super.cleanup();
+	      unlockSystem();
     }
 
-    protected void cleanup() throws Exception {
-      super.cleanup();
-      unlockSystem();
-
-    }
 
 
     static void displayAttributeValues(ISeriesNetServerConnection conn)
