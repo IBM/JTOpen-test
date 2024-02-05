@@ -12,24 +12,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
-import java.awt.Image;
 import java.util.Hashtable;
-import java.beans.BeanInfo;
-import java.beans.SimpleBeanInfo;
 import java.beans.FeatureDescriptor;
 import java.beans.BeanDescriptor;
 import java.beans.EventSetDescriptor;
-import java.beans.MethodDescriptor;
 import java.beans.PropertyDescriptor;
 
-import test.Testcase;
-
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.NetServer;
 import com.ibm.as400.access.NetServerBeanInfo;
 
 /**
@@ -85,7 +76,18 @@ public class NetServerBeanInfoTestcase extends Testcase
       }
       return true;
    }
-   
+
+   protected void setup() throws Exception {
+     lockSystem("NETSVR", 600);
+     super.setup();
+   }
+
+   protected void cleanup() throws Exception {
+     super.cleanup();
+     unlockSystem();
+
+   }
+
    /**
    Verify the constructor, NetServerBeanInfo().
    <br>

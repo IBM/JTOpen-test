@@ -61,6 +61,7 @@ public class NetServerConnectionTestcase extends Testcase
     throws Exception
     {
 	// Establish a connection using jcifs
+      lockSystem("NETSVR",600); 
 
 	jcifs = new JCIFSUtility(pwrSys_.getSystemName(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 
@@ -71,8 +72,10 @@ public class NetServerConnectionTestcase extends Testcase
        if (connectionList.getListLength() == 0) {
 	       throw new IllegalStateException("No connections are active.  To start a connection: Signon to any PC and use Network Neighborhood to map a drive to \\\\" + systemObject_.getSystemName() + "\\ROOT.   Alternatively jcifs should have established a session");
        }
-        
+          super.setup(); 
     }
+
+
 
     /**
     Performs cleanup needed after running variations.
@@ -84,6 +87,8 @@ public class NetServerConnectionTestcase extends Testcase
     {
 
 	jcifs.close(); 
+        unlockSystem(); 
+        super.cleanup(); 
     }
 
 

@@ -68,6 +68,8 @@ public class NetServerTestcase extends Testcase
     protected void setup ()
     throws Exception
     {
+      lockSystem("NETSVR", 600);
+      super.setup();
 	
        jcifs = new JCIFSUtility(pwrSys_.getSystemName().toUpperCase(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 	
@@ -99,6 +101,7 @@ public class NetServerTestcase extends Testcase
        waitForStart(server); 
     }
 
+
     /**
     Performs cleanup needed after running variations.
     
@@ -114,6 +117,8 @@ public class NetServerTestcase extends Testcase
        waitForStart(server); 
 
        jcifs.close(); 
+       super.cleanup();
+       unlockSystem();
     }
 
     

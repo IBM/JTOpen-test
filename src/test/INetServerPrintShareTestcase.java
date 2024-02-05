@@ -19,8 +19,6 @@ package test;
 
 import java.io.*;
 import com.ibm.as400.access.*;
-import java.util.Vector;
-import java.util.Properties;
 import java.util.Hashtable;
 
 /**
@@ -67,6 +65,8 @@ public class INetServerPrintShareTestcase extends Testcase
     protected void setup ()
     throws Exception
     {
+      lockSystem("NETSVR", 600);
+      super.setup();
        netserver_ = new ISeriesNetServer(systemObject_);
        netserverPwr_ = new ISeriesNetServer(pwrSys_);
        try {
@@ -93,6 +93,8 @@ public class INetServerPrintShareTestcase extends Testcase
     protected void cleanup ()
     throws Exception
     {
+      super.cleanup();
+      unlockSystem();
       String shareName = share_.getName();
       netserverPwr_.removeShare(shareName);
 
@@ -554,7 +556,7 @@ public class INetServerPrintShareTestcase extends Testcase
       boolean published = share.isPublished();
       int splfType = share.getSpooledFileType();
       System.out.println("--------\n" +
-                         "PRINT SHARE " + share.getName() + ":\n"+
+                         "PRINT SHARE " + shareName + ":\n"+
                          "--------\n" +
                          "Description: "+desc+"\n"+
                          "OutQ: "+outQ+"\n"+

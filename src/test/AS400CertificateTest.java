@@ -16,12 +16,9 @@ package test;
 import java.io.IOException;
 import java.util.Vector;
 import java.util.Enumeration;
-import test.TestDriver;
-import test.Testcase;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.UserSpace;
 import java.util.StringTokenizer;
 
 /**
@@ -101,9 +98,12 @@ Creates Testcase objects for all the testcases in this component.
       StringTokenizer miscTok = new StringTokenizer(misc_, ",");
       String uid = miscTok.nextToken();
       String pwd = miscTok.nextToken();
+      char[] encryptedPwd = PasswordVault.getEncryptedPassword(pwd); 
       if (runMode_!=Testcase.ATTENDED)
       {
-        PwrSys = new AS400( systemObject_.getSystemName(), uid, pwd );
+        char[] decryptedPassword = PasswordVault.decryptPassword(encryptedPwd);
+        PwrSys = new AS400( systemObject_.getSystemName(), uid, decryptedPassword );
+        PasswordVault.clearPassword(decryptedPassword);
         try {
           PwrSys.setGuiAvailable(false);
         } catch (Exception e) {}

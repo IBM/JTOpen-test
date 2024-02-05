@@ -69,8 +69,17 @@ Constructor.
   protected void setup()
     throws Exception
   {
+    lockSystem("NETSVR", 600);
     super.setup();
     filename = "File"+collection_; 
+
+  }
+
+  
+
+  protected void cleanup() throws Exception {
+    super.cleanup();
+    unlockSystem();
 
   }
 

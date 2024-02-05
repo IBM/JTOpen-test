@@ -60,6 +60,8 @@ public class INetServerFileShareTestcase extends Testcase
     protected void setup ()
     throws Exception
     {
+      lockSystem("NETSVR", 600);
+      super.setup();
        netserver_ = new ISeriesNetServer(systemObject_);
        netserverPwr_ = new ISeriesNetServer(pwrSys_);
        try {
@@ -77,6 +79,7 @@ public class INetServerFileShareTestcase extends Testcase
        ISeriesNetServerFileShare[] shares = netserver_.listFileShares("TOOLBOXTST");
        share_ = shares[0];
     }
+
 
     /**
     Performs cleanup needed after running variations.
@@ -97,6 +100,8 @@ public class INetServerFileShareTestcase extends Testcase
           break;
         }
       }
+      super.cleanup();
+      unlockSystem();
     }
 
 
