@@ -13,16 +13,6 @@
 
 package test;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Label;
-import java.awt.Panel;
-
-import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.io.File;
 import java.io.FileInputStream;
@@ -105,7 +95,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
     /**
    *
    */
-  private static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 1L;
 
     static TestDriverTimeoutThread timeoutThread = null;
 
@@ -114,21 +104,21 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
 
     protected String outputFileName_ = null;
     // Set of Testcase objects for this component.  This is filled in by the createTestcases() method.
-    protected Vector testcases_ = new Vector();
-    protected Vector skipTestcases_ = new Vector();
-    Vector testcaseResults  = new Vector();
-    static Vector staticTestcaseResults = new Vector();
+    protected Vector<Testcase> testcases_ = new Vector<Testcase>();
+    protected Vector<String> skipTestcases_ = new Vector<String>();
+    Vector<String[]> testcaseResults  = new Vector<String[]>();
+    static Vector<String[]> staticTestcaseResults = new Vector<String[]>();
     // The following set of variables are passed to each testcase when running it.
     protected FileOutputStream fileOutputStream_ = null;
     protected String misc_ = null;
     protected String asp_  = null;
     // Testcase names and variations to run.  Key is the testcase name, elements are an array of variations to run.
-    protected Hashtable namesAndVars_ = new Hashtable();
+    protected Hashtable<String, Vector<String>> namesAndVars_ = new Hashtable<String, Vector<String>>();
     protected String systemName_ = null;
     // RDB to use for remote access testing 
     protected String rdbName_ = null; 
     protected String userId_ = null;
-    protected String password_ = null;
+    protected char[]  encryptedPassword_ = null; 
     protected static String proxy_;
     static {
       String propVal = System.getProperty("com.ibm.as400.access.AS400.proxyServer");
@@ -145,7 +135,6 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
     protected String[] argsToSave_ = null; //@A1A
     protected PrintWriter out_;
 
-    private Thread runner = null;
     private long start_ = 0;  // Start time for a testcase.
     private long time_ = 0;  // Time to run for a testcase.
     protected boolean useSSL_ = false;
@@ -248,7 +237,11 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
                 {
                     systemObject_ = (AS400)s2.readObject();
                 }
-                if (password_ != null) systemObject_.setPassword(password_);
+                if (encryptedPassword_ != null) {
+                  char[] decryptedPassword = PasswordVault.decryptPassword(encryptedPassword_); 
+                  systemObject_.setPassword(decryptedPassword);
+                  PasswordVault.clearPassword(decryptedPassword);; 
+                }
                 s2.close();
             }
             else
@@ -406,7 +399,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
 
       // Parse the command line parameters.
       String name = null;
-      Vector variations = null;
+      Vector<String> variations = null;
       StringTokenizer vars = null;
       int state = START;
       for (int i = 0; i < args.length; ++i)
@@ -553,13 +546,13 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
             else
             {
               // Add last testcase with no vars.
-              namesAndVars_.put(name, new Vector());
+              namesAndVars_.put(name, new Vector<String>());
               state = START;
               --i;  // Reparse this token.
             }
             break;
           case PARSE_VARIATIONS:
-            variations = new Vector();
+            variations = new Vector<String>();
             vars = new StringTokenizer(arg, ",");
             while (vars.hasMoreTokens())
             {
@@ -588,7 +581,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
                     state = START;
                     break;
                 case PARSE_PASSWORD:
-                    password_ = arg;
+                    encryptedPassword_ = PasswordVault.getEncryptedPassword(arg); 
                     state = START;
                     break;
                 case PARSE_PROXY:
@@ -706,7 +699,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
         switch (state)
         {
             case CHECK_FOR_VARIATIONS:
-        namesAndVars_.put(name, new Vector());  // Add last testcase with no vars.
+        namesAndVars_.put(name, new Vector<String>());  // Add last testcase with no vars.
                 break;
             case PARSE_SYSTEM:
                 throw new Exception("Incomplete system name specification.");
@@ -766,9 +759,11 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
       {
         pwrSys_.setUserId(pwrSysUserID_);
       }
-      if (password_ != null)
+      if (encryptedPassword_ != null)
       {
-        systemObject_.setPassword(password_);
+        char[] decryptedPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        systemObject_.setPassword(decryptedPassword); 
+        PasswordVault.clearPassword(decryptedPassword); 
       }
       if (pwrSysPassword_ != null)
       {
@@ -963,7 +958,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
 
 	// Record the skipped testcases
  
-	for (Enumeration e = skipTestcases_.elements(); e.hasMoreElements();)
+	for (Enumeration<String> e = skipTestcases_.elements(); e.hasMoreElements();)
 	{
 	    String  tc = (String) e.nextElement();
 
@@ -1165,13 +1160,14 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
             JarEntry jarEntry = jarFile.getJarEntry("com/ibm/as400/access/AS400.class");
             Date classDate = new Date(jarEntry.getTime());
             out_.println("TOOLBOX BUILD DATE   = " +  timeStampFormatter_.format(classDate));
+            jarFile.close(); 
           }
           catch (Exception e) {}
         }
 
         try
         {
-          Class driver = Class.forName("com.ibm.as400.access.AS400JDBCDriver");
+          Class<?> driver = Class.forName("com.ibm.as400.access.AS400JDBCDriver");
           Field majorVersion = driver.getDeclaredField("JDBC_MAJOR_VERSION_");
           Field minorVersion = driver.getDeclaredField("JDBC_MINOR_VERSION_");
           out_.println("JDBC VERSION         = " +
@@ -1194,6 +1190,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
             JarEntry jarEntry = jarFile.getJarEntry("test/Testcase.class");
             Date classDate = new Date(jarEntry.getTime());
             out_.println("TEST JAR BUILD DATE  = " +  timeStampFormatter_.format(classDate));
+            jarFile.close(); 
           }
           catch (Exception e) {}
         }
@@ -1218,6 +1215,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
             Date classDate = new Date(jarEntry.getTime());
             out_.println("NATIVE BUILD DATE   = "
                 + timeStampFormatter_.format(classDate));
+            jarFile.close(); 
           }
         } catch (Exception e) {
           
@@ -1227,7 +1225,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
       }
 
       try {
-        Class driver = Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
+        Class<?> driver = Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
         Field releaseString = driver.getDeclaredField("RELEASE_STRING");
         out_.println("NATIVE JDBC VERSION = " + releaseString.get(null));
       } catch (Exception e) {

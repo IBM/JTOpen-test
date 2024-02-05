@@ -43,6 +43,19 @@ public class NetServerFileShareTestcase extends Testcase
         pwrSys_ = pwrSys;
     }
 
+    protected void setup()
+        throws Exception
+      {
+        lockSystem("NETSVR",600); 
+        super.setup(); 
+      }
+      protected void cleanup() throws Exception
+      {
+        unlockSystem();
+        super.cleanup(); 
+      }
+
+
     
     /**
      Construct a NetServerFileShare with no parameters.

@@ -68,6 +68,8 @@ public class INetServerTestcase extends Testcase
     protected void setup ()
     throws Exception
     {
+      lockSystem("NETSVR", 600);
+      super.setup();
       netserver_ = new ISeriesNetServer(systemObject_);
       netserverPwr_ = new ISeriesNetServer(pwrSys_);
       original_NetServer_Name = netserver_.getName();
@@ -86,6 +88,8 @@ public class INetServerTestcase extends Testcase
 ///       server.commitChanges();
 ///       stopAndStart(server,true);
     }
+
+
 
     /**
     Performs cleanup needed after running variations.
@@ -106,6 +110,8 @@ public class INetServerTestcase extends Testcase
       if (okToStopNetServer_) {
         stopAndStart(true);
       }
+      super.cleanup();
+      unlockSystem();
     }
 
 
@@ -250,7 +256,7 @@ public class INetServerTestcase extends Testcase
         try
         {
             ISeriesNetServer netser = new ISeriesNetServer(null);
-            failed("No exception");
+            failed("No exception, but got "+netser);
         }
         catch (Exception e)
         {
@@ -267,7 +273,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            AS400 system = new AS400("BogusToolbox", "is", "cool");
+            AS400 system = new AS400("BogusToolbox", "is", "cool".toCharArray());
             system.setGuiAvailable(false);
             ISeriesNetServer netser = new ISeriesNetServer(system);
             netser.setName(new String());
@@ -795,7 +801,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            AS400 bogus = new AS400("bogusToolbox", "bogus", "bogus");
+            AS400 bogus = new AS400("bogusToolbox", "bogus", "bogus".toCharArray());
             bogus.setGuiAvailable(false);
             ISeriesNetServer netser = new ISeriesNetServer(bogus);
             netser.start();
@@ -1243,9 +1249,9 @@ public class INetServerTestcase extends Testcase
           return;
         }
         // For each element of allShares, verify that it's in exactly one of the other lists.
-        Vector allShareNames = new Vector(allShares.length);
-        Vector fileShareNames = new Vector(allShares.length);
-        Vector printShareNames = new Vector(allShares.length);
+        Vector<String> allShareNames = new Vector<String>(allShares.length);
+        Vector<String> fileShareNames = new Vector<String>(allShares.length);
+        Vector<String> printShareNames = new Vector<String>(allShares.length);
         boolean ok = true;
         for (int i=0; i<allShares.length; i++) {
           allShareNames.addElement(allShares[i].getName());
@@ -1256,7 +1262,7 @@ public class INetServerTestcase extends Testcase
         for (int i=0; i<printShares.length; i++) {
           printShareNames.addElement(printShares[i].getName());
         }
-        Enumeration enumeration = allShareNames.elements();
+        Enumeration<String> enumeration = allShareNames.elements();
         while (enumeration.hasMoreElements()) {
           String shareName = (String)enumeration.nextElement();
           if (fileShareNames.contains(shareName)) {
@@ -1591,7 +1597,7 @@ public class INetServerTestcase extends Testcase
         {
            ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
            boolean val = ns.isAutoStart();
-           failed ("Didn't throw exception.  Try a userid without IOSYSCFG auth.");
+           failed ("Didn't throw exception.  Try a userid without IOSYSCFG auth. got "+val);
         }
         catch(Exception e)
         {

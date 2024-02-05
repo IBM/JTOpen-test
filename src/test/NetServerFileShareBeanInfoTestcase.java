@@ -86,6 +86,19 @@ public class NetServerFileShareBeanInfoTestcase extends Testcase
       return true;
    }
    
+   protected void setup()
+       throws Exception
+     {
+       lockSystem("NETSVR",600); 
+       super.setup(); 
+     }
+     protected void cleanup() throws Exception
+     {
+       unlockSystem();
+       super.cleanup(); 
+     }
+
+
    /**
    Verify the constructor, NetServerFileShareBeanInfo().
    <br>

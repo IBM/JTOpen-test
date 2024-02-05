@@ -14,7 +14,6 @@
 package test;
 
 import java.io.PrintStream;
-import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -160,7 +159,7 @@ public class JDSchedulerServer extends JDScheduler {
       int threadCount1 = getThreadCount();
       Thread[] threads = new Thread[threadCount1];
       JDSchedulerRunnable[] runnables = new JDSchedulerRunnable[threadCount1];
-      Hashtable initialsToThreadHashtable = new Hashtable();
+      Hashtable<String, JDSchedulerRunnable> initialsToThreadHashtable = new Hashtable<String, JDSchedulerRunnable>();
       for (int i = 0; i < threadCount1; i++) {
         runnables[i] = new JDSchedulerRunnable(scheduleTable, runTable, out,
             serverId, i, initialsToThreadHashtable);

@@ -58,6 +58,8 @@ public class NetServerSessionTestcase extends Testcase
     protected void setup ()
     throws Exception
     {
+      lockSystem("NETSVR", 600);
+      super.setup();
 
 	jcifs = new JCIFSUtility(pwrSys_.getSystemName(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 
@@ -78,7 +80,10 @@ public class NetServerSessionTestcase extends Testcase
     {
 
 	jcifs.close(); 
+	      super.cleanup();
+	      unlockSystem();
     }
+
 
   
     /**

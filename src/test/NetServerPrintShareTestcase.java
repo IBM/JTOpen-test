@@ -62,6 +62,8 @@ public class NetServerPrintShareTestcase extends Testcase
     {
        try
        {
+         lockSystem("NETSVR", 600);
+         super.setup();
           pshare_ = new NetServerPrintShare(pwrSys_, "PRTTOOLBOX");
           pshare_.setAttributeValue(NetServerPrintShare.OUTPUT_QUEUE_NAME, "QPRINT");
           pshare_.setAttributeValue(NetServerPrintShare.OUTPUT_QUEUE_LIBRARY, "/QGPL");
@@ -74,6 +76,8 @@ public class NetServerPrintShareTestcase extends Testcase
        }
     }
 
+
+
     /**
     Performs cleanup needed after running variations.
     
@@ -83,6 +87,8 @@ public class NetServerPrintShareTestcase extends Testcase
     throws Exception
     {
        pshare_.remove();
+       super.cleanup();
+       unlockSystem();
     }
 
 
@@ -251,10 +257,12 @@ public class NetServerPrintShareTestcase extends Testcase
    {
       try
       {
-         if (((Integer)pshare_.getAttributeValue(NetServerPrintShare.USER_COUNT)).intValue() == 0)
+        int userCount = ((Integer)pshare_.getAttributeValue(NetServerPrintShare.USER_COUNT)).intValue(); 
+         if ( userCount == 0)
             succeeded();
-         else
-            failed("NetServerPrintShare user count is not valid.");
+         else {
+            failed("NetServerPrintShare user count is not valid ("+userCount+").");
+         }
       }
       catch (Exception e)
       {

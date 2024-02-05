@@ -1513,8 +1513,10 @@ public abstract class JDTestDriver extends TestDriver {
             connection = as400JdbcDriver_.connect(url, uid, pwdChars);
           } catch (Exception e) { 
             System.out.println("Unable to connect using as400JdbcDriver_.connect("+url+","+uid+","+new String(pwdChars)+")"); 
+            throw e; 
+          } finally { 
+            PasswordVault.clearPassword(pwdChars); 
           }
-          PasswordVault.clearPassword(pwdChars); 
 
         } else {
           throw new Exception(":as400: not in url: " + url);

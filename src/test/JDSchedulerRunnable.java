@@ -30,7 +30,7 @@ public class JDSchedulerRunnable implements Runnable {
   String serverId;
   boolean on400 = false;
   private int threadId;
-  Hashtable initialsToThreadHashtable;
+  Hashtable<String, JDSchedulerRunnable> initialsToThreadHashtable;
   String runningInitials = "";
   String scheduleTable;
   String runTable;
@@ -51,7 +51,7 @@ public class JDSchedulerRunnable implements Runnable {
 
   public JDSchedulerRunnable(String scheduleTable, String runTable,
       PrintStream out, String serverId, int threadId,
-      Hashtable initialsToThreadHashtable)
+      Hashtable<String, JDSchedulerRunnable> initialsToThreadHashtable)
 
   throws Exception {
     this.out = out;
@@ -533,7 +533,7 @@ public class JDSchedulerRunnable implements Runnable {
           // select * from JDTestINFO.SCHED4 WHERE INITIALS NOT LIKE '61%A' AND
           // INITIALS NOT LIKE '61%T' AND PRIORITY <= 5
           {
-            Set keyset = null;
+            Set<String> keyset = null;
             Object[] keys = null;
             // We need to keep this locked until we are done with the query
             synchronized (initialsToThreadHashtable) {
@@ -574,7 +574,7 @@ public class JDSchedulerRunnable implements Runnable {
             } /* synchronized initialsToThreadHashtable */
           } /* Look for high priority task */
 
-          Set keyset = null;
+          Set<String> keyset = null;
           Object[] keys = null;
           // We need to keep this locked until the query is done
           // and the reuslts are added back.

@@ -86,6 +86,18 @@ public class NetServerPrintShareBeanInfoTestcase extends Testcase
       return true;
    }
    
+
+   protected void setup() throws Exception {
+     lockSystem("NETSVR", 600);
+     super.setup();
+   }
+
+   protected void cleanup() throws Exception {
+     super.cleanup();
+     unlockSystem();
+
+   }
+
    /**
    Verify the constructor, NetServerPrintShareBeanInfo().
    <br>

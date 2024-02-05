@@ -2444,6 +2444,65 @@ public class JDReport {
         newFile.renameTo(new File(outfile));
       }
 
+      if (rawfile.endsWith("A") || rawfile.endsWith("B")) { 
+        System.out.println("Removing HTML and servlet tests"); 
+
+        StringBuffer iniInfo = new StringBuffer(); 
+        InputStream fileInputStream = JDRunit.loadResource("ini/testbase.ini" , iniInfo);
+        Properties testBaseProperties = new Properties();
+        testBaseProperties.load(fileInputStream);
+        fileInputStream.close();
+
+        String deleteSql = " DELETE FROM " + SCHEMA + "." + rawfile +" WHERE TESTCASE=?";
+        PreparedStatement psDelete = connection.prepareStatement(deleteSql); 
+        Enumeration<Object> enumeration = testBaseProperties.keys(); 
+        while (enumeration.hasMoreElements()) { 
+          String key = (String) enumeration.nextElement(); 
+          String base = testBaseProperties.getProperty(key); 
+          if (isServletHtmlTestbase(base)) {
+            int lastDotIndex = key.lastIndexOf('.'); 
+            if (lastDotIndex > 0) { 
+              key = key.substring(lastDotIndex+1); 
+            }
+            psDelete.setString(1,key); 
+            psDelete.executeUpdate(); 
+          }
+        }
+        psDelete.close(); 
+      
+      }
+
+      
+      if ( rawfile.endsWith("B")) { 
+        System.out.println("Removing Visual tests"); 
+
+        StringBuffer iniInfo = new StringBuffer(); 
+        InputStream fileInputStream = JDRunit.loadResource("ini/testbase.ini" , iniInfo);
+        Properties testBaseProperties = new Properties();
+        testBaseProperties.load(fileInputStream);
+        fileInputStream.close();
+
+        String deleteSql = " DELETE FROM " + SCHEMA + "." + rawfile +" WHERE TESTCASE=?";
+        PreparedStatement psDelete = connection.prepareStatement(deleteSql); 
+        Enumeration<Object> enumeration = testBaseProperties.keys(); 
+        while (enumeration.hasMoreElements()) { 
+          String key = (String) enumeration.nextElement(); 
+          String base = testBaseProperties.getProperty(key); 
+          if (isVisualTestbase(base)) {
+            int lastDotIndex = key.lastIndexOf('.'); 
+            if (lastDotIndex > 0) { 
+              key = key.substring(lastDotIndex+1); 
+            }
+            psDelete.setString(1,key); 
+            psDelete.executeUpdate(); 
+          }
+        }
+        psDelete.close(); 
+      
+      }
+
+      
+      
       System.out.println("Running the query");
       writer.println(
           "Generating information -- STEP 3 -- running SQL commands on "
@@ -3191,6 +3250,64 @@ public class JDReport {
 
   }
 
+  private static boolean isServletHtmlTestbase(String base) {
+    String[] possibleBases = {
+        "test.util.html.FormInputTest",
+        "test.util.html.HTMLFormTest",
+        "test.util.html.HTMLHyperlinkTest",
+        "test.util.html.HTMLTableTest",
+        "test.util.html.HTMLTest",
+        "test.util.html.HTMLTextTest",
+        "test.util.html.LabelFormElementTest",
+        "test.util.html.LayoutFormPanelTest",
+        "test.util.html.RadioFormInputGroupTest",
+        "test.util.html.SelectFormElementTest",
+        "test.util.html.SelectOptionTest",
+        "test.util.html.TextAreaFormElementTest",
+        "test.util.html.URLEncoderTest",
+        "test.util.servlet.HTMLConverterTest",
+        "test.util.servlet.RowDataTest",
+        "test.util.servlet.RowMetaDataTest",
+        "test.util.servlet.ServletHyperlinkTest",
+        
+    }; 
+    for (int i = 0; i < possibleBases.length; i++) { 
+      if (possibleBases[i].equals(base)) {
+        return true; 
+      }
+    }
+    return false; 
+  }
+
+  private static boolean isVisualTestbase(String base) {
+    String[] possibleBases = {
+        "VAS400Test",
+        "VCmdTest",
+        "VDQTest",
+        "VIFSTest",
+        "VJavaPgmCallTest",
+        "VJobTest",
+        "VMessageTest",
+        "VPgmTest",
+        "VRLATest",
+        "VResourceTest",
+        "VSQLQueryTest",
+        "VSQLTest",
+        "VSystemStatusTestDriver",
+        "VUserAndGroupTestDriver",
+        "VUserTest",
+        
+    }; 
+    for (int i = 0; i < possibleBases.length; i++) { 
+      if (possibleBases[i].equals(base)) {
+        return true; 
+      }
+    }
+    return false; 
+  }
+
+  
+  
   private static String getJoCoCoRuntimeDir(String initials) {
     switch (initials.charAt(2)) {
     case '6':

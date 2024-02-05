@@ -91,6 +91,16 @@ public class INetServerConnectionTestcase extends Testcase
     {
 	jcifs.close(); 
     }
+    protected void setup() throws Exception {
+      lockSystem("NETSVR", 600);
+      super.setup();
+    }
+
+    protected void cleanup() throws Exception {
+      super.cleanup();
+      unlockSystem();
+
+    }
 
 
     static void displayAttributeValues(ISeriesNetServerConnection conn)

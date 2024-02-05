@@ -53,14 +53,17 @@ Constructor.
   /**
    @exception  Exception  If an exception occurs.
    **/
-  protected void setup()
-    throws Exception
-  {
-    super.setup(); 
-    
 
+  protected void setup() throws Exception {
+    lockSystem("NETSVR", 600);
+    super.setup();
   }
 
+  protected void cleanup() throws Exception {
+    super.cleanup();
+    unlockSystem();
+
+  }
 
 
 
