@@ -73,7 +73,13 @@ public class SecSignonInfoTestcase extends Testcase {
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     } finally { 
-      if (sys != null) sys.close(); 
+      if (sys != null) {
+        try { 
+          sys.close(); 
+        } catch (Exception e) { 
+          e.printStackTrace(); 
+        }
+      }
     }
   }
 
@@ -238,7 +244,11 @@ public class SecSignonInfoTestcase extends Testcase {
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     }
-    sys.close(); 
+    try { 
+      sys.close(); 
+    } catch (Exception e) { 
+      e.printStackTrace(); 
+    }
   }
 
   /**
@@ -257,7 +267,11 @@ public class SecSignonInfoTestcase extends Testcase {
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     }
-    sys.close();
+    try { 
+      sys.close(); 
+    } catch (Exception e) { 
+      e.printStackTrace(); 
+    }
   }
 
   /**
