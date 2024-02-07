@@ -21,6 +21,7 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import test.PasswordVault;
 import test.TestDriver;
 import test.Testcase;
 import com.ibm.as400.access.*;
@@ -130,7 +131,9 @@ Creates Testcase objects for all the testcases in this component.
         }
     	else
     	{
-    		PwrSys_ = new AS400(systemObject_.getSystemName(), pwrSysUserID_, pwrSysPassword_);
+          char[] decryptedPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_); 
+          PwrSys_ = new AS400( systemObject_.getSystemName(), pwrSysUserID_, decryptedPassword);
+          PasswordVault.clearPassword(decryptedPassword);
  		
     	}	
     	
@@ -282,7 +285,10 @@ Creates Testcase objects for all the testcases in this component.
      }
      else
      {
-       PwrSys_ = new AS400(systemObject_.getSystemName(), pwrSysUserID_, pwrSysPassword_);
+       char[] decryptedPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_); 
+       PwrSys_ = new AS400( systemObject_.getSystemName(), pwrSysUserID_, decryptedPassword);
+       PasswordVault.clearPassword(decryptedPassword);
+
        CommandCall cmd = new CommandCall(PwrSys_);
        initialToken_ = directory_;
 

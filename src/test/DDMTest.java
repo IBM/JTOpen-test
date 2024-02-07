@@ -642,7 +642,9 @@ Creates Testcase objects for all the testcases in this component.
     
     if (!(pwrSys_.getUserId()).equals(""))
     {
-      PwrSys = new AS400( systemObject_.getSystemName(), pwrSysUserID_, pwrSysPassword_);
+      char[] decryptedPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_); 
+      PwrSys = new AS400( systemObject_.getSystemName(), pwrSysUserID_, decryptedPassword);
+      PasswordVault.clearPassword(decryptedPassword);
    	
       try {
     	  
