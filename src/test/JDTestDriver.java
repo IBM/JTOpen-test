@@ -1210,8 +1210,9 @@ public abstract class JDTestDriver extends TestDriver {
     if (pwrSysUserID_ != null) {
       if (!pwrSysUserID_.equals(userId)) {
         try {
+          String password = PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDTestDriver.grantPackagePermissions"); 
           Connection changeConnection = DriverManager.getConnection(url,
-              pwrSysUserID_, pwrSysPassword_);
+              pwrSysUserID_, password);
 
           /* Find the packages in the library */
           Statement queryStatement = changeConnection.createStatement();
