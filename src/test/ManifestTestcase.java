@@ -68,7 +68,6 @@ public class ManifestTestcase extends Testcase
       output_.println("html not found.");
       f = true;
     }
-    */ 
     try
     {
       new com.ibm.as400.util.servlet.HTMLFormConverter();
@@ -78,6 +77,7 @@ public class ManifestTestcase extends Testcase
       output_.println("servlet not found.");
       f = true;
     }
+    */ 
     try
     {
       new com.ibm.as400.resource.BufferedResourceList();
