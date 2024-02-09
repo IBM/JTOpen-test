@@ -412,20 +412,43 @@ public abstract class JDTestDriver extends TestDriver {
    * Drops a collection.
    **/
   public static void dropCollection(Connection c, String collection) {
+    String sql = ""; 
+    Statement s = null; 
     try {
-
+      s = c.createStatement();
       // Make sure the sysreply list is being used
       //
       System.out.println("Dropping collection " + collection + ".");
 
-      Statement s = c.createStatement();
-      s.executeUpdate("CALL QSYS2.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)   ')");
-      s.executeUpdate("DROP COLLECTION " + collection);
+      sql = "CALL QSYS2.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)   ')";
+      s.executeUpdate(sql);
+      sql = "CALL QSYS2.QCMDEXC('ENDJRNPF FILE(*ALL) JRN("+collection+"/QSQJRN)')"; 
+      try { 
+         s.executeUpdate(sql);   
+      } catch (SQLException e) { 
+        if (JDCleanup.isImportantException(e )) { 
+          System.out.println("Warning:  sql failed in dropCollection:"+sql);
+          e.printStackTrace(System.out);
+        }
+      }
+      sql = "DROP COLLECTION " + collection;
+      try { 
+        s.executeUpdate(sql);
+      } catch (SQLException e) { 
+        int sqlcode = e.getErrorCode(); 
+        if (sqlcode == -910) { /* pending change */ 
+          sql = "CALL QSYS2.QCMDEXC('DLTLIB "+collection+"')"; 
+          s.executeUpdate(sql);
+        }
+      }
       s.close();
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      if (JDCleanup.isImportantException(e)) { 
+        System.out.println(e.getMessage()+" SQL="+sql);
+      }
     }
   }
+
 
   /**
    * Returns the base URL for the driver being tested.

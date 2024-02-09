@@ -49,6 +49,7 @@ public class ManifestTestcase extends Testcase
       output_.println("access not found.");
       f = true;
     }
+    /* These classes are not shipped in jt400.jar 
     try
     {
       new com.ibm.as400.vaccess.CommandCallButton();
@@ -67,6 +68,7 @@ public class ManifestTestcase extends Testcase
       output_.println("html not found.");
       f = true;
     }
+    */ 
     try
     {
       new com.ibm.as400.util.servlet.HTMLFormConverter();
