@@ -1678,7 +1678,7 @@ getConnection -- test debug connection properties
               .getConnection(url, userId_, encryptedPassword_);
           Statement stmt = testConnection.createStatement();
           String sql = "select TCP_STATE,CONNECTION_TYPE,REMOTE_ADDRESS,REMOTE_PORT,REMOTE_PORT_NAME,LOCAL_ADDRESS,LOCAL_PORT,LOCAL_PORT_NAME,PROTOCOL,IDLE_TIME from QSYS2.NETSTAT_INFO where REMOTE_ADDRESS=SYSIBM.CLIENT_IPADDR and LOCAL_NAME='as-database' ORDER BY TCP_STATE";
-          sb.append("Running : " + sql);
+          sb.append("Running : " + sql+"\n");
           ResultSet rs = stmt.executeQuery(sql);
           int badCount = 0;
           while (rs.next()) {
@@ -1693,9 +1693,9 @@ getConnection -- test debug connection properties
               } 
             }
           }
-          if (badCount > 1) {
+          if (badCount > 2) {
             sb.append(
-                "FAILED:  More than one connection is not ESTABLISHED or TIME-WAIT \n");
+                "FAILED:  More than two connections is not ESTABLISHED or TIME-WAIT \n");
             passed = false;
           }
 

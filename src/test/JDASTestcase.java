@@ -2605,7 +2605,7 @@ public class JDASTestcase extends JDTestcase {
       if (sb == null) sb = new StringBuffer(); 
       Connection killerConnection = testDriver_.getConnection(url_,
           systemObject_.getUserId(), encryptedPassword_);
-      sb.append("Connecting to " + url + "\n");
+      infoAppend(sb,"Connecting to " + url + "\n");
       Connection connection = testDriver_.getConnection(url,
           systemObject_.getUserId(), encryptedPassword_);
 
@@ -2625,7 +2625,7 @@ public class JDASTestcase extends JDTestcase {
       if (sb == null) sb = new StringBuffer(); 
       Connection killerConnection = testDriver_.getConnection(url_,
           systemObject_.getUserId(), encryptedPassword_); 
-      sb.append("Connecting to " + url + "using datasource \n");
+      infoAppend(sb,"Connecting to " + url + "using datasource \n");
       
       Connection connection = createDSConnectionFromURL(url); 
 
@@ -2745,10 +2745,10 @@ public class JDASTestcase extends JDTestcase {
     int killTime =  MINIMUM_TRANSACTION_MILLISECONDS; 
     int minimumTransactionMilliseconds = MINIMUM_TRANSACTION_MILLISECONDS;
     boolean passed = true;
-    sb.append("Test a connection with enableClientAffinitiesList\n");
-    sb.append("Make sure the connection is re-established after it drops\n");
-    sb.append("It will be dropped randomly\n");
-    sb.append("This test uses prepared statements with type parameter markers\n");
+    infoAppend(sb,"Test a connection with enableClientAffinitiesList\n");
+    infoAppend(sb,"Make sure the connection is re-established after it drops\n");
+    infoAppend(sb,"It will be dropped randomly\n");
+    infoAppend(sb,"This test uses prepared statements with type parameter markers\n");
 
     try {
 
@@ -2788,7 +2788,7 @@ public class JDASTestcase extends JDTestcase {
             try {
 
               synchronized (sb) {
-                sb.append("TC=" + transactionCount + " T=" + t + "\n");
+                infoAppend(sb,"TC=" + transactionCount + " T=" + t + "\n");
               }
               PreparedStatement[] psInT = psTransactions[t];
               String[][][] parameterSets = psTypeParms[t];
@@ -2796,7 +2796,7 @@ public class JDASTestcase extends JDTestcase {
               String[][] parameterSet = parameterSets[parameterSetIndex];
               transactionsAttempted++;
               for (int j = 0; j < psInT.length; j++) {
-                sb.append(" T=" + t + " S=" + j + "\n");
+                infoAppend(sb," T=" + t + " S=" + j + "\n");
                 int parameterCount = psInT[j].getParameterMetaData()
                     .getParameterCount();
                 if (parameterCount > 0) {
@@ -2901,12 +2901,12 @@ public class JDASTestcase extends JDTestcase {
 
                       if (!result.equals(outputValues[k])) {
                         passed = false;
-                        sb.append(" For column " + (k + 1) + " got " + result
+                        infoAppend(sb," For column " + (k + 1) + " got " + result
                             + " sb " + outputValues[k] + "\n");
                       }
                     }
                   } else {
-                    sb.append("Failed:  empty result set\n");
+                    infoAppend(sb,"Failed:  empty result set\n");
                     passed = false;
                   }
                   rs.close();
@@ -2923,13 +2923,13 @@ public class JDASTestcase extends JDTestcase {
               killCount++;
               if (sqlcode != -4498) {
                 synchronized (sb) {
-                  sb.append("Bad exception received\n");
+                  infoAppend(sb,"Bad exception received\n");
                   printStackTraceToStringBuffer(e, sb);
                 }
                 throw e;
               } else {
                 synchronized (sb) {
-                  sb.append("Good exception received\n");
+                  infoAppend(sb,"Good exception received\n");
                   printStackTraceToStringBuffer(e, sb);
                 }
                 // restart the transaction
@@ -2939,7 +2939,7 @@ public class JDASTestcase extends JDTestcase {
                 if (transactionCount == 0) {
 
                   minimumTransactionMilliseconds += killTime;
-                  sb.append("Minimum transaction milliseconds increased to "
+                  infoAppend(sb,"Minimum transaction milliseconds increased to "
                       + minimumTransactionMilliseconds + "\n");
                 }
                 // Start a thread to kill the connection
@@ -2958,11 +2958,11 @@ public class JDASTestcase extends JDTestcase {
         } /* while running */
         killThread.shutdown();
         killThread.join();
-        sb.append("Final killCount =" + killCount + "\n");
+        infoAppend(sb,"Final killCount =" + killCount + "\n");
         // System.out.println("Testcase done: killCount="+killCount);
         if (transactionCount == 0) {
-          sb.append("Transactions attempted = " + transactionsAttempted + "\n");
-          sb.append("Error -- no transactions completed\n");
+          infoAppend(sb,"Transactions attempted = " + transactionsAttempted + "\n");
+          infoAppend(sb,"Error -- no transactions completed\n");
           passed = false;
         } else {
           System.out.println("Transactions attempted = "
@@ -2993,7 +2993,7 @@ public class JDASTestcase extends JDTestcase {
       }
      killerConnection = testDriver_.getConnection(url_,
         systemObject_.getUserId(), encryptedPassword_);
-    sb.append("Connecting to " + url + "\n");
+    infoAppend(sb,"Connecting to " + url + "\n");
      connection = createDSConnectionFromURL(url);
     } catch (Exception e) {
       failed(e, "Unexpected Exception\n" + sb.toString());
@@ -3015,7 +3015,7 @@ public class JDASTestcase extends JDTestcase {
       }
      killerConnection = testDriver_.getConnection(url_,
         systemObject_.getUserId(), encryptedPassword_);
-    sb.append("Connecting to " + url + "\n");
+    infoAppend(sb,"Connecting to " + url + "\n");
      connection = testDriver_.getConnection(url,
         systemObject_.getUserId(), encryptedPassword_);
     } catch (Exception e) {
@@ -3025,6 +3025,23 @@ public class JDASTestcase extends JDTestcase {
     testCSTypeParameters(csTypeTransactions, csTypeParms, javaType, connection, killerConnection, killThread, runSeconds, sb);
   }
   
+  public boolean printInfo = false; 
+  public boolean propertyChecked = false; 
+  public void infoAppend(StringBuffer sb, String info) { 
+    if (!propertyChecked) { 
+      String prop = System.getProperty("com.ibm.as400.access.Trace.category"); 
+      if (prop != null ) {
+        printInfo = true; 
+      }
+      propertyChecked=true; 
+    }
+    sb.append(info); 
+    if (printInfo) {
+      System.out.print(info);
+      System.out.flush(); 
+    }
+  }
+  
   public void testCSTypeParameters(String[][] csTypeTransactions,
       String[][][][] csTypeParms, int javaType, Connection connection, Connection killerConnection,
       KillThread killThread, int runSeconds, StringBuffer sb) {
@@ -3032,10 +3049,10 @@ public class JDASTestcase extends JDTestcase {
     int killCount = 0;
     int killTime = 0; 
     boolean passed = true;
-    sb.append("Test a connection with enableClientAffinitiesList\n");
-    sb.append("Make sure the connection is re-established after it drops\n");
-    sb.append("It will be dropped randomly\n");
-    sb.append("This test uses prepared statements with type parameter markers\n");
+    infoAppend(sb,"Test a connection with enableClientAffinitiesList\n");
+    infoAppend(sb,"Make sure the connection is re-established after it drops\n");
+    infoAppend(sb,"It will be dropped randomly\n");
+    infoAppend(sb,"This test uses prepared statements with type parameter markers\n");
     int minimumTransactionMilliseconds = MINIMUM_TRANSACTION_MILLISECONDS;
 
     try {
@@ -3075,7 +3092,7 @@ public class JDASTestcase extends JDTestcase {
             try {
 
               synchronized (sb) {
-                sb.append("TC=" + transactionCount + " T=" + t + "\n");
+                infoAppend(sb,"TC=" + transactionCount + " T=" + t + "\n");
               }
               CallableStatement[] csInT = csTransactions[t];
               String[][][] parameterSets = csTypeParms[t];
@@ -3083,7 +3100,7 @@ public class JDASTestcase extends JDTestcase {
               String[][] parameterSet = parameterSets[parameterSetIndex];
               transactionsAttempted++;
               for (int j = 0; j < csInT.length; j++) {
-                sb.append(" T=" + t + " S=" + j + "\n");
+                infoAppend(sb," T=" + t + " S=" + j + "\n");
                 ParameterMetaData pmd = csInT[j].getParameterMetaData();
                 int parameterCount = pmd.getParameterCount();
                 if (parameterCount > 0) {
@@ -3139,56 +3156,56 @@ public class JDASTestcase extends JDTestcase {
                     if (parameterValue != null) {
                       switch (javaType) {
                       case JAVA_STRING:
-                        sb.append("  setString("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setString("+(k+1)+")="+parameterValue+"\n"); 
                         csInT[j].setString((k + 1), parameterValue);
                         break;
                       case JAVA_BIGDECIMAL:
-                        sb.append("  setBigDecimal("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setBigDecimal("+(k+1)+")="+parameterValue+"\n"); 
                         csInT[j].setBigDecimal((k + 1), new BigDecimal(
                             parameterValue));
                         break;
                       case JAVA_FLOAT:
-                        sb.append("  setFloat("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setFloat("+(k+1)+")="+parameterValue+"\n"); 
                         csInT[j].setFloat((k + 1),
                             Float.parseFloat(parameterValue));
                         break;
                       case JAVA_DOUBLE:
-                        sb.append("  setDouble("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setDouble("+(k+1)+")="+parameterValue+"\n"); 
                         csInT[j].setDouble((k + 1),
                             Double.parseDouble(parameterValue));
                         break;
                       case JAVA_LONG:
-                        sb.append("  setLong("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setLong("+(k+1)+")="+parameterValue+"\n"); 
                         csInT[j].setLong((k + 1),
                             Long.parseLong(parameterValue));
                         break;
                       case JAVA_INT:
-                        sb.append("  setInt("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setInt("+(k+1)+")="+parameterValue+"\n"); 
                         csInT[j].setInt((k + 1),
                             Integer.parseInt(parameterValue));
                         break;
                       case JAVA_SHORT:
-                        sb.append("  setShort("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setShort("+(k+1)+")="+parameterValue+"\n"); 
                         csInT[j].setShort((k + 1),
                             Short.parseShort(parameterValue));
                         break;
                       case JAVA_BYTEARRAY:
-                        sb.append("  setByteArray("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setByteArray("+(k+1)+")="+parameterValue+"\n"); 
                         byte[] stuff = hexAsStringToBytes(parameterValue);
                         csInT[j].setBytes(k + 1, stuff);
                         break;
                       case JAVA_DATE:
-                        sb.append("  setDate("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setDate("+(k+1)+")="+parameterValue+"\n"); 
                         Date dateStuff = Date.valueOf(parameterValue);
                         csInT[j].setDate(k + 1, dateStuff);
                         break;
                       case JAVA_TIME:
-                        sb.append("  setTime("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setTime("+(k+1)+")="+parameterValue+"\n"); 
                         Time timeStuff = Time.valueOf(parameterValue);
                         csInT[j].setTime(k + 1, timeStuff);
                         break;
                       case JAVA_TIMESTAMP:
-                        sb.append("  setTimestamp("+(k+1)+")="+parameterValue+"\n"); 
+                        infoAppend(sb,"  setTimestamp("+(k+1)+")="+parameterValue+"\n"); 
                         Timestamp timestampStuff = Timestamp
                             .valueOf(parameterValue);
                         csInT[j].setTimestamp(k + 1, timestampStuff);
@@ -3200,7 +3217,7 @@ public class JDASTestcase extends JDTestcase {
                     }
                   }
                 }
-                sb.append("Executing:" + fixupSql(csTypeTransactions[t][j]) + "\n");
+                infoAppend(sb,"Executing:" + fixupSql(csTypeTransactions[t][j]) + "\n");
                 boolean resultSetAvailable = csInT[j].execute();
 
                 // Process output parameters
@@ -3257,7 +3274,7 @@ public class JDASTestcase extends JDTestcase {
                       }
                       if (!parameterValue.equals(outputParameter)) {
                         passed = false;
-                        sb.append(" For parameter " + (k + 1) + " got '"
+                        infoAppend(sb," For parameter " + (k + 1) + " got '"
                             + outputParameter + "'\n"
                             + "                          sb '" + parameterValue
                             + "'\n");
@@ -3314,13 +3331,13 @@ public class JDASTestcase extends JDTestcase {
 
                       if (!result.equals(outputValues[k])) {
                         passed = false;
-                        sb.append(" For column " + (k + 1) + " got '" + result
+                        infoAppend(sb," For column " + (k + 1) + " got '" + result
                             + "'\n" + "                       sb '"
                             + outputValues[k] + "'\n");
                       }
                     }
                   } else {
-                    sb.append("Failed:  empty result set\n");
+                    infoAppend(sb,"Failed:  empty result set\n");
                     passed = false;
                   }
                   rs.close();
@@ -3337,13 +3354,13 @@ public class JDASTestcase extends JDTestcase {
               killCount++;
               if (sqlcode != -4498) {
                 synchronized (sb) {
-                  sb.append("Bad exception received\n");
+                  infoAppend(sb,"Bad exception received\n");
                   printStackTraceToStringBuffer(e, sb);
                 }
                 throw e;
               } else {
                 synchronized (sb) {
-                  sb.append("Good exception received\n");
+                  infoAppend(sb,"Good exception received\n");
                   printStackTraceToStringBuffer(e, sb);
                 }
                 // restart the transaction
@@ -3370,11 +3387,11 @@ public class JDASTestcase extends JDTestcase {
         } /* while running */
         killThread.shutdown();
         killThread.join();
-        sb.append("Final killCount =" + killCount + "\n");
+        infoAppend(sb,"Final killCount =" + killCount + "\n");
         // System.out.println("Testcase done: killCount="+killCount);
         if (transactionCount == 0) {
-          sb.append("Transactions attempted = " + transactionsAttempted + "\n");
-          sb.append("Error -- no transactions completed\n");
+          infoAppend(sb,"Transactions attempted = " + transactionsAttempted + "\n");
+          infoAppend(sb,"Error -- no transactions completed\n");
           passed = false;
         } else {
           System.out.println("Transactions attempted = "

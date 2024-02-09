@@ -1780,7 +1780,9 @@ public class JDSetupProcedure {
       s.executeUpdate("DROP PROCEDURE " + stp);
       s.close();
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      if (JDCleanup.isImportantException(e)) { 
+        System.out.println(e.getMessage());
+      }
     }
   }
 
