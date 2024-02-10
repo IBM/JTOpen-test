@@ -16,8 +16,6 @@ package test;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import test.misc.ManifestTestcase;
-
 
 /**
  * Tests for the build-generated jar files and their manifests and package information.
