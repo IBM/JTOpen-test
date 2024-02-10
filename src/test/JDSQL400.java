@@ -27,6 +27,9 @@ import java.net.URLClassLoader;
 
 import javax.sql.XAConnection;
 
+import test.JD.JDTestBlob;
+import test.JD.JDTestClob;
+
 public class JDSQL400 implements Runnable {
   public static String[] usage = {
       "JDSQL400 interprets SQL commands using a JDBC connection.  ",
@@ -4943,7 +4946,7 @@ public class JDSQL400 implements Runnable {
 
   }
 
-  static void printArray(PrintWriter out, Array outArray) throws SQLException {
+  public static void printArray(PrintWriter out, Array outArray) throws SQLException {
     if (outArray == null) {
       out.print("nullArray");
     } else {
@@ -5643,7 +5646,7 @@ public class JDSQL400 implements Runnable {
     }
   }
 
-  static String getCRC32(String input) {
+  public static String getCRC32(String input) {
     int length = input.length();
     if (length > 16000000) {
       System.gc();
@@ -5881,7 +5884,7 @@ public class JDSQL400 implements Runnable {
    * Creates a native or sqlArray from TYPE:element:element... ]
    */
 
-  static Object getNativeOrSqlArray(Connection connection, String left,
+  public static Object getNativeOrSqlArray(Connection connection, String left,
       boolean returnSqlArray) throws Exception {
     Object returnArray;
     int colonIndex = left.indexOf(":");

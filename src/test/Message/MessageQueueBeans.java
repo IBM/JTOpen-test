@@ -17,8 +17,8 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.MessageQueue;
 import com.ibm.as400.access.QSYSObjectPathName;
 
-import test.TestUtilities;
 import test.Testcase;
+import test.misc.TestUtilities;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

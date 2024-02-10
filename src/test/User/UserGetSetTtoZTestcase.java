@@ -29,7 +29,6 @@ import com.ibm.as400.access.User;
 
 import test.JDTestDriver;
 import test.Testcase;
-import test.UserSandbox;
 
 /**
  Testcase UserGetSetTestcase.  This tests the get and set methods of the User class.

@@ -24,7 +24,7 @@ import com.ibm.as400.access.*;
 import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
-import test.ThreadedTestcase;
+import test.misc.ThreadedTestcase;
 
 
 class NPThreadTestcase

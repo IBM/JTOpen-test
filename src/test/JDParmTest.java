@@ -35,6 +35,27 @@ package test;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import test.JD.JDSetupCollection;
+import test.JD.Parm.JDParmStringBinary;
+import test.JD.Parm.JDParmStringChar;
+import test.JD.Parm.JDParmStringCharHex;
+import test.JD.Parm.JDParmStringClob;
+import test.JD.Parm.JDParmStringDbclob;
+import test.JD.Parm.JDParmStringDecimal;
+import test.JD.Parm.JDParmStringGraphic;
+import test.JD.Parm.JDParmStringLarge;
+import test.JD.Parm.JDParmStringMixed;
+import test.JD.Parm.JDParmStringMixed2;
+import test.JD.Parm.JDParmStringNumeric;
+import test.JD.Parm.JDParmStringVarbinary;
+import test.JD.Parm.JDParmStringVarchar;
+import test.JD.Parm.JDParmStringVarcharHex;
+import test.JD.Parm.JDParmStringVargraphic;
+import test.JD.Parm.JDParmStringVarmixed;
+import test.JD.Parm.JDParmStringVarmixed2;
+import test.JD.Parm.JDParmStringWchar;
+import test.JD.Parm.JDParmStringWvarchar;
+
 
 
 /**

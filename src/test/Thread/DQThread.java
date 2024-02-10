@@ -24,7 +24,7 @@ import com.ibm.as400.access.DataQueueEntry;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.ComponentThread;
-import test.ThreadedTestcase;
+import test.misc.ThreadedTestcase;
 
 class DQThread extends ComponentThread
 {

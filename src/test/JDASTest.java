@@ -23,6 +23,8 @@ package test;
 
 import java.sql.Connection;
 
+import test.JD.JDSetupCollection;
+
 
 
 /**

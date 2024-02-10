@@ -23,6 +23,8 @@ package test;
 
 import com.ibm.as400.access.*;
 
+import test.JD.JDSetupCollection;
+
 import java.io.FileOutputStream;
 import java.sql.*;         
 import java.util.*;

@@ -22,7 +22,6 @@ import com.ibm.as400.access.UserList;
 import com.ibm.as400.resource.ResourceException;
 
 import test.Testcase;
-import test.UserSandbox;
 import test.UserTest;
 import test.UserTest.PropertyChangeListener_;
 import test.UserTest.VetoableChangeListener_;

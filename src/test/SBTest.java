@@ -21,6 +21,8 @@ import java.io.ObjectOutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import test.misc.SBTestcase;
+
 /**
 Test driver for the Subsystem component.  
 **/

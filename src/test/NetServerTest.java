@@ -19,6 +19,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
+import test.NetServer.NetServerBeanInfoTestcase;
+import test.NetServer.NetServerConnectionTestcase;
+import test.NetServer.NetServerFileShareBeanInfoTestcase;
+import test.NetServer.NetServerFileShareTestcase;
+import test.NetServer.NetServerPrintShareBeanInfoTestcase;
+import test.NetServer.NetServerPrintShareTestcase;
+import test.NetServer.NetServerSessionTestcase;
+import test.NetServer.NetServerTestcase;
+
 /**
 Test driver for the NetServer* classes.  
 **/

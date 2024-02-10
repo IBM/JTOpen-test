@@ -19,7 +19,7 @@ import com.ibm.as400.access.*;
 
 import test.ComponentThread;
 import test.Testcase;
-import test.ThreadedTestcase;
+import test.misc.ThreadedTestcase;
 
 class PgmCallThread
   extends ComponentThread

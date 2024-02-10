@@ -45,8 +45,8 @@ import com.ibm.as400.access.JobList;
 import com.ibm.as400.access.SystemValue;
 import com.ibm.as400.access.Trace;
 
-import test.TelnetRunnable;
 import test.Testcase;
+import test.misc.TelnetRunnable;
 
 /**
  The JobUnattendedTestcase class tests the methods of Job.

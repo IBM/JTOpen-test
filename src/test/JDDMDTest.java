@@ -39,6 +39,43 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDSetupCollection;
+import test.JD.DMD.JDDMDAxx;
+import test.JD.DMD.JDDMDCCSID65535;
+import test.JD.DMD.JDDMDDxx;
+import test.JD.DMD.JDDMDGetBestRowIdentifier;
+import test.JD.DMD.JDDMDGetCatalogs;
+import test.JD.DMD.JDDMDGetColumnPrivileges;
+import test.JD.DMD.JDDMDGetColumns;
+import test.JD.DMD.JDDMDGetCrossReference;
+import test.JD.DMD.JDDMDGetExportedKeys;
+import test.JD.DMD.JDDMDGetFunctionColumns;
+import test.JD.DMD.JDDMDGetFunctions;
+import test.JD.DMD.JDDMDGetImportedKeys;
+import test.JD.DMD.JDDMDGetIndexInfo;
+import test.JD.DMD.JDDMDGetPrimaryKeys;
+import test.JD.DMD.JDDMDGetProcedureColumns;
+import test.JD.DMD.JDDMDGetProcedures;
+import test.JD.DMD.JDDMDGetPseudoColumns;
+import test.JD.DMD.JDDMDGetSchemas;
+import test.JD.DMD.JDDMDGetTablePrivileges;
+import test.JD.DMD.JDDMDGetTablePrivileges3;
+import test.JD.DMD.JDDMDGetTableTypes;
+import test.JD.DMD.JDDMDGetTables;
+import test.JD.DMD.JDDMDGetTypeInfo;
+import test.JD.DMD.JDDMDGetUDTs;
+import test.JD.DMD.JDDMDGetVersionColumns;
+import test.JD.DMD.JDDMDGetXxx;
+import test.JD.DMD.JDDMDIsXxx;
+import test.JD.DMD.JDDMDMisc;
+import test.JD.DMD.JDDMDNullXxx;
+import test.JD.DMD.JDDMDPerformance;
+import test.JD.DMD.JDDMDStoresXxx;
+import test.JD.DMD.JDDMDSupportsXxx;
+import test.JD.DMD.JDDMDUsesXxx;
+import test.JD.DMD.JDDMDWrapper;
+import test.JD.DMD.JDDMDXxxAreXxx;
+
 
 
 /**

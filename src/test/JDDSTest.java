@@ -27,6 +27,11 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.DS.JDDSGetConnection;
+import test.JD.DS.JDDSGetReference;
+import test.JD.DS.JDDSMisc;
+import test.JD.DS.JDDSProperties;
+
 
 
 /**

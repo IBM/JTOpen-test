@@ -65,6 +65,9 @@ import java.util.Vector;
 
 import com.ibm.as400.access.AS400JDBCDriver;
 
+import test.JD.DataSource.JDDatabaseOverride;
+import test.JTA.JTACleanupTx;
+
 import java.sql.*;
 
 public class JDRunit {

@@ -14,6 +14,16 @@
 package test;
 
 import com.ibm.as400.access.ProxyServer;
+
+import test.PS.PSBalanceThreshold;
+import test.PS.PSConfiguration;
+import test.PS.PSConnections;
+import test.PS.PSJdbcDrivers;
+import test.PS.PSMisc;
+import test.PS.PSPeers;
+import test.PS.PSPort;
+import test.PS.PSStart;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -118,7 +128,7 @@ Creates the testcases.
 Pings the proxy server to verify that the proxy server is
 listening to the default port.
 **/
-    static boolean ping ()
+    public static boolean ping ()
     {
         return ping (PSPort.DEFAULT_PORT);
     }
@@ -129,7 +139,7 @@ listening to the default port.
 Pings the proxy server to verify that the proxy server is
 listening to the specified port.
 **/
-    static boolean ping (int port)
+    public static boolean ping (int port)
     {
         // Connect to the proxy server.
         Socket clientSocket;
@@ -154,7 +164,7 @@ listening to the specified port.
     }
 
 
-    static boolean ping(Socket clientSocket)
+    public static boolean ping(Socket clientSocket)
     {
         // Verify that the proxy server is listening to the port.
         // We can just send a load request.

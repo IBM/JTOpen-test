@@ -22,6 +22,8 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.lang.Thread;
 
+import test.misc.ThreadedTestcase;
+
 
 public abstract class ComponentThread
   extends Thread

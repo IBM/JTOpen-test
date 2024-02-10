@@ -20,7 +20,6 @@ import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.User;
 
 import test.Testcase;
-import test.UserSandbox;
 import test.UserTest;
 
 /**

@@ -19,7 +19,6 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
-import test.UserSandbox;
 
 import com.ibm.as400.resource.RUser;
 import com.ibm.as400.resource.RUserList;

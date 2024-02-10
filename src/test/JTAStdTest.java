@@ -20,6 +20,28 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDSetupCollection;
+import test.JTA.JTAResource;
+import test.JTA.JTAResource2;
+import test.JTA.JTAStdBasic;
+import test.JTA.JTAStdBasic2;
+import test.JTA.JTAStdConn;
+import test.JTA.JTAStdConnCommit;
+import test.JTA.JTAStdConnProp;
+import test.JTA.JTAStdCrash1;
+import test.JTA.JTAStdCrash2;
+import test.JTA.JTAStdDelete;
+import test.JTA.JTAStdInsert;
+import test.JTA.JTAStdLocal;
+import test.JTA.JTAStdMisc;
+import test.JTA.JTAStdThread;
+import test.JTA.JTAStdThread2;
+import test.JTA.JTAStdTransOrder;
+import test.JTA.JTAStdUpdate;
+import test.JTA.JTATestXid;
+import test.JTA.JTATransInfo;
+import test.JTA.JTATransaction;
+
 
 /**
 Test driver for the JDBC Driver class.
@@ -172,7 +194,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 /**
 @exception Exception If an exception occurs.
 **/
-   public static TransInfo[] getTransInfo() throws Exception {
+   public static JTATransInfo[] getTransInfo() throws Exception {
       int count = -1;
       Vector v = new Vector();
       
@@ -207,7 +229,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
                    (s.indexOf("Q_UDB_JTA") != -1)) {
                   int i;
 
-                  TransInfo match = new TransInfo();
+                  JTATransInfo match = new JTATransInfo();
                   s = buf.readLine();
 
                   count++;
@@ -259,7 +281,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
          return null;
       }
       // convert the vector into a TransInfo array and return it
-      TransInfo[] tiArr = new TransInfo[v.size()];
+      JTATransInfo[] tiArr = new JTATransInfo[v.size()];
       v.copyInto(tiArr);
       return tiArr;
    }
@@ -274,13 +296,13 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 
    }
 
-   public static TestXid Crash2Xid; // Used in Crash2 test
+   public static JTATestXid Crash2Xid; // Used in Crash2 test
 
-   public static void storeXid(TestXid xid) {
+   public static void storeXid(JTATestXid xid) {
       Crash2Xid = xid;
    }
 
-   public static TestXid getXid() {
+   public static JTATestXid getXid() {
       return Crash2Xid;
    }
 

@@ -15,6 +15,8 @@ package test;
 
 import com.ibm.as400.access.SystemProperties;
 
+import test.misc.VersionSerializationMessageTestcase;
+
 /**
  Test driver for the Message components.  Refer to TestDriver for calling syntax.
  **/

@@ -18,9 +18,9 @@ import com.ibm.as400.resource.RIFSFile;
 
 import test.Testcase;
 import test.UserTest;
-import test.VIFSSandbox;
 import test.UserTest.PropertyChangeListener_;
 import test.UserTest.VetoableChangeListener_;
+import test.misc.VIFSSandbox;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;

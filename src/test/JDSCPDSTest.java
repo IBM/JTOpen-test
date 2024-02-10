@@ -35,6 +35,23 @@ package test;
 
 import java.sql.*;
 
+import test.JD.SCPDS.JDSCPDSConnectionClose;
+import test.JD.SCPDS.JDSCPDSConnectionCommit;
+import test.JD.SCPDS.JDSCPDSConnectionCreateStatement;
+import test.JD.SCPDS.JDSCPDSConnectionFormat;
+import test.JD.SCPDS.JDSCPDSConnectionLibraries;
+import test.JD.SCPDS.JDSCPDSConnectionMisc;
+import test.JD.SCPDS.JDSCPDSConnectionNaming;
+import test.JD.SCPDS.JDSCPDSConnectionNativeSQL;
+import test.JD.SCPDS.JDSCPDSConnectionReadOnly;
+import test.JD.SCPDS.JDSCPDSConnectionSort;
+import test.JD.SCPDS.JDSCPDSConnectionTransactionIsolation;
+import test.JD.SCPDS.JDSCPDSConnectionWarnings;
+import test.JD.SCPDS.JDSCPDSGetConnection;
+import test.JD.SCPDS.JDSCPDSGetReference;
+import test.JD.SCPDS.JDSCPDSMisc;
+import test.JD.SCPDS.JDSCPDSProperties;
+
 
 /**
 Test driver for the JDBC ConnectionPoolDataSource class.

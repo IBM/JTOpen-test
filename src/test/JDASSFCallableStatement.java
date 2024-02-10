@@ -39,6 +39,10 @@ import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.AS400JDBCPreparedStatement;
 import com.ibm.as400.access.AS400JDBCStatement;
 
+import test.SocketProxy.*;
+import test.socketProxy.SocketProxyPair; 
+
+
 /**
  * Testcase JDASSFPreparedStatement Test for the Statement object covers for
  * Seamless failover
@@ -81,7 +85,7 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
         String url;
 
-        transactionalSocketProxyPair = SocketProxyPair.getSocketProxyPair(8001,
+        SocketProxyPair transactionalSocketProxyPair = SocketProxyPair.getSocketProxyPair(8001,
             8010, systemName, JDASTest.AS_DATABASE);
 
         url = "jdbc:as400:localhost:"

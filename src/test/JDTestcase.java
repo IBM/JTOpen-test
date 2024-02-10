@@ -18,7 +18,7 @@ import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.AS400JDBCTimestamp;
 import com.ibm.as400.access.IFSFile;
 
-
+import test.JD.JDTestUtilities;
 
 import java.io.*;
 import java.lang.reflect.Method;
@@ -46,7 +46,7 @@ public class JDTestcase extends Testcase {
   // Common exceptions that we can expect
   //
   // Private data.
-  Connection connection_;
+  protected Connection connection_;
 
   public static String[] dataTypeMismatchExceptions = { "Data type mismatch",
       "Parameter type not valid", "Data truncation" };
@@ -96,7 +96,7 @@ public class JDTestcase extends Testcase {
   private long driverFixLevel_ = 0;
   private long driverFixDate_ = 0;
   static Object timeUnitSeconds = null;
-  boolean toolboxNative = false;
+  protected boolean toolboxNative = false;
 
   protected JDSupportedFeatures supportedFeatures_;
 
@@ -628,7 +628,7 @@ public class JDTestcase extends Testcase {
   /**
    * dumpBytes() - Utility function used to see the bytes
    **/
-  static String dumpBytes(byte[] b) {
+  protected static String dumpBytes(byte[] b) {
     String s = "";
     for (int i = 0; i < b.length; i++) {
       String ns = Integer.toHexString(((int) b[i]) & 0xFF);
@@ -731,12 +731,12 @@ public class JDTestcase extends Testcase {
   /**
    * Compares an InputString with a String representing the bytes
    */
-  boolean compare(InputStream i, String s, StringBuffer sb) {
+  protected boolean compare(InputStream i, String s, StringBuffer sb) {
 
     return compare(i, hexAsStringToBytes(s), sb);
   }
 
-  byte hexDigit(char a) throws NumberFormatException {
+  protected byte hexDigit(char a) throws NumberFormatException {
     if (a >= '0' && a <= '9') {
       return (byte) (a - '0');
     } else if (a >= 'a' && a <= 'f') {
@@ -747,7 +747,7 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  byte hexDigits(char a, char b) throws NumberFormatException {
+  protected byte hexDigits(char a, char b) throws NumberFormatException {
     try {
       return (byte) (16 * hexDigit(a) + hexDigit(b));
     } catch (NumberFormatException nfe) {
@@ -757,7 +757,7 @@ public class JDTestcase extends Testcase {
 
   }
 
-  byte[] hexAsStringToBytes(String s) throws NumberFormatException {
+  protected byte[] hexAsStringToBytes(String s) throws NumberFormatException {
     try {
       int length = s.length() / 2;
       byte[] output = new byte[length];
@@ -994,7 +994,7 @@ public class JDTestcase extends Testcase {
   /**
    * Compares a Blob with a byte[].
    **/
-  boolean compare(Blob i, byte[] b, StringBuffer sb) throws SQLException {
+  protected boolean compare(Blob i, byte[] b, StringBuffer sb) throws SQLException {
     if (i == null) {
       if (b != null) {
         sb.append("BLOB is null");
@@ -1017,7 +1017,7 @@ public class JDTestcase extends Testcase {
   /**
    * Compares a Blob with a String.
    **/
-  boolean compare(Blob i, String b, StringBuffer sb) throws SQLException {
+  protected boolean compare(Blob i, String b, StringBuffer sb) throws SQLException {
     byte[] iBytes = i.getBytes(1, (int) i.length()); 
     return compare(iBytes, b, sb);
   }
@@ -1025,7 +1025,7 @@ public class JDTestcase extends Testcase {
   /**
    * Compares a byte array with a string
    */
-  boolean compare(byte[] ba, String expectedValue, StringBuffer sb) {
+  protected boolean compare(byte[] ba, String expectedValue, StringBuffer sb) {
     String returnString = "NULL";
     if (ba != null) {
       returnString = bytesToString(ba);
@@ -1450,7 +1450,7 @@ public class JDTestcase extends Testcase {
   /**
    * Return the "minor version" for the Toolbox JDBC driver.
    **/
-  static int getToolboxDriverMinorVersion() {
+  protected static int getToolboxDriverMinorVersion() {
     if (toolboxDriverMinorVersion_ == 0) {
       String specVersion = getToolboxSpecificationVersion(); // e.g. "6.1.0.4"
       String finalDigit = specVersion
@@ -2333,7 +2333,7 @@ public class JDTestcase extends Testcase {
     return answer;
   }
 
-  boolean verifyRsmd(ResultSetMetaData rsmd, String[][] methodTests,
+  protected boolean verifyRsmd(ResultSetMetaData rsmd, String[][] methodTests,
       String catalog1, int j, StringBuffer message, StringBuffer prime)
       throws SQLException {
     boolean passed = true;
@@ -2882,15 +2882,15 @@ public class JDTestcase extends Testcase {
       "STATEMENT CLOSED", "Invalid operation: statement closed", /* JCC */
   };
 
-  void assertClosedException(Exception e, StringBuffer sb) {
+  public void assertClosedException(Exception e, StringBuffer sb) {
     assertExceptionContains(e, expectedClosedExceptions, sb.toString());
   }
 
-  void assertClosedException(Exception e, String info) {
+  public void assertClosedException(Exception e, String info) {
     assertExceptionContains(e, expectedClosedExceptions, info);
   }
 
-  boolean checkClosedException(Exception e, StringBuffer sb) {
+  public boolean checkClosedException(Exception e, StringBuffer sb) {
     String exceptionMessage = e.toString();
     StringBuffer messagesText = new StringBuffer();
     for (int i = 0; i < expectedClosedExceptions.length; i++) {
@@ -2913,7 +2913,7 @@ public class JDTestcase extends Testcase {
 
   }
 
-  Connection cleanupConnection(Connection connection) throws SQLException {
+  protected Connection cleanupConnection(Connection connection) throws SQLException {
 
     Statement stmt = connection.createStatement();
     stmt.execute("CALL QSYS2.QCMDEXC('CHGJOB LOG(4 00 *NOLIST)')");
@@ -3101,7 +3101,7 @@ public class JDTestcase extends Testcase {
   /* check if the exception is an inuse exception */
   /* If so, gather information about why it is in use */
 
-  static void checkInUse(Exception e, Statement stmt) {
+  public static void checkInUse(Exception e, Statement stmt) {
     String message = e.toString().toUpperCase();
     if (message.indexOf("IN USE") > 0) {
       String library = null;
@@ -3226,7 +3226,7 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  void cleanupBindings(String userid, char[] encryptedPassword) {
+  public void cleanupBindings(String userid, char[] encryptedPassword) {
     if (checkClientOn400()) {
       // Use the authority of the userid/password to delete the files
       char[] passwordChars =  PasswordVault.decryptPassword(encryptedPassword);
@@ -3252,7 +3252,7 @@ public class JDTestcase extends Testcase {
 
   }
 
-  void rebindContext(Context ctx, String bindName, Object obj)
+  public void rebindContext(Context ctx, String bindName, Object obj)
       throws NamingException {
     try {
       ctx.rebind(bindName, obj);
@@ -3275,7 +3275,7 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  static void initTable(Statement s, String tableName, String tableDefinition)
+  public static void initTable(Statement s, String tableName, String tableDefinition)
       throws SQLException {
     StringBuffer sb = new StringBuffer();
     try {
@@ -3287,12 +3287,12 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  static void initTable(Statement s, String tableName, String tableDefinition,
+  public static void initTable(Statement s, String tableName, String tableDefinition,
       StringBuffer sb) throws SQLException {
     JDTestDriver.initTable(s, tableName, tableDefinition, sb);
   }
 
-  static void initTrigger(Statement s, String triggerName,
+  public static void initTrigger(Statement s, String triggerName,
       String triggerDefinition) throws SQLException {
     StringBuffer sb = new StringBuffer();
     try {
@@ -3304,12 +3304,12 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  void cleanupTable(Statement s, String tableName) {
+  public void cleanupTable(Statement s, String tableName) {
     testDriver_.cleanupTable(s, tableName);
 
   }
 
-  void cleanupTrigger(Statement s, String triggerName) {
+  public void cleanupTrigger(Statement s, String triggerName) {
     testDriver_.cleanupTrigger(s, triggerName);
   }
 

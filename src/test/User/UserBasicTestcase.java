@@ -21,7 +21,6 @@ import com.ibm.as400.access.User;
 import com.ibm.as400.resource.RUser;
 
 import test.Testcase;
-import test.UserSandbox;
 import test.UserTest;
 import test.UserTest.PropertyChangeListener_;
 import test.UserTest.VetoableChangeListener_;

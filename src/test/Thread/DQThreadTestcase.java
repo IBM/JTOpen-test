@@ -22,7 +22,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Trace;
 
-import test.ThreadedTestcase;
+import test.misc.ThreadedTestcase;
 
 import com.ibm.as400.access.DataQueue;
 import com.ibm.as400.access.KeyedDataQueue;

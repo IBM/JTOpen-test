@@ -15,6 +15,27 @@ package test;
 
 import java.sql.*;
 import java.util.*;
+
+import test.JD.JDSetupCollection;
+import test.JTA.JTABasic;
+import test.JTA.JTABasic2;
+import test.JTA.JTAConn;
+import test.JTA.JTAConnCommit;
+import test.JTA.JTAConnProp;
+import test.JTA.JTACrash1;
+import test.JTA.JTACrash2;
+import test.JTA.JTADMDGetXxx;
+import test.JTA.JTADelete;
+import test.JTA.JTAInsert;
+import test.JTA.JTALocal;
+import test.JTA.JTAMisc;
+import test.JTA.JTATestXid;
+import test.JTA.JTAThread;
+import test.JTA.JTAThread2;
+import test.JTA.JTATransInfo;
+import test.JTA.JTATransOrder;
+import test.JTA.JTAUpdate;
+
 import java.io.*;
 
 
@@ -27,10 +48,10 @@ public class JTATest
    /**
    * 
    */
-  private static final long serialVersionUID = 1L;
+  public  static final long serialVersionUID = 1L;
   public static  String DEFAULT_COLLECTION1 = "JTATESTCO";
    public static  String COLLECTION     = DEFAULT_COLLECTION1; 
-   static boolean verbose = false; // turn off verbose output for JTA tests
+   public static boolean verbose = false; // turn off verbose output for JTA tests
    public static StringBuffer verboseOutput = new StringBuffer();
 
    static {
@@ -70,7 +91,7 @@ from the test driver's main().
    {
        if (args.length >= 1 && args[0].equals("getTransInfo")) {
 	   System.out.println("running getTransInfo");
-	   TransInfo[] transInfo = getTransInfo();
+	   JTATransInfo[] transInfo = getTransInfo();
 	   if (transInfo == null) { 
 	       System.out.println("transInfo returned null ");
 	   } else {
@@ -155,7 +176,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 
 
 
-   protected static void verboseOut(String printThis) {
+   public static void verboseOut(String printThis) {
        verboseOutput.append(printThis);
        verboseOutput.append("\n");
 
@@ -163,7 +184,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
          System.out.println(printThis);
    }
 
-   static String getVerboseOut() {
+   public static String getVerboseOut() {
        String returnString =  verboseOutput.toString();
 
        verboseOutput.setLength(0);
@@ -171,7 +192,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
        return returnString; 
    }
 
-   static void resetVerboseOut() {
+   public static void resetVerboseOut() {
        verboseOutput.setLength(0);
    }
 
@@ -179,7 +200,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 /**
 @exception Exception If an exception occurs.
 **/
-   protected static void crtTmpTbl(String table, Connection c) throws Exception {
+   public static void crtTmpTbl(String table, Connection c) throws Exception {
       Statement s = c.createStatement();
 
       try {
@@ -194,7 +215,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 /**
 @exception Exception If an exception occurs.
 **/
-   protected static void dltTmpTbl(String table, Connection c) throws Exception {
+   public  static void dltTmpTbl(String table, Connection c) throws Exception {
       Statement s = c.createStatement();
       s.execute("DROP TABLE " + table);
       s.close();
@@ -203,7 +224,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 /**
 @exception Exception If an exception occurs.
 **/
-   public static TransInfo[] getTransInfo() throws Exception {
+   public static JTATransInfo[] getTransInfo() throws Exception {
       int count = -1;
       Vector v = new Vector();
       String [] cmdA = new String[2];
@@ -261,7 +282,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
                    (s.indexOf("Q_UDB_JTA") != -1)) {
                   int i;
 
-                  TransInfo match = new TransInfo();
+                  JTATransInfo match = new JTATransInfo();
                   s = buf.readLine();
 
                   count++;
@@ -364,7 +385,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
          return null;
       }
       // convert the vector into a TransInfo array and return it
-      TransInfo[] tiArr = new TransInfo[v.size()];
+      JTATransInfo[] tiArr = new JTATransInfo[v.size()];
       v.copyInto(tiArr);
       return tiArr;
    }
@@ -379,13 +400,13 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 
    }
 
-   public static TestXid Crash2Xid; // Used in Crash2 test
+   public static JTATestXid Crash2Xid; // Used in Crash2 test
 
-   public static void storeXid(TestXid xid) {
+   public static void storeXid(JTATestXid xid) {
       Crash2Xid = xid;
    }
 
-   public static TestXid getXid() {
+   public static JTATestXid getXid() {
       return Crash2Xid;
    }
 

@@ -99,6 +99,7 @@ import test.UserSpace.UserSpaceCrtDltTestcase;
 import test.UserSpace.UserSpacePgmCallTestcase;
 import test.UserSpace.UserSpaceReadTestcase;
 import test.UserSpace.UserSpaceWriteTestcase;
+import test.misc.TraceMiscTestcase;
 
 
 

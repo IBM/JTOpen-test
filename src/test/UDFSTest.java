@@ -13,6 +13,8 @@
 
 package test;
 
+import test.misc.UDFSTestcase;
+
 /**
  Test driver for the UDFS object and associated classes.  Refer to TestDriver for calling syntax.
  **/

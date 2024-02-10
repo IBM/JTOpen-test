@@ -159,9 +159,9 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   protected boolean mustUseSockets_ = false;
   protected AS400 pwrSys_ = null;
   protected static AS400 pwrSysStatic_ = null;
-  protected String pwrSysUserID_ = null;
+  public String pwrSysUserID_ = null;
   protected String pwrSysPassword_ = null;
-  protected char[] pwrSysEncryptedPassword_ = null;
+  public char[] pwrSysEncryptedPassword_ = null;
   protected boolean noThreads_ = false;
   protected String mappedDrive_ = null;
   protected String printer_ = null;

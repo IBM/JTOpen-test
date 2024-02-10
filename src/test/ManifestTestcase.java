@@ -14,15 +14,18 @@
 package test;
 
 import com.ibm.as400.access.AS400;
+
 import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.util.Vector;
+
 
 /**
  * Testcase ManifestTestcase.
  *
  * Test variations for the build-generated jar files and their manifests.
  **/
+
 public class ManifestTestcase extends Testcase
 {
   /**

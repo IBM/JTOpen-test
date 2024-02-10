@@ -29,6 +29,8 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDSetupCollection;
+
 /**
 Test driver for the JDBC SavePoints class.
 **/

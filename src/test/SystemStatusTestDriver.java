@@ -13,6 +13,11 @@
 
 package test;
 
+import test.SystemStatus.SystemPoolBeanInfoUnattendedTestcase;
+import test.SystemStatus.SystemPoolUnattendedTestcase;
+import test.SystemStatus.SystemStatusBeanInfoUnattendedTestcase;
+import test.SystemStatus.SystemStatusUnattendedTestcase;
+
 /**
  The SystemStatusTestDriver class provides the test driver for the testcase files.
  <p>The test driver contains ten testcase files :

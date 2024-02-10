@@ -14,6 +14,9 @@
 package test;
 
 import java.sql.*;
+
+import test.JD.JDSetupCollection;
+
 import java.io.*;
 
 /**

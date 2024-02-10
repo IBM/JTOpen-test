@@ -24,6 +24,8 @@ import java.sql.Timestamp;
 import java.util.Hashtable;
 import java.util.Set;
 
+import test.JTA.JTACleanupTx;
+
 public class JDSchedulerRunnable implements Runnable {
 
   PrintStream out;

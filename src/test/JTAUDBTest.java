@@ -15,6 +15,29 @@ package test;
 
 import java.sql.*;
 import java.util.*;
+
+import test.JD.JDSetupCollection;
+import test.JTA.JTATestXid;
+import test.JTA.JTATransInfo;
+import test.JTA.JTAUDBBasic;
+import test.JTA.JTAUDBBasic2;
+import test.JTA.JTAUDBConn;
+import test.JTA.JTAUDBConnCommit;
+import test.JTA.JTAUDBConnProp;
+import test.JTA.JTAUDBCrash1;
+import test.JTA.JTAUDBCrash2;
+import test.JTA.JTAUDBDelete;
+import test.JTA.JTAUDBIasp;
+import test.JTA.JTAUDBInsert;
+import test.JTA.JTAUDBLocal;
+import test.JTA.JTAUDBMisc;
+import test.JTA.JTAUDBResource;
+import test.JTA.JTAUDBResource2;
+import test.JTA.JTAUDBThread;
+import test.JTA.JTAUDBThread2;
+import test.JTA.JTAUDBTransOrder;
+import test.JTA.JTAUDBUpdate;
+
 import java.io.*;
 
 
@@ -179,7 +202,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 /**
 @exception Exception If an exception occurs.
 **/
-   public static TransInfo[] getTransInfo() throws Exception {
+   public static JTATransInfo[] getTransInfo() throws Exception {
       int count = -1;
       Vector v = new Vector();
 
@@ -214,7 +237,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
                    (s.indexOf("Q_UDB_JTA") != -1)) {
                   int i;
 
-                  TransInfo match = new TransInfo();
+                  JTATransInfo match = new JTATransInfo();
                   s = buf.readLine();
 
                   count++;
@@ -273,7 +296,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
          return null;
       }
       // convert the vector into a TransInfo array and return it
-      TransInfo[] tiArr = new TransInfo[v.size()];
+      JTATransInfo[] tiArr = new JTATransInfo[v.size()];
       v.copyInto(tiArr);
       return tiArr;
    }
@@ -288,13 +311,13 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 
    }
 
-   public static TestXid Crash2Xid; // Used in Crash2 test
+   public static JTATestXid Crash2Xid; // Used in Crash2 test
 
-   public static void storeXid(TestXid xid) {
+   public static void storeXid(JTATestXid xid) {
       Crash2Xid = xid;
    }
 
-   public static TestXid getXid() {
+   public static JTATestXid getXid() {
       return Crash2Xid;
    }
 
