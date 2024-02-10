@@ -36,6 +36,31 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDSetupCollection;
+import test.JD.RSMD.JDRSMDGetCatalogName;
+import test.JD.RSMD.JDRSMDGetColumnClassName;
+import test.JD.RSMD.JDRSMDGetColumnCount;
+import test.JD.RSMD.JDRSMDGetColumnDisplaySize;
+import test.JD.RSMD.JDRSMDGetColumnLabel;
+import test.JD.RSMD.JDRSMDGetColumnName;
+import test.JD.RSMD.JDRSMDGetColumnType;
+import test.JD.RSMD.JDRSMDGetColumnTypeName;
+import test.JD.RSMD.JDRSMDGetPrecision;
+import test.JD.RSMD.JDRSMDGetScale;
+import test.JD.RSMD.JDRSMDGetSchemaName;
+import test.JD.RSMD.JDRSMDGetTableName;
+import test.JD.RSMD.JDRSMDIsAutoIncrement;
+import test.JD.RSMD.JDRSMDIsCaseSensitive;
+import test.JD.RSMD.JDRSMDIsCurrency;
+import test.JD.RSMD.JDRSMDIsDefinitelyWritable;
+import test.JD.RSMD.JDRSMDIsNullable;
+import test.JD.RSMD.JDRSMDIsReadOnly;
+import test.JD.RSMD.JDRSMDIsSearchable;
+import test.JD.RSMD.JDRSMDIsSigned;
+import test.JD.RSMD.JDRSMDIsWritable;
+import test.JD.RSMD.JDRSMDMisc;
+import test.JD.RSMD.JDRSMDWrapper;
+
 
 
 /**

@@ -1,0 +1,94 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// Filename:  JDPSBatchNative.java
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+//
+//
+//
+//
+//
+////////////////////////////////////////////////////////////////////////
+//
+// File Name:    JDPSBatchNative.java
+//
+// Classes:      JDPSBatchNatvie 
+//
+////////////////////////////////////////////////////////////////////////
+//
+//
+//
+////////////////////////////////////////////////////////////////////////
+
+package test.JD.PS;
+
+import com.ibm.as400.access.AS400;
+
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+
+
+
+/**
+Testcase JDPSBatchNative.  This is the same test as JDPSBatch.java, but runs with the
+native property "use block insert" set, if the native driver is used.
+**/
+public class JDPSBatchNative
+extends JDPSBatch {
+
+/**
+Constructor.
+**/
+    public JDPSBatchNative (AS400 systemObject,
+                      Hashtable namesAndVars,
+                      int runMode,
+                      FileOutputStream fileOutputStream,
+                      
+                      String password)
+    {
+        super (systemObject, "JDPSBatchNative",
+               namesAndVars, runMode, fileOutputStream,
+               password);
+	useBlockInsert = true;						// @A1
+    }
+
+
+
+/**
+Performs setup needed before running variations.
+
+@exception Exception If an exception occurs.
+**/
+    protected void setup ()
+    throws Exception
+    {
+
+	baseURL_ += ";use block insert=true";	// @A2
+	super.setup();
+/*						   @A2
+
+        // reset connection and set "use block insert" property 
+        String url = baseURL_;
+        connection_ = testDriver_.getConnection (url+";use block insert=true", userId_, encryptedPassword_);
+        //connection_.setAutoCommit(true); // for xa
+*/						// @A2
+    }
+
+
+//
+// All remaining testcases are inherited --- Yea...
+// 
+
+}
+
+
+

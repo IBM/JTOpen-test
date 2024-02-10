@@ -53,6 +53,9 @@ import com.ibm.as400.access.ObjectDescription;
 import com.ibm.as400.access.ObjectLockListEntry;
 import com.ibm.as400.access.QueuedMessage;
 import com.ibm.as400.access.ReturnCodeException;
+
+import test.JD.JDTestUtilities;
+
 import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
 import com.ibm.as400.access.CharConverter;
@@ -159,7 +162,7 @@ public abstract class Testcase {
   protected boolean skipCleanup;
   private String lockDtaaraName_;
 
-  static boolean debug = false;
+  protected static boolean debug = false;
   
   // Constant used in stringToBytes()
   // Note that 0x11 is "undefined".
@@ -1452,7 +1455,7 @@ public abstract class Testcase {
   public static String getResource(String key) {
     if (resources_ == null) {
       try {
-        resources_ = ResourceBundle.getBundle("test.TestMRI");
+        resources_ = ResourceBundle.getBundle("test.mri.TestMRI");
       } catch (Throwable e) {
         System.out
             .println("Caught a MissingResourceException after getBundle.");
@@ -2428,7 +2431,7 @@ public abstract class Testcase {
     ++currentVariation_;
   }
 
-  static final String inputStreamToString(InputStream in) throws Exception {
+  public static final String inputStreamToString(InputStream in) throws Exception {
     byte[] buffer = new byte[1024];
     StringBuffer sb = new StringBuffer();
     int bytesRead;
@@ -2442,7 +2445,7 @@ public abstract class Testcase {
     return sb.toString();
   }
 
-  static final String readerToString(Reader reader) throws Exception {
+  public static final String readerToString(Reader reader) throws Exception {
     StringBuffer sb = new StringBuffer();
     char[] buffer = new char[1024];
     int charsRead;
@@ -2457,7 +2460,7 @@ public abstract class Testcase {
   }
 
   
-  static final String bytesToString(final byte[] b) {
+  public  static final String bytesToString(final byte[] b) {
     if (b == null)
       return "null";
     return bytesToString(b, 0, b.length);
@@ -2475,7 +2478,7 @@ public abstract class Testcase {
   
   // Helper method to convert a byte array into its hex string representation.
   // This is faster than calling Integer.toHexString(...)
-  static final int bytesToString(final byte[] b, int offset, int length,
+  public static final int bytesToString(final byte[] b, int offset, int length,
       final char[] c, int coffset) {
     for (int i = 0; i < length; ++i) {
       final int j = i * 2;
@@ -2492,7 +2495,7 @@ public abstract class Testcase {
   // number
   // For example A becomes 65
   // @return the String array in Decimal
-  static final byte[] stringToAsciiDecimal(String s, int length) {
+  public static final byte[] stringToAsciiDecimal(String s, int length) {
     // Convert the String to a character array to process each ASCII character
     char[] b = s.toCharArray();
     // Each ASCII character is two digits when converted to DECIMAL
@@ -2525,7 +2528,7 @@ public abstract class Testcase {
   }
 
   
-  static final byte[] stringToBytes(char[] hex, int offset, int length) {
+  public static final byte[] stringToBytes(char[] hex, int offset, int length) {
     if (hex.length == 0)
       return new byte[0];
     byte[] buf = new byte[length / 2];
@@ -2540,7 +2543,7 @@ public abstract class Testcase {
 
   
   // Helper method to convert a String in hex into its corresponding byte array.
-  static final int stringToBytes(char[] hex, int offset, int length,
+  public static final int stringToBytes(char[] hex, int offset, int length,
       final byte[] b, int boff) {
     if (hex.length == 0)
       return 0;
@@ -2573,11 +2576,11 @@ public abstract class Testcase {
     return b.length;
   }
 
-  boolean isProxy() {
+  protected boolean isProxy() {
     return (proxy_ != null && (!proxy_.equals("")));
   }
 
-  void validateCheckdir() {
+  protected void validateCheckdir() {
     File directory = new File(CHECKDIR);
     if (!directory.exists()) {
       directory.mkdirs();
@@ -2598,7 +2601,7 @@ public abstract class Testcase {
   // All test that use checkLongRunning should also use finishLongRunning to
   // indicate if the test passed or failed.
 
-  boolean checkLongRunning(String testname, int variation, int probability,
+  public boolean checkLongRunning(String testname, int variation, int probability,
       int ageInDays) {
     validateCheckdir();
     File checkFile = new File(CHECKDIR + "/" + testname + "." + variation
@@ -2639,7 +2642,7 @@ public abstract class Testcase {
   
   // Check to make sure the tests is not on a group test System
   static String hostname = null; 
-  boolean isNotGroupTest() { 
+  public boolean isNotGroupTest() { 
     if (hostname == null) { 
       try { 
       hostname = JDHostName.getHostName().toUpperCase();
@@ -2669,7 +2672,7 @@ public abstract class Testcase {
     }  
   }
   
-  void createFile(File file) {
+  public void createFile(File file) {
     try {
       FileOutputStream fos = new FileOutputStream(file);
       fos.write(0xeb);
@@ -2681,7 +2684,7 @@ public abstract class Testcase {
 
   }
 
-  void finishLongRunning(String testname, int variation, boolean passed) {
+  public void finishLongRunning(String testname, int variation, boolean passed) {
     validateCheckdir();
     File checkFile = new File(CHECKDIR + "/" + testname + "." + variation
         + ".failed");

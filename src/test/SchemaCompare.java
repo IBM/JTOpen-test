@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import test.misc.TableCompare;
+
 public class SchemaCompare {
   public static void usage() {
     System.out.println("Usage: SchemaCompare <jdbcurl> <remoteRDB> <schema>");

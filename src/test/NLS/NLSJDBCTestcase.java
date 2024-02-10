@@ -38,12 +38,12 @@ import java.util.Hashtable;
 import java.util.Properties;
 
 import test.JDLobTest;
-import test.JDSetupCollection;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.NLSTest;
 import test.PasswordVault;
+import test.JD.JDSetupCollection;
 import test.JDLobTest.JDTestClob;
 
 

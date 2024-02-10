@@ -22,7 +22,6 @@ import com.ibm.as400.resource.ResourceListEvent;
 import com.ibm.as400.resource.ResourceListListener;
 
 import test.Testcase;
-import test.UserSandbox;
 import test.UserTest;
 import test.UserTest.PropertyChangeListener_;
 import test.UserTest.ResourceListListener_;

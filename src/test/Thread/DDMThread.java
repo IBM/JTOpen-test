@@ -18,9 +18,9 @@ import java.io.PrintWriter;
 import com.ibm.as400.access.*;
 
 import test.ComponentThread;
-import test.ThreadedTestcase;
 import test.DDM.DDMChar10KeyFormat;
 import test.DDM.DDMChar10NoKeyFormat;
+import test.misc.ThreadedTestcase;
 
 import java.util.*;
 import java.io.*;

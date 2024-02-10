@@ -20,6 +20,8 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.Statement.JDStatementListener;
+
 
 /**
 Test driver for the JDBC Statement Listener class.

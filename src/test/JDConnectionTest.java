@@ -28,6 +28,40 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDSetupCollection;
+import test.JD.Connection.JDConnectionAbort;
+import test.JD.Connection.JDConnectionCCSID;
+import test.JD.Connection.JDConnectionCharacterTruncation;
+import test.JD.Connection.JDConnectionClientInfo;
+import test.JD.Connection.JDConnectionClose;
+import test.JD.Connection.JDConnectionClose10;
+import test.JD.Connection.JDConnectionClose11;
+import test.JD.Connection.JDConnectionClose12;
+import test.JD.Connection.JDConnectionClose13;
+import test.JD.Connection.JDConnectionCommit;
+import test.JD.Connection.JDConnectionCreateArrayOf;
+import test.JD.Connection.JDConnectionCreateStatement;
+import test.JD.Connection.JDConnectionCreateXXX;
+import test.JD.Connection.JDConnectionCursorHold;
+import test.JD.Connection.JDConnectionCursorHoldability;
+import test.JD.Connection.JDConnectionDecfloatRoundingMode;
+import test.JD.Connection.JDConnectionFormat;
+import test.JD.Connection.JDConnectionLibraries;
+import test.JD.Connection.JDConnectionMisc;
+import test.JD.Connection.JDConnectionNaming;
+import test.JD.Connection.JDConnectionNativeSQL;
+import test.JD.Connection.JDConnectionNetworkTimeout;
+import test.JD.Connection.JDConnectionNumericRangeError;
+import test.JD.Connection.JDConnectionQueryRplParm;
+import test.JD.Connection.JDConnectionReadOnly;
+import test.JD.Connection.JDConnectionSchema;
+import test.JD.Connection.JDConnectionSort;
+import test.JD.Connection.JDConnectionStress;
+import test.JD.Connection.JDConnectionTransactionIsolation;
+import test.JD.Connection.JDConnectionTranslateHex;
+import test.JD.Connection.JDConnectionWarnings;
+import test.JD.Connection.JDConnectionWrapper;
+
 
 
 /**

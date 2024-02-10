@@ -24,6 +24,11 @@ package test;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import test.JD.JDSetupCollection;
+import test.JD.BU.JDBUPSArray;
+import test.JD.BU.JDBUPSFunctional;
+import test.JD.BU.JDBUStatementArray;
+
 
 
 /**

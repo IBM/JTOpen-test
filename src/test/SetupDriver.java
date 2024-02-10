@@ -14,6 +14,14 @@
 package test;
 
 import java.util.Vector;
+
+import test.Setup.SetupJobLog;
+import test.Setup.SetupNLS;
+import test.Setup.SetupNetworkPrint;
+import test.Setup.SetupPgmCall;
+import test.Setup.SetupRFML;
+import test.Setup.SetupRLA;
+
 import java.util.Enumeration;
 
 /**

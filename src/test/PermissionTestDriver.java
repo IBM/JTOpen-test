@@ -16,6 +16,11 @@ package test;
 import java.io.IOException;
 import java.util.Enumeration;
 import test.TestDriver;
+import test.Permission.PermissionDLOUnattendedTestcase;
+import test.Permission.PermissionQSYSUnattendedTestcase;
+import test.Permission.PermissionRootUnattendedTestcase;
+import test.Permission.PermissionUnattendedTestcase;
+
 import com.ibm.as400.access.*;
 
 /**
@@ -33,7 +38,7 @@ To run the ATTENDED testcases for the Permission component, use PermissionAttend
 **/
 public class PermissionTestDriver extends  TestDriver
 {
-      static AS400 PwrSys = null;
+      public static AS400 PwrSys = null;
       private CommandCall cmd= null;
 /**
 Main for running standalone application tests.

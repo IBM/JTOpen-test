@@ -21,6 +21,8 @@ import java.io.ObjectOutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import test.misc.SFTestcase;
+
 /**
 Test driver for the SaveFile* classes.  
 **/

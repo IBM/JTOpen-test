@@ -29,6 +29,13 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDSetupCollection;
+import test.JD.XML.JDXMLBlob;
+import test.JD.XML.JDXMLBlobLocator;
+import test.JD.XML.JDXMLClob;
+import test.JD.XML.JDXMLClobLocator;
+import test.JD.XML.JDXMLXML;
+
 
 
 /**

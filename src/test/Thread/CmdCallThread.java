@@ -22,7 +22,7 @@ import com.ibm.as400.access.CommandCall;
 
 import test.ComponentThread;
 import test.Testcase;
-import test.ThreadedTestcase;
+import test.misc.ThreadedTestcase;
 
 class CmdCallThread extends ComponentThread
 {

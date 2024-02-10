@@ -13,6 +13,8 @@
 
 package test;
 
+import test.misc.ToolboxTestcase;
+
 /**
  Test driver for the FileAttributes class.
  **/

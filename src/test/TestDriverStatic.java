@@ -69,9 +69,9 @@ public class TestDriverStatic
     }
     public static boolean brief_ = false;
     protected static int duration_ = 0;  // number of seconds to run
-    static boolean pause_ = false;
-    private static String implementationVersion_ = null;
-    private static String specificationVersion_ = null;
+    public static boolean pause_ = false;
+    public  static String implementationVersion_ = null;
+    public  static String specificationVersion_ = null;
     protected static boolean servlet_ = false;
     static boolean systemExitDisabled_ = false;
 

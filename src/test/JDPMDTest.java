@@ -41,6 +41,19 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDSetupCollection;
+import test.JD.PMD.JDPMDGetDB2ParameterName;
+import test.JD.PMD.JDPMDGetDirection;
+import test.JD.PMD.JDPMDGetParameterClassName;
+import test.JD.PMD.JDPMDGetParameterCount;
+import test.JD.PMD.JDPMDGetParameterType;
+import test.JD.PMD.JDPMDGetParameterTypeName;
+import test.JD.PMD.JDPMDGetPrecision;
+import test.JD.PMD.JDPMDGetScale;
+import test.JD.PMD.JDPMDIsNullable;
+import test.JD.PMD.JDPMDIsSigned;
+import test.JD.PMD.JDPMDWrapper;
+
 /**
 Test driver for the JDBC ParameterMetaData class.
 **/
@@ -341,7 +354,7 @@ Creates the testcases.
 This method returns a prepared statement or a callable statement that is the 
 right format for the various tests of the ParameterMetaData test bucket.
 **/
-    static PreparedStatement getStatement(int stmt, Connection connection_, JDSupportedFeatures supportedFeatures) 
+    public static PreparedStatement getStatement(int stmt, Connection connection_, JDSupportedFeatures supportedFeatures) 
     throws Exception
     {
         PreparedStatement ps = null;

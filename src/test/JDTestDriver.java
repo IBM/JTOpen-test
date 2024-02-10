@@ -1055,7 +1055,7 @@ public abstract class JDTestDriver extends TestDriver {
     return getConnection(url, (String) null);
   }
 
-  String fixupUrl(String url) {
+  public String fixupUrl(String url) {
     if ((subDriver_ == SUBDRIVER_JTOPENCA)
         || (subDriver_ == SUBDRIVER_JTOPENSF)) {
       int enableClientAffinitiesIndex = url
@@ -1780,12 +1780,12 @@ public abstract class JDTestDriver extends TestDriver {
 
   static Hashtable<String, String> tableDefinitions = new Hashtable<String, String>();
 
-  static void initTable(Statement s, String tableName, String tableDefinition)
+  protected static void initTable(Statement s, String tableName, String tableDefinition)
       throws SQLException {
     initTable(s, tableName, tableDefinition, null);
   }
 
-  static void initTable(Statement s, String tableName, String tableDefinition,
+  protected static void initTable(Statement s, String tableName, String tableDefinition,
       StringBuffer sb) throws SQLException {
     tableDefinition = tableDefinition.trim();
     String oldDefinition = (String) tableDefinitions.get(tableName);
@@ -1839,7 +1839,7 @@ public abstract class JDTestDriver extends TestDriver {
     }
   }
 
-  void cleanupTable(Statement s, String tableName) {
+  protected void cleanupTable(Statement s, String tableName) {
     if (!skipCleanup) {
       try {
         s.executeUpdate("DROP TABLE " + tableName);

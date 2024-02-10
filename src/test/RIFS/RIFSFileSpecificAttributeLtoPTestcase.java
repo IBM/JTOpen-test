@@ -21,7 +21,7 @@ import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
-import test.VIFSSandbox;
+import test.misc.VIFSSandbox;
 
 import com.ibm.as400.resource.RIFSFile;
 

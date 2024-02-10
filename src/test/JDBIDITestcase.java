@@ -23,11 +23,11 @@ public class JDBIDITestcase extends JDTestcase {
   // Private data.
   // private Connection connection_;
 
-  TestBidiConnection t1;
-  TestBidiMetaData t2;
+  JDBIDITestBidiConnection t1;
+  JDBIDITestBidiMetaData t2;
 
-  TestBidiConnection[] tBidiConn_ = new TestBidiConnection[4];
-  TestBidiMetaData[] tBidiMetaData_ = new TestBidiMetaData[4];
+  JDBIDITestBidiConnection[] tBidiConn_ = new JDBIDITestBidiConnection[4];
+  JDBIDITestBidiMetaData[] tBidiMetaData_ = new JDBIDITestBidiMetaData[4];
 
   boolean isBidiUser_ = true;
 
@@ -85,8 +85,8 @@ public class JDBIDITestcase extends JDTestcase {
     }
   }
 
-  public TestBidiConnection constructBidiConn(String ccsid) {
-    TestBidiConnection t = new TestBidiConnection();
+  public JDBIDITestBidiConnection constructBidiConn(String ccsid) {
+    JDBIDITestBidiConnection t = new JDBIDITestBidiConnection();
     t.schema_ = JDNLSTest.COLLECTION;
     if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       t.driverUrlBase = "jdbc:db2:";
@@ -98,8 +98,8 @@ public class JDBIDITestcase extends JDTestcase {
     return t;
   }
 
-  public TestBidiMetaData constructMetaData(String ccsid) {
-    TestBidiMetaData t = new TestBidiMetaData();
+  public JDBIDITestBidiMetaData constructMetaData(String ccsid) {
+    JDBIDITestBidiMetaData t = new JDBIDITestBidiMetaData();
     t.schema_ = JDNLSTest.COLLECTION;
     if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       t.driverUrlBase = "jdbc:db2:";
@@ -211,7 +211,7 @@ public class JDBIDITestcase extends JDTestcase {
    * getMetaData() - Should throw an exception on a closed prepared statement.
    **/
 
-  private void testcaseBidiConnection(String varID, TestBidiConnection t, String userCCSID) {
+  private void testcaseBidiConnection(String varID, JDBIDITestBidiConnection t, String userCCSID) {
     System.gc();
 
     System.out.println(
@@ -224,8 +224,8 @@ public class JDBIDITestcase extends JDTestcase {
     try {
       long start = System.currentTimeMillis();
       boolean result = true;
-      TestBidiConnection.errorLog_.setLength(0);
-      t.TestString = t.use_complex_strings ? t.TestString1 : TestBidiConnection.TestString2;
+      JDBIDITestBidiConnection.errorLog_.setLength(0);
+      t.TestString = t.use_complex_strings ? t.TestString1 : JDBIDITestBidiConnection.TestString2;
       t.RecreateTable();
       t.setHostCCSID(Integer.parseInt(userCCSID));
 
@@ -250,15 +250,15 @@ public class JDBIDITestcase extends JDTestcase {
       }
       long end = System.currentTimeMillis();
       System.out.println("var" + varID + " SQL execute time : " + (end - start) / 1000 + " s");
-      assertCondition(result, TestBidiConnection.errorLog_.toString());
+      assertCondition(result, JDBIDITestBidiConnection.errorLog_.toString());
 
     } catch (Exception e) {
-      failed(e, TestBidiConnection.errorLog_.toString());
+      failed(e, JDBIDITestBidiConnection.errorLog_.toString());
     }
 
   }
 
-  private void testcaseBidiMetaData(String varID, TestBidiMetaData t, String userCCSID) {
+  private void testcaseBidiMetaData(String varID, JDBIDITestBidiMetaData t, String userCCSID) {
 
     System.gc();
     System.out.println(
@@ -270,8 +270,8 @@ public class JDBIDITestcase extends JDTestcase {
     }
     try {
       t.setHostCCSID(Integer.parseInt(userCCSID));
-      TestBidiMetaData.errorLog_.setLength(0);
-      t.TestString = t.use_complex_strings ? t.TestString1 : TestBidiConnection.TestString2;
+      JDBIDITestBidiMetaData.errorLog_.setLength(0);
+      t.TestString = t.use_complex_strings ? t.TestString1 : JDBIDITestBidiConnection.TestString2;
       long start = System.currentTimeMillis();
       boolean result = true;
       // Note: We cannot test the DMD unless we are on a BIDI system
@@ -296,156 +296,156 @@ public class JDBIDITestcase extends JDTestcase {
       }
       long end = System.currentTimeMillis();
       System.out.println("var" + varID + " SQL execute time : " + (end - start) / 1000 + " s");
-      assertCondition(result, TestBidiConnection.errorLog_.toString());
+      assertCondition(result, JDBIDITestBidiConnection.errorLog_.toString());
 
     } catch (Exception e) {
-      failed(e, TestBidiConnection.errorLog_.toString());
+      failed(e, JDBIDITestBidiConnection.errorLog_.toString());
     }
 
   }
 
   public void Var001() {
-    TestBidiConnection t424 = tBidiConn_[0];
+    JDBIDITestBidiConnection t424 = tBidiConn_[0];
     t424.package_ccsid = "system";
     t424.use_complex_strings = false;
     testcaseBidiConnection("001", t424, "424");
   }
 
   public void Var002() {
-    TestBidiConnection t62211 = tBidiConn_[1];
+    JDBIDITestBidiConnection t62211 = tBidiConn_[1];
     t62211.package_ccsid = "system";
     t62211.use_complex_strings = false;
     testcaseBidiConnection("002", t62211, "62211");
   }
 
   public void Var003() {
-    TestBidiConnection t62235 = tBidiConn_[2];
+    JDBIDITestBidiConnection t62235 = tBidiConn_[2];
     t62235.package_ccsid = "system";
     t62235.use_complex_strings = false;
     testcaseBidiConnection("003", t62235, "62235");
   }
 
   public void Var004() {
-    TestBidiConnection t62245 = tBidiConn_[3];
+    JDBIDITestBidiConnection t62245 = tBidiConn_[3];
     t62245.package_ccsid = "system";
     t62245.use_complex_strings = false;
     testcaseBidiConnection("004", t62245, "62245");
   }
 
   public void Var005() {
-    TestBidiConnection t424 = tBidiConn_[0];
+    JDBIDITestBidiConnection t424 = tBidiConn_[0];
     t424.package_ccsid = "424";
     t424.use_complex_strings = false;
     testcaseBidiConnection("005", t424, "424");
   }
 
   public void Var006() {
-    TestBidiConnection t62211 = tBidiConn_[1];
+    JDBIDITestBidiConnection t62211 = tBidiConn_[1];
     t62211.package_ccsid = "424";
     t62211.use_complex_strings = false;
     testcaseBidiConnection("006", t62211, "62211");
   }
 
   public void Var007() {
-    TestBidiConnection t62235 = tBidiConn_[2];
+    JDBIDITestBidiConnection t62235 = tBidiConn_[2];
     t62235.package_ccsid = "424";
     t62235.use_complex_strings = false;
     testcaseBidiConnection("007", t62235, "62235");
   }
 
   public void Var008() {
-    TestBidiConnection t62245 = tBidiConn_[3];
+    JDBIDITestBidiConnection t62245 = tBidiConn_[3];
     t62245.package_ccsid = "424";
     t62245.use_complex_strings = false;
     testcaseBidiConnection("008", t62245, "62245");
   }
 
   public void Var009() {
-    TestBidiConnection t424 = tBidiConn_[0];
+    JDBIDITestBidiConnection t424 = tBidiConn_[0];
     t424.package_ccsid = "62211";
     t424.use_complex_strings = false;
     testcaseBidiConnection("009", t424, "424");
   }
 
   public void Var010() {
-    TestBidiConnection t62211 = tBidiConn_[1];
+    JDBIDITestBidiConnection t62211 = tBidiConn_[1];
     t62211.package_ccsid = "62211";
     t62211.use_complex_strings = false;
     testcaseBidiConnection("010", t62211, "62211");
   }
 
   public void Var011() {
-    TestBidiConnection t62235 = tBidiConn_[2];
+    JDBIDITestBidiConnection t62235 = tBidiConn_[2];
     t62235.package_ccsid = "62211";
     t62235.use_complex_strings = false;
     testcaseBidiConnection("011", t62235, "62235");
   }
 
   public void Var012() {
-    TestBidiConnection t62245 = tBidiConn_[3];
+    JDBIDITestBidiConnection t62245 = tBidiConn_[3];
     t62245.package_ccsid = "62211";
     t62245.use_complex_strings = false;
     testcaseBidiConnection("012", t62245, "62245");
   }
 
   public void Var013() {
-    TestBidiConnection t424 = tBidiConn_[0];
+    JDBIDITestBidiConnection t424 = tBidiConn_[0];
     t424.package_ccsid = "13488";
     t424.use_complex_strings = false;
     testcaseBidiConnection("013", t424, "424");
   }
 
   public void Var014() {
-    TestBidiConnection t62211 = tBidiConn_[1];
+    JDBIDITestBidiConnection t62211 = tBidiConn_[1];
     t62211.package_ccsid = "13488";
     t62211.use_complex_strings = false;
     testcaseBidiConnection("013", t62211, "62211");
   }
 
   public void Var015() {
-    TestBidiConnection t62235 = tBidiConn_[2];
+    JDBIDITestBidiConnection t62235 = tBidiConn_[2];
     t62235.package_ccsid = "13488";
     t62235.use_complex_strings = false;
     testcaseBidiConnection("015", t62235, "62235");
   }
 
   public void Var016() {
-    TestBidiConnection t62245 = tBidiConn_[3];
+    JDBIDITestBidiConnection t62245 = tBidiConn_[3];
     t62245.package_ccsid = "13488";
     t62245.use_complex_strings = false;
     testcaseBidiConnection("016", t62245, "62245");
   }
 
   public void Var017() {
-    TestBidiMetaData t424 = tBidiMetaData_[0];
+    JDBIDITestBidiMetaData t424 = tBidiMetaData_[0];
     t424.package_ccsid = "system";
     t424.use_complex_strings = false;
     testcaseBidiMetaData("017", t424, "424");
   }
 
   public void Var018() {
-    TestBidiMetaData t62211 = tBidiMetaData_[1];
+    JDBIDITestBidiMetaData t62211 = tBidiMetaData_[1];
     t62211.package_ccsid = "system";
     t62211.use_complex_strings = false;
     testcaseBidiMetaData("018", t62211, "62211");
   }
 
   public void Var019() {
-    TestBidiMetaData t62235 = tBidiMetaData_[2];
+    JDBIDITestBidiMetaData t62235 = tBidiMetaData_[2];
     t62235.package_ccsid = "system";
     t62235.use_complex_strings = false;
     testcaseBidiMetaData("019", t62235, "62235");
   }
 
   public void Var020() {
-    TestBidiMetaData t62245 = tBidiMetaData_[3];
+    JDBIDITestBidiMetaData t62245 = tBidiMetaData_[3];
     t62245.package_ccsid = "system";
     t62245.use_complex_strings = false;
     testcaseBidiMetaData("020", t62245, "62245");
   }
 
   public void Var021() {
-    TestBidiMetaData t424 = tBidiMetaData_[0];
+    JDBIDITestBidiMetaData t424 = tBidiMetaData_[0];
     t424.package_ccsid = "424";
     t424.use_complex_strings = false;
     testcaseBidiMetaData("021", t424, "424");
@@ -453,97 +453,97 @@ public class JDBIDITestcase extends JDTestcase {
 
   public void Var022() {
 
-    TestBidiMetaData t62211 = tBidiMetaData_[1];
+    JDBIDITestBidiMetaData t62211 = tBidiMetaData_[1];
     t62211.package_ccsid = "424";
     t62211.use_complex_strings = false;
     testcaseBidiMetaData("022", t62211, "62211");
   }
 
   public void Var023() {
-    TestBidiMetaData t62235 = tBidiMetaData_[2];
+    JDBIDITestBidiMetaData t62235 = tBidiMetaData_[2];
     t62235.package_ccsid = "424";
     t62235.use_complex_strings = false;
     testcaseBidiMetaData("023", t62235, "62235");
   }
 
   public void Var024() {
-    TestBidiMetaData t62245 = tBidiMetaData_[3];
+    JDBIDITestBidiMetaData t62245 = tBidiMetaData_[3];
     t62245.package_ccsid = "62211";
     t62245.use_complex_strings = false;
     testcaseBidiMetaData("024", t62245, "62245");
   }
 
   public void Var025() {
-    TestBidiMetaData t424 = tBidiMetaData_[0];
+    JDBIDITestBidiMetaData t424 = tBidiMetaData_[0];
     t424.package_ccsid = "62211";
     t424.use_complex_strings = false;
     testcaseBidiMetaData("025", t424, "424");
   }
 
   public void Var026() {
-    TestBidiMetaData t62211 = tBidiMetaData_[1];
+    JDBIDITestBidiMetaData t62211 = tBidiMetaData_[1];
     t62211.package_ccsid = "62211";
     t62211.use_complex_strings = false;
     testcaseBidiMetaData("026", t62211, "62211");
   }
 
   public void Var027() {
-    TestBidiMetaData t62235 = tBidiMetaData_[2];
+    JDBIDITestBidiMetaData t62235 = tBidiMetaData_[2];
     t62235.package_ccsid = "62211";
     t62235.use_complex_strings = false;
     testcaseBidiMetaData("023", t62235, "62235");
   }
 
   public void Var028() {
-    TestBidiMetaData t62245 = tBidiMetaData_[3];
+    JDBIDITestBidiMetaData t62245 = tBidiMetaData_[3];
     t62245.package_ccsid = "62211";
     t62245.use_complex_strings = false;
     testcaseBidiMetaData("029", t62245, "62245");
   }
 
   public void Var029() {
-    TestBidiMetaData t424 = tBidiMetaData_[0];
+    JDBIDITestBidiMetaData t424 = tBidiMetaData_[0];
     t424.package_ccsid = "13488";
     t424.use_complex_strings = false;
     testcaseBidiMetaData("029", t424, "424");
   }
 
   public void Var030() {
-    TestBidiMetaData t62211 = tBidiMetaData_[1];
+    JDBIDITestBidiMetaData t62211 = tBidiMetaData_[1];
     t62211.package_ccsid = "13488";
     t62211.use_complex_strings = false;
     testcaseBidiMetaData("030", t62211, "62211");
   }
 
   public void Var031() {
-    TestBidiMetaData t62235 = tBidiMetaData_[2];
+    JDBIDITestBidiMetaData t62235 = tBidiMetaData_[2];
     t62235.package_ccsid = "13488";
     t62235.use_complex_strings = false;
     testcaseBidiMetaData("031", t62235, "62235");
   }
 
   public void Var032() {
-    TestBidiMetaData t62245 = tBidiMetaData_[3];
+    JDBIDITestBidiMetaData t62245 = tBidiMetaData_[3];
     t62245.package_ccsid = "13488";
     t62245.use_complex_strings = false;
     testcaseBidiMetaData("032", t62245, "62245");
   }
 
   public void Var033() {
-    TestBidiConnection t424 = tBidiConn_[0];
+    JDBIDITestBidiConnection t424 = tBidiConn_[0];
     t424.package_ccsid = "system";
     t424.use_complex_strings = true;
     testcaseBidiConnection("033", t424, "424");
   }
 
   public void Var034() {
-    boolean result = TestBidiTransform.test(420, TestBidiTransform.Arabic_String, TestBidiTransform.Arabic_CCSID);
-    assertCondition(result, TestBidiConnection.errorLog_.toString());
+    boolean result = JDBIDITestBidiTransform.test(420, JDBIDITestBidiTransform.Arabic_String, JDBIDITestBidiTransform.Arabic_CCSID);
+    assertCondition(result, JDBIDITestBidiConnection.errorLog_.toString());
   }
 
   public void Var035() {
-    boolean result = TestBidiTransform.test(424, TestBidiTransform.Hebrew_String, TestBidiTransform.Hebrew_CCSID);
-    assertCondition(result, TestBidiConnection.errorLog_.toString());
+    boolean result = JDBIDITestBidiTransform.test(424, JDBIDITestBidiTransform.Hebrew_String, JDBIDITestBidiTransform.Hebrew_CCSID);
+    assertCondition(result, JDBIDITestBidiConnection.errorLog_.toString());
   }
 
 }

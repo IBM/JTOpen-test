@@ -23,7 +23,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 
-import test.ThreadedTestcase;
+import test.misc.ThreadedTestcase;
 
 public class CmdCallThreadTestcase extends ThreadedTestcase
 {

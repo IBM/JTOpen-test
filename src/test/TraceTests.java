@@ -16,6 +16,9 @@ package test;
 
 import java.io.*;
 import java.util.Vector;
+
+import test.misc.TraceMiscTestcase;
+
 import java.util.Enumeration;
 
 

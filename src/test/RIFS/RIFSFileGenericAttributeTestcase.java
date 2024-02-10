@@ -19,8 +19,8 @@ import com.ibm.as400.resource.ResourceMetaData;
 
 import test.RIFSTest;
 import test.Testcase;
-import test.VIFSSandbox;
 import test.RIFSTest.ResourceListener_;
+import test.misc.VIFSSandbox;
 
 import com.ibm.as400.resource.RIFSFile;
 

@@ -22,7 +22,6 @@ import com.ibm.as400.access.User;
 import com.ibm.as400.access.UserGroup;
 
 import test.Testcase;
-import test.UserSandbox;
 
 /**
  Testcase UserGroupTestcase.  This tests the following methods of the User class:

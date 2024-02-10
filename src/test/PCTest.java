@@ -14,6 +14,11 @@
 package test;
 import com.ibm.as400.access.SystemProperties;
 
+import test.PC.PCConstructorTestcase;
+import test.PC.PCMiscTestcase;
+import test.PC.PCTransformTestcase;
+import test.PC.PCUsageTestcase;
+
 /**
  Test driver for the PCML component.
  **/

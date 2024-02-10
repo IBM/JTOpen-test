@@ -14,11 +14,11 @@ package test;
 
 public class JDSupportedFeatures {
  
-  boolean lobSupport = false; 
-  boolean bigintSupport = false; 
-  boolean decfloatSupport = false; 
-  boolean booleanSupport = false; 
-  boolean arraySupport = false; 
+  public boolean lobSupport = false; 
+  public boolean bigintSupport = false; 
+  public boolean decfloatSupport = false; 
+  public boolean booleanSupport = false; 
+  public boolean arraySupport = false; 
   
   
   public JDSupportedFeatures(JDTestcase testcase) {

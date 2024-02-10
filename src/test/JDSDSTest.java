@@ -27,7 +27,11 @@
 
 package test;
 
-
+import test.JD.SDS.JDSDSGetConnection;
+import test.JD.SDS.JDSDSGetReference;
+import test.JD.SDS.JDSDSMisc;
+import test.JD.SDS.JDSDSProperties;
+import test.JD.SDS.JDSDSWrapper;
 
 /**
 Test driver for the JDBC Driver class.

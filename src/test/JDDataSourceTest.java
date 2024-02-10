@@ -38,7 +38,12 @@ import java.sql.Connection;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
-import com.ibm.as400.access.Job;  
+import com.ibm.as400.access.Job;
+
+import test.JD.JDSetupCollection;
+import test.JD.DataSource.JDConnectionPoolDataSource;
+import test.JD.DataSource.JDDataSource;
+import test.JD.DataSource.JDDataSourceSocketOptionsTestcase;  
 
 
 

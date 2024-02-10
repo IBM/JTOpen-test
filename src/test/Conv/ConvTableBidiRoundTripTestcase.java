@@ -24,8 +24,8 @@ import com.ibm.as400.access.*;
 **/
 public class ConvTableBidiRoundTripTestcase extends Testcase
 {
-   private static ResourceBundle resources_ = ResourceBundle.getBundle("test.TestMRI_he_HE");
-   private static ResourceBundle resources2_ = ResourceBundle.getBundle("test.TestMRI_ar_AR");
+   private static ResourceBundle resources_ = ResourceBundle.getBundle("test.mri.TestMRI_he_HE");
+   private static ResourceBundle resources2_ = ResourceBundle.getBundle("test.mri.TestMRI_ar_AR");
 
   /**
     Runs the variations requested.

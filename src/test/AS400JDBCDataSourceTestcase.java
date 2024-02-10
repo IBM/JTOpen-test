@@ -36,6 +36,8 @@ import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.AS400JDBCDataSource;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
+import test.JD.JDSetupCollection;
+
 /**
   Testcase AS400JDBCDataSourceTestcase.
  **/

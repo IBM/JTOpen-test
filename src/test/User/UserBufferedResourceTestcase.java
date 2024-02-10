@@ -21,7 +21,6 @@ import com.ibm.as400.resource.Presentation;
 import com.ibm.as400.resource.ResourceEvent;
 
 import test.Testcase;
-import test.UserSandbox;
 import test.UserTest;
 import test.UserTest.PropertyChangeListener_;
 import test.UserTest.ResourceListener_;

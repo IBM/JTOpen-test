@@ -16,6 +16,9 @@ package test;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
 
+import test.JD.JDSetupCollection;
+import test.JD.JDTestUtilities;
+
 import java.math.BigDecimal;
 //import java.math.*;
 import java.sql.CallableStatement;
@@ -143,7 +146,7 @@ public class JDSetupProcedure {
 
   public static Hashtable procedureDefinitions = new Hashtable();
 
-  static String getProcedureDefinition(String stp) {
+  public static String getProcedureDefinition(String stp) {
     String def = (String) procedureDefinitions.get(stp);
     if (def == null)
       def = "NOT FOUND";
@@ -168,7 +171,7 @@ public class JDSetupProcedure {
   /**
    * Determines if a connection is to an IASP
    **/
-  static boolean isIASP(Connection connection) {
+  public static boolean isIASP(Connection connection) {
 
     if (JDTestDriver.getDatabaseTypeStatic() != JDTestDriver.DB_SYSTEMI) {
       return false;
@@ -329,7 +332,7 @@ public class JDSetupProcedure {
   /**
    * Resets the collection names
    */
-  static void resetCollection(String collection) {
+  public static void resetCollection(String collection) {
     COLLECTION = collection;
     STP_RS0 = COLLECTION + ".JDRSNONE";
     STP_RS1 = COLLECTION + ".JDRSONE";
@@ -430,7 +433,7 @@ public class JDSetupProcedure {
    * @param collection
    *          Lib to create the stored procs in
    **/
-  static void create(AS400 system,  Connection connection,
+  public static void create(AS400 system,  Connection connection,
       String stp, JDSupportedFeatures supportedFeatures, String collection)
       throws Exception {
     if (collection == null) collection = COLLECTION; 
@@ -2030,7 +2033,7 @@ public class JDSetupProcedure {
    * 
    * @return The SQL string.
    **/
-  static String getSQLString(String stp, JDSupportedFeatures supportedFeatures)
+  public static String getSQLString(String stp, JDSupportedFeatures supportedFeatures)
       throws Exception {
     String sql = null;
 
@@ -2296,7 +2299,7 @@ public class JDSetupProcedure {
    * @param except
    *          Don't set value for this column
    **/
-  static void setTypesParametersButForOne(CallableStatement cs, String stp,
+  public static void setTypesParametersButForOne(CallableStatement cs, String stp,
       JDSupportedFeatures supportedFeatures, int except) throws Exception {
 
     if (except != 1)
@@ -2395,7 +2398,7 @@ public class JDSetupProcedure {
    * @param accept
    *          Set value only for this column
    **/
-  static void setTypesParametersForOne(CallableStatement cs, String stp,
+  public static void setTypesParametersForOne(CallableStatement cs, String stp,
       JDSupportedFeatures supportedFeatures, int accept) throws Exception {
 
     if (accept == 1)
@@ -2546,7 +2549,7 @@ public class JDSetupProcedure {
    * @param except
    *          Do not check for this parameter
    **/
-  static boolean checkAllButForOne(CallableStatement cs, String stp,
+  public static boolean checkAllButForOne(CallableStatement cs, String stp,
       JDSupportedFeatures supportedFeatures, int except) throws Exception {
 
     int count = 26;
@@ -2689,7 +2692,7 @@ public class JDSetupProcedure {
    * @param supportedFeatures
    *          What features are supported?
    **/
-  static boolean checkAllForOne(CallableStatement cs, String stp,
+  public static boolean checkAllForOne(CallableStatement cs, String stp,
       JDSupportedFeatures supportedFeatures, int accept) throws Exception {
 
     if (!stp.equals(STP_CSTYPESINOUT) && (!stp.equals(STP_CSTYPESINOUTX))) {
@@ -2803,7 +2806,7 @@ public class JDSetupProcedure {
 
   }
 
-  private static boolean comp(double actual, double expected) {
+  public static boolean comp(double actual, double expected) {
     if (actual != expected) {
       System.out.println(actual + " sb " + expected);
       return false;
@@ -2811,7 +2814,7 @@ public class JDSetupProcedure {
     return true;
   }
 
-  private static boolean comp(double actual, double expected,
+  public static boolean comp(double actual, double expected,
       double acceptableDiff) {
     if (actual != expected) {
       if (!(Math.abs(actual - expected) <= Math.abs(acceptableDiff))) {
@@ -2822,7 +2825,7 @@ public class JDSetupProcedure {
     return true;
   }
 
-  private static boolean comp(String actual, String expected) {
+  public static boolean comp(String actual, String expected) {
     if (!actual.equals(expected)) {
       System.out.println(actual + " sb " + expected);
       return false;

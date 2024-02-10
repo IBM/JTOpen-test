@@ -24,9 +24,9 @@ import com.ibm.as400.access.*;
 import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
-import test.ThreadedTestcase;
 import test.DDM.DDMChar10KeyFormat;
 import test.DDM.DDMChar10NoKeyFormat;
+import test.misc.ThreadedTestcase;
 
 
 public class DDMThreadTestcase extends ThreadedTestcase

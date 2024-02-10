@@ -33,8 +33,8 @@ import java.beans.VetoableChangeListener;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.JobList;
 
-import test.TestUtilities;
 import test.Testcase;
+import test.misc.TestUtilities;
 
 /**
  Testcase JobListBeans.

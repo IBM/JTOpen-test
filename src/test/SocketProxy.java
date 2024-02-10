@@ -19,7 +19,9 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.ServerSocket;
-import java.sql.*; 
+import java.sql.*;
+
+import test.socketProxy.SocketProxyMasterThread; 
 
 
 public class SocketProxy implements Runnable {
@@ -166,19 +168,19 @@ public class SocketProxy implements Runnable {
   	
   }
   
-  int getPortNumber () {
+  public int getPortNumber () {
   	return proxyPort_; 
   }
   
-  long getActiveByteCount() { 
+  public long getActiveByteCount() { 
   	return masterThread.getActiveByteCount(); 
   }
 
-  int getFailedConnectCount() {
+  public int getFailedConnectCount() {
       return masterThread.getFailedConnectCount(); 
   }
 
-  void endActiveConnections() { 
+  public void endActiveConnections() { 
   	masterThread.endActiveConnections(); 
   }
 

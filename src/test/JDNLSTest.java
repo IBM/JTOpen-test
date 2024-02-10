@@ -2,6 +2,8 @@ package test;
 
 import java.sql.Connection;
 
+import test.JD.JDSetupCollection;
+
 public class JDNLSTest extends JDTestDriver {
    
     public static String COLLECTION = "JDTESTNLS1";

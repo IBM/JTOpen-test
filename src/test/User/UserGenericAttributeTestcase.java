@@ -22,7 +22,6 @@ import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
-import test.UserSandbox;
 import test.UserTest;
 import test.UserTest.ResourceListener_;
 

@@ -19,10 +19,10 @@ import com.ibm.as400.resource.ResourceEvent;
 
 import test.RIFSTest;
 import test.Testcase;
-import test.VIFSSandbox;
 import test.RIFSTest.PropertyChangeListener_;
 import test.RIFSTest.ResourceListener_;
 import test.RIFSTest.VetoableChangeListener_;
+import test.misc.VIFSSandbox;
 
 import com.ibm.as400.resource.RIFSFile;
 import java.awt.Image;

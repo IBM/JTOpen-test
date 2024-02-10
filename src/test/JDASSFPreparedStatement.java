@@ -39,6 +39,8 @@ import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.AS400JDBCPreparedStatement;
 import com.ibm.as400.access.AS400JDBCStatement;
 
+import test.socketProxy.SocketProxyPair;
+
 /**
  * Testcase JDASSFPreparedStatement Test for the Statement object covers for
  * Seamless failover

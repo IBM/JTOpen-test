@@ -23,6 +23,7 @@ import test.ServiceProgram.ServiceProgramCallBeanInfoTestcase;
 import test.ServiceProgram.ServiceProgramCallBeans;
 import test.ServiceProgram.ServiceProgramCallTestcase;
 import test.ServiceProgram.ServiceProgramCallUnattendedTestcase;
+import test.misc.ProgramParameterBeanInfoTestcase;
 
 /**
  The ServiceProgramCallTest class provides the test driver for the testcase files.
