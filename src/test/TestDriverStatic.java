@@ -68,6 +68,7 @@ public class TestDriverStatic
       }
     }
     public static boolean brief_ = false;
+    
     public static int duration_ = 0;  // number of seconds to run
     public static boolean pause_ = false;
     public  static String implementationVersion_ = null;
