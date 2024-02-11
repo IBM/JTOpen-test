@@ -20,6 +20,10 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.AS400JDBC.AS400JDBCRowSetBeanInfoTestcase;
+import test.AS400JDBC.AS400JDBCRowSetCtorTestcase;
+import test.AS400JDBC.AS400JDBCRowSetTestcase;
+
 /**
   Test driver for the JDBC row set classes.
   The testcases will be attempted in unattended mode.

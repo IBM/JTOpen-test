@@ -22,8 +22,8 @@ import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
 import com.ibm.as400.access.Trace;
 
-import test.CmdMultiThread;
 import test.Testcase;
+import test.Cmd.CmdMultiThread;
 
 import java.util.Properties;
 

@@ -24,6 +24,14 @@ import java.util.zip.ZipFile;
 import test.PasswordVault;
 import test.TestDriver;
 import test.Testcase;
+import test.MiscAH.AS400FTPBeans;
+import test.MiscAH.AS400FTPTestcase;
+import test.MiscAH.FTPBeans;
+import test.MiscAH.FTPModeTestcase;
+import test.MiscAH.FTPQuickVerification;
+import test.MiscAH.FTPReconnect;
+import test.MiscAH.FTPTestcase;
+
 import com.ibm.as400.access.*;
 
 
@@ -33,7 +41,7 @@ public class FTPTest extends TestDriver
 {
    AS400 PwrSys_ = null;
    String initialToken_ = null;
-   static final boolean DEBUG = false;
+   public static final boolean DEBUG = false;
 
 
    public static void main(String args[])

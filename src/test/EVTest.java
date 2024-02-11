@@ -25,6 +25,11 @@ import java.io.ObjectOutputStream;
 import com.ibm.as400.access.EnvironmentVariable;
 import com.ibm.as400.access.EnvironmentVariableList;
 
+import test.MiscAH.EVBasicTestcase;
+import test.MiscAH.EVBeanInfoTestcase;
+import test.MiscAH.EVListBasicTestcase;
+import test.MiscAH.EVListBeanInfoTestcase;
+
 /**
  Test driver for the EnvironmentVariable and related classes.
  **/

@@ -13,6 +13,8 @@
 
 package test;
 
+import test.MiscAH.FATestcase;
+
 /**
  Test driver for the FileAttributes class.
  **/

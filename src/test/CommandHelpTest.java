@@ -22,6 +22,11 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
 import test.TestDriver;
+import test.Cmd.CommandBeanInfoTestcase;
+import test.Cmd.CommandHelpRetrieverTestcase;
+import test.Cmd.CommandListBeanInfoTestcase;
+import test.Cmd.CommandListTestcase;
+import test.Cmd.CommandTestcase;
 
 /**
   Test driver for the Command Help components.

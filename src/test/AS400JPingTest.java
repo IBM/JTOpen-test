@@ -13,6 +13,8 @@
 
 package test;
 
+import test.MiscAH.AS400JPingTestcase;
+
 /**
  Test driver for the Form Input components.
  The testcases will be attempted in unattended mode.

@@ -16,6 +16,10 @@
 package test;
 
 import com.ibm.as400.access.CommandCall;
+
+import test.MiscAH.CHTEntryTestcase;
+import test.MiscAH.CHTTestcase;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import java.util.StringTokenizer;
@@ -33,8 +37,8 @@ extends TestDriver
 {
 
     // Constants.
-    static final String chtSvrName_ = "CHTJTTEST";
-    static AS400 pwrSys_ = null;
+    public static final String chtSvrName_ = "CHTJTTEST";
+    public static AS400 pwrSys_ = null;
 
     private static final String clusterName = "CHTCLUSTER";
 

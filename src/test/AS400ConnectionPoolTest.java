@@ -19,6 +19,10 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.MiscAH.AS400ConnectionPoolBeanInfoTestcase;
+import test.MiscAH.AS400ConnectionPoolSerializationTestcase;
+import test.MiscAH.AS400ConnectionPoolTestcase;
+
 /**
 The AS400ConnectionPoolTest class tests the AS400ConnectionPool class.
 **/

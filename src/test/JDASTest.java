@@ -23,7 +23,9 @@ package test;
 
 import java.sql.Connection;
 
-import test.JD.JDSetupCollection;
+import test.JD.*
+import test.JD.AS*
+
 
 
 

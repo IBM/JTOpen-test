@@ -17,6 +17,8 @@ import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Trace;
 
+import test.Cmd.CmdStressTestcase;
+import test.DA.DataAreaStressTestcase;
 import test.DDM.DDMProxyStressTestcase;
 import test.IFS.IFSProxyStressTestcase;
 import test.ServiceProgram.ServicePgmCallStressTestcase;

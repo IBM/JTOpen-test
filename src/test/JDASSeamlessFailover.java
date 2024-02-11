@@ -29,7 +29,8 @@ import java.sql.*;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 
-import test.socketProxy.SocketProxyPair;
+import test.JD.AS.*
+import test.socketProxy.*;
 
 /**
  * Testcase JDASSeamlessFailover

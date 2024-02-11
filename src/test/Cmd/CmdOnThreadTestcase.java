@@ -20,7 +20,6 @@ import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Trace;
 
-import test.CmdMultiThread;
 import test.Testcase;
 
 /**

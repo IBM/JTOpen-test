@@ -19,6 +19,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
+import test.INet.INetServerConnectionTestcase;
+import test.INet.INetServerFileShareTestcase;
+import test.INet.INetServerPrintShareTestcase;
+import test.INet.INetServerSessionTestcase;
+import test.INet.INetServerTestcase;
+
 /**
 Test driver for the ISeriesNetServer* classes.  
 **/
