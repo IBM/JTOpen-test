@@ -25,6 +25,45 @@ import java.sql.Connection;
 
 import test.JD.JDSetupCollection;
 
+// Add new imports
+
+import test.JD.AS.JDASAffinityFailback;
+import test.JD.AS.JDASClientRegisters;
+import test.JD.AS.JDASClientReroute1;
+import test.JD.AS.JDASClientReroute2;
+import test.JD.AS.JDASClientReroute3;
+import test.JD.AS.JDASClientReroute4;
+import test.JD.AS.JDASClientReroute5;
+import test.JD.AS.JDASClientReroute6;
+import test.JD.AS.JDASClientReroute7;
+import test.JD.AS.JDASDSClientReroute1;
+import test.JD.AS.JDASDSClientReroute2;
+import test.JD.AS.JDASDSClientReroute3;
+import test.JD.AS.JDASDSClientReroute4;
+import test.JD.AS.JDASDSClientReroute5;
+import test.JD.AS.JDASDSClientReroute6;
+import test.JD.AS.JDASDSClientReroute7;
+import test.JD.AS.JDASDSDefaultRetry;
+import test.JD.AS.JDASDSEnableCALTestcase;
+import test.JD.AS.JDASDSRetry;
+import test.JD.AS.JDASDSSeamlessFailover1;
+import test.JD.AS.JDASDSSeamlessFailover2;
+import test.JD.AS.JDASDSSeamlessFailover3;
+import test.JD.AS.JDASDSSeamlessFailover4;
+import test.JD.AS.JDASDSSeamlessFailover5;
+import test.JD.AS.JDASDefaultRetry;
+import test.JD.AS.JDASEnableCALTestcase;
+import test.JD.AS.JDASPreparedStatement;
+import test.JD.AS.JDASRetry;
+import test.JD.AS.JDASSFCallableStatement;
+import test.JD.AS.JDASSFConnection;
+import test.JD.AS.JDASSFPreparedStatement;
+import test.JD.AS.JDASSFStatement;
+import test.JD.AS.JDASSeamlessFailover1;
+import test.JD.AS.JDASSeamlessFailover2;
+import test.JD.AS.JDASSeamlessFailover3;
+import test.JD.AS.JDASSeamlessFailover4;
+import test.JD.AS.JDASSeamlessFailover5;
 
 
 /**
