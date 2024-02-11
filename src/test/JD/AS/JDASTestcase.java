@@ -44,14 +44,14 @@ import test.SocketProxy;
  * Testcase AS400JDBCEnableCALTestcase.
  **/
 public class JDASTestcase extends JDTestcase {
-  long TOOLBOX_FIX_DATE=20200101; 
+  protected long TOOLBOX_FIX_DATE=20200101; 
   
   protected int MINIMUM_TRANSACTION_MILLISECONDS = 300;
   protected int RUN_TRANSACTIONS = 1000;
 
   protected String url_;
 
-  static String[] setupSql = {
+  protected static String[] setupSql = {
       "create or replace variable COLLECTION.GVCALTCINT INT",
       "create or replace table    COLLECTION.GVCALTCT1(C1 INT,C2 BIGINT)",
       "insert into                COLLECTION.GVCALTCT1 VALUES(2,0)",
@@ -428,7 +428,7 @@ public class JDASTestcase extends JDTestcase {
           + "LANGUAGE SQL BEGIN  DECLARE ANSWER VARCHAR(80);   "
           + "GET DIAGNOSTICS CONDITION 1 ANSWER=DB2_PRODUCT_ID;   "
           + "RETURN ANSWER;  END", };
-  static String[] statementSql = { "values 1",
+  protected static String[] statementSql = { "values 1",
       "select * from sysibm.sqlcolumns fetch first 1000 rows only",
       "set COLLECTION.GVCALTCINT=7",
       "insert into COLLECTION.GVCALTCT1 VALUES(1,0)",
@@ -441,13 +441,13 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[] callableStatementSql = { "call COLLECTION.GVCALTCTM()",
+  protected static String[] callableStatementSql = { "call COLLECTION.GVCALTCTM()",
       "call COLLECTION.GVCALTCP1('sally')",
       "call COLLECTION.GVCALTCP1('harry')",
       "call COLLECTION.GVCALTCP1('lewis')", };
 
   /* List of possible transactions */
-  static String[][] psIntTransactions = {
+  protected static String[][] psIntTransactions = {
       /* Transaction 0 */
       { "delete from COLLECTION.GVCALTCI7",
           "INSERT INTO COLLECTION.GVCALTCI7 VALUES(?,?,?,?,?,?,?)",
@@ -461,7 +461,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psIntParms = {
+  protected static String[][][][] psIntParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -486,7 +486,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psSmallintTransactions = {
+  protected static String[][] psSmallintTransactions = {
       /* Transaction 0 */
       { "delete from COLLECTION.GVCALTCSI7",
           "INSERT INTO COLLECTION.GVCALTCSI7 VALUES(?,?,?,?,?,?,?)",
@@ -500,7 +500,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psSmallintParms = {
+  protected static String[][][][] psSmallintParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -525,7 +525,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psBigintTransactions = {
+  protected static String[][] psBigintTransactions = {
       /* Transaction 0 */
       { "delete from COLLECTION.GVCALTCBI7",
           "INSERT INTO COLLECTION.GVCALTCBI7 VALUES(?,?,?,?,?,?,?)",
@@ -539,7 +539,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psBigintParms = {
+  protected static String[][][][] psBigintParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -564,7 +564,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psRealTransactions = {
+  protected static String[][] psRealTransactions = {
       /* Transaction 0 */
       { "delete from COLLECTION.GVCALTCRL7",
           "INSERT INTO COLLECTION.GVCALTCRL7 VALUES(?,?,?,?,?,?,?)",
@@ -578,7 +578,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psRealParms = {
+  protected static String[][][][] psRealParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -603,7 +603,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psFloatTransactions = {
+  protected static String[][] psFloatTransactions = {
       /* Transaction 0 */
       { "delete from COLLECTION.GVCALTCFT7",
           "INSERT INTO COLLECTION.GVCALTCFT7 VALUES(?,?,?,?,?,?,?)",
@@ -617,7 +617,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psFloatParms = {
+  protected static String[][][][] psFloatParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -642,7 +642,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psDoubleTransactions = {
+  protected static String[][] psDoubleTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCDL7",
           "INSERT INTO   COLLECTION.GVCALTCDL7 VALUES(?,?,?,?,?,?,?)",
@@ -656,7 +656,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psDoubleParms = {
+  protected static String[][][][] psDoubleParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -681,7 +681,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psDecimalTransactions = {
+  protected static String[][] psDecimalTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCDC7",
           "INSERT INTO   COLLECTION.GVCALTCDC7 VALUES(?,?,?,?,?,?,?)",
@@ -695,7 +695,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psDecimalParms = {
+  protected static String[][][][] psDecimalParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -738,7 +738,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psNumericTransactions = {
+  protected static String[][] psNumericTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCNM7",
           "INSERT INTO   COLLECTION.GVCALTCNM7 VALUES(?,?,?,?,?,?,?)",
@@ -752,7 +752,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psNumericParms = {
+  protected static String[][][][] psNumericParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -795,7 +795,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psDecfloatTransactions = {
+  protected static String[][] psDecfloatTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCDF7",
           "INSERT INTO   COLLECTION.GVCALTCDF7 VALUES(?,?,?,?,?,?,?)",
@@ -809,7 +809,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psDecfloatParms = {
+  protected static String[][][][] psDecfloatParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -852,7 +852,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psCharTransactions = {
+  protected static String[][] psCharTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCCH7",
           "INSERT INTO   COLLECTION.GVCALTCCH7 VALUES(?,?,?,?,?,?,?)",
@@ -866,7 +866,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psCharParms = {
+  protected static String[][][][] psCharParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -891,7 +891,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psVarcharTransactions = {
+  protected static String[][] psVarcharTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCVC7",
           "INSERT INTO   COLLECTION.GVCALTCVC7 VALUES(?,?,?,?,?,?,?)",
@@ -905,7 +905,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psVarcharParms = {
+  protected static String[][][][] psVarcharParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -930,7 +930,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psGraphicTransactions = {
+  protected static String[][] psGraphicTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCGR7",
           "INSERT INTO   COLLECTION.GVCALTCGR7 VALUES(?,?,?,?,?,?,?)",
@@ -944,7 +944,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psGraphicParms = {
+  protected static String[][][][] psGraphicParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -969,7 +969,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psVargraphicTransactions = {
+  protected static String[][] psVargraphicTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCVG7",
           "INSERT INTO   COLLECTION.GVCALTCVG7 VALUES(?,?,?,?,?,?,?)",
@@ -983,7 +983,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psVargraphicParms = {
+  protected static String[][][][] psVargraphicParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1008,7 +1008,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psClobTransactions = {
+  protected static String[][] psClobTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCCL7",
           "INSERT INTO   COLLECTION.GVCALTCCL7 VALUES(?,?,?,?,?,?,?)",
@@ -1022,7 +1022,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psClobParms = {
+  protected static String[][][][] psClobParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1047,7 +1047,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psDBClobTransactions = {
+  protected static String[][] psDBClobTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCDB7",
           "INSERT INTO   COLLECTION.GVCALTCDB7 VALUES(?,?,?,?,?,?,?)",
@@ -1061,7 +1061,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psDBClobParms = {
+  protected static String[][][][] psDBClobParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1086,7 +1086,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] psBinaryTransactions = {
+  protected static String[][] psBinaryTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCBN7",
           "INSERT INTO   COLLECTION.GVCALTCBN7 VALUES(?,?,?,?,?,?,?)",
@@ -1100,7 +1100,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psBinaryParms = {
+  protected static String[][][][] psBinaryParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1145,7 +1145,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] psVarbinaryTransactions = {
+  protected static String[][] psVarbinaryTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCVB7",
           "INSERT INTO   COLLECTION.GVCALTCVB7 VALUES(?,?,?,?,?,?,?)",
@@ -1159,7 +1159,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psVarbinaryParms = {
+  protected static String[][][][] psVarbinaryParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1204,7 +1204,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] psBlobTransactions = {
+  protected static String[][] psBlobTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCBL7",
           "INSERT INTO   COLLECTION.GVCALTCBL7 VALUES(?,?,?,?,?,?,?)",
@@ -1218,7 +1218,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psBlobParms = {
+  protected static String[][][][] psBlobParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1263,7 +1263,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] psDateTransactions = {
+  protected static String[][] psDateTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCDT7",
           "INSERT INTO   COLLECTION.GVCALTCDT7 VALUES(?,?,?,?,?,?,?)",
@@ -1277,7 +1277,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psDateParms = {
+  protected static String[][][][] psDateParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1322,7 +1322,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] psTimeTransactions = {
+  protected static String[][] psTimeTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCTM7",
           "INSERT INTO   COLLECTION.GVCALTCTM7 VALUES(?,?,?,?,?,?,?)",
@@ -1336,7 +1336,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psTimeParms = {
+  protected static String[][][][] psTimeParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1381,7 +1381,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] psTimestampTransactions = {
+  protected static String[][] psTimestampTransactions = {
       /* Transaction 0 */
       { "delete from   COLLECTION.GVCALTCTS7",
           "INSERT INTO   COLLECTION.GVCALTCTS7 VALUES(?,?,?,?,?,?,?)",
@@ -1395,7 +1395,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] psTimestampParms = {
+  protected static String[][][][] psTimestampParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1461,7 +1461,7 @@ public class JDASTestcase extends JDTestcase {
 
   /* Callable statement test data */
   /* List of possible transactions */
-  static String[][] csIntTransactions = {
+  protected static String[][] csIntTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCI3(?,?,?)",
           "CALL COLLECTION.GVCALTCI6(?,?,?,?,?,?)", },
@@ -1471,7 +1471,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csIntParms = {
+  protected static String[][][][] csIntParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1502,7 +1502,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csSmallintTransactions = {
+  protected static String[][] csSmallintTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCSI3(?,?,?)",
           "CALL COLLECTION.GVCALTCSI6(?,?,?,?,?,?)", },
@@ -1512,7 +1512,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csSmallintParms = {
+  protected static String[][][][] csSmallintParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1543,7 +1543,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csBigintTransactions = {
+  protected static String[][] csBigintTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCBI3(?,?,?)",
           "CALL COLLECTION.GVCALTCBI6(?,?,?,?,?,?)", },
@@ -1553,7 +1553,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csBigintParms = {
+  protected static String[][][][] csBigintParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1584,7 +1584,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csRealTransactions = {
+  protected static String[][] csRealTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCRL3(?,?,?)",
           "CALL COLLECTION.GVCALTCRL6(?,?,?,?,?,?)", },
@@ -1594,7 +1594,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csRealParms = {
+  protected static String[][][][] csRealParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1627,7 +1627,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csFloatTransactions = {
+  protected static String[][] csFloatTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCFT3(?,?,?)",
           "CALL COLLECTION.GVCALTCFT6(?,?,?,?,?,?)", },
@@ -1637,7 +1637,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csFloatParms = {
+  protected static String[][][][] csFloatParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1670,7 +1670,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csDoubleTransactions = {
+  protected static String[][] csDoubleTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCDL3(?,?,?)",
           "CALL COLLECTION.GVCALTCDL6(?,?,?,?,?,?)", },
@@ -1680,7 +1680,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csDoubleParms = {
+  protected static String[][][][] csDoubleParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1713,7 +1713,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csDecimalTransactions = {
+  protected static String[][] csDecimalTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCDC3(?,?,?)",
           "CALL COLLECTION.GVCALTCDC6(?,?,?,?,?,?)", },
@@ -1723,7 +1723,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csDecimalParms = {
+  protected static String[][][][] csDecimalParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1758,7 +1758,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csNumericTransactions = {
+  protected static String[][] csNumericTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCNM3(?,?,?)",
           "CALL COLLECTION.GVCALTCNM6(?,?,?,?,?,?)", },
@@ -1768,7 +1768,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csNumericParms = {
+  protected static String[][][][] csNumericParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1803,7 +1803,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csDecfloatTransactions = {
+  protected static String[][] csDecfloatTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCDF3(?,?,?)",
           "CALL COLLECTION.GVCALTCDF6(?,?,?,?,?,?)", },
@@ -1813,7 +1813,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csDecfloatParms = {
+  protected static String[][][][] csDecfloatParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1848,7 +1848,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csCharTransactions = {
+  protected static String[][] csCharTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCCH3(?,?,?)",
           "CALL COLLECTION.GVCALTCCH6(?,?,?,?,?,?)", },
@@ -1858,7 +1858,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csCharParms = {
+  protected static String[][][][] csCharParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1905,7 +1905,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csVarcharTransactions = {
+  protected static String[][] csVarcharTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCVC3(?,?,?)",
           "CALL COLLECTION.GVCALTCVC6(?,?,?,?,?,?)", },
@@ -1915,7 +1915,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csVarcharParms = {
+  protected static String[][][][] csVarcharParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -1946,7 +1946,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csGraphicTransactions = {
+  protected static String[][] csGraphicTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCGR3(?,?,?)",
           "CALL COLLECTION.GVCALTCGR6(?,?,?,?,?,?)", },
@@ -1956,7 +1956,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csGraphicParms = {
+  protected static String[][][][] csGraphicParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2003,7 +2003,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csVargraphicTransactions = {
+  protected static String[][] csVargraphicTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCVG3(?,?,?)",
           "CALL COLLECTION.GVCALTCVG6(?,?,?,?,?,?)", },
@@ -2013,7 +2013,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csVargraphicParms = {
+  protected static String[][][][] csVargraphicParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2044,7 +2044,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csClobTransactions = {
+  protected static String[][] csClobTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCCL3(?,?,?)",
           "CALL COLLECTION.GVCALTCCL6(?,?,?,?,?,?)", },
@@ -2054,7 +2054,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csClobParms = {
+  protected static String[][][][] csClobParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2085,7 +2085,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csDBClobTransactions = {
+  protected static String[][] csDBClobTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCDB3(?,?,?)",
           "CALL COLLECTION.GVCALTCDB6(?,?,?,?,?,?)", },
@@ -2095,7 +2095,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csDBClobParms = {
+  protected static String[][][][] csDBClobParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2126,7 +2126,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csBinaryTransactions = {
+  protected static String[][] csBinaryTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCBN3(?,?,?)",
           "CALL COLLECTION.GVCALTCBN6(?,?,?,?,?,?)", },
@@ -2136,7 +2136,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csBinaryParms = {
+  protected static String[][][][] csBinaryParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2188,7 +2188,7 @@ public class JDASTestcase extends JDTestcase {
       } };
 
   /* List of possible transactions */
-  static String[][] csVarbinaryTransactions = {
+  protected static String[][] csVarbinaryTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCVB3(?,?,?)",
           "CALL COLLECTION.GVCALTCVB6(?,?,?,?,?,?)", },
@@ -2198,7 +2198,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csVarbinaryParms = {
+  protected static String[][][][] csVarbinaryParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2233,7 +2233,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] csBlobTransactions = {
+  protected static String[][] csBlobTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCBL3(?,?,?)",
           "CALL COLLECTION.GVCALTCBL6(?,?,?,?,?,?)", },
@@ -2243,7 +2243,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csBlobParms = {
+  protected static String[][][][] csBlobParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2278,7 +2278,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] csDateTransactions = {
+  protected static String[][] csDateTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCDT3(?,?,?)",
           "CALL COLLECTION.GVCALTCDT6(?,?,?,?,?,?)", },
@@ -2288,7 +2288,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csDateParms = {
+  protected static String[][][][] csDateParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2345,7 +2345,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] csTimeTransactions = {
+  protected static String[][] csTimeTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCTM3(?,?,?)",
           "CALL COLLECTION.GVCALTCTM6(?,?,?,?,?,?)", },
@@ -2355,7 +2355,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csTimeParms = {
+  protected static String[][][][] csTimeParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2404,7 +2404,7 @@ public class JDASTestcase extends JDTestcase {
   };
 
   /* List of possible transactions */
-  static String[][] csTimestampTransactions = {
+  protected static String[][] csTimestampTransactions = {
       /* Transaction 0 */
       { "CALL COLLECTION.GVCALTCTS3(?,?,?)",
           "CALL COLLECTION.GVCALTCTS6(?,?,?,?,?,?)", },
@@ -2414,7 +2414,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[][][][] csTimestampParms = {
+  protected static String[][][][] csTimestampParms = {
       /* Transaction 0 */
       {
           /* T0 Test 0 */
@@ -2494,7 +2494,7 @@ public class JDASTestcase extends JDTestcase {
 
   };
 
-  static String[] cleanupSql = { "drop variable COLLECTION.GVCALTCINT",
+  protected static String[] cleanupSql = { "drop variable COLLECTION.GVCALTCINT",
       "drop table  COLLECTION.GVCALTCT1", "drop table  COLLECTION.GVCALTCT2",
       "drop table  COLLECTION.GVCALTCI7", "drop table  COLLECTION.GVCALTCSI7",
       "drop table  COLLECTION.GVCALTCBI7", "drop table  COLLECTION.GVCALTCRL7",
@@ -2570,7 +2570,7 @@ public class JDASTestcase extends JDTestcase {
     pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPassword); 
   }
 
-  void fixupSql(String[] sqlArray) {
+  protected void fixupSql(String[] sqlArray) {
     int len = sqlArray.length;
     for (int i = 0; i < len; i++) {
       sqlArray[i] = fixupSql(sqlArray[i]);
@@ -2578,22 +2578,22 @@ public class JDASTestcase extends JDTestcase {
 
   }
 
-  String fixupSql(String sql) {
+  protected String fixupSql(String sql) {
     sql = sql.replace("COLLECTION", JDASTest.COLLECTION);
     return sql;
   }
 
-  static final int JAVA_STRING = 1;
-  static final int JAVA_BIGDECIMAL = 2;
-  static final int JAVA_SHORT = 3;
-  static final int JAVA_INT = 4;
-  static final int JAVA_LONG = 5;
-  static final int JAVA_FLOAT = 6;
-  static final int JAVA_DOUBLE = 7;
-  static final int JAVA_BYTEARRAY = 8;
-  static final int JAVA_DATE = 9;
-  static final int JAVA_TIME = 10;
-  static final int JAVA_TIMESTAMP = 11;
+  protected static final int JAVA_STRING = 1;
+  protected static final int JAVA_BIGDECIMAL = 2;
+  protected static final int JAVA_SHORT = 3;
+  protected static final int JAVA_INT = 4;
+  protected static final int JAVA_LONG = 5;
+  protected static final int JAVA_FLOAT = 6;
+  protected static final int JAVA_DOUBLE = 7;
+  protected static final int JAVA_BYTEARRAY = 8;
+  protected static final int JAVA_DATE = 9;
+  protected static final int JAVA_TIME = 10;
+  protected static final int JAVA_TIMESTAMP = 11;
 
   /* Run prepared statement tests with different types as parameters */
   public void testPSTypeParameters(String[][] psTypeTransactions,
@@ -3425,7 +3425,7 @@ public class JDASTestcase extends JDTestcase {
 
   }
 
-  class SwitchKillThread extends KillThread {
+  public class SwitchKillThread extends KillThread {
     SocketProxy[] proxies_;
     Random random_;
 

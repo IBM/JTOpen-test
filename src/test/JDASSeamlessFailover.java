@@ -29,7 +29,7 @@ import java.sql.*;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 
-import test.JD.AS.*
+import test.JD.AS.*;
 import test.socketProxy.*;
 
 /**
@@ -38,17 +38,17 @@ import test.socketProxy.*;
 public class JDASSeamlessFailover extends JDASTestcase {
   int RUN_SECONDS = 20;
 
-  String systemName;
+  protected String systemName;
 
-  Connection transactionalConnection;
-  Connection autocommitConnection;
-  Connection failConnection;
-  SocketProxyPair transactionalSocketProxyPair;
-  SocketProxyPair autocommitSocketProxyPair;
-  SocketProxyPair failSocketProxyPair;
-  String collection;
+  protected Connection transactionalConnection;
+  protected Connection autocommitConnection;
+  protected Connection failConnection;
+  protected SocketProxyPair transactionalSocketProxyPair;
+  protected SocketProxyPair autocommitSocketProxyPair;
+  protected SocketProxyPair failSocketProxyPair;
+  protected String collection;
 
-  String table;
+  protected String table;
 
   /**
    * Constructor.
@@ -679,7 +679,7 @@ public class JDASSeamlessFailover extends JDASTestcase {
     } 
   }
 
-  boolean checkResultSet(ResultSet rs, String expected, StringBuffer sb) throws SQLException {
+  protected boolean checkResultSet(ResultSet rs, String expected, StringBuffer sb) throws SQLException {
     rs.next(); 
     ResultSetMetaData rsmd = rs.getMetaData(); 
     StringBuffer resultSb = new StringBuffer(); 
