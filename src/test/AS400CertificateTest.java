@@ -19,6 +19,12 @@ import java.util.Enumeration;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
+
+import test.MiscAH.AS400CertificateUsrPrfBeans;
+import test.MiscAH.AS400CertificateUsrPrfTestcase;
+import test.MiscAH.AS400CertificateVldlBeans;
+import test.MiscAH.AS400CertificateVldlTestcase;
+
 import java.util.StringTokenizer;
 
 /**
@@ -44,7 +50,7 @@ See TestDriver for remaining calling syntax.
 **/
 public class AS400CertificateTest extends TestDriverApplet
 {
-    static AS400 PwrSys = null;
+    public static AS400 PwrSys = null;
 
 
 

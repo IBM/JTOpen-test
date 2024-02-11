@@ -14,6 +14,14 @@
 package test;
 
 import java.util.Vector;
+
+import test.IN.INAppTestcase;
+import test.IN.INAttributesTestcase;
+import test.IN.INInstallTestcase;
+import test.IN.INIsInstalledTestcase;
+import test.IN.INIsUpdateNeededTestcase;
+import test.IN.INUnInstallTestcase;
+
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.net.URL;
@@ -41,8 +49,8 @@ static public URL remoteURL2;    // ftp://-system/QIBM/ProdData/HTTP/Public/jt40
 
 private static byte[] data_ = new byte[2560];
 
-static boolean runningAIX_;
-static boolean runningUNIX_;
+public static boolean runningAIX_;
+public static boolean runningUNIX_;
 
 /**
 Write the data in <i>contents</i> to <i>targetFile</i>.

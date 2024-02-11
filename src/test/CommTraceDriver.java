@@ -16,6 +16,9 @@
 package test;
 
 import java.util.Vector;
+
+import test.MiscAH.CommTraceTestcase;
+
 import java.util.Enumeration;
 
 /**

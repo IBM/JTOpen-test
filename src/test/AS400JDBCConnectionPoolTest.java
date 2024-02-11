@@ -19,6 +19,14 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.AS400JDBC.AS400JDBCConnectionPoolBeanInfoTestcase;
+import test.AS400JDBC.AS400JDBCConnectionPoolTestcase;
+import test.AS400JDBC.AS400JDBCManagedConnectionPool2Testcase;
+import test.AS400JDBC.AS400JDBCManagedConnectionPoolTestcase;
+import test.AS400JDBC.AS400JDBCPooledConnectionTestcase;
+import test.MiscAH.ConnectionPoolBeanInfoTestcase;
+import test.MiscAH.ConnectionPoolPropertiesTestcase;
+
 /**
   Test driver for the JDBC Data Source classes.
   The testcases will be attempted in unattended mode.

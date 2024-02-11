@@ -15,6 +15,9 @@ package test;
 
 import java.io.*;
 import java.util.Vector;
+
+import test.MiscAH.EventLogTestcase;
+
 import java.util.Enumeration;
 
 

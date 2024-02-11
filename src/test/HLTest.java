@@ -13,6 +13,8 @@
 
 package test;
 
+import test.MiscAH.HLTestcase;
+
 /**
  Test driver for the HistoryLog object and associated classes.  Refer to TestDriver for calling syntax.
  **/
