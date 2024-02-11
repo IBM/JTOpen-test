@@ -24,11 +24,11 @@ package test.JD.AS;
 
 import java.io.FileOutputStream;
 import java.util.Hashtable;
-import java.sql.*;
+
 
 import com.ibm.as400.access.AS400;
 
-import test.JDASSeamlessFailover;
+
 
 /**
  * Testcase JDASSeamlessFailover
