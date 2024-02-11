@@ -40,7 +40,7 @@ import com.ibm.as400.access.AS400JDBCPreparedStatement;
 import com.ibm.as400.access.AS400JDBCStatement;
 
 import test.*;
-import test.socketProxy.*
+import test.socketProxy.*;
 
 
 /**

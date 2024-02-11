@@ -23,8 +23,8 @@ package test;
 
 import java.sql.Connection;
 
-import test.JD.*
-import test.JD.AS*
+import test.JD.*;
+import test.JD.AS.*; 
 
 
 
