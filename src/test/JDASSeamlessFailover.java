@@ -19,7 +19,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // 
 ////////////////////////////////////////////////////////////////////////////
-package test.JD.AS;
+package test;
 
 
 import java.io.FileOutputStream;
@@ -29,8 +29,8 @@ import java.sql.*;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 
-import test.JDASTest;
-import test.SocketProxy;
+import test.JD.AS.JDASTestcase;
+import test.JD.AS.JDASTestcase.SwitchKillThread;
 import test.socketProxy.SocketProxyPair;
 
 /**

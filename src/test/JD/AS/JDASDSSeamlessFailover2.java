@@ -27,6 +27,8 @@ import java.util.Hashtable;
 
 import com.ibm.as400.access.AS400;
 
+import test.JDASSeamlessFailover;
+
 /**
  * Testcase JDASSeamlessFailover
  **/

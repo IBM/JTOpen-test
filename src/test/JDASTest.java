@@ -24,6 +24,7 @@ package test;
 import java.sql.Connection;
 
 import test.JD.JDSetupCollection;
+
 import test.JD.AS.JDASAffinityFailback;
 import test.JD.AS.JDASClientRegisters;
 import test.JD.AS.JDASClientReroute1;
