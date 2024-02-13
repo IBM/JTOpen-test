@@ -130,7 +130,7 @@ public class JDGroupTestInfo {
         }
         // Run wrkactjob and place the results in dbfile
         String sql = "CALL QSYS2.QCMDEXC('" + "QSH CMD(''system wrkactjob > /qsys.lib/qgpl.lib/" + outputFile + ".file/"
-            + outputFile + ".mbr'')   '";
+            + outputFile + ".mbr'')   ')";
         // System.out.println("sql is "+sql);
         s.setQueryTimeout(120); /* limit is in seconds */
         try {
