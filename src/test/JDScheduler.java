@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// Filename:  JDScalarFunctions.java
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+ ////////////////////////////////////////////////////////////////////////
+ //
+ // File Name:    JDScheduler.java
+ //
+ // Classes:      JDScheduler
+ //
+ ////////////////////////////////////////////////////////////////////////
 package test;
 
 import java.io.*;
@@ -9,7 +29,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.net.InetAddress;
 
 public class JDScheduler {
 
