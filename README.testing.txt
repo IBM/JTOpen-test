@@ -135,6 +135,11 @@ Testcases run for regression purposes for JTOpen can be found in the following f
  The testbucket contains a scheduler to run the tests.  Tests are submitted to the scheduler, and the scheduler then runs the tests.
  
  -- Scheduler configuration
+1.  Pick an ID to use for the scheduler. For example, pick 11
+
+
+-- Start scheduler
+java -cp JTOpen-test.jar test.JDSchedulerServer 11 SERVER
  
  
  -- Adding tests to the scheduler
