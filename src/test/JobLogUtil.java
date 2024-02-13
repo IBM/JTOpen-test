@@ -608,9 +608,10 @@ public class JobLogUtil {
   /**
    * Save the joblog as a file that be accessed with the web page
    * Returns a string with a message indicating where the joblog can be found
+   * @throws Exception 
    */
 
-  public static String publishJoblog(String jobname, String joblog)    throws IOException {
+  public static String publishJoblog(String jobname, String joblog)    throws Exception {
     if (joblog == null) {
       return "joblog is null and cannot be saved";
     }
@@ -635,7 +636,7 @@ public class JobLogUtil {
     InetAddress localHost = InetAddress.getLocalHost();
     String hostname =localHost.getHostName();
     if (hostname.indexOf(".") < 0 ) { 
-      hostname = hostname+".rch.stglabs.ibm.com"; 
+      hostname = hostname+"."+JTOpenTestEnvironment.getDefaultClientDomain();  
     }
     return "...Joblog for " + jobname + " available at http://"
         + hostname + ":6050/debugdata/" + filename;

@@ -1805,7 +1805,7 @@ public class JDReport {
               connection = driver.connect("jdbc:as400:" + CONNECTNAME
                   + ";keep alive=true;thread used=false", properties);
             } catch (Exception e) {
-              CONNECTNAME = AS400 + ".rch.stglabs.ibm.com";
+              CONNECTNAME = AS400 + "."+JTOpenTestEnvironment.getDefaultServerDomain();
               try {
                 connection = driver.connect("jdbc:as400:" + CONNECTNAME
                     + ";keep alive=true;thread used=false", properties);
@@ -2033,7 +2033,7 @@ public class JDReport {
         JDSQL400.html = true;
 
         String[] formatPtf = { null, /* COMP */
-            "<a href=\"https://build.rch.stglabs.ibm.com/fixprocess/viewfixes.wss?continueButton=viaLink&selectedTab=fixgeneral&fixNumber={STUFF}\">{STUFF}</a>", /*
+            "<a href=\"https://build."+JTOpenTestEnvironment.getDefaultServerDomain()+"/fixprocess/viewfixes.wss?continueButton=viaLink&selectedTab=fixgeneral&fixNumber={STUFF}\">{STUFF}</a>", /*
                                                                                                                                                                    * PTFID
                                                                                                                                                                    */
             null, /* change date */

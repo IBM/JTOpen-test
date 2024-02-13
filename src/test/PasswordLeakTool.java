@@ -459,13 +459,13 @@ public class PasswordLeakTool {
         "[ENCRYPTPASSWORD] [DECRYPTPASSWORD] "
         + "[DUMP dumpfile]* [SCAN dumpfile pwd]* ");
     System.out.println(
-        "                    i.e.  AS400JAVACONNECT sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  AS400JAVACONNECT    system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
-        "                    i.e.  AS400JAVADATASOURCE sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  AS400JAVADATASOURCE system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
-        "                    i.e.  AS400JAVAJDBC sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  AS400JAVAJDBC       system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
-        "                    i.e.  DB2JAVAJDBC sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  DB2JAVAJDBC         system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
 
     System.out.println(
         "                    i.e.  ENCRYPTPASSWORD DECRYPTPASSWORD DUMP /tmp/dumpFile.txt  SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");

@@ -500,9 +500,9 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
 				    Socket s = new Socket(systemName_, 22); 
 				    s.close(); 
 				} catch (Exception e2) {
-
-				    System.out.println("Warning:  port 21 and 22  of "+systemName_+" not available.  adding .RCH.STGLABS.IBM.COM"); 
-				    systemName_ = arg+".RCH.STGLABS.IBM.COM";
+				    String defaultHostDomain = JTOpenTestEnvironment.getDefaultServerDomain(); 
+				    System.out.println("Warning:  port 21 and 22  of "+systemName_+" not available.  adding ."+defaultHostDomain); 
+				    systemName_ = arg+"."+defaultHostDomain;
 				}
 			    }
 			}
