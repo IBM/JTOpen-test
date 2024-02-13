@@ -84,8 +84,6 @@ Performs setup needed before running variations.
     throws Exception
     {
         try {
-            // Register the JDBC driver.
-            Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
 
             // Get a global connection - choose how you which
             // to get the connection.
