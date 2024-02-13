@@ -604,7 +604,7 @@ extends JDTestcase
         }
 
 
-        if (getRelease() <= JDTestDriver.RELEASE_V5R4M0) { 
+        if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) { 
           notApplicable("Not working in V5R3/V5R4 after testcase fix");
 	  return; 
         }
@@ -720,7 +720,7 @@ extends JDTestcase
 	      int[] sqlcode = new int[2];
               sqlcode[0] = -952;
 	      sqlcode[1] = -99999; 
-              if   (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+              if   (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                 t = new AuxThread(s1, message, sqlcode, query  +  " optimize for all rows");
               } else { 
                 t = new AuxThread(s1, message, sqlcode, query);
@@ -829,7 +829,7 @@ extends JDTestcase
     **/
     public void Var029()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R2M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    Statement s = null;
 	    ResultSet rs = null;
 	    try
@@ -838,7 +838,7 @@ extends JDTestcase
 		StringBuffer query = new StringBuffer("Select Parm_int, Parm_Date ");
 		int maxCount = 32800;
 	    // For V5R4M0 make the statement larger than 2 Meg 
-		if (getRelease() >=  JDTestDriver.RELEASE_V5R4M0) {
+		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 		    maxCount = 2 * 1024 * 1024;
 		}
 		for(int i=0; i< maxCount; i++)
@@ -859,7 +859,7 @@ extends JDTestcase
 		e.printStackTrace(); 
 	    // @G1 Changes for v5r3 Cli issue the error now
 		// AS of 08/04 the CLI will also issue the error in V5R2 
-		if((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >=  JDTestDriver.RELEASE_V5R2M0))
+		if((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))
 		{
 		    if(e instanceof SQLException)
 		    {
@@ -928,7 +928,7 @@ extends JDTestcase
     **/
     public void Var030()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R2M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 
 	    Statement s = null;
 	    ResultSet rs = null;
@@ -939,7 +939,7 @@ extends JDTestcase
 
 		int maxCount = 32800;
 	    // For V5R4M0 make the statement larger than 2 Meg 
-		if (getRelease() >=  JDTestDriver.RELEASE_V5R4M0) {
+		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 		    maxCount = 2 * 1024 * 1024;
 		}
 
@@ -964,7 +964,7 @@ extends JDTestcase
 	    catch(Exception e)
 	    {
 	    // @G1 Changes for v5r3 Cli issue the error now
-		if ((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >=  JDTestDriver.RELEASE_V5R3M0))
+		if ((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))
 		{
 		    if(e instanceof SQLException)
 		    {
@@ -2897,7 +2897,7 @@ extends JDTestcase
     **/
     public void Var059()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             Connection connection = null;
             try
@@ -2963,7 +2963,7 @@ extends JDTestcase
     **/
     public void Var060()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             Connection connection = null;
             try
@@ -3031,7 +3031,7 @@ extends JDTestcase
     **/
     public void Var061()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             Connection connection = null;
             try
@@ -3277,7 +3277,7 @@ extends JDTestcase
      */
     public void Var070()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {               
             Connection c = null;
             try{
@@ -3363,7 +3363,7 @@ extends JDTestcase
 	    notApplicable("TOOLBOX TEST for 'query storage limit' connection property");
 	    return; 
 	} 
-        if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             Connection c = null;
             try{
@@ -3391,14 +3391,14 @@ extends JDTestcase
                 //execute the query
                 ResultSet rs = null;
                 //33923 - v5r5 optimizer is smarter...
-                if (getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+                if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
                     rs = s.executeQuery("SELECT * FROM " + QUERY_STORAGE_LIMIT_TABLE + " ORDER BY COL1 optimize for all rows");
                 else
                     rs = s.executeQuery("SELECT * FROM " + QUERY_STORAGE_LIMIT_TABLE + " ORDER BY COL1");
                 rs.close();
                 s.close();
                 
-                if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 && isToolboxDriver())
+                if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isToolboxDriver())
                 {
                     succeeded(); //in v6r1 now, this does not take up enough space to error out
                     return;
@@ -3449,7 +3449,7 @@ extends JDTestcase
     **/
     public void Var072()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             try
             {
@@ -3480,7 +3480,7 @@ extends JDTestcase
     **/
     public void Var073()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             try
             {
@@ -3521,7 +3521,7 @@ extends JDTestcase
 	String sql = ""; 
 	try
 	{
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R3M0 && isToolboxDriver())
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0 && isToolboxDriver())
         {
             notApplicable("Too complex for v5r3");
             return;
@@ -3529,7 +3529,7 @@ extends JDTestcase
 
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
+	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Native fails in V5R3, need CLI header fix");
             return; 
 	} 

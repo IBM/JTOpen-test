@@ -123,7 +123,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT INTEGER
 **/
     public void Var002()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10INT");
 		CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10INT (?)}");
@@ -148,7 +148,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT REAL
 **/
     public void Var003()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 
 	    try{
 
@@ -175,7 +175,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT FLOAT
 **/
     public void Var004()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10FLOAT");
@@ -201,7 +201,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT DOUBLE
 **/
     public void Var005()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DOUBLE");
@@ -227,7 +227,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT DECIMAL
 **/
     public void Var006()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC50");
@@ -253,7 +253,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT DECIMAL(10,5)
 **/
     public void Var007()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC105");
@@ -279,7 +279,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT NUMERIC(5,0)
 **/
     public void Var008()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM50");
@@ -306,7 +306,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT NUMERIC(10,5)
 **/
     public void Var009()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM105");
@@ -332,7 +332,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT CHAR(1)
 **/
     public void Var010()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCHAR1");
@@ -358,7 +358,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT CHAR(50)
 **/
     public void Var011()
     {
-	if (getRelease() ==  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() ==  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCHAR50");
@@ -384,7 +384,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT VARCHAR(50)
 **/
     public void Var012()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNVARCHAR50");
@@ -609,7 +609,7 @@ getBoolean() - getBoolean on a type registered as boolean, INOUT BIGINT
 **/
     public void Var021()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10BINT");

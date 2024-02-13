@@ -355,7 +355,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 		      }
 		      else
 		      {
-			  if ( getRelease() ==  JDTestDriver.RELEASE_V5R1M0) {
+			  if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
 			      failed ("Did not throw exception. for "+c);
 			  } else {
 			      succeeded();
@@ -370,7 +370,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 		}
 		else
 		{
-		    if ( getRelease() ==  JDTestDriver.RELEASE_V5R1M0) {
+		    if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
 			assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 		    } else {
 			failed(e, "Unexpected exception");
@@ -650,7 +650,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 								  + ";libraries=BAD_LIB", userId_, encryptedPassword_);
 			if (getDriver() == JDTestDriver.DRIVER_NATIVE)
 			{
-			    if ( getRelease() ==  JDTestDriver.RELEASE_V5R1M0) {
+			    if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
 				try {
 				    c.close();
 				    failed("Did not throw exception while passing bad library");
@@ -1560,7 +1560,7 @@ the same name as the userId as the default.
 		    failed(e,"SSL not configured.\n"+
 			   "If you get a certificate chaining error, you need "+
 			   "to get the CA certificate and install it using "+
-			   "keytool -import -keystore /QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/jre/lib/security/cacerts -file /tmp/eberhard.ca2 -storepass changeit");
+			   "keytool -import -keystore /QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/jre/lib/security/cacerts -file /tmp/import.ca2 -storepass changeit");
 		}
 	    }
 
@@ -1986,13 +1986,13 @@ libraries - Specify library list with *LIBL before 2 other libraries.
        {
            if ( (isToolboxDriver()) ||
                 (( getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                    (getRelease() >= JDTestDriver.RELEASE_V5R5M0)))
+                    (getRelease() >= JDTestDriver.RELEASE_V7R1M0)))
            {
                boolean setupFailed = false;
                int setup = 0;
                try
                {
-                 if (getDriver() == JDTestDriver.DRIVER_NATIVE || (getRelease() == JDTestDriver.RELEASE_V5R4M0) ) {
+                 if (getDriver() == JDTestDriver.DRIVER_NATIVE ){
                    Connection c = testDriver_.getConnection (baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
                    Statement s2 = c.createStatement();
 		   String command = null;
@@ -2100,7 +2100,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
             conn.close();
           }
           if (getDriver() == JDTestDriver.DRIVER_NATIVE
-              || (getRelease() == JDTestDriver.RELEASE_V5R4M0)) {
+              ) {
             Connection c = testDriver_.getConnection(baseURL_, pwrSysUserID_,
                 pwrSysEncryptedPassword_);
             Statement s2 = c.createStatement();

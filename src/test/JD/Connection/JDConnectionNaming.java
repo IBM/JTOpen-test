@@ -342,7 +342,7 @@ Fixed in V5R5 using issue 33770.
 	    notApplicable("toolbox driver possible todo");
 	    return;
 	}
-	if (getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
+	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Find named parameter problem when not all parms are parameter markers not working in V5R4");
 	    return; 
 	} 

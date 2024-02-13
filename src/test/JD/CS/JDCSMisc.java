@@ -1636,7 +1636,7 @@ cache.
         String sql = "";
 	boolean passed = true;
         String failStr = "";
-        if ((getRelease() >=  JDTestDriver.RELEASE_V5R5M0)) {
+        if ((getRelease() >=  JDTestDriver.RELEASE_V7R1M0)) {
         Connection conn = null;
 
         try {

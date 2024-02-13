@@ -1356,7 +1356,7 @@ public class JDRSTest extends JDTestDriver {
           }
           // Key == LOB_FULL.
           ps4.setString(1, "LOB_FULL");
-          ps4.setString(2, "http://schuman.rchland.ibm.com/help.html");
+          ps4.setString(2, "https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt");
           ps4.executeUpdate();
 
           // Key == LOB_EMPTY.
@@ -1380,7 +1380,7 @@ public class JDRSTest extends JDTestDriver {
 
       // @F2
       // Setup RSTEST_GRAPH table.
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         buffer = new StringBuffer();
 
         buffer = new StringBuffer();
@@ -1416,7 +1416,7 @@ public class JDRSTest extends JDTestDriver {
       // @F1
       // Setup RSTEST_BINARY table.
       // in release V5R3 binary and varbinary will be their own data type in DB2
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
         buffer.setLength(0);
         buffer.append(" (C_KEY           VARCHAR(20)   ");
@@ -1647,7 +1647,7 @@ public class JDRSTest extends JDTestDriver {
       // Setup tables for DECFLOAT
       //
 
-      if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         if (getDatabaseType() == JDTestDriver.DB_ZOS
             || getDatabaseType() == JDTestDriver.DB_LUW) {
           createAndPopulateTable(RSTEST_DFP16, "C1 DECFLOAT(16)", VALUES_DFP16);
@@ -1678,7 +1678,7 @@ public class JDRSTest extends JDTestDriver {
 
       // Setup RSTEST_GETXML table.
       // in release V5R3 binary and varbinary will be their own data type in DB2
-      if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
         buffer.setLength(0);
         buffer.append("( C_KEY               INT ");
@@ -2076,7 +2076,7 @@ public class JDRSTest extends JDTestDriver {
     cleanupTable(statement_, RSTEST_GETX);
 
     cleanupTable(statement_, RSTEST_POS);
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       cleanupTable(statement_, RSTEST_BINARY);
       cleanupTable(statement_, RSTEST_GRAPHIC);
     }
@@ -2089,7 +2089,7 @@ public class JDRSTest extends JDTestDriver {
       statement_.executeUpdate("DROP DISTINCT TYPE " + COLLECTION + ".SSN");
     }
 
-    if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       cleanupTable(statement_, RSTEST_GETXML);
       cleanupTable(statement_, RSTEST_UPDATEXML);
 

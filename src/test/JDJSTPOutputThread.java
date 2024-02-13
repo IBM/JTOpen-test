@@ -46,29 +46,22 @@ public class JDJSTPOutputThread extends Thread {
      iStream = is; 
      this.outputBuffer = outputBuffer; 
      this.writer = writer;
-     String osName = System.getProperty("os.name");
-     /* System.out.println("DEBUG: DEBUG: osName is "+osName); */ 
-     
-     this.encoding = encoding;
+      this.encoding = encoding;
 
-     boolean isWindows = osName.indexOf("Windows") >= 0;
-     if (isWindows) this.encoding = ENCODING_ASCII; 
+     if (JTOpenTestEnvironment.isWindows) this.encoding = ENCODING_ASCII; 
    }
 
    public JDJSTPOutputThread(InputStream is, StringBuffer outputBuffer, PrintWriter writer, String[] hangMessages, String[] hangMessagesException,  Vector hangMessagesFound, int encoding ) {
      iStream = is; 
      this.outputBuffer = outputBuffer; 
      this.writer = writer;
-     String osName = System.getProperty("os.name");
-     /* System.out.println("DEBUG: DEBUG: osName is "+osName); */ 
-
+  
      this.hangMessagesFound = hangMessagesFound;
      this.hangMessagesException = hangMessagesException;
      this.hangMessages = hangMessages; 
      this.encoding = encoding;
 
-     boolean isWindows = osName.indexOf("Windows") >= 0;
-     if (isWindows) this.encoding = ENCODING_ASCII; 
+     if (JTOpenTestEnvironment.isWindows) this.encoding = ENCODING_ASCII; 
 
    }
 

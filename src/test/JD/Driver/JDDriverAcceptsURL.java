@@ -312,8 +312,7 @@ acceptsURL() - Should accept a valid URL with no system specified
       // changed by native since DB2Driver cannot use startsWith() when checking
       // the url subprotocol
       // if startsWith() is used the Cloudscape driver will not work
-      if ((getRelease() >= JDTestDriver.RELEASE_V5R2M0)
-          && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
+      if ((getDriver() == JDTestDriver.DRIVER_NATIVE)) {
         assertCondition(driver_.acceptsURL("jdbc:" + subprotocol_
             + ":errors=full") == true);
       } else {
@@ -611,7 +610,7 @@ acceptsURL() - Should not accept a URL with suprotocol db2j -- Cloudscape driver
 **/
     public void Var030()
     {
-	if ((getRelease() >= JDTestDriver.RELEASE_V5R3M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE)) {
 	    try {
 		assertCondition (!driver_.acceptsURL ("jdbc:" + subprotocol_ + "j"), "Native driver accepted subprotocol: " + subprotocol_ + "j -- added by native 3/3/2004");
 	    }
@@ -629,7 +628,7 @@ acceptsURL() - Should accept a URL with suprotocol DB2
 **/
     public void Var031()
     {
-	if ((getRelease() >= JDTestDriver.RELEASE_V5R3M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
+	if ( (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
 	    try {
 		assertCondition (driver_.acceptsURL ("jdbc:" + subprotocol_.toUpperCase()), "Native driver did not accepted subprotocol: " + subprotocol_.toUpperCase() + " -- added by native 3/3/2004");
 	    }

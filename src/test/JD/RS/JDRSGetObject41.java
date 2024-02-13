@@ -2031,7 +2031,7 @@ name is invalid.
             "null",
             "null"};
 
-	    if (isToolboxDriver() && getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+	    if (isToolboxDriver() && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 		testArray = testArrayTB54; 
 	    } 
 

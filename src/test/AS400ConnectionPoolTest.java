@@ -31,22 +31,8 @@ extends TestDriver
 {
 
   // Determine if testcase is running on AS/400.
-  static boolean onAS400_ = false;
-  static
-  {
-    try {
-      String s = System.getProperty("os.name");
-      if (s == null)
-        onAS400_ = false;
-      else if (s.equalsIgnoreCase("OS/400"))
-        onAS400_ = true;
-      else
-        onAS400_ = false;
-    }
-    catch (SecurityException e) {
-      onAS400_ = false;
-    }
-  }
+  static boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
+  
 
 
 

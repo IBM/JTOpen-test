@@ -85,23 +85,13 @@ public abstract class JDTestDriver extends TestDriver {
   // This field and contants can be used to verify which release
   // is being tested.
   public static final int RELEASE_NONE = 0;
-  public static final int RELEASE_V4R2M0 = 420;
-  public static final int RELEASE_V4R3M0 = 430;
-  public static final int RELEASE_V4R4M0 = 440;
-  public static final int RELEASE_V4R5M0 = 450; 
-  public static final int RELEASE_V5R1M0 = 510; 
-  public static final int RELEASE_V5R2M0 = 520; 
-  public static final int RELEASE_V5R3M0 = 530;
-  public static final int RELEASE_V5R4M0 = 540;
-  public static final int RELEASE_V5R5M0 = 550;
-  public static final int RELEASE_V6R1M0 = 610;
   public static final int RELEASE_V7R1M0 = 710;
   public static final int RELEASE_V7R2M0 = 720;
   public static final int RELEASE_V7R3M0 = 730;
   public static final int RELEASE_V7R4M0 = 740;
   public static final int RELEASE_V7R5M0 = 750;
-  public static final int RELEASE_V7R6M0 = 760;
-
+  public static final int RELEASE_V7R5M0_PLUS = 999;
+ 
   public static final String CLIENT_windows = "windows";
   public static final String CLIENT_as400 = "as400";
   public static final String CLIENT_aix = "aix";
@@ -117,8 +107,7 @@ public abstract class JDTestDriver extends TestDriver {
   // proxy server is in use.
   public static boolean useSecondaryUrl_ = false;
 
-  public static String OSName_ = System.getProperty("os.name");
-
+ 
   // For LUW this is not 466
   public static int jccPort = 446;
 
@@ -670,39 +659,17 @@ public abstract class JDTestDriver extends TestDriver {
           registerDriver(DRIVER_CLASS_NATIVE_RMI, DRIVER_NATIVE_RMI);
 
         // Was a release specified?
-        else if (token.equalsIgnoreCase("V4R2M0"))
-          release_ = RELEASE_V4R2M0;
-        else if (token.equalsIgnoreCase("V4R3M0"))
-          release_ = RELEASE_V4R3M0;
-        else if (token.equalsIgnoreCase("V4R4M0"))
-          release_ = RELEASE_V4R4M0;
-        else if (token.equalsIgnoreCase("V4R5M0")) 
-          release_ = RELEASE_V4R5M0; 
-        else if (token.equalsIgnoreCase("V5R1M0")) 
-          release_ = RELEASE_V5R1M0;
-        else if (token.equalsIgnoreCase("V5R2M0")) 
-          release_ = RELEASE_V5R2M0;
-        else if (token.equalsIgnoreCase("V5R3M0"))
-          release_ = RELEASE_V5R3M0;
-        else if (token.equalsIgnoreCase("V5R4M0"))
-          release_ = RELEASE_V5R4M0;
-        else if (token.equalsIgnoreCase("V5R5M0"))
-          release_ = RELEASE_V5R5M0;
-        else if (token.equalsIgnoreCase("V6R1M0"))
-          release_ = RELEASE_V6R1M0;
-        else if (token.equalsIgnoreCase("V7R1M0"))
-          release_ = RELEASE_V7R1M0;
         else if (token.equalsIgnoreCase("V7R2M0"))
           release_ = RELEASE_V7R2M0;
         else if (token.equalsIgnoreCase("V7R3M0"))
           release_ = RELEASE_V7R3M0;
         else if (token.equalsIgnoreCase("V7R4M0"))
           release_ = RELEASE_V7R4M0;
-        else if (token.equalsIgnoreCase("V7R5M0"))
-          release_ = RELEASE_V7R5M0;
-        else if (token.equalsIgnoreCase("V7R6M0"))
-          release_ = RELEASE_V7R6M0;
-
+        else if (token.equalsIgnoreCase("V7R5M0")) 
+          release_ = RELEASE_V7R5M0; 
+         else if (token.indexOf("V7R") >= 0 )
+          release_ = RELEASE_V7R5M0_PLUS;
+      
         // Was "secondary URL mode" specified?
         else if (token.equalsIgnoreCase("secondaryURL")) {
           useSecondaryUrl_ = true;
@@ -773,27 +740,7 @@ public abstract class JDTestDriver extends TestDriver {
       } catch (Exception e) {
         e.printStackTrace();
       }
-      if (vrm == AS400.generateVRM(4, 2, 0))
-        release_ = RELEASE_V4R2M0;
-      else if (vrm == AS400.generateVRM(4, 3, 0))
-        release_ = RELEASE_V4R3M0;
-      else if (vrm == AS400.generateVRM(4, 4, 0))
-        release_ = RELEASE_V4R4M0;
-      else if (vrm == AS400.generateVRM(4, 5, 0)) 
-        release_ = RELEASE_V4R5M0; 
-      else if (vrm == AS400.generateVRM(5, 1, 0)) 
-        release_ = RELEASE_V5R1M0; 
-      else if (vrm == AS400.generateVRM(5, 2, 0)) 
-        release_ = RELEASE_V5R2M0; 
-      else if (vrm == AS400.generateVRM(5, 3, 0))
-        release_ = RELEASE_V5R3M0;
-      else if (vrm == AS400.generateVRM(5, 4, 0))
-        release_ = RELEASE_V5R4M0;
-      else if (vrm == AS400.generateVRM(5, 5, 0)) 
-        release_ = RELEASE_V5R5M0;
-      else if (vrm == AS400.generateVRM(6, 1, 0))
-        release_ = RELEASE_V6R1M0;
-      else if (vrm == AS400.generateVRM(7, 1, 0))
+      if (vrm == AS400.generateVRM(7, 1, 0))
         release_ = RELEASE_V7R1M0;
       else if (vrm == AS400.generateVRM(7, 2, 0))
         release_ = RELEASE_V7R2M0;
@@ -803,28 +750,28 @@ public abstract class JDTestDriver extends TestDriver {
         release_ = RELEASE_V7R4M0;
       else if (vrm == AS400.generateVRM(7, 5, 0))
         release_ = RELEASE_V7R5M0;
-      else if (vrm == AS400.generateVRM(7, 6, 0))
-        release_ = RELEASE_V7R6M0;
+      else 
+        release_ = RELEASE_V7R5M0_PLUS;
     }
 
     // Determine if what is supported.
-    lobSupport_ = (release_ >= JDTestDriver.RELEASE_V4R4M0);
-    datalinkSupport_ = (release_ >= JDTestDriver.RELEASE_V4R4M0);
+    lobSupport_ = true;
+    datalinkSupport_ = true;
     if (db_ == DB_ZOS || db_ == DB_LUW) {
       datalinkSupport_ = false;
     }
-    largeDecimalPrecisionSupport_ = (release_ >= JDTestDriver.RELEASE_V5R3M0);
-    bigintSupport_ = (release_ >= JDTestDriver.RELEASE_V4R5M0); 
-    decfloatSupport_ = (release_ >= JDTestDriver.RELEASE_V5R5M0); 
-    xmlSupport_ = (release_ >= JDTestDriver.RELEASE_V7R1M0); 
-    arraySupport_ = (release_ >= JDTestDriver.RELEASE_V7R1M0); 
+    largeDecimalPrecisionSupport_ = true;
+    bigintSupport_ = true;
+    decfloatSupport_ = true;
+    xmlSupport_ = true; 
+    arraySupport_ = true;
     timestamp12Support_ = (release_ >= JDTestDriver.RELEASE_V7R2M0); 
-    returnValueSupport_ = (release_ >= JDTestDriver.RELEASE_V4R4M0); 
+    returnValueSupport_ = true; 
     booleanSupport_ = (release_ >= JDTestDriver.RELEASE_V7R5M0); 
 
     try { 
       Class.forName("java.sql.Savepoint"); 
-      savepointSupport_ = (release_ >= JDTestDriver.RELEASE_V5R2M0); 
+      savepointSupport_ = true; 
     } 
     catch (Exception e) 
     {
@@ -838,10 +785,10 @@ public abstract class JDTestDriver extends TestDriver {
       {
       
       case DRIVER_TOOLBOX: 
-        namedParameterSupport_ = (release_ >= JDTestDriver.RELEASE_V4R5M0); 
+        namedParameterSupport_ = true; 
         break; 
       case DRIVER_NATIVE: 
-        namedParameterSupport_ = (release_ >= JDTestDriver.RELEASE_V5R1M0); 
+        namedParameterSupport_ =true; 
         break; 
       case DRIVER_JCC: 
         // As of 10/3/2011, jcc not supporting named parameter for i
@@ -859,85 +806,14 @@ public abstract class JDTestDriver extends TestDriver {
       namedParameterSupport_ = false; 
     } 
 
-    try { 
-      Class.forName("java.sql.Savepoint"); 
-      switch (driver_) 
-      {
-      
-      case DRIVER_TOOLBOX: 
-        cursorHoldabilitySupport_ = (release_ >= JDTestDriver.RELEASE_V5R2M0); 
-        break; 
-      case DRIVER_NATIVE: 
-        cursorHoldabilitySupport_ = (release_ >= JDTestDriver.RELEASE_V5R1M0); 
-        break; 
-      case DRIVER_JCC:
-        cursorHoldabilitySupport_ = (release_ >= JDTestDriver.RELEASE_V5R1M0);
-        break;
-      } 
-    } 
-    catch (Exception e) 
-    {
-      
-      cursorHoldabilitySupport_ = false; 
-    } 
+        cursorHoldabilitySupport_ = true;
+        multipleOpenResultSetSupport_ = true;
+         
 
-    try { 
-      Class.forName("java.sql.Savepoint"); 
-      switch (driver_) {
-      case DRIVER_TOOLBOX: 
-        multipleOpenResultSetSupport_ = (release_ > JDTestDriver.RELEASE_V6R1M0); 
-        break; 
-      case DRIVER_NATIVE: 
-        multipleOpenResultSetSupport_ = (release_ >= JDTestDriver.RELEASE_V5R2M0); 
-        break; 
-      case DRIVER_JCC:
-        multipleOpenResultSetSupport_ = (release_ >= JDTestDriver.RELEASE_V5R2M0);
-        break;
-      }
-    } 
-    catch (Exception e) 
-    {
       
-      multipleOpenResultSetSupport_ = false; 
-    } 
-
-    try { 
-      Class.forName("java.sql.Savepoint"); 
-      generatedKeySupport_ = (release_ >= JDTestDriver.RELEASE_V5R2M0); 
-    } 
-    catch (Exception e) 
-    {
-      
-      generatedKeySupport_ = false; 
-    } 
-
-    try { 
-      Class.forName("java.sql.Savepoint"); 
-      switch (driver_) 
-      {
-      
-      case DRIVER_TOOLBOX: 
-        updateableLobsSupport_ = (release_ >= JDTestDriver.RELEASE_V4R5M0); 
-        break; 
-      case DRIVER_NATIVE: 
-        updateableLobsSupport_ = (release_ >= JDTestDriver.RELEASE_V5R1M0); 
-        break; 
-      case DRIVER_JCC:
-        updateableLobsSupport_ = (release_ >= JDTestDriver.RELEASE_V5R1M0);
-        break;
-      } 
-    } 
-    catch (Exception e) 
-    {
-      
-      updateableLobsSupport_ = false; 
-    }
-
-    try {
-      OSName_ = System.getProperty("os.name");
-    } catch (Throwable t) {
-      updateableLobsSupport_ = false;
-    }
+      generatedKeySupport_ = true ;
+        updateableLobsSupport_ = true;
+ 
 
     System.out.println("OS/400 Release = " + release_ + ".");
     System.out.println("JDK level = " + JVMInfo.getJavaVersionString());
@@ -946,7 +822,7 @@ public abstract class JDTestDriver extends TestDriver {
       System.out.println("Max memory = " + Runtime.getRuntime().maxMemory());
     }
     System.out.println("Java home = " + System.getProperty("java.home"));
-    System.out.println("JVM Running on " + OSName_);
+    System.out.println("JVM Running on " + JTOpenTestEnvironment.osVersion);
     Locale locale = Locale.getDefault();
     System.out.println("Default locale = " + locale);
     Calendar defaultCalendar = Calendar.getInstance();
@@ -1619,10 +1495,7 @@ public abstract class JDTestDriver extends TestDriver {
 
       }
       if (isExtendedDynamic_) {
-      //
-      // Override_qaqqini not available in V5R4
-      //
-	  if (getRelease() >= RELEASE_V6R1M0) {
+         {
 	      Statement stmt = connection.createStatement();
 	      try {
 		  stmt.executeUpdate("call qsys2.override_qaqqini(1, '', '')");
@@ -1710,16 +1583,14 @@ public abstract class JDTestDriver extends TestDriver {
    * @return platform
    **/
   static public String getClientOS() {
-    String os = System.getProperty("os.name");
-    // System.out.println("Environment: " + os);
 
-    if (os.toUpperCase().indexOf("400") >= 0)
+    if (JTOpenTestEnvironment.isOS400)
       return CLIENT_as400;
-    else if (os.toUpperCase().indexOf("WINDOWS") >= 0)
+    else if (JTOpenTestEnvironment.isWindows)
       return CLIENT_windows;
-    else if (os.toUpperCase().indexOf("AIX") >= 0)
+    else if (JTOpenTestEnvironment.isAIX)
       return CLIENT_aix;
-    else if (os.toUpperCase().indexOf("LINUX") >= 0)
+    else if (JTOpenTestEnvironment.isLinux)
       return CLIENT_linux;
     else
       return "???";

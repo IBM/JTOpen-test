@@ -39,6 +39,7 @@ import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 import test.JDReflectionUtil;
 import test.JDTestDriver;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -200,7 +201,7 @@ public class AS400JDBCMDSTestcase extends Testcase
 
         if (os.indexOf("OS/400") >= 0)
             environment_ = OS_AS400;
-        else if (os.indexOf("Windows") >= 0)
+        else if (JTOpenTestEnvironment.isWindows)
             environment_ = OS_WINDOWS;
 
         if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))

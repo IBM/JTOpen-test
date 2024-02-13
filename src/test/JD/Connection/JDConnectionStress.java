@@ -97,11 +97,11 @@ Performs cleanup needed after running variations.
 	if (checkNative()) {
 	    long cliFixLevel =getCliFixLevel();
 	    System.out.println("cliFixLevel is "+cliFixLevel);
-	    if ((getRelease() == JDTestDriver.RELEASE_V6R1M0) && (cliFixLevel < 47196)) {
+	    if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) && (cliFixLevel < 47196)) {
 		notApplicable("Requires CLI fix SI47196 CLI LEVEL="+cliFixLevel);
 		return;
 	    }
-	    if ((getRelease() == JDTestDriver.RELEASE_V5R4M0)) {
+	    if ((getRelease() == JDTestDriver.RELEASE_V7R1M0)) {
 		notApplicable("Fix not in V5R4");
 		return;
 	    }

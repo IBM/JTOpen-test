@@ -956,7 +956,7 @@ public class JDPSSetBlob extends JDTestcase {
 
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(
           "Not working for native JDBC PTF level < 27438 : current level "
               + getDriverFixLevel());

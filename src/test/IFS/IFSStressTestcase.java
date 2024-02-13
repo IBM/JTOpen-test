@@ -26,6 +26,8 @@ import com.ibm.as400.access.IFSFileOutputStream;
 import com.ibm.as400.access.IFSKey;
 import com.ibm.as400.access.IFSRandomAccessFile;
 
+import test.JTOpenTestEnvironment;
+
 /**
 Exercise various methods by requesting very demanding operations in terms
 of size, number of requests, or use of system resources.
@@ -403,7 +405,7 @@ entries).
     //    Each of those would need to be exported and mounted individually. @A3A
     //    Since you can mount over NFS, you can construct an identical      @A3A
     //    namespace if you mount over the correct subdirectories.           @A3A
-    if (isApplet_ || linux_ || AIX_)                                      //@A3C
+    if (isApplet_ || JTOpenTestEnvironment.isLinux || JTOpenTestEnvironment.isAIX)                                      //@A3C
     {
       notApplicable();
       return;

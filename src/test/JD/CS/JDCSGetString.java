@@ -807,7 +807,7 @@ extends JDCSGetTestcase
             try
             {
                 String p = csTypes_.getString (18);
-                assertCondition (p.equals ("http://w3.rchland.ibm.com/index.html"));
+                assertCondition (p.equals ("https://github.com/IBM/JTOpen-test/blob/main/README.md"));
             }
             catch(Exception e)
             {
@@ -1614,7 +1614,7 @@ extends JDCSGetTestcase
                 try
                 {
                     String p = csTypes_.getString ("P_DATALINK");
-                    assertCondition (p.equals ("http://w3.rchland.ibm.com/index.html"));
+                    assertCondition (p.equals ("https://github.com/IBM/JTOpen-test/blob/main/README.md"));
                 }
                 catch(Exception e)
                 {
@@ -1729,7 +1729,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -1777,7 +1777,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -1826,7 +1826,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -1875,7 +1875,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -1925,7 +1925,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -1976,7 +1976,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -2027,7 +2027,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -2083,7 +2083,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 
 		try
@@ -2137,7 +2137,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -2190,7 +2190,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -2242,7 +2242,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -2291,7 +2291,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{

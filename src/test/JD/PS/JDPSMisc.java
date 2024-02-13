@@ -645,7 +645,7 @@ getMetaData() - Should return null when the statement does not produce a result 
             notApplicable("Toolbox only TC");
             return;
         }
-        else if ( getRelease() <= JDTestDriver.RELEASE_V5R4M0 ){
+        else if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ){
             succeeded("V6R1 onward");
             return;
         }
@@ -782,7 +782,7 @@ getMetaData() - Should return null when the statement does not produce a result 
             notApplicable("Toolbox only TC");
             return;
         }
-        else if ( getRelease() <= JDTestDriver.RELEASE_V5R4M0 ){
+        else if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ){
             succeeded("V6R1 onward");
             return;
         }
@@ -917,14 +917,14 @@ getMetaData() - Should return null when the statement does not produce a result 
     **/
     public void Var022()
     {
-        if (getRelease() <= JDTestDriver.RELEASE_V5R4M0 && isToolboxDriver())
+        if (getRelease() <= JDTestDriver.RELEASE_V7R1M0 && isToolboxDriver())
         {
             notApplicable("Too complex for v5r3/4");
             return;
         }
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
+	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Native fails in V5R4, needs CLI header fix");
 	    return; 
 	} 

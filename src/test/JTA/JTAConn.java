@@ -195,7 +195,7 @@ Performs cleanup needed after running variations.
                   conn.rollback();
                }
                conn.close();
-	       if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		   assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 
 	       } else { 
@@ -250,7 +250,7 @@ Performs cleanup needed after running variations.
                failed("Did not throw exception");
             }
             catch (Exception ex) {
-	       if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		   assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 
 	       } else { 
@@ -354,7 +354,7 @@ Performs cleanup needed after running variations.
                // failed("Did not throw exception");
             }
             catch (Exception ex) {
-	       if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		   assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 
 	       } else { 
@@ -1246,7 +1246,7 @@ Performs cleanup needed after running variations.
                failed("Did not throw exception");
             }
             catch (Exception ex) {
-	       if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		   assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 
 	       } else { 

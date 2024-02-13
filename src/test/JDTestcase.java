@@ -375,12 +375,10 @@ public class JDTestcase extends Testcase {
    * Checks to see if the testcase is running on 400
    **/
   protected boolean checkClientOn400() {
-    String osName;
-    osName = System.getProperty("os.name");
-    if (osName.indexOf("400") >= 0) {
+    if (JTOpenTestEnvironment.isOS400) {
       return true;
     }
-    notApplicable("on400 test: currently on " + osName);
+    notApplicable("on400 test: currently on " + JTOpenTestEnvironment.osVersion);
     return false;
   }
 
@@ -1494,8 +1492,8 @@ public class JDTestcase extends Testcase {
     return release_;
   }
 
-  public boolean checkRelease760(String comment) {
-    return checkRelease(JDTestDriver.RELEASE_V7R6M0, comment);
+  public boolean checkRelease750plus(String comment) {
+    return checkRelease(JDTestDriver.RELEASE_V7R5M0_PLUS, comment);
   }
 
   public boolean checkRelease750(String comment) {
@@ -1536,7 +1534,7 @@ public class JDTestcase extends Testcase {
   }
 
   public boolean checkRelease610(String comment) {
-    return checkRelease(JDTestDriver.RELEASE_V6R1M0, comment);
+    return checkRelease(JDTestDriver.RELEASE_V7R1M0, comment);
   }
 
   public boolean checkRelease(int release, String comment) {
@@ -1578,10 +1576,7 @@ public class JDTestcase extends Testcase {
     return (jdbcLevel_ >= 40);
   }
 
-  public String getOS() {
-    return System.getProperty("os.name"); // "os/400"
-  }
-
+ 
   /**
    * Checks if SYSIBM metdata used
    **/
@@ -1589,15 +1584,11 @@ public class JDTestcase extends Testcase {
   protected boolean isSysibmMetadata() {
     // as of jdbc40, toolbox is still mainly non-sysibmMetadata.
     if (isToolboxDriver()) {
-      if (getRelease() <= JDTestDriver.RELEASE_V6R1M0) 
-        return false;
-      else
         return true;
     }
 
     return isJdbc40()
-        || (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+        || (getDriver() == JDTestDriver.DRIVER_NATIVE)
         || (getDriver() == JDTestDriver.DRIVER_JCC);
   }
 
@@ -1663,20 +1654,16 @@ public class JDTestcase extends Testcase {
     if ((release_ == JDTestDriver.RELEASE_NONE) && (isToolboxDriver())) {
       try {
         int vrm = systemObject_.getVRM();
-        if (vrm == AS400.generateVRM(4, 2, 0))
-          release_ = JDTestDriver.RELEASE_V4R2M0;
-        else if (vrm == AS400.generateVRM(4, 3, 0))
-          release_ = JDTestDriver.RELEASE_V4R3M0;
-        else if (vrm == AS400.generateVRM(4, 4, 0))
-          release_ = JDTestDriver.RELEASE_V4R4M0;
-        else if (vrm == AS400.generateVRM(4, 5, 0)) 
-          release_ = JDTestDriver.RELEASE_V4R5M0; 
-        else if (vrm == AS400.generateVRM(5, 1, 0)) 
-          release_ = JDTestDriver.RELEASE_V5R1M0; 
-        else if (vrm == AS400.generateVRM(5, 2, 0)) 
-          release_ = JDTestDriver.RELEASE_V5R2M0; 
-        else if (vrm == AS400.generateVRM(5, 3, 0)) 
-          release_ = JDTestDriver.RELEASE_V5R3M0; 
+        if (vrm == AS400.generateVRM(7, 2, 0))
+          release_ = JDTestDriver.RELEASE_V7R2M0;
+        else if (vrm == AS400.generateVRM(7, 3, 0))
+          release_ = JDTestDriver.RELEASE_V7R3M0;
+        else if (vrm == AS400.generateVRM(7, 4, 0))
+          release_ = JDTestDriver.RELEASE_V7R4M0;
+        else if (vrm == AS400.generateVRM(7, 5, 0)) 
+          release_ = JDTestDriver.RELEASE_V7R5M0; 
+        else  
+          release_ = JDTestDriver.RELEASE_V7R5M0_PLUS; 
       } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
         e.printStackTrace(System.out);
@@ -2178,13 +2165,6 @@ public class JDTestcase extends Testcase {
   String getReleaseJvmDriver() {
     String value = "";
     switch (getRelease()) {
-    case JDTestDriver.RELEASE_V5R4M0:
-      value = "54";
-      break;
-    case JDTestDriver.RELEASE_V5R5M0:
-    case JDTestDriver.RELEASE_V6R1M0:
-      value = "61";
-      break;
     case JDTestDriver.RELEASE_V7R1M0:
       value = "71";
       break;
@@ -2200,7 +2180,7 @@ public class JDTestcase extends Testcase {
     case JDTestDriver.RELEASE_V7R5M0:
       value = "75";
       break;
-    case JDTestDriver.RELEASE_V7R6M0:
+    case JDTestDriver.RELEASE_V7R5M0_PLUS:
       value = "76";
       break;
     default:
@@ -2208,18 +2188,6 @@ public class JDTestcase extends Testcase {
     }
     int jdk = JVMInfo.getJDK();
     switch (jdk) {
-    case JVMInfo.JDK_13:
-      value += "3";
-      break;
-    case JVMInfo.JDK_14:
-      value += "4";
-      break;
-    case JVMInfo.JDK_142:
-      value += "4";
-      break;
-    case JVMInfo.JDK_15:
-      value += "5";
-      break;
     case JVMInfo.JDK_16:
       value += "6";
       break;
@@ -2972,7 +2940,7 @@ public class JDTestcase extends Testcase {
           .prepareCall("CALL QGPL.STPJOBLOG('" + outputFile + "')");
       cs.executeUpdate();
       System.out.println("JOBLOG information at " + outputFile);
-      if (System.getProperty("os.name").indexOf("400") > 0) {
+      if (JTOpenTestEnvironment.isOS400) {
         // No need to get file, it is already there
       } else {
         // Grab the file and place it on the local system
@@ -3029,7 +2997,7 @@ public class JDTestcase extends Testcase {
           "CALL QGPL.STPJOBLOGX('" + outputFile + "','" + jobname + "')");
       cs.executeUpdate();
       System.out.println("JOBLOG information at " + outputFile);
-      if (System.getProperty("os.name").indexOf("400") > 0) {
+      if (JTOpenTestEnvironment.isOS400) {
         // No need to get file, it is already there
       } else {
         // Grab the file and place it on the local system
@@ -3238,8 +3206,8 @@ public class JDTestcase extends Testcase {
         ifsFile.delete();
       } catch (IOException e) {
       }
-      // Remove /home/jdbctest/.bindings
-      ifsFile = new IFSFile(as400, "/home/jdbctest/.bindings");
+      // Remove bindings
+      ifsFile = new IFSFile(as400, JTOpenTestEnvironment.testcaseHomeDirectory+"/.bindings");
       try {
         ifsFile.delete();
       } catch (IOException e) {

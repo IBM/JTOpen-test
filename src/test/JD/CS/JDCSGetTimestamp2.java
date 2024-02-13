@@ -437,7 +437,7 @@ getTimestamp() - getTimestamp on a type registered as Timestamp, INOUT TIME
 **/
     public void Var016()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION, "RETURNTIME");

@@ -73,7 +73,7 @@ import java.sql.*;
 public class JDRunit {
 
   public static final String TMP = "/tmp";
-  static String testcaseCode = "/home/jdbctest";
+  public static String testcaseCode = JTOpenTestEnvironment.testcaseHomeDirectory;
 
   static Hashtable rdbToCreatedUserid = new Hashtable();
   static Hashtable rdbToCreatedPassword = new Hashtable();
@@ -198,10 +198,9 @@ public class JDRunit {
       System.out.println("JDRunit:  file.encoding is "
           + System.getProperty("file.encoding"));
     }
-    String osname = System.getProperty("os.name");
-
-    on400 = (osname.indexOf("400")) > 0;
-    onLinux = (osname.indexOf("Linux")) >= 0;
+ 
+    on400 = JTOpenTestEnvironment.isOS400; 
+    onLinux = JTOpenTestEnvironment.isLinux;
     
     property = System.getProperty("useTestJar"); 
     if (property != null && (property.toUpperCase().indexOf('N')< 0)) {
@@ -922,15 +921,11 @@ public class JDRunit {
       int foundLocations = 0;
       StringBuffer locations = new StringBuffer();
       String[] activationJarLocations = {
-          "/home/jdbctest/jars/activation.jar",
-          "/home/jdbctest/jars/activation.jar",
-          "/home/jdbctest/jars/activation.jar",
-          "/afs/rchland.ibm.com/lande/shadow/dev2000/as400/v7r1m0t.jacl/cur/cmvc/java.pgm/yjac.jacl/jars/activation.jar",
+          userDir + sep + "jars" + sep    + "activation.jar",
+          "C:" + sep + "activation.jar",
+          testcaseCode+"/jars/activation.jar",
           "/qibm/proddata/os400/java400/ext/activation.jar",
           "C:\\Documents and Settings\\Administrator\\workspace\\lib\\activation.jar", };
-      activationJarLocations[0] = userDir + sep + "jars" + sep
-          + "activation.jar";
-      activationJarLocations[1] = "C:" + sep + "activation.jar";
 
       for (int i = 0; i < activationJarLocations.length && urls[0] == null; i++) {
         if (i > 0) {
@@ -952,14 +947,11 @@ public class JDRunit {
       locations = new StringBuffer();
       // Look for mail.jar
       String[] mailJarLocations = {
-          "/home/jdbctest/jars/mail.jar",
-          "/home/jdbctest/jars/mail.jar",
-          "/home/jdbctest/jars/mail.jar",
-          "/afs/rchland.ibm.com/lande/shadow/dev2000/as400/v7r1m0t.jacl/cur/cmvc/java.pgm/yjac.jacl/jars/mail.jar",
+          userDir + sep + "jars" + sep + "mail.jar",
+          "C:" + sep + "mail.jar", 
+          testcaseCode+"/jars/mail.jar",
           "/qibm/proddata/os400/java400/ext/mail.jar",
           "C:\\Documents and Settings\\Administrator\\workspace\\lib\\mail.jar", };
-      mailJarLocations[0] = userDir + sep + "jars" + sep + "mail.jar";
-      mailJarLocations[1] = "C:" + sep + "mail.jar";
       for (int i = 0; i < mailJarLocations.length && urls[1] == null; i++) {
         if (i > 0) {
           locations.append(" ");
@@ -1184,8 +1176,7 @@ public class JDRunit {
     //
     // Before we start, make sure the CCSID is not 65535
     //
-    String osName = System.getProperty("os.name");
-    if ("OS/400".equals(osName)) {
+    if (JTOpenTestEnvironment.isOS400) {
       int ccsid = JDJobName.getJobCCSID();
       if (ccsid == 65535) {
         System.out.println("Warning:  CCSID is 65535, changing to 37");
@@ -1644,7 +1635,7 @@ public class JDRunit {
 
     String AS400 = iniProperties.getProperty("AS400");
     if (AS400 == null) {
-      if (System.getProperty("os.name").indexOf("400") >= 0) {
+      if (JTOpenTestEnvironment.isOS400) {
         AS400 = JDHostName.getHostName().toUpperCase();
         iniProperties.put("AS400", AS400);
       }
@@ -1779,7 +1770,7 @@ public class JDRunit {
     if (AS400 == null) {
       AS400 = iniProperties.getProperty(initials);
       if (AS400 == null) {
-        if (System.getProperty("os.name").indexOf("400") >= 0) {
+        if (JTOpenTestEnvironment.isOS400) {
           try {
             AS400 = JDHostName.getHostName().toUpperCase();
           } catch (Exception e) {
@@ -2005,13 +1996,13 @@ public class JDRunit {
 
     if (useJaCoCo) {
       if (toolboxJar.indexOf("java6") > 0) {
-        toolboxJar = "/home/jdbctest/jacoco/java6/jt400.jar";
+        toolboxJar = testcaseCode+"/jacoco/java6/jt400.jar";
       } else if (toolboxJar.indexOf("java8") > 0) {
-        toolboxJar = "/home/jdbctest/jacoco/java8/jt400.jar";
+        toolboxJar = testcaseCode+"/jacoco/java8/jt400.jar";
       } else if (toolboxJar.indexOf("java9") > 0) {
-        toolboxJar = "/home/jdbctest/jacoco/java9/jt400.jar";
+        toolboxJar = testcaseCode+"/jacoco/java9/jt400.jar";
       } else {
-        toolboxJar = "/home/jdbctest/jacoco/java0/jt400.jar";
+        toolboxJar = testcaseCode+"/jacoco/java0/jt400.jar";
       }
     }
 
@@ -2113,7 +2104,6 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     
     int failedCount = 0; 
     boolean forceReport = false;
-    String osname = System.getProperty("os.name");
     long thisRunNumber = nextRunNumber();
     String runitInputFile = TMP + "/runit" + initials + ".in." + pid + "."
         + thisRunNumber;
@@ -2126,7 +2116,6 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     }
     String results = "ct/runit" + initials + ".out";
     boolean fatalError = false;
-    boolean isWindows = iniProperties.getProperty("CLIENTOS", "AS400").equals("WINDOWS"); 
     String fatalErrorString = "";
     String fatalErrorMessage = "";
     boolean isClassic = System.getProperty("java.vm.name").indexOf("Classic") >= 0;
@@ -2146,8 +2135,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     inputVector.addElement("echo input is " + runitInputFile);
     inputVector.addElement("echo output is " + runitOutputFile);
     inputVector.addElement(iniInfo.toString());
-    inputVector.addElement("echo cd /home/jdbctest");
-    inputVector.addElement("cd /home/jdbctest");
+    inputVector.addElement("echo cd "+testcaseCode);
+    inputVector.addElement("cd "+testcaseCode);
 
     String javaExecPath = javaHome;
     //
@@ -2161,7 +2150,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     String classpath = iniProperties.getProperty("classpath");
     if (classpath != null) {
-        if (isWindows) { 
+        if (JTOpenTestEnvironment.isWindows) { 
                 inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
                 inputVector.addElement("CLASSPATH='" + classpath+"'");
         } else {
@@ -2169,7 +2158,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
                 inputVector.addElement("CLASSPATH=" + classpath);
         }
     } else {
-        if (isWindows) { 
+        if (JTOpenTestEnvironment.isWindows) { 
                 /* Just inherit the classpath.  */ 
                 classpath = System.getProperty("java.class.path"); 
                 inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
@@ -2223,7 +2212,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       setClasspath += ":" + jtopenliteJar;
     }
 
-    if (isWindows) {
+    if (JTOpenTestEnvironment.isWindows) {
 
       /* On windows, we copy the toolbox jar so that the original can be updated */
       /*
@@ -2591,7 +2580,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     String savefileName = "ct" + sep + "out" + sep + initials + sep + "runit."
         + dateStringNoSpace;
-    if (osname.indexOf("Windows") >= 0) {
+    if (JTOpenTestEnvironment.isWindows) {
       savefileName = savefileName.replace(':', '.');
     }
 
@@ -2606,11 +2595,11 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         + savefileName + " -Dtest.parentJob=" + parentJob + " " + javaArgs;
 
     if (useJaCoCo) {
-        File destDir = new File("/home/jdbctest/jacoco/"+initials);
+        File destDir = new File(testcaseCode+"/jacoco/"+initials);
         if (!destDir.exists()) {
             destDir.mkdir(); 
         }
-        javaArgs = "-javaagent:/home/jdbctest/jacoco/lib/jacocoagent.jar=destfile=/home/jdbctest/jacoco/"+initials+"/"+test+".exec,includes=com.ibm.as400.access.* " + javaArgs; 
+        javaArgs = "-javaagent:"+testcaseCode+"/jacoco/lib/jacocoagent.jar=destfile="+testcaseCode+"/jacoco/"+initials+"/"+test+".exec,includes=com.ibm.as400.access.* " + javaArgs; 
     } 
 
     String javaCommand = "java " + javaArgs + " " + testArgs + " -lib "
@@ -2674,8 +2663,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       shellCommand = cmdArray1[0];
       /* Fix the command line if running on windows in */
       if (debug)
-        System.out.println("JDRunit: os.name=" + osname);
-      if (osname.indexOf("Windows") >= 0 && cmdArray1[0].indexOf("/bin") >= 0) {
+        System.out.println("JDRunit: osVersion=" + JTOpenTestEnvironment.osVersion);
+      if (JTOpenTestEnvironment.isWindows && cmdArray1[0].indexOf("/bin") >= 0) {
         //
         // Get CYGWIN location from user.dir
         //
@@ -2715,7 +2704,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     // This scenario should only typically happened on V6R1
     if ((System.getProperty("java.home").indexOf("QOpenSys") > 0)
         && (javaHome.indexOf("QOpenSys") == -1)) {
-      String[] envp = { "PATH=/usr/bin:", "HOME=/home/jdbctest", };
+      String[] envp = { "PATH=/usr/bin:", "HOME="+testcaseCode, };
       if (debug)
         System.out.println("Calling exec1 with envp and cmdArray[0]="
             + cmdArray1[0]);
@@ -3048,8 +3037,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
           // The logic should also work with Linux
 
-          if ((osname.indexOf("Windows") >= 0)
-              || (osname.indexOf("Linux") >= 0)) {
+          if (JTOpenTestEnvironment.isWindows
+              || JTOpenTestEnvironment.isLinux) {
 
             // Start a process to run shell commands..
             // Note: We control the shell by passing in commands to the shell.
@@ -3662,7 +3651,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       
         String command = "java -classpath "+testcaseCode+":"+jt400jar+" com.ibm.as400.access.ProxyServer"; 
         System.out.println("JDRunit: starting ProxyServer on default port using: "+command); 
-      // Need to include /home/jdbctest because the source for the serialized
+      // Need to include testcaseCode because the source for the serialized
       // lobs is located there.
       runtime1
           .exec(command);

@@ -21,6 +21,7 @@ import com.ibm.as400.access.IFSFileFilter;
 import com.ibm.as400.access.IFSRandomAccessFile;
 
 import test.IFSTests;
+import test.JTOpenTestEnvironment;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -3912,8 +3913,8 @@ private boolean compareIFSFilePathToJavaIOPath(String IFSFile1, String file2)
   // from the AIX/Linux NFS path.
 
   if (DEBUG) System.out.println("Before file2='"+file2+"'");
-  // os.name (e.g. "OS/400", "Windows XP"
-  if (operatingSystem_.indexOf("Windows XP") >= 0)
+
+  if (JTOpenTestEnvironment.isWindows)
   {
     // Remove drive letter from front of file2 (e.g. mappedDrive="I:")
 

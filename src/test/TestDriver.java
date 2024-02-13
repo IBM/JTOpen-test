@@ -172,12 +172,8 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   protected boolean isNative_ = false;
   protected boolean isExtendedDynamic_ = false;
   protected boolean isLocal_ = false;
-  protected static boolean onAS400_ = false;
+  protected static boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
   static {
-    String s = System.getProperty("os.name");
-    boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
-    if (onI5OS)
-      onAS400_ = true; // make sure this flag gets set
     try {
       TestDriverStatic.init();
     } catch (Exception e) {
@@ -1202,8 +1198,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     } catch (Exception e) {
     }
     out_.println("CLIENT NAME      = " + clientMachineName);
-    out_.println("CLIENT OS/VERSION= " + System.getProperty("os.name") + " "
-        + System.getProperty("os.version"));
+    out_.println("CLIENT OS/VERSION= " + JTOpenTestEnvironment.osVersion); 
     out_.println("CLIENT USER NAME = " + System.getProperty("user.name"));
     String sysName = systemName_;
     if (sysName != null && sysName.equalsIgnoreCase("localhost")) {

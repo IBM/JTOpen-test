@@ -577,7 +577,7 @@ getObject() - Get a type that was registered as an OTHER.
        if (checkLobSupport ()) {
         try {
             Object p = csTypes_.getObject (18);
-            assertCondition (p.equals ("http://w3.rchland.ibm.com/index.html"));
+            assertCondition (p.equals ("https://github.com/IBM/JTOpen-test/blob/main/README.md"));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -988,7 +988,7 @@ getObject() - Get a type that was registered as an OTHER.
 	    if (checkLobSupport ()) {
 		try{
 		    Object p = csTypes_.getObject ("P_DATALINK");
-		    assertCondition (p.equals ("http://w3.rchland.ibm.com/index.html"));
+		    assertCondition (p.equals ("https://github.com/IBM/JTOpen-test/blob/main/README.md"));
 		}
 		catch (Exception e) {
 		    failed (e, "Unexpected Exception");

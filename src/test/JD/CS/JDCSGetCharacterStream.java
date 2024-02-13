@@ -618,7 +618,7 @@ getCharacterStream() - Get a type that was registered as an OTHER.
          if (checkJdbc40 ()) {
             try {
                Reader p = (Reader) JDReflectionUtil.callMethod_O(csTypes_,getMethodName, 18);
-               String expected = "http://w3.rchland.ibm.com/index.html"; 
+               String expected = "https://github.com/IBM/JTOpen-test/blob/main/README.md"; 
                assertCondition (compare(p, expected,sb),sb.toString()+" -- updated 11/17/2011 ");
             } catch (Exception e) {
               failed (e, "Unexpected Exception -- updated 11/17/2011");
@@ -1084,7 +1084,7 @@ getCharacterStream() - Get a type that was registered as an OTHER.
          if (checkJdbc40 ()) {
             try {
                Reader p = (Reader) JDReflectionUtil.callMethod_OS(csTypes_,getMethodName, "P_DATALINK");
-               String expected = "http://w3.rchland.ibm.com/index.html"; 
+               String expected = "https://github.com/IBM/JTOpen-test/blob/main/README.md"; 
                assertCondition (compare(p, expected,sb),sb.toString()+" -- updated 11/17/2011 ");
             } catch (Exception e) {
               failed (e, "Unexpected Exception -- updated 11/17/2011");
@@ -1274,7 +1274,7 @@ getCharacterStream() - Get a type that was registered as a BIGINT.
        */
   public void Var057() {
     sb.setLength(0); 
-    if (getRelease() < JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("V5R3 or later test");
     } else {
       if (checkJdbc40()) {

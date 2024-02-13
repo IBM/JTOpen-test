@@ -1707,7 +1707,7 @@ getNString() - Get from a DATALINK.
                 + JDRSTest.RSTEST_GETDL);
             JDRSTest.position0 (rs, "LOB_FULL");
             String str = (String) JDReflectionUtil.callMethod_OS(rs, "getNString", "C_DATALINK");
-            assertCondition (str.equalsIgnoreCase("http://schuman.rchland.ibm.com/help.html"), "Failed to obtain datalink str="+str);
+            assertCondition (str.equalsIgnoreCase("https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt"), "Failed to obtain datalink str="+str);
           } catch (Exception e) {
             failed (e, "Unexpected Exception");
           }
@@ -2012,7 +2012,7 @@ the result set.
 		    //also in TB, we get outofmem error and then it hangs the tc script
                     // For class in V6R1 we also see the same problem 
 		    if(runningJ9 && isToolboxDriver() ||
-		       (!runningJ9 &&  isToolboxDriver()  && getRelease() == JDTestDriver.RELEASE_V6R1M0 ))
+		       (!runningJ9 &&  isToolboxDriver()  && getRelease() == JDTestDriver.RELEASE_V7R1M0 ))
 		    {
 		        notApplicable("TOOLBOX_FIX_NEEDED:  sometimes gets outofmem and hangs tc script");
 		        return;

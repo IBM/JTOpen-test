@@ -2215,9 +2215,9 @@ public abstract class Testcase {
     try {
       int vrm = systemObject_.getVRM();
       if (vrm == AS400.generateVRM(5, 4, 0)) {
-        release_ = JDTestDriver.RELEASE_V5R4M0;
+        release_ = JDTestDriver.RELEASE_V7R1M0;
       } else if (vrm == AS400.generateVRM(6, 1, 0)) {
-        release_ = JDTestDriver.RELEASE_V6R1M0;
+        release_ = JDTestDriver.RELEASE_V7R1M0;
       } else if (vrm == AS400.generateVRM(7, 1, 0)) {
         release_ = JDTestDriver.RELEASE_V7R1M0;
       } else if (vrm == AS400.generateVRM(7, 2, 0)) {
@@ -2229,7 +2229,7 @@ public abstract class Testcase {
       } else if (vrm == AS400.generateVRM(7, 5, 0)) {
         release_ = JDTestDriver.RELEASE_V7R5M0;
       } else if (vrm == AS400.generateVRM(7, 6, 0)) {
-        release_ = JDTestDriver.RELEASE_V7R6M0;
+        release_ = JDTestDriver.RELEASE_V7R5M0_PLUS;
       } else {
         System.out.println("***************************");
         System.out.println(" WARNING .. release not set");

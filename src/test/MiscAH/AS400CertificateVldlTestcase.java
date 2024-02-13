@@ -44,6 +44,7 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.UserSpace;
 
 import test.AS400CertificateTest;
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 /**
@@ -65,7 +66,6 @@ public class AS400CertificateVldlTestcase extends Testcase
   private String operatingSystem_;
   private boolean DOS_ = false;
   private static String dirName_;
-  private boolean OS2_ = false;
   private boolean OS400_ = false;
   private boolean usingNativeImpl = false;
   boolean failed;  // Keeps track of failure in multi-part tests.
@@ -105,18 +105,11 @@ Constructor.
 
     // Determine operating system we're running under
     operatingSystem_ = System.getProperty("os.name");
-    if (operatingSystem_.indexOf("Windows") >= 0 ||
-        operatingSystem_.indexOf("DOS") >= 0 ||
-        operatingSystem_.indexOf("OS/2") >= 0)
+    if (JTOpenTestEnvironment.isWindows)
     {
       DOS_ = true;
     }
 
-    // Are we in OS/2? If so, need different commands for deleting stuff...
-    if (operatingSystem_.indexOf("OS/2") >= 0)
-    {
-      OS2_ = true;
-    }
 
     // Are we running on the AS/400?
     else if (operatingSystem_.indexOf("OS/400") >= 0)

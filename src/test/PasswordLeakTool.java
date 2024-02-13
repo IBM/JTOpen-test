@@ -53,15 +53,14 @@ public class PasswordLeakTool {
     if (debug) {
 	System.out.println("DEBUG: java.home is "+javaHome); 
     }
-    osName = System.getProperty("os.name");
-    if (osName.indexOf("Windows") == 0) {
+    if (JTOpenTestEnvironment.isWindows) {
       osType = OS_WINDOWS;
-    } else if (osName.indexOf("OS/400") == 0) {
+    } else if (JTOpenTestEnvironment.isOS400) {
       osType = OS_IBM_I;
-    } else if (osName.indexOf("AIX") == 0) {
+    } else if (JTOpenTestEnvironment.isAIX) {
       osType = OS_AIX;
     } else {
-      System.out.println("PasswordLeakTool: unknown OS=" + osName);
+      System.out.println("PasswordLeakTool: unknown OS=" + JTOpenTestEnvironment.osVersion);
     }
     if (javaHome.indexOf("/QOpenSys/QIBM/ProdData/JavaVM") >= 0) {
       ibmJVM = true;

@@ -1156,7 +1156,7 @@ an invalid value. Exception should be thrown.
         public void Var051 ()
         {
             if (checkJdbc20StdExt()) {
-              if ((getRelease() >= JDTestDriver.RELEASE_V5R4M0) && 
+              if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && 
                   (getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
                 try {
                     ctx_.rebind(bindName_, dataSource_);
@@ -1181,7 +1181,7 @@ an invalid value. Exception should be thrown.
         public void Var052 ()
         {
             if (checkJdbc20StdExt()) {
-              if ((getRelease() >= JDTestDriver.RELEASE_V5R4M0) && 
+              if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && 
                   (getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
 
                 try {
@@ -1209,7 +1209,7 @@ an invalid value. Exception should be thrown.
         public void Var053 ()
         {
             if (checkJdbc20StdExt()) {
-              if ((getRelease() >= JDTestDriver.RELEASE_V5R4M0) && 
+              if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && 
                   (getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
                 try {
                     ctx_.rebind(bindName_, dataSource_);
@@ -1234,7 +1234,7 @@ an invalid value. Exception should be thrown.
         public void Var054 ()
         {
             if (checkJdbc20StdExt()) {
-              if ((getRelease() >= JDTestDriver.RELEASE_V5R4M0) && 
+              if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && 
                   (getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
 
                 try {

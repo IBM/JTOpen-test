@@ -358,7 +358,7 @@ Performs setup needed before running variations.
             }
         }
 
-	v5r2nativeFunctions_ = (getRelease() == JDTestDriver.RELEASE_V5R2M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE);
+	v5r2nativeFunctions_ = (getRelease() == JDTestDriver.RELEASE_V7R1M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE);
 
     }
 
@@ -421,7 +421,7 @@ getBinaryStream() - When the lob is empty.
 		    sb.setLength(0);
 		    InputStream v = blob.getBinaryStream ();
 		    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D3
-		       getRelease() >= JDTestDriver.RELEASE_V5R3M0)	// @D3
+		       getRelease() >= JDTestDriver.RELEASE_V7R1M0)	// @D3
 			assertCondition( compareBeginsWithBytes( v, new byte[0],sb),sb);	// @D3
 		    else						// @D3
 			assertCondition (compare (v, new byte[0],sb),sb);
@@ -449,7 +449,7 @@ getBinaryStream() - When the lob is not empty.
 		    sb.setLength(0);
 		    boolean condition;					// @D3
 		    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D3
-		       getRelease() >= JDTestDriver.RELEASE_V5R3M0)	// @D3
+		       getRelease() >= JDTestDriver.RELEASE_V7R1M0)	// @D3
 			condition = id==2 && compareBeginsWithBytes( v, MEDIUM_,sb );	// @D3
 		    else						// @D3
 			condition = ( id == 2 && compare (v, MEDIUM_,sb)); 
@@ -477,7 +477,7 @@ getBinaryStream() - When the lob is full.
 		    sb.setLength(0); 
 		    InputStream v = blob.getBinaryStream ();
 		    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @D3
-		       getRelease() >= JDTestDriver.RELEASE_V5R3M0)		// @D3
+		       getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @D3
 			assertCondition( compareBeginsWithBytes( v, LARGE_ ,sb),sb);	// @D3
 		    else							// @D3
 			assertCondition (compare (v, LARGE_,sb),sb);
@@ -618,7 +618,7 @@ SQL400 - The test is saying it will test the right thing but then
                         Blob blob = rs_.getBlob ("C_BLOB");
                         byte[] v = blob.getBytes (47, 8);
 			if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @D1
-			   getRelease() >= JDTestDriver.RELEASE_V5R3M0)		// @D1
+			   getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @D1
 			    succeeded();					// @D1
 			else
 			    failed ("Didn't throw SQLException"+v);
@@ -2435,7 +2435,7 @@ setBytes(long, byte[], int, int) - Should work to set the last part of a non-emp
                 int written = blob.setBytes (2, expected, 0, 1);  // @D1: changed offset from 1 to 0 .... setBytes(2, expected, 1, 1);
                 rs2_.updateBlob("C_BLOB", blob);
 
-		if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0 || v5r2nativeFunctions_) //@K2D && getDriver () == JDTestDriver.DRIVER_NATIVE)	// @D1
+		if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0 || v5r2nativeFunctions_) //@K2D && getDriver () == JDTestDriver.DRIVER_NATIVE)	// @D1
 		    assertCondition(written == 1);								// @D1
 		else												// @D1
 		    failed ("Didn't throw SQLException");                                                               
@@ -2480,7 +2480,7 @@ setBytes(long, byte[], int, int) - Should work to set the last part of a non-emp
                 InputStream inputStream = blob1.getBinaryStream();
 		byte[] actualExp = new byte[] {(byte) 6, (byte) 7, (byte) 8, (byte)89}; // 4th byte from var063   @D1
 		sb.setLength(0); 
-		if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0					// @D3
+		if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0					// @D3
 		   && getDriver () == JDTestDriver.DRIVER_NATIVE)			// @D1	// @D3
 		    assertCondition(compareBeginsWithBytes( inputStream, actualExp,sb),sb);	// @D1	// @D3
 		else									// @D1	// @D3
@@ -3005,7 +3005,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
 
 		byte [] newBytes = new byte[] {(byte) 10, (byte) 11, (byte) 12, (byte)65, (byte)75}; // from Var082: last 2 bytes @D1
     sb.setLength(0); 
-		if(getRelease() >=  JDTestDriver.RELEASE_V5R3M0					// @D3
+		if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0					// @D3
 		   && getDriver () == JDTestDriver.DRIVER_NATIVE)			// @D1	// @D3
 		    assertCondition(compareBeginsWithBytes (inputStream, newBytes,sb),sb);	// @D1	// @D3
 		else										// @D3
@@ -3533,7 +3533,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
     **/
     public void Var096()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -3591,7 +3591,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
     **/
     public void Var097()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -3654,7 +3654,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
     **/
     public void Var098()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -3714,7 +3714,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
     **/
     public void Var099()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -3800,7 +3800,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {                                                     
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.toString().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.toString()+" sb ..not support");
@@ -3832,7 +3832,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {          
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -3864,7 +3864,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {            
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -3898,7 +3898,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {        
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -3931,7 +3931,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {                 
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -3964,7 +3964,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {                 
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -3998,7 +3998,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {           
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -4030,7 +4030,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {                       
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -4062,7 +4062,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {                   
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -4095,7 +4095,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {             
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -4124,7 +4124,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
         }
         catch (Exception e)
         {            
-        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V5R5M0)) 
+        	if((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease()< JDTestDriver.RELEASE_V7R1M0)) 
         	{
         		assertCondition(e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1 ,
 					"message is "+e.getMessage()+" sb ..not support");
@@ -4189,7 +4189,7 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
 
     public void Var112()
     {
-	if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+	if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
 	    notApplicable("v5r5 variation");
 	    return;
 	}

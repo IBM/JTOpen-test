@@ -246,27 +246,6 @@ Returns the release as a string.
    {
       String release;
       switch (getRelease ()) {
-      case JDTestDriver.RELEASE_V4R2M0:
-         release = "04.02.0000 V4R2m0";
-         break;
-      case JDTestDriver.RELEASE_V4R3M0:
-         release = "04.03.0000 V4R3m0";
-         break;
-      case JDTestDriver.RELEASE_V4R4M0:
-         release = "04.04.0000 V4R4m0";
-         break;
-      case JDTestDriver.RELEASE_V4R5M0:
-         release = "04.05.0000 V4R5m0";
-         break;
-      case JDTestDriver.RELEASE_V5R1M0:
-         release = "05.01.0000 V5R1m0";
-         break;
-      case JDTestDriver.RELEASE_V5R2M0:
-         release = "05.02.0000 V5R2m0";
-         break;
-      case JDTestDriver.RELEASE_V5R3M0:
-         release = "05.03.0000 V5R3m0";
-         break;
       default:
          release = "";
          break;
@@ -769,7 +748,7 @@ getMaxColumnNameLength() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if(getRelease() <= JDTestDriver.RELEASE_V5R3M0)               //@F1A
+	       if(getRelease() <= JDTestDriver.RELEASE_V7R1M0)               //@F1A
 		   assertCondition (dmd_.getMaxColumnNameLength() == 30);
 	       else                                                          //@F1A
 		   assertCondition (dmd_.getMaxColumnNameLength() == 128);   //@F1A
@@ -791,7 +770,7 @@ getMaxColumnsInGroupBy() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)     {     
+	       if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)     {     
 		   int maxColumnsInGroupBy = dmd_.getMaxColumnsInGroupBy(); 
 		   assertCondition( maxColumnsInGroupBy == 8000,
 				    "maxColumnsInGroupBy is "+maxColumnsInGroupBy+" sb 8000" );
@@ -909,7 +888,7 @@ getMaxCursorNameLength() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if(getRelease() < JDTestDriver.RELEASE_V5R5M0)          
+	       if(getRelease() < JDTestDriver.RELEASE_V7R1M0)          
 		   assertCondition (dmd_.getMaxCursorNameLength() == 18);
 	       else 
 		   assertCondition (dmd_.getMaxCursorNameLength() == 128);   
@@ -1007,7 +986,7 @@ getMaxStatementLength() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if(getRelease() >= JDTestDriver.RELEASE_V5R4M0) {                         //@F2A
+	       if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) {                         //@F2A
 		   assertCondition(dmd_.getMaxStatementLength() == 1048576,
 				   "Max statement length is "+dmd_.getMaxStatementLength()+" sb  1048576"); 
 	       } else {                                                                    //@F2A
@@ -1079,7 +1058,7 @@ getMaxTablesInSelect() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+	       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		   assertCondition (dmd_.getMaxTablesInSelect() == 1000);
 	       } else { 
 		   assertCondition (dmd_.getMaxTablesInSelect() == 32);
@@ -1127,7 +1106,7 @@ getNumericFunctions() - Should return the correct value on a connection.
 	   try {
 	       String[]  expected; 
 	       if (getDriver () == JDTestDriver.DRIVER_TOOLBOX) {
-		   if (getRelease() < JDTestDriver.RELEASE_V5R1M0) {
+		   if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 		       expected = numericFunctionspre510_;
 		   } else {
 		       expected = numericFunctions510_; 
@@ -1297,11 +1276,11 @@ getStringFunctions() - Should return the correct value on a connection.
 	   try {
 	       if (getDriver () == JDTestDriver.DRIVER_TOOLBOX)
 	       {
-		   if (getRelease() < JDTestDriver.RELEASE_V5R1M0) {
+		   if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 		       assertCondition(compare(stringFunctionspre510_, dmd_.getStringFunctions()));
-		   } else if (getRelease() < JDTestDriver.RELEASE_V5R2M0) {
+		   } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 		       assertCondition(compare(stringFunctionspre520_, dmd_.getStringFunctions()));
-		   } else if (getRelease() < JDTestDriver.RELEASE_V5R3M0) {
+		   } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 		       assertCondition(compare(stringFunctionspre530_, dmd_.getStringFunctions()));
 		   } else {
 		       assertCondition(compare(stringFunctions530_, dmd_.getStringFunctions()));
@@ -1419,9 +1398,9 @@ getTimeDateFunctions() - Should return the correct value on a connection.
 	   try {
 	       String expected[]; 
 	       if (getDriver () == JDTestDriver.DRIVER_TOOLBOX) {
-		   if (getRelease() < JDTestDriver.RELEASE_V5R1M0) {
+		   if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 		       expected = timeDateFunctionspre510_;
-		   } else if (getRelease() < JDTestDriver.RELEASE_V5R3M0) {
+		   } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 		       expected = timeDateFunctionspre530_;
 		   } else {
 		       expected = timeDateFunctions530_; 

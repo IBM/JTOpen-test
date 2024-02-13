@@ -546,7 +546,7 @@ not accessing the real table, updates can't be done.
                         && (updatable == false)
                         && (scrollable == true));
             } else {
-		if ( getRelease() ==  JDTestDriver.RELEASE_V5R1M0) {
+		if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
 		    // V5R1 version 
 		    assertCondition ((w != null)
 				     && (type == ResultSet.TYPE_SCROLL_INSENSITIVE)
@@ -931,7 +931,7 @@ is on there.
             rs.close ();
             s.close ();
 
-	    if ( getRelease() ==  JDTestDriver.RELEASE_V5R1M0) {
+	    if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
 	        // V5R1 version 
 		assertCondition ((w == null)
 				 && (type == ResultSet.TYPE_FORWARD_ONLY)
@@ -1082,7 +1082,7 @@ not accessing the real table, updates can't be done.
                         && (updatable == false)
 				 && (scrollable == true));
 	    } else {
-		if ( getRelease() ==  JDTestDriver.RELEASE_V5R1M0) {
+		if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
 		    assertCondition ((w != null)
 			    && (type == ResultSet.TYPE_SCROLL_INSENSITIVE)
 			    && (concurrency == ResultSet.CONCUR_READ_ONLY)
@@ -1550,7 +1550,7 @@ not accessing the real table, updates can't be done.
                         && (scrollable == true));
             } else {
 
-		if ( getRelease() ==  JDTestDriver.RELEASE_V5R1M0) {
+		if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
 		    assertCondition ((w != null)
                         && (type == ResultSet.TYPE_SCROLL_INSENSITIVE)
                         && (concurrency == ResultSet.CONCUR_READ_ONLY)

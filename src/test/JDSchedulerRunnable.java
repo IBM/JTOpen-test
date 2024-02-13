@@ -65,8 +65,7 @@ public class JDSchedulerRunnable implements Runnable {
     runningInitials = "";
     this.runTable = runTable;
 
-    String osname = System.getProperty("os.name");
-    on400 = (osname.indexOf("400")) > 0;
+    on400 = JTOpenTestEnvironment.isOS400; 
 
   }
 

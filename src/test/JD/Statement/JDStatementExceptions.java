@@ -202,7 +202,7 @@ public class JDStatementExceptions extends JDTestcase {
    **/
   public void Var004() {
     if (checkJdbc40()) {
-      if (isToolboxDriver() && getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
+      if (isToolboxDriver() && getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
         notApplicable("command does not work on v5r3");
         return;
       }
@@ -575,7 +575,7 @@ public class JDStatementExceptions extends JDTestcase {
 
           query += " QSYS2.SYSINDEXES AS F" + random.nextInt(1000); /* @F1C */
           // 33923 - v5r5 optimizer is smarter...
-          if (getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
             query += orderbyClause + " optimize for all rows ";
           s = connectionPwr_.createStatement();
           //

@@ -109,7 +109,7 @@ Performs setup needed before running variations.
         initializeLargeArray();
 
 	extraBytesOK = getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K3
-	  getRelease() >= JDTestDriver.RELEASE_V5R3M0 ;				// @K3
+	  getRelease() >= JDTestDriver.RELEASE_V7R1M0 ;				// @K3
 
         TABLE_  = JDLobTest.COLLECTION + ".JDLLLBLOB";
         if (isJdbc20 ()) {
@@ -459,7 +459,7 @@ Performs cleanup needed after running variations.
         rs_.absolute(3);
         Blob blob = rs_.getBlob("C_BLOB");
         blob.getBytes(3, LARGE_.length + 1);
-        if (getRelease() >= JDTestDriver.RELEASE_V5R3M0 && // @K2
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && // @K2
             getDriver() == JDTestDriver.DRIVER_NATIVE) // @K2
           succeeded(); // @K2
         else
@@ -1175,7 +1175,7 @@ setBytes(long, byte[], int, int) - Should work to set the last part of a non-emp
         if (checkUpdateableLobsSupport ())
         {
             if (getDriver () == JDTestDriver.DRIVER_NATIVE &&	// @K2
-		getRelease() < JDTestDriver.RELEASE_V5R3M0 )	// @K2
+		getRelease() < JDTestDriver.RELEASE_V7R1M0 )	// @K2
             {
                 try
                 {

@@ -574,11 +574,11 @@ public class JDCSSetString extends JDCSSetTestcase {
               supportedFeatures_);
           JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
               supportedFeatures_, getDriver());
-          cs.setString(18, "http://w3.rchland.ibm.com");
+          cs.setString(18, "https://github.com");
           cs.execute();
           String check = cs.getString(18);
           cs.close();
-          assertCondition(check.equalsIgnoreCase("http://w3.rchland.ibm.com"));
+          assertCondition(check.equalsIgnoreCase("https://github.com"));
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -1233,11 +1233,11 @@ public class JDCSSetString extends JDCSSetTestcase {
               supportedFeatures_);
           JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
               supportedFeatures_, getDriver());
-          cs.setString("P_DATALINK", "http://w3.rchland.ibm.com");
+          cs.setString("P_DATALINK", "https://github.com");
           cs.execute();
           String check = cs.getString(18);
           cs.close();
-          assertCondition(check.equalsIgnoreCase("http://w3.rchland.ibm.com"));
+          assertCondition(check.equalsIgnoreCase("https://github.com"));
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }

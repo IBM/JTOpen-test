@@ -30,6 +30,9 @@ import com.ibm.as400.access.IFSJavaFile;
 import com.ibm.as400.access.IFSRandomAccessFile;
 import com.ibm.as400.access.IFSTextFileInputStream;
 import com.ibm.as400.access.IFSTextFileOutputStream;
+
+import test.JTOpenTestEnvironment;
+
 import com.ibm.as400.access.*; 
 
 /**
@@ -2422,8 +2425,6 @@ cannot be read from.
     try
     {
       raf = new IFSRandomAccessFile(systemObject_, ifsPathNameX, "w");
-      //if (isApplet_ || linux_)
-      //{
         IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
         if (file.exists())
         {
@@ -2435,21 +2436,6 @@ cannot be read from.
         {
           failed("File wasn't created.");
         }
-      //}
-      //else
-      //{
-      //  File file = new File(convertToPCName(ifsPathNameX));
-      //  if (file.exists())
-      //  {
-      //    raf.read();
-      //    //failed("Exception didn't occur..");
-      //    notApplicable("Exception didn't occur."); // Bug in OS/400, will not be fixed
-      //  }
-      //  else
-      //  {
-      //    failed("File wasn't created.");
-      //  }
-      // }
       raf.close();
     }
     catch(Exception e)
@@ -2761,8 +2747,6 @@ IFSRandomAccessFile(AS400, String, String, int, int) in write-only mode.
         new IFSRandomAccessFile(systemObject_, ifsPathNameX, "w",
                                 IFSRandomAccessFile.SHARE_ALL,
                                 IFSRandomAccessFile.OPEN_OR_CREATE);
-      //if (isApplet_ || linux_)
-      //{
         IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
         if (file.exists())
         {
@@ -2774,21 +2758,6 @@ IFSRandomAccessFile(AS400, String, String, int, int) in write-only mode.
         {
           failed("File wasn't created.");
         }
-      //}
-      //else
-      // {
-      //  File file = new File(convertToPCName(ifsPathNameX));
-      //  if (file.exists())
-      //  {
-      //    raf.read();
-          //failed("Exception didn't occur..");
-      //    notApplicable("Exception didn't occur."); // Bug in OS/400, will not be fixed
-      //  }
-      //  else
-      //  {
-      //    failed("File wasn't created.");
-      //  }
-      // }
       raf.close();
     }
     catch(Exception e)
@@ -2911,7 +2880,7 @@ exist and the existence option is OPEN_OR_CREATE.
                                 IFSRandomAccessFile.SHARE_ALL,
                                 IFSRandomAccessFile.OPEN_OR_CREATE);
       raf.close();
-      if (isApplet_ || linux_)
+      if (isApplet_ || JTOpenTestEnvironment.isLinux)
       {
         IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
         assertCondition(file.exists());
@@ -2993,7 +2962,7 @@ existence option is REPLACE_OR_CREATE.
                                 IFSRandomAccessFile.SHARE_ALL,
                                 IFSRandomAccessFile.REPLACE_OR_CREATE);
       raf.close();
-      if (isApplet_ || linux_)
+      if (isApplet_ || JTOpenTestEnvironment.isLinux)
       {
         IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
         assertCondition(file.length() == 0);
@@ -3052,7 +3021,7 @@ existence option is REPLACE_OR_CREATE.
                                 IFSRandomAccessFile.SHARE_ALL,
                                 IFSRandomAccessFile.REPLACE_OR_FAIL);
       raf.close();
-      if (isApplet_ || linux_)
+      if (isApplet_ || JTOpenTestEnvironment.isLinux)
       {
         IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
         assertCondition(file.length() == 0);
@@ -3557,8 +3526,6 @@ IFSRandomAccessFile(AS400, IFSFile, String, int, int) in write-only mode.
         new IFSRandomAccessFile(systemObject_, file1, "w",
                                 IFSRandomAccessFile.SHARE_ALL,
                                 IFSRandomAccessFile.OPEN_OR_CREATE);
-      // if (isApplet_ || linux_)
-      // {
         IFSFile file2 = new IFSFile(systemObject_, ifsPathNameX);
         if (file2.exists())
         {
@@ -3570,21 +3537,6 @@ IFSRandomAccessFile(AS400, IFSFile, String, int, int) in write-only mode.
         {
           failed("File wasn't created.");
         }
-      //}
-      //else
-      //{
-      //  File file2 = new File(convertToPCName(ifsPathNameX));
-      //  if (file2.exists())
-      //  {
-      //    raf.read();
-          //failed("Exception didn't occur..");
-      //    notApplicable("Exception didn't occur."); // Bug in OS/400, will not be fixed
-      //  }
-     //   else
-     //   {
-     //     failed("File wasn't created.");
-     //   }
-      // }
       raf.close();
     }
     catch(Exception e)

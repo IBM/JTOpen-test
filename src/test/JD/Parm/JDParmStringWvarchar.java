@@ -151,7 +151,7 @@ Performs setup needed before running variations.
                            " col2 vargraphic(20) CCSID 13488, " + 
                            " col3 vargraphic(16346) CCSID 13488)");
 
-	   if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	   if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	       s.executeUpdate("create table "+JDParmTest.COLLECTION+".stringsVarchar " + 
 			       "(col4 varchar(1) CCSID 1208, " +
 			       " col5 varchar(20) CCSID 1208, " + 
@@ -167,7 +167,7 @@ Performs setup needed before running variations.
            col1 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col1) values(?)");
            col2 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col2) values(?)");
            col3 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col3) values(?)");
-	   if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	   if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	       col4 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".stringsVarchar (col4) values(?)");
 	       col5 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".stringsVarchar (col5) values(?)");
 	       col6 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".stringsVarchar (col6) values(?)");
@@ -605,7 +605,7 @@ Test:  wvarchar(16346) - value too big
 Test:  wvarchar(1) - value is just right
 **/
    public void Var017() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col4.setString(1, "X");
 	       int count = col4.executeUpdate();
@@ -631,7 +631,7 @@ Test:  wvarchar(1) - value is just right
 Test:  wvarchar(1) - empty string
 **/
    public void Var018() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col4.setString(1, "");
 	       int count = col4.executeUpdate();
@@ -658,7 +658,7 @@ Test:  wvarchar(1) - empty string
 Test:  wvarchar(1) - null value
 **/
    public void Var019() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col4.setString(1, null);
 	       int count = col4.executeUpdate();
@@ -685,7 +685,7 @@ Test:  wvarchar(1) - null value
 Test:  wvarchar(1) - value too big
 **/
    public void Var020() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   String value = "TOO BIG";
 	   try {
 	       col4.setString(1, value);
@@ -725,7 +725,7 @@ Test:  wvarchar(1) - value too big
 Test:  wvarchar(20) - value is just right
 **/
    public void Var021() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col5.setString(1, "01234567890123456789");
 	       int count = col5.executeUpdate();
@@ -752,7 +752,7 @@ Test:  wvarchar(20) - value is just right
 Test:  wvarchar(20) - value is smaller than column
 **/
    public void Var022() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col5.setString(1, "0123456789");
 	       int count = col5.executeUpdate();
@@ -778,7 +778,7 @@ Test:  wvarchar(20) - value is smaller than column
 Test:  wvarchar(20) - value is 1 char long
 **/
    public void Var023() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col5.setString(1, "0");
 	       int count = col5.executeUpdate();
@@ -805,7 +805,7 @@ Test:  wvarchar(20) - value is 1 char long
 Test:  wvarchar(20) - value is empty string
 **/
    public void Var024() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col5.setString(1, "");
 	       int count = col5.executeUpdate();
@@ -832,7 +832,7 @@ Test:  wvarchar(20) - value is empty string
 Test:  wvarchar(20) - value is null
 **/
    public void Var025() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col5.setString(1, null);
 	       int count = col5.executeUpdate();
@@ -858,7 +858,7 @@ Test:  wvarchar(20) - value is null
 Test:  wvarchar(20) - value too big
 **/
    public void Var026() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   String value = "012345678901234567890123";
 	   try {
 	       col5.setString(1, value);
@@ -898,7 +898,7 @@ Test:  wvarchar(20) - value too big
 Test:  wvarchar(16346) - value is just right
 **/
    public void Var027() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col6.setString(1, largeValue);
 	       int count = col6.executeUpdate();
@@ -925,7 +925,7 @@ Test:  wvarchar(16346) - value is just right
 Test:  wvarchar(16346) - value is smaller than column
 **/
    public void Var028() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col6.setString(1, "0123456789012345678901234567890123456789");
 	       int count = col6.executeUpdate();
@@ -952,7 +952,7 @@ Test:  wvarchar(16346) - value is smaller than column
 Test:  wvarchar(16346) - value is 1 char long
 **/
    public void Var029() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col6.setString(1, "0");
 	       int count = col6.executeUpdate();
@@ -980,7 +980,7 @@ Test:  wvarchar(16346) - value is 1 char long
 Test:  wvarchar(16346) - value is empty string
 **/
    public void Var030() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col6.setString(1, "");
 	       int count = col6.executeUpdate();
@@ -1008,7 +1008,7 @@ Test:  wvarchar(16346) - value is empty string
 Test:  wvarchar(16346) - value is null
 **/
    public void Var031() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col6.setString(1, null);
 	       int count = col6.executeUpdate();
@@ -1034,7 +1034,7 @@ Test:  wvarchar(16346) - value is null
 Test:  wvarchar(16346) - value too big
 **/
    public void Var032() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   String value = largeValue + "01234567890";
 	   try {
 	       col6.setString(1, value);
@@ -1072,7 +1072,7 @@ Test:  wvarchar(16346) - value too big
 Test:  wvarchar(1) - value is just right
 **/
    public void Var033() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col7.setString(1, "X");
 	       int count = col7.executeUpdate();
@@ -1098,7 +1098,7 @@ Test:  wvarchar(1) - value is just right
 Test:  wvarchar(1) - empty string
 **/
    public void Var034() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col7.setString(1, "");
 	       int count = col7.executeUpdate();
@@ -1125,7 +1125,7 @@ Test:  wvarchar(1) - empty string
 Test:  wvarchar(1) - null value
 **/
    public void Var035() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col7.setString(1, null);
 	       int count = col7.executeUpdate();
@@ -1152,7 +1152,7 @@ Test:  wvarchar(1) - null value
 Test:  wvarchar(1) - value too big
 **/
    public void Var036() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   String value = "TOO BIG";
 	   
 	   int size = (value.length()*2);
@@ -1194,7 +1194,7 @@ Test:  wvarchar(1) - value too big
 Test:  wvarchar(20) - value is just right
 **/
    public void Var037() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col8.setString(1, "01234567890123456789");
 	       int count = col8.executeUpdate();
@@ -1221,7 +1221,7 @@ Test:  wvarchar(20) - value is just right
 Test:  wvarchar(20) - value is smaller than column
 **/
    public void Var038() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col8.setString(1, "0123456789");
 	       int count = col8.executeUpdate();
@@ -1247,7 +1247,7 @@ Test:  wvarchar(20) - value is smaller than column
 Test:  wvarchar(20) - value is 1 char long
 **/
    public void Var039() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col8.setString(1, "0");
 	       int count = col8.executeUpdate();
@@ -1274,7 +1274,7 @@ Test:  wvarchar(20) - value is 1 char long
 Test:  wvarchar(20) - value is empty string
 **/
    public void Var040() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col8.setString(1, "");
 	       int count = col8.executeUpdate();
@@ -1301,7 +1301,7 @@ Test:  wvarchar(20) - value is empty string
 Test:  wvarchar(20) - value is null
 **/
    public void Var041() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col8.setString(1, null);
 	       int count = col8.executeUpdate();
@@ -1327,7 +1327,7 @@ Test:  wvarchar(20) - value is null
 Test:  wvarchar(20) - value too big
 **/
    public void Var042() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   String value = "012345678901234567890123";
 	   
 	   int size = (value.length()*2);
@@ -1369,7 +1369,7 @@ Test:  wvarchar(20) - value too big
 Test:  wvarchar(16346) - value is just right
 **/
    public void Var043() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {	
 	       col9.setString(1, largeValue);
 	       int count = col9.executeUpdate();
@@ -1396,7 +1396,7 @@ Test:  wvarchar(16346) - value is just right
 Test:  wvarchar(16346) - value is smaller than column
 **/
    public void Var044() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col9.setString(1, "0123456789012345678901234567890123456789");
 	       int count = col9.executeUpdate();
@@ -1423,7 +1423,7 @@ Test:  wvarchar(16346) - value is smaller than column
 Test:  wvarchar(16346) - value is 1 char long
 **/
    public void Var045() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col9.setString(1, "0");
 	       int count = col9.executeUpdate();
@@ -1451,7 +1451,7 @@ Test:  wvarchar(16346) - value is 1 char long
 Test:  wvarchar(16346) - value is empty string
 **/
    public void Var046() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col9.setString(1, "");
 	       int count = col9.executeUpdate();
@@ -1479,7 +1479,7 @@ Test:  wvarchar(16346) - value is empty string
 Test:  wvarchar(16346) - value is null
 **/
    public void Var047() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   try {
 	       col9.setString(1, null);
 	       int count = col9.executeUpdate();
@@ -1504,7 +1504,7 @@ Test:  wvarchar(16346) - value is null
 Test:  wvarchar(16346) - value too big
 **/
    public void Var048() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	   String value = largeValue + "01234567890";
        
        int size = (value.length()*2);

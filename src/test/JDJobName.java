@@ -18,7 +18,7 @@ public class JDJobName {
     /* Change this name each time the nativeSource is changed */
     /* #11 - added getLoggingText */ 
     static String  srvpgm= "JDJOBNM011";
-    static String osName = ""; 
+
     static boolean loaded = false; 
     static boolean debug = false; 
     static String[] nativeSource = {
@@ -594,8 +594,7 @@ public class JDJobName {
 			//
 			// Only build on iSeries machine
 			//
-			osName = System.getProperty("os.name");
-			if ("OS/400".equals(osName)) {
+			if (JTOpenTestEnvironment.isOS400) {
 
 				String debugString = System.getProperty("debug");
 				if (debugString != null)
@@ -989,7 +988,7 @@ public class JDJobName {
     public static native String sendProgramMessageNative(String message);
 
 	public static void sendProgramMessage(String message) {
-		if ("OS/400".equals(osName)) {
+		if (JTOpenTestEnvironment.isOS400) {
 			try {
 				if (loaded) {
 					String rc = sendProgramMessageNative(message);

@@ -84,10 +84,9 @@ public class IFSTests extends TestDriver
 	 COLLECTION = COLLECTION+random.nextInt(100); 
       }
 
-	if (System.getProperty("os.name").indexOf("400") > 0 )
-      IsRunningOnOS400 = true;
-    else
-      IsRunningOnOS400 = false;
+	
+      IsRunningOnOS400 = JTOpenTestEnvironment.isOS400; 
+   
 
    }
 
@@ -132,10 +131,8 @@ public class IFSTests extends TestDriver
   		} 
 
     	  
-	if (System.getProperty("os.name").indexOf("400") > 0 )
-      IsRunningOnOS400 = true;
-    else
-      IsRunningOnOS400 = false;
+	
+      IsRunningOnOS400 = JTOpenTestEnvironment.isOS400;
 	
 	
 	

@@ -60,8 +60,7 @@ public class JDSchedulerServer extends JDScheduler {
         //
         // Before we start, make sure the CCSID is not 65535
         //
-        String osName = System.getProperty("os.name");
-        if ("OS/400".equals(osName)) {
+        if (JTOpenTestEnvironment.isOS400) {
           int ccsid = JDJobName.getJobCCSID();
           if (ccsid == 65535) {
             System.out.println("Warning:  CCSID is 65535, changing to 37");
@@ -95,9 +94,7 @@ public class JDSchedulerServer extends JDScheduler {
       setupAccess(serverId);
       long emailSentTime = 0;
 
-      String osname = System.getProperty("os.name");
-      boolean on400 = (osname.indexOf("400")) > 0;
-
+      boolean on400 = JTOpenTestEnvironment.isOS400;
       AS400 thisAS400 = null;
 
       if (on400) {

@@ -1098,7 +1098,7 @@ updateRow() - Don't need "for update"
     {
        if (checkJdbc20 ()) 
        {                 
-          if (getRelease() > JDTestDriver.RELEASE_V5R1M0)
+          if (getRelease() > JDTestDriver.RELEASE_V7R1M0)
           {
              ResultSet rs2 = null;
              ResultSet rs3 = null;
@@ -1152,7 +1152,7 @@ updateRow() - Don't need "for update"
     {
        if (checkJdbc20 ()) 
        {                 
-          if (getRelease() > JDTestDriver.RELEASE_V5R1M0)
+          if (getRelease() > JDTestDriver.RELEASE_V7R1M0)
           {
              ResultSet rs2 = null;
              ResultSet rs3 = null;
@@ -1206,7 +1206,7 @@ updateRow() - Using a subquery                                             //@E1
     {
        if (checkJdbc20 ()) 
        {
-	   if ( getRelease() <= JDTestDriver.RELEASE_V5R2M0 &&            // @E2A
+	   if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 &&            // @E2A
 		getDriver() == JDTestDriver.DRIVER_NATIVE )	{
 	       notApplicable("New V5R3 test fails in native driver V5R2");
 	   } else { 
@@ -1280,14 +1280,14 @@ updateRow() - Using a subquery                                             //@E1
 		    }
 
 		    s.close();
-		    if(getRelease() > JDTestDriver.RELEASE_V5R1M0)
+		    if(getRelease() > JDTestDriver.RELEASE_V7R1M0)
 			assertCondition(city.equals("Manhatten"));
 		    else
 			failed("Didn't throw SQLException - New Testcase added by toolbox to test column alias support 9/17/03");
 		}
 		catch(Exception e)
 		{
-		    if(getRelease() > JDTestDriver.RELEASE_V5R1M0)
+		    if(getRelease() > JDTestDriver.RELEASE_V7R1M0)
 			failed(e, "Unexpected Exception-New Testcase added by toolbox to test column alias support 9/17/03");
 		    else
 			assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1310,7 +1310,7 @@ updateRow() - Using a subquery                                             //@E1
     {
 	if(checkJdbc20())
 	{
-	    if ( getRelease() <= JDTestDriver.RELEASE_V5R2M0 &&            // @E2A
+	    if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 &&            // @E2A
 		 getDriver() == JDTestDriver.DRIVER_NATIVE )	{
 		notApplicable("New V5R3 test fails in native driver V5R2");
 	    } else { 
@@ -1387,14 +1387,14 @@ updateRow() - Using a subquery                                             //@E1
 
 		    s.close();
 		    c.close();
-		    if(getRelease() > JDTestDriver.RELEASE_V5R1M0)
+		    if(getRelease() > JDTestDriver.RELEASE_V7R1M0)
 			assertCondition(city.equals("Rochester") && state.equals("MN"));
 		    else
 			failed("Didn't throw SQLException - New Testcase added by toolbox to test column alias support 9/17/03");
 		}
 		catch(Exception e)
 		{
-		    if(getRelease() > JDTestDriver.RELEASE_V5R1M0)
+		    if(getRelease() > JDTestDriver.RELEASE_V7R1M0)
 			failed(e, "Unexpected Exception-New Testcase added by toolbox to test column alias support 9/17/03");
 		    else
 			assertExceptionIsInstanceOf(e, "java.sql.SQLException");

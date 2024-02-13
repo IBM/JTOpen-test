@@ -746,8 +746,8 @@ Performs cleanup needed after running variations.
      }
 
        if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   (getRelease() >= JDTestDriver.RELEASE_V5R4M0  &&
-	    getRelease() <= JDTestDriver.RELEASE_V6R1M0)) {
+	   (getRelease() >= JDTestDriver.RELEASE_V7R1M0  &&
+	    getRelease() <= JDTestDriver.RELEASE_V7R1M0)) {
 	   notApplicable("Not working in V5R4/V6R1 native code");
 	   return; 
        } 

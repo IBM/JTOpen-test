@@ -685,7 +685,7 @@ data size is 14 significant digits and the transfer size is 5 digits.
     public void Var021()
     {
 
-	if (getRelease() == JDTestDriver.RELEASE_V5R4M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
+	if (getRelease() == JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
 	    notApplicable("Test not working in V5R4");
 	    return ; 
 

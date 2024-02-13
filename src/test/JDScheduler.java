@@ -73,8 +73,7 @@ public class JDScheduler {
       fileInputStream.close();
 
       // Set defaults for non-400 platform
-      String osName = System.getProperty("os.name");
-      if (osName.indexOf("400") < 0) {
+      if (JTOpenTestEnvironment.isOS400) {
 
         String localHost = JDHostName.getHostName().toLowerCase();
         int dotIndex = localHost.indexOf(".");

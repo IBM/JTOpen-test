@@ -28,6 +28,7 @@ import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 
 import java.io.FileOutputStream;
@@ -669,7 +670,7 @@ getUser() - call getUSer to check that it is unset.
             String user = JDReflectionUtil.callMethod_S(ds,"getUser");
             String expectedUser = ""; 
             if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-              if (System.getProperty("os.name").indexOf("400") > 0) { 
+              if (JTOpenTestEnvironment.isOS400) { 
               expectedUser = System.getProperty("user.name").toUpperCase(); 
               }
             }
@@ -1369,7 +1370,7 @@ check the default value of maximum precision , should be 31
 **/
    public void Var054 ()
    {
-       if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1394,7 +1395,7 @@ set the precision to the other valid number and see that it was changed
 **/
    public void Var055 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1422,7 +1423,7 @@ set the maximum precision to an invalid value
 **/
    public void Var056 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1449,7 +1450,7 @@ check the default value of maximum scale , should be 31
 **/
    public void Var057 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1474,7 +1475,7 @@ set the maximum scale to lowest valid number and see that it was changed
 **/
    public void Var058 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1502,7 +1503,7 @@ set the maximum scale to the highest valid number and see that it was changed
 **/
    public void Var059 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1530,7 +1531,7 @@ set the maximum scale to an invalid high value
 **/
    public void Var060 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1558,7 +1559,7 @@ set the maximum scale to an invalid low value
 **/
    public void Var061 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1586,7 +1587,7 @@ check the default value of minimum divide scale , should be 0
 **/
    public void Var062 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   Object ds; 
@@ -1611,7 +1612,7 @@ check the lowest valid value for minimum divide scale
 **/
    public void Var063 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   JDReflectionUtil.callMethod_V(dataSource_, "setMinimumDivideScale", 0);
@@ -1635,7 +1636,7 @@ check the highest valid value for minimum divide scale
 **/
    public void Var064 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   JDReflectionUtil.callMethod_V(dataSource_, "setMinimumDivideScale", 9);
@@ -1659,7 +1660,7 @@ error should be thrown when invalid number is entered for minimum divide scale
 **/
    public void Var065 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   JDReflectionUtil.callMethod_V(dataSource_, "setMinimumDivideScale", 10);
@@ -1684,7 +1685,7 @@ check the default value of translate hex , should be "character"
 **/
    public void Var066 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   ctx_.rebind(bindName_, dataSource_);
@@ -1707,7 +1708,7 @@ set translate hex to "character" and check that it was set correctly
 **/
    public void Var067 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   JDReflectionUtil.callMethod_V(dataSource_, "setTranslateHex", "character"); 
@@ -1732,7 +1733,7 @@ set translate hex to its only other valid value "binary" and check that it was c
 **/
    public void Var068 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   JDReflectionUtil.callMethod_V(dataSource_, "setTranslateHex", "binary"); 
@@ -1756,7 +1757,7 @@ set translate hex to an invalid value and check that error is thrown
 **/
    public void Var069 ()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   String badHex = "invalidHexValue";
@@ -1789,7 +1790,7 @@ getCursorSensitivity() -- call getCursorSensitivity() to check the default value
 **/
    public void Var070()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt()) {
 	       try {
 
@@ -1815,7 +1816,7 @@ setCursorSensitivity(), getCursorSensitivity() -- call setCursorSensitivity() to
 **/
    public void Var071()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
                    JDReflectionUtil.callMethod_V(dataSource_, "setCursorSensitivity", "asensitive"); 
@@ -1841,7 +1842,7 @@ setCursorSensitivity(), getCursorSensitivity() -- call setCursorSensitivity() to
 **/
    public void Var072()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
                    JDReflectionUtil.callMethod_V(dataSource_, "setCursorSensitivity", "insensitive"); 
@@ -1867,7 +1868,7 @@ setCursorSensitivity(), getCursorSensitivity() -- call setCursorSensitivity() to
 **/
    public void Var073()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
                if( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
@@ -1900,7 +1901,7 @@ setCursorSensitivity() -- call setCursorSensitivity() with an invalid value and 
 **/
    public void Var074()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		   String badSensitivity = "invalidSensitivityValue";
@@ -1937,7 +1938,7 @@ getReturnExtendedMetaData() -- call getReturnExtendedMetaData() to check the def
 **/
    public void Var075()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt()) {
 	       try {
                if( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
@@ -1968,7 +1969,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setReturnExtend
 **/
    public void Var076()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
 		    
@@ -2004,7 +2005,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
 **/
    public void Var077()
    {
-       if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	   if (checkJdbc20StdExt ()) {
 	       try {
                if( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
@@ -2037,7 +2038,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
    **/
       public void Var078()
       {
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 && 
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && 
               (getDriver()  == JDTestDriver.DRIVER_NATIVE)) {
            if (checkJdbc20StdExt()) {
                try {
@@ -2062,7 +2063,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
    **/
       public void Var079()
       {
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 && 
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && 
               (getDriver()  == JDTestDriver.DRIVER_NATIVE)) {
            if (checkJdbc20StdExt ()) {
                try {
@@ -2088,7 +2089,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
    **/
       public void Var080()
       {
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 && 
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && 
               (getDriver()  == JDTestDriver.DRIVER_NATIVE)) {
            if (checkJdbc20StdExt ()) {
                try {
@@ -2114,7 +2115,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
       public void Var081()
       {
 	  String added = " -- new v5r4 property added by native 01/19/2006"; 
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
            if (checkJdbc20StdExt()) {
                try {
 		   String expected="2";
@@ -2152,7 +2153,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
       public void Var082()
       {
 	  String added = " -- new v5r4 property added by native 01/19/2006"; 
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 ) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) {
            if (checkJdbc20StdExt ()) {
                try {
                    if( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
@@ -2187,7 +2188,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
       public void Var083()
       {
 	  String added = " -- new v5r4 property added by native 01/19/2006"; 
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 ) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) {
            if (checkJdbc20StdExt ()) {
                try {
 
@@ -2642,7 +2643,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
          public void Var094()
          {
              String added = " -- new V5R5 property added by native driver 05/22/07"; 
-             if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 && 
+             if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && 
                  (getDriver()  == JDTestDriver.DRIVER_NATIVE)) {
               if (checkJdbc20StdExt()) {
                   try {
@@ -2668,7 +2669,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
          public void Var095()
          {
            String added = " -- new V5R5 property added by native driver 05/22/07"; 
-             if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 && 
+             if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && 
                  (getDriver()  == JDTestDriver.DRIVER_NATIVE)) {
                   try {
                       JDReflectionUtil.callMethod_V(dataSource_, "setQaqqinilib", "EBERHARD"); 
@@ -2693,7 +2694,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
             public void Var096()
             {
                 String added = " -- new V5R5 property added by native driver 05/22/07"; 
-                if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 && 
+                if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && 
                     (getDriver()  == JDTestDriver.DRIVER_NATIVE)) {
                  if (checkJdbc20StdExt()) {
                      try {
@@ -2719,7 +2720,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
             public void Var097()
             {
               String added = " -- new V5R5 property added by native driver 05/22/07"; 
-                if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 && 
+                if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && 
                     (getDriver()  == JDTestDriver.DRIVER_NATIVE)) {
                      try {
                          JDReflectionUtil.callMethod_V(dataSource_, "setIgnoreWarnings", "0100C"); 
@@ -2960,7 +2961,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
             **/
                public void Var104 ()
                {
-                   if (getRelease() >  JDTestDriver.RELEASE_V5R4M0) {
+                   if (getRelease() >  JDTestDriver.RELEASE_V7R1M0) {
 
                        if (checkJdbc20StdExt ()) {
 
@@ -2991,7 +2992,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
                **/
                   public void Var105 ()
                   {
-                      if (getRelease() > JDTestDriver.RELEASE_V5R4M0) {
+                      if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
                           if (checkJdbc20StdExt ()) {
                               try {
 				  Object ds; 
@@ -3019,7 +3020,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
 
                   public void Var106 ()
                   {
-                      if (getRelease() > JDTestDriver.RELEASE_V5R4M0) {
+                      if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
                           if (checkJdbc20StdExt ()) {
                               try {
 				  Object ds; 
@@ -3047,7 +3048,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
 
                   public void Var107 ()
                   {
-                      if (getRelease() > JDTestDriver.RELEASE_V5R4M0) {
+                      if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
                           if (checkJdbc20StdExt ()) {
                               try {
 				  Object ds; 
@@ -3080,7 +3081,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
                **/
                   public void Var108 ()
                   {
-                      if (getRelease() > JDTestDriver.RELEASE_V5R4M0) {
+                      if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
                           if (checkJdbc20StdExt ()) {
                               try {
 				  Object ds; 
@@ -3112,7 +3113,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
                   **/
                      public void Var109 ()
                      {
-                         if (getRelease() > JDTestDriver.RELEASE_V5R4M0) {
+                         if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
                              if (checkJdbc20StdExt ()) {
                                  try {
 				     Object ds; 
