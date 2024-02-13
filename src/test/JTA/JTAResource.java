@@ -780,7 +780,7 @@ public class JTAResource extends JTATestcase {
     if (checkJdbc20StdExt()) {
       int expectedErrorCode = XAException.XAER_PROTO;
       // If V5R4 and UDBdatasource then error should be XAER_NOTA
-      if ((useUDBDataSource) && (getRelease() >= JDTestDriver.RELEASE_V5R4M0)) {
+      if ((useUDBDataSource) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         expectedErrorCode = XAException.XAER_NOTA;
       }
       try {
@@ -2176,7 +2176,7 @@ public class JTAResource extends JTATestcase {
           // Actually, the return code should be XAER_PROTO because the
           // transaction branch is still active. This was fixed in
           // V5R4.
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
             condition = (errorCode == XAException.XAER_PROTO /*
                                                               * XAException.
                                                               * XAER_INVAL
@@ -2402,7 +2402,7 @@ public class JTAResource extends JTATestcase {
           }
           assertCondition(condition);
         } else {
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
             // in V5R4 we return XAER_NOTA
             assertCondition(errorCode == XAException.XAER_NOTA,
                 "Error code should be XAER_NOTA=" + XAException.XAER_NOTA
@@ -2462,7 +2462,7 @@ public class JTAResource extends JTATestcase {
           assertCondition(condition);
 
         } else {
-          if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
             // in V5R4 we return XAER_NOTA
             assertCondition(errorCode == XAException.XAER_NOTA,
                 "Error code should be XAER_NOTA=" + XAException.XAER_NOTA

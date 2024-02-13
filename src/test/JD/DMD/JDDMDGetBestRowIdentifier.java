@@ -192,7 +192,7 @@ Performs setup needed before running variations.
         //@C1A
         // Note LUW still has 30 column name limit
 
-        if(!JDTestDriver.isLUW() && (getRelease() >= JDTestDriver.RELEASE_V5R4M0))
+        if(!JDTestDriver.isLUW() && (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
         {
 
 	    try {
@@ -299,7 +299,7 @@ Performs cleanup needed after running variations.
 	}
 
 	//@C1A
-	if((!JDTestDriver.isLUW()) && getRelease() >= JDTestDriver.RELEASE_V5R4M0){
+	if((!JDTestDriver.isLUW()) && getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	    try {
 		s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION   //@C1A
 				 + ".LCNTAB");                          //@C1A
@@ -360,7 +360,7 @@ getBestRowIdentifier() - Check the result set format.
             if( getRelease() >= JDTestDriver.RELEASE_V7R1M0)
                 expectedTypes=expectedTypesV7R1;
 
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 &&
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&
 		getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		/* SYSIBM procedures fixed in V6R1 on 1/11/2010 */
                 expectedTypes=expectedTypesV7R1;
@@ -598,7 +598,7 @@ matching rows should be returned.
     public void Var007()
     {
       if ( (getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC) ||
-            ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V5R5M0))) {
+            ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0))) {
         notApplicable("COMPATIBILITY localhost variation");
       } else {
 
@@ -687,7 +687,7 @@ getBestRowIdentifier() - Specify null for the schema.
     public void Var010()
     {
 	if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V5R5M0) {
+	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in pree V5R5 native code");
 	    return;
 	}
@@ -1196,7 +1196,7 @@ exactly.  All matching columns should be returned.
 **/
     public void Var026()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && (!JDTestDriver.isLUW()))
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW()))
         {
             try {
                 ResultSet rs = dmd_.getBestRowIdentifier (connection_.getCatalog (),
@@ -1251,7 +1251,7 @@ exactly.  All matching columns should be returned.
             public void Var028()
             {
 		if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-		    getRelease() <= JDTestDriver.RELEASE_V5R5M0) {
+		    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 		    notApplicable("Not working in pree V5R5 native code");
 		    return;
 		}
@@ -1348,7 +1348,7 @@ Created 1/31/2011 for CPS 8DHTTE.
     public void checkRSMD(boolean extendedMetadata)
     {
 
-	if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&
+	if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&
 	    getDriver() == JDTestDriver.DRIVER_NATIVE) {
 	    notApplicable("Native driver fails in V5R4 on call is isNullable");
 	    return;

@@ -382,7 +382,7 @@ Performs cleanup needed after running variations.
 
 
    public void Var004() {
-       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() <= JDTestDriver.RELEASE_V5R3M0)  {
+       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
            notApplicable("TMSUSPEND and TMRESUME not currently supported");
            return;
        }

@@ -160,7 +160,7 @@ public class JDRSGetSQLXML extends JDTestcase {
     // For native JDBC driver,
     // only stip the declaration for V7R1 and later
     //
-    if (getRelease() < JDTestDriver.RELEASE_V6R1M0
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0
         && getDriver() == JDTestDriver.DRIVER_NATIVE) {
       // Don't strip declaration
     } else {
@@ -271,7 +271,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column index is valid and CCSID is 37
    **/
   public void Var006() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(); // table only created in 54+
       return;
     }
@@ -304,7 +304,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column index is valid.
    **/
   public void Var007() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(); // table only created in 54+
       return;
     }
@@ -339,7 +339,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column index is valid.
    **/
   public void Var008() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(); // table only created in 54+
       return;
     }
@@ -374,7 +374,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column index is valid.
    **/
   public void Var009() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(); // table only created in 54+
       return;
     }
@@ -553,7 +553,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column name is valid.
    **/
   public void Var016() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(); // table only created in 54+
       return;
     }
@@ -589,7 +589,7 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var017() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         notApplicable("V5R4 or later only");
         return;
       }
@@ -622,7 +622,7 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var018() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         notApplicable("V5R4 or later only");
         return;
       }
@@ -657,7 +657,7 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var019() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         notApplicable("V5R4 or later only");
         return;
       }
@@ -697,7 +697,7 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var020() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         notApplicable("V5R4 or later only");
         return;
       }
@@ -733,7 +733,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should throw an exception on a deleted row.
    **/
   public void Var021() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(); // table only created in 54+
       return;
     }
@@ -771,7 +771,7 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var022() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         notApplicable("V5R4 or later only");
         return;
       }
@@ -1410,7 +1410,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * size is set to 0.
    **/
   public void Var049() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(); // table only created in 54+
       return;
     }
@@ -1454,7 +1454,7 @@ public class JDRSGetSQLXML extends JDTestcase {
    * when the max field size is set to a value shorter than the data.
    **/
   public void Var050() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(); // table only created in 54+
       return;
     }

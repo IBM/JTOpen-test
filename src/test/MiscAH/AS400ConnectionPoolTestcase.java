@@ -29,6 +29,7 @@ import com.ibm.as400.security.auth.DefaultProfileTokenProvider;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 
 import test.JDReflectionUtil;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -88,9 +89,7 @@ extends Testcase
 
         // Determine operating system we're running under
         operatingSystem_ = System.getProperty("os.name");
-        if (operatingSystem_.indexOf("Windows") >= 0 ||
-            operatingSystem_.indexOf("DOS") >= 0 ||
-            operatingSystem_.indexOf("OS/2") >= 0)
+        if (JTOpenTestEnvironment.isWindows)
         {
             DOS_ = true;
         }

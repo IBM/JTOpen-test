@@ -57,16 +57,16 @@ public class CleanupJavaTestJobs {
 	public static void cleanup(String system, String userid, String password) {
 		try {
 			int os;
-			String osName = System.getProperty("os.name");
+			
 
-			if (osName.indexOf("400") > 0) {
+			if (JTOpenTestEnvironment.isOS400) {
 				os = OS_OS400;
-			} else if (osName.indexOf("Windows") >= 0) {
+			} else if (JTOpenTestEnvironment.isWindows) {
 				os = OS_WINDOWS;
-			} else if (osName.indexOf("Windows") >= 0) {
+			} else if (JTOpenTestEnvironment.isLinux) {
 				os = OS_LINUX;
 			} else {
-				throw new Exception("Unsupported OS " + osName);
+				throw new Exception("Unsupported OS " + JTOpenTestEnvironment.osVersion);
 			}
 			boolean jobNotFoundStackPrinted = false; 
 			if (os == OS_OS400 || os==OS_WINDOWS) {

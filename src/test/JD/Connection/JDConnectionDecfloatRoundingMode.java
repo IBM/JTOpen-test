@@ -204,7 +204,7 @@ Setup.
 	table34_  = JDConnectionTest.COLLECTION + ".JDCDFPP34";
 
 	connection_  = testDriver_.getConnection (baseURL_ , userId_ , encryptedPassword_ );
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R5M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 	    Statement s = connection_.createStatement ();
 	    try {
 		s.executeUpdate("Drop table "+table16_); 
@@ -235,7 +235,7 @@ Cleanup.
     {
 	// Drop the table.
 	Statement s = connection_ .createStatement ();
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R5M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 	    s.executeUpdate ("DROP TABLE " + table16_ );
 	    s.executeUpdate ("DROP TABLE " + table34_ );
 	}

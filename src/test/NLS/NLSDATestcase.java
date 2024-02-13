@@ -32,6 +32,7 @@ import com.ibm.as400.access.CharConverter;
 import com.ibm.as400.access.ObjectDescription;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import java.math.BigDecimal;
@@ -76,9 +77,7 @@ public class NLSDATestcase extends Testcase
 
     // Determine operating system we're running under
     operatingSystem_ = System.getProperty("os.name");
-    if (operatingSystem_.indexOf("Windows") >= 0 ||
-        operatingSystem_.indexOf("DOS") >= 0 ||
-        operatingSystem_.indexOf("OS/2") >= 0)
+    if (JTOpenTestEnvironment.isWindows)
     {
       DOS_ = true;
     }

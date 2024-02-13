@@ -188,10 +188,8 @@ public class JDPerformanceUtil {
   public static double getClientCPULoad() {
     if (!platformKnown) {
       String srvpgm = "CPUUSE"; 
-      osname = System.getProperty("os.name"); 
-      System.out.println("osname is "+osname); 
       platformKnown=true; 
-      if (osname.equals("OS/400")) {
+      if (JTOpenTestEnvironment.isOS400) {
         // 
         // If on iSeries, determine if native method exists
         // Create native method and use it.
@@ -497,10 +495,10 @@ public class JDPerformanceUtil {
   public static void main(String args[]) {
     if (args.length < 3) {
       System.out.println("Usage:  JDPerformanceUtil <URL> <userid> <password> ");
-      System.out.println("        JDPerformanceUtil jdbc:db2:y0551p2 eberhard xxxxx "); 
-      System.out.println("        JDPerformanceUtil jdbc:as400://y0551p2 eberhard xxxxx "); 
-      System.out.println("        JDPerformanceUtil jdbc:db2://y0551p2:446/*LOCAL eberhard xxxxx"); 
-      System.out.println("        JDPerformanceUtil jdbc:db2://diroc:50000/SAMPLE eberhard xxxxx"); 
+      System.out.println("        JDPerformanceUtil jdbc:db2:y0551p2 user xxxxx "); 
+      System.out.println("        JDPerformanceUtil jdbc:as400://y0551p2 user xxxxx "); 
+      System.out.println("        JDPerformanceUtil jdbc:db2://y0551p2:446/*LOCAL user xxxxx"); 
+      System.out.println("        JDPerformanceUtil jdbc:db2://diroc:50000/SAMPLE user xxxxx"); 
       System.out.println("");
       System.out.println("Current system information");
     } else {

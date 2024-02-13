@@ -343,7 +343,7 @@ Creates Testcase objects for all the testcases in this component.
        }
 
        /// If on OS/400 make sure the stuff is unpacked in '/'
-       if (System.getProperty("os.name").indexOf("400") >= 0) { 
+       if (JTOpenTestEnvironment.isOS400) { 
 	   localFtpTestDir = new File("/FTPTestDir");
 	   if (!localFtpTestDir.exists() || !localFtpTestDir.isDirectory()) {
 

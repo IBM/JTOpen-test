@@ -279,7 +279,7 @@ afterLast() - Should work on a "simple" result set.
             try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else { 
 
@@ -905,11 +905,11 @@ when positioned after the last row.
 		message+=rs.getString("TABLE_TYPE")+",";
                 rs.next ();
 		message+=rs.getString("TABLE_TYPE")+",";
-		if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) {       // @C2A  V5R3 and higher have Materialized Query Tables
+		if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) {       // @C2A  V5R3 and higher have Materialized Query Tables
                     rs.next();                                         // @C2A
 		    message+=rs.getString("TABLE_TYPE")+",";
 		}
-		if(getRelease() >= JDTestDriver.RELEASE_V5R2M0) {       // @C3A  V5R3 and should have Aliases
+		if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) {       // @C3A  V5R3 and should have Aliases
                     rs.next();                                         // @C3A
 		}
                 boolean success = rs.isAfterLast ();
@@ -1644,7 +1644,7 @@ afterLast() - Should work on a "simple" result set.
             try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else { 
 
@@ -2270,11 +2270,11 @@ when positioned after the last row.
 		message+=rs.getString("TABLE_TYPE")+",";
                 rs.next ();
 		message+=rs.getString("TABLE_TYPE")+",";
-		if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) {       // @C2A  V5R3 and higher have Materialized Query Tables
+		if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) {       // @C2A  V5R3 and higher have Materialized Query Tables
                     rs.next();                                         // @C2A
 		    message+=rs.getString("TABLE_TYPE")+",";
 		}
-		if(getRelease() >= JDTestDriver.RELEASE_V5R2M0) {       // @C3A  V5R3 and should have Aliases
+		if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) {       // @C3A  V5R3 and should have Aliases
                     rs.next();                                         // @C3A
 		}
                 boolean success = rs.isAfterLast ();

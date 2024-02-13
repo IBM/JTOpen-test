@@ -317,7 +317,7 @@ Performs setup needed before running testcases.
       } 
 
     // Setup PSTEST_SET table.
-    boolean lobSupport = (getRelease() >= RELEASE_V4R4M0);
+    boolean lobSupport = (getRelease() >= RELEASE_V7R1M0);
     StringBuffer buffer = new StringBuffer();
     buffer.append(" (C_KEY VARCHAR(20)");
     buffer.append(",C_SMALLINT        SMALLINT      ");
@@ -468,7 +468,7 @@ Performs setup needed before running testcases.
       }
 
 
-      if (getRelease() >= RELEASE_V5R5M0) { 
+      if (getRelease() >= RELEASE_V7R1M0) { 
 	      cleanupTable(statement_,  PSTEST_SETDFP16);
 	      cleanupTable(statement_,  PSTEST_SETDFP34);
       }

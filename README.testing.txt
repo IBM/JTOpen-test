@@ -1,17 +1,18 @@
 This is the testbucket for JTOpen
 -----------------------------------
 
-The structure is that individual tests are named xxxTest.  Within tests, there are testcases that are run.  These testcases are typically named xxxTestcase.
+The structure is that individual tests are named xxxTest.  Within tests, there are testcases that are run.  
+These testcases are typically named xxxTestcase.
 
 To run a test, you run the main test class and specify parameters that control how the test runs. 
-For example, the following will run the AS400JPingTest toolbox from a POSIX shell with the specified settings.
+For example, the following will run the AS400JPingTest test from a POSIX shell with the specified settings.
 
 ------------------------------------------------------------------------------------------------------------------
 
 # This is the library on the IBM i that will be used for the tests
 TESTLIBRARY=JDT7583A
 # This is the name of the IBM i to be tested
-SYSTEM=SQ750
+SYSTEM=SYSTEMS
 # This is the userid / password used to connect to the system
 UID=JAVA
 PWD=xxxxxxx
@@ -70,14 +71,14 @@ __________________________________________________
 An alternate way of running the tests is to use the JDRunit program.
 
 JDRunit setup. 
+----------------------------
 
 1.  Create a directory to be used for testing (i.e. /home/toolboxTest
-2.  Copy JTOpen-test.jar into this directory. 
-    (i.e. curl -L -o JTOpen-test.jar https://github.com/IBM/JTOpen-test/releases/download/v1.0.3/JTOpen-test-1.0.3.jar )
-3.  Copy a version of jt400.jar into this directory. 
-    (i.e. curl -L -o jt400.jar https://github.com/IBM/JTOpen/releases/download/v20.0.6/jt400-20.0.6-java8.jar )
-4.  Change your current directory into this directory
-    cd /home/toolboxTest
+2.  Set the JTOPEN_TEST_DIR environment variable to this directory.  This should be set as a system environment variable.
+3.  Change your current directory into this directory
+    cd $JTOPEN_TEST_DIR
+4.  Copy JTOpen-test.jar into this directory. 
+    (i.e. curl -L -o JTOpen-test.jar https://github.com/IBM/JTOpen-test/releases/download/v1.0.5/JTOpen-test-1.0.5.jar )
 5.  Create a ini directory to hold configuration files
     mkdir ini
 6.  Extract the sample config files into this jar file
@@ -87,12 +88,21 @@ JDRunit setup.
 9.  Edit the ini/system.ini file and add information to the systems you are testing to. 
 10. Edit the ini/notification.ini file to add e-mail addresses for e-mail notifications as well as the SMTP host. 
 11. Copy the ini/runitxx8Sx.ini to a file that represents the JVM used for the test.  The 8S is a sample configuration for a Java 8 test on a PC. 
-12. Make a jars directory to contain accessor jar files
-    mkdir jar
-13. For the IFS tests, get a copy jcifs.jar and copy into the jar directory.     
+12. Download the latest JTOpen release. 
+    java -cp JTOpen-test.jar test.JTOpenDownloadReleaseJars
+13. For the IFS tests, get a copy of jcifs.jar and copy into the jar directory.     
+
+*Note: to refresh the test jar, you can use
+java -cp .:JTOpen-test.jar test.JTOpenTestSeup
+
+* Additional windows setup
+If running on windows, then CYGWIN need to installed.
+Set the CYGWIN_HOME environment variable to the directory where CYGWIN was installed. 
 
     
 JDRunit running
+-----------------------------
+
 When running JDRunit, you specify initials that describe the testcase as well as the testcase to be run. 
 The initials consist of 5 characters.  The first 2 specify the release of the IBM i (74, 75) , the next two indicate the JVM to be used, 
 and the last character indicates the type of test (A=toolbox, T=toolbox JDBC).  
@@ -112,5 +122,5 @@ The report will be generated in ct/latest758AA.html
 
 Tests supported by JDRunit are specified in the ini/testbase.ini file. 
 
-Testcases run for regression purposes for toobox can be found in the ini/regressionBaseA.ini file
+Testcases run for regression purposes for JTOpen can be found in the ini/regressionBaseA.ini file
 

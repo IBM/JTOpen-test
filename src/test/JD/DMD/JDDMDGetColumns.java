@@ -237,7 +237,7 @@ Performs setup needed before running variations.
 	}
         String sql=null;
 	try {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
           && (!JDTestDriver.isLUW())) {
 
 	  JDTestDriver.dropTable(s,JDDMDTest.COLLECTION    + ".CHARCOLUMNS");
@@ -258,7 +258,7 @@ Performs setup needed before running variations.
             + ".GRAPHICUTF16COLUMNS (COL1 GRAPHIC(10) CCSID 1200 , COL2 VARGRAPHIC(10) CCSID 1200, COL3 DBCLOB(1M) CCSID 1200)";
         s.executeUpdate(sql);
       }
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0 && (!JDTestDriver.isLUW())) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())) {
           sql = "CREATE TABLE " + JDDMDTest.COLLECTION
               + ".ROWIDCOLUMNS (COL1 ROWID , COL2 VARGRAPHIC(10) CCSID 1200)";
           s.executeUpdate(sql);
@@ -271,7 +271,7 @@ Performs setup needed before running variations.
 
 
         // @L1A
-	if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && (!JDTestDriver.isLUW())){
+	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())){
 
 	  JDTestDriver.dropTable(s,JDDMDTest.COLLECTION    + ".LCNCOLUMNS");
             sql = "CREATE TABLE "  + JDDMDTest.COLLECTION                         //@L1A
@@ -285,7 +285,7 @@ Performs setup needed before running variations.
 	}
 
         // @M1A
-        if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
 
 	  JDTestDriver.dropTable(s,JDDMDTest.COLLECTION    + ".DEFCOLUMNS");
@@ -365,7 +365,7 @@ Performs cleanup needed after running variations.
 	    }
 	}
 
-	if(getRelease() >= JDTestDriver.RELEASE_V5R3M0 && (! JDTestDriver.isLUW())){     //@K1A
+	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW())){     //@K1A
 	    try {
 		s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION
 				 + ".CHARCOLUMNS");
@@ -396,7 +396,7 @@ Performs cleanup needed after running variations.
 
 	}
 
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && (! JDTestDriver.isLUW() )) //@L1A
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW() )) //@L1A
         {
 	try {
             s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION   //@L1A
@@ -408,7 +408,7 @@ Performs cleanup needed after running variations.
         }
 
         // @M1A
-        if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             try{
                 s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".DEFCOLUMNS");
@@ -609,7 +609,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
 
                 if (getDriver() == JDTestDriver.DRIVER_JCC  || (getJdbcLevel() >= 4)  ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE ) &&
-                                (getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+                                (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                     // Buffer length is "not used"  so don't check JCC
                     // check check below to assure that native and toolbox are consistent
@@ -619,7 +619,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     success =  check(sqlDateTimeSub, 0, "sqlDataTimeSub") && success;
                 }
 
-                if(getRelease() < JDTestDriver.RELEASE_V5R5M0 || ( !JDTestDriver.isLUW() && getDriver () != JDTestDriver.DRIVER_TOOLBOX ))  // @M1A
+                if(getRelease() < JDTestDriver.RELEASE_V7R1M0 || ( !JDTestDriver.isLUW() && getDriver () != JDTestDriver.DRIVER_TOOLBOX ))  // @M1A
                     success =  check(columnDef, (String) null, "columnDef" )&& success;
 
                 if (column.equals ("COLUMN")) {
@@ -640,7 +640,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                         success = check(charOctetLength, -1, "charOctetLength ") && success;
                     }
 
-                    if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)   {              // @M1A
+                    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)   {              // @M1A
                         if (getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW()
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                             success = check(columnDef, null, "columnDef") && success;
@@ -684,7 +684,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     success = check(numPrecRadix, 0, "numPrecRadix")&& success;
                     success = check(isNullable,"YES", "isNullable")&& success;
 
-                    if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)                 // @M1A
+                    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)                 // @M1A
                         if (getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW()
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                             success = check(columnDef, null, "columnDef") && success;
@@ -712,7 +712,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     success = check(charOctetLength,10,"charOctetLength") && success;
                     success = check(isNullable,"NO","isNullable") && success;
 
-                    if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)                 // @M1A
+                    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)                 // @M1A
                         if (getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW()
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                             success = check(columnDef, null, "columnDef") && success;
@@ -742,7 +742,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     success = check(nullable , DatabaseMetaData.columnNullable, "nullable") && success;
                     success = check(isNullable,"YES", "isNullable") && success;
 
-                    if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)                 // @M1A
+                    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)                 // @M1A
                         if (getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW()
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                             success = check(columnDef, null, "columnDef") && success;
@@ -965,7 +965,7 @@ No matching columns should be returned.
 
             rs.close ();
 	    if (getDriver () == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW() ||
-                (getDriver() == JDTestDriver.DRIVER_NATIVE && (isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+                (getDriver() == JDTestDriver.DRIVER_NATIVE && (isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V7R1M0))
                 || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
 		assertCondition (rows > 0, "rows = "+rows+" sb > 0  empty string for the catalog parameter");
 	    } else {
@@ -1037,7 +1037,7 @@ All matching columns should be returned.
     public void Var008()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4  ||
-          ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) &&
+          ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) &&
               (getDriver() == JDTestDriver.DRIVER_NATIVE) )
               || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())
              ) {
@@ -2098,7 +2098,7 @@ is closed.
 	    String [][] expected;
 	    if(getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()) {     //@K1A
 	    	if((getJdbcLevel() >= 4)){ //@pda
-	    		if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+	    		if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 	    			message.append("Expected = toolboxJDBC40Expected\n");//@pda
 	    			expected = toolboxJDBC40Expected;  //@pda
 	    		}else{
@@ -2106,7 +2106,7 @@ is closed.
 	    			expected = toolboxJDBC40ExpectedV5R5;  //@pda
 	    		} //@pda
 	    	} //@pda
-                else if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {   // @M1A
+                else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {   // @M1A
                     message.append("Expected = toolboxExpected30\n");
                     expected = toolboxExpected30;  //@K1a
                 } else  {                                        // @M1A
@@ -2115,7 +2115,7 @@ is closed.
                 }
             } else                                                //@K1A
 	    {						// @K3
-		if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) || JDTestDriver.isLUW() ||
+		if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) || JDTestDriver.isLUW() ||
 		    (getJdbcLevel() >= 4) ) {
 		    if (getJdbcMajorMinorLevel () >= 41) { 
 	        message.append("Expected = nativeExpectedVar30Jdk17\n");
@@ -2262,7 +2262,7 @@ is closed.
 
 	} else if ( (getJdbcLevel() >= 4   && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||   //@N1C
 	        ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-	                (getRelease() >= JDTestDriver.RELEASE_V5R5M0) )
+	                (getRelease() >= JDTestDriver.RELEASE_V7R1M0) )
 	                || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata()) ) {
 	    if (getJdbcMajorMinorLevel() >= 41) { 
 	      message.append("Expected = jdbc41Expected31\n");
@@ -2275,7 +2275,7 @@ is closed.
 	} else {
 	    if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()) {
 	        if((getJdbcLevel() >= 4)){ //@pda
-	            if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+	            if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 	                message.append("Expected = toolboxJDBC40Expected\n");//@pda
 	                expected31 = toolboxJDBC40Expected;  //@pda
 	            }else{
@@ -2283,7 +2283,7 @@ is closed.
 	                expected31 = toolboxJDBC40ExpectedV5R5;  //@pda
 	            } //@pda
 	        } //@pda
-	        else if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {    // @M1A
+	        else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {    // @M1A
 	            message.append("Expected = toolboxExpected31\n");
 	            expected31=toolboxExpected31;
 	        } else {                                              // @M1A
@@ -2424,7 +2424,7 @@ is closed.
 
 	} else if ( (getJdbcLevel() >= 4   && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||   //@N1C
                 ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V5R5M0) )
+                (getRelease() >= JDTestDriver.RELEASE_V7R1M0) )
                || ( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata()) ) {
 	    if (getJdbcMajorMinorLevel() >= 41) {
         message.append("Expected = jdbc40Expected32\n");
@@ -2437,7 +2437,7 @@ is closed.
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda
-        		  if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        		  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
   	    			message.append("Expected = toolboxJDBC40Expected\n");//@pda
   	    			expected32 = toolboxJDBC40Expected;  //@pda
   	    		}else{
@@ -2445,7 +2445,7 @@ is closed.
   	    			expected32 = toolboxJDBC40ExpectedV5R5;  //@pda
   	    		} //@pda
               } //@pda
-              else if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {    // @M1A
+              else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {    // @M1A
                   expected32=toolboxExpected32;
               } else {                                               // @M1A
                   expected32 = toolboxExpectedV5R5;             // @M1A
@@ -2583,7 +2583,7 @@ is closed.
 
         } else if ( (getJdbcLevel() >= 4   && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||   //@N1C
                 ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V5R5M0) )
+                (getRelease() >= JDTestDriver.RELEASE_V7R1M0) )
                 ||( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata())) {
           if (getJdbcMajorMinorLevel() >= 41) { 
             message.append("Expected = jdbc41Expected33\n");
@@ -2596,7 +2596,7 @@ is closed.
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
               if((getJdbcLevel() >= 4)){ //@pda
-            	  if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            	  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
   	    			message.append("Expected = toolboxJDBC40Expected\n");//@pda
   	    			expected33 = toolboxJDBC40Expected;  //@pda
   	    		}else{
@@ -2604,7 +2604,7 @@ is closed.
   	    			expected33 = toolboxJDBC40ExpectedV5R5;  //@pda
   	    		} //@pda
             } //@pda
-              else if(getRelease() < JDTestDriver.RELEASE_V5R5M0)    // @M1A
+              else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)    // @M1A
                   expected33=toolboxExpected33;
               else                                              // @M1A
                   expected33 = toolboxExpectedV5R5;             // @M1A
@@ -2948,11 +2948,11 @@ is closed.
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
           || getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
         if ((getJdbcLevel() >= 4)) { // @pda
-          if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+          if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
             message.append("Expected = toolboxJDBC40Expected34\n");// @pda
             expected34 = toolboxJDBC40Expected34; // @pda
           } else {
-	      if (getRelease() < JDTestDriver.RELEASE_V6R1M0) { 
+	      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) { 
 		  message.append("Expected = toolboxJDBC40Expected34V5R5\n");// @pda
 		  expected34 = toolboxJDBC40Expected34V5R5; // @pda
 	      } else  if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
@@ -2979,7 +2979,7 @@ is closed.
           } // @pda
         } // @pda
         else {
-          if (getRelease() < JDTestDriver.RELEASE_V5R5M0) { // @M1A
+          if (getRelease() < JDTestDriver.RELEASE_V7R1M0) { // @M1A
             expected34 = toolboxExpected34;
             message.append("Expected = toolboxExpected34\n");
           } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0){ // @M1A
@@ -2993,7 +2993,7 @@ is closed.
         }
       } else if ((getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX)
           || // @N1C
-          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
           || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata())) {
 	  if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
 	    if (getJdbcMajorMinorLevel() >= 41) { 
@@ -3067,7 +3067,7 @@ is closed.
 **/
     public void Var035()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0 && (! JDTestDriver.isLUW()) ) {
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW()) ) {
      /** @K2 **/
      //String systemName = ((AS400JDBCConnection)connection_).getSystem().getSystemName();    //@K1A
         String jdbc40Expected35[][] = {
@@ -3120,7 +3120,7 @@ is closed.
         String[][] expected35 = nativeExpected35;
         if ( (getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) || //@N1C
             ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V5R5M0) )
+                (getRelease() >= JDTestDriver.RELEASE_V7R1M0) )
                 || ( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata()) ) {
           if (getJdbcMajorMinorLevel() >= 41) {
             message.append("Expected = jdbc41Expected35\n");
@@ -3132,7 +3132,7 @@ is closed.
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda
-        		  if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        		  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
   	    			message.append("Expected = toolboxJDBC40Expected35\n");//@pda
   	    			expected35 = toolboxJDBC40Expected35;  //@pda
   	    		}else{
@@ -3140,7 +3140,7 @@ is closed.
   	    			expected35 = toolboxJDBC40Expected35V5R5;  //@pda
   	    		} //@pda
               } //@pda
-        	  else if(getRelease() < JDTestDriver.RELEASE_V5R5M0)    // @M1A
+        	  else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)    // @M1A
                   expected35=toolboxExpected35;
               else                                              // @M1A
                   expected35=toolboxExpected35V5R5;               // @M1A
@@ -3297,7 +3297,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                 messageColumnName=column;
 
                 /* success = check(bufferLength.intValue(),0,"bufferLength") && success ; */
-                if(getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getRelease() < JDTestDriver.RELEASE_V5R5M0 || getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW() || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata()))  // @M1A
+                if(getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getRelease() < JDTestDriver.RELEASE_V7R1M0 || getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW() || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata()))  // @M1A
                     success = check(columnDef,(String) null, "columnDef") && success ;
                 else                                            // @M1A
                     success = check(columnDef, "", "columnDef") && success; // @M1A
@@ -3546,7 +3546,7 @@ SQL400 - The native driver will return null for a remarks field that
     */
     public void Var038()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && (! JDTestDriver.isLUW())){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW())){
             try{
                 ResultSet rs = dmd_.getColumns(null, JDDMDTest.COLLECTION, "LCNCOLUMNS", "%");
                 boolean success = false;
@@ -3675,7 +3675,7 @@ SQL400 - The native driver will return null for a remarks field that
 	if ( JDTestDriver.isLUW() ) {
 	    expected39=luwExpected39;
 	} else if (  getDriver () == JDTestDriver.DRIVER_JTOPENLITE ) {
-	    if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+	    if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 		message.append("Expected = toolboxJDBC40Expected39\n");//@pda
 		expected39 = toolboxJDBC40Expected39;  //@pda
 	    }else{
@@ -3685,7 +3685,7 @@ SQL400 - The native driver will return null for a remarks field that
 
 	} else if (  getDriver () == JDTestDriver.DRIVER_JTOPENLITE ||  getDriver () == JDTestDriver.DRIVER_NATIVE || (getJdbcLevel() >= 4   && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||   //@N1C
                 ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+                (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
                 ||  ( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
                         isSysibmMetadata())) {
 	    if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
@@ -3710,7 +3710,7 @@ SQL400 - The native driver will return null for a remarks field that
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda
-        		  if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        		  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
   	    			message.append("Expected = toolboxJDBC40Expected39\n");//@pda
   	    			expected39 = toolboxJDBC40Expected39;  //@pda
   	    		}else{
@@ -3718,7 +3718,7 @@ SQL400 - The native driver will return null for a remarks field that
   	    			expected39 = toolboxJDBC40Expected39V5R5;  //@pda
   	    		} //@pda
               } //@pda
-        	   else if(getRelease() < JDTestDriver.RELEASE_V5R5M0)    // @M1A
+        	   else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)    // @M1A
                   expected39=toolboxExpected39;
               else                                      // @M1A
                   expected39 = toolboxExpected39V5R5;     // @M1A
@@ -3779,7 +3779,7 @@ SQL400 - The native driver will return null for a remarks field that
      */
     public void Var040()
     {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0 && (! JDTestDriver.isLUW())) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW())) {
         String added = " -- Added by native driver ";
             /** @K2 **/
        // String systemName = ((AS400JDBCConnection)connection_).getSystem().getSystemName();    //@K1A
@@ -3840,7 +3840,7 @@ SQL400 - The native driver will return null for a remarks field that
         String[][] expected40 = nativeExpected40;
         if (getDriver () == JDTestDriver.DRIVER_JTOPENLITE ||  (getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) || //@N1C
             ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+                (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
                 ||( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
                         (isSysibmMetadata())) ) {
           if (getJdbcMajorMinorLevel() >= 41) { 
@@ -3854,7 +3854,7 @@ SQL400 - The native driver will return null for a remarks field that
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda
-        		  if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        		  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
   	    			message.append("Expected = toolboxJDBC40Expected40\n");//@pda
   	    			expected40 = toolboxJDBC40Expected40;  //@pda
   	    		}else{
@@ -3862,7 +3862,7 @@ SQL400 - The native driver will return null for a remarks field that
   	    			expected40 = toolboxJDBC40Expected40V5R5;  //@pda
   	    		} //@pda
               } //@pda
-        	   else if(getRelease() < JDTestDriver.RELEASE_V5R5M0)    // @M1A
+        	   else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)    // @M1A
                   expected40=toolboxExpected40;
               else                                              // @M1A
                   expected40=toolboxExpected40V5R5;               // @M1A
@@ -3926,7 +3926,7 @@ SQL400 - The native driver will return null for a remarks field that
        public void Var041()
        {
 
-           if(getRelease() >= JDTestDriver.RELEASE_V5R3M0 && (! JDTestDriver.isLUW())) {
+           if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW())) {
 
              String jdbc40Expected41[][] = {
                  {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -4010,11 +4010,11 @@ SQL400 - The native driver will return null for a remarks field that
 	   if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
 	       message.append("Expected = toolboxJDBC40Expected41V5R5\n");//@pda
 	       expected41 = toolboxJDBC40Expected41V5R5;  //@pda
-	   } else  if ( getJdbcLevel() >= 4 && getRelease() == JDTestDriver.RELEASE_V5R4M0 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) {//@N1C
+	   } else  if ( getJdbcLevel() >= 4 && getRelease() == JDTestDriver.RELEASE_V7R1M0 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) {//@N1C
              message.append("Expected = jdbc40Expected41\n");
              expected41=jdbc40Expected41;
 	   } else if ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-		       (getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+		       (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 		       || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
 			   (isSysibmMetadata()))  || getDriver () == JDTestDriver.DRIVER_NATIVE  ) {
 	      if (getJdbcMajorMinorLevel() >= 41) {
@@ -4034,7 +4034,7 @@ SQL400 - The native driver will return null for a remarks field that
            } else {
              if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
             	 if((getJdbcLevel() >= 4)){ //@pda
-            		 if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            		 if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
      	    			message.append("Expected = toolboxJDBC40Expected41\n");//@pda
      	    			expected41 = toolboxJDBC40Expected41;  //@pda
      	    		}else{
@@ -4042,7 +4042,7 @@ SQL400 - The native driver will return null for a remarks field that
      	    			expected41 = toolboxJDBC40Expected41V5R5;  //@pda
      	    		} //@pda
                  } //@pda
-            	   else if(getRelease() < JDTestDriver.RELEASE_V5R5M0) // @M1A
+            	   else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) // @M1A
                      expected41=toolboxExpected41;
                  else                                           // @M1A
                      expected41=toolboxExpected41V5R5;            // @M1A
@@ -4107,7 +4107,7 @@ SQL400 - The native driver will return null for a remarks field that
    */
   public void Var042() {
 
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0  && (! JDTestDriver.isLUW())) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0  && (! JDTestDriver.isLUW())) {
 
 	       String jdbc40Expected42[][] = {
 		   {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -4193,14 +4193,14 @@ SQL400 - The native driver will return null for a remarks field that
 		expected42 = jdbc40Expected4271;
 	      }
 	    } else if ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-		(getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+		(getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
 
 		message.append("Expected = jdbc40Expected4255\n");
 		expected42 = jdbc40Expected4255;
 	    }
 
 	}  else if (((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-	        (getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+	        (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
 	        || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
 	                (isSysibmMetadata()))) {
 	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_TOOLBOX && isJdbc40()) {
@@ -4226,14 +4226,14 @@ SQL400 - The native driver will return null for a remarks field that
 	} else {
 	    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 		if(getJdbcLevel() >= 4)                         //@N1A
-		    if(getRelease() < JDTestDriver.RELEASE_V5R5M0) { //@N1A
+		    if(getRelease() < JDTestDriver.RELEASE_V7R1M0) { //@N1A
 			message.append("Expected = toolboxJDBC40Expected42\n");
 			expected42 = toolboxJDBC40Expected42;       //@N1A  //@pdc
 		    } else  {                                          //@N1A
 			message.append("Expected = toolboxJDBC40Expected42V5R5\n");
 			expected42 = toolboxJDBC40Expected42V5R5;     //@N1A //@pdc
 		    }
-		else if(getRelease() < JDTestDriver.RELEASE_V5R5M0) { // @M1A @N1C
+		else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) { // @M1A @N1C
 		    message.append("Expected = toolboxJDBC42\n");
 		    expected42 = toolboxExpected42;
 		} else {                                             // @M1A
@@ -4320,9 +4320,9 @@ will attempt to recreate the error.
 		} 
 	    }
 
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V5R5M0 ) {
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0 ) {
 	  notApplicable("Native Driver and SI24355 testing");
-      } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() == JDTestDriver.RELEASE_V5R4M0 ) {
+      } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() == JDTestDriver.RELEASE_V7R1M0 ) {
 	  notApplicable("Not tested for toolbox and V5R4");
       } else {
 	  checkRSMD(false);
@@ -4345,9 +4345,9 @@ will attempt to recreate the error.
       }
 
 
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 	  notApplicable("Native Driver and SI24355 testing");
-      } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() == JDTestDriver.RELEASE_V5R4M0 ) {
+      } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() == JDTestDriver.RELEASE_V7R1M0 ) {
 	  notApplicable("Not tested for toolbox and V5R4");
       } else {
 
@@ -4363,7 +4363,7 @@ will attempt to recreate the error.
 	  notApplicable("LUW faling with com.ibm.db2.jcc.am.SqlException: DB2 SQL error: SQLCODE: -443, SQLSTATE: 38553, SQLERRMC: SYSIBM.SQLCOLUMNS;COLUMNS;SYSIBM:CLI:-727");
 	  return;
       }
-      if(getRelease() >= JDTestDriver.RELEASE_V5R5M0)
+      if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
           message = new StringBuffer();
           ResultSet rs = null;

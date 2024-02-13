@@ -158,8 +158,7 @@ public class JDJSTPBlobUtil implements java.sql.Blob {
           //
           // Determine which driver to use
           //
-	  String osName = System.getProperty("os.name");
-	  if (osName.equals("OS/400")) {
+	  if (JTOpenTestEnvironment.isOS400) {
 	      Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
 	      url = "jdbc:db2:"+system;
 	  } else {

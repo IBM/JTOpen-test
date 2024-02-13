@@ -329,7 +329,7 @@ setObject() - Should throw exception when the type is invalid.
 		return;
 	    }
 	    try {
-		if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+		if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 		    notApplicable("testcase didn't work in earlier releases ");
 		} else {
 		    notApplicable("Native does not use col types");

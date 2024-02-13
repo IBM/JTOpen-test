@@ -250,7 +250,7 @@ Performs cleanup needed after running variations.
      */    
     public void baseTruncationTest(String x, String method ) {
 
-        if(getRelease() >=  JDTestDriver.RELEASE_V5R5M0 ) { 
+        if(true ) { 
             try {
                 Statement stmt = connection_.createStatement(); 
                 ResultSet rs = stmt.executeQuery ("SELECT "+x+" FROM SYSIBM.SYSDUMMY1");    
@@ -288,7 +288,7 @@ Performs cleanup needed after running variations.
     // This was added for V5R5
     // 
     public void checkLimitBAD(String query, String exceptionType, String method) {
-        if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) { 
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
            try {
                String values = ""; 
                ResultSet rs = statement0_.executeQuery (query); 

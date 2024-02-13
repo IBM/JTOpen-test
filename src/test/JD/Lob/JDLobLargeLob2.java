@@ -319,7 +319,7 @@ A DIFFERENT TESTCASE SHOULD BE WRITTEN TO COVER THE LEFT OVER CONDITION
 **/
     public void Var001()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V5R3M0 &&
+	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
 	    getDriver() == JDTestDriver.DRIVER_NATIVE){
 	    notApplicable("NOT APPLICABLE FOR <= V5R3");
 	    return;
@@ -357,7 +357,7 @@ A DIFFERENT TESTCASE SHOULD BE WRITTEN TO COVER THE LEFT OVER CONDITION
 			    success = success && compare(v, expected, "8859_1",sb);
 			else
 			    success = success && compare(v, expected,
-							 getRelease()>=JDTestDriver.RELEASE_V5R3M0);	// @KK
+							 getRelease()>=JDTestDriver.RELEASE_V7R1M0);	// @KK
 		    }
 
 		    assertCondition ( success, "Large lob Testcases added 07/17/2003"+sb);
@@ -399,7 +399,7 @@ getSubString() - Native driver pads extra characters if mentioned length exceeds
 **/
     public void Var003()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V5R3M0 &&
+	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
 	    getDriver() == JDTestDriver.DRIVER_NATIVE){
 	    notApplicable("NOT APPLICABLE FOR <= V5R3");
 	    return;
@@ -835,7 +835,7 @@ setString(long, String, int, int) - Should set value beyond length_ as long as t
 **/
     public void Var021()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V5R3M0 &&
+	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
 	    getDriver() == JDTestDriver.DRIVER_NATIVE){
 	    notApplicable("NOT APPLICABLE FOR <= V5R3");
 	    return;
@@ -994,7 +994,7 @@ truncate() - Should work on a non-empty lob.
 **/
     public void Var026()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V5R3M0 &&
+	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
 	    getDriver() == JDTestDriver.DRIVER_NATIVE){
 	    notApplicable("NOT APPLICABLE FOR <= V5R3");
 	    return;
@@ -1081,7 +1081,7 @@ setString(long, String, int, int) - Should work to set str to a non-empty lob wi
 **/
     public void Var029()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V5R3M0 &&
+	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
 	    getDriver() == JDTestDriver.DRIVER_NATIVE){
 	    notApplicable("NOT APPLICABLE FOR <= V5R3");
 	    return;
@@ -1180,7 +1180,7 @@ Playing around with VLARGE_ field by checking getSubString, length methods
 **/
     public void Var032()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V5R3M0 &&
+	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
 	    getDriver() == JDTestDriver.DRIVER_NATIVE){
 	    notApplicable("NOT APPLICABLE FOR <= V5R3");
 	    return;

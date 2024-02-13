@@ -36,7 +36,7 @@ public class JDCleanCore {
     System.out
         .println("Usage:  java JDCleanCore <system> <userid> <password> ");
     System.out
-        .println("        Cleans duplicate core files from / and /home/jdbctest and /home/jdpwrsys.");
+        .println("        Cleans duplicate core files from / and "+JTOpenTestEnvironment.testcaseHomeDirectory+" and /home/jdpwrsys.");
   }
 
   public static void main(String args[]) {
@@ -84,7 +84,10 @@ public class JDCleanCore {
       as400 = new AS400(system, userid, password);
     }
     
-    String directories[] = { "/", "/home/jdbctest", "/home/jdpwrsys", "/tmp", "/home/JAVA", "/home/jdbctest/ct", "/home/QWLISVR", "/home/jsonTest", "/home/jsontest/bin", "/home/QSRVAGT" }; 
+    String directories[] = { "/", 
+          JTOpenTestEnvironment.testcaseHomeDirectory, 
+            "/home/jdpwrsys", "/tmp", "/home/JAVA", 
+            JTOpenTestEnvironment.testcaseHomeDirectory+"/ct", "/home/QWLISVR", "/home/jsonTest", "/home/jsontest/bin", "/home/QSRVAGT" }; 
 
     for (int i = 0; i < directories.length; i++) {
      Hashtable foundProblems = new Hashtable(); 

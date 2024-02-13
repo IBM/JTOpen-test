@@ -802,7 +802,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         {
 
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
+		getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 		notApplicable("Fix does not improve performance on V5R3");
 		return; 
 	    }  

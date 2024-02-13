@@ -374,7 +374,7 @@ getString() - getString on a type registered as VARCHAR, INOUT BINARY(20)
 **/
     public void Var013()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 
@@ -411,7 +411,7 @@ getString() - getString on a type registered as VARCHAR, INOUT VARBINARY(20)
 **/
     public void Var014()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		byte [] b = { (byte) 23, (byte) 45, (byte) 48, (byte) 88};
@@ -488,7 +488,7 @@ getString() - getString on a type registered as VARCHAR, INOUT TIMESTAMP
 **/
     public void Var017()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTS");
@@ -522,7 +522,7 @@ getString() - getString on a type registered as VARCHAR, INOUT DATALINK
     public void Var018()
     {
         //Note:  It is illegal to register a DATALINK as an INOUT parameter according to the DB2 SQL Reference  //@B1A
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0 && !(isToolboxDriver()) ) {   //@B1C
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && !(isToolboxDriver()) ) {   //@B1C
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDL");
@@ -550,7 +550,7 @@ getString() - getString on a type registered as VARCHAR, INOUT BLOB(200)
 **/
     public void Var019()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		byte [] b = {(byte) 23, (byte) 65, (byte) 87, (byte) 88};
@@ -581,7 +581,7 @@ getString() - getString on a type registered as VARCHAR, INOUT CLOB(200)
 **/
     public void Var020()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCLOB200");
@@ -638,7 +638,7 @@ getString() - getString on a type registered  as char, INOUT SMALLINT
 **/
     public void Var022()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10SMINT");
@@ -663,7 +663,7 @@ getString() - getString on a type registered  as char, INOUT INTEGER
 **/
     public void Var023()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10INT");
@@ -688,7 +688,7 @@ getString() - getString on a type registered  as char, INOUT REAL
 **/
     public void Var024()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10REAL");
@@ -713,7 +713,7 @@ getString() - getString on a type registered  as char, INOUT FLOAT
 **/
     public void Var025()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10FLOAT");
@@ -738,7 +738,7 @@ getString() - getString on a type registered  as char, INOUT DOUBLE
 **/
     public void Var026()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DOUBLE");
@@ -763,7 +763,7 @@ getString() - getString on a type registered  as char, INOUT DECIMAL
 **/
     public void Var027()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC50");
@@ -788,7 +788,7 @@ getString() - getString on a type registered  as char, INOUT DECIMAL(10,5)
 **/
     public void Var028()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC105");
@@ -813,7 +813,7 @@ getString() - getString on a type registered  as char, INOUT NUMERIC(5,0)
 **/
     public void Var029()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM50");
@@ -839,7 +839,7 @@ getString() - getString on a type registered  as char, INOUT NUMERIC(10,5)
 **/
     public void Var030()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM105");
 		CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10NUM105 (?)}");
@@ -863,7 +863,7 @@ getString() - getString on a type registered  as char, INOUT CHAR
 **/
     public void Var031()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCHAR1");
@@ -888,7 +888,7 @@ getString() - getString on a type registered  as char, INOUT CHAR(50)
 **/
     public void Var032()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCHAR50");
@@ -913,7 +913,7 @@ getString() - getString on a type registered  as char, INOUT VARCHAR(50)
 **/
     public void Var033()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNVARCHAR50");
@@ -939,7 +939,7 @@ getString() - getString on a type registered  as char, INOUT BINARY(20)
 **/
     public void Var034()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		byte[] b = { (byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) 87,
@@ -975,7 +975,7 @@ getString() - getString on a type registered  as char, INOUT VARBINARY(20)
 **/
     public void Var035()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		byte [] b = { (byte) 23, (byte) 45, (byte) 48, (byte) 88};
@@ -1005,7 +1005,7 @@ getString() - getString on a type registered  as char, INOUT DATE
 **/
     public void Var036()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDATE");
@@ -1030,7 +1030,7 @@ getString() - getString on a type registered  as char, INOUT TIME
 **/
     public void Var037()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTIME");
@@ -1058,7 +1058,7 @@ getString() - getString on a type registered  as char, INOUT TIMESTAMP
 **/
     public void Var038()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTS");
@@ -1091,7 +1091,7 @@ getString() - getString on a type registered  as char, INOUT DATALINK
     public void Var039()
     {
         //note:  It is illegal to register a Datalink as an INOUT parameter according to the DB2 SQL Reference      //@B1A
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0 && !(isToolboxDriver())) {	    //@B1C
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && !(isToolboxDriver())) {	    //@B1C
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDL");
@@ -1119,7 +1119,7 @@ getString() - getString on a type registered  as char, INOUT BLOB(200)
 **/
     public void Var040()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		byte [] b = {(byte) 23, (byte) 65, (byte) 87, (byte) 88};
@@ -1150,7 +1150,7 @@ getString() - getString on a type registered  as char, INOUT CLOB(200)
 **/
     public void Var041()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCLOB200");
@@ -1183,7 +1183,7 @@ getString() - getString on a type registered  as char, INOUT BIGINT
 **/
     public void Var042()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10BINT");

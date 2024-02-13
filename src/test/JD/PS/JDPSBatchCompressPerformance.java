@@ -45,6 +45,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
 
 import test.JDJobName;
+import test.JTOpenTestEnvironment;
 
 
 
@@ -102,8 +103,7 @@ Performs setup needed before running variations.
 
     /* If running on IBM i, change the job priority */
 
-    String osName = System.getProperty("os.name");
-    if (osName.indexOf("400") > 0) {
+    if (JTOpenTestEnvironment.isOS400) {
       String jobName = JDJobName.getJobName();
       if (jobName.indexOf("not Available") < 0) {
         String sql = "";
@@ -169,8 +169,7 @@ Performs setup needed before running variations.
   
 	  double expectedRatio = 0.75;
 	  // If running on Windows or linux the performance difference will not be so greate
-	  String osName = System.getProperty("os.name");
-	  if (osName.indexOf("Window") >= 0) {
+	  if (JTOpenTestEnvironment.isLinux || JTOpenTestEnvironment.isWindows) {
 	      expectedRatio  =  0.85; 
 	  }
 	  String hostname = "";
@@ -222,8 +221,7 @@ Performs setup needed before running variations.
 
 	  double expectedRatio = 0.39;
 	  // If running on Windows or linux the performance difference will not be so greate
-	  String osName = System.getProperty("os.name");
-	  if (osName.indexOf("Window") >= 0) {
+	  if (JTOpenTestEnvironment.isLinux || JTOpenTestEnvironment.isWindows) { 
 	      expectedRatio  =  0.40; 
 	  }
 	  String hostname = ""; 

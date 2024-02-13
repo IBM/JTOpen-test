@@ -153,7 +153,7 @@ Property translate hex = character, expected to fail when we try to insert a hex
 **/
     public void Var001 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
         try {
 	    Statement stmt = conn_Char.createStatement ();
@@ -183,7 +183,7 @@ Property translate hex = binary, should work when we try to insert a hex value i
     public void Var002 ()
     {
 	
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -215,7 +215,7 @@ Property translate hex = character, should pass when we try to insert a hex valu
 **/
     public void Var003 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Char.createStatement ();
 	    try{
@@ -248,7 +248,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 **/
     public void Var004 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -267,7 +267,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 	    if (getDriver () == JDTestDriver.DRIVER_NATIVE)                                 //@B2
 		assertCondition(isEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
 	    else if (isToolboxDriver())      {
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		    assertCondition(isEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
 		} else {
 		    failed("Toolbox pre v5r5 didn't throw SQLException");
@@ -293,7 +293,7 @@ Property translate hex = character,should pass when we try to insert a hex value
 **/
     public void Var005 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Char.createStatement ();
 	    try{
@@ -326,7 +326,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 **/
     public void Var006 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -344,7 +344,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 	    if (getDriver () == JDTestDriver.DRIVER_NATIVE)                                      //@B2
 		assertCondition(isEqual(b,expected));
 	    else {
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		    assertCondition(isEqual(b,expected), "retrieved bytes != expected bytes");
 		} else { 
 		    failed("Toolbox pre V5R5 didn't throw SQLException");
@@ -368,7 +368,7 @@ Property translate hex = character,should pass when we try to insert a hex value
 **/
     public void Var007 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Char.createStatement ();
 	    try{
@@ -397,7 +397,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 **/
     public void Var008 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -428,7 +428,7 @@ Property translate hex = character,should fail when we try to insert a hex value
 **/
     public void Var009 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Char.createStatement ();
 	    try{
@@ -457,7 +457,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
 **/
     public void Var010 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -489,7 +489,7 @@ Property translate hex = character, should fail when we try to insert a hex valu
     public void Var011()
     {
         
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE1 (IN B_IN BINARY(20), OUT B_OUT BINARY(20)) LANGUAGE SQL "+
              "SPECIFIC TRANSLATE1 JDCTRANSLATE1: BEGIN DECLARE DUMMY BINARY(20); "+
@@ -520,7 +520,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
      public void Var012()
      {
         
-         if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
          try{
 	     String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE2 (IN B_IN BINARY(20),OUT B_OUT BINARY(20)) LANGUAGE SQL "+
               "SPECIFIC TRANSLATE2 JDCTRANSLATE2: BEGIN DECLARE DUMMY BINARY(20); "+
@@ -554,7 +554,7 @@ Property translate hex = character, should fail when we try to insert a hex valu
     public void Var013()
     {
         
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE3 (IN B_IN VARBINARY(20), OUT B_OUT VARBINARY(20)) LANGUAGE SQL " + "SPECIFIC TRANSLATE3 JDCTRANSLATE3: BEGIN DECLARE DUMMY VARBINARY(20); "+
              "SET B_OUT=B_IN; END JDCTRANSLATE3" ;
@@ -584,7 +584,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
      public void Var014()
      {
         
-         if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
          try{
 String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE4 (IN B_IN VARBINARY(20),OUT B_OUT VARBINARY(20)) LANGUAGE SQL " + "SPECIFIC TRANSLATE4 JDCTRANSLATE4: BEGIN DECLARE DUMMY VARBINARY(20); "+
               "SET B_OUT=B_IN; END JDCTRANSLATE4" ;
@@ -615,7 +615,7 @@ Property translate hex = character, should pass when we try to insert a hex valu
 **/
     public void Var015()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE5 (IN B_IN CHAR(20) FOR BIT DATA, OUT B_OUT CHAR(20) FOR BIT DATA) LANGUAGE SQL " + "SPECIFIC TRANSLATE5 JDCTRANSLATE5: BEGIN DECLARE DUMMY CHAR(20); "+
              "SET B_OUT=B_IN; END JDCTRANSLATE5   ";
@@ -649,7 +649,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
      public void Var016()
      {
         
-         if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
          try{
 String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE6 (IN B_IN CHAR(20) FOR BIT DATA,OUT B_OUT CHAR(20) FOR BIT DATA) LANGUAGE SQL " + "SPECIFIC TRANSLATE6 JDCTRANSLATE6: BEGIN DECLARE DUMMY CHAR(20) FOR BIT DATA; " + "SET B_OUT=B_IN; END JDCTRANSLATE6" ;
 
@@ -662,7 +662,7 @@ String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE6 (IN B_IN CHAR(20) FOR BIT DA
              cstmt.registerOutParameter(1, java.sql.Types.CHAR);
 	     cstmt.execute();
 	     cstmt.close();
-	     if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		 /* In V6R1 the DB eased this restriction */ 
 		 assertCondition(true); 
 	     } else { 
@@ -670,7 +670,7 @@ String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE6 (IN B_IN CHAR(20) FOR BIT DA
 	     }
          }
          catch (SQLException e){
-	     if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		 failed(e, "Should not throw exception in V6R1 due to DB changes in May 2008"); 
 	     } else { 
 		 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -686,7 +686,7 @@ Property translate hex = character, should pass when we try to insert a hex valu
 **/
     public void Var017()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE7 (IN B_IN VARCHAR(20) FOR BIT DATA, OUT B_OUT VARCHAR(20) FOR BIT DATA) LANGUAGE SQL " + "SPECIFIC TRANSLATE7 JDCTRANSLATE7: BEGIN DECLARE DUMMY VARCHAR(20) FOR BIT DATA; " + "SET B_OUT=B_IN; END JDCTRANSLATE7" ;
 
@@ -716,7 +716,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 **/
      public void Var018()
      {
-         if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	 try{
 String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE8 (IN B_IN VARCHAR(20) FOR BIT DATA ,OUT B_OUT VARCHAR(20) FOR BIT DATA) LANGUAGE SQL " + "SPECIFIC TRANSLATE8 JDCTRANSLATE8: BEGIN DECLARE DUMMY VARCHAR(20) FOR BIT DATA; " + "SET B_OUT=B_IN; END JDCTRANSLATE8" ;
 
@@ -729,7 +729,7 @@ String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE8 (IN B_IN VARCHAR(20) FOR BIT
              cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
 	     cstmt.execute();
 	     cstmt.close();
-	     if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		 /* In V6R1 the DB eased this restriction */ 
 		 assertCondition(true); 
 	     } else { 
@@ -737,7 +737,7 @@ String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE8 (IN B_IN VARCHAR(20) FOR BIT
 	     }
          }
          catch (SQLException e){
-	     if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		 failed(e, "Should not throw exception in V6R1 due to DB changes in May 2008"); 
 	     } else { 
 		 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -754,7 +754,7 @@ Property translate hex = character, should fail when we try to insert a hex valu
 **/
     public void Var019()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE9 (IN B_IN BLOB(20), OUT B_OUT BLOB(20)) LANGUAGE SQL " + "SPECIFIC TRANSLATE9 JDCTRANSLATE9: BEGIN DECLARE DUMMY BLOB(20); "+
              "SET B_OUT=B_IN; END JDCTRANSLATE9" ;
@@ -791,7 +791,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
 	 }
 	 */
 	 String sql="not set "; 
-         if(getRelease() >= JDTestDriver.RELEASE_V5R3M0){
+         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	 try{
  sql = "CREATE PROCEDURE "+proc+".TRANSLATE10 (IN B_IN BLOB(200), OUT B_OUT BLOB(200)) LANGUAGE SQL " + "SPECIFIC TRANSLATE10 JDCTRANSLATE10: BEGIN DECLARE DUMMY BLOB(200); "+
               "SET B_OUT=B_IN; END JDCTRANSLATE10" ;

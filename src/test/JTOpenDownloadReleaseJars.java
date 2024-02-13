@@ -82,14 +82,13 @@ public class JTOpenDownloadReleaseJars {
 
 	    String jdk14Path = jdk14newPath;
 	    String jdk14nativePath = jdk14newPath;
-	    String osName = System.getProperty("os.name");
-	    System.out.println("osName is '" + osName+"'");
+	    System.out.println("osVersioname is '" + JTOpenTestEnvironment.osVersion+"'");
 	    String osVersion = System.getProperty("os.version");
-	    if (osName.equals("Windows 10") ||
-		osName.equals("Linux") ||
-		osName.equals("AIX"))  {
+	    if (JTOpenTestEnvironment.isWindows||
+	        JTOpenTestEnvironment.isLinux ||
+	        JTOpenTestEnvironment.isAIX)  {
 
-		 if (osName.equals("AIX") &&
+		 if (JTOpenTestEnvironment.isAIX &&
 		     System.getProperty("user.dir").indexOf("/WWW/") > 0 ) {
 
 		     jdk14Path = ".";

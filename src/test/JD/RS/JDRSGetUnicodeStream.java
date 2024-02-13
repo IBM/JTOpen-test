@@ -242,7 +242,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       JDRSTest.position0(rs, "CHAR_FULL");
       InputStream v = rs.getUnicodeStream(12);
       if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-          getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+          getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
         assertCondition(compareBeginsWithBytes(v,
             "Toolbox for Java                                  "
                 .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
@@ -322,7 +322,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       JDRSTest.position0(rs, "CHAR_FULL");
       InputStream v = rs.getUnicodeStream("C_CHAR_50");
       if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-          getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+          getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
         assertCondition(compareBeginsWithBytes(v,
             "Toolbox for Java                                  "
                 .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
@@ -348,7 +348,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         rs_.updateString("C_VARCHAR_50", "World Peace");
         InputStream v = rs_.getUnicodeStream("C_VARCHAR_50");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v, "World Peace"
               .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
         else
@@ -373,7 +373,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         rs_.updateRow();
         InputStream v = rs_.getUnicodeStream("C_CHAR_50");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v,
               "New Planet                                        "
                   .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
@@ -405,7 +405,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         rs_.updateString("C_VARCHAR_50", "El Nino");
         InputStream v = rs_.getUnicodeStream("C_VARCHAR_50");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v, "El Nino"
               .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
         else
@@ -435,7 +435,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         rs_.insertRow();
         InputStream v = rs_.getUnicodeStream("C_VARCHAR_50");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v, "Year 2000 Problem"
               .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
         else
@@ -635,7 +635,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       JDRSTest.position0(rs, "CHAR_EMPTY");
       InputStream v = rs.getUnicodeStream("C_CHAR_50");
       if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-          getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+          getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
         assertCondition(compareBeginsWithBytes(v,
             "                                                  "
                 .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
@@ -661,7 +661,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       JDRSTest.position0(rs, "CHAR_FULL");
       InputStream v = rs.getUnicodeStream("C_CHAR_50");
       if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-          getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+          getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
         assertCondition(compareBeginsWithBytes(v,
             "Toolbox for Java                                  "
                 .getBytes("UnicodeBigUnmarked"),sb)); // @K2
@@ -687,7 +687,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       JDRSTest.position0(rs, "CHAR_EMPTY");
       InputStream v = rs.getUnicodeStream("C_VARCHAR_50");
       if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-          getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+          getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
         assertCondition(compareBeginsWithBytes(v, ""
             .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
       else
@@ -710,7 +710,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       JDRSTest.position0(rs, "CHAR_FULL");
       InputStream v = rs.getUnicodeStream("C_VARCHAR_50");
       if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-          getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+          getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
         assertCondition(compareBeginsWithBytes(v, "Java Toolbox"
             .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
       else
@@ -735,7 +735,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       if (isToolboxDriver()) // @F1A
         assertCondition(compare(v, "456C6576656E2020202020202020202020202020",
             "UnicodeBigUnmarked",sb),sb); // @F1A
-      else if (getRelease() < JDTestDriver.RELEASE_V5R3M0) // @F1A // @K2
+      else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) // @F1A // @K2
         assertCondition(compare(v, eleven,sb),sb);
       else
         // @K2
@@ -758,7 +758,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       InputStream v = rs.getUnicodeStream("C_VARBINARY_20");
       if (isToolboxDriver()) // @F1A
         assertCondition(compare(v, "5477656C7665", "UnicodeBigUnmarked",sb),sb); // @F1A
-      else if (getRelease() < JDTestDriver.RELEASE_V5R3M0) // @F1A // @K2
+      else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) // @F1A // @K2
         assertCondition(compare(v, twelve,sb), " v = " + v + " and SB eleven "+sb);
       else
         // @K2
@@ -782,7 +782,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         JDRSTest.position0(rs, "LOB_FULL");
         InputStream v = rs.getUnicodeStream("C_CLOB");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v, JDRSTest.CLOB_FULL
               .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
         else
@@ -808,7 +808,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         JDRSTest.position0(rs2, "LOB_FULL");
         InputStream v = rs2.getUnicodeStream("C_CLOB");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v, JDRSTest.CLOB_FULL
               .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
         else
@@ -834,7 +834,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         JDRSTest.position0(rs, "LOB_FULL");
         InputStream v = rs.getUnicodeStream("C_DBCLOB");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v, JDRSTest.DBCLOB_FULL
               .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
         else
@@ -860,7 +860,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         JDRSTest.position0(rs2, "LOB_FULL");
         InputStream v = rs2.getUnicodeStream("C_DBCLOB");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v, JDRSTest.DBCLOB_FULL
               .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
         else
@@ -887,7 +887,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         InputStream v = rs.getUnicodeStream("C_BLOB");
         if (isToolboxDriver()) // @K1A
           assertCondition(compare(v, JDRSTest.BLOB_FULL, false,sb),sb); // @K1A
-        else if (getRelease() < JDTestDriver.RELEASE_V5R3M0) // @K1A // @K2
+        else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) // @K1A // @K2
           assertCondition(compare(v, JDRSTest.BLOB_FULL,sb),sb);
         else
           // @K2
@@ -922,7 +922,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         InputStream v = rs2.getUnicodeStream("C_BLOB");
         if (isToolboxDriver()) // @K1A
           assertCondition(compare(v, JDRSTest.BLOB_FULL, false,sb),sb); // @K1A
-        else if (getRelease() < JDTestDriver.RELEASE_V5R3M0) // @K1A // @K2
+        else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) // @K1A // @K2
           assertCondition(compare(v, JDRSTest.BLOB_FULL,sb),sb);
         else
           // @K2
@@ -1012,7 +1012,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         JDRSTest.position0(rs, "LOB_FULL");
         InputStream v = rs.getUnicodeStream("C_DATALINK");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V5R3M0 && isJDK14) // @K1C
+            && getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isJDK14) // @K1C
           failed("Didn't throw SQLException" + v);
         else
           // Note the case... AS/400 DB does its own thing here...
@@ -1021,7 +1021,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
 
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V5R3M0 && isJDK14) // @K1C
+            && getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isJDK14) // @K1C
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         else
           failed(e, "Unexpected Exception");
@@ -1046,14 +1046,14 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         JDRSTest.position0(rs, "LOB_EMPTY");
         InputStream v = rs.getUnicodeStream("C_DATALINK");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V5R3M0 && isJDK14) // @K1C
+            && getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isJDK14) // @K1C
           failed("Didn't throw SQLException" + v);
         else
           assertCondition(compare(v, "", "UnicodeBigUnmarked",sb),sb);
 
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V5R3M0 && isJDK14) // @K1C
+            && getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isJDK14) // @K1C
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         else
           failed(e, "Unexpected Exception");
@@ -1074,7 +1074,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         JDRSTest.position0(rs, "LOB_EMPTY");
         InputStream v = rs.getUnicodeStream("C_DISTINCT");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-            getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
           assertCondition(compareBeginsWithBytes(v, "         "
               .getBytes("UnicodeBigUnmarked"),sb),sb); // @K2
         else
@@ -1123,7 +1123,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       rs.close();
       s.close();
       if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-          getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+          getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
         assertCondition(compareBeginsWithBytes(v, "Java Toolbox"
             .getBytes("UnicodeBigUnmarked"),sb)
             && dt == null,sb); // @K2
@@ -1154,7 +1154,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       rs.close();
       s.close();
       if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
-          getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K2
+          getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K2
         assertCondition(compareBeginsWithBytes(v, "Toolbox for Java  "
             .getBytes("UnicodeBigUnmarked"),sb)
             && w == null,sb);// @K2

@@ -428,7 +428,7 @@ getColumnName() - Check to see if you can get a 128 byte column name.
 **/
     public void Var013()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
             if(checkJdbc20()){
                 try{
                     Statement s = connection_.createStatement();

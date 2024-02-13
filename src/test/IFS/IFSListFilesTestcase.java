@@ -27,6 +27,7 @@ import com.ibm.as400.access.IFSFileFilter;
 import com.ibm.as400.access.IFSFileOutputStream;
 
 import test.IFSTests;
+import test.JTOpenTestEnvironment;
 import test.TestDriverStatic;
 
 /**
@@ -659,7 +660,7 @@ Ensure that IFSFile.listFiles() returns the same files as File.list().
       return;
     }
 
-    if (UNIX_ || NT_ || IFSTests.IsRunningOnOS400)
+    if (UNIX_ || JTOpenTestEnvironment.isWindows || IFSTests.IsRunningOnOS400)
     {
       notApplicable("On Sun, AIX, Linux, Windows, and OS/400," +
                     " java.io.File.list() reports many more files than IFSFile.listFiles().");

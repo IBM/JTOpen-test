@@ -1196,7 +1196,7 @@ getClob() - Get a type that was registered as a BIGINT.
        * getCLOB() - Get CLOB on a large CLOB
        */
   public void Var057() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("V5R3 or later test");
     } else {
       if (checkJdbc20()) {

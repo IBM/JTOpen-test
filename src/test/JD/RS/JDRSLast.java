@@ -295,7 +295,7 @@ last() - Should work on a "simple" result set.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else { 
 
@@ -900,7 +900,7 @@ when positioned to the last row.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else { 
 
@@ -1646,7 +1646,7 @@ last() - Should work on a "simple" result set.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else { 
 
@@ -2251,7 +2251,7 @@ when positioned to the last row.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else { 
 

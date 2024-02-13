@@ -36,6 +36,7 @@ import com.ibm.as400.access.AS400JDBCDataSource;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 import test.JDTestDriver;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -331,7 +332,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
 
         if (os.indexOf("OS/400") >= 0)
             environment_ = OS_AS400;
-        else if (os.indexOf("Windows") >= 0)
+        else if (JTOpenTestEnvironment.isWindows)
             environment_ = OS_WINDOWS;
 
         if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))
@@ -4641,8 +4642,8 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         // testcase does not work when on AS/400 because Jim's code
         // will grab the password for the current job if we don't
         // specify it.  Just move on.
-	System.out.println("OSName_ is "+JDTestDriver.OSName_); 
-        if (JDTestDriver.OSName_.equalsIgnoreCase("OS/400"))
+	System.out.println("osVersion is "+JTOpenTestEnvironment.osVersion); 
+        if (JTOpenTestEnvironment.isOS400)
         {                            
            succeeded();
            return;

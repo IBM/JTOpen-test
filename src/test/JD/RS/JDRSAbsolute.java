@@ -411,7 +411,7 @@ says that "Calling absolute(0) moves the cursor before the first row."
 		ResultSet rs;
 		/* In V5R5 the metadata results are no longer scrollable */
 		/* run a different query */
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    // Note:  don't use statement_ since it is updatable 
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSDUMMY1"); 
 		} else { 
@@ -440,7 +440,7 @@ the cursor on the first row and return true.
 		boolean success ;
 		String s1;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSDUMMY1"); 
 		    success = rs.absolute (1);
 		    s1 = rs.getString ("IBMREQD");
@@ -476,7 +476,7 @@ true.
 		boolean success ;
 		String s1;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		    success = rs.absolute (3);
 		    s1 = rs.getString ("TABLE_TYPE");
@@ -513,7 +513,7 @@ after the last row and return false.
 
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else { 
 		    rs = dmd_.getTableTypes ();
@@ -546,7 +546,7 @@ the cursor on the last row and return true.
 		boolean success ;
 		String s1;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		    success = rs.absolute (-1);
 		    s1 = rs.getString ("TABLE_TYPE");
@@ -580,7 +580,7 @@ return true.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs;
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else {
 		    rs = dmd_.getTableTypes ();
@@ -608,7 +608,7 @@ before the first row and return false.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs;
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
 		} else {
 

@@ -229,7 +229,7 @@ Performs setup needed before running variations.
 	    debug = true; 
 	} 
 
-	if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+	if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    skipListRelease = skipListV5R4; 
 	} 
 

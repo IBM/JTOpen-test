@@ -394,7 +394,7 @@ verify all columns with system remarks (the default).
     public void Var002()
     {
         if (checkJdbc40()) {
-        if((getDriver() == JDTestDriver.DRIVER_TOOLBOX)  && getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if((getDriver() == JDTestDriver.DRIVER_TOOLBOX)  && getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
             notApplicable("V5R5 variation");
             return;
         }
@@ -536,7 +536,7 @@ verify all columns with system remarks (the default).
         }
 
       } catch (Exception e) {
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0
             && (getDriver() == JDTestDriver.DRIVER_TOOLBOX)) {
           assertExceptionIs(e, "SQLFeatureNotSupportedException");
           return;
@@ -1474,7 +1474,7 @@ verify all columns with system remarks (the default).
 
 	if (checkJdbc40()) {
 	    if((getDriver() == JDTestDriver.DRIVER_TOOLBOX)  &&
-	       getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+	       getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
 		notApplicable("V5R5 variation");
 		return;
 	    }

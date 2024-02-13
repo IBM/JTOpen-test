@@ -846,7 +846,7 @@ public class JDRSMDGetColumnLabel extends JDTestcase {
    * cache = false)
    **/
   public void Var034() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       try {
         reconnect(PACKAGE_CACHE_NO);
         ResultSet rs = statement_.executeQuery("SELECT * FROM " + TABLELCN);
@@ -947,7 +947,7 @@ public class JDRSMDGetColumnLabel extends JDTestcase {
       boolean passed = true;
       String label = "L";
       for (int i = 1; i < 60; i++) {
-        if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           // Drop old table
           cleanupTable(statement_,  TABLE3);
           

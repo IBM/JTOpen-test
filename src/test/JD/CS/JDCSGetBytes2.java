@@ -409,7 +409,7 @@ getBytes() - getBytes on a type registered as BINARY, INOUT BINARY(20)
 **/
     public void Var013()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 		byte[] b = { (byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) 43,
@@ -445,7 +445,7 @@ getBytes() - getBytes on a type registered as BINARY, INOUT VARBINARY(20)
 **/
     public void Var014()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 
@@ -566,7 +566,7 @@ getBytes() - getBytes on a type registered as BINARY, INOUT BLOB(200)
 **/
     public void Var019()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
 	    try{
 
 
@@ -936,7 +936,7 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT BINARY(20)
 **/
     public void Var034()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 
@@ -971,7 +971,7 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT VARBINARY(20)
 **/
     public void Var035()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 
@@ -1092,7 +1092,7 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT BLOB(200)
 **/
     public void Var040()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 		byte [] b = {(byte) 23, (byte) 65, (byte) 87, (byte) 88};

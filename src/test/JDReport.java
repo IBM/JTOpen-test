@@ -1536,7 +1536,7 @@ public class JDReport {
 
     AS400 = iniProperties.getProperty("AS400");
     if (AS400 == null) {
-      if (System.getProperty("os.name").indexOf("400") >= 0) {
+      if (JTOpenTestEnvironment.isOS400) {
         AS400 = JDHostName.getHostName();
       } else {
         AS400 = iniProperties.getProperty(initials);
@@ -1697,10 +1697,7 @@ public class JDReport {
 
       writer.println("<br>");
 
-      String osName = System.getProperty("os.name");
-      if (osName.equals("OS/400")) {
-        on400 = true;
-      }
+        on400 = JTOpenTestEnvironment.isOS400;
 
       Connection connection = null;
 
@@ -1735,7 +1732,7 @@ public class JDReport {
           // Looks for the classes in known locations
           URL[] urls = new URL[1];
           // Look for activation.jar
-          String[] jt400JarLocations = { "/home/jdbctest/jars/jt400.jar",
+          String[] jt400JarLocations = { JTOpenTestEnvironment.testcaseHomeDirectory+"/jars/jt400.jar",
               "jars/jt400.jar", };
           for (int i = 0; i < jt400JarLocations.length
               && urls[0] == null; i++) {
@@ -1980,11 +1977,11 @@ public class JDReport {
           // TODO: Run the command to generate the information
           try {
             StringBuffer sb = new StringBuffer();
-            sb.append("cd /home/jdbctest;\n");
+            sb.append("cd "+JTOpenTestEnvironment.testcaseHomeDirectory+";\n");
             // Get the dir (i.e. jacoco/java6 )
             String runtimeDir = getJoCoCoRuntimeDir(initials);
 
-            sb.append("java -jar /home/jdbctest/jacoco/lib/jacococli.jar "
+            sb.append("java -jar "+JTOpenTestEnvironment.testcaseHomeDirectory+"/jacoco/lib/jacococli.jar "
                 + "report jacoco/" + initials + "/* " + "--classfiles "
                 + runtimeDir + "/jt400.jar " + "--html ct/jacoco/" + initials
                 + " " + "--sourcefiles " + runtimeDir + ";\n");
@@ -2863,7 +2860,7 @@ public class JDReport {
       JDSQL400.dispResultSet(writer, rs, true);
 
       writer.println(" <h2> Rerun commands</h2> ");
-      writer.println(" <pre>cd /home/jdbctest\n");
+      writer.println(" <pre>cd "+JTOpenTestEnvironment.testcaseHomeDirectory+"\n");
       writer.println("java test.JDRunit " + initials + " RERUNFAILED </pre>");
       // echo "select '$RUNONE ' || testcase from $SCHEMA."$worst' as a where
       // old_finish_time= (select max(old_finish_time) from "+SCHEMA+"."+worst'
@@ -3199,7 +3196,7 @@ public class JDReport {
 
       JDSQL400.dispResultSet(writer, rs, true, formatNotRun);
 
-      writer.println(" <hr>REPORT created using<br><pre>cd /home/jdbctest\n");
+      writer.println(" <hr>REPORT created using<br><pre>cd "+JTOpenTestEnvironment.testcaseHomeDirectory+"\n");
       writer.println("java test.JDRunit " + initials + " REPORT </pre>");
 
 

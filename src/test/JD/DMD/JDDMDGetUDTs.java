@@ -313,7 +313,7 @@ getUDTs() - Check the result set format.
 				expectedTypes30 = expectedTypes30V7R1;
 			    }
 			}
-		    } else  if( getRelease() >= JDTestDriver.RELEASE_V5R5M0 &&
+		    } else  if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&
 				getDriver() == JDTestDriver.DRIVER_NATIVE ){
 			/* SYSIBM changes PTF'd back to V6R1 1/11/2010 */ 
 			expectedTypes30 = expectedTypes30V6R1;
@@ -671,7 +671,7 @@ All matching types should be returned.
       StringBuffer sb = new StringBuffer(); 
 
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4  ||
-              (getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() >= JDTestDriver.RELEASE_V5R5M0 ) ||
+              (getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) ||
               (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {

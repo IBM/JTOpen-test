@@ -19,6 +19,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 
 import java.io.FileOutputStream;
 
@@ -569,8 +570,8 @@ SQL400 - For this test to return UTC timezone information,
  	    // Make this work for V5R4 group test -- same result as before @PDC change
             // For the V5R4 group test, the timezone is set to UTC  @H2A 
  	    if ((isToolboxDriver()) &&
- 		(getRelease() == JDTestDriver.RELEASE_V5R4M0 || getRelease() >= JDTestDriver.RELEASE_V7R1M0) &&
- 		(JDTestDriver.OSName_.indexOf("OS/400") >= 0) &&
+ 		(getRelease() == JDTestDriver.RELEASE_V7R1M0 || getRelease() >= JDTestDriver.RELEASE_V7R1M0) &&
+ 		(JTOpenTestEnvironment.isOS400) &&
                  "UTC".equals(tz)) {
                 assertCondition (v.toString ().equals ("1998-04-08"));
 	       return;

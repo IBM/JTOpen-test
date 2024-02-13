@@ -425,7 +425,7 @@ executeUpdate() - Verify that previous warnings are cleared.
         if (checkJdbc20 ()) {
             if (( isToolboxDriver() ||
 		  getDriver () == JDTestDriver.DRIVER_JTOPENLITE) &&
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -441,7 +441,7 @@ executeUpdate() - Verify that previous warnings are cleared.
                 }
             }
             else if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -709,7 +709,7 @@ executeQuery() - Verify that previous warnings are cleared.
     {
         if (checkJdbc20 ()) {
             if (isToolboxDriver() &&
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     //TB v7r1 returns warning if statement type does not match cursor type returned from host
@@ -726,7 +726,7 @@ executeQuery() - Verify that previous warnings are cleared.
                 }
             }
             else if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -840,7 +840,7 @@ executeQuery() - Execute a read only query using an updatable statement.
                 // we also no longer warn that we changed concurrency.
                 if ((isToolboxDriver() ||
                      getDriver () == JDTestDriver.DRIVER_NATIVE ) &&
-                    getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
                 {
                     assertCondition ((w == null) && (concurrency == ResultSet.CONCUR_UPDATABLE));
                 }
@@ -1162,7 +1162,7 @@ execute() - Verify that previous warnings are closed.
     {
         if (checkJdbc20 ()) {
             if (isToolboxDriver() &&
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -1178,7 +1178,7 @@ execute() - Verify that previous warnings are closed.
                 }
             }
 	    else if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-		     getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+		     getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
 	    {
 
                 try {
@@ -2550,7 +2550,7 @@ executeLargeUpdate() - Verify that previous warnings are cleared.
         if (checkJdbc42 ()) {
             if (( isToolboxDriver() ||
 		  getDriver () == JDTestDriver.DRIVER_JTOPENLITE) &&
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -2566,7 +2566,7 @@ executeLargeUpdate() - Verify that previous warnings are cleared.
                 }
             }
             else if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,

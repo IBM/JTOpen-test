@@ -912,7 +912,7 @@ com.ibm.db2.jcc.am.SqlException: [ibm][db2][jcc][1043][10867] Cursor is not on a
 		boolean success2=rs.isBeforeFirst();
 		rs.close ();
                 if ((getDriver() == JDTestDriver.DRIVER_NATIVE && 
-                    getRelease() >= JDTestDriver.RELEASE_V5R4M0) ||
+                    getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
                     isToolboxDriver())
                 {
 
@@ -1109,7 +1109,7 @@ a call to relative(1) should return false and the cursor should remain positione
 		boolean success3=rs.isBeforeFirst();
 		rs.close ();
 		if ((getDriver() == JDTestDriver.DRIVER_NATIVE && 
-		    getRelease() >= JDTestDriver.RELEASE_V5R4M0) ||
+		    getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
 		    isToolboxDriver()){
 		  // In v5r5 native permits relative to be used when 
 		  // cursor position is before first or after last
@@ -1161,7 +1161,7 @@ a call to relative(1) should return false and leave the cursor positioned before
 		boolean success3=rs.isBeforeFirst();
 		rs.close ();
                 if ((getDriver() == JDTestDriver.DRIVER_NATIVE && 
-                    getRelease() >= JDTestDriver.RELEASE_V5R4M0) ||
+                    getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
                     isToolboxDriver()){
                   // In v5r5 native permits relative to be used when 
                   // cursor position is before first or after last
@@ -1803,12 +1803,12 @@ getRow()
     public void Var050()
     {
        if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
+	   getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	   notApplicable("Not working in V5R4 native code");
 	   return; 
        } 
        if (isToolboxDriver() &&
-               getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+               getRelease() < JDTestDriver.RELEASE_V7R1M0) {
            notApplicable("Not working in V5R3 toolbox code");
            return; 
        } 

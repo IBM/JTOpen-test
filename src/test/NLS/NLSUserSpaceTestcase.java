@@ -24,6 +24,7 @@ import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ReturnCodeException;
 import com.ibm.as400.access.UserSpace;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
@@ -67,9 +68,7 @@ public class NLSUserSpaceTestcase extends Testcase
 
     // Determine operating system we're running under
     operatingSystem_ = System.getProperty("os.name");
-    if (operatingSystem_.indexOf("Windows") >= 0 ||
-        operatingSystem_.indexOf("DOS") >= 0 ||
-        operatingSystem_.indexOf("OS/2") >= 0)
+    if (JTOpenTestEnvironment.isWindows)
     {
       DOS_ = true;
     }

@@ -1317,7 +1317,7 @@ extends JDTestcase
                 JDRSTest.position (rs_, key_);
                 JDReflectionUtil.callMethod_V(rs_, "updateNCharacterStream", "C_VARCHAR_50", new StringReader ("Toronto"),4L);
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @D2
+		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    failed ("Didn't throw SQLException");
@@ -1325,7 +1325,7 @@ extends JDTestcase
             catch(Exception e)
             {
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @D2
+		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1372,7 +1372,7 @@ extends JDTestcase
                 JDRSTest.position (rs_, key_);
                 JDReflectionUtil.callMethod_V(rs_, "updateNCharacterStream", "C_VARCHAR_50", new StringReader ("Winnipeg"), 1L);
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @D2
+		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    failed ("Didn't throw SQLException");
@@ -1380,7 +1380,7 @@ extends JDTestcase
             catch(Exception e)
             {
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @D2
+		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1404,7 +1404,7 @@ extends JDTestcase
                 JDRSTest.position (rs_, key_);
                 JDReflectionUtil.callMethod_V(rs_, "updateNCharacterStream", "C_VARCHAR_50", new StringReader ("Vancouver"), 0L);
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @D2
+		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    failed ("Didn't throw SQLException");
@@ -1412,7 +1412,7 @@ extends JDTestcase
             catch(Exception e)
             {
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @D2
+		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");

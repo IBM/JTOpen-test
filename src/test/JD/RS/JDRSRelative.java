@@ -203,7 +203,7 @@ relative() - Should work on a 1 row result set.
     {
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
+	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Native fails in V5R3, need fix for 9C30869");
 	    return; 
 	} 
@@ -436,7 +436,7 @@ indentical to calling next.  So relative(1) should return true.
                 boolean success1 = rs.relative (1);     /* This must be 1 */ 
                 boolean success2 = rs.isBeforeFirst ();
                 rs.close ();
-                if (getRelease() > JDTestDriver.RELEASE_V5R3M0 ||
+                if (getRelease() > JDTestDriver.RELEASE_V7R1M0 ||
                     isToolboxDriver() ) { 
                   assertCondition ((success1 == true) && (success2 == false), 
                         "rs.relative(1) returned "+success1+" sb true "+
@@ -485,7 +485,7 @@ indentical to calling previous.  So relative(-1) should return true.
                 boolean success1 = rs.relative (-1);
                 boolean success2 = rs.isAfterLast ();
                 rs.close ();
-                if (getRelease() > JDTestDriver.RELEASE_V5R3M0 || isToolboxDriver()) { 
+                if (getRelease() > JDTestDriver.RELEASE_V7R1M0 || isToolboxDriver()) { 
                   assertCondition ((success1 == true) && (success2 == false), 
                         "rs.relative(-1) returned "+success1+" sb true "+
                         "rs.isAfterLast returned "+success2+" sb false"+
@@ -517,7 +517,7 @@ Var 007
 **/
     public void Var015 ()
     {
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 	    notApplicable("In V5R5 or JDBC40, metafunctions are forward only"); 
 	} else { 
 	    if (checkJdbc20 ()) {
@@ -544,7 +544,7 @@ the cursor on the next row and return true.
 **/
     public void Var016 ()
     {
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 	    notApplicable("In V5R5, metafunctions are forward only"); 
 	} else { 
 	    if (checkJdbc20 ()) {
@@ -572,7 +572,7 @@ the last row and return true.
 **/
     public void Var017 ()
     {
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 	    notApplicable("In JDBC 4.0, metafunctions are forward only"); 
 	} else { 
 	    if (checkJdbc20 ()) {
@@ -603,7 +603,7 @@ after the last row and return false.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs;
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement_.executeQuery ("SELECT * FROM "
 						  + JDRSTest.RSTEST_POS);
 		} else { 
@@ -633,7 +633,7 @@ the cursor on the previous row and return true.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs; 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
 		    rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
 		} else { 
 		    rs = dmd_.getTableTypes ();
@@ -662,7 +662,7 @@ on the first row and return true.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs; 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40() ) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40() ) {
 		    rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
 		} else { 
 
@@ -692,7 +692,7 @@ before the first row and return false.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs; 
-		if ( getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40() ) {
+		if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40() ) {
 		    rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
 		} else { 
 
@@ -965,7 +965,7 @@ Fixed in V5R5
                 rs.beforeFirst ();
                 boolean success = rs.relative (23);
                 rs.close ();
-                if (getRelease() > JDTestDriver.RELEASE_V5R3M0 || isToolboxDriver()) {
+                if (getRelease() > JDTestDriver.RELEASE_V7R1M0 || isToolboxDriver()) {
                   assertCondition (success == true, comment);
                  
                 } else { 
@@ -1149,7 +1149,7 @@ Nope:  should return true.
                 rs.afterLast ();
                 boolean success = rs.relative (-50);
                 rs.close ();
-                if (getRelease() > JDTestDriver.RELEASE_V5R3M0 || isToolboxDriver()) { 
+                if (getRelease() > JDTestDriver.RELEASE_V7R1M0 || isToolboxDriver()) { 
                   assertCondition (success == true, comment);
                 } else { 
                    assertCondition (success == false);

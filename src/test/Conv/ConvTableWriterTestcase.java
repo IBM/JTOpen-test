@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import com.ibm.as400.access.*;
 
+import test.JTOpenTestEnvironment;
 import test.JVMInfo;
 import test.Testcase;
 
@@ -993,30 +994,29 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             ConvTableWriter ctw = new ConvTableWriter(fos);
             int ccsid = ctw.getCcsid();
             ctw.close();
-            String s = System.getProperty("os.name").trim().toUpperCase();
-            if (s.indexOf("WINDOWS") > -1 && ( ccsid == 1252 || ccsid == 1208)) // for Windows
+            if (JTOpenTestEnvironment.isWindows  && ( ccsid == 1252 || ccsid == 1208)) // for Windows
             {
                 succeeded();
             }
-            else if (s.indexOf("OS/400") > -1 && (JVMInfo.getJDK() == JVMInfo.JDK_14) && ccsid == 916) // for AS/400 if jdk 1.4, then change ccsid from 819 to 916
+            else if (JTOpenTestEnvironment.isOS400 && (JVMInfo.getJDK() == JVMInfo.JDK_14) && ccsid == 916) // for AS/400 if jdk 1.4, then change ccsid from 819 to 916
             {
                 succeeded();
             }
-            else if (s.indexOf("OS/400") > -1 && (ccsid == 819  || ccsid == 1208)) // for AS/400 
+            else if (JTOpenTestEnvironment.isOS400 && (ccsid == 819  || ccsid == 1208)) // for AS/400 
             {
                 succeeded();
             }
-            else if (s.indexOf("AIX") > -1 && (ccsid == 850 || ccsid == 819)) // for AIX
+            else if (JTOpenTestEnvironment.isAIX && (ccsid == 850 || ccsid == 819)) // for AIX
             {
                 succeeded();
             }
-            else if ((s.indexOf("Linux") > -1 || s.indexOf("LINUX") > -1) && (ccsid == 819 || ccsid == 1208)) // for Linux
+            else if (JTOpenTestEnvironment.isLinux  && (ccsid == 819 || ccsid == 1208)) // for Linux
             {
                 succeeded();
             }
             else
             {
-                failed("Incorrect ccsid for '"+s+"': "+ccsid);
+                failed("Incorrect ccsid for '"+JTOpenTestEnvironment.osVersion+"': "+ccsid);
             }
         }
         catch (Exception e)

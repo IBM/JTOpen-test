@@ -221,7 +221,7 @@ Performs setup needed before running variations.
           createStatements=createStatements71;
         }
 
-	if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+	if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    dropStatements=dropStatements54;
 	    createStatements=createStatements54;
 	}
@@ -619,7 +619,7 @@ No matching columns should be returned.
 
             rs.close ();
 	    if (JDTestDriver.isLUW() ||
-                (getDriver() == JDTestDriver.DRIVER_NATIVE && (isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+                (getDriver() == JDTestDriver.DRIVER_NATIVE && (isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V7R1M0))
                 || (getDriver() == JDTestDriver.DRIVER_TOOLBOX)) {
 		assertCondition (rows > 0, "rows = "+rows+" sb > 0  empty string for the catalog parameter");
 	    } else {

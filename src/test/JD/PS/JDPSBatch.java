@@ -36,6 +36,7 @@ import test.JDPSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 import test.JVMInfo;
 import test.JD.JDTestUtilities;
 import test.JDLobTest.JDTestBlob;
@@ -1507,7 +1508,7 @@ executeBatch() - Verify that the Toolbox can execute a batch with 32,767 stateme
 
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 &&  
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&  
                 getJDK() != JVMInfo.JDK_15) {
 		    /* "Longing running test only used on JDK 1.5 for release >= V5R4M0" */
 		assertCondition(true); 
@@ -1515,7 +1516,7 @@ executeBatch() - Verify that the Toolbox can execute a batch with 32,767 stateme
 	    } 
 	} 
 
-      if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+      if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
         if (longRunTest != 0) {
           notApplicable("Long running test skipped");
           return;
@@ -1562,7 +1563,7 @@ Native doesn't allow this though when useBlockInsert option is set to true.
 	// To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
 	//
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 &&  
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&  
                 getJDK() != JVMInfo.JDK_15) {
 		    /* "Longing running test only used on JDK 1.5 for release >= V5R4M0" */
 		  assertCondition(true); 
@@ -1570,7 +1571,7 @@ Native doesn't allow this though when useBlockInsert option is set to true.
 	    } 
 	} 
 
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
               if (longRunTest != 1) {
                 notApplicable("Long running test skipped");
                 return;
@@ -1591,13 +1592,13 @@ Native doesn't allow this though when useBlockInsert option is set to true.
                 s.close();
 
 		// Big Batches now work in V5R5 
-		if(useBlockInsert && (getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() < JDTestDriver.RELEASE_V5R5M0))		// @L2
+		if(useBlockInsert && (getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() < JDTestDriver.RELEASE_V7R1M0))		// @L2
 		    failed("Didn't throw SQL Exception ! ");				// @L2
 		else									// @L2
 		    assertCondition(updateCounts.length == 37000 && rows == 37000, "updateCount.length="+updateCounts.length+" sb 37000  rows="+rows+" sb 37000");
             }
             catch (Exception e) {
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE && (getRelease() < JDTestDriver.RELEASE_V5R5M0))			// @L2
+		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE && (getRelease() < JDTestDriver.RELEASE_V7R1M0))			// @L2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");			// @L2
 		else										// @L2
 		    failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
@@ -1622,13 +1623,13 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
         } 
-        if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
           if (longRunTest != 2) {
             notApplicable("Long running test skipped");
             return;
@@ -1648,13 +1649,13 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
                 s.close();
 
 		if(useBlockInsert &&					// @L2
-		   getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V5R5M0))		// @L2
+		   getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))		// @L2
 		    failed("Didn't throw SQL Exception !");		// @L2
 		else							// @L2
 		    assertCondition(updateCounts.length == 65600 && rows == 65600);
             }
             catch (Exception e) {
-		if(getDriver() == JDTestDriver.DRIVER_NATIVE && useBlockInsert && (getRelease() < JDTestDriver.RELEASE_V5R5M0))		// @L2
+		if(getDriver() == JDTestDriver.DRIVER_NATIVE && useBlockInsert && (getRelease() < JDTestDriver.RELEASE_V7R1M0))		// @L2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");		// @L2
 		else									// @L2
 		    failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
@@ -1675,7 +1676,7 @@ addBatch() - Verify that JTOpen Toolbox allows more than 65,534 statements to be
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
@@ -1721,13 +1722,13 @@ executeBatch() - Verify that the Toolbox can execute a batch with exactly 32000 
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
         } 
-        if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
           if (longRunTest != 3) {
             notApplicable("Long running test skipped");
             return;
@@ -1765,7 +1766,7 @@ addBatch() - Verify that JTOpen Toolbox allows 32,766 statements to be added to 
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
@@ -1802,7 +1803,7 @@ addBatch() - Verify that JTOpen Toolbox allows 32,768 statements to be added to 
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
@@ -1845,7 +1846,7 @@ long startTime = System.currentTimeMillis();
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
@@ -1893,14 +1894,14 @@ long startTime = System.currentTimeMillis();
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
         } 
         
-        if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
           if (longRunTest != 0) {
             notApplicable("Long running test skipped");
             return;
@@ -1919,14 +1920,14 @@ long startTime = System.currentTimeMillis();
                 int rows = countRows("Par%");
                 s.close();
 
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V5R5M0))	// @L2
+		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))	// @L2
 		    failed("Didn't throw SQL Exception !");			// @L2
 		else								// @L2
 		    assertCondition(updateCounts.length == 32768 && rows == 32768);
             }
             catch (Exception e) {
 
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V5R5M0))	// @L2
+		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))	// @L2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");	// @L2
 		else								// @L2
 		    failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
@@ -1947,7 +1948,7 @@ addBatch() - Verify that JTOpen Toolbox allows 31,999 statements to be added to 
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
@@ -1984,7 +1985,7 @@ addBatch() - Verify that JTOpen Toolbox allows 32,001 statements to be added to 
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
@@ -2029,14 +2030,14 @@ long startTime = System.currentTimeMillis();
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
         }
         
-        if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
           if (longRunTest != 1) {
             notApplicable("Long running test skipped");
             return;
@@ -2083,13 +2084,13 @@ long startTime = System.currentTimeMillis();
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
         } 
-        if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
           if (longRunTest != 2) {
             notApplicable("Long running test skipped");
             return;
@@ -2137,13 +2138,13 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&  
+            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
               getJDK() != JVMInfo.JDK_15) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
         } 
-        if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
           if (longRunTest != 3) {
             notApplicable("Long running test skipped");
             return;
@@ -2162,13 +2163,13 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
                 int rows = countRows("Divot%");
                 s.close();
 
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V5R5M0))	// @L2
+		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))	// @L2
 		    failed("Didn't throw SQL Exception !");			// @L2
 		else								// @L2
 		    assertCondition(updateCounts.length == 64000 && rows == 64000);
             }
             catch (Exception e) {
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V5R5M0))	// @L2
+		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))	// @L2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");	// @L2
 		else								// @L2
 		    failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
@@ -2946,10 +2947,10 @@ Adds a statement using a blob of varying lengths to a batch
 	} 
 
 
-	if(getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+	if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("16M test for V5R4 or later version" ); 
 	} else {
-	    if (getRelease() == JDTestDriver.RELEASE_V5R4M0 && 
+	    if (getRelease() == JDTestDriver.RELEASE_V7R1M0 && 
 		runningJ9) {
 		notApplicable("16M test not working in J9 ");
 		return; 
@@ -3028,7 +3029,7 @@ for indicator variables.
 	    return; 
 	} 
 
-	if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+	if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("16M test for V5R5 or later version" ); 
 	} else {
 	    try {
@@ -3132,7 +3133,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	StringBuffer messageBuffer = new StringBuffer(); 
 
-	if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+	if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("16M test for V5R4 or later version" ); 
 	} else {
 	    try {
@@ -7329,7 +7330,7 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
 
 	if (getDriver() != JDTestDriver.DRIVER_NATIVE && useBlockInsert) {  notApplicable("Native block insert test");  return;	}
 
-	if ((getRelease() == JDTestDriver.RELEASE_V6R1M0) &&
+	if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
 	    (useBlockInsert)) {
 	    notApplicable("Native block insert not working in V6R1 -- counts are wrong");
 	    return ; 
@@ -7337,7 +7338,7 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
 	    
 	String message = " -- New test 4/16/2010 to verify bach when insert statment inserts more than 1 row " ; 
 	StringBuffer sb = new StringBuffer();
-	if (getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
+	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Does not work on V5R3");
 	    return; 
 	} 
@@ -7649,11 +7650,11 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
             
             StringBuffer messageBuffer = new StringBuffer(); 
 	    System.out.println("Driver fix level is "+getDriverFixLevel()); 
-	    if ((getRelease() <= JDTestDriver.RELEASE_V6R1M0) &&
+	    if ((getRelease() <= JDTestDriver.RELEASE_V7R1M0) &&
                 (getDriver() == JDTestDriver.DRIVER_NATIVE) && 
 		(getDriverFixLevel() <= 38878)) {
                 notApplicable("16M test on V6R1 requires PTF later than SI38878" ); 
-	    } else if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+	    } else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
                 notApplicable("16M test for V5R5 or later version" ); 
             } else {
                 try {
@@ -7697,13 +7698,12 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
 
 		    int rowCount = 10000; 
 
-		    String osName = System.getProperty("os.name");
 		    // If running on windows, 10000 rows is too big..
-		    if ((osName.indexOf("Win") >= 0)) {
+		    if (JTOpenTestEnvironment.isWindows) {
 			rowCount=2000;
-		    } else if (osName.indexOf("Linux") >= 0) {
+		    } else if (JTOpenTestEnvironment.isLinux) {
 			// rowCount is good 
-		    } else if (osName.indexOf("OS/400") >= 0) {
+		    } else if (JTOpenTestEnvironment.isOS400) {
 		       // Check if 32-bit os.. If so,
                        // Then use smaller row count to avoid overflowing
                        // the 200 meg limit for parameter space. 
@@ -7713,7 +7713,7 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
 		       }
 
 		    } else {
-			System.out.println("OS is "+osName); 
+			System.out.println("OS is "+JTOpenTestEnvironment.osVersion); 
 		    } 
 
                     PreparedStatement pStmt = connection.prepareStatement("INSERT INTO "+tablename+
@@ -7783,11 +7783,11 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
             
             StringBuffer messageBuffer = new StringBuffer(); 
 	    System.out.println("Driver fix level is "+getDriverFixLevel()); 
-	    if ((getRelease() <= JDTestDriver.RELEASE_V6R1M0) &&
+	    if ((getRelease() <= JDTestDriver.RELEASE_V7R1M0) &&
                 (getDriver() == JDTestDriver.DRIVER_NATIVE) && 
 		(getDriverFixLevel() <= 38878)) {
                 notApplicable("16M test on V6R1 requires PTF later than SI38878" ); 
-	    } else if(getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+	    } else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
                 notApplicable("16M test for V5R5 or later version" ); 
             } else {
 		String tablename = JDPSTest.COLLECTION+ ".JDPSBAT91";
@@ -7848,12 +7848,11 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
 		    //
 
 
-		    String osName = System.getProperty("os.name");
 		    // If running on windows, 10000 rows is too big..
-		    if ((osName.indexOf("Win") >= 0) ||
-			(osName.indexOf("Linux") >= 0)) {
+		    if (JTOpenTestEnvironment.isWindows ||
+		        JTOpenTestEnvironment.isLinux) {
 			rowCount=1000;
-		    } else if (osName.indexOf("OS/400") >= 0) {
+		    } else if (JTOpenTestEnvironment.isOS400) {
 		       // Check if 32-bit os.. If so,
                        // Then use smaller row count to avoid overflowing
                        // the 200 meg limit for parameter space. 
@@ -7862,7 +7861,7 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
 			   rowCount=1000;
 		       }
 		    } else {
-			System.out.println("OS is "+osName); 
+			System.out.println("OS is "+JTOpenTestEnvironment.osVersion); 
 		    } 
 
 

@@ -113,7 +113,7 @@ Performs setup needed before running variations.
         connection_ = testDriver_.getConnection (baseURL_
 						 + ";errors=full", userId_, encryptedPassword_);
 
-	if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 
+	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    String sql =   "CREATE PROCEDURE " + STP_BIN
 	      + " (IN P_BINARY_IN		BINARY(20),"
 	      + "  OUT P_BINARY_OUT		BINARY(20))"
@@ -152,7 +152,7 @@ Performs cleanup needed after running variations.
     throws Exception
     {
 	Statement s = connection_.createStatement ();
-	if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 
+	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    s.executeUpdate("DROP PROCEDURE " + STP_BIN);
 	    s.executeUpdate("DROP PROCEDURE " + STP_VAR);
 	}
@@ -169,7 +169,7 @@ setBytes() - Should work with a valid parameter name.
 **/
     public void Var001 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
 
             try
@@ -198,7 +198,7 @@ posted when data is truncated.
 **/
     public void Var002()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
 
             try
@@ -245,7 +245,7 @@ setBytes() - Should set to SQL NULL when the value is null.
 **/
     public void Var003()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             try
             {
@@ -273,7 +273,7 @@ setBytes() - Should work with a valid parameter name.
 **/
     public void Var004 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 	{
 
 	    if(checkNamedParametersSupport())
@@ -306,7 +306,7 @@ setBytes() - Set a BINARY parameter.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 	    {
 
 		try
@@ -338,7 +338,7 @@ posted when data is truncated.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 	    {
 
 		try
@@ -387,7 +387,7 @@ setBytes() - Should set to SQL NULL when the value is null.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -416,7 +416,7 @@ setBytes() - Should work with a valid parameter name.
 **/
     public void Var008 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
 
             try
@@ -445,7 +445,7 @@ posted when data is truncated.
 **/
     public void Var009()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
 
             try
@@ -491,7 +491,7 @@ setBytes() - Should set to SQL NULL when the value is null.
 **/
     public void Var010()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
             try
             {
@@ -519,7 +519,7 @@ setBytes() - Should work with a valid parameter name.
 **/
     public void Var011 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 	{
 
 	    if(checkNamedParametersSupport())
@@ -552,7 +552,7 @@ setBytes() - Set a BINARY parameter.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 	    {
 
 		try
@@ -584,7 +584,7 @@ posted when data is truncated.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 	    {
 
 		try
@@ -633,7 +633,7 @@ setBytes() - Should set to SQL NULL when the value is null.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{

@@ -287,7 +287,7 @@ GetFunctions() -
     {
         if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) ||  checkJdbc40()) {
             
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
             notApplicable("V5R5 variation");
             return;
         }
@@ -370,7 +370,7 @@ verify all columns with system remarks (the default).
         if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
             
         
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
             notApplicable("V5R5 variation");
             return;
         }
@@ -406,7 +406,7 @@ verify all columns with system remarks (the default).
       if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
         
         
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
           notApplicable("V5R5 variation");
           return;
         }
@@ -452,7 +452,7 @@ verify all columns with system remarks (the default).
       if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
         
         
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
           notApplicable("V5R5 variation");
           return;
         }
@@ -491,7 +491,7 @@ verify all columns with system remarks (the default).
       if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
         
         
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
           notApplicable("V5R5 variation");
           return;
         }
@@ -531,7 +531,7 @@ verify all columns with system remarks (the default).
       if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
         
         
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
           notApplicable("V5R5 variation");
           return;
         }
@@ -568,7 +568,7 @@ verify all columns with system remarks (the default).
       if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
         
         
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
           notApplicable("V5R5 variation");
           return;
         }
@@ -603,7 +603,7 @@ verify all columns with system remarks (the default).
       if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
         
         
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
           notApplicable("V5R5 variation");
           return;
         }
@@ -641,7 +641,7 @@ verify all columns with system remarks (the default).
           if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
             
             
-            if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+            if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
               notApplicable("V5R5 variation");
               return;
             }
@@ -676,7 +676,7 @@ verify all columns with system remarks (the default).
               if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
                 
                 
-                if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+                if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
                   notApplicable("V5R5 variation");
                   return;
                 }
@@ -711,7 +711,7 @@ verify all columns with system remarks (the default).
               if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
                 
                 
-                if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+                if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
                   notApplicable("V5R5 variation");
                   return;
                 }
@@ -750,7 +750,7 @@ verify all columns with system remarks (the default).
               if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
                 
                 
-                if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+                if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
                   notApplicable("V5R5 variation");
                   return;
                 }
@@ -785,7 +785,7 @@ verify all columns with system remarks (the default).
               if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
                 
                 
-                if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+                if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
                   notApplicable("V5R5 variation");
                   return;
                 }
@@ -1149,7 +1149,7 @@ public void Var015() {
 				rsA[j] = (ResultSet) JDReflectionUtil.callMethod_OSSS(dmd, 
 						"getFunctions", connectionCatalog_, JDDMDTest.SCHEMAS_PERCENT, "FUNCS_");
 			}catch(Exception e){
-				if(getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() < JDTestDriver.RELEASE_V5R5M0){
+				if(getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() < JDTestDriver.RELEASE_V7R1M0){
 					assertCondition(e.getMessage().indexOf("not support") != -1);
 					return;
 				}
@@ -1220,7 +1220,7 @@ public void Var015() {
 	    				schemaPattern,
 	    				functionNamePattern); 
 	    	}catch(Exception ee) {
-	    		if(getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() < JDTestDriver.RELEASE_V5R5M0){
+	    		if(getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() < JDTestDriver.RELEASE_V7R1M0){
 	    			assertCondition(ee.getMessage().indexOf("not support") != -1);
 	    			return;
 	    		}
@@ -1464,7 +1464,7 @@ public void Var015() {
         if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) || checkJdbc40()) {
             
         
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0)  {
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
             notApplicable("V5R5 variation");
             return;
         }

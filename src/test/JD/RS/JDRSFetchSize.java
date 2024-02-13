@@ -1327,7 +1327,7 @@ specified.
             // Native fixed this bug in V5R5.  Relative should work if there are 3 rows,
             // which there are.
             // Native fixed this bug in V5R4 using SI34211
-            if (getRelease() >= JDTestDriver.RELEASE_V5R4M0 || isToolboxDriver()) {
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isToolboxDriver()) {
               assertCondition (check==true, "Relative should work when there are 3 more rows.  Fixed by native Driver 01/10/2007");
             } else { 
                assertCondition (check==false);

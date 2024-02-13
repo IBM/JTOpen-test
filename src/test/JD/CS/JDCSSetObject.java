@@ -243,7 +243,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    * than the IN parameter.
    **/
   public void Var009() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       try {
         CallableStatement cs1 = JDSetupProcedure.prepare(connection_,
             JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @KK
@@ -269,8 +269,8 @@ public class JDCSSetObject extends JDCSSetTestcase {
         /* Changing this back to the way it was */
         /* As of 2/11/2008 on V6R1 an exception is not thrown */
         if ((getDriver() == JDTestDriver.DRIVER_NATIVE)
-            && (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
-            && (getRelease() < JDTestDriver.RELEASE_V5R5M0)) { // @KK
+            && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+            && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) { // @KK
           /*
            * The native driver expects an exception to be thrown because the
            * first call to setTypesParameters sets the value of column
@@ -290,7 +290,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
         }
       } catch (Exception e) {
         if ((getDriver() == JDTestDriver.DRIVER_NATIVE)
-            && (getRelease() >= JDTestDriver.RELEASE_V5R3M0)) { // @KK
+            && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) { // @KK
           // With the new JDBC 4.0 support, this exception changes
           String classname = e.getClass().getName();
           if (classname.indexOf("DB2SQLData") >= 0) {
@@ -531,7 +531,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    * SetObject() - Set a type that was registered as a TIMESTAMP.
    **/
   public void Var024() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       try {
         Timestamp t = new Timestamp(4342343);
         cs.setObject(17, t);
@@ -625,7 +625,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    * SQL400 - We added this testcase because of a customer bug.
    **/
   public void Var029() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       try {
         CallableStatement cs1 = JDSetupProcedure.prepare(connection_,
             JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @KK
@@ -873,7 +873,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    * SetObject() - Set a type that was registered as a TIMESTAMP.
    **/
   public void Var043() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       if (checkNamedParametersSupport()) {
         try {
           Timestamp t = new Timestamp(444);
@@ -897,10 +897,10 @@ public class JDCSSetObject extends JDCSSetTestcase {
     if (checkNamedParametersSupport()) {
       if (checkLobSupport()) {
         try {
-          cs.setObject("P_DATALINK", "http://w3.rchland.ibm.com/index.html");
+          cs.setObject("P_DATALINK", "https://github.com/IBM/JTOpen-test/blob/main/README.md");
           cs.execute();
           Object p = cs.getObject("P_DATALINK");
-          assertCondition(p.equals("http://w3.rchland.ibm.com/index.html"));
+          assertCondition(p.equals("https://github.com/IBM/JTOpen-test/blob/main/README.md"));
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -969,7 +969,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
 
   // TESTING native driver
   public void Var048() { // @KK - added this Var
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       try {
         boolean success = true;
         // This variation checks that none of the i-value in for loop causes an

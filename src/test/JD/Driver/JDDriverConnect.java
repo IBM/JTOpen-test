@@ -45,6 +45,7 @@ import test.JDDriverTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 import test.JVMInfo;
 import test.PasswordVault;
 
@@ -509,7 +510,7 @@ public class JDDriverConnect extends JDTestcase {
         p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.13"));
         p.put("secure", "true");
 
-        if (getRelease() >= JDTestDriver.RELEASE_V4R4M0) {
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           Connection c = driver_.connect(url, p);
 
           // Run a query.
@@ -537,7 +538,7 @@ public class JDDriverConnect extends JDTestcase {
         failed(e, "SSL not configured. "
             + "If you get a certificate chaining error, you need "
             + "to get the CA certificate and install it using "
-            + "keytool -import -keystore /QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/jre/lib/security/cacerts -file /tmp/eberhard.ca2 -storepass changeit");
+            + "keytool -import -keystore /QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/jre/lib/security/cacerts -file /tmp/cert.ca2 -storepass changeit");
       }
     }
     }
@@ -1273,7 +1274,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var032() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1303,7 +1304,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var033() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1332,7 +1333,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var034() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1362,7 +1363,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var035() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1395,7 +1396,7 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = "jdbc:db2j:localhost";
@@ -1421,7 +1422,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var037() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1451,7 +1452,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var038() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1481,7 +1482,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var039() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1511,7 +1512,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var040() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1541,7 +1542,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var041() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       try {
         String url = baseURL_;
@@ -1604,7 +1605,7 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       enableWorkaround();
       try {
         String url = baseURL_;
@@ -1647,7 +1648,7 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       enableWorkaround();
       try {
@@ -1692,7 +1693,7 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       enableWorkaround();
       try {
         String url = baseURL_;
@@ -1736,7 +1737,7 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
       enableWorkaround();
       try {
@@ -1783,7 +1784,7 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       enableWorkaround();
       try {
         String url = baseURL_;
@@ -2579,7 +2580,7 @@ public class JDDriverConnect extends JDTestcase {
       return;
     }
 
-    if (JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_linux)) {
+    if (JTOpenTestEnvironment.isLinux) {
       notApplicable(
           "Test attempts to use GUI.  Not Applicable when running on linux");
       return;
@@ -2789,7 +2790,7 @@ public class JDDriverConnect extends JDTestcase {
 
   public void Var057() {
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-        && "OS/400".equals(System.getProperty("os.name"))) {
+        && JTOpenTestEnvironment.isOS400) {
       try {
         Connection c = DriverManager
             .getConnection("jdbc:as400:localhost;driver=native");
@@ -3024,7 +3025,7 @@ public class JDDriverConnect extends JDTestcase {
       // If we are running with the toolbox driver in V6R1, we don't get an
       // error
       if ((isToolboxDriver())
-          && (getRelease() == JDTestDriver.RELEASE_V6R1M0)) {
+          && (getRelease() == JDTestDriver.RELEASE_V7R1M0)) {
         notApplicable("Toolbox in V6R1 does not throw error");
         return;
       }
@@ -3032,7 +3033,7 @@ public class JDDriverConnect extends JDTestcase {
       // Not fixed for V5R4
 
       if ((getDriver() == JDTestDriver.DRIVER_NATIVE)
-          && (getRelease() == JDTestDriver.RELEASE_V5R4M0)) {
+          && (getRelease() == JDTestDriver.RELEASE_V7R1M0)) {
         System.out.println("PTF for APAR SE45716 not created to V5R4");
         assertCondition(true);
         return;

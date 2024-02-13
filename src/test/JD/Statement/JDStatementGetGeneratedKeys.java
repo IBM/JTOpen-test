@@ -266,7 +266,7 @@ function not supported exception.
 **/
     public void Var001()
     {
-        if (getRelease() >= JDTestDriver.RELEASE_V5R2M0 &&  getJdbcLevel() >= 2)
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&  getJdbcLevel() >= 2)
         {
             notApplicable("v5r1 or earlier variation");
             return;
@@ -306,7 +306,7 @@ null result set returned from getGeneratedKeys().
 **/
     public void Var002()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -333,7 +333,7 @@ null result set from getGeneratedKeys().
 **/
     public void Var003()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -359,7 +359,7 @@ this statement, getGeneratedKeys() should return null.
 **/
     public void Var004()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -386,7 +386,7 @@ statement, getGeneratedKeys() should return null.
 **/
     public void Var005()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -414,7 +414,7 @@ getGeneratedKeys() - Make sure that an empty result set is returned from an empt
 **/
     public void Var006()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -443,7 +443,7 @@ getGeneratedKeys() - Verify that a generated key is returned w/ execute and INSE
 **/
     public void Var007()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -477,7 +477,7 @@ getGeneratedKeys() - Verify that a generated key is returned w/ executeUpdate an
 **/
     public void Var008()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -518,7 +518,7 @@ generated keys aren't supported from executeQuery() statements.
 **/
     public void Var009()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -559,7 +559,7 @@ to access generated keys once the statement is closed.
 **/
     public void Var010()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -589,7 +589,7 @@ auto-generated key will be returned.
 **/
     public void Var011()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -624,7 +624,7 @@ getGeneratedKeys() - getGeneratedKeys() should return null if the user caught an
 **/
     public void Var012()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -658,7 +658,7 @@ getGeneratedKeys() - getGeneratedKeys() should return null if the user caught an
 		assertCondition (exception && (rs == null || rsNext==false ),
                     "rs ="+rs+" exception="+exception+" rsNext="+rsNext+" rsGetString="+rsGetString);
 	    } else if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		       getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		       getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition (exception && rs != null, "rs sb not-null but is ="+rs+" exception="+exception);
 
 	    } else { 
@@ -678,7 +678,7 @@ getGeneratedKeys() returns an empty result set as CALLs do not return generated 
 **/
     public void Var013()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -711,7 +711,7 @@ and execute.
 **/
     public void Var014()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -747,7 +747,7 @@ and executeUpdate.
 **/
     public void Var015()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -788,7 +788,7 @@ and executeQuery.
 **/
     public void Var016()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -818,7 +818,7 @@ getGeneratedKeys() - Verify that a generated key is returned w/ execute and DELE
 **/
     public void Var017()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -870,7 +870,7 @@ that doesn't match a row in the table.
 **/
     public void Var018()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -908,7 +908,7 @@ return null.
 **/
     public void Var019()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -919,7 +919,7 @@ return null.
                        + " (NAME) VALUES ('ivy')", Statement.NO_GENERATED_KEYS);
             ResultSet rs = s.getGeneratedKeys();
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition (rs != null, "rs sb not-null but is ="+rs); 
 	    } else { 
 		assertCondition(rs == null);
@@ -938,7 +938,7 @@ return null.
 **/
     public void Var020()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -962,7 +962,7 @@ return null.
 **/
     public void Var021()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -986,7 +986,7 @@ a PreparedStatement.
 **/
     public void Var022()
     {
-	if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+	if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
 	{
 	    notApplicable("v5r2/JDK 1.4 variation");
 	    return;
@@ -1019,7 +1019,7 @@ a PreparedStatement.
 **/
     public void Var023()
     {
-	if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+	if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
 	{
 	    notApplicable("v5r2/JDK 1.4 variation");
 	    return;
@@ -1053,7 +1053,7 @@ return null.
 **/
     public void Var024()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1064,7 +1064,7 @@ return null.
                        + " (NAME) VALUES ('molly')");
             ResultSet rs = s.getGeneratedKeys();
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition (rs != null, "rs sb not-null but is ="+rs); 
 	    } else { 
 		assertCondition(rs == null);
@@ -1083,7 +1083,7 @@ should return an empty result set.
 **/
     public void Var025()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1099,7 +1099,7 @@ should return an empty result set.
 	    if (check) {
 		generatedKey=rs.getString(1); 
 	    } 
-            if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                // In V5R5 we can get generated information from non-identity columns
               assertCondition(check, "rs.next returned false instead of true");
             } else { 
@@ -1127,7 +1127,7 @@ empty result set.
 **/
     public void Var026()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1174,7 +1174,7 @@ return generated keys, but the second will, so getGeneratedKeys() should return 
 **/
     public void Var027()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1215,7 +1215,7 @@ empty result set.
 **/
     public void Var028()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1262,7 +1262,7 @@ empty result set in both cases.
 **/
     public void Var029()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1310,7 +1310,7 @@ different result set in both cases.
 **/
     public void Var030()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1352,7 +1352,7 @@ different result set in both cases.
   **/
     public void Var031()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1383,7 +1383,7 @@ different result set in both cases.
 		assertCondition(exception && rs != null && check2
 				&& key2.length() >=1, "exception = "+exception+" rs = "+rs+" check2="+check2+" key2.length()="+key2.length());
 	    } else if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition(exception && rs != null && check2
 				&& key2.length() >=1, "exception = "+exception+" rs = "+rs+" check2="+check2+" key2.length()="+key2.length());
 	    } else { 
@@ -1409,7 +1409,7 @@ exception even if the first run was successful.
 **/
     public void Var032()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1457,7 +1457,7 @@ that the key had to be unique on the table.
 **/
     public void Var033()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1501,7 +1501,7 @@ specify that, so getGeneratedKeys() should return no result set the second time.
 **/
     public void Var034()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1549,7 +1549,7 @@ the second time.
 **/
     public void Var035()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1566,7 +1566,7 @@ the second time.
             boolean check2 = rs2.next();
             String key2 = rs2.getString(1);
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition(rs != null && check2 && key2.length() >= 1);
 	    } else { 
 		assertCondition(rs == null && check2 && key2.length() >= 1);
@@ -1594,7 +1594,7 @@ the second time.
 
     public void Var036()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1657,7 +1657,7 @@ the second time.
 	    notApplicable("JCC doesn't support insert / select");
 	    return; 
 	}
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -1684,7 +1684,7 @@ the second time.
             boolean check1 = rs1.next();
             String key1 = rs1.getString(1);
             boolean condition = true; 
-            if (getRelease()  >= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease()  >= JDTestDriver.RELEASE_V7R1M0) {
               // For V5R5, we should be able to get all the values because the
               // implementation uses SELECT from INSERT 
               boolean check2 = rs1.next();
@@ -1749,13 +1749,13 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3 || isToolboxDriver())
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3 || isToolboxDriver())
         {
             notApplicable("v5r2/JDK 1.4 native variation");
             return;
         }
 	boolean expectException = true;
-	if (getDriver() == JDTestDriver.DRIVER_JCC || getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	if (getDriver() == JDTestDriver.DRIVER_JCC || getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	    expectException = false; 
 	} 
         Statement s = null;
@@ -1802,14 +1802,14 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3 || 
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3 || 
             isToolboxDriver())
         {
             notApplicable("v5r2/JDK 1.4 native variation");
             return;
         }
 	boolean expectException = true;
-	if (getDriver() == JDTestDriver.DRIVER_JCC || getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	if (getDriver() == JDTestDriver.DRIVER_JCC || getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	    expectException = false; 
 	} 
 
@@ -1856,7 +1856,7 @@ the second time.
 
     public void Var040()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3 || getDriver() != JDTestDriver.DRIVER_NATIVE)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3 || getDriver() != JDTestDriver.DRIVER_NATIVE)
         {
             notApplicable("v5r2/JDK 1.4 native variation");
             return;
@@ -1867,7 +1867,7 @@ the second time.
 	    int[] columnIndexes = {2}; 
             int rowCount = s.executeUpdate ("INSERT INTO " + table_
                        + " (NAME) VALUES ('bobby')", columnIndexes);
-            if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
               
                 ResultSet rs = s.getGeneratedKeys();
                 boolean check = rs.next();
@@ -1885,7 +1885,7 @@ the second time.
             }
         }
         catch (Exception e) {
-          if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
               failed(e); 
           } else { 
 		// Exception changed with JDK 1.6 PTF 
@@ -1904,7 +1904,7 @@ the second time.
 
     public void Var041()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3 || getDriver() != JDTestDriver.DRIVER_NATIVE)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3 || getDriver() != JDTestDriver.DRIVER_NATIVE)
         {
             notApplicable("v5r2/JDK 1.4 native variation");
             return;
@@ -1915,7 +1915,7 @@ the second time.
 	    String[] columnNames = {"GENID"}; 
 	    int rowCount = s.executeUpdate ("INSERT INTO " + table_
                        + " (NAME) VALUES ('bobby')", columnNames);
-            if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
               ResultSet rs = s.getGeneratedKeys();
               boolean check = rs.next();
               String generatedKey = rs.getString(1);
@@ -1932,7 +1932,7 @@ the second time.
             }
         }
         catch (Exception e) {
-          if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
             failed(e); 
 	  } else { 
 		// Exception changed with JDK 1.6 PTF 
@@ -1950,7 +1950,7 @@ the second time.
      */ 
     public void Var042()
     {
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3 || getDriver() != JDTestDriver.DRIVER_NATIVE)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3 || getDriver() != JDTestDriver.DRIVER_NATIVE)
         {
             notApplicable("v5r2/JDK 1.4 native variation");
             return;
@@ -1961,7 +1961,7 @@ the second time.
             PreparedStatement ps = connection_.prepareStatement (
                 "INSERT INTO " + table_
                 + " (NAME) VALUES ('george')", columnIndexes);
-            if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
               ps.execute(); 
               ResultSet rs = ps.getGeneratedKeys();
               boolean check = (rs != null); 
@@ -1973,7 +1973,7 @@ the second time.
             }
         }
         catch (Exception e) {
-          if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
             failed(e); 
 	  } else {
 		// Exception changed with JDK 1.6 PTF 
@@ -1994,7 +1994,7 @@ the second time.
 
     public void Var043()
     {
-      if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3 || getDriver() != JDTestDriver.DRIVER_NATIVE)
+      if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3 || getDriver() != JDTestDriver.DRIVER_NATIVE)
       {
         notApplicable("v5r2/JDK 1.4 native variation");
         return;
@@ -2004,7 +2004,7 @@ the second time.
         
         PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " + table_
             + " (NAME) VALUES ('harold')", columnNames);
-        if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           ps.execute(); 
           ResultSet rs = ps.getGeneratedKeys();
           boolean check = (rs != null); 
@@ -2016,7 +2016,7 @@ the second time.
         }
       }
       catch (Exception e) {
-        if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           failed(e); 
 	} else  {
 		// Exception changed with JDK 1.6 PTF 
@@ -2043,7 +2043,7 @@ null result set returned from getGeneratedKeys().
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2075,7 +2075,7 @@ null result set from getGeneratedKeys().
 	    return; 
 	} 
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2106,7 +2106,7 @@ this statement, getGeneratedKeys() should return null.
 	    return; 
 	} 
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2138,7 +2138,7 @@ statement, getGeneratedKeys() should return null.
 	    return; 
 	} 
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2171,7 +2171,7 @@ getGeneratedKeys() - Using system naming -Make sure that an empty result set is 
 	    return; 
 	} 
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2207,7 +2207,7 @@ getGeneratedKeys() - Using system naming -Verify that a generated key is returne
 	    return; 
 	} 
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2245,7 +2245,7 @@ getGeneratedKeys() - Using system naming -Verify that a generated key is returne
 	    return; 
 	} 
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2291,7 +2291,7 @@ generated keys aren't supported from executeQuery() statements.
 	    return; 
 	} 
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2323,7 +2323,7 @@ to access generated keys once the statement is closed.
 	    return; 
 	} 
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2359,7 +2359,7 @@ auto-generated key will be returned.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2391,7 +2391,7 @@ getGeneratedKeys() - Using system naming -getGeneratedKeys() should return null 
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2413,7 +2413,7 @@ getGeneratedKeys() - Using system naming -getGeneratedKeys() should return null 
             ResultSet rs = s.getGeneratedKeys();
 
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition (exception && rs != null,  "system naming test added 12/2/2003");
 	    } else { 
 		assertCondition (exception && rs == null,  "system naming test added 12/2/2003");
@@ -2436,7 +2436,7 @@ getGeneratedKeys() returns an empty result set as CALLs do not return generated 
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2469,7 +2469,7 @@ and execute.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2515,7 +2515,7 @@ and executeUpdate.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2559,7 +2559,7 @@ and executeQuery.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2588,7 +2588,7 @@ getGeneratedKeys() - Using system naming -Verify that a generated key is returne
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2620,7 +2620,7 @@ that doesn't match a row in the table.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-       if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+       if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2650,7 +2650,7 @@ return null.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2661,7 +2661,7 @@ return null.
                        + " (NAME) VALUES ('ivy')", Statement.NO_GENERATED_KEYS);
             ResultSet rs = s.getGeneratedKeys();
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
             assertCondition(rs != null,  "system naming test added 12/2/2003");
 	    } else { 
             assertCondition(rs == null,  "system naming test added 12/2/2003");
@@ -2684,7 +2684,7 @@ return null.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2712,7 +2712,7 @@ return null.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2739,7 +2739,7 @@ getGeneratedKeys() - Using system naming -Since we requested no generated keys, 
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2750,7 +2750,7 @@ getGeneratedKeys() - Using system naming -Since we requested no generated keys, 
                        + " (NAME) VALUES ('molly')");
             ResultSet rs = s.getGeneratedKeys();
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		boolean rsNext = true;
 		if (rs != null) {
 		    rsNext = rs.next(); 
@@ -2780,7 +2780,7 @@ should return an empty result set.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2792,7 +2792,7 @@ should return an empty result set.
                        + " (NAME) VALUES ('jackiek')", Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = s.getGeneratedKeys();
             boolean check = rs.next();
-            if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
               // In V5R5 we can return autogenerated keys, even from a non-identity column
               assertCondition(check,  "system naming test added 12/2/2003");
             } else {
@@ -2824,7 +2824,7 @@ empty result set.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2871,7 +2871,7 @@ return generated keys, but the second will, so getGeneratedKeys() should return 
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2914,7 +2914,7 @@ empty result set.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -2960,7 +2960,7 @@ empty result set in both cases.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3003,7 +3003,7 @@ different result set in both cases.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3049,7 +3049,7 @@ different result set in both cases.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3076,7 +3076,7 @@ different result set in both cases.
             boolean check2 = rs2.next();
             String key2 = rs2.getString(1);
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition(exception && rs != null && check2
 				&& key2.length() >= 1);
 	    } else { 
@@ -3106,7 +3106,7 @@ exception even if the first run was successful.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3157,7 +3157,7 @@ that the key had to be unique on the table.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3205,7 +3205,7 @@ specify that, so getGeneratedKeys() should return no result set the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3256,7 +3256,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3273,7 +3273,7 @@ the second time.
             boolean check2 = rs2.next();
             String key2 = rs2.getString(1);
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition(rs != null && check2 && key2.length() >= 1,  "system naming test added 12/2/2003");
 	    } else { 
 		assertCondition(rs == null && check2 && key2.length() >= 1,  "system naming test added 12/2/2003");
@@ -3305,7 +3305,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3367,7 +3367,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R2M0 || getJdbcLevel() < 3)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || getJdbcLevel() < 3)
         {
             notApplicable("v5r2/JDK 1.4 variation");
             return;
@@ -3396,7 +3396,7 @@ the second time.
             String key1 = rs1.getString(1);
 
             
-            if (getRelease()  >= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease()  >= JDTestDriver.RELEASE_V7R1M0) {
               // For V5R5, we should be able to get all the values because the
               // implementation uses SELECT from INSERT 
               boolean check2 = rs1.next();
@@ -3468,7 +3468,7 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3508,7 +3508,7 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3556,7 +3556,7 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3602,7 +3602,7 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3646,7 +3646,7 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3692,7 +3692,7 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3739,7 +3739,7 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3812,7 +3812,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3887,7 +3887,7 @@ the second time.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -3960,7 +3960,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4034,7 +4034,7 @@ the second time.
 	    notApplicable("JCC doesn't support INSERT/SELECT");
 	    return; 
 	}
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4109,7 +4109,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4185,7 +4185,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4240,7 +4240,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4296,7 +4296,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-       if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+       if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4357,7 +4357,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4418,7 +4418,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-       if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+       if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4480,7 +4480,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4542,7 +4542,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4599,7 +4599,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4661,7 +4661,7 @@ the second time.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -4715,7 +4715,7 @@ the second time.
 
     public void stringTruncationTest(String datatype, String tablename, String insertValue  ) {
         String added = " -- "+datatype+" truncation test added 4/16/2008 by native"; 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation"+added);
             return;
@@ -4780,7 +4780,7 @@ the second time.
 
     public void binaryTruncationTest(String datatype, String tablename, byte[] insertValue  ) {
         String added = " -- "+datatype+" truncation test added 4/16/2008 by native"; 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation"+added);
             return;
@@ -4912,7 +4912,7 @@ the second time.
     public void Var109()
     {
         String added = " -- select from insert test Added 04/16/2008 by native driver";
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation"+added);
             return;
@@ -4979,7 +4979,7 @@ the second time.
     public void Var110()
     {
 	String added = " -- select from insert test Added 04/16/2008 by native driver";
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation"+added);
             return;
@@ -5036,7 +5036,7 @@ the second time.
     public void Var111()
     {
 	String added = " -- select from insert test Added 04/16/2008 by native driver";
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation"+added);
             return;
@@ -5095,7 +5095,7 @@ the second time.
     public void Var112()
     {
 	String added = " -- select from insert test Added 04/16/2008 by native driver";
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation"+added);
             return;
@@ -5152,7 +5152,7 @@ the second time.
      */ 
     public void Var113() {
 	String added = " -- Testcase added 12/15/2010 to test insert into table with trigger"; 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation"+added);
             return;
@@ -5188,7 +5188,7 @@ the second time.
      */
   public void Var114() {
     String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("v5r5 or later variation" + added);
       return;
     }
@@ -5213,7 +5213,7 @@ the second time.
      */
   public void Var115() {
     String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("v5r5 or later variation" + added);
       return;
     }
@@ -5240,7 +5240,7 @@ the second time.
 
   public void Var116() {
     String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("v5r5 or later variation" + added);
       return;
     }
@@ -5265,7 +5265,7 @@ the second time.
    */
 public void Var117() {
   String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-  if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+  if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
     notApplicable("v5r5 or later variation" + added);
     return;
   }
@@ -5290,7 +5290,7 @@ public void Var117() {
    */
 public void Var118() {
   String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-  if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+  if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
     notApplicable("v5r5 or later variation" + added);
     return;
   }
@@ -5317,7 +5317,7 @@ public void Var118() {
 
 public void Var119() {
   String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-  if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+  if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
     notApplicable("v5r5 or later variation" + added);
     return;
   }
@@ -5345,7 +5345,7 @@ public void Var119() {
  */ 
 public void Var120() {
     String added = " -- Testcase added 12/15/2010 to test insert into table with trigger"; 
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
     {
         notApplicable("v5r5 or later variation"+added);
         return;
@@ -5381,7 +5381,7 @@ public void Var120() {
  */
 public void Var121() {
 String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
   notApplicable("v5r5 or later variation" + added);
   return;
 }
@@ -5406,7 +5406,7 @@ try {
  */
 public void Var122() {
 String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
   notApplicable("v5r5 or later variation" + added);
   return;
 }
@@ -5433,7 +5433,7 @@ try {
 
 public void Var123() {
 String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
   notApplicable("v5r5 or later variation" + added);
   return;
 }
@@ -5458,7 +5458,7 @@ try {
 */
 public void Var124() {
 String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 notApplicable("v5r5 or later variation" + added);
 return;
 }
@@ -5483,7 +5483,7 @@ failed(e, "Unexpected exception " + added);
 */
 public void Var125() {
 String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 notApplicable("v5r5 or later variation" + added);
 return;
 }
@@ -5510,7 +5510,7 @@ failed(e, "Unexpected exception " + added);
 
 public void Var126() {
 String added = " -- Testcase added 12/15/2010 to test insert into table with trigger";
-if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 notApplicable("v5r5 or later variation" + added);
 return;
 }
@@ -5797,7 +5797,7 @@ auto-generated key will be returned.
 	    return; 
 	}
 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;
@@ -5916,7 +5916,7 @@ auto-generated key will be returned.
 		notApplicable("System naming version NA for JCC");
 		return; 
 	    } 
-	    if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+	    if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
 	    {
 		notApplicable("v5r5 or later variation");
 		return;
@@ -5990,7 +5990,7 @@ auto-generated key will be returned.
 		notApplicable("System naming version NA for JCC");
 		return; 
 	    } 
-	    if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+	    if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
 	    {
 		notApplicable("v5r5 or later variation");
 		return;
@@ -6049,7 +6049,7 @@ auto-generated key will be returned.
 		notApplicable("System naming version NA for JCC");
 		return; 
 	    } 
-	    if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+	    if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
 	    {
 		notApplicable("v5r5 or later variation");
 		return;
@@ -6112,7 +6112,7 @@ auto-generated key will be returned.
 		notApplicable("System naming version NA for JCC");
 		return; 
 	    } 
-	    if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+	    if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
 	    {
 		notApplicable("v5r5 or later variation");
 		return;
@@ -6176,7 +6176,7 @@ auto-generated key will be returned.
 	    notApplicable("System naming version NA for JCC");
 	    return; 
 	} 
-        if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0)
         {
             notApplicable("v5r5 or later variation");
             return;

@@ -1091,7 +1091,7 @@ getBlob() - Get blob on a large blob
        if (checkJdbc20 ()) {
 	   if (getDriver()  == JDTestDriver.DRIVER_NATIVE) { /* native only large blob tc */
 
-	       if ( getRelease() >=  JDTestDriver.RELEASE_V5R4M0 ) {
+	       if ( getRelease() >=  JDTestDriver.RELEASE_V7R1M0 ) {
 		   String sql ="";
 		   try {
 		       sql = "CREATE OR REPLACE  PROCEDURE "+JDCSTest.COLLECTION+".BIGBLOBOUT(OUT B BLOB(40000000)) LANGUAGE SQL " +

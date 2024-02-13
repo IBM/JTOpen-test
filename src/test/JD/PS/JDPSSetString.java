@@ -35,7 +35,6 @@ package test.JD.PS;
 
 import com.ibm.as400.access.AS400;
 
-import test.JDJobName;
 import test.JDPSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
@@ -1359,7 +1358,6 @@ setString() - make sure pad is correct for graphic fields
 	    return;
 	}
 
-        if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)                                     //@G1A
         {                                                                                   //@G1A
             String tableName = JDPSTest.COLLECTION + ".GRAPHIC_PAD";
             try
@@ -1447,8 +1445,6 @@ setString() - make sure pad is correct for graphic fields
                 try { statement_.executeUpdate ("DROP TABLE " + tableName); } catch (SQLException e) { }
             }
         }
-        else                                                                            //@G1A
-            notApplicable("V5R3 or higher variation.");                                 //@G1A
     }
 
     public String formatUnicode(String inString) {
@@ -1503,7 +1499,6 @@ setString() - make sure UTF-8 parameter can be passed
 	    return;
 	}
 
-	if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
             String tableName = JDPSTest.COLLECTION + ".UTF8";
             try  {
 		try { statement_.executeUpdate("drop table " + tableName); } catch (Exception e) {}
@@ -1533,10 +1528,8 @@ setString() - make sure UTF-8 parameter can be passed
             } finally {
                 try { statement_.executeUpdate ("DROP TABLE " + tableName); } catch (SQLException e) { }
             }
-	} else {
-            notApplicable("V5R3 or higher variation.");
 	}
-    }
+
 
 
 /**
@@ -1550,7 +1543,7 @@ setString() - make sure EURO symbol parameter can be passed and retrieved
 	    return;
 	}
 
-	if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+	 {
             String tableName = JDPSTest.COLLECTION + ".EURO";
             try  {
 		try { statement_.executeUpdate("drop table " + tableName); } catch (Exception e) {}
@@ -1576,8 +1569,6 @@ setString() - make sure EURO symbol parameter can be passed and retrieved
             } finally {
                 try { statement_.executeUpdate ("DROP TABLE " + tableName); } catch (SQLException e) { }
             }
-	} else {
-            notApplicable("V5R3 or higher variation.");
 	}
     }
 
@@ -1594,24 +1585,10 @@ Also needs to work for V5R2
 	    return;
 	}
 
-	if(getRelease() >= JDTestDriver.RELEASE_V5R2M0) {
+	
             String tableName = JDPSTest.COLLECTION + ".MIXED5035";
             try  {
 
-		//
-		// In V5R2, all translations for native JDBC driver
-                // go through job CCSID.  Must change CCSId for 5035 for
-		// this to work.
-		//
-		if ((getRelease() == JDTestDriver.RELEASE_V5R2M0) &&
-		    (getDriver () == JDTestDriver.DRIVER_NATIVE)) {
-
-		   System.out.println("The CCSID is "+JDJobName.getJobCCSID());
-		    JDJobName.setIGC(5035);
-
-		   System.out.println("The CCSID is "+JDJobName.getJobCCSID());
-
-		}
 		try { statement_.executeUpdate("drop table " + tableName); } catch (Exception e) {}
                 statement_.executeUpdate ("CREATE TABLE " + tableName
                                           + " (COL1 CLOB(30000) CCSID 5035)");
@@ -1641,9 +1618,7 @@ Also needs to work for V5R2
             } finally {
                 try { statement_.executeUpdate ("DROP TABLEX " + tableName); } catch (SQLException e) { }
             }
-	} else {
-            notApplicable("V5R2 or higher variation.");
-	}
+	
     }
 
 
@@ -2803,11 +2778,7 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
 		  "SUB \u001A SUB",
 		"E2E4C2403F40E2E4C2"}
 	};
-	if (getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
-	    notApplicable("Not fixing v5r3 -- going out of service");
-	} else {
 	    testCCSID(37,testStrings);
-	}
     }
 
 
@@ -2878,11 +2849,7 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
 
 
 	};
-	if (getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
-	    notApplicable("Not fixing v5r3 -- going out of service");
-	} else {
 	    testCCSID(273,testStrings);
-	}
     }
 
 
@@ -2892,11 +2859,6 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     **/
         public void Var116()
         {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R4M0 &&
-		getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		notApplicable("Invalid DATE test not applicable for V5R4");
-		return;
-	    }
             try {
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
@@ -2923,11 +2885,6 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     **/
         public void Var117()
         {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R4M0 &&
-		getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		notApplicable("Invalid TIME test not applicable for V5R4");
-		return;
-	    }
             try {
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
@@ -3135,10 +3092,6 @@ setString() - Set an XML  parameter using invalid data.
         /* Earlier version of the driver did not cause this exception.  */
 
 	public void Var151() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
-		notApplicable("V6R1 or later test");
-		return;
-	    }
 	    try {
 
 		// Use a connection with query replace truncated parameter set
@@ -3178,10 +3131,6 @@ setString() - Set an XML  parameter using invalid data.
 
 	public void setDecimalValueWithDecimalSeparatorComma(String query, String value) {
 
-	    if (getRelease() == JDTestDriver.RELEASE_V5R4M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		notApplicable("Not fixing decimal separator problem on V5R4");
-		return; 
-	    } 
 	    try {
 
 

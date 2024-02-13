@@ -1171,7 +1171,7 @@ public class SSLConnectTestcase extends Testcase
     }
 
     /**
-     Connect to service without setting the system name.  This should go to the local system, and if we are not running on an AS/400, an exception will be generated.  In some cases this will be a ServerPortMapException.  On OS/2 this is a Java.net exception.
+     Connect to service without setting the system name.  This should go to the local system, and if we are not running on an AS/400, an exception will be generated.  In some cases this will be a ServerPortMapException.  
      **/
     public void Var036()
     {

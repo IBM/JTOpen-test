@@ -122,14 +122,14 @@ Performs cleanup needed after running variations.
                }
                s.execute("CREATE TABLE " + table + " (COLA INT)");
                conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-	       if ( getRelease() <= JDTestDriver.RELEASE_V5R2M0 ) { 
+	       if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ) { 
 		   failed("Did not throw exception");
 	       } else {
 		   succeeded(); 
 	       } 
             }
             catch (SQLException e) {
-	       if ( getRelease() <= JDTestDriver.RELEASE_V5R2M0 ) { 
+	       if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ) { 
 		   succeeded();
 	       } else {
 		   failed(e, "Unexpected  Exception Message Should not throw exception in V5R3 ");
@@ -218,7 +218,7 @@ Performs cleanup needed after running variations.
             }
             catch (Exception e) {
                if (exceptionMsgHas(e, "XAER_PROTO"))
-		   if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		   if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		       assertExceptionIsInstanceOf(e, "javax.transaction.xa.XAException");
 		   } else { 
 		       assertExceptionIsInstanceOf(e, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
@@ -759,14 +759,14 @@ Performs cleanup needed after running variations.
 
 	       try {
 		   conn.setReadOnly(true);
-		   if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+		   if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		       assertCondition(true); 
 		   } else { 
 		       failed("Did not throw exception");
 		   }
 	       }
                catch (Exception e) {
-		   if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+		   if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			   failed(e, "Exception thrown calling setReadonly on readonly connection");
 		   } else { 
 		       if (exceptionMsgHas(e, "authorization failure"))

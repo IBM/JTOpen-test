@@ -153,12 +153,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
     protected boolean isNative_ = false;
     protected boolean isExtendedDynamic_ = false;
     protected boolean isLocal_ = false;
-    static boolean onAS400_ = false;
-    static {
-      String s = System.getProperty("os.name");
-      boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
-      if (onI5OS) onAS400_ = true; // make sure this flag gets set
-    }
+    static boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
     static boolean brief_ = false;
     protected static int duration_ = 0;  // number of seconds to run
     static boolean pause_ = false;
@@ -1135,7 +1130,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
           clientMachineName = InetAddress.getLocalHost().getHostName();
         } catch (Exception e) {}
         out_.println("CLIENT NAME      = " + clientMachineName);
-        out_.println("CLIENT OS/VERSION= " + System.getProperty("os.name")+" "+ System.getProperty("os.version")) ;
+        out_.println("CLIENT OS/VERSION= " + JTOpenTestEnvironment.osVersion) ;
         out_.println("CLIENT USER NAME = " + System.getProperty("user.name"));
         String sysName = systemName_;
         if (sysName != null && sysName.equalsIgnoreCase("localhost")) {

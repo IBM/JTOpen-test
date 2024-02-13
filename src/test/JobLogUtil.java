@@ -615,17 +615,17 @@ public class JobLogUtil {
       return "joblog is null and cannot be saved";
     }
 
-    File dir = new File("/home/jdbctest/ct/debugdata");
+    File dir = new File(JTOpenTestEnvironment.testcaseHomeDirectory+"/ct/debugdata");
     if (!dir.exists()) {
       dir.mkdirs();
     }
     String filename = jobname.replace('/', '.') + ".txt";
-    File outfile = new File("/home/jdbctest/ct/debugdata/" + filename);
+    File outfile = new File(JTOpenTestEnvironment.testcaseHomeDirectory+"/ct/debugdata/" + filename);
     int count = 0;
     while (outfile.exists()) {
       count++;
       filename = jobname.replace('/', '.') + "." + count + ".txt";
-      outfile = new File("/home/jdbctest/ct/debugdata/" + filename);
+      outfile = new File(JTOpenTestEnvironment.testcaseHomeDirectory+"/ct/debugdata/" + filename);
     }
 
     PrintWriter writer = new PrintWriter(new FileWriter(outfile));

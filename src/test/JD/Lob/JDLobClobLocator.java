@@ -8202,7 +8202,7 @@ public class JDLobClobLocator extends JDTestcase {
       return;
     }
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       if (checkUpdateableLobsSupport()) {
         try {
           String statement = "SELECT * FROM " + TABLE3_;
@@ -8293,7 +8293,7 @@ public class JDLobClobLocator extends JDTestcase {
       return;
     }
     String lastSql = "";
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("v5r5 variation");
       return;
     }
@@ -8370,7 +8370,7 @@ public class JDLobClobLocator extends JDTestcase {
       notApplicable("JDBC 4.0 testcase");
       return;
     }
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("v5r5 variation");
       return;
     }
@@ -8441,7 +8441,7 @@ public class JDLobClobLocator extends JDTestcase {
       notApplicable("JDBC 4.0 testcase");
       return;
     }
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("v5r5 variation");
       return;
     }
@@ -8514,7 +8514,7 @@ public class JDLobClobLocator extends JDTestcase {
       notApplicable("JDBC 4.0 testcase");
       return;
     }
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("v5r5 variation");
       return;
     }
@@ -8602,7 +8602,7 @@ public class JDLobClobLocator extends JDTestcase {
         assertCondition(true);
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8633,7 +8633,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8669,7 +8669,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8700,7 +8700,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8731,7 +8731,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8763,7 +8763,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8794,7 +8794,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8825,7 +8825,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8856,7 +8856,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8887,7 +8887,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8918,7 +8918,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -8949,7 +8949,7 @@ public class JDLobClobLocator extends JDTestcase {
         }
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-            && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+            && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
           assertCondition(e.getMessage().indexOf("not support") != -1);
           return;
         }
@@ -9042,7 +9042,7 @@ public class JDLobClobLocator extends JDTestcase {
       notApplicable("JDBC 4.0 testcase");
       return;
     }
-    if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("v5r5 variation");
       return;
     }
