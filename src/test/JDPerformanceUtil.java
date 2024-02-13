@@ -74,7 +74,7 @@ public class JDPerformanceUtil {
       if (clientName == null) { 
          InetAddress localAddress =  InetAddress.getLocalHost();
          clientName  = localAddress.getHostName();
-         int rchIndex = clientName.indexOf(".RCH.STGLABS.IBM.COM"); 
+         int rchIndex = clientName.indexOf(JTOpenTestEnvironment.getDefaultClientDomain().toUpperCase()); 
          if (rchIndex > 0) { 
            clientName = clientName.substring(0, rchIndex); 
          }

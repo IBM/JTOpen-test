@@ -39,7 +39,7 @@ public class JDScheduler {
 
   public static String COLLECTION = "JDTESTINFO";
 
-  public static Hashtable threadConnectionHashtable = new Hashtable();
+  public static Hashtable<Thread, Connection> threadConnectionHashtable = new Hashtable<Thread, Connection>();
   // Default is to connect to local host.
   // Can be changed via -DjdbcUrl
   public static String jdbcURL = "jdbc:db2:*LOCAL";
@@ -466,17 +466,8 @@ public class JDScheduler {
     }
 
     if (connection == null) {
-      if (jdbcURL.indexOf("db2") > 0) {
-        Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
-      } else if (jdbcURL.indexOf("as400") > 0) {
-        Class.forName("com.ibm.as400.access.AS400JDBCDriver");
-      } else if (jdbcURL.indexOf("jtopenlite") > 0) {
-        Class.forName("com.ibm.jtopenlite.database.jdbc.JDBCDriver");
-      } else {
-        throw new Exception("Unrecognized URL " + jdbcURL);
-      }
       System.out.println("Thread " + currentThread + ": Requesting new connection at " + jdbcURL + " using " + userid
-          + "," + password);
+          + ",XXXXXX");
       if (userid == null) {
         connection = DriverManager.getConnection(jdbcURL + ";prompt = false");
       } else {

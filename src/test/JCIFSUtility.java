@@ -80,10 +80,10 @@ private static Blob blob;
     
   }
 
-  public static String fullyQualifySystem(String system) {
+  public static String fullyQualifySystem(String system) throws Exception {
     if (system.indexOf(".") < 0) {
       if (!"LOCALHOST".equals(system.toUpperCase())) {
-        system = system + ".rch.stglabs.ibm.com";
+        system = system + "."+JTOpenTestEnvironment.getDefaultServerDomain(); 
       } else {
         system = "localhost";
       }

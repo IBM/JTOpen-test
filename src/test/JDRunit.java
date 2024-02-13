@@ -473,29 +473,24 @@ public class JDRunit {
           + regressionFilename);
     }
 
-    File regressionFile = new File(regressionFilename);
-    if (!regressionFile.exists()) {
-
+    InputStream is = loadResource(hostRegressionFilename, iniInfo); 
+    if (is == null) { 
       regressionFilename = "ini/regression" + initials + ".ini";
-      regressionFile = new File(regressionFilename);
-      if (!regressionFile.exists()) {
+      is = loadResource(regressionFilename, iniInfo);
+      if (is == null) {
         String baseRegressionFilename = "ini/regressionBase"
             + initials.charAt(initials.length() - 1) + ".ini";
         regressionFilename = baseRegressionFilename;
-        regressionFile = new File(regressionFilename);
-        if (!regressionFile.exists()) {
-
+        is = loadResource(regressionFilename, iniInfo);
+        if (is == null) { 
           throw new Exception("Error:  Regression file " + regressionFilename
               + " or " + hostRegressionFilename + " or "
-              + baseRegressionFilename + " does not exist");
+              + baseRegressionFilename + " does not exist "+iniInfo);
         }
-
       }
     }
     System.out.println("Running regression instructions from "
         + regressionFilename);
-
-    FileInputStream is = new FileInputStream(regressionFile);
     runInterpreter(System.out, is, initials);
   }
 
@@ -588,8 +583,8 @@ public class JDRunit {
 
   static volatile Properties domainProperties = null;
 
-  public static String getDomain(String systemName) {
-    String domain = "rch.STGLabs.IBM.COM";
+  public static String getDomain(String systemName) throws Exception {
+    String domain = JTOpenTestEnvironment.getDefaultClientDomain(); 
 
     if (domainProperties == null) {
       try {
@@ -772,10 +767,6 @@ public class JDRunit {
 
     String hostname = JDHostName.getHostName();
     hostname = hostname.toUpperCase();
-    int rchlandIndex = hostname.indexOf(".RCHLAND");
-    if (rchlandIndex > 0) {
-      hostname = hostname.substring(0, rchlandIndex);
-    }
     if (hostname.indexOf('.') < 0) {
 
       hostname = hostname + "." + getDomain(hostname);
@@ -1685,7 +1676,7 @@ public class JDRunit {
       } catch (Exception e) {
         String message = e.toString();
         if (message.indexOf("cannot establish") >= 0) {
-          url = "jdbc:as400:" + SYSTEM + ".rch.stglabs.ibm.com";
+          url = "jdbc:as400:" + SYSTEM + "."+JTOpenTestEnvironment.getDefaultServerDomain();
           con = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", url, userid, password);
 
         } else {
@@ -2373,9 +2364,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
         // Note: In some rare cases, the VNC server may fail to start with this
         // message:
-        // Warning: FOWGAI2.RCHLAND.IBM.COM:9 is taken because of
+        // Warning: SYSTEM.DOMAIN.COM:9 is taken because of
         // /tmp/.X11-unix/X9
-        // Remove this file if there is no X server FOWGAI2.RCHLAND.IBM.COM:9
+        // Remove this file if there is no X server SYSTEM.DOMAIN.COM:9
 
         // Detect the error, remove the file, and restart the server
         inputVector.addElement("cat " + TMP + "/vncstart.out");
