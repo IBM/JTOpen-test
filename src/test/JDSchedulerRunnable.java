@@ -20,6 +20,7 @@ import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Hashtable;
 import java.util.Set;
@@ -300,6 +301,7 @@ public class JDSchedulerRunnable implements Runnable {
           deleteRunStatement.setString(2, initials);
           deleteRunStatement.setString(3, action);
           deleteRunStatement.executeUpdate();
+          deleteRunStatement.close(); 
         } /* sychronized c */
 
       } catch (Throwable e) {
@@ -516,6 +518,12 @@ public class JDSchedulerRunnable implements Runnable {
 	    queryInitialsSql = "select * from "
                 + scheduleTable + "  where INITIALS=? "
                 + JDScheduler.SCHEDULE_ORDERING + " fetch first 1 rows only";
+	    if (queryInitialsStatement != null) { 
+	      try { 
+	         queryInitialsStatement.close(); 
+	      } catch (SQLException e) {
+	      }
+	    }
             queryInitialsStatement = c1.prepareStatement(queryInitialsSql);
 
             baseConnection = c1;
@@ -572,6 +580,7 @@ public class JDSchedulerRunnable implements Runnable {
 
               }
               rs.close();
+              queryStatement.close(); 
             } /* synchronized initialsToThreadHashtable */
           } /* Look for high priority task */
 
@@ -640,6 +649,7 @@ public class JDSchedulerRunnable implements Runnable {
 
                 }
                 rs.close();
+                queryStatement.close(); 
               }
             }
             if (initials != null) {
@@ -653,6 +663,7 @@ public class JDSchedulerRunnable implements Runnable {
               deleteStatement.setString(2, initials);
               deleteStatement.setString(3, action);
               deleteStatement.executeUpdate();
+              deleteStatement.close(); 
 
               PreparedStatement insertRunStatement = c1
                   .prepareStatement("INSERT INTO " + runTable
@@ -664,6 +675,7 @@ public class JDSchedulerRunnable implements Runnable {
               insertRunStatement.setString(4, action);
               insertRunStatement.setString(5, outputFile);
               insertRunStatement.executeUpdate();
+              insertRunStatement.close(); 
               found = true;
               runOneTest = true;
               notify();

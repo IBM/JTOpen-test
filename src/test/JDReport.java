@@ -1702,7 +1702,6 @@ public class JDReport {
       Connection connection = null;
 
       if (on400) {
-        Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
         String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
         try {
           connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,

@@ -195,15 +195,6 @@ public class JDGroupTestInfo {
   }
 
   public static void main(String args[]) {
-    String[] drivers = { "com.ibm.as400.access.AS400JDBCDriver", "com.ibm.db2.jdbc.app.DB2Driver" };
-
-    for (int i = 0; i < drivers.length; i++) {
-      try {
-        Class.forName(drivers[i]);
-      } catch (Exception e) {
-
-      }
-    }
     try {
       String url = args[0];
       String userid = null;

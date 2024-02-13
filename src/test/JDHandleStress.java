@@ -594,7 +594,6 @@ public static void run(PrintStream out,
 
 
 
-    Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
 
     // Connection dummyConnection = DriverManager.getConnection("jdbc:db2:*LOCAL");
     // Statement dummyStatement = dummyConnection.createStatement();

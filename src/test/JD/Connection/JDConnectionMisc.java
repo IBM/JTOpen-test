@@ -489,7 +489,6 @@ getConnection -- test the query optimize goal property
               "qsys2.systriggers"
           } ;
 */
-          Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
           // Change to use pwrUID_ because QCMDEXC needs it later.
           connQOpt2    = testDriver_.getConnection (baseURL_+";query optimize goal=2", pwrSysUserID_, pwrSysEncryptedPassword_); //@H2C
           connOpt = testDriver_.getConnection (baseURL_+";query optimize goal=1", pwrSysUserID_, pwrSysEncryptedPassword_); //@H2C

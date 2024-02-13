@@ -87,14 +87,7 @@ Performs setup needed before running variations.
 	    JDBUTest.BUTESTDATA = "BUSATSTDTA";
 	    JDBUTest.BUTEST     = "BUSATEST";
 	    JDBUTest.BUTESTLOB  = "BUSATSTLOB"; 
-	    /* 
-            // Register the JDBC driver.
-            Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
 
-            // Get a global connection - choose how you which
-            // to get the connection.
-            connection_ = DriverManager.getConnection("jdbc:db2:*local");
-            */
 	    url = baseURL_;
 	    connection_ = testDriver_.getConnection (url, systemObject_.getUserId(), encryptedPassword_);
 
