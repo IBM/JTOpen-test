@@ -122,5 +122,25 @@ The report will be generated in ct/latest758AA.html
 
 Tests supported by JDRunit are specified in the ini/testbase.ini file. 
 
-Testcases run for regression purposes for JTOpen can be found in the ini/regressionBaseA.ini file
+Testcases run for regression purposes for JTOpen can be found in the following files: 
+ ini/regressionBaseA.ini     -- toolbox tests
+ ini/regressionBaseB.ini     -- toolbox native tests
+ ini/regressionBaseT.ini     -- JDBC tests
+ ini/regressionBaseU.ini     -- JDBC native tests
+ 
+ --
+ -- Scheduler 
+ -- 
+ 
+ The testbucket contains a scheduler to run the tests.  Tests are submitted to the scheduler, and the scheduler then runs the tests.
+ 
+ -- Scheduler configuration
+ 
+ 
+ -- Adding tests to the scheduler
+ 
+ -- Viewing currently scheduled tests
+ 
+ 
+ 
 

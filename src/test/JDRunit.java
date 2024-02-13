@@ -2674,7 +2674,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
              cmdArray1[0] = userDir.substring(0, homeIndex)
                 + cmdArray1[0].replace('/', '\\');
         } else {
-                 cmdArray1[0] = "C:\\etlocalinst\\cygwin"+  cmdArray1[0].replace('/', '\\');
+                 cmdArray1[0] = JTOpenTestEnvironment.cygwinBase+  cmdArray1[0].replace('/', '\\');
         }
       }
 
