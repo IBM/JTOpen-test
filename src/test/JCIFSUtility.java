@@ -380,8 +380,7 @@ public static void deleteFile(String system, String userId, char[] encryptedPass
 
   public static DataInput openDataInput(String system, String userId,
       char[] encryptedPassword, String filename, String mode)
-      throws MalformedURLException, SmbException, UnknownHostException,
-      FileNotFoundException, SQLException {
+      throws Exception {
 
     system = fullyQualifySystem(system);
 
@@ -405,7 +404,7 @@ public static void deleteFile(String system, String userId, char[] encryptedPass
 
   public static DataOutput openDataOutput(String system, String userId,
       char[] encryptedPassword, String filename, String mode)
-      throws MalformedURLException, SmbException, UnknownHostException {
+      throws Exception {
 	  
     system = fullyQualifySystem(system);
     String url = getUrl(system, userId, encryptedPassword, filename);
