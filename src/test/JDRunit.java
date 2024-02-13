@@ -473,15 +473,15 @@ public class JDRunit {
           + regressionFilename);
     }
 
-    InputStream is = loadResource(hostRegressionFilename, iniInfo); 
+    InputStream is = loadResourceIfExists(regressionFilename, iniInfo); 
     if (is == null) { 
       regressionFilename = "ini/regression" + initials + ".ini";
-      is = loadResource(regressionFilename, iniInfo);
+      is = loadResourceIfExists(regressionFilename, iniInfo);
       if (is == null) {
         String baseRegressionFilename = "ini/regressionBase"
             + initials.charAt(initials.length() - 1) + ".ini";
         regressionFilename = baseRegressionFilename;
-        is = loadResource(regressionFilename, iniInfo);
+        is = loadResourceIfExists(regressionFilename, iniInfo);
         if (is == null) { 
           throw new Exception("Error:  Regression file " + regressionFilename
               + " or " + hostRegressionFilename + " or "
@@ -1450,6 +1450,7 @@ public class JDRunit {
   }
 
   /* Load a resource.  The default is to load from the filesystem, then load using the classloader */ 
+  /* If not found, then an empty input stream is returned */ 
   
   public static InputStream loadResource(String iniFile, StringBuffer iniInfo) throws FileNotFoundException {
     InputStream inputStream ;
@@ -1468,6 +1469,27 @@ public class JDRunit {
         }
     }
         return inputStream;
+}
+
+  /* Load a resource.  The default is to load from the filesystem, then load using the classloader */ 
+  /* If not found, then null is returned */ 
+  
+  public static InputStream loadResourceIfExists(String iniFile, StringBuffer iniInfo) throws FileNotFoundException {
+    InputStream inputStream ;
+    File file = new File(iniFile); 
+    if (file.exists()) { 
+        inputStream=    new FileInputStream(iniFile);
+        if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
+    } else {
+        inputStream = JDRunit.class.getClassLoader().getResourceAsStream(iniFile);
+        if (inputStream != null) { 
+                if (iniInfo!=null) iniInfo.append("echo loaded "+iniFile+" from classloader\n"); 
+        } else {
+                if (iniInfo!=null) iniInfo.append("echo unable to load "+iniFile+" from classloader\n"); 
+                inputStream = null;
+        }
+    }
+    return inputStream;
 }
 
 /** 
