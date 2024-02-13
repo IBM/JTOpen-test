@@ -1232,24 +1232,32 @@ public abstract class Testcase {
   public final void failed(String comment) {
     // Mark this variation as a failure.
     failures_++;
-    Class skipClass = null; 
-    try {
-      skipClass = Class.forName("test.JDVariationSkip"); 
-    } catch (Exception e) { 
-    	
-    }
     // Check if see if this is ignored for other releases
-    if (skipClass != null) { 
-    	try { 
-    String skippedInfo = (String) JDReflectionUtil.callStaticMethod_O("test.JDVariationSkip",
-    		"skipInformation", name_, currentVariation_);
-    if (skippedInfo != null) {
-      comment += "\nNote:  testcase skipped for the following: " + skippedInfo;
-    }
-    } catch (Exception e) { 
-    	// Ignore
-    }
-    }
+      try {
+        String skippedInfo = JDVariationSkip.skipInformation(
+            name_, currentVariation_);
+        if (skippedInfo != null) {
+          comment += "\nNote:  testcase skipped for the following: " + skippedInfo;
+        } else {
+          Class<?> skipClass = null; 
+          try {
+            skipClass = Class.forName("test.JDVariationSkip2");
+          } catch (Exception e) {
+
+          }
+          // Check if see if this is ignored for other releases
+          if (skipClass != null) {
+            skippedInfo = (String) JDReflectionUtil.callStaticMethod_O("test.JDVariationSkip2", "skipInformation",
+                name_, currentVariation_);
+            if (skippedInfo != null) {
+              comment += "\nNote:  testcase skipped for the following: " + skippedInfo;
+            }
+          }
+        }
+
+      } catch (Exception e) {
+        // Ignore
+      }
     // Output the message.
     outputVariationStatus(currentVariation_, FAILED, comment);
 

@@ -21,10 +21,10 @@ import test.JDLobTest;
 import test.JDReflectionUtil;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
 
-import java.awt.TextArea;
+
+
+
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Array;
@@ -59,7 +59,7 @@ public class JDCSSetArray extends JDCSSetTestcase
     /**
      * Constructor.
      */
-    public JDCSSetArray(AS400 systemObject, Hashtable namesAndVars,
+    public JDCSSetArray(AS400 systemObject, Hashtable<?, ?> namesAndVars,
             int runMode, FileOutputStream fileOutputStream,
              String password)
     {
