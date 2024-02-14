@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import com.ibm.as400.access.FTP;
 
+import test.JTOpenTestEnvironment;
 import test.TestDriver;
 
 /**
@@ -964,8 +965,7 @@ dumpBytes() - Utility function used to see the bytes
     */ 
    public static String getLocalRDBInformation(String RDB) {
        try { 
-	   String osName = System.getProperty("os.name");
-	   if (osName != null  && osName.indexOf("400") > 0) {
+	   if (JTOpenTestEnvironment.isOS400) {
 	       String returnString; 
 	       Connection c = DriverManager.getConnection("jdbc:db2:localhost");
 	       PreparedStatement ps = c.prepareStatement("select DBXRDBN,DBTXRLC,DBTPORT from  QSYS.QADBXRDBD WHERE DBXRDBN=?");
@@ -981,7 +981,7 @@ dumpBytes() - Utility function used to see the bytes
 	       c.close();
 	       return returnString; 
 	   } else {
-	       return "Unable to get RDBINFO for osName="+osName; 
+	       return "Unable to get RDBINFO for osName="+JTOpenTestEnvironment.osVersion; 
 	   }
        } catch (Exception e) {
 	   return "Caught exception "+e; 

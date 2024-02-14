@@ -37,6 +37,7 @@ import test.JDPSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
 import test.JD.JDWeirdReader;
@@ -663,7 +664,7 @@ the full stream.
                 Reader r = new StringReader ("Roseville");
                 ps.setCharacterStream (1, r, 4);
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @C1
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @C1
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @C1
 		    succeeded();					// @C1
 		else							// @C1
 		    failed ("Didn't throw SQLException");
@@ -716,7 +717,7 @@ setCharacterStream() - Set a VARCHAR(50) parameter, with the length set to 1 cha
                 Reader r = new StringReader ("Brooklyn Center");
                 ps.setCharacterStream (1, r, 1);
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @C1
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @C1
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @C1
 		    succeeded();					// @C1
 		else							// @C1
 		    failed ("Didn't throw SQLException");
@@ -744,7 +745,7 @@ setCharacterStream() - Set a VARCHAR(50) parameter, with the length set to 0.
                 Reader r = new StringReader ("Brooklyn Park");
                 ps.setCharacterStream (1, r, 0);
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @C1
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @C1
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @C1
 		    succeeded();					// @C1
 		else							// @C1
 		    failed ("Didn't throw SQLException");
@@ -1001,7 +1002,7 @@ setCharacterStream() - Set a BLOB parameter.
             catch(Exception e)
             {
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @C1
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @C1
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @C1
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");	// @C1
 		else	
 		    failed(e, "Unexpected Exception - supported added by Toolbox"+
@@ -1235,7 +1236,7 @@ setCharacterStream() - Set a large CLOB parameter.
 	String filename="/tmp/JDPSSetCharacterStream.var038"; 
         if(isToolboxDriver())  //Determine OS so we know what type of file location to use
         {
-            if (System.getProperty("os.name").startsWith("Win"))
+            if (JTOpenTestEnvironment.isWindows)
             {
                 filename="c:\\temp\\JDPSSetCharacterStream.var038";
             }

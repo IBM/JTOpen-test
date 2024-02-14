@@ -652,7 +652,7 @@ extends JDTestDriver {
             password_));
 
         try{
-            if(getRelease() >= JDTestDriver.RELEASE_V5R5M0 ||
+            if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 ||
                getRelease() == 0 )    // only run if i5/OS has support
 
             // 5/15/2008 For some release getRelease() is returning 0.

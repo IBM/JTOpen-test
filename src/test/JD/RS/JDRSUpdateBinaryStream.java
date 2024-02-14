@@ -822,7 +822,7 @@ and the length less than the full stream.
             byte[] expected = new byte[] {(byte)7, (byte)-1, (byte)86};
 
 //            if(isToolboxDriver())			// @D2
-	    if( getRelease() >= JDTestDriver.RELEASE_V5R2M0 ||			// @D2
+	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 ||			// @D2
 		isToolboxDriver() )			// @D2
 	    {
                 byte[] afterUpdate = rs_.getBytes("C_VARBINARY_20");
@@ -833,7 +833,7 @@ and the length less than the full stream.
         }
         catch (Exception e) {
 //            if(isToolboxDriver())			// @D2
-	    if( getRelease() >= JDTestDriver.RELEASE_V5R3M0 ||			// @D2
+	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 ||			// @D2
 		isToolboxDriver() )			// @D2
 		failed(e, "Unexpected Exception");
             else
@@ -879,7 +879,7 @@ and the length 1.
             rs_.updateBinaryStream ("C_VARBINARY_20", new ByteArrayInputStream (ba), 1);
 
 //            if(isToolboxDriver())			// @D2
-	    if( getRelease() >= JDTestDriver.RELEASE_V5R2M0 ||			// @D2
+	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 ||			// @D2
 		isToolboxDriver() )			// @D2
             {
                     byte[] afterUpdate = rs_.getBytes("C_VARBINARY_20");            //allow updateBinaryStream if length is less than stream length
@@ -890,7 +890,7 @@ and the length 1.
         }
         catch (Exception e) {
 //            if(isToolboxDriver())			// @D2
-	    if( getRelease() >= JDTestDriver.RELEASE_V5R3M0 ||			// @D2
+	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 ||			// @D2
 		isToolboxDriver() )			// @D2
                 failed(e, "Unexpected Exception");
             else
@@ -914,7 +914,7 @@ and the length 0.
             rs_.updateBinaryStream ("C_VARBINARY_20", new ByteArrayInputStream (ba), 0);
 
 //            if(isToolboxDriver())			// @D2
-	    if( getRelease() >= JDTestDriver.RELEASE_V5R2M0 ||			// @D2
+	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 ||			// @D2
 		isToolboxDriver() )			// @D2
             {
                     byte[] afterUpdate = rs_.getBytes("C_VARBINARY_20");            //allow updateBinaryStream if length is less than stream length
@@ -925,7 +925,7 @@ and the length 0.
         }
         catch (Exception e) {
 //            if(isToolboxDriver())			// @D2
-	    if( getRelease() >= JDTestDriver.RELEASE_V5R3M0 ||			// @D2
+	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 ||			// @D2
 		isToolboxDriver() )			// @D2
                 failed(e, "Unexpected Exception");
             else

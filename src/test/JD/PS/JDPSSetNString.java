@@ -34,11 +34,9 @@ package test.JD.PS;
 
 import com.ibm.as400.access.AS400;
 
-import test.JDJobName;
 import test.JDPSTest;
 import test.JDReflectionUtil;
 import test.JDSetupProcedure;
-import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
@@ -1321,7 +1319,6 @@ setNString() - make sure pad is correct for graphic fields
     {
 	if (checkJdbc40()) {
 
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)                                     //@G1A
 	    {                                                                                   //@G1A
 		String tableName = JDPSTest.COLLECTION + ".GRAPHIC_PAD";
 		try 
@@ -1395,8 +1392,6 @@ setNString() - make sure pad is correct for graphic fields
 		    try { statement_.executeUpdate ("DROP TABLE " + tableName); } catch (SQLException e) { }
 		}
 	    }
-	    else                                                                            //@G1A
-		notApplicable("V5R3 or higher variation.");                                 //@G1A
 	}
     }
     public String formatUnicode(String inString) {
@@ -1445,7 +1440,7 @@ setNString() - make sure UTF-8 parameter can be passed
 **/
     public void Var040() {
 	if (checkJdbc40()) {
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+	     {
 		String tableName = JDPSTest.COLLECTION + ".UTF8";
 		try  {                              
 		    try { statement_.executeUpdate("drop table " + tableName); } catch (Exception e) {}
@@ -1471,9 +1466,7 @@ setNString() - make sure UTF-8 parameter can be passed
 		} finally {
 		    try { statement_.executeUpdate ("DROP TABLE " + tableName); } catch (SQLException e) { }
 		}
-	    } else {
-		notApplicable("V5R3 or higher variation.");
-	    }
+	    } 
 	}
     }
 
@@ -1484,7 +1477,7 @@ setNString() - make sure EURO symbol parameter can be passed and retrieved
 **/
     public void Var041() {
 	if (checkJdbc40()) {
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+	    {
 		String tableName = JDPSTest.COLLECTION + ".EURO";
 		try  {                              
 		    try { statement_.executeUpdate("drop table " + tableName); } catch (Exception e) {}
@@ -1510,8 +1503,6 @@ setNString() - make sure EURO symbol parameter can be passed and retrieved
 		} finally {
 		    try { statement_.executeUpdate ("DROP TABLE " + tableName); } catch (SQLException e) { }
 		}
-	    } else {
-		notApplicable("V5R3 or higher variation.");
 	    }
 	}
     }
@@ -1523,7 +1514,7 @@ Also needs to work for V5R2
 **/
     public void Var042() {
 	if (checkJdbc40()) {
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R2M0) {
+	     {
 		String tableName = JDPSTest.COLLECTION + ".MIXED5035";
 		try  {
 
@@ -1532,15 +1523,6 @@ Also needs to work for V5R2
 		// go through job CCSID.  Must change CCSId for 5035 for
 		// this to work.
 		//
-		    if ((getRelease() == JDTestDriver.RELEASE_V5R2M0) &&
-			(getDriver () == JDTestDriver.DRIVER_NATIVE)) {
-
-			System.out.println("The CCSID is "+JDJobName.getJobCCSID()); 
-			JDJobName.setIGC(5035); 
-
-			System.out.println("The CCSID is "+JDJobName.getJobCCSID()); 
-
-		    }
 		    try { statement_.executeUpdate("drop table " + tableName); } catch (Exception e) {}
 		    statement_.executeUpdate ("CREATE TABLE " + tableName
 					      + " (COL1 CLOB(30000) CCSID 5035)");
@@ -1570,8 +1552,6 @@ Also needs to work for V5R2
 		} finally {
 		    try { statement_.executeUpdate ("DROP TABLEX " + tableName); } catch (SQLException e) { }
 		}
-	    } else {
-		notApplicable("V5R2 or higher variation.");
 	    }
 	}
 

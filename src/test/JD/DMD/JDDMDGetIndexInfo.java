@@ -183,10 +183,8 @@ Performs setup needed before running variations.
         try { s.executeUpdate ("DROP INDEX " + JDDMDTest.COLLECTION+ ".INDEX");} catch (Exception e) {}
         try { s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION+ ".INDEXTABLE2");} catch (Exception e) {}
         try { s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION+ ".INDEXTABLE");} catch (Exception e) {}
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0){
             try { s.executeUpdate ("DROP INDEX " + JDDMDTest.COLLECTION+".LCNINDEX");} catch (Exception e) {}
             try { s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION+".LCNINDEXTABLE");} catch (Exception e) {}
-        }
 
 
 
@@ -223,7 +221,7 @@ Performs setup needed before running variations.
             + ".INDEX2 ON " + JDDMDTest.COLLECTION
             + ".INDEXTABLE2 (COLUMN DESC)");
 
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && is400 )
+        if( is400 )
         {
             s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION      //@C1A
                 + ".LCNINDEXTABLE (THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST INT)");
@@ -313,7 +311,7 @@ Performs cleanup needed after running variations.
         s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION
             + ".INDEXTABLE");
         //@C1A
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && is400){
+        if( is400){
             s.executeUpdate ("DROP INDEX " + JDDMDTest.COLLECTION   //C1A
                 + ".LCNINDEX");
             s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION   //@C1A
@@ -431,9 +429,7 @@ Note:  In December 2008 for V6R1, the SYSIBM procedure changed the datatype for 
                     Types.CLOB };*/
 
             if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ||
-                    getDriver() == JDTestDriver.DRIVER_NATIVE)
-                    &&
-                    (getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+                    getDriver() == JDTestDriver.DRIVER_NATIVE)) {
 		if (getJdbcLevel() >= 4) {
 		    expectedTypes = expectedTypes40V6R1;
 		    info = "using expectedTypes40V6R1";
@@ -444,13 +440,12 @@ Note:  In December 2008 for V6R1, the SYSIBM procedure changed the datatype for 
             }
             else if ((getDriver() == JDTestDriver.DRIVER_JCC) || (getJdbcLevel() >= 4 )
                     ||
-                    (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+                    (getDriver() == JDTestDriver.DRIVER_NATIVE )) {
                 expectedTypes = expectedTypes16;
 		info = "using expectedTypes16"; 
             }
 
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                    (getRelease() == JDTestDriver.RELEASE_V5R4M0) &&
+            if ((getDriver() == JDTestDriver.DRIVER_NATIVE)  &&
                     (getJdbcLevel() == 4)) {
                 /* column 10 = 1 */
                 /* Changed March 2009 */
@@ -458,8 +453,7 @@ Note:  In December 2008 for V6R1, the SYSIBM procedure changed the datatype for 
 		info += " change1"; 
 
             }
-            if (getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
-                    getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+            if (getDriver() == JDTestDriver.DRIVER_TOOLBOX )
             {
                 expectedTypes[12] = 12; // don't use long varchar
 		if (getJdbcLevel() >= 4) {
@@ -471,13 +465,6 @@ Note:  In December 2008 for V6R1, the SYSIBM procedure changed the datatype for 
 		    info += " change3"; 
 		} 
 
-            }else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
-                   ( getRelease() == JDTestDriver.RELEASE_V6R1M0 || getRelease() == JDTestDriver.RELEASE_V5R5M0 ) )
-            {
-                //expectedTypes[12] = 2005; //sysibm returns clob
-                //this week it is back to -1
-                expectedTypes[12] = -1;
-		info += " change4"; 
             }
 
             int count = rsmd.getColumnCount ();
@@ -513,7 +500,7 @@ SQL400 - The native driver returns the cardinality and the pages as 0
 	    int expectedRows = 2;
 	    if (isSysibmMetadata()) {
 		    expectedRows = 3;
-	    } else if((getDriver () == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+	    } else if((getDriver () == JDTestDriver.DRIVER_TOOLBOX))
 	    	expectedRows = 3;
 
       message.setLength(0);
@@ -556,12 +543,6 @@ SQL400 - The native driver returns the cardinality and the pages as 0
 
                 if (getDriver () == JDTestDriver.DRIVER_TOOLBOX)
                 {
-                    if (getRelease() < JDTestDriver.RELEASE_V5R5M0)
-                    {
-                        success = success && (cardinality == -1);
-                        success = success && (pages == -1);
-                    }
-                    else
                     {
                     	  success = checkInt("CARDINALITY", cardinality, 0) && success;
                     	  if(type == DatabaseMetaData.tableIndexStatistic)
@@ -573,10 +554,7 @@ SQL400 - The native driver returns the cardinality and the pages as 0
                 else
                 {
                     success = checkInt("CARDINALITY", cardinality, 0) && success;
-		    if(type == DatabaseMetaData.tableIndexStatistic && getRelease() >= JDTestDriver.RELEASE_V5R5M0)
 			success = checkInt("PAGES", pages, 1) && success; //index pages
-		    else
-			success = checkInt("PAGES", pages, 0) && success;
                 }
 
                 success = checkString("FILTER_CONDITION", filterCondition,null ) && success;
@@ -688,7 +666,7 @@ No matching columns should be returned.
             rs.close ();
 	    if ( isSysibmMetadata()) {
 		assertCondition (rows > 0, "rows="+rows+" sb > 0 when empty string specified for catalog and LUW or JDBC4.0 or NATIVE & V5R5");
-	    } else if ( (getDriver () == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+	    } else if ( (getDriver () == JDTestDriver.DRIVER_TOOLBOX) )
 	    {
 	    	assertCondition (rows > 0, "rows="+rows+" sb > 0 when empty string specified for catalog and LUW or JDBC4.0 or NATIVE & V5R5");
 	    }
@@ -745,8 +723,8 @@ All matching rows should be returned.
     public void Var007()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4 ||
-          (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V5R5M0) ||
-          (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+          (getDriver() == JDTestDriver.DRIVER_NATIVE ) ||
+          (getDriver() == JDTestDriver.DRIVER_TOOLBOX )) {
         notApplicable("\"localhost\" variation ");
       } else {
 
@@ -934,11 +912,6 @@ SQL400 - When you give the native driver a search pattern and they are not
             ResultSet rs = dmd_.getIndexInfo (connectionCatalog_,
                 JDDMDTest.SCHEMAS_PERCENT, "INDEXTABLE", false, false);
 
-            if ((getRelease() < JDTestDriver.RELEASE_V5R5M0) && (getDriver () == JDTestDriver.DRIVER_TOOLBOX))
-            {
-                failed("Didn't throw SQLException");
-            }
-            else
             {
                 int rows = 0;
                 while (rs.next ())
@@ -1008,7 +981,7 @@ No rows should be returned.
 
             rs.close ();
 	    if (isSysibmMetadata()
-	    		|| (getRelease() >= JDTestDriver.RELEASE_V5R5M0) && (getDriver () == JDTestDriver.DRIVER_TOOLBOX)) {
+	    		|| (getDriver () == JDTestDriver.DRIVER_TOOLBOX)) {
 
 	    			assertCondition (rows > 0, "rows="+rows+" sb > 0 Rows should be returned when null is specified for the table and sysibm metadata is used. ");
 
@@ -1094,11 +1067,6 @@ SQL400 - When you give the native driver a search pattern and they are not
             ResultSet rs = dmd_.getIndexInfo (connectionCatalog_,
                 JDDMDTest.COLLECTION, "INDEXTAB%", false, false);
 
-            if ((getRelease() < JDTestDriver.RELEASE_V5R5M0) &&  (getDriver () == JDTestDriver.DRIVER_TOOLBOX))
-            {
-                failed("Didn't throw SQLException");
-            }
-            else
             {
                 int rows = 0;
                 while (rs.next ())
@@ -1153,7 +1121,7 @@ getIndexInfo() - Specify unique = true.
 
 	    if (isSysibmMetadata()) {
 		expectedRows = 2;
-	    } else if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) && (getDriver () == JDTestDriver.DRIVER_TOOLBOX))
+	    } else if ((getDriver () == JDTestDriver.DRIVER_TOOLBOX))
 	    {
 	    	expectedRows = 2;
 	    }
@@ -1201,7 +1169,7 @@ getIndexInfo() - Specify unique = false.
 
 	if (isSysibmMetadata()) {
 	    expectedRows = 3;
-	} else if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) && (getDriver () == JDTestDriver.DRIVER_TOOLBOX))
+	} else if ((getDriver () == JDTestDriver.DRIVER_TOOLBOX))
     {
 	    expectedRows = 3;
     }
@@ -1323,7 +1291,7 @@ verify the column name. Test for 128 byte column name.
     public void Var024()
     {
       message.setLength(0);
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && is400 )
+        if( is400 )
         {
             try {
 		int expectedRows = 1;
@@ -1331,7 +1299,7 @@ verify the column name. Test for 128 byte column name.
 		if (isSysibmMetadata()) {
 		    expectedRows = 2;
 		}
-		 else if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) && (getDriver () == JDTestDriver.DRIVER_TOOLBOX))
+		 else if ( (getDriver () == JDTestDriver.DRIVER_TOOLBOX))
 	    {
 		  	expectedRows = 2;
 	    }
@@ -2050,15 +2018,6 @@ getIndexInfo() - Check all the RSMD results when using JDBC 3.0.
           dmd = connection.getMetaData();
 
           if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0 && ! isSysibmMetadata()) {
-              fixup = v5r4NativeDifferencesExtended;
-	      message.append("Fixup = v5r4NativeDifferencesExtended\n");
-            } else {
-		if ((getRelease() == JDTestDriver.RELEASE_V5R3M0) ||
-                     (getRelease() == JDTestDriver.RELEASE_V5R2M0)) {
-		    fixup = v5r3NativeDifferencesExtended;
-		    message.append("Fixup = v5r3NativeDifferencesExtended\n");
-		} else {
 		    if(getJdbcLevel() >= 4) {
 			fixup = nativeExtendedDifferences40;
 			message.append("Fixup = nativeExtendedDifferences40\n");
@@ -2066,28 +2025,14 @@ getIndexInfo() - Check all the RSMD results when using JDBC 3.0.
 			fixup = nativeExtendedDifferences;
 			message.append("Fixup = nativeExtendedDifferences\n");
 		    }
-		}
-            }
           }
 
         } else {
 
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V5R4M0) {
-              fixup = v5r4NativeDifferences;
-	      message.append("Fixup = v5r4NativeDifferences\n");
-	    } else {
-		if ((getRelease() == JDTestDriver.RELEASE_V5R3M0) ||
-                     (getRelease() == JDTestDriver.RELEASE_V5R2M0)) {
-		    fixup = v5r3NativeDifferences;
-		    message.append("Fixup = v5r3NativeDifferences\n");
-		}
-	    }
-          }
         }
 
 	if (isSysibmMetadata()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
+	    
 		if (extendedMetadata) {
 		    fixup2 = sysibmDifferences73;
 		    message.append("Fixup2 = sysibmDifferences73 extended MD\n");
@@ -2100,54 +2045,6 @@ getIndexInfo() - Check all the RSMD results when using JDBC 3.0.
 			message.append("Fixup2 = sysibmDifferences55 no extended MD\n");
 		    }
 		}
-	    } else if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-		if (extendedMetadata) {
-		    fixup2 = sysibmDifferences72;
-		    message.append("Fixup2 = sysibmDifferences72 extended MD\n");
-		} else {
-		    if (getJdbcLevel() >= 4) {
-			fixup2 = sysibmDifferences5540;
-			message.append("Fixup2 = sysibmDifferences5540 no extended MD\n");
-		    } else { 
-			fixup2 = sysibmDifferences55;
-			message.append("Fixup2 = sysibmDifferences55 no extended MD\n");
-		    }
-		}
-
-	    } else if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
-
-		if (extendedMetadata) {
-		    if (getJdbcLevel() >= 4) {
-			fixup2 = sysibmDifferences7140;
-			message.append("Fixup2 = sysibmDifferences7140 extended MD\n");
-		    } else { 
-			fixup2 = sysibmDifferences71;
-			message.append("Fixup2 = sysibmDifferences71 extended MD\n");
-		    }
-		} else {
-		    if (getJdbcLevel() >= 4) {
-			fixup2 = sysibmDifferences5540;
-			message.append("Fixup2 = sysibmDifferences5540 no extended MD\n");
-		    } else { 
-
-			fixup2 = sysibmDifferences55;
-			message.append("Fixup2 = sysibmDifferences55 no extended MD\n");
-		    }
-		}
-
-	    } else if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
-		    if (getJdbcLevel() >= 4) {
-			fixup2 = sysibmDifferences5540;
-			message.append("Fixup2 = sysibmDifferences5540 no extended MD\n");
-		    } else { 
-
-			fixup2 = sysibmDifferences55;
-			message.append("Fixup2 = sysibmDifferences55\n");
-		    }
-	    } else {
-		fixup2 = sysibmDifferences;
-		message.append("Fixup2 = sysibmDifferences\n");
-	    }
 	}
 
         for (j = 0; j < fixup.length; j++) {

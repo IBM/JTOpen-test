@@ -141,7 +141,7 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void forceWarning(Statement s) throws Exception {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V5R2M0) {
+        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       setNativeWarning(s);
     } else {
       // This should force the warning "option value changed".
@@ -158,9 +158,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var001() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V5R1M0)
+      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         try {
           Statement s = connection_.createStatement();
           s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='cnock'");
@@ -197,9 +197,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var002() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V5R1M0)
+      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         try {
           Statement s = connection_.createStatement();
           s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='Susan'");
@@ -233,9 +233,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var003() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V5R1M0)
+      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         try {
           Statement s = connection_.createStatement();
           s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='Susan'");
@@ -269,9 +269,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var004() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V5R1M0)
+      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         try {
           Statement s = connection_.createStatement();
           s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='murch'");
@@ -302,9 +302,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var005() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V5R1M0)
+      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         try {
           Statement s = connection_.createStatement();
           s.clearWarnings();
@@ -339,9 +339,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var006() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V5R1M0)
+      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         try {
           PreparedStatement s = connection_.prepareStatement(
               "SELECT * FROM QIWS.QCUSTCDT WHERE CUSNUM = ?",
@@ -358,14 +358,14 @@ public class JDStatementWarnings extends JDTestcase {
             SQLWarning w2 = w1.getNextWarning();
             SQLWarning w3 = w2.getNextWarning();
             s.close();
-            if (getRelease() >= JDTestDriver.RELEASE_V5R5M0
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
                 && (isToolboxDriver()
                     || getDriver() == JDTestDriver.DRIVER_NATIVE))
               failed("did not throw truncation exception for v5r5");
             else
               assertCondition((w1 != null) && (w2 != null) && (w3 == null));
           } catch (DataTruncation e) {
-            if (getRelease() >= JDTestDriver.RELEASE_V5R5M0
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
                 && (isToolboxDriver()
                     || getDriver() == JDTestDriver.DRIVER_NATIVE))
               succeeded();
@@ -402,9 +402,9 @@ public class JDStatementWarnings extends JDTestcase {
    * closed.
    **/
   public void Var007() {
-    if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V5R1M0)
+    if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         || (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+            && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
       try {
         Statement s = connection_.createStatement();
         s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='Susan'");
@@ -437,7 +437,7 @@ public class JDStatementWarnings extends JDTestcase {
    */
 
   public void Var008() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       try {
         Statement s = connection_.createStatement();
         ResultSet rs = s.executeQuery("SELECT 8/0 from QSYS2.QSQPTABL");
@@ -473,7 +473,7 @@ public class JDStatementWarnings extends JDTestcase {
    */
 
   public void Var009() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       String tablename = JDStatementTest.COLLECTION + ".JDSTMWRNTS";
       try {
         Statement s = connection_.createStatement();
@@ -533,7 +533,7 @@ public class JDStatementWarnings extends JDTestcase {
    */
 
   public void Var010() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
         && getDriver() == JDTestDriver.DRIVER_NATIVE) // host server doesn't
                                                       // have a way to get
                                                       // truncation warnings
@@ -573,7 +573,7 @@ public class JDStatementWarnings extends JDTestcase {
     // this is where the warning test for SQL state 01506 goes
     // warning for an illegal date being created using addition and subtraction
     // of years/months to date type
-    if (getRelease() >= JDTestDriver.RELEASE_V5R5M0
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
         && getDriver() == JDTestDriver.DRIVER_NATIVE) {
       try {
         String select = "select date1 + 1 year from " + table_2
@@ -613,7 +613,7 @@ public class JDStatementWarnings extends JDTestcase {
     // this is where the warning test for SQL state 01506 goes
     // warning for an illegal date being created using addition and subtraction
     // of years/months to date type
-    if (getRelease() >= JDTestDriver.RELEASE_V5R5M0
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
         && getDriver() == JDTestDriver.DRIVER_NATIVE) {
       try {
         String select = "select date1 + 1 year from " + table_2

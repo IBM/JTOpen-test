@@ -206,29 +206,7 @@ public class LocalSocketConnectTestcase extends Testcase
 
     private boolean isAS400()
     {
-        try
-        {
-            String s = System.getProperty("os.name");
-            if (s != null)
-            {
-                if (s.equalsIgnoreCase("OS/400"))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
+      return JTOpenTestEnvironment.isOS400;
     }
 
 

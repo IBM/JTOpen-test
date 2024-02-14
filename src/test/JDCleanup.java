@@ -381,9 +381,6 @@ Performs setup needed before running variations.
 
       cleanDirectory(sep+"tmp", tmpPatterns, 4 /* day */ );
 
-      //find /home/jdbctest -name "core*" -mtime +1 -print  -exec rm {} \;
-	//find /home/jdbctest -name "javacore*" -mtime +1 -print  -exec rm {} \;
-	//find /home/jdbctest -name "Snap*" -mtime +1 -print  -exec rm {} \; 
 
 
       String[] corePatterns = {"core","Snap","heapdump",}; 

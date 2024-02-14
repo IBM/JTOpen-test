@@ -88,7 +88,7 @@ public class JDSCPDSConnectionNativeSQL extends JDTestcase {
 					PasswordVault.decryptPasswordLeak(encryptedPassword_));
 			connection_ = dataSource.getConnection();
 
-			v5r2nativeFunctions_ = (getRelease() == JDTestDriver.RELEASE_V5R2M0)
+			v5r2nativeFunctions_ = (getRelease() == JDTestDriver.RELEASE_V7R1M0)
 					&& (getDriver() == JDTestDriver.DRIVER_NATIVE);
 			nativeDriver_ = getDriver() == JDTestDriver.DRIVER_NATIVE;
 			if (nativeDriver_) {

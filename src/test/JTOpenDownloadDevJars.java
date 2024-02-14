@@ -64,8 +64,7 @@ public class JTOpenDownloadDevJars {
 
 
     public static void setupEnv() throws Exception {
-	String osName = System.getProperty("os.name");
-	if (osName.equals("AIX")) {
+	if (JTOpenTestEnvironment.isAIX) {
 	    /* Do not set cacerts */ 
 	} else { 
 	    System.setProperty("javax.net.ssl.trustStore","cacerts");
@@ -97,27 +96,22 @@ public class JTOpenDownloadDevJars {
 	    String password = null; 
 
 	    String jdk14Path = jdk14newPath;
-	    String jdk14nativePath = jdk14newPath;
-	    String osName = System.getProperty("os.name");
-	    System.out.println("osName is '" + osName+"'");
-	    String osVersion = System.getProperty("os.version");
-	    String jdbcUtil = "jdbc:as400:localhost"; 
-	    if (osName.equals("Windows 10") ||
-		osName.equals("Linux") ||
-		osName.equals("AIX"))  {
+	    System.out.println("osVersion is '" + JTOpenTestEnvironment.osVersion+"'");
+	    String osVersion = JTOpenTestEnvironment.osVersion; 
+	    if (JTOpenTestEnvironment.isWindows ||
+	        JTOpenTestEnvironment.isLinux ||
+	        JTOpenTestEnvironment.isAIX)  {
 
-		 if (osName.equals("AIX") &&
+		 if (JTOpenTestEnvironment.isAIX &&
 		     System.getProperty("user.dir").indexOf("yjac.jacl") < 0 ) {
 
 		     jdk14Path = ".";
-		     jdk14nativePath = ".";
 		     jdk16Path = "./java6";
 		     jdk18Path = "./java8";
 		     jdk9Path  = "./java9";
 
 		 } else { 
 		jdk14Path = "jars";
-		jdk14nativePath = "jars";
 		jdk16Path = "jars/java6";
 		jdk18Path = "jars/java8";
 		jdk9Path  = "jars/java9";

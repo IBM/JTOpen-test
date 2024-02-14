@@ -117,7 +117,7 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 07/10/2006 by jdbc driver to test setClientInfo";
 	StringBuffer sb = new StringBuffer(); 
-        if ( isJdbc40() ||  (isToolboxDriver() && getRelease()>=JDTestDriver.RELEASE_V5R5M0) || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease()>=JDTestDriver.RELEASE_V5R5M0) )
+        if ( isJdbc40()  )
         {
             try
             {
@@ -240,7 +240,7 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 07/10/2006 by jdbc driver to test setClientInfo";
 
-        if ( isJdbc40() || (isToolboxDriver() && getRelease()>=JDTestDriver.RELEASE_V5R5M0) ||  (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease()>=JDTestDriver.RELEASE_V5R5M0))
+        if ( isJdbc40())
         {
             try
             {
@@ -326,7 +326,7 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 07/10/2006 by jdbc driver to test getClientInfoProperties";
 
-        if (isJdbc40() || (isToolboxDriver() && getRelease()>=JDTestDriver.RELEASE_V5R5M0) || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease()>=JDTestDriver.RELEASE_V5R5M0) )        {
+        if (isJdbc40() || (isToolboxDriver() && getRelease()>=JDTestDriver.RELEASE_V7R1M0) || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease()>=JDTestDriver.RELEASE_V7R1M0) )        {
             try
             {
                 Connection conn = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
@@ -357,11 +357,7 @@ Performs cleanup needed after running variations.
                     clientValues = toolboxValues;
                 } else
                 {
-		    if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
 			clientValues = nativeValues55;
-		    } else { 
-			clientValues = nativeValues;
-		    }
                 }
               
                 boolean check1 = true;
@@ -436,7 +432,7 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 03/06/2007 by native to test client register default values"; 
 
-        if (getRelease() <  JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() <  JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("V5R5 or later release -- queries built in properties "); 
 	} else { 
 
@@ -487,7 +483,7 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 03/06/2007 by native to test client register set values"; 
 
-        if (getRelease() <  JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() <  JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("V5R5 or later release"); 
 	} else { 
 
@@ -562,14 +558,14 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 03/06/2007 by native to test client register default values"; 
 
-        if (getRelease() <  JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() <  JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("V5R5 or later release"); 
 	} else { 
             String sql = "NONE"; 
             try   {
                 String expected = ""; 
                 if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		    if        (getRelease() == JDTestDriver.RELEASE_V7R6M0) {
+		    if        (getRelease() == JDTestDriver.RELEASE_V7R5M0_PLUS) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07060";
 		    } else if        (getRelease() == JDTestDriver.RELEASE_V7R5M0) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07050";
@@ -621,7 +617,7 @@ Performs cleanup needed after running variations.
     {
 	String added = "-- added 09/06/2007 by native to test client register set values -- Note: as of 9/6/2007 this will fail because of issue 34082 "; 
 
-	if (getRelease() <  JDTestDriver.RELEASE_V5R5M0) {
+	if (getRelease() <  JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("V5R5 or later release"); 
 	} else { 
 
@@ -778,10 +774,7 @@ Performs cleanup needed after running variations.
         String added = "-- added 06/18/2008 by native"; 
         StringBuffer sb = new StringBuffer(); 
         boolean passed = true; 
-        if (getRelease() <  JDTestDriver.RELEASE_V5R4M0) {
-	    notApplicable("V5R4 or later release"); 
-	} else {
-
+        {
 	    } 
             try   {
                 Connection conn = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);

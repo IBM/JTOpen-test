@@ -137,7 +137,7 @@ getBytes() - Should work when the column index is valid.
 **/
    public void Var001 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          try {
             statement_.close();
@@ -169,7 +169,7 @@ getBytes() - Should work when the column name is valid.
 **/
    public void Var002 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -190,7 +190,7 @@ getBytes() - Should work when an update is pending.
 **/
    public void Var003 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          if (checkJdbc20 ()) {
             try {
@@ -217,7 +217,7 @@ getBytes() - Should work when an update has been done.
 **/
    public void Var004 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          if (checkJdbc20 ()) {
             try {
@@ -246,7 +246,7 @@ row, when an insert is pending.
 **/
    public void Var005 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          if (checkJdbc20 ()) {
            if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -276,7 +276,7 @@ row, when an insert has been done.
 **/
    public void Var006 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          if (checkJdbc20 ()) {
            if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -306,7 +306,7 @@ getBytes() - Should return null when the column is NULL.
 **/
    public void Var007 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -329,7 +329,7 @@ getBytes() - Get from a BINARY.
 **/
    public void Var008 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -352,7 +352,7 @@ getBytes() - Get from a VARBINARY.
 **/
    public void Var009 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -376,7 +376,7 @@ to a value shorter than the byte array.
 **/
    public void Var010 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
       {
          try {
             Statement s = connection_.createStatement ();

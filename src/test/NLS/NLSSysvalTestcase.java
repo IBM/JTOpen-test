@@ -24,6 +24,7 @@ import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.SystemValue;
 import com.ibm.as400.access.SystemValueList;
 
+import test.JTOpenTestEnvironment;
 import test.NLSTest;
 import test.Testcase;
 
@@ -105,9 +106,7 @@ public class NLSSysvalTestcase extends Testcase
 
     // Determine operating system we're running under
     operatingSystem_ = System.getProperty("os.name");
-    if (operatingSystem_.indexOf("Windows") >= 0 ||
-        operatingSystem_.indexOf("DOS") >= 0 ||
-        operatingSystem_.indexOf("OS/2") >= 0)
+    if (JTOpenTestEnvironment.isWindows)
     {
       DOS_ = true;
     }

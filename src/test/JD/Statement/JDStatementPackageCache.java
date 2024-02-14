@@ -1287,11 +1287,6 @@ public class JDStatementPackageCache extends JDTestcase {
   // testing the parms of a prepared statement
   public void Var024() {
     // Not working for V5R4 and on AS/400. Ignoring
-    if (getRelease() == JDTestDriver.RELEASE_V5R4M0 && isToolboxDriver()
-        && "OS/400".equals(System.getProperty("os.name"))) {
-      notApplicable("Not working on V5R4 on OS/400 getting java.sql.DataTruncation from setBytes");
-      return;
-    }
 
     if (isToolboxDriver()) {
       if (system == null) {
@@ -1412,7 +1407,7 @@ public class JDStatementPackageCache extends JDTestcase {
       StringBuffer sb = new StringBuffer();
 
     // Not working for V5R4 and on AS/400. Ignoring
-    if (getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("Not testing V5R4");
       return;
     }

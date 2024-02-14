@@ -139,7 +139,7 @@ Exeption should be thrown if try to jump ahead more than one row if TYPE_FORWARD
     public void Var002 ()
     {
 	if (checkJdbc20()) {
-	    if ( getRelease() > JDTestDriver.RELEASE_V5R1M0)  {
+	    if ( getRelease() > JDTestDriver.RELEASE_V7R1M0)  {
 		Statement statement_ = null;
 		ResultSet rs = null;
 		try 
@@ -176,7 +176,7 @@ Toolbox opens a scrollable sensitive cursor
     public void Var003 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() > JDTestDriver.RELEASE_V5R1M0)     {
+	    if ( getRelease() > JDTestDriver.RELEASE_V7R1M0)     {
 		try 
 		{
 		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -216,7 +216,7 @@ Note:  Toolbox opens a scrollable sensitive cursor
     public void Var004 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0)    {
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)    {
 		try 
 		{
 		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -257,7 +257,7 @@ Note:  Toolbox opens a scrollable insensitive cursor
     public void Var005 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0) 
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		try 
 		{
@@ -297,13 +297,13 @@ Should show changes made to the database while ResultSet is open if TYPE_SCROLL_
 **/
     public void Var006 ()
     {
-	if(getRelease() <= JDTestDriver.RELEASE_V5R2M0 &&
+	if(getRelease() <= JDTestDriver.RELEASE_V7R1M0 &&
 	   getDriver() == JDTestDriver.DRIVER_NATIVE){
 	    notApplicable("V5R3 or greater variation for Native Driver.");
 	    return;
 	}   
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    // Note.. connection_ is default - which is asenstive.  Must use the sensitive one. 
@@ -346,7 +346,7 @@ Toolbox opens a scrollable sensitive cursor
     public void Var007 ()
     {
 	if (checkJdbc20()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -387,7 +387,7 @@ Note:  Toolbox opens a scrollable sensitive cursor
     public void Var008 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0)     {
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)     {
 		try 
 		{
 		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -428,7 +428,7 @@ Note:  Toolbox opens a non-scrollable insensitive cursor
     public void Var009 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() > JDTestDriver.RELEASE_V5R1M0) 
+	    if ( getRelease() > JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		Statement statement_ = null;
 		ResultSet rs = null;
@@ -475,7 +475,7 @@ Toolbox opens a non-scrollable insensitive cursor
     public void Var010 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() > JDTestDriver.RELEASE_V5R1M0) 
+	    if ( getRelease() > JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		try 
 		{
@@ -553,7 +553,7 @@ Toolbox opens a scrollable sensitive cursor
     public void Var012 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0)      {
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)      {
 		try 
 		{
 		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -594,7 +594,7 @@ Note:  Toolbox opens a scrollable sensitive cursor
     public void Var013 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0)   {
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)   {
 		try 
 		{
 		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -836,7 +836,7 @@ Toolbox opens a scrollable insensitive cursor
     public void Var019 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0) 
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		try 
 		{
@@ -880,7 +880,7 @@ Note:  Toolbox opens a scrollable insensitive cursor
     public void Var020 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0)     {
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)     {
 		try 
 		{
 		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
@@ -921,7 +921,7 @@ Note:  Toolbox opens a scrollable insensitive cursor
     public void Var021 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
@@ -1020,7 +1020,7 @@ Note:  Toolbox opens a non-scrollable asensitive cursor
     public void Var024 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() <= JDTestDriver.RELEASE_V5R1M0) 
+	    if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		Statement statement_ = null;
 		ResultSet rs = null;
@@ -1068,7 +1068,7 @@ Toolbox opens a non-scrollable asensitive cursor
     public void Var025 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0) 
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		try 
 		{
@@ -1109,7 +1109,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var026 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -1149,7 +1149,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var027 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
@@ -1191,7 +1191,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var028 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -1234,7 +1234,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var029 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() <= JDTestDriver.RELEASE_V5R1M0) 
+	    if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		try 
 		{
@@ -1276,7 +1276,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var030 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0)   {
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)   {
             try 
             {
                 Statement statement_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
@@ -1317,7 +1317,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var031 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
@@ -1358,7 +1358,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var032 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
@@ -1398,7 +1398,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var033 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0) 
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		try 
 		{
@@ -1440,7 +1440,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var034 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() <= JDTestDriver.RELEASE_V5R1M0) 
+	    if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
 	    {
 		try 
 		{
@@ -1482,7 +1482,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var035 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0)  {
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
 		try 
 		{
 		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -1523,7 +1523,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var036 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V5R1M0) {
+	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
             try 
             {
                 Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
@@ -1616,7 +1616,7 @@ Test with use of the with fetch first clause for scroll insensitive cursors
 Test with use of the optimize for all rows for scroll insensitive cursors
 **/
     public void Var040() {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working for V5R3 native driver");
 	    return; 
 	} 

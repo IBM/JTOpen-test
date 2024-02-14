@@ -239,7 +239,7 @@ Performs cleanup needed after running variations.
             // Now try it with a string length.
             try {
                 StringBuffer queryString = new StringBuffer("SELECT * FROM QIWS.QCUSTCDT /*");
-                if(getRelease() >= JDTestDriver.RELEASE_V5R4M0){
+                if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
                     for (int i=0; i<2098000; ++i) {
                         queryString.append("C");
                     }

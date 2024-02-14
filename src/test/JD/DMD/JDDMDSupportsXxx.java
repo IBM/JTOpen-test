@@ -2777,7 +2777,7 @@ extends JDTestcase
         {                                                         
             try 
             {                                                         
-               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
+               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V7R1M0)
                   assertCondition (dmd_.supportsSavepoints () == false);  
                else
                   assertCondition (dmd_.supportsSavepoints () == true);  
@@ -2801,7 +2801,7 @@ extends JDTestcase
         if (getJdbcLevel() == 3){                                                       
             try 
             {                                                                           
-               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
+               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V7R1M0)
                   assertCondition (dmd2_.supportsSavepoints () == false);  
                else
                   assertCondition (dmd2_.supportsSavepoints () == true);  
@@ -2923,7 +2923,7 @@ extends JDTestcase
         {
             try 
             {                                                                           
-               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)   
+               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V7R1M0)   
                   assertCondition (dmd_.supportsGetGeneratedKeys () == false);
                else
                   assertCondition (dmd_.supportsGetGeneratedKeys () == true);
@@ -2948,7 +2948,7 @@ extends JDTestcase
         {                                               
             try 
             {                                                                           
-               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)                   
+               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V7R1M0)                   
                  assertCondition (dmd2_.supportsGetGeneratedKeys () == false);                
                else
                  assertCondition (dmd2_.supportsGetGeneratedKeys () == true);                
@@ -2970,7 +2970,7 @@ extends JDTestcase
         if (getJdbcLevel() == 3){                                                
             try 
             {                                                                           
-               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)                   
+               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V7R1M0)                   
                   assertCondition (dmd_.supportsResultSetHoldability (ResultSet.HOLD_CURSORS_OVER_COMMIT) == false);                 
                else
                   assertCondition (dmd_.supportsResultSetHoldability (ResultSet.HOLD_CURSORS_OVER_COMMIT) == true);                 
@@ -2994,7 +2994,7 @@ extends JDTestcase
         if (getJdbcLevel() == 3){                                                
             try 
             {                                                                           
-               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)                   
+               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V7R1M0)                   
                   assertCondition (dmd2_.supportsResultSetHoldability (ResultSet.HOLD_CURSORS_OVER_COMMIT) == false);                 
                else
                   assertCondition (dmd2_.supportsResultSetHoldability (ResultSet.HOLD_CURSORS_OVER_COMMIT) == true);                 
@@ -3023,7 +3023,7 @@ extends JDTestcase
         if (getJdbcLevel() == 3){                                                
             try 
             {                                                                           
-               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)                   
+               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V7R1M0)                   
                   assertCondition (dmd_.supportsResultSetHoldability (ResultSet.CLOSE_CURSORS_AT_COMMIT) == false);                 
                else
                   assertCondition (dmd_.supportsResultSetHoldability (ResultSet.CLOSE_CURSORS_AT_COMMIT) == true);                 
@@ -3047,7 +3047,7 @@ extends JDTestcase
         if (getJdbcLevel() == 3){                                                
             try 
             {                                                                           
-               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)                   
+               if (testDriver_.getRelease() < JDTestDriver.RELEASE_V7R1M0)                   
                  assertCondition (dmd2_.supportsResultSetHoldability (ResultSet.CLOSE_CURSORS_AT_COMMIT) == false);                 
                else
                  assertCondition (dmd2_.supportsResultSetHoldability (ResultSet.CLOSE_CURSORS_AT_COMMIT) == true);                 

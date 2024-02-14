@@ -50,10 +50,6 @@ extends JDTestcase {
     // Private data.
     private              Connection     connection_;
     private              int            vrm_;
-    static       int            VRM_450 = AS400.generateVRM(4,5,0);
-    private static       int            VRM_510 = AS400.generateVRM(5,1,0);
-    private static       int            VRM_520 = AS400.generateVRM(5,2,0);
-    private static       int            VRM_530 = AS400.generateVRM(5,3,0);
     private              boolean        nativeDriver_ = false; 
     private              boolean        v5r2nativeFunctions_ = false;
 
@@ -92,18 +88,13 @@ Performs setup needed before running variations.
 	    JDReflectionUtil.callMethod_V(dataSource,"setPassword",clearPassword_);
 	    connection_ = dataSource.getConnection ();
 
-	    v5r2nativeFunctions_ = (getRelease() == JDTestDriver.RELEASE_V5R2M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE);
+	    v5r2nativeFunctions_ = (getDriver() == JDTestDriver.DRIVER_NATIVE);
 	    nativeDriver_ = getDriver() == JDTestDriver.DRIVER_NATIVE; 
 	    if (nativeDriver_) {
 		// @H1A  native driver uses different notion of VRM 
 		  vrm_ = testDriver_.getRelease();
 		System.out.println("vrm = "+vrm_);
 
-		// Set the VRM constants to match driver
-		  VRM_450 = 450;
-		VRM_510 = 510;
-		VRM_520 = 520;
-		VRM_530 = 530;
 
 	    } else {
 		/* This cast doesn't work for native driver @H1A */
@@ -589,14 +580,7 @@ should return the correct SQL.
 	    try {
 		String sql = "SELECT {fn abs({fn pi()})} FROM MYTABLE";
 		String expected;
-		if (vrm_ < VRM_510)
-		    expected = "SELECT ABS(3.1415926E00) FROM MYTABLE";
-		else
 		    expected = "SELECT ABS(PI()) FROM MYTABLE";
-
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT ABSVAL(3.1415926E00) FROM MYTABLE"; 
-		} 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -829,9 +813,6 @@ Native Driver returns ABSVAL in V5R2.
 	    try {
 		String sql = "SELECT {fn abs(INTEGERCOL)} FROM MYTABLE";
 		String expected = "SELECT ABS(INTEGERCOL) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT ABSVAL(INTEGERCOL) FROM MYTABLE";
-		} 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -856,11 +837,7 @@ with 2 arguments, should return the correct SQL.
 	    try {
 		String sql = "SELECT {fn concat(CHARCOL1, CHARCOL2)}) FROM MYTABLE";
 		String expected;
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT CONCAT(CHARCOL1,  CHARCOL2)) FROM MYTABLE";
-		} else { 
 		    expected = "SELECT CONCAT(CHARCOL1, CHARCOL2)) FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -886,11 +863,7 @@ return the correct SQL.
 		String sql = "SELECT {fn concat(CHARCOL1    ,     CHARCOL2)}) FROM MYTABLE";
 
 		String expected;
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT CONCAT(CHARCOL1    ,      CHARCOL2)) FROM MYTABLE";
-		} else { 
 		    expected = "SELECT CONCAT(CHARCOL1    ,     CHARCOL2)) FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1048,9 +1021,6 @@ nativeSQL() "fn" - Test ABS scalar function.
 	    try {
 		String sql = "SELECT {fn abs(INTEGERCOL)} FROM MYTABLE";
 		String expected = "SELECT ABS(INTEGERCOL) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT ABSVAL(INTEGERCOL) FROM MYTABLE";
-		} 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1131,9 +1101,6 @@ nativeSQL() "fn" - Test ATAN2 scalar function.
 	    try {
 		String sql =  "SELECT {fn atan2(FLOATCOL1, FLOATCOL2)} FROM MYTABLE";
 		String expected = "SELECT ATAN2(FLOATCOL1, FLOATCOL2) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT ATAN2(FLOATCOL1,  FLOATCOL2) FROM MYTABLE";
-		} 
 		String translated = connection_.nativeSQL (sql);
 		boolean condition = translated.equalsIgnoreCase (expected);
 		if (!condition) {
@@ -1284,9 +1251,6 @@ nativeSQL() "fn" - Test LOG scalar function.
 		String expected;
 
 		expected = "SELECT LN(FLOATCOL) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT LOG(FLOATCOL) FROM MYTABLE";
-		} 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1328,9 +1292,6 @@ nativeSQL() "fn" - Test MOD scalar function.
 	    try {
 		String sql = "SELECT {fn mod(INTEGERCOL1,INTEGERCOL2)} FROM MYTABLE";
 		String expected = "SELECT MOD(INTEGERCOL1,INTEGERCOL2) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT MOD(INTEGERCOL1, INTEGERCOL2) FROM MYTABLE";
-		} 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1352,13 +1313,7 @@ pi supported at V5R1 and higher
 	    try {
 		String sql = "SELECT {fn pi()} FROM MYTABLE";
 		String expected;
-		if (vrm_ < VRM_510)
-		    expected = "SELECT 3.1415926E00 FROM MYTABLE";
-		else
 		    expected = "SELECT PI() FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT 3.1415926E00 FROM MYTABLE"; 
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1379,9 +1334,6 @@ nativeSQL() "fn" - Test POWER scalar function.
 	    try {
 		String sql = "SELECT {fn power(INTEGERCOL1, INTEGERCOL2)} FROM MYTABLE";
 		String expected = "SELECT POWER(INTEGERCOL1, INTEGERCOL2) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT POWER(INTEGERCOL1,  INTEGERCOL2) FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1400,7 +1352,6 @@ radians supported at V5R1 and higher
     public void Var058()
     {
 	if (checkJdbc20StdExt()) {
-	    if (vrm_ >= VRM_510) {
 		try {
 		    String sql = "SELECT {fn radians(INTEGERCOL)} FROM MYTABLE";
 		    String expected = "SELECT RADIANS(INTEGERCOL) FROM MYTABLE";
@@ -1410,9 +1361,6 @@ radians supported at V5R1 and higher
 		catch (Exception e) {
 		    failed(e , "Unexpected Exception");
 		}
-	    } else { 
-		notApplicable("RADIANS supported only at V5R1M0 and higher.");
-	    }
 	}
     }
 
@@ -1425,7 +1373,6 @@ rand supported at V5R1 and higher
     public void Var059()
     {
 	if (checkJdbc20StdExt()) {
-	    if (vrm_ >= VRM_510) {
 		try {
 		    String sql = "SELECT {fn rand(INTEGERCOL)} FROM MYTABLE";
 		    String expected = "SELECT RAND(INTEGERCOL) FROM MYTABLE";
@@ -1435,9 +1382,6 @@ rand supported at V5R1 and higher
 		catch (Exception e) {
 		    failed(e , "Unexpected Exception");
 		}
-	    } else { 
-		notApplicable("RAND supported only at V5R1M0 and higher.");
-	    }
 	}
 
     }
@@ -1557,9 +1501,6 @@ nativeSQL() "fn" - Test TRUNCATE scalar function.
 	    try {
 		String sql = "SELECT {fn truncate(FLOATCOL,5)} FROM MYTABLE";
 		String expected = "SELECT TRUNCATE(FLOATCOL,5) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT TRUNCATE(FLOATCOL, 5) FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1629,9 +1570,6 @@ nativeSQL() "fn" - Test CONCAT scalar function.
 	    try {
 		String sql = "SELECT {fn concat(CHARCOL1,CHARCOL2)} FROM MYTABLE";
 		String expected = "SELECT CONCAT(CHARCOL1,CHARCOL2) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT CONCAT(CHARCOL1, CHARCOL2) FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1670,7 +1608,6 @@ difference supported at V5R1 and higher
 		}
 	    } else { 
 
-		if (vrm_ >= VRM_510) {
 		    try {
 			String sql = "SELECT {fn difference(INTEGERCOL)} FROM MYTABLE";
 			String expected = "SELECT DIFFERENCE(INTEGERCOL) FROM MYTABLE";
@@ -1687,9 +1624,6 @@ difference supported at V5R1 and higher
 		    catch (Exception e) {
 			failed(e , "Unexpected Exception");
 		    }
-		} else { 
-		    notApplicable("DIFFERENCE supported only at V5R1M0 and higher.");
-		}
 	    }
 	}
     }
@@ -1706,12 +1640,7 @@ nativeSQL() "fn" - Test INSERT scalar function.
 	    try {
 		String sql = "SELECT {fn insert(CHARCOL1,5,7,CHARCOL2)} FROM MYTABLE";
 		String expected;
-		if (vrm_ < VRM_530) {
-		    expected = "SELECT SUBSTR(CHARCOL1, 1, 5 - 1) "
-		      + "|| CHARCOL2 || SUBSTR(CHARCOL1, 5 + 7) FROM MYTABLE";
-		} else {
 		    expected = "SELECT insert(CHARCOL1,5,7,CHARCOL2) FROM MYTABLE";
-		} 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1732,13 +1661,9 @@ The native driver returns LOWER prior to V5R3.
     public void Var071()
     {
 	if (checkJdbc20StdExt()) {
-	    if (vrm_ >= VRM_520) {
 		try {
 		    String sql = "SELECT {fn lcase(CHARCOL)} FROM MYTABLE";
 		    String expected = "SELECT LCASE(CHARCOL) FROM MYTABLE";
-		    if (vrm_ < VRM_530 && nativeDriver_) {
-			expected = "SELECT LOWER(CHARCOL) FROM MYTABLE";
-		    }
 
 		    String translated = connection_.nativeSQL (sql);
 		    assertCondition (translated.equalsIgnoreCase (expected));
@@ -1746,9 +1671,6 @@ The native driver returns LOWER prior to V5R3.
 		catch (Exception e) {
 		    failed(e , "Unexpected Exception");
 		}
-	    } else { 
-		notApplicable("LCASE supported only at V5R2M0 and later.");
-	    }
 	}
 
     }
@@ -1765,9 +1687,6 @@ Native driver returns SUBSTR prior to V5R3
 	    try {
 		String sql = "SELECT {fn left(CHARCOL,  7)} FROM MYTABLE";
 		String expected = "SELECT LEFT(CHARCOL,  7) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT SUBSTR(CHARCOL, 1,   7) FROM MYTABLE";
-		}
 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
@@ -1791,7 +1710,7 @@ nativeSQL() "fn" - Test LENGTH scalar function.
 		String sql = "SELECT {fn length(CHARCOL)} FROM MYTABLE";
 		String expected = "SELECT LENGTH(STRIP(CHARCOL,T,' ')) FROM MYTABLE";
 		// if v5r3 or later, then ,' ' was removed 
-		if (vrm_ >= VRM_530 && nativeDriver_) {
+		if ( nativeDriver_) {
 		    expected = "SELECT LENGTH(STRIP(CHARCOL,T)) FROM MYTABLE";
 		}
 		String translated = connection_.nativeSQL (sql);
@@ -1815,7 +1734,7 @@ nativeSQL() "fn" - Test LOCATE scalar function.
 	    try {
 		String sql = "SELECT {fn locate(CHARCOL1,CHARCOL2,5)} FROM MYTABLE";
 		String expected = "SELECT LOCATE(CHARCOL1,CHARCOL2,5) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
+		if ( nativeDriver_) {
 		    expected = "SELECT LOCATE(CHARCOL1, CHARCOL2, 5) FROM MYTABLE";
 		}
 		String translated = connection_.nativeSQL (sql);
@@ -1840,7 +1759,7 @@ The native driver returns STRIP prior to v5r3.
 	    try {
 		String sql = "SELECT {fn ltrim(CHARCOL)} FROM MYTABLE";
 		String expected = "SELECT LTRIM(CHARCOL) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
+		if ( nativeDriver_) {
 		    expected = "SELECT STRIP(CHARCOL,L,' ') FROM MYTABLE"; 
 		}
 		String translated = connection_.nativeSQL (sql);
@@ -1876,22 +1795,10 @@ repeat supported at V5R3 and higher
 		    String sql = "SELECT {fn repeat(CHARCOL,6)} FROM MYTABLE";
 		    String expected = "SELECT REPEAT(CHARCOL,6) FROM MYTABLE";
 		    String translated = connection_.nativeSQL (sql);
-		    if (vrm_ > VRM_520) {
 			assertCondition(translated.equalsIgnoreCase(expected));
-		    }
-		    else
-		    {
-			failed("Didn't throw SQLException");
-		    }
 		}
 		catch (Exception e) {
-		    if (vrm_ > VRM_520) {	    
 			failed(e, "Unexpected Exception");
-		    }
-		    else
-		    {
-			assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		    }
 		}
 	    }
 	}
@@ -1923,24 +1830,10 @@ replace supported at V5R3 and higher
 		    String sql = "SELECT {fn replace(CHARCOL,'HELLO','GOODBYE')} FROM MYTABLE";
 		    String expected = "SELECT REPLACE(CHARCOL,'HELLO','GOODBYE') FROM MYTABLE";
 		    String translated = connection_.nativeSQL (sql);
-		    if (vrm_ > VRM_520)
-		    {
 			assertCondition(translated.equalsIgnoreCase(expected));
-		    }
-		    else
-		    {
-			failed("Didn't throw SQLException");
-		    }
 		}
 		catch (Exception e) {
-		    if (vrm_ > VRM_520)
-		    {
 			failed(e, "Unexpected Exception");
-		    }
-		    else
-		    {
-			assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		    }
 		}
 	    }
 	}
@@ -1958,11 +1851,7 @@ nativeSQL() "fn" - Test RIGHT scalar function.
 	    try {
 		String sql = "SELECT {fn right(CHARCOL,1)} FROM MYTABLE";
 		String expected;
-		if (vrm_ < VRM_530) { 
-		    expected = "SELECT SUBSTR(CHARCOL, LENGTH(CHARCOL) - 1 + 1) FROM MYTABLE";
-		} else {
 		    expected = "SELECT right(CHARCOL,1) FROM MYTABLE"; 
-		} 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1985,9 +1874,6 @@ Native driver returns STRIP prior to V5R3
 	    try {
 		String sql = "SELECT {fn rtrim(CHARCOL)} FROM MYTABLE";
 		String expected = "SELECT RTRIM(CHARCOL) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT STRIP(CHARCOL,T,' ') FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -2007,7 +1893,6 @@ soundex supported at V5R1 and higher
     public void Var080()
     {
 	if (checkJdbc20StdExt()) {
-	    if (vrm_ >= VRM_510) {
 		try {
 		    String sql = "SELECT {fn soundex(CHARCOL)} FROM MYTABLE";
 		    String expected = "SELECT SOUNDEX(CHARCOL) FROM MYTABLE";
@@ -2017,9 +1902,6 @@ soundex supported at V5R1 and higher
 		catch (Exception e) {
 		    failed(e , "Unexpected Exception");
 		}
-	    } else { 
-		notApplicable("SOUNDEX supported only at V5R1M0 and higher.");
-	    }
 	}
     }
 
@@ -2033,7 +1915,6 @@ space supported at V5R1 and higher
     public void Var081()
     {
 	if (checkJdbc20StdExt()) {
-	    if (vrm_ >= VRM_510) {
 		try {
 		    String sql = "SELECT {fn space(80)} FROM MYTABLE";
 		    String expected = "SELECT SPACE(80) FROM MYTABLE";
@@ -2043,9 +1924,6 @@ space supported at V5R1 and higher
 		catch (Exception e) {
 		    failed(e , "Unexpected Exception");
 		}
-	    } else { 
-		notApplicable("SPACE supported only at V5R1M0 and higher.");
-	    }
 	}
     }
 
@@ -2062,9 +1940,6 @@ The native driver returns SUBSTR prior to V5R3
 	    try {
 		String sql = "SELECT {fn substring(CHARCOL,6,3)} FROM MYTABLE";
 		String expected = "SELECT SUBSTRING(CHARCOL,6,3) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT SUBSTR(CHARCOL, 6, 3) FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -2108,9 +1983,7 @@ The native driver returns CURRENT DATE prior to V5R3
 	    try {
 		String sql = "SELECT {fn curdate()} FROM MYTABLE";
 		String expected = "SELECT CURDATE() FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT CURRENT DATE FROM MYTABLE"; 
-		}
+
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -2133,9 +2006,6 @@ The native driver returns CURRENT TIME prior to V5R3
 	    try {
 		String sql = "SELECT {fn curtime()} FROM MYTABLE";
 		String expected = "SELECT CURTIME() FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT CURRENT TIME FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -2170,24 +2040,10 @@ dayname supported at V5R3 and higher
 		    String sql = "SELECT {fn dayname(DATECOL)} FROM MYTABLE";
 		    String expected = "SELECT DAYNAME(DATECOL) FROM MYTABLE";
 		    String translated = connection_.nativeSQL (sql);
-		    if (vrm_ > VRM_520)
-		    {
 			assertCondition(translated.equalsIgnoreCase(expected));
-		    }
-		    else
-		    {		
-			failed("Didn't throw SQLException");
-		    }
 		}
 		catch (Exception e) {
-		    if (vrm_ > VRM_520)
-		    {
 			failed(e, "Unexpected Exception");
-		    }
-		    else
-		    {
-			assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		    }
 		}
 	    }
 	}
@@ -2206,13 +2062,7 @@ The native driver returns DAY prior to V5R3
 	    try {
 		String sql = "SELECT {fn dayofmonth(DATECOL)} FROM MYTABLE";
 		String expected;
-		if (vrm_ < VRM_510)
-		    expected = "SELECT DAY(DATECOL) FROM MYTABLE";
-		else
 		    expected = "SELECT DAYOFMONTH(DATECOL) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT DAY(DATECOL) FROM MYTABLE";
-		}
 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
@@ -2355,24 +2205,10 @@ monthname supported at V5R3 and higher
 		    String sql = "SELECT {fn monthname(DATECOL)} FROM MYTABLE";
 		    String expected = "SELECT MONTHNAME(DATECOL) FROM MYTABLE";
 		    String translated = connection_.nativeSQL (sql);
-		    if (vrm_ > VRM_520)
-		    {
 			assertCondition(translated.equalsIgnoreCase(expected));
-		    }
-		    else
-		    {
-			failed("Didn't throw SQLException");
-		    }
 		}
 		catch (Exception e) {
-		    if (vrm_ > VRM_520)
-		    {
 			failed(e, "Unexpected Exception");
-		    }
-		    else
-		    {
-			assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		    }
 		}
 	    }
 	}
@@ -2391,9 +2227,6 @@ The native driver returns CURRENT TIMESTAMP prior to V5R3
 	    try {
 		String sql = "SELECT {fn now()} FROM MYTABLE";
 		String expected = "SELECT NOW() FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT CURRENT TIMESTAMP FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -2476,7 +2309,6 @@ timestampdiff supported at V5R1
     public void Var098()
     {
 	if (checkJdbc20StdExt()) {
-	    if (vrm_ >= VRM_510) {
 		try {
 		    String sql = "SELECT {fn timestampdiff(SQL_TSI_MONTH,TSCOL1,TSCOL2)} FROM MYTABLE";
 		    String expected = "SELECT TIMESTAMPDIFF(SQL_TSI_MONTH,TSCOL1,TSCOL2) FROM MYTABLE";
@@ -2486,9 +2318,6 @@ timestampdiff supported at V5R1
 		catch (Exception e) {
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 		}
-	    } else {
-		notApplicable("TIMESTAMPDIFF supported only at V5R1M0 and higher.");
-	    }
 	}
     }
 
@@ -2554,11 +2383,7 @@ nativeSQL() "fn" - Test DATABASE scalar function.
 	    try {
 		String sql = "SELECT {fn database()} FROM MYTABLE";
 		String expected;
-		if (vrm_ < VRM_530) { 
-		    expected = "SELECT CURRENT SERVER FROM MYTABLE";
-		} else {
 		    expected = "SELECT database() FROM MYTABLE"; 
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -2581,9 +2406,6 @@ The native driver returns VALUE prior to V5R3
 	    try {
 		String sql = "SELECT {fn ifnull(INTEGERCOL,-1)} FROM MYTABLE";
 		String expected = "SELECT IFNULL(INTEGERCOL,-1) FROM MYTABLE";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "SELECT VALUE(INTEGERCOL, -1) FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -3222,9 +3044,6 @@ nativeSQL() - Pass a string with a comment.
 		  + "(PICOL) VALUES ('3.1415') -- Insert a value into the column.";
 		String expected = "INSERT INTO MYTABLE "
 		  + "(PICOL) VALUES ('3.1415') -- Insert a value into the column.";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "INSERT INTO MYTABLE (PICOL) VALUES ('3.1415')";
-		}
 		//
 		// Native driver will strip the comments if the length of the
 		  // statement if > 32 K. 
@@ -3251,9 +3070,6 @@ nativeSQL() - Pass a string with a comment at the beginning.
 	    try {
 		String sql = "-- One major league comment.";
 		String expected = "-- One major league comment.";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = ""; 
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -3276,10 +3092,6 @@ be trimmed off.
 		  + "(PICOL) VALUES ('3.1415') --";
 		String expected = "INSERT INTO MYTABLE "
 		  + "(PICOL) VALUES ('3.1415') --";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "INSERT INTO MYTABLE "
-		      + "(PICOL) VALUES ('3.1415')";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -3368,10 +3180,6 @@ is trimmed.
 		  + "(PICOL) VALUES ('3.1415') -- Insert {fn pi()} into the column.";
 		String expected = "INSERT INTO MYTABLE "
 		  + "(PICOL) VALUES ('3.1415') -- Insert {fn pi()} into the column.";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "INSERT INTO MYTABLE "
-		      + "(PICOL) VALUES ('3.1415')";
-		}
 		String translated = connection_.nativeSQL (sql);
 
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
@@ -3395,14 +3203,7 @@ pi supported at V5R1 and higher
 		String sql = "INSERT INTO MYTABLE "
 		  + "(PICOL1, PICOL2) VALUES (-3.1415, {fn pi()})";
 		String expected;
-		if (vrm_ < VRM_510)
-		    expected = "INSERT INTO MYTABLE (PICOL1, PICOL2) VALUES (-3.1415, 3.1415926E00)";
-		else
 		    expected = "INSERT INTO MYTABLE (PICOL1, PICOL2) VALUES (-3.1415, PI())";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "INSERT INTO MYTABLE "
-		      + "(PICOL1, PICOL2) VALUES (-3.1415, 3.1415926E00)"; 
-		}
 
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
@@ -3510,9 +3311,6 @@ when the comment line ends before the entire SQL string ends.
 	    try {
 		String sql      = "select * from cujosql.comment -- This is a comment to the end of the line.\nwhere col1 = {ts '1998-03-23 12:42:02.123450'}";
 		String expected = "select * from cujosql.comment -- This is a comment to the end of the line.\nwhere col1 = '1998-03-23-12.42.02.123450'";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "select * from cujosql.comment  \nwhere col1 = '1998-03-23-12.42.02.123450'";
-		}
 		String translated = connection_.nativeSQL (sql);
 
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
@@ -3540,11 +3338,6 @@ when the comment contains some invalid JDBC escape syntax.
 		String expected = "select * from cujosql.comment \n" + 
 		  " /* TODO:  We remove the special {ts} syntax here.  */ \n " + 
 		  " where col1 = '1998-03-23-12.42.02.123450'";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected = "select * from cujosql.comment \n" + 
-		      "   \n " + 
-		      " where col1 = '1998-03-23-12.42.02.123450'";
-		}
 		String translated = connection_.nativeSQL (sql);
 
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
@@ -3568,11 +3361,6 @@ when the comment contains some valid JDBC escape syntax.
 		String expected = "select * from cujosql.comment \n" +
 		  " /* TODO:  Do not convert escape syntax here. {fn pi()} */" +
 		  "\n where col1 = '1998-03-23-12.42.02.123450'";
-		if (vrm_ < VRM_530 && nativeDriver_) {
-		    expected="select * from cujosql.comment \n" +
-		      "  " +
-		      "\n where col1 = '1998-03-23-12.42.02.123450'";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equals (expected)); 
 	    }

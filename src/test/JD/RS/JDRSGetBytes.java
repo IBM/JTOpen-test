@@ -596,7 +596,7 @@ public class JDRSGetBytes extends JDTestcase {
           (byte) 0x40, (byte) 0x40 };
 
       if (getDriver() == JDTestDriver.DRIVER_NATIVE
-          && getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+          && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         assertCondition(areEqual(v, expectedNative),
             " v = " + JDTestUtilities.dumpBytes(v) + " and expected = "
                 + JDTestUtilities.dumpBytes(expectedNative));
@@ -1120,70 +1120,76 @@ public class JDRSGetBytes extends JDTestcase {
         JDRSTest.position0(rs, "LOB_FULL");
         byte[] v = rs.getBytes("C_DATALINK");
 
-        byte[] expectedToolbox = { (byte) 0xC8, (byte) 0xE3, (byte) 0xE3,
-            (byte) 0xD7, (byte) 0x7A, (byte) 0x61, (byte) 0x61, (byte) 0xE2,
-            (byte) 0xC3, (byte) 0xC8, (byte) 0xE4, (byte) 0xD4, (byte) 0xC1,
-            (byte) 0xD5, (byte) 0x4B, (byte) 0xD9, (byte) 0xC3, (byte) 0xC8,
-            (byte) 0xD3, (byte) 0xC1, (byte) 0xD5, (byte) 0xC4, (byte) 0x4B,
-            (byte) 0xC9, (byte) 0xC2, (byte) 0xD4, (byte) 0x4B, (byte) 0xC3,
-            (byte) 0xD6, (byte) 0xD4, (byte) 0x61, (byte) 0x88, (byte) 0x85,
-            (byte) 0x93, (byte) 0x97, (byte) 0x4B, (byte) 0x88, (byte) 0xA3,
-            (byte) 0x94, (byte) 0x93, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40 }; // DATALINK
-                                        // "HTTP://schuman.rchland.ibm.com/help.html"
+        byte[] expectedToolbox = { (byte) 0x88,(byte) 0xA3,(byte) 0xA3,   
+            (byte) 0x97,(byte) 0xA2,(byte) 0x7A,(byte) 0x61,(byte) 0x61,
+            (byte) 0x87,(byte) 0x89,(byte) 0xA3,(byte) 0x88,(byte) 0xA4,
+            (byte) 0x82,(byte) 0x4B,(byte) 0x83,(byte) 0x96,(byte) 0x94,
+            (byte) 0x61,(byte) 0xC9,(byte) 0xC2,(byte) 0xD4,(byte) 0x61,
+            (byte) 0xD1,(byte) 0xE3,(byte) 0xD6,(byte) 0x97,(byte) 0x85,
+            (byte) 0x95,(byte) 0x60,(byte) 0xA3,(byte) 0x85,(byte) 0xA2,
+            (byte) 0xA3,(byte) 0x61,(byte) 0x82,(byte) 0x93,(byte) 0x96,
+            (byte) 0x82,(byte) 0x61,(byte) 0x94,(byte) 0x81,(byte) 0x89,
+            (byte) 0x95,(byte) 0x61,(byte) 0xD9,(byte) 0xC5,(byte) 0xC1,
+            (byte) 0xC4,(byte) 0xD4,(byte) 0xC5,(byte) 0x4B,(byte) 0xA3,
+            (byte) 0x85,(byte) 0xA2,(byte) 0xA3,(byte) 0x89,(byte) 0x95,
+            (byte) 0x87,(byte) 0x4B,(byte) 0xA3,(byte) 0xA7,(byte) 0xA3,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,(byte) 0x40,
+            (byte) 0x40,(byte) 0x40,
+          }; // DATALINK
+                                        // "https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt"
                                         // 200 characters + 2 for the length.
         // toolbox: in 550, if VLC is on, then the ending x40 bytes are gone,
         // but the length is still the same.
         // toolbox: in pre 550, getbytes() ignores the length and return the
         // length of the column.
         if ((isToolboxDriver())
-            && (getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+            && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
           // 42 bytes
           byte[] tmp = new byte[40];
           System.arraycopy(expectedToolbox, 0, tmp, 0, 40);
           expectedToolbox = tmp;
         }
 
-        byte[] expectedNative = { (byte) 0xC8, (byte) 0xE3, (byte) 0xE3,
-            (byte) 0xD7, (byte) 0x7A, (byte) 0x61, (byte) 0x61, (byte) 0xE2,
-            (byte) 0xC3, (byte) 0xC8, (byte) 0xE4, (byte) 0xD4, (byte) 0xC1,
-            (byte) 0xD5, (byte) 0x4B, (byte) 0xD9, (byte) 0xC3, (byte) 0xC8,
-            (byte) 0xD3, (byte) 0xC1, (byte) 0xD5, (byte) 0xC4, (byte) 0x4B,
-            (byte) 0xC9, (byte) 0xC2, (byte) 0xD4, (byte) 0x4B, (byte) 0xC3,
-            (byte) 0xD6, (byte) 0xD4, (byte) 0x61, (byte) 0x88, (byte) 0x85,
-            (byte) 0x93, (byte) 0x97, (byte) 0x4B, (byte) 0x88, (byte) 0xA3,
-            (byte) 0x94, (byte) 0x93 }; // "HTTP://SCHUMAN.RCHLAND.IBM.COM/help.html"
+        byte[] expectedNative = { (byte) 0x88,(byte) 0xA3,(byte) 0xA3,   
+            (byte) 0x97,(byte) 0xA2,(byte) 0x7A,(byte) 0x61,(byte) 0x61,
+            (byte) 0x87,(byte) 0x89,(byte) 0xA3,(byte) 0x88,(byte) 0xA4,
+            (byte) 0x82,(byte) 0x4B,(byte) 0x83,(byte) 0x96,(byte) 0x94,
+            (byte) 0x61,(byte) 0xC9,(byte) 0xC2,(byte) 0xD4,(byte) 0x61,
+            (byte) 0xD1,(byte) 0xE3,(byte) 0xD6,(byte) 0x97,(byte) 0x85,
+            (byte) 0x95,(byte) 0x60,(byte) 0xA3,(byte) 0x85,(byte) 0xA2,
+            (byte) 0xA3,(byte) 0x61,(byte) 0x82,(byte) 0x93,(byte) 0x96,
+            (byte) 0x82,(byte) 0x61,(byte) 0x94,(byte) 0x81,(byte) 0x89,
+            (byte) 0x95,(byte) 0x61,(byte) 0xD9,(byte) 0xC5,(byte) 0xC1,
+            (byte) 0xC4,(byte) 0xD4,(byte) 0xC5,(byte) 0x4B,(byte) 0xA3,
+            (byte) 0x85,(byte) 0xA2,(byte) 0xA3,(byte) 0x89,(byte) 0x95,
+            (byte) 0x87,(byte) 0x4B,(byte) 0xA3,(byte) 0xA7,(byte) 0xA3,
+            }; // "https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt"
 
         // if (isToolboxDriver())
         // assertCondition (isEqual (v, expectedToolbox));
@@ -1331,7 +1337,7 @@ public class JDRSGetBytes extends JDTestcase {
       return;
     }
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         ResultSet rs = statement0_
             .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
         JDRSTest.position0(rs, "GRAPHIC_FULL");
@@ -1403,7 +1409,7 @@ public class JDRSGetBytes extends JDTestcase {
       return;
     }
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         ResultSet rs = statement0_
             .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
         JDRSTest.position0(rs, "GRAPHIC_FULL");
@@ -1436,7 +1442,7 @@ public class JDRSGetBytes extends JDTestcase {
         // toolbox: in pre 550, getbytes() ignores the length and return the
         // length of the column.
         if ((isToolboxDriver())
-            && (getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+            && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
           // 26 bytes
           byte[] tmp = new byte[26];
           System.arraycopy(expectedToolbox, 0, tmp, 0, 26);
@@ -1467,7 +1473,7 @@ public class JDRSGetBytes extends JDTestcase {
       return;
     }
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         ResultSet rs = statement0_
             .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
         JDRSTest.position0(rs, "GRAPHIC_FULL");
@@ -1507,7 +1513,7 @@ public class JDRSGetBytes extends JDTestcase {
       return;
     }
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         ResultSet rs = statement0_
             .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
         JDRSTest.position0(rs, "GRAPHIC_FULL");

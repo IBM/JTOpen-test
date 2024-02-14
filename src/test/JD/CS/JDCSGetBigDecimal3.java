@@ -610,7 +610,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT SMALLINT
     public void Var022()
     {
 	if (checkJdbc20()) { 
-	    if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 
+	    if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 		try{
 
 		    JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10SMINT");
@@ -636,7 +636,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT INTEGER
 **/
     public void Var023()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10INT");
@@ -662,7 +662,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT REAL
 **/
     public void Var024()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10REAL");
@@ -688,7 +688,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT FLOAT
 **/
     public void Var025()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10FLOAT");
@@ -714,7 +714,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT DOUBLE
 **/
     public void Var026()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10DOUBLE");
@@ -741,7 +741,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT DECIMAL
     public void Var027()
     {
 
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10DEC50");
@@ -767,7 +767,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT DECIMAL(1
 **/
     public void Var028()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10DEC105");
@@ -793,7 +793,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT NUMERIC(5
 **/
     public void Var029()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10NUM50");
@@ -820,7 +820,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT NUMERIC(1
 **/
     public void Var030()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"ADD10NUM105");
@@ -869,7 +869,7 @@ getBigDecimal() - getBigDecimal on a type registered as Numeric, INOUT CHAR(50)
 **/
     public void Var032()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection,JDCSTest.COLLECTION,"RETURNCHAR50");

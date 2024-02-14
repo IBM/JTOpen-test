@@ -301,7 +301,7 @@ Performs cleanup needed after running variations.
         expectedTypes = jccExpectedTypes;
         usingExpectedTypes = "jccExpectedtypes";
       } else if ((getJdbcLevel() >= 4)
-          || ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V5R5M0))
+          || ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
           || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         expectedNames = jdk16ExpectedNames;
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()) {
@@ -310,7 +310,7 @@ Performs cleanup needed after running variations.
           expectedTypes = jdk16ExpectedTypesTB;
           usingExpectedTypes = "jdk16ExpectedTypesTB";
           expectedNames = jdk16ExpectedNamesTB;
-        } else if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+        } else if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
           if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
               && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
             if (getJdbcLevel() >= 4) {
@@ -377,7 +377,7 @@ verify all columns with system remarks (the default).
         success = JDDMDTest.check(rs.getString("PROCEDURE_SCHEM"), JDDMDTest.COLLECTION, "PROCEDURE_SCHEMA", "PROCS%", message, success);
 
         //below, toolbox is not yet on metadata from sysibm stored procs
-        if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || getDriver() == JDTestDriver.DRIVER_JCC || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0)) || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+        if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || getDriver() == JDTestDriver.DRIVER_JCC || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0)) || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
           success = JDDMDTest.check(rs.getString("REMARKS"), null, "REMARKS", "PROCS%", message, success);
         } else {
           success = JDDMDTest.check(rs.getString("REMARKS"), "", "REMARKS", "PROCS%", message, success);
@@ -387,7 +387,7 @@ verify all columns with system remarks (the default).
         short procedureType = rs.getShort("PROCEDURE_TYPE");
 
         if (procedureName.equals("PROCS")) {
-        	if ((getJdbcLevel() >= 4  && getDriver() != JDTestDriver.DRIVER_TOOLBOX) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0)) || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+        	if ((getJdbcLevel() >= 4  && getDriver() != JDTestDriver.DRIVER_TOOLBOX) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0)) || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
 		success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
 					"PROCEDURE_TYPE", procedureName, message,success);
 
@@ -396,7 +396,7 @@ verify all columns with system remarks (the default).
 					"PROCEDURE_TYPE", procedureName, message,success);
 	    }
         } else if (procedureName.equals("PROCS1")) {
-        	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+        	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
             success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                 "PROCEDURE_TYPE", procedureName, message,success);
           } else  if (JDTestDriver.isLUW()) {
@@ -407,7 +407,7 @@ verify all columns with system remarks (the default).
                 "PROCEDURE_TYPE", procedureName, message,success);
           }
         } else if (procedureName.equals("PROCS2")) {
-        	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+        	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
             success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                 "PROCEDURE_TYPE", procedureName, message,success);
           } else {
@@ -415,7 +415,7 @@ verify all columns with system remarks (the default).
                 "PROCEDURE_TYPE", procedureName, message,success);
           }
         } else if (procedureName.equals("PROCSXX")) {
-        	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+        	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
             success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                 "PROCEDURE_TYPE", procedureName, message,success);
           } else {
@@ -482,14 +482,14 @@ verify all columns with sql remarks.
                 short procedureType = rs.getShort ("PROCEDURE_TYPE");
 
                 if (procedureName.equals ("PROCS")) {
-                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success = JDDMDTest.check(remarks, null,
                         "REMARKS", "PROCS", message, success);
                   } else {
                     success = JDDMDTest.check(remarks, "",
                         "REMARKS", "PROCS", message, success);
                   }
-                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -500,7 +500,7 @@ verify all columns with sql remarks.
                 else if (procedureName.equals ("PROCS1")) {
                   success = JDDMDTest.check(remarks, "5",
                       "REMARKS", "PROCS1", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX))  || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX))  || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else if (JDTestDriver.isLUW()) {
@@ -514,7 +514,7 @@ verify all columns with sql remarks.
                 else if (procedureName.equals ("PROCS2")) {
                   success = JDDMDTest.check(remarks, "Six",
                       "REMARKS", "PROCS2", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -525,7 +525,7 @@ verify all columns with sql remarks.
                 else if (procedureName.equals ("PROCSXX")) {
                   success = JDDMDTest.check(remarks, "The Native JDBC driver is very fast",
                       "REMARKS", "PROCS2", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -668,7 +668,7 @@ No matching procedures should be returned.
 
         if ((getDriver()==JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata())){ //toolbox not yet on sysibm storedproc metadata in jdbc40
         	assertCondition (rows == 0, "Empty string specified for catalog, so results should have NOT been returned rows="+rows);
-        } else if ((getJdbcLevel() >= 4) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0)) || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+        } else if ((getJdbcLevel() >= 4) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0)) || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
 		assertCondition (rows >0 , "Empty string specified for catalog, so results should have been returned rows="+rows+"  Running with JDBC 4.0 or JCC or Native >= V5R5 ");
 	    } else {
 		assertCondition (rows == 0, "Empty string specified for catalog, so results should have NOT been returned rows="+rows);
@@ -735,7 +735,7 @@ All matching procedures should be returned.
 **/
     public void Var008()
     {
-       if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+       if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
          notApplicable("localhost variation");
        } else {
         try {
@@ -1135,7 +1135,7 @@ but I don't see why it shouldn't work just like var017 above.
       if ((getDriver () == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()) ||
           (getDriver () == JDTestDriver.DRIVER_JCC) ||
           (getJdbcLevel() >= 4 && getDriver () != JDTestDriver.DRIVER_TOOLBOX) ||
-	  ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))) {
+	  ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))) {
         try {
             ResultSet rs = dmd_.getProcedures (connectionCatalog_,
                 "PROC\\S%", "PROCS%");
@@ -1427,10 +1427,10 @@ getProcedures() - Check all the RSMD results when using JDBC 3.0.
       }
   }
   public void Var027() {
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	      notApplicable("Native Driver and > V5R3 test");
       } else {
-	  if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+	  if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
 	      notApplicable("Native Driver and SI24355 testing currentLevel="+getDriverFixLevel());
 	  } else {
 	      checkRSMD(true);
@@ -2066,7 +2066,7 @@ getProcedures() - Check all the RSMD results when using JDBC 3.0.
 
 	            if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 	                if (isSysibmMetadata()) {
-			    if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 	                        message.append("fixup = nativeExtendedSysibmDifferences\n");
 	                        fixup = nativeExtendedSysibmDifferences55;
 
@@ -2138,7 +2138,7 @@ getProcedures() - Check all the RSMD results when using JDBC 3.0.
 				message.append("fixup2 = sysibmDifferences71\n");
 			    }
 			}
-		    } else  if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		    } else  if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		        fixup2 = sysibmDifferences55;
 		        message.append("fixup2 = sysibmDifferences55\n");
 
@@ -2250,14 +2250,14 @@ Almost identical to Var003.
                 short procedureType = (short) rs.getInt ("PROCEDURE_TYPE");
 
                 if (procedureName.equals ("PROCS")) {
-                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success = JDDMDTest.check(remarks, null,
                         "REMARKS", "PROCS", message, success);
                   } else {
                     success = JDDMDTest.check(remarks, "",
                         "REMARKS", "PROCS", message, success);
                   }
-                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -2268,7 +2268,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCS1")) {
                   success = JDDMDTest.check(remarks, "5",
                       "REMARKS", "PROCS1", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX))  || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX))  || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else if (JDTestDriver.isLUW()) {
@@ -2282,7 +2282,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCS2")) {
                   success = JDDMDTest.check(remarks, "Six",
                       "REMARKS", "PROCS2", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -2293,7 +2293,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCSXX")) {
                   success = JDDMDTest.check(remarks, "The Native JDBC driver is very fast",
                       "REMARKS", "PROCS2", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -2363,14 +2363,14 @@ Almost identical to Var003.
                 short procedureType = (short) rs.getLong ("PROCEDURE_TYPE");
 
                 if (procedureName.equals ("PROCS")) {
-                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success = JDDMDTest.check(remarks, null,
                         "REMARKS", "PROCS", message, success);
                   } else {
                     success = JDDMDTest.check(remarks, "",
                         "REMARKS", "PROCS", message, success);
                   }
-                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -2381,7 +2381,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCS1")) {
                   success = JDDMDTest.check(remarks, "5",
                       "REMARKS", "PROCS1", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX))  || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX))  || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else if (JDTestDriver.isLUW()) {
@@ -2395,7 +2395,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCS2")) {
                   success = JDDMDTest.check(remarks, "Six",
                       "REMARKS", "PROCS2", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -2406,7 +2406,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCSXX")) {
                   success = JDDMDTest.check(remarks, "The Native JDBC driver is very fast",
                       "REMARKS", "PROCS2", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -2477,14 +2477,14 @@ Almost identical to Var003.
                 short procedureType = (short) ((Integer)rs.getObject ("PROCEDURE_TYPE")).intValue();
 
                 if (procedureName.equals ("PROCS")) {
-                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || (getDriver()==JDTestDriver.DRIVER_JCC) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success = JDDMDTest.check(remarks, null,
                         "REMARKS", "PROCS", message, success);
                   } else {
                     success = JDDMDTest.check(remarks, "",
                         "REMARKS", "PROCS", message, success);
                   }
-                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                	if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -2495,7 +2495,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCS1")) {
                   success = JDDMDTest.check(remarks, "5",
                       "REMARKS", "PROCS1", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX))  || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX))  || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else if (JDTestDriver.isLUW()) {
@@ -2509,7 +2509,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCS2")) {
                   success = JDDMDTest.check(remarks, "Six",
                       "REMARKS", "PROCS2", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {
@@ -2520,7 +2520,7 @@ Almost identical to Var003.
                 else if (procedureName.equals ("PROCSXX")) {
                   success = JDDMDTest.check(remarks, "The Native JDBC driver is very fast",
                       "REMARKS", "PROCS2", message, success);
-                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V5R5M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
+                  if (((getJdbcLevel() >= 4) && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&  (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))|| (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                     success=JDDMDTest.check(procedureType,DatabaseMetaData.procedureResultUnknown,
                         "PROCEDURE_TYPE", procedureName, message,success);
                   } else {

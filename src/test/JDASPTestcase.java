@@ -497,11 +497,7 @@ Performs cleanup needed after running variations.
          return; 
        }
       
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
+       
              
        Connection c  = null;
        Statement  s  = null;
@@ -545,11 +541,7 @@ Performs cleanup needed after running variations.
         return; 
       }
       
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
+       
              
        Connection c  = null;
        Statement  s  = null;
@@ -596,11 +588,7 @@ Performs cleanup needed after running variations.
         return; 
       }
       
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
+      
              
        Connection c  = null;
        Statement  s  = null;
@@ -642,11 +630,6 @@ Performs cleanup needed after running variations.
         return; 
       }
       
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
              
        Connection c  = null;
        Statement  s  = null;
@@ -693,11 +676,6 @@ Performs cleanup needed after running variations.
         return; 
       }
       
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
              
        Connection c  = null;
        Statement  s  = null;
@@ -726,11 +704,6 @@ Performs cleanup needed after running variations.
           String text = sqee.getMessage().toUpperCase();
 	  String expected = "NOT IN RELATIONAL";
 	  String expected2= "TBD"; 
-	  // In V6R1 we get a different error.  Since it is an error condition,
-          // this testcase will tolerate the difference.
-	  if (getRelease() == JDTestDriver.RELEASE_V6R1M0) {
-	      expected2 = "NOT IN A CONNECTED STATE"; 
-	  } 
 	  
           if ((text.indexOf(expected) >= 0) ||(text.indexOf(expected2) >= 0) )
              succeeded();
@@ -756,11 +729,6 @@ Performs cleanup needed after running variations.
         return; 
       }
       
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
              
        Connection c  = null;
        Statement  s  = null;
@@ -783,11 +751,6 @@ Performs cleanup needed after running variations.
           String text = sqee.getMessage().toUpperCase();
 	  String expected = "NOT IN RELATIONAL"; 
 	  String expected2= "TBD"; 
-	  // In V6R1 we get a different error.  Since it is an error condition,
-          // this testcase will tolerate the difference.
-	  if (getRelease() == JDTestDriver.RELEASE_V6R1M0) {
-	      expected2 = "NOT IN A CONNECTED STATE"; 
-	  } 
 	  
           if ((text.indexOf(expected) >= 0) ||(text.indexOf(expected2) >= 0) )
              succeeded();
@@ -814,11 +777,6 @@ Performs cleanup needed after running variations.
         return; 
       }
       
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
              
        Connection c  = null;
        Statement  s  = null;
@@ -845,11 +803,6 @@ Performs cleanup needed after running variations.
           String text = sqee.getMessage().toUpperCase();
 	  String expected = "NOT IN RELATIONAL"; 
 	  String expected2= "TBD"; 
-	  // In V6R1 we get a different error.  Since it is an error condition,
-          // this testcase will tolerate the difference.
-	  if (getRelease() == JDTestDriver.RELEASE_V6R1M0) {
-	      expected2 = "NOT IN A CONNECTED STATE"; 
-	  } 
 	  
           if ((text.indexOf(expected) >= 0) ||(text.indexOf(expected2) >= 0) )
 
@@ -879,11 +832,6 @@ Performs cleanup needed after running variations.
         return; 
       }
       
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
              
        Connection c  = null;
        Statement  s  = null;
@@ -906,11 +854,6 @@ Performs cleanup needed after running variations.
           String text = sqee.getMessage().toUpperCase();
 	  String expected = "NOT IN RELATIONAL"; 
 	  String expected2= "TBD"; 
-	  // In V6R1 we get a different error.  Since it is an error condition,
-          // this testcase will tolerate the difference.
-	  if (getRelease() == JDTestDriver.RELEASE_V6R1M0) {
-	      expected2 = "NOT IN A CONNECTED STATE"; 
-	  } 
 	  
           if ((text.indexOf(expected) >= 0) ||(text.indexOf(expected2) >= 0) )
 
@@ -939,11 +882,6 @@ Performs cleanup needed after running variations.
         return; 
       }
 
-       if (testDriver_.getRelease() < JDTestDriver.RELEASE_V5R2M0)
-       {
-          notApplicable("Requires OS/400 V5R2 or later.");       
-          return;
-       }
       
        Connection         c  = null;
        ResultSet          rs = null;      

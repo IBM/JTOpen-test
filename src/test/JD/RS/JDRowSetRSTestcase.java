@@ -22,6 +22,7 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 import test.JD.DataSource.JDDatabaseOverride;
@@ -118,9 +119,8 @@ Performs setup needed before running variations.
            System.setProperty(Context.INITIAL_CONTEXT_FACTORY,  "com.sun.jndi.fscontext.RefFSContextFactory");        //@C1A
 
            // Set the root to a writable directory on AIX and Linux
-	   String osname = System.getProperty("os.name");
-	   if (osname.equals("AIX") || osname.equals("OS/400") || osname.equals("Linux") ||  (osname.indexOf("Windows") >= 0)) {
-
+	   if (JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isAIX || JTOpenTestEnvironment.isLinux) {
+	     
 	       System.setProperty("java.naming.provider.url", "file:///tmp");
 
 	       java.io.File file = new java.io.File("/tmp/jdbc");
@@ -132,7 +132,7 @@ Performs setup needed before running variations.
 
 	     
 	   } else {
-	     System.out.println("Unexpected osname="+osname); 
+	     System.out.println("Unexpected osVersion="+JTOpenTestEnvironment.osVersion); 
 	   }
 
            Context context = new InitialContext();
@@ -694,10 +694,6 @@ clearWarnings() - Clears warnings after 1 has been posted.
             return;
        }
 
-       if (getRelease() == JDTestDriver.RELEASE_V5R4M0 && "OS/400".equals(System.getProperty("os.name"))) { 
-            notApplicable("V5R4 test system not set up correctly for this test");
-            return;
-       } 
        if (checkJdbc20 ()) {
 	   String systemName = systemObject_.getSystemName().trim();
 	   String databaseName = "UNSET"; 
@@ -787,10 +783,6 @@ reported.
            notApplicable("Native directory not set up correctly for this test");
            return;
        }
-       if (getRelease() == JDTestDriver.RELEASE_V5R4M0 && "OS/400".equals(System.getProperty("os.name"))) { 
-         notApplicable("V5R4 test system not set up correctly for this test");
-         return;
-       } 
        if (checkJdbc20 ()) {
             try
             {
@@ -1108,7 +1100,7 @@ getAsciiStream() - Should work when the column index is valid.
            InputStream v = rowset.getAsciiStream (12);
            sb.setLength(0); 
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @K2
+	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @K2
 	       assertCondition( compareBeginsWithBytes( v, "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb);			// @K2
 	   else							// @K2
 	       assertCondition (compare (v, "Toolbox for Java                                  ", "8859_1",sb),sb);
@@ -1138,7 +1130,7 @@ getAsciiStream() - Should work when the column name is valid.
            InputStream v = rowset.getAsciiStream ("C_CHAR_50");
            sb.setLength(0); 
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @K2
+	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
 	       assertCondition( compareBeginsWithBytes( v, "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb);				// @K2
 	   else								// @K2
 	       assertCondition (compare (v, "Toolbox for Java                                  ", "8859_1",sb),sb);
@@ -1169,7 +1161,7 @@ getBinaryStream() - Should work when the column index is valid.
           position0 (rowset, "BINARY_NOTRANS");
           InputStream v = rowset.getBinaryStream (18);
 	  if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	     getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @K2
+	     getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
 	      assertCondition( compareBeginsWithBytes( v, twelve));	// @K2
 	  else								// @K2
 	      assertCondition (compare (v, twelve, sb), sb);
@@ -1200,7 +1192,7 @@ getBinaryStream() - Should work when the column name is valid.
            position0 (rowset, "BINARY_NOTRANS");
            InputStream v = rowset.getBinaryStream ("C_BINARY_20");
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @K2
+	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
 	       assertCondition( compareBeginsWithBytes( v, eleven));	// @K2
 	   else								// @K2
 	       assertCondition (compare (v, eleven,sb),sb);
@@ -2203,7 +2195,7 @@ getUnicodeStream() - Should work when the column index is valid.
            Reader v = rowset.getCharacterStream (12);
            sb.setLength(0); 
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V5R3M0 )			// @K2
+	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )			// @K2
 	       assertCondition( compare( v, "Toolbox for Java                                  ",sb),sb);			// @K2
 	   else									// @K2
 	       assertCondition (compare (v, "Toolbox for Java                                  ",sb),sb); // @B0C
@@ -2234,7 +2226,7 @@ getUnicodeStream() - Should work when the column name is valid.
            Reader v = rowset.getCharacterStream ("C_CHAR_50");
            sb.setLength(0); 
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @K2
+	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
 	       assertCondition( compare( v, "Toolbox for Java                                  ",sb),sb);			// @K2
 	   else								// @K2
 	       assertCondition (compare (v, "Toolbox for Java                                  ",sb),sb); // @B0C

@@ -279,7 +279,7 @@ Performs setup needed before running variations.
 
 
         //@C1A
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
 	    if (JDTestDriver.isLUW()) {
 		// LUW doesn't support long names..
 	    } else {
@@ -384,7 +384,7 @@ Performs cleanup needed after running variations.
 	}
 
         //@C1A
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
 	    if (JDTestDriver.isLUW()) {
 		// LUW doesn't support long names
@@ -415,7 +415,7 @@ Performs cleanup needed after running variations.
         executeDuringCleanup(s, "DROP TABLE " + JDDMDTest.COLLECTION2
             + ".IK4");
         //@C1A
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
 	    if (JDTestDriver.isLUW()) {
 		// LUW doesn't support long names
@@ -706,7 +706,7 @@ getImportedKeys() - Specify "localhost" for catalog.
     public void Var007()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4 ||
-          (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V5R5M0) ||
+          (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
           (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {
@@ -898,7 +898,7 @@ SQL400 - for functions that call the SQLForeignKeys() CLI function,
 
                 rs.close ();
                 if ((getDriver() == JDTestDriver.DRIVER_JCC) || (getJdbcLevel() >= 4 ) ||
-                    (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V5R5M0) ||
+                    (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
                     (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                   assertCondition (rows == 0, "Expected 0 rows when schema had a pattern  ");
                 } else {
@@ -1045,7 +1045,7 @@ SQL400 - for functions that call the SQLForeignKeys() CLI function,
 
                 rs.close ();
                 if ((getDriver() == JDTestDriver.DRIVER_JCC) || (getJdbcLevel() >= 4 ) ||
-                    (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V5R5M0) ||
+                    (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
                     (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                   assertCondition (rows == 0, "Expected 0 rows when table had a pattern  ");
                 } else {
@@ -1092,7 +1092,7 @@ exactly.  All matching columns should be returned.
 **/
     public void Var020()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && !JDTestDriver.isLUW())
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && !JDTestDriver.isLUW())
         {
             try {
                 ResultSet rs = dmd_.getImportedKeys (catalog_,

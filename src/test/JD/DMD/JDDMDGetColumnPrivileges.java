@@ -167,7 +167,7 @@ Performs setup needed before running variations.
 	//@E2C.  When trying to get this to work, it would fail because the SQLCOLPRIVILEGES
         //       view does not work when the table contains only 1 column.  DB Issue 27810
         //
-        if((!JDTestDriver.isLUW())  && release >= JDTestDriver.RELEASE_V5R4M0){
+        if((!JDTestDriver.isLUW())  && release >= JDTestDriver.RELEASE_V7R1M0){
             s.executeUpdate ("CREATE TABLE "  + JDDMDTest.COLLECTION                         //@E1A
                 + ".LCNPRIVS (THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST INTEGER, C2 INTEGER)");  //@E1A
             s.executeUpdate("GRANT UPDATE(THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST) ON " + JDDMDTest.COLLECTION + ".LCNPRIVS TO QUSER");  /*@E2A*/
@@ -197,7 +197,7 @@ Performs setup needed before running variations.
         s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION2
             + ".CPRIVS");
         //@E1A
-        if((!JDTestDriver.isLUW()) && release >= JDTestDriver.RELEASE_V5R4M0){
+        if((!JDTestDriver.isLUW()) && release >= JDTestDriver.RELEASE_V7R1M0){
             s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION       //@E1A
                 + ".LCNPRIVS");                                         //@E1A
         }
@@ -931,7 +931,7 @@ there is a match.
                                                      "CPRIVS", null);
           }
             //@C0
-            if ((!isSysibmMetadata()) && (!(getRelease()>=JDTestDriver.RELEASE_V5R5M0)) && getDriver () == JDTestDriver.DRIVER_NATIVE)
+            if ((!isSysibmMetadata()) && (!(getRelease()>=JDTestDriver.RELEASE_V7R1M0)) && getDriver () == JDTestDriver.DRIVER_NATIVE)
             {
                 boolean check = rs.next();
                 String columnName = "NOT RETRIEVED";
@@ -1096,7 +1096,7 @@ there is a match.
       }
 
       // @C0
-      if ((!isSysibmMetadata()) && ((getRelease() < JDTestDriver.RELEASE_V5R5M0 )) && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
+      if ((!isSysibmMetadata()) && ((getRelease() < JDTestDriver.RELEASE_V7R1M0 )) && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
         boolean check = rs.next();
         String columnName="NOT RETRIEVED";
         if (check) {
@@ -1445,7 +1445,7 @@ columns should be returned.
     public void Var026()
     {
       StringBuffer sb = new StringBuffer();
-        if((!JDTestDriver.isLUW()) &&  getRelease() >= JDTestDriver.RELEASE_V5R4M0){
+        if((!JDTestDriver.isLUW()) &&  getRelease() >= JDTestDriver.RELEASE_V7R1M0){
             try {
                 String pattern = null;
                 //
@@ -2790,7 +2790,7 @@ columns should be returned.
             return;
         }
       StringBuffer sb = new StringBuffer();
-        if((!JDTestDriver.isLUW()) &&  getRelease() >= JDTestDriver.RELEASE_V5R4M0){
+        if((!JDTestDriver.isLUW()) &&  getRelease() >= JDTestDriver.RELEASE_V7R1M0){
             try {
                 String pattern = null;
                 //

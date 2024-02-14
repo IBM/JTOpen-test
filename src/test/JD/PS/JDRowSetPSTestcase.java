@@ -30,6 +30,7 @@ import test.JDPSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 
 import java.io.FileOutputStream;
@@ -96,8 +97,7 @@ Performs setup needed before running variations.
 
 
 	      // Set the root to a writable directory on AIX and Linux
-	      String osname = System.getProperty("os.name");
-	      if (osname.equals("AIX") || osname.equals("Linux")  || osname.equals("OS/400") ) {
+	      if (JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isLinux || JTOpenTestEnvironment.isAIX ) {
 
 		  System.setProperty("java.naming.provider.url", "file:///tmp");
 

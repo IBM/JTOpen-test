@@ -552,7 +552,7 @@ as VARCHAR, just like the type that comes back on JDRSMDGetColumnType.
             try {
                 String s = rsmd_.getColumnTypeName (rs_.findColumn ("C_DATALINK"));
 
-                if (isToolboxDriver() || (getRelease() >= JDTestDriver.RELEASE_V5R3M0 && isJDK14))
+                if (isToolboxDriver() || (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isJDK14))
                 {
                    assertCondition (s.equals ("DATALINK"));
                 } else {

@@ -347,7 +347,7 @@ addBatch() - Verify that addBatch() does NOT clear the warnings.
     {
         if (checkJdbc20 ()) {
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -363,7 +363,7 @@ addBatch() - Verify that addBatch() does NOT clear the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V5R2M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -846,7 +846,7 @@ executeBatch() - Verify that addBatch() clears the warnings.
     {
         if (checkJdbc20 ()) {
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                 Statement s = connection_.createStatement();
@@ -864,7 +864,7 @@ executeBatch() - Verify that addBatch() clears the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V5R2M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -1276,7 +1276,7 @@ addBatch() - Verify that addBatch() does NOT clear the warnings.
 		sb.append("-- added 9/23/2013 to test values with no parenthesis"); 
 
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -1292,7 +1292,7 @@ addBatch() - Verify that addBatch() does NOT clear the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V5R2M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -1794,7 +1794,7 @@ executeBatch() - Verify that addBatch() clears the warnings.
 		sb.append("-- added 9/23/2013 to test values with no parenthesis"); 
 
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                 Statement s = connection_.createStatement();
@@ -1812,7 +1812,7 @@ executeBatch() - Verify that addBatch() clears the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V5R2M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -2539,7 +2539,7 @@ executeLargeBatch() - Verify that addBatch() clears the warnings.
     {
         if (checkJdbc42 ()) {
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                 Statement s = connection_.createStatement();
@@ -2557,7 +2557,7 @@ executeLargeBatch() - Verify that addBatch() clears the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V5R2M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -3234,7 +3234,7 @@ executeLargeBatch() - Verify that addBatch() clears the warnings.
 		sb.append("-- added 9/23/2013 to test values with no parenthesis"); 
 
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V5R1M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
             {
                 try {
                 Statement s = connection_.createStatement();
@@ -3252,7 +3252,7 @@ executeLargeBatch() - Verify that addBatch() clears the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V5R2M0 )
+                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();

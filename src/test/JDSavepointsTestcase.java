@@ -1358,9 +1358,7 @@ commit()
 **/
     public void Var037 ()
     {
-	if (getRelease() <= JDTestDriver.RELEASE_V5R2M0) {
-	    notApplicable("Fix provided for V5R3, but not before"); 
-	} else { 
+	 { 
 
 	    boolean exceptionThrown = false; 
 	    boolean exceptionTested=false; 
@@ -1414,9 +1412,7 @@ commit()
 **/
     public void Var038 ()
     {
-	if (getRelease() <= JDTestDriver.RELEASE_V5R2M0) {
-	    notApplicable("Fix provided for V5R3, but not before"); 
-	} else { 
+	{ 
 
 	    boolean exceptionTested = false;
 	    boolean exceptionThrown = false; 
@@ -1471,9 +1467,7 @@ getSavepointId()
 **/
     public void Var039 ()
     {
-	if (getRelease() <= JDTestDriver.RELEASE_V5R2M0) {
-	    notApplicable("Fix provided for V5R3, but not before"); 
-	} else { 
+	{ 
 	    if(checkSavepointSupport())
 	    {
 		try

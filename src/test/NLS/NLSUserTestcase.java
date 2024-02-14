@@ -23,6 +23,7 @@ import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.User;
 import com.ibm.as400.access.UserList;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 /**
@@ -64,9 +65,7 @@ public class NLSUserTestcase extends Testcase
 
     // Determine operating system we're running under
     operatingSystem_ = System.getProperty("os.name");
-    if (operatingSystem_.indexOf("Windows") >= 0 ||
-        operatingSystem_.indexOf("DOS") >= 0 ||
-        operatingSystem_.indexOf("OS/2") >= 0)
+    if (JTOpenTestEnvironment.isWindows)
     {
       DOS_ = true;
     }

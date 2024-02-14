@@ -628,7 +628,6 @@ public class JDHandleDumpAnalyzer {
 		hda  = new JDHandleDumpAnalyzer(f);
 	    } else {
 		out.println("Querying job "+job+" using native JDBC driver");
-		Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
 		conn = DriverManager.getConnection("jdbc:db2://*local");
 
 		stmt = conn.createStatement();

@@ -106,19 +106,12 @@ Should throw an exception for <= V5R2
 		ResultSet rs = cs.executeQuery();
 		rs.beforeFirst();
 		rs.absolute(3);
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
 		    String name3 = rs.getString("LSTNAM").trim();
 		    rs.absolute(1);
 		    String name1 = rs.getString("LSTNAM").trim();
 		    assertCondition(name3.equals("Doe") && name1.equals("Abraham"), "name3 should be Doe but is " + name3 + ", name1 should be Abraham but is " + name1 + " Added by Toolbox 10/20/2003");
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	}
@@ -136,19 +129,12 @@ Should throw an exception if server is less than V5R3
 		ResultSet rs = cs.executeQuery();
 		rs.next();          //position to first row
 		rs.relative(3);
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
 		    String name3 = rs.getString("LSTNAM").trim();
 		    rs.relative(1);
 		    String name4 = rs.getString("LSTNAM").trim();
 		    assertCondition(name3.equals("Henning") && name4.equals("Johnson"), "name3 should be Henning but is " + name3 + ", name4 should be Johnson but is " + name4 + " Added by Toolbox 10/20/2003");
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -172,17 +158,10 @@ Should throw an exception if server is less than V5R3
 		rs.next();
 		String name2 = rs.getString("LSTNAM").trim();
 		rs.previous();
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
 		    String name3 = rs.getString("LSTNAM").trim();
 		    assertCondition(name3.trim().equals("Abraham") && name1.trim().equals("Abraham") && name2.trim().equals("Alison"), "name3 should be Abraham but is " + name3 + ", name1 should be Abraham but is " + name1 + ", name2 should be Alison but is " + name2 + " Added by Toolbox 10/20/2003");
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -204,19 +183,12 @@ Should throw an exception if server is less than V5R3
 		{
 		}
 		rs.previous();
-		if( ( isToolboxDriver() &&
-                      getRelease() < JDTestDriver.RELEASE_V5R3M0)
-                   || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R2M0)){ 
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
+
 		    String last = rs.getString("LSTNAM").trim();
 		    assertCondition(last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
-		}
+		
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -234,18 +206,11 @@ Should throw an exception if server is less than V5R3
 		CallableStatement cs = connection_.prepareCall("CALL " + JDSetupProcedure.STP_CSSRS, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet rs = cs.executeQuery();
 		rs.afterLast();
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
 		    rs.previous();
 		    String last = rs.getString("LSTNAM").trim();
 		    assertCondition(last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -262,19 +227,12 @@ Should throw an exception if server is less than V5R3
 		CallableStatement cs = connection_.prepareCall("CALL " + JDSetupProcedure.STP_CSSRS, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet rs = cs.executeQuery();
 		rs.absolute(12);
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
 		    rs.next();
 		    rs.previous();
 		    String last = rs.getString("LSTNAM").trim();
 		    assertCondition(last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -296,20 +254,11 @@ Should throw an exception if server is less than V5R3
 		}
 		while(rs.previous()){
 		}
-		if( ( isToolboxDriver() &&
-                      getRelease() < JDTestDriver.RELEASE_V5R3M0)
-                   || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R2M0)){ 
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
 		    rs.next();
 		    String first = rs.getString("LSTNAM").trim();
 		    assertCondition(first.equals("Abraham"), "first should be Abraham but is " + first + " Added by Toolbox 10/20/2003");
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -338,14 +287,9 @@ Should throw an exception for <= V5R2
 		    {
 			ResultSet rs1 = cs.getResultSet();
 			rs1.absolute(3);
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-			    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-			    failDone = true; 
-			} else { 
 			    name3 = rs1.getString("LSTNAM").trim();
 			    rs1.absolute(1);
 			    name1 = rs1.getString("LSTNAM").trim();
-			}
 			rs1.close();
 		    }
 		    rs.close();
@@ -355,9 +299,6 @@ Should throw an exception for <= V5R2
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -388,14 +329,9 @@ Should throw an exception if server is less than V5R3
 			ResultSet rs1 = cs.getResultSet();
 			rs1.next();          //position to first row
 			rs1.relative(3);
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-			    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-			    failDone=true; 
-			} else { 
 			    name3 = rs1.getString("LSTNAM").trim();
 			    rs1.relative(1);
 			    name4 = rs1.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -403,9 +339,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -440,12 +373,7 @@ Should throw an exception if server is less than V5R3
 			rs1.next();
 			name2 = rs1.getString("LSTNAM").trim();
 			rs1.previous();
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-			    failDone = true; 
-			    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003"+rs);
-			} else { 
 			    name3 = rs1.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -453,9 +381,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -486,15 +411,7 @@ Should throw an exception if server is less than V5R3
 			{
 			}
 			rs.previous();
-			if( ( isToolboxDriver() &&
-			      getRelease() < JDTestDriver.RELEASE_V5R3M0)
-			    || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R2M0)){ 
-
-			    failDone=true; 
-			    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003"+rs1);
-			} else { 
 			    last = rs.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -502,9 +419,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -532,13 +446,8 @@ Should throw an exception if server is less than V5R3
 		    {
 			ResultSet rs = cs.getResultSet();
 			rs.afterLast();
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-			    failDone=true; 
-			    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003"+rs1);
-			} else { 
 			    rs.previous();
 			    last = rs.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -546,9 +455,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -567,7 +473,6 @@ Should throw an exception if server is less than V5R3
 		String last = null;
 		boolean moreResults = false;
 		boolean results = cs.execute();
-		boolean failDone = false; 
 		if(results)
 		{
 		    ResultSet rs1 = cs.getResultSet();
@@ -576,24 +481,14 @@ Should throw an exception if server is less than V5R3
 		    {
 			ResultSet rs = cs.getResultSet();
 			rs.absolute(12);
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-			    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003"+rs1);
-			    failDone=true; 
-			} else { 
 			    rs.next();
 			    rs.previous();
 			    last = rs.getString("LSTNAM").trim();
-			}
 		    }
 		}
-		if (!failDone) {
 		    assertCondition(results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -625,15 +520,8 @@ Should throw an exception if server is less than V5R3
 			}
 			while(rs.previous()){
 			}
-			if( ( isToolboxDriver() &&
-			      getRelease() < JDTestDriver.RELEASE_V5R3M0)
-			    || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R2M0)){ 
-			    failDone=true; 
-			    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003"+rs1);
-			} else { 
 			    rs.next();
 			    first = rs.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -641,9 +529,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -805,19 +690,12 @@ Should throw an exception for <= V5R2
 		ResultSet rs = cs.executeQuery();
 		rs.beforeFirst();
 		rs.absolute(3);
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
 		    String name3 = rs.getString("LSTNAM").trim();
 		    rs.absolute(1);
 		    String name1 = rs.getString("LSTNAM").trim();
 		    assertCondition(name3.equals("Doe") && name1.equals("Abraham"), "name3 should be Doe but is " + name3 + ", name1 should be Abraham but is " + name1 + added); 
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception "+added);
 	    }
 	}
@@ -836,19 +714,12 @@ Should throw an exception if server is less than V5R3
 		ResultSet rs = cs.executeQuery();
 		rs.next();          //position to first row
 		rs.relative(3);
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-		    failed("Didn't throw SQLException - Added by Toolbox 10/20/2003");
-		} else { 
 		    String name3 = rs.getString("LSTNAM").trim();
 		    rs.relative(1);
 		    String name4 = rs.getString("LSTNAM").trim();
 		    assertCondition(name3.equals("Henning") && name4.equals("Johnson"), "name3 should be Henning but is " + name3 + ", name4 should be Johnson but is " + name4 + added); 
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -874,17 +745,10 @@ Should throw an exception if server is less than V5R3
 		rs.next();
 		String name2 = rs.getString("LSTNAM").trim();
 		rs.previous();
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-		    failed("Didn't throw SQLException -"+added); 
-		} else { 
 		    String name3 = rs.getString("LSTNAM").trim();
 		    assertCondition(name3.trim().equals("Abraham") && name1.trim().equals("Abraham") && name2.trim().equals("Alison"), "name3 should be Abraham but is " + name3 + ", name1 should be Abraham but is " + name1 + ", name2 should be Alison but is " + name2 + added); 
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -907,19 +771,10 @@ Should throw an exception if server is less than V5R3
 		{
 		}
 		rs.previous();
-		if( ( isToolboxDriver() &&
-		      getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R2M0)){ 
-		    failed("Didn't throw SQLException - "+added); 
-		} else { 
 		    String last = rs.getString("LSTNAM").trim();
 		    assertCondition(last.equals("Williams"), "last should be Williams but is " + last + added); 
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -938,18 +793,11 @@ Should throw an exception if server is less than V5R3
 		CallableStatement cs = connection_.prepareCall("CALL " + JDSetupProcedure.STP_CSSRS, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet rs = cs.executeQuery();
 		rs.afterLast();
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-		    failed("Didn't throw SQLException "+added); 
-		} else { 
 		    rs.previous();
 		    String last = rs.getString("LSTNAM").trim();
 		    assertCondition(last.equals("Williams"), "last should be Williams but is " + last + added); 
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -966,19 +814,12 @@ Should throw an exception if server is less than V5R3
 		CallableStatement cs = connection_.prepareCall("CALL " + JDSetupProcedure.STP_CSSRS, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet rs = cs.executeQuery();
 		rs.absolute(12);
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-		    failed("Didn't throw SQLException - "+added); 
-		} else { 
 		    rs.next();
 		    rs.previous();
 		    String last = rs.getString("LSTNAM").trim();
 		    assertCondition(last.equals("Williams"), "last should be Williams but is " + last + added); 
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -1000,20 +841,11 @@ Should throw an exception if server is less than V5R3
 		}
 		while(rs.previous()){
 		}
-		if( ( isToolboxDriver() &&
-		      getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R2M0)){ 
-		    failed("Didn't throw SQLException -"+added); 
-		} else { 
 		    rs.next();
 		    String first = rs.getString("LSTNAM").trim();
 		    assertCondition(first.equals("Abraham"), "first should be Abraham but is " + first + added); 
-		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -1043,14 +875,9 @@ Should throw an exception for <= V5R2
 		    {
 			ResultSet rs1 = cs.getResultSet();
 			rs1.absolute(3);
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-			    failed("Didn't throw SQLException "+added); 
-			    failDone = true; 
-			} else { 
 			    name3 = rs1.getString("LSTNAM").trim();
 			    rs1.absolute(1);
 			    name1 = rs1.getString("LSTNAM").trim();
-			}
 			rs1.close();
 		    }
 		    rs.close();
@@ -1060,9 +887,6 @@ Should throw an exception for <= V5R2
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -1094,14 +918,9 @@ Should throw an exception if server is less than V5R3
 			ResultSet rs1 = cs.getResultSet();
 			rs1.next();          //position to first row
 			rs1.relative(3);
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-			    failed("Didn't throw SQLException -"+added); 
-			    failDone=true; 
-			} else { 
 			    name3 = rs1.getString("LSTNAM").trim();
 			    rs1.relative(1);
 			    name4 = rs1.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -1109,9 +928,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -1147,12 +963,7 @@ Should throw an exception if server is less than V5R3
 			rs1.next();
 			name2 = rs1.getString("LSTNAM").trim();
 			rs1.previous();
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-			    failDone = true; 
-			    failed("Didn't throw SQLException " +added+rs);
-			} else { 
 			    name3 = rs1.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -1160,9 +971,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -1194,15 +1002,7 @@ Should throw an exception if server is less than V5R3
 			{
 			}
 			rs.previous();
-			if( ( isToolboxDriver() &&
-			      getRelease() < JDTestDriver.RELEASE_V5R3M0)
-			    || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R2M0)){ 
-
-			    failDone=true; 
-			    failed("Didn't throw SQLException "+added+rs1);
-			} else { 
 			    last = rs.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -1210,9 +1010,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception "+added); 
 	    }
 	} 
@@ -1241,13 +1038,8 @@ Should throw an exception if server is less than V5R3
 		    {
 			ResultSet rs = cs.getResultSet();
 			rs.afterLast();
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {
-			    failDone=true; 
-			    failed("Didn't throw SQLException "+added+rs1);
-			} else { 
 			    rs.previous();
 			    last = rs.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -1255,9 +1047,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
 	    }
 	} 
@@ -1286,14 +1075,9 @@ Should throw an exception if server is less than V5R3
 		    {
 			ResultSet rs = cs.getResultSet();
 			rs.absolute(12);
-			if(getRelease() < JDTestDriver.RELEASE_V5R3M0) { 
-			    failed("Didn't throw SQLException "+added+rs1);
-			    failDone=true; 
-			} else { 
 			    rs.next();
 			    rs.previous();
 			    last = rs.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) {
@@ -1301,9 +1085,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 
@@ -1336,15 +1117,8 @@ Should throw an exception if server is less than V5R3
 			}
 			while(rs.previous()){
 			}
-			if( ( isToolboxDriver() &&
-			      getRelease() < JDTestDriver.RELEASE_V5R3M0)
-			    || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R2M0)){ 
-			    failDone=true; 
-			    failed("Didn't throw SQLException "+added+rs1);
-			} else { 
 			    rs.next();
 			    first = rs.getString("LSTNAM").trim();
-			}
 		    }
 		}
 		if (!failDone) { 
@@ -1352,9 +1126,6 @@ Should throw an exception if server is less than V5R3
 		}
 	    }
 	    catch (Exception e) {
-		if(getRelease() < JDTestDriver.RELEASE_V5R3M0)
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		else
 		    failed (e, "Unexpected Exception - "+added); 
 	    }
 	} 

@@ -37,24 +37,19 @@ public class CmdTest extends TestDriver
     public static boolean assumeCommandsThreadSafe_ = false;
 
     // Determine if testcase is running on an iSeries server.
-    static
-    {
-        try
-        {
-            String s = System.getProperty("os.name");
-            if (s != null && s.equalsIgnoreCase("OS/400"))
-            {
-                onAS400_ = true;
-                s = SystemProperties.getProperty(SystemProperties.COMMANDCALL_THREADSAFE);
-                if (s != null && s.equals("true"))
-                {
-                    assumeCommandsThreadSafe_ = true;
-                }
-            }
+    static {
+      try {
+
+        onAS400_ = JTOpenTestEnvironment.isOS400;
+        if (onAS400_) {
+          String s = SystemProperties.getProperty(SystemProperties.COMMANDCALL_THREADSAFE);
+          if (s != null && s.equals("true")) {
+            assumeCommandsThreadSafe_ = true;
+          }
         }
-        catch (SecurityException e)
-        {
-        }
+
+      } catch (SecurityException e) {
+      }
     }
 
     /**

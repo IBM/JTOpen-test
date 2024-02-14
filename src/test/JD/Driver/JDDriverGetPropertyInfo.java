@@ -31,6 +31,7 @@ import com.ibm.as400.access.AS400;
 
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 
 import java.beans.BeanInfo;
@@ -240,8 +241,8 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
    **/
   public void Var006() {
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-        && getRelease() == JDTestDriver.RELEASE_V5R4M0
-        && "OS/400".equals(System.getProperty("os.name"))) {
+        && getRelease() == JDTestDriver.RELEASE_V7R1M0
+        && JTOpenTestEnvironment.isOS400) {
       notApplicable("Toolbox on V5R4 on OS/400 not working");
       return;
     }
@@ -264,8 +265,8 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
    **/
   public void Var007() {
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-        && getRelease() == JDTestDriver.RELEASE_V5R4M0
-        && "OS/400".equals(System.getProperty("os.name"))) {
+        && getRelease() == JDTestDriver.RELEASE_V7R1M0
+        && JTOpenTestEnvironment.isOS400) {
       notApplicable("Toolbox on V5R4 on OS/400 not working");
       return;
     }

@@ -355,7 +355,7 @@ extends JDTestcase
                     queryStart = System.currentTimeMillis();   
                     //@C1D s.executeQuery (slow_);
                     //33923 - v5r5 optimizer is smarter...
-                    if   (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+                    if   (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                         s.executeQuery (query +  " optimize for all rows"); 
                     } else { 
                         s.executeQuery (query );    //@C1A@F1C
@@ -728,7 +728,7 @@ extends JDTestcase
                     queryStart = System.currentTimeMillis();   
                     //@C1D s.executeQuery (slow_);
                     //33923 - v5r5 optimizer is smarter...
-                    if   (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+                    if   (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                         s.executeQuery (query +  " optimize for all rows"); 
                     } else { 
                         s.executeQuery (query );    //@C1A@F1C

@@ -428,7 +428,7 @@ getBlob() - getBlob on a type registered as BLOB, INOUT BINARY(20)
     {
 	String info = " -- Updated 01/03/2012 for native driver"; 
 	if (checkJdbc20()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {         //BINARY is valid for V5r3 or higher	
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {         //BINARY is valid for V5r3 or higher	
 		try{
 
 		    byte [] p = {(byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) (10)};
@@ -466,7 +466,7 @@ getBlob() - getBlob on a type registered as BLOB, INOUT VARBINARY(20)
     {
 	String info = " -- Updated 01/03/2012 for native driver"; 
 	if (checkJdbc20()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 	    //VARBINARY is valid for V5R3 or greater
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 	    //VARBINARY is valid for V5R3 or greater
 		try{
 
 		    byte [] p = {(byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) (10)};

@@ -165,7 +165,7 @@ Performs setup needed before running variations.
 	}
 
 
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && !JDTestDriver.isLUW()){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && !JDTestDriver.isLUW()){
             s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION     //@C1A
                          + ".LCNPK1 (THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST INTEGER NOT NULL PRIMARY KEY, COL2 INTEGER)");
         }
@@ -217,7 +217,7 @@ Performs cleanup needed after running variations.
             + ".PK2");
         s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION2
             + ".PK1");
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
             s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION //@C1A
                          + ".LCNPK1");
         }
@@ -458,7 +458,7 @@ getPrimaryKeys() - Specify "localhost" for the catalog.
     public void Var007()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4 ||
-          (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V5R5M0) ||
+          (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
           (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {
@@ -649,7 +649,7 @@ JDBC40 -- The JDBC spec states that the schema parameter is not a pattern.
 **/
   public void Var013() {
     if ((JDTestDriver.isLUW() || (getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||    //@C2C Do not execute if Toolbox driver
-        (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V5R5M0) ||
+        (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
         (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
       try {
         ResultSet rs = dmd_.getPrimaryKeys(connection_.getCatalog(),
@@ -818,7 +818,7 @@ JDBC40 - The javadoc states that the table must match the table name as
 **/
   public void Var018() {
     if (JDTestDriver.isLUW() || (getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) || //@C2C Do not execute if Toolbox driver
-        (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V5R5M0) ||
+        (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
         (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
       try {
         ResultSet rs = dmd_.getPrimaryKeys(connection_.getCatalog(),
@@ -889,7 +889,7 @@ getPrimaryKeys() - Verify you can retrieve a 128 byte column name.
 **/
     public void Var020()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && !JDTestDriver.isLUW()){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && !JDTestDriver.isLUW()){
             try {
                 ResultSet rs = dmd_.getPrimaryKeys (null, JDDMDTest.COLLECTION,
                     "LCNPK1");

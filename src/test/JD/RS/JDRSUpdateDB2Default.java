@@ -232,7 +232,7 @@ closed.
 **/
     public void Var001()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -265,7 +265,7 @@ not updatable.
 **/
     public void Var002()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -297,7 +297,7 @@ to a row.
 **/
     public void Var003()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -325,7 +325,7 @@ is an invalid index.
 **/
     public void Var004()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -353,7 +353,7 @@ is 0.
 **/
     public void Var005()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -380,7 +380,7 @@ is -1.
 **/
     public void Var006()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -406,7 +406,7 @@ updateDB2Default() - Should work when the column index is valid.
 **/
     public void Var007()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -443,7 +443,7 @@ name is null.
     {
       
       
-      if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+      if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
         notApplicable("v5r5 variation");
         return;
       }
@@ -474,7 +474,7 @@ name is an empty string.
 **/
     public void Var009()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -501,7 +501,7 @@ name is invalid.
 **/
     public void Var010()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -528,7 +528,7 @@ updateDB2Default() - Should work when the column name is valid.
 **/
     public void Var011()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -566,7 +566,7 @@ been issued and cursor has been repositioned.
 **/
     public void Var012()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -599,7 +599,7 @@ row.
 **/
     public void Var013()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -633,7 +633,7 @@ updateDB2Default() - Should throw an exception on a deleted row.
 **/
     public void Var014()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -686,7 +686,7 @@ updateDB2Default() - Should throw an exception on a deleted row.
     
 
     public void updateTest(String columnName, String expected ) {
-      if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+      if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
         notApplicable("v5r5 variation");
         return;
       }

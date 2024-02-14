@@ -107,7 +107,7 @@ public class JTATransaction extends JTATestcase {
      */
   
     public void Var001() {
-        if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
             notApplicable("v5r4 or higher");
             return;
         }
@@ -216,7 +216,7 @@ public class JTATransaction extends JTATestcase {
      * Since Loosely Coupled option is off, this variation should get exception
      */
     public void Var002() {
-        if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
             notApplicable("v5r4 or higher");
             return;
         }
@@ -326,7 +326,7 @@ public class JTATransaction extends JTATestcase {
      */
     
     public void Var003() {
-        if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
             notApplicable("v5r4 or higher");
             return;
         }
@@ -436,7 +436,7 @@ public class JTATransaction extends JTATestcase {
      * Since Loosely Coupled option is off, this variation should get exception
      */
     public void Var004() {
-        if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
             notApplicable("v5r4 or higher");
             return;
         }
@@ -543,7 +543,7 @@ public class JTATransaction extends JTATestcase {
   
 
     public void Var005() {
-        if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
             notApplicable("v5r4 or higher");
             return;
         }
@@ -652,7 +652,7 @@ public class JTATransaction extends JTATestcase {
      * Since Loosely Coupled option is off, this variation should get exception
      */
     public void Var006() {
-        if (getRelease() < JDTestDriver.RELEASE_V5R4M0) {
+        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
             notApplicable("v5r4 or higher");
             return;
         }

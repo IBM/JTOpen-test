@@ -299,8 +299,7 @@ getTypeMap() - Throws an exception, not supported.
 **/
     public void Var007() {
         if (checkJdbc20 ()) {
-	    if ((getDriver () == JDTestDriver.DRIVER_NATIVE) &&
-		( getRelease() >=  JDTestDriver.RELEASE_V5R4M0)) {
+	    if ((getDriver () == JDTestDriver.DRIVER_NATIVE) ) {
 		try {
 		    java.util.Map map = connection_.getTypeMap ();
 		    System.out.println("passed "+map);
@@ -413,7 +412,7 @@ SQL400 - The Native JDBC driver has changed so that it will
 getServerJobName - Returns the name of the server job
 **/
     public void Var011() {
-	if ((getRelease() >= JDTestDriver.RELEASE_V5R3M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE)) {
 
 	    try {
 
@@ -441,7 +440,7 @@ getConnection -- test with an invalid subprotocol, db2j should not allow a succe
                  uses equal instead of startsWith to check the subprotocol
 **/
     public void Var012() {
-	if ((getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+	{
 	    try{
 		String url = "jdbc:db2j:localhost;user=BOGUS;password=XXXX" ;
 		Connection tempConn = DriverManager.getConnection(url);
@@ -454,9 +453,7 @@ getConnection -- test with an invalid subprotocol, db2j should not allow a succe
           assertExceptionIs(e, expectedClassName, expectedDetail);
   		      
 	    }
-	} else {
-	    notApplicable("V5R3 Native driver variation -- naive add 3/3/2004");
-	}
+	} 
     }
 
 
@@ -474,7 +471,7 @@ getConnection -- test the query optimize goal property
     // via the output of the Database Performance Monitor output.  @H2A
     public void Var013() {
       String added="-- added 01/19/2005 by native driver";
-      if ((getRelease() >= JDTestDriver.RELEASE_V5R4M0)) {
+       {
         Connection connQOpt2 = null;
         Connection connOpt = null;
         Statement stmt = null ;
@@ -492,7 +489,6 @@ getConnection -- test the query optimize goal property
               "qsys2.systriggers"
           } ;
 */
-          Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
           // Change to use pwrUID_ because QCMDEXC needs it later.
           connQOpt2    = testDriver_.getConnection (baseURL_+";query optimize goal=2", pwrSysUserID_, pwrSysEncryptedPassword_); //@H2C
           connOpt = testDriver_.getConnection (baseURL_+";query optimize goal=1", pwrSysUserID_, pwrSysEncryptedPassword_); //@H2C
@@ -613,9 +609,7 @@ getConnection -- test the query optimize goal property
         } catch(Exception e){
           failed(e, "unexpectedException "+added);
         }
-      } else {
-        notApplicable("V5R4 query optimize goal variation "+added);
-      }
+      } 
     }
 
 

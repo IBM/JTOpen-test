@@ -106,7 +106,7 @@ Performs setup needed before running variations.
 	// Create and add the mapping function for UDTs
 	//
 	if ( (getDriver()  == JDTestDriver.DRIVER_NATIVE) &&
-	     (getRelease() >= JDTestDriver.RELEASE_V5R3M0)) {
+	     (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
 	    canRun=true; 
 	    map_ = connection_.getTypeMap();
 	    // SSN is a CHAR(9) 
@@ -1075,10 +1075,10 @@ NOTE: This really shouldn't be an issue as all datalinks on the AS/400 are http-
 		    JDRSTest.position0 (rs, "LOB_FULL");
 		    Object o = rs.getObject ("C_DATALINK",map_);
 		//Native driver will return datalinks as strings until v5r3.
-		    if ( (getJdbcLevel() < 3) || ( getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R3M0))
-			assertCondition ((o instanceof String) && (o.toString().equalsIgnoreCase("http://schuman.rchland.ibm.com/help.html")));
+		    if ( (getJdbcLevel() < 3) || ( getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V7R1M0))
+			assertCondition ((o instanceof String) && (o.toString().equalsIgnoreCase("https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt")));
 		    else
-			assertCondition ((o instanceof java.net.URL) && (o.toString().equalsIgnoreCase("http://schuman.rchland.ibm.com/help.html")));
+			assertCondition ((o instanceof java.net.URL) && (o.toString().equalsIgnoreCase("https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt")));
 
 		} catch (Exception e) {
 		    failed (e, "Unexpected Exception");

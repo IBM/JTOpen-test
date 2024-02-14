@@ -591,7 +591,7 @@ objects in prior releases.
                String s = rsmd_.getColumnClassName (rs_.findColumn ("C_DATALINK"));
                if(isToolboxDriver())
                    failed("Didn't throw exception");
-               else if ((getRelease() < JDTestDriver.RELEASE_V5R3M0) || !isJDK14 ) // @E1a
+               else if ((getRelease() < JDTestDriver.RELEASE_V7R1M0) || !isJDK14 ) // @E1a
                    assertCondition (s.equals ("java.lang.String"));
                else                                             // @E1a
                    assertCondition (s.equals ("java.net.URL"));          // @E1a

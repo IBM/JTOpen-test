@@ -918,7 +918,7 @@ regardless of what they are set to.
 		ResultSet rs = statement.executeQuery ("CALL " + JDSetupProcedure.STP_RS1S);
 		int type = rs.getType ();
 		int firstFetch = -1, secondFetch = -2;
-		if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {                   /* @D2A */
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {                   /* @D2A */
 		    // verify that the cursor is scrollable                          /* @D2A */
 		    rs.first();
 		    firstFetch = rs.getInt("CUSNUM");
@@ -928,9 +928,9 @@ regardless of what they are set to.
 		}                                                                    /* @D2A */
 		rs.close ();
 		statement.close ();
-        if(getRelease() < JDTestDriver.RELEASE_V5R3M0) {                                                  //@D1A
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {                                                  //@D1A
             assertCondition (type == ResultSet.TYPE_FORWARD_ONLY);
-        } else if(getRelease() <= JDTestDriver.RELEASE_V5R4M0) { //@pda                                                                                             //@D1A
+        } else if(getRelease() <= JDTestDriver.RELEASE_V7R1M0) { //@pda                                                                                             //@D1A
             assertCondition (type == ResultSet.TYPE_SCROLL_INSENSITIVE && firstFetch == secondFetch, "Type is "+type+" instead of TYPE_SCROLL_INSENSITIVE or firstFetch("+firstFetch+") != secondFetch("+secondFetch+") Added by Toolbox 11/18/2003"); ///@D1A
         } else {                                                                                             
             assertCondition ( ((type == ResultSet.TYPE_SCROLL_SENSITIVE) || (type == ResultSet.TYPE_SCROLL_INSENSITIVE)) && firstFetch == secondFetch, "Type is "+type+" instead of TYPE_SCROLL_INSENSITIVE or firstFetch("+firstFetch+") != secondFetch("+secondFetch+") Added by Toolbox 05/31/2007"); //@pda //get from sp definition, which is assensitive by default
@@ -1164,7 +1164,7 @@ even though it is declared to be. @D2A
     {
 	String command=""; 
 	if (checkJdbc20 ()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {                   /* @D2A */
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {                   /* @D2A */
 		try {
 		    String collection = collection_;
 		    if (collection == null) {
@@ -1314,7 +1314,7 @@ call JDTESTSTP.JDRSMISC43
     {
 	String command=""; 
 	if (checkJdbc20 ()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {                   /* @D2A */
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {                   /* @D2A */
 		try {
 		    String collection = collection_;
 		    if (collection == null) {
@@ -1568,7 +1568,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var049() {
 	String added = " -- Added 03/01/2007";
-	if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+	if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
 	    try { 
 		String procedureName = collection_+".JDRSMISC49";
                 if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
@@ -1617,7 +1617,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var050() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
           String sql = ""; 
             try { 
                 String procedureName = collection_+".JDRSMISC50";
@@ -1694,7 +1694,7 @@ call JDTESTSTP.JDRSMISC43
     public void Var051() {
       String added = " -- Added 03/01/2007";
       if (checkJdbc40()) {
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
           String sql = ""; 
           try { 
             String procedureName = collection_+".JDRSMISC51";
@@ -1777,7 +1777,7 @@ call JDTESTSTP.JDRSMISC43
     public void Var052() {
       String added = " -- Added 03/01/2007";
       if (checkJdbc40()) {
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
           String sql = ""; 
           try { 
             String procedureName = collection_+".JDRSMISC52";
@@ -1860,7 +1860,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var053() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+".JDRSMISC53";
                 if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
@@ -1920,7 +1920,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var054() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+".JDRSMISC53";
                 if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
@@ -1980,7 +1980,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var055() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+".JDRSMISC53";
                 if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
@@ -2039,7 +2039,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var056() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+".JDRSMISC54";
                 int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
@@ -2096,7 +2096,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var057() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+".JDRSMISC54";
                 int    expectedType = ResultSet.TYPE_SCROLL_INSENSITIVE;
@@ -2152,7 +2152,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var058() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+".JDRSMISC54";
 		            int    expectedType = ResultSet.TYPE_SCROLL_INSENSITIVE;
@@ -2211,7 +2211,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var059() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+".JDRSMISC55";
                 if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
@@ -2272,7 +2272,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var060() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+".JDRSMISC55";
                 if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
@@ -2332,7 +2332,7 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var061() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try { 
                 String procedureName = collection_+"JDRSMISC55";
                 // Use JDTESTRS for colleciton as collecion might not exist for user
@@ -2399,7 +2399,7 @@ call JDTESTSTP.JDRSMISC43
             return; 
         }
         String added = " -- Added 04/30/2007 Bug fixed by native driver SE28737 SI27438(V5R3) ???(V5R4) ";
-        if (getRelease() >=   JDTestDriver.RELEASE_V5R3M0) {
+        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
             try {
                 int runIterations = 20000; 
                 int iteration = 0;
@@ -2597,7 +2597,7 @@ call JDTESTSTP.JDRSMISC43
 
 		    rs.close ();
 		    statement.close ();
-		    if (getRelease() <= JDTestDriver.RELEASE_V5R4M0)  {
+		    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
                         // Last changed 2/23/2010 for java test.JDRunit 543CN JDRSMisc                        
 			assertCondition (type == ResultSet.TYPE_SCROLL_SENSITIVE, "type is "+type+" Driver is V5R4 or less"); //same that creatStatement()
 		    } else { 
@@ -2683,7 +2683,7 @@ call JDTESTSTP.JDRSMISC43
 		    rs.close ();
 		    statement.close ();
 
-		    if (getRelease() <= JDTestDriver.RELEASE_V5R4M0)       
+		    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)       
 			assertCondition (hold == ResultSet.CLOSE_CURSORS_AT_COMMIT); //conn3 is not holdable
 		    else
 			assertCondition (hold == ResultSet.HOLD_CURSORS_OVER_COMMIT); //from STP_RS1WH
@@ -2711,7 +2711,7 @@ call JDTESTSTP.JDRSMISC43
 		    int hold = JDReflectionUtil.callMethod_I(rs, "getHoldability");
 		    rs.close ();
 		    statement.close ();
-		    if (getRelease() <= JDTestDriver.RELEASE_V5R4M0)       
+		    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)       
 			    assertCondition (hold == ResultSet.HOLD_CURSORS_OVER_COMMIT); //conn2 is holdable
 		    else if(getRelease() >=   JDTestDriver.RELEASE_V7R1M0)
 			assertCondition (hold == ResultSet.HOLD_CURSORS_OVER_COMMIT, "hold="+hold+" expected HOLD_CURSORS_OVER_COMMIT -- V7R1 *none - (needs hostserver support)");

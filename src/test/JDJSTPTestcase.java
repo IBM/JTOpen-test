@@ -104,9 +104,6 @@ extends JDTestcase
     
 
     static boolean usePase = false; 
-    static boolean isWindows = false; 
-    static String cygwinBase = "C:\\etlocalinst\\cygwin";
-
 
 /**
 Constructor.
@@ -289,7 +286,7 @@ Constructor.
     static String hostname =null; 
     static boolean clientSameAsServer = false;
 
-    static String nativeBaseDir = "/home/jdbctest3.NOLIB"; 
+    static String nativeBaseDir = JTOpenTestEnvironment.testcaseHomeDirectory+"3.NOLIB"; 
     static String funcpath = "/QIBM/UserData/OS400/SQLLib/Function";
     static String library = "NOLIB";
 
@@ -330,7 +327,6 @@ Constructor.
      **/
   static {
 
-    isWindows = System.getProperty("os.name").indexOf("Windows") >= 0;
 
     pathSep = System.getProperty("path.separator").trim();
     String sepString = System.getProperty("file.separator");
@@ -353,9 +349,6 @@ Constructor.
     disconnectSTP = System.getProperty("JDJSTP.disconnectSTP");
 
     try {
-      int jdk = JVMInfo.getJDK();
-
-      jdk13 = true;
 
       String osVersion = System.getProperty("os.version");
       if (osVersion == null)
@@ -429,11 +422,8 @@ Constructor.
     //
     try {
       nativeClient = false;
-      propertyString = System.getProperty("os.name");
-      if (propertyString != null) {
-        if (propertyString.equals("OS/400")) {
-          nativeClient = true;
-        }
+      if (JTOpenTestEnvironment.isOS400) {
+        nativeClient = true;
       }
     } catch (Exception dontCare) {
     }
@@ -704,7 +694,7 @@ Constructor.
     public static void setLibrary(String setLibrary) {
        if (debug) System.out.println("JDJSTP.debug: Setting library = "+setLibrary); 
        library = setLibrary;
-       nativeBaseDir = "/home/jdbctest3."+library; 
+       nativeBaseDir = JTOpenTestEnvironment.testcaseHomeDirectory+"3."+library; 
 
        // 
        // Make sure that the directory if newer than the library, if not then delete the 
@@ -1754,8 +1744,8 @@ Constructor.
 				//
 				// Copy to location
 				//
-				if (isWindows) {
-					javaRunPath = cygwinBase + sep + nativeBaseDir.replace('/', '\\') + sep + sourcepath;
+				if (JTOpenTestEnvironment.isWindows) {
+					javaRunPath = JTOpenTestEnvironment.cygwinBase + sep + nativeBaseDir.replace('/', '\\') + sep + sourcepath;
 				} else if (usePase) {
 					javaRunPath = "/QOpenSys" + nativeBaseDir + "/" + sourcepath;
 				} else {
@@ -1815,7 +1805,7 @@ Constructor.
 					String base = javaSource.substring(0, javaSource.lastIndexOf(".c"));
 					String upperBase = base.toUpperCase();
 
-					if (isWindows) {
+					if (JTOpenTestEnvironment.isWindows) {
 						// Compile if CYGWIN
 						System.out.println("compiling on windows");
 
@@ -2095,8 +2085,7 @@ Constructor.
 
 
 
-	     String osname = System.getProperty("os.name");
-	     if (osname.equals("AIX") ) {
+	     if (JTOpenTestEnvironment.isAIX ) {
 		 String[] commands = new String[4];
 		 commands[0] = "/bin/sh";
 		 commands[1] = "-t"; 
@@ -2107,7 +2096,7 @@ Constructor.
 						" c[2]="+commands[2]+
 						" c[3]="+commands[3]);
 		 process = runtime.exec(commands); 
-             } else if (isWindows ) {
+             } else if (JTOpenTestEnvironment.isWindows ) {
                  if (debug) System.out.println("JDJSTP.debug: running on Windows");
 		 // System.out.println("user.dir is " + System.getProperty("user.dir"));
 		 // System.out.println("env PATH is "+System.getenv("PATH")); 
@@ -2126,7 +2115,7 @@ Constructor.
 		 }
                  process = runtime.exec(commands); 
 
-             } else if (osname.indexOf("Linux") >= 0 ) {
+             } else if (JTOpenTestEnvironment.isLinux ) {
                  if (debug) System.out.println("JDJSTP.debug: running on Linux");
 		 // System.out.println("user.dir is " + System.getProperty("user.dir"));
 		 // System.out.println("env PATH is "+System.getenv("PATH")); 
@@ -5420,8 +5409,8 @@ Constructor.
 
 	}
       } else {
-		String osname = System.getProperty("os.name");
-        if (osname.indexOf("Windows") >= 0) {
+		
+        if (JTOpenTestEnvironment.isWindows) {
           // Must escape classpath on windows
           // on 3/14/2011 change from " to ' to surround classpath
           if (jdk <= JVMInfo.JDK_15) {
@@ -5923,8 +5912,7 @@ Constructor.
 		} 
 
 	    } else {
-		String osname = System.getProperty("os.name");
-		if (osname.indexOf("Windows") >= 0 ) {
+		if (JTOpenTestEnvironment.isWindows ) {
 		    // Windows is run through a shell so we need to escape the pathSep (;)
 		    // If JDBC 4.0 and later use the java6 version of the jar
 		    // 
@@ -6020,7 +6008,7 @@ Constructor.
 
 		} else { 
                   
-                  if (System.getProperty("os.name").indexOf("Windows") >= 0) {
+                  if (JTOpenTestEnvironment.isWindows) {
                         command =  nativeBaseDir+"/"+sourcepath+"/"+testbase+" "+variation + " "+arg2;
                         if (debug) {
                             System.out.println("JDJSTP.debug:    .....................................");
@@ -6089,8 +6077,7 @@ Constructor.
         //
         String output = "/tmp/"+testbase+".rxp";
         
-        String osName = System.getProperty("os.name"); 
-        if (osName.indexOf("Windows") >= 0) {
+        if (JTOpenTestEnvironment.isWindows) {
           output = "C:"+output.replace("/","\\"); 
         }
         //

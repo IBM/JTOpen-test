@@ -394,7 +394,7 @@ setCursorName()/getCursorName() - Set a 128 character cursor name
     public void Var010 ()
     {
 	String added = " -- Added 06/21/06 by native driver to test for longer cursor names"; 
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    String longCursorName="LONGNAME101234567892123456789312345678941234567895123456789612345678971234567898123456789912345678901234567891123456789212345678"; 
 	    try {
 		Statement s = connection_.createStatement ();
@@ -423,7 +423,7 @@ FOR UPDATE OF.
     public void Var011()
     {
 	String added = " -- Added 06/21/06 by native driver to test for longer cursor names"; 
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    String longCursorName="LONGNAME111234567892123456789312345678941234567895123456789612345678971234567898123456789912345678901234567891123456789212345678"; 
 
 	    try {
@@ -461,7 +461,7 @@ FOR UPDATE.
     public void Var012()
     {
 	String added = " -- Added 06/21/06 by native driver to test for longer cursor names"; 
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    String longCursorName="LONGNAME121234567892123456789312345678941234567895123456789612345678971234567898123456789912345678901234567891123456789212345678"; 
 
 	    try {
@@ -500,7 +500,7 @@ SQ attempts to open the cursor at the same time.
     public void Var013()
     {
 	String added = " -- Added 06/21/06 by native driver to test for longer cursor names"; 
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    String longCursorName="LONGNAME131234567892123456789312345678941234567895123456789612345678971234567898123456789912345678901234567891123456789212345678"; 
 
 	    try {
@@ -541,7 +541,7 @@ SQ attempts to open the cursor at the same time.
     public void Var014()
     {
 	String added = " -- Added 08/31/06 by toolbox driver to test for longer cursor names"; 
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    String longCursorName="LONGNAME1312345678921234567893123456789412345678951234567896123456789712345678981234567899123456789012345678911234567892123456789000"; 
 
 	    try {
@@ -585,7 +585,7 @@ SQ attempts to open the cursor at the same time.
  */
     public void Var015() {
 
-	if (getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
+	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("V6R1 and latest testcase");
 	    return;
 	}
@@ -634,7 +634,7 @@ SQ attempts to open the cursor at the same time.
 
     public void Var016() {
 
-	if (getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
+	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("V6R1 and latest testcase");
 	    return;
 	}

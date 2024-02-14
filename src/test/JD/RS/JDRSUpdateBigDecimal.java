@@ -1704,12 +1704,12 @@ This is ok.
                     else if (jdk_ <= JVMInfo.JDK_142) {
                         expectedValue = "0.0000001700";
                     }else if ( isJdbc40()) {
-                        if ((getRelease() == JDTestDriver.RELEASE_V5R4M0) &&
+                        if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
                                 (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
                             // In V5R4 the native driver still returns the old value 
                             expectedValue = "0.0000001700";
                         } else {
-                            if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) && (jdk_ >= JVMInfo.JDK_16  )) {
+                            if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (jdk_ >= JVMInfo.JDK_16  )) {
                                 expectedValue = "0.0000001700";
                             } else { 
                                 expectedValue = "1.700E-7";
@@ -1829,12 +1829,12 @@ This is ok.
                     else if (jdk_ <= JVMInfo.JDK_142) {
                         expectedValue = "0.0000001700";
                     }else if(isJdbc40()) {
-                        if ((getRelease() == JDTestDriver.RELEASE_V5R4M0) &&
+                        if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
                                 (getDriver() == JDTestDriver.DRIVER_NATIVE))  {
                             // In V5R4, the native driver returns the other value
                             expectedValue = "0.0000001700"; 
                         } else {
-                            if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) && (jdk_ >= JVMInfo.JDK_16  )) {
+                            if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (jdk_ >= JVMInfo.JDK_16  )) {
                                 expectedValue = "0.0000001700";
                             } else { 
                                 expectedValue = "1.700E-7";
@@ -3023,12 +3023,12 @@ This is ok.
                     else if (jdk_ <= JVMInfo.JDK_142) {
                         expectedValue = "0,0000001700";
                     }else if ( isJdbc40()) {
-                        if ((getRelease() == JDTestDriver.RELEASE_V5R4M0) &&
+                        if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
                                 (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
                             // In V5R4 the native driver still returns the old value 
                             expectedValue = "0,0000001700";
                         } else {
-                            if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) && (jdk_ >= JVMInfo.JDK_16 )) {
+                            if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (jdk_ >= JVMInfo.JDK_16 )) {
                                 expectedValue = "0,0000001700";
                             } else { 
                                 expectedValue = "1.700E-7";
@@ -3147,12 +3147,12 @@ This is ok.
                     else if (jdk_ <= JVMInfo.JDK_142) {
                         expectedValue = "0,0000001700";
                     }else if(isJdbc40()) {
-                        if ((getRelease() == JDTestDriver.RELEASE_V5R4M0) &&
+                        if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
                                 (getDriver() == JDTestDriver.DRIVER_NATIVE))  {
                             // In V5R4, the native driver returns the other value
                             expectedValue = "0,0000001700"; 
                         } else {
-                            if ((getRelease() >= JDTestDriver.RELEASE_V5R5M0) && (jdk_ >= JVMInfo.JDK_16  )) {
+                            if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (jdk_ >= JVMInfo.JDK_16  )) {
                                 expectedValue = "0,0000001700";
                             } else { 
                                 expectedValue = "1.700E-7";

@@ -343,22 +343,19 @@ Creates the testcases.
 
 
 
-	if (getDriver() != JDTestDriver.DRIVER_NATIVE || getRelease() >=  JDTestDriver.RELEASE_V5R2M0) {	
-
 	    addTestcase (new JDTableName (systemObject_,
 					  namesAndVars_, runMode_, fileOutputStream_, 
 					  password_));
-	}
+	
         addTestcase (new JDStatementPackageCache (systemObject_,
             namesAndVars_, runMode_, fileOutputStream_, 
             password_, pwrSysUserID_, pwrSysPassword_));
 
-	if (getDriver() != JDTestDriver.DRIVER_NATIVE || getRelease() >=  JDTestDriver.RELEASE_V5R1M0) {	
-
+	
 	    addTestcase (new JDScalarFunctions (systemObject_,
 						namesAndVars_, runMode_, fileOutputStream_, 
 						password_));
-	}
+	
 
 
         addTestcase (new JDStatementWrapper (systemObject_,

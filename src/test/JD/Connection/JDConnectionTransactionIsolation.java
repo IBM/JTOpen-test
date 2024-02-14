@@ -484,24 +484,10 @@ active.  Verify that an exception is thrown.
                 + " (NAME, ID) VALUES ('Dinkytown', 55414)");
 
             boolean success = false;
-	    if ( getRelease() <= JDTestDriver.RELEASE_V5R2M0 ) { 
-		try {
-		    c.setTransactionIsolation (Connection.TRANSACTION_READ_UNCOMMITTED);
-		    message = "setTransactionIsolation did not throw exception for V5R2 and earlier"; 
-		}
-		catch (SQLException e) {
-		    success = true;
-		}
-	    } else {
-		//
-		// In V5R3 this is allowed and should work
-		// Fixed in native driver using PTF for PTR 9A66517
-		// 
-		c.setTransactionIsolation (Connection.TRANSACTION_READ_UNCOMMITTED);
-		success=true; 
-	    } 
+            c.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+            success = true;
 
-            c.rollback ();
+            c.rollback();
             c.close ();
             assertCondition (success, message);
         }

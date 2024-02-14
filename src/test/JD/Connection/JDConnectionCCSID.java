@@ -574,12 +574,7 @@ Set the CCSID and get the returned value.
 Set the CCSID and get the returned value from the WCB 
 **/
   public void Var002() {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0 &&
-	  getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	  notApplicable("Native Backend CCSID fixed in V7R2");
-	  return; 
-      } 
-      changeCcsidAndGetFromWcb(500);
+       changeCcsidAndGetFromWcb(500);
   }
 
 
@@ -598,11 +593,6 @@ Set the CCSID and get the returned value from the WCB
      * Connect using profile with different CCSID and check WCB
      */
  public void Var005() {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0 &&
-	  getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	  notApplicable("Native Backend CCSID fixed in V7R2");
-	  return; 
-      } 
 
       loginCcsidAndGetFromWcb(500);
  }
@@ -620,11 +610,6 @@ Set the CCSID and get the returned value from the WCB
  
  public void Var007() { changeCcsidAndGetFromQusrjobi(65535);   }
  public void Var008() {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0 &&
-	  getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	  notApplicable("Native Backend CCSID fixed in V7R2");
-	  return; 
-      } 
 
  changeCcsidAndGetFromWcb(65535);
 }
