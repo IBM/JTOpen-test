@@ -75,7 +75,7 @@ public class JDTestUtilities
     Deletes and re-creates any necessary collections on the 400. Cleans up
     any leftover objects from previous testcase runs.
     **/
-    static void cleanup(AS400 systemObject,
+    public static void cleanup(AS400 systemObject,
                         String password,
                         String collection)
     {
@@ -112,7 +112,7 @@ public class JDTestUtilities
     /**
     Clears all rows from a table.
     **/
-    static void clearTable (AS400 systemObject,
+    public static void clearTable (AS400 systemObject,
                             String password,
                             String tableName,
                             String tableLib)
@@ -144,7 +144,7 @@ public class JDTestUtilities
     Creates a procedure.  If the procedure existed previously, it will
     be dropped and recreated.
     **/
-    static void createProcedure (AS400 systemObject,
+    public static void createProcedure (AS400 systemObject,
                                  String password,
                                  String procName,
                                  String procLib,
@@ -180,7 +180,7 @@ public class JDTestUtilities
     /**
     Creates one of the stored procedures needed for testing.
     **/
-    static void createProcedure (AS400 systemObject,
+    public static void createProcedure (AS400 systemObject,
                                  String password,
                                  int procedureNumber)
         throws SQLException
@@ -269,7 +269,7 @@ public class JDTestUtilities
     Creates a table.  If the table existed previously, it will
     be dropped and recreated.
     **/
-    static void createTable (AS400 systemObject,
+    public static void createTable (AS400 systemObject,
                              String password,
                              String tableName,
                              String tableLib,
@@ -305,7 +305,7 @@ public class JDTestUtilities
     Drops the table and closes the connection (which should in turn close
     any open statements and result sets.
     **/
-    static void dropAndClose (Connection connection,
+    public static void dropAndClose (Connection connection,
                               String tableName,
                               String tableLib)
         throws SQLException
@@ -336,7 +336,7 @@ public class JDTestUtilities
     Deletes a collection on the 400 without having to use a screen to reply
     to the standard message that appears in the message queue.
     **/
-    static void dropCollection(AS400 systemObject,
+    public static void dropCollection(AS400 systemObject,
                                String collection)
     {
       CommandCall cmd = new CommandCall(systemObject);
@@ -396,7 +396,7 @@ public class JDTestUtilities
     This will allow the currently running testcase to cleanup the leftover
     objects that were created during a previous run by a different user.
     **/
-    static void grantAuthority(AS400 systemObject,
+    public static void grantAuthority(AS400 systemObject,
                                String library,
                                String user)
     {
@@ -437,7 +437,7 @@ public class JDTestUtilities
     that the next connect with package caching on will cause the statement
     to be in the cache.
     **/
-    static void primePackage (AS400 systemObject,
+    public static void primePackage (AS400 systemObject,
                               String password,
                               String packageName,
                               String packageLib,
@@ -455,7 +455,7 @@ public class JDTestUtilities
     that the next connect with package caching on will cause the statement
     to be in the cache.
     **/
-    static void primePackage (AS400 systemObject,
+    public static void primePackage (AS400 systemObject,
                               String password,
                               String packageName,
                               String packageLib,
@@ -490,7 +490,7 @@ public class JDTestUtilities
     @return     the new connection or null if reconnecting was
                 not necessary.
     **/
-    static Connection reconnect (AS400 systemObject,
+    public static Connection reconnect (AS400 systemObject,
                                  String password,
                                  Connection connection,
                                  String currentProperties,
@@ -529,7 +529,7 @@ public class JDTestUtilities
     /**
     Registers the appropriate JDBC driver(s) for testing.
     **/
-    static void registerDriver ()
+    public static void registerDriver ()
     {
         // Register the AS/400 Toolbox for Java driver.
         try {
@@ -564,7 +564,7 @@ public class JDTestUtilities
     by typing an "I" and pressing enter. This should allow the setup to continue.
 
     **/
-    static void setupJDBC(AS400 systemObject,
+    public static void setupJDBC(AS400 systemObject,
                           String AS400password,
                           String rs6000,
                           String AFSuserid,
@@ -714,7 +714,7 @@ public class JDTestUtilities
     }
 
 
-    static void getCmdMessages(CommandCall cmd)
+    public static void getCmdMessages(CommandCall cmd)
     {
       try
       {
