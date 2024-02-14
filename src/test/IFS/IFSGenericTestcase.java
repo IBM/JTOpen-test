@@ -14,13 +14,11 @@
 package test.IFS;
 
 import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -40,34 +38,34 @@ import com.ibm.as400.access.IFSTextFileInputStream;
 
 public class IFSGenericTestcase extends Testcase
 {
-  static final String FILE_SEPARATOR = System.getProperty("file.separator");
-  static final char FILE_SEPARATOR_CHAR = FILE_SEPARATOR.charAt(0);
+  public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+  public static final char FILE_SEPARATOR_CHAR = FILE_SEPARATOR.charAt(0);
 
-  static String ifsDirName_ = "/";
-  static String ifsDirPath_ = "/" + ifsDirName_;
+  public static String ifsDirName_ = "/";
+  public static String ifsDirPath_ = "/" + ifsDirName_;
 
-  static String ifsFileName_ = "TestFile";
-  static String ifsFilePath_ = ifsDirPath_ + FILE_SEPARATOR + ifsFileName_; 
-  static String fileName_ = "File";
-  static String ifsPathName_ = ifsDirName_ + fileName_;
+  public static String ifsFileName_ = "TestFile";
+  public static String ifsFilePath_ = ifsDirPath_ + FILE_SEPARATOR + ifsFileName_; 
+  public static String fileName_ = "File";
+  public static String ifsPathName_ = ifsDirName_ + fileName_;
   
-  String mappedDrive_=null;
-  String operatingSystem_=null;
-  String dirName_=null;
-  String collection_ = "JDIFSCOL"; 
+  public String mappedDrive_=null;
+  public String operatingSystem_=null;
+  public String dirName_=null;
+  public String collection_ = "JDIFSCOL"; 
 
-  boolean DOS_ = false;
-  boolean OS2_ = false;
-  boolean linux_ = false ;
-  boolean NT_ = false;
-  boolean OS400_ = false;
-  boolean UNIX_ = false;
-  boolean AIX_ = false; 
+  public boolean DOS_ = false;
+  public boolean OS2_ = false;
+  public boolean linux_ = false ;
+  public boolean NT_ = false;
+  public boolean OS400_ = false;
+  public boolean UNIX_ = false;
+  public boolean AIX_ = false; 
 
   
-  static boolean DEBUG = false;
+  public static boolean DEBUG = false;
 
-  boolean isClassic; 
+  public boolean isClassic; 
 
 
   static {

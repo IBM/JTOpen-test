@@ -35,16 +35,16 @@ This class contains common routines for the JDBC tests.
 **/
 public class JDTestUtilities
 {
-    static final String PROCEDURE_1     = "STPTEST1";
-    static final String PROCEDURE_2     = "STPTEST2";
-    static final String PROCEDURE_3     = "STPTEST3";
-    static final String PROCEDURE_4     = "STPTEST4";
-    static final String PROCEDURE_5     = "STPTEST5";
-    static final String PROCEDURE_6     = "STPTEST6";
-    static final String TEST_LIBRARY    = "JDBCTEST";
+    public static final String PROCEDURE_1     = "STPTEST1";
+    public static final String PROCEDURE_2     = "STPTEST2";
+    public static final String PROCEDURE_3     = "STPTEST3";
+    public static final String PROCEDURE_4     = "STPTEST4";
+    public static final String PROCEDURE_5     = "STPTEST5";
+    public static final String PROCEDURE_6     = "STPTEST6";
+    public static final String TEST_LIBRARY    = "JDBCTEST";
 
-    static final String NLS_TEST_LIBRARY = "JAVANLS";
-    static final String NLS_PROCEDURE_1 =  "NLSPGM1";
+    public static final String NLS_TEST_LIBRARY = "JAVANLS";
+    public static final String NLS_PROCEDURE_1 =  "NLSPGM1";
 
     private static boolean[]    procedureInitialized_   = new boolean[8];
 
