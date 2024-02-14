@@ -62,7 +62,6 @@ public class IFSGenericTestcase extends Testcase
   public boolean OS400_ = false;
   public boolean UNIX_ = false;
   public boolean AIX_ = false; 
-  
   public static boolean DEBUG = false;
 
   public boolean isClassic; 
@@ -239,12 +238,12 @@ protected void cleanup() throws Exception {
 
 
 
-  final void createDirectory(String dirName)
+  public final void createDirectory(String dirName)
   {
      createDirectory(systemObject_, dirName);
   }
   
-  final void createDirectory(AS400 system, String dirName)
+  public final void createDirectory(AS400 system, String dirName)
   {
     try
     {
@@ -265,7 +264,7 @@ protected void cleanup() throws Exception {
     }
   }
 
-  final void createFile(String pathName)
+  public final void createFile(String pathName)
   {
     try
     {
@@ -359,7 +358,7 @@ Create a file to be used for the testcases.
      }
   }
 
-  final void createFile(String pathName, String data)
+  public final void createFile(String pathName, String data)
   {
     try
     {
@@ -405,7 +404,7 @@ Create a file to be used for the testcases.
     }
   }
 
-  void createFileWriteChars(String pathName, String data)
+  public void createFileWriteChars(String pathName, String data)
   {
     try
     {
@@ -426,7 +425,7 @@ Create a file to be used for the testcases.
   }
 
 
-  final void createFile(String pathName, byte[] data)
+  public final void createFile(String pathName, byte[] data)
   {
     try
     {
@@ -470,7 +469,7 @@ Create a file to be used for the testcases.
     }
   }
 
-  final void deleteFile(String pathName)
+  public final void deleteFile(String pathName)
   {
     try
     {
@@ -502,7 +501,7 @@ Create a file to be used for the testcases.
   }
 
   
-  void createIFSDirectory(String dirName)
+  public void createIFSDirectory(String dirName)
   {
     try
     {
@@ -518,7 +517,7 @@ Create a file to be used for the testcases.
 
 
 
-  final void createIFSFile(String pathName)
+  public final void createIFSFile(String pathName)
   {
     try
     {
@@ -537,7 +536,7 @@ Create a file to be used for the testcases.
     }
   }
 
-  final void createIFSFile(AS400 as400, String pathName)
+  public final void createIFSFile(AS400 as400, String pathName)
   {
     try
     {
@@ -567,7 +566,7 @@ Create a file to be used for the testcases.
 
 
 
-  String[] listDirectory(String pathName) throws Exception {
+  public String[] listDirectory(String pathName) throws Exception {
 
     if ( IFSTests.IsRunningOnOS400 ) { 
      File file2 = new File(convertToPCName(pathName));
@@ -583,7 +582,7 @@ Create a file to be used for the testcases.
   }
 
 
-  final boolean deleteDirectory(String pathName)
+  public final boolean deleteDirectory(String pathName)
   {
 
    // Try to delete using CIFS first
@@ -673,7 +672,7 @@ Create a file to be used for the testcases.
       }
   }
 
-  final void deleteIFSDirectory(IFSFile dir)
+  public final void deleteIFSDirectory(IFSFile dir)
   {
     if (dir == null) return;
     try
@@ -688,7 +687,7 @@ Create a file to be used for the testcases.
     {e.printStackTrace();}
   }
 
-  final void deleteIFSFile(IFSFile file)
+  public final void deleteIFSFile(IFSFile file)
   {
     try
     {
@@ -705,7 +704,7 @@ e.printStackTrace();
 }
   }
 
-  final void deleteIFSFile(String pathName)
+  public final void deleteIFSFile(String pathName)
   {
     try
     {
@@ -721,7 +720,7 @@ e.printStackTrace();
 
 
 
-  InputStream getNonIFSInputStream(String ifsPathName) throws FileNotFoundException, SmbException, MalformedURLException, UnknownHostException, SQLException {
+  public InputStream getNonIFSInputStream(String ifsPathName) throws FileNotFoundException, SmbException, MalformedURLException, UnknownHostException, SQLException {
       InputStream fis = null; 
       if (IFSTests.IsRunningOnOS400) {
 	  fis = new FileInputStream(ifsPathName); 
