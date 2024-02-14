@@ -148,7 +148,7 @@ extends JDTestcase
 
             rs_ = statement1_.executeQuery ("SELECT * FROM " + TABLE_);
         }
-	v5r2nativeFunctions_ = (getRelease() == JDTestDriver.RELEASE_V5R2M0 || getRelease() == JDTestDriver.RELEASE_V5R1M0 ) && (getDriver() == JDTestDriver.DRIVER_NATIVE);
+	v5r2nativeFunctions_ = (getRelease() == JDTestDriver.RELEASE_V7R1M0 || getRelease() == JDTestDriver.RELEASE_V7R1M0 ) && (getDriver() == JDTestDriver.DRIVER_NATIVE);
 
     }
 
@@ -186,7 +186,7 @@ extends JDTestcase
 
                 sb.setLength(0); 
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&					// @K9
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )				// @K9
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				// @K9
 		    assertCondition( compareBeginsWithBytes (v, "".getBytes("8859_1"),sb),sb);	// @K9
 		else										// @K9
 		    assertCondition (compare (v, "", "8859_1",sb),sb);
@@ -210,7 +210,7 @@ extends JDTestcase
                 InputStream v = clob.getAsciiStream ();
                 sb.setLength(0); 
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&					// @K9
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )				// @K9
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				// @K9
 		    assertCondition( compareBeginsWithBytes (v, MEDIUM_.getBytes("8859_1"),sb),sb);	// @K9
 		else										// @K9
 		    assertCondition (compare (v, MEDIUM_, "8859_1",sb),sb);
@@ -235,7 +235,7 @@ extends JDTestcase
                 InputStream v = clob.getAsciiStream ();
                 sb.setLength(0); 
 if(getDriver() == JDTestDriver.DRIVER_NATIVE &&					// @K9
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )				// @K9
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				// @K9
 		    assertCondition( compareBeginsWithBytes (v, LARGE_.getBytes("8859_1"),sb),sb);	// @K9
 		else										// @K9
 		    assertCondition (compare (v, LARGE_, "8859_1",sb),sb);
@@ -427,7 +427,7 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE &&					// @K9
     public void Var012()
     {
         if (checkJdbc20 ()) {
-	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&  getRelease() ==  JDTestDriver.RELEASE_V5R1M0) {
+	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&  getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
 		try {
 		    rs_.absolute (1);
 		    Clob clob = rs_.getClob ("C_VARCHAR");
@@ -1942,7 +1942,7 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE &&					// @K9
                 InputStream i = clob1.getAsciiStream();
                 sb.setLength(0); 
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K9
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )	// @K9
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @K9
 		    assertCondition( compareBeginsWithBytes (i,b,sb),sb);	// @K9
 		else							// @K9
 		    assertCondition ( compare (i, b,sb),sb);      //@C3C
@@ -1982,7 +1982,7 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE &&					// @K9
                 //@C3A We put (byte) 1 into the first position in testcase 72.
                 sb.setLength(0); 
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @K9
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @K9
+		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K9
 		    assertCondition( compareBeginsWithBytes( i, newBytes,sb),sb);	// @K9
 		else								// @K9
 		    assertCondition( compare (i, newBytes,sb),sb); //@C3A 

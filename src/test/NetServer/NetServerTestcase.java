@@ -94,7 +94,7 @@ public class NetServerTestcase extends Testcase
 	   // But "localhost" is not valid for a NetServer name in CHGNSVA.
 	   // Therefore, we need to extract the real system name.
 	   String localSysName = java.net.InetAddress.getLocalHost().getHostName();
-	   // The above localSysName is of the format "LP126AB.RCHLAND.IBM.COM"
+	   // The above localSysName is of the format "SYSTEM.DOMAIN.COM"
 	   // so we need to extract the system name as the first token of the string
 	   StringTokenizer st = new StringTokenizer(localSysName, ".");
 	   original_NetServer_Name = st.nextToken().toUpperCase();

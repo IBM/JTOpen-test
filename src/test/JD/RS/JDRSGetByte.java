@@ -636,7 +636,7 @@ to an int.
                 + JDRSTest.RSTEST_GET);
             JDRSTest.position0 (rs, "CHAR_INT");
             byte v = rs.getByte ("C_VARCHAR_50");
-            if (getRelease()>= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease()>= JDTestDriver.RELEASE_V7R1M0) {
               failed ("Didn't throw SQLException but got "+v+comment);
             } else { 
                assertCondition (v == (byte) 567);
@@ -646,7 +646,7 @@ to an int.
             // Both native and toolbox should throw an error because
             // 567 is not a valid value for a byte
             // 
-            if (getRelease()>= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease()>= JDTestDriver.RELEASE_V7R1M0) {
               assertExceptionIsInstanceOf (e, "java.sql.SQLException", comment );
             } else { 
               failed (e, "Unexpected Exception");
@@ -670,14 +670,14 @@ to an int, except that it has a decimal point
             JDRSTest.position0 (rs, "CHAR_FLOAT");
             byte v = rs.getByte ("C_VARCHAR_50");
 	    String s = rs.getString ("C_VARCHAR_50");
-            if (getRelease()>= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease()>= JDTestDriver.RELEASE_V7R1M0) {
               failed ("Didn't throw SQLException but got "+v+" string is "+s+comment);
             } else { 
               assertCondition (v == (byte) -567);
             }   
         }
         catch (Exception e) {
-          if (getRelease()>= JDTestDriver.RELEASE_V5R5M0) {
+          if (getRelease()>= JDTestDriver.RELEASE_V7R1M0) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException", comment );
           } else { 
             failed (e, "Unexpected Exception");
@@ -880,14 +880,14 @@ getByte() - Get from a DISTINCT.
                     + JDRSTest.RSTEST_GET);
                 JDRSTest.position0 (rs, "LOB_FULL");
                 byte v = rs.getByte ("C_DISTINCT");
-                if (getRelease()>= JDTestDriver.RELEASE_V5R5M0) {
+                if (getRelease()>= JDTestDriver.RELEASE_V7R1M0) {
                   failed ("Didn't throw SQLException but got "+v+comment);
                 } else { 
                   assertCondition (v == (byte)123456789);
                 }
             }
             catch (Exception e) {
-              if (getRelease()>= JDTestDriver.RELEASE_V5R5M0) {
+              if (getRelease()>= JDTestDriver.RELEASE_V7R1M0) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException", comment );
               } else { 
                 failed (e, "Unexpected Exception");
@@ -911,14 +911,14 @@ getByte() - Get from a BIGINT.
                 + JDRSTest.RSTEST_GET);
             JDRSTest.position0 (rs, "NUMBER_POS");
             byte v = rs.getByte ("C_BIGINT");
-            if (getRelease()>= JDTestDriver.RELEASE_V5R5M0) {
+            if (getRelease()>= JDTestDriver.RELEASE_V7R1M0) {
               failed ("Didn't throw SQLException but got "+v+comment);
             } else { 
               assertCondition (v == (byte) 12374321);
             }
         }
         catch (Exception e) {
-          if (getRelease()>= JDTestDriver.RELEASE_V5R5M0) {
+          if (getRelease()>= JDTestDriver.RELEASE_V7R1M0) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException", comment );
           } else { 
             failed (e, "Unexpected Exception");

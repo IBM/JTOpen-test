@@ -214,7 +214,7 @@ test the getStringFunctions method of DatabaseMetaData
 	    } else {
                // NATIVE VERSION
 		String expected;
-		if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 		    expected= "concat,difference,insert,lcase,left,length,locate,ltrim,repeat,replace,right,rtrim,soundex,space,substring,ucase";
 		} else {
 		    expected="concat,difference,insert,lcase,left,length,locate,ltrim,right,rtrim,soundex,space,substring,ucase";
@@ -266,7 +266,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
                 // native driver
                 //
 		String expected;
-		if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 		    expected = "curdate,curtime,dayname,dayofmonth,dayofweek,dayofyear,hour,minute,month,monthname,now,quarter,second,timestampdiff,week,year";
 		} else {
 		    expected = "curdate,curtime,dayofmonth,dayofweek,dayofyear,hour,minute,month,now,quarter,second,week,year";

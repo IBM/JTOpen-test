@@ -536,15 +536,13 @@ the full stream.
             InputStream is = new ByteArrayInputStream ("Tobago".getBytes ("ISO8859_1"));
             InputStream is2 = new ByteArrayInputStream ("Tob".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is2.available ());
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @E3
-		getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @E3
+	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
 		succeeded();						// @E3
 	    else							// @E3
 		failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @E3
-		getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @E3
+	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
 		failed(e, "Unexpected Exception.");			// @E3
 	    else							// @E3
 
@@ -592,15 +590,13 @@ setAsciiStream() - Set a VARCHAR(50) parameter, with the length set to 1 charact
             InputStream is = new ByteArrayInputStream ("Yucatan Penisula".getBytes ("ISO8859_1"));
             InputStream is2 = new ByteArrayInputStream ("Y".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is2.available ());
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @E3
-		getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @E3
+	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
 		succeeded();						// @E3
 	    else							// @E3
 		failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @E3
-		getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @E3
+	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
 		failed(e, "Unexpected Exception.");			// @E3
 	    else							// @E3
 
@@ -623,15 +619,13 @@ setAsciiStream() - Set a VARCHAR(50) parameter, with the length set to 0.
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Baja California".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, 0);
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @E3
-		getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @E3
+	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
 		succeeded();						// @E3
 	    else							// @E3
 		failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-    	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @E3
-		getRelease() >= JDTestDriver.RELEASE_V5R3M0 )		// @E3
+    	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
 		failed(e, "Unexpected Exception.");			// @E3
 	    else							// @E3
 
@@ -1017,10 +1011,6 @@ setAsciiStream() - Set a BIGINT parameter.
 		InputStream is = new ByteArrayInputStream ("Cuba".getBytes ("ISO8859_1"));
 		ps.setAsciiStream (1, is, is.available ());
 		ps.close ();
-		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		    getRelease() <= JDTestDriver.RELEASE_V5R2M0 )
-		    assertCondition(true);
-		else
 		    failed ("Didn't throw SQLException");
 	    }
 	    catch (Exception e) {
@@ -1384,10 +1374,6 @@ turned off.
                   InputStream is = new ByteArrayInputStream ("Cuba".getBytes ("ISO8859_1"));
                   ps.setAsciiStream (1, is, is.available ());
                   ps.close ();
-                  if( getDriver() == JDTestDriver.DRIVER_NATIVE &&
-                      getRelease() <= JDTestDriver.RELEASE_V5R2M0 )
-                    assertCondition(true);
-                  else
                     failed ("Didn't throw SQLException");
                 }
                 catch (Exception e) {
@@ -1409,10 +1395,6 @@ turned off.
                  InputStream is = new ByteArrayInputStream ("Cuba".getBytes ("ISO8859_1"));
                  ps.setAsciiStream (1, is, is.available ());
                  ps.close ();
-                 if( getDriver() == JDTestDriver.DRIVER_NATIVE &&
-                     getRelease() <= JDTestDriver.RELEASE_V5R2M0 )
-                   assertCondition(true);
-                 else
                    failed ("Didn't throw SQLException");
                }
                catch (Exception e) {

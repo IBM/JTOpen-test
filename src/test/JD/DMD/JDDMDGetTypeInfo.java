@@ -118,7 +118,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
 
     /* This is now tested by Var006 and Var007 */
     switch (getRelease() * 100 + getDriver()) {
-    case 100 * JDTestDriver.RELEASE_V6R1M0 + JDTestDriver.DRIVER_NATIVE:
+    case 100 * JDTestDriver.RELEASE_V7R1M0 + JDTestDriver.DRIVER_NATIVE:
       assertCondition(true);
       return;
     }
@@ -264,7 +264,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
               message);
           message.append(" checkedBy(expectedSysibmTypes71) ");
 
-        } else if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+        } else if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           /* sysibm changes PTF backed 01/11/2010 */
           typesCheck = JDDMDTest.checkColumnTypes(rsmd, expectedSysibmTypes61,
               message);
@@ -1212,7 +1212,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
                 comment += "\n" + jdbcType + ": bad PRECISION "
                     + rs.getInt("PRECISION");
               success = success & thisCase;
-              if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+              if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                 thisCase = (rs.getString("LITERAL_PREFIX")
                     .equals("X'")); /* @K6 */
               } else {
@@ -1310,7 +1310,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
                     + rs.getInt("PRECISION");
               success = success & thisCase;
 
-              if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K3
+              if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K3
                 thisCase = (rs.getString("LITERAL_PREFIX").equals("BINARY(X'")); // @K3
               else // @K3
                 thisCase = (rs.getString("LITERAL_PREFIX") == null);
@@ -1319,7 +1319,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
                     + rs.getString("LITERAL_PREFIX");
               success = success & thisCase;
 
-              if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K3
+              if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K3
                 thisCase = (rs.getString("LITERAL_SUFFIX").equals("')")); // @K3
               else // @K3
                 thisCase = (rs.getString("LITERAL_SUFFIX") == null);
@@ -1416,7 +1416,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
                   + rs.getInt("PRECISION");
             success = success & thisCase;
 
-            if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K3
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K3
               thisCase = ("BLOB(X'".equals(rs.getString("LITERAL_PREFIX"))); // @K3
                                                                              // @K6
             else // @K3
@@ -1426,7 +1426,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
                   + rs.getString("LITERAL_PREFIX");
             success = success & thisCase;
 
-            if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K3
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K3
               thisCase = "')".equals(rs.getString("LITERAL_SUFFIX")); // @K3
             else // @K3
               thisCase = (rs.getString("LITERAL_SUFFIX") == null);
@@ -2067,7 +2067,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
               comment += "\n" + jdbcType + ": bad TYPE_NAME "
                   + rs.getString("TYPE_NAME");
             success = success & thisCase;
-            if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
               thisCase = (rs.getInt("PRECISION") == 63);
             else
               thisCase = (rs.getInt("PRECISION") == 31); /* NC */
@@ -2133,7 +2133,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
               comment += "\n" + jdbcType + ": bad MINIMUM_SCALE "
                   + rs.getShort("MINIMUM_SCALE");
             success = success & thisCase;
-            if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
               thisCase = (rs.getShort("MAXIMUM_SCALE") == 63);
             else
               thisCase = (rs.getShort("MAXIMUM_SCALE") == 31);
@@ -2442,7 +2442,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
               comment += "\n" + jdbcType + ": bad TYPE_NAME "
                   + rs.getString("TYPE_NAME");
             success = success & thisCase;
-            if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
               thisCase = (rs.getInt("PRECISION") == 63);
             else
               thisCase = (rs.getInt("PRECISION") == 31);
@@ -2508,7 +2508,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
               comment += "\n" + jdbcType + ": bad MINIMUM_SCALE "
                   + rs.getShort("MINIMUM_SCALE");
             success = success & thisCase;
-            if (getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
               thisCase = (rs.getShort("MAXIMUM_SCALE") == 63);
             else
               thisCase = (rs.getShort("MAXIMUM_SCALE") == 31);
@@ -2931,7 +2931,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
                     + rs.getInt("PRECISION");
               success = success & thisCase;
 
-              if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K3
+              if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K3
                 thisCase = (rs.getString("LITERAL_PREFIX")
                     .equals("VARBINARY(X'")); // @K3@K6
               else // @K3
@@ -2941,7 +2941,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
                     + rs.getString("LITERAL_PREFIX");
               success = success & thisCase;
 
-              if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) // @K3
+              if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K3
                 thisCase = (rs.getString("LITERAL_SUFFIX").equals("')")); // @K3
               else // @K3
                 thisCase = (rs.getString("LITERAL_SUFFIX") == null);
@@ -3032,7 +3032,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
                 comment += "\n" + jdbcType + ": bad PRECISION "
                     + rs.getInt("PRECISION");
               success = success & thisCase;
-              if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+              if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                 thisCase = (rs.getString("LITERAL_PREFIX")
                     .equals("X'")); /* @K6 */
               } else {
@@ -4374,14 +4374,14 @@ public class JDDMDGetTypeInfo extends JDTestcase {
       int expectedRows = areLobsSupported() ? 22 : 18; // @K1a
       // check if V5R5 or greater. We added one type in V4R5
       expectedRows += areBigintsSupported() ? 1 : 0; // @B2A //@K1C
-      if (getRelease() >= JDTestDriver.RELEASE_V5R2M0) // @K1A Added one type in
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K1A Added one type in
                                                        // V5R2
         expectedRows += 1; // @K1A
       // need to add code here to add 2 to expectedRows when we are on a v5r3
       // machine and we support the new BINARY and VARBINARY types
       // if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) //@K1A
       // expectedRows += 2; //@K1A
-      if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) // @L1A added DECFLOAT
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @L1A added DECFLOAT
         expectedRows += 1;
 
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()) {
@@ -4395,7 +4395,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
         assertCondition(success && (rows == expectedRows)); // @A1C @B0C
       } else /* @K2 */
       {
-        if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           boolean condition = success && (rows >= 27);
           if (!condition) {
             System.out.println("success = " + success);

@@ -282,7 +282,7 @@ Connection.setAutoCommit() - Verify that this fails when in a global transaction
 		//
 // The native driver permits autocommit to be set 
 if (getDriver() == JDTestDriver.DRIVER_NATIVE & !useUDBDataSource // ) {	/* @A1 */
-    && getRelease() < JDTestDriver.RELEASE_V5R3M0 ) {				/* @A1 */
+    && getRelease() < JDTestDriver.RELEASE_V7R1M0 ) {				/* @A1 */
     assertCondition(error == false);
 } else {
     assertCondition(error == true);
@@ -861,7 +861,7 @@ no work done.
 // Native driver permits a commit if no work has been done
     //
     if (getDriver() == JDTestDriver.DRIVER_NATIVE && !useUDBDataSource // ){	 /* @A1 */
-	&& getRelease() < JDTestDriver.RELEASE_V5R3M0 )	{			 /* @A1 */
+	&& getRelease() < JDTestDriver.RELEASE_V7R1M0 )	{			 /* @A1 */
 	condition = (error == false) && (countRows(34865) == 0);
     } else {
 	condition = (error == true) && (countRows(34865) == 0);
@@ -914,7 +914,7 @@ with no work done.
     //
     boolean condition; 
 if (getDriver() == JDTestDriver.DRIVER_NATIVE && !useUDBDataSource // ) {	/* @A1 */
-    && getRelease() < JDTestDriver.RELEASE_V5R3M0 )	{		        /* @A1 */
+    && getRelease() < JDTestDriver.RELEASE_V7R1M0 )	{		        /* @A1 */
     condition = (error == false);
 } else {
     condition = (error == true);

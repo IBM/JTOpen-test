@@ -1260,7 +1260,7 @@ getFloat() - Get from a BIGINT.
         return; 
       }
 	// Note:  infinity only supported on V5R5 
-	if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    String added = " -- added 07/09/2007 to test getFloat on double values"; 
 	    String[][] testVars =
 	  /* SQL VALUE */  /* Get value */ 

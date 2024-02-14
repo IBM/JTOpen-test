@@ -64,7 +64,7 @@ Constructor.
 
    public void Var011() {
        if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+	   getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	   notApplicable("Not working in V5R4 native code");
 	   return; 
        } 
@@ -122,7 +122,7 @@ end() - Pass TMSUSPEND.
         // The transaction is then in a weird state and does
         // not get cleaned up when the transaction ends.
 	//
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R4M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 	    if (checkJdbc20StdExt()) {
 		try {
 		    XADataSource xads = newXADataSource();

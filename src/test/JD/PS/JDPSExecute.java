@@ -1015,7 +1015,7 @@ execute() - Verify that lobs can be inserted, even when the declared width of th
 **/
     public void Var033()
     {
-	if ( (getRelease() <= JDTestDriver.RELEASE_V5R1M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
+	if ( (getRelease() <= JDTestDriver.RELEASE_V7R1M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
 	    notApplicable("Native driver V5R2 and beyond test");
 	} else {
 
@@ -1072,7 +1072,7 @@ execute() - Verify that lobs cannot be inserted even when the width of the inser
 **/
     public void Var034() {
 
-	if ( (isToolboxDriver()) || ((getRelease() <= JDTestDriver.RELEASE_V5R1M0)
+	if ( (isToolboxDriver()) || ((getRelease() <= JDTestDriver.RELEASE_V7R1M0)
         && (getDriver() == JDTestDriver.DRIVER_NATIVE))) {
       notApplicable("Native driver V5R3 and beyond test");
     } else {
@@ -1127,7 +1127,7 @@ execute() - Verify that lobs cannot be inserted even when the width of the inser
               failed = true;
 
               if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-                if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+                if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                   if ((sqlEx.getMessage().indexOf(
                       "Row length exceeds 3.5 gigabytes") >= 0)
                       || (sqlEx.getMessage().indexOf(

@@ -974,7 +974,7 @@ public class JTAStdConn extends JTATestcase {
               return; // @B1A
             } else {
 
-              if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+              if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
                 assertExceptionIsInstanceOf(ex,
                     "com.ibm.db2.jdbc.app.DB2XAException");
                 return;
@@ -1079,7 +1079,7 @@ public class JTAStdConn extends JTATestcase {
                   "javax.transaction.xa.XAException");
               return; // @B1A
             } else {
-              if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+              if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
                 assertExceptionIsInstanceOf(ex,
                     "com.ibm.db2.jdbc.app.DB2XAException");
 

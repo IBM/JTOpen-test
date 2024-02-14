@@ -19,6 +19,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 import test.JD.JDTestUtilities;
 
 import java.io.FileOutputStream;
@@ -1568,7 +1569,7 @@ getString() - Get from a DATALINK.
                                                + JDRSTest.RSTEST_GETDL);
                 JDRSTest.position0 (rs, "LOB_FULL");
                 String str = rs.getString ("C_DATALINK");
-                assertCondition (str.equalsIgnoreCase("http://schuman.rchland.ibm.com/help.html"), "Failed to obtain datalink str="+str);
+                assertCondition (str.equalsIgnoreCase("https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt"), "Failed to obtain datalink str="+str);
             } catch (Exception e) {
                 failed (e, "Unexpected Exception");
             }
@@ -1827,9 +1828,6 @@ the result set.
       if (getDriver() == JDTestDriver.DRIVER_JCC && getDatabaseType() == JDTestDriver.DB_ZOS  ) {
         notApplicable("Causes resource error on Z/OS ");
 	return;
-      }else if ((isToolboxDriver()) && (!System.getProperty("os.name").startsWith("Win"))){
-          notApplicable("out of mem on iseries");
-          return;
       }
       else {
 
@@ -1931,9 +1929,6 @@ the result set.
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC && getDatabaseType() == JDTestDriver.DB_ZOS  ) {
         notApplicable("Causes resource error on Z/OS ");
-      }else if ((isToolboxDriver()) && (!System.getProperty("os.name").startsWith("Win"))){
-          notApplicable("out of mem on iseries");
-          return;
       } else {
         if (checkLobSupport ()) {
 	    Statement stmt = null;
@@ -2329,7 +2324,7 @@ the result set.
 	    notApplicable("substitution test not application for toolbox < v7r2");
 	    return;
 	}
-	if (getRelease() <= JDTestDriver.RELEASE_V5R4M0) {
+	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("V6R1 or later test");
 	    return;
 	}

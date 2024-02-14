@@ -263,7 +263,7 @@ statement is closed.
      **/
     public void Var001()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -291,7 +291,7 @@ specified.
      **/
     public void Var002()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -318,7 +318,7 @@ SetDB2Unassigned() - Should throw exception when index is 0.
      **/
     public void Var003()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -345,7 +345,7 @@ SetDB2Unassigned() - Should throw exception when index is -1.
      **/
     public void Var004()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -374,7 +374,7 @@ greater than 1.
      **/
     public void Var005()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -415,7 +415,7 @@ not an input parameter.
      **/
     public void Var006()
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -466,7 +466,7 @@ not an input parameter.
     
     public void testOk(String columnName, String expectedString )
     {
-	if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+	if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
 	    notApplicable("v5r5 variation");
 	    return;
 	}
@@ -500,7 +500,7 @@ not an input parameter.
 
     public void testOk(String columnName1, String expectedString1, String columnName2, String expectedString2 )
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -542,7 +542,7 @@ not an input parameter.
     
     public void testOk(String columnName1, String expectedString1, String columnName2, String expectedString2, String columnName3, String expectedString3 )
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -590,7 +590,7 @@ not an input parameter.
     
     public void testMultiple(String columnName, String expectedString )
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }
@@ -625,7 +625,7 @@ not an input parameter.
 
     public void testMultiple(String columnName1, String expectedString1, String columnName2, String expectedString2, String columnName3, String expectedString3 )
     {
-        if(getRelease() < JDTestDriver.RELEASE_V5R5M0){
+        if(getRelease() < JDTestDriver.RELEASE_V7R1M0){
             notApplicable("v5r5 variation");
             return;
         }

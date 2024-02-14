@@ -564,7 +564,7 @@ Performs setup needed before running variations.
 **/
     protected void setup() throws Exception {
       
-      if ((getRelease () >= JDTestDriver.RELEASE_V5R4M0)) {
+      if ((getRelease () >= JDTestDriver.RELEASE_V7R1M0)) {
     connection_ = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
     dmd_ = connection_.getMetaData();
     stmt_ = connection_.createStatement();
@@ -640,7 +640,7 @@ Performs setup needed before running variations.
     protected void cleanup ()
     throws Exception
     {
-if ((getRelease () >= JDTestDriver.RELEASE_V5R4M0)) { 
+if ((getRelease () >= JDTestDriver.RELEASE_V7R1M0)) { 
       dropIndex(indexTable1);
       dropIndex(indexTable2);
       dropIndex(indexTable3);
@@ -675,7 +675,7 @@ if ((getRelease () >= JDTestDriver.RELEASE_V5R4M0)) {
    * last time it was run
    */
   public void Var001() {
-    if (getRelease () >= JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease () >= JDTestDriver.RELEASE_V7R1M0) {
     String testname = "JDDMDPerf01SQLCOLUMNS";
     int rowCount = 0; 
     try {
@@ -716,7 +716,7 @@ if ((getRelease () >= JDTestDriver.RELEASE_V5R4M0)) {
    * last time it was run
    */
   public void Var002() {
-    if (getRelease () >= JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease () >= JDTestDriver.RELEASE_V7R1M0) {
     String testname = "JDDMDPerf02SQLTABLES";
     int rowCount = 0; 
     try {
@@ -757,7 +757,7 @@ if ((getRelease () >= JDTestDriver.RELEASE_V5R4M0)) {
    * last time it was run
    */
   public void Var003() {
-    if (getRelease () >= JDTestDriver.RELEASE_V5R4M0) {
+    if (getRelease () >= JDTestDriver.RELEASE_V7R1M0) {
     String testname = "JDDMDPerf03SQLSTATISTICS";
     int rowCount = 0; 
     try {

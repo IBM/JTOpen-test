@@ -19,14 +19,11 @@ import test.JDLobTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JDLobTest.JDTestBlob;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;                          //@C1A
+import java.io.OutputStream;                        
 import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -152,7 +149,8 @@ extends JDTestcase
 
             rs_ = statement1_.executeQuery ("SELECT * FROM " + TABLE_);
         }
-	v5r2nativeFunctions_ = (getRelease() == JDTestDriver.RELEASE_V5R2M0 || getRelease() == JDTestDriver.RELEASE_V5R1M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE);
+	v5r2nativeFunctions_ = false;
+	
     }
 
 
@@ -185,8 +183,7 @@ extends JDTestcase
                 Blob blob = rs_.getBlob ("C_VARBINARY");
 		InputStream v = blob.getBinaryStream ();
 		sb.setLength(0); 
-		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @D4
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0)		// @D4
+		if(getDriver() == JDTestDriver.DRIVER_NATIVE )		// @D4
 		    assertCondition( compareBeginsWithBytes( v, new byte[0],sb),sb);	// @D4
 		else							// @D4
 		    assertCondition (compare (v, new byte[0],sb),sb);
@@ -209,8 +206,7 @@ extends JDTestcase
                 Blob blob = rs_.getBlob ("C_VARBINARY");
                 InputStream v = blob.getBinaryStream ();
                 sb.setLength(0); 
-		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @D4
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0)		// @D4
+		if(getDriver() == JDTestDriver.DRIVER_NATIVE )		// @D4
 		    assertCondition( compareBeginsWithBytes( v, MEDIUM_,sb),sb);	// @D4
 		else							// @D4
                 assertCondition (compare (v, MEDIUM_,sb),sb);
@@ -234,8 +230,7 @@ extends JDTestcase
                 Blob blob = rs_.getBlob ("C_VARBINARY");
                 InputStream v = blob.getBinaryStream ();
                 sb.setLength(0); 
-if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @D4
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0)			// @D4
+if(getDriver() == JDTestDriver.DRIVER_NATIVE )			// @D4
 		    assertCondition( compareBeginsWithBytes( v, LARGE_,sb));	// @D4
 		else								// @D4
                 assertCondition (compare (v, LARGE_,sb));
@@ -302,8 +297,7 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @D4
                 rs_.absolute (2);
                 Blob blob = rs_.getBlob ("C_VARBINARY");
                 blob.getBytes (MEDIUM_.length, 5);
-		if(getRelease() >= JDTestDriver.RELEASE_V5R3M0 &&	// @D2
-		   getDriver() == JDTestDriver.DRIVER_NATIVE )		// @D2
+		if(getDriver() == JDTestDriver.DRIVER_NATIVE )		// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    failed ("Didn't throw SQLException");
@@ -349,8 +343,7 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @D4
                 rs_.absolute (2);
                 Blob blob = rs_.getBlob ("C_VARBINARY");
                 blob.getBytes (3, MEDIUM_.length - 1);
-		if(getRelease() >= JDTestDriver.RELEASE_V5R3M0 &&	// @D2
-		   getDriver() == JDTestDriver.DRIVER_NATIVE )		// @D2
+		if(getDriver() == JDTestDriver.DRIVER_NATIVE )		// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    failed ("Didn't throw SQLException");
@@ -370,18 +363,7 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @D4
     public void Var009()
     {
         if (checkJdbc20 ()) {
-	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&  getRelease() ==  JDTestDriver.RELEASE_V5R1M0 ) {
-		try {
-		    rs_.absolute (1);
-		    Blob blob = rs_.getBlob ("C_VARBINARY");
-		    byte[] v = blob.getBytes (1, 0);
-		    failed ("Didn't throw SQLException "+v);                        // @B1C
-		}                                                                   // @B1C
-		catch (Exception e) {                                               // @B1C
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");       // @B1C
-		}                                                                   // @B1C
-
-	    } else { 
+	     { 
 
 		try {
 		    rs_.absolute (1);
@@ -1814,8 +1796,7 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @D4
                 Blob blob1 = rs2_.getBlob("C_VARBINARY");                       
                 InputStream inputStream = blob1.getBinaryStream();
                 sb.setLength(0); 
-		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @D4
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0)				// @D4
+		if(getDriver() == JDTestDriver.DRIVER_NATIVE )				// @D4
 		    assertCondition( compareBeginsWithBytes( inputStream, expected,sb));	// @D4
 		else									// @D4
 		    assertCondition (compare (inputStream, expected,sb)); 
@@ -2054,8 +2035,7 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @D4
                 // Var 65 should have left a (byte) 6 in the first position.
                 byte[] expected = new byte[] {(byte) 6, (byte) 10, (byte) 11, (byte) 12};                InputStream inputStream = blob1.getBinaryStream();	
                 sb.setLength(0); 
-		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @D4
-		   getRelease() >= JDTestDriver.RELEASE_V5R3M0)				// @D4
+		if(getDriver() == JDTestDriver.DRIVER_NATIVE )				// @D4
 		    assertCondition( compareBeginsWithBytes( inputStream, expected,sb),sb);	// @D4
 		else									// @D4
 		    assertCondition (compare (inputStream, expected,sb),sb); 

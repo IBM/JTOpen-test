@@ -102,32 +102,9 @@ public class LocalSocketCtorTestcase extends Testcase
 
   }
 
-    private boolean isAS400()
-    {
-        try
-        {
-            String s = System.getProperty("os.name");
-            if (s != null)
-            {
-                if (s.equalsIgnoreCase("SLIC"))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
+  private boolean isAS400() {
+    return JTOpenTestEnvironment.isOS400;
+  }
 
 /**
   * Create a default AS400 object.  Running on an AS/400, this should

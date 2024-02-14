@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// JTOpen (IBM Toolbox for Java - OSS version)
+//
+// Filename:  JDScalarFunctions.java
+//
+// The source code contained herein is licensed under the IBM Public License
+// Version 1.0, which has been approved by the Open Source Initiative.
+// Copyright (C) 1997-2023 International Business Machines Corporation and
+// others.  All rights reserved.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+ ////////////////////////////////////////////////////////////////////////
+ //
+ // File Name:    JDScheduler.java
+ //
+ // Classes:      JDScheduler
+ //
+ ////////////////////////////////////////////////////////////////////////
 package test;
 
 import java.io.*;
@@ -9,7 +29,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.net.InetAddress;
 
 public class JDScheduler {
 
@@ -39,7 +58,7 @@ public class JDScheduler {
 
   public static String COLLECTION = "JDTESTINFO";
 
-  public static Hashtable threadConnectionHashtable = new Hashtable();
+  public static Hashtable<Thread, Connection> threadConnectionHashtable = new Hashtable<Thread, Connection>();
   // Default is to connect to local host.
   // Can be changed via -DjdbcUrl
   public static String jdbcURL = "jdbc:db2:*LOCAL";
@@ -73,8 +92,7 @@ public class JDScheduler {
       fileInputStream.close();
 
       // Set defaults for non-400 platform
-      String osName = System.getProperty("os.name");
-      if (osName.indexOf("400") < 0) {
+      if (!JTOpenTestEnvironment.isOS400) {
 
         String localHost = JDHostName.getHostName().toLowerCase();
         int dotIndex = localHost.indexOf(".");
@@ -467,17 +485,8 @@ public class JDScheduler {
     }
 
     if (connection == null) {
-      if (jdbcURL.indexOf("db2") > 0) {
-        Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
-      } else if (jdbcURL.indexOf("as400") > 0) {
-        Class.forName("com.ibm.as400.access.AS400JDBCDriver");
-      } else if (jdbcURL.indexOf("jtopenlite") > 0) {
-        Class.forName("com.ibm.jtopenlite.database.jdbc.JDBCDriver");
-      } else {
-        throw new Exception("Unrecognized URL " + jdbcURL);
-      }
       System.out.println("Thread " + currentThread + ": Requesting new connection at " + jdbcURL + " using " + userid
-          + "," + password);
+          + ",XXXXXX");
       if (userid == null) {
         connection = DriverManager.getConnection(jdbcURL + ";prompt = false");
       } else {

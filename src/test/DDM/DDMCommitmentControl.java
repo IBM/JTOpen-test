@@ -23,6 +23,7 @@ import com.ibm.as400.access.AS400Exception;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.access.SequentialFile;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import com.ibm.as400.access.KeyedFile;
@@ -6334,23 +6335,7 @@ protected void cleanup()
   **/
   public void Var087()
   {
-    boolean onAS400_ = false;
-    try
-    {
-      String s = System.getProperty("os.name");
-      if (s != null && s.equalsIgnoreCase("OS/400"))
-      {
-        onAS400_ = true;
-      }
-      else
-      {
-        onAS400_ = false;
-      }
-    }
-    catch(SecurityException e)
-    {
-      onAS400_ = false;
-    }
+    boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
     
     if (!onAS400_)
     {
@@ -6429,24 +6414,7 @@ protected void cleanup()
   **/
   public void Var088()
   {
-    boolean onAS400_ = false;
-    try
-    {
-      String s = System.getProperty("os.name");
-      if (s != null && s.equalsIgnoreCase("OS/400"))
-      {
-        onAS400_ = true;
-      }
-      else
-      {
-        onAS400_ = false;
-      }
-    }
-    catch(SecurityException e)
-    {
-      onAS400_ = false;
-    }
-    
+    boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
     if (!onAS400_)
     {
       notApplicable("native only"); // This variation must be run natively.
@@ -6509,23 +6477,7 @@ protected void cleanup()
   **/
   public void Var089()
   {
-    boolean onAS400_ = false;
-    try
-    {
-      String s = System.getProperty("os.name");
-      if (s != null && s.equalsIgnoreCase("OS/400"))
-      {
-        onAS400_ = true;
-      }
-      else
-      {
-        onAS400_ = false;
-      }
-    }
-    catch(SecurityException e)
-    {
-      onAS400_ = false;
-    }
+    boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
     
     if (!onAS400_ || ! isNative_)
     {
@@ -6601,23 +6553,7 @@ protected void cleanup()
   public void Var090()
   {
     StringBuffer sb = new StringBuffer(); 
-    boolean onAS400_ = false;
-    try
-    {
-      String s = System.getProperty("os.name");
-      if (s != null && s.equalsIgnoreCase("OS/400"))
-      {
-        onAS400_ = true;
-      }
-      else
-      {
-        onAS400_ = false;
-      }
-    }
-    catch(SecurityException e)
-    {
-      onAS400_ = false;
-    }
+    boolean onAS400_ = JTOpenTestEnvironment.isOS400;
     
     if (!onAS400_)
     {

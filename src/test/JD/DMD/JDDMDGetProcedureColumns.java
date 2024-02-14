@@ -220,7 +220,7 @@ Performs setup needed before running variations.
       expectedRowsBase = 4  ;
       expectedRowsAll  = 8  ;
       // @C1A
-      if (getRelease() >= JDTestDriver.RELEASE_V5R4M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         sql="CREATE PROCEDURE "
           + JDDMDTest.COLLECTION
           + ".PROCCOLSLCN (IN THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST INT) "
@@ -298,7 +298,7 @@ Performs cleanup needed after running variations.
 
 
         //@C1A
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0)
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
         {
 	    try {
             s.executeUpdate("DROP PROCEDURE " + JDDMDTest.COLLECTION
@@ -368,7 +368,7 @@ verify all columns.
                         success = (checkString("PROCCOLS.PARM:remarks", remarks, "")) && success;
                    }
                    else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC  ) ||
-                   ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                   ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                    (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARM:length", length ,4)) && success;
                       success = (checkString("PROCCOLS.PARM:remarks", remarks, null)) && success;
@@ -396,7 +396,7 @@ verify all columns.
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (
-                            getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARM1:length", length ,16)) && success;
                       success = (checkInt("PROCCOLS.PARM1:scale", scale, 6)) && success;
@@ -427,7 +427,7 @@ verify all columns.
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC )
                         || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkString("PROCCOLS.PARM2:typeName", typeName,("CHAR"))) && success;
                       success = (checkInt("PROCCOLS.PARM2:precision", precision,10)) && success;
@@ -463,7 +463,7 @@ verify all columns.
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC )
                         || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARMXX:length", length ,8)) && success;
                       success = (checkString("PROCCOLS.PARMXX:remarks", remarks, null)) && success;
@@ -489,7 +489,7 @@ verify all columns.
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLSLCN.THISIS..:length", length ,4)) && success;
                       success = (checkString("PROCCOLSLCN.THISIS..:remarks", remarks, null)) && success;
@@ -507,7 +507,7 @@ verify all columns.
             // System.out.println ("Rows = " + rows);
 
             rs.close ();
-            if(getRelease() >= JDTestDriver.RELEASE_V5R4M0) //@C1A
+            if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@C1A
                 assertCondition((rows == 5) && success, "rows = "+rows+" sb 5 "+ errorMessage);    //@C1A
             else                                            //@C1A
                 assertCondition ((rows == 4) && success, "rows = "+rows+" sb 4 "+ errorMessage);
@@ -687,7 +687,7 @@ All matching columns should be returned.
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4 ||
           ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (
-              getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+              getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
           (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {
@@ -1545,7 +1545,7 @@ Detects native driver bug.
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC )
                         || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkString("length",length,""+4)) && success;
                       success = checkString("remarks",remarks,null) && success;
@@ -1568,7 +1568,7 @@ Detects native driver bug.
                         success = checkString("remarks",remarks,("")) && success;
                     }else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkString("precision",precision,""+26)) && success;
                       success = (checkString("length",length,""+16)) && success;
@@ -1596,7 +1596,7 @@ Detects native driver bug.
                          success = checkString("remarks",remarks,("")) && success;
                     }else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = checkString("typeName",typeName,("CHAR")) && success;
                       success = (checkString("precision",precision,""+10)) && success;
@@ -1629,7 +1629,7 @@ Detects native driver bug.
                     else if ((getJdbcLevel() >= 4) ||
                         (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkString("length",length,""+8)) && success;
                       success = checkString("remarks",remarks,null) && success;
@@ -1656,7 +1656,7 @@ Detects native driver bug.
                     } else if ((getJdbcLevel() >= 4) || (
                         getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkString("length",length,""+4)) && success;
                       success = checkString("remarks",remarks,null) && success;
@@ -1676,7 +1676,7 @@ Detects native driver bug.
             // System.out.println ("Rows = " + rows);
 
             rs.close ();
-            if(getRelease() >= JDTestDriver.RELEASE_V5R4M0) //@C1A
+            if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@C1A
                 assertCondition((rows == 5) && success, "rows = "+rows+" "+errorMessage);    //@C1A
             else                                            //@C1A
                 assertCondition ((rows == 4) && success, "rows = "+rows+" "+errorMessage+" added by native driver 8/3/05");
@@ -1765,7 +1765,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
         	  if ((getDriver() == JDTestDriver.DRIVER_NATIVE )  &&
-        			  (getRelease()< JDTestDriver.RELEASE_V5R5M0)) {
+        			  (getRelease()< JDTestDriver.RELEASE_V7R1M0)) {
         		  ex.length=null;
         		  ex.remarks="";
         	  }
@@ -1814,7 +1814,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
             if ((getDriver() == JDTestDriver.DRIVER_NATIVE )  &&
-                (getRelease()< JDTestDriver.RELEASE_V5R5M0)) {
+                (getRelease()< JDTestDriver.RELEASE_V7R1M0)) {
               ex.length=null;
               ex.remarks="";
             }
@@ -1862,7 +1862,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
             if ((getDriver() == JDTestDriver.DRIVER_NATIVE )  &&
-                (getRelease()< JDTestDriver.RELEASE_V5R5M0)) {
+                (getRelease()< JDTestDriver.RELEASE_V7R1M0)) {
               // This is really wrong..
               ex.dataType ="19";
               ex.length=null;
@@ -1913,7 +1913,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
             if ((getDriver() == JDTestDriver.DRIVER_NATIVE )  &&
-                (getRelease()< JDTestDriver.RELEASE_V5R5M0)) {
+                (getRelease()< JDTestDriver.RELEASE_V7R1M0)) {
               ex.length=null;
               ex.remarks="";
             }
@@ -1967,7 +1967,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
         	  if ((getDriver() == JDTestDriver.DRIVER_NATIVE )) {
-        		  if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        		  if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         			  ex.length=null;
         			  ex.remarks="";
         		  }
@@ -2017,7 +2017,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
         	  if ((getDriver() == JDTestDriver.DRIVER_NATIVE )) {
-        		  if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        		  if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         			  ex.typeName = "DOUBLE PRECISION";
         			  ex.length=null;
         			  ex.remarks="";
@@ -2069,7 +2069,7 @@ Detects native driver bug.
 
           if (JDTestDriver.isLUW() || (getJdbcLevel() >= 4)||
               (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-                  getRelease() >= JDTestDriver.RELEASE_V5R5M0) ||
+                  getRelease() >= JDTestDriver.RELEASE_V7R1M0) ||
                   (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
             // LUW changes FLOAT to DOUBLE
             // SYSIBM procedures also report this
@@ -2079,7 +2079,7 @@ Detects native driver bug.
           }
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V5R5M0 )) {
+            if ((getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V7R1M0 )) {
               ex.dataType=""+Types.DOUBLE;
               ex.typeName="DOUBLE PRECISION";
               ex.precision="53";
@@ -2136,7 +2136,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
         	  if ((getDriver() == JDTestDriver.DRIVER_NATIVE )) {
-        		  if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        		  if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         			  ex.length=null;
         			  ex.remarks="";
         		  }
@@ -2185,7 +2185,7 @@ Detects native driver bug.
 
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V5R5M0)) {
+            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
               ex.precision=null;
               ex.length=""+10;
               ex.remarks="";
@@ -2237,7 +2237,7 @@ Detects native driver bug.
 
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V5R5M0)) {
+            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
               ex.precision=null;
               ex.length="8";
               ex.scale=null;
@@ -2288,7 +2288,7 @@ Detects native driver bug.
 
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V5R5M0)) {
+            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
               ex.precision=null;
               ex.length="26";
               ex.scale=null;
@@ -2343,7 +2343,7 @@ Detects native driver bug.
 
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V5R5M0)) {
+            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
               ex.typeName="CHARACTER";
               ex.precision=null;
               ex.remarks="";
@@ -2395,7 +2395,7 @@ Detects native driver bug.
 
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V5R5M0)) {
+            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
               ex.typeName="CHARACTER VARYING";
               ex.precision=null;
               ex.remarks="";
@@ -2424,7 +2424,7 @@ Detects native driver bug.
         public void Var043()
         {
 	    if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() <= JDTestDriver.RELEASE_V6R1M0) {
+		getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 		notApplicable("Not working in pree V5R5 native code");
 		return;
 	    }
@@ -2457,7 +2457,7 @@ Detects native driver bug.
         	  if ((getDriver() == JDTestDriver.DRIVER_NATIVE ) &&
 		      (getRelease()< JDTestDriver.RELEASE_V7R1M0)) {
         		  // This is really wrong
-        		  if (getRelease() >= JDTestDriver.RELEASE_V5R3M0 && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        		  if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         			  // Recent CLI PTF fixed this
 
         		  } else {
@@ -2516,7 +2516,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V5R5M0 )) {
+            if ((getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() < JDTestDriver.RELEASE_V7R1M0 )) {
               ex.dataType = ""+Types.CHAR;
               ex.typeName = "CHARACTER";
               ex.precision=null;
@@ -2548,7 +2548,7 @@ Detects native driver bug.
         public void Var045()
         {
 	    if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() <= JDTestDriver.RELEASE_V6R1M0) {
+		getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 		notApplicable("Not working in pre V5R5 native code");
 		return;
 	    }
@@ -2580,7 +2580,7 @@ Detects native driver bug.
           if ((getJdbcLevel() < 4)) {
             if ((getDriver() == JDTestDriver.DRIVER_NATIVE ) &&
 		(getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-		if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		    // Recent CLI PTF fixed this
 
 		} else {
@@ -2653,7 +2653,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
             // Now fix older releases with the wrong answers
             if ((getJdbcLevel() < 4)) {
-              if ((getDriver() == JDTestDriver.DRIVER_NATIVE   && getRelease() < JDTestDriver.RELEASE_V5R5M0)) {
+              if ((getDriver() == JDTestDriver.DRIVER_NATIVE   && getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
 		ex.dataType = null;
 		ex.precision = null;
                 ex.remarks="";
@@ -2706,7 +2706,7 @@ Detects native driver bug.
           // Now fix older releases with the wrong answers
           if ((getJdbcLevel() < 4)) {
             if ((getDriver() == JDTestDriver.DRIVER_NATIVE  &&
-                   getRelease() < JDTestDriver.RELEASE_V5R5M0 )) {
+                   getRelease() < JDTestDriver.RELEASE_V7R1M0 )) {
               ex.dataType=""+Types.VARCHAR;
               ex.typeName="CHARACTER VARYING";
               ex.precision=null;
@@ -2961,7 +2961,7 @@ Detects native driver bug with getLong @D1A
                         success = (checkString("PROCCOLS.PARM:remarks", remarks, "")) && success;
                    }
                    else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC  ) ||
-                   ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                   ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                    (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARM:length", length ,4)) && success;
                       success = (checkString("PROCCOLS.PARM:remarks", remarks, null)) && success;
@@ -2989,7 +2989,7 @@ Detects native driver bug with getLong @D1A
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (
-                            getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARM1:length", length ,16)) && success;
                       success = (checkInt("PROCCOLS.PARM1:scale", scale, 6)) && success;
@@ -3020,7 +3020,7 @@ Detects native driver bug with getLong @D1A
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC )
                         || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkString("PROCCOLS.PARM2:typeName", typeName,("CHAR"))) && success;
                       success = (checkInt("PROCCOLS.PARM2:precision", precision,10)) && success;
@@ -3056,7 +3056,7 @@ Detects native driver bug with getLong @D1A
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC )
                         || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARMXX:length", length ,8)) && success;
                       success = (checkString("PROCCOLS.PARMXX:remarks", remarks, null)) && success;
@@ -3082,7 +3082,7 @@ Detects native driver bug with getLong @D1A
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLSLCN.THISIS..:length", length ,4)) && success;
                       success = (checkString("PROCCOLSLCN.THISIS..:remarks", remarks, null)) && success;
@@ -3100,7 +3100,7 @@ Detects native driver bug with getLong @D1A
             // System.out.println ("Rows = " + rows);
 
             rs.close ();
-            if(getRelease() >= JDTestDriver.RELEASE_V5R4M0) //@C1A
+            if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@C1A
                 assertCondition((rows == 5) && success, "rows = "+rows+" sb 5 "+ errorMessage);    //@C1A
             else                                            //@C1A
                 assertCondition ((rows == 4) && success, "rows = "+rows+" sb 4 "+ errorMessage);
@@ -3169,7 +3169,7 @@ Detects native driver bug with getObject @D1A
                         success = (checkString("PROCCOLS.PARM:remarks", remarks, "")) && success;
                    }
                    else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC  ) ||
-                   ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                   ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                    (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARM:length", length ,4)) && success;
                       success = (checkString("PROCCOLS.PARM:remarks", remarks, null)) && success;
@@ -3197,7 +3197,7 @@ Detects native driver bug with getObject @D1A
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (
-                            getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARM1:length", length ,16)) && success;
                       success = (checkInt("PROCCOLS.PARM1:scale", scale, 6)) && success;
@@ -3228,7 +3228,7 @@ Detects native driver bug with getObject @D1A
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC )
                         || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkString("PROCCOLS.PARM2:typeName", typeName,("CHAR"))) && success;
                       success = (checkInt("PROCCOLS.PARM2:precision", precision,10)) && success;
@@ -3264,7 +3264,7 @@ Detects native driver bug with getObject @D1A
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC )
                         || ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLS.PARMXX:length", length ,8)) && success;
                       success = (checkString("PROCCOLS.PARMXX:remarks", remarks, null)) && success;
@@ -3290,7 +3290,7 @@ Detects native driver bug with getObject @D1A
                     }
                     else if ((getJdbcLevel() >= 4) || (getDriver() == JDTestDriver.DRIVER_JCC ) ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                            (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                       success = (checkInt("PROCCOLSLCN.THISIS..:length", length ,4)) && success;
                       success = (checkString("PROCCOLSLCN.THISIS..:remarks", remarks, null)) && success;
@@ -3308,7 +3308,7 @@ Detects native driver bug with getObject @D1A
             // System.out.println ("Rows = " + rows);
 
             rs.close ();
-            if(getRelease() >= JDTestDriver.RELEASE_V5R4M0) //@C1A
+            if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@C1A
                 assertCondition((rows == 5) && success, "rows = "+rows+" sb 5 "+ errorMessage);    //@C1A
             else                                            //@C1A
                 assertCondition ((rows == 4) && success, "rows = "+rows+" sb 4 "+ errorMessage);
@@ -3328,7 +3328,7 @@ Detects native driver bug with getObject @D1A
     {
 
 
-        if (getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
+        if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
             notApplicable("V5R4 or later testcase");
             return;
 
@@ -3363,14 +3363,14 @@ Detects native driver bug with getObject @D1A
         }
 
 	// Fixed 06/02/2012
-	if (getJdbcLevel() >= 4 && getRelease() == JDTestDriver.RELEASE_V6R1M0) {
+	if (getJdbcLevel() >= 4 && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
             ex.dataType = "-8";
             ex.length = "42";
 	}
 
         // Fix V5R4
         if ((getJdbcLevel() < 4) &&
-                ( getRelease() == JDTestDriver.RELEASE_V5R4M0) ) {
+                ( getRelease() == JDTestDriver.RELEASE_V7R1M0) ) {
             ex.dataType = null;
             ex.precision = null;
             ex.length = "40";
@@ -3379,7 +3379,7 @@ Detects native driver bug with getObject @D1A
 
         // Fix V5R4 toolbox
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && (getJdbcLevel() >= 4) &&
-                ( getRelease() == JDTestDriver.RELEASE_V5R4M0) ) {
+                ( getRelease() == JDTestDriver.RELEASE_V7R1M0) ) {
             ex.dataType = "-8";
             ex.precision = "0";
             ex.length = "40";
@@ -3405,7 +3405,7 @@ Detects native driver bug with getObject @D1A
         }
 
         if (getJdbcLevel() >= 4 &&
-                getRelease() == JDTestDriver.RELEASE_V6R1M0 &&
+                getRelease() == JDTestDriver.RELEASE_V7R1M0 &&
                 getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 
             ex.dataType = "-8" ;
@@ -3488,7 +3488,7 @@ Created 1/31/2011 for CPS 8DHTTE.
     {
 
 
-	if (getRelease() == JDTestDriver.RELEASE_V5R4M0 &&
+	if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&
 	    getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 	    notApplicable("Toolbox driver fails in V5R4 on call to isAutoincrement");
 	    return;
@@ -4402,7 +4402,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 			url = baseURL_;
 		    }
 		    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
-			getRelease() == JDTestDriver.RELEASE_V6R1M0) {
+			getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 			url += ";metadata source=1"; 
 		    } 
 		    connection = testDriver_.getConnection (url,
@@ -4423,7 +4423,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 
 		    if (isJdbc40() &&
 			getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
-			getRelease() <= JDTestDriver.RELEASE_V6R1M0) {
+			getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
 
 			connection = testDriver_.getConnection(baseURL_						    + ";errors=full;metadata source=1;libraries=" + JDDMDTest.COLLECTION + " "
 							       + JDDMDTest.COLLECTION2 + " " + JDDMDTest.COLLECTIONXX, userId_, encryptedPassword_);

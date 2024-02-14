@@ -51,9 +51,7 @@ public class TestDriverStatic
      static SecurityManager defaultSecurityManager_; 
     static {
       try { 
-      String s = System.getProperty("os.name");
-      boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
-      if (onI5OS) onAS400_ = true; // make sure this flag gets set
+      if (JTOpenTestEnvironment.isOS400) onAS400_ = true; // make sure this flag gets set
       
       // Setting a security manager is deprecated.  Remove. 
       // defaultSecurityManager_ = System.getSecurityManager(); 

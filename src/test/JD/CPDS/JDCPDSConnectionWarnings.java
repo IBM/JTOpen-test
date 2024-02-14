@@ -143,7 +143,7 @@ Forces a single warning to be posted to the connection.
     throws Exception
     {
         if (isJdbc20StdExt()) {
-	    if (  getRelease()  >= JDTestDriver.RELEASE_V5R5M0) {
+	    if (  getRelease()  >= JDTestDriver.RELEASE_V7R1M0) {
 		// In V5R5, we not longer cause a warning when switching autocommit
 		// For another warning another way.
 		JDReflectionUtil.callMethod_V(c, "setClientInfo", "Bogus", "x"); 

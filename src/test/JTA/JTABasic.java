@@ -95,7 +95,7 @@ Performs cleanup needed after running variations.
    // Basic Transactional (JTA) tests
 
    public void Var001() {             // from ~kulack/JTA/jtatest/JTAEasy.java
-      if ( getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+      if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
          notApplicable("OLD JTA TEST"); 
          return; 
       }
@@ -155,7 +155,7 @@ Performs cleanup needed after running variations.
 
 
    public void Var002() { // from ~kulack/JTA/jtatest/JTAEnd.java
-     if ( getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+     if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
        notApplicable("OLD JTA TEST"); 
        return; 
     }
@@ -250,7 +250,7 @@ Performs cleanup needed after running variations.
    }
 
    public void Var003() {
-     if ( getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+     if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
        notApplicable("OLD JTA TEST"); 
        return; 
     }
@@ -374,7 +374,7 @@ Performs cleanup needed after running variations.
 
 
    public void Var004() {
-     if ( getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+     if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
        notApplicable("OLD JTA TEST"); 
        return; 
     }
@@ -393,7 +393,7 @@ Performs cleanup needed after running variations.
 
 
    public void Var005() {
-     if ( getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+     if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
        notApplicable("OLD JTA TEST"); 
        return; 
     }

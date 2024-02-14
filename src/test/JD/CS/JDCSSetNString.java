@@ -722,11 +722,11 @@ setNString() - Set a DATALINK parameter.
                     JDSetupProcedure.setTypesParameters (cs, JDSetupProcedure.STP_CSINOUT,
                                                          supportedFeatures_);
                     JDSetupProcedure.register (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, getDriver());
-                    JDReflectionUtil.callMethod_V(cs, "setNString", 18, "http://w3.rchland.ibm.com");
+                    JDReflectionUtil.callMethod_V(cs, "setNString", 18, "https://github.com");
                     cs.execute ();
                     String check=(String) JDReflectionUtil.callMethod_O(cs,"getNString",18);
                     cs.close();
-                    assertCondition (check.equalsIgnoreCase("http://w3.rchland.ibm.com"));
+                    assertCondition (check.equalsIgnoreCase("https://github.com"));
                 }
                 catch(Exception e)
                 {
@@ -1539,11 +1539,11 @@ setNString() - Set a DATALINK parameter.
                     JDSetupProcedure.setTypesParameters (cs, JDSetupProcedure.STP_CSINOUT,
                                                          supportedFeatures_);
                     JDSetupProcedure.register (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, getDriver());
-                    JDReflectionUtil.callMethod_V(cs,"setNString","P_DATALINK", "http://w3.rchland.ibm.com");
+                    JDReflectionUtil.callMethod_V(cs,"setNString","P_DATALINK", "https://github.com");
                     cs.execute ();
                     String check=(String) JDReflectionUtil.callMethod_O(cs,"getNString",18);
                     cs.close();
-                    assertCondition (check.equalsIgnoreCase("http://w3.rchland.ibm.com"));
+                    assertCondition (check.equalsIgnoreCase("https://github.com"));
                 }
                 catch(Exception e)
                 {

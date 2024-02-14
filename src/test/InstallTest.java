@@ -224,13 +224,9 @@ public void createTestcases()
         catch (Exception e) {}
     }
 
-    String osName = System.getProperty("os.name").trim().toUpperCase();
-    if (osName.equals("AIX")) runningAIX_ = true;
-    else runningAIX_ = false;
+      runningAIX_ = JTOpenTestEnvironment.isAIX; 
 
-    if ((osName.equalsIgnoreCase("AIX"))   ||
-        (osName.equalsIgnoreCase("SUNOS")) ||
-        (osName.equalsIgnoreCase("LINUX"))) {
+    if (JTOpenTestEnvironment.isAIX  ||JTOpenTestEnvironment.isLinux) {
       runningUNIX_ = true;
     }
     else runningUNIX_ = false;

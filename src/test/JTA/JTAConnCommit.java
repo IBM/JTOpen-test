@@ -435,7 +435,7 @@ Performs cleanup needed after running variations.
                }
                catch (Exception e) {
                   if (exceptionMsgHas(e, "XAER_PROTO"))
-		      if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			  assertExceptionIsInstanceOf(e, "javax.transaction.xa.XAException");
 		      } else { 
 			  assertExceptionIsInstanceOf(e, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
@@ -518,7 +518,7 @@ Performs cleanup needed after running variations.
                }
                catch (Exception e) {
                   if (exceptionMsgHas(e, "XAER_PROTO"))
-		      if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			  assertExceptionIsInstanceOf(e, "javax.transaction.xa.XAException");
 		      } else { 
 			  assertExceptionIsInstanceOf(e, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");

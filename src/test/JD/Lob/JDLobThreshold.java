@@ -181,7 +181,7 @@ Performs cleanup needed after running variations.
 	       boolean check;
 	       sb.setLength(0); 
 	       if(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		  getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+		  getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 		   check = compareBeginsWithBytes( v, LARGE_,sb);
 	       else
 		   check = compare (v, LARGE_,sb);
@@ -220,7 +220,7 @@ Performs cleanup needed after running variations.
 	       boolean check;
 	       sb.setLength(0); 
 	       if(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		  getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+		  getRelease() >= JDTestDriver.RELEASE_V7R1M0)
 		   check = compareBeginsWithBytes( v, LARGE_,sb);
 	       else
 		   check = compare (v, LARGE_,sb);
@@ -258,7 +258,7 @@ Performs cleanup needed after running variations.
                InputStream v = blob.getBinaryStream ();
                sb.setLength(0); 
                boolean check = 	(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-				 getRelease() >= JDTestDriver.RELEASE_V5R3M0) ?
+				 getRelease() >= JDTestDriver.RELEASE_V7R1M0) ?
 		 compareBeginsWithBytes( v, LARGE_,sb):
 		 compare (v, LARGE_,sb);
                rs.close ();
@@ -296,7 +296,7 @@ Performs cleanup needed after running variations.
 //               boolean check = compare (v, LARGE_);
                sb.setLength(0); 
                boolean check = 	(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-				 getRelease() >= JDTestDriver.RELEASE_V5R3M0) ?
+				 getRelease() >= JDTestDriver.RELEASE_V7R1M0) ?
 		 compareBeginsWithBytes( v, LARGE_,sb):
 		 compare (v, LARGE_,sb);
 
@@ -335,7 +335,7 @@ Performs cleanup needed after running variations.
                InputStream v = blob.getBinaryStream ();
 //               boolean check = compare (v, LARGE_);
                boolean check = 	(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-				 getRelease() >= JDTestDriver.RELEASE_V5R3M0) ?
+				 getRelease() >= JDTestDriver.RELEASE_V7R1M0) ?
 		 compareBeginsWithBytes( v, LARGE_,sb):
 		 compare (v, LARGE_,sb);
 
@@ -374,7 +374,7 @@ Performs cleanup needed after running variations.
 //               boolean check = compare (v, LARGE_);
                sb.setLength(0); 
                boolean check = 	(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-				 getRelease() >= JDTestDriver.RELEASE_V5R3M0) ?
+				 getRelease() >= JDTestDriver.RELEASE_V7R1M0) ?
 		 compareBeginsWithBytes( v, LARGE_,sb):
 		 compare (v, LARGE_,sb);
 
@@ -413,7 +413,7 @@ Performs cleanup needed after running variations.
 //               boolean check = compare (v, LARGE_);
                sb.setLength(0); 
                boolean check = 	(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-				 getRelease() >= JDTestDriver.RELEASE_V5R3M0) ?
+				 getRelease() >= JDTestDriver.RELEASE_V7R1M0) ?
 		 compareBeginsWithBytes( v, LARGE_,sb):
 		 compare (v, LARGE_,sb);
 
@@ -463,7 +463,7 @@ than 500,000 and we can't create a memory block for a single column result set.
 //               boolean check = compare (v, LARGE_);
                sb.setLength(0); 
                boolean check = 	(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-				 getRelease() >= JDTestDriver.RELEASE_V5R3M0) ?
+				 getRelease() >= JDTestDriver.RELEASE_V7R1M0) ?
 		 compareBeginsWithBytes( v, LARGE_,sb):
 		 compare (v, LARGE_,sb);
 
@@ -509,7 +509,7 @@ SQL400 - See note in variation 8 for details on the driver different here.
 //               boolean check = compare (v, LARGE_);
                sb.setLength(0); 
                boolean check = 	(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-				 getRelease() >= JDTestDriver.RELEASE_V5R3M0) ?
+				 getRelease() >= JDTestDriver.RELEASE_V7R1M0) ?
 		 compareBeginsWithBytes( v, LARGE_,sb):
 		 compare (v, LARGE_,sb);
 
@@ -548,7 +548,7 @@ SQL400 - See note in variation 8 for details on the driver different here.
 //               boolean check = compare (v, LARGE_);
                sb.setLength(0); 
                boolean check = 	(getDriver() == JDTestDriver.DRIVER_NATIVE &&
-				 getRelease() >= JDTestDriver.RELEASE_V5R3M0) ?
+				 getRelease() >= JDTestDriver.RELEASE_V7R1M0) ?
 		 compareBeginsWithBytes( v, LARGE_,sb):
 		 compare (v, LARGE_,sb);
 

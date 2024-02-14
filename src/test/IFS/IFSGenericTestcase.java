@@ -27,6 +27,7 @@ import java.util.Hashtable;
 import jcifs.smb.SmbException;
 import test.IFSTests;
 import test.JCIFSUtility;
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import com.ibm.as400.access.AS400;
@@ -61,8 +62,6 @@ public class IFSGenericTestcase extends Testcase
   public boolean OS400_ = false;
   public boolean UNIX_ = false;
   public boolean AIX_ = false; 
-
-  
   public static boolean DEBUG = false;
 
   public boolean isClassic; 
@@ -123,30 +122,7 @@ Constructor.
    }
 
    // Determine operating system we're running under
-   operatingSystem_ = System.getProperty("os.name");
-   if (operatingSystem_.indexOf("Windows") >= 0 ||
-       operatingSystem_.indexOf("DOS") >= 0 ||
-       operatingSystem_.indexOf("OS/2") >= 0)
-   {
-     DOS_ = true;
-   }
-   else
-   {
-     DOS_ = false;
-   }
-
-   // Are we in OS/2? If so, need different commands for deleting stuff...
-   //if (operatingSystem_.indexOf("OS/2") >= 0) {
-   //  OS2_ = true;
-   //}
-
-   if (operatingSystem_.indexOf("Windows NT") >= 0) {
-     NT_ = true;
-   }
-
-   if (operatingSystem_.indexOf("Linux") >= 0) {
-     linux_ = true;
-   }
+     DOS_ = JTOpenTestEnvironment.isWindows; 
 
    if (operatingSystem_.equals("OS/400")) {
       OS400_ = true;
@@ -160,17 +136,13 @@ Constructor.
           (operatingSystem_.equalsIgnoreCase("LINUX")))
         UNIX_ = true;
 
-    if (operatingSystem_.indexOf("AIX") >= 0) {    
-      AIX_ = true;                                 
-    }                                              
 
 
    output_.println("Running under: " + operatingSystem_);
    output_.println("DOS-based file structure: " + DOS_);
    output_.println("Executing " + (isApplet_ ? "applet." : "application."));
-   output_.println("NT Flag:    " + NT_);
-   output_.println("Linux Flag: " + linux_);
-   output_.println("AIX Flag:   " + AIX_); 
+   output_.println("Linux Flag: " + JTOpenTestEnvironment.isLinux);
+   output_.println("AIX Flag:   " + JTOpenTestEnvironment.isAIX); 
 
   
    ifsDirName_ = IFSFile.separator + "IFSTEST."+ System.getProperty("user.name") + IFSFile.separator ;
@@ -639,7 +611,7 @@ Create a file to be used for the testcases.
 		  Process myProcess = null;
 		  int rc = -1;  //@A1C
 
-		  if (DOS_ && !OS2_)
+		  if (DOS_ )
 		  {
 	  //myProcess = myRuntime.exec("command.com /c deltree /y "+pcPathName);
 		      myProcess = myRuntime.exec("cmd.exe /c rmdir /s /q "+pcPathName);
@@ -656,21 +628,14 @@ Create a file to be used for the testcases.
 			  Thread.sleep(1000);                   //@A1A
 		      }                                        //@A1A
 		  }
-		  else if (DOS_ && OS2_)
-		  {
-		      myProcess = myRuntime.exec("cmd.exe /c xdel "+pcPathName+"/s /e /y");
-		      rc = myProcess.waitFor();
-		      myProcess = myRuntime.exec("cmd.exe /c rd "+pcPathName);
-		      rc = myProcess.waitFor();
-		  }
-		  else // assume UNIX file structure if not DOS or OS/2
+		  else // assume UNIX file structure if not DOS 
 		  {
 		      myProcess = myRuntime.exec("rm -r "+pcPathName);
 		      rc = myProcess.waitFor();
 		  }
 	      }
 
-	      if (isApplet_ || IFSTests.IsRunningOnOS400 || linux_)
+	      if (isApplet_ || IFSTests.IsRunningOnOS400 || JTOpenTestEnvironment.isLinux)
 	      {
 		  IFSFile stillThere = new IFSFile(systemObject_, pathName);
 		  if (stillThere.exists())
@@ -829,7 +794,7 @@ e.printStackTrace();
 
 
   public boolean checkFileExists(String ifsPathNameX) throws Exception { 
-      if (isApplet_ || linux_)
+      if (isApplet_ || JTOpenTestEnvironment.isLinux)
       {
   	IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
   	return (file.exists());
@@ -846,7 +811,7 @@ e.printStackTrace();
 
 
   public long checkFileLength(String ifsPathNameX) throws Exception { 
-      if (isApplet_ || linux_)
+      if (isApplet_ || JTOpenTestEnvironment.isLinux)
       {
   	IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
   	return (file.length());

@@ -207,7 +207,7 @@ SQL400 - The order of the values between the 2 drivers is different here.
                 rs.next ();
                 success = success && rs.getString ("TABLE_TYPE").equals ("SYSTEM TABLE");
 
-                if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)         //@C1A
+                if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)         //@C1A
                 {
                     rs.next ();
                     success = success && rs.getString ("TABLE_TYPE").equals ("ALIAS");  // added in JTOpen 4.9
@@ -218,7 +218,7 @@ SQL400 - The order of the values between the 2 drivers is different here.
             else
             {
                rs.next ();
-               if(getRelease() >= JDTestDriver.RELEASE_V5R2M0)
+               if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
                {
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"ALIAS") && success ;
                }
@@ -229,7 +229,7 @@ SQL400 - The order of the values between the 2 drivers is different here.
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"INOPERATIVE VIEW") && success ;
                }
 
-               if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+               if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
                {
                    rs.next ();
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"MATERIALIZED QUERY TABLE") && success ;
@@ -546,7 +546,7 @@ SQL400 - The order of the values between the 2 drivers is different here.
                 rs.next ();
                 success = success && rs.getString ("TABLE_TYPE").equals ("SYSTEM TABLE");
 
-                if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)         //@C1A
+                if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)         //@C1A
                 {
                     rs.next ();
                     success = success && rs.getString ("TABLE_TYPE").equals ("ALIAS");  // added in JTOpen 4.9
@@ -557,7 +557,7 @@ SQL400 - The order of the values between the 2 drivers is different here.
             else
             {
                rs.next ();
-               if(getRelease() >= JDTestDriver.RELEASE_V5R2M0)
+               if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
                {
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"ALIAS") && success ;
                }
@@ -568,7 +568,7 @@ SQL400 - The order of the values between the 2 drivers is different here.
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"INOPERATIVE VIEW") && success ;
                }
 
-               if(getRelease() >= JDTestDriver.RELEASE_V5R3M0)
+               if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
                {
                    rs.next ();
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"MATERIALIZED QUERY TABLE") && success ;

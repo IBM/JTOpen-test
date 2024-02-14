@@ -126,7 +126,7 @@ Performs cleanup needed after running variations.
 		try { 
 		    int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 		    if (errorCode == javax.transaction.xa.XAException.XAER_PROTO)
-			if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 			} else { 
 			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
@@ -179,7 +179,7 @@ Performs cleanup needed after running variations.
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                if (errorCode == javax.transaction.xa.XAException.XAER_PROTO)
-			if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 			} else { 
 
@@ -234,7 +234,7 @@ Performs cleanup needed after running variations.
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                if (errorCode == javax.transaction.xa.XAException.XAER_NOTA)
-			if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 			} else { 
 			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
@@ -289,7 +289,7 @@ Performs cleanup needed after running variations.
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                if (errorCode == javax.transaction.xa.XAException.XAER_PROTO)
-			if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 			} else { 
 			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
@@ -347,7 +347,7 @@ Performs cleanup needed after running variations.
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                if (errorCode == javax.transaction.xa.XAException.XAER_PROTO) {
-			if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 			} else { 
 			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
@@ -413,7 +413,7 @@ Performs cleanup needed after running variations.
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                if (errorCode == javax.transaction.xa.XAException.XAER_PROTO) {
-			if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 			} else { 
 			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
@@ -513,7 +513,7 @@ Performs cleanup needed after running variations.
                  int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                   if (errorCode == javax.transaction.xa.XAException.XAER_NOTA)
-			if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 			} else { 
 			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
@@ -572,7 +572,7 @@ Performs cleanup needed after running variations.
                  int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                   if (errorCode == javax.transaction.xa.XAException.XAER_NOTA)
-			if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
 			} else { 
 			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");

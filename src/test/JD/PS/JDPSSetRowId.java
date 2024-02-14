@@ -881,7 +881,7 @@ public class JDPSSetRowId extends JDTestcase {
    * setRowId() - Set a ROWID parameter and make sure it works.
    **/
   public void Var032() {
-    if (isToolboxDriver() && getRelease() <= JDTestDriver.RELEASE_V5R3M0) {
+    if (isToolboxDriver() && getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
       notApplicable(
           "issue 37803 opened for hstsrv, but nogo unless customer request. (on v5r3)");
       return;

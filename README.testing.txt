@@ -1,17 +1,18 @@
 This is the testbucket for JTOpen
 -----------------------------------
 
-The structure is that individual tests are named xxxTest.  Within tests, there are testcases that are run.  These testcases are typically named xxxTestcase.
+The structure is that individual tests are named xxxTest.  Within tests, there are testcases that are run.  
+These testcases are typically named xxxTestcase.
 
 To run a test, you run the main test class and specify parameters that control how the test runs. 
-For example, the following will run the AS400JPingTest toolbox from a POSIX shell with the specified settings.
+For example, the following will run the AS400JPingTest test from a POSIX shell with the specified settings.
 
 ------------------------------------------------------------------------------------------------------------------
 
 # This is the library on the IBM i that will be used for the tests
 TESTLIBRARY=JDT7583A
 # This is the name of the IBM i to be tested
-SYSTEM=SQ750
+SYSTEM=SYSTEMS
 # This is the userid / password used to connect to the system
 UID=JAVA
 PWD=xxxxxxx
@@ -70,29 +71,40 @@ __________________________________________________
 An alternate way of running the tests is to use the JDRunit program.
 
 JDRunit setup. 
+----------------------------
 
 1.  Create a directory to be used for testing (i.e. /home/toolboxTest
-2.  Copy JTOpen-test.jar into this directory. 
-    (i.e. curl -L -o JTOpen-test.jar https://github.com/IBM/JTOpen-test/releases/download/v1.0.3/JTOpen-test-1.0.3.jar )
-3.  Copy a version of jt400.jar into this directory. 
-    (i.e. curl -L -o jt400.jar https://github.com/IBM/JTOpen/releases/download/v20.0.6/jt400-20.0.6-java8.jar )
-4.  Change your current directory into this directory
-    cd /home/toolboxTest
+2.  Set the JTOPEN_TEST_DIR environment variable to this directory.  This should be set as a system environment variable.
+3.  Change your current directory into this directory
+    cd $JTOPEN_TEST_DIR
+4.  Copy JTOpen-test.jar into this directory. 
+    (i.e. curl -L -o JTOpen-test.jar https://github.com/IBM/JTOpen-test/releases/download/v1.0.5/JTOpen-test-1.0.5.jar )
 5.  Create a ini directory to hold configuration files
     mkdir ini
-6.  Extract the sample config files into this jar file
+6.  Run the setup program to extract the sample config files.  The files will need to be edited
+    java -jar JTOpen-test.jar test.JTOpenTestSetup.jar   
+Extract the sample config files into this jar file
     jar xvf JTOpen-test.jar ini/netrc.ini ini/systems.ini ini/notification.ini ini/dropAuthority.ini ini/runitxx8Sx.ini
 7.  Edit the ini/netrc.ini file and add the appropriate credentials.
 8.  Edit the ini/dropAuthority.ini file and make sure the USERID matches the TESTUSERID in the ini/netrc.ini file
-9.  Edit the ini/system.ini file and add information to the systems you are testing to. 
+9.  Edit the ini/systems.ini file and add information to the systems you are testing to. 
 10. Edit the ini/notification.ini file to add e-mail addresses for e-mail notifications as well as the SMTP host. 
 11. Copy the ini/runitxx8Sx.ini to a file that represents the JVM used for the test.  The 8S is a sample configuration for a Java 8 test on a PC. 
-12. Make a jars directory to contain accessor jar files
-    mkdir jar
-13. For the IFS tests, get a copy jcifs.jar and copy into the jar directory.     
+12. Download the latest JTOpen release. 
+    java -cp JTOpen-test.jar test.JTOpenDownloadReleaseJars
+13. For the IFS tests, get a copy of jcifs.jar and copy into the jar directory.     
+
+*Note: to refresh the test jar, you can use
+java -cp .:JTOpen-test.jar test.JTOpenTestSeup
+
+* Additional windows setup
+If running on windows, then CYGWIN need to installed.
+Set the CYGWIN_HOME environment variable to the directory where CYGWIN was installed. 
 
     
 JDRunit running
+-----------------------------
+
 When running JDRunit, you specify initials that describe the testcase as well as the testcase to be run. 
 The initials consist of 5 characters.  The first 2 specify the release of the IBM i (74, 75) , the next two indicate the JVM to be used, 
 and the last character indicates the type of test (A=toolbox, T=toolbox JDBC).  
@@ -112,5 +124,85 @@ The report will be generated in ct/latest758AA.html
 
 Tests supported by JDRunit are specified in the ini/testbase.ini file. 
 
-Testcases run for regression purposes for toobox can be found in the ini/regressionBaseA.ini file
+Testcases run for regression purposes for JTOpen can be found in the following files: 
+ ini/regressionBaseA.ini     -- toolbox tests
+ ini/regressionBaseB.ini     -- toolbox native tests
+ ini/regressionBaseT.ini     -- JDBC tests
+ ini/regressionBaseU.ini     -- JDBC native tests
+ 
+ --
+ -- Scheduler 
+ -- 
+ 
+ The testbucket contains a scheduler to run the tests.  Tests are submitted to the scheduler, and the scheduler then runs the tests.
+ 
+ -- Scheduler configuration
+1.  Make sure the setup for the ini files for JDRunit was completed (see above). 
+1.  Pick an ID to use for the scheduler. For example, pick 11
+2.  Edit the ini/systems.ini and add a line in the following format, where localsystem is the name of the local system, 
+    11 is the selected id, and ibmi is the name of the IBM i system. 
+
+SCHEDULERID_localsystem=11
+SCHEDULERDB_localsystem=ibmi
+    If you don't know that name of the system, attempt to start the scheduler using the following
+    java -cp JTOpen-test.jar:jar/jt400.jar test.JDSchedulerServer 11 SERVER
+    You will see the error message with the name of the system
+    java.lang.Exception: ID for SCHEDULERID_localsystem not found in ini/systems.ini
+    
+        
+
+-- Start scheduler -- This will continue to run. 
+java -cp JTOpen-test.jar test.JDSchedulerServer 11 SERVER
+ 
+ 
+ -- Adding tests to the scheduler
+ -- Add tests using the following command where PRIORITY is the PRIORITY in the queue, INITIALS are the initials for the test, and TEST is the testname. 
+ java -cp 'JTOpen-test.jar:jars/jt400.jar' test.JDScheduler 11 ADD <PRIORITY> <INITIALS> <TEST>
+ 
+ -- For example 
+ java -cp 'JTOpen-test.jar:jars/jt400.jar' test.JDScheduler 11 ADD 20 758ST JDDriverAcceptsURL
+ 
+ -- The priorities used when the scheduler schedulers new jobs are the following. 
+PRIORITY 0 -- Run ASAP -- Reserved for runtime usage
+PRIORITY 5 -- Run JOB  -- Used to preempt other jobs
+PRIORITY 10 -- RERUNFAILED submitted jobs
+PRIORITY 20 -- REGRESSION submitted jobs
+PRIORITY 30 -- REGRESSION submission
+PRIORITY 30 -- RERUNFAILED submission
+PRIORITY 30 -- REPORT      submission
+PRIORITY 30 -- EMAIL submission
+ 
+-- The TEST can also be one of the following. 
+REPORT -- generates a report for the initials.  Appropriate web pages are generated in the ct/ directory.
+EMAIL  -- emails a report of the test using information in notifications.ini.  
+          The ini/DOMAIN.ini file must be created with the following contents
+          #
+          # Mapping of system names to domain
+          # The system name should be in lower case
+          #
+          localsystem=domain.for.local.system
+          The mail.smtp.host property must also be added to the ini/notification.ini file 
+          # Also mail.jar and activation.jar must be added to the jars/ directory. 
+ 
+ -- Viewing currently scheduled tests
+ java -cp 'JTOpen-test.jar:jars/jt400.jar' test.JDScheduler 11 LIST
+ 
+This will display the running and scheduled tests, for example. 
+----------------------------------------------------
+LIST as of 2024-02-13 10:25:44.367204
+----------------------------------------------------
+----------------------------------------------------
+RUNNING ITEMS (JDTESTINFO.SCRUN11)
+----------------------------------------------------
+PRI,                  ADDED_TS,  INIT, ACTION,                 STARTED_TS, RUN_SECONDS, AVG_RUN_SECONDS
+----------------------------------------------------
+SCHEDULED ITEMS (JDTESTINFO.SCHED11)
+----------------------------------------------------
+----------------------------------------------------
+END
+----------------------------------------------------
+
+ 
+ 
+ 
 

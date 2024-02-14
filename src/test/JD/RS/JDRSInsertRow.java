@@ -551,7 +551,7 @@ java.lang.Short object.  This testcase has been changed to match that expectatio
             for (int i = 0; i < columnCount; ++i) {
 		if (i != 27) {  /* skip the rowid row */ 
 		    if (i == updatedColumn) {
-			if (getDriver() == JDTestDriver.DRIVER_NATIVE &&  getRelease() ==  JDTestDriver.RELEASE_V5R1M0 )
+			if (getDriver() == JDTestDriver.DRIVER_NATIVE &&  getRelease() ==  JDTestDriver.RELEASE_V7R1M0 )
 			{
 			    if ((! after[i].equals (new Short ((short) 77)))
 				|| (afterNulls[i] != false))

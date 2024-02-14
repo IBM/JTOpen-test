@@ -209,10 +209,6 @@ public class AS400JDBCRowSetTestcase extends Testcase
         String os = System.getProperty("os.name");
         System.out.println("Environment: " + os);
 
-        //if (os.indexOf("OS/400") >= 0)
-        //    environment_ = OS_AS400;
-        //else if (os.indexOf("Windows") >= 0)
-        //    environment_ = OS_WINDOWS;
 
         if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))  //@B1A
         {

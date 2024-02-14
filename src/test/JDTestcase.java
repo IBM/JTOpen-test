@@ -37,7 +37,6 @@ import java.util.Vector;
 import javax.naming.Context;
 import javax.naming.NamingException;
 
-
 /**
  * The JDTestcase class is a superclass for all JDBC testcase.
  **/
@@ -48,17 +47,15 @@ public class JDTestcase extends Testcase {
   // Private data.
   protected Connection connection_;
 
-  public static String[] dataTypeMismatchExceptions = { "Data type mismatch",
-      "Parameter type not valid", "Data truncation" };
+  public static String[] dataTypeMismatchExceptions = { "Data type mismatch", "Parameter type not valid",
+      "Data truncation" };
 
-  public static String[] parameterDoesNotExistExceptions = {
-      "An undefined column name was detected", "Descriptor index not valid", };
+  public static String[] parameterDoesNotExistExceptions = { "An undefined column name was detected",
+      "Descriptor index not valid", };
 
-  public static String[] statementClosedExceptions = {
-      "Function sequence error", "STATEMENT CLOSED", };
+  public static String[] statementClosedExceptions = { "Function sequence error", "STATEMENT CLOSED", };
 
-  public static String[] parameterTypeNotValidExceptions = {
-      "Parameter type not valid", "Data type mismatch", };
+  public static String[] parameterTypeNotValidExceptions = { "Parameter type not valid", "Data type mismatch", };
 
   // Protected data.
   protected String baseURL_;
@@ -70,29 +67,29 @@ public class JDTestcase extends Testcase {
   private static int toolboxDriverMinorVersion_;
 
   private boolean largeDecimalPrecisionSupport_;
-  private boolean bigintSupport_; 
-  private boolean xmlSupport_; 
-  private boolean arraySupport_; 
-  private boolean timestamp12Support_; 
-  private boolean booleanSupport_; 
+  private boolean bigintSupport_;
+  private boolean xmlSupport_;
+  private boolean arraySupport_;
+  private boolean timestamp12Support_;
+  private boolean booleanSupport_;
   // private boolean collections_;
   private int driver_;
   private int subDriver_;
   private int databaseType_;
   private boolean lobSupport_;
   private boolean datalinkSupport_;
-  private boolean savepointSupport_; 
-  private boolean namedParameterSupport_; 
-  private boolean cursorHoldabilitySupport_; 
-  private boolean multipleOpenResultSetSupport_; 
-  private boolean generatedKeySupport_; 
-  private boolean updateableLobsSupport_; 
+  private boolean savepointSupport_;
+  private boolean namedParameterSupport_;
+  private boolean cursorHoldabilitySupport_;
+  private boolean multipleOpenResultSetSupport_;
+  private boolean generatedKeySupport_;
+  private boolean updateableLobsSupport_;
   // private String name_;
   private int jdk_ = 0;
-  private boolean returnValueSupport_; 
+  private boolean returnValueSupport_;
   private boolean decFloatSupport_;
-  protected JDTestDriver testDriver_; 
-  protected String collection_; 
+  protected JDTestDriver testDriver_;
+  protected String collection_;
   private long driverFixLevel_ = 0;
   private long driverFixDate_ = 0;
   static Object timeUnitSeconds = null;
@@ -102,8 +99,8 @@ public class JDTestcase extends Testcase {
 
   private boolean isOpenJdk = false;
 
-  private String javaHome = null; 
-  
+  private String javaHome = null;
+
   /**
    * Static initializer.
    **/
@@ -127,7 +124,7 @@ public class JDTestcase extends Testcase {
             // Note java.sql.SQLType is in JDK 1.8, as is java.time.Localtime
             Class.forName("java.sql.SQLType");
             jdbcLevel_ = 42;
-                     
+
           } catch (ClassNotFoundException e) {
             jdbcLevel_ = 41;
           }
@@ -149,13 +146,12 @@ public class JDTestcase extends Testcase {
     } catch (ClassNotFoundException e) {
       jdbcLevel_ = 20;
     }
-    System.out.println("jdbcLevel: " + jdbcLevel_); 
+    System.out.println("jdbcLevel: " + jdbcLevel_);
     // System.out.println("java.class.path:
     // "+System.getProperty("java.class.path"));
 
     try {
-      timeUnitSeconds = JDReflectionUtil
-          .getStaticField_O("java.util.concurrent.TimeUnit", "SECONDS");
+      timeUnitSeconds = JDReflectionUtil.getStaticField_O("java.util.concurrent.TimeUnit", "SECONDS");
     } catch (Exception e) {
     }
 
@@ -165,12 +161,9 @@ public class JDTestcase extends Testcase {
    * Constructor.
    **/
 
-  public JDTestcase(AS400 systemObject, String testcaseName,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
-      String password) {
-    super(systemObject, testcaseName, -1,
-        (Vector) namesAndVars.get(testcaseName), runMode, fileOutputStream,
-         password);
+  public JDTestcase(AS400 systemObject, String testcaseName, Hashtable namesAndVars, int runMode,
+      FileOutputStream fileOutputStream, String password) {
+    super(systemObject, testcaseName, -1, (Vector) namesAndVars.get(testcaseName), runMode, fileOutputStream, password);
 
     initializeFields(testcaseName);
 
@@ -179,13 +172,10 @@ public class JDTestcase extends Testcase {
   /**
    * Constructor.
    **/
-  public JDTestcase(AS400 systemObject, String testcaseName,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
-       String password, String pwrSysUid,
-      String pwrSysPwd) {
-    super(systemObject, testcaseName, -1,
-        (Vector) namesAndVars.get(testcaseName), runMode, fileOutputStream,
-         password, pwrSysUid, pwrSysPwd);
+  public JDTestcase(AS400 systemObject, String testcaseName, Hashtable namesAndVars, int runMode,
+      FileOutputStream fileOutputStream, String password, String pwrSysUid, String pwrSysPwd) {
+    super(systemObject, testcaseName, -1, (Vector) namesAndVars.get(testcaseName), runMode, fileOutputStream, password,
+        pwrSysUid, pwrSysPwd);
 
     initializeFields(testcaseName);
 
@@ -194,11 +184,11 @@ public class JDTestcase extends Testcase {
   private void initializeFields(String testcaseName) {
     baseURL_ = null;
     largeDecimalPrecisionSupport_ = false;
-    bigintSupport_ = false; 
-    xmlSupport_ = false; 
-    arraySupport_ = false; 
-    timestamp12Support_ = false; 
-    booleanSupport_ = false; 
+    bigintSupport_ = false;
+    xmlSupport_ = false;
+    arraySupport_ = false;
+    timestamp12Support_ = false;
+    booleanSupport_ = false;
     // collections_ = true;
     driver_ = JDTestDriver.DRIVER_NONE;
     subDriver_ = JDTestDriver.DRIVER_NONE;
@@ -207,32 +197,31 @@ public class JDTestcase extends Testcase {
     release_ = JDTestDriver.RELEASE_NONE;
     lobSupport_ = false;
     datalinkSupport_ = false;
-    savepointSupport_ = false; 
-    namedParameterSupport_ = false; 
-    cursorHoldabilitySupport_ = false; 
-    multipleOpenResultSetSupport_ = false; 
-    generatedKeySupport_ = false; 
-    updateableLobsSupport_ = false; 
-    returnValueSupport_ = false; 
+    savepointSupport_ = false;
+    namedParameterSupport_ = false;
+    cursorHoldabilitySupport_ = false;
+    multipleOpenResultSetSupport_ = false;
+    generatedKeySupport_ = false;
+    updateableLobsSupport_ = false;
+    returnValueSupport_ = false;
     decFloatSupport_ = false;
     name_ = testcaseName;
     system_ = systemObject_.getSystemName();
     testDriver_ = null;
     totalVariations_ = countVariations();
     userId_ = systemObject_.getUserId();
-    collection_ = null; 
+    collection_ = null;
     jdk_ = JVMInfo.getJDK();
-    
-    
+
   }
 
   protected boolean areLargeDecimalPrecisionsSupported() {
     return largeDecimalPrecisionSupport_;
   }
 
-  protected boolean areBigintsSupported() { 
-    return bigintSupport_; 
-  } 
+  protected boolean areBigintsSupported() {
+    return bigintSupport_;
+  }
 
   protected boolean areDecfloatsSupported() {
     return decFloatSupport_;
@@ -246,7 +235,6 @@ public class JDTestcase extends Testcase {
     return xmlSupport_;
   }
 
-  
   protected boolean areArraysSupported() {
     return arraySupport_;
   }
@@ -258,44 +246,44 @@ public class JDTestcase extends Testcase {
   /**
    * Indicates if savepoints are supported on the server release
    **/
-  protected boolean areSavepointsSupported() { 
-    return savepointSupport_; 
-  } 
+  protected boolean areSavepointsSupported() {
+    return savepointSupport_;
+  }
 
   /**
    * Indicates if named parameters are supported on the server release
    **/
-  protected boolean areNamedParametersSupported() { 
-    return namedParameterSupport_; 
-  } 
+  protected boolean areNamedParametersSupported() {
+    return namedParameterSupport_;
+  }
 
   /**
    * Indicates if cursor holdability is supported on the server release
    **/
-  protected boolean areCursorHoldabilitySupported() { 
-    return cursorHoldabilitySupport_; 
-  } 
+  protected boolean areCursorHoldabilitySupported() {
+    return cursorHoldabilitySupport_;
+  }
 
   /**
    * Indicates if multiple open result sets are supported on the server release
    **/
-  protected boolean areMultipleOpenResultSetsSupported() { 
-    return multipleOpenResultSetSupport_; 
-  } 
+  protected boolean areMultipleOpenResultSetsSupported() {
+    return multipleOpenResultSetSupport_;
+  }
 
   /**
    * Indicates if generated keys are supported on the server release
    **/
-  protected boolean areGeneratedKeysSupported() { 
-    return generatedKeySupport_; 
-  } 
+  protected boolean areGeneratedKeysSupported() {
+    return generatedKeySupport_;
+  }
 
   /**
    * Indicates if updateable lobs are supported on the server release
    **/
-  protected boolean areUpdateableLobsSupported() { 
-    return updateableLobsSupport_; 
-  } 
+  protected boolean areUpdateableLobsSupported() {
+    return updateableLobsSupport_;
+  }
 
   /**
    * Indicates if lobs are supported on the server release.
@@ -304,13 +292,13 @@ public class JDTestcase extends Testcase {
     return lobSupport_;
   }
 
-  protected boolean areReturnValuesSupported() { 
-    return returnValueSupport_; 
-  } 
+  protected boolean areReturnValuesSupported() {
+    return returnValueSupport_;
+  }
 
   /**
-   * Checks if JDBC 2.0 is available. Always returns true since the testcases
-   * are no long run on older JVMS.
+   * Checks if JDBC 2.0 is available. Always returns true since the testcases are
+   * no long run on older JVMS.
    **/
   // @Deprecated
   protected boolean checkJdbc20() {
@@ -318,8 +306,8 @@ public class JDTestcase extends Testcase {
   }
 
   /**
-   * Checks if JDBC 2.0 Standard Extension is available. Always returns true
-   * since the testcases are no long run on older JVMS.
+   * Checks if JDBC 2.0 Standard Extension is available. Always returns true since
+   * the testcases are no long run on older JVMS.
    **/
   // @Deprecated
   protected boolean checkJdbc20StdExt() {
@@ -329,7 +317,7 @@ public class JDTestcase extends Testcase {
   /**
    * Checks if JDBC 3.0 is available. If not, this will report "not applicable".
    **/
-  
+
   protected boolean checkJdbc30() {
     boolean jdbcLevel3 = (jdbcLevel_ >= 30);
     if (!jdbcLevel3)
@@ -367,30 +355,23 @@ public class JDTestcase extends Testcase {
     return jdbcLevel42;
   }
 
-  
-
-  
-  
   /**
    * Checks to see if the testcase is running on 400
    **/
   protected boolean checkClientOn400() {
-    String osName;
-    osName = System.getProperty("os.name");
-    if (osName.indexOf("400") >= 0) {
+    if (JTOpenTestEnvironment.isOS400) {
       return true;
     }
-    notApplicable("on400 test: currently on " + osName);
+    notApplicable("on400 test: currently on " + JTOpenTestEnvironment.osVersion);
     return false;
   }
 
   /**
-   * Checks if we are using the native driver with a native JVM. If not, this will report "not
-   * applicable". B1A
+   * Checks if we are using the native driver with a native JVM. If not, this will
+   * report "not applicable". B1A
    **/
   protected boolean checkNative() {
-    if ((driver_ != JDTestDriver.DRIVER_NATIVE)
-        && (driver_ != JDTestDriver.DRIVER_NATIVE_RMI)) {
+    if ((driver_ != JDTestDriver.DRIVER_NATIVE) && (driver_ != JDTestDriver.DRIVER_NATIVE_RMI)) {
       notApplicable("JDBC Native Driver variation.");
       return false;
     } else {
@@ -401,9 +382,9 @@ public class JDTestcase extends Testcase {
         }
       }
       if (isOpenJdk) {
-         notApplicable("JDBC Native Driver variation. Not run for OpenJdk");
-         return false; 
-      } else { 
+        notApplicable("JDBC Native Driver variation. Not run for OpenJdk");
+        return false;
+      } else {
         return true;
       }
     }
@@ -421,40 +402,36 @@ public class JDTestcase extends Testcase {
       return true;
   }
 
-
-
-  
   /**
-   * Checks if we are using the toolbox driver with at least the specified driver fix date.
-   * The fix date is a long in the form YYYYMMDD. 
-   * If not, this will report "not applicable".
+   * Checks if we are using the toolbox driver with at least the specified driver
+   * fix date. The fix date is a long in the form YYYYMMDD. If not, this will
+   * report "not applicable".
    **/
   protected boolean checkToolboxFixDate(long driverFixDate) {
     if ((driver_ != JDTestDriver.DRIVER_TOOLBOX)) {
       notApplicable("Toolbox JDBC Driver variation.");
       return false;
-    } else
-      if (  getDriverFixDate() < driverFixDate ) {
-        notApplicable("Toolbox JDBC Driver (fixDate "+getDriverFixDate()+"<"+driverFixDate+") variation.");
-        return false;
-      } else { 
-        // System.out.println("Toolbox JDBC Driver Running (fixDate "+getDriverFixDate()+">="+driverFixDate+") variation.");
-        
-         return true;
-      }
+    } else if (getDriverFixDate() < driverFixDate) {
+      notApplicable("Toolbox JDBC Driver (fixDate " + getDriverFixDate() + "<" + driverFixDate + ") variation.");
+      return false;
+    } else {
+      // System.out.println("Toolbox JDBC Driver Running (fixDate
+      // "+getDriverFixDate()+">="+driverFixDate+") variation.");
+
+      return true;
+    }
   }
 
-  
   protected boolean isToolboxFixDate(long driverFixDate) {
     if ((driver_ != JDTestDriver.DRIVER_TOOLBOX)) {
       return false;
-    } else
-      if ( getDriverFixDate() < driverFixDate ) {
-        return false;
-      } else { 
-        // System.out.println("Toolbox JDBC Driver Running (fixDate "+getDriverFixDate()+">="+driverFixDate+") variation.");
-         return true;
-      }
+    } else if (getDriverFixDate() < driverFixDate) {
+      return false;
+    } else {
+      // System.out.println("Toolbox JDBC Driver Running (fixDate
+      // "+getDriverFixDate()+">="+driverFixDate+") variation.");
+      return true;
+    }
   }
 
   /**
@@ -519,13 +496,12 @@ public class JDTestcase extends Testcase {
       notApplicable("TIMESTAMP(12) variation (>=V7R1).");
     return timestamp12Support_;
   }
-  
+
   protected boolean checkBooleanSupport() {
     if (areBooleansSupported() == false)
       notApplicable("BOOLEAN variation (>=V7R5).");
     return areBooleansSupported();
   }
-
 
   protected boolean checkLargeDecimalPrecisionSupport() {
     if (largeDecimalPrecisionSupport_ == false)
@@ -537,60 +513,60 @@ public class JDTestcase extends Testcase {
    * Checks if savepoints are supported on the server release. If not, this will
    * automatically report "not applicable".
    **/
-  protected boolean checkSavepointSupport() { 
-    if (savepointSupport_ == false) 
-      notApplicable("Savepoint variation (>=V5R2)."); 
-    return savepointSupport_; 
+  protected boolean checkSavepointSupport() {
+    if (savepointSupport_ == false)
+      notApplicable("Savepoint variation (>=V5R2).");
+    return savepointSupport_;
   }
 
   /**
-   * Checks if named parameters are supported on the server release. If not,
-   * this will automatically report "not applicable".
+   * Checks if named parameters are supported on the server release. If not, this
+   * will automatically report "not applicable".
    **/
-  protected boolean checkNamedParametersSupport() { 
-    if (namedParameterSupport_ == false) 
-      notApplicable("Named Parameter variation (>=V5R2 and nonJcc)."); 
-    return namedParameterSupport_; 
+  protected boolean checkNamedParametersSupport() {
+    if (namedParameterSupport_ == false)
+      notApplicable("Named Parameter variation (>=V5R2 and nonJcc).");
+    return namedParameterSupport_;
   }
 
   /**
    * Checks if cursor holdability is supported ont the server release. If not,
    * this will automatically report "not applicable."
    **/
-  protected boolean checkCursorHoldabilitySupport() { 
-    if (cursorHoldabilitySupport_ == false) 
-      notApplicable("Cursor Holdability variation (>=V5R2)."); 
-    return cursorHoldabilitySupport_; 
+  protected boolean checkCursorHoldabilitySupport() {
+    if (cursorHoldabilitySupport_ == false)
+      notApplicable("Cursor Holdability variation (>=V5R2).");
+    return cursorHoldabilitySupport_;
   }
 
   /**
    * Checks if multiple open result sets are supported on the server release. If
    * not, this will automatically report "not applicable."
    **/
-  protected boolean checkMultipleOpenResultSetSupport() { 
-    if (multipleOpenResultSetSupport_ == false) 
-      notApplicable("Multiple Open Result Set variation (>=V5R2)."); 
-    return multipleOpenResultSetSupport_; 
+  protected boolean checkMultipleOpenResultSetSupport() {
+    if (multipleOpenResultSetSupport_ == false)
+      notApplicable("Multiple Open Result Set variation (>=V5R2).");
+    return multipleOpenResultSetSupport_;
   }
 
   /**
    * Checks if generated keys are supported on the server release. If not, this
    * will automatically report "not applicable."
    **/
-  protected boolean checkGeneratedKeySupport() { 
-    if (generatedKeySupport_ == false) 
-      notApplicable("Generated Key variation (>=V5R2)."); 
-    return generatedKeySupport_; 
+  protected boolean checkGeneratedKeySupport() {
+    if (generatedKeySupport_ == false)
+      notApplicable("Generated Key variation (>=V5R2).");
+    return generatedKeySupport_;
   }
 
   /**
    * Checks if updateable lobs are supported on the server release. If not, this
    * will automatically report "not applicable."
    **/
-  protected boolean checkUpdateableLobsSupport() { 
-    if (updateableLobsSupport_ == false) 
-      notApplicable("Updateable Lobs variation (>=JDK 1.4)."); 
-    return updateableLobsSupport_; 
+  protected boolean checkUpdateableLobsSupport() {
+    if (updateableLobsSupport_ == false)
+      notApplicable("Updateable Lobs variation (>=JDK 1.4).");
+    return updateableLobsSupport_;
   }
 
   /**
@@ -613,11 +589,11 @@ public class JDTestcase extends Testcase {
     return datalinkSupport_;
   }
 
-  protected boolean checkReturnValueSupport() { 
-    if (returnValueSupport_ == false) 
-      notApplicable("Return value variation (>=V4R4)."); 
-    return returnValueSupport_; 
-  } 
+  protected boolean checkReturnValueSupport() {
+    if (returnValueSupport_ == false)
+      notApplicable("Return value variation (>=V4R4).");
+    return returnValueSupport_;
+  }
 
   protected boolean checkDecFloatSupport() {
     if (decFloatSupport_ == false)
@@ -641,21 +617,21 @@ public class JDTestcase extends Testcase {
     return s;
   }
 
-  protected static boolean compareUnicodeStream(InputStream i, String b,
-      StringBuffer sb) throws UnsupportedEncodingException {
+  protected static boolean compareUnicodeStream(InputStream i, String b, StringBuffer sb)
+      throws UnsupportedEncodingException {
     sb.append("Comparing to " + b + "\n");
     return compare(i, b.getBytes("UnicodeBigUnmarked"), sb);
   }
 
-  protected static boolean compareAsciiStream(InputStream i, String b,
-      StringBuffer sb) throws UnsupportedEncodingException {
+  protected static boolean compareAsciiStream(InputStream i, String b, StringBuffer sb)
+      throws UnsupportedEncodingException {
     sb.append("Comparing to " + b + "\n");
     return compare(i, b.getBytes("UTF-8"), sb);
   }
 
   /**
-   * Compares an InputStream with a byte[]. Files the string buffer with the
-   * input stream output if there is an error.
+   * Compares an InputStream with a byte[]. Files the string buffer with the input
+   * stream output if there is an error.
    **/
   protected static boolean compare(InputStream i, byte[] b, StringBuffer sb) {
     boolean rc = false;
@@ -704,16 +680,16 @@ public class JDTestcase extends Testcase {
       return false;
     }
     /*
-     * try { byte[] b2 = new byte[b.length]; int l = i.read (b2, 0, b.length);
-     * if (l == -1) return(b.length == 0); else return((l == b.length) &&
-     * (i.available() == 0) && (Testcase.isEqual (b, b2))); } catch (IOException
-     * e) { return false; }
+     * try { byte[] b2 = new byte[b.length]; int l = i.read (b2, 0, b.length); if (l
+     * == -1) return(b.length == 0); else return((l == b.length) && (i.available()
+     * == 0) && (Testcase.isEqual (b, b2))); } catch (IOException e) { return false;
+     * }
      */
   }
 
   /**
-   * Compares an InputStream with a byte[]. Files the string buffer with the
-   * input stream output if there is an error.
+   * Compares an InputStream with a byte[]. Files the string buffer with the input
+   * stream output if there is an error.
    **/
   protected static boolean compare(byte[] buf, byte[] b, StringBuffer sb) {
     boolean rc = false;
@@ -742,8 +718,7 @@ public class JDTestcase extends Testcase {
     } else if (a >= 'a' && a <= 'f') {
       return (byte) (a - 'a' + 10);
     } else {
-      throw new NumberFormatException(
-          "Could not convert " + a + " to hexDigit");
+      throw new NumberFormatException("Could not convert " + a + " to hexDigit");
     }
   }
 
@@ -751,8 +726,7 @@ public class JDTestcase extends Testcase {
     try {
       return (byte) (16 * hexDigit(a) + hexDigit(b));
     } catch (NumberFormatException nfe) {
-      throw new NumberFormatException(
-          "Could not convert " + a + b + " to hexDigit");
+      throw new NumberFormatException("Could not convert " + a + b + " to hexDigit");
     }
 
   }
@@ -772,12 +746,10 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  
   /**
    * Compares an InputStream with a byte[].
    **/
-  protected static boolean compareRemoved(InputStream i, byte[] b,
-      boolean hexToAscii) {
+  protected static boolean compareRemoved(InputStream i, byte[] b, boolean hexToAscii) {
     try {
       int divisor = 1;
       if (hexToAscii) // IF getAsciiStream was called on the ResultSet
@@ -800,8 +772,7 @@ public class JDTestcase extends Testcase {
       }
       if (num == -1)
         --total;
-      return (total / divisor) == b.length && i.available() == 0
-          && Testcase.areEqual(b, buf, hexToAscii);
+      return (total / divisor) == b.length && i.available() == 0 && Testcase.areEqual(b, buf, hexToAscii);
     } catch (IOException e) {
       return false;
     }
@@ -810,8 +781,7 @@ public class JDTestcase extends Testcase {
   /**
    * Compares an InputStream with a byte[].
    **/
-  protected static boolean compare(InputStream i, byte[] b, boolean hexToAscii,
-      StringBuffer sb) {
+  protected static boolean compare(InputStream i, byte[] b, boolean hexToAscii, StringBuffer sb) {
     try {
       int divisor = 1;
       if (hexToAscii) // IF getAsciiStream was called on the ResultSet
@@ -836,8 +806,7 @@ public class JDTestcase extends Testcase {
         --total;
       boolean passed = true;
       if (!((total / divisor) == b.length)) {
-        sb.append("total(" + total + ")+/devisor(" + divisor + ")) != b.length("
-            + b.length + ")\n");
+        sb.append("total(" + total + ")+/devisor(" + divisor + ")) != b.length(" + b.length + ")\n");
         passed = false;
       }
       if (!(i.available() == 0)) {
@@ -853,8 +822,7 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  protected static boolean compareBeginsWithBytes(InputStream i, byte[] b,
-      StringBuffer sb) 
+  protected static boolean compareBeginsWithBytes(InputStream i, byte[] b, StringBuffer sb)
   // this compare doesn't check if inputStream has more bytes or not beyond
   // containing b
   // unlike JDTestcase.compare which see thats inputStream should contain only b
@@ -883,8 +851,7 @@ public class JDTestcase extends Testcase {
       if (total == b.length) {
         return Testcase.areEqual(b, buf, sb);
       } else {
-        sb.append("inputstream bytesRead=" + total + " expectedLength = "
-            + b.length + "\n");
+        sb.append("inputstream bytesRead=" + total + " expectedLength = " + b.length + "\n");
         return false;
       }
     } catch (java.io.IOException e) {
@@ -893,11 +860,10 @@ public class JDTestcase extends Testcase {
   }
 
   /**
-   * Compares an InputStream with a String. Return information in an string
-   * buffer about the intput
+   * Compares an InputStream with a String. Return information in an string buffer
+   * about the intput
    **/
-  protected boolean compare(InputStream i, String s, String encoding,
-      StringBuffer sb) {
+  protected boolean compare(InputStream i, String s, String encoding, StringBuffer sb) {
     try {
       return (compare(i, s.getBytes(encoding), sb));
     } catch (java.io.UnsupportedEncodingException e) {
@@ -905,16 +871,13 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  
   /**
    * Compares an InputStream with a String.
    * 
-   * @param t
-   *          if true, getAsciiStream was called, otherwise getUnicodeStream was
+   * @param t if true, getAsciiStream was called, otherwise getUnicodeStream was
    *          called
    **/
-  protected boolean compare(InputStream i, String s, String encoding, boolean t,
-      StringBuffer sb) {
+  protected boolean compare(InputStream i, String s, String encoding, boolean t, StringBuffer sb) {
     try {
       return (compare(i, s.getBytes(encoding), t, sb));
     } catch (java.io.UnsupportedEncodingException e) {
@@ -925,8 +888,7 @@ public class JDTestcase extends Testcase {
   /**
    * Compares a Reader with a String.
    **/
-  protected static boolean compareRemoved(Reader r, String s) 
-  {
+  protected static boolean compareRemoved(Reader r, String s) {
     try {
       int slength = s.length();
       if (s.length() == 0) {
@@ -953,8 +915,7 @@ public class JDTestcase extends Testcase {
   /**
    * Compares a Reader with a String.
    **/
-  protected static boolean compare(Reader r, String s, StringBuffer sb) 
-  {
+  protected static boolean compare(Reader r, String s, StringBuffer sb) {
     try {
       String s2;
       if (r == null) {
@@ -986,7 +947,7 @@ public class JDTestcase extends Testcase {
       return (rc);
     } catch (IOException e) {
       printStackTraceToStringBuffer(e, sb);
-      
+
       return false;
     }
   }
@@ -1008,7 +969,7 @@ public class JDTestcase extends Testcase {
         sb.append("BLOB is not null but array is null ");
         return false;
       } else {
-        byte[] iBytes = i.getBytes(1, (int) i.length()); 
+        byte[] iBytes = i.getBytes(1, (int) i.length());
         return compare(iBytes, b, sb);
       }
     }
@@ -1018,7 +979,7 @@ public class JDTestcase extends Testcase {
    * Compares a Blob with a String.
    **/
   protected boolean compare(Blob i, String b, StringBuffer sb) throws SQLException {
-    byte[] iBytes = i.getBytes(1, (int) i.length()); 
+    byte[] iBytes = i.getBytes(1, (int) i.length());
     return compare(iBytes, b, sb);
   }
 
@@ -1039,7 +1000,6 @@ public class JDTestcase extends Testcase {
 
   }
 
-  
   /**
    * Compares a Reader with a byte array for getCharacterStream.
    **/
@@ -1140,8 +1100,8 @@ public class JDTestcase extends Testcase {
   }
 
   /**
-   * Returns the fix date of driver as a long in the form YYYYMMDD. If not
-   * found, then the date is set to 20010101
+   * Returns the fix date of driver as a long in the form YYYYMMDD. If not found,
+   * then the date is set to 20010101
    * 
    * @return
    */
@@ -1151,51 +1111,49 @@ public class JDTestcase extends Testcase {
       if (driver_ == JDTestDriver.DRIVER_NATIVE) {
 
       } else if (driver_ == JDTestDriver.DRIVER_TOOLBOX) {
-        
-        try { 
-        String versionString = (String) JDReflectionUtil.getStaticField_O("com.ibm.as400.access.Copyright", "version");
 
-        // System.out.println("JDTestcase.getDriverFixDate versionString="+versionString); 
-        /*
-         * Possible formats are the following. 
-         * Open Source Software, JTOpen 9.6, codebase 5770-SS1 V7R3M0.00 built=20181031 @X5
-         * Open Source Software, JTOpen 20.0.0-alpha-1 (development build) codebase 5770-SS1 V7R5M0.00 built=2023-04-10 21:19:51 (GMT)
-         * 
-         */
-        int builtIndex = versionString.indexOf("built=");
-        if (builtIndex > 0) {
-	    
-	  // System.out.println("Date in version string is "+versionString.substring( builtIndex + 6));
-	  String dateString; 
-	  if (versionString.charAt(builtIndex+10) == '-') {
-	      dateString = versionString.substring(builtIndex + 6, builtIndex + 10) +
-		versionString.substring(builtIndex + 11, builtIndex + 13) +
-		versionString.substring(builtIndex + 14, builtIndex + 16) ;
-	  } else {    
-	   dateString = versionString.substring(builtIndex + 6,
-						builtIndex + 6 + 8);
-	  }
-	  // System.out.println("Date string is "+dateString); 
-          driverFixDate_ = Long.parseLong(dateString);
-        }
-        /*
-         *  
-        Class cls = Class.forName("com.ibm.as400.access.Copyright");
-          ClassLoader loader = cls.getClassLoader();
-          if (loader != null)
-          {
-            String resourceName = "com/ibm/as400/access/Copyright.class";
-            java.net.URL resourceUrl = loader.getResource(resourceName);
-            if (resourceUrl != null) {
-              System.out.println("JDTestcase loadPath ="+ resourceUrl.getPath());
+        try {
+          String versionString = (String) JDReflectionUtil.getStaticField_O("com.ibm.as400.access.Copyright",
+              "version");
+
+          // System.out.println("JDTestcase.getDriverFixDate
+          // versionString="+versionString);
+          /*
+           * Possible formats are the following. Open Source Software, JTOpen 9.6,
+           * codebase 5770-SS1 V7R3M0.00 built=20181031 @X5 Open Source Software, JTOpen
+           * 20.0.0-alpha-1 (development build) codebase 5770-SS1 V7R5M0.00
+           * built=2023-04-10 21:19:51 (GMT)
+           * 
+           */
+          int builtIndex = versionString.indexOf("built=");
+          if (builtIndex > 0) {
+
+            // System.out.println("Date in version string is "+versionString.substring(
+            // builtIndex + 6));
+            String dateString;
+            if (versionString.charAt(builtIndex + 10) == '-') {
+              dateString = versionString.substring(builtIndex + 6, builtIndex + 10)
+                  + versionString.substring(builtIndex + 11, builtIndex + 13)
+                  + versionString.substring(builtIndex + 14, builtIndex + 16);
+            } else {
+              dateString = versionString.substring(builtIndex + 6, builtIndex + 6 + 8);
             }
+            // System.out.println("Date string is "+dateString);
+            driverFixDate_ = Long.parseLong(dateString);
           }
-        
-        
-        */ 
+          /*
+           * 
+           * Class cls = Class.forName("com.ibm.as400.access.Copyright"); ClassLoader
+           * loader = cls.getClassLoader(); if (loader != null) { String resourceName =
+           * "com/ibm/as400/access/Copyright.class"; java.net.URL resourceUrl =
+           * loader.getResource(resourceName); if (resourceUrl != null) {
+           * System.out.println("JDTestcase loadPath ="+ resourceUrl.getPath()); } }
+           * 
+           * 
+           */
 
         } catch (Throwable t) {
-          System.out.println("Error getting version infomation"); 
+          System.out.println("Error getting version infomation");
           t.printStackTrace(System.out);
         }
       } else {
@@ -1241,8 +1199,7 @@ public class JDTestcase extends Testcase {
           int readByte = iStream.read();
           while (readByte != -1) {
             // System.out.println(Integer.toHexString((int) readByte));
-            if (((readByte >= 0xf0) && (readByte <= 0xf9))
-                || ((readByte >= 0x30) && (readByte <= 0x39))) {
+            if (((readByte >= 0xf0) && (readByte <= 0xf9)) || ((readByte >= 0x30) && (readByte <= 0x39))) {
               int value = readByte & 0xf;
               driverFixLevel_ = 10 * driverFixLevel_ + value;
             }
@@ -1256,8 +1213,7 @@ public class JDTestcase extends Testcase {
           // check for spawnp failure
           String message = e.toString();
           if (message.indexOf("spawnp failure") >= 0) {
-            System.out.println(
-                "Warning.. spawnp failed, setting driverFixLevel to 1");
+            System.out.println("Warning.. spawnp failed, setting driverFixLevel to 1");
             driverFixLevel_ = 1;
           }
         }
@@ -1269,50 +1225,40 @@ public class JDTestcase extends Testcase {
           JTOpenIndex += 7;
           int dotIndex = versionString.indexOf(".", JTOpenIndex);
           if (dotIndex > 0) {
-            String majorVersionString = versionString.substring(JTOpenIndex,
-                dotIndex);
+            String majorVersionString = versionString.substring(JTOpenIndex, dotIndex);
             dotIndex += 1;
             int spaceIndex = versionString.indexOf(",", dotIndex);
             if (spaceIndex > 0) {
-              String minorVersionString = versionString.substring(dotIndex,
-                  spaceIndex);
+              String minorVersionString = versionString.substring(dotIndex, spaceIndex);
               int majorVersion = Integer.parseInt(majorVersionString);
               if (majorVersion > 0) {
                 // Cleanup minorVersionString
                 int cleanupIndex = minorVersionString.indexOf("+");
                 if (cleanupIndex > 0) {
-                  minorVersionString = minorVersionString.substring(0,
-                      cleanupIndex);
+                  minorVersionString = minorVersionString.substring(0, cleanupIndex);
                 }
                 cleanupIndex = minorVersionString.indexOf("-");
                 if (cleanupIndex > 0) {
-                  minorVersionString = minorVersionString.substring(0,
-                      cleanupIndex);
+                  minorVersionString = minorVersionString.substring(0, cleanupIndex);
                 }
 
                 int minorVersion = Integer.parseInt(minorVersionString);
                 if (minorVersion > 0 || minorVersionString.equals("0")) {
                   driverFixLevel_ = majorVersion * 100 + minorVersion;
                 } else {
-                  System.out.println("Warning.. minorVersion <= 0 from "
-                      + minorVersionString + " in " + versionString);
+                  System.out.println("Warning.. minorVersion <= 0 from " + minorVersionString + " in " + versionString);
                 }
               } else {
-                System.out.println("Warning.. majorVersion <= 0 from "
-                    + majorVersionString + " in " + versionString);
+                System.out.println("Warning.. majorVersion <= 0 from " + majorVersionString + " in " + versionString);
               }
             } else {
-              System.out
-                  .println("Warning.. Unable to find , after . after JTOpen in "
-                      + versionString);
+              System.out.println("Warning.. Unable to find , after . after JTOpen in " + versionString);
             }
           } else {
-            System.out.println(
-                "Warning.. Unable to find . after JTOpen in " + versionString);
+            System.out.println("Warning.. Unable to find . after JTOpen in " + versionString);
           }
         } else {
-          System.out
-              .println("Warning.  Unable to find JTOpen in " + versionString);
+          System.out.println("Warning.  Unable to find JTOpen in " + versionString);
         }
       }
     }
@@ -1324,8 +1270,8 @@ public class JDTestcase extends Testcase {
   }
 
   /**
-   * Returns the fix level for CLI. Returns the PTF number for CLI. Returns
-   * 99999 for other driver.
+   * Returns the fix level for CLI. Returns the PTF number for CLI. Returns 99999
+   * for other driver.
    */
   int cliFixLevel_ = 0;
 
@@ -1349,8 +1295,7 @@ public class JDTestcase extends Testcase {
           int readByte = iStream.read();
           while (readByte != -1) {
             // System.out.println(Integer.toHexString((int) readByte));
-            if (((readByte >= 0xf0) && (readByte <= 0xf9))
-                || ((readByte >= 0x30) && (readByte <= 0x39))) {
+            if (((readByte >= 0xf0) && (readByte <= 0xf9)) || ((readByte >= 0x30) && (readByte <= 0x39))) {
               int value = readByte & 0xf;
               cliFixLevel_ = 10 * cliFixLevel_ + value;
             }
@@ -1364,8 +1309,7 @@ public class JDTestcase extends Testcase {
           // check for spawnp failure
           String message = e.toString();
           if (message.indexOf("spawnp failure") >= 0) {
-            System.out
-                .println("Warning.. spawnp failed, setting CliFixLevel to 1");
+            System.out.println("Warning.. spawnp failed, setting CliFixLevel to 1");
             cliFixLevel_ = 1;
           }
         }
@@ -1379,8 +1323,8 @@ public class JDTestcase extends Testcase {
   }
 
   /**
-   * Returns the fix level for JDJSTP. Returns the PTF number for sqlejext. Returns
-   * 99999 for other driver.
+   * Returns the fix level for JDJSTP. Returns the PTF number for sqlejext.
+   * Returns 99999 for other driver.
    */
   int jstpFixLevel_ = 0;
 
@@ -1391,7 +1335,7 @@ public class JDTestcase extends Testcase {
         Runtime rt = Runtime.getRuntime();
 
         String[] cmd = new String[3];
-  
+
         cmd[0] = "/usr/bin/qsh";
         cmd[1] = "-c";
         cmd[2] = "system dspobjd QSYS/QSQLEJEXT '*srvpgm detail(*service)'  | grep -i 'PTF number' | sed 's/^.*SI//'";
@@ -1403,8 +1347,7 @@ public class JDTestcase extends Testcase {
           int readByte = iStream.read();
           while (readByte != -1) {
             // System.out.println(Integer.toHexString((int) readByte));
-            if (((readByte >= 0xf0) && (readByte <= 0xf9))
-                || ((readByte >= 0x30) && (readByte <= 0x39))) {
+            if (((readByte >= 0xf0) && (readByte <= 0xf9)) || ((readByte >= 0x30) && (readByte <= 0x39))) {
               int value = readByte & 0xf;
               jstpFixLevel_ = 10 * jstpFixLevel_ + value;
             }
@@ -1418,8 +1361,7 @@ public class JDTestcase extends Testcase {
           // check for spawnp failure
           String message = e.toString();
           if (message.indexOf("spawnp failure") >= 0) {
-            System.out
-                .println("Warning.. spawnp failed, setting jstpFixLevel to 1");
+            System.out.println("Warning.. spawnp failed, setting jstpFixLevel to 1");
             jstpFixLevel_ = 1;
           }
         }
@@ -1431,7 +1373,6 @@ public class JDTestcase extends Testcase {
     }
     return jstpFixLevel_;
   }
-
 
   /**
    * Returns the JDBC level that we would expect the JDBC driver being tested to
@@ -1453,13 +1394,11 @@ public class JDTestcase extends Testcase {
   protected static int getToolboxDriverMinorVersion() {
     if (toolboxDriverMinorVersion_ == 0) {
       String specVersion = getToolboxSpecificationVersion(); // e.g. "6.1.0.4"
-      String finalDigit = specVersion
-          .substring(1 + specVersion.lastIndexOf('.'));
+      String finalDigit = specVersion.substring(1 + specVersion.lastIndexOf('.'));
       try {
         toolboxDriverMinorVersion_ = Integer.parseInt(finalDigit);
       } catch (NumberFormatException e) {
-        System.out.println("Warning:  getToolboxSpecificationVersion returned "
-            + specVersion + " from package");
+        System.out.println("Warning:  getToolboxSpecificationVersion returned " + specVersion + " from package");
         e.printStackTrace(System.out);
       }
     }
@@ -1476,8 +1415,8 @@ public class JDTestcase extends Testcase {
   }
 
   /**
-   * Returns the JDK level being testing. Possible values are
-   * JDTestDriver.JDK_13, JDTestDriver.JDK_14,....
+   * Returns the JDK level being testing. Possible values are JDTestDriver.JDK_13,
+   * JDTestDriver.JDK_14,....
    * 
    * @return the JDK level
    **/
@@ -1494,8 +1433,8 @@ public class JDTestcase extends Testcase {
     return release_;
   }
 
-  public boolean checkRelease760(String comment) {
-    return checkRelease(JDTestDriver.RELEASE_V7R6M0, comment);
+  public boolean checkRelease750plus(String comment) {
+    return checkRelease(JDTestDriver.RELEASE_V7R5M0_PLUS, comment);
   }
 
   public boolean checkRelease750(String comment) {
@@ -1505,7 +1444,6 @@ public class JDTestcase extends Testcase {
   public boolean checkRelease740(String comment) {
     return checkRelease(JDTestDriver.RELEASE_V7R4M0, comment);
   }
-
 
   public boolean checkRelease730() {
     return checkRelease730(null);
@@ -1536,7 +1474,7 @@ public class JDTestcase extends Testcase {
   }
 
   public boolean checkRelease610(String comment) {
-    return checkRelease(JDTestDriver.RELEASE_V6R1M0, comment);
+    return checkRelease(JDTestDriver.RELEASE_V7R1M0, comment);
   }
 
   public boolean checkRelease(int release, String comment) {
@@ -1553,8 +1491,8 @@ public class JDTestcase extends Testcase {
   }
 
   /**
-   * Checks if JDBC 2.0 is available. Always returns true since we are testing
-   * on newer JVMS
+   * Checks if JDBC 2.0 is available. Always returns true since we are testing on
+   * newer JVMS
    **/
   // @Deprecated
   protected boolean isJdbc20() {
@@ -1578,10 +1516,6 @@ public class JDTestcase extends Testcase {
     return (jdbcLevel_ >= 40);
   }
 
-  public String getOS() {
-    return System.getProperty("os.name"); // "os/400"
-  }
-
   /**
    * Checks if SYSIBM metdata used
    **/
@@ -1589,16 +1523,10 @@ public class JDTestcase extends Testcase {
   protected boolean isSysibmMetadata() {
     // as of jdbc40, toolbox is still mainly non-sysibmMetadata.
     if (isToolboxDriver()) {
-      if (getRelease() <= JDTestDriver.RELEASE_V6R1M0) 
-        return false;
-      else
-        return true;
+      return true;
     }
 
-    return isJdbc40()
-        || (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V5R5M0)
-        || (getDriver() == JDTestDriver.DRIVER_JCC);
+    return isJdbc40() || (getDriver() == JDTestDriver.DRIVER_NATIVE) || (getDriver() == JDTestDriver.DRIVER_JCC);
   }
 
   /**
@@ -1609,13 +1537,12 @@ public class JDTestcase extends Testcase {
     // Set our fields based on the test driver.
     if (testDriver_ != null) {
       baseURL_ = testDriver_.getBaseURL();
-      largeDecimalPrecisionSupport_ = testDriver_
-          .areLargeDecimalPrecisionsSupported();
-      bigintSupport_ = testDriver_.areBigintsSupported(); 
-      xmlSupport_ = testDriver_.isXmlSupported(); 
-      arraySupport_ = testDriver_.areArraysSupported(); 
-      timestamp12Support_ = testDriver_.isTimestamp12Supported(); 
-      booleanSupport_ = testDriver_.areBooleansSupported(); 
+      largeDecimalPrecisionSupport_ = testDriver_.areLargeDecimalPrecisionsSupported();
+      bigintSupport_ = testDriver_.areBigintsSupported();
+      xmlSupport_ = testDriver_.isXmlSupported();
+      arraySupport_ = testDriver_.areArraysSupported();
+      timestamp12Support_ = testDriver_.isTimestamp12Supported();
+      booleanSupport_ = testDriver_.areBooleansSupported();
       driver_ = testDriver_.getDriver();
 
       subDriver_ = testDriver_.getSubDriver();
@@ -1625,18 +1552,17 @@ public class JDTestcase extends Testcase {
 
       lobSupport_ = testDriver_.areLobsSupported();
       datalinkSupport_ = testDriver_.areDatalinksSupported();
-      savepointSupport_ = testDriver_.areSavepointsSupported(); 
-      namedParameterSupport_ = testDriver_.areNamedParametersSupported(); 
-      cursorHoldabilitySupport_ = testDriver_.areCursorHoldabilitySupported(); 
-      multipleOpenResultSetSupport_ = testDriver_
-          .areMultipleOpenResultSetsSupported(); 
-      generatedKeySupport_ = testDriver_.areGeneratedKeysSupported(); 
-      updateableLobsSupport_ = testDriver_.areUpdateableLobsSupported(); 
-      collection_ = testDriver_.getCollection(); 
-      returnValueSupport_ = testDriver_.areReturnValuesSupported(); 
+      savepointSupport_ = testDriver_.areSavepointsSupported();
+      namedParameterSupport_ = testDriver_.areNamedParametersSupported();
+      cursorHoldabilitySupport_ = testDriver_.areCursorHoldabilitySupported();
+      multipleOpenResultSetSupport_ = testDriver_.areMultipleOpenResultSetsSupported();
+      generatedKeySupport_ = testDriver_.areGeneratedKeysSupported();
+      updateableLobsSupport_ = testDriver_.areUpdateableLobsSupported();
+      collection_ = testDriver_.getCollection();
+      returnValueSupport_ = testDriver_.areReturnValuesSupported();
       decFloatSupport_ = testDriver_.areDecfloatsSupported();
-      
-      supportedFeatures_ = new JDSupportedFeatures(this); 
+
+      supportedFeatures_ = new JDSupportedFeatures(this);
       // Testcase fails in V6R1 for U testcases
       String initials = "";
       int l = collection_.length();
@@ -1663,20 +1589,16 @@ public class JDTestcase extends Testcase {
     if ((release_ == JDTestDriver.RELEASE_NONE) && (isToolboxDriver())) {
       try {
         int vrm = systemObject_.getVRM();
-        if (vrm == AS400.generateVRM(4, 2, 0))
-          release_ = JDTestDriver.RELEASE_V4R2M0;
-        else if (vrm == AS400.generateVRM(4, 3, 0))
-          release_ = JDTestDriver.RELEASE_V4R3M0;
-        else if (vrm == AS400.generateVRM(4, 4, 0))
-          release_ = JDTestDriver.RELEASE_V4R4M0;
-        else if (vrm == AS400.generateVRM(4, 5, 0)) 
-          release_ = JDTestDriver.RELEASE_V4R5M0; 
-        else if (vrm == AS400.generateVRM(5, 1, 0)) 
-          release_ = JDTestDriver.RELEASE_V5R1M0; 
-        else if (vrm == AS400.generateVRM(5, 2, 0)) 
-          release_ = JDTestDriver.RELEASE_V5R2M0; 
-        else if (vrm == AS400.generateVRM(5, 3, 0)) 
-          release_ = JDTestDriver.RELEASE_V5R3M0; 
+        if (vrm == AS400.generateVRM(7, 2, 0))
+          release_ = JDTestDriver.RELEASE_V7R2M0;
+        else if (vrm == AS400.generateVRM(7, 3, 0))
+          release_ = JDTestDriver.RELEASE_V7R3M0;
+        else if (vrm == AS400.generateVRM(7, 4, 0))
+          release_ = JDTestDriver.RELEASE_V7R4M0;
+        else if (vrm == AS400.generateVRM(7, 5, 0))
+          release_ = JDTestDriver.RELEASE_V7R5M0;
+        else
+          release_ = JDTestDriver.RELEASE_V7R5M0_PLUS;
       } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
         e.printStackTrace(System.out);
@@ -1700,8 +1622,7 @@ public class JDTestcase extends Testcase {
   /**
    * Sets the test driver.
    * 
-   * @param testDriver
-   *          The test driver.
+   * @param testDriver The test driver.
    **/
   public void setTestDriver(JDTestDriver testDriver) {
     testDriver_ = testDriver;
@@ -1710,48 +1631,43 @@ public class JDTestcase extends Testcase {
   public static void ignoreWarningException(Exception e, String ignoreString) {
     String msg = e.toString();
     if (msg.indexOf(ignoreString) < 0) {
-      System.out.println(
-          "WARNING:  Unexpected Exception -- expected " + ignoreString);
+      System.out.println("WARNING:  Unexpected Exception -- expected " + ignoreString);
       e.printStackTrace(System.out);
     }
 
   }
 
-  public static void ignoreWarningException(Exception e, String ignoreString,
-      String ignoreString2) {
+  public static void ignoreWarningException(Exception e, String ignoreString, String ignoreString2) {
     String msg = e.toString();
     if ((msg.indexOf(ignoreString)) < 0 && (msg.indexOf(ignoreString2) < 0)) {
-      System.out.println("WARNING:  Unexpected Exception -- expected '"
-          + ignoreString + "' or '" + ignoreString2 + "'");
+      System.out
+          .println("WARNING:  Unexpected Exception -- expected '" + ignoreString + "' or '" + ignoreString2 + "'");
       e.printStackTrace(System.out);
     }
   }
 
   /** Convert the string array to a source file on the system */
 
-  public static void stringArrayToSourceFile(Connection connection,
-      String stringArray[], String library, String file) throws Exception {
+  public static void stringArrayToSourceFile(Connection connection, String stringArray[], String library, String file)
+      throws Exception {
 
     //
     // Make sure the procedure exists to call CL commands.
     Statement stmt = connection.createStatement();
     try {
-      stmt.executeUpdate("create procedure " + library
-          + ".JDCMDEXEC(IN CMDSTR VARCHAR(1024),IN CMDLEN DECIMAL(15,5)) "
+      stmt.executeUpdate("create procedure " + library + ".JDCMDEXEC(IN CMDSTR VARCHAR(1024),IN CMDLEN DECIMAL(15,5)) "
           + "External name QSYS.QCMDEXC LANGUAGE C GENERAL");
     } catch (Exception e) {
       // Ignore already exists error
       String message = e.toString();
-      if ((message.indexOf("already exists") < 0)
-          && (message.indexOf("-454") < 0)) {
+      if ((message.indexOf("already exists") < 0) && (message.indexOf("-454") < 0)) {
         System.out.println("Warning:  Unrecognized exception");
         e.printStackTrace(System.out);
       }
 
     }
 
-    CallableStatement cmd = connection
-        .prepareCall("call " + library + ".JDCMDEXEC(?,?)");
+    CallableStatement cmd = connection.prepareCall("call " + library + ".JDCMDEXEC(?,?)");
 
     //
     // Make sure the library exists
@@ -1781,20 +1697,17 @@ public class JDTestcase extends Testcase {
         ignoreWarningException(ex, "already exists", "TBD");
       }
 
-      command = "CRTJRN JRN(" + library + "/QSQJRN) JRNRCV(" + library
-          + "/QSQJRN1000)";
+      command = "CRTJRN JRN(" + library + "/QSQJRN) JRNRCV(" + library + "/QSQJRN1000)";
       ;
       cmd.setString(1, command);
       cmd.setInt(2, command.length());
       try {
         cmd.execute();
       } catch (Exception ex) {
-        ignoreWarningException(ex, "Error on JRNRCV specifications",
-            "already exists");
+        ignoreWarningException(ex, "Error on JRNRCV specifications", "already exists");
       }
 
-      command = "STRJRNPF FILE(" + library + "/" + file + ") JRN(" + library
-          + "/QSQJRN)";
+      command = "STRJRNPF FILE(" + library + "/" + file + ") JRN(" + library + "/QSQJRN)";
       cmd.setString(1, command);
       cmd.setInt(2, command.length());
       try {
@@ -1836,8 +1749,7 @@ public class JDTestcase extends Testcase {
     // Use SQL to add the file to the member
     //
 
-    PreparedStatement ps = connection.prepareStatement(
-        "insert into " + library + "." + file + " values (?, 0, ?)");
+    PreparedStatement ps = connection.prepareStatement("insert into " + library + "." + file + " values (?, 0, ?)");
 
     for (int i = 0; i < stringArray.length; i++) {
       ps.setInt(1, i + 1);
@@ -1880,8 +1792,7 @@ public class JDTestcase extends Testcase {
       if (message.indexOf("not found") > 0) {
         // OK exception
       } else {
-        System.out.println(
-            "WARNING: Unexpected exception dropping table using " + sql);
+        System.out.println("WARNING: Unexpected exception dropping table using " + sql);
         e.printStackTrace(System.out);
       }
     }
@@ -1910,20 +1821,17 @@ public class JDTestcase extends Testcase {
       // If they do not exist, then we will force the creation
       // of the collection.
 
-      String[] tables = { "SYSCOLUMNS", "SYSKEYS", "SYSPACKAGE", "SYSTRIGCOL",
-          "SYSTRIGDEP", "SYSTRIGGERS", "SYSTRIGUPD", "SYSCST", "SYSCSTCOL",
-          "SYSCSTDEP", "SYSINDEXES", "SYSKEYCST", "SYSREFCST", "SYSTABLEDEP",
+      String[] tables = { "SYSCOLUMNS", "SYSKEYS", "SYSPACKAGE", "SYSTRIGCOL", "SYSTRIGDEP", "SYSTRIGGERS",
+          "SYSTRIGUPD", "SYSCST", "SYSCSTCOL", "SYSCSTDEP", "SYSINDEXES", "SYSKEYCST", "SYSREFCST", "SYSTABLEDEP",
           "SYSTABLES", "SYSVIEWDEP", "SYSVIEWS",
 
       };
 
       for (int i = 0; i < tables.length; i++) {
         try {
-          s.executeQuery("Select * from " + collection + "." + tables[i]
-              + " fetch first 2 rows only");
+          s.executeQuery("Select * from " + collection + "." + tables[i] + " fetch first 2 rows only");
         } catch (Exception e) {
-          System.out.println("WARNING: " + collection + "." + tables[i]
-              + "  missing -- or other error");
+          System.out.println("WARNING: " + collection + "." + tables[i] + "  missing -- or other error");
           e.printStackTrace(System.out);
           tableMissing = true;
         }
@@ -1963,21 +1871,28 @@ public class JDTestcase extends Testcase {
    *
    */
   public boolean checkVariationApplies() {
-	try { 
-		Class skipClass = Class.forName("test.JDVariationSkip");
-	} catch (Exception e) { 
-		// If class does not exist then return true
-		return true; 
-	}
     try {
-      
-      String reason = (String) JDReflectionUtil.callStaticMethod_O("test.JDVariationSkip", "skipReason", driver_, subDriver_,
-          getRelease(), getName(), getVariation());
+      String reason = JDVariationSkip.skipReason( driver_,
+          subDriver_, getRelease(), getName(), getVariation());
       if (reason != null) {
         notApplicable(reason);
         return false;
       } else {
-        return true;
+
+        try {
+          Class skipClass = Class.forName("test.JDVariationSkip2");
+        } catch (Exception e) {
+          // If class does not exist then return true
+          return true;
+        }
+        reason = (String) JDReflectionUtil.callStaticMethod_O("test.JDVariationSkip", "skipReason", driver_, subDriver_,
+            getRelease(), getName(), getVariation());
+        if (reason != null) {
+          notApplicable(reason);
+          return false;
+        } else {
+          return true;
+        }
       }
     } catch (Exception e) {
       System.out.println("WARNING:  exception caught in checkVariationApplies");
@@ -1995,20 +1910,16 @@ public class JDTestcase extends Testcase {
    * <li>JDK1.5 java.util.concurrent.ScheduledThreadPoolExecutor
    * </ul>
    * 
-   * @param executorClassname
-   *          Name of the executor class
-   * @param sb
-   *          StringBuffer for error tracking purposes
+   * @param executorClassname Name of the executor class
+   * @param sb                StringBuffer for error tracking purposes
    * @return executor
    * @throws Exception
    */
-  public Object createExecutor(String executorClassname, StringBuffer sb)
-      throws Exception {
+  public Object createExecutor(String executorClassname, StringBuffer sb) throws Exception {
     if (executorClassname.equals("java.util.concurrent.ForkJoinPool")) {
       sb.append("Create " + executorClassname + "\n");
       return JDReflectionUtil.createObject(executorClassname);
-    } else if (executorClassname
-        .equals("java.util.concurrent.ThreadPoolExecutor")) {
+    } else if (executorClassname.equals("java.util.concurrent.ThreadPoolExecutor")) {
 
       // public ThreadPoolExecutor(
       // int corePoolSize,
@@ -2029,13 +1940,11 @@ public class JDTestcase extends Testcase {
       args[2] = new Long(60);
       args[3] = timeUnitSeconds;
       sb.append("Create LinkedBlockingQueue");
-      args[4] = JDReflectionUtil
-          .createObject("java.util.concurrent.LinkedBlockingQueue");
+      args[4] = JDReflectionUtil.createObject("java.util.concurrent.LinkedBlockingQueue");
       sb.append("Create " + executorClassname + "\n");
 
       return JDReflectionUtil.createObject(executorClassname, argTypes, args);
-    } else if (executorClassname
-        .equals("java.util.concurrent.ScheduledThreadPoolExecutor")) {
+    } else if (executorClassname.equals("java.util.concurrent.ScheduledThreadPoolExecutor")) {
 
       // ScheduledThreadPoolExecutor(int corePoolSize)
 
@@ -2066,13 +1975,11 @@ public class JDTestcase extends Testcase {
   /*
    * return the fixup string for a particular release and driver
    *
-   * The input array looks like this where 54 is V5R4 4 is JDK 1.4 and N is
-   * native JDBC driver Object[][] fixupArray = { { "544N", {
-   * {"","",""},{"","",""}}} }
+   * The input array looks like this where 54 is V5R4 4 is JDK 1.4 and N is native
+   * JDBC driver Object[][] fixupArray = { { "544N", { {"","",""},{"","",""}}} }
    */
 
-  public String[][] getFixup(Object[][] fixupArray, String extraId, String info,
-      StringBuffer sb) {
+  public String[][] getFixup(Object[][] fixupArray, String extraId, String info, StringBuffer sb) {
     String releaseJvmDriver = getReleaseJvmDriver();
     if (extraId != null) {
       releaseJvmDriver += extraId;
@@ -2081,32 +1988,31 @@ public class JDTestcase extends Testcase {
   }
 
   char previousJVM(char JVM) {
-      switch (JVM) {
-	  case 'C':
-	      return 'B';		
-	  case 'B':
-	      return '9';
-	  case '9':
-	      return '8';
-	  case '8':
-	      return '7';
-	  case '7':
-	      return '6';
-	  case '6':
-	      return '5';
-	  default:
-	      return 'X';
-      }
+    switch (JVM) {
+    case 'C':
+      return 'B';
+    case 'B':
+      return '9';
+    case '9':
+      return '8';
+    case '8':
+      return '7';
+    case '7':
+      return '6';
+    case '6':
+      return '5';
+    default:
+      return 'X';
+    }
   }
 
-  public String[][] getFixup(Object[][] fixupArray, String releaseJvmDriver,
-      String extraId, String info, StringBuffer sb) {
+  public String[][] getFixup(Object[][] fixupArray, String releaseJvmDriver, String extraId, String info,
+      StringBuffer sb) {
     return getFixup(fixupArray, releaseJvmDriver, extraId, info, sb, false);
   }
 
-  public String[][] getFixup(Object[][] fixupArray, String releaseJvmDriver,
-      String extraId, String info, StringBuffer sb,
-      boolean skipPreviousRelease) {
+  public String[][] getFixup(Object[][] fixupArray, String releaseJvmDriver, String extraId, String info,
+      StringBuffer sb, boolean skipPreviousRelease) {
 
     for (int i = 0; i < fixupArray.length; i++) {
       if (releaseJvmDriver.equals(fixupArray[i][0])) {
@@ -2114,8 +2020,7 @@ public class JDTestcase extends Testcase {
         String[][] fixup = ((String[][]) fixupArray[i][1]);
         sb.append("Size of fixup = " + fixup.length + "\n");
         if (fixup.length > 0) {
-          sb.append("fixup[0]=" + fixup[0][0] + "," + fixup[0][1] + ","
-              + fixup[0][2] + "\n");
+          sb.append("fixup[0]=" + fixup[0][0] + "," + fixup[0][1] + "," + fixup[0][2] + "\n");
         }
         return fixup;
       }
@@ -2128,9 +2033,7 @@ public class JDTestcase extends Testcase {
     JVM = previousJVM(JVM);
     String[][] answer = null;
     while (JVM != 'X') {
-      answer = getFixup(fixupArray,
-          currentRelease + JVM + releaseJvmDriver.substring(3), extraId, info,
-          sb, true);
+      answer = getFixup(fixupArray, currentRelease + JVM + releaseJvmDriver.substring(3), extraId, info, sb, true);
       if (answer != null) {
         return answer;
       }
@@ -2141,32 +2044,25 @@ public class JDTestcase extends Testcase {
       /* Search for an earlier release */
       if (currentRelease.equals("76")) {
         sb.append("Trying previous release\n");
-        return getFixup(fixupArray, "75" + releaseJvmDriver.substring(2),
-            extraId, info, sb);
+        return getFixup(fixupArray, "75" + releaseJvmDriver.substring(2), extraId, info, sb);
       } else if (currentRelease.equals("75")) {
         sb.append("Trying previous release\n");
-        return getFixup(fixupArray, "74" + releaseJvmDriver.substring(2),
-            extraId, info, sb);
+        return getFixup(fixupArray, "74" + releaseJvmDriver.substring(2), extraId, info, sb);
       } else if (currentRelease.equals("74")) {
         sb.append("Trying previous release\n");
-        return getFixup(fixupArray, "73" + releaseJvmDriver.substring(2),
-            extraId, info, sb);
+        return getFixup(fixupArray, "73" + releaseJvmDriver.substring(2), extraId, info, sb);
       } else if (currentRelease.equals("73")) {
         sb.append("Trying previous release\n");
-        return getFixup(fixupArray, "72" + releaseJvmDriver.substring(2),
-            extraId, info, sb);
+        return getFixup(fixupArray, "72" + releaseJvmDriver.substring(2), extraId, info, sb);
       } else if (currentRelease.equals("72")) {
         sb.append("Trying previous release\n");
-        return getFixup(fixupArray, "71" + releaseJvmDriver.substring(2),
-            extraId, info, sb);
+        return getFixup(fixupArray, "71" + releaseJvmDriver.substring(2), extraId, info, sb);
       } else if (currentRelease.equals("71")) {
         sb.append("Trying previous release\n");
-        return getFixup(fixupArray, "61" + releaseJvmDriver.substring(2),
-            extraId, info, sb);
+        return getFixup(fixupArray, "61" + releaseJvmDriver.substring(2), extraId, info, sb);
       } else if (currentRelease.equals("61")) {
         sb.append("Trying previous release\n");
-        return getFixup(fixupArray, "54" + releaseJvmDriver.substring(2),
-            extraId, info, sb);
+        return getFixup(fixupArray, "54" + releaseJvmDriver.substring(2), extraId, info, sb);
       } else {
         return null;
       }
@@ -2178,13 +2074,6 @@ public class JDTestcase extends Testcase {
   String getReleaseJvmDriver() {
     String value = "";
     switch (getRelease()) {
-    case JDTestDriver.RELEASE_V5R4M0:
-      value = "54";
-      break;
-    case JDTestDriver.RELEASE_V5R5M0:
-    case JDTestDriver.RELEASE_V6R1M0:
-      value = "61";
-      break;
     case JDTestDriver.RELEASE_V7R1M0:
       value = "71";
       break;
@@ -2200,7 +2089,7 @@ public class JDTestcase extends Testcase {
     case JDTestDriver.RELEASE_V7R5M0:
       value = "75";
       break;
-    case JDTestDriver.RELEASE_V7R6M0:
+    case JDTestDriver.RELEASE_V7R5M0_PLUS:
       value = "76";
       break;
     default:
@@ -2208,18 +2097,6 @@ public class JDTestcase extends Testcase {
     }
     int jdk = JVMInfo.getJDK();
     switch (jdk) {
-    case JVMInfo.JDK_13:
-      value += "3";
-      break;
-    case JVMInfo.JDK_14:
-      value += "4";
-      break;
-    case JVMInfo.JDK_142:
-      value += "4";
-      break;
-    case JVMInfo.JDK_15:
-      value += "5";
-      break;
     case JVMInfo.JDK_16:
       value += "6";
       break;
@@ -2263,8 +2140,7 @@ public class JDTestcase extends Testcase {
     return value;
   }
 
-  public String callRsmdMethod(ResultSetMetaData rsmd, String method, int col)
-      throws SQLException {
+  public String callRsmdMethod(ResultSetMetaData rsmd, String method, int col) throws SQLException {
     String answer = null;
     if (method.equals("isAutoIncrement")) {
       answer = "" + rsmd.isAutoIncrement(col);
@@ -2333,9 +2209,8 @@ public class JDTestcase extends Testcase {
     return answer;
   }
 
-  protected boolean verifyRsmd(ResultSetMetaData rsmd, String[][] methodTests,
-      String catalog1, int j, StringBuffer message, StringBuffer prime)
-      throws SQLException {
+  protected boolean verifyRsmd(ResultSetMetaData rsmd, String[][] methodTests, String catalog1, int j,
+      StringBuffer message, StringBuffer prime) throws SQLException {
     boolean passed = true;
     for (int i = 0; i < methodTests.length; i++) {
       String answer = "NOT SET";
@@ -2356,19 +2231,17 @@ public class JDTestcase extends Testcase {
             // Skipping this method call
           } else {
             passed = false;
-            message.append("Loop " + j + " Expected: \"" + method + "\",\""
-                + col + "\",\"" + expected + "\"\n" + "Got:      \"" + method
-                + "\",\"" + col + "\",\"" + answer + "\"\n");
+            message.append("Loop " + j + " Expected: \"" + method + "\",\"" + col + "\",\"" + expected + "\"\n"
+                + "Got:      \"" + method + "\",\"" + col + "\",\"" + answer + "\"\n");
             if (j == 0) {
-              prime.append("      {\"" + method + "\",\"" + col + "\",\""
-                  + answer + "\"},\n");
+              prime.append("      {\"" + method + "\",\"" + col + "\",\"" + answer + "\"},\n");
             }
           }
         }
       } catch (SQLException sqlex) {
         passed = false;
-        message.append("Expected: \"" + method + "\",\"" + col + "\",\""
-            + expected + "\"\n" + "Got exception " + sqlex + "\n");
+        message.append(
+            "Expected: \"" + method + "\",\"" + col + "\",\"" + expected + "\"\n" + "Got exception " + sqlex + "\n");
 
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
@@ -2388,8 +2261,8 @@ public class JDTestcase extends Testcase {
 
       Statement stmt = connection.createStatement();
 
-      ResultSet rsJobname = stmt.executeQuery("SELECT "
-          + JDJSTPTestcase.envLibrary + ".GETJOBNAME() FROM SYSIBM.SYSDUMMY1");
+      ResultSet rsJobname = stmt
+          .executeQuery("SELECT " + JDJSTPTestcase.envLibrary + ".GETJOBNAME() FROM SYSIBM.SYSDUMMY1");
       rsJobname.next();
       String jobnameQusrwrk = rsJobname.getString(1).trim();
       System.out.println("Server job name is " + jobnameQusrwrk);
@@ -2400,8 +2273,7 @@ public class JDTestcase extends Testcase {
       }
       stmt.close();
     } catch (Exception e) {
-      System.out.println(
-          "Warning...exception caught while determining remote connection");
+      System.out.println("Warning...exception caught while determining remote connection");
       e.printStackTrace(System.out);
     }
     return remoteConnection;
@@ -2410,26 +2282,18 @@ public class JDTestcase extends Testcase {
   /**
    * Test a update method
    * 
-   * @param stmt
-   *          java.sql.Statement object to use
-   * @param setupSql
-   *          SQL setup statements.
-   * @param sql
-   *          SQL statement to execute. Value to get should be first column of
-   *          first row.
-   * @param cleanupSql
-   *          SQL cleanup statements
-   * @param methodName
-   *          name of method to call
-   * @param expectedValue
-   *          expected string value. This may also be an expected exception
-   *          (EXCEPTION: ...)
-   * @param info
-   *          information about when the testcase was added
+   * @param stmt          java.sql.Statement object to use
+   * @param setupSql      SQL setup statements.
+   * @param sql           SQL statement to execute. Value to get should be first
+   *                      column of first row.
+   * @param cleanupSql    SQL cleanup statements
+   * @param methodName    name of method to call
+   * @param expectedValue expected string value. This may also be an expected
+   *                      exception (EXCEPTION: ...)
+   * @param info          information about when the testcase was added
    */
-  public void testUpdate(Statement stmt, String[] setupSql, String sql,
-      String[] cleanupSql, String updateMethodName, String getMethodName,
-      String[] expectedValues, String info) {
+  public void testUpdate(Statement stmt, String[] setupSql, String sql, String[] cleanupSql, String updateMethodName,
+      String getMethodName, String[] expectedValues, String info) {
     StringBuffer sb = new StringBuffer();
 
     boolean setupFailed = false;
@@ -2455,8 +2319,7 @@ public class JDTestcase extends Testcase {
     if (setupFailed) {
       assertCondition(false, "Setup failed \n" + sb.toString());
     } else {
-      testUpdate(stmt, sql, updateMethodName, getMethodName, expectedValues,
-          info);
+      testUpdate(stmt, sql, updateMethodName, getMethodName, expectedValues, info);
       if (cleanupSql != null) {
         for (int i = 0; i < cleanupSql.length; i++) {
           String thisSql = cleanupSql[i];
@@ -2482,26 +2345,18 @@ public class JDTestcase extends Testcase {
   /**
    * Test a get method
    * 
-   * @param stmt
-   *          java.sql.Statement object to use
-   * @param setupSql
-   *          SQL setup statements.
-   * @param sql
-   *          SQL statement to execute. Value to get should be first column of
-   *          first row.
-   * @param cleanupSql
-   *          SQL cleanup statements
-   * @param methodName
-   *          name of method to call
-   * @param expectedValue
-   *          expected string value. This may also be an expected exception
-   *          (EXCEPTION: ...)
-   * @param info
-   *          information about when the testcase was added
+   * @param stmt          java.sql.Statement object to use
+   * @param setupSql      SQL setup statements.
+   * @param sql           SQL statement to execute. Value to get should be first
+   *                      column of first row.
+   * @param cleanupSql    SQL cleanup statements
+   * @param methodName    name of method to call
+   * @param expectedValue expected string value. This may also be an expected
+   *                      exception (EXCEPTION: ...)
+   * @param info          information about when the testcase was added
    */
-  public void testGet(Statement stmt, String[] setupSql, String sql,
-      String[] cleanupSql, String methodName, String expectedValue,
-      String info) {
+  public void testGet(Statement stmt, String[] setupSql, String sql, String[] cleanupSql, String methodName,
+      String expectedValue, String info) {
     StringBuffer sb = new StringBuffer();
 
     boolean setupFailed = false;
@@ -2555,26 +2410,18 @@ public class JDTestcase extends Testcase {
   /**
    * Test a get method
    * 
-   * @param stmt
-   *          java.sql.Statement object to use
-   * @param setupSql
-   *          SQL setup statements.
-   * @param sql
-   *          SQL statement to execute. Value to get should be first column of
-   *          first row.
-   * @param cleanupSql
-   *          SQL cleanup statements
-   * @param methodName
-   *          name of method to call
-   * @param expectedValues
-   *          expected values array. This may also be an expected exception
-   *          (EXCEPTION: ...)
-   * @param info
-   *          information about when the testcase was added
+   * @param stmt           java.sql.Statement object to use
+   * @param setupSql       SQL setup statements.
+   * @param sql            SQL statement to execute. Value to get should be first
+   *                       column of first row.
+   * @param cleanupSql     SQL cleanup statements
+   * @param methodName     name of method to call
+   * @param expectedValues expected values array. This may also be an expected
+   *                       exception (EXCEPTION: ...)
+   * @param info           information about when the testcase was added
    */
-  public void testGet(Statement stmt, String[] setupSql, String sql,
-      String[] cleanupSql, String methodName, String[] expectedValues,
-      String info) {
+  public void testGet(Statement stmt, String[] setupSql, String sql, String[] cleanupSql, String methodName,
+      String[] expectedValues, String info) {
     StringBuffer sb = new StringBuffer();
 
     boolean setupFailed = false;
@@ -2626,20 +2473,17 @@ public class JDTestcase extends Testcase {
   /**
    * check a getMethod call on a result set
    */
-  public boolean checkRsGetMethod(ResultSet rs, String methodName,
-      String expectedValue, StringBuffer sb) {
+  public boolean checkRsGetMethod(ResultSet rs, String methodName, String expectedValue, StringBuffer sb) {
     String stringValue;
     try {
       if (methodName.equals("getUnicodeStream")) {
 
-        InputStream v = (InputStream) JDReflectionUtil.callMethod_O(rs,"getUnicodeStream",1);
+        InputStream v = (InputStream) JDReflectionUtil.callMethod_O(rs, "getUnicodeStream", 1);
         boolean check = compareUnicodeStream(v, expectedValue, sb);
         return check;
-      } else if (methodName.equals("getURL")
-          || methodName.equals("getBigDecimal") || methodName.equals("getDate")
-          || methodName.equals("getNString") || methodName.equals("getObject")
-          || methodName.equals("getRef") || methodName.equals("getTime")
-          || methodName.equals("getTimestamp") || methodName.equals("getSQLXML")
+      } else if (methodName.equals("getURL") || methodName.equals("getBigDecimal") || methodName.equals("getDate")
+          || methodName.equals("getNString") || methodName.equals("getObject") || methodName.equals("getRef")
+          || methodName.equals("getTime") || methodName.equals("getTimestamp") || methodName.equals("getSQLXML")
           || methodName.equals("getString")) {
         Object outObject = JDReflectionUtil.callMethod_O(rs, methodName, 1);
         if (outObject == null) {
@@ -2665,8 +2509,7 @@ public class JDTestcase extends Testcase {
         Object outObject = JDReflectionUtil.callMethod_O(rs, methodName, 1);
         stringValue = "NULL";
         if (outObject != null) {
-          byte[] returnBytes = (byte[]) JDReflectionUtil.callMethod_O(outObject,
-              "getBytes");
+          byte[] returnBytes = (byte[]) JDReflectionUtil.callMethod_O(outObject, "getBytes");
           stringValue = bytesToString(returnBytes);
         }
 
@@ -2691,12 +2534,10 @@ public class JDTestcase extends Testcase {
         stringValue = "NULL";
         if (outObject != null) {
           int length = (int) JDReflectionUtil.callMethod_L(outObject, "length");
-          stringValue = JDReflectionUtil.callMethod_S(outObject, "getSubString",
-              1L, length);
+          stringValue = JDReflectionUtil.callMethod_S(outObject, "getSubString", 1L, length);
         }
       } else if (methodName.equals("getCharacterStream")) {
-        Reader reader = (Reader) JDReflectionUtil.callMethod_O(rs, methodName,
-            1);
+        Reader reader = (Reader) JDReflectionUtil.callMethod_O(rs, methodName, 1);
         boolean passed = compare(reader, expectedValue, sb);
         return passed;
 
@@ -2709,8 +2550,7 @@ public class JDTestcase extends Testcase {
       }
       boolean check = stringValue.equals(expectedValue);
       if (!check) {
-        sb.append(" for " + methodName + "\ngot " + stringValue + "\nsb  "
-            + expectedValue + "\n");
+        sb.append(" for " + methodName + "\ngot " + stringValue + "\nsb  " + expectedValue + "\n");
       }
       return check;
 
@@ -2718,8 +2558,7 @@ public class JDTestcase extends Testcase {
       if (expectedValue.indexOf("EXCEPTION:") == 0) {
         String searchException = expectedValue.substring(10);
         if (e.toString().indexOf(searchException) < 0) {
-          sb.append(
-              "Unexpected Exception -- Expected " + searchException + "\n");
+          sb.append("Unexpected Exception -- Expected " + searchException + "\n");
           printStackTraceToStringBuffer(e, sb);
           return false;
         } else {
@@ -2737,21 +2576,15 @@ public class JDTestcase extends Testcase {
   /**
    * Test a get method
    * 
-   * @param stmtjava.sql.Statement
-   *          object to use
-   * @param sql
-   *          SQL statement to execute. Value to get should be first column of
-   *          first row.
-   * @param methodName
-   *          name of method to call
-   * @param expectedValue
-   *          expected string value. This may also be an expected exception
-   *          (EXCEPTION: ...)
-   * @param info
-   *          information about when the testcase was added
+   * @param stmtjava.sql.Statement object to use
+   * @param sql                    SQL statement to execute. Value to get should
+   *                               be first column of first row.
+   * @param methodName             name of method to call
+   * @param expectedValue          expected string value. This may also be an
+   *                               expected exception (EXCEPTION: ...)
+   * @param info                   information about when the testcase was added
    */
-  public void testGet(Statement stmt, String sql, String methodName,
-      String expectedValue, String info) {
+  public void testGet(Statement stmt, String sql, String methodName, String expectedValue, String info) {
 
     StringBuffer sb = new StringBuffer();
     try {
@@ -2769,21 +2602,15 @@ public class JDTestcase extends Testcase {
   /**
    * Test a get method
    * 
-   * @param stmtjava
-   *          .sql.Statement object to use
-   * @param sql
-   *          SQL statement to execute. Value to get should be first column of
-   *          first row.
-   * @param methodName
-   *          name of method to call
-   * @param expectedValues
-   *          expected string array. This may also be an expected exception
-   *          (EXCEPTION: ...)
-   * @param info
-   *          information about when the testcase was added
+   * @param stmtjava       .sql.Statement object to use
+   * @param sql            SQL statement to execute. Value to get should be first
+   *                       column of first row.
+   * @param methodName     name of method to call
+   * @param expectedValues expected string array. This may also be an expected
+   *                       exception (EXCEPTION: ...)
+   * @param info           information about when the testcase was added
    */
-  public void testGet(Statement stmt, String sql, String methodName,
-      String[] expectedValues, String info) {
+  public void testGet(Statement stmt, String sql, String methodName, String[] expectedValues, String info) {
 
     StringBuffer sb = new StringBuffer();
     try {
@@ -2791,8 +2618,7 @@ public class JDTestcase extends Testcase {
       ResultSet rs = stmt.executeQuery(sql);
       boolean check = true;
       for (int i = 0; i < expectedValues.length; i++) {
-        sb.append("Test step: Calling rs.next for i = " + i
-            + " expectedValue = " + expectedValues[i] + "\n");
+        sb.append("Test step: Calling rs.next for i = " + i + " expectedValue = " + expectedValues[i] + "\n");
         rs.next();
         if (!checkRsGetMethod(rs, methodName, expectedValues[i], sb)) {
           check = false;
@@ -2808,28 +2634,21 @@ public class JDTestcase extends Testcase {
   /**
    * Test an update method
    * 
-   * @param stmtjava
-   *          .sql.Statement object to use
-   * @param sql
-   *          SQL statement to execute. Value to get should be first column of
-   *          first row.
-   * @param updateMethodName
-   *          name of method to call for the update
-   * @param getMethodName
-   *          name of method to call for the get
-   * @param expectedValues
-   *          expected string array. This may also be an expected exception
-   *          (EXCEPTION: ...)
-   * @param info
-   *          information about when the testcase was added
+   * @param stmtjava         .sql.Statement object to use
+   * @param sql              SQL statement to execute. Value to get should be
+   *                         first column of first row.
+   * @param updateMethodName name of method to call for the update
+   * @param getMethodName    name of method to call for the get
+   * @param expectedValues   expected string array. This may also be an expected
+   *                         exception (EXCEPTION: ...)
+   * @param info             information about when the testcase was added
    */
-  public void testUpdate(Statement stmt, String sql, String updateMethodName,
-      String getMethodName, String[] expectedValues, String info) {
+  public void testUpdate(Statement stmt, String sql, String updateMethodName, String getMethodName,
+      String[] expectedValues, String info) {
 
     StringBuffer sb = new StringBuffer();
     try {
-      sb.append("Testing " + sql + " " + updateMethodName + "/" + getMethodName
-          + "\n");
+      sb.append("Testing " + sql + " " + updateMethodName + "/" + getMethodName + "\n");
       boolean check = true;
       ResultSet rs = stmt.executeQuery(sql);
 
@@ -2841,8 +2660,8 @@ public class JDTestcase extends Testcase {
           d = Timestamp.valueOf(inValue);
         } else {
           if (driver_ == JDTestDriver.DRIVER_NATIVE) {
-            d = (Timestamp) JDReflectionUtil.callStaticMethod_O(
-                "com.ibm.db2.jdbc.app.DB2JDBCTimestamp", "valueOf", inValue);
+            d = (Timestamp) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2JDBCTimestamp", "valueOf",
+                inValue);
           } else {
             d = AS400JDBCTimestamp.valueOf(inValue);
           }
@@ -2859,8 +2678,7 @@ public class JDTestcase extends Testcase {
 
       rs = stmt.executeQuery(sql);
       for (int i = 0; i < expectedValues.length; i++) {
-        sb.append("Calling rs.next for i = " + i + " expectedValue = "
-            + expectedValues[i] + "\n");
+        sb.append("Calling rs.next for i = " + i + " expectedValue = " + expectedValues[i] + "\n");
         rs.next();
         if (!checkRsGetMethod(rs, getMethodName, expectedValues[i], sb)) {
           check = false;
@@ -2878,8 +2696,8 @@ public class JDTestcase extends Testcase {
    * exceptions
    */
 
-  static String[] expectedClosedExceptions = { "Function sequence error",
-      "STATEMENT CLOSED", "Invalid operation: statement closed", /* JCC */
+  static String[] expectedClosedExceptions = { "Function sequence error", "STATEMENT CLOSED",
+      "Invalid operation: statement closed", /* JCC */
   };
 
   public void assertClosedException(Exception e, StringBuffer sb) {
@@ -2907,8 +2725,8 @@ public class JDTestcase extends Testcase {
       }
     }
 
-    sb.append("Statement was not closed correctly:  Exception "
-        + exceptionMessage + " did not have " + messagesText.toString() + "\n");
+    sb.append("Statement was not closed correctly:  Exception " + exceptionMessage + " did not have "
+        + messagesText.toString() + "\n");
     return false;
 
   }
@@ -2926,15 +2744,11 @@ public class JDTestcase extends Testcase {
    * This method is used to indicate failure of the current variation. It is
    * intended for use when an exception caused the failure.
    * 
-   * @param connection
-   *          The JDBC connection being used when the exception occurred.
-   * @param exception
-   *          The exception that caused the failure.
-   * @param comment
-   *          Additional information concerning the failure.
+   * @param connection The JDBC connection being used when the exception occurred.
+   * @param exception  The exception that caused the failure.
+   * @param comment    Additional information concerning the failure.
    **/
-  public final void failed(Connection connection, Throwable exception,
-      String comment) {
+  public final void failed(Connection connection, Throwable exception, String comment) {
     /* Get additional information about the failure */
     if (exception instanceof SQLException) {
       System.out.println("ERROR:  SQLException caught.  Server job log is ");
@@ -2944,8 +2758,7 @@ public class JDTestcase extends Testcase {
     failed(exception, comment);
   }
 
-  public final void failed(Connection connection, Throwable exception,
-      StringBuffer sb) {
+  public final void failed(Connection connection, Throwable exception, StringBuffer sb) {
     /* Get additional information about the failure */
     if (exception instanceof SQLException) {
       System.out.println("ERROR:  SQLException caught.  Server job log is ");
@@ -2964,15 +2777,13 @@ public class JDTestcase extends Testcase {
       stmt.execute("CALL QSYS2.QCMDEXC('DSPJOBLOG OUTPUT(*PRINT) ')");
       stmt.close();
 
-      String outputFile = "/tmp/failed.joblog."
-          + connection.toString().replace('/', '-') + "."
-          + connection.hashCode() + ".txt";
+      String outputFile = "/tmp/failed.joblog." + connection.toString().replace('/', '-') + "." + connection.hashCode()
+          + ".txt";
       JDJSTPTestcase.assureSTPJOBLOGisAvailable(connection);
-      CallableStatement cs = connection
-          .prepareCall("CALL QGPL.STPJOBLOG('" + outputFile + "')");
+      CallableStatement cs = connection.prepareCall("CALL QGPL.STPJOBLOG('" + outputFile + "')");
       cs.executeUpdate();
       System.out.println("JOBLOG information at " + outputFile);
-      if (System.getProperty("os.name").indexOf("400") > 0) {
+      if (JTOpenTestEnvironment.isOS400) {
         // No need to get file, it is already there
       } else {
         // Grab the file and place it on the local system
@@ -3022,14 +2833,12 @@ public class JDTestcase extends Testcase {
       int hashcode = connection.hashCode();
       if (hashcode < 0)
         hashcode = -hashcode;
-      String outputFile = "/tmp/failed.joblog." + jobname.replace('/', '-')
-          + "." + hashcode + ".txt";
+      String outputFile = "/tmp/failed.joblog." + jobname.replace('/', '-') + "." + hashcode + ".txt";
       JDJSTPTestcase.assureSTPJOBLOGXisAvailable(connection);
-      CallableStatement cs = connection.prepareCall(
-          "CALL QGPL.STPJOBLOGX('" + outputFile + "','" + jobname + "')");
+      CallableStatement cs = connection.prepareCall("CALL QGPL.STPJOBLOGX('" + outputFile + "','" + jobname + "')");
       cs.executeUpdate();
       System.out.println("JOBLOG information at " + outputFile);
-      if (System.getProperty("os.name").indexOf("400") > 0) {
+      if (JTOpenTestEnvironment.isOS400) {
         // No need to get file, it is already there
       } else {
         // Grab the file and place it on the local system
@@ -3110,15 +2919,13 @@ public class JDTestcase extends Testcase {
       System.out.println("IN USE error found");
       try {
         Connection currentConnection = stmt.getConnection();
-        String currentConnectionClassName = currentConnection.getClass()
-            .getName();
+        String currentConnectionClassName = currentConnection.getClass().getName();
         if (currentConnectionClassName.indexOf("AS400JDBCConnection") >= 0) {
-          System.out.println("Current server job is "
-              + ((AS400JDBCConnection) currentConnection)
-                  .getServerJobIdentifier());
+          System.out
+              .println("Current server job is " + ((AS400JDBCConnection) currentConnection).getServerJobIdentifier());
         } else if (currentConnectionClassName.indexOf("DB2Connection") >= 0) {
-          System.out.println("Current server job is " + JDReflectionUtil
-              .callMethod_S(currentConnection, "getServerJobName"));
+          System.out
+              .println("Current server job is " + JDReflectionUtil.callMethod_S(currentConnection, "getServerJobName"));
 
         }
       } catch (Exception e1) {
@@ -3151,8 +2958,7 @@ public class JDTestcase extends Testcase {
       }
 
       if (library != null && object != null && objectType != null) {
-        System.out
-            .println("Checking " + library + "/" + object + " " + objectType);
+        System.out.println("Checking " + library + "/" + object + " " + objectType);
         String lockInfoTable = "qgpl.lockinfo";
         String sql = null;
         try {
@@ -3164,9 +2970,8 @@ public class JDTestcase extends Testcase {
           sql = "create table " + lockInfoTable + "(srcdta varchar(200))";
           stmt.executeUpdate(sql);
 
-          sql = "CALL QSYS.QCMDEXC('QSH CMD(''system \"WRKOBJLCK OBJ(" + library
-              + "/" + object + ") OBJTYPE(" + objectType + ")  \""
-              + "| sed \"s/^\\(.*\\)/insert into " + lockInfoTable
+          sql = "CALL QSYS.QCMDEXC('QSH CMD(''system \"WRKOBJLCK OBJ(" + library + "/" + object + ") OBJTYPE("
+              + objectType + ")  \"" + "| sed \"s/^\\(.*\\)/insert into " + lockInfoTable
               + "(SRCDTA) values(''''\\1'''')/\"  > /tmp/" + lockInfoTable
               + ".txt '')                             ',000000180.00000)";
           stmt.executeUpdate(sql);
@@ -3229,17 +3034,17 @@ public class JDTestcase extends Testcase {
   public void cleanupBindings(String userid, char[] encryptedPassword) {
     if (checkClientOn400()) {
       // Use the authority of the userid/password to delete the files
-      char[] passwordChars =  PasswordVault.decryptPassword(encryptedPassword);
-      AS400 as400 = new AS400("localhost", userid,passwordChars);
-      PasswordVault.clearPassword(passwordChars); 
+      char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword);
+      AS400 as400 = new AS400("localhost", userid, passwordChars);
+      PasswordVault.clearPassword(passwordChars);
       // Remove /.bindings
       IFSFile ifsFile = new IFSFile(as400, "/.bindings");
       try {
         ifsFile.delete();
       } catch (IOException e) {
       }
-      // Remove /home/jdbctest/.bindings
-      ifsFile = new IFSFile(as400, "/home/jdbctest/.bindings");
+      // Remove bindings
+      ifsFile = new IFSFile(as400, JTOpenTestEnvironment.testcaseHomeDirectory + "/.bindings");
       try {
         ifsFile.delete();
       } catch (IOException e) {
@@ -3252,8 +3057,7 @@ public class JDTestcase extends Testcase {
 
   }
 
-  public void rebindContext(Context ctx, String bindName, Object obj)
-      throws NamingException {
+  public void rebindContext(Context ctx, String bindName, Object obj) throws NamingException {
     try {
       ctx.rebind(bindName, obj);
     } catch (Exception e) {
@@ -3275,8 +3079,7 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  public static void initTable(Statement s, String tableName, String tableDefinition)
-      throws SQLException {
+  public static void initTable(Statement s, String tableName, String tableDefinition) throws SQLException {
     StringBuffer sb = new StringBuffer();
     try {
       JDTestDriver.initTable(s, tableName, tableDefinition, sb);
@@ -3287,13 +3090,12 @@ public class JDTestcase extends Testcase {
     }
   }
 
-  public static void initTable(Statement s, String tableName, String tableDefinition,
-      StringBuffer sb) throws SQLException {
+  public static void initTable(Statement s, String tableName, String tableDefinition, StringBuffer sb)
+      throws SQLException {
     JDTestDriver.initTable(s, tableName, tableDefinition, sb);
   }
 
-  public static void initTrigger(Statement s, String triggerName,
-      String triggerDefinition) throws SQLException {
+  public static void initTrigger(Statement s, String triggerName, String triggerDefinition) throws SQLException {
     StringBuffer sb = new StringBuffer();
     try {
       JDTestDriver.initTrigger(s, triggerName, triggerDefinition, sb);
@@ -3313,6 +3115,4 @@ public class JDTestcase extends Testcase {
     testDriver_.cleanupTrigger(s, triggerName);
   }
 
-
- 
 }

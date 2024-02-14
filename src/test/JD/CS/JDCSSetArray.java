@@ -21,10 +21,10 @@ import test.JDLobTest;
 import test.JDReflectionUtil;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
 
-import java.awt.TextArea;
+
+
+
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Array;
@@ -59,7 +59,7 @@ public class JDCSSetArray extends JDCSSetTestcase
     /**
      * Constructor.
      */
-    public JDCSSetArray(AS400 systemObject, Hashtable namesAndVars,
+    public JDCSSetArray(AS400 systemObject, Hashtable<?, ?> namesAndVars,
             int runMode, FileOutputStream fileOutputStream,
              String password)
     {
@@ -1015,7 +1015,7 @@ public class JDCSSetArray extends JDCSSetTestcase
 	    } else if (areArraysSupported() ||  isToolboxDriver() ) { //toolbox supports setting an any i5.  Let host return error.
                 //with array support in TB this is okay
                 assertCondition(true);
-	    } else if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease()  == JDTestDriver.RELEASE_V6R1M0) {
+	    } else if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease()  == JDTestDriver.RELEASE_V7R1M0) {
 		// To set as null is not an error
                 assertCondition(true);
             } else {

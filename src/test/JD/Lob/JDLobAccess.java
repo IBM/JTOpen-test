@@ -1527,7 +1527,7 @@ extends JDTestcase
     **/
     public void Var033()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R3 for native driver"); return; 
 	} 
         if (checkJdbc20 ()) {
@@ -1576,7 +1576,7 @@ extends JDTestcase
     **/
     public void Var034()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R3 for native driver"); return; 
 	} 
         if (checkJdbc20 ()) {
@@ -1629,7 +1629,7 @@ extends JDTestcase
     **/
     public void Var035()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R3 for native driver"); return; 
 	} 
         if (checkJdbc20 ()) {
@@ -1684,7 +1684,7 @@ extends JDTestcase
     **/
     public void Var036()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R3 for native driver"); return; 
 	} 
         if (checkJdbc20 ()) {
@@ -1741,7 +1741,7 @@ extends JDTestcase
     **/
     public void Var037()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R3 for native driver"); return; 
 	} 
         if (checkJdbc20 ()) {
@@ -1793,7 +1793,7 @@ extends JDTestcase
     **/
     public void Var038()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R3 for native driver"); return; 
 	} 
         if (checkJdbc20 ()) {
@@ -1847,7 +1847,7 @@ extends JDTestcase
     **/
     public void Var039()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R3 for native driver"); return; 
 	} 
         if (checkJdbc20 ()) {
@@ -1903,7 +1903,7 @@ extends JDTestcase
     **/
     public void Var040()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V5R3M0) {
+	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R3 for native driver"); return; 
 	} 
         if (checkJdbc20 ()) {

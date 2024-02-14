@@ -284,7 +284,7 @@ when the connection is open.
         try {
 
 
-	    if ((getRelease() < JDTestDriver.RELEASE_V5R5M0) && (getDriver () != JDTestDriver.DRIVER_TOOLBOX)) { 
+	    if ((getRelease() < JDTestDriver.RELEASE_V7R1M0) && (getDriver () != JDTestDriver.DRIVER_TOOLBOX)) { 
 		assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == true); // @A1C
 	    } else {
 		    assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == false,
@@ -309,7 +309,7 @@ when the connection is closed.
         try {
 
 
-	    if ((getRelease() < JDTestDriver.RELEASE_V5R5M0) && (getDriver () != JDTestDriver.DRIVER_TOOLBOX)) { 
+	    if ((getRelease() < JDTestDriver.RELEASE_V7R1M0) && (getDriver () != JDTestDriver.DRIVER_TOOLBOX)) { 
 		assertCondition (dmd2_.storesMixedCaseQuotedIdentifiers () == true); // @A1C
 	    } else {
 		    assertCondition (dmd2_.storesMixedCaseQuotedIdentifiers () == false,

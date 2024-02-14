@@ -53,15 +53,14 @@ public class PasswordLeakTool {
     if (debug) {
 	System.out.println("DEBUG: java.home is "+javaHome); 
     }
-    osName = System.getProperty("os.name");
-    if (osName.indexOf("Windows") == 0) {
+    if (JTOpenTestEnvironment.isWindows) {
       osType = OS_WINDOWS;
-    } else if (osName.indexOf("OS/400") == 0) {
+    } else if (JTOpenTestEnvironment.isOS400) {
       osType = OS_IBM_I;
-    } else if (osName.indexOf("AIX") == 0) {
+    } else if (JTOpenTestEnvironment.isAIX) {
       osType = OS_AIX;
     } else {
-      System.out.println("PasswordLeakTool: unknown OS=" + osName);
+      System.out.println("PasswordLeakTool: unknown OS=" + JTOpenTestEnvironment.osVersion);
     }
     if (javaHome.indexOf("/QOpenSys/QIBM/ProdData/JavaVM") >= 0) {
       ibmJVM = true;
@@ -460,13 +459,13 @@ public class PasswordLeakTool {
         "[ENCRYPTPASSWORD] [DECRYPTPASSWORD] "
         + "[DUMP dumpfile]* [SCAN dumpfile pwd]* ");
     System.out.println(
-        "                    i.e.  AS400JAVACONNECT sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  AS400JAVACONNECT    system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
-        "                    i.e.  AS400JAVADATASOURCE sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  AS400JAVADATASOURCE system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
-        "                    i.e.  AS400JAVAJDBC sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  AS400JAVAJDBC       system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
     System.out.println(
-        "                    i.e.  DB2JAVAJDBC sq750.rch.stglabs.ibm.com PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  DB2JAVAJDBC         system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
 
     System.out.println(
         "                    i.e.  ENCRYPTPASSWORD DECRYPTPASSWORD DUMP /tmp/dumpFile.txt  SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");

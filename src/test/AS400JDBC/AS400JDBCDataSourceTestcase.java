@@ -202,7 +202,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
 
         if (os.indexOf("OS/400") >= 0)
             environment_ = OS_AS400;
-        else if (os.indexOf("Windows") >= 0)
+        else if (JTOpenTestEnvironment.isWindows)
             environment_ = OS_WINDOWS;
 
         if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))          //@A7A

@@ -950,7 +950,7 @@ Performs cleanup needed after running variations.
     }
     String[] lastSql = new String[1]; 
     try {
-      if (directMap && (getRelease() <= JDTestDriver.RELEASE_V5R3M0)) {
+      if (directMap && (getRelease() <= JDTestDriver.RELEASE_V7R1M0)) {
         notApplicable("DirectMap test");
       } else {
         StringBuffer sb = new StringBuffer(); 
@@ -1025,7 +1025,7 @@ Performs cleanup needed after running variations.
 	    notApplicable("Native DRIVER direct map test");
 	    return;
 	}
-	if (directMap && (getRelease() <=  JDTestDriver.RELEASE_V5R3M0)) {
+	if (directMap && (getRelease() <=  JDTestDriver.RELEASE_V7R1M0)) {
 	    notApplicable("DirectMap test");
 	} else {
     String[] lastSql = new String[1]; 
@@ -1080,7 +1080,7 @@ Performs cleanup needed after running variations.
       notApplicable("Native DRIVER direct map test");
       return;
     }
-    if (directMap && (getRelease() <= JDTestDriver.RELEASE_V5R3M0)) {
+    if (directMap && (getRelease() <= JDTestDriver.RELEASE_V7R1M0)) {
       notApplicable("DirectMap test");
     } else {
       String[] lastSql = new String[1]; 
@@ -1130,7 +1130,7 @@ Performs cleanup needed after running variations.
       notApplicable("Native DRIVER direct map test");
       return;
     }
-    if (directMap && (getRelease() <= JDTestDriver.RELEASE_V5R3M0)) {
+    if (directMap && (getRelease() <= JDTestDriver.RELEASE_V7R1M0)) {
       notApplicable("DirectMap test");
     } else {
       Random random = new Random();

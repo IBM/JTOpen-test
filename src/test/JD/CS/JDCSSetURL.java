@@ -187,7 +187,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
     }
     String info = " -- testcase updated 10/2011 for toolbox driver -- null is now value parameter";
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           cs = connection_.prepareCall(sql);
           JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
@@ -460,7 +460,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
       return;
     }
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
         try {
           cs = connection_.prepareCall(sql);
@@ -503,7 +503,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var017() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           cs = connection_.prepareCall(sql);
           JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
@@ -542,7 +542,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var018() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         if (checkLobSupport()) {
           try {
             cs = connection_.prepareCall(sql);
@@ -754,7 +754,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
   // @A1 This should work by default binary translate to character
   public void Var025() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           cs = connection_.prepareCall(sql);
           JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
@@ -793,7 +793,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
   // @ A1
   public void Var026() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           cs = connection_.prepareCall(sql);
           JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
@@ -1083,7 +1083,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var036() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           cs = connection_.prepareCall(sql);
           JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
@@ -1122,7 +1122,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var037() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           cs = connection_.prepareCall(sql);
           JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
@@ -1161,7 +1161,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var038() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         if (checkLobSupport()) {
           try {
             cs = connection_.prepareCall(sql);
@@ -1372,7 +1372,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var045() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           cs = connection_.prepareCall(sql);
           JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
@@ -1410,7 +1410,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var046() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           cs = connection_.prepareCall(sql);
           JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,

@@ -96,7 +96,7 @@ public class JDPSSetSQLXML extends JDTestcase {
    **/
   protected void setup() throws Exception {
     if (isJdbc40()) {
-      nodecl = (getRelease() >= JDTestDriver.RELEASE_V6R1M0)
+      nodecl = (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
           || (isToolboxDriver());
 
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -811,7 +811,7 @@ public class JDPSSetSQLXML extends JDTestcase {
             "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
 
         String expected = "<?xml version=\"1.0\" ?> <name>Var025</name>";
-        if (getRelease() >= JDTestDriver.RELEASE_V6R1M0) {
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           /*
            * In V7R1 the getString method of SQLXML will remove the XML
            * declaration

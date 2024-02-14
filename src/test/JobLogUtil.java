@@ -608,24 +608,25 @@ public class JobLogUtil {
   /**
    * Save the joblog as a file that be accessed with the web page
    * Returns a string with a message indicating where the joblog can be found
+   * @throws Exception 
    */
 
-  public static String publishJoblog(String jobname, String joblog)    throws IOException {
+  public static String publishJoblog(String jobname, String joblog)    throws Exception {
     if (joblog == null) {
       return "joblog is null and cannot be saved";
     }
 
-    File dir = new File("/home/jdbctest/ct/debugdata");
+    File dir = new File(JTOpenTestEnvironment.testcaseHomeDirectory+"/ct/debugdata");
     if (!dir.exists()) {
       dir.mkdirs();
     }
     String filename = jobname.replace('/', '.') + ".txt";
-    File outfile = new File("/home/jdbctest/ct/debugdata/" + filename);
+    File outfile = new File(JTOpenTestEnvironment.testcaseHomeDirectory+"/ct/debugdata/" + filename);
     int count = 0;
     while (outfile.exists()) {
       count++;
       filename = jobname.replace('/', '.') + "." + count + ".txt";
-      outfile = new File("/home/jdbctest/ct/debugdata/" + filename);
+      outfile = new File(JTOpenTestEnvironment.testcaseHomeDirectory+"/ct/debugdata/" + filename);
     }
 
     PrintWriter writer = new PrintWriter(new FileWriter(outfile));
@@ -635,7 +636,7 @@ public class JobLogUtil {
     InetAddress localHost = InetAddress.getLocalHost();
     String hostname =localHost.getHostName();
     if (hostname.indexOf(".") < 0 ) { 
-      hostname = hostname+".rch.stglabs.ibm.com"; 
+      hostname = hostname+"."+JTOpenTestEnvironment.getDefaultClientDomain();  
     }
     return "...Joblog for " + jobname + " available at http://"
         + hostname + ":6050/debugdata/" + filename;

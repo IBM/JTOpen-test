@@ -1149,7 +1149,7 @@ public class JDRSGetClob extends JDTestcase {
    **/
   public void Var045() {
     if (checkLevel()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
         try {
           String tablename = JDRSTest.COLLECTION + ".JDRSGCLB45";
           try {

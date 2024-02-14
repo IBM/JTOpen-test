@@ -37,6 +37,7 @@ import com.ibm.as400.access.IFSTextFileOutputStream;
 
 import test.JCIFSUtility;
 import test.JDReflectionUtil;
+import test.JTOpenTestEnvironment;
 
 /**
 Test read methods for IFSFileInputStream, IFSFileOutputStream, and
@@ -1317,7 +1318,7 @@ Read and verify a file containing characters \u0000 through \u0080, \u7fff,
       IFSRandomAccessFile raf1 =
         new IFSRandomAccessFile(systemObject_, ifsPathName_, "r");
       int i;
-      if (linux_) {
+      if (JTOpenTestEnvironment.isLinux) {
         IFSRandomAccessFile raf2 =
         new IFSRandomAccessFile(systemObject_, ifsPathName_, "r");
         i = 0;

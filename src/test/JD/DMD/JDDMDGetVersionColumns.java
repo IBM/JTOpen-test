@@ -162,7 +162,7 @@ Performs setup needed before running variations.
 	}
 
 	//@C1A
-	if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && (!JDTestDriver.isLUW())){
+	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())){
 	    if (!isSysibmMetadata()) { 
 		try {
 		s.executeUpdate ("ALTER TABLE " + JDDMDTest.COLLECTION
@@ -221,7 +221,7 @@ Performs setup needed before running variations.
 	} else {
 
 	    if (isSysibmMetadata()) {
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		    changeType = "TIMESTAMP FOR EACH ROW ON UPDATE AS ROW CHANGE TIMESTAMP NOT NULL"; 
 		    s.executeUpdate ( "CREATE TABLE " + JDDMDTest.COLLECTION
 				     +".VC1 (CUSTID  TIMESTAMP FOR EACH ROW ON UPDATE AS ROW CHANGE TIMESTAMP NOT NULL, "
@@ -274,7 +274,7 @@ Performs setup needed before running variations.
   
         //@C1A
 	if (isSysibmMetadata()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 
 
 		s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION
@@ -290,7 +290,7 @@ Performs setup needed before running variations.
 	    }
 
 	} else { 
-	    if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && (!JDTestDriver.isLUW())){
+	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())){
 		s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION
 				 + ".LCNVC2 (CUSTID INT NOT NULL, THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST CHAR(10) NOT NULL, "
 				 + "ACCTNBR INT NOT NULL WITH DEFAULT, BALANCE DEC (6,2), "
@@ -379,7 +379,7 @@ Performs cleanup needed after running variations.
 	}
         
         //@C1A
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && (!JDTestDriver.isLUW())){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())){
             if (!isSysibmMetadata()) { 
                s.executeUpdate ("ALTER TABLE " + JDDMDTest.COLLECTION
                              + ".LCNVC2 DROP PRIMARY KEY CASCADE");
@@ -450,7 +450,7 @@ getVersionColumns() - Check the result set format.
                     expectedTypes = expectedTypesJCC;
             }else if( getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                 expectedTypes = expectedTypesTBV7R1;
-            } else if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 &&
+            } else if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&
 		       getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		// V7R1 changes moved to V6R1 01/11/2010 
                 expectedTypes = expectedTypesTBV7R1;
@@ -480,7 +480,7 @@ getVersionColumns() - Verify all columns.
       message.setLength(0); 
       message.append("Change type is '"+changeType+"'"); 
         try {
-	    boolean isTimestamp = (getRelease() >= JDTestDriver.RELEASE_V5R5M0);
+	    boolean isTimestamp = (getRelease() >= JDTestDriver.RELEASE_V7R1M0);
             ResultSet rs = dmd_.getVersionColumns (connectionCatalog_, 
                                                   JDDMDTest.COLLECTION, "VC1");
             boolean success = true;
@@ -597,7 +597,7 @@ getVersionColumns() - Verify all columns.
             rs.close ();
 	    if (JDTestDriver.isLUW()) {
 		assertCondition ((rows == 0) && success, "Rows="+rows+" sb 0 "+message);
-	    } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX &&  ( getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+	    } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX &&  ( getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
             assertCondition ((rows == 0) && success, "Rows="+rows+" sb 0 "+message);  
         } else { 
 		assertCondition ((rows == 1) && success, "Rows="+rows+" sb 1 "+message);
@@ -663,7 +663,7 @@ getVersionColumns() - Specify null for the catalog.
             rs.close ();
 	    if (JDTestDriver.isLUW()) {
 		assertCondition ((rows == 0), " rows="+rows+" sb 0");
-        } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+        } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
             assertCondition ((rows == 0), " rows="+rows+" sb 0");
         } else { 
 		assertCondition (check1 && (rows == 1), "NAME found="+check1+" rows="+rows+" sb 1");
@@ -724,7 +724,7 @@ exactly.
             rs.close ();
 	    if (JDTestDriver.isLUW()) {
 		assertCondition ((rows == 0), " rows="+rows+" sb 0");
-	    } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+	    } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
 	        assertCondition ((rows == 0), " rows="+rows+" sb 0");
 	    } else { 
 		assertCondition (check1 && (rows == 1), "ACCTNBR found="+check1+" rows="+rows+" sb 1");
@@ -743,7 +743,7 @@ getVersionColumns() - Specify "localhost" for the catalog.
     public void Var007()
     {
         if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4  ||
-                ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V5R5M0)) ||
+                ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
                 (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
             notApplicable("\"localhost\" variation ");
         } else {
@@ -762,7 +762,7 @@ getVersionColumns() - Specify "localhost" for the catalog.
                 }
 
                 rs.close ();
-               if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+               if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
                    assertCondition (!check1 && (rows == 0), "CUSTID found="+check1+" rows="+rows+" sb 0");
                 }
                else
@@ -852,7 +852,7 @@ getVersionColumns() - Specify null for the schema.
             rs.close ();
             if (JDTestDriver.isLUW()) {
                 assertCondition ( (rows == 0), " rows="+rows+" sb 0");
-            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && ( getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && ( getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
                 assertCondition ( (rows == 0), " rows="+rows+" sb 0");
             } else { 
                 assertCondition (check1 && (rows >= 1), "ACCTNBR found="+check1+" rows="+rows+" sb >=  1");
@@ -915,7 +915,7 @@ exactly.
             rs.close ();
             if (JDTestDriver.isLUW()) {
                 assertCondition ((rows == 0), " rows="+rows+" sb 0");
-            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && ( getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && ( getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
                 assertCondition ((rows == 0), " rows="+rows+" sb 0");
             } else { 
                 assertCondition (check1 && (rows == 1), "NAME found="+check1+" rows="+rows+" sb 1");
@@ -1069,7 +1069,7 @@ exactly.  All matching columns should be returned.
             rs.close ();
             if (JDTestDriver.isLUW()) {
                 assertCondition ((rows == 0), " rows="+rows+" sb 0");
-            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
                 assertCondition ((rows == 0), " rows="+rows+" sb 0");
             } else { 
                 assertCondition (check1 && (rows == 1), "ACCTNBR found="+check1+" rows="+rows+" sb 1");
@@ -1150,7 +1150,7 @@ getVersionColumns() - Specify null for the catalog.  retrieve a 128 byte column 
 **/
     public void Var020()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V5R4M0 && (!JDTestDriver.isLUW())){
+        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())){
             try {
                 ResultSet rs = dmd_.getVersionColumns (null, JDDMDTest.COLLECTION, 
                                                        "LCNVC2");
@@ -1165,7 +1165,7 @@ getVersionColumns() - Specify null for the catalog.  retrieve a 128 byte column 
                 }
 
                 rs.close ();
-                if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+                if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
                     assertCondition (!check1 && (rows == 0), "should return 0");
                 }
                 else
@@ -1264,7 +1264,7 @@ getVersionColumns() - Readonly conneciton
 	    c.close(); 
 	    if (JDTestDriver.isLUW()) {
 		assertCondition ((rows == 0), " rows="+rows+" sb 0");
-        } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V6R1M0 || getRelease()== JDTestDriver.RELEASE_V5R5M0)) {//per issue 40138 for v6r1 non-metadata TB
+        } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX && (getRelease()== JDTestDriver.RELEASE_V7R1M0 || getRelease()== JDTestDriver.RELEASE_V7R1M0)) {//per issue 40138 for v6r1 non-metadata TB
             assertCondition ((rows == 0), " rows="+rows+" sb 0");
         } else { 
 		assertCondition (check1 && (rows == 1), "NAME found="+check1+" rows="+rows+" sb 1");

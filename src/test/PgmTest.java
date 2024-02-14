@@ -41,17 +41,16 @@ public class PgmTest extends TestDriver
     public void setup() throws Exception
     {
         // Determine if testcase is running on i5/OS.
-        String s = System.getProperty("os.name");
-        boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
+        boolean onI5OS = JTOpenTestEnvironment.isOS400; 
 
         if (onI5OS != onAS400_)
         {
-            out_.println("Detected os.name does not match arguments passed.");
+            out_.println("Detected operating system  does not match arguments passed.");
         }
 
         if (onI5OS)
         {
-            s = SystemProperties.getProperty(SystemProperties.PROGRAMCALL_THREADSAFE);
+            String s = SystemProperties.getProperty(SystemProperties.PROGRAMCALL_THREADSAFE);
             assumeProgramsThreadSafe_ = (s != null && s.equals("true")) ? true : false;
         }
     }

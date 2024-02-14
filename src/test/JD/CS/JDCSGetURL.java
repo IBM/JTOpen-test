@@ -521,7 +521,7 @@ getURL() - Get a type that was registered as an OTHER.
 	   if (checkLobSupport ()) {
 	       try {
 		   URL p = csTypes_.getURL (18);
-		   assertCondition (p.toString().equals ("http://w3.rchland.ibm.com/index.html"));
+		   assertCondition (p.toString().equals ("https://github.com/IBM/JTOpen-test/blob/main/README.md"));
 	       } catch (Exception e)
 	       {
 		   failed (e, "Unexpected Exception");
@@ -879,7 +879,7 @@ getURL() - Get a type that was registered as an OTHER.
 		if (checkLobSupport ()) {
 		    try {
 			URL p = csTypes_.getURL ("P_DATALINK");
-			assertCondition (p.toString().equals ("http://w3.rchland.ibm.com/index.html"));
+			assertCondition (p.toString().equals ("https://github.com/IBM/JTOpen-test/blob/main/README.md"));
 		    } catch (Exception e)
 		    {
 			failed (e, "Unexpected Exception");

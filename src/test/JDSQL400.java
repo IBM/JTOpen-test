@@ -480,9 +480,8 @@ public class JDSQL400 implements Runnable {
 
     // Load the jdbc-odbc bridge driver if not on 400. Activating this on the
     // 400 causes the JVM to crash.
-    String os = System.getProperty("os.name");
 
-    if (!os.equals("OS/400")) {
+    if (JTOpenTestEnvironment.isOS400) {
       try {
         Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
         url = "jdbc:odbc:" + system;
@@ -547,7 +546,7 @@ public class JDSQL400 implements Runnable {
         // class that is loaded from another classloader. Think about this
         //
 
-        if (os.equals("OS/400")) {
+        if (JTOpenTestEnvironment.isOS400) {
           String[] jarLocations = {
               "/qibm/proddata/http/public/jt400/lib/jt400.jar" };
           String[] jarLocations16 = {
@@ -595,13 +594,13 @@ public class JDSQL400 implements Runnable {
     //
     // Don't load this if running on a PC
     //
-    String osname = System.getProperty("os.name");
+    
     if (debug) {
-      System.out.println("osname is " + osname);
+      System.out.println("osname is " + JTOpenTestEnvironment.osVersion);
     }
 
-    if (osname.equals("Windows XP") || (noNative != null)
-        || osname.equals("AIX")) {
+    if (JTOpenTestEnvironment.isWindows || (noNative != null)
+        || JTOpenTestEnvironment.isAIX) {
       // Don't even try loading on other platforms
     } else {
       try {
@@ -3475,12 +3474,11 @@ public class JDSQL400 implements Runnable {
   public static void main(String args[]) {
     prompt = true;
 
-    String os = System.getProperty("os.name");
 
-    if ((!os.equals("OS/400")) && (args.length < 3)) {
+    if ((!JTOpenTestEnvironment.isOS400) && (args.length < 3)) {
       System.out.println("Usage:  java sql400 <system> <userid> <password>");
     } else {
-      System.out.println("os.version = " + os);
+      System.out.println("osVersion = " + JTOpenTestEnvironment.osVersion);
 
       if (args.length > 0) {
         system = args[0];
@@ -3571,11 +3569,11 @@ public class JDSQL400 implements Runnable {
 
       try {
 
-        String osname = System.getProperty("os.name");
+ 
         if (debug)
-          System.out.println("os.name is " + osname);
+          System.out.println("Operating System is " + JTOpenTestEnvironment.osVersion);
         String jdbclog = "jdbclog.out";
-        if (osname.equals("AIX")) {
+        if (JTOpenTestEnvironment.isAIX) {
           jdbclog = "/tmp/" + System.getProperty("user.name") + ".jdbclog.out";
         }
         if (debug)

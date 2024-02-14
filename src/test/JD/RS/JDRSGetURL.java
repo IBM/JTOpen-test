@@ -197,7 +197,7 @@ public class JDRSGetURL extends JDTestcase {
         JDRSTest.position0(rs, "LOB_FULL");
         URL v = rs.getURL(2);
         assertCondition(v.toString()
-            .equalsIgnoreCase("http://schuman.rchland.ibm.com/help.html"));
+            .equalsIgnoreCase("https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt"));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -274,7 +274,7 @@ public class JDRSGetURL extends JDTestcase {
           JDRSTest.position0(rs, "LOB_FULL");
           URL v = rs.getURL("C_DATALINK");
           assertCondition(v.toString()
-              .equalsIgnoreCase("http://schuman.rchland.ibm.com/help.html"));
+              .equalsIgnoreCase("https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt"));
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }

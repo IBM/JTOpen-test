@@ -240,7 +240,7 @@ getDouble() - getDouble on a type registered as Double, INOUT DECIMAL(10,5)
     public void Var007()
     {
 
-	if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC105");
@@ -294,7 +294,7 @@ getDouble() - getDouble on a type registered as Double, INOUT NUMERIC(10,5)
     public void Var009()
     {
 
-	if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM105");

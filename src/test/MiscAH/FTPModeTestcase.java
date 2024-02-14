@@ -16,6 +16,7 @@ package test.MiscAH;
 import com.ibm.as400.access.*;
 
 import test.FTPTest;
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import java.io.RandomAccessFile;
@@ -40,10 +41,6 @@ public class FTPModeTestcase extends    Testcase
     private String initialToken_ = null;
     private int ftpMode_;    // either PASSIVE_MODE or ACTIVE_MODE
     private int otherMode_;  // opposite value of ftpMode_
-    private String operatingSystem_;
-    private boolean windows_;
-    private boolean linux_;
-    private boolean aix_;
 
     // Added following WindowsFTPSleepTime due to intermittent FTP failures where 
     // the FTP::get() fails getting a socket with "425 Not able to open data connection"
@@ -67,6 +64,9 @@ public class FTPModeTestcase extends    Testcase
     private FTPEvent ftpEvent = null;
 
     private boolean cleanup = true;
+    private boolean windows_;
+    private boolean linux_;
+    private boolean aix_;
 
     public FTPModeTestcase (AS400 systemObject,
                               Hashtable namesAndVars,
@@ -136,27 +136,11 @@ public class FTPModeTestcase extends    Testcase
      lockSystem("FTP",600); 
     // Determine operating system we're running under.
 
-    operatingSystem_ = System.getProperty("os.name");
+    String operatingSystem_ = System.getProperty("os.name");
 
-    if (operatingSystem_.indexOf("Windows") >= 0) {
-      windows_ = true;
-    }
-    else {
-      windows_ = false;
-    }
-
-///    // Are we in OS/2? If so, need different commands for deleting stuff...
-///    if (operatingSystem_.indexOf("OS/2") >= 0) {
-///      OS2_ = true;
-///    }
-
-    if (operatingSystem_.indexOf("Linux") >= 0) {
-      linux_ = true;
-    }
-
-    if (operatingSystem_.indexOf("AIX") >= 0) {
-      aix_ = true;
-    }
+    windows_ = JTOpenTestEnvironment.isWindows;
+      linux_ = JTOpenTestEnvironment.isLinux; 
+      aix_ = JTOpenTestEnvironment.isAIX;
 
     output_.println("Running under: " + operatingSystem_);
 ///    output_.println("DOS-based file structure: " + DOS_);

@@ -851,7 +851,7 @@ public class JDPSSetInt extends JDTestcase {
       // ditto on toolbox
       if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE
           || ((isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE)
-              && getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         boolean success = e.getMessage().indexOf("Data type mismatch") != -1;
         if (success) {
           assertCondition(true);
@@ -910,7 +910,7 @@ public class JDPSSetInt extends JDTestcase {
       // ditto toolbox
       if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE
           || ((isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE)
-              && getRelease() >= JDTestDriver.RELEASE_V5R5M0)) {
+              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
         boolean success = e.getMessage().indexOf("Data type mismatch") != -1;
         if (success) {
           assertCondition(true);
@@ -1068,12 +1068,12 @@ public class JDPSSetInt extends JDTestcase {
           // This removes warning for V5R4 toolbox case.
           ps.executeQuery();
         }
-        if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           failed("Didn't throw DataTruncation");
           return;
         }
       } catch (Exception e) {
-        if (getRelease() >= JDTestDriver.RELEASE_V5R5M0
+        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
             || getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
           // In V5R5 native will throw a datatype mismatch
           // ditto toolbox
@@ -1168,7 +1168,7 @@ public class JDPSSetInt extends JDTestcase {
    * Query from a SMALLINT parm where the INT is too big
    */
   public void Var041() {
-    if (getRelease() >= JDTestDriver.RELEASE_V5R5M0) {
+    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       String added = " -- added 06/17/2006 by native driver";
       String tableName = JDPSTest.COLLECTION + ".JDPSSI041";
       PreparedStatement ps = null;

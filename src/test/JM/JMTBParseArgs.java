@@ -17,6 +17,7 @@ import utilities.*;
 import com.ibm.as400.access.AS400;
 
 import test.JMTest;
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import java.io.BufferedReader;
@@ -48,7 +49,6 @@ extends Testcase
   private File destinationJarFile_ = null;
   private boolean windows_ = false;
   private boolean DOS_ = false;
-  private boolean OS2_ = false;
   private boolean OS400_ = false;
   private String infoOutput_;
   private String errorOutput_;
@@ -80,12 +80,7 @@ Performs setup needed before running variations.
 
       // Determine operating system we're running under
       String operatingSystem_ = System.getProperty("os.name");
-      if (operatingSystem_.indexOf("OS/2") >= 0)
-      {
-        OS2_ = true;
-        DOS_ = true;
-      }
-      else if (operatingSystem_.indexOf("Windows") >= 0)
+      if (JTOpenTestEnvironment.isWindows)
       {
         windows_ = true;
         DOS_ = true;

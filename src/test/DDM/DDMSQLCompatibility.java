@@ -19,6 +19,7 @@ import java.util.Vector;
 import com.ibm.as400.access.*;
 
 import test.JDJobName;
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import java.sql.Connection;
@@ -186,7 +187,7 @@ public class DDMSQLCompatibility extends Testcase
 
     try
     {
-	if (System.getProperty("os.name").equals("OS/400"))
+	if (JTOpenTestEnvironment.isOS400)
 	{
   	   // CCSID of CURRENT job must be 65535
 	    System.out.println("Native test so setting job ccsid to 65535"); 

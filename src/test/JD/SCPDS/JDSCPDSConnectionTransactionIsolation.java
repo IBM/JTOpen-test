@@ -558,7 +558,7 @@ active.  Verify that an exception is thrown.
 				 + " (NAME, ID) VALUES ('Dinkytown', 55414)");
 
 		boolean success = false;
-		if ( getRelease() <= JDTestDriver.RELEASE_V5R2M0 ) { 
+		if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ) { 
 		    try {
 			c.setTransactionIsolation (Connection.TRANSACTION_READ_UNCOMMITTED);
 			message = "setTransactionIsolation did not throw exception for V5R2 and earlier"; 

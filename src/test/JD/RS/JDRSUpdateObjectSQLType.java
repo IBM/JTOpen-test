@@ -1945,13 +1945,8 @@ updateObject() - Update a DATE.
                 Date v = rs2.getDate ("C_DATE");
                 rs2.close ();
 
-                if (getDriver () == JDTestDriver.DRIVER_NATIVE ||
-                    (JDTestDriver.OSName_.indexOf("OS/400") >= 0))  //@F1A
-                  assertCondition (v.toString().equals(d.toString()));
-                else{
-                  //making more platform generic
-                    assertCondition (v.toString().equals(d.toString()));
-                }
+                      assertCondition (v.toString().equals(d.toString()));
+                
             } 
             catch (Exception e) {
                 failed (e, "Unexpected Exception");

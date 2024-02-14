@@ -1183,7 +1183,7 @@ boolean in the same way that other Strings can be.
               + JDRSTest.RSTEST_GETDL);
           JDRSTest.position0 (rs, "LOB_FULL");
           boolean v = rs.getBoolean ("C_DATALINK");
-          if (isToolboxDriver() || ( getRelease() >=  JDTestDriver.RELEASE_V5R3M0 && isJDK14) )
+          if (isToolboxDriver() || ( getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && isJDK14) )
           {
             failed ("Didn't throw SQLException");
           }
@@ -1194,7 +1194,7 @@ boolean in the same way that other Strings can be.
 
         }
         catch (Exception e) {
-          if (isToolboxDriver() || (getRelease() >=  JDTestDriver.RELEASE_V5R3M0 && isJDK14))
+          if (isToolboxDriver() || (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && isJDK14))
           {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
           }
@@ -1233,7 +1233,7 @@ boolean in the same way that other Strings can be.
                 + JDRSTest.RSTEST_GETDL);
             JDRSTest.position0 (rs, "LOB_EMPTY");
             boolean v = rs.getBoolean ("C_DATALINK");
-            if (isToolboxDriver() || (getRelease() >=  JDTestDriver.RELEASE_V5R3M0 && isJDK14))
+            if (isToolboxDriver() || (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && isJDK14))
             {
               failed ("Didn't throw SQLException");
             }
@@ -1244,7 +1244,7 @@ boolean in the same way that other Strings can be.
 
           }
           catch (Exception e) {
-            if (isToolboxDriver() || (getRelease() >=  JDTestDriver.RELEASE_V5R3M0 && isJDK14))
+            if (isToolboxDriver() || (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && isJDK14))
             {
               assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }

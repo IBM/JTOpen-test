@@ -237,7 +237,7 @@ refreshRow() - Should work on a "simple" result set.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V5R5M0 || isJdbc40()) {
+		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
                     // Cursor must be scrollable
 		    rs = statement3_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
 		} else {
@@ -255,11 +255,11 @@ refreshRow() - Should work on a "simple" result set.
 
 	    /* Changed the comparision -- @D3C */
 	    int expectedCount = 3;
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		// add 1 for MQT
 		expectedCount++;
 	    }
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R2M0) {
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		// add 1 for ALIAS
 		expectedCount++;
 	    }

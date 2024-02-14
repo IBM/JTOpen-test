@@ -365,7 +365,7 @@ Test:  char huge
 **/
     public void Var002() {
 
-	if (runningJ9 && getRelease() == JDTestDriver.RELEASE_V5R4M0) {
+	if (runningJ9 && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
 	    notApplicable("Not working in V5R4 and J9P");
 	    return; 
 	} 

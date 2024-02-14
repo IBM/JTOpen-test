@@ -865,7 +865,7 @@ setBlob() - Set a BINARY parameter.
     {
 	String info = " -- Update 01/03/2011 for native driver"; 
 
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    if(checkJdbc20())
 	    {
 		try
@@ -899,7 +899,7 @@ setBlob() - Set a VARBINARY parameter.
     {
 	String info = " -- Update 01/03/2011 for native driver"; 
 
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) {
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    if(checkJdbc20())
 	    {
 		try{
@@ -987,7 +987,7 @@ setBlob() - Should set to SQL NULL when the value is null.
    setBlob() - With a very large blob
    **/
   public void Var031() {
-    if (getRelease() < JDTestDriver.RELEASE_V5R3M0) {
+    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("V5R3 or later test");
     } else {
       if(isToolboxDriver()) {

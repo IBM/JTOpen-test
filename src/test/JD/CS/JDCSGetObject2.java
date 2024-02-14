@@ -433,7 +433,7 @@ getObject() - getObject on a type registered as String, INOUT BINARY(20)
 **/
     public void Var013()
     {
-	if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 
+	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
 
 		byte[] b = { (byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) (10),
@@ -468,7 +468,7 @@ getObject() - getObject on a type registered as VARBINARY, INOUT VARBINARY(20)
     public void Var014()
     {
 
-	if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 
+	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
 
 		byte [] b = { (byte) 23, (byte) 45, (byte) 48, (byte) 88};
@@ -541,7 +541,7 @@ getObject() - getObject on a type registered as Timestamp, INOUT TIMESTAMP
 **/
     public void Var017()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTS");
@@ -571,7 +571,7 @@ getObject() - getObject on a type registered as DataLink, INOUT DATALINK
     public void Var018()
     {
         //note:  illegal to have a Datalink as an inout parameter according to SQL Reference                                //@B1A
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0 && !(isToolboxDriver())) {                //@B1C
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && !(isToolboxDriver())) {                //@B1C
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDL");
@@ -710,7 +710,7 @@ getObject() - getObject on a type registered as boolean, INOUT INTEGER
     public void Var023()
     {
 	String procName="GO2V23ADD1"; 
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
 
 		String  sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+"."+procName+" (INOUT B INTEGER) LANGUAGE SQL " +
@@ -752,7 +752,7 @@ getObject() - getObject on a type registered as boolean, INOUT REAL
 **/
     public void Var024()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 	    String procName="GO2V24ADD1"; 
 
 	    try{
@@ -796,7 +796,7 @@ getObject() - getObject on a type registered as boolean, INOUT FLOAT
 **/
     public void Var025()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    String procName="GO2V25ADD1"; 
 	    try{
 
@@ -840,7 +840,7 @@ getObject() - getObject on a type registered as boolean, INOUT DOUBLE
 **/
     public void Var026()
     {
-	if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 
+	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    String procName="GO2V26ADD1"; 
 	    try{
 
@@ -883,7 +883,7 @@ getObject() - getObject on a type registered as boolean, INOUT DECIMAL
 **/
     public void Var027()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    String procName="GO2V27ADD1"; 
 	    try{
 
@@ -926,7 +926,7 @@ getObject() - getObject on a type registered as boolean, INOUT DECIMAL(10,5)
 **/
     public void Var028()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    String procName="GO2V28ADD1"; 
 	    try{
 
@@ -969,7 +969,7 @@ getObject() - getObject on a type registered as boolean, INOUT NUMERIC(5,0)
 **/
     public void Var029()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    String procName="GO2V29ADD1"; 
 	    try{
 
@@ -1013,7 +1013,7 @@ getObject() - getObject on a type registered as boolean, INOUT NUMERIC(10,5)
 **/
     public void Var030()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    String procName="GO2V30ADD1"; 
 	    try{
 
@@ -1056,7 +1056,7 @@ getObject() - getObject on a type registered as boolean, INOUT CHAR(1)
 **/
     public void Var031()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    String procName="GO2V31ADD1"; 
 	    try{
 
@@ -1099,7 +1099,7 @@ getObject() - getObject on a type registered as boolean, INOUT CHAR(50)
 **/
     public void Var032()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    String procName="GO2V32ADD1"; 
 	    try{
 
@@ -1143,7 +1143,7 @@ getObject() - getObject on a type registered as boolean, INOUT VARCHAR(50)
     public void Var033()
     {
 	String procName="GO2V33ADD1"; 
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		String  sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+"."+procName+" (INOUT B VARCHAR(50)) LANGUAGE SQL " +
@@ -1526,7 +1526,7 @@ getObject() - getObject on a type registered as boolean, INOUT BIGINT
     {
 	String procName="GO2V42ADD1"; 
 
-	if (getRelease() >=  JDTestDriver.RELEASE_V5R3M0) { 	
+	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 	
 	    try{
 
 		String  sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+"."+procName+" (INOUT B BIGINT) LANGUAGE SQL " +
@@ -1570,7 +1570,7 @@ getObject() - getObject on a type registered as LONGVARBINARY, INOUT VARBINARY(2
     {
 	String procName="GO2V43ADD1";
 
-	if(getRelease() >= JDTestDriver.RELEASE_V5R3M0) { 
+	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
 	    try{
 
 		String  sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+"."+procName+" (INOUT B VARBINARY(20)) LANGUAGE SQL " +"SPECIFIC "+JDCSTest.COLLECTION+"."+procName+" JDCS"+procName+": BEGIN DECLARE DUMMY VARBINARY(20); "+

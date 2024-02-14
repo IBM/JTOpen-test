@@ -271,11 +271,11 @@ next() - Should work on a "simple" result set.
             rs.close ();
 	    /* Changed the comparision -- @D2C */ 
 	    int expectedCount = 3;
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R3M0) {
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		// add 1 for MQT
 		expectedCount++; 
 	    }
-	    if (getRelease() >= JDTestDriver.RELEASE_V5R2M0) {
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		// add 1 for ALIAS
 		expectedCount++; 
 	    }

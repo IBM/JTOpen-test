@@ -871,7 +871,7 @@ public class JDSetupProcedure {
           + "   SET P_TIMESTAMP       =  TIMESTAMP('2001-11-18 13:42:22.123456');");
       if (supportedFeatures.lobSupport)
         buffer.append(
-            "   SET P_DATALINK        = 'http://w3.rchland.ibm.com/index.html';"
+            "   SET P_DATALINK        = 'https://github.com/IBM/JTOpen-test/blob/main/README.md';"
                 + "   SET P_BLOB            = BLOB(X'446176652045676C65');" // @B1C
                 + "   SET P_CLOB            = CLOB('Chris Smith');" // @B1C
                 + "   SET P_DBCLOB          = CLOB('Jeff Lee');"); // @B1C
@@ -951,7 +951,7 @@ public class JDSetupProcedure {
           + "   SET P_TIMESTAMP       =  TIMESTAMP('2001-11-18 13:42:22.123456');");
       if (supportedFeatures.lobSupport)
         buffer.append(
-            "   SET P_DATALINK        = 'http://w3.rchland.ibm.com/index.html';"
+            "   SET P_DATALINK        = 'https://github.com/IBM/JTOpen-test/blob/main/README.md';"
                 + "   SET P_BLOB            = BLOB('<d>Dave Egle</d>');" // @B1C
                 + "   SET P_CLOB            = CLOB('<d>Chris Smith</d>');" // @B1C
                 + "   SET P_DBCLOB          = CLOB('<d>Jeff Lee</d>');"); // @B1C
@@ -1028,7 +1028,7 @@ public class JDSetupProcedure {
           + "   SET P_TIMESTAMP       = TIMESTAMP('2001-11-18 13:42:22.123456');");
       if (supportedFeatures.lobSupport)
         buffer.append(
-            "   SET P_DATALINK        = 'http://w3.rchland.ibm.com/index.html';"
+            "   SET P_DATALINK        = 'https://github.com/IBM/JTOpen-test/blob/main/README.md';"
                 + "   SET P_BLOB            = BLOB('18');" // @B1C
                 + "   SET P_CLOB            = CLOB('19');" // @B1C
                 + "   SET P_DBCLOB          = CLOB('20');"); // @B1C

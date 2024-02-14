@@ -2037,7 +2037,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
    **/
   public void Var083() {
     if (isToolboxDriver()) {
-      if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         notApplicable("Toolbox V5R5M0 or later test");
         return;
       } else {
@@ -2048,7 +2048,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
 
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("Native JDBC driver needs fix > 27438 current fix = "
           + getDriverFixLevel());
       return;
@@ -2088,13 +2088,13 @@ public class JDPSSetBinaryStream extends JDTestcase {
    * exception would occur on data copy
    **/
   public void Var084() {
-    if (isToolboxDriver() && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (isToolboxDriver() && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("Toolbox V5R5M0 or later test");
       return;
     }
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("Native JDBC driver needs fix > 27438 current fix = "
           + getDriverFixLevel());
       return;
@@ -2150,13 +2150,13 @@ public class JDPSSetBinaryStream extends JDTestcase {
    * method: EAO exception would occur on data copy
    **/
   public void Var085() {
-    if (isToolboxDriver() && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+    if (isToolboxDriver() && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("Toolbox V5R5M0 or later test");
       return;
     }
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("Native JDBC driver needs fix > 27438 current fix = "
           + getDriverFixLevel());
       return;
@@ -2213,7 +2213,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
   public void Var086() {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("Native JDBC driver needs fix > 27438 current fix = "
           + getDriverFixLevel());
       return;
@@ -2251,7 +2251,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
    **/
   public void Var087() {
     if (isToolboxDriver()) {
-      if (getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
         notApplicable("Toolbox V5R5M0 or later test");
         return;
       } else {
@@ -2261,7 +2261,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
     }
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
         && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V5R5M0) {
+        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
       notApplicable("Native JDBC driver needs fix > 27438 current fix = "
           + getDriverFixLevel());
       return;
