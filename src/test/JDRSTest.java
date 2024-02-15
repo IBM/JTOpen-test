@@ -1337,7 +1337,7 @@ public class JDRSTest extends JDTestDriver {
         if (JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_SYSTEMI) {
           buffer.append(",C_DATALINK     DATALINK      )");
         } else {
-          buffer.append(",C_DATALINK     VARCHAR(50)   )");
+          buffer.append(",C_DATALINK     VARCHAR(150)   )");
         }
         sql = buffer.toString();
         JDTestcase.initTable(statement_, RSTEST_GETDL, sql, errorBuffer);
@@ -1347,7 +1347,7 @@ public class JDRSTest extends JDTestDriver {
           PreparedStatement ps4;
           if (JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_SYSTEMI) {
             sql = "INSERT INTO " + RSTEST_GETDL + " (C_KEY, C_DATALINK) "
-                + " VALUES (?, DLVALUE( CAST(? AS VARCHAR(50)),'URL'))";
+                + " VALUES (?, DLVALUE( CAST(? AS VARCHAR(200)),'URL'))";
             ps4 = connection_.prepareStatement(sql);
           } else {
             sql = "INSERT INTO " + RSTEST_GETDL + " (C_KEY, C_DATALINK) "

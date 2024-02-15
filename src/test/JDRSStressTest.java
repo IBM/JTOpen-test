@@ -12,7 +12,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-package test.JD.RS;
+package test;
 
 
 import java.io.IOException;
@@ -21,8 +21,18 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
-import test.JDRSTest;
-import test.TestDriverStatic;
+import test.JD.RS.JDRSStress;
+import test.JD.RS.JDRSStressDirectMap;
+import test.JD.RS.JDRSStressNoBlockPSDirectMap;
+import test.JD.RS.JDRSStressPS;
+import test.JD.RS.JDRSStressPSBatch;
+import test.JD.RS.JDRSStressPSDirectMap;
+import test.JD.RS.JDRSStressScroll;
+import test.JD.RS.JDRSStressScrollDirectMap;
+import test.JD.RS.JDRSStressScrollPS;
+import test.JD.RS.JDRSStressScrollPSDirectMap;
+import test.JD.RS.JDRSStressUpdatePS;
+import test.JD.RS.JDRSStressUpdatePSDirectMap;
 
 
 
