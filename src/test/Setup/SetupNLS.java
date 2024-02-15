@@ -20,17 +20,14 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.FTP;
 
-import test.Testcase;
 
 
 /**
   * SetupNLS "testcase".
 **/
-public class SetupNLS extends Testcase
+public class SetupNLS extends SetupLibraryTestcase
 {
 
-  AS400 PwrSys;
-  String PwrPwd;
 
   /**
   Constructor.
@@ -46,9 +43,7 @@ public class SetupNLS extends Testcase
   {
     // The third parameter is the total number of variations in this class.
     super(systemObject, "SetupNLS", 1,
-          variationsToRun, runMode, fileOutputStream, password);
-    this.PwrSys = PwrSys;
-    this.PwrPwd = PwrPwd;
+          variationsToRun, runMode, fileOutputStream, password, PwrSys.getUserId(),PwrPwd );
   }
 
 
@@ -57,7 +52,7 @@ public class SetupNLS extends Testcase
   **/
   public void Var001()
   {
-    CommandCall cmd = new CommandCall(PwrSys);
+    CommandCall cmd = new CommandCall(pwrSys_);
     try
     {
       // Cleanup the necessary libraries
@@ -74,53 +69,8 @@ public class SetupNLS extends Testcase
       cmd.setCommand("CRTLIB LIB(JAVANLS) AUT(*ALL)");
       cmd.run();
 
-      // Create the necessary save files in preparation
-      // for object restoration.
-      output_.println("Creating master save file...");
-      cmd.setCommand("CRTSAVF QGPL/JAVAPRIME");
-      cmd.run();
-
-      // FTP files from CMVC on to the 400
-      output_.println("Starting ftp...");
-
-/*@B0D
-      // Note: The FTPConnection class is currently located in JDTestUtilities.java.
-      String port = null;
-      FTPConnection rsftp = new FTPConnection();
-      FTPConnection asftp = new FTPConnection();
-
-      rsftp.openConnection(rs6000, rsUserId, rsPassword);
-      rsftp.cwd("/as400/v4r5m0t.jacl/cur/cmvc/java.pgm/yjac.jacl/test");
-      rsftp.setBinary();
-
-      asftp.openConnection(PwrSys.getSystemName(), PwrSys.getUserId(), PwrPwd);
-      asftp.cwd("QGPL");
-      asftp.setBinary();
-
-      port = asftp.receive("javaprime.savf");
-      rsftp.send(port, "javaprime.savf");
-      asftp.readResponse();
-      asftp.readResponse();
-
-      rsftp.sendCommand("quit");
-      asftp.sendCommand("quit");
-*/
-//@B0A - start
-      FTP os400 = new FTP(PwrSys.getSystemName(), PwrSys.getUserId(), PwrPwd);
-      os400.cd("QGPL");
-      os400.setDataTransferType(FTP.BINARY);
-      boolean ok =  os400.put("test/javaprime.savf", "javaprime.savf");
-      if (!ok) {
-        failed("FTP of test/javaprime.savf to javaprime.savf failed"); 
-        return; 
-      }
-      os400.disconnect();
-//@B0A - end
-
-      // Restore objects from save files to appropriate locations
-      output_.println("Restoring objects and libraries...");
-      cmd.setCommand("RSTLIB SAVLIB(JAVAPRIME) DEV(*SAVF) SAVF(QGPL/JAVAPRIME)");
-      cmd.run();
+      
+      restoreLibrary("javaprime.savf", "JAVAPRIME"); 
 
       output_.println("Copying objects to respective libraries...");
       String str1 = "CRTDUPOBJ OBJ(SMPDBCS*) FROMLIB(JAVAPRIME) OBJTYPE(*ALL) ";
@@ -128,7 +78,7 @@ public class SetupNLS extends Testcase
       cmd.setCommand(str1);
       cmd.run();
 
-      output_.println("Setup of NLS on "+PwrSys.getSystemName()+" is complete.");
+      output_.println("Setup of NLS on "+pwrSys_.getSystemName()+" is complete.");
       succeeded();
     }
     catch(Exception e)

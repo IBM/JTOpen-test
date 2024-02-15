@@ -2376,7 +2376,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
 	  if (checkDecFloatSupport()) { 
 	      try {
 		  String expected="round half even"; 
-                       ctx_.rebind(bindName_, dataSourceNative_);
+                       ctx_.rebind(bindName_, dataSource_);
                        Object ds = ctx_.lookup(bindName_); 
                        String property = JDReflectionUtil.callMethod_S(ds, "getDecfloatRoundingMode");
                        assertCondition(expected.equals(property), "Expecting: \""+expected+"\" Received: \""+property+"\" "+added); 

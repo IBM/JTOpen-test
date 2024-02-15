@@ -278,7 +278,7 @@ public abstract class Testcase {
    * @param pwrSysPwd
    *          The power user password.
    **/
-  protected Testcase(AS400 system, String name, Hashtable namesAndVars,
+  public Testcase(AS400 system, String name, Hashtable namesAndVars,
       int runMode, FileOutputStream fileOutputStream,  
       String password, AS400 pwrSys, String pwrSysPwd) {
     this(system, name, (Vector) namesAndVars.get(name), runMode,
@@ -479,7 +479,7 @@ public abstract class Testcase {
    * @param pwrSysPwd
    *          The power user password.
    **/
-  protected Testcase(AS400 system, String name, int totalVariations,
+  public Testcase(AS400 system, String name, int totalVariations,
       Vector variationsToRun, int runMode, FileOutputStream fileOutputStream,
        String password, String pwrSysUid, String pwrSysPwd) {
     initializeFields(system, name, totalVariations, variationsToRun, runMode,
