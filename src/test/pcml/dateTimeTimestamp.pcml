@@ -1,0 +1,12 @@
+<pcml version="6.0">
+
+<program name="prog1" path="/QGPL.LIB/PROG1.PGM">        
+        <data name="date1" type="date" usage="input" dateformat="USA" dateseparator="slash" init="2010-12-15"/>
+        <data name="time1" type="time" usage="input" timeformat="HMS" timeseparator="colon" init="13:14:15"/>
+        <data name="timestamp1" type="timestamp" usage="input" init="2010-01-01T23:59:59.999999999"/>
+  <data name="packed1" type="packed" length="4" usage="input" init="0"/>
+  <data  name="float1" type="float" length="4" init="0" />
+  <data  name="zoned1" type="zoned" length="8" precision="2" init="0" />
+</program>
+
+</pcml>

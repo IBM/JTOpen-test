@@ -81,10 +81,10 @@ JDRunit setup.
     (i.e. curl -L -o JTOpen-test.jar https://github.com/IBM/JTOpen-test/releases/download/v1.0.5/JTOpen-test-1.0.5.jar )
 5.  Create a ini directory to hold configuration files
     mkdir ini
-6.  Run the setup program to extract the sample config files.  The files will need to be edited
-    java -jar JTOpen-test.jar test.JTOpenTestSetup.jar   
-Extract the sample config files into this jar file
-    jar xvf JTOpen-test.jar ini/netrc.ini ini/systems.ini ini/notification.ini ini/dropAuthority.ini ini/runitxx8Sx.ini
+6.  Run the setup program to extract the sample .ini configuration files.  The files will need to be edited as described below. 
+    java -jar JTOpen-test.jar test.JTOpenTestSetup.jar 
+    The setup will also make sure the latest release of JTOpen-test.jar is begin. 
+    It will also check the test environment.   
 7.  Edit the ini/netrc.ini file and add the appropriate credentials.
 8.  Edit the ini/dropAuthority.ini file and make sure the USERID matches the TESTUSERID in the ini/netrc.ini file
 9.  Edit the ini/systems.ini file and add information to the systems you are testing to. 
@@ -95,10 +95,10 @@ Extract the sample config files into this jar file
 13. For the IFS tests, get a copy of jcifs.jar and copy into the jar directory.     
 
 *Note: to refresh the test jar, you can use
-java -cp .:JTOpen-test.jar test.JTOpenTestSeup
+java -cp .:JTOpen-test.jar test.JTOpenTestSetup
 
 * Additional windows setup
-If running on windows, then CYGWIN need to installed.
+If running on windows, then CYGWIN needs to installed.
 Set the CYGWIN_HOME environment variable to the directory where CYGWIN was installed. 
 
     

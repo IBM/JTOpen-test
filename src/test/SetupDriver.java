@@ -16,6 +16,7 @@ package test;
 import java.util.Vector;
 
 import test.Setup.SetupJobLog;
+import test.Setup.SetupLibraryTestcase;
 import test.Setup.SetupNLS;
 import test.Setup.SetupNetworkPrint;
 import test.Setup.SetupPgmCall;
@@ -118,7 +119,7 @@ Creates Testcase objects for all the testcases in this component.
 
     if (allTestcases || namesAndVars_.containsKey("SetupJobLog"))
     {
-      SetupJobLog tc =
+      SetupLibraryTestcase tc =
         new SetupJobLog(systemObject_,
                      (Vector) namesAndVars_.get("SetupJobLog"), runMode_,
                      fileOutputStream_, password_,

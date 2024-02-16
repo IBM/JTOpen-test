@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<recordformat name="format1">
+  <data name="field1" type="char" length="lengthOfField1" count="countOfField1" ccsid="ccsidOfField1" init="A"/>
+  <data name="lengthOfField1" type="int" length="2" init="6"/>
+  <data name="countOfField1" type="int" length="2" init="5"/>
+  <data name="ccsidOfField1" type="int" length="2" init="37"/>
+</recordformat>
+
+</rfml>

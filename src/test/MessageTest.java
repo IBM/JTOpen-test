@@ -11,12 +11,16 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-package test.Message;
+package test;
 
 import com.ibm.as400.access.SystemProperties;
 
-import test.TestDriver;
-import test.Testcase;
+import test.Message.MessageFileBeansTestcase;
+import test.Message.MessageFileTestcase;
+import test.Message.MessageQueueBeans;
+import test.Message.MessageQueueRFTestcase;
+import test.Message.MessageQueueTestcase;
+import test.Message.QueuedMessageRFTestcase;
 
 /**
  Test driver for the Message components.  Refer to TestDriver for calling syntax.
@@ -24,7 +28,7 @@ import test.Testcase;
 public class MessageTest extends TestDriver
 {
 
-  static final boolean runningOnThread_;
+  public static final boolean runningOnThread_;
   static {
     boolean onThread = false;
     if (onAS400_)

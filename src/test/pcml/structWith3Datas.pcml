@@ -1,0 +1,7 @@
+<pcml version="4.0">
+<struct name="struct1">
+  <data name="field1" type="char" length="1"/>
+  <data name="field2" type="byte" length="2"/>
+  <data name="field3" type="char" length="3"/>
+</struct>
+</pcml>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<recordformat name="format1">
+  <data  name="field1" type="int" length="2" precision="15" init="012" />
+  <data  name="field2" type="int" length="2" precision="16" init="123" />
+  <data  name="field3" type="int" length="2"  init="1234" />
+  <data  name="field4" type="int" length="4"  init="9999999" />
+  <data  name="field5" type="int" length="4" precision="31" init="123456789" />
+  <data  name="field6" type="int" length="4" precision="32" init="7" />
+  <data  name="field7" type="int" length="8" precision="63" init="777777777" />
+<!--  <data  name="field8" type="int" length="8" precision="68" init="888888888" /> -->
+ 
+</recordformat>
+
+</rfml>

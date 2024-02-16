@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+
+<recordformat name="format1">
+  <data  name="struct1" type="struct" struct="struct1"/>
+  <data  name="struct2" type="struct" struct="struct2"/>
+</recordformat>
+
+<struct name="struct1">
+  <data  type="char" length="10" name="field1" init="s1.field1" ccsid="65535"/>
+</struct>
+
+<struct name="struct2">
+  <data  type="char" length="12" name="field1" init="s2.field1" ccsid="833"/>
+</struct>
+
+
+</rfml>

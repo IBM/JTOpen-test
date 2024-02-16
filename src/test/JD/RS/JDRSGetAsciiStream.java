@@ -1242,7 +1242,7 @@ getAsciiStream as other Strings can.
                    failed ("Didn't throw SQLException");                                                              
                 else                                                                                                 
                    // Note the case... AS/400 DB does its own thing here...                                             
-                   assertCondition (compare (v, "HTTP://SCHUMAN.RCHLAND.IBM.COM/help.html", "8859_1",sb),sb);        
+                   assertCondition (compare (v, JDRSTest.LOB_FULL_DATALINK_UPPER_DOMAIN, "8859_1",sb),sb);        
 
             }
             catch (Exception e) {

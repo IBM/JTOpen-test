@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="6.0" ccsid="13488">  <!-- Unicode (encoding=="UnicodeBig") -->
+
+<recordformat name="format1">
+  <data name="datefield" type="date" dateformat="ISO" dateseparator="hyphen" init="2000-01-01"/>
+  <data name="timefield" type="time" timeformat="ISO" timeseparator="period" init="01.02.03"/>
+  <data name="timestampfield" type="timestamp" init="9999-12-31-23.59.59.999999"/>
+  <data name="signedBin8field" type="int" length="8" precision="63" init="11"/>
+  <data name="unsignedBin8field" type="int" length="8" precision="64" init="22"/>
+  <data name="signedBin1field" type="int" length="1" precision="7" init="33"/>
+  <data name="unsignedBin1field" type="int" length="1" precision="8" init="44"/>
+</recordformat>
+
+</rfml>

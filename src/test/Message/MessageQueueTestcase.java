@@ -21,6 +21,7 @@ import com.ibm.as400.access.MessageQueue;
 import com.ibm.as400.access.QueuedMessage;
 
 import test.MessageSandbox;
+import test.MessageTest;
 import test.Testcase;
 
 import com.ibm.as400.access.QSYSObjectPathName;

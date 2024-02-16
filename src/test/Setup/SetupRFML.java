@@ -26,12 +26,10 @@ import test.Testcase;
 /**
   * SetupRFML "testcase".
 **/
-public class SetupRFML extends Testcase
+public class SetupRFML extends SetupLibraryTestcase
 {
 
-  AS400 PwrSys;
-  String PwrPwd;
-
+  
   /**
   Constructor.
   **/
@@ -46,9 +44,7 @@ public class SetupRFML extends Testcase
   {
     // The third parameter is the total number of variations in this class.
     super(systemObject, "SetupRFML", 1,
-          variationsToRun, runMode, fileOutputStream, password);
-    this.PwrSys = PwrSys;
-    this.PwrPwd = PwrPwd;
+          variationsToRun, runMode, fileOutputStream, password, PwrSys.getUserId(),PwrPwd);
   }
 
 
@@ -57,47 +53,10 @@ public class SetupRFML extends Testcase
   **/
   public void Var001()
   {
-    CommandCall cmd = new CommandCall(PwrSys);
+    CommandCall cmd = new CommandCall(pwrSys_);
     try
     {
-
-      // Create the necessary save files in preparation
-      // for object restoration.
-      output_.println("Creating master save file ...");
-      cmd.setCommand("CRTSAVF QGPL/RMLIB");
-      cmd.run();
-
-      // FTP files from CMVC on to the 400
-      output_.println("Starting ftp...");
-
-
-      FTP os400 = new FTP(PwrSys.getSystemName(), PwrSys.getUserId(), PwrPwd);
-      os400.cd("QGPL");
-      os400.setDataTransferType(FTP.BINARY);
-
-      {
-        output_.println("Transferring RMLIB.SAVF ...");
-        boolean ok = os400.put("test/rmlib.savf", "rmlib.savf");
-        if (!ok) {
-          failed("Unable to ftp test/rmlib.savf to rmlib.savf"); 
-          return; 
-        }
-      }
-
-      os400.disconnect();
-
-      // Restore objects from save files to appropriate locations
-      output_.println("Restoring objects and libraries...");
-      cmd.setCommand("RSTLIB SAVLIB(RMLIB) DEV(*SAVF) SAVF(QGPL/RMLIB)");
-      cmd.run();
-
-      // Delete the necessary save files.
-      output_.println("Deleting master save files ...");
-      cmd.setCommand("DLTF QGPL/RMLIB");
-      cmd.run();
-
-
-      output_.println("Setup of RFML on "+PwrSys.getSystemName()+" is complete.");
+      restoreLibrary("rmlib.savf", "RMLIB"); 
       succeeded();
     }
     catch(Exception e)

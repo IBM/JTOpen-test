@@ -1,0 +1,19 @@
+<pcml version="1.0">
+	
+	<program name="qezsndmg" path="/QSYS.LIB/QEZSNDMG.PGM" >
+		<data name="messageType"       type="char"   length="10"       usage="input" init="*INFO     "   />
+		<data name="deliveryMode"      type="char"   length="10"       usage="input" init="*NORMAL   "   />
+		<data name="messageText"       type="char"   length="lenOfMessageText" usage="input"             />
+		<data name="lenOfMessageText"  type="int"    length="4"        usage="input"  init="494"         />
+		<data name="targetNames"       type="char"   length="10"       count="nbrOfTargetNames"  usage="input"        />
+		<data name="nbrOfTargetNames"  type="int"    length="4"        usage="input"  init="1"           />
+		<data name="msgSentIndicator"  type="int"    length="4"        usage="output" init="3"           />
+		<data name="functionRequested" type="int"    length="4"        usage="output" init="0"           />
+		<data name="errorCode"         type="int"    length="4"        usage="input"  init="0"           />
+		<data name="showDisplay"       type="char"   length="1"        usage="input"  init="N"           />
+		<data name="qualMsgQName"      type="char"   length="20"       usage="input"  init="                    "     />
+		<data name="nameType"          type="char"   length="4"        usage="input"  init="*USR"        />
+		<data name="ccsid"             type="int"    length="4"        usage="input"  init="0"           />
+	</program>
+
+</pcml>

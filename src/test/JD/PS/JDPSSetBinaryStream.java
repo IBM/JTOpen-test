@@ -86,6 +86,13 @@ public class JDPSSetBinaryStream extends JDTestcase {
         fileOutputStream, password);
   }
 
+  public JDPSSetBinaryStream(AS400 systemObject, String testname, Hashtable namesAndVars,
+      int runMode, FileOutputStream fileOutputStream, 
+      String password) {
+    super(systemObject, testname, namesAndVars, runMode,
+        fileOutputStream, password);
+  }
+
   /**
    * Performs setup needed before running variations.
    * 
@@ -2874,7 +2881,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
     }
   }
 
-  public static boolean runBlockingTest(String testcase, String tableName,
+  public  boolean runBlockingTest(String testcase, String tableName,
       Connection connection, String jdbcUrl, int blockSize, StringBuffer sb)
       throws Exception {
     boolean passed = true;
@@ -2910,7 +2917,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
       if (blockSize > 0) {
         jdbcUrl = jdbcUrl + ";lob block size=" + blockSize;
       }
-      Connection blockingConnection = DriverManager.getConnection(jdbcUrl);
+      Connection blockingConnection = testDriver_.getConnection (jdbcUrl,systemObject_.getUserId(), encryptedPassword_);
 
       sql = "INSERT INTO " + testTable + " VALUES(?)";
       sb.append("Preparing sql: " + sql + "\n");

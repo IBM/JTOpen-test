@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0" ccsid="819">
+
+<recordformat name="format1">
+  <data name="field1" type="char" length="1"/>
+</recordformat>
+
+<recordformat name="format2">
+  <data name="field1" type="int" length="2"/>
+  <data name="field2" type="char" length="5"/>
+</recordformat>
+
+</rfml>

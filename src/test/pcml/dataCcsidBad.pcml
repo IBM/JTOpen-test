@@ -1,0 +1,6 @@
+<!-- some comments -->
+<pcml version="4.0">
+<program name="prog1">
+  <data name="field1" type="char" length="1" ccsid="70000"/>
+</program>
+</pcml>

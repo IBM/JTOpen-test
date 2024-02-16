@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+<struct name="struct1">
+  <data name="field1" type="char" count="1" length="5" ccsid="819" init="ABC" bidistringtype="ST4"/>
+  <data name="field2" type="byte" count="2" length="6" init="1"/>
+  <data name="field3" type="int" length="2" init="3" precision="16"/>
+</struct>
+</rfml>

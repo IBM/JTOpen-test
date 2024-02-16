@@ -1,0 +1,40 @@
+<pcml version="1.0">
+
+
+
+<!-- Retrieve Current Attributes. -->
+<!-- Note: Multiple variable-length records may be returned. -->
+<program name="qwcrtvca" path="/QSYS.LIB/QWCRTVCA.PGM">
+        <data name="receiverVariable"                   usage="output"          type="struct" struct="rtvc0200"
+                                                                                outputsize="lengthOfReceiverVariable"/>
+        <data name="lengthOfReceiverVariable"           usage="input"           type="int" length="4" init="1188"/>
+        <data name="format"                             usage="input"           type="char" length="8" init="RTVC0200"/>
+        <data name="numberAttrsToReturn"                usage="input"           type="int" length="4" init="1"/>
+        <data name="keyOfAttrsToReturn"                 usage="input"           type="int" length="4" init="2110"/>
+        <data name="errorCode"                          usage="input"           type="byte" length="17" init="0"/>
+</program>
+
+
+
+<!-- Referenced by qwcrtvca -->
+<struct name="rtvc0200"                                 usage="output">
+        <data name="numBytesReturned"                   type="int" length="4"/>
+        <data name="numBytesAvail"                      type="int" length="4"/>
+        <data name="numLibsInSyslibl"                   type="int" length="4"/>
+        <data name="numProdLibs"                        type="int" length="4"/>
+        <data name="CurrentLibExistence"                type="int" length="4"/>
+        <data name="numLibsInUserlibl"                  type="int" length="4"/>
+        <data name="libListEntries"                     type="struct" struct="libListEntry"
+                                                        count="numLibsInUserlibl"
+                                                        outputsize="numBytesReturned"/>
+</struct>
+
+<!-- Referenced by rtvc0200 -->
+<struct name="libListEntry"                             usage="output">
+        <data name="listEntry"                          type="char" length="11"/>
+</struct>
+
+
+
+</pcml>
+

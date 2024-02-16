@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<recordformat name="format1">
+  <data   type="char" length="10" ccsid="37" bidistringtype="ST5"  />
+  <data   type="packed" length="10" precision="5"   />
+  <data   type="int" length="2" precision="16" />
+  <data   type="int" length="4" precision="32" />
+  <data   type="float" length="4"  />
+  <data   type="float" length="8" />
+  <data   type="zoned" length="22" precision="7"    />
+  <data   type="byte" length="12" ccsid="37" />
+</recordformat>
+
+</rfml>

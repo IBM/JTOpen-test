@@ -30,10 +30,10 @@ public class SecVrmTestcase extends Testcase {
 
   /* no longer testing to V7R1 */
   /* no longer testing to V7R2 */
-  static String V7R3_SYSTEM_NAME = "NOT_SET";
-  static String V7R4_SYSTEM_NAME = "NOT_SET";
-  static String V7R5_SYSTEM_NAME = "NOT_SET";
-  static String VNEXT_SYSTEM_NAME = "NOT_SET";
+  static String V7R3_SYSTEM_NAME = "V7R3_SYSTEM_NAME_NOT_SET";
+  static String V7R4_SYSTEM_NAME = "V7R4_SYSTEM_NAME_NOT_SET";
+  static String V7R5_SYSTEM_NAME = "V7R5_SYSTEM_NAME_NOT_SET";
+  static String VNEXT_SYSTEM_NAME = "VNEXT_SYSTEM_NAME_NOT_SET";
 
   static {
     try {

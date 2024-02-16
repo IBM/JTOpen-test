@@ -1,0 +1,115 @@
+<pcml version="1.0">
+	
+
+<struct name="PIDinformation">
+  <data name="qualifiedJobName"           type="char"   length="26" usage="input"/>
+  <data name="internalJobID"              type="char"   length="16" usage="input" init="                "/>
+  <data name="reserved3"                  type="int"    length="2"  usage="input" init="0"/>
+  <data name="threadIndicator"            type="int"    length="4"  usage="input" init="3" precision="32"/>
+  <data name="threadID"                   type="int"    length="8"  usage="input" init="0"/>
+<!--  <data name="threadID"                   type="byte"   length="8"  usage="input" init="0"/> -->
+</struct>
+
+<struct name="PIDinformation2">
+  <data name="qualifiedJobName"           type="char"   length="26" usage="input"/>
+  <data name="internalJobID"              type="char"   length="16" usage="input" init="                "/>
+  <data name="reserved3"                  type="int"    length="2"  usage="input" init="0"/>
+  <data name="threadHandle"               type="int"    length="4"  usage="input" precision="32"/>
+  <data name="threadIDHi"                 type="int"    length="4"  usage="input" precision="32"/>
+  <data name="threadIDLo"                 type="int"    length="4"  usage="input" precision="32"/>
+</struct>
+
+
+<struct name="Qp0lRRO0100">
+    <data name="bytesReturned"           type="int"   length="4" precision="32" />
+    <data name="bytesAvailable"          type="int"   length="4" precision="32" />
+    <data name="numRefObjectsReturned"   type="int"   length="4" precision="32" />
+    <data name="objectsAvailable"        type="int"   length="4" precision="32" />
+    <data name="objListOffset"           type="int"   length="4" precision="32" />
+    <data name="referenceStatus"         type="int"   length="4" precision="32" />
+<!--  <struct name="RefObjListEntry" count="numRefObjectsReturned" offsetfrom="Qp0lRRO0100" offset="objListOffset">
+-->
+  <struct name="RefObjListEntry" count="numRefObjectsReturned">
+     <data name="nextListEntryDisp"      type="int"   length="4" precision="32" />
+     <data name="extRefListDisp"         type="int"   length="4" precision="32" />
+     <data name="extRefListLength"       type="int"   length="4" precision="32" />
+     <data name="referenceCount"         type="int"   length="4" precision="32" />
+     <data name="pathDisp"               type="int"   length="4" precision="32" />
+     <data name="qlgpathLength"          type="int"   length="4" precision="32" />
+     <data name="fileID"                 type="byte"  length="16"/>
+     <data name="fileSysID"              type="byte"   length="8" />
+     <data name="fileSysType"            type="int"   length="4" precision="32" />
+     <data name="fileIDNumber"           type="byte"   length="4" />
+     <data name="genID"                  type="byte"   length="4" />
+   <struct name="ExtRefTypes" count="1" offsetfrom="RefObjListEntry" offset="extRefListDisp">
+       <data name="readShareRead"       type="int"   length="4" precision="32" /> 
+       <data name="readShareWrite"      type="int"   length="4" precision="32" /> 
+       <data name="readShareRdWr"       type="int"   length="4" precision="32" /> 
+       <data name="readShareNone"       type="int"   length="4" precision="32" /> 
+       <data name="writeShareRead"      type="int"   length="4" precision="32" /> 
+       <data name="writeShareWrite"     type="int"   length="4" precision="32" /> 
+       <data name="writeShareRdWr"      type="int"   length="4" precision="32" /> 
+       <data name="writeShareNone"      type="int"   length="4" precision="32" /> 
+       <data name="rdWrShareRead"       type="int"   length="4" precision="32" /> 
+       <data name="rdWrShareWrite"      type="int"   length="4" precision="32" /> 
+       <data name="rdWrShareRdWr"       type="int"   length="4" precision="32" /> 
+       <data name="rdWrShareNone"       type="int"   length="4" precision="32" /> 
+       <data name="exclShareRead"       type="int"   length="4" precision="32" /> 
+       <data name="exclShareWrite"      type="int"   length="4" precision="32" /> 
+       <data name="exclShareRdWr"       type="int"   length="4" precision="32" /> 
+       <data name="exclShareNone"       type="int"   length="4" precision="32" /> 
+       <data name="exRdShareRead"       type="int"   length="4" precision="32" /> 
+       <data name="exRdShareWrite"      type="int"   length="4" precision="32" /> 
+       <data name="exRdShareRdWr"       type="int"   length="4" precision="32" /> 
+       <data name="exRdShareNone"       type="int"   length="4" precision="32" /> 
+       <data name="attributes"          type="int"   length="4" precision="32" /> 
+       <data name="save"                type="int"   length="4" precision="32" /> 
+       <data name="saveInt"             type="int"   length="4" precision="32" /> 
+       <data name="links"               type="int"   length="4" precision="32" /> 
+       <data name="currentDir"          type="int"   length="4" precision="32" /> 
+       <data name="rootDir"             type="int"   length="4" precision="32" /> 
+       <data name="fSRef"               type="int"   length="4" precision="32" /> 
+       <data name="fSWorkDir"           type="int"   length="4" precision="32" /> 
+       <data name="checkedOut"          type="int"   length="4" precision="32" /> 
+       <data name="checkOutName"        type="char"  length="10"/> 
+       <data name="reserved0"           type="char"  length="2" /> 
+    </struct>
+   <!-- <data name="QlgPath"                 type="struct" struct="QlgPath"/> -->
+   <!-- <struct name="QlgPath" count="1" offsetfrom="RefObjListEntry" offset="pathDisp" outputsize="qlgpathLength"> -->
+   <struct name="QlgPath" offsetfrom="RefObjListEntry" offset="pathDisp" outputsize="qlgpathLength">	
+       <data name="CCSID"               type="int"   length="4" precision="32" />
+       <data name="countryID"           type="char"  length="2" />
+       <data name="languageID"          type="char"  length="3" />
+       <data name="reserved0"           type="char"  length="3" />
+       <data name="pathType"            type="int"   length="4" precision="32" />
+       <data name="pathLength"          type="int"   length="4" precision="32" />
+       <data name="pathNameDelim"       type="char"  length="2" />
+       <data name="reserved1"           type="char"  length="10"/>
+       <data name="pathName"            type="char"  ccsid="1200" length="pathLength"
+	offsetfrom="QlgPath" offset="32"/>
+    </struct>
+  </struct>
+</struct>
+
+
+<program name="qp0lrro" path="/QSYS.LIB/QP0LRRO.PGM" >
+  <data name="Qp0lRRO0100"       type="struct"                   usage="output" struct="Qp0lRRO0100" outputsize="receiverLength"/>
+  <data name="receiverLength"    type="int"    length="4"        usage="input" init="32000" precision="32"/>
+  <data name="receiverFormat"    type="char"   length="8"        usage="input" init="RROO0100"/>
+  <data name="processIDinfo"     type="struct"                   usage="input" struct="PIDinformation"/>
+  <data name="formatPIDinfo"     type="char"   length="8"        usage="input" init="JIDF0100"/>
+  <data name="errorCode"         type="int"    length="4"        usage="input" init="0" precision="32"/>
+</program>
+
+<!--
+<program name="qp0lrro2" path="/QSYS.LIB/QP0LRRO.PGM" >
+  <data name="Qp0lRRO0100"       type="struct"                   usage="output" struct="Qp0lRRO0100" outputsize="receiverLength"/>
+  <data name="receiverLength"    type="int"    length="4"        usage="input" init="32000" precision="32"/>
+  <data name="receiverFormat"    type="char"   length="8"        usage="input" init="RROO0100"/>
+  <data name="processIDinfo2"    type="struct"                   usage="input" struct="PIDinformation2"/>
+  <data name="formatPIDinfo"     type="char"   length="8"        usage="input" init="JIDF0200"/>
+  <data name="errorCode"         type="int"    length="4"        usage="input" init="0" precision="32"/>
+</program>
+-->
+
+</pcml>

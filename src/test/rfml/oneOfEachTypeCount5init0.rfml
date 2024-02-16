@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0" ccsid="13488">  <!-- Unicode (encoding=="UnicodeBig") -->
+
+<recordformat name="format1">
+  <data name="field1" type="char" length="2" count="5" init=""/>
+  <data name="field2" type="int" length="2" count="5" init="0"/>
+  <data name="field3" type="zoned" length="2" count="5" precision="2" init="0"/>
+  <data name="field4" type="packed" length="2" count="5" precision="2" init="0"/>
+  <data name="field5" type="float" length="4" count="5" init="0"/>
+  <data name="field6" type="byte" length="2" count="5" init="0"/>
+  <data name="field7" type="struct" struct="struct1" count="5"/>
+</recordformat>
+
+<struct name="struct1">
+  <data name="field1" type="char" length="2" count="6" init=""/>
+  <data name="field2" type="int" length="2" count="6" init="0"/>
+  <data name="field3" type="zoned" length="2" count="6" precision="2" init="0"/>
+  <data name="field4" type="packed" length="2" count="6" precision="2" init="0"/>
+  <data name="field5" type="float" length="4" count="6" init="0"/>
+  <data name="field6" type="byte" length="2" count="6" init="0"/>
+</struct>
+
+</rfml>

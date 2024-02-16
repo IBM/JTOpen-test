@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<recordformat name="format1">
+  <data name="field1" type="zoned" length="1" init="8"/>
+  <!-- <data name="field2" type="struct" struct="struct1"/> -->
+  <data name="field2" type="char" length="50" init="Now is the time for all good men..."/>
+</recordformat>
+
+<struct name="struct1">
+  <data name="field1" type="char" length="50" init="Now is the time for all good men..."/>
+</struct>
+
+</rfml>

@@ -1176,10 +1176,10 @@ public class JDRSGetBytes extends JDTestcase {
           expectedToolbox = tmp;
         }
 
-        byte[] expectedNative = { (byte) 0x88,(byte) 0xA3,(byte) 0xA3,   
-            (byte) 0x97,(byte) 0xA2,(byte) 0x7A,(byte) 0x61,(byte) 0x61,
-            (byte) 0x87,(byte) 0x89,(byte) 0xA3,(byte) 0x88,(byte) 0xA4,
-            (byte) 0x82,(byte) 0x4B,(byte) 0x83,(byte) 0x96,(byte) 0x94,
+        byte[] expectedNative = { (byte) 0xc8,(byte) 0xe3,(byte) 0xe3,   
+            (byte) 0xd7,(byte) 0xe2,(byte) 0x7A,(byte) 0x61,(byte) 0x61,
+            (byte) 0xc7,(byte) 0xc9,(byte) 0xe3,(byte) 0xc8,(byte) 0xe4,
+            (byte) 0xc2,(byte) 0x4B,(byte) 0xc3,(byte) 0xd6,(byte) 0xd4,
             (byte) 0x61,(byte) 0xC9,(byte) 0xC2,(byte) 0xD4,(byte) 0x61,
             (byte) 0xD1,(byte) 0xE3,(byte) 0xD6,(byte) 0x97,(byte) 0x85,
             (byte) 0x95,(byte) 0x60,(byte) 0xA3,(byte) 0x85,(byte) 0xA2,
@@ -1195,7 +1195,8 @@ public class JDRSGetBytes extends JDTestcase {
         // assertCondition (isEqual (v, expectedToolbox));
         // else
         assertCondition(areEqual(v, expectedNative),
-            " v = " + JDTestUtilities.dumpBytes(v) + " expectedNative = "
+            "\n v              = " + JDTestUtilities.dumpBytes(v) + 
+            "\n expectedNative = "
                 + JDTestUtilities.dumpBytes(expectedNative));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");

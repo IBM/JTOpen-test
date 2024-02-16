@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<recordformat name="format1">
+  <data name="field1" type="zoned" length="2" />
+</recordformat>
+
+<recordformat name="format2">
+  <data name="field1" type="packed" length="9" />
+</recordformat>
+
+<recordformat name="format3">
+  <data name="field1" type="char" length="8" />
+</recordformat>
+
+</rfml>
