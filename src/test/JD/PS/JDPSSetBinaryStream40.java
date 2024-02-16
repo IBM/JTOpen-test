@@ -60,7 +60,7 @@ import java.util.Hashtable;
  * <li>setBinaryStream() JDBC 4.0 version
  * </ul>
  **/
-public class JDPSSetBinaryStream40 extends JDTestcase {
+public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
 
   // Constants.
   private static final String PACKAGE = "JDPSSBS";
@@ -2470,7 +2470,7 @@ public class JDPSSetBinaryStream40 extends JDTestcase {
 
     StringBuffer sb = new StringBuffer(" -- Testcases added 8/6/2013 \n");
     try {
-      boolean passed = JDPSSetBinaryStream.runBlockingTest(
+      boolean passed = runBlockingTest(
           "JDPSSetBinaryStream40", "JDPSSB4145", connection_, testUrl, 0, sb);
       assertCondition(passed, sb);
 
@@ -2487,7 +2487,7 @@ public class JDPSSetBinaryStream40 extends JDTestcase {
 
     StringBuffer sb = new StringBuffer(" -- Testcases added 8/6/2013 \n");
     try {
-      boolean passed = JDPSSetBinaryStream.runBlockingTest(
+      boolean passed = runBlockingTest(
           "JDPSSetBinaryStream40", "JDPSSB4146", connection_, testUrl, 4096,
           sb);
       assertCondition(passed, sb);
@@ -2505,7 +2505,7 @@ public class JDPSSetBinaryStream40 extends JDTestcase {
 
     StringBuffer sb = new StringBuffer(" -- Testcases added 8/6/2013 \n");
     try {
-      boolean passed = JDPSSetBinaryStream.runBlockingTest(
+      boolean passed = runBlockingTest(
           "JDPSSetBinaryStream40", "JDPSSB4147", connection_, testUrl, 1048576,
           sb);
       assertCondition(passed, sb);

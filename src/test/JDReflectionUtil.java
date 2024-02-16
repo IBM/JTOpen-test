@@ -3708,7 +3708,12 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      */
     public static boolean instanceOf(Object ts1,
         String classname) throws Exception {
-      Class c = Class.forName(classname);
+      Class c = null; 
+      try { 
+       c = Class.forName(classname);
+      } catch (ClassNotFoundException ex) { 
+        return false; 
+      }
       return c.isInstance(ts1); 
     }
 
