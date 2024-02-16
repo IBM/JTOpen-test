@@ -3931,8 +3931,8 @@ private boolean compareIFSFilePathToJavaIOPath(String IFSFile1, String file2)
     } 
 
   }
-  else if ((operatingSystem_.indexOf("Linux") >= 0) || 
-           (operatingSystem_.indexOf("AIX") >= 0))
+  else if (JTOpenTestEnvironment.isLinux  || 
+           JTOpenTestEnvironment.isAIX)
   {
     // Strip the final '/' if present.
     String pathPrefix;
