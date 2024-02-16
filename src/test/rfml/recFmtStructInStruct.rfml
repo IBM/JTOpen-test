@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<struct name="struct1">
+  <data name="field1" type="struct" struct="struct2" />
+</struct>
+
+<struct name="struct2">
+  <data  name="CharacterFieldValue" type="char"  length="18" ccsid="2039"  />
+  <data  name="PackedFieldValue" type="packed" length="10" precision="8" />
+</struct>
+
+
+<recordformat name="format1">
+  <data  name="struct1" type="struct" struct="struct1"/>
+  <data  name="struct2" type="struct" struct="struct2"/>
+</recordformat>
+
+</rfml>

@@ -1,0 +1,24 @@
+<pcml version="4.0">
+   <!-- RPG module: PDZ410F4  -->
+   <!-- created: 2011-06-13-08.03.53 -->
+   <!-- source: JDT545CA/PDZ410F4(PDZ410F4) -->
+   <!-- 85 -->
+   <program name="STOPTEST" entrypoint="stopTest">
+   </program>
+   <!-- 83 -->
+   <program name="STARTTEST" entrypoint="startTest">
+      <data name="TEMPLIB" type="char" length="10" usage="input" />
+   </program>
+   <!-- 96 -->
+   <program name="VAR1RES" entrypoint="var3Res">
+      <data name="RC" type="int" length="4" precision="31" usage="input" />
+   </program>
+   <!-- 90 -->
+   <program name="VAR4DTZ" entrypoint="var4dtz">
+      <data name="BYTE1" type="byte" length="1" usage="inputoutput" />
+      <data name="INT1" type="int" length="4" precision="31" usage="inputoutput" />
+      <data name="DEC1" type="packed" length="15" precision="2" usage="inputoutput" />
+      <data name="ZONE1" type="zoned" length="15" precision="2" usage="inputoutput" />
+      <data name="OK" type="char" length="1" usage="inputoutput" />
+   </program>
+</pcml>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<recordformat name="format1">
+  <data  name="field1" type="int" length="4" precision="31" init="123"  />
+  <data  name="field2" type="packed" length="8"  init="123"  />
+  <data  name="field3" type="packed" length="5" precision="2" init=".12"  />
+  <data  name="field4" type="packed" length="9" precision="7" init=".123"  />
+</recordformat>
+
+</rfml>

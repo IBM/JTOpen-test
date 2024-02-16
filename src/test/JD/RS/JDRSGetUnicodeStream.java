@@ -1017,7 +1017,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         else
           // Note the case... AS/400 DB does its own thing here...
           assertCondition(compare(v,
-              "HTTP://SCHUMAN.RCHLAND.IBM.COM/help.html", "UnicodeBigUnmarked",sb),sb);
+              JDRSTest.LOB_FULL_DATALINK_UPPER_DOMAIN, "UnicodeBigUnmarked",sb),sb);
 
       } catch (Exception e) {
         if (getDriver() == JDTestDriver.DRIVER_NATIVE

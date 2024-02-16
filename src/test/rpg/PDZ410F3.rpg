@@ -1,0 +1,302 @@
+     H NOMAIN THREAD(*SERIALIZE)
+      *PROLOG BEGIN                                                       *
+     F*===================================================================*
+     F*                                                                   *
+     F*  TEST CASE ID: PDZ410F3               DATE       : JUN. 2011      *
+     F*   - Copied from R7P410F2 in RGLE520L01                            *
+     F*  PROGRAMMER  : XXXXX XXXXX            ORIGIN     : NEW            *
+     F*                                       SELF CHECK : NO             *
+     F*                                                                   *
+     F*  LIBRARY     : RGLE540DEV             PRODUCT    : ILE RPG        *
+     F*                                                                   *
+     F*  DCR/PTR     : D0099030                                           *
+     F*                                                                   *
+     F*                                                                   *
+     F*  TITLE       : PCML generation                                    *
+     F*                                                                   *
+     F*  OBJECTIVE   : Use generated PCML in Java to call the RPG procs   *
+     F*                                                                   *
+     F*  DESCRIPTION : Test actually using the PCML in a Java method      *
+     F*                                                                   *
+     F*    VARIATION 1:  20u parameter
+     F*                                                                   *
+      *PROLOG END
+     F*  DEPENDENCIES :                                                   *
+     F*     CONDITION  - N/A                                              *
+     F*                                                                   *
+     F*  EXECUTION INFO :                                                 *
+     F*    RUN THE CONTROL LANGUAGE PDZ410C1  .                           *
+     F*                                                                   *
+     F*  EXPECTED RESULTS :                                               *
+     F*                                                                   *
+     F* ----------------------------------------------------------------- *
+     F* REQUIRED SOURCE                                                   *
+     F* MBR NAME     SRC FILE     DESCRIPTION                             *
+     F* ----------   ----------   --------------------------------------- *
+     F* PDZ410F3     QRPGLESRC    MAIN RPG SOURCE                         *
+     F*                                                                   *
+     F* PDZ410J1     QJVASRC      Java class source                       *
+     F*                                                                   *
+     F* PDZ410C1     QCLSRC       CONTROL LANGUAGE 1                      *
+     F*                                                                   *
+     F* PDZ410P1     QRPGLESRC    PREPROCESSING (LOAD) SOURCE             *
+     F* PDZ410P2     QRPGLESRC    PREPROCESSING (LOAD) SOURCE             *
+     F*                                                                   *
+     F*-------------------------------------------------------------------*
+     F*                                                                   *
+     F*-------------------------------------------------------------------*
+     F* MODIFICATION LOG                                                  *
+     F* MOD# PROGRAMMER           DATE     REASON                         *
+     F* ---- -------------------- -------- -------------------------------*
+     F*===================================================================*
+
+     fqsysprt   o    f   80        printer
+
+      *-------------------------------------------------------------------*
+      * PROGRAM CONSTANTS                                                 *
+      *-------------------------------------------------------------------*
+      * TEST CASE STATUS
+     DSUCC             C                   'SUCC     '
+     DFAIL             C                   'FAIL     '
+     DVAR_STS          S              9A   EXPORT
+     DTC_STS           S              9A
+     DN_SUCC_V         S              3P 0
+     DN_FAIL_V         S              3P 0
+     DN_RUN            S              3P 0
+
+     D g_templib       s             10a
+     D g_rmvlible      s               n
+
+      *-------------------------------------------------------------------*
+      * PROTOTYPES                                                        *
+      *-------------------------------------------------------------------*
+     D debugMsg        PR
+     D    string                     80a   const
+     D RCD_VAR         PR
+     D RCD_FINAL       PR
+     D   test_status                  9A   VALUE OPTIONS(*NOPASS)
+     D INZPR           PR
+     D startTest       PR                  EXTPROC('startTest')
+     D   templib                     10a   const
+     D stopTest        PR                  EXTPROC('stopTest')
+
+      *-------------------------------------------------------------------*
+      *    VARIATION 3:  All types of scalar in/out parameter
+      *-------------------------------------------------------------------*
+     D var3dtz         PR                  EXTPROC('var3dtz')
+     D   byte1                        9b 0
+     D   int1                        10i 0
+     D   dec1                        15p 2
+     D   zone1                       15s 2
+     D   ok                           1a
+     D var1Res         PR                  EXTPROC('var3Res')
+     D   rc                          10i 0 CONST
+
+      * Final number will be (num_vars + 1) - last var checks the # vars run
+     D num_vars        c                   1
+
+      *-------------------------------------------------------------------*
+      * PROGRAM VARIABLES                                                 *
+      *-------------------------------------------------------------------*
+     D* PUT DEFINITIONS HERE
+
+      *-------------------------------------------------------------------*
+      * PROGRAM STATUS DATA STRUCTURE, FOR THE PROGRAM NAME               *
+      *-------------------------------------------------------------------*
+     D PSDS           SDS
+     D  PGMNAME          *PROC
+     D  srvpgm               334    343
+     D  srvlib                81     90
+
+     Oqsysprt   e            varfail
+     O                                              'Variation failed '
+     O                       n_run         p
+     Oqsysprt   e            rpttest
+     O                                              'Total successful: '
+     O                       n_succ_v      p
+     Oqsysprt   e            rpttest
+     O                                              'Total failed    : '
+     O                       n_fail_v      p
+     Oqsysprt   e            rpttest
+     O                                              'Testcase status : '
+     O                       tc_sts
+
+      *-------------------------------------------------------------------*
+      *-------------------------------------------------------------------*
+      *               T E S T   S U B P R O C E D U R E S                 *
+      *-------------------------------------------------------------------*
+      *-------------------------------------------------------------------*
+
+      *-------------------------------------------------------------------*
+      *    VARIATION 3:  All types of scalar in/out parameter
+      *-------------------------------------------------------------------*
+     p var3dtz         b                   export
+     D var3dtz         pi
+     D   byte1                        9b 0
+     D   int1                        10i 0
+     D   dec1                        15p 2
+     D   zone1                       15s 2
+     D   ok                           1a
+      /free
+         ok = '1';
+         int1                 = 7; 
+         dec1             = 44.44;
+         zone1            = 33.33;
+         byte1                = 8;
+      /end-free
+     p                 e
+
+     p var1Res         b                   export
+     D var1Res         pi
+     D   rc                          10i 0 const
+      /free
+         if rc = 1;
+           eval VAR_STS = SUCC;
+         endif;
+         N_RUN += 1;
+         RCD_VAR();
+      /end-free
+     p                 e
+
+      *-------------------------------------------------------------------*
+      *-------------------------------------------------------------------*
+      *               O T H E R   S U B P R O C E D U R E S               *
+      *-------------------------------------------------------------------*
+      *-------------------------------------------------------------------*
+
+      *-------------------------------------------------------------------*
+      * SUBROUTINE:   *INZSR                                              *
+      * DESCRIPTION:  INITIALIZE VARIABLES                                *
+      *-------------------------------------------------------------------*
+     P INZPR           B
+
+     D initDone        S               N   INZ('0') STATIC
+
+     C                   IF        NOT initDone
+
+      * INITIALIZE COUNTERS TO ZERO
+     C                   Z-ADD     0             N_RUN
+     C                   Z-ADD     0             N_SUCC_V
+     C                   Z-ADD     0             N_FAIL_V
+
+      * INITIALIZE VARIATION AND TEST CASE STATUS TO FAIL
+     C                   MOVEL     FAIL          VAR_STS
+     C                   MOVEL     FAIL          TC_STS
+
+     C                   EVAL      initDone = '1'
+
+     C                   ENDIF
+
+     P INZPR           E
+
+
+      *-------------------------------------------------------------------*
+      * SUBPROCEDURE:  RCD_VAR                                            *
+      * DESCRIPTION:  RECORD THE RESULTS OF THE VARIATIONS                *
+      *-------------------------------------------------------------------*
+     P RCD_VAR         B
+
+      * IF THE VARIATION SUCCEEDS, ADD 1 TO NUMBER SUCCESSFUL
+     C     VAR_STS       IFEQ      SUCC
+     C                   ADD       1             N_SUCC_V
+
+      * OTHERWISE ADD 1 TO THE NUMBER FAILED AND OUTPUT THE RESULTS
+      * TO THE SPOOL FILE
+     C                   ELSE
+     C                   ADD       1             N_FAIL_V
+     C                   EXCEPT    VARFAIL
+     C                   ENDIF
+
+      * RESET THE STATUS FOR THE NEXT VARIATION
+     C                   EVAL      VAR_STS = FAIL
+
+     P RCD_VAR         E
+
+      *-------------------------------------------------------------------*
+      * SUBPROCEDURE: RCD_FINAL                                           *
+      * DESCRIPTION:  DETERMINE FINAL STATUS AND RECORD THE RESULTS       *
+      *-------------------------------------------------------------------*
+     P RCD_FINAL       B
+
+     D RCD_FINAL       PI
+     D   test_status                  9A   VALUE OPTIONS(*NOPASS)
+
+     C                   IF        %PARMS > 0
+     C                   EVAL      TC_STS = test_status
+     C                   ENDIF
+
+      * IF ALL VARIATIONS PASSED, SET THE TEST CASE STATUS TO SUCCESSFUL
+     C     N_SUCC_V      IFEQ      N_RUN
+     C                   IF        %PARMS < 1
+     C                   EVAL      TC_STS = SUCC
+     C                   ENDIF
+
+      * OTHERWISE, WRITE A SUMMARY LINE AND CLOSE THE SPOOL FILE
+     C                   ELSE
+     C                   ENDIF
+
+      * CALL RPTTEST TO RECORD THE TEST CASE RESULTS
+     C                   except    rpttest
+
+     P RCD_FINAL       E
+
+      *-------------------------------------------------------------------*
+      * startTest: Initialize the test stuff
+      *-------------------------------------------------------------------*
+     P startTest       B                   EXPORT
+     D startTest       PI
+     D   templib                     10a   const
+
+     C                   eval      g_templib = templib
+     C                   eval      g_rmvlible = '1'
+
+     C                   eval      cmd = 'ADDLIBLE ' + g_templib
+     C                   call(e)   'QCMDEXC'
+     C                   parm                    cmd              80
+     C                   parm      80            len              15 5
+     C                   if        %error
+     C                   eval      g_rmvlible = '0'
+     C                   endif
+
+     C                   CALLP     INZPR
+     C                   RETURN
+
+     P                 E
+
+      *-------------------------------------------------------------------*
+      * stopTest: test cleanup
+      *-------------------------------------------------------------------*
+     P stopTest        B                   EXPORT
+     D stopTest        PI
+
+      /free
+              //
+              // one last variation to check the number of variations run
+              //
+              if (N_RUN = num_vars);
+                VAR_STS = SUCC;
+              endif;
+              N_RUN += 1;
+              RCD_VAR();
+      /end-free
+
+     C                   close     qsysprt
+     C                   CALLP     RCD_FINAL
+     C                   RETURN
+
+     C                   if        g_rmvlible
+     C                   eval      cmd = 'RMVLIBLE ' + g_templib
+     C                   call(e)   'QCMDEXC'
+     C                   parm                    cmd              80
+     C                   parm      80            len              15 5
+     C                   endif
+
+     P                 E
+
+     P debugMsg        b
+     D debugMsg        pi
+     D    string                     80a   const
+     D struct          ds            80
+     C                   eval      struct = string
+     C                   write     qsysprt       struct
+     P debugMsg        e

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<recordformat name="format1">
+  <data  name="field1" type="char" length="13" ccsid="37" bidistringtype="ST5" init="Brian and Boo" />
+  <data  name="field2" type="packed" length="10" precision="5" init="100.45" />
+  <data  name="field3" type="int" length="2" precision="15" init="0" />
+  <data  name="field4" type="int" length="2" precision="16" init="123" />
+  <data  name="field5" type="int" length="4" precision="31" init="123" />
+  <data  name="field6" type="int" length="4" precision="32" init="700000" />
+  <data  name="field7" type="float" length="4"  init="87.98" />
+  <data  name="field8" type="float" length="8"  init="9.1"  />
+  <data  name="field9" type="zoned" length="22" precision="7" init="1000.76"    />
+  <data  name="field10" type="byte" length="12" init="0000" />
+  <data  name="field11" type="char" length="4" ccsid="37" init="roof" />
+  <data  name="field12" type="byte" length="8" init="0000" />
+</recordformat>
+
+</rfml>

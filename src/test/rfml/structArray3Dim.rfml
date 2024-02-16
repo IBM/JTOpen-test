@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE rfml SYSTEM "rfml.dtd">
+
+<rfml version="4.0">
+
+<struct name="struct1">
+  <data name="field1" type="struct" struct="struct2" count="2"/>
+</struct>
+
+<struct name="struct2">
+  <data name="field1" type="int" length="2" precision="15" count="2" init="0"/>
+</struct>
+
+<recordformat name="format1">
+  <data name="field1" type="struct" struct="struct1" count="2"/>
+</recordformat>
+
+</rfml>

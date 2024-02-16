@@ -1,0 +1,23 @@
+<pcml version="6.0">
+   <!-- RPG module: PDZ410F1  -->
+   <!-- created: 2011-03-16-16.48.33 -->
+   <!-- source: RPGDTZ/SOURCE(PDZ410F1) -->
+   <!-- 85 -->
+   <program name="STOPTEST" entrypoint="stopTest">
+   </program>
+   <!-- 83 -->
+   <program name="STARTTEST" entrypoint="startTest">
+      <data name="TEMPLIB" type="char" length="10" usage="input" />
+   </program>
+   <!-- 95 -->
+   <program name="VAR1RES" entrypoint="var3Res">
+      <data name="RC" type="int" length="4" precision="31" usage="input" />
+   </program>
+   <!-- 90 -->
+   <program name="VAR1DTZ" entrypoint="var1dtz">
+      <data name="TIME" type="time" timeformat="ISO" timeseparator="period" usage="inputoutput" />
+      <data name="DATE" type="date" dateformat="ISO" dateseparator="hyphen" usage="inputoutput" />
+      <data name="TIMESTAMP" type="timestamp" usage="inputoutput" />
+      <data name="OK" type="char" length="1" usage="inputoutput" />
+   </program>
+</pcml>

@@ -163,6 +163,9 @@ public class JDRSTest extends JDTestDriver {
   public static String RSTEST_UPDATEXML = COLLECTION + ".RSTESTUPDX";
   public static String RSTEST_BOOLEAN = COLLECTION + ".RSTESTBOOL"; // @F1
 
+  public static String LOB_FULL_DATALINK = "https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt";
+  public static String LOB_FULL_DATALINK_UPPER_DOMAIN = "HTTPS://GITHUB.COM/IBM/JTOpen-test/blob/main/README.testing.txt";
+
   public static String VALUES_DFP16[] = { "1.1", /*
                                                   * must be convertable to a
                                                   * byte
@@ -1356,7 +1359,7 @@ public class JDRSTest extends JDTestDriver {
           }
           // Key == LOB_FULL.
           ps4.setString(1, "LOB_FULL");
-          ps4.setString(2, "https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt");
+          ps4.setString(2, LOB_FULL_DATALINK );
           ps4.executeUpdate();
 
           // Key == LOB_EMPTY.
