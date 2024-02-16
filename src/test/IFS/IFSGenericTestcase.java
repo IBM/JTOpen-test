@@ -51,7 +51,6 @@ public class IFSGenericTestcase extends Testcase
   public static String ifsPathName_ = ifsDirName_ + fileName_;
   
   public String mappedDrive_=null;
-  public String operatingSystem_=null;
   public String dirName_=null;
   public String collection_ = "JDIFSCOL"; 
 
@@ -124,21 +123,21 @@ Constructor.
    // Determine operating system we're running under
      DOS_ = JTOpenTestEnvironment.isWindows; 
 
-   if (operatingSystem_.equals("OS/400")) {
+     
+   if (JTOpenTestEnvironment.isOS400) {
       OS400_ = true;
       mappedDrive_ = "/"; 
    }  else    {                                     
       OS400_ = false;
    }
 
-      if ((operatingSystem_.equalsIgnoreCase("AIX"))   ||
-          (operatingSystem_.equalsIgnoreCase("SUNOS")) ||
-          (operatingSystem_.equalsIgnoreCase("LINUX")))
+      if (JTOpenTestEnvironment.isAIX   ||
+          JTOpenTestEnvironment.isLinux)
         UNIX_ = true;
 
 
 
-   output_.println("Running under: " + operatingSystem_);
+   output_.println("Running under: " + JTOpenTestEnvironment.osVersion);
    output_.println("DOS-based file structure: " + DOS_);
    output_.println("Executing " + (isApplet_ ? "applet." : "application."));
    output_.println("Linux Flag: " + JTOpenTestEnvironment.isLinux);
