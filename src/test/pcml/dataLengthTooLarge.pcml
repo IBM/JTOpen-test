@@ -1,0 +1,11 @@
+<pcml version="4.0">
+<program name="prog1">
+  <data name="field1" type="char" length="1048577"/>
+  <data name="field2" type="byte" length="-2"/>
+  <data name="field3" type="int" length="1"/>
+  <data name="field4" type="packed" length="0"/>
+  <data name="field5" type="zoned" length="32"/>
+  <data name="field6" type="float" length="2"/>
+  <data name="field7" type="struct" length="1"/>
+</program>
+</pcml>

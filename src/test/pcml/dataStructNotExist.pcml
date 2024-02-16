@@ -1,0 +1,11 @@
+
+<pcml version="4.0">
+<struct name="struct1">
+  <data name="field1"/>
+</struct>
+
+<program name="prog1">
+  <data name="field1" type="struct" struct="struct11"/>
+</program>
+
+</pcml>

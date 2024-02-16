@@ -692,7 +692,7 @@ canRead() - Should return true if called for a file that exists.
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
-      assertCondition(file.canRead() == true);
+      assertCondition(file.canRead() == true, "file.canRead() returned false for "+fileName);
     }
     catch(Exception e)
     {
@@ -779,7 +779,7 @@ canWrite() - Should return true if called for a file that exists.
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
-      assertCondition(file.canWrite() == true, "If running on AIX or Linux, verify that the profile specified on -uid is the IBM i profile that has the same UID number as the local profile (e.g. JAVA1).");
+      assertCondition(file.canWrite() == true, "file.canWrite() returned false for "+fileName+" If running on AIX or Linux, verify that the profile specified on -uid is the IBM i profile that has the same UID number as the local profile (e.g. JAVA1).");
     }
     catch(Exception e)
     {
@@ -953,6 +953,7 @@ delete() - Should remove the file.
   public void Var035()
   {
     String fileName = ifsPathName_ + "m" + getVariation();
+    StringBuffer sb = new StringBuffer(); 
     try
     {
       boolean succeeded = true;
@@ -961,11 +962,14 @@ delete() - Should remove the file.
       if (file.exists() == false)
       {
         succeeded = false;
+        sb.append("Error : File "+fileName+" does not exist"); 
       }
       file.delete();
       if (file.exists() == true)
       {
         succeeded = false;
+        sb.append("Error : File "+fileName+" exists after delete "); 
+
         //deleteFile(fileName);
       }
       assertCondition(succeeded == true);
@@ -1088,7 +1092,7 @@ exists() - Should return true if the file exists.
     {
       createFile(fileName);
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
-      assertCondition(file.exists() == true);
+      assertCondition(file.exists() == true, "File "+fileName+" does not exist.  Should have been created"); 
     }
     catch(Exception e)
     {
@@ -1438,7 +1442,7 @@ isFile() - Should return true if the file exists and is a file.
     {
       createFile(fileName);
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
-      assertCondition(file.isFile() == true);
+      assertCondition(file.isFile() == true, "file.isFile() returned false for "+fileName);
     }
     catch(Exception e)
     {
@@ -1460,7 +1464,7 @@ isFile() - Should return false if the file exists and is a directory.
     {
       createFile(fileName);
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
-      assertCondition(file.isFile() == true);
+      assertCondition(file.isFile() == true, "file.isFile returned false for "+fileName);
     }
     catch(Exception e)
     {
@@ -1564,7 +1568,10 @@ lastModified() - Should return the timestamp of a newly created file correctly.
       if ((modificationDate1.getTime() >= modificationDate2.getTime())
       ||  (modificationDate2.getTime() >= modificationDate3.getTime()))
       {
-        failed("Dates are not correct");
+        failed("Dates are not correct modificationDate1.getTime()("+modificationDate1.getTime()+") "
+            + ">= modificationDate2.getTime()("+modificationDate2.getTime()+"))\n"
+            + "      ||  (modificationDate2.getTime()("+modificationDate2.getTime()+") "
+                + ">= modificationDate3.getTime()("+modificationDate3.getTime()+")");
       } else
       {
         succeeded();
@@ -1699,7 +1706,7 @@ length() - Should return the length of the data in a newly created file.
         System.out.println("File length:   " + file.length());
         System.out.println("String length: " + myData.length());
       }
-      assertCondition(file.length() == myData.length());
+      assertCondition(file.length() == myData.length(),"File length:   " + file.length()+" String length: " + myData.length());
     }
     catch(Exception e)
     {

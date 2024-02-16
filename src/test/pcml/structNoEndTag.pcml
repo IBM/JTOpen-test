@@ -1,0 +1,4 @@
+<pcml version="4.0">
+<struct>
+  <data name="field1" type="char"/>
+</pcml>

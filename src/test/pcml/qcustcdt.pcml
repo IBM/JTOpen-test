@@ -1,0 +1,61 @@
+<pcml version="4.0">
+
+  <program name="cusrec">
+
+    <data name="cusnum" type="zoned" length="6"  precision="0" init="0"/>
+    <data name="lstnam" type="char"  length="8"  ccsid="37" init="A"/>
+    <data name="init"   type="char"  length="3"  ccsid="37" init="B"/>
+    <data name="street" type="char"  length="13" ccsid="37" init="C"/>
+    <data name="city"   type="char"  length="6"  ccsid="37" init="D"/>
+    <data name="state"  type="char"  length="2"  ccsid="37" init="E"/>
+    <data name="zipcod" type="zoned" length="5" init="1"/>
+    <data name="cdtlmt" type="zoned" length="4" init="2"/>
+    <data name="chgcod" type="zoned" length="1" init="3"/>
+<!--<data name="baldue" type="struct" struct="balance"/>
+    <data name="cdtdue" type="struct" struct="balance"/>-->
+    <data name="baldue" type="zoned" length="6" precision="2" init="4"/>
+    <data name="cdtdue" type="zoned" length="6" precision="2" init="5"/>
+
+  </program>
+
+  <program name="cusrec1">
+
+    <data name="cusnum" type="zoned" length="6"  precision="0" init="0"/>
+    <data name="lstnam" type="char"  length="8"  ccsid="37" init="A"/>
+    <data name="init"   type="char"  length="3"  ccsid="37" init="B"/>
+    <data name="street" type="char"  length="13" ccsid="37" init="C"/>
+    <data name="city"   type="char"  length="6"  ccsid="37" init="D"/>
+    <data name="state"  type="char"  length="2"  ccsid="37" init="E"/>
+    <data name="zipcod" type="zoned" length="5" init="1"/>
+    <data name="cdtlmt" type="zoned" length="4" init="2"/>
+    <data name="chgcod" type="zoned" length="1" init="3"/>
+    <data name="baldue" type="struct" struct="balance"/>
+    <data name="cdtdue" type="struct" struct="balance"/>
+<!--<data name="baldue" type="zoned" length="6" precision="2" init="4"/>
+    <data name="cdtdue" type="zoned" length="6" precision="2" init="5"/>-->
+
+  </program>
+
+  <program name="cusrecAscii">
+
+    <data name="cusnum" type="zoned" length="6"  precision="0" init="0"/>
+    <data name="lstnam" type="char"  length="8" init="A"/>
+    <data name="init"   type="char"  length="3" init="B"/>
+    <data name="street" type="char"  length="13" init="C"/>
+    <data name="city"   type="char"  length="6" init="D"/>
+    <data name="state"  type="char"  length="2" init="E"/>
+    <data name="zipcod" type="zoned" length="5" init="1"/>
+    <data name="cdtlmt" type="zoned" length="4" init="2"/>
+    <data name="chgcod" type="zoned" length="1" init="3"/>
+<!--<data name="baldue" type="struct" struct="balance"/>
+    <data name="cdtdue" type="struct" struct="balance"/>-->
+    <data name="baldue" type="zoned" length="6" precision="2" init="4"/>
+    <data name="cdtdue" type="zoned" length="6" precision="2" init="5"/>
+
+  </program>
+
+  <struct name="balance">
+    <data name="amount" type="zoned" length="6" precision="2" init="7"/>
+  </struct>
+
+</pcml>

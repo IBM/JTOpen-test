@@ -1,0 +1,188 @@
+<pcml version="1.0"> 
+
+
+
+	<!-- S T R U C T U R E S   S E C T I O N -->
+
+
+
+	<!-- Main receiver structure for table partition information -->
+
+    <struct name="receiver">
+        <data name="fileDefLengthProvided" 	type="int"    length="4"            	/>  
+        <data name="fileDefLengthNeeded" 	type="int"    length="4"            	/>
+        <data name="stuff"          		type="byte"   length="2"           		/>
+        <data 				           		type="char"   length="4"            	/>
+        <data 			            		type="byte"   length="2"            	/>
+        <data 			            		type="char"   length="14"           	/>
+        <data name="publicAut"      		type="char"   length="10"           	/>   
+        <data name="offsetPhysFile" 		type="int"    length="4"				offset="364"			  					/>   
+        <data name="offsetJrnInfo" 			type="int"    length="4"				offset="378"			  					/>   
+        <data name="physicalFileData"   	type="struct" struct="physicalFileData"	offset="offsetPhysFile"   					offsetfrom="0"/> 
+		<data name="partitionHeader"   		type="struct" struct="partitionHeader"	offset="physicalFileData.offsetPartFile" 	offsetfrom="0"/> 
+   		<data name="journalData"		   	type="struct" struct="journalData"		offset="offsetJrnInfo"   					offsetfrom="0"/> 
+    </struct>
+
+
+	<!-- Main receiver structure for view query text information -->
+
+    <struct name="receiverForLogical">
+        <data name="fileDefLengthProvided" 	type="int"    length="4"            	/>  
+        <data name="fileDefLengthNeeded" 	type="int"    length="4"            	/>
+        <data name="stuff"          		type="byte"   length="2"           		/>
+        <data 				           		type="char"   length="4"            	/>
+        <data 			            		type="byte"   length="2"            	/>
+        <data 			            		type="char"   length="14"           	/>
+        <data name="publicAut"      		type="char"   length="10"           	/>   
+        <data name="offsetLogicalFile"		type="int"    length="4"				offset="368"			  					/>   
+        <data name="logicalFileData"   		type="struct" struct="logicalFileData"	offset="offsetLogicalFile"    offsetfrom="0"/> 
+    </struct>
+
+
+	<!-- Qdb_Qdbfphys structure -->
+    <struct name="physicalFileData">
+        <data name="length"            		type="char"   length="2"            />
+        <data 			            		type="char"   length="1"            />
+        <data name="offsetPartFile" 		type="int"    length="4"			/>   
+        <data  			            		type="char"   length="16"           />
+        <data name="flags"          		type="char"   length="1"			/>    
+    </struct>
+       
+       
+	<!-- Qdb_Qdbfv structure -->
+    <struct name="logicalFileData">
+        <data name="offsetSQLView" 		    type="int"    length="4"		    offset="26"  />
+        <data name="sqlViewData"	  	 	type="struct" struct="sqlViewData"	offset="offsetSQLView"   					offsetfrom="0"/> 
+    </struct>
+
+
+	<!-- Qdb_Qdbfv_SQL_View_Area structure -->
+    <struct name="sqlViewData">
+        <data name="sqlStatementLength"     type="int"    length="4"		    offset="56"  />
+        <data name="sqlStatement" 		    type="char"   length="sqlStatementLength"  offset="60"/>
+    </struct>
+
+
+       
+    <!-- Qdb_Qdbfjoal structure - Journaling info for the file -->
+    <struct name="journalData">
+        <data name="jrnName"           		type="char"   length="10"           />
+        <data name="jrnLib"            		type="char"   length="10"           />
+        <data name="jrnOptions" 			type="char"   length="1"			/>   
+        <data name="fileJournaled"     		type="char"   length="1"			/>    
+    </struct>
+    
+    
+     
+	<!-- Qdb_Qdbfsqpt_Head structure -->
+    <struct name="partitionHeader">
+        <data name="length"         		type="byte"   length="4"            />
+        <data 			            		type="byte"   length="4"            />
+        <data name="hashorRange" 			type="char"   length="1"			/> 
+        <data  			            		type="char"   length="231"          />
+        <data name="numbPartStructs" 		type="int"    length="4"			/>
+        <data name="offsetToPartition" 		type="int"    length="4"			/>  
+        <data name="offsetToHashPKey" 		type="int"    length="4"			/> 
+
+	        <!-- Qdb_Qdbfsqpt_Part structure -->
+        	<struct name="partition" offset="offsetToPartition" offsetfrom="partitionHeader"  count="partitionHeader.numbPartStructs">
+        		<data name="length"         	type="int"    length="4"            />
+        		<data 			            	type="int"    length="4"            />
+        		<data name="partNumber" 		type="int"    length="4"			/>  
+        		<data name="partNameLen" 		type="byte"   length="4"			/>  
+        		<data name="partName"	 		type="char"   length="128"			/>  
+        		<data 					 		type="char"   length="80"			/>  
+		        <data name="numbRangeKeys" 		type="int"    length="4"			/>  
+		        <data name="rangeOffset"	 	type="int"    length="4"			/>  
+		        <data 							type="char"	  length="8"			/>
+
+		        <!-- Qdb_Qdbfsqpt_Range structure -->
+		        <struct name="range"  offset="length" 	offsetfrom="partitionHeader"   count="numbRangeKeys">
+			        <data name="rlength"         	type="int"    length="4"            />
+			        <data  				         	type="char"   length="12"           />
+			        <data name="rangeName"         	type="char"   length="10"           />
+			        <data 				         	type="byte"   length="2"           	/>
+			        <data name="startValUnbound"   	type="char"   length="1"           	/>
+			        <data name="endValUnbound"     	type="char"   length="1"           	/>
+			        <data name="startValInclusive" 	type="char"   length="1"           	/>
+			        <data name="endValInclusive"   	type="char"   length="1"           	/>
+			        <data  				         	type="char"   length="15"           />
+			        <data name="includeNullValues" 	type="char"   length="1"           	/>
+			        <data name="lengthStartValue" 	type="int"    length="4"           	/>
+			        <data name="lengthEndValue"   	type="int"    length="4"           	/>
+			        <data name="offsetStartValues"	type="int"    length="4"           	/>
+			        <data name="offsetEndValues"  	type="int"    length="4"           	/>
+			        <data  				         	type="char"   length="14"           />
+			        <data  				         	type="byte"   length="2"            />
+			        <data name="startValue"      	type="char"   length="lengthStartValue"   	offset="offsetStartValues" 	offsetfrom="partitionHeader"  />
+			        <data name="endValue"      		type="char"   length="lengthEndValue"   	offset="offsetEndValues" 	offsetfrom="partitionHeader"  />
+			        <data                           type="byte"   length="0"  					offset="rlength"/>
+			    </struct> 
+		    </struct> 
+
+			<!-- Qdb_Qdbfsqpt_Head_Hash structure -->
+	 		<struct name="HashKeyHead" offset="offsetToHashPKey"  offsetfrom="partitionHeader">
+		        <data name="length"         	type="int"    length="4"            />
+		        <data name="numbHashKeys"      	type="int"    length="4"            />
+		        <data							type="char"   length="56"			/>
+
+					<!-- Qdb_Qdbfsqpt_Hash structure -->     
+				    <struct name="HashKey" offset="40" offsetfrom="HashKeyHead"  count="numbHashKeys">				       
+				        <data name="keyName"         	type="char"   length="10"           />
+				        <data                           type="byte"   length="22" 			/>
+				    </struct> 		
+			</struct> 
+    </struct> 
+
+
+    <struct name="qualNm">
+       	<data name="name"           	type="char"   length="10"					/>
+       	<data name="lib"            	type="char"   length="10"					/>
+   	</struct>
+
+
+   	<struct name="qualName">
+       	<data name="name"           	type="char"   length="10" init="*ALL"  		/>
+       	<data name="lib"            	type="char"   length="10" init="*LIBL" 		/>
+   	</struct>
+
+
+
+
+	<!-- P R O G R A M S   S E C T I O N -->
+
+
+
+	<!-- Program for retrieving table partition information -->
+
+    <program name="qdbrtvfd" path="/QSYS.LIB/QDBRTVFD.PGM" >
+        <data name="receiver"       type="struct" struct="receiver" outputsize="receiverLength" 	usage="output" 	/>
+        <data name="receiverLength" type="int"    length="4"        usage="input"   	init="10000"   				/>
+        <data name="qualNameO"      type="struct" struct="qualNm" 	usage="output" 									/>
+        <data name="formatName"     type="char"   length="8"       	usage="input" 		init="FILD0100" 			/>
+        <data name="qualNameI"      type="struct" struct="qualName" usage="input"									/>       
+        <data name="rcdformatNm"  	type="char"   length="10"       usage="input" 		init="          " 			/>
+        <data name="override"  	    type="char"   length="1"       	usage="input" 		init="0" 					/>
+        <data name="localRemote"    type="char"   length="10"       usage="input" 		init="*LCL      " 			/>
+        <data name="system"     	type="char"   length="10"       usage="input" 		init="*EXT      " 			/>
+        <data name="errorCode"      type="int"    length="4"        usage="input" 		init="0"    				/>
+    </program>
+
+
+	<!-- Program for retrieving view query text information -->
+
+    <program name="qdbrtvfd_lf" path="/QSYS.LIB/QDBRTVFD.PGM" >
+        <data name="receiver"       type="struct" struct="receiverForLogical" outputsize="receiverLength" 	usage="output" 	/>
+        <data name="receiverLength" type="int"    length="4"        usage="input"   	init="2000000"   				/>
+        <data name="qualNameO"      type="struct" struct="qualNm" 	usage="output" 									/>
+        <data name="formatName"     type="char"   length="8"       	usage="input" 		init="FILD0100" 			/>
+        <data name="qualNameI"      type="struct" struct="qualName" usage="input"									/>       
+        <data name="rcdformatNm"  	type="char"   length="10"       usage="input" 		init="          " 			/>
+        <data name="override"  	    type="char"   length="1"       	usage="input" 		init="0" 					/>
+        <data name="localRemote"    type="char"   length="10"       usage="input" 		init="*LCL      " 			/>
+        <data name="system"     	type="char"   length="10"       usage="input" 		init="*EXT      " 			/>
+        <data name="errorCode"      type="int"    length="4"        usage="input" 		init="0"    				/>
+    </program>
+
+
+</pcml>
