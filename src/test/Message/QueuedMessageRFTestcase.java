@@ -21,6 +21,7 @@ import com.ibm.as400.access.QSYSObjectPathName;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.MessageSandbox;
+import test.MessageTest;
 import test.Testcase;
 
 import java.util.Date;
