@@ -310,6 +310,7 @@ Creates Testcase objects for all the testcases in this component.
              StringBuffer sb = new StringBuffer();
              InputStream is = JDRunit.loadResourceIfExists("test/FTPTestDirArchive.zip", sb);
              if (is == null) {
+               
                System.out.println("Unable to find resource " + sb.toString());
                throw new Exception("Unable to find resource");
              }
