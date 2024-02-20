@@ -89,7 +89,6 @@ extends JDTestcase
     {
 
 
-	isjdk14_ = (getJDK() == JVMInfo.JDK_14) || (getJDK() == JVMInfo.JDK_142); 
 	select_         = "SELECT * FROM " + JDRSTest.RSTEST_UPDATE;
 
 	if(isJdbc20 ())

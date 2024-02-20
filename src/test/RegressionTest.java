@@ -146,8 +146,6 @@ Main for running standalone application tests.
        System.out.println("      DataArea");
        System.out.println("      JDBC");
        System.out.println();
-       // System.out.println("To run IFSTests specify the -mappedDrive parameter.");
-       // System.out.println("The FTP tests assume the test files are off the current directory.");
        System.out.println();
        System.out.println("To get the JavaProgramCall test cases to run cleanly:");
        System.out.println("   1. The AS/400 must have a JVM");
@@ -614,28 +612,28 @@ Creates Testcase objects for all the testcases in this component.
         {
           addTestcase (new IFSCrtDltTestcase (systemObject_, userId_, password_,
                                               namesAndVars_, runMode_,
-                                              fileOutputStream_, mappedDrive_, pwrSys_));
+                                              fileOutputStream_,  pwrSys_));
           addTestcase (new IFSCtorTestcase (systemObject_, userId_, password_,
                                             namesAndVars_, runMode_,
-                                            fileOutputStream_, mappedDrive_, pwrSys_));
+                                            fileOutputStream_,  pwrSys_));
           addTestcase (new IFSFileAttrTestcase (systemObject_, userId_, password_,
                                                 namesAndVars_, runMode_,
-                                                fileOutputStream_, mappedDrive_, pwrSys_));
+                                                fileOutputStream_,  pwrSys_));
           addTestcase (new IFSFileDescriptorTestcase (systemObject_, userId_, password_,
                                                       namesAndVars_, runMode_,
-                                                      fileOutputStream_, mappedDrive_, pwrSys_));
+                                                      fileOutputStream_,  pwrSys_));
           addTestcase (new IFSMiscTestcase (systemObject_, userId_, password_,
                                             namesAndVars_, runMode_,
-                                            fileOutputStream_, mappedDrive_, pwrSys_));
+                                            fileOutputStream_,  pwrSys_));
           addTestcase (new IFSPropertyTestcase (systemObject_, userId_, password_,
                                                 namesAndVars_, runMode_,
-                                                fileOutputStream_, mappedDrive_, pwrSys_));
+                                                fileOutputStream_,  pwrSys_));
           addTestcase (new IFSReadTestcase (systemObject_, userId_, password_,
                                             namesAndVars_, runMode_,
-                                            fileOutputStream_, mappedDrive_, pwrSys_));
+                                            fileOutputStream_,  pwrSys_));
           addTestcase (new IFSWriteTestcase (systemObject_, userId_, password_,
                                              namesAndVars_, runMode_,
-                                             fileOutputStream_, mappedDrive_, pwrSys_));
+                                             fileOutputStream_,  pwrSys_));
 
         }
         catch(Exception e)

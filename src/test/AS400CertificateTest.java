@@ -172,7 +172,7 @@ Creates Testcase objects for all the testcases in this component.
       AS400CertificateUsrPrfTestcase tc =
         new AS400CertificateUsrPrfTestcase(systemObject_,
                      (Vector) namesAndVars_.get("AS400CertificateUsrPrfTestcase"), runMode_,
-                     fileOutputStream_,  "e");
+                     fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("AS400CertificateUsrPrfTestcase");
     }

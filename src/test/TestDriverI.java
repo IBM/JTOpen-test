@@ -35,7 +35,6 @@ import java.util.Vector;
  * -socks     - Set the system object's mustUseSockets property to true.
  * -pwrSys    - A userID, password combination with *SECOFR authority.
  * -nothreads - Set the system object's isThreadUsed property to false.
- * -mappedDrive - The local pathname which is mapped to the root IFS directory on the server.
  * -printer   - The name of the printer to use for the NPPrint testcases.
  * -profileToken - Generate and use a profile token for authentication.
  * -serialize - Indicates that the AS400 object is to be deserialized/serialized.  A file named "as400.ser" is sought and, if found, deserialized into systemObject_.  Upon testcase completion, the file is (re)generated.

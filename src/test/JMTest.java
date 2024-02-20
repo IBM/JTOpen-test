@@ -1552,7 +1552,7 @@ Creates the testcases.
 
       // Setup the power user if provided.
       AS400 pwrSys = null;
-      String mappedDrive = null;
+      
       if (misc_ != null)
       {
         StringTokenizer tokenizer = new StringTokenizer (misc_, ",");

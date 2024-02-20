@@ -722,7 +722,7 @@ public class RMRecordConstructorTestcase extends Testcase
      **/
     public void Var003()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         File file1 = null;
         RandomAccessFile raFile1 = null;
@@ -2817,7 +2817,7 @@ public class RMRecordConstructorTestcase extends Testcase
 
     public void Var010()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         // File file1 = null;
         // RandomAccessFile raFile1 = null;
@@ -2865,7 +2865,7 @@ public class RMRecordConstructorTestcase extends Testcase
      **/
     public void Var011()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         // File file1 = null;
         // RandomAccessFile raFile1 = null;
@@ -3246,7 +3246,7 @@ public class RMRecordConstructorTestcase extends Testcase
     **/
     public void Var014()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
 
         try

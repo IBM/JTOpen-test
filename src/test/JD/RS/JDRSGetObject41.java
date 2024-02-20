@@ -4052,9 +4052,6 @@ name is invalid.
               "CLOB=<h>hello</h>",
               "null"};
 
-	      if (getJDK() <= JVMInfo.JDK_15 ) {
-		  testArray = testArrayClob; 
-	      }
 
            testGetObject(testArray);
         }
@@ -4177,15 +4174,6 @@ name is invalid.
             "file://TMP/x", 
             "null"};
 
-	  String [] testArray13 = {
-            "java.lang.Object",
-            "select DLVALUE('file://tmp/x'), CAST(NULL AS DATALINK) from sysibm.sysdummy1",
-            "FILE://TMP/x", 
-            "null"};
-
-	    if (getJDK() <= JVMInfo.JDK_13 ) {
-		testArray = testArray13; 
-	    } 
 
         testGetObject(testArray); 
     }
@@ -4218,9 +4206,6 @@ name is invalid.
             "null",
             "null"};
 
-	      if (getJDK() <= JVMInfo.JDK_15 ) {
-		  testArray = testArray15; 
-	      }
 
 	    
         testGetObject(testArray);
@@ -8594,15 +8579,6 @@ name is invalid.
               "SQLXML=<h>hello</h>",
               "null"};
 
-           String[] testArrayClob = {
-              "java.lang.Object",
-              "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
-              "CLOB=<h>hello</h>",
-              "null"};
-
-	      if (getJDK() <= JVMInfo.JDK_15 ) {
-		  testArray = testArrayClob; 
-	      }
 
            testGetObjectNamed(testArray);
         }
@@ -8725,15 +8701,6 @@ name is invalid.
             "file://TMP/x", 
             "null"};
 
-	  String [] testArray13 = {
-            "java.lang.Object",
-            "select DLVALUE('file://tmp/x') AS C1, CAST(NULL AS DATALINK) AS C2 from sysibm.sysdummy1",
-            "FILE://TMP/x", 
-            "null"};
-
-	    if (getJDK() <= JVMInfo.JDK_13 ) {
-		testArray = testArray13; 
-	    } 
 
         testGetObjectNamed(testArray); 
     }
@@ -8754,21 +8721,6 @@ name is invalid.
             "null",
             "null"};
 
-	    String[] testArray15 = {
-		"java.lang.Object",
-		"select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('ABC' as NCHAR(10)) AS C2, CAST('ABC' AS NVARCHAR(100)) AS C3, CAST('ABC' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
-		"BYTEARRAY=1122",
-		"ABC       ",
-		"ABC",
-		"CLOB=ABC", 
-		"null", 
-		"null", 
-		"null",
-		"null"};
-
-	    if (getJDK() <= JVMInfo.JDK_15 ) {
-		testArray = testArray15; 
-	    }
         testGetObjectNamed(testArray);
       }
     }

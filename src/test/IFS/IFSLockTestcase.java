@@ -40,12 +40,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password, "IFSLockTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
     }
 
   /**

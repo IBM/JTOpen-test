@@ -1369,7 +1369,7 @@ causes a data truncation error.
      */    
     
     public void Var055 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, Float.MAX_VALUE, "340282350000000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, Float.MAX_VALUE, "3.4028235E+38");
@@ -1380,7 +1380,7 @@ causes a data truncation error.
      * updateFloat -- set a DFP16 value (MIN_VALUE)
      */    
     public void Var056 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, Float.MIN_VALUE, "0.0000000000000000000000000000000000000000000014");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, Float.MIN_VALUE, "1.4E-45"); 
@@ -1539,7 +1539,7 @@ causes a data truncation error.
      * updateFloat -- set a DFP34 value (MAX_VALUE)
      */    
     public void Var089 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, Float.MAX_VALUE, "340282350000000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, Float.MAX_VALUE, "3.4028235E+38");
@@ -1550,7 +1550,7 @@ causes a data truncation error.
      * updateFloat -- set a DFP34 value (MIN_VALUE)
      */    
     public void Var090 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, Float.MIN_VALUE, "0.0000000000000000000000000000000000000000000014");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, Float.MIN_VALUE, "1.4E-45");

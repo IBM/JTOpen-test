@@ -1764,8 +1764,15 @@ public class JDTestcase extends Testcase {
   }
 
   public static String[] fileToStringArray(String file) throws Exception {
-    Vector vector = new Vector();
-    BufferedReader reader = new BufferedReader(new FileReader(file));
+    
+    StringBuffer sb = new StringBuffer(); 
+    InputStream is = JDRunit.loadResourceIfExists(file, sb);
+    if (is == null) { 
+      System.out.println("Unable to find resource "+file+"\n"+sb.toString()); 
+      throw new Exception("Unable to find resource "+file); 
+    }
+    Vector<String> vector = new Vector<String>();
+    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
     String line = reader.readLine();
     while (line != null) {
       vector.addElement(line);

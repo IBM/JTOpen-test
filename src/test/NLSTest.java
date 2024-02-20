@@ -22,6 +22,7 @@ import com.ibm.as400.access.AS400;
 ///import javasoft.sqe.tests.ibm.jdbc.JDTestDriver;
 ///import javasoft.sqe.tests.ibm.jdbc.NLSJDBCTestcase;
 import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.Job;
 
 import test.NLS.NLSCmdTestcase;
@@ -158,16 +159,8 @@ Creates Testcase objects for all the testcases in this component.
         "variations may fail.");    	
     }
 	
-	if (mappedDrive_ == null)
-    {               	
-      	System.out.println("Warning: -mappedDrive option not specified  " +
-        "variations may fail.");    	
-    }
-	else
-	{
 		
-		ifsDir_ = mappedDrive_;
-	}
+	ifsDir_ = IFSFile.separator;
 	
 
 	String cleanup = null;
@@ -222,7 +215,7 @@ Creates Testcase objects for all the testcases in this component.
       NLSIFSTestcase tc =
         new NLSIFSTestcase(systemObject_,
                      (Vector) namesAndVars_.get("NLSIFSTestcase"), runMode_,
-                     fileOutputStream_, ifsDir_);
+                     fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSIFSTestcase");
     }

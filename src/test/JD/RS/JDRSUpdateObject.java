@@ -2338,35 +2338,35 @@ updateObject() - Update an BIGINT, when the integer is too big.
     public void Var096 () { dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456", "-1234567890123456");}
     public void Var097 () { dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456","1234567890123456");}
     public void Var098 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","1.234567890123456E+43");
 	}
     }
     public void Var099 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","1.234567890123456E+43");
 	}
     }
     public void Var100 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","1.234567890123456E+43");
 	}
     }
     public void Var101 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","1.234567890123456E+43");
 	}
     }
     public void Var102 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-1.234567890123456E+43");
@@ -2383,35 +2383,35 @@ updateObject() - Update an BIGINT, when the integer is too big.
     public void Var109 () { dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("-1234567890123456"), "-1234567890123456");}
     public void Var110 () { dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456"),"1234567890123456");}
     public void Var111 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456E28"),"12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456E28"),"1.234567890123456E+43");
 	}
     }
     public void Var112 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456E+28"), "12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456E+28"),"1.234567890123456E+43");
 	}
     }
     public void Var113 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+123456789012345.6E+29"), "12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+123456789012345.6E+29"),"1.234567890123456E+43");
 	}
     }
     public void Var114 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+0.01234567890123456E+45"), "12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("+0.01234567890123456E+45"),"1.234567890123456E+43");
 	}
     }
     public void Var115 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("-1234567890123456E28"), "-12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("-1234567890123456E28"),"-1.234567890123456E+43");
@@ -2428,7 +2428,7 @@ updateObject() - Update an BIGINT, when the integer is too big.
     public void Var121 () { dfpTest(JDRSTest.RSTEST_DFP16, new Float(Float.POSITIVE_INFINITY), "Infinity");}
     public void Var122 () { dfpTest(JDRSTest.RSTEST_DFP16, new Float(Float.NEGATIVE_INFINITY), "-Infinity");}
     public void Var123 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, new Float(-1234567890123456.0), "-1234567950000000");
 	} else {
 	    /* with the new native PASE support, this comes back with the zeros*/
@@ -2829,35 +2829,35 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
     public void Var144 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "-1234567890123456", "-1234567890123456");}
     public void Var145 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456","1234567890123456");}
     public void Var146 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","1,234567890123456E+43");
 	}
     }
     public void Var147 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","1,234567890123456E+43");
 	}
     }
     public void Var148 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","1,234567890123456E+43");
 	}
     }
     public void Var149 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","1,234567890123456E+43");
 	}
     }
     public void Var150 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-1,234567890123456E+43");
@@ -2874,35 +2874,35 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
     public void Var157 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("-1234567890123456"), "-1234567890123456");}
     public void Var158 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456"),"1234567890123456");}
     public void Var159 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456E28"),"12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456E28"),"1,234567890123456E+43");
 	}
     }
     public void Var160 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456E+28"), "12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+1234567890123456E+28"),"1,234567890123456E+43");
 	}
     }
     public void Var161 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+123456789012345.6E+29"), "12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+123456789012345.6E+29"),"1,234567890123456E+43");
 	}
     }
     public void Var162 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+0.01234567890123456E+45"), "12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("+0.01234567890123456E+45"),"1,234567890123456E+43");
 	}
     }
     public void Var163 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("-1234567890123456E28"), "-12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("-1234567890123456E28"),"-1,234567890123456E+43");
@@ -2919,7 +2919,7 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
     public void Var169 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Float(Float.POSITIVE_INFINITY), "Infinity");}
     public void Var170 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Float(Float.NEGATIVE_INFINITY), "-Infinity");}
     public void Var171 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Float(-1234567890123456.0), "-1234567950000000");
 	} else {
 	    /* with the new native PASE support, this comes back with the zeros*/

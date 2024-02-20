@@ -144,86 +144,55 @@ public class IFSTests extends TestDriver
         
     }
 
-    //Changed misc_ to pwrSys_ so all test drivers are consistent.
-
-   /* AS400 pwrSys = null;
-    String mappedDrive = null;
-    if (misc_ != null)
-     {
-       try
-       {
-        StringTokenizer tokenizer = new StringTokenizer (misc_, ",");
-         mappedDrive = tokenizer.nextToken ();
-        String uid = tokenizer.nextToken ();
-        String pwd = tokenizer.nextToken ();
-        pwrSys = new AS400 (systemObject_.getSystemName(), uid, pwd);
-        try
-        {
-           pwrSys.setGuiAvailable(false);
-         }
-         catch (PropertyVetoException e)
-         {
-           // Ignore.
-        }
-      }
-      catch (NoSuchElementException e2)
-      {
-        usage();
-        System.exit(0);
-      }
-    } else
-    {
-     usage();
-    }*/
 
     addTestcase (new IFSConnectTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSCtorTestcase (systemObject_, userId_, password_, 
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSCrtDltTestcase (systemObject_, userId_, password_, 
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSLockTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSReadTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSWriteTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSFileAttrTestcase (systemObject_, userId_,password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSMiscTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSPropertyTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSEventTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSSerializeTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSFileDescriptorTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSJavaFileTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     addTestcase (new IFSListFilesTestcase (systemObject_, userId_, password_,
                                   namesAndVars_, runMode_,
-                                  fileOutputStream_, mappedDrive_, pwrSys_));
+                                  fileOutputStream_,  pwrSys_));
     try {
       Class[] parmTypes = { String.class };
       Class.forName("com.ibm.as400.access.IFSFile").getDeclaredMethod("copyTo", parmTypes);
       addTestcase (new IFSCopyTestcase (systemObject_, userId_, password_,
                                         namesAndVars_, runMode_,
-                                        fileOutputStream_, mappedDrive_, pwrSys_));
+                                        fileOutputStream_,  pwrSys_));
     }
     catch (NoSuchMethodException e) {
       addSkipTestcase("IFSCopyTestcase"); 
@@ -238,13 +207,7 @@ public class IFSTests extends TestDriver
     {
     */ 
       try {
-	//
-	// Loading this class on the classic JVM in V6R1 hangs the system
-	//
-	boolean isClassic = System.getProperty("java.vm.name").indexOf("Classic") >= 0;
-	if (!isClassic) { 
 	    Class.forName("com.ibm.as400.vaccess.IFSFileSystemView");
-	}
       }
       catch (ClassNotFoundException e1)
       {
@@ -265,13 +228,10 @@ public class IFSTests extends TestDriver
       }
 
       try {
-	boolean isClassic = System.getProperty("java.vm.name").indexOf("Classic") >= 0;
-	if (!isClassic) { 
 	    Class.forName("com.ibm.as400.access.IFSSystemView");
-	}
         addTestcase (new IFSSystemViewTestcase (systemObject_,  userId_, password_,
                                                 namesAndVars_, runMode_,
-                                                fileOutputStream_, mappedDrive_, pwrSys_));
+                                                fileOutputStream_,  pwrSys_));
       }
       catch (ClassNotFoundException e1)
       {
@@ -302,6 +262,6 @@ public class IFSTests extends TestDriver
 **/
   public void usage()
   {
-    System.out.println ("usage: java IFSTests -system systemName -uid userID -pwd password -pwrSys userID,password -mappedDrive mappedDrive ");
+    System.out.println ("usage: java IFSTests -system systemName -uid userID -pwd password -pwrSys userID,password  ");
   }
 }

@@ -17,6 +17,7 @@ import java.io.DataInput;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -39,18 +40,17 @@ import com.ibm.as400.access.IFSTextFileInputStream;
 
 public class IFSGenericTestcase extends Testcase
 {
-  public static final String FILE_SEPARATOR = System.getProperty("file.separator");
-  public static final char FILE_SEPARATOR_CHAR = FILE_SEPARATOR.charAt(0);
+  /* public static final String FILE_SEPARATOR = System.getProperty("file.separator"); */
+  /* public static final char FILE_SEPARATOR_CHAR = FILE_SEPARATOR.charAt(0); */
 
   public static String ifsDirName_ = "/";
   public static String ifsDirPath_ = "/" + ifsDirName_;
 
   public static String ifsFileName_ = "TestFile";
-  public static String ifsFilePath_ = ifsDirPath_ + FILE_SEPARATOR + ifsFileName_; 
+  public static String ifsFilePath_ = ifsDirPath_ + '/' + ifsFileName_; 
   public static String fileName_ = "File";
   public static String ifsPathName_ = ifsDirName_ + fileName_;
   
-  public String mappedDrive_=null;
   public String dirName_=null;
   public String collection_ = "JDIFSCOL"; 
 
@@ -63,7 +63,6 @@ public class IFSGenericTestcase extends Testcase
   public boolean AIX_ = false; 
   public static boolean DEBUG = false;
 
-  public boolean isClassic; 
 
 
   static {
@@ -87,14 +86,11 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   String   driveLetter,
                    AS400    pwrSys
                    )
     {
         super(systemObject,testname,namesAndVars,runMode,fileOutputStream,password);
-        mappedDrive_ = driveLetter;
         userId_=userid;
-        isClassic = System.getProperty("java.vm.name").indexOf("Classic") >= 0;
 	pwrSys_ = pwrSys; 
 	if (systemName_ == null) {
 	  systemName_ = systemObject.getSystemName(); 
@@ -115,10 +111,6 @@ Constructor.
    collection_ = IFSTests.COLLECTION;
 
 
-   if (mappedDrive_ == null)
-   {
-       mappedDrive_ = "MAPPED DRIVE SHOULD NOT BE USED. CHANGE TESTCASE"; 
-   }
 
    // Determine operating system we're running under
      DOS_ = JTOpenTestEnvironment.isWindows; 
@@ -126,7 +118,6 @@ Constructor.
      
    if (JTOpenTestEnvironment.isOS400) {
       OS400_ = true;
-      mappedDrive_ = "/"; 
    }  else    {                                     
       OS400_ = false;
    }
@@ -161,10 +152,10 @@ Constructor.
    }
    fileName_ = "File"+collection_; 
    ifsPathName_ = ifsDirName_ + fileName_;
-   dirName_ = convertToPCName("");
+   dirName_ =  IFSFile.separator; 
 
   ifsFileName_ = "TestFile"+collection_;
-  ifsDirPath_ = FILE_SEPARATOR + ifsFileName_; 
+  ifsDirPath_ = IFSFile.separator + ifsFileName_; 
 
 
 
@@ -173,28 +164,12 @@ Constructor.
    // Check to see if we're connected properly
    try
    {
-     if (isApplet_)
-     {
        IFSFile file = new IFSFile(systemObject_, IFSFile.separator, "QSYS.LIB");
        if (!file.exists())
        {
          output_.println("Unable to locate QSYS.LIB in " + IFSFile.separator + " on " + systemObject_.getSystemName() + ".");
          throw new Exception("Unable to locate QSYS.LIB");
        }
-     }
-     else
-     {
-       File file = new File(dirName_, "QSYS.LIB");
-       if (!file.exists())
-       {
-         output_.println("WARNING:  Unable to locate QSYS.LIB in " + dirName_ + ".");
-         output_.println("WARNING:  Check to make sure that " + mappedDrive_ + " is mapped to the root directory on " + systemObject_.getSystemName() + ".");
-         output_.println("WARNING:  Unable to locate QSYS.LIB");
-
-
-	 // TODO:  Use JCIFS instead. 
-       }
-     }
    }
    catch(Exception e)
    {
@@ -210,31 +185,6 @@ protected void cleanup() throws Exception {
 }
 
 
-  final String convertToPCName(String name)
-  {
-
-
-
-    String result = name;
-    if (name.indexOf(mappedDrive_) != 0)
-    {
-      result = mappedDrive_;
-      if (name.indexOf("/") == 0 || name.indexOf("\\") == 0)
-        result += name;
-      else
-        result += File.separator + name;
-    }
-    if (result.startsWith("//")) result = result.substring(1);
-
-    if (File.separatorChar != '/')
-    {
-      result = result.replace('/', File.separatorChar);
-    }
-
-
-    return result;
-  }
-
 
 
   public final void createDirectory(String dirName)
@@ -246,10 +196,6 @@ protected void cleanup() throws Exception {
   {
     try
     {
-        // Always create using IFS file and do not rely on mapped file.
-        if (dirName.indexOf(FILE_SEPARATOR_CHAR) >= 0) { 
-           dirName = dirName.replace(FILE_SEPARATOR_CHAR, '/');
-        }
         IFSFile dir = new IFSFile(system, dirName);
         if (!dir.exists())
         {
@@ -295,6 +241,10 @@ protected void cleanup() throws Exception {
 				      userId_,
 				      encryptedPassword_,
 				      pathName);
+              IFSFile file = new IFSFile(systemObject_, pathName);
+              if (!file.exists())  {
+                throw new Exception("JDCIFSUtility.createFile did not create "+pathName);
+              }
            } catch (Exception e) {
              String message = e.toString();
              // If hitting weird access denied error.  Just use IFSRAF to create it. 
@@ -307,6 +257,12 @@ protected void cleanup() throws Exception {
                IFSRandomAccessFile raf =
                  new IFSRandomAccessFile(systemObject_, pathName, "rw");
                raf.close();
+
+               file = new IFSFile(systemObject_, pathName);
+               if (!file.exists())  {
+                 throw new Exception("IFSRandomAccessFile did not create "+pathName);
+               }
+
                
              } else {
                throw e; 
@@ -468,37 +424,22 @@ Create a file to be used for the testcases.
     }
   }
 
-  public final void deleteFile(String pathName)
-  {
-    try
-    {
-      if (isApplet_ || IFSTests.IsRunningOnOS400)
-      {
-        IFSFile file = new IFSFile(systemObject_, pathName);
-        if (file.exists())
-        {
-          file.delete();
-        }
-      }
-      else
-      {
-        JCIFSUtility.deleteFile(systemObject_.getSystemName(),
-            userId_,
-            encryptedPassword_,
-            pathName); 
-        /* 
-        File file = new File(convertToPCName(pathName));
-        if (file.exists())
-        {
-          file.delete();
-        }
-        */ 
-      }
+  public final void deleteFile(String pathName) {
+    try { 
+      deleteFileStatus(pathName); 
+    } catch (Exception e) { 
+      
     }
-    catch(Exception e)
-    {}
   }
-
+  public final boolean deleteFileStatus(String pathName) throws IOException
+  {
+        IFSFile file = new IFSFile(systemObject_, pathName);
+        if (file.exists())        {
+          boolean deleted = file.delete();
+          return deleted; 
+        }
+        return false; 
+  }
   
   public void createIFSDirectory(String dirName)
   {
@@ -568,7 +509,7 @@ Create a file to be used for the testcases.
   public String[] listDirectory(String pathName) throws Exception {
 
     if ( IFSTests.IsRunningOnOS400 ) { 
-     File file2 = new File(convertToPCName(pathName));
+     File file2 = new File(pathName);
      String[] names2 = file2.list();
      return names2; 
 
@@ -580,95 +521,34 @@ Create a file to be used for the testcases.
     }
   }
 
-
-  public final boolean deleteDirectory(String pathName)
+  public final void deleteDirectory(String pathName) 
   {
-
-   // Try to delete using CIFS first
-      try {
-
-	  return JCIFSUtility.deleteDirectory(systemObject_.getSystemName(),
-					      userId_,
-					      encryptedPassword_,
-					      pathName); 
+              deleteFile(pathName);
+  }
 
 
-      } catch (Exception pass1Exception) {
-	  pass1Exception.printStackTrace();
+  public final boolean deleteDirectoryStatus(String pathName) throws IOException {
+    if (DEBUG)
+      output_.print("Deleting directory tree starting at: " + pathName + "...");
+    if (pathName.indexOf('\\') >= 0) {
+      pathName = pathName.replace('\\', '/');
+    }
+    deleteFileStatus(pathName);
+    IFSFile stillThere = new IFSFile(systemObject_, pathName);
+    if (stillThere.exists()) {
+      output_.print("Unable to cleanup.\n");
+      return false;
+    } else {
+      if (DEBUG)
+        output_.print("OK.\n");
+      return true;
+    }
+  }
 
-	  String pcPathName = convertToPCName(pathName);
-	  if (DEBUG) output_.print("Deleting directory tree starting at: "+pcPathName+"...");
-	  try
-	  {
-      // Try to delete it like normal first.
-	      deleteFile(pathName);
-
-	      if (!isApplet_)
-	      {
-	// Try to delete it using a command process.
-		  Runtime myRuntime = Runtime.getRuntime();
-		  Process myProcess = null;
-		  int rc = -1;  //@A1C
-
-		  if (DOS_ )
-		  {
-	  //myProcess = myRuntime.exec("command.com /c deltree /y "+pcPathName);
-		      myProcess = myRuntime.exec("cmd.exe /c rmdir /s /q "+pcPathName);
-	  //rc = myProcess.waitFor();              //@A1D
-
-	  // Note: On Windows NT, the waitFor() after deltree will occasionally hang,
-	  // so we do the following instead.         @A1A
-		      for (int i = 0; i < 20 && rc != 0; i++)  //@A1A
-		      {                                        //@A1A
-			  try                                   //@A1A
-			  {                                     //@A1A
-			      rc = myProcess.exitValue();        //@A1A
-			  } catch (Exception e) {}              //@A1A
-			  Thread.sleep(1000);                   //@A1A
-		      }                                        //@A1A
-		  }
-		  else // assume UNIX file structure if not DOS 
-		  {
-		      myProcess = myRuntime.exec("rm -r "+pcPathName);
-		      rc = myProcess.waitFor();
-		  }
-	      }
-
-	      if (isApplet_ || IFSTests.IsRunningOnOS400 || JTOpenTestEnvironment.isLinux)
-	      {
-		  IFSFile stillThere = new IFSFile(systemObject_, pathName);
-		  if (stillThere.exists())
-		  {
-		      output_.print("Unable to cleanup.\n");
-		      return false;
-		  }
-		  else
-		  {
-		      if (DEBUG) output_.print("OK.\n");
-		      return true;
-		  }
-	      }
-	      else
-	      {
-		  File stillThere = new File(pcPathName);
-		  if (stillThere.exists())
-		  {
-		      output_.print("Unable to cleanup.\n");
-		      return false;
-		  }
-		  else
-		  {
-		      if (DEBUG) output_.print("OK.\n");
-		      return true;
-		  }
-	      }
-	  }
-	  catch(Exception e)
-	  {
-	      if (DEBUG) e.printStackTrace(output_);
-	      return false;
-	  }
-      }
+  
+  public final void deleteIFSDirectory(String pathName) { 
+    IFSFile file = new IFSFile(systemObject_, pathName);
+    deleteIFSDirectory(file); 
   }
 
   public final void deleteIFSDirectory(IFSFile dir)

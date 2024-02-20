@@ -156,7 +156,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var004()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
       try
       {
@@ -751,7 +751,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var022()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt1");
@@ -776,7 +776,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var023()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt1");
@@ -796,7 +796,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var024()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtEmpty");
@@ -817,7 +817,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var025()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt1");
@@ -841,7 +841,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var026()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt1");
@@ -860,7 +860,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var027()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt1");
@@ -884,7 +884,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var028()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.twoRecFmtsDiff");
@@ -908,7 +908,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var029()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.twoRecFmtsDiff");
@@ -946,7 +946,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var030()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.twoRecFmtsDiff");
@@ -970,7 +970,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var031()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtUnicode");
@@ -999,7 +999,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var032()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt819");  // ascii code page
@@ -1026,7 +1026,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var033()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.char1Count2"); // ccsid==ascii
@@ -1062,7 +1062,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var034()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.int1");
@@ -1109,7 +1109,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var035()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.zoned1");
@@ -1131,7 +1131,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var036()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.zoned1");
@@ -1167,7 +1167,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var037()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.packed1");
@@ -1191,7 +1191,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var038()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.packed1");
@@ -1215,7 +1215,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var039()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.float1");
@@ -1237,7 +1237,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var040()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.float1");
@@ -1262,7 +1262,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var041()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.float1BadValue");
@@ -1300,7 +1300,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var042()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.byte1");
@@ -1333,7 +1333,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var043()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachType");
@@ -1515,7 +1515,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var044()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount1");
@@ -1694,7 +1694,7 @@ public class RMSetValuesTestcase extends Testcase
      **/
     public void Var045()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount1new");

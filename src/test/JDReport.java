@@ -450,8 +450,6 @@ public class JDReport {
   public static boolean is400(String initials) {
     char c3 = initials.charAt(3);
     switch (c3) {
-    case 'C':
-      return true; // description += "Classic "; break;
     case '3':
       return true; // description += "J9 32-bit "; break;
     case '4':

@@ -68,23 +68,7 @@ Constructor.
      // We use a different grid prefix for each jdk level
      //
      int jdk = JVMInfo.getJDK(); 
-     if (jdk == JVMInfo.JDK_13) {
-       gtridPrefix = 0x1DBCCC1300000000L;    
-     } else if (jdk == JVMInfo.JDK_14) {
-       gtridPrefix = 0x1DBCCC1400000000L;    
-     } else if (jdk == JVMInfo.JDK_15) {
-       //
-       // Check if running J9
-       // 
-       String vmName = System.getProperty("java.vm.name");
-       if (vmName.indexOf("Classic VM") >= 0) {
-          // We're using the old JVM 
-          gtridPrefix = 0x1DBCCC1500000000L;   
-       } else {
-          gtridPrefix = 0x1DBC991500000000L;    
-       } 
-
-     } else if (jdk == JVMInfo.JDK_16) {
+     if (jdk == JVMInfo.JDK_16) {
        gtridPrefix = 0x1DBCCC1600000000L;    
 
      } else if (jdk == JVMInfo.JDK_17) {
@@ -95,6 +79,10 @@ Constructor.
      } else if (jdk == JVMInfo.JDK_19) {
        gtridPrefix = 0x1DBCCC1900000000L;    
 
+     } else if (jdk == JVMInfo.JDK_V11) {
+       gtridPrefix = 0x1DBCCC1B00000000L;    
+     } else if (jdk == JVMInfo.JDK_V17) {
+       gtridPrefix = 0x1DBCCC1C00000000L;    
      } else {
        System.out.println("Warning.. did not recognize jdk version "+jdk); 
      }

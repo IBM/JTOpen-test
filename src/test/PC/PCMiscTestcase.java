@@ -47,18 +47,9 @@ public class PCMiscTestcase extends Testcase
       dateFormatterGMT_.setTimeZone(timezoneGMT_);
     }
     static SimpleDateFormat timeFormatterGMT_ = new SimpleDateFormat("HH:mm:ss");
-    static boolean jdk15 = false; 
+    static boolean jdk15 = true; 
     static {
       timeFormatterGMT_.setTimeZone(timezoneGMT_);
-      // 
-      // look for jdk1.4
-      //
-      int jdk = JVMInfo.getJDK();
-      if (jdk < JVMInfo.JDK_15) {
-	  jdk15 = false;
-      } else {
-	  jdk15=true;
-      }
 
     }
 

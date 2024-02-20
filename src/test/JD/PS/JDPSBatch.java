@@ -1508,8 +1508,7 @@ executeBatch() - Verify that the Toolbox can execute a batch with 32,767 stateme
 
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&  
-                getJDK() != JVMInfo.JDK_15) {
+	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) {
 		    /* "Longing running test only used on JDK 1.5 for release >= V5R4M0" */
 		assertCondition(true); 
 		    return; 
@@ -1564,7 +1563,7 @@ Native doesn't allow this though when useBlockInsert option is set to true.
 	//
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&  
-                getJDK() != JVMInfo.JDK_15) {
+                true) {
 		    /* "Longing running test only used on JDK 1.5 for release >= V5R4M0" */
 		  assertCondition(true); 
 		    return; 
@@ -1624,7 +1623,7 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -1677,7 +1676,7 @@ addBatch() - Verify that JTOpen Toolbox allows more than 65,534 statements to be
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -1723,7 +1722,7 @@ executeBatch() - Verify that the Toolbox can execute a batch with exactly 32000 
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -1767,7 +1766,7 @@ addBatch() - Verify that JTOpen Toolbox allows 32,766 statements to be added to 
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -1804,7 +1803,7 @@ addBatch() - Verify that JTOpen Toolbox allows 32,768 statements to be added to 
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -1847,7 +1846,7 @@ long startTime = System.currentTimeMillis();
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -1895,7 +1894,7 @@ long startTime = System.currentTimeMillis();
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -1949,7 +1948,7 @@ addBatch() - Verify that JTOpen Toolbox allows 31,999 statements to be added to 
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -1986,7 +1985,7 @@ addBatch() - Verify that JTOpen Toolbox allows 32,001 statements to be added to 
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -2031,7 +2030,7 @@ long startTime = System.currentTimeMillis();
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -2085,7 +2084,7 @@ long startTime = System.currentTimeMillis();
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 
@@ -2139,7 +2138,7 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
             if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              getJDK() != JVMInfo.JDK_15) {
+              true) {
                     notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
 		    return;
             } 

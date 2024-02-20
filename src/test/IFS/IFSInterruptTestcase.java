@@ -36,14 +36,12 @@ Constructor.
                          Hashtable        variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream,
-                         
-                         String           driveLetter,
                          AS400 pwrSys
                          )
     throws IOException
   {
     super(systemObject, userid, password, "IFSInterruptTestcase", variationsToRun, runMode,
-          fileOutputStream, driveLetter, pwrSys);
+          fileOutputStream,  pwrSys);
 
   }
 

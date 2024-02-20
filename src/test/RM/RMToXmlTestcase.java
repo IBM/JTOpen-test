@@ -102,7 +102,7 @@ public class RMToXmlTestcase extends Testcase
      **/
     public void Var002()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         try
         {
@@ -128,7 +128,7 @@ public class RMToXmlTestcase extends Testcase
      **/
     public void Var003()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         try
         {
@@ -327,7 +327,7 @@ public class RMToXmlTestcase extends Testcase
      **/
     public void Var007()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         File file1 = null;
         RandomAccessFile raFile1 = null;
@@ -2050,7 +2050,7 @@ public class RMToXmlTestcase extends Testcase
      **/
     public void Var037()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
       File file1 = null;
       RandomAccessFile raFile1 = null;

@@ -817,10 +817,7 @@ public abstract class JDTestDriver extends TestDriver {
 
     System.out.println("OS/400 Release = " + release_ + ".");
     System.out.println("JDK level = " + JVMInfo.getJavaVersionString());
-    // maxMemory only available in JDK 1.4 or later
-    if (JVMInfo.getJDK() >= JVMInfo.JDK_14) {
-      System.out.println("Max memory = " + Runtime.getRuntime().maxMemory());
-    }
+    System.out.println("Max memory = " + Runtime.getRuntime().maxMemory());
     System.out.println("Java home = " + System.getProperty("java.home"));
     System.out.println("JVM Running on " + JTOpenTestEnvironment.osVersion);
     Locale locale = Locale.getDefault();

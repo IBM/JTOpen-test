@@ -55,12 +55,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password, "IFSReadTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
     }
 
   /**
@@ -1623,7 +1621,7 @@ Ensure that IFSRandomAccessFile.readFully(byte[]) blocks at end of file.
         output_.println("Starting loop.");
         file2.write(oneByte);
         totalBytes++;
-        output_.println(totalBytes+" total bytes written to "+convertToPCName(ifsPathName_));
+        output_.println(totalBytes+" total bytes written to "+ifsPathName_);
         Thread.sleep(1000); // Give readFully a chance to catch up
       }
       file2.close();
@@ -1845,7 +1843,7 @@ file.
         output_.println("Starting loop.");
         file2.write(oneByte);
         totalBytes++;
-        output_.println(totalBytes+" total bytes written to "+convertToPCName(ifsPathName_));
+        output_.println(totalBytes+" total bytes written to "+ifsPathName_);
         Thread.sleep(1000); // Give readFully a chance to catch up
       }
       file2.close();

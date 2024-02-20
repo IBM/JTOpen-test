@@ -144,29 +144,13 @@ Creates Testcase objects for all the testcases in this component.
 //        }
         
 
-   /*  if (misc_ != null)
-     {
-         StringTokenizer tokenizer = new StringTokenizer (misc_, ",");
-             mappedDrive = tokenizer.nextToken ();
-             String uid = tokenizer.nextToken ();
-             String pwd = tokenizer.nextToken ();
-            pwrSys = new AS400 (systemObject_.getSystemName(), uid, pwd);
-            try
-            {
-           pwrSys.setGuiAvailable(false);
-         }
-         catch (PropertyVetoException e)
-         {
-           // Ignore.
-         }
-     }*/
 
         // Create the testcases.
         addTestcase (new IFSJavaFileTestcase (systemObject_,
             userId_,password_,
                                               namesAndVars_, runMode_,
                                               fileOutputStream_,
-                                              mappedDrive_, pwrSys_));
+                                               pwrSys_));
 
 
         // Put out error message for each invalid testcase name.

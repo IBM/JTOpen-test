@@ -26,6 +26,7 @@ import test.JTOpenTestEnvironment;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
@@ -86,7 +87,8 @@ extends IFSGenericTestcase
 
   // Private data.
   public static final int    variations_             = 136;    // @A2c
-
+  private static final String NEWLINE = "\n";
+  private StringBuffer sb = new StringBuffer(); 
 
 /**
 Constructor.
@@ -97,13 +99,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password,  "IFSJavaFileTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
-        mappedDrive_ = driveLetter;
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
         pwrSys_ = pwrSys;
     }
 
@@ -149,10 +148,16 @@ Constructor.
   }
 
 
-  boolean deletePrivateDirectory(AS400 as400, String dirName)
+  void deletePrivateDirectory(AS400 as400, String dirName) 
   {
     setPublic(as400, dirName);
-    return deleteDirectory(dirName);
+    deleteDirectory(dirName);
+  }
+
+  boolean deletePrivateDirectoryStatus(AS400 as400, String dirName) throws IOException
+  {
+    setPublic(as400, dirName);
+    return deleteDirectoryStatus(dirName);
   }
 
 
@@ -165,22 +170,16 @@ Constructor.
   void setPrivate(AS400 as400, String dirName)
   {
     String cmdString = "CHGAUT OBJ('"
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
-    if (DEBUG)
-    {
-      System.out.println ("Command: " + cmdString);
-    }
-
+      sb.append("Command: " + cmdString+"\n"); 
+ 
     String cmdString2 = "CHGAUT OBJ('"
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER("
                      + systemObject_.getUserId()
                      + ") DTAAUT(*NONE) OBJAUT(*NONE)";
-    if (DEBUG)
-    {
-      System.out.println ("Command: " + cmdString2);
-    }
+      sb.append ("Command: " + cmdString2+"\n");
 
     CommandCall cmd = new CommandCall(as400);
     try
@@ -200,21 +199,18 @@ Constructor.
   void setPublic(AS400 as400, String dirName)
   {
     String cmdString = "CHGAUT OBJ('"
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
-    if (DEBUG)
-    {
-      System.out.println ("Command: " + cmdString);
-    }
+    sb.append("Command: " + cmdString+"\n");
 
     String cmdString2 = "CHGAUT OBJ('"
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER("
                      + systemObject_.getUserId()
                      + ") DTAAUT(*RWX) OBJAUT(*ALL)";
     if (DEBUG)
     {
-      System.out.println ("Command: " + cmdString2);
+      sb.append ("Command: " + cmdString2+NEWLINE);
     }
 
     CommandCall cmd = new CommandCall(as400);
@@ -240,7 +236,7 @@ Constructor.
   {
     super.setup(); 
 
-    ifsDirName_ = FILE_SEPARATOR; 
+    ifsDirName_ = IFSFile.separator; 
     fileName_ = IFSTests.COLLECTION+".File";
     ifsPathName_ = ifsDirName_ + fileName_;
 
@@ -258,16 +254,18 @@ ctor() - Empty ctor should have default properties.
   {
     try
     {
+      sb.setLength(0); 
       IFSJavaFile f = new IFSJavaFile();
-      if (DEBUG)
-      {
-        System.out.println("Path:      " + f.getPath());
-        System.out.println("Name:      " + f.getName());
-        System.out.println("System:    " + f.getSystem());
-      }
-      assertCondition((f.getPath().equals(FILE_SEPARATOR))
+      
+      String osPath = f.getPath(); 
+      String getPath = osPath.replace('\\','/'); 
+
+        sb.append("Path:      " + getPath+NEWLINE);
+        sb.append("Name:      " + f.getName()+NEWLINE);
+        sb.append("System:    " + f.getSystem()+NEWLINE);
+      assertCondition((getPath.equals(IFSFile.separator))
           && (f.getName().equals(""))
-          && (f.getSystem() == null));
+          && (f.getSystem() == null), sb);
     }
     catch(Exception e) {
       failed(e, "Unexpected Exception");
@@ -281,7 +279,7 @@ ctor(AS400, String) - Passing null for system should throw an exception.
   {
     try
     {
-      IFSJavaFile f = new IFSJavaFile((AS400)null, FILE_SEPARATOR);
+      IFSJavaFile f = new IFSJavaFile((AS400)null, IFSFile.separator);
       failed("Did not throw exception for."+f);
     }
     catch(Exception e)
@@ -297,7 +295,7 @@ ctor(AS400, String) - Passing a valid system should set the system.
   {
     try
     {
-      IFSJavaFile f = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile f = new IFSJavaFile(systemObject_, IFSFile.separator);
       assertCondition(f.getSystem() == systemObject_);
     }
     catch(Exception e)
@@ -327,16 +325,17 @@ ctor(AS400, String) - Passing a valid path should set the path.
 **/
   public void Var005()
   {
+    sb.setLength(0);
     try
     {
-      String path = FILE_SEPARATOR + "path";
+      String path = IFSFile.separator + "path";
       IFSJavaFile f = new IFSJavaFile(systemObject_, path);
-      if (DEBUG)
-      {
-        System.out.println("expected: <" + path + ">");
-        System.out.println("got:      <" + f.getPath() + ">");
-      }
-      assertCondition(f.getPath().equals(path));
+      // I'm not sure why, but path uses the current OS separator
+      String osPath = f.getPath(); 
+      String getPath = osPath.replace('\\','/'); 
+        sb.append("expected: <" + path + ">"+NEWLINE);
+        sb.append("got:      <" + getPath + ">"+NEWLINE);
+      assertCondition(getPath.equals(path),sb);
     }
     catch(Exception e)
     {
@@ -351,7 +350,7 @@ ctor(AS400, String, String) - Passing null for system should throw an exception.
   {
     try
     {
-      IFSJavaFile f = new IFSJavaFile(null, FILE_SEPARATOR, "file");
+      IFSJavaFile f = new IFSJavaFile(null, IFSFile.separator, "file");
       failed("Did not throw exception."+f);
     }
     catch(Exception e)
@@ -367,7 +366,7 @@ ctor(AS400, String, String) - Passing a valid system should set the system.
   {
     try
     {
-      IFSJavaFile f = new IFSJavaFile(systemObject_, FILE_SEPARATOR, "file");
+      IFSJavaFile f = new IFSJavaFile(systemObject_, IFSFile.separator, "file");
       assertCondition(f.getSystem() == systemObject_);
     }
     catch(Exception e)
@@ -397,17 +396,20 @@ ctor(AS400, String, String) - Passing a valid path should set the path.
 **/
   public void Var009()
   {
+    sb.setLength(0);
     try
     {
-      String path = FILE_SEPARATOR + "path";
+      String path = IFSFile.separator + "path";
       String name = "name";
       IFSJavaFile f = new IFSJavaFile(systemObject_, path, name);
-      if (DEBUG)
-      {
-        System.out.println("expected: <" + path + File.separator + name + ">");
-        System.out.println("got:      <" + f.getPath() + ">");
-      }
-      assertCondition(f.getPath().equals(path + File.separator + name));
+      
+      String osPath = f.getPath(); 
+      String getPath = osPath.replace('\\','/'); 
+
+        sb.append("expected: <" + path + IFSFile.separator + name + ">"+NEWLINE);
+        sb.append("got:      <" + getPath + ">"+NEWLINE);
+      
+      assertCondition(getPath.equals(path + IFSFile.separator + name),sb);
     }
     catch(Exception e)
     {
@@ -455,7 +457,7 @@ ctor(AS400, IFSJavaFile, String) - Passing null for system should throw an excep
   {
     try
     {
-      IFSJavaFile directory = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile directory = new IFSJavaFile(systemObject_, IFSFile.separator);
       IFSJavaFile f = new IFSJavaFile(null, directory, "path");
       failed("Did not throw exception."+f);
     }
@@ -472,7 +474,7 @@ ctor(AS400, IFSJavaFile, String) - Passing a valid system should set the system.
   {
     try
     {
-      IFSJavaFile directory = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile directory = new IFSJavaFile(systemObject_, IFSFile.separator);
       IFSJavaFile f = new IFSJavaFile(systemObject_, directory, "path");
       assertCondition(f.getSystem() == systemObject_);
     }
@@ -503,18 +505,20 @@ ctor(AS400, IFSJavaFile, String) - Passing a valid directory should set the path
 **/
   public void Var015()
   {
+    sb.setLength(0);
     try
     {
       String name = "name";
-      String path = FILE_SEPARATOR + "path";
+      String path = IFSFile.separator + "path";
       IFSJavaFile directory = new IFSJavaFile(systemObject_, path);
       IFSJavaFile f = new IFSJavaFile(systemObject_, directory, name);
-      if (DEBUG)
-      {
-        System.out.println("expected: <" + path + File.separator + name + ">");
-        System.out.println("got:      <" + f.getPath() + ">");
-      }
-      assertCondition(f.getPath().equals(path + File.separator + name));
+      String osPath = f.getPath(); 
+      String getPath = osPath.replace('\\','/'); 
+      
+        sb.append("expected: <" + path + IFSFile.separator + name + ">"+NEWLINE);
+        sb.append("got:      <" + getPath + ">"+NEWLINE);
+      
+      assertCondition(getPath.equals(path + IFSFile.separator + name),sb);
     }
     catch(Exception e)
     {
@@ -543,18 +547,17 @@ ctor(AS400, IFSJavaFile, String) - Passing a valid name should set the name.
 **/
   public void Var017()
   {
+    sb.setLength(0);
     try
     {
       String name = "name";
-      String path = FILE_SEPARATOR + "path";
+      String path = IFSFile.separator + "path";
       IFSJavaFile directory = new IFSJavaFile(systemObject_, path);
       IFSJavaFile f = new IFSJavaFile(systemObject_, directory, name);
-      if (DEBUG)
-      {
-        System.out.println("expected: <" + name + ">");
-        System.out.println("got:      <" + f.getName() + ">");
-      }
-      assertCondition(f.getName().equals(name));
+      
+        sb.append("expected: <" + name + ">"+NEWLINE);
+        sb.append("got:      <" + f.getName() + ">"+NEWLINE);
+          assertCondition(f.getName().equals(name),sb );
     }
     catch(Exception e)
     {
@@ -583,18 +586,18 @@ ctor(IFSJavaFile, String) - Passing a valid directory should set the path and sy
 **/
   public void Var019()
   {
+    sb.setLength(0);
     try
     {
-      String path = FILE_SEPARATOR + "path";
+      String path = IFSFile.separator + "path";
       String name = "name";
       IFSJavaFile directory = new IFSJavaFile(systemObject_, path);
       IFSJavaFile f = new IFSJavaFile(directory, name);
-      if (DEBUG)
-      {
-        System.out.println("expected: <" + path + File.separator + name + ">");
-        System.out.println("got:      <" + f.getPath() + ">");
-      }
-      assertCondition((f.getPath().equals(path + File.separator + name)) && (f.getSystem() == systemObject_));
+      String osPath = f.getPath(); 
+      String getPath = osPath.replace('\\','/'); 
+        sb.append("expected: <" + path + IFSFile.separator + name + ">"+NEWLINE);
+        sb.append("got:      <" + getPath + ">"+NEWLINE);
+      assertCondition((getPath.equals(path + IFSFile.separator + name)) && (f.getSystem() == systemObject_),sb);
     }
     catch(Exception e)
     {
@@ -623,18 +626,18 @@ ctor(IFSJavaFile, String) - Passing a valid name should set the name.
 **/
   public void Var021()
   {
+    sb.setLength(0);
     try
     {
-      String path = FILE_SEPARATOR + "path";
+      String path = IFSFile.separator + "path";
       String name = "name";
       IFSJavaFile directory = new IFSJavaFile(systemObject_, path);
       IFSJavaFile f = new IFSJavaFile(directory, name);
-      if (DEBUG)
-      {
-        System.out.println("expected: <" + name + ">");
-        System.out.println("got:      <" + f.getName() + ">");
-      }
-      assertCondition(f.getName().equals(name));
+      
+        sb.append("expected: <" + name + ">"+NEWLINE);
+        sb.append("got:      <" + f.getName() + ">"+NEWLINE);
+      
+      assertCondition(f.getName().equals(name),sb);
     }
     catch(Exception e)
     {
@@ -682,17 +685,15 @@ canRead() - Should return true if called for a file that exists.
 **/
   public void Var024()
   {
+    sb.setLength(0);
     String fileName = ifsPathName_ + "m" + getVariation();
-    if (DEBUG)
-    {
-      System.out.println("ifsPathName_: " + ifsPathName_);
-      System.out.println("fileName:     " + fileName);
-    }
+      sb.append("ifsPathName_: " + ifsPathName_+NEWLINE);
+      sb.append("fileName:     " + fileName+NEWLINE);
     createFile(fileName);
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
-      assertCondition(file.canRead() == true, "file.canRead() returned false for "+fileName);
+      assertCondition(file.canRead() == true, "file.canRead() returned false for "+fileName+" "+sb);
     }
     catch(Exception e)
     {
@@ -709,23 +710,24 @@ canRead() - Should return false when not authorized to the file.
 **/
   public void Var025()
   {
+    sb.setLength(0);
     String fileName = ifsPathName_ + "m" + getVariation();
-    if (DEBUG)
-    {
-      System.out.println("ifsPathName_: " + ifsPathName_);
-      System.out.println("fileName:     " + fileName);
-    }
+    
+    sb.append("ifsPathName_: " + ifsPathName_+NEWLINE);
+    sb.append("fileName:     " + fileName+NEWLINE);
+    
     createPrivateFile(pwrSys_, fileName);
     boolean passed = false; 
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
+      
       passed = (false == file.canRead()); 
-      assertCondition(passed, "Should not have been authorized to "+fileName);
+      assertCondition(passed, "Should not have been authorized to "+fileName+" "+sb);
     }
     catch(Exception e)
     {
-      failed(e, "Unexpected Exception");
+      failed(e, "Unexpected Exception" + sb);
     }
     if (passed) deletePrivateFile(pwrSys_, fileName);
   }
@@ -816,13 +818,13 @@ canWrite() - Should return false if called for a read-only file.
     try
     {
       file =
-        new IFSJavaFile(systemObject_,   FILE_SEPARATOR
+        new IFSJavaFile(systemObject_,   IFSFile.separator
                                        + "QSYS.LIB"
-                                       + FILE_SEPARATOR
+                                       + IFSFile.separator
                                        + "JFILETST.lib"
-                                       + FILE_SEPARATOR
+                                       + IFSFile.separator
                                        + "FILE.FILE"
-                                   );//    + IFS_FILE_SEPARATOR
+                                   );//    + IFS_IFSFile.separator
                                      //  + "FILE.MBR");
       assertCondition(file.canWrite() == false);
     }
@@ -830,9 +832,9 @@ canWrite() - Should return false if called for a read-only file.
     {
       if (DEBUG)
       {
-        System.out.println ("Exception: " + e.getMessage());
+        sb.append ("Exception: " + e.getMessage()+NEWLINE);
         if (file != null) { 
-            System.out.println ("File: " + file.getPath());
+            sb.append ("File: " + file.getPath()+NEWLINE);
         }
       }
       failed(e, "Unexpected Exception");
@@ -865,8 +867,8 @@ canWrite() - Should return false when not authorized to the file.
     String fileName = ifsPathName_ + "m" + getVariation();
     if (DEBUG)
     {
-      System.out.println("ifsPathName_: " + ifsPathName_);
-      System.out.println("fileName:     " + fileName);
+      sb.append("ifsPathName_: " + ifsPathName_+NEWLINE);
+      sb.append("fileName:     " + fileName+NEWLINE);
     }
     createPrivateFile(pwrSys_, fileName);
     try
@@ -1010,8 +1012,8 @@ delete() - Should throw a security exception when not authorized to the file.
     String fileName = ifsPathName_ + "m" + getVariation();
     if (DEBUG)
     {
-      System.out.println("ifsPathName_: " + ifsPathName_);
-      System.out.println("fileName:     " + fileName);
+      sb.append("ifsPathName_: " + ifsPathName_+NEWLINE);
+      sb.append("fileName:     " + fileName+NEWLINE);
     }
     createPrivateFile(pwrSys_, fileName);
     try
@@ -1110,7 +1112,7 @@ exists() - Should throw a security exception when not authorized to the director
   public void Var042()
   {
     String pathName = ifsPathName_ + "m" + getVariation();
-    String fileName = pathName + FILE_SEPARATOR + "m" + getVariation();
+    String fileName = pathName + IFSFile.separator + "m" + getVariation();
     try
     {
       createPrivateDirectory(pwrSys_, pathName);
@@ -1136,8 +1138,11 @@ getAbsolutePath() - Should equal the ifsPathName we provided.
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, ifsPathName_);
-      assertCondition(file.getAbsolutePath().equals(ifsPathName_), 
-          "file.getAbsolutePath()="+file.getAbsolutePath()+ " != ifsPathName_="+ifsPathName_);
+      String osPath = file.getAbsolutePath(); 
+      String getAbsolutePath = osPath.replace('\\','/'); 
+
+      assertCondition(getAbsolutePath.equals(ifsPathName_), 
+          "file.getAbsolutePath()="+getAbsolutePath + " != ifsPathName_="+ifsPathName_);
     }
     catch(Exception e)
     {
@@ -1153,7 +1158,10 @@ getCanonicalPath() - Should equal the ifsPathName we provided.
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, ifsPathName_);
-      assertCondition(file.getCanonicalPath().equals(ifsPathName_));
+      String osPath = file.getCanonicalPath(); 
+      String getPath = osPath.replace('\\','/'); 
+
+      assertCondition(getPath.equals(ifsPathName_), "getCanonicalPath="+getPath+" sb "+ifsPathName_);
     }
     catch(Exception e)
     {
@@ -1168,7 +1176,7 @@ getName() - Should return just the file name.
   {
     try
     {
-      IFSJavaFile file1 = new IFSJavaFile(systemObject_, FILE_SEPARATOR + "Directory" + FILE_SEPARATOR + "File.txt");
+      IFSJavaFile file1 = new IFSJavaFile(systemObject_, IFSFile.separator + "Directory" + IFSFile.separator + "File.txt");
       IFSJavaFile file2 = new IFSJavaFile(systemObject_, "File.txt");
       assertCondition(file1.getName().equals("File.txt") &&
              file2.getName().equals("File.txt"));
@@ -1187,7 +1195,9 @@ getParent() - Should return the parent directory.
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, ifsPathName_);
-      assertCondition(file.getParent().equals(ifsDirName_));
+      String osPath = file.getParent(); 
+      String getPath = osPath.replace('\\','/'); 
+      assertCondition(getPath.equals(ifsDirName_));
     }
     catch(Exception e)
     {
@@ -1203,7 +1213,10 @@ getPath() - Should return the path part of the ifsFilename.
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, ifsPathName_);
-      assertCondition(file.getPath().equals(ifsPathName_));
+      String osPath = file.getPath(); 
+      String getPath = osPath.replace('\\','/'); 
+
+      assertCondition(getPath.equals(ifsPathName_));
     }
     catch(Exception e)
     {
@@ -1220,7 +1233,9 @@ not specified.
     try
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, "foobar");
-      assertCondition(file.getPath().equals(FILE_SEPARATOR + "foobar"));
+      String osPath = file.getPath(); 
+      String getPath = osPath.replace('\\','/'); 
+      assertCondition(getPath.equals(IFSFile.separator + "foobar"));
     }
     catch(Exception e)
     {
@@ -1270,8 +1285,8 @@ return the same value.
   {
     try
     {
-      IFSJavaFile file1 = new IFSJavaFile(systemObject_, FILE_SEPARATOR + "abcd");
-      IFSJavaFile file2 = new IFSJavaFile(systemObject_, FILE_SEPARATOR + "abcd");
+      IFSJavaFile file1 = new IFSJavaFile(systemObject_, IFSFile.separator + "abcd");
+      IFSJavaFile file2 = new IFSJavaFile(systemObject_, IFSFile.separator + "abcd");
       assertCondition(file1.hashCode() == file2.hashCode() &&
              file1.equals(file2) && file1.hashCode() == file1.hashCode());
     }
@@ -1288,8 +1303,14 @@ isAbsolute() - Should return true.
   {
     try
     {
-      IFSJavaFile file = new IFSJavaFile(systemObject_, ifsPathName_);
-      assertCondition(file.isAbsolute());
+      if (JTOpenTestEnvironment.isWindows) {
+        IFSJavaFile file = new IFSJavaFile(systemObject_, ifsPathName_.replace(IFSFile.separatorChar, File.separatorChar));
+        assertCondition(file.isAbsolute()); 
+      } else {
+        IFSJavaFile file = new IFSJavaFile(systemObject_, ifsPathName_);
+        assertCondition(file.isAbsolute()); 
+        
+      }
     }
     catch(Exception e)
     {
@@ -1353,7 +1374,7 @@ isDirectory() - Should return false if the path exists and is a file.
   public void Var055()
   {
     String pathName = ifsPathName_ + "m" + getVariation();
-    String fileName = pathName + FILE_SEPARATOR + "m" + getVariation();
+    String fileName = pathName + IFSFile.separator + "m" + getVariation();
 
     try
     {
@@ -1379,7 +1400,7 @@ isDirectory() - Should throw a security exception when not authorized to the dir
   public void Var056()
   {
     String pathName = ifsPathName_ + "m" + getVariation();
-    String fileName = pathName + FILE_SEPARATOR + "m" + getVariation();
+    String fileName = pathName + IFSFile.separator + "m" + getVariation();
 
     try
     {
@@ -1482,7 +1503,7 @@ isFile() - Should throw a security exception when not authorized to the file.
   public void Var060()
   {
     String pathName = ifsPathName_ + "m" + getVariation();
-    String fileName = pathName + FILE_SEPARATOR + "m" + getVariation();
+    String fileName = pathName + IFSFile.separator + "m" + getVariation();
     try
     {
       createPrivateDirectory(pwrSys_, pathName);
@@ -1597,7 +1618,7 @@ lastModified() - Should throw a security exception when not authorized to the fi
   public void Var063()
   {
     String pathName = ifsPathName_ + "m" + getVariation();
-    String fileName = pathName + FILE_SEPARATOR + "m" + getVariation();
+    String fileName = pathName + IFSFile.separator + "m" + getVariation();
     try
     {
       createPrivateDirectory(pwrSys_, pathName);
@@ -1659,7 +1680,7 @@ length() - Should return zero on a newly created file.
     {
       createEmptyFile(fileName);
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
-      if (DEBUG) System.out.println ("Length (0) = " + file.length());
+      if (DEBUG) sb.append ("Length (0) = " + file.length()+NEWLINE);
       assertCondition(file.length() == 0);
     }
     catch(Exception e)
@@ -1703,8 +1724,8 @@ length() - Should return the length of the data in a newly created file.
 
       if (DEBUG)
       {
-        System.out.println("File length:   " + file.length());
-        System.out.println("String length: " + myData.length());
+        sb.append("File length:   " + file.length()+NEWLINE);
+        sb.append("String length: " + myData.length()+NEWLINE);
       }
       assertCondition(file.length() == myData.length(),"File length:   " + file.length()+" String length: " + myData.length());
     }
@@ -1724,14 +1745,14 @@ length() - Should throw a security exception when not authorized to the file.
   public void Var067()
   {
     String pathName = ifsPathName_ + "m" + getVariation();
-    String fileName = pathName + FILE_SEPARATOR + "m" + getVariation();
+    String fileName = pathName + IFSFile.separator + "m" + getVariation();
     try
     {
       createPrivateDirectory(pwrSys_, pathName);
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
       long len = file.length();
-      System.out.println ("Length is: " + len);
-      failed("Did not throw exception when not auhorized to "+fileName);
+      sb.append ("Length is: " + len+NEWLINE);
+      failed("Did not throw exception when not auhorized to "+fileName+" "+sb);
     }
     catch(Exception e)
     {
@@ -1950,6 +1971,7 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
 **/
   public void Var071()
   {
+    sb.setLength(0);
     if (isApplet_)
     {
       notApplicable();
@@ -1960,7 +1982,6 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
     {
       IFSJavaFile dir1 = new IFSJavaFile(pwrSys_, ifsDirName_);
       dir1.setPatternMatching(IFSFile.PATTERN_POSIX_ALL);  //@B1A
-      if (DEBUG) System.out.println ("pcName <" + convertToPCName(ifsDirName_) + ">");
       String[] list1 = dir1.list("*");
       String[] list2 = listDirectory(ifsDirName_); 
       // File dir2 = new File(convertToPCName(ifsDirName_));
@@ -1971,15 +1992,13 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
       {
         for (i = 0; i < list1.length; i++)
         {
-          if (DEBUG)
-          {
-            System.out.println(i + ": <" + list1[i] + "> =?= <" + list2[i] + ">");
-          }
-          if (!list1[i].equals(list2[i]))
+          
+            sb.append(i + ": <" + list1[i] + "> =?= <" + list2[i] + ">"+NEWLINE);
+              if (!list1[i].equals(list2[i]))
             mismatchCount++;
         }
         output_.println("  Number mismatches: ("+mismatchCount+"/"+list1.length+")");
-        assertCondition(list1.length == list2.length);  //@A1C
+        assertCondition(list1.length == list2.length, sb);  //@A1C
       }
       else //do if list lengths are not equal   //@A1C
       {
@@ -2026,7 +2045,7 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
 
       if (DEBUG)
       {
-        System.out.println("i: " + i + " list1.length: " + list1.length);
+        sb.append("i: " + i + " list1.length: " + list1.length+NEWLINE);
       }
     }
     catch(Exception e)
@@ -2060,7 +2079,7 @@ list(IFSFileFilter) - Should filter correctly.
   {
     try
     {
-      IFSJavaFile file = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile file = new IFSJavaFile(systemObject_, IFSFile.separator);
       IFSJavaFilter83 filter = new IFSJavaFilter83(output_);
       String[] list = file.list(filter);
       output_.println("");
@@ -2116,7 +2135,7 @@ IFSFile.list(IFSFileFilter, String) is null.
   {
     try
     {
-      IFSJavaFile file = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile file = new IFSJavaFile(systemObject_, IFSFile.separator);
       IFSJavaFilter83 filter = new IFSJavaFilter83(output_);
       String[] list = file.list(filter, "*");
       output_.println("");
@@ -2136,7 +2155,7 @@ IFSFile.list(IFSFileFilter, String) is null.
   {
     try
     {
-      IFSJavaFile file = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile file = new IFSJavaFile(systemObject_, IFSFile.separator);
       IFSJavaFilter83 filter = new IFSJavaFilter83(output_);
       String[] list = file.list(filter, "Q*");
       output_.println("");
@@ -2171,49 +2190,41 @@ mkdir() - Should create the directory.
   public void Var079()
 
   {
+    sb.setLength(0);
     String fileName = ifsDirName_;
-    deleteDirectory (ifsDirName_ + FILE_SEPARATOR + "firstOne");
+    deleteDirectory (ifsDirName_ + IFSFile.separator + "firstOne");
     try
     {
       boolean succeeded = false;
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
-      if (DEBUG)
-      {
-        System.out.println("File: <" + file.getName() + "> (" + fileName + ") exists?: " + file.exists());
-      }
+        sb.append("File: <" + file.getName() + "> (" + fileName + ") exists?: " + file.exists()+NEWLINE);
       if (file.exists())
       {
         fileName += File.separator;
         fileName += "firstOne";
         IFSJavaFile file2 = new IFSJavaFile(file, fileName);
 //        file2.setSystem(systemObject_);
-        if (DEBUG)
-        {
-          System.out.println("File: <" + file2.getName() + "> (" + fileName + ") exists?: " + file2.exists());
-        }
+          sb.append("File: <" + file2.getName() + "> (" + fileName + ") exists?: " + file2.exists()+NEWLINE);
         if (!file2.exists())
         {
           file2.mkdir();
           if (!file2.exists() || !file2.isDirectory())
           {
-            if (DEBUG)
-            {
               if (!file2.exists())
               {
-                System.out.println(fileName + " does not exist");
+                sb.append(fileName + " does not exist"+NEWLINE);
               }
               if (!file2.isDirectory())
               {
-                System.out.println(fileName + " is not a directory");
+                sb.append(fileName + " is not a directory"+NEWLINE);
               }
-            }
           } else
           {
             succeeded = true;
           }
         }
       }
-      assertCondition(succeeded == true);
+      assertCondition(succeeded == true, sb);
     }
     catch(Exception e)
     {
@@ -2234,7 +2245,7 @@ mkdir() - Should throw a security exception when not authorized to the file.
   public void Var080()
   {
     String pathName = ifsPathName_ + "m" + getVariation();
-    String fileName = pathName + FILE_SEPARATOR + "m" + getVariation();
+    String fileName = pathName + IFSFile.separator + "m" + getVariation();
     try
     {
       createPrivateDirectory(pwrSys_, pathName);
@@ -2275,7 +2286,16 @@ mkdirs() - Should create the directory.
   public void Var082()
 
   {
-    String fileName = ifsDirName_ + FILE_SEPARATOR + "firstDir" + FILE_SEPARATOR + "secondDir" + FILE_SEPARATOR + "thirdDir" + FILE_SEPARATOR + "fourthDir";
+    sb.setLength(0);
+    String fileName; 
+    if (ifsDirName_.length() > 1) { 
+       fileName = ifsDirName_ + File.separator + "firstDir" + File.separator + "secondDir" + 
+  File.separator + "thirdDir" + File.separator + "fourthDir";
+    } else { 
+      fileName = ifsDirName_ +  "firstDir" + File.separator + "secondDir" + 
+ File.separator + "thirdDir" + File.separator + "fourthDir";
+      
+    }
     try
     {
       boolean succeeded = false;
@@ -2285,9 +2305,11 @@ mkdirs() - Should create the directory.
       try
       {
         String theFile = fileDelete.getPath();
-        while (!theFile.equals(ifsDirName_))
+        while (!theFile.equals(File.separator))
         {
-          deleteDirectory(theFile);
+          sb.append("deleting "+theFile+"\n"); 
+          boolean deleted = deleteDirectoryStatus(theFile);
+          if (!deleted) sb.append("  File not deleted "+theFile+"\n"); 
           fileDelete = new IFSJavaFile(systemObject_, fileDelete.getParent());
           fileDelete.setSystem(systemObject_);
           theFile = fileDelete.getPath();
@@ -2308,32 +2330,43 @@ mkdirs() - Should create the directory.
           {
             if (!file.exists())
             {
-              System.out.println(fileName + " does not exist");
+              sb.append(fileName + " does not exist\n");
             }
             if (!file.isDirectory())
             {
-              System.out.println(fileName + " is not a directory");
+              sb.append(fileName + " is not a directory\n");
             }
           }
         } else
         {
           succeeded = true;
         }
+      } else {
+        sb.append("Error: file "+file+" exists"); 
       }
-      assertCondition(succeeded == true);
-
       String theFile = file.getPath();
-      while (!theFile.equals(ifsDirName_))
+      while (!theFile.equals(File.separator))
       {
-        deleteDirectory(theFile);
-        file = new IFSJavaFile(systemObject_, file.getParent());
-        file.setSystem(systemObject_);
-        theFile = file.getPath();
+        boolean deleted = deleteDirectoryStatus(theFile);
+        if (!deleted) {
+          succeeded = false; 
+          sb.append("File not deleted:"+theFile); 
+        }
+        String parent = file.getParent(); 
+        if (parent != null) { 
+          file = new IFSJavaFile(systemObject_, file.getParent());
+          file.setSystem(systemObject_);
+          theFile = file.getPath();
+        } else {
+          theFile = ifsDirName_; 
+        }
       }
+      assertCondition(succeeded , sb);
+      
     }
     catch(Exception e)
     {
-      failed(e, "Unexpected Exception");
+      failed(e, "Unexpected Exception "+sb.toString());
     }
   }
 
@@ -2343,7 +2376,7 @@ mkdirs() - Should throw a security exception when not authorized to the file.
   public void Var083()
   {
     String pathName = ifsPathName_ + "m" + getVariation();
-    String fileName = pathName + FILE_SEPARATOR + "m" + getVariation();
+    String fileName = pathName + IFSFile.separator + "m" + getVariation();
     try
     {
       createPrivateDirectory(pwrSys_, pathName);
@@ -2392,6 +2425,7 @@ renameTo() - Should rename the file to a new name.
 **/
   public void Var085()
   {
+    sb.setLength(0);
     String myData = "Now is the time for all good men and/or women (as pc demands) to go directly to jail.  Do not pass go.  Do not collect $200.00";
     String fileName  = ifsPathName_ + "m" + getVariation();
     String fileName2 = ifsPathName_ + "r" + getVariation();
@@ -2424,16 +2458,13 @@ renameTo() - Should rename the file to a new name.
       createFile(fileName, myData.getBytes());
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
 
-      if (DEBUG)
-      {
-        System.out.println("File length:   " + file.length());
-        System.out.println("String length: " + myData.length());
-      }
+        sb.append("File length:   " + file.length()+NEWLINE);
+        sb.append("String length: " + myData.length()+NEWLINE);
       IFSJavaFile file2 = new IFSJavaFile(systemObject_, fileName2);
       file.renameTo(file2);
       IFSJavaFile file3 = new IFSJavaFile(systemObject_, fileName);
       IFSJavaFile file4 = new IFSJavaFile(systemObject_, fileName2);
-      assertCondition((file3.exists() == false) && (file4.exists() == true));
+      assertCondition((file3.exists() == false) && (file4.exists() == true), sb);
     }
     catch(Exception e)
     {
@@ -2453,7 +2484,7 @@ renameto() - Should throw a security exception when not authorized to the file(s
   {
     String pathName = ifsPathName_ + "m" + getVariation();
     String fileName1 = ifsPathName_ + "mm" + getVariation();
-    String fileName2 = pathName + FILE_SEPARATOR + "r" + getVariation();
+    String fileName2 = pathName + IFSFile.separator + "r" + getVariation();
     try
     {
       createPrivateDirectory (pwrSys_, pathName);
@@ -2495,7 +2526,7 @@ renameto() - Should throw a security exception when not authorized to the file(s
   {
     String pathName = ifsPathName_ + "m" + getVariation();
     String fileName1 = ifsPathName_ + "mm" + getVariation();
-    String fileName2 = pathName + FILE_SEPARATOR + "r" + getVariation();
+    String fileName2 = pathName + IFSFile.separator + "r" + getVariation();
     try
     {
       createPrivateDirectory (pwrSys_, pathName);
@@ -2552,27 +2583,23 @@ setPath(String) - Should change the file path.
 **/
   public void Var089()
   {
+    sb.setLength(0);
     try
     {
       IFSJavaFile f = new IFSJavaFile();
-      if (DEBUG)
+        sb.append("Path: " + f.getPath()+NEWLINE);
+        sb.append("Name: " + f.getName()+NEWLINE);
+      if (!f.getPath().equals(File.separator))
       {
-        System.out.println("Path: " + f.getPath());
-        System.out.println("Name: " + f.getName());
-      }
-      if (!f.getPath().equals(FILE_SEPARATOR))
-      {
-        failed("Unable to setup variation.");
+        failed("Unable to setup variation."+sb.toString());
       } else
       {
-        String newPath = FILE_SEPARATOR + "com" + FILE_SEPARATOR + "ibm" + FILE_SEPARATOR + "as400" + FILE_SEPARATOR + "access";
+        String newPath = File.separator + "com" + File.separator + "ibm" + File.separator + "as400" 
+      + File.separator + "access";
         f.setPath(newPath);
-        if (DEBUG)
-        {
-          System.out.println("expect: <" + newPath + ">");
-          System.out.println("got:    <" + f.getPath() + ">");
-        }
-        assertCondition(f.getPath().equals(newPath));
+          sb.append("expect: <" + newPath + ">"+NEWLINE);
+          sb.append("got:    <" + f.getPath() + ">"+NEWLINE);
+        assertCondition(f.getPath().equals(newPath),sb);
       }
     }
     catch(Exception e) {
@@ -2602,15 +2629,14 @@ setSystem(AS400) - Should change the connected AS/400 system.
 **/
   public void Var091()
   {
+    sb.setLength(0);
     try
     {
       IFSJavaFile f = new IFSJavaFile();
       if (DEBUG)
-      {
-        System.out.println("System: " + f.getSystem());
-      }
+        sb.append("System: " + f.getSystem()+NEWLINE);
       f.setSystem(systemObject_);
-      assertCondition(f.getSystem() == systemObject_);
+      assertCondition(f.getSystem() == systemObject_, sb);
     }
     catch(Exception e) {
       failed(e, "Unexpected Exception");
@@ -2625,10 +2651,10 @@ toString() - Should return default values when no properties have been set.
     try
     {
       IFSJavaFile f = new IFSJavaFile();
-      if (!f.toString().equals(FILE_SEPARATOR))
+      if (!f.toString().equals(File.separator))
       {
         System.out.println ("toString <" + f.toString() + ">");
-        System.out.println ("System   <" + FILE_SEPARATOR + ">");
+        System.out.println ("System   <" + IFSFile.separator + ">");
         failed("Unexpected separator value found.");
       }
       succeeded();
@@ -2644,33 +2670,29 @@ toString() - Should return the same value as getPath().
 **/
   public void Var093()
   {
+    sb.setLength(0);
+
     try
     {
       boolean succeeded = true;
       IFSJavaFile f = new IFSJavaFile();
-      if (DEBUG)
-      {
-        System.out.println("Path:      " + f.getPath());
-        System.out.println ("toString: " + f.toString());
-      }
+        sb.append("Path:      " + f.getPath()+NEWLINE);
+        sb.append ("toString: " + f.toString()+NEWLINE);
       if (!f.getPath().equals(f.toString()))
       {
         succeeded = false;
       } else
       {
-        String newPath = FILE_SEPARATOR + "com" + FILE_SEPARATOR + "ibm" + FILE_SEPARATOR + "as400" + FILE_SEPARATOR + "access";
+        String newPath = IFSFile.separator + "com" + IFSFile.separator + "ibm" + IFSFile.separator + "as400" + IFSFile.separator + "access";
         f.setPath(newPath);
-        if (DEBUG)
-        {
-          System.out.println ("Path:     " + f.getPath());
-          System.out.println ("toString: " + f.toString());
-        }
+          sb.append ("Path:     " + f.getPath()+NEWLINE);
+          sb.append ("toString: " + f.toString()+NEWLINE);
         if (!f.getPath().equals(f.toString()))
         {
           succeeded = false;
         }
       }
-      assertCondition(succeeded == true);
+      assertCondition(succeeded == true, sb);
     }
     catch(Exception e) {
       failed(e, "Unexpected Exception");
@@ -2881,6 +2903,7 @@ IFSJavaFile.list().
       return;
     }
 
+    sb.setLength(0);
     try
     {
       IFSJavaFile dir = new IFSJavaFile(pwrSys_, ifsDirName_);
@@ -2892,18 +2915,15 @@ IFSJavaFile.list().
       { 
         for (i = 0; i < list1.length; i++)
         {
-          if (DEBUG)
-          {
-            System.out.println(i + ": <" + list1[i].getName() + "> =?= <" + list2[i] + ">");
-          }
+            sb.append(i + ": <" + list1[i].getName() + "> =?= <" + list2[i] + ">"+NEWLINE);
           if (!(list1[i].getName()).equals(list2[i]))
             break;
         }
-        assertCondition(i == list1.length);
+        assertCondition(i == list1.length, sb);
       }
       else //do if list lengths are not equal
       {
-         failed("IFSJavaFile.listFiles(\"*\").length= " + list1.length + "IFSJavaFile.list().length = " + list2.length);
+         failed("IFSJavaFile.listFiles(\"*\").length= " + list1.length + "IFSJavaFile.list().length = " + list2.length+" "+sb.toString());
          Vector listFilesStarNames = new Vector(list1.length);
          for (int j = 0; j < list1.length; j++) 
          {
@@ -2944,10 +2964,7 @@ IFSJavaFile.list().
          }
       }//end else
 
-      if (DEBUG)
-      {
-        System.out.println("i: " + i + " list1.length: " + list1.length);
-      }
+        sb.append("i: " + i + " list1.length: " + list1.length+NEWLINE);
     }
     catch(Exception e)
     {
@@ -2982,7 +2999,7 @@ listFiles(IFSFileFilter) - Should filter the same as list(IFSFileFilter).
   {
     try
     {
-      IFSJavaFile file = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile file = new IFSJavaFile(systemObject_, IFSFile.separator);
       IFSJavaFilter83 filter = new IFSJavaFilter83(output_);
       File[] list1 = file.listFiles(filter);
       String[] list2 = file.list(filter);
@@ -3063,7 +3080,7 @@ listFiles(IFSJavaFilter83, String) - Should filter "*" same as list(IFSJavaFilte
   {
     try
     {
-      IFSJavaFile file = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile file = new IFSJavaFile(systemObject_, IFSFile.separator);
       IFSJavaFilter83 filter = new IFSJavaFilter83(output_);
       File[] list1 = file.listFiles(filter, "*");
       String[] list2 = file.list(filter, "*");
@@ -3106,7 +3123,7 @@ listFiles(IFSFileFilter, String) - Should filter "Q*" same as list(IFSFileFilter
   {
     try
     {
-      IFSJavaFile file = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile file = new IFSJavaFile(systemObject_, IFSFile.separator);
       IFSJavaFilter83 filter = new IFSJavaFilter83(output_);
       File[] list1 = file.listFiles(filter, "Q*");
       String[] list2 = file.list(filter, "Q*");
@@ -3919,52 +3936,10 @@ private boolean compareIFSFilePathToJavaIOPath(String IFSFile1, String file2)
   // path.  For example, remove the "I:" from the Windows path, or the "/mnt/lp126ab"
   // from the AIX/Linux NFS path.
 
-  if (DEBUG) System.out.println("Before file2='"+file2+"'");
+   sb.append("Before file2='"+file2+"'"+NEWLINE);
 
-  if (JTOpenTestEnvironment.isWindows)
-  {
-    // Remove drive letter from front of file2 (e.g. mappedDrive="I:")
-
-    if (DEBUG) System.out.println("mappedDrive_='"+mappedDrive_.toUpperCase()+"'");
-
-    if (file2.indexOf(mappedDrive_.toUpperCase()) == 0)
-    {
-      file2 = file2.substring(2, file2.length());
-    } else if (file2.indexOf(mappedDrive_) == 0) {
-	file2 = file2.substring(mappedDrive_.length());
-
-	if (file2.length() == 0) 
-	    file2 = "\\"; // Stripped off mappedDrive - replace with "root"
-    } 
-
-  }
-  else if (JTOpenTestEnvironment.isLinux  || 
-           JTOpenTestEnvironment.isAIX)
-  {
-    // Strip the final '/' if present.
-    String pathPrefix;
-    if (mappedDrive_.length() > 1 && mappedDrive_.endsWith("/"))
-    {
-      pathPrefix = mappedDrive_.substring(0, mappedDrive_.length()-1);
-    }
-    else {
-      pathPrefix = mappedDrive_;
-    }
-    if (DEBUG) System.out.println("path prefix='"+pathPrefix+"'");
-    if (file2.indexOf(pathPrefix) >= 0)
-    {
-      // Strip off mount path (e.g. "/mnt/lp126ab") prefix
-      file2 = file2.substring(pathPrefix.length(), file2.length());
-      if (file2.length() == 0) 
-        file2 = "/"; // Stripped off mappedDrive - replace with "root"
-    }
-  }
-
-  if (DEBUG)
-  {
-    System.out.println("IFSFile1='"+IFSFile1+"'");
-    System.out.println("After file2='"+file2+"'");
-  }
+    sb.append("IFSFile1='"+IFSFile1+"'"+NEWLINE);
+    sb.append("After file2='"+file2+"'"+NEWLINE);
   return IFSFile1.equals(file2);
 }
 
@@ -4097,22 +4072,20 @@ renameTo(File) - Should rename the file to a new name.
       failed("Unable to setup variation.");
       return;
     }
+    sb.setLength(0);
 
     try
     {
       createFile(fileName, myData.getBytes());
       IFSJavaFile file = new IFSJavaFile(systemObject_, fileName);
 
-      if (DEBUG)
-      {
-        System.out.println("File length:   " + file.length());
-        System.out.println("String length: " + myData.length());
-      }
+        sb.append("File length:   " + file.length()+NEWLINE);
+        sb.append("String length: " + myData.length()+NEWLINE);
       IFSJavaFile file2 = new IFSJavaFile(systemObject_, fileName2);
       renameFile(file,file2);
       IFSJavaFile file3 = new IFSJavaFile(systemObject_, fileName);
       IFSJavaFile file4 = new IFSJavaFile(systemObject_, fileName2);
-      assertCondition((file3.exists() == false) && (file4.exists() == true));
+      assertCondition((file3.exists() == false) && (file4.exists() == true), sb);
     }
     catch(Exception e)
     {
@@ -4132,7 +4105,7 @@ renameto(File) - Should throw a security exception when not authorized to the fi
   {
     String pathName = ifsPathName_ + "m" + getVariation();
     String fileName1 = ifsPathName_ + "mm" + getVariation();
-    String fileName2 = pathName + FILE_SEPARATOR + "r" + getVariation();
+    String fileName2 = pathName + IFSFile.separator + "r" + getVariation();
     try
     {
       createPrivateDirectory (pwrSys_, pathName);
@@ -4174,7 +4147,7 @@ renameto(File) - Should throw a security exception when not authorized to the fi
   {
     String pathName = ifsPathName_ + "m" + getVariation();
     String fileName1 = ifsPathName_ + "mm" + getVariation();
-    String fileName2 = pathName + FILE_SEPARATOR + "r" + getVariation();
+    String fileName2 = pathName + IFSFile.separator + "r" + getVariation();
     try
     {
       createPrivateDirectory (pwrSys_, pathName);
@@ -4217,7 +4190,7 @@ listFiles(java.io.FileFilter) - Should filter the same as list(IFSFileFilter).
   {
     try
     {
-      IFSJavaFile file = new IFSJavaFile(systemObject_, FILE_SEPARATOR);
+      IFSJavaFile file = new IFSJavaFile(systemObject_, IFSFile.separator);
       NativeJavaFileFilter83 filter = new NativeJavaFileFilter83(output_);
       IFSJavaFilter83 filter2 = new IFSJavaFilter83(output_);
       File[] list1 = file.listFiles(filter);
@@ -4297,44 +4270,46 @@ listFiles(java.io.FileFilter) - Should filter the same as list(IFSFileFilter).
   **/
 public void Var138()                                       // @B2A
 {
+  sb.setLength(0);
+  boolean passed = true; 
   // parent = /IFSJavaFileTestcaseV138
   String parent = ifsPathName_ + "IFSJavaFileTestcaseV" + getVariation();
 
   // pathA1 = /IFSJavaFileTestcaseV138/A1
   // pathA2 = /IFSJavaFileTestcaseV138/A1/A2
   // pathA3 = /IFSJavaFileTestcaseV138/A1/A2/A3
-  String pathA1 = parent + FILE_SEPARATOR + "A1";
-  String pathA2 = pathA1 + FILE_SEPARATOR + "A2";
-  // String pathA3 = pathA2 + IFS_FILE_SEPARATOR + "A3";
-  String relPathA1 = "relative" + parent + FILE_SEPARATOR + "A1";
+  String pathA1 = parent + IFSFile.separator + "A1";
+  String pathA2 = pathA1 + IFSFile.separator + "A2";
+  // String pathA3 = pathA2 + IFS_IFSFile.separator + "A3";
+  String relPathA1 = "relative" + parent + IFSFile.separator + "A1";
 
 
   // pathB1 = /IFSJavaFileTestcaseV138/B1
   // pathB2 = /IFSJavaFileTestcaseV138/B1/B2
   // pathB3 = /IFSJavaFileTestcaseV138/B1/B2/B3
-  String pathB1 = parent + FILE_SEPARATOR + "B1";
-  // String pathB2 = pathB1 + IFS_FILE_SEPARATOR + "B2";
-  // String pathB3 = pathB2 + IFS_FILE_SEPARATOR + "B3";
+  String pathB1 = parent + IFSFile.separator + "B1";
+  // String pathB2 = pathB1 + IFS_IFSFile.separator + "B2";
+  // String pathB3 = pathB2 + IFS_IFSFile.separator + "B3";
 
   // DOT: 
   //   pathTest1 = /IFSJavaFileTestcaseV138/A1/./A2
-  String pathTest1  = pathA1 + FILE_SEPARATOR + "." + FILE_SEPARATOR + "A2";
+  String pathTest1  = pathA1 + IFSFile.separator + "." + IFSFile.separator + "A2";
 
   // DOTDOT: 
   //   pathTest2 = /IFSJavaFileTestcaseV138/A1/../B1
-  String pathTest2  = pathA1 + FILE_SEPARATOR + ".." + FILE_SEPARATOR + "B1";
+  String pathTest2  = pathA1 + IFSFile.separator + ".." + IFSFile.separator + "B1";
 
   // Multiple separators/delimitors:
   //   pathTest3 = /IFSJavaFileTestcaseV138/A1//A2
-  String pathTest3  = pathA1 + FILE_SEPARATOR + FILE_SEPARATOR + "A2";
+  String pathTest3  = pathA1 + IFSFile.separator + IFSFile.separator + "A2";
 
   // Single delimiter (i.e. root)
-  String pathTest4  = FILE_SEPARATOR;
+  String pathTest4  = IFSFile.separator;
 
   // Multiple DOT and DOTDOT
-  String pathTest5  = FILE_SEPARATOR + "ABC" + FILE_SEPARATOR + "."; // /abc/./.././def/
-  pathTest5 += FILE_SEPARATOR + ".." + FILE_SEPARATOR + "." + FILE_SEPARATOR + "def";
-  // String pathTest5a = IFS_FILE_SEPARATOR + "def";
+  String pathTest5  = IFSFile.separator + "ABC" + IFSFile.separator + "."; // /abc/./.././def/
+  pathTest5 += IFSFile.separator + ".." + IFSFile.separator + "." + IFSFile.separator + "def";
+  // String pathTest5a = IFS_IFSFile.separator + "def";
 
   // Relative path (i.e. doesn't start with a SEPARATOR
   String pathTest6  = relPathA1;
@@ -4359,30 +4334,30 @@ public void Var138()                                       // @B2A
         !file1.getCanonicalPath().equals(pathA2) /* ||
         !compareIFSFilePathToJavaIOPath(file1.getCanonicalPath(),javaIoFile1.getCanonicalPath()) */ )
     {
-      System.out.println("  file1.getAbsolutePath()="  + file1.getAbsolutePath());
-      System.out.println("  expected pathTest1     ="  + pathTest1);
+      sb.append("  file1.getAbsolutePath()="  + file1.getAbsolutePath()+NEWLINE);
+      sb.append("  expected pathTest1     ="  + pathTest1+NEWLINE);
 
-      System.out.println("  file1.getCanonicalPath()=" + file1.getCanonicalPath());
-      System.out.println("  expected pathA2         =" + pathA2);
+      sb.append("  file1.getCanonicalPath()=" + file1.getCanonicalPath()+NEWLINE);
+      sb.append("  expected pathA2         =" + pathA2+NEWLINE);
       /* System.out.println("  javaIoFile1.getCanonicalPath()=" + javaIoFile1.getCanonicalPath()); */ 
-      failed("file1 path incorrect"); 
-      return;
+      sb.append("file1 path incorrect\n"); 
+      passed = false; 
     }
-    else if (DEBUG) System.out.println("Success file1");
+    else  sb.append("Success file1"+NEWLINE);
 
     if (!file2.getAbsolutePath().equals(pathTest2) ||
         !file2.getCanonicalPath().equals(pathB1) /* ||
         !compareIFSFilePathToJavaIOPath(file2.getCanonicalPath(),javaIoFile2.getCanonicalPath()) */ )
     {
-      System.out.println("  file2.getAbsolutePath()="  + file2.getAbsolutePath());
-      System.out.println("  pathTest2="  + pathTest2);
+      sb.append("\n  file2.getAbsolutePath()="  + file2.getAbsolutePath());
+      sb.append("\n  pathTest2="  + pathTest2);
 
-      System.out.println("  file2.getCanonicalPath()=" + file2.getCanonicalPath());
-      System.out.println("  pathB1="  + pathB1);
-      failed("file2 path incorrect"); 
-      return;
+      sb.append("\n  file2.getCanonicalPath()=" + file2.getCanonicalPath());
+      sb.append("\n  pathB1="  + pathB1);
+      sb.append("file2 path incorrect \n"); 
+      passed = false; 
     }
-    else if (DEBUG) System.out.println("Success file2");
+    else  sb.append("Success file2"+NEWLINE);
 
 
     if (!file3.getAbsolutePath().equals(pathTest3) ||
@@ -4390,54 +4365,55 @@ public void Var138()                                       // @B2A
         !compareIFSFilePathToJavaIOPath(file3.getCanonicalPath(),javaIoFile3.getCanonicalPath()) */ 
         )
     {
-      System.out.println("  file3.getAbsolutePath()="  + file3.getAbsolutePath());
-      System.out.println("  pathTest3="  + pathTest3);
+      sb.append("  file3.getAbsolutePath()="  + file3.getAbsolutePath()+NEWLINE);
+      sb.append("  pathTest3="  + pathTest3+NEWLINE);
 
-      System.out.println("  file3.getCanonicalPath()=" + file3.getCanonicalPath());
-      System.out.println("  pathA2="  + pathA2);
-      failed("file3 path incorrect"); 
-      return;
+      sb.append("  file3.getCanonicalPath()=" + file3.getCanonicalPath()+NEWLINE);
+      sb.append("  pathA2="  + pathA2+NEWLINE);
+      sb.append("file3 path incorrect\n"); 
+      passed=false; 
     }
-    else if (DEBUG) System.out.println("Success file3");
+    else  sb.append("Success file3"+NEWLINE);
 
     if (!file4.getAbsolutePath().equals(pathTest4) ||
         !file4.getCanonicalPath().equals(pathTest4) 
         /* ||
         !compareIFSFilePathToJavaIOPath(file4.getCanonicalPath(),javaIoFile4.getCanonicalPath()) */)
     {
-      System.out.println("  pathTest4= '"+pathTest4+"'");
-      System.out.println("  file4.getAbsolutePath()= '"  + file4.getAbsolutePath()+"'");
-      System.out.println("  file4.getCanonicalPath()= '" + file4.getCanonicalPath()+"'");
-      failed("file4 path incorrect"); 
+      sb.append("  pathTest4= '"+pathTest4+"'"+NEWLINE);
+      sb.append("  file4.getAbsolutePath()= '"  + file4.getAbsolutePath()+"'"+NEWLINE);
+      sb.append("  file4.getCanonicalPath()= '" + file4.getCanonicalPath()+"'"+NEWLINE);
+      sb.append("file4 path incorrect\n"); 
+      passed = false; 
       return;
     }
-    else if (DEBUG) System.out.println("Success file4");
+    else  sb.append("Success file4"+NEWLINE);
 
     if (!file5.getAbsolutePath().equals(pathTest5) ||
-        !file5.getCanonicalPath().equals((FILE_SEPARATOR+"def")) 
+        !file5.getCanonicalPath().equals((IFSFile.separator+"def")) 
         /* ||
         !compareIFSFilePathToJavaIOPath(file5.getCanonicalPath(),javaIoFile5.getCanonicalPath())*/ )
     {
-      System.out.println("  IFS_FILE_SEPARATOR="+FILE_SEPARATOR);
-      System.out.println("  file5.getAbsolutePath()="  + file5.getAbsolutePath());
-      System.out.println("  file5.getCanonicalPath()=" + file5.getCanonicalPath());
-      failed("file5 path incorrect"); 
-      return;
+      sb.append("  IFS_IFSFile.separator="+IFSFile.separator+NEWLINE);
+      sb.append("  file5.getAbsolutePath()="  + file5.getAbsolutePath()+NEWLINE);
+      sb.append("  file5.getCanonicalPath()=" + file5.getCanonicalPath()+NEWLINE);
+      sb.append("file5 path incorrect\n"); 
+      passed = false; 
     }
-    else if (DEBUG) System.out.println("Success file5");
+    else  sb.append("Success file5"+NEWLINE);
 
-    if (!file6.getAbsolutePath().equals(FILE_SEPARATOR+pathTest6) ||
-        !file6.getCanonicalPath().equals(FILE_SEPARATOR+pathTest6) /* ||
+    if (!file6.getAbsolutePath().equals(IFSFile.separator+pathTest6) ||
+        !file6.getCanonicalPath().equals(IFSFile.separator+pathTest6) /* ||
         !compareIFSFilePathToJavaIOPath(file6.getCanonicalPath(),javaIoFile6.getCanonicalPath()) */)
     {
-      System.out.println("  file6.getAbsolutePath()="  + file6.getAbsolutePath());
-      System.out.println("  file6.getCanonicalPath()=" + file6.getCanonicalPath());
-      failed("file6 path incorrect"); 
-      return;
+      sb.append("  file6.getAbsolutePath()="  + file6.getAbsolutePath()+NEWLINE);
+      sb.append("  file6.getCanonicalPath()=" + file6.getCanonicalPath()+NEWLINE);
+      sb.append("file6 path incorrect"); 
+       passed = false; 
     }
-    else if (DEBUG) System.out.println("Success file6");
+    else  sb.append("Success file6"+NEWLINE);
 
-    succeeded();
+    assertCondition(passed, sb); 
   }
   catch (Exception e)
   {
@@ -4452,17 +4428,15 @@ public void Var138()                                       // @B2A
   **/
 public void Var139()
 {
+  sb.setLength(0);
   if (!checkMethodExists("getFreeSpace", null)) {
     notApplicable("No method named getFreeSpace()");
     return;
   }
   String fileName = ifsPathName_ + "m" + getVariation();
   boolean succeeded = true;
-  if (DEBUG)
-  {
-    System.out.println("ifsPathName_: " + ifsPathName_);
-    System.out.println("fileName:     " + fileName);
-  }
+    sb.append("ifsPathName_: " + ifsPathName_+NEWLINE);
+    sb.append("fileName:     " + fileName+NEWLINE);
   createFile(fileName);
   try
   {
@@ -4472,37 +4446,34 @@ public void Var139()
     long tSpace = file.getTotalSpace();
     long uSpace = file.getUsableSpace();
 
-    if (DEBUG)
-    {
-      System.out.println("Free space:   |" + fSpace + "|");
-      System.out.println("Total space:  |" + tSpace + "|");
-      System.out.println("Usable space: |" + uSpace + "|");
-    }
+      sb.append("Free space:   |" + fSpace + "|"+NEWLINE);
+      sb.append("Total space:  |" + tSpace + "|"+NEWLINE);
+      sb.append("Usable space: |" + uSpace + "|"+NEWLINE);
 
     if (fSpace > (tSpace - 10000)) {
-      System.out.println("Free space exceeds total space.");
+      sb.append("Free space exceeds total space."+NEWLINE);
       succeeded = false;
     }
     if (uSpace > (tSpace - 10000)) {
-      System.out.println("Usable space exceeds total space.");
+      sb.append("Usable space exceeds total space."+NEWLINE);
       succeeded = false;
     }
     if (uSpace > fSpace) {
-      System.out.println("Usable space exceeds free space.");
+      sb.append("Usable space exceeds free space."+NEWLINE);
       succeeded = false;
     }
 
     final long maxReasonableValue = Long.MAX_VALUE >>> 3;
     if (fSpace > maxReasonableValue) {
-      System.out.println("Free space exceeds reasonable value: " + fSpace);
+      sb.append("Free space exceeds reasonable value: " + fSpace+NEWLINE);
       succeeded = false;
     }
     if (tSpace > maxReasonableValue) {
-      System.out.println("Total space exceeds reasonable value: " + tSpace);
+      sb.append("Total space exceeds reasonable value: " + tSpace+NEWLINE);
       succeeded = false;
     }
     if (uSpace > maxReasonableValue) {
-      System.out.println("Usable space exceeds reasonable value: " + uSpace);
+      sb.append("Usable space exceeds reasonable value: " + uSpace+NEWLINE);
       succeeded = false;
     }
 
@@ -4517,22 +4488,22 @@ public void Var139()
 //      long uSpaceNative = fileNative.getUsableSpace();
 //
 //      if (fSpace != fSpaceNative) {
-//        System.out.println("Free space inconsistent with native: " +fSpace+ " != " + fSpaceNative);
+//        sb.append("Free space inconsistent with native: " +fSpace+ " != " + fSpaceNative+NEWLINE);
 //        succeeded = false;
 //      }
 //
 //      if (tSpace != tSpaceNative) {
-//        System.out.println("Total space inconsistent with native: " +tSpace+ " != " + tSpaceNative);
+//        sb.append("Total space inconsistent with native: " +tSpace+ " != " + tSpaceNative+NEWLINE);
 //        succeeded = false;
 //      }
 //
 //      if (uSpace != uSpaceNative) {
-//        System.out.println("Usable space inconsistent with native: " +uSpace+ " != " + uSpaceNative);
+//        sb.append("Usable space inconsistent with native: " +uSpace+ " != " + uSpaceNative+NEWLINE);
 //        succeeded = false;
 //      }
 //    }
 
-    assertCondition(succeeded);
+    assertCondition(succeeded, sb);
   }
   catch(Exception e)
   {
@@ -4550,17 +4521,16 @@ public void Var139()
   **/
 public void Var140()
 {
+  sb.setLength(0);
+
   if (!checkMethodExists("canExecute", null)) {
     notApplicable("No method named canExecute()");
     return;
   }
   String fileName = ifsPathName_ + "m" + getVariation();
   boolean succeeded = true;
-  if (DEBUG)
-  {
-    System.out.println("ifsPathName_: " + ifsPathName_);
-    System.out.println("fileName:     " + fileName);
-  }
+    sb.append("ifsPathName_: " + ifsPathName_+NEWLINE);
+    sb.append("fileName:     " + fileName+NEWLINE);
   createFile(fileName);
   try
   {
@@ -4581,15 +4551,15 @@ public void Var140()
     final boolean OWNER_ONLY = true;
     if (!file1_pwr.setReadable(canRead1,!OWNER_ONLY)) {
       succeeded = false;
-      System.out.println("Call to setReadable() failed.");
+      sb.append("Call to setReadable() failed."+NEWLINE);
     }
     if (!file1_pwr.setWritable(canWrite1,!OWNER_ONLY)) {
       succeeded = false;
-      System.out.println("Call to setWritable() failed.");
+      sb.append("Call to setWritable() failed."+NEWLINE);
     }
     if (!file1_pwr.setExecutable(canExecute1,!OWNER_ONLY)) {
       succeeded = false;
-      System.out.println("Call to setExecutable() failed.");
+      sb.append("Call to setExecutable() failed."+NEWLINE);
     }
 
     boolean canRead2    = file1.canRead();
@@ -4598,17 +4568,17 @@ public void Var140()
 
     if (canRead2 != canRead1) {
       succeeded = false;
-      System.out.println("Failed to change canRead to " + canRead1);
+      sb.append("Failed to change canRead to " + canRead1+NEWLINE);
     }
 
     if (canWrite2 != canWrite1) {
       succeeded = false;
-      System.out.println("Failed to change canWrite to " + canWrite1);
+      sb.append("Failed to change canWrite to " + canWrite1+NEWLINE);
     }
 
     if (canExecute2 != canExecute1) {
       succeeded = false;
-      System.out.println("Failed to change canExecute to " + canExecute1);
+      sb.append("Failed to change canExecute to " + canExecute1+NEWLINE);
     }
 
     // Reset everything to original values.
@@ -4622,20 +4592,20 @@ public void Var140()
 
     if (canRead2 != canRead0) {
       succeeded = false;
-      System.out.println("Failed to restore canRead to " + canRead1);
+      sb.append("Failed to restore canRead to " + canRead1+NEWLINE);
     }
 
     if (canWrite2 != canWrite0) {
       succeeded = false;
-      System.out.println("Failed to restore canWrite to " + canWrite1);
+      sb.append("Failed to restore canWrite to " + canWrite1+NEWLINE);
     }
 
     if (canExecute2 != canExecute0) {
       succeeded = false;
-      System.out.println("Failed to restore canExecute to " + canExecute1);
+      sb.append("Failed to restore canExecute to " + canExecute1+NEWLINE);
     }
 
-    assertCondition(succeeded);
+    assertCondition(succeeded, sb);
   }
   catch(Exception e)
   {

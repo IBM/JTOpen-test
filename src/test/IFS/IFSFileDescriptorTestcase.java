@@ -42,11 +42,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password,  "IFSFileDescriptorTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
         ifsFile_ = new IFSFile(systemObject_, name_);
     }
 

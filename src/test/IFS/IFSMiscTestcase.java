@@ -66,12 +66,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password, "IFSMiscTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
         brief_ = TestDriverStatic.brief_;
     }
 
@@ -89,7 +87,7 @@ Constructor.
 
 
 //    ifsDirName_ = IFSFile.separator;
-    dirName_ = convertToPCName("");
+    dirName_ = IFSFile.separator;
 
   }
 
@@ -568,7 +566,7 @@ exist.
     // ensure directory doesn't exist
     try
     {
-      deleteDirectory(ifsDirName_ + "NoDir");
+      boolean deleted = deleteDirectoryStatus (ifsDirName_ + "NoDir");
       IFSFile stillThere = new IFSFile(systemObject_, ifsDirName_ + "NoDir");
       if (stillThere.exists())
       {

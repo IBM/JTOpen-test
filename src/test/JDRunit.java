@@ -2131,12 +2131,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     boolean fatalError = false;
     String fatalErrorString = "";
     String fatalErrorMessage = "";
-    boolean isClassic = System.getProperty("java.vm.name").indexOf("Classic") >= 0;
-    boolean isV5R4 = System.getProperty("os.version").equals("V5R4M0");
-    boolean isV6R1 = System.getProperty("os.version").equals("V6R1M0");
     String display = ":8";
 
-    Vector inputVector = new Vector();
+    Vector<String> inputVector = new Vector<String>();
 
     if (debug) {
       System.out.println("JDRunit: Building the script");
@@ -2742,25 +2739,10 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     OutputStream stdin = shellTestProcess.getOutputStream();
     JDJSTPInputThread inputThread;
     int encoding = JDJSTPOutputThread.ENCODING_UNKNOWN;
-    if (on400 && isClassic && isV5R4) {
-      // Need to translate input stream to EBCIDC
-      if (debug)
-        System.out.println("InputStream is EBCDIC");
-      inputThread = new JDJSTPInputThread(stdin, runitInputFile, "IBM037");
-      encoding = JDJSTPOutputThread.ENCODING_EBCDIC;
-    } else {
-      if (on400 && isV6R1 && shellCommand.equals("/usr/bin/sh")) {
-        if (debug)
-          System.out.println("InputStream is EBCDIC");
-        inputThread = new JDJSTPInputThread(stdin, runitInputFile, "IBM037");
-        encoding = JDJSTPOutputThread.ENCODING_EBCDIC;
-      } else {
         if (debug)
           System.out.println("InputStream is ASCII");
         inputThread = new JDJSTPInputThread(stdin, runitInputFile);
         encoding = JDJSTPOutputThread.ENCODING_ASCII;
-      }
-    }
 
     if (debug)
       JDJSTPTestcase.debug = true;

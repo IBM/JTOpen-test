@@ -62,15 +62,10 @@ public class AS400CertificateVldlTestcase extends Testcase
   private String non_existingUserSpace_ = "/QSYS.LIB/CERTTEST.LIB/XKG52V9QWQ.USRSPC";
   private byte pre_existingByteValue_ = (byte)0x00;
   private int pre_existingLengthValue_ = 11000;
-  private String mappedDrive_;
   private String operatingSystem_;
-  private boolean DOS_ = false;
-  private static String dirName_;
-  private boolean OS400_ = false;
   private boolean usingNativeImpl = false;
   boolean failed;  // Keeps track of failure in multi-part tests.
   String msg;      // Keeps track of reason for failure in multi-part tests.
-  private String certtestUserID = " USER(CERTTEST) ";
   byte[][] testcert_ = null; // Array of X.509 test certificates
 
 /**
@@ -86,7 +81,6 @@ Constructor.
           fileOutputStream);
 
 
-    mappedDrive_ = driveLetter;
   }
 
 
@@ -97,30 +91,19 @@ Constructor.
     throws Exception
   {
 
-    if (mappedDrive_ == null)
-    {
-      output_.println("No mapped drive was specified on command line.");
-      throw new Exception("No mapped drive was specified");
-    }
 
     // Determine operating system we're running under
     operatingSystem_ = System.getProperty("os.name");
-    if (JTOpenTestEnvironment.isWindows)
-    {
-      DOS_ = true;
-    }
 
 
     // Are we running on the AS/400?
-    else if (operatingSystem_.indexOf("OS/400") >= 0)
+    if (operatingSystem_.indexOf("OS/400") >= 0)
     {
-      OS400_ = true;
       usingNativeImpl = true;
       output_.println("Will use native implementation");
     }
 
     output_.println("Running under: " + operatingSystem_);
-    output_.println("DOS-based file structure: " + DOS_);
     output_.println("Executing " + (isApplet_ ? "applet." : "application."));
 
     testInit();
@@ -750,8 +733,6 @@ Run variations.
     }
 
 
-    if (usingNativeImpl)
-       certtestUserID = " USER(" + systemObject_.getUserId() + ") ";
 
 
     if (runMode_ != ATTENDED)

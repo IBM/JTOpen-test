@@ -20,10 +20,6 @@ public class JVMInfo {
    */
   static final long serialVersionUID = 1L;
 
-  public static final int JDK_13 =   130;
-  public static final int JDK_14 =   140;
-  public static final int JDK_142 =  142;
-  public static final int JDK_15 =   150;
   public static final int JDK_16 =   160;
   public static final int JDK_17 =   170;
   public static final int JDK_18 =   180;
@@ -38,19 +34,7 @@ public class JVMInfo {
 
     javaVersionString_ = System.getProperty("java.version");
     if (javaVersionString_ != null) {
-	if (javaVersionString_.charAt(0) == '1' &&
-	    javaVersionString_.charAt(2) == '3') {
-	    jdk_ = JDK_13;
-	} else if (javaVersionString_.charAt(0) == '1' && javaVersionString_.charAt(2) == '4') {
-	    jdk_ = JDK_14;
-	    if (javaVersionString_.length() > 4) {
-		if (javaVersionString_.charAt(4) == '2') {
-		    jdk_ = JDK_142;
-		}
-	    }
-	} else if (javaVersionString_.charAt(0) == '1' && javaVersionString_.charAt(2) == '5') {
-	    jdk_ = JDK_15;
-	} else if (javaVersionString_.charAt(0) == '1' && javaVersionString_.charAt(2) == '6') {
+	if (javaVersionString_.charAt(0) == '1' && javaVersionString_.charAt(2) == '6') {
 	    jdk_ = JDK_16;
 	} else if (javaVersionString_.charAt(0) == '1' && javaVersionString_.charAt(2) == '7') {
 	    jdk_ = JDK_17;

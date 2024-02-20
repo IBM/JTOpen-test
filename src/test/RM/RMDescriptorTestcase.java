@@ -74,7 +74,7 @@ public class RMDescriptorTestcase extends Testcase
      **/
     public void Var002()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         try
         {
@@ -157,7 +157,7 @@ public class RMDescriptorTestcase extends Testcase
      **/
     public void Var005()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         try
         {
@@ -238,7 +238,7 @@ public class RMDescriptorTestcase extends Testcase
      **/
     public void Var008()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         try
         {
@@ -321,7 +321,7 @@ public class RMDescriptorTestcase extends Testcase
      **/
     public void Var009()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
       File serFile = null;
         try
         {

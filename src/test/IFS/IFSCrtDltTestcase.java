@@ -37,12 +37,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userId, password, "IFSCrtDltTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys); 
+            namesAndVars, runMode, fileOutputStream,  pwrSys); 
     }
 
 
@@ -57,7 +55,7 @@ Constructor.
     
     
    
-    dirName_ = convertToPCName("");
+    dirName_ = "/"; 
   }
 
 
@@ -71,8 +69,6 @@ Constructor.
     String nnn = null;  //@A1A
     try
     {
-      if (isApplet_)
-      {
         do
         {
           // Note: Filenames longer than 8 chars can confuse DOS tools
@@ -82,17 +78,6 @@ Constructor.
           name = directory + IFSFile.separator + nnn;          //@A1C
         }
         while(new IFSFile(systemObject_, name).exists());
-      }
-      else
-      {
-        do
-        {
-          nnn = Integer.toString(Math.abs(random.nextInt()));  //@A1A
-          if (nnn.length() > 8)  nnn = nnn.substring(0,8);     //@A1A
-          name = directory + IFSFile.separator + nnn;          //@A1C
-        }
-        while(new File(convertToPCName(name)).exists());
-      }
     }
     catch(Exception e)
     {
@@ -106,11 +91,11 @@ Constructor.
   void setPrivate(AS400 as400, String dirName)
   {
     String cmdString = "CHGAUT OBJ('" 
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
 
     String cmdString2 = "CHGAUT OBJ('" 
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER("
                      + systemObject_.getUserId()
                      + ") DTAAUT(*NONE) OBJAUT(*NONE)";
@@ -133,11 +118,11 @@ Constructor.
   void setPublic(AS400 as400, String dirName)
   {
     String cmdString = "CHGAUT OBJ('" 
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
 
     String cmdString2 = "CHGAUT OBJ('" 
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER("
                      + systemObject_.getUserId()
                      + ") DTAAUT(*RWX) OBJAUT(*ALL)";

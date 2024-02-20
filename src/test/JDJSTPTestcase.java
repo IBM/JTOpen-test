@@ -806,14 +806,8 @@ Constructor.
 	    int startIndex = value.indexOf("/home/");
 	    if (startIndex >= 0) {
 		// if running J9 use the -X option
-		if (javaVmName.indexOf("Classic") == -1) {
 		    int endIndex=value.indexOf(":",startIndex);
 		    options += " -Xbootclasspath/a:"+value.substring(startIndex,endIndex)+" "; 
-		} else { 
-		    options += " -Dsun.boot.class.path="+value;
-		    value = JVMInfo.getJavaVersionString(); 
-		    options += " -Djava.version="+value+" "; 
-		}
 	    }
 
 	} else {
@@ -5095,7 +5089,6 @@ Constructor.
                                                                 * string to use
                                                                 */
             if (jdkString != null) { 
-            if (javaVmName.indexOf("Classic") == -1) {
               // check for J9
               expectedOutput = exppath + "/" + testbase + variationString
                   + ".rxp" + vrmString + jdkString + ".j9";
@@ -5103,7 +5096,6 @@ Constructor.
               if (!checkFile.exists()) {
                 possibleOutputFiles.append(" " + expectedOutput);
               }
-            }
             if (!checkFile.exists()) {
               if (isToolbox) {
                 // check for toolbox
@@ -5369,13 +5361,7 @@ Constructor.
         command = "java "+getInheritedJavaOptions()+" ";
         // Add the library if needed 
         // Use the right Jar file
-        if (jdk < JVMInfo.JDK_15) {
-          command += " -classpath /qibm/proddata/http/public/jt400/lib/jt400.jar:"
-              + javaRunPath
-              + pathSep
-              + "jars/jt400.jar:.  -DJSTPPath=1 "
-              + getInheritedJavaOptions() + " " + testbase;
-        } else if (jdk == JVMInfo.JDK_16 ||
+        if (jdk == JVMInfo.JDK_16 ||
 		   jdk == JVMInfo.JDK_17 ) {
           command+= " -classpath /QIBM/proddata/OS400/jt400/lib/java6/jt400.jar:"
               + javaRunPath
@@ -5413,14 +5399,7 @@ Constructor.
         if (JTOpenTestEnvironment.isWindows) {
           // Must escape classpath on windows
           // on 3/14/2011 change from " to ' to surround classpath
-          if (jdk <= JVMInfo.JDK_15) {
-
-            command = "java " + getInheritedJavaOptions()
-                + "  -DJSTPPath=2 "+ " -classpath '" + sep + "qibm" + sep + "proddata" + sep
-                + "http" + sep + "public" + sep + "jt400/lib/jt400.jar"
-                + pathSep + javaRunPath + pathSep + "jars/jt400.jar" + pathSep
-                + ".' " + testbase;
-	  } else if (jdk == JVMInfo.JDK_16 ||
+          if (jdk == JVMInfo.JDK_16 ||
 		     jdk == JVMInfo.JDK_17) { 
             command = "java " + getInheritedJavaOptions()
                 + "  -DJSTPPath=2.2 "
@@ -5456,13 +5435,7 @@ Constructor.
               + "  -DJSTPPath=3 ";
 
 
-          if (jdk <= JVMInfo.JDK_15) {
-
-            command += " -classpath " + sep + "qibm" + sep + "proddata" + sep
-                + "http" + sep + "public" + sep + "jt400/lib/jt400.jar"
-                + pathSep + javaRunPath + pathSep + "jars/jt400.jar" + pathSep
-                + ". " + testbase;
-	  } else if (jdk == JVMInfo.JDK_16
+          if (jdk == JVMInfo.JDK_16
               || jdk == JVMInfo.JDK_17) {
             command += " -classpath " + sep + "qibm" + sep + "proddata" + sep
                 + "http" + sep + "public" + sep + "jt400/lib/jt400.jar"
@@ -5888,10 +5861,7 @@ Constructor.
 	    command = "java "+javaOptions+" "+getInheritedJavaOptions()+" "+ testbase+" "+variation;
 	    if (nativeClient) {
 		command = "cd "+funcpath+" && export -s QIBM_JAVA_STDIO_CONVERT=Y && export -s CLASSPATH=\"$CLASSPATH\"\":/QIBM/ProdData/OS400/Java400/ext/runtime.zip:/QIBM/ProdData/OS400/Java400/ext/translator.zip:/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar:"+funcpath+"\" && " + command ;
-		if (jdk <= JVMInfo.JDK_15) {
-
-		    command = "java -classpath /qibm/proddata/http/public/jt400/lib/jt400.jar:"+javaRunPath+pathSep+"jars/jt400.jar:. -DJSTPPath=4 "+javaOptions+" "+getInheritedJavaOptions()+" "+testbase+" "+variation;
-		} else if (jdk == JVMInfo.JDK_16 ||jdk == JVMInfo.JDK_17 )  {
+		if (jdk == JVMInfo.JDK_16 ||jdk == JVMInfo.JDK_17 )  {
 		   command = "java -classpath /QIBM/proddata/OS400/jt400/lib/java6/jt400.jar:"+javaRunPath+pathSep+"jars/java6/jt400.jar:. -DJSTPPath=4.1 "+javaOptions+" "+getInheritedJavaOptions()+" "+testbase+" "+variation;
 
 		} else if ((jdk == JVMInfo.JDK_18 ) || (jdk == JVMInfo.JDK_19 ))  {
@@ -5917,11 +5887,7 @@ Constructor.
 		    // If JDBC 4.0 and later use the java6 version of the jar
 		    // 
 		    
-		    if (jdk <= JVMInfo.JDK_15) {
-
-
-			command = "java "+javaOptions+" -DJSTPPath=5 "+getInheritedJavaOptions()+" -classpath '"+ sep+"qibm"+ sep+ "proddata"+ sep+ "http"+ sep+ "public"+ sep+ "jt400"+ sep+ "lib"+ sep+ "jt400.jar"+ pathSep+javaRunPath+pathSep+"jars"+sep+"jt400.jar"+pathSep+".' "+testbase+" "+variation;
-		    } else if (jdk == JVMInfo.JDK_16 || jdk == JVMInfo.JDK_17) {
+		    if (jdk == JVMInfo.JDK_16 || jdk == JVMInfo.JDK_17) {
 			command = "java "+javaOptions+" -DJSTPPath=5.1 "+getInheritedJavaOptions()+" -classpath '"+ sep+"qibm"+ sep+ "proddata"+ sep+ "http"+ sep+ "public"+ sep+ "jt400"+ sep+ "lib"+ sep+ "jt400.jar"+ pathSep+javaRunPath+pathSep+"jars"+sep+"java6"+sep+"jt400.jar"+pathSep+".' "+testbase+" "+variation;
 		    } else if (( jdk == JVMInfo.JDK_18) || ( jdk == JVMInfo.JDK_19)) {
 			command = "java "+javaOptions+" -DJSTPPath=5.1 "+getInheritedJavaOptions()+" -classpath '"+ sep+"qibm"+ sep+ "proddata"+ sep+ "http"+ sep+ "public"+ sep+ "jt400"+ sep+ "lib"+ sep+ "jt400.jar"+ pathSep+javaRunPath+pathSep+"jars"+sep+"java8"+sep+"jt400.jar"+pathSep+".' "+testbase+" "+variation;
@@ -5936,10 +5902,7 @@ Constructor.
 
 
 		} else {
-		    if (jdk <= JVMInfo.JDK_15) {
-
-			command = "java "+javaOptions+" -DJSTPPath=6 "+getInheritedJavaOptions()+" -classpath "+javaRunPath + pathSep+ sep+"qibm"+ sep+ "proddata"+ sep+ "http"+ sep+ "public"+ sep+ "jt400"+ sep+ "lib"+ sep+ "jt400.jar"+pathSep+"jars"+sep+"jt400.jar"+pathSep+". "+testbase+" "+variation;
-		    } else if  (jdk == JVMInfo.JDK_16 || jdk == JVMInfo.JDK_17  ) { 
+		    if  (jdk == JVMInfo.JDK_16 || jdk == JVMInfo.JDK_17  ) { 
 			command = "java "+javaOptions+" -DJSTPPath=6 "+getInheritedJavaOptions()+" -classpath "+javaRunPath + pathSep+ sep+"qibm"+ sep+ "proddata"+ sep+ "http"+ sep+ "public"+ sep+ "jt400"+ sep+ "lib"+ sep+ "jt400.jar"+pathSep+"jars"+sep+"java6"+sep+"jt400.jar"+pathSep+". "+testbase+" "+variation;
 
 		    } else if  ((jdk == JVMInfo.JDK_18)  || (jdk == JVMInfo.JDK_19) ){
@@ -6787,47 +6750,6 @@ Constructor.
      static String[] getSetJVMSQL(String javaHome) throws Exception  {
 
 
-        //  CLASSIC JDK 1.3
-	 if ("/QIBM/ProdData/Java400/jdk13".equals(javaHome)) {
-	     String[] answer = {
-		 "call QSYS.QCMDEXC('ADDENVVAR ENVVAR(JAVA_HOME) VALUE(''/QIBM/ProdData/Java400/jdk13'')                                                               ', 000000090.00000)",
-		 "call QSYS.QCMDEXC('CHGENVVAR ENVVAR(JAVA_HOME) VALUE(''/QIBM/ProdData/Java400/jdk13'')                                                              ', 000000090.00000)",
-	     };
-	     return answer;   
-	 }
-
-
-
-        //  CLASSIC JDK 1.4
-	 if ("/QIBM/ProdData/Java400/jdk14".equals(javaHome)) {
-	     String[] answer = {
-		 "call QSYS.QCMDEXC('ADDENVVAR ENVVAR(JAVA_HOME) VALUE(''/QIBM/ProdData/Java400/jdk14'')                                                             ', 000000090.00000)",
-		 "call QSYS.QCMDEXC('CHGENVVAR ENVVAR(JAVA_HOME) VALUE(''/QIBM/ProdData/Java400/jdk14'')                                                            ', 000000090.00000)",
-	     };
-	     return answer;   
-	 }
-
-
-        //  CLASSIC JDK 1.5
-	 if ("/QIBM/ProdData/Java400/jdk15".equals(javaHome)) {
-	     String[] answer = {
-		 "call QSYS.QCMDEXC('ADDENVVAR ENVVAR(JAVA_HOME) VALUE(''/QIBM/ProdData/Java400/jdk15'')                                                                ', 000000090.00000)",
-		 "call QSYS.QCMDEXC('CHGENVVAR ENVVAR(JAVA_HOME) VALUE(''/QIBM/ProdData/Java400/jdk15'')                                                                ', 000000090.00000)",
-	     };
-	     return answer; 
-	 }
-
-
-        //  CLASSIC JDK 1.6
-	 if ("/QIBM/ProdData/Java400/jdk6".equals(javaHome)) {
-	     String[] answer = {
-		 "call QSYS.QCMDEXC('ADDENVVAR ENVVAR(JAVA_HOME) VALUE(''/QIBM/ProdData/Java400/jdk6'')                                                            ', 000000090.00000)",
-		 "call QSYS.QCMDEXC('CHGENVVAR ENVVAR(JAVA_HOME) VALUE(''/QIBM/ProdData/Java400/jdk6'')                                                            ', 000000090.00000)",
-	     };
-	     return answer; 
-	 }
-
-
 	 // J9 JVMS
 	 if (javaHome.indexOf("/QOpenSys/QIBM/ProdData/JavaVM/") >= 0) {
 	     int jreIndex = javaHome.indexOf("/jre");
@@ -6847,15 +6769,7 @@ Constructor.
 	     (javaHome.indexOf("/jvm") >= 0)) {
 	     // On windows or linux... Pick a matching 32 bit version
 	     int jdk = JVMInfo.getJDK(); 
-	     if (jdk == JVMInfo.JDK_15) {
-
-		 String[] answer = {
-		     "call QSYS.QCMDEXC('ADDENVVAR ENVVAR(JAVA_HOME) VALUE(''/QOpenSys/QIBM/ProdData/JavaVM/jdk50/32bit'')                                            ', 000000090.00000)",
-		     "call QSYS.QCMDEXC('CHGENVVAR ENVVAR(JAVA_HOME) VALUE(''/QOpenSys/QIBM/ProdData/JavaVM/jdk50/32bit'')                                            ', 000000090.00000)",
-		 };
-		 return answer; 
-
-	     } else if (jdk == JVMInfo.JDK_16) {
+	     if (jdk == JVMInfo.JDK_16) {
 
 		     String[] answer = {
 			 "call QSYS.QCMDEXC('ADDENVVAR ENVVAR(JAVA_HOME) VALUE(''/QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit'')                                            ', 000000090.00000)",
