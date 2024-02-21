@@ -4330,6 +4330,10 @@ public void Var138()                                       // @B2A
     // File  javaIoFile6 = new File(convertToPCName(pathTest6));
 
 
+    if (File.separatorChar != IFSFile.separatorChar) {
+      pathTest1 = pathTest1.replace(IFSFile.separatorChar, File.separatorChar);
+      pathA2 = pathA2.replace(IFSFile.separatorChar, File.separatorChar);
+    }
     if (!file1.getAbsolutePath().equals(pathTest1) ||
         !file1.getCanonicalPath().equals(pathA2) /* ||
         !compareIFSFilePathToJavaIOPath(file1.getCanonicalPath(),javaIoFile1.getCanonicalPath()) */ )
@@ -4345,6 +4349,11 @@ public void Var138()                                       // @B2A
     }
     else  sb.append("Success file1"+NEWLINE);
 
+    if (File.separatorChar != IFSFile.separatorChar) {
+      pathTest2 = pathTest2.replace(IFSFile.separatorChar, File.separatorChar);
+      pathB1 = pathB1.replace(IFSFile.separatorChar, File.separatorChar);
+    }
+
     if (!file2.getAbsolutePath().equals(pathTest2) ||
         !file2.getCanonicalPath().equals(pathB1) /* ||
         !compareIFSFilePathToJavaIOPath(file2.getCanonicalPath(),javaIoFile2.getCanonicalPath()) */ )
@@ -4359,6 +4368,10 @@ public void Var138()                                       // @B2A
     }
     else  sb.append("Success file2"+NEWLINE);
 
+    if (File.separatorChar != IFSFile.separatorChar) {
+      pathTest3 = pathTest3.replace(IFSFile.separatorChar, File.separatorChar);
+      pathA2 = pathA2.replace(IFSFile.separatorChar, File.separatorChar);
+    }
 
     if (!file3.getAbsolutePath().equals(pathTest3) ||
         !file3.getCanonicalPath().equals(pathA2) /* ||
@@ -4375,6 +4388,10 @@ public void Var138()                                       // @B2A
     }
     else  sb.append("Success file3"+NEWLINE);
 
+    if (File.separatorChar != IFSFile.separatorChar) {
+      pathTest4 = pathTest4.replace(IFSFile.separatorChar, File.separatorChar);
+    }
+
     if (!file4.getAbsolutePath().equals(pathTest4) ||
         !file4.getCanonicalPath().equals(pathTest4) 
         /* ||
@@ -4385,12 +4402,15 @@ public void Var138()                                       // @B2A
       sb.append("  file4.getCanonicalPath()= '" + file4.getCanonicalPath()+"'"+NEWLINE);
       sb.append("file4 path incorrect\n"); 
       passed = false; 
-      return;
     }
     else  sb.append("Success file4"+NEWLINE);
 
+    if (File.separatorChar != IFSFile.separatorChar) {
+      pathTest5 = pathTest5.replace(IFSFile.separatorChar, File.separatorChar);
+    }
+
     if (!file5.getAbsolutePath().equals(pathTest5) ||
-        !file5.getCanonicalPath().equals((IFSFile.separator+"def")) 
+        !file5.getCanonicalPath().equals((File.separator+"def")) 
         /* ||
         !compareIFSFilePathToJavaIOPath(file5.getCanonicalPath(),javaIoFile5.getCanonicalPath())*/ )
     {
@@ -4402,8 +4422,12 @@ public void Var138()                                       // @B2A
     }
     else  sb.append("Success file5"+NEWLINE);
 
-    if (!file6.getAbsolutePath().equals(IFSFile.separator+pathTest6) ||
-        !file6.getCanonicalPath().equals(IFSFile.separator+pathTest6) /* ||
+    if (File.separatorChar != IFSFile.separatorChar) {
+      pathTest6 = pathTest6.replace(IFSFile.separatorChar, File.separatorChar);
+    }
+
+    if (!file6.getAbsolutePath().equals(File.separator+pathTest6) ||
+        !file6.getCanonicalPath().equals(File.separator+pathTest6) /* ||
         !compareIFSFilePathToJavaIOPath(file6.getCanonicalPath(),javaIoFile6.getCanonicalPath()) */)
     {
       sb.append("  file6.getAbsolutePath()="  + file6.getAbsolutePath()+NEWLINE);

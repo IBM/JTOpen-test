@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+     <xpcml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="xpcml.xsd" version="6.0">
+
+     <!-- XPCML source for calling "Open List of Authorized Users" -->
+     <!-- (QGYOLAUS) API -->
+     <!-- ***** CAUTION ***** this file is sensitive to whitespace around field values. -->
+
+       <!-- Format AUTU0150 - Other formats are available -->
+       <struct name="autu0150">
+         <stringParm name="profileName" length="10"/>
+         <stringParm name="userOrGroupIndicator" length="1"/>
+         <stringParm name="groupMembersIndicator" length="1"/>
+         <stringParm name="testDescription" length="50"/>
+       </struct>
+
+       <!-- List information structure (common for "Open List" type APIs) -->
+       <struct name="listInfo">
+         <intParm name="totalRcds">0</intParm>
+         <intParm name="rcdsReturned">0</intParm>
+         <hexBinaryParm name="rqsHandle" totalBytes="4"/>
+         <intParm name="rcdLength">0</intParm>
+         <stringParm name="infoComplete" length="1"/>
+         <dateParm name="dateCreated" dateFormat="CYMD" dateSeparator="none">2000-01-01</dateParm>
+         <timeParm name="timeCreated" timeFormat="HMS" timeSeparator="none">00:00:00</timeParm>
+         <stringParm name="listStatus" length="1"/>
+         <hexBinaryParm totalBytes="1"/>
+         <unsignedIntParm name="lengthOfInfo">0</unsignedIntParm>
+         <intParm name="firstRecord">0</intParm>
+         <hexBinaryParm totalBytes="40"/>
+       </struct>
+
+       <!-- Program QGYOLAUS and its parameter list -->
+
+       <program name="qgyolaus_autu0150" path="/QSYS.LIB/QGY.LIB/QGYOLAUS.PGM"
+          parseOrder="listInformation receiverVariable">
+        <parameterList>
+
+	  <!-- Output parameter: Receiver variable -->
+          <arrayOfStructParm name="receiverVariable" count="listInformation.rcdsReturned" 
+             passDirection="out" outputSize="lengthOfReceiverVariable" struct="autu0150"/>
+
+	  <!-- Input parameter: Length of receiver variable -->
+          <intParm name="lengthOfReceiverVariable" passDirection="in">620</intParm>
+
+	  <!-- Output parameter: List information -->
+          <structParm name="listInformation" passDirection="out" struct="listInfo"/>
+
+	  <!-- Input parameter: Number of records to return -->
+          <intParm name="numberOfRecordsToReturn" passDirection="in">-1</intParm>
+
+	  <!-- Input parameter: Format name -->
+          <stringParm name="formatName" passDirection="in" length="8">AUTU0150</stringParm>
+
+	  <!-- Input parameter: Selection criteria -->
+          <stringParm name="selectionCriteria" passDirection="in" length="10">*USER</stringParm>
+
+	  <!-- Input parameter: Group profile name -->
+          <stringParm name="groupProfileName" passDirection="in" length="10">*NONE</stringParm>
+
+	  <!-- Input/output parameter: Error code -->
+          <intParm name="errorCode" passDirection="inout">0</intParm>
+
+	  <!-- Input parameter: Profile name -->
+          <stringParm name="profileName" passDirection="in" length="10">*ALL</stringParm>
+
+        </parameterList> 
+       </program>
+     </xpcml> 

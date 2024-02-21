@@ -22,8 +22,13 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector; 
+
 
 import jcifs.smb.SmbException;
 import test.IFSTests;
@@ -32,6 +37,7 @@ import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.IFSFileInputStream;
 import com.ibm.as400.access.IFSFileOutputStream;
@@ -521,6 +527,34 @@ Create a file to be used for the testcases.
     }
   }
 
+  public String[] listQSYSDirectory(String pathName) throws Exception {
+
+    if ( IFSTests.IsRunningOnOS400 ) { 
+     File file2 = new File(pathName);
+     String[] names2 = file2.list();
+     return names2; 
+
+    } else { 
+      String[] sampleStringArray = new String[0]; 
+      Vector<String> answer = new Vector<String>();
+      Connection c = new AS400JDBCDriver().connect(pwrSys_);
+      Statement s = c.createStatement(); 
+      String sql="SELECT SUBSTRING(PATH_NAME,LENGTH('"+pathName+"')+2) FROM "
+          + "TABLE(QSYS2.IFS_OBJECT_STATISTICS('"+pathName+"','NO'))";
+      ResultSet rs = s.executeQuery(sql); 
+      while (rs.next()) { 
+        String string = rs.getString(1); 
+        if (string != null && string.length() > 0) { 
+          answer.add(string); 
+        }
+      }
+      String[] names2 = answer.toArray(sampleStringArray); 
+      c.close(); 
+      return names2; 
+    }
+  }
+
+  
   public final void deleteDirectory(String pathName) 
   {
               deleteFile(pathName);

@@ -38,7 +38,7 @@ public class SetupJobLog extends SetupLibraryTestcase
                    AS400            PwrSys,
                    String           PwrPwd)
   {
-    super(systemObject, "SetupJoblog", 1, variationsToRun, runMode, fileOutputStream, password, PwrSys.getUserId(), PwrPwd); 
+    super(systemObject, "SetupJobLog", 1, variationsToRun, runMode, fileOutputStream, password, PwrSys.getUserId(), PwrPwd); 
     
   }
 
