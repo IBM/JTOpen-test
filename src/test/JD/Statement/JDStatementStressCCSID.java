@@ -114,12 +114,12 @@ Performs setup needed before running variations.
 
         if (getDriver() == JDTestDriver.DRIVER_JCC) {
           // JCC doesn't have these properties
-          connection_ = DriverManager.getConnection (baseURL_ ,
-              systemObject_.getUserId(), PasswordVault.decryptPasswordLeak(encryptedPassword_));
+          connection_ = testDriver_.getConnection(baseURL_,systemObject_.getUserId(), encryptedPassword_);
+
 
         } else { 
-        connection_ = DriverManager.getConnection (baseURL_ + ";errors=full;lazy close=true",
-                                                   systemObject_.getUserId(), PasswordVault.decryptPasswordLeak(encryptedPassword_));
+        connection_ = testDriver_.getConnection(baseURL_+ ";errors=full;lazy close=true",systemObject_.getUserId(), encryptedPassword_);
+
         }
         
         statement_ = connection_.createStatement();
@@ -498,13 +498,11 @@ Performs cleanup needed after running variations.
       if (connection_.isClosed()) {
         if (getDriver() == JDTestDriver.DRIVER_JCC) {
           // JCC doesn't have these properties
-          connection_ = DriverManager.getConnection(baseURL_,
-              systemObject_.getUserId(),  new String(PasswordVault.decryptPassword(encryptedPassword_)));
+          connection_ = testDriver_.getConnection(baseURL_,systemObject_.getUserId(), encryptedPassword_);
+
 
         } else {
-          connection_ = DriverManager.getConnection(baseURL_
-              + ";errors=full;lazy close=true", systemObject_.getUserId(),
-               new String(PasswordVault.decryptPassword(encryptedPassword_)));
+          connection_ = testDriver_.getConnection(baseURL_+ ";errors=full;lazy close=true",systemObject_.getUserId(), encryptedPassword_);
         }
       }
 

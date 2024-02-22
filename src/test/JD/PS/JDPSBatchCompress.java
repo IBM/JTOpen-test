@@ -79,12 +79,8 @@ extends JDTestcase {
          e.printStackTrace(System.out); 
        } catch (Error e) {
 	   int jdk = JVMInfo.getJDK(); 
-	   if ( jdk <= JVMInfo.JDK_142) { 
-	       // Just ignore since JDK 1.4 doens't have getEnt
-	   } else { 
 	       System.out.println("Warning:  exception caught  ");
 	       e.printStackTrace(System.out);
-	   }
        }
      }
   

@@ -65,7 +65,6 @@ import com.ibm.as400.security.auth.ProfileTokenCredential;
  *  -socks     - Set the system object's mustUseSockets property to true.
  *  -pwrSys    - A userID, password combination with *SECOFR authority.
  *  -nothreads - Set the system object's isThreadUsed property to false.
- *  -mappedDrive - The local pathname which is mapped to the root IFS directory on the server.
  *  -printer   - The name of the printer to use for the NPPrint testcases.
  *  -profileToken - Generate and use a profile token for authentication.
  *  -serialize - Indicates that the AS400 object is to be deserialized/serialized.  A file named "as400.ser" is sought and, if found, deserialized into systemObject_.  Upon testcase completion, the file is (re)generated.
@@ -163,7 +162,6 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   protected String pwrSysPassword_ = null;
   public char[] pwrSysEncryptedPassword_ = null;
   protected boolean noThreads_ = false;
-  protected String mappedDrive_ = null;
   protected String printer_ = null;
   protected boolean serializeSystemObject_ = false;
   private static String SERIAL_FILE_NAME = "as400.ser";
@@ -390,7 +388,6 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     fileOutputStream_ = null;
     noThreads_ = false;
     connType_ = Testcase.CONN_DEFAULT;
-    mappedDrive_ = null;
     printer_ = null;
     useProfileToken_ = false;
     useKerberos_ = false;
@@ -456,8 +453,6 @@ public abstract class TestDriver implements TestDriverI, Runnable,
           noThreads_ = true;
         else if (arg.equalsIgnoreCase("-ctype"))
           state = PARSE_CONN_TYPE;
-        else if (arg.equalsIgnoreCase("-mappeddrive"))
-          state = PARSE_MAPPED_DRIVE;
         else if (arg.equalsIgnoreCase("-printer"))
           state = PARSE_PRINTER;
         else if (arg.equalsIgnoreCase("-lib"))
@@ -635,7 +630,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
         state = START;
         break;
       case PARSE_MAPPED_DRIVE:
-        mappedDrive_ = arg;
+        System.out.println("Warning: Mapped Drive no longer used"); 
         state = START;
         break;
       case PARSE_PRINTER:
@@ -1133,7 +1128,6 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 			"  -socks     - Set the system object's mustUseSockets property to true.",
 			"  -pwrSys    - A userID, password combination with SECOFR authority.",
 			"  -nothreads - Set the system object's isThreadUsed property to false.",
-			"  -mappedDrive - The local pathname which is mapped to the root IFS directory on the server.",
 			"  -printer   - The name of the printer to use for the NPPrint testcases.",
 			"  -profileToken - Generate and use a profile token for authentication.",
 			"  -serialize - Indicates that the AS400 object is to be deserialized/serialized.  A file named \"as400.ser\" is sought and, if found, deserialized into systemObject_.  Upon testcase completion, the file is (re)generated.",

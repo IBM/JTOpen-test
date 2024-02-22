@@ -50,13 +50,6 @@ public class PCConstructorTestcase extends Testcase
   private String exceptionProperty_original_;
 
   private static boolean jdk15orLater = true;
-  static {
-      int jdk = JVMInfo.getJDK();
-      if (jdk < JVMInfo.JDK_15) { 
-	      jdk15orLater = false; 
-      }
-
-  } 
     /**
      Constructor.
      **/

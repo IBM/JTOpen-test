@@ -487,12 +487,6 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (checkNotGroupTest()) {
-      if (jdk_ <= JVMInfo.JDK_142) {
-        // System.out.println("The SSL testcase does not work for JDK 1.4 or
-        // lower");
-        assertCondition(true);
-        return;
-      }
       if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
         notApplicable("'secure' property not supported.");
         return;
@@ -966,12 +960,6 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var025() {
     if (checkNotGroupTest()) {
-      if (jdk_ <= JVMInfo.JDK_142) {
-        // System.out.println("The SSL testcase does not work for JDK 1.4 or
-        // lower");
-        assertCondition(true);
-        return;
-      }
       if (!isToolboxDriver()) {
         notApplicable("connect(AS400) variation");
         return;
@@ -1036,12 +1024,6 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var027() {
     if (checkNotGroupTest()) {
-      if (jdk_ <= JVMInfo.JDK_142) {
-        // System.out.println("The SSL testcase does not work for JDK 1.4 or
-        // lower");
-        assertCondition(true);
-        return;
-      }
       if (!isToolboxDriver()) {
         notApplicable("connect(AS400) variation");
         return;
@@ -1091,12 +1073,6 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (checkNotGroupTest()) {
-      if (jdk_ <= JVMInfo.JDK_142) {
-        // System.out.println("The SSL testcase does not work for JDK 1.4 or
-        // lower");
-        assertCondition(true);
-        return;
-      }
       if (!isToolboxDriver()) {
         notApplicable("connect(AS400) variation");
         return;
@@ -1152,12 +1128,6 @@ public class JDDriverConnect extends JDTestcase {
     if (checkPasswordLeak()) { 
 
     if (checkNotGroupTest()) {
-      if (jdk_ <= JVMInfo.JDK_142) {
-        // System.out.println("The SSL testcase does not work for JDK 1.4 or
-        // lower");
-        assertCondition(true);
-        return;
-      }
       if (!isToolboxDriver()) {
         notApplicable("connect(AS400) variation");
         return;

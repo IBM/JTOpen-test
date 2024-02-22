@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xpcml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="xpcml.xsd" version="4.0">
+
+<struct name="s2">
+<stringParm name="s2p1"/>
+<stringParm name="s2p2"/>
+</struct>
+
+<program name="prog1" path="/QSYS.LIB/W95LIB.LIB/PROG1.PGM"> 
+<parameterList>
+	<arrayOfStructParm name="s2Ref" struct="s2" count="2" passDirection="in">
+		<struct_i>
+		<stringParm name="s2p1">1</stringParm>
+		<stringParm name="s2p2">2</stringParm>
+		</struct_i>
+		
+		<struct_i>
+		<stringParm name="s2p1">3</stringParm>
+		<stringParm name="s2p2">4</stringParm>
+		</struct_i>
+	</arrayOfStructParm>
+</parameterList> 
+</program>
+
+</xpcml>
+

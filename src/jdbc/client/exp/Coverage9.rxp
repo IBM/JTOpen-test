@@ -1,0 +1,30 @@
+>>!PRINTSTACKTRACE false
+>-- Test the debug paths and also alternative drivers
+>
+>!SETNEWVAR client=com.ibm.as400.access.jdbcClient.Main(jdbc:as400://.*,newtonjudf,newtonp1)
+client=com.ibm.as400.access.jdbcClient.Main@.*
+>
+>!CALLMETHOD client.setUserId(newtonjudf)
+No matching method found, possible errors are the following:
+Exception java.lang.NullPointerException.*
+Calling method setUserId with java.lang.String  failed
+
+Call returned null
+>!CALLMETHOD client.setPassword(newtonp1)
+Call returned null
+>
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf PASSWORD=.*
+Connecting using newtonjudf, newtonp1 to jdbc:as400://.*
+>
+>!CONNECT TO URL jdbc:db2://localhost USERID=newtonjudf PASSWORD=.*
+Connecting using newtonjudf, newtonp1 to jdbc:db2://localhost
+Loading jcc driver
+Exception java.lang.ClassNotFoundException: com.ibm.db2.jcc.DB2Driver
+Usage:  CONNECT TO URL [URL] [USERID=XXXX] [PASSWORD=.*YYYY]
+  i.e.  CONNECT TO URL jdbc:db2:localhost USERID=MYUSER PASSWORD=.*XXXXX
+        CONNECT TO URL jdbc:db2://localhost/*LOCAL USERID=MYUSER PASSWORD=.*XXXXX
+        CONNECT TO URL jdbc:db2:SAMPLE\;transaction isolation=serializable USERID=MYUSER PASSWORD=.*XXXXXXX
+>
+>!CONNECT TO SCHEMA .*
+Connecting using newtonjudf, newtonp1 to jdbc:as400://.*/.*
+>

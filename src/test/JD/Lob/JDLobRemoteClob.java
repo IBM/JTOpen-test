@@ -179,10 +179,9 @@ Performs setup needed before running variations.
 		    Connection localConnection; 
 
 		    String localUrl = "jdbc:db2:*LOCAL"
-		      + ";user=" + systemObject_.getUserId() 
-		      + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_) 
 		      + ";lob threshold=1";
-		    localConnection = DriverManager.getConnection (localUrl);
+		    localConnection = testDriver_.getConnection(localUrl,systemObject_.getUserId(), encryptedPassword_);
+
 		    localConnection.setAutoCommit(false);
 		    localConnection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 		    statement_ = localConnection.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,

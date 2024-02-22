@@ -1,0 +1,89 @@
+!ECHOCOMMAND true
+!PRINTSTACKTRACE false
+-- Testcase to test the coverage of the built in JDBC client
+-- Testcase reflection tests
+
+-- Call method that returns an input stream
+!SETVAR BYTEARRAY GEN_BYTE_ARRAY+100
+-- Call method using a variable as a parameter
+!SETNEWVAR BAIS=java.io.ByteArrayInputStream(BYTEARRAY)
+
+!SETNEWVAR S1=java.lang.String(my:test:string)
+-- Call method that returns an array 
+!CALLMETHOD S1.split(':',20)
+!CALLMETHOD S1.toCharArray()
+
+
+-- Call method using a null parameter 
+!CALLMETHOD S1.equals(null)
+
+-- Failure here 
+
+-- Call a method with a boolean true
+!CALLMETHOD S1.regionMatches(true,0,MY,0,2)
+
+-- call a method with a boolean false 
+!CALLMETHOD S1.regionMatches(false,0,MY,0,2)
+
+-- call a method with a short
+!CALLMETHOD java.lang.Short.toString(2)
+
+-- call a method with a int
+!CALLMETHOD java.lang.Integer.toString(2)
+
+-- call a method with a long
+!CALLMETHOD java.lang.Long.toString(2)
+
+-- call a method with a float
+!CALLMETHOD java.lang.Float.toString(3.14)
+
+-- call a method with a double 
+!CALLMETHOD java.lang.Double.toString(3.14)
+
+-- call a method with a string
+!callmethod java.lang.Short.parseShort(7)
+
+-- call a method with a string array [ a + b + c]
+
+
+-- call a method with an integer array 
+!callmethod java.util.Arrays.sort([1+2+3])
+
+
+-- try calling a method that is not visible
+!SETVAR STMT1=CON.createStatement()
+!CALLMETHOD STMT1.checkOpen()
+
+-- error situations
+-- No . 
+!CALLMETHOD STMT1
+!CALLMETHOD STMT1.
+-- not ( 
+!CALLMETHOD STMT1.exec
+-- method not found
+!CALLMETHOD STMT1.exec()
+-- not )
+!CALLMETHOD STMT1.exec(
+-- empty , 
+!CALLMETHOD STMT1.exec(,)
+
+
+-- Call new method with null
+
+-- Call new method with int
+!setnewvar I1=java.lang.Integer(1)
+-- Call new method with boolean
+!setnewvar B1=java.lang.Boolean(true)
+!setnewvar B1=java.lang.Boolean(false)
+-- Call new method with long
+!setnewvar L1=java.lang.Long(100)
+-- Call new method with String array
+
+-- call new method with int array
+
+-- show varmethods with object with a void method
+!setnewvar bitset=java.util.BitSet()
+!showvarmethods bitset
+
+
+

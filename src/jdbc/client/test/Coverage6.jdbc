@@ -1,0 +1,15 @@
+!ECHOCOMMAND true
+-- Coverage tests for print stack trace
+
+!PRINTSTACKTRACE true
+!bummer
+!PRINTSTACKTRACE false
+
+!PRINTSTACKTRACE bogus
+!PRINTSTACKTRACE on
+!PRINTSTACKTRACE off
+!PRINTSTACKTRACE true
+-- show show stack trace from this error 
+values '\u'
+!PRINTSTACKTRACE false
+

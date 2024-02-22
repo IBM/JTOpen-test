@@ -67,7 +67,6 @@ import com.ibm.as400.access.DateTimeConverter;
  * This class represents a testcase.
  **/
 public abstract class Testcase {
-  public static boolean isJDK14 = false;
   // In JDK1.7, the veto behavior changed
   public static boolean isAtLeastJDK17 = false;
   public static boolean isAtLeastJDK18 = false; 
@@ -192,8 +191,6 @@ public abstract class Testcase {
   static {
 
     int jdk = JVMInfo.getJDK();
-    if (jdk == JVMInfo.JDK_14)
-      isJDK14 = true;
 
     if (jdk >= JVMInfo.JDK_17)
       isAtLeastJDK17 = true;

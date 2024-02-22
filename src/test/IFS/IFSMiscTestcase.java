@@ -19,7 +19,7 @@ import java.io.FilenameFilter;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Enumeration;
@@ -66,12 +66,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password, "IFSMiscTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
         brief_ = TestDriverStatic.brief_;
     }
 
@@ -89,7 +87,7 @@ Constructor.
 
 
 //    ifsDirName_ = IFSFile.separator;
-    dirName_ = convertToPCName("");
+    dirName_ = IFSFile.separator;
 
   }
 
@@ -568,7 +566,7 @@ exist.
     // ensure directory doesn't exist
     try
     {
-      deleteDirectory(ifsDirName_ + "NoDir");
+      deleteIFSDirectory (ifsDirName_ + "NoDir");
       IFSFile stillThere = new IFSFile(systemObject_, ifsDirName_ + "NoDir");
       if (stillThere.exists())
       {
@@ -631,13 +629,14 @@ File.list().
       if (names1 == null) {
 	  failed("names1 is null for ifsDirName_="+ifsDirName_); return; 
       } 
+      Arrays.sort(names1);
       // File file2 = new File(convertToPCName(ifsDirName_));
       // String[] names2 = file2.list();
       String[] names2 = listDirectory(ifsDirName_);
       if (names2 == null) {
 	  failed("names2 is null ifsDirName_="+ifsDirName_); return; 
       } 
-
+      Arrays.sort(names2);
       int mismatchCount=0;
       if (names1.length == names2.length)
       {
@@ -711,22 +710,17 @@ Ensure that IFSFile.list("*") returns the same files as File.list().
 **/
   public void Var027()
   {
-    if (false /*isApplet_*/)
-    {
-      notApplicable();
-      return;
-    }
 
     try
     {
       IFSFile dir1 = new IFSFile(systemObject_, ifsDirName_);
       dir1.setPatternMatching(IFSFile.PATTERN_POSIX_ALL);   //@D1A
       String[] list1 = dir1.list("*");
-
+      
       if (list1 == null) {
 	  failed("list1 is null for *"); return; 
       } 
-
+      Arrays.sort(list1); 
       // File dir2 = new File(convertToPCName(ifsDirName_));
       // String[] list2 = dir2.list();
 
@@ -735,14 +729,16 @@ Ensure that IFSFile.list("*") returns the same files as File.list().
       if (list2 == null) {
 	  failed("list2 is null for ifsDirName_="+ifsDirName_); return; 
       } 
-
+      Arrays.sort(list2);
       int mismatchCount=0;
       int i = -1;
       if (list1.length == list2.length)
       {
         for (i = 0; i < list1.length; i++)
-          if (!list1[i].equals(list2[i]))
+          if (!list1[i].equals(list2[i])) {
+            output_.println(" ["+i+"] '"+list1[i]+"' != '"+list2[i]+"'");
             mismatchCount++;
+          }
       }
       if (mismatchCount != 0) {
         output_.println("  Number mismatches: ("+mismatchCount+"/"+list1.length+")");
@@ -1621,6 +1617,7 @@ Note to tester: This can be a long-running variation.
     IFSFile dir1 = null;
     try
     {
+      deleteIFSDirectory("/Directory52");
       // Set up a directory under 'root'.
       dir1 = new IFSFile(systemObject_, "/Directory52");
       // Make sure directory is empty at the start. @D2A

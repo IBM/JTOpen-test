@@ -187,10 +187,6 @@ public class PCTransformTestcase extends Testcase
     public void checkTransform(String pcmlString, String expectedXpcmlString, boolean checkPcml, boolean checkXpcml) {
 
 
-	if (jdk_ < JVMInfo.JDK_15) {
-	    notApplicable("JDK 1.5 or later testcase");
-	    return; 
-	} 
       StringBuffer sb = new StringBuffer();
       String xpcmlString = "NOT SET"; 
       try

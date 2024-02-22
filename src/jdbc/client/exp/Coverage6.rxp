@@ -1,0 +1,68 @@
+>>-- Coverage tests for print stack trace
+>
+>!PRINTSTACKTRACE true
+>!bummer
+
+*** SQLException caught ***
+Statement was bummer
+SQLState: 42601
+Message:.*[SQL0104] Token BUMMER was not valid.*
+... Syntax error at 1 in bummer
+... =====>bummer
+Vendor:   -104
+com.ibm.as400.access.AS400JDBCSQLSyntaxErrorException: [SQL0104] Token BUMMER was not valid.*
+	at com.ibm.as400.access.JDError.createSQLExceptionSubClass(JDError.java:.*)
+	at com.ibm.as400.access.JDError.throwSQLException(JDError.java:.*)
+	at com.ibm.as400.access.AS400JDBCStatement.commonPrepare(AS400JDBCStatement.java:.*)
+	at com.ibm.as400.access.AS400JDBCStatement.executeUpdate(AS400JDBCStatement.java:.*)
+	at com.ibm.as400.access.jdbcClient.Main.executeCommand(Main.java:.*)
+	at com.ibm.as400.access.jdbcClient.Main.executeTopLevelCommand(Main.java:.*)
+	at com.ibm.as400.access.jdbcClient.Main.go(Main.java:.*)
+	at test.JDJSTPTestcase.runJdbcClient(JDJSTPTestcase.java:.*)
+	at test.JDJSTPTestcase.RasUser(JDJSTPTestcase.java:.*)
+	at test.JDCCoverage.runTest(JDCCoverage.java:.*)
+	at test.JDCCoverage.Var006(JDCCoverage.java:.*)
+	at .*.NativeMethodAccessorImpl.invoke0(Native Method)
+	at .*.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:.*)
+	at .*.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:.*)
+	at .*.lang.reflect.Method.invoke(Method.java:.*)
+	at test.Testcase.invokeVariation(Testcase.java:.*)
+	at test.Testcase.run(Testcase.java:.*)
+	at test.JDTestcase.run(JDTestcase.java:.*)
+	at test.TestDriver.run(TestDriver.java:.*)
+	at test.TestDriver.start(TestDriver.java:.*)
+	at test.TestDriver.runApplication(TestDriver.java:.*)
+	at test.JDCTest.main(JDCTest.java:.*)
+
+Token not valid found.  Use !HELP to see what you can do
+
+>!PRINTSTACKTRACE false
+>
+>!PRINTSTACKTRACE bogus
+Invalid arg 'BOGUS' for PRINTSTACKTRACE
+>!PRINTSTACKTRACE on
+>!PRINTSTACKTRACE off
+>!PRINTSTACKTRACE true
+>-- show show stack trace from this error
+>Exception reading: java.sql.SQLException: Escape sequence '\u'' invalid in values '\u'
+java.sql.SQLException: Escape sequence '\u'' invalid in values '\u'
+	at com.ibm.as400.access.jdbcClient.Main.readLine(Main.java:.*)
+	at com.ibm.as400.access.jdbcClient.Main.go(Main.java:.*)
+	at test.JDJSTPTestcase.runJdbcClient(JDJSTPTestcase.java:.*)
+	at test.JDJSTPTestcase.RasUser(JDJSTPTestcase.java:.*)
+	at test.JDCCoverage.runTest(JDCCoverage.java:.*)
+	at test.JDCCoverage.Var006(JDCCoverage.java:.*)
+	at .*.NativeMethodAccessorImpl.invoke0(Native Method)
+	at .*.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:.*)
+	at .*.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:.*)
+	at .*.lang.reflect.Method.invoke(Method.java:.*)
+	at test.Testcase.invokeVariation(Testcase.java:.*)
+	at test.Testcase.run(Testcase.java:.*)
+	at test.JDTestcase.run(JDTestcase.java:.*)
+	at test.TestDriver.run(TestDriver.java:.*)
+	at test.TestDriver.start(TestDriver.java:.*)
+	at test.TestDriver.runApplication(TestDriver.java:.*)
+	at test.JDCTest.main(JDCTest.java:.*)
+>!PRINTSTACKTRACE false
+>
+>

@@ -44,12 +44,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400 pwrSys)//@A1C
     {
         super (systemObject, userid, password, "IFSStressTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
     }
 
   /**
@@ -421,7 +419,7 @@ entries).
 
       // File file2 = new File(convertToPCName(file1.getAbsolutePath()));
       // String[] names2 = file2.list();
-      String[] names2 = listDirectory(file1.getAbsolutePath());
+      String[] names2 = listQSYSDirectory(file1.getAbsolutePath());
 
 
       boolean[] found2 = new boolean[names2.length]; 

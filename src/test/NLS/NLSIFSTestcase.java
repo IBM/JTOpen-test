@@ -38,7 +38,6 @@ public class NLSIFSTestcase extends Testcase
   private static String dirName_;
   private static String fileName_ = "File";
   private static String ifsPathName_ = ifsDirName_ + fileName_;
-  private String mappedDrive_;
 
   private String operatingSystem_;
   private boolean DOS_;
@@ -57,15 +56,12 @@ public class NLSIFSTestcase extends Testcase
   public NLSIFSTestcase(AS400            systemObject,
                       Vector           variationsToRun,
                       int              runMode,
-                      FileOutputStream fileOutputStream,
-                      
-                      String           driveLetter)
+                      FileOutputStream fileOutputStream)
   {
     // The third parameter is the total number of variations in this class.
     super(systemObject, "NLSIFSTestcase", 35,
           variationsToRun, runMode, fileOutputStream);
 
-    mappedDrive_ = driveLetter;
   }
 
 
@@ -75,11 +71,6 @@ public class NLSIFSTestcase extends Testcase
   protected void setup()
     throws Exception
   {
-    if (mappedDrive_ == null)
-    {
-      output_.println("No mapped drive was specified on command line.");
-      throw new Exception("No mapped drive was specified");
-    }
 
     // Determine operating system we're running under
     operatingSystem_ = System.getProperty("os.name");
@@ -97,30 +88,17 @@ public class NLSIFSTestcase extends Testcase
     output_.println("Executing applet: " + isApplet_);
 
     ifsDirName_ = IFSFile.separator;
-    dirName_ = convertToPCName("");
+    dirName_ = IFSFile.separator; 
 
     // Check to see if we're connected properly
     try
     {
-      if (isApplet_)
-      {
         IFSFile file = new IFSFile(systemObject_, ifsDirName_, "QSYS.lib");
         if (!file.exists())
         {
           output_.println("Unable to locate QSYS.lib in " + ifsDirName_ + " on " + systemObject_.getSystemName() + ".");
           throw new Exception("Unable to locate QSYS.lib");
         }
-      }
-      else
-      {
-        File file = new File(dirName_, "QSYS.lib");
-        if (!file.exists())
-        {
-          output_.println("Unable to locate QSYS.lib in " + dirName_ + ".");
-          output_.println("Check to make sure that " + mappedDrive_ + " is mapped to the root directory on " + systemObject_.getSystemName() + ".");
-          throw new Exception("Unable to locate QSYS.lib");
-        }
-      }
     }
     catch(Exception e)
     {
@@ -129,28 +107,6 @@ public class NLSIFSTestcase extends Testcase
     }
   }
 
-
-  String convertToPCName(String name)
-  {
-    String result = name;
-    if (name.indexOf(mappedDrive_) != 0)
-    {
-      result = mappedDrive_;
-      if (name.indexOf("/") == 0 || name.indexOf("\\") == 0)
-        result += name;
-      else
-        result += File.separator + name;
-    }
-    if (DOS_)
-    {
-      result = result.replace('/', File.separatorChar);
-    }
-    else
-    {
-      result = result.replace('\\', File.separatorChar);
-    }
-    return result;
-  }
 
 
   void createDirectory(String dirName)
@@ -323,24 +279,12 @@ public class NLSIFSTestcase extends Testcase
     String name = null;
     try
     {
-      if (isApplet_)
-      {
         do
         {
           name = directory + IFSFile.separator +
             Integer.toString(Math.abs(random.nextInt()));
         }
         while(new IFSFile(systemObject_, name).exists());
-      }
-      else
-      {
-        do
-        {
-          name = directory + IFSFile.separator +
-            Integer.toString(Math.abs(random.nextInt()));
-        }
-        while(new File(convertToPCName(name)).exists());
-      }
     }
     catch(Exception e)
     {
@@ -1440,9 +1384,9 @@ public void Var028()
       if (!dir.delete())
         failMsg.append("Directory deletion failed.\n");
       if (oldDir.exists())
-        failMsg.append("Directory still exists: " + convertToPCName(oldDir.getAbsolutePath())+".\n");
+        failMsg.append("Directory still exists: " + oldDir.getAbsolutePath()+".\n");
       if (newDir.exists())
-        failMsg.append("Directory still exists: " + convertToPCName(newDir.getAbsolutePath())+".\n");
+        failMsg.append("Directory still exists: " + newDir.getAbsolutePath()+".\n");
     }
     catch(Exception e)
     {
@@ -1465,9 +1409,9 @@ public void Var028()
         if (!file.delete())
           failMsg.append("File deletion failed.\n");
         if (oldFile.exists())
-          failMsg.append("File still exists: " + convertToPCName(oldFile.getAbsolutePath())+".\n");
+          failMsg.append("File still exists: " + oldFile.getAbsolutePath()+".\n");
         if (newFile.exists())
-          failMsg.append("File still exists: " + convertToPCName(newFile.getAbsolutePath())+".\n");
+          failMsg.append("File still exists: " + newFile.getAbsolutePath()+".\n");
       }
       catch(Exception e)
       {
@@ -1621,9 +1565,9 @@ public void Var029()
       if (!dir.delete())
         failMsg.append("Directory deletion failed.\n");
       if (oldDir.exists())
-        failMsg.append("Directory still exists: " + convertToPCName(oldDir.getAbsolutePath())+".\n");
+        failMsg.append("Directory still exists: " + oldDir.getAbsolutePath()+".\n");
       if (newDir.exists())
-        failMsg.append("Directory still exists: " + convertToPCName(newDir.getAbsolutePath())+".\n");
+        failMsg.append("Directory still exists: " + newDir.getAbsolutePath()+".\n");
     }
     catch(Exception e)
     {
@@ -1646,9 +1590,9 @@ public void Var029()
         if (!file.delete())
           failMsg.append("File deletion failed.\n");
         if (oldFile.exists())
-          failMsg.append("File still exists: " + convertToPCName(oldFile.getAbsolutePath())+".\n");
+          failMsg.append("File still exists: " + oldFile.getAbsolutePath()+".\n");
         if (newFile.exists())
-          failMsg.append("File still exists: " + convertToPCName(newFile.getAbsolutePath())+".\n");
+          failMsg.append("File still exists: " + newFile.getAbsolutePath()+".\n");
       }
       catch(Exception e)
       {

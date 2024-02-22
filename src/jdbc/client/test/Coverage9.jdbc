@@ -1,0 +1,14 @@
+!ECHOCOMMAND true
+!PRINTSTACKTRACE false
+-- Test the debug paths and also alternative drivers
+
+!SETNEWVAR client=com.ibm.as400.access.jdbcClient.Main(BASEURL,TESTUSER,TESTPASS)
+
+!CALLMETHOD client.setUserId(TESTUSER)
+!CALLMETHOD client.setPassword(TESTPASS)
+
+!CONNECT TO URL BASEURL USERID=TESTUSER PASSWORD=TESTPASS 
+
+!CONNECT TO URL jdbc:db2://localhost USERID=TESTUSER PASSWORD=TESTPASS 
+
+!CONNECT TO SCHEMA COLLECTION

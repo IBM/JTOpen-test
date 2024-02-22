@@ -53,7 +53,6 @@ public class AS400CertificateUsrPrfTestcase extends Testcase
   private String non_existingUserSpace_ = "/QSYS.LIB/CERTTEST.LIB/XKG52V9QWQ.USRSPC";
   private byte pre_existingByteValue_ = (byte)0x00;
   private int pre_existingLengthValue_ = 11000;
-  private String mappedDrive_;
   private String operatingSystem_;
   private boolean DOS_ = false;
   private boolean usingNativeImpl = false;
@@ -67,14 +66,11 @@ Constructor.
   public AS400CertificateUsrPrfTestcase(AS400  systemObject,
                                 Vector           variationsToRun,
                                 int              runMode,
-                                FileOutputStream fileOutputStream,
-                                String           driveLetter)
+                                FileOutputStream fileOutputStream)
   {
     super(systemObject, "AS400CertificateUsrPrfTestcase", 47, variationsToRun, runMode,
           fileOutputStream);
 
-
-    mappedDrive_ = driveLetter;
   }
 
   /**
@@ -84,11 +80,6 @@ Constructor.
     throws Exception
   {
 
-    if (mappedDrive_ == null)
-    {
-      output_.println("No mapped drive was specified on command line.");
-      throw new Exception("No mapped drive was specified");
-    }
 
     // Determine operating system we're running under
     operatingSystem_ = System.getProperty("os.name");

@@ -998,10 +998,6 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             {
                 succeeded();
             }
-            else if (JTOpenTestEnvironment.isOS400 && (JVMInfo.getJDK() == JVMInfo.JDK_14) && ccsid == 916) // for AS/400 if jdk 1.4, then change ccsid from 819 to 916
-            {
-                succeeded();
-            }
             else if (JTOpenTestEnvironment.isOS400 && (ccsid == 819  || ccsid == 1208)) // for AS/400 
             {
                 succeeded();
@@ -1141,10 +1137,6 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             }
             String s = System.getProperty("os.name").trim().toUpperCase();
             if (s.indexOf("WINDOWS") > -1 && (enc.equals("Cp1252") || enc.equals("UTF-8"))) // for Windows
-            {
-                succeeded();
-            }
-            else if (s.indexOf("OS/400") > -1 && (JVMInfo.getJDK() == JVMInfo.JDK_14) && enc.equals("ISO8859_8")) // for AS/400 if jdk 1.4, then change ccsid from ISO8859_1 to ISO8859_8
             {
                 succeeded();
             }

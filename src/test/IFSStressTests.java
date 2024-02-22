@@ -109,45 +109,11 @@ public class IFSStressTests extends TestDriver
 	
 	    //Changed misc_ to pwrSys_ so all test drivers are consistent.           
 
-/*
-  // Start of changes for pwrSys ------------------ @A1A
-  AS400 pwrSys = null;
-  String mappedDrive = null;
-  if (misc_ != null)
-  {
-    try
-    {
-      StringTokenizer tokenizer = new StringTokenizer (misc_, ",");
-      mappedDrive = tokenizer.nextToken ();
-      String uid = tokenizer.nextToken ();
-      String pwd = tokenizer.nextToken ();
-      pwrSys = new AS400 (systemObject_.getSystemName(), uid, pwd);
-      try
-      {
-        pwrSys.setGuiAvailable(false);
-      }
-      catch (PropertyVetoException e)
-      {
-        // Ignore.
-      }
-    }
-    catch (NoSuchElementException e2)
-    {
-      usage();
-      System.exit(0);
-    }
-  }
-  else
-  {
-    usage();
-  }
-  // End of changes for pwrSys -------------------- @A1A
-*/
 
   // Added pwrSys parameter - one variation needs user with more authority          @A1C
     addTestcase (new IFSStressTestcase (systemObject_,userId_ ,password_,
                                       namesAndVars_, runMode_,
-                                      fileOutputStream_, mappedDrive_, pwrSys_));//@A1C
+                                      fileOutputStream_,  pwrSys_));//@A1C
 
     for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
     {
@@ -161,8 +127,8 @@ public class IFSStressTests extends TestDriver
 **/
   public void usage() // @A1A
   {
-	  System.out.println ("usage: java test.IFSStressTests -system systemName -uid userID -pwd password -pwrSys userID,password -mappedDrive mappedDrive ");
-	  System.out.println ("  e.g. java test.IFSStressTests -system lp03ut12   -uid java   -pwd xxxxxxx  -pwrSys javactl,xxxxxxxx -mappedDrive Y: ");
+	  System.out.println ("usage: java test.IFSStressTests -system systemName -uid userID -pwd password -pwrSys userID,password  ");
+	  System.out.println ("  e.g. java test.IFSStressTests -system lp03ut12   -uid java   -pwd xxxxxxx  -pwrSys javactl,xxxxxxxx  ");
 
   }
 }

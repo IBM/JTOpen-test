@@ -14,16 +14,15 @@
 package test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
-import test.PasswordVault;
-import test.TestDriver;
-import test.Testcase;
 import test.MiscAH.AS400FTPBeans;
 import test.MiscAH.AS400FTPTestcase;
 import test.MiscAH.FTPBeans;
@@ -269,8 +268,8 @@ Creates Testcase objects for all the testcases in this component.
 */
 
     // Check for invalid testcase names.
-    for (Enumeration e = namesAndVars_.keys (); e.hasMoreElements (); ) {
-      String name = (String)e.nextElement ();
+    for (Enumeration<String> e = namesAndVars_.keys (); e.hasMoreElements (); ) {
+      String name = e.nextElement ();
       System.out.println ("Testcase " + name + " not found.");
     }
 
@@ -305,12 +304,23 @@ Creates Testcase objects for all the testcases in this component.
        if (!localFtpTestDir.exists() || !localFtpTestDir.isDirectory()) {
 
            // Try to extract the test directory from test/FTPTestDirArchive.zip
-	   try {
-	       System.out.println("Attempting to extract test/FtPTestDirArchive.zip"); 
-	       ZipFile zipFile = new ZipFile( "test/FTPTestDirArchive.zip");
-	       Enumeration entries = zipFile.entries();
-	       while (entries.hasMoreElements()) {
-		   ZipEntry entry = (ZipEntry) entries.nextElement();
+           try {
+             System.out.println("Attempting to extract test/FTPTestDirArchive.zip");
+
+             StringBuffer sb = new StringBuffer();
+             InputStream is = JDRunit.loadResourceIfExists("test/FTPTestDirArchive.zip", sb);
+             if (is == null) {
+               
+               System.out.println("Unable to find resource " + sb.toString());
+               throw new Exception("Unable to find resource");
+             }
+
+             // Look for local file first
+             // Otherwise get as a resource
+	       ZipInputStream zis = new ZipInputStream(is);
+	       
+	       ZipEntry entry = zis.getNextEntry(); 
+	       while (entry != null ) {
 		   if (entry.isDirectory()) {
 		       String dirname = entry.getName();
 		       File dirFile = new File(dirname);
@@ -319,23 +329,23 @@ Creates Testcase objects for all the testcases in this component.
 			   dirFile.mkdirs(); 
 		       }
 		   } else {
-		       InputStream is = zipFile.getInputStream(entry);
 		       String filename = entry.getName();
 		       OutputStream os = new FileOutputStream(filename);
 		       System.out.println("Creating "+filename); 
 		       byte[] buffer = new byte[200];
 		       int bytesRead = 0;
-		       bytesRead = is.read(buffer); 
+		       bytesRead = zis.read(buffer); 
 		       while (bytesRead > 0) {	
 			   os.write(buffer, 0, bytesRead); 
-			   bytesRead = is.read(buffer); 
+			   bytesRead = zis.read(buffer); 
 		       } 
 		       os.close();
-		       is.close(); 
 		       
-		   } 
+		   }
+		   
+		   entry = zis.getNextEntry(); 
 	       }
-
+	       zis.close(); 
 	   } catch (Exception e) {
 	       e.printStackTrace(); 
 	       System.out.println("\nERROR: Local directory does not contain a FTPTestDir subdirectory tree. Many variations may fail.");
@@ -351,7 +361,7 @@ Creates Testcase objects for all the testcases in this component.
 	       try {
 		   System.out.println("Attempting to extract test/FtPTestDirArchive.zip to /"); 
 		   ZipFile zipFile = new ZipFile( "test/FTPTestDirArchive.zip");
-		   Enumeration entries = zipFile.entries();
+		   Enumeration<ZipEntry> entries = (Enumeration<ZipEntry>) zipFile.entries();
 		   while (entries.hasMoreElements()) {
 		       ZipEntry entry = (ZipEntry) entries.nextElement();
 		       if (entry.isDirectory()) {

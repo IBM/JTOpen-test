@@ -1,0 +1,1029 @@
+>>!PRINTSTACKTRACE false
+>-- Testcase to test the coverage of the built in JDBC client
+>
+>
+>-- Setup
+>!SILENT: DROP TABLE .*.JDCOV1
+>CREATE TABLE .*.JDCOV1(JDCOV1COL1 INTEGER)
+>
+>-- Do some common stuff
+>
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>
+>CALL SYSIBM.SQLTABLES(null,null,null, '%', null)
+
+ *** Warning ***
+
+SQLState: 0100C
+Message:.*[SQL0466] 1 result sets are available from procedure SQLTABLES in SYSIBM.
+Vendor:   466
+
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS
+.*,null,null,ALIAS,null
+.*,null,null,MATERIALIZED QUERY TABLE,null
+.*,null,null,SYSTEM TABLE,null
+.*,null,null,TABLE,null
+.*,null,null,VIEW,null
+>
+>
+>-- Error before prepared statement exists
+>!SETVAR UNICODE UX'0030'
+UNICODE=0
+>!SETPARMFROMVAR  1,UNICODE
+UNABLE to SETPARM because prepared statement does not exist
+>!SETPARM 1,UX'0030'
+UNABLE to SETPARM because prepared statement does not exist
+>!EXECUTEUPDATE
+UNABLE to EXECUTE UPDATE because prepared statement does not exist
+>!EXECUTEQUERY
+UNABLE to EXECUTE QUERY because prepared statement does not exist
+>
+>
+>!prepare select * from sysibm.sysdummy1 where IBMREQD=?
+>!setparm 1,Y
+>!executeQuery
+IBMREQD
+Y
+>
+>
+>!prepare select cast(? as INTEGER) from sysibm.sysdummy1
+>!setparm 1,1
+>!executeQuery
+00001
+1
+>
+IGNORE_EXTRA:>select '0123456789:;<=>?:;<=>?' from sysibm.sysdummy1
+IGNORE_EXTRA:>select '0\u0031\u0032\u0033\u0034\u0035\u0036\u0037\u0038\u0039\u003a\u003b\u003c\u003d\u003e\u003f\u003A\u003B\u003C\u003D\u003E\u003F' from sysibm.sysdummy1
+00001
+IGNORE_EXTRA:0123456789:;<=>?:;<=>?
+IGNORE_EXTRA:0\u0031\u0032\u0033\u0034\u0035\u0036\u0037\u0038\u0039\u003a\u003b\u003c\u003d\u003e\u003f\u003A\u003B\u003C\u003D\u003E\u003F
+>select '0' from sysibm.sysdummy1
+00001
+0
+>
+>
+>
+>
+>!MEASUREEXECUTE bogus
+Invalid arg 'BOGUS' for measureExecute
+>!MEASUREEXECUTE true
+>!MEASUREEXECUTE false
+>!MEASUREEXECUTE ON
+>
+>select * from sysibm.sysdummy1
+EXECUTE TIME: .* ms
+IBMREQD
+Y
+WITH FETCH TIME: .* ms
+>
+>!prepare select * from sysibm.sysdummy1
+>!executeQuery
+TIME: .* ms
+IBMREQD
+Y
+>
+>!SILENT:drop function .*.getProperty
+>
+>!prepare create function .*.getProperty(key varchar(80)) returns varchar(80) language java parameter style java external name 'java.lang.System.getProperty'
+>!executeUpdate
+TIME: .* ms
+>!prepare drop function .*.getProperty
+>!executeUpdate
+TIME: .* ms
+>
+>-- TODO:  Need to get a warning from executeUpdate
+>
+>
+>CL: DSPLIBL
+TIME: .* ms
+>
+>
+>!MEASUREEXECUTE OFF
+>
+>!MANUALFETCH ON
+>!MANUALFETCH TRUE
+>!SETRESULTSETTYPE SCROLL_SENSITIVE
+>select * from sysibm.sysdummy1
+IBMREQD
+>!RS.NEXT
+Y
+>!RS.NEXT
+rs.next returned false
+>!RS.FIRST
+Y
+>!RS.LAST
+Y
+>!RS.PREVIOUS
+rs.previous returned false
+>!RS.ABSOLUTE 1
+Y
+>!RS.BEFOREFIRST
+rs.beforeFirst called
+>!RS.RELATIVE 1
+Y
+>!RS.AFTERLAST
+rs.afterLast called
+>
+>!prepare select * from sysibm.sysdummy1
+>!executeQuery
+IBMREQD
+>!RS.NEXT
+Y
+>
+>!MANUALFETCH OFF
+>!MANUALFETCH FALSE
+>!SETRESULTSETTYPE FORWARD_ONLY
+>
+>-- show warnings
+>select cast('XX' as CHAR(1)) from sysibm.sysdummy1
+00001
+X
+
+ *** Warning ***
+
+SQLState: 01004
+Message:.*
+Vendor:   0
+
+>!prepare select cast('XX' as CHAR(1)) from sysibm.sysdummy1
+>!executeQuery
+00001
+X
+
+ *** Warning ***
+
+SQLState: 01004
+Message:.*
+Vendor:   0
+
+>
+>!USAGE
+com.ibm.as400.access.jdbcClient.Main executes SQL commands using a JDBC connection.  
+  This program is provided AS IS and formal support will NOT be provided.
+  This program should not be used in a production environment.
+
+Parameters are passed to a CALL procedure by using the following 
+CALL ... -- INPARM [p1]....    Calls the stored procedure with the specified parameters
+
+Using CL:  [as400 command] will use QSYS.QCMDEXEC to execute the as400 command 
+
+Besides SQL COMMANDS, the following COMMANDS and SUBCOMMANDS are available
+
+!USAGE                          Displays this information
+!HELP                           Displays this information
+!PREPARE [sql statement]        prepares an sql statement
+!EXECUTEQUERY                   Invokes executeQuery on the prepared statement
+!EXECUTEUPDATE                  Invokes executeUpdate on the prepared statement
+!SETPARM [index],[value]        Sets the parameter for the sql statement
+!SETPARMFROMVAR [index],[var]   Sets the parameter using a variable
+!SETRESULTSETTYPE [..]          Sets the results set type for prepare
+!SETRESULTSETCONCURRENCY [..]   ..
+!SETRESULTSETHOLDABILITY [..]   ..
+!REUSE STATEMENT [true|false]   Controls whethe the stmt object is reused
+IGNORE_EXTRA:!PROMPT [string]                Set the string to use for the prompt
+!ECHO [string]                  Echos the string
+!ECHOCOMMAND [true|false]       Should the input command be echod.
+IGNORE_EXTRA:!ECHOCOMMENTS [true|false]      Should the comments be echod.
+!PRINTSTACKTRACE [true|false]   Should the stack trace be printed for SQLExceptions.
+-- [string]                     Specifies a comment
+!SETQUERYTIMEOUT [number]       Sets the query timeout for subsequent statements
+!RESET CONNECTION PROPERTIES    Resets connection properties
+!ADD CONNECTION PROPERTY        Set properties to be used on subsequent connects
+!REUSE CONNECTION [true|false]  Should the connection be reused by connect to 
+!CONNECT TO URL [URL] [USERID=..] [PASSWORD=.*...]  Connect using the URL
+!CONNECT TO SCHEMA [schema]            Reconnect using the current URL to the specified schema
+!CONNECT RESET                  Closes the current connection
+!EXISTFILE                      Indicates if the specified file exists (on the client)
+!GC                             Force the Java garbage collector to run
+!OUTPUT FORMAT [xml | html]     Set the output format to include XML or HTML
+!SHOWMIXEDUX [true | false]     Set if mixed UX strings will be displayed
+!SET AUTOCOMMIT [true|false]    Sets the autocommit value
+!SET TRANSACTIONISOLATION [VALUE] Sets the autocommit value
+                                 Supported values are 
+                               TRANSACTION_READ_UNCOMMITTED
+                               TRANSACTION_READ_COMMITTED
+                               TRANSACTION_REPEATABLE_READ
+                               TRANSACTION_SERIALIZABLE
+!GETSERVERJOBNAME               Returns connection.getServerJobName
+!CLOSESTATEMENTRS [on|off]      Close statement and result set after execution of query default off
+!MEASUREEXECUTE [on|off]        Measure time to do execute
+!CHARACTERDETAILS [on|off]      Turn on to see entire character details -- default of off
+!MANUALFETCH [on|off]           Set if manual fetch operations should be used
+!RS.NEXT,!RS.FIRST, !RS.LAST, !RS.PREVIOUS, !RS.ABSOLUTE pos, !RS.RELATIVE pos, !RS.BEFOREFIRST, !RS.AFTERLAST
+                               Call rs.next,... for manually fetching
+!DMD.GETCOLUMNS catalog, schemaPattern, tableNamePattern, columnNamePattern 
+!DMD.GETTABLES catalog, schemaPattern, tableNamePattern, type1 | type2
+!DMD.GETINDEXINFO catalog, schema, table, booleanUnique, booleanApproximate 
+!DMD.GETSCHEMAS
+!HISTORY.CLEAR                    Clears the stored history
+!HISTORY.SHOW                     Shows the history of commands
+!SETCLITRACE [true|false]         Sets CLI tracing for native JDBC driver -- valid V5R5 and later
+!SETDB2TRACE [0|1|2|3|4]          Sets jdbc tracing for native JDBC driver  -- valid V5R5 and later
+!SYSTEMDEBUGGER                   Starts the system debugger (requires tes.jar on classpath)
+
+Parameters for prepared statements and callable statements may be specified in the following formats
+UX'....'                       Unicode string (in hexadecimal)
+X'....'                        Byte array (in hexademical)
+FILEBLOB=<filename>            A Blob retrieved from the named file
+FILECLOB=<filename>            A clob retrieved from the named file
+SAVEDPARM=<number>             A parameter from a previous CALL statement
+GEN_BYTE_ARRAY+<count>         A generated byte array of count bytes
+GEN_HEX_STRING+<count>         A generated hex string
+GEN_CHAR_ARRAY+<count>C<ccsid> A generated character string
+SQLARRAY[TYPE:e1:e2:...]       A JAVA.SQL.ARRAY type
+                               Types are String:BigDecimal:Date:Time:Timestamp:Blob:Clob:int:short:long:float:double:byteArray
+IGNORE_EXTRA:SQLARRAY[Time:e1 e2 ...]       A JAVA.SQL.ARRAY with time blank sep
+IGNORE_EXTRA:SQLARRAY[Date:e1 e2 ...]       A JAVA.SQL.ARRAY with data blank sep
+SQLARRAY[Timestamp:e1|e2 ...]  A JAVA.SQL.ARRAY with timestamp | sep
+
+The following prefixes are available
+!INVISIBLE:     The command and its results are not echoed
+!SILENT:        The exceptions and warnings from the command are not echoed
+!SILENTRS:      The result sets from the command are not echoed
+
+
+The following 'reflection' based commands are available
+!SETVAR [VARNAME] = [METHODCALL]  Sets a variable use a method.. i.e. 
+                                 SETVAR BLOB = RS.getBlob(1)
+!SETVAR [VARNAME] [PARAMETER SPECIFICATION] Sets a variable using a parameter specification
+!SETNEWVAR [VARNAME] = [CONSTRUCTORCALL]  Sets a variable by calling the contructor
+                                 SETNEWVAR DS = com.ibm.db2.jdbc.app.UDBDataSource()
+!SHOWVARMETHODS [VARNAME]         Shows the methods for a variable
+!CALLMETHOD [METHODCALL]          Calls a method on a variable
+  Hint:  To see a result set use .*CALLMETHOD com.ibm.as400.access.jdbcClient.Main.dispResultSet(RS)
+  Hint:  To access an array use .*SETVAR LIST=java.util.Arrays.asList(ARRAYVARIABLE)
+
+!THREAD [COMMAND]                      Runs a command in its own thread.
+!THREADPERSIST [THREADNAME]            Create a thread that persist.
+!THREADEXEC [THREADNAME] [COMMAND]     Execute a command in a persistent thread.
+!REPEAT [NUMBER] [COMMAND]             Repeat a command a number of times.
+!EXIT_REPEAT_ON_EXCEPTION [false|true] Exit the repeat if an exception occurs. 
+
+>!HELP
+com.ibm.as400.access.jdbcClient.Main executes SQL commands using a JDBC connection.  
+  This program is provided AS IS and formal support will NOT be provided.
+  This program should not be used in a production environment.
+
+Parameters are passed to a CALL procedure by using the following 
+CALL ... -- INPARM [p1]....    Calls the stored procedure with the specified parameters
+
+Using CL:  [as400 command] will use QSYS.QCMDEXEC to execute the as400 command 
+
+Besides SQL COMMANDS, the following COMMANDS and SUBCOMMANDS are available
+
+!USAGE                          Displays this information
+!HELP                           Displays this information
+!PREPARE [sql statement]        prepares an sql statement
+!EXECUTEQUERY                   Invokes executeQuery on the prepared statement
+!EXECUTEUPDATE                  Invokes executeUpdate on the prepared statement
+!SETPARM [index],[value]        Sets the parameter for the sql statement
+!SETPARMFROMVAR [index],[var]   Sets the parameter using a variable
+!SETRESULTSETTYPE [..]          Sets the results set type for prepare
+!SETRESULTSETCONCURRENCY [..]   ..
+!SETRESULTSETHOLDABILITY [..]   ..
+!REUSE STATEMENT [true|false]   Controls whethe the stmt object is reused
+IGNORE_EXTRA:!PROMPT [string]                Set the string to use for the prompt
+!ECHO [string]                  Echos the string
+!ECHOCOMMAND [true|false]       Should the input command be echod.
+IGNORE_EXTRA:!ECHOCOMMENTS [true|false]      Should the comments be echod.
+!PRINTSTACKTRACE [true|false]   Should the stack trace be printed for SQLExceptions.
+-- [string]                     Specifies a comment
+!SETQUERYTIMEOUT [number]       Sets the query timeout for subsequent statements
+!RESET CONNECTION PROPERTIES    Resets connection properties
+!ADD CONNECTION PROPERTY        Set properties to be used on subsequent connects
+!REUSE CONNECTION [true|false]  Should the connection be reused by connect to 
+!CONNECT TO URL [URL] [USERID=..] [PASSWORD=.*...]  Connect using the URL
+!CONNECT TO SCHEMA [schema]            Reconnect using the current URL to the specified schema
+!CONNECT RESET                  Closes the current connection
+!EXISTFILE                      Indicates if the specified file exists (on the client)
+!GC                             Force the Java garbage collector to run
+!OUTPUT FORMAT [xml | html]     Set the output format to include XML or HTML
+!SHOWMIXEDUX [true | false]     Set if mixed UX strings will be displayed
+!SET AUTOCOMMIT [true|false]    Sets the autocommit value
+!SET TRANSACTIONISOLATION [VALUE] Sets the autocommit value
+                                 Supported values are 
+                               TRANSACTION_READ_UNCOMMITTED
+                               TRANSACTION_READ_COMMITTED
+                               TRANSACTION_REPEATABLE_READ
+                               TRANSACTION_SERIALIZABLE
+!GETSERVERJOBNAME               Returns connection.getServerJobName
+!CLOSESTATEMENTRS [on|off]      Close statement and result set after execution of query default off
+!MEASUREEXECUTE [on|off]        Measure time to do execute
+!CHARACTERDETAILS [on|off]      Turn on to see entire character details -- default of off
+!MANUALFETCH [on|off]           Set if manual fetch operations should be used
+!RS.NEXT,!RS.FIRST, !RS.LAST, !RS.PREVIOUS, !RS.ABSOLUTE pos, !RS.RELATIVE pos, !RS.BEFOREFIRST, !RS.AFTERLAST
+                               Call rs.next,... for manually fetching
+!DMD.GETCOLUMNS catalog, schemaPattern, tableNamePattern, columnNamePattern 
+!DMD.GETTABLES catalog, schemaPattern, tableNamePattern, type1 | type2
+!DMD.GETINDEXINFO catalog, schema, table, booleanUnique, booleanApproximate 
+!DMD.GETSCHEMAS
+!HISTORY.CLEAR                    Clears the stored history
+!HISTORY.SHOW                     Shows the history of commands
+!SETCLITRACE [true|false]         Sets CLI tracing for native JDBC driver -- valid V5R5 and later
+!SETDB2TRACE [0|1|2|3|4]          Sets jdbc tracing for native JDBC driver  -- valid V5R5 and later
+!SYSTEMDEBUGGER                   Starts the system debugger (requires tes.jar on classpath)
+
+Parameters for prepared statements and callable statements may be specified in the following formats
+UX'....'                       Unicode string (in hexadecimal)
+X'....'                        Byte array (in hexademical)
+FILEBLOB=<filename>            A Blob retrieved from the named file
+FILECLOB=<filename>            A clob retrieved from the named file
+SAVEDPARM=<number>             A parameter from a previous CALL statement
+GEN_BYTE_ARRAY+<count>         A generated byte array of count bytes
+GEN_HEX_STRING+<count>         A generated hex string
+GEN_CHAR_ARRAY+<count>C<ccsid> A generated character string
+SQLARRAY[TYPE:e1:e2:...]       A JAVA.SQL.ARRAY type
+                               Types are String:BigDecimal:Date:Time:Timestamp:Blob:Clob:int:short:long:float:double:byteArray
+IGNORE_EXTRA:SQLARRAY[Time:e1 e2 ...]       A JAVA.SQL.ARRAY with time blank sep
+IGNORE_EXTRA:SQLARRAY[Date:e1 e2 ...]       A JAVA.SQL.ARRAY with data blank sep
+SQLARRAY[Timestamp:e1|e2 ...]  A JAVA.SQL.ARRAY with timestamp | sep
+
+The following prefixes are available
+!INVISIBLE:     The command and its results are not echoed
+!SILENT:        The exceptions and warnings from the command are not echoed
+!SILENTRS:      The result sets from the command are not echoed
+
+
+The following 'reflection' based commands are available
+!SETVAR [VARNAME] = [METHODCALL]  Sets a variable use a method.. i.e. 
+                                 SETVAR BLOB = RS.getBlob(1)
+!SETVAR [VARNAME] [PARAMETER SPECIFICATION] Sets a variable using a parameter specification
+!SETNEWVAR [VARNAME] = [CONSTRUCTORCALL]  Sets a variable by calling the contructor
+                                 SETNEWVAR DS = com.ibm.db2.jdbc.app.UDBDataSource()
+!SHOWVARMETHODS [VARNAME]         Shows the methods for a variable
+!CALLMETHOD [METHODCALL]          Calls a method on a variable
+  Hint:  To see a result set use.*CALLMETHOD com.ibm.as400.access.jdbcClient.Main.dispResultSet(RS)
+  Hint:  To access an array use.*SETVAR LIST=java.util.Arrays.asList(ARRAYVARIABLE)
+
+!THREAD [COMMAND]                      Runs a command in its own thread.
+!THREADPERSIST [THREADNAME]            Create a thread that persist.
+!THREADEXEC [THREADNAME] [COMMAND]     Execute a command in a persistent thread.
+!REPEAT [NUMBER] [COMMAND]             Repeat a command a number of times.
+!EXIT_REPEAT_ON_EXCEPTION [false|true] Exit the repeat if an exception occurs. 
+
+>
+>!SILENT: DROP TABLE QGPL.JDCJTOpenClientTesting
+>CREATE TABLE QGPL.JDCJTOpenClientTesting(cint int)
+IGNORE_EXTRA:
+IGNORE_EXTRA: *** Warning ***
+IGNORE_EXTRA:
+IGNORE_EXTRA:SQLState: 01567
+IGNORE_EXTRA:Message:.*[SQL7905] Table JDCJTOPENCLIENTTESTING in QGPL created but was not journaled.
+IGNORE_EXTRA:Vendor:   7905
+IGNORE_EXTRA:
+>!MEASUREEXECUTE on
+>!PREPARE insert into QGPL.JDCJTOpenClientTesting VALUES(?)
+>!setparm 1,1
+>!executeUpdate
+TIME: .* ms
+>!MEASUREEXECUTE off
+>DROP TABLE QGPL.JDCJTOpenClientTesting
+>
+>!prepare select cast(? AS INTEGER) from sysibm.sysdummy1
+>!setparm 1,1
+>!executeQuery
+00001
+1
+>
+>!prepare select cast(? AS VARCHAR(80)) from sysibm.sysdummy1
+>!setparm 1,UX'0030'
+>!executeQuery
+00001
+0
+>!setparm 1,GEN_HEX_STRING+70
+GEN_BYTE_ARRAY generated array of size = 70 with checksum of 3385135197
+
+ *** Warning ***
+
+SQLState: 22001
+Message:.*Data truncation
+Vendor:   0
+
+>!executeQuery
+00001
+000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021222324252627
+>!setparm 1,GEN_CHAR_ARRAY+10C37
+CHARARRAY[size=10,CRC32=1457594174,CRC32xor1=1508894062]
+>!executeQuery
+00001
+abcdabcdab
+>
+>
+>!prepare select cast(? AS VARBINARY(80)) from sysibm.sysdummy1
+>!setparm 1,X'0101'
+>!executeQuery
+00001
+0101
+>!setparm 1,GEN_BYTE_ARRAY+10
+GEN_BYTE_ARRAY generated array of size = 10 with checksum of 1164760902
+>!executeQuery
+00001
+00010203040506070809
+>
+>!SILENTRS:select * from sysibm.sysdummy1
+>
+>IBMREQD
+Y
+>
+>
+>!SETVAR JAVAHOME=java.lang.System.getProperty('java.home')
+JAVAHOME=.*
+>!SETNEWVAR STRING=java.lang.String(hi)
+STRING=hi
+>!SETVAR UNICODE UX'0030'
+UNICODE=0
+>!SETVAR BADSET
+ERROR:  '=' or ' ' not found after SETVAR [VAR]
+>!SETVAR
+ERROR:  '=' or ' ' not found after SETVAR [VAR]
+>!SETNEWVAR BOGUS
+line missing =
+>!SETNEWVAR
+line missing =
+>
+>!SETNEWVAR SMALLOBJECT=java.lang.Object()
+SMALLOBJECT=java.lang.Object@.*
+>!SHOWVARMETHODS SMALLOBJECT
+boolean equals(java.lang.Object)
+java.lang.Class getClass()
+int hashCode()
+void notify()
+void notifyAll()
+java.lang.String toString()
+void wait()
+void wait(long)
+void wait(long,int)
+>
+>
+>!REPEAT
+
+*** SQLException caught ***
+Statement was REPEAT
+SQLState: 42601
+Message:.*[SQL0199] Keyword REPEAT not expected.*
+... Syntax error at 1 in REPEAT
+... =====>REPEAT
+Vendor:   -199
+
+>!REPEAT 2
+Error.  No count for repeat
+>!REPEAT -1 select '1' from sysibm.sysdummy1
+Error.. invalid repeat count -1
+>!REPEAT 2 select '1' from sysibm.sysdummy1
+Iteration 1 of 2
+select '1' from sysibm.sysdummy1
+00001
+1
+Iteration 2 of 2
+select '1' from sysibm.sysdummy1
+00001
+1
+>
+>
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>
+>!REUSE STATEMENT true
+>!REUSE STATEMENT dummy
+REUSE STATEMENT:  Didn't understand "dummy"
+  Usage:  REUSE STATEMENT true
+          REUSE STATEMENT false
+>!REUSE STATEMENT false
+>
+>!ECHO This is a test
+>!ECHOCOMMAND true
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>!ECHOCOMMAND false
+>IBMREQD
+Y
+>>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>!ECHOCOMMAND off
+>IBMREQD
+Y
+>Invalid arg 'BOGUS' for ECHOCOMMAND
+>>
+>
+>
+>!PROMPT
+values 1
+00001
+1
+values 2
+00001
+2
+!PROMPT P>
+P>values 1
+00001
+1
+P>values 2
+00001
+2
+P>!PROMPT >
+>
+>
+>
+>
+>!SETQUERYTIMEOUT BOGUS_VALUE
+Unable to parse (BOGUS_VALUE)
+>!SETQUERYTIMEOUT 100
+-->Query timeout set to 100
+>!RESET CONNECTION PROPERTIES
+>!ADD CONNECTION PROPERTY translate hex=character
+>!ADD CONNECTION PROPERTY autocommit=true
+>!ADD CONNECTION PROPERTY big decimal=true
+>!ADD CONNECTION PROPERTY translate hex=character
+>!ADD CONNECTION PROPERTY autocommit=true
+>!ADD CONNECTION PROPERTY big decimal=true
+>!ADD CONNECTION PROPERTY translate hex=character;autocommit=true;big decimal=true
+>
+>
+>
+>
+>!REUSE CONNECTION true
+>!REUSE CONNECTION bogus
+REUSE CONNECTION:  Didn't understand "bogus"
+  Usage:  REUSE CONNECTION true
+          REUSE CONNECTION false
+>!REUSE CONNECTION false
+>
+>!CONNECT TO SCHEMA QGPL
+
+ *** Warning ***
+
+SQLState: 01H20
+Message:.*Extra connection property is ignored.
+Vendor:   -99999
+
+SQLState: HY001
+Message:.*[PWS0082] 1 library(s) not added to the library list.
+Vendor:   1301
+
+>!CONNECT RESET
+>!CONNECT TO SCHEMA QGPL
+
+ *** Warning ***
+
+SQLState: 01H20
+Message:.*Extra connection property is ignored.
+Vendor:   -99999
+
+SQLState: HY001
+Message:.*[PWS0082] 1 library(s) not added to the library list.
+Vendor:   1301
+
+>
+>!EXISTFILE /tmp/xThisFilesDoesNotExist
+EXISTFILE /tmp/xThisFilesDoesNotExist: NO
+>!EXISTFILE jdbc
+EXISTFILE jdbc: YES
+>
+>!GC
+GC ran in .* milliseconds
+>!SHOWMIXEDUX true
+>SELECT UX'0030003100e001231f0000300031' from sysibm.sysdummy1
+00001
+01UX''00e001231f00''01
+>!PREPARE SELECT CAST(? AS VARGRAPHIC(16000) CCSID 1200) from sysibm.sysdummy1
+>!SETPARM 1,GEN_CHAR_ARRAY+100C37
+CHARARRAY[size=100,CRC32=1237288030,CRC32xor1=3060845829]
+>!executeQuery
+00001
+abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd
+>!SETPARM 1,GEN_CHAR_ARRAY+100C835
+CHARARRAY[size=100,CRC32=2538745265,CRC32xor1=1755145450]
+>!executeQuery
+00001
+UX''5e035f17672b537859cb8679500c89f4985382718f44977e52f15e035f17672b537859cb8679500c89f4985382718f44977e52f15e035f17672b537859cb8679500c89f4985382718f44977e52f15e035f17672b537859cb8679500c89f4985382718f44977e52f15e035f17672b537859cb8679500c89f4985382718f44977e52f15e035f17672b537859cb8679500c89f4985382718f44977e52f15e035f17672b537859cb8679500c89f4985382718f44977e52f15e035f17672b537859cb8679500c89f49853''
+>!SETPARM 1,GEN_CHAR_ARRAY+100C1200
+CHARARRAY[size=100,CRC32=1770645740,CRC32xor1=2521211319]
+>!executeQuery
+00001
+UX''00c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a03055''
+>!SETPARM 1,GEN_CHAR_ARRAY+100C1208
+CHARARRAY[size=100,CRC32=1770645740,CRC32xor1=2521211319]
+>!executeQuery
+00001
+UX''00c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a0305531ff306600c035c0b5a03055''
+>!SETPARM 1,GEN_CHAR_ARRAY+100C13488
+CHARARRAY[size=100,CRC32=4032232825,CRC32xor1=261731362]
+>!executeQuery
+00001
+UX''305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff3066305531ff30663055''
+>!SETPARM 1,GEN_CHAR_ARRAY+100C1
+CHARARRAY[size=100,CRC32=3379669110,CRC32xor1=918479149]
+>!executeQuery
+00001
+UX''0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000''
+>!SETPARM 1,'hi'
+>!executeQuery
+00001
+hi
+>!SETPARM 1,'hi
+>!executeQuery
+00001
+hi
+>
+>
+>!SHOWMIXEDUX false
+>!SHOWMIXEDUX bogus
+Error.  Did not recognize SHOWMIXEDUX value  'BOGUS'
+>
+>!SET AUTOCOMMIT false
+>
+>!SET TRANSACTIONISOLATION TRANSACTION_READ_UNCOMMITTED
+>!SET TRANSACTIONISOLATION TRANSACTION_READ_COMMITTED
+>!SET TRANSACTIONISOLATION TRANSACTION_REPEATABLE_READ
+>!SET TRANSACTIONISOLATION TRANSACTION_SERIALIZABLE
+>!SET TRANSACTIONISOLATION bogus
+SET TRANSACTIONISOLATION:  Didn't understand "bogus"
+  Usage:  SET TRANSACTIONISOLATION TRANSACTION_READ_UNCOMMITTED
+          SET TRANSACTIONISOLATION TRANSACTION_READ_COMMITTED
+          SET TRANSACTIONISOLATION TRANSACTION_REPEATABLE_READ
+          SET TRANSACTIONISOLATION TRANSACTION_SERIALIZABLE
+>
+>
+>
+>!SET AUTOCOMMIT bogus
+SET AUTOCOMMIT:  Didn't understand "bogus"
+  Usage:  SET AUTOCOMMIT true
+          SET AUTOCOMMIT false
+>!SET AUTOCOMMIT true
+>
+>
+>!GETSERVERJOBNAME
+getServerJobName returned .*
+>
+>!CLOSESTATEMENTRS  bogus
+Invalid arg 'BOGUS' for closeStatementRS
+>!CLOSESTATEMENTRS  true
+>!CLOSESTATEMENTRS  false
+>!CLOSESTATEMENTRS  on
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>!PREPARE select * from sysibm.sysdummy1
+>!executeQuery
+IBMREQD
+Y
+>!PREPARE select * from sysibm.sysdummy1
+>!executeQuery
+IBMREQD
+Y
+>!CLOSESTATEMENTRS off
+>!CLOSESTATEMENTRS bogus
+Invalid arg 'BOGUS' for closeStatementRS
+>
+>
+>!CHARACTERDETAILS on
+>!CHARACTERDETAILS off
+>!CHARACTERDETAILS true
+>!CHARACTERDETAILS false
+>!CHARACTERDETAILS bogus
+Invalid arg 'BOGUS' for CHARACTERDETAILS
+>
+>!DMD.GETCOLUMNS null,.*,JDCOV1,%
+Calling dmd.getColumns(null, .*, JDCOV1, %)
+IGNORE_EXTRA:TABLE_CAT,TABLE_SCHEM,TABLE_NAME,COLUMN_NAME,DATA_TYPE,TYPE_NAME,COLUMN_SIZE,BUFFER_LENGTH,DECIMAL_DIGITS,NUM_PREC_RADIX,NULLABLE,REMARKS,COLUMN_DEF,SQL_DATA_TYPE,SQL_DATETIME_SUB,CHAR_OCTET_LENGTH,ORDINAL_POSITION,IS_NULLABLE,SCOPE_CATALOG,SCOPE_SCHEMA,SCOPE_TABLE,SOURCE_DATA_TYPE,IS_AUTOINCREMENT,IS_GENERATEDCOLUMN
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+IGNORE_EXTRA:TABLE_CAT,TABLE_SCHEM,TABLE_NAME,COLUMN_NAME,DATA_TYPE,TYPE_NAME,COLUMN_SIZE,BUFFER_LENGTH,DECIMAL_DIGITS,NUM_PREC_RADIX,NULLABLE,REMARKS,COLUMN_DEF,SQL_DATA_TYPE,SQL_DATETIME_SUB,CHAR_OCTET_LENGTH,ORDINAL_POSITION,IS_NULLABLE,SCOPE_CATLOG,SCOPE_SCHEMA,SCOPE_TABLE,SOURCE_DATA_TYPE,IS_AUTOINCREMENT
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO
+>!DMD.GETCOLUMNS null,null,JDCOV1,%
+Calling dmd.getColumns(null, null, JDCOV1, %)
+IGNORE_EXTRA:TABLE_CAT,TABLE_SCHEM,TABLE_NAME,COLUMN_NAME,DATA_TYPE,TYPE_NAME,COLUMN_SIZE,BUFFER_LENGTH,DECIMAL_DIGITS,NUM_PREC_RADIX,NULLABLE,REMARKS,COLUMN_DEF,SQL_DATA_TYPE,SQL_DATETIME_SUB,CHAR_OCTET_LENGTH,ORDINAL_POSITION,IS_NULLABLE,SCOPE_CATALOG,SCOPE_SCHEMA,SCOPE_TABLE,SOURCE_DATA_TYPE,IS_AUTOINCREMENT,IS_GENERATEDCOLUMN
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+IGNORE_EXTRA:TABLE_CAT,TABLE_SCHEM,TABLE_NAME,COLUMN_NAME,DATA_TYPE,TYPE_NAME,COLUMN_SIZE,BUFFER_LENGTH,DECIMAL_DIGITS,NUM_PREC_RADIX,NULLABLE,REMARKS,COLUMN_DEF,SQL_DATA_TYPE,SQL_DATETIME_SUB,CHAR_OCTET_LENGTH,ORDINAL_POSITION,IS_NULLABLE,SCOPE_CATLOG,SCOPE_SCHEMA,SCOPE_TABLE,SOURCE_DATA_TYPE,IS_AUTOINCREMENT
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+>!DMD.GETCOLUMNS null,null,JDCOV1,null
+Calling dmd.getColumns(null, null, JDCOV1, null)
+IGNORE_EXTRA:TABLE_CAT,TABLE_SCHEM,TABLE_NAME,COLUMN_NAME,DATA_TYPE,TYPE_NAME,COLUMN_SIZE,BUFFER_LENGTH,DECIMAL_DIGITS,NUM_PREC_RADIX,NULLABLE,REMARKS,COLUMN_DEF,SQL_DATA_TYPE,SQL_DATETIME_SUB,CHAR_OCTET_LENGTH,ORDINAL_POSITION,IS_NULLABLE,SCOPE_CATALOG,SCOPE_SCHEMA,SCOPE_TABLE,SOURCE_DATA_TYPE,IS_AUTOINCREMENT,IS_GENERATEDCOLUMN
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+IGNORE_EXTRA:TABLE_CAT,TABLE_SCHEM,TABLE_NAME,COLUMN_NAME,DATA_TYPE,TYPE_NAME,COLUMN_SIZE,BUFFER_LENGTH,DECIMAL_DIGITS,NUM_PREC_RADIX,NULLABLE,REMARKS,COLUMN_DEF,SQL_DATA_TYPE,SQL_DATETIME_SUB,CHAR_OCTET_LENGTH,ORDINAL_POSITION,IS_NULLABLE,SCOPE_CATLOG,SCOPE_SCHEMA,SCOPE_TABLE,SOURCE_DATA_TYPE,IS_AUTOINCREMENT
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+>!DMD.GETCOLUMNS null,.*,null,JDCOV1COL1
+Calling dmd.getColumns(null, .*, null, JDCOV1COL1)
+IGNORE_EXTRA:TABLE_CAT,TABLE_SCHEM,TABLE_NAME,COLUMN_NAME,DATA_TYPE,TYPE_NAME,COLUMN_SIZE,BUFFER_LENGTH,DECIMAL_DIGITS,NUM_PREC_RADIX,NULLABLE,REMARKS,COLUMN_DEF,SQL_DATA_TYPE,SQL_DATETIME_SUB,CHAR_OCTET_LENGTH,ORDINAL_POSITION,IS_NULLABLE,SCOPE_CATALOG,SCOPE_SCHEMA,SCOPE_TABLE,SOURCE_DATA_TYPE,IS_AUTOINCREMENT,IS_GENERATEDCOLUMN
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO,NO
+IGNORE_EXTRA:TABLE_CAT,TABLE_SCHEM,TABLE_NAME,COLUMN_NAME,DATA_TYPE,TYPE_NAME,COLUMN_SIZE,BUFFER_LENGTH,DECIMAL_DIGITS,NUM_PREC_RADIX,NULLABLE,REMARKS,COLUMN_DEF,SQL_DATA_TYPE,SQL_DATETIME_SUB,CHAR_OCTET_LENGTH,ORDINAL_POSITION,IS_NULLABLE,SCOPE_CATLOG,SCOPE_SCHEMA,SCOPE_TABLE,SOURCE_DATA_TYPE,IS_AUTOINCREMENT
+IGNORE_EXTRA:.*,.*,JDCOV1,JDCOV1COL1,4,INTEGER,10,4,0,10,1,null,null,4,null,null,1,YES,null,null,null,null,NO
+>!DMD.GETTABLES null,.*,JDCOV1,0
+Calling dmd.getTables(null, .*, JDCOV1, 0=[0])
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAME,SELF_REFERENCING_COL_NAME,REF_GENERATION
+>!DMD.GETTABLES null,null,JDCOV1,0
+Calling dmd.getTables(null, null, JDCOV1, 0=[0])
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAME,SELF_REFERENCING_COL_NAME,REF_GENERATION
+>!DMD.GETTABLES null,.*,JDCOV1,null
+Calling dmd.getTables(null, .*, JDCOV1, null=null)
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAME,SELF_REFERENCING_COL_NAME,REF_GENERATION
+.*,.*,JDCOV1,TABLE,null,null,null,null,null,null
+>!DMD.GETTABLES null,.*,null,TABLE|INDEX
+Calling dmd.getTables(null, .*, null, INDEX=[TABLE,INDEX])
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAME,SELF_REFERENCING_COL_NAME,REF_GENERATION
+.*,.*,ATOM,TABLE,null,null,null,null,null,null
+.*,.*,JDCOV1,TABLE,null,null,null,null,null,null
+>!DMD.GETINDEXINFO null,.*,JDCOV1,false,false
+Calling dmd.getIndexInfo(null, .*, JDCOV1, false,false)
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,NON_UNIQUE,INDEX_QUALIFIER,INDEX_NAME,TYPE,ORDINAL_POSITION,COLUMN_NAME,ASC_OR_DESC,CARDINALITY,PAGES,FILTER_CONDITION
+.*,.*,JDCOV1,null,null,null,0,null,null,null,0,1,null
+>!DMD.GETINDEXINFO null,null,JDCOV1,false,false
+Calling dmd.getIndexInfo(null, null, JDCOV1, false,false)
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,NON_UNIQUE,INDEX_QUALIFIER,INDEX_NAME,TYPE,ORDINAL_POSITION,COLUMN_NAME,ASC_OR_DESC,CARDINALITY,PAGES,FILTER_CONDITION
+.*,.*,JDCOV1,null,null,null,0,null,null,null,0,1,null
+IGNORE_EXTRA:.*,.*,JDCOV1,null,null,null,0,null,null,null,0,1,null
+IGNORE_EXTRA:.*,.*,JDCOV1,null,null,null,0,null,null,null,0,1,null
+IGNORE_EXTRA:.*,.*,JDCOV1,null,null,null,0,null,null,null,0,1,null
+IGNORE_EXTRA:.*,.*,JDCOV1,null,null,null,0,null,null,null,0,1,null
+>!DMD.GETINDEXINFO null,.*,null,false,false
+Calling dmd.getIndexInfo(null, .*, null, false,false)
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,NON_UNIQUE,INDEX_QUALIFIER,INDEX_NAME,TYPE,ORDINAL_POSITION,COLUMN_NAME,ASC_OR_DESC,CARDINALITY,PAGES,FILTER_CONDITION
+.*,.*,ATOM,null,null,null,0,null,null,null,1,1,null
+.*,.*,JDCOV1,null,null,null,0,null,null,null,0,1,null
+>
+>
+>!HISTORY.CLEAR
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>!HISTORY.SHOW
+select * from sysibm.sysdummy1
+>
+>!SETCLITRACE true
+>!SETCLITRACE false
+>!SETCLITRACE bogus
+SETCLITRACE:  Didn't understand "bogus"
+  Usage:  SETCLITRACE true
+          SETCLITRACE false
+>
+>!SETDB2TRACE true
+>!SETDB2TRACE false
+>!SETDB2TRACE 0
+>!SETDB2TRACE 1
+>!SETDB2TRACE 2
+>!SETDB2TRACE 3
+>!SETDB2TRACE 0
+>!SETDB2TRACE bogus
+Exception while setting cli trace
+Exception java.lang.NumberFormatException: For input string: "bogus"
+>
+>
+>!SYSTEMDEBUGGER
+Exception starting  SYSTEMDEBUGGER
+Exception java.lang.ClassNotFoundException: com.ibm.iseries.debug.util.Util
+>
+>CL:DSPLIBL
+>-- Greater than 10
+>CL:          DSPLIBL
+>-- Greater than 100
+>CL:.*DSPLIBL
+>-- Greater than 1000
+>CL:.*DSPLIBL
+>-- Another type of comment
+>// Another type of comment
+>/* Another type of comment */
+>!ECHOCOMMENTS true
+>-- Another type of comment
+-- Another type of comment
+>// Another type of comment
+// Another type of comment
+>/* Another type of comment */
+/* Another type of comment */
+>!-- Another type of comment
+-- Another type of comment
+>!// Another type of comment
+// Another type of comment
+>!/* Another type of comment */
+/* Another type of comment */
+>
+>!ECHOCOMMENTS false
+>// Another type of comment
+>!ECHOCOMMENTS on
+>// Another type of comment
+// Another type of comment
+>!ECHOCOMMENTS off
+>!ECHOCOMMENTS bogus
+Invalid arg 'BOGUS' for ECHOCOMMENTS
+>!ECHOCOMMENTS true
+>
+>!SETRESULTSETTYPE FORWARD_ONLY
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>!SETRESULTSETTYPE SCROLL_INSENSITIVE
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>!SETRESULTSETTYPE SCROLL_SENSITIVE
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>!SETRESULTSETTYPE bogus
+Value of 'bogus not valid use
+     FORWARD_ONLY, SCROLL_INSENSITIVE, or SCROLL_SENSITIVE
+>!SETRESULTSETTYPE FORWARD_ONLY
+>
+>!SETRESULTSETCONCURRENCY READ_ONLY
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+>!SETRESULTSETCONCURRENCY UPDATABLE
+>select * from sysibm.sysdummy1
+IBMREQD
+Y
+
+ *** Warning ***
+
+SQLState: 01S02
+Message:.*Option value changed.
+Vendor:   -99999
+
+>!SETRESULTSETCONCURRENCY bogus
+Value of 'CURRENCY bogus not valid. Use
+ READ_ONLY or UPDATABLE 
+>!SETRESULTSETCONCURRENCY READ_ONLY
+>
+>!SETRESULTSETHOLDABILITY HOLD
+>!SETRESULTSETHOLDABILITY CLOSE
+>!SETRESULTSETHOLDABILITY bogus
+Value of 'DABILITY bogus not valid. Use
+ HOLD_CURSORS_OVER_COMMIT or CLOSE_CURSORS_AT_COMMIT
+>
+>
+>
+>!prepare select cast(? AS VARCHAR(1)) from sysibm.sysdummy1
+>!SETVAR UNICODE UX'003000310032'
+UNICODE=012
+>!SETPARMFROMVAR 1,UNICODE
+
+ *** Warning ***
+
+SQLState: 22001
+Message:.*Data truncation
+Vendor:   0
+
+>!executeQuery
+00001
+0
+>!SETPARMFROMVAR 1 NO COMMA
+UNABLE to find comma for SETPARM  --> SETPARM [index],[value]
+>!SETPARMFROMVAR INVALID INDEX,UNICODE
+
+*** exception caught *** java.lang.NumberFormatException: For input string: "INVALID INDEX"
+Statement was INVALID INDEX,UNICODE
+>!SETPARMFROMVAR 1,VARIABLE_NOT_FOUND
+Unable to find object for variable VARIABLE_NOT_FOUND
+Valid variables are the following
+STMT
+PSTMT
+MAIN
+JAVAHOME
+STRING
+CON
+SMALLOBJECT
+UNICODE
+RS
+>!SETPARM NOCOMMA
+UNABLE to find comma for SETPARM  --> SETPARM [index],[value]
+>
+>!CALLMETHOD CON.commit()
+Call returned null
+>!CALLMETHOD UNICODE.toString()
+Call returned 012
+>-- error cases
+-- error cases
+>!CALLMETHOD UNICODE
+No matching method found, possible errors are the following:
+ERROR:  could find ( in UNICODE
+Call returned null
+>!CALLMETHOD
+No matching method found, possible errors are the following:
+ERROR:  could find ( in 
+Call returned null
+>
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf PASSWORD=.*
+>values current user
+00001
+NEWTONJUDF
+>
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf
+Usage:  CONNECT TO URL [URL] [USERID=XXXX] [PASSWORD=.*YYYY]
+  i.e.  CONNECT TO URL jdbc:db2:localhost USERID=MYUSER PASSWORD=.*XXXXX
+        CONNECT TO URL jdbc:db2://localhost/*LOCAL USERID=MYUSER PASSWORD=.*XXXXX
+        CONNECT TO URL jdbc:db2:SAMPLE\;transaction isolation=serializable USERID=MYUSER PASSWORD=.*XXXXXXX
+>!CONNECT TO URL jdbc:as400://.*
+Usage:  CONNECT TO URL [URL] [USERID=XXXX] [PASSWORD=.*YYYY]
+  i.e.  CONNECT TO URL jdbc:db2:localhost USERID=MYUSER PASSWORD=.*XXXXX
+        CONNECT TO URL jdbc:db2://localhost/*LOCAL USERID=MYUSER PASSWORD=.*XXXXX
+        CONNECT TO URL jdbc:db2:SAMPLE\;transaction isolation=serializable USERID=MYUSER PASSWORD=.*XXXXXXX
+>
+>!MEASUREEXECUTE ON
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf PASSWORD=.*
+CONNECT TIME: .* ms
+>!CONNECT TO SCHEMA .*
+CONNECT TIME: .* ms
+
+ *** Warning ***
+
+SQLState: 01H20
+Message:.*Extra connection property is ignored.
+Vendor:   -99999
+
+>!MEASUREEXECUTE OFF
+>
+>-- get a warning
+-- get a warning
+>!CONNECT TO URL jdbc:as400://.*;bad property=true USERID=newtonjudf PASSWORD=.*
+
+ *** Warning ***
+
+SQLState: 01H20
+Message:.*Extra connection property is ignored.
+Vendor:   -99999
+
+>
+>-- get an error
+-- get an error
+>!CONNECT TO URL jdbc:bogusdriver:neverConnects USERID=newtonjudf PASSWORD=.*
+Exception java.sql.SQLException: No suitable driver.*
+Usage:  CONNECT TO URL [URL] [USERID=XXXX] [PASSWORD=.*YYYY]
+  i.e.  CONNECT TO URL jdbc:db2:localhost USERID=MYUSER PASSWORD=.*XXXXX
+        CONNECT TO URL jdbc:db2://localhost/*LOCAL USERID=MYUSER PASSWORD=.*XXXXX
+        CONNECT TO URL jdbc:db2:SAMPLE\;transaction isolation=serializable USERID=MYUSER PASSWORD=.*XXXXXXX
+>
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf PASSWORD=.*
+>
+>
+>!EXIT_REPEAT_ON_EXCEPTION TRUE
+>!EXIT_REPEAT_ON_EXCEPTION ON
+>!EXIT_REPEAT_ON_EXCEPTION FALSE
+>!EXIT_REPEAT_ON_EXCEPTION OFF
+>!EXIT_REPEAT_ON_EXCEPTION bogus
+Invalid arg 'BOGUS' for EXIT REPEAT ON EXCEPTION
+>!EXIT REPEAT ON EXCEPTION TRUE
+>!EXIT REPEAT ON EXCEPTION ON
+>!EXIT REPEAT ON EXCEPTION FALSE
+>!EXIT REPEAT ON EXCEPTION OFF
+>!EXIT REPEAT ON EXCEPTION bogus
+Invalid arg 'BOGUS' for EXIT REPEAT ON EXCEPTION
+>
+>-- Different output types
+-- Different output types
+>
+>SELECT BLOB(X'ff') from sysibm.sysdummy1
+00001
+ff
+>!SILENT: DROP TABLE .*.VARBIN
+>CREATE TABLE .*.VARBIN(C1 VARBINARY(10))
+>INSERT INTO .*.VARBIN values(null)
+>select * from .*.VARBIN
+C1
+null
+>DROP TABLE .*.VARBIN
+>!prepare select CAST(? AS VARBINARY(30000)) from sysibm.sysdummy1
+>!setparm 1,GEN_BYTE_ARRAY+256
+GEN_BYTE_ARRAY generated array of size = 256 with checksum of 688229491
+>!executeQuery
+00001
+000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff
+>!setparm 1,GEN_BYTE_ARRAY+25000
+GEN_BYTE_ARRAY generated array of size = 25000 with checksum of 1560674154
+>!executeQuery
+00001
+ARRAY[size=25000,CRC32=1560674154]
+>
+>
+>-- invalid escape
+-- invalid escape
+>Exception reading: java.sql.SQLException: Escape sequence '\u003'' invalid in select '\u003' from sysibm.sysdummy1
+>Exception reading: java.sql.SQLException: Escape sequence '\u00' ' invalid in select '\u00' from sysibm.sysdummy1
+>Exception reading: java.sql.SQLException: Escape sequence '\u0' f' invalid in select '\u0' from sysibm.sysdummy1
+>Exception reading: java.sql.SQLException: Escape sequence '\u' fr' invalid in select '\u' from sysibm.sysdummy1
+>
+>Exception reading: java.sql.SQLException: Escape sequence '\u003'' invalid in values '\u003'
+>Exception reading: java.sql.SQLException: Escape sequence '\u00'' invalid in values '\u00'
+>Exception reading: java.sql.SQLException: Escape sequence '\u0'' invalid in values '\u0'
+>Exception reading: java.sql.SQLException: Escape sequence '\u'' invalid in values '\u'
+>
+>
+>-- CLEANUP
+-- CLEANUP
+>DROP TABLE .*.JDCOV1
+>
+>
+>!exit

@@ -1638,8 +1638,7 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
 		
 		if(isToolboxDriver() || getDriver () == JDTestDriver.DRIVER_JTOPENLITE )
                     expectedValue = "0.0000001600";
-                else if ((jdk_ <= JVMInfo.JDK_142) ||
-                        ((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0 ))  ) {
+                else if (getDriver () == JDTestDriver.DRIVER_NATIVE) {
                     expectedValue = "0.0000001600";
                 }
                 rs.close(); 
@@ -1683,20 +1682,13 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
                 PreparedStatement ps;
                 ps = connection_.prepareStatement ( "select c1 from " + tableName + " where c1 =?");
                 BigDecimal bd; 
-                if (jdk_ <= JVMInfo.JDK_142) {
-                  bd = new BigDecimal("1600000000"); 
-                } else {
                   bd = new BigDecimal (new BigInteger("16"),-8 ); 
-                }
                 
                 ps.setBigDecimal (1, bd);
                 ResultSet rs = ps.executeQuery();
                 rs.next();
                 String value=rs.getString(1);
                 String expectedValue = "1600000000.00"; 
-                if (jdk_ <= JVMInfo.JDK_142) {
-                  expectedValue = "1600000000.00";
-                }
                 rs.close(); 
                 statement_.executeUpdate("DROP TABLE "+tableName);
                 assertCondition(expectedValue.equals(value), "value("+value+") != "+expectedValue+added);
@@ -1743,8 +1735,7 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
                 String expectedValue = "1.600E-7"; 
                 if(isToolboxDriver() || getDriver () == JDTestDriver.DRIVER_JTOPENLITE)
                     expectedValue = "0.0000001600";
-                else if ((jdk_ <= JVMInfo.JDK_142)  ||
-                    ((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0 ))) {
+                else if (getDriver () == JDTestDriver.DRIVER_NATIVE)  {
                   expectedValue = "0.0000001600";
                 }
                 rs.close(); 
@@ -1788,20 +1779,13 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
                 PreparedStatement ps;
                 ps = connection_.prepareStatement ( "select c1 from " + tableName + " where c1 =?");
                 BigDecimal bd; 
-		if (jdk_ <= JVMInfo.JDK_142) {
-                  bd = new BigDecimal("1600000000"); 
-                } else {
                   bd = new BigDecimal (new BigInteger("16"),-8 ); 
-                }
                 
                 ps.setBigDecimal (1, bd);
                 ResultSet rs = ps.executeQuery();
                 rs.next();
                 String value=rs.getString(1);
                 String expectedValue = "1600000000.00"; 
-                if (JVMInfo.getJDK() <= JVMInfo.JDK_142) {
-                  expectedValue = "1600000000.00";
-                }
                 rs.close(); 
                 statement_.executeUpdate("DROP TABLE "+tableName);
                 assertCondition(expectedValue.equals(value), "value("+value+") != "+expectedValue+added);
@@ -1918,9 +1902,6 @@ setBigDecimal() - Set an DFP16 parameter -- maximum value .
     public void Var053()
     {
 	String expected="9.999999999999999E+384";
-	if (getJDK() <= JVMInfo.JDK_142) {
-	    expected = "9999999999999999000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"; 
-	}
 	testDfp(JDPSTest.PSTEST_SETDFP16, "9.999999999999999E384", expected, null); 
     }
     
@@ -1931,9 +1912,6 @@ setBigDecimal() - Set an DFP16 parameter -- minimum positive value .
     public void Var054()
     {
 	String expected="1.0E-383";
-	if (getJDK() <=  JVMInfo.JDK_142) {
-              expected="0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010";
-	}
 
 
         testDfp(JDPSTest.PSTEST_SETDFP16, "1.0E-383",  expected, null ); 
@@ -2001,11 +1979,7 @@ setBigDecimal() - Set an DFP16 parameter -- minimum positive value .
               {"123456789012345.6",            "123456789012345.6",      null, "Without E"},              
               {"1234567890123456.0000000",     "1234567890123456",       null, "Without E"},              
           };
-	  if (JVMInfo.getJDK() <=JVMInfo.JDK_142) {
-	      notApplicable("JDK 1.5 and later test"); 
-	  } else { 
 	      testDfp(JDPSTest.PSTEST_SETDFP16, testValues);
-	  }
         }
 
     
@@ -2033,13 +2007,9 @@ setBigDecimal() - Set an DFP34 parameter -- maximum value .
 **/
     public void Var060()
     {
-	  if (getJDK() <= JVMInfo.JDK_142) {
-	      notApplicable("JDK 1.5 and later test"); 
-	  } else { 
 	      String expected = "9.999999999999999000000000000000000E+6144";
 
 	      testDfp(JDPSTest.PSTEST_SETDFP34, "9.999999999999999E6144", expected, null);
-	  }
     }
     
     
@@ -2048,13 +2018,9 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
 **/
     public void Var061()
     {
-	  if (getJDK() <= JVMInfo.JDK_142) {
-	      notApplicable("JDK 1.5 and later test"); 
-	  } else {
 	      String expected = "1.0E-6143";
 
 	      testDfp(JDPSTest.PSTEST_SETDFP34, "1.0E-6143",  expected, null );
-	  }
     }
     
     /**
@@ -2132,16 +2098,12 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
           };
 
 
-	  if (getJDK() <= JVMInfo.JDK_142) {
-	      notApplicable("JDK 1.5 and later test"); 
-	  } else {
 
 	      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
 	      } 
 
 
 	      testDfp(JDPSTest.PSTEST_SETDFP34, testValues);
-	  }
         }
 
 

@@ -1277,20 +1277,17 @@ public class JDStatementStressTest extends JDTestcase {
 
   }
 
-  public void resetConnection() throws SQLException {
+  public void resetConnection() throws Exception {
     if (connection_ != null) {
       connection_.close();
     }
 
     if (getDriver() == JDTestDriver.DRIVER_JCC) {
       // JCC doesn't have these properties
-      connection_ = DriverManager.getConnection(baseURL_,
-          systemObject_.getUserId(),  PasswordVault.decryptPasswordLeak(encryptedPassword_));
+      connection_ = testDriver_.getConnection(baseURL_,systemObject_.getUserId(), encryptedPassword_);
 
     } else {
-      connection_ = DriverManager.getConnection(
-          baseURL_ + ";errors=full;lazy close=true", systemObject_.getUserId(),
-          PasswordVault.decryptPasswordLeak(encryptedPassword_));
+      connection_ = testDriver_.getConnection(baseURL_+ ";errors=full;lazy close=true",systemObject_.getUserId(), encryptedPassword_);
     }
 
     statement_ = connection_.createStatement();

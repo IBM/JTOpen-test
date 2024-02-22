@@ -1,0 +1,14 @@
+!ECHOCOMMAND true
+!PRINTSTACKTRACE false
+-- Testcase to test the coverage of the built in JDBC client
+-- Testcase for higher level paths
+
+!SETNEWVAR client=com.ibm.as400.access.jdbcClient.Main('jdbc:badurl','user','password')
+
+!SETNEWVAR client=com.ibm.as400.access.jdbcClient.Main(BASEURL,TESTUSER,TESTPASS)
+!CALLMETHOD client.useConnectionPool(true)
+
+!CONNECT TO URL BASEURL USERID=TESTUSER PASSWORD=TESTPASS OTHERSTUFF
+
+
+!SYSTEMDEBUGGER

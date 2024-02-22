@@ -1701,9 +1701,7 @@ This is ok.
                     String expectedValue = "0.0000001700";
                     if(isToolboxDriver())
                         expectedValue = "0.0000001700";  //@big TB always this format
-                    else if (jdk_ <= JVMInfo.JDK_142) {
-                        expectedValue = "0.0000001700";
-                    }else if ( isJdbc40()) {
+                    else if ( isJdbc40()) {
                         if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
                                 (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
                             // In V5R4 the native driver still returns the old value 
@@ -1758,11 +1756,7 @@ This is ok.
 		  ResultSet rs = ps.executeQuery(); 
 		  rs.next(); 
 		  BigDecimal bd; 
-		  if (jdk_ <= JVMInfo.JDK_142) {
-		      bd = new BigDecimal("1700000000"); 
-		  } else {
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
-		  }
 
 		  rs.updateBigDecimal (1, bd);
 		  rs.updateRow();
@@ -1772,7 +1766,7 @@ This is ok.
 		  rs.next();
 		  String value=rs.getString(1);
 		  String expectedValue = "1700000000.00"; 
-		  if (jdk_ <= JVMInfo.JDK_142) {
+		  if (false) {
 		      expectedValue = "1700000000.00";
 		  }
 		  rs.close(); 
@@ -1826,7 +1820,7 @@ This is ok.
                     String expectedValue = "0.0000001700"; 
                     if(isToolboxDriver())
                         expectedValue = "0.0000001700";  //@big TB always this format
-                    else if (jdk_ <= JVMInfo.JDK_142) {
+                    else if (false) {
                         expectedValue = "0.0000001700";
                     }else if(isJdbc40()) {
                         if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
@@ -1882,7 +1876,7 @@ This is ok.
 		  ResultSet rs = ps.executeQuery();
 		  rs.next();
 		  BigDecimal bd; 
-		  if (jdk_ <= JVMInfo.JDK_142) {
+		  if (false) {
 		      bd = new BigDecimal("1700000000"); 
 		  } else {
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
@@ -1896,7 +1890,7 @@ This is ok.
 		  rs.next();
 		  String value=rs.getString(1);
 		  String expectedValue = "1700000000.00"; 
-		  if (jdk_ <= JVMInfo.JDK_142) {
+		  if (false) {
 		      expectedValue = "1700000000.00";
 		  }
 		  rs.close(); 
@@ -1955,147 +1949,147 @@ This is ok.
     public void Var061 () { dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456", "-1234567890123456");}
     public void Var062 () { dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456","1234567890123456");}
     public void Var063 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","1.234567890123456E+43");
 	}
     }
     public void Var064 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","1.234567890123456E+43");
 	}
     }
     public void Var065 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","1.234567890123456E+43");
 	}
     }
     public void Var066 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901234.56E+30", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901234.56E+30","1.234567890123456E+43");
 	}
     }
     public void Var067 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123.456E+31", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123.456E+31","1.234567890123456E+43");
 	}
     }
     public void Var068 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012.3456E+32", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012.3456E+32","1.234567890123456E+43");
 	}
     }
     public void Var069 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901.23456E+33", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901.23456E+33","1.234567890123456E+43");
 	}
     }
     public void Var070 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890.123456E+34", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890.123456E+34","1.234567890123456E+43");
 	}
     }
     public void Var071 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789.0123456E+35", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789.0123456E+35","1.234567890123456E+43");
 	}
     }
     public void Var072 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678.90123456E+36", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678.90123456E+36","1.234567890123456E+43");
 	}
     }
     public void Var073 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567.890123456E+37", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567.890123456E+37","1.234567890123456E+43");
 	}
     }
     public void Var074 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456.7890123456E+38", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456.7890123456E+38","1.234567890123456E+43");
 	}
     }
     public void Var075 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345.67890123456E+39", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345.67890123456E+39","1.234567890123456E+43");
 	}
     }
     public void Var076 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234.567890123456E+40", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234.567890123456E+40","1.234567890123456E+43");
 	}
     }
     public void Var077 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123.4567890123456E+41", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+123.4567890123456E+41","1.234567890123456E+43");
 	}
     }
     public void Var078 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12.34567890123456E+42", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+12.34567890123456E+42","1.234567890123456E+43");
 	}
     }
     public void Var079 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1.234567890123456E+43", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+1.234567890123456E+43","1.234567890123456E+43");
 	}
     }
     public void Var080 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+.1234567890123456E+44", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+.1234567890123456E+44","1.234567890123456E+43");
 	}
     }
     public void Var081 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.1234567890123456E+44", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.1234567890123456E+44","1.234567890123456E+43");
 	}
     }
     public void Var082 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","1.234567890123456E+43");
 	}
     }
     public void Var083 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-12345678901234560000000000000000000000000000"); 
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-1.234567890123456E+43");}
@@ -2114,147 +2108,147 @@ This is ok.
     public void Var090 () { dfpTest(JDRSTest.RSTEST_DFP34, "-1234567890123456", "-1234567890123456");}
     public void Var091 () { dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456","1234567890123456");}
     public void Var092 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E28", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E28","1.234567890123456E+43");
 	}
     }
     public void Var093 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E+28", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E+28","1.234567890123456E+43");
 	}
     }
     public void Var094 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012345.6E+29", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012345.6E+29","1.234567890123456E+43");
 	}
     }
     public void Var095 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901234.56E+30", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901234.56E+30","1.234567890123456E+43");
 	}
     }
     public void Var096 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123.456E+31", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123.456E+31","1.234567890123456E+43");
 	}
     }
     public void Var097 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012.3456E+32", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012.3456E+32","1.234567890123456E+43");
 	}
     }
     public void Var098 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901.23456E+33", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901.23456E+33","1.234567890123456E+43");
 	}
     }
     public void Var099 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890.123456E+34", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890.123456E+34","1.234567890123456E+43");
 	}
     }
     public void Var100 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789.0123456E+35", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789.0123456E+35","1.234567890123456E+43");
 	}
     }
     public void Var101 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678.90123456E+36", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678.90123456E+36","1.234567890123456E+43");
 	}
     }
     public void Var102 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567.890123456E+37", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567.890123456E+37","1.234567890123456E+43");
 	}
     }
     public void Var103 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456.7890123456E+38", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456.7890123456E+38","1.234567890123456E+43");
 	}
     }
     public void Var104 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345.67890123456E+39", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345.67890123456E+39","1.234567890123456E+43");
 	}
     }
     public void Var105 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234.567890123456E+40", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234.567890123456E+40","1.234567890123456E+43");
 	}
     }
     public void Var106 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123.4567890123456E+41", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+123.4567890123456E+41","1.234567890123456E+43");
 	}
     }
     public void Var107 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12.34567890123456E+42", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+12.34567890123456E+42","1.234567890123456E+43");
 	}
     }
     public void Var108 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1.234567890123456E+43", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+1.234567890123456E+43","1.234567890123456E+43");
 	}
     }
     public void Var109 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+.1234567890123456E+44", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+.1234567890123456E+44","1.234567890123456E+43");
 	}
     }
     public void Var110 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.1234567890123456E+44", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.1234567890123456E+44","1.234567890123456E+43");
 	}
     }
     public void Var111 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.01234567890123456E+45", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.01234567890123456E+45","1.234567890123456E+43");
 	}
     }
     public void Var112 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "-1234567890123456E28","-12345678901234560000000000000000000000000000"); 
 	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, "-1234567890123456E28","-1.234567890123456E+43");
@@ -3020,7 +3014,7 @@ This is ok.
                     String expectedValue = "0,0000001700"; 
                     if(isToolboxDriver())
                         expectedValue = "0,0000001700";  //@big TB always this format
-                    else if (jdk_ <= JVMInfo.JDK_142) {
+                    else if (false) {
                         expectedValue = "0,0000001700";
                     }else if ( isJdbc40()) {
                         if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
@@ -3077,7 +3071,7 @@ This is ok.
 		  ResultSet rs = ps.executeQuery(); 
 		  rs.next(); 
 		  BigDecimal bd; 
-		  if (jdk_ <= JVMInfo.JDK_142) {
+		  if (false) {
 		      bd = new BigDecimal("1700000000"); 
 		  } else {
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
@@ -3091,7 +3085,7 @@ This is ok.
 		  rs.next();
 		  String value=rs.getString(1);
 		  String expectedValue = "1700000000,00"; 
-		  if (jdk_ <= JVMInfo.JDK_142) {
+		  if (false) {
 		      expectedValue = "1700000000,00";
 		  }
 		  rs.close(); 
@@ -3144,7 +3138,7 @@ This is ok.
                     String expectedValue = "0,0000001700"; 
                     if(isToolboxDriver())
                         expectedValue = "0,0000001700";  //@big TB always this format
-                    else if (jdk_ <= JVMInfo.JDK_142) {
+                    else if (false) {
                         expectedValue = "0,0000001700";
                     }else if(isJdbc40()) {
                         if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
@@ -3200,7 +3194,7 @@ This is ok.
 		  ResultSet rs = ps.executeQuery();
 		  rs.next();
 		  BigDecimal bd; 
-		  if (jdk_ <= JVMInfo.JDK_142) {
+		  if (false) {
 		      bd = new BigDecimal("1700000000"); 
 		  } else {
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
@@ -3214,7 +3208,7 @@ This is ok.
 		  rs.next();
 		  String value=rs.getString(1);
 		  String expectedValue = "1700000000,00"; 
-		  if (jdk_ <= JVMInfo.JDK_142) {
+		  if (false) {
 		      expectedValue = "1700000000,00";
 		  }
 		  rs.close(); 
@@ -3275,147 +3269,147 @@ This is ok.
     public void Var149 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "-1234567890123456", "-1234567890123456");}
     public void Var150 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456","1234567890123456");}
     public void Var151 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","1,234567890123456E+43");
 	}
     }
     public void Var152 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","12345678901234560000000000000000000000000000");
 	} else { 
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","1,234567890123456E+43");
 	}
     }
     public void Var153 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","1,234567890123456E+43");
 	}
     }
     public void Var154 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678901234.56E+30", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678901234.56E+30","1,234567890123456E+43");
 	}
     }
     public void Var155 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123.456E+31", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123.456E+31","1,234567890123456E+43");
 	}
     }
     public void Var156 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789012.3456E+32", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789012.3456E+32","1,234567890123456E+43");
 	}
     }
     public void Var157 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678901.23456E+33", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678901.23456E+33","1,234567890123456E+43");
 	}
     }
     public void Var158 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890.123456E+34", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890.123456E+34","1,234567890123456E+43");
 	}
     }
     public void Var159 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789.0123456E+35", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789.0123456E+35","1,234567890123456E+43");
 	}
     }
     public void Var160 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678.90123456E+36", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678.90123456E+36","1,234567890123456E+43");
 	}
     }
     public void Var161 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567.890123456E+37", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567.890123456E+37","1,234567890123456E+43");
 	}
     }
     public void Var162 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456.7890123456E+38", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456.7890123456E+38","1,234567890123456E+43");
 	}
     }
     public void Var163 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345.67890123456E+39", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345.67890123456E+39","1,234567890123456E+43");
 	}
     }
     public void Var164 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234.567890123456E+40", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234.567890123456E+40","1,234567890123456E+43");
 	}
     }
     public void Var165 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123.4567890123456E+41", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123.4567890123456E+41","1,234567890123456E+43");
 	}
     }
     public void Var166 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12.34567890123456E+42", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12.34567890123456E+42","1,234567890123456E+43");
 	}
     }
     public void Var167 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1.234567890123456E+43", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1.234567890123456E+43","1,234567890123456E+43");
 	}
     }
     public void Var168 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+.1234567890123456E+44", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+.1234567890123456E+44","1,234567890123456E+43");
 	}
     }
     public void Var169 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+0.1234567890123456E+44", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+0.1234567890123456E+44","1,234567890123456E+43");
 	}
     }
     public void Var170 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","1,234567890123456E+43");
 	}
     }
     public void Var171 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-12345678901234560000000000000000000000000000"); 
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-1,234567890123456E+43");}
@@ -3434,151 +3428,147 @@ This is ok.
     public void Var178 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "-1234567890123456", "-1234567890123456");}
     public void Var179 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123456","1234567890123456");}
     public void Var180 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123456E28", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123456E28","1,234567890123456E+43");
 	}
     }
     public void Var181 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123456E+28", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123456E+28","1,234567890123456E+43");
 	}
     }
     public void Var182 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789012345.6E+29", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789012345.6E+29","1,234567890123456E+43");
 	}
     }
     public void Var183 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678901234.56E+30", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678901234.56E+30","1,234567890123456E+43");
 	}
     }
     public void Var184 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123.456E+31", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123.456E+31","1,234567890123456E+43");
 	}
     }
     public void Var185 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789012.3456E+32", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789012.3456E+32","1,234567890123456E+43");
 	}
     }
     public void Var186 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678901.23456E+33", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678901.23456E+33","1,234567890123456E+43");
 	}
     }
     public void Var187 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890.123456E+34", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890.123456E+34","1,234567890123456E+43");
 	}
     }
     public void Var188 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789.0123456E+35", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789.0123456E+35","1,234567890123456E+43");
 	}
     }
     public void Var189 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678.90123456E+36", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678.90123456E+36","1,234567890123456E+43");
 	}
     }
     public void Var190 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567.890123456E+37", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567.890123456E+37","1,234567890123456E+43");
 	}
     }
     public void Var191 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456.7890123456E+38", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456.7890123456E+38","1,234567890123456E+43");
 	}
     }
     public void Var192 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345.67890123456E+39", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345.67890123456E+39","1,234567890123456E+43");
 	}
     }
     public void Var193 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234.567890123456E+40", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234.567890123456E+40","1,234567890123456E+43");
 	}
     }
     public void Var194 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123.4567890123456E+41", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123.4567890123456E+41","1,234567890123456E+43");
 	}
     }
     public void Var195 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12.34567890123456E+42", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12.34567890123456E+42","1,234567890123456E+43");
 	}
     }
     public void Var196 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1.234567890123456E+43", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1.234567890123456E+43","1,234567890123456E+43");
 	}
     }
     public void Var197 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+.1234567890123456E+44", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+.1234567890123456E+44","1,234567890123456E+43");
 	}
     }
     public void Var198 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+0.1234567890123456E+44", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+0.1234567890123456E+44","1,234567890123456E+43");
 	}
     }
     public void Var199 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
+	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && false) {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+0.01234567890123456E+45", "12345678901234560000000000000000000000000000");
 	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+0.01234567890123456E+45","1,234567890123456E+43");
 	}
     }
     public void Var200 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && getJDK() <= JVMInfo.JDK_142) {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "-1234567890123456E28","-12345678901234560000000000000000000000000000"); 
-	} else {
 	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "-1234567890123456E28","-1,234567890123456E+43");
-	}
     }
     public void Var201 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "1E0", "1");}
     public void Var202 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "1.1", "1,1");} 

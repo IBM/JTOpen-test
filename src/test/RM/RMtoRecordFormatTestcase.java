@@ -64,7 +64,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var001()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try 
         {
            RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.empty1");
@@ -83,7 +83,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var002()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
            RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.empty1");
@@ -101,7 +101,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var003()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
            RecordFormatDocument rfmlDoc = new RecordFormatDocument();
@@ -120,7 +120,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var004()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
            RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.empty1");
@@ -149,7 +149,7 @@ public class RMtoRecordFormatTestcase extends Testcase
 
     public void Var005()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         try
         {
            RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.empty1");
@@ -171,7 +171,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var006()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt = new AS400Text(8);
         try
         {
@@ -226,7 +226,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var007()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt1= new AS400Text(8);
         AS400PackedDecimal dt2 = new AS400PackedDecimal(12,0);
         AS400ZonedDecimal dt3  = new AS400ZonedDecimal(6,0);
@@ -286,7 +286,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var008()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt1= new AS400Text(8);
         AS400PackedDecimal dt2 = new AS400PackedDecimal(10,3);
         try
@@ -348,7 +348,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var009()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt1= new AS400Text(25);
         AS400PackedDecimal dt2 = new AS400PackedDecimal(10,2);
         AS400Bin2 dt3 = new AS400Bin2();
@@ -460,7 +460,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var010()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
 
         AS400Text dt1= new AS400Text(25);
         AS400PackedDecimal dt2 = new AS400PackedDecimal(10,3);
@@ -570,7 +570,7 @@ public class RMtoRecordFormatTestcase extends Testcase
      **/
     public void Var011()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400ZonedDecimal dt1= new AS400ZonedDecimal(6,0);
         AS400Text dt2 = new AS400Text(8);
         AS400Text dt3 = new AS400Text(3);
@@ -719,7 +719,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
      **/
     public void Var012()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt = new AS400Text(8);
         try
         {
@@ -766,7 +766,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
      **/
     public void Var013()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt = new AS400Text(10);
         try
         {
@@ -809,7 +809,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
      **/
     public void Var014()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt = new AS400Text(1);
         try
         {
@@ -852,7 +852,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
 
     public void Var015()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt1= new AS400Text(500);
         AS400PackedDecimal dt2 = new AS400PackedDecimal(10,0);
         AS400ZonedDecimal dt3  = new AS400ZonedDecimal(8,0);
@@ -914,7 +914,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
 
     public void Var016()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt1= new AS400Text(500);
         AS400PackedDecimal dt2 = new AS400PackedDecimal(10,0);
         AS400ZonedDecimal dt3  = new AS400ZonedDecimal(8,0);
@@ -972,7 +972,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
      **/
     public void Var017()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt1= new AS400Text(18);
         AS400PackedDecimal dt2 = new AS400PackedDecimal(10,8);
         try
@@ -1051,7 +1051,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
 
     public void Var018()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text dt1= new AS400Text(25);
         AS400PackedDecimal dt2 = new AS400PackedDecimal(10,3);
         AS400UnsignedBin2 dt3 = new AS400UnsignedBin2();
@@ -1161,7 +1161,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
      **/
     public void Var019()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text s3field1= new AS400Text(18,37);
         AS400PackedDecimal s3field2 = new AS400PackedDecimal(8,3);
         AS400ZonedDecimal s2field1 = new AS400ZonedDecimal(5,2);
@@ -1349,7 +1349,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
 
     public void Var020()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400ZonedDecimal s2field1= new AS400ZonedDecimal(5,2);
         AS400Text s3field1 = new AS400Text(18,37);
         AS400Text format1_field1 = new AS400Text(10,65535);
@@ -1438,7 +1438,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
      **/
      public void Var021()
      {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Text ffield1 = new AS400Text(10,65535);
         AS400ZonedDecimal s2field1 = new AS400ZonedDecimal(5,2);
         AS400PackedDecimal s3field2 = new AS400PackedDecimal(8,3);
@@ -1623,7 +1623,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
      **/
     public void Var022()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
         AS400Float4 field1_dt= new AS400Float4();
         AS400Float8 field2_dt = new AS400Float8();
         FloatFieldDescription field1_desc = new FloatFieldDescription(field1_dt, "field1");
@@ -1682,7 +1682,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
      **/
     public void Var023()
     {
-	if (RMTest.jvmIsSunOrIBM_142_) { notApplicable("JVM is 142"); return; }
+	
       AS400Text dt1= new AS400Text(25);
       AS400PackedDecimal dt2 = new AS400PackedDecimal(10,2);
       AS400Bin2 dt3 = new AS400Bin2();

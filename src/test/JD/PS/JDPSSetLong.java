@@ -47,7 +47,6 @@ import test.JDPSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JVMInfo;
 import test.JD.JDSetupPackage;
 
 
@@ -1388,9 +1387,6 @@ public void Var039()
             long value = -Long.MIN_VALUE;
             // Long value is really -9 223372036854775808 
             String expectedValue = "-9.223372036854776E+18";
-	    if ((isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE) && getJDK() <= JVMInfo.JDK_142) {
-		expectedValue = "-9223372036854776000";
-	    } 
 
             statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SETDFP16);
             

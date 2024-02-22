@@ -720,11 +720,6 @@ public class AS400JPingTestcase extends Testcase
     public void Var027()
     {
 
-	// SSL does not work with JDK 1.4 due to insecure older SSL protocol
-	if (isJDK14) {
-	    notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-	    return; 
-	} 
 
         try
         {
@@ -760,11 +755,6 @@ public class AS400JPingTestcase extends Testcase
      **/
     public void Var028()
     {
-      // SSL does not work with JDK 1.4 due to insecure older SSL protocol
-      if (isJDK14) {
-          notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-          return; 
-      } 
 
       try
         {
@@ -800,11 +790,6 @@ public class AS400JPingTestcase extends Testcase
      **/
     public void Var029()
     {
-      // SSL does not work with JDK 1.4 due to insecure older SSL protocol
-      if (isJDK14) {
-          notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-          return; 
-      } 
         try
         {
             // create a AS400JPing
@@ -839,11 +824,6 @@ public class AS400JPingTestcase extends Testcase
      **/
     public void Var030()
     {
-      // SSL does not work with JDK 1.4 due to insecure older SSL protocol
-      if (isJDK14) {
-          notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-          return; 
-      } 
         try
         {
             // create a AS400JPing
@@ -878,11 +858,6 @@ public class AS400JPingTestcase extends Testcase
      **/
     public void Var031()
     {
-      // SSL does not work with JDK 1.4 due to insecure older SSL protocol
-      if (isJDK14) {
-          notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-          return; 
-      } 
         try
         {
             // create a AS400JPing
@@ -917,11 +892,6 @@ public class AS400JPingTestcase extends Testcase
      **/
     public void Var032()
     {
-      // SSL do not work with JDK 1.4 due to insecure older SSL protocol
-      if (isJDK14) {
-          notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-          return; 
-      } 
         try
         {
             // create a AS400JPing
@@ -956,11 +926,6 @@ public class AS400JPingTestcase extends Testcase
      **/
     public void Var033()
     {
-      // SSL do not work with JDK 1.4 due to insecure older SSL protocol
-      if (isJDK14) {
-          notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-          return; 
-      } 
         try
         {
             // create a AS400JPing
@@ -995,11 +960,6 @@ public class AS400JPingTestcase extends Testcase
      **/
     public void Var034()
     {
-      // SSL do not work with JDK 1.4 due to insecure older SSL protocol
-      if (isJDK14) {
-          notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-          return; 
-      } 
         try
         {
             // create a AS400JPing
@@ -1037,11 +997,6 @@ public class AS400JPingTestcase extends Testcase
     {
         FileOutputStream stream = null;
         RandomAccessFile file = null;
-        // SSL do not work with JDK 1.4 due to insecure older SSL protocol
-        if (isJDK14) {
-            notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-            return; 
-        } 
         try
         {
             AS400JPing ping = new AS400JPing(systemObject_.getSystemName(), AS400.COMMAND, true);
@@ -1084,10 +1039,6 @@ public class AS400JPingTestcase extends Testcase
         FileOutputStream stream = null;
         RandomAccessFile file = null;
         // SSL do not work with JDK 1.4 due to insecure older SSL protocol
-        if (isJDK14) {
-            notApplicable("SSL not working for JDK 1.4 due to insecure older SSL protocol");
-            return; 
-        } 
         try
         {
             AS400JPing ping = new AS400JPing(systemObject_.getSystemName(), AS400.RECORDACCESS, true );

@@ -1,0 +1,6 @@
+>>!PRINTSTACKTRACE false
+>-- Testcase to test the coverage of the built in JDBC client
+>!DMD.GETSCHEMAS
+Calling dmd.getSchemas()
+TABLE_SCHEM,TABLE_CATALOG
+@IGNORE_REST

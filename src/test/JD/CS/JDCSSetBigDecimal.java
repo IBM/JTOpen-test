@@ -2195,7 +2195,7 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
                 String expectedValue = "1.600E-7";
                 if(isToolboxDriver())
                     expectedValue = "0.0000001600";
-                else if ((jdk_ == JVMInfo.JDK_13) || (jdk_ <= JVMInfo.JDK_142) || (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
+                else if (  (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
 		    /* In V5R3 JDK 1.5 native will return this */
                   expectedValue = "0.0000001600";
 
@@ -2243,11 +2243,7 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
 		  CallableStatement ps;
 		  ps = connection_.prepareCall( "CALL " + procedureName + "(?,?)");
 		  BigDecimal bd;
-		  if (jdk_ <= JVMInfo.JDK_142) {
-		      bd = new BigDecimal("1600000000");
-		  } else {
 		      bd = new BigDecimal (new BigInteger("16"),-8 );
-		  }
 
 		  ps.setBigDecimal (1, bd);
 		  ps.registerOutParameter(2,java.sql.Types.VARCHAR);
@@ -2255,9 +2251,6 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
 		  String value=ps.getString(2);
 
 		  String expectedValue = "1600000000.00";
-		  if (jdk_ <= JVMInfo.JDK_142) {
-		      expectedValue = "1600000000.00";
-		  }
 		  statement_.executeUpdate("DROP PROCEDURE "+procedureName);
 		  assertCondition(expectedValue.equals(value), "value("+value+") != "+expectedValue+added);
 
@@ -2308,9 +2301,8 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
 
                 if(isToolboxDriver())
                     expectedValue = "0.0000001600";
-                else if ((jdk_ <= JVMInfo.JDK_142) || (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
-		  /* In V5R3 JDK 1.5 native will return this */
-                  expectedValue = "0.0000001600";
+                else if ( (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
+                    expectedValue = "0.0000001600";
                 }
                 statement_.executeUpdate("DROP PROCEDURE "+procedureName);
                 assertCondition(expectedValue.equals(value), "value("+value+") != "+expectedValue+added);
@@ -2355,11 +2347,7 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
 		  CallableStatement ps;
 		  ps = connection_.prepareCall( "CALL " + procedureName + "(?,?)");
 		  BigDecimal bd;
-		  if (jdk_ <= JVMInfo.JDK_142) {
-		      bd = new BigDecimal("1600000000");
-		  } else {
 		      bd = new BigDecimal (new BigInteger("16"),-8 );
-		  }
 
 		  ps.setBigDecimal (1, bd);
 
@@ -2368,9 +2356,6 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
 		  String value=ps.getString(2);
 
 		  String expectedValue = "1600000000.00";
-		  if (jdk_ <= JVMInfo.JDK_142) {
-		      expectedValue = "1600000000.00";
-		  }
 		  statement_.executeUpdate("DROP PROCEDURE "+procedureName);
 		  assertCondition(expectedValue.equals(value), "value("+value+") != "+expectedValue+added);
 

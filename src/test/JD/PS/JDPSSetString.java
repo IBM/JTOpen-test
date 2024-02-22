@@ -1846,11 +1846,7 @@ setString() - Set a DECFLOAT 16 parameter to valid values.  This should work.
                 PreparedStatement ps = connection_.prepareStatement (
                         "INSERT INTO " + JDPSTest.PSTEST_SETDFP16
                         + " VALUES (?)");
-                if (getDriver() == JDTestDriver.DRIVER_NATIVE && getJDK() <= JVMInfo.JDK_142) {
-                    dfp16values = dfp16valuesJDK14;
-                }else if (isToolboxDriver() && getJDK() <= JVMInfo.JDK_142) {
-                    dfp16values = dfp16valuesJDK14TB;
-                }else if (isToolboxDriver()) {
+               if (isToolboxDriver()) {
                     dfp16values = dfp16valuesTB;
                 }
                 for (int i = 0; i < dfp16values.length; i++) {
@@ -1981,12 +1977,7 @@ setString() - Set a DECFLOAT 16 parameter to truncation values.  This should wor
     {
 	String setValue = null;
 	String added = " -- DECFLOAT(16) test added by native driver 11/18/2006";
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getJDK() <= JVMInfo.JDK_142) {
-	    dfp16values = dfp16valuesJDK14;
-	}
-	if (isToolboxDriver() && getJDK() <= JVMInfo.JDK_142) {
-        dfp16values = dfp16valuesJDK14;
-    }
+	
 
 	if (checkDecFloatSupport()) {
             try {
@@ -2047,54 +2038,6 @@ setString() - Set a DECFLOAT 16 parameter to truncation values.  This should wor
         }
     }
 
-    String dfp34valuesJDK14[][] = {
-	{"valid", "NaN", "NaN"},
-	{"valid", "NAN", "NaN"},
-	{"valid", "+NaN", "NaN"},
-	{"valid", "-NaN", "-NaN"},
-	{"valid", "QNaN", "NaN"},
-	{"valid", "+QNaN", "NaN"},
-	{"valid", "-QNaN", "-NaN"},
-	{"valid", "SNaN", "SNaN"},
-	{"valid", "+SNaN", "SNaN"},
-	{"valid", "-SNaN", "-SNaN"},
-	{"valid", "INF", "Infinity"},
-	{"valid", "+INF", "Infinity"},
-	{"valid", "-INF", "-Infinity"},
-	{"valid", "Infinity", "Infinity"},
-	{"valid", "+Infinity", "Infinity"},
-	{"valid", "-Infinity", "-Infinity"},
-	{"valid", "1234567890123456", "1234567890123456"},
-	{"valid", "-1234567890123456", "-1234567890123456"},
-	{"valid", "+1234567890123456","1234567890123456"},
-	{"valid", "+1234567890123456E28",  "12345678901234560000000000000000000000000000"},
-	{"valid", "+1234567890123456E+28", "12345678901234560000000000000000000000000000"},
-	{"valid", "+123456789012345.6E+29","12345678901234560000000000000000000000000000"},
-	{"valid", "+12345678901234.56E+30","12345678901234560000000000000000000000000000"},
-	{"valid", "+1234567890123.456E+31","12345678901234560000000000000000000000000000"},
-	{"valid", "+123456789012.3456E+32","12345678901234560000000000000000000000000000"},
-	{"valid", "+12345678901.23456E+33","12345678901234560000000000000000000000000000"},
-	{"valid", "+1234567890.123456E+34","12345678901234560000000000000000000000000000"},
-	{"valid", "+123456789.0123456E+35","12345678901234560000000000000000000000000000"},
-	{"valid", "+12345678.90123456E+36","12345678901234560000000000000000000000000000"},
-	{"valid", "+1234567.890123456E+37","12345678901234560000000000000000000000000000"},
-	{"valid", "+123456.7890123456E+38","12345678901234560000000000000000000000000000"},
-	{"valid", "+12345.67890123456E+39","12345678901234560000000000000000000000000000"},
-	{"valid", "+1234.567890123456E+40","12345678901234560000000000000000000000000000"},
-	{"valid", "+123.4567890123456E+41","12345678901234560000000000000000000000000000"},
-	{"valid", "+12.34567890123456E+42","12345678901234560000000000000000000000000000"},
-	{"valid", "+1.234567890123456E+43","12345678901234560000000000000000000000000000"},
-	{"valid", "+.1234567890123456E+44","12345678901234560000000000000000000000000000"},
-	{"valid", "+0.1234567890123456E+44","12345678901234560000000000000000000000000000"},
-	{"valid", "+0.01234567890123456E+45","12345678901234560000000000000000000000000000"},
-	{"valid", "-1234567890123456E28","-12345678901234560000000000000000000000000000"},
-	{"valid", "1E0", "1"},
-	{"valid", "1.1", "1.1"},
-	{"valid", "1.1E0", "1.1"},
-	{"valid", null, null},
-	{"truncation", "12345678901234567890123456789012345", "12345678901234567890123456789012340"}
-
-    };
 
 
     String dfp34values[][] = {
@@ -2146,54 +2089,6 @@ setString() - Set a DECFLOAT 16 parameter to truncation values.  This should wor
 
     };
 
-    String dfp34valuesJDK14TB[][] = {
-            {"valid", "NaN", "NaN"},
-            {"valid", "NAN", "NaN"},
-            {"valid", "+NaN", "NaN"},
-            {"valid", "-NaN", "-NaN"},
-            {"valid", "QNaN", "NaN"},
-            {"valid", "+QNaN", "NaN"},
-            {"valid", "-QNaN", "-NaN"},
-            {"valid", "SNaN", "SNaN"},   //snan
-            {"valid", "+SNaN", "SNaN"},  //snan
-            {"valid", "-SNaN", "-SNaN"}, //snan
-            {"valid", "INF", "Infinity"},
-            {"valid", "+INF", "Infinity"},
-            {"valid", "-INF", "-Infinity"},
-            {"valid", "Infinity", "Infinity"},
-            {"valid", "+Infinity", "Infinity"},
-            {"valid", "-Infinity", "-Infinity"},
-            {"valid", "1234567890123456", "1234567890123456"},
-            {"valid", "-1234567890123456", "-1234567890123456"},
-            {"valid", "+1234567890123456","1234567890123456"},
-            {"valid", "+1234567890123456E28",  "12345678901234560000000000000000000000000000"},
-            {"valid", "+1234567890123456E+28", "12345678901234560000000000000000000000000000"},
-            {"valid", "+123456789012345.6E+29","12345678901234560000000000000000000000000000"},
-            {"valid", "+12345678901234.56E+30","12345678901234560000000000000000000000000000"},
-            {"valid", "+1234567890123.456E+31","12345678901234560000000000000000000000000000"},
-            {"valid", "+123456789012.3456E+32","12345678901234560000000000000000000000000000"},
-            {"valid", "+12345678901.23456E+33","12345678901234560000000000000000000000000000"},
-            {"valid", "+1234567890.123456E+34","12345678901234560000000000000000000000000000"},
-            {"valid", "+123456789.0123456E+35","12345678901234560000000000000000000000000000"},
-            {"valid", "+12345678.90123456E+36","12345678901234560000000000000000000000000000"},
-            {"valid", "+1234567.890123456E+37","12345678901234560000000000000000000000000000"},
-            {"valid", "+123456.7890123456E+38","12345678901234560000000000000000000000000000"},
-            {"valid", "+12345.67890123456E+39","12345678901234560000000000000000000000000000"},
-            {"valid", "+1234.567890123456E+40","12345678901234560000000000000000000000000000"},
-            {"valid", "+123.4567890123456E+41","12345678901234560000000000000000000000000000"},
-            {"valid", "+12.34567890123456E+42","12345678901234560000000000000000000000000000"},
-            {"valid", "+1.234567890123456E+43","12345678901234560000000000000000000000000000"},
-            {"valid", "+.1234567890123456E+44","12345678901234560000000000000000000000000000"},
-            {"valid", "+0.1234567890123456E+44","12345678901234560000000000000000000000000000"},
-            {"valid", "+0.01234567890123456E+45","12345678901234560000000000000000000000000000"},
-            {"valid", "-1234567890123456E28","-12345678901234560000000000000000000000000000"},
-            {"valid", "1E0", "1"},
-            {"valid", "1.1", "1.1"},
-            {"valid", "1.1E0", "1.1"},
-            {"valid", null, null},
-            {"truncation", "12345678901234567890123456789012345", "12345678901234567890123456789012340"}
-
-            };
 
 
             String dfp34valuesTB[][] = {
@@ -2254,14 +2149,8 @@ setString() - Set a DECFLOAT 34 parameter to valid values.  This should work.
 	String setValue = null;
 	String added = " -- DECFLOAT(34) test added by native driver 11/18/2006";
 
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getJDK() <= JVMInfo.JDK_142) {
-	    dfp34values = dfp34valuesJDK14;
-	}
 	if (isToolboxDriver() ) {
         dfp34values = dfp34valuesTB;
-    }
-	if (isToolboxDriver() && getJDK() <= JVMInfo.JDK_142) {
-        dfp34values = dfp34valuesJDK14TB;
     }
 
 
@@ -2400,12 +2289,6 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     public void Var048()
     {
 
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getJDK() <= JVMInfo.JDK_142) {
-	    dfp34values = dfp34valuesJDK14;
-	}
-	if (isToolboxDriver() && getJDK() <= JVMInfo.JDK_142) {
-        dfp34values = dfp34valuesJDK14;
-    }
 
 	String setValue = null;
 	String added = " -- DECFLOAT(34) test added by native driver 11/18/2006";

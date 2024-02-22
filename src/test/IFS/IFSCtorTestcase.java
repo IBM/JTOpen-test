@@ -53,12 +53,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password, "IFSCtorTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
 	if (pwrSys == null) {
 	    Exception e = new Exception("IFSCtorTestcase<init>: pwrSys is null");
 	    e.printStackTrace(); 
@@ -2962,16 +2960,8 @@ existence option is REPLACE_OR_CREATE.
                                 IFSRandomAccessFile.SHARE_ALL,
                                 IFSRandomAccessFile.REPLACE_OR_CREATE);
       raf.close();
-      if (isApplet_ || JTOpenTestEnvironment.isLinux)
-      {
         IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
         assertCondition(file.length() == 0);
-      }
-      else
-      {
-        File file = new File(convertToPCName(ifsPathNameX));
-        assertCondition(file.length() == 0);
-      }
     }
     catch(Exception e)
     {
@@ -3021,16 +3011,8 @@ existence option is REPLACE_OR_CREATE.
                                 IFSRandomAccessFile.SHARE_ALL,
                                 IFSRandomAccessFile.REPLACE_OR_FAIL);
       raf.close();
-      if (isApplet_ || JTOpenTestEnvironment.isLinux)
-      {
         IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
         assertCondition(file.length() == 0);
-      }
-      else
-      {
-        File file = new File(convertToPCName(ifsPathNameX));
-        assertCondition(file.length() == 0);
-      }
     }
     catch(Exception e)
     {

@@ -1,0 +1,19 @@
+!ECHOCOMMAND true
+!PROMPT
+!PRINTSTACKTRACE false
+-- Testcase to test the coverage of the built in JDBC client
+
+!THREAD VALUES 1
+!CALLMETHOD java.lang.Thread.sleep(500)
+values 2
+!THREADPERSIST T1
+!CALLMETHOD java.lang.Thread.sleep(500)
+values 3
+!THREADEXEC T1 VALUES 4
+!CALLMETHOD java.lang.Thread.sleep(500)
+values 5
+-- error cases
+!THREADEXEC T1
+!THREADEXEC THREAD_NOT_EXIST
+
+

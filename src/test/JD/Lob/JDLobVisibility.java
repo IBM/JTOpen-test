@@ -253,9 +253,9 @@ extends JDTestcase
 
 	try { 
 	    String url = baseURL_
-	      + ";user=" + systemObject_.getUserId()
-	      + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_)  +";"+connectionProperties;
-	    Connection connection = DriverManager.getConnection (url);
+	      +";"+connectionProperties;
+	    Connection connection = testDriver_.getConnection(url,systemObject_.getUserId(), encryptedPassword_);
+
 	    adjustConnection(connection, url);
 	    //
 	    // Note .. need more testing with different cursor types
@@ -337,11 +337,11 @@ extends JDTestcase
 
 	try { 
 	    String url = baseURL_
-	      + ";user=" + systemObject_.getUserId()
-	      + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_)  +";"+connectionProperties;
+	      + ";"+connectionProperties;
             if(getDriver() == JDTestDriver.DRIVER_TOOLBOX)  //@B1A
                 url+= ";hold statements=true";
-	    Connection connection = DriverManager.getConnection (url);
+	    Connection connection = testDriver_.getConnection(url,systemObject_.getUserId(), encryptedPassword_);
+
 	    adjustConnection(connection, url); 
 	    Statement  statement =  connection.createStatement (); 
 
@@ -421,9 +421,9 @@ extends JDTestcase
 
 	try { 
 	    String url = baseURL_
-	      + ";user=" + systemObject_.getUserId()
-	      + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_)  +";"+connectionProperties;
-	    Connection connection = DriverManager.getConnection (url);
+	      + ";"+connectionProperties;
+	    Connection  connection = testDriver_.getConnection(url,systemObject_.getUserId(), encryptedPassword_);
+
 	    adjustConnection(connection, url); 
 	    Statement  statement =  connection.createStatement (); 
 

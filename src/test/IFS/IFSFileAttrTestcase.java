@@ -40,12 +40,10 @@ Constructor.
                    Hashtable namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
-                   
-                   String   driveLetter,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password, "IFSFileAttrTestcase",
-            namesAndVars, runMode, fileOutputStream, driveLetter, pwrSys);
+            namesAndVars, runMode, fileOutputStream,  pwrSys);
     }
 
   /**
@@ -63,11 +61,11 @@ Constructor.
   void setPrivate(AS400 as400, String dirName)
   {
     String cmdString = "CHGAUT OBJ('"
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
 
     String cmdString2 = "CHGAUT OBJ('"
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER("
                      + systemObject_.getUserId()
                      + ") DTAAUT(*NONE) OBJAUT(*NONE)";
@@ -90,11 +88,11 @@ Constructor.
   void setPublic(AS400 as400, String dirName)
   {
     String cmdString = "CHGAUT OBJ('"
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
 
     String cmdString2 = "CHGAUT OBJ('"
-                     + dirName.replace(FILE_SEPARATOR_CHAR, IFSFile.separatorChar)
+                     + dirName
                      + "') USER("
                      + systemObject_.getUserId()
                      + ") DTAAUT(*RWX) OBJAUT(*ALL)";

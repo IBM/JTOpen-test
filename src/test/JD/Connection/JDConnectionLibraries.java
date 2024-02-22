@@ -1532,11 +1532,6 @@ the same name as the userId as the default.
 	public void Var042()
 	{
 	    if (checkNotGroupTest())  { 
-		if (jdk_ <= JVMInfo.JDK_142) {
-//			System.out.println("The SSL testcase does not work for JDK 1.4 or lower");
-		    assertCondition(true);
-		    return;
-		}
 		if ((!isToolboxDriver())) {
 		    notApplicable("TOOLBOX ONLY VARIATION");
 		    return;
@@ -1572,11 +1567,6 @@ libraries - Specify library list with *LIBL before 2 other libraries.
 	public void Var043()
 	{
 	    if (checkNotGroupTest()) { 
-		if (jdk_ <= JVMInfo.JDK_142) {
-//			System.out.println("The SSL testcase does not work for JDK 1.4 or lower");
-		    assertCondition(true);
-		    return;
-		}
 		if ((!isToolboxDriver())) {
 		    notApplicable("TOOLBOX ONLY VARIATION");
 		    return;

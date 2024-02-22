@@ -24,16 +24,6 @@
  // Classes:      JDConnectionSort
  //
  ////////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //  B1 - changed DriverManager.getConnection to JDTestDriver.getConnection
- //                                                     currently work for native driver, which
- //                                                     doen't support these properties until V5R4. 
- //                                                     using order by index instead of order by sort.  See DB Issue #24050
- // 
- //
  ////////////////////////////////////////////////////////////////////////
 
 package test.JD.Connection;

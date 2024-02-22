@@ -1288,11 +1288,9 @@ See Issue 44488 for more information
 		// Create the testConnection
 
 		    String url = baseURL_
-		      + ";user=" + systemObject_.getUserId()
-		      + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_) 
 		      + ";auto commit=true;transaction isolation=none"; 
 		    sql = "Getting connection with "+url;
-		    Connection testConnection =  DriverManager.getConnection (url);
+		    Connection testConnection =  testDriver_.getConnection(url,systemObject_.getUserId(), encryptedPassword_);
 
 
 		    testConnection.setAutoCommit(false);

@@ -45,7 +45,6 @@ extends TestDriver
 
     // Private data.
     private static final String serializeFilename_      = "RMTest.ser";
-    public static boolean jvmIsSunOrIBM_142_ = false;
 
 
 /**
@@ -91,27 +90,6 @@ Creates the testcases.
 **/
     public void createTestcases ()
     {
-      // Print failure warning if we're running on Sun JDK 1.4.2.
-      String javaVersion = System.getProperty("java.version");
-      if (javaVersion != null &&
-          javaVersion.startsWith("1.4.2"))
-      {
-        String javaVendor  = System.getProperty("java.vm.vendor");
-        if ((javaVendor != null && javaVendor.indexOf("Sun") != -1) ||
-            onAS400_)
-        {
-          System.err.println("\nWARNING: RFML is not supported on Sun JDK 1.4.2, or running natively on IBM i JDK 1.4.2. Expect many RFML testcase variation failures on this JVM.\n");
-          jvmIsSunOrIBM_142_ = true;
-        }
-        
-      }
-      if (jvmIsSunOrIBM_142_)
-      {
-	// Don't skip... Testcases will detect JVM 1.4.2 
-        // out_.println("Skipping RMTest testcases, since we are on a Sun or IBM Classic JDK 1.4.2");
-        // return;
-      }
-        //boolean allTestcases = (namesAndVars_.size() == 0);
 /*
 RMCTTestcase.java
 RMConstructorTestcase.java
