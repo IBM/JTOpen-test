@@ -1,0 +1,422 @@
+!ECHOCOMMAND true
+!PRINTSTACKTRACE false
+-- Testcase to test the coverage of the built in JDBC client
+
+
+-- Setup
+!SILENT: DROP TABLE COLLECTION.JDCOV1
+CREATE TABLE COLLECTION.JDCOV1(JDCOV1COL1 INTEGER)
+
+-- Do some common stuff
+
+select * from sysibm.sysdummy1
+
+CALL SYSIBM.SQLTABLES(null,null,null, '%', null)
+
+
+-- Error before prepared statement exists
+!SETVAR UNICODE UX'0030'
+!SETPARMFROMVAR  1,UNICODE
+!SETPARM 1,UX'0030' 
+!EXECUTEUPDATE
+!EXECUTEQUERY
+
+
+!prepare select * from sysibm.sysdummy1 where IBMREQD=?
+!setparm 1,Y
+!executeQuery
+
+
+!prepare select cast(? as INTEGER) from sysibm.sysdummy1
+!setparm 1,1
+!executeQuery
+
+select '\u0030\u0031\u0032\u0033\u0034\u0035\u0036\u0037\u0038\u0039\u003a\u003b\u003c\u003d\u003e\u003f\u003A\u003B\u003C\u003D\u003E\u003F' from sysibm.sysdummy1
+select '\u0030' from sysibm.sysdummy1
+
+
+
+
+!MEASUREEXECUTE bogus
+!MEASUREEXECUTE true
+!MEASUREEXECUTE false
+!MEASUREEXECUTE ON
+
+select * from sysibm.sysdummy1
+
+!prepare select * from sysibm.sysdummy1
+!executeQuery
+
+!SILENT:drop function COLLECTION.getProperty
+
+!prepare create function COLLECTION.getProperty(key varchar(80)) returns varchar(80) language java parameter style java external name 'java.lang.System.getProperty' 
+!executeUpdate
+!prepare drop function COLLECTION.getProperty
+!executeUpdate
+
+-- TODO:  Need to get a warning from executeUpdate
+
+
+CL: DSPLIBL
+
+
+!MEASUREEXECUTE OFF
+
+!MANUALFETCH ON 
+!MANUALFETCH TRUE
+!SETRESULTSETTYPE SCROLL_SENSITIVE
+select * from sysibm.sysdummy1
+!RS.NEXT
+!RS.NEXT
+!RS.FIRST
+!RS.LAST
+!RS.PREVIOUS
+!RS.ABSOLUTE 1
+!RS.BEFOREFIRST
+!RS.RELATIVE 1 
+!RS.AFTERLAST
+
+!prepare select * from sysibm.sysdummy1
+!executeQuery
+!RS.NEXT
+
+!MANUALFETCH OFF
+!MANUALFETCH FALSE
+!SETRESULTSETTYPE FORWARD_ONLY
+
+-- show warnings
+select cast('XX' as CHAR(1)) from sysibm.sysdummy1
+!prepare select cast('XX' as CHAR(1)) from sysibm.sysdummy1
+!executeQuery 
+
+!USAGE
+!HELP
+
+!SILENT: DROP TABLE QGPL.JDCJTOpenClientTesting
+CREATE TABLE QGPL.JDCJTOpenClientTesting(cint int)
+!MEASUREEXECUTE on
+!PREPARE insert into QGPL.JDCJTOpenClientTesting VALUES(?)
+!setparm 1,1
+!executeUpdate
+!MEASUREEXECUTE off
+DROP TABLE QGPL.JDCJTOpenClientTesting
+
+!prepare select cast(? AS INTEGER) from sysibm.sysdummy1
+!setparm 1,1
+!executeQuery
+
+!prepare select cast(? AS VARCHAR(80)) from sysibm.sysdummy1
+!setparm 1,UX'0030'
+!executeQuery
+!setparm 1,GEN_HEX_STRING+70
+!executeQuery
+!setparm 1,GEN_CHAR_ARRAY+10C37
+!executeQuery
+
+
+!prepare select cast(? AS VARBINARY(80)) from sysibm.sysdummy1
+!setparm 1,X'0101'
+!executeQuery
+!setparm 1,GEN_BYTE_ARRAY+10
+!executeQuery
+
+!SILENTRS:select * from sysibm.sysdummy1
+
+!INVISIBLE:select * from sysibm.sysdummy1
+
+
+!SETVAR JAVAHOME=java.lang.System.getProperty('java.home')
+!SETNEWVAR STRING=java.lang.String(hi)
+!SETVAR UNICODE UX'0030'
+!SETVAR BADSET
+!SETVAR
+!SETNEWVAR BOGUS
+!SETNEWVAR
+
+!SETNEWVAR SMALLOBJECT=java.lang.Object()
+!SHOWVARMETHODS SMALLOBJECT
+
+
+!REPEAT
+!REPEAT 2
+!REPEAT -1 select '1' from sysibm.sysdummy1
+!REPEAT 2 select '1' from sysibm.sysdummy1
+
+
+select * from sysibm.sysdummy1
+select * from sysibm.sysdummy1
+select * from sysibm.sysdummy1
+
+!REUSE STATEMENT true
+!REUSE STATEMENT dummy
+!REUSE STATEMENT false
+
+!ECHO This is a test
+!ECHOCOMMAND true
+select * from sysibm.sysdummy1
+!ECHOCOMMAND false
+select * from sysibm.sysdummy1
+!ECHOCOMMAND on
+select * from sysibm.sysdummy1
+!ECHOCOMMAND off
+select * from sysibm.sysdummy1
+!ECHOCOMMAND bogus
+!ECHOCOMMAND true
+
+
+
+!PROMPT
+values 1
+values 2
+!PROMPT P>
+values 1
+values 2
+!PROMPT >
+
+
+
+
+!SETQUERYTIMEOUT BOGUS_VALUE
+!SETQUERYTIMEOUT 100
+!RESET CONNECTION PROPERTIES
+!ADD CONNECTION PROPERTY translate hex=character
+!ADD CONNECTION PROPERTY autocommit=true
+!ADD CONNECTION PROPERTY big decimal=true
+!ADD CONNECTION PROPERTY translate hex=character
+!ADD CONNECTION PROPERTY autocommit=true
+!ADD CONNECTION PROPERTY big decimal=true
+!ADD CONNECTION PROPERTY translate hex=character;autocommit=true;big decimal=true
+
+
+
+
+!REUSE CONNECTION true
+!REUSE CONNECTION bogus
+!REUSE CONNECTION false
+
+!CONNECT TO SCHEMA QGPL
+!CONNECT RESET  
+!CONNECT TO SCHEMA QGPL
+
+!EXISTFILE /tmp/xThisFilesDoesNotExist
+!EXISTFILE jdbc
+ 
+!GC
+!SHOWMIXEDUX true 
+SELECT UX'0030003100e001231f0000300031' from sysibm.sysdummy1
+!PREPARE SELECT CAST(? AS VARGRAPHIC(16000) CCSID 1200) from sysibm.sysdummy1
+!SETPARM 1,GEN_CHAR_ARRAY+100C37
+!executeQuery
+!SETPARM 1,GEN_CHAR_ARRAY+100C835
+!executeQuery
+!SETPARM 1,GEN_CHAR_ARRAY+100C1200
+!executeQuery
+!SETPARM 1,GEN_CHAR_ARRAY+100C1208
+!executeQuery
+!SETPARM 1,GEN_CHAR_ARRAY+100C13488
+!executeQuery
+!SETPARM 1,GEN_CHAR_ARRAY+100C1
+!executeQuery
+!SETPARM 1,'hi'
+!executeQuery
+!SETPARM 1,'hi
+!executeQuery
+
+
+!SHOWMIXEDUX false
+!SHOWMIXEDUX bogus
+
+!SET AUTOCOMMIT false
+
+!SET TRANSACTIONISOLATION TRANSACTION_READ_UNCOMMITTED
+!SET TRANSACTIONISOLATION TRANSACTION_READ_COMMITTED
+!SET TRANSACTIONISOLATION TRANSACTION_REPEATABLE_READ
+!SET TRANSACTIONISOLATION TRANSACTION_SERIALIZABLE
+!SET TRANSACTIONISOLATION bogus
+
+
+
+!SET AUTOCOMMIT bogus 
+!SET AUTOCOMMIT true
+
+
+!GETSERVERJOBNAME 
+
+!CLOSESTATEMENTRS  bogus
+!CLOSESTATEMENTRS  true
+!CLOSESTATEMENTRS  false
+!CLOSESTATEMENTRS  on
+select * from sysibm.sysdummy1
+!PREPARE select * from sysibm.sysdummy1
+!executeQuery
+!PREPARE select * from sysibm.sysdummy1
+!executeQuery
+!CLOSESTATEMENTRS off 
+!CLOSESTATEMENTRS bogus 
+
+
+!CHARACTERDETAILS on
+!CHARACTERDETAILS off
+!CHARACTERDETAILS true
+!CHARACTERDETAILS false
+!CHARACTERDETAILS bogus
+
+!DMD.GETCOLUMNS null,COLLECTION,JDCOV1,%
+!DMD.GETCOLUMNS null,null,JDCOV1,%
+!DMD.GETCOLUMNS null,null,JDCOV1,null
+!DMD.GETCOLUMNS null,COLLECTION,null,JDCOV1COL1
+!DMD.GETTABLES null,COLLECTION,JDCOV1,0
+!DMD.GETTABLES null,null,JDCOV1,0
+!DMD.GETTABLES null,COLLECTION,JDCOV1,null
+!DMD.GETTABLES null,COLLECTION,null,TABLE|INDEX
+!DMD.GETINDEXINFO null,COLLECTION,JDCOV1,false,false
+!DMD.GETINDEXINFO null,null,JDCOV1,false,false
+!DMD.GETINDEXINFO null,COLLECTION,null,false,false
+
+
+!HISTORY.CLEAR   
+select * from sysibm.sysdummy1
+!HISTORY.SHOW   
+
+!SETCLITRACE true
+!SETCLITRACE false
+!SETCLITRACE bogus
+
+!SETDB2TRACE true
+!SETDB2TRACE false
+!SETDB2TRACE 0
+!SETDB2TRACE 1
+!SETDB2TRACE 2
+!SETDB2TRACE 3
+!SETDB2TRACE 0
+!SETDB2TRACE bogus
+
+
+!SYSTEMDEBUGGER
+
+CL:DSPLIBL
+-- Greater than 10
+CL:          DSPLIBL
+-- Greater than 100
+CL:                                                                                                    DSPLIBL
+-- Greater than 1000
+CL:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        DSPLIBL
+-- Another type of comment
+// Another type of comment
+/* Another type of comment */ 
+!ECHOCOMMENTS true
+-- Another type of comment
+// Another type of comment
+/* Another type of comment */ 
+!-- Another type of comment
+!// Another type of comment
+!/* Another type of comment */ 
+
+!ECHOCOMMENTS false
+// Another type of comment
+!ECHOCOMMENTS on
+// Another type of comment
+!ECHOCOMMENTS off
+!ECHOCOMMENTS bogus 
+!ECHOCOMMENTS true
+
+!SETRESULTSETTYPE FORWARD_ONLY
+select * from sysibm.sysdummy1
+!SETRESULTSETTYPE SCROLL_INSENSITIVE
+select * from sysibm.sysdummy1
+!SETRESULTSETTYPE SCROLL_SENSITIVE
+select * from sysibm.sysdummy1
+!SETRESULTSETTYPE bogus
+!SETRESULTSETTYPE FORWARD_ONLY
+
+!SETRESULTSETCONCURRENCY READ_ONLY
+select * from sysibm.sysdummy1
+!SETRESULTSETCONCURRENCY UPDATABLE
+select * from sysibm.sysdummy1
+!SETRESULTSETCONCURRENCY bogus
+!SETRESULTSETCONCURRENCY READ_ONLY
+
+!SETRESULTSETHOLDABILITY HOLD
+!SETRESULTSETHOLDABILITY CLOSE
+!SETRESULTSETHOLDABILITY bogus
+
+
+
+!prepare select cast(? AS VARCHAR(1)) from sysibm.sysdummy1
+!SETVAR UNICODE UX'003000310032'
+!SETPARMFROMVAR 1,UNICODE
+!executeQuery
+!SETPARMFROMVAR 1 NO COMMA
+!SETPARMFROMVAR INVALID INDEX,UNICODE
+!SETPARMFROMVAR 1,VARIABLE_NOT_FOUND
+!SETPARM NOCOMMA
+
+!CALLMETHOD CON.commit()
+!CALLMETHOD UNICODE.toString()
+-- error cases 
+!CALLMETHOD UNICODE
+!CALLMETHOD 
+
+!CONNECT TO URL BASEURL USERID=TESTUSER PASSWORD=TESTPASS
+values current user 
+
+!CONNECT TO URL BASEURL USERID=TESTUSER 
+!CONNECT TO URL BASEURL 
+
+!MEASUREEXECUTE ON
+!CONNECT TO URL BASEURL USERID=TESTUSER PASSWORD=TESTPASS
+!CONNECT TO SCHEMA COLLECTION
+!MEASUREEXECUTE OFF
+
+-- get a warning
+!CONNECT TO URL BASEURL;bad property=true USERID=TESTUSER PASSWORD=TESTPASS
+
+-- get an error 
+!CONNECT TO URL jdbc:bogusdriver:neverConnects USERID=TESTUSER PASSWORD=TESTPASS
+
+!CONNECT TO URL BASEURL USERID=TESTUSER PASSWORD=TESTPASS
+
+
+!EXIT_REPEAT_ON_EXCEPTION TRUE
+!EXIT_REPEAT_ON_EXCEPTION ON
+!EXIT_REPEAT_ON_EXCEPTION FALSE
+!EXIT_REPEAT_ON_EXCEPTION OFF
+!EXIT_REPEAT_ON_EXCEPTION bogus
+!EXIT REPEAT ON EXCEPTION TRUE
+!EXIT REPEAT ON EXCEPTION ON
+!EXIT REPEAT ON EXCEPTION FALSE
+!EXIT REPEAT ON EXCEPTION OFF
+!EXIT REPEAT ON EXCEPTION bogus
+
+-- Different output types
+
+SELECT BLOB(X'ff') from sysibm.sysdummy1
+!SILENT: DROP TABLE COLLECTION.VARBIN
+CREATE TABLE COLLECTION.VARBIN(C1 VARBINARY(10))
+INSERT INTO COLLECTION.VARBIN values(null)
+select * from COLLECTION.VARBIN
+DROP TABLE COLLECTION.VARBIN
+!prepare select CAST(? AS VARBINARY(30000)) from sysibm.sysdummy1
+!setparm 1,GEN_BYTE_ARRAY+256
+!executeQuery
+!setparm 1,GEN_BYTE_ARRAY+25000
+!executeQuery
+
+
+-- invalid escape
+select '\u003' from sysibm.sysdummy1
+select '\u00' from sysibm.sysdummy1
+select '\u0' from sysibm.sysdummy1
+select '\u' from sysibm.sysdummy1
+
+values '\u003'
+values '\u00'
+values '\u0'
+values '\u'
+
+
+-- CLEANUP 
+DROP TABLE COLLECTION.JDCOV1
+
+
+!exit

@@ -91,11 +91,6 @@ Performs setup needed before running variations.
             connection_.setAutoCommit(false); // @C1A
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                       ResultSet.CONCUR_UPDATABLE);
-		//
-		// On 5/10/2007 changed this to be TYPE_SCROLL_SENSITIVE instead of
-		//              TYPE_SCROLL_INSENSITIVE.  Otherwise, changes are not
-		//              being seen on V5R5.
-		// 
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                        ResultSet.CONCUR_READ_ONLY);
 

@@ -1,0 +1,55 @@
+>>!PROMPT
+!PRINTSTACKTRACE false
+-- Testcase to test the coverage of the built in JDBC client
+
+!THREAD VALUES 1
+Starting thread for VALUES 1
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+Thread Thread.* running VALUES 1
+Thread Thread.* running VALUES 1
+VALUES 1
+00001
+1
+Thread Thread.* ending
+Thread Thread.* ending
+Call returned null
+values 2
+00001
+2
+!THREADPERSIST T1
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+Starting runnable T1
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+IGNORE_EXTRA:Thread Thread.* running PERSIST
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+Started thread T1-T
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+IGNORE_EXTRA:Thread Thread.* running PERSIST
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+Call returned null
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+values 3
+00001
+3
+!THREADEXEC T1 VALUES 4
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+Thread Thread.* running VALUES 4
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+VALUES 4
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+00001
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+4
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+Call returned null
+IGNORE_EXTRA:!CALLMETHOD java.lang.Thread.sleep(500)
+values 5
+00001
+5
+-- error cases
+!THREADEXEC T1
+ERROR:  THREADEXEC: no space after thread name
+!THREADEXEC THREAD_NOT_EXIST
+ERROR:  THREADEXEC: no space after thread name
+
+

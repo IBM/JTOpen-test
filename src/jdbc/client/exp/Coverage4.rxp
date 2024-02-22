@@ -1,0 +1,74 @@
+>>!OUTPUT FORMAT bogus
+Error.  Did not recognize output format 'BOGUS'
+>!OUTPUT FORMAT html
+>
+<BR>
+>select * from sysibm.sysdummy1
+<BR>
+<table>
+<td>Y<tr>
+</table>
+>
+<BR>
+>!SILENT:DROP PROCEDURE .*.SYSDUMMY1
+<BR>
+>CREATE PROCEDURE .*.SYSDUMMY1() RESULT SETS 1 LANGUAGE SQL  BEGIN   DECLARE c1 CURSOR FOR SELECT * from SYSIBM.SYSDUMMY1;  OPEN c1 ;   SET RESULT SETS CURSOR c1;  END
+<BR>
+>
+<BR>
+>!ECHO this is a test
+<BR>
+>
+<BR>
+>
+<BR>
+>CALL .*.SYSDUMMY1
+<BR>
+
+ *** Warning ***
+
+<br>
+SQLState: 0100C
+<br>
+Message:.*[SQL0466] 1 result sets are available from procedure SYSDUMMY1 in .*.
+<br>
+Vendor:   466
+<br>
+
+<br>
+Statement was CALL .*.SYSDUMMY1
+<table>
+<td>Y<tr>
+</table>
+>
+<BR>
+>select cast('abc' as CHAR(1)) from sysibm.sysdummy1
+<BR>
+<table>
+<td>a<tr>
+</table>
+
+ *** Warning ***
+
+<br>
+SQLState: 01004
+<br>
+Message:.*
+<br>
+Vendor:   0
+<br>
+
+<br>
+>
+<BR>
+>
+<BR>
+>
+<BR>
+>
+<BR>
+>DROP PROCEDURE .*.SYSDUMMY1
+<BR>
+>
+<BR>
+>

@@ -1,0 +1,11 @@
+>>!OUTPUT FORMAT XML
+>
+>select * from sysibm.sysdummy1
+<table border>
+<th>IBMREQD<tr>
+
+<row>
+   <IBMREQD>Y</IBMREQD>
+</row>
+</table>
+>

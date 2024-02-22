@@ -1,0 +1,16 @@
+>>!PRINTSTACKTRACE false
+>-- Testcase to test the coverage of the built in JDBC client
+>-- Testcase for connection pool
+>
+>!REUSE CONNECTION true
+>!CONNECT TO SCHEMA .*
+>!CONNECT TO SCHEMA .*
+>!CONNECT TO SCHEMA .*
+>
+>
+>
+>
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf PASSWORD=.*
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf PASSWORD=.*
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf PASSWORD=.*
+>

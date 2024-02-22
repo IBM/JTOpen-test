@@ -27,24 +27,15 @@ import test.JDJobName;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.Hashtable;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
-
-// B1 - Changed DriverManager.getConnection() to testDriver_.getConnection()
-//    - added the conn.commit for the xa test
 
 
 

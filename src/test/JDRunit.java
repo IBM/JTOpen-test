@@ -44,6 +44,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.StringBufferInputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
@@ -1470,6 +1471,27 @@ public class JDRunit {
     }
         return inputStream;
 }
+
+
+  /* Load a resource.  The default is to load from the filesystem, then load using the classloader */ 
+  /* If not found, then an empty input stream is returned */ 
+  
+  public static Reader loadReaderResource(String filename) throws FileNotFoundException {
+    InputStream inputStream;
+    File file = new File(filename);
+    if (file.exists()) {
+      inputStream = new FileInputStream(filename);
+    } else {
+      inputStream = JDRunit.class.getClassLoader().getResourceAsStream(filename);
+      if (inputStream != null) {
+        if (iniInfo != null)
+          iniInfo.append("echo loaded " + filename + " from classloader\n");
+      } else {
+        throw new FileNotFoundException(filename);
+      }
+    }
+    return new InputStreamReader(inputStream);
+  }
 
   /* Load a resource.  The default is to load from the filesystem, then load using the classloader */ 
   /* If not found, then null is returned */ 

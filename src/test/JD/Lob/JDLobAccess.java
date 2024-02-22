@@ -148,10 +148,9 @@ extends JDTestcase
             try
             {
                 String url = baseURL_
-                         + ";user=" + systemObject_.getUserId()
-                         + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_) 
                          + ";lob threshold=1";
-                c = DriverManager.getConnection(url);
+                c = testDriver_.getConnection(url,systemObject_.getUserId(), encryptedPassword_);
+
                 c.setAutoCommit(false);
                 ps = c.prepareStatement("SELECT * FROM " + TABLE_ + " WHERE LOBS=?");
                 byte[] bytes = new byte[] {(byte) 1, (byte)2, (byte)3, (byte)4, (byte)5};

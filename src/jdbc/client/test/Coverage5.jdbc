@@ -1,0 +1,4 @@
+!ECHOCOMMAND true
+!OUTPUT FORMAT XML
+
+select * from sysibm.sysdummy1

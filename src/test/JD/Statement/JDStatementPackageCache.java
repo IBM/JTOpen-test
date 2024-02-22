@@ -31,7 +31,6 @@ import test.PasswordVault;
 import java.io.FileOutputStream;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -390,7 +389,8 @@ public class JDStatementPackageCache extends JDTestcase {
       // use count before it is added)
       // //////1 2 3 on same connection
       System.out.println("Connecting with "+connect_string); 
-      connection = DriverManager.getConnection(connect_string);
+      connection = testDriver_.getConnection(connect_string,systemObject_.getUserId(), encryptedPassword_);
+
       for (int x = 0; x < 3; x++) {
 
         statement = connection.createStatement();
@@ -472,7 +472,8 @@ public class JDStatementPackageCache extends JDTestcase {
 
       // //////////4 I don't know why we have to close and reopen conn here, but
       // we do
-      connection = DriverManager.getConnection(connect_string);
+      connection = testDriver_.getConnection(connect_string,systemObject_.getUserId(), encryptedPassword_);
+
       statement = connection.createStatement();
       statement2 = connection.createStatement(
           ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -543,7 +544,7 @@ public class JDStatementPackageCache extends JDTestcase {
       // Start DBMon. That will trace statements being run. Later we
       // will look at the output from DBMon to see what was added to the
       // sql cache.
-      connection = DriverManager.getConnection(connect_string);
+      connection = testDriver_.getConnection(connect_string,systemObject_.getUserId(), encryptedPassword_);
 
       // pdc use reflection for proxy server
       String job = JDReflectionUtil.callMethod_S(connection,
@@ -1450,7 +1451,8 @@ public class JDStatementPackageCache extends JDTestcase {
 	  //
 	  // TODO:  Make sure that the package does not exist
 	  //
-	  Connection cDrop = DriverManager.getConnection(url_);
+	  Connection cDrop =  testDriver_.getConnection(url_,systemObject_.getUserId(), encryptedPassword_);
+
     String deletepkg = "CALL QSYS.QCMDEXC('DLTSQLPKG "+collection+"/"+packageName+"9899',0000000029.00000)";
     try { 
       Statement s = cDrop.createStatement(); 
@@ -1466,7 +1468,8 @@ public class JDStatementPackageCache extends JDTestcase {
 		String colType2;
 		boolean callRs;
 
-		  Connection c = DriverManager.getConnection(dbUrl);
+		  Connection c =  testDriver_.getConnection(dbUrl,systemObject_.getUserId(), encryptedPassword_);
+
 		  
 		  {
 		      String ji = ((com.ibm.as400.access.AS400JDBCConnection)c).getServerJobIdentifier();
@@ -1666,8 +1669,8 @@ public class JDStatementPackageCache extends JDTestcase {
 		  c.close(); 
 		  
 		  // Reconnect and run again.  This time, it should come from the package. 
-      c = DriverManager.getConnection(dbUrl);
-      
+      c = testDriver_.getConnection(dbUrl,systemObject_.getUserId(), encryptedPassword_);
+
       {
           String ji = ((com.ibm.as400.access.AS400JDBCConnection)c).getServerJobIdentifier();
           String jobname = ji.substring(20).trim()+"/"+ji.substring(10,20).trim()+"/"+ji.substring(0,10).trim(); 
@@ -1905,7 +1908,8 @@ public class JDStatementPackageCache extends JDTestcase {
 	cc.run("DLTF "+collection+"/QAQQINI"); 
         cc.run("CHGAUT OBJ('/qsys.lib/qaqqini.file') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*OBJEXIST *OBJREF *OBJMGT) "); 
 
-        Connection c = DriverManager.getConnection(dbUrl);
+        Connection c = testDriver_.getConnection(dbUrl,systemObject_.getUserId(), encryptedPassword_);
+
         Statement s = c.createStatement();
 
         try
@@ -1960,7 +1964,8 @@ public class JDStatementPackageCache extends JDTestcase {
     {
         try
         {
-            Connection c = DriverManager.getConnection(dbUrl);
+            Connection c = testDriver_.getConnection(dbUrl,systemObject_.getUserId(), encryptedPassword_);
+
             Statement s = c.createStatement();
              s.execute("DROP TABLE "+collection+"."+ptFile+"");
              s.execute("DROP TABLE "+collection+"."+qcustFile+"");

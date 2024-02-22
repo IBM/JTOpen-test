@@ -6107,7 +6107,7 @@ Constructor.
       
       StringBuffer sb = new StringBuffer(); 
 
-      BufferedReader br = new BufferedReader(new FileReader(command)); 
+      BufferedReader br = new BufferedReader(JDRunit.loadReaderResource(command)); 
       String line = br.readLine();
       while (line != null) { 
         line = jdbcReplace(line); 
@@ -6324,7 +6324,7 @@ Constructor.
     }
     BufferedReader readerOne = null;
     try {
-      readerOne = new BufferedReader(new FileReader(filenameOne));
+      readerOne = new BufferedReader(JDRunit.loadReaderResource(filenameOne));
     } catch (Exception e) {
       System.out.println("Exception opening " + filenameOne);
       System.out.println("Command was " + command);
@@ -6332,7 +6332,7 @@ Constructor.
     }
     BufferedReader readerTwo = null;
     try {
-      readerTwo = new BufferedReader(new FileReader(filenameTwo));
+      readerTwo = new BufferedReader(JDRunit.loadReaderResource(filenameTwo));
     } catch (Exception e) {
       System.out.println("Exception opening " + filenameTwo);
       System.out.println("Command was " + command);

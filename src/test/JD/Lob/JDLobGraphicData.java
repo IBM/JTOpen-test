@@ -286,7 +286,8 @@ Performs cleanup needed after running variations.
             statement_.close ();
             connection_.close ();
 
-            Connection c = DriverManager.getConnection (url_);
+            Connection c = testDriver_.getConnection(url_,systemObject_.getUserId(), encryptedPassword_);
+
             Statement s = c.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                                              ResultSet.CONCUR_READ_ONLY);
             s.executeUpdate ("DROP TABLE " + TABLE_);

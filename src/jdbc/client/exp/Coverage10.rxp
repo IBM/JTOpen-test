@@ -1,0 +1,19 @@
+>>!PRINTSTACKTRACE false
+>-- Testcase to test the coverage of the built in JDBC client
+>-- Testcase for higher level paths
+>
+>!SETNEWVAR client=com.ibm.as400.access.jdbcClient.Main('jdbc:badurl','user','password')
+client=com.ibm.as400.access.jdbcClient.Main@.*
+>
+>!SETNEWVAR client=com.ibm.as400.access.jdbcClient.Main(jdbc:as400://.*,newtonjudf,newtonp1)
+client=com.ibm.as400.access.jdbcClient.Main@.*
+>!CALLMETHOD client.useConnectionPool(true)
+Call returned null
+>
+>!CONNECT TO URL jdbc:as400://.* USERID=newtonjudf PASSWORD=.* OTHERSTUFF
+>
+>
+>!SYSTEMDEBUGGER
+Exception starting  SYSTEMDEBUGGER
+Exception java.lang.ClassNotFoundException: com.ibm.iseries.debug.util.Util
+>

@@ -1,0 +1,5 @@
+!ECHOCOMMAND true
+!PRINTSTACKTRACE false
+-- Testcase to test the coverage of the built in JDBC client
+!DMD.GETSCHEMAS
+@IGNORE_REST
