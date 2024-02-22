@@ -1474,7 +1474,7 @@ public class JDRunit {
 
 
   /* Load a resource.  The default is to load from the filesystem, then load using the classloader */ 
-  /* If not found, then an empty input stream is returned */ 
+  /* If not found, then an error is returned */ 
   
   public static Reader loadReaderResource(String filename) throws FileNotFoundException {
     InputStream inputStream;
@@ -1482,11 +1482,11 @@ public class JDRunit {
     if (file.exists()) {
       inputStream = new FileInputStream(filename);
     } else {
+      if (filename.indexOf('\\') >= 0) {
+        filename = filename.replace('\\','/'); 
+      }
       inputStream = JDRunit.class.getClassLoader().getResourceAsStream(filename);
-      if (inputStream != null) {
-        if (iniInfo != null)
-          iniInfo.append("echo loaded " + filename + " from classloader\n");
-      } else {
+      if (inputStream == null) {
         throw new FileNotFoundException(filename);
       }
     }
