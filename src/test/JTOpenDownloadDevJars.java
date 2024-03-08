@@ -126,23 +126,7 @@ public class JTOpenDownloadDevJars {
 		}
 
 	    } else {
-		if (osVersion.equals("V7R1M0")) {
-		    jdk14Path = jdk14newPath;
-		} else if (osVersion.equals("V7R2M0")) {
-		    jdk14Path = jdk14newPath;
-		} else if (osVersion.equals("V7R3M0")) {
-		    jdk14Path = jdk14newPath;
-		} else if (osVersion.equals("V7R4M0")) {
-		    jdk14Path = jdk14newPath;
-		} else if (osVersion.equals("V7R5M0")) {
-		    jdk14Path = jdk14newPath;
-		} else if (osVersion.equals("V7R6M0")) {
-		    jdk14Path = jdk14newPath;
-		} else {
-		    System.out.println("Unrecognized os.version = " + osVersion);
-		    System.out.println("Exiting");
-		    System.exit(1);
-		}
+	      jdk14Path = jdk14newPath;
 	    }
 
 	    String disableSSL = System.getenv("DISABLESSL");
