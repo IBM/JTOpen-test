@@ -46,6 +46,7 @@ import javax.naming.*;
 import javax.sql.DataSource;
 
 import java.util.Hashtable;
+import java.util.Vector;
 import java.io.PrintWriter;
 
 
@@ -113,7 +114,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDCPDSProperties (AS400 systemObject,
-                             Hashtable<?,?> namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

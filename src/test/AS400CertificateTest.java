@@ -14,7 +14,6 @@
 package test;
 
 import java.io.IOException;
-import java.util.Vector;
 import java.util.Enumeration;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
@@ -150,7 +149,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       AS400CertificateVldlBeans tc =
         new AS400CertificateVldlBeans(systemObject_,
-                     (Vector) namesAndVars_.get("AS400CertificateVldlBeans"), runMode_,
+                      namesAndVars_.get("AS400CertificateVldlBeans"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("AS400CertificateVldlBeans");
@@ -161,7 +160,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       AS400CertificateVldlTestcase tc =
         new AS400CertificateVldlTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("AS400CertificateVldlTestcase"), runMode_,
+                     namesAndVars_.get("AS400CertificateVldlTestcase"), runMode_,
                      fileOutputStream_, "e");
       testcases_.addElement(tc);
       namesAndVars_.remove("AS400CertificateVldlTestcase");
@@ -171,7 +170,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       AS400CertificateUsrPrfTestcase tc =
         new AS400CertificateUsrPrfTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("AS400CertificateUsrPrfTestcase"), runMode_,
+                     namesAndVars_.get("AS400CertificateUsrPrfTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("AS400CertificateUsrPrfTestcase");
@@ -183,7 +182,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       AS400CertificateUsrPrfBeans tc =
         new AS400CertificateUsrPrfBeans(systemObject_,
-                     (Vector) namesAndVars_.get("AS400CertificateUsrPrfBeans"), runMode_,
+                      namesAndVars_.get("AS400CertificateUsrPrfBeans"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("AS400CertificateUsrPrfBeans");
@@ -196,7 +195,7 @@ Creates Testcase objects for all the testcases in this component.
         PwrSys.disconnectService(AS400.COMMAND);
     }
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

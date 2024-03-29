@@ -52,7 +52,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDSavepointsTestcase (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          

@@ -103,16 +103,19 @@ public class EVTest extends TestDriver
     public static Object serialize(EnvironmentVariable object, char[] encryptedPassword) throws Exception
     {
         // Serialize.
+      {
         ObjectOutput out = new ObjectOutputStream(new FileOutputStream(SERIALIZE_FILENAME));
         out.writeObject(object);
         out.flush();
-
+        out.close(); 
+      }
         // Deserialize.
         EnvironmentVariable object2 = null;
         try
         {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(SERIALIZE_FILENAME));
             object2 = (EnvironmentVariable)in.readObject();
+            in.close(); 
         }
         finally
         {
@@ -138,9 +141,12 @@ public class EVTest extends TestDriver
     public static Object serialize(EnvironmentVariableList object, char[] encryptedPassword) throws Exception
     {
         // Serialize.
+      {
         ObjectOutput out = new ObjectOutputStream(new FileOutputStream(SERIALIZE_FILENAME));
         out.writeObject(object);
         out.flush();
+        out.close(); 
+      }
 
         // Deserialize.
         EnvironmentVariableList object2 = null;
@@ -148,6 +154,7 @@ public class EVTest extends TestDriver
         {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(SERIALIZE_FILENAME));
             object2 = (EnvironmentVariableList)in.readObject();
+            in.close(); 
         }
         finally
         {

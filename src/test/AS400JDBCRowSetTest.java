@@ -14,7 +14,6 @@ package test;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
@@ -169,7 +168,7 @@ public class AS400JDBCRowSetTest extends TestDriver
       // Repeat the following 'if' block for each testcase.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCRowSetTestcase"))
       {
-         AS400JDBCRowSetTestcase tc = new AS400JDBCRowSetTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCRowSetTestcase"), runMode_, fileOutputStream_,  password_, jndiType, ldapUsr, ldapPwd); //@A1C
+         AS400JDBCRowSetTestcase tc = new AS400JDBCRowSetTestcase(systemObject_,  namesAndVars_.get("AS400JDBCRowSetTestcase"), runMode_, fileOutputStream_,  password_, jndiType, ldapUsr, ldapPwd); //@A1C
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCRowSetTestcase");
       }
@@ -177,7 +176,7 @@ public class AS400JDBCRowSetTest extends TestDriver
       // Repeat the following 'if' block for each testcase.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCRowSetCtorTestcase"))
       {
-         AS400JDBCRowSetCtorTestcase tc = new AS400JDBCRowSetCtorTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCRowSetCtorTestcase"), runMode_, fileOutputStream_,  password_, jndiType, ldapUsr, ldapPwd); //@A1C
+         AS400JDBCRowSetCtorTestcase tc = new AS400JDBCRowSetCtorTestcase(systemObject_,  namesAndVars_.get("AS400JDBCRowSetCtorTestcase"), runMode_, fileOutputStream_,  password_, jndiType, ldapUsr, ldapPwd); //@A1C
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCRowSetCtorTestcase");
       }
@@ -185,13 +184,13 @@ public class AS400JDBCRowSetTest extends TestDriver
       // Repeat the following 'if' block for each testcase.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCRowSetBeanInfoTestcase"))
       {
-         AS400JDBCRowSetBeanInfoTestcase tc = new AS400JDBCRowSetBeanInfoTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCRowSetBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
+         AS400JDBCRowSetBeanInfoTestcase tc = new AS400JDBCRowSetBeanInfoTestcase(systemObject_,  namesAndVars_.get("AS400JDBCRowSetBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCRowSetBeanInfoTestcase");
       }
 
       // Put out error message for each invalid testcase name.
-      for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+      for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
       {
          System.out.println("Testcase " + e.nextElement() + " not found.");
       }

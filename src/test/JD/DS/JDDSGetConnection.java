@@ -33,6 +33,7 @@ import java.io.FileOutputStream;
 import javax.sql.DataSource;
 
 import java.util.Hashtable;
+import java.util.Vector;
 import java.sql.*;
 
 
@@ -61,7 +62,7 @@ extends JDTestcase {
 Constructor.
 **/
    public JDDSGetConnection (AS400 systemObject,
-                             Hashtable<?,?> namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

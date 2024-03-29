@@ -27,6 +27,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.PooledConnection;
@@ -66,7 +67,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDCPDSGetConnection (AS400 systemObject,
-                                Hashtable<?,?> namesAndVars,
+                                Hashtable<String,Vector<String>> namesAndVars,
                                 int runMode,
                                 FileOutputStream fileOutputStream,
                                 

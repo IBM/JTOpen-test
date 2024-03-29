@@ -103,7 +103,7 @@ public class JDCleanSplf implements PrintObjectListListener {
 				}
 			}
 
-			Hashtable deleteUserIds = new Hashtable();
+			Hashtable<String,String> deleteUserIds = new Hashtable<String,String>();
 			deleteUserIds.put("BOSSJUDF", "BOSSJUDF");
 			deleteUserIds.put("JAVA", "JAVA");
 			deleteUserIds.put("JAVA290", "JAVA290");
@@ -217,7 +217,7 @@ public class JDCleanSplf implements PrintObjectListListener {
 	}
 
 	public static JDCleanSplfResults deleteSpoolFiles(PrintStream out, AS400 as400, String nestLevel,
-			long startFilterTime, long endFilterTime, boolean deleteAll, Hashtable deleteUserIds) throws Exception {
+			long startFilterTime, long endFilterTime, boolean deleteAll, Hashtable<String,String> deleteUserIds) throws Exception {
 
 		long startTime = System.currentTimeMillis();
 		String startDateFilter = getDateFilter(startFilterTime);
@@ -401,7 +401,7 @@ public class JDCleanSplf implements PrintObjectListListener {
 	}
 
 	public static JDCleanSplfResults deleteSpoolFilesAttempt(PrintStream out, AS400 as400, String nestLevel,
-			long startFilterTime, long endFilterTime, boolean deleteAll, Hashtable deleteUserIds) throws Exception {
+			long startFilterTime, long endFilterTime, boolean deleteAll, Hashtable<String,String> deleteUserIds) throws Exception {
 		SpooledFileList spooledFileList = new SpooledFileList(as400);
 		spooledFileList.setUserFilter("*ALL");
 
@@ -591,7 +591,7 @@ public class JDCleanSplf implements PrintObjectListListener {
 	String nestLevel_ = "";
 	boolean deleteAll_ = false;
 	boolean deleteUseless_ = false;
-	Hashtable deleteUserIds_ = null;
+	Hashtable<String,String> deleteUserIds_ = null;
 	long deleteCount_ = 0;
 	long deleteBytes_ = 0;
 	long keepCount_ = 0;
@@ -601,7 +601,7 @@ public class JDCleanSplf implements PrintObjectListListener {
 	AS400 as400_;
 	private PrintStream out;
 
-	public JDCleanSplf(PrintStream out, AS400 as400, String nestLevel, boolean deleteAll, Hashtable deleteUserIds) {
+	public JDCleanSplf(PrintStream out, AS400 as400, String nestLevel, boolean deleteAll, Hashtable<String,String> deleteUserIds) {
 		this.as400_ = as400;
 		this.nestLevel_ = nestLevel;
 		this.deleteAll_ = deleteAll;
@@ -625,7 +625,7 @@ public class JDCleanSplf implements PrintObjectListListener {
 		deleteUseless_ = true;
 		this.nestLevel_ = nestLevel;
 		this.deleteAll_ = false;
-		deleteUserIds_ = new Hashtable();
+		deleteUserIds_ = new Hashtable<String,String>();
 		deleteCount_ = 0;
 		deleteBytes_ = 0;
 		keepCount_ = 0;

@@ -607,7 +607,7 @@ public class JDPerformanceUtil {
     for (int i = 1; i <= columnCount; i++) { 
       columnHeader[i] = rsmd.getColumnName(i); 
       columnWidth[i]=columnHeader[i].length(); 
-      columnContents[i] = new Vector(); 
+      columnContents[i] = new Vector<>(); 
     }
     
     while (rs.next()) {

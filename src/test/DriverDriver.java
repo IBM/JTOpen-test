@@ -16,7 +16,6 @@
 package test;
 
 import java.util.Vector;
-import java.util.StringTokenizer;
 
 /**
 This class invokes all the various component TestDrivers in succession.
@@ -46,7 +45,7 @@ public class DriverDriver
   protected static String installDir_ = null; // local directory for InstallTest
   protected static String printer_ = null;    // printer for NPPrintTest
   protected static String misc_ = null;       // '-misc' argument passed in
-  protected static Vector common_args_;       // everything the caller specified
+  protected static Vector<String> common_args_;       // everything the caller specified
                                               // for options, other than the above
 
   public static void main(String[] args) 
@@ -199,10 +198,9 @@ Parse parameters.
     installDir_ = null;
     printer_ = null;
     misc_ = null;
-    common_args_ = new Vector();
+    common_args_ = new Vector<String>();
 
     // Parse the command line parameters.
-    StringTokenizer vars = null;
     int state = START;
 
     for (int i = 0; i < args.length; i++)
@@ -290,14 +288,15 @@ Run a driver.
 /**
 Set up arguments for a Driver.
 **/
-  public static String[] setupArgs(Vector base_args, String misc_val)
+  public static String[] setupArgs(Vector<String> base_args, String misc_val)
   {
     if (base_args == null)
-      base_args = new Vector();
+      base_args = new Vector<String>();
     String[] combined_args = null;
     if (misc_val != null)
     {
-      Vector temp_args = (Vector)base_args.clone();
+      @SuppressWarnings("unchecked")
+      Vector<String> temp_args = (Vector<String>)base_args.clone();
       temp_args.addElement("-misc");
       temp_args.addElement(misc_val);
       combined_args = new String[temp_args.size()];

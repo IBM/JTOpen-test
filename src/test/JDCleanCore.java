@@ -16,17 +16,13 @@ package test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.text.NumberFormat;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
-import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.IFSFileReader;
-import com.ibm.as400.access.ObjectDescription;
-import com.ibm.as400.access.ObjectList;
 
 
 
@@ -68,9 +64,9 @@ public class JDCleanCore {
     }
   }
 
-  public static Enumeration getJavacoreList(AS400 as400, String directory) throws IOException {
+  public static Enumeration<IFSFile> getJavacoreList(AS400 as400, String directory) throws IOException {
     IFSFile file = new IFSFile(as400, directory);
-    Enumeration files = file.enumerateFiles("javacore.*"); 
+    Enumeration<IFSFile> files = file.enumerateFiles("javacore.*"); 
     return files; 
   }
 
@@ -81,7 +77,7 @@ public class JDCleanCore {
     if (userid == null) {
       as400 = new AS400(system);
     } else {
-      as400 = new AS400(system, userid, password);
+      as400 = new AS400(system, userid, password.toCharArray());
     }
     
     String directories[] = { "/", 
@@ -90,8 +86,8 @@ public class JDCleanCore {
             JTOpenTestEnvironment.testcaseHomeDirectory+"/ct", "/home/QWLISVR", "/home/jsonTest", "/home/jsontest/bin", "/home/QSRVAGT" }; 
 
     for (int i = 0; i < directories.length; i++) {
-     Hashtable foundProblems = new Hashtable(); 
-	   Enumeration javacoreList = getJavacoreList(as400,directories[i]); 
+     Hashtable<String,IFSFile> foundProblems = new Hashtable<String,IFSFile>(); 
+	   Enumeration<IFSFile> javacoreList = getJavacoreList(as400,directories[i]); 
 	   while (javacoreList.hasMoreElements()) {
 	     IFSFile javacorefile = (IFSFile) javacoreList.nextElement();
 	     
@@ -129,7 +125,7 @@ public class JDCleanCore {
       
       String pattern = "*"+filename.substring(firstDot, fourthDot+1)+"*"; 
       IFSFile directoryFile = new IFSFile(as400, directory);
-      Enumeration files = directoryFile.enumerateFiles(pattern); 
+      Enumeration<IFSFile> files = directoryFile.enumerateFiles(pattern); 
       while (files.hasMoreElements()) { 
         IFSFile file = (IFSFile) files.nextElement(); 
         file.delete(); 

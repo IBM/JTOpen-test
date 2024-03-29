@@ -121,7 +121,7 @@ public abstract class Testcase {
                                    // the current user id
   protected String pwrSysUserID_ = null;
   protected char[] pwrSysEncryptedPassword_ = null;
-  protected Vector variationsToRun_ = null;
+  protected Vector<String> variationsToRun_ = null;
   protected boolean mustUseSockets_ = false;
   protected boolean isNative_ = false;
   protected boolean isLocal_ = false;
@@ -226,9 +226,9 @@ public abstract class Testcase {
    * @param fileOutputStream
    *          The output stream to which to write the results.
    **/
-  protected Testcase(AS400 system, String name, Hashtable namesAndVars,
+  protected Testcase(AS400 system, String name, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream) {
-    this(system, name, (Vector) namesAndVars.get(name), runMode,
+    this(system, name,  namesAndVars.get(name), runMode,
         fileOutputStream);
   }
 
@@ -248,10 +248,10 @@ public abstract class Testcase {
    * @param password
    *          The user profile password.
    **/
-  protected Testcase(AS400 system, String name, Hashtable namesAndVars,
+  protected Testcase(AS400 system, String name, Hashtable<String, Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
-    this(system, name, (Vector) namesAndVars.get(name), runMode,
+    this(system, name,  namesAndVars.get(name), runMode,
         fileOutputStream,  password);
   }
 
@@ -275,10 +275,10 @@ public abstract class Testcase {
    * @param pwrSysPwd
    *          The power user password.
    **/
-  public Testcase(AS400 system, String name, Hashtable namesAndVars,
+  public Testcase(AS400 system, String name, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream,  
       String password, AS400 pwrSys, String pwrSysPwd) {
-    this(system, name, (Vector) namesAndVars.get(name), runMode,
+    this(system, name,  namesAndVars.get(name), runMode,
         fileOutputStream,  password);
     pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPwd);
     pwrSys_ = pwrSys;
@@ -306,10 +306,10 @@ public abstract class Testcase {
    * @param pwrSys
    *          The iSeries server, accessed through a SECADM user profile.
    **/
-  protected Testcase(AS400 system, String name, Hashtable namesAndVars,
+  protected Testcase(AS400 system, String name, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       AS400 pwrSys) {
-    this(system, name, (Vector) namesAndVars.get(name), runMode,
+    this(system, name,  namesAndVars.get(name), runMode,
         fileOutputStream);
     pwrSys_ = pwrSys;
     if (pwrSys_ != null) {
@@ -331,7 +331,7 @@ public abstract class Testcase {
    * @param fileOutputStream
    *          The output stream to which to write the results.
    **/
-  protected Testcase(AS400 system, String name, Vector variationsToRun,
+  protected Testcase(AS400 system, String name, Vector<String> variationsToRun,
       int runMode, FileOutputStream fileOutputStream) {
     this(system, name, -1, variationsToRun, runMode, fileOutputStream,
          null);
@@ -354,7 +354,7 @@ public abstract class Testcase {
    * @param password
    *          The user profile password.
    **/
-  protected Testcase(AS400 system, String name, Vector variationsToRun,
+  protected Testcase(AS400 system, String name, Vector<String> variationsToRun,
       int runMode, FileOutputStream fileOutputStream,  
       String password) {
     this(system, name, -1, variationsToRun, runMode, fileOutputStream,
@@ -379,7 +379,7 @@ public abstract class Testcase {
    *          The output stream to which to write the results.
    **/
   protected Testcase(AS400 system, String name, int totalVariations,
-      Vector variationsToRun, int runMode, FileOutputStream fileOutputStream) {
+      Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream) {
     this(system, name, totalVariations, variationsToRun, runMode,
         fileOutputStream,  null);
   }
@@ -403,7 +403,7 @@ public abstract class Testcase {
    *          The user profile password.
    **/
   protected Testcase(AS400 system, String name, int totalVariations,
-      Vector variationsToRun, int runMode, FileOutputStream fileOutputStream,
+      Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream,
       String password) {
     this(system, name, totalVariations, variationsToRun, runMode,
         fileOutputStream,  password, null);
@@ -430,7 +430,7 @@ public abstract class Testcase {
    *          The iSeries server, accessed through a SECADM user profile.
    **/
   protected Testcase(AS400 system, String name, int totalVariations,
-      Vector variationsToRun, int runMode, FileOutputStream fileOutputStream,
+      Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream,
        String password, AS400 pwrSys) {
     initializeFields(system, name, totalVariations, variationsToRun, runMode,
         fileOutputStream,  password);
@@ -477,7 +477,7 @@ public abstract class Testcase {
    *          The power user password.
    **/
   public Testcase(AS400 system, String name, int totalVariations,
-      Vector variationsToRun, int runMode, FileOutputStream fileOutputStream,
+      Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream,
        String password, String pwrSysUid, String pwrSysPwd) {
     initializeFields(system, name, totalVariations, variationsToRun, runMode,
         fileOutputStream,  password);
@@ -505,7 +505,7 @@ public abstract class Testcase {
   }
 
   private void initializeFields(AS400 system, String name, int totalVariations,
-      Vector variationsToRun, int runMode, FileOutputStream fileOutputStream,
+      Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream,
        String password) {
 
     // System.out.println("checking interactive");
@@ -521,7 +521,7 @@ public abstract class Testcase {
     systemObject_ = system;
     name_ = name;
     totalVariations_ = totalVariations;
-    variationsToRun_ = variationsToRun != null ? variationsToRun : new Vector();
+    variationsToRun_ = variationsToRun != null ? variationsToRun : new Vector<String>();
     runMode_ = runMode;
     OutputStream out;
     if (fileOutputStream != null)
@@ -1716,7 +1716,7 @@ public abstract class Testcase {
       try {
         method = this.getClass().getMethod(methodName, new Class[0]);
       } catch (NoSuchMethodException ee) {
-        Class[] parms = new Class[1];
+        Class<?>[] parms = new Class[1];
         parms[0] = Integer.TYPE;
         method = this.getClass().getMethod(methodName, parms);
       }
@@ -1724,7 +1724,7 @@ public abstract class Testcase {
       variationStartTime = System.currentTimeMillis();
       setVariation(variation);
 
-      Class[] paramTypes = method.getParameterTypes();
+      Class<?>[] paramTypes = method.getParameterTypes();
       if (paramTypes.length == 0) {
         if (runMode_ != ATTENDED) {
           if (this.checkVariationApplies()) {
@@ -2311,7 +2311,7 @@ public abstract class Testcase {
   public void setTestcaseParameters(AS400 system, AS400 pwrSys,
       String systemName, String userId, String password, String proxy,
       boolean mustUseSockets, boolean isNative, boolean isLocal,
-      boolean onAS400, Hashtable namesAndVars, int runMode,
+      boolean onAS400, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream) {
     systemObject_ = system;
     pwrSys_ = pwrSys;
@@ -2360,9 +2360,9 @@ public abstract class Testcase {
 
     totalVariations_ = countVariations();
 
-    variationsToRun_ = (Vector) namesAndVars.get(name_);
+    variationsToRun_ = namesAndVars.get(name_);
     if (variationsToRun_ == null)
-      variationsToRun_ = new Vector();
+      variationsToRun_ = new Vector<String>();
     runMode_ = runMode;
     OutputStream out;
     if (fileOutputStream != null) {
@@ -2377,7 +2377,7 @@ public abstract class Testcase {
   public void setTestcaseParameters(AS400 system, AS400 pwrSys,
       String systemName, String userId, String password, String proxy,
       boolean mustUseSockets, boolean isNative, boolean isLocal,
-      boolean onAS400, Hashtable namesAndVars, int runMode,
+      boolean onAS400, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String pwrSysUserID, String pwrSysPassword) {
     setTestcaseParameters(system, pwrSys, systemName, userId, password, proxy,
@@ -2703,24 +2703,16 @@ public abstract class Testcase {
 
   }
 
-  class MethodComparator implements Comparator {
+  class MethodComparator implements Comparator<Method> {
     /*
      * Compares its two arguments for order. Returns a negative integer, zero,
      * or a positive integer as the first argument is less than, equal to, or
      * greater than the second.
      */
-    public int compare(Object o1, Object o2) {
-      if ((o1 instanceof Method) && (o2 instanceof Method)) {
-        Method m1 = (Method) o1;
-        Method m2 = (Method) o2;
+    public int compare(Method m1, Method m2) {
         String name1 = m1.getName();
         String name2 = m2.getName();
         return name1.compareTo(name2);
-
-      } else {
-        return o1.hashCode() - o2.hashCode();
-      }
-
     }
   }
 
@@ -2812,7 +2804,7 @@ public abstract class Testcase {
     return getLoadPath(thisObject.getClass());
   }
 
-  public static String getLoadPath(Class thisClass) {
+  public static String getLoadPath(Class<? extends Object> thisClass) {
 
     String loadPath = null;
     try {

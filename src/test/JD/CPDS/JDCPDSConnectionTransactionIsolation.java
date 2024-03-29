@@ -30,6 +30,7 @@ import test.PasswordVault;
 
 import java.io.FileOutputStream;
 import java.util.Hashtable;
+import java.util.Vector;
 import java.sql.*;
 import javax.sql.*;
 
@@ -62,7 +63,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDCPDSConnectionTransactionIsolation (AS400 systemObject,
-                                                 Hashtable<?,?> namesAndVars,
+                                                 Hashtable<String,Vector<String>> namesAndVars,
                                                  int runMode,
                                                  FileOutputStream fileOutputStream,
                                                  

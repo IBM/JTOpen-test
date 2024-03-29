@@ -147,7 +147,7 @@ Performs setup needed before running testcases.
 	    ipAddress = tokenizer.nextToken ();
 	    String uid = tokenizer.nextToken ();
 	    String pwd = tokenizer.nextToken ();
-	    pwrSys_ = new AS400 (systemObject_.getSystemName(), uid, pwd);
+	    pwrSys_ = new AS400 (systemObject_.getSystemName(), uid, pwd.toCharArray());
 	}
 
      String sysName = getSystemName();
@@ -250,8 +250,8 @@ Creates the testcases.
 
 
       // Reports invalid testcase names.
-      for (Enumeration e = namesAndVars_.keys (); e.hasMoreElements (); ) {
-        String name = (String)e.nextElement ();
+      for (Enumeration<String> e = namesAndVars_.keys (); e.hasMoreElements (); ) {
+        String name = e.nextElement ();
         System.out.println ("Testcase " + name + " not found.");
       }
     }

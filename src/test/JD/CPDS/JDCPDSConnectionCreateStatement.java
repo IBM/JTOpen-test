@@ -30,6 +30,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.sql.DataSource;
 
@@ -75,7 +76,7 @@ public class JDCPDSConnectionCreateStatement extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDCPDSConnectionCreateStatement(AS400 systemObject, Hashtable<?, ?> namesAndVars, int runMode,
+  public JDCPDSConnectionCreateStatement(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,
 
       String password) {

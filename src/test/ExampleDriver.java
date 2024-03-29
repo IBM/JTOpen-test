@@ -13,7 +13,7 @@
 
 package test;
 
-import java.util.Vector;
+
 
 import test.MiscAH.ExampleTestcase;
 
@@ -87,14 +87,14 @@ Creates Testcase objects for all the testcases in this component.
     {
       ExampleTestcase tc =
         new ExampleTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("example"), runMode_,
+                      namesAndVars_.get("example"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("example");
     }
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

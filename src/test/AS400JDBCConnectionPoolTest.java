@@ -14,7 +14,6 @@ package test;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Vector;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
@@ -127,7 +126,7 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
       // Repeat the following 'if' block for each testcase.
       if (allTestcases || namesAndVars_.containsKey("ConnectionPoolPropertiesTestcase"))
       {
-         ConnectionPoolPropertiesTestcase tc = new ConnectionPoolPropertiesTestcase(systemObject_, (Vector) namesAndVars_.get("ConnectionPoolPropertiesTestcase"), runMode_, fileOutputStream_,  password_);
+         ConnectionPoolPropertiesTestcase tc = new ConnectionPoolPropertiesTestcase(systemObject_,  namesAndVars_.get("ConnectionPoolPropertiesTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("ConnectionPoolPropertiesTestcase");
       }
@@ -140,13 +139,13 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCPooledConnectionTestcase"))
       {
-         AS400JDBCPooledConnectionTestcase tc = new AS400JDBCPooledConnectionTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCPooledConnectionTestcase"), runMode_, fileOutputStream_,  password_);
+         AS400JDBCPooledConnectionTestcase tc = new AS400JDBCPooledConnectionTestcase(systemObject_,  namesAndVars_.get("AS400JDBCPooledConnectionTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCPooledConnectionTestcase");
       }
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCConnectionPoolTestcase"))
       {
-         AS400JDBCConnectionPoolTestcase tc = new AS400JDBCConnectionPoolTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCConnectionPoolTestcase"), runMode_, fileOutputStream_,  password_);
+         AS400JDBCConnectionPoolTestcase tc = new AS400JDBCConnectionPoolTestcase(systemObject_,  namesAndVars_.get("AS400JDBCConnectionPoolTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCConnectionPoolTestcase");
       }
@@ -154,33 +153,33 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
  
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCConnectionPoolBeanInfoTestcase"))
       {
-         AS400JDBCConnectionPoolBeanInfoTestcase tc = new AS400JDBCConnectionPoolBeanInfoTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCConnectionPoolBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
+         AS400JDBCConnectionPoolBeanInfoTestcase tc = new AS400JDBCConnectionPoolBeanInfoTestcase(systemObject_,  namesAndVars_.get("AS400JDBCConnectionPoolBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCConnectionPoolBeanInfoTestcase");
       }
       if (allTestcases || namesAndVars_.containsKey("ConnectionPoolBeanInfoTestcase"))
       {
-         ConnectionPoolBeanInfoTestcase tc = new ConnectionPoolBeanInfoTestcase(systemObject_, (Vector) namesAndVars_.get("ConnectionPoolBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
+         ConnectionPoolBeanInfoTestcase tc = new ConnectionPoolBeanInfoTestcase(systemObject_,  namesAndVars_.get("ConnectionPoolBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("ConnectionPoolBeanInfoTestcase");
       }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCManagedConnectionPoolTestcase"))
       {
-         AS400JDBCManagedConnectionPoolTestcase tc = new AS400JDBCManagedConnectionPoolTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCManagedConnectionPoolTestcase"), runMode_, fileOutputStream_,  password_, pwrSys_, pwrSysPassword_);///, duration_);
+         AS400JDBCManagedConnectionPoolTestcase tc = new AS400JDBCManagedConnectionPoolTestcase(systemObject_,  namesAndVars_.get("AS400JDBCManagedConnectionPoolTestcase"), runMode_, fileOutputStream_,  password_, pwrSys_, pwrSysPassword_);///, duration_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCManagedConnectionPoolTestcase");
       }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCManagedConnectionPool2Testcase"))
       {
-         AS400JDBCManagedConnectionPool2Testcase tc = new AS400JDBCManagedConnectionPool2Testcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCManagedConnectionPool2Testcase"), runMode_, fileOutputStream_,  password_, pwrSys_, pwrSysPassword_);///, duration_);
+         AS400JDBCManagedConnectionPool2Testcase tc = new AS400JDBCManagedConnectionPool2Testcase(systemObject_, namesAndVars_.get("AS400JDBCManagedConnectionPool2Testcase"), runMode_, fileOutputStream_,  password_, pwrSys_, pwrSysPassword_);///, duration_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCManagedConnectionPool2Testcase");
       }
 
       // Put out error message for each invalid testcase name.
-      for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+      for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
       {
          System.out.println("Testcase " + e.nextElement() + " not found.");
       }

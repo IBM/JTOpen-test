@@ -15,13 +15,12 @@ package test;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Vector;
+
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
-import test.TestDriver;
 import test.Cmd.CommandBeanInfoTestcase;
 import test.Cmd.CommandHelpRetrieverTestcase;
 import test.Cmd.CommandListBeanInfoTestcase;
@@ -128,28 +127,28 @@ public class CommandHelpTest extends TestDriver
         // Repeat the following 'if' block for each testcase.
         if (allTestcases || namesAndVars_.containsKey("CommandTestcase"))
         {
-            CommandTestcase tc = new CommandTestcase(systemObject_, (Vector) namesAndVars_.get("CommandTestcase"), runMode_, fileOutputStream_ );
+            CommandTestcase tc = new CommandTestcase(systemObject_,  namesAndVars_.get("CommandTestcase"), runMode_, fileOutputStream_ );
             testcases_.addElement(tc);
             namesAndVars_.remove("CommandTestcase");
         }
 
         if (allTestcases || namesAndVars_.containsKey("CommandBeanInfoTestcase"))
         {
-            CommandBeanInfoTestcase tc = new CommandBeanInfoTestcase(systemObject_, (Vector) namesAndVars_.get("CommandBeanInfoTestcase"), runMode_, fileOutputStream_ );
+            CommandBeanInfoTestcase tc = new CommandBeanInfoTestcase(systemObject_,  namesAndVars_.get("CommandBeanInfoTestcase"), runMode_, fileOutputStream_ );
             testcases_.addElement(tc);
             namesAndVars_.remove("CommandBeanInfoTestcase");
         }
 
         if (allTestcases || namesAndVars_.containsKey("CommandListTestcase"))
         {
-            CommandListTestcase tc = new CommandListTestcase(systemObject_, (Vector) namesAndVars_.get("CommandListTestcase"), runMode_, fileOutputStream_ );
+            CommandListTestcase tc = new CommandListTestcase(systemObject_,  namesAndVars_.get("CommandListTestcase"), runMode_, fileOutputStream_ );
             testcases_.addElement(tc);
             namesAndVars_.remove("CommandListTestcase");
         }
 
         if (allTestcases || namesAndVars_.containsKey("CommandListBeanInfoTestcase"))
         {
-            CommandListBeanInfoTestcase tc = new CommandListBeanInfoTestcase(systemObject_, (Vector) namesAndVars_.get("CommandListBeanInfoTestcase"), runMode_, fileOutputStream_ );
+            CommandListBeanInfoTestcase tc = new CommandListBeanInfoTestcase(systemObject_,  namesAndVars_.get("CommandListBeanInfoTestcase"), runMode_, fileOutputStream_ );
             testcases_.addElement(tc);
             namesAndVars_.remove("CommandListBeanInfoTestcase");
         }
@@ -157,14 +156,14 @@ public class CommandHelpTest extends TestDriver
 
         if (allTestcases || namesAndVars_.containsKey("CommandHelpRetrieverTestcase"))
         {
-            CommandHelpRetrieverTestcase tc = new CommandHelpRetrieverTestcase(systemObject_, (Vector) namesAndVars_.get("CommandHelpRetrieverTestcase"), runMode_, fileOutputStream_ );
+            CommandHelpRetrieverTestcase tc = new CommandHelpRetrieverTestcase(systemObject_,  namesAndVars_.get("CommandHelpRetrieverTestcase"), runMode_, fileOutputStream_ );
             testcases_.addElement(tc);
             namesAndVars_.remove("CommandHelpRetrieverTestcase");
         }
 
 
         // Put out error message for each invalid testcase name.
-        for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+        for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
         {
             System.out.println("Testcase " + e.nextElement() + " not found.");
         }

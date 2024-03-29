@@ -57,9 +57,7 @@ import test.DDM.DDMUpdate;
 import test.DDM.DDMWrite;
 
 import java.io.IOException;
-import java.util.Vector;
 import java.util.Enumeration;
-import java.util.StringTokenizer;
 
 /**
 Test driver for the ddm (record-level database access) component.
@@ -753,7 +751,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMConstructors tc =
         new DDMConstructors(systemObject_,
-                     (Vector) namesAndVars_.get("DDMConstructors"), runMode_,
+                      namesAndVars_.get("DDMConstructors"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMConstructors");
@@ -763,7 +761,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMConnect tc =
         new DDMConnect(systemObject_,
-                     (Vector) namesAndVars_.get("DDMConnect"), runMode_,
+                      namesAndVars_.get("DDMConnect"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMConnect");
@@ -773,7 +771,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMOpenClose tc =
         new DDMOpenClose(systemObject_,
-                     (Vector) namesAndVars_.get("DDMOpenClose"), runMode_,
+                      namesAndVars_.get("DDMOpenClose"), runMode_,
                      fileOutputStream_, testLib_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMOpenClose");
@@ -783,7 +781,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCreateAndAdd tc =
         new DDMCreateAndAdd(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCreateAndAdd"), runMode_,
+                      namesAndVars_.get("DDMCreateAndAdd"), runMode_,
                      fileOutputStream_, testLib_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCreateAndAdd");
@@ -793,7 +791,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMDelete tc =
         new DDMDelete(systemObject_,
-                     (Vector) namesAndVars_.get("DDMDelete"), runMode_,
+                      namesAndVars_.get("DDMDelete"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMDelete");
@@ -803,7 +801,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMLocking tc =
         new DDMLocking(systemObject_,
-                     (Vector) namesAndVars_.get("DDMLocking"), runMode_,
+                      namesAndVars_.get("DDMLocking"), runMode_,
                      fileOutputStream_, testLib_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMLocking");
@@ -813,7 +811,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCommitmentControl tc =
         new DDMCommitmentControl(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCommitmentControl"), runMode_,
+                      namesAndVars_.get("DDMCommitmentControl"), runMode_,
                      fileOutputStream_, testLib_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCommitmentControl");
@@ -823,7 +821,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMPosition tc =
         new DDMPosition(systemObject_,
-                     (Vector) namesAndVars_.get("DDMPosition"), runMode_,
+                      namesAndVars_.get("DDMPosition"), runMode_,
                      fileOutputStream_, testLib_,  1, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMPosition");
@@ -833,7 +831,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMPositionExtended tc =
         new DDMPositionExtended(systemObject_,
-                     (Vector) namesAndVars_.get("DDMPositionExtended"), runMode_,
+                      namesAndVars_.get("DDMPositionExtended"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMPositionExtended");
@@ -843,7 +841,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMPosition tc =
         new DDMPosition(systemObject_,
-                     (Vector) namesAndVars_.get("DDMPositionCaching0"), runMode_,
+                      namesAndVars_.get("DDMPositionCaching0"), runMode_,
                      fileOutputStream_, testLib_,  0, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMPositionCaching0");
@@ -853,7 +851,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMPosition tc =
         new DDMPosition(systemObject_,
-                     (Vector) namesAndVars_.get("DDMPositionCaching2"), runMode_,
+                      namesAndVars_.get("DDMPositionCaching2"), runMode_,
                      fileOutputStream_, testLib_,  2, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMPositionCaching2");
@@ -863,7 +861,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMPosition tc =
         new DDMPosition(systemObject_,
-                     (Vector) namesAndVars_.get("DDMPositionCaching10"), runMode_,
+                      namesAndVars_.get("DDMPositionCaching10"), runMode_,
                      fileOutputStream_, testLib_,  10, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMPositionCaching10");
@@ -873,7 +871,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadSeq tc =
         new DDMReadSeq(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadSeq"), runMode_,
+                      namesAndVars_.get("DDMReadSeq"), runMode_,
                      fileOutputStream_, testLib_,  1);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadSeq");
@@ -883,7 +881,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadSeq tc =
         new DDMReadSeq(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadSeqCaching0"), runMode_,
+                      namesAndVars_.get("DDMReadSeqCaching0"), runMode_,
                      fileOutputStream_, testLib_,  0);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadSeqCaching0");
@@ -893,7 +891,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadSeq tc =
         new DDMReadSeq(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadSeqCaching2"), runMode_,
+                      namesAndVars_.get("DDMReadSeqCaching2"), runMode_,
                      fileOutputStream_, testLib_,  2);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadSeqCaching2");
@@ -903,7 +901,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadSeq tc =
         new DDMReadSeq(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadSeqCaching10"), runMode_,
+                      namesAndVars_.get("DDMReadSeqCaching10"), runMode_,
                      fileOutputStream_, testLib_,  10);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadSeqCaching10");
@@ -913,7 +911,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadKey tc =
         new DDMReadKey(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadKey"), runMode_,
+                      namesAndVars_.get("DDMReadKey"), runMode_,
                      fileOutputStream_, testLib_,  1);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadKey");
@@ -923,7 +921,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadKey tc =
         new DDMReadKey(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadKeyCaching0"), runMode_,
+                      namesAndVars_.get("DDMReadKeyCaching0"), runMode_,
                      fileOutputStream_, testLib_,  0);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadKeyCaching0");
@@ -933,7 +931,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadKey tc =
         new DDMReadKey(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadKeyCaching2"), runMode_,
+                      namesAndVars_.get("DDMReadKeyCaching2"), runMode_,
                      fileOutputStream_, testLib_,  2);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadKeyCaching2");
@@ -943,7 +941,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadKey tc =
         new DDMReadKey(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadKeyCaching10"), runMode_,
+                      namesAndVars_.get("DDMReadKeyCaching10"), runMode_,
                      fileOutputStream_, testLib_,  10);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadKeyCaching10");
@@ -953,7 +951,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadRN tc =
         new DDMReadRN(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadRN"), runMode_,
+                      namesAndVars_.get("DDMReadRN"), runMode_,
                      fileOutputStream_, testLib_,  1);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadRN");
@@ -963,7 +961,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadRN tc =
         new DDMReadRN(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadRNCaching0"), runMode_,
+                      namesAndVars_.get("DDMReadRNCaching0"), runMode_,
                      fileOutputStream_, testLib_,  0);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadRNCaching0");
@@ -973,7 +971,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadRN tc =
         new DDMReadRN(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadRNCaching2"), runMode_,
+                      namesAndVars_.get("DDMReadRNCaching2"), runMode_,
                      fileOutputStream_, testLib_,  2);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadRNCaching2");
@@ -983,7 +981,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMReadRN tc =
         new DDMReadRN(systemObject_,
-                     (Vector) namesAndVars_.get("DDMReadRNCaching10"), runMode_,
+                      namesAndVars_.get("DDMReadRNCaching10"), runMode_,
                      fileOutputStream_, testLib_,  10);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMReadRNCaching10");
@@ -993,7 +991,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMDeletedRecords tc =
         new DDMDeletedRecords(systemObject_,
-                     (Vector) namesAndVars_.get("DDMDeletedRecords"), runMode_,
+                      namesAndVars_.get("DDMDeletedRecords"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMDeletedRecords");
@@ -1003,7 +1001,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMWrite tc =
         new DDMWrite(systemObject_,
-                     (Vector) namesAndVars_.get("DDMWrite"), runMode_,
+                      namesAndVars_.get("DDMWrite"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMWrite");
@@ -1013,7 +1011,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMWrite tc =
         new DDMWrite(systemObject_,
-                     (Vector) namesAndVars_.get("DDMWriteCaching0"), runMode_,
+                      namesAndVars_.get("DDMWriteCaching0"), runMode_,
                      fileOutputStream_, testLib_,  0);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMWriteCaching0");
@@ -1023,7 +1021,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMWrite tc =
         new DDMWrite(systemObject_,
-                     (Vector) namesAndVars_.get("DDMWriteCaching2"), runMode_,
+                      namesAndVars_.get("DDMWriteCaching2"), runMode_,
                      fileOutputStream_, testLib_,  2);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMWriteCaching2");
@@ -1033,7 +1031,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMWrite tc =
         new DDMWrite(systemObject_,
-                     (Vector) namesAndVars_.get("DDMWriteCaching10"), runMode_,
+                      namesAndVars_.get("DDMWriteCaching10"), runMode_,
                      fileOutputStream_, testLib_,  10);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMWriteCaching10");
@@ -1043,7 +1041,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMUpdate tc =
         new DDMUpdate(systemObject_,
-                     (Vector) namesAndVars_.get("DDMUpdate"), runMode_,
+                      namesAndVars_.get("DDMUpdate"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMUpdate");
@@ -1053,7 +1051,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMGetSet tc =
         new DDMGetSet(systemObject_,
-                     (Vector) namesAndVars_.get("DDMGetSet"), runMode_,
+                      namesAndVars_.get("DDMGetSet"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMGetSet");
@@ -1063,7 +1061,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMRecordDescription tc =
         new DDMRecordDescription(systemObject_,
-                     (Vector) namesAndVars_.get("DDMRecordDescription"), runMode_,
+                      namesAndVars_.get("DDMRecordDescription"), runMode_,
                      fileOutputStream_, testLib_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMRecordDescription");
@@ -1073,7 +1071,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMSerialization tc =
         new DDMSerialization(systemObject_,
-                     (Vector) namesAndVars_.get("DDMSerialization"), runMode_,
+                      namesAndVars_.get("DDMSerialization"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMSerialization");
@@ -1083,7 +1081,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMEvents tc =
         new DDMEvents(systemObject_,
-                     (Vector) namesAndVars_.get("DDMEvents"), runMode_,
+                      namesAndVars_.get("DDMEvents"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMEvents");
@@ -1092,7 +1090,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCaching tc =
         new DDMCaching(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCaching"), runMode_,
+                      namesAndVars_.get("DDMCaching"), runMode_,
                      fileOutputStream_, testLib_,  1, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCaching");
@@ -1102,7 +1100,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCaching tc =
         new DDMCaching(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCaching0"), runMode_,
+                      namesAndVars_.get("DDMCaching0"), runMode_,
                      fileOutputStream_, testLib_,  0, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCaching0");
@@ -1112,7 +1110,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCaching tc =
         new DDMCaching(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCaching2"), runMode_,
+                      namesAndVars_.get("DDMCaching2"), runMode_,
                      fileOutputStream_, testLib_,  2, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCaching2");
@@ -1122,7 +1120,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCaching tc =
         new DDMCaching(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCaching100"), runMode_,
+                      namesAndVars_.get("DDMCaching100"), runMode_,
                      fileOutputStream_, testLib_,  100, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCaching100");
@@ -1132,7 +1130,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCaching tc =
         new DDMCaching(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCaching499"), runMode_,
+                      namesAndVars_.get("DDMCaching499"), runMode_,
                      fileOutputStream_, testLib_,  499, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCaching499");
@@ -1142,7 +1140,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCaching tc =
         new DDMCaching(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCaching500"), runMode_,
+                      namesAndVars_.get("DDMCaching500"), runMode_,
                      fileOutputStream_, testLib_,  500, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCaching500");
@@ -1152,7 +1150,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCaching tc =
         new DDMCaching(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCaching501"), runMode_,
+                      namesAndVars_.get("DDMCaching501"), runMode_,
                      fileOutputStream_, testLib_,  501, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCaching501");
@@ -1162,7 +1160,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCaching tc =
         new DDMCaching(systemObject_,
-                     (Vector) namesAndVars_.get("DDMCaching600"), runMode_,
+                      namesAndVars_.get("DDMCaching600"), runMode_,
                      fileOutputStream_, testLib_,  600, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCaching600");
@@ -1172,7 +1170,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMMultipleFormat tc =
         new DDMMultipleFormat(systemObject_,
-                     (Vector) namesAndVars_.get("DDMMultipleFormat"), runMode_,
+                      namesAndVars_.get("DDMMultipleFormat"), runMode_,
                      fileOutputStream_, testLib_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMMultipleFormat");
@@ -1182,7 +1180,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP3666842 tc =
         new DDMP3666842(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP3666842"), runMode_,
+                      namesAndVars_.get("DDMP3666842"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP3666842");
@@ -1192,7 +1190,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP3696575 tc =
         new DDMP3696575(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP3696575"), runMode_,
+                      namesAndVars_.get("DDMP3696575"), runMode_,
                      fileOutputStream_, testLib_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP3696575");
@@ -1202,7 +1200,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP9901531 tc =
         new DDMP9901531(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP9901531"), runMode_,
+                      namesAndVars_.get("DDMP9901531"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP9901531");
@@ -1212,7 +1210,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP9907036 tc =
         new DDMP9907036(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP9907036"), runMode_,
+                      namesAndVars_.get("DDMP9907036"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP9907036");
@@ -1222,7 +1220,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP9908190 tc =
         new DDMP9908190(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP9908190"), runMode_,
+                      namesAndVars_.get("DDMP9908190"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP9908190");
@@ -1232,7 +1230,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP9936798 tc =
         new DDMP9936798(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP9936798"), runMode_,
+                      namesAndVars_.get("DDMP9936798"), runMode_,
                      fileOutputStream_, testLib_, password_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP9936798");
@@ -1242,7 +1240,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP9946152 tc =
         new DDMP9946152(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP9946152"), runMode_,
+                      namesAndVars_.get("DDMP9946152"), runMode_,
                      fileOutputStream_, testLib_, password_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP9946152");
@@ -1252,7 +1250,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP9949891 tc =
         new DDMP9949891(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP9949891"), runMode_,
+                      namesAndVars_.get("DDMP9949891"), runMode_,
                      fileOutputStream_, testLib_, password_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP9949891");
@@ -1262,7 +1260,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMPSA94749 tc =
         new DDMPSA94749(systemObject_,
-                     (Vector) namesAndVars_.get("DDMPSA94749"), runMode_,
+                      namesAndVars_.get("DDMPSA94749"), runMode_,
                      fileOutputStream_, testLib_, password_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMPSA94749");
@@ -1272,7 +1270,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMSQLCompatibility tc =
         new DDMSQLCompatibility(systemObject_,
-                     (Vector) namesAndVars_.get("DDMSQLCompatibility"), runMode_,
+                      namesAndVars_.get("DDMSQLCompatibility"), runMode_,
                      fileOutputStream_, testLib_, password_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMSQLCompatibility");
@@ -1282,7 +1280,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMPassword tc =
         new DDMPassword(systemObject_,
-                     (Vector) namesAndVars_.get("DDMPassword"), runMode_,
+                      namesAndVars_.get("DDMPassword"), runMode_,
                      fileOutputStream_, testLib_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMPassword");
@@ -1292,7 +1290,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMRegressionTestcase tc =
         new DDMRegressionTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("DDMRegressionTestcase"), runMode_,
+                      namesAndVars_.get("DDMRegressionTestcase"), runMode_,
                      fileOutputStream_, testLib_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMRegressionTestcase");
@@ -1302,7 +1300,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMP9960329 tc =
         new DDMP9960329(systemObject_,
-                     (Vector) namesAndVars_.get("DDMP9960329"), runMode_,
+                      namesAndVars_.get("DDMP9960329"), runMode_,
                      fileOutputStream_, testLib_, password_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMP9960329");
@@ -1312,7 +1310,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMCheckFields tc =
           new DDMCheckFields(systemObject_,
-                  (Vector) namesAndVars_.get("DDMCheckFields"), runMode_,
+                   namesAndVars_.get("DDMCheckFields"), runMode_,
                   fileOutputStream_, testLib_, password_, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMCheckFields");
@@ -1344,7 +1342,7 @@ Creates Testcase objects for all the testcases in this component.
 
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

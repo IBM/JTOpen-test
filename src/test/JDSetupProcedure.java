@@ -144,7 +144,7 @@ public class JDSetupProcedure {
   public static String STP_CSARRXML = COLLECTION + ".JDCSARRXML"; // array of
                                                                   // xml
 
-  public static Hashtable procedureDefinitions = new Hashtable();
+  public static Hashtable<String,String> procedureDefinitions = new Hashtable<String,String>();
 
   public static String getProcedureDefinition(String stp) {
     String def = (String) procedureDefinitions.get(stp);
@@ -2338,7 +2338,7 @@ public class JDSetupProcedure {
     if (except != 15)
       cs.setObject(15, Date.valueOf("1980-06-25"));
     if (except != 16)
-      cs.setObject(16, new Time(14, 11, 19));
+      cs.setObject(16, Time.valueOf("14:11:19"));
     if (except != 17)
       cs.setObject(17, new Timestamp(32343));
     if (supportedFeatures.lobSupport) {
@@ -2468,7 +2468,7 @@ public class JDSetupProcedure {
       return;
     }
     if (accept == 16) {
-      cs.setObject(16, new Time(14, 11, 20));
+      cs.setObject(16, Time.valueOf("14:11:20"));
       return;
     }
     if (accept == 17) {

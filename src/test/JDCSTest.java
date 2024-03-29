@@ -21,7 +21,6 @@
 
 package test;
 
-import java.awt.TextArea;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -333,7 +332,6 @@ extends JDTestDriver {
   	   	 } 
     	
     	
-    	TextArea output_1 = null ;
       addTestcase (new JDCSExecute (systemObject_,
                                       namesAndVars_, runMode_, fileOutputStream_, 
                                       password_));
