@@ -59,7 +59,7 @@ public class CleanupPsrwJobs {
       if (system == null) { 
         as400 = new AS400(); 
       } else { 
-        as400 = new AS400(system, userid, password); 
+        as400 = new AS400(system, userid, password.toCharArray()); 
       }
       
       JobList joblist = new JobList(as400); 
@@ -67,11 +67,11 @@ public class CleanupPsrwJobs {
       joblist.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
       joblist.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS, Job.ACTIVE_JOB_STATUS_WAIT_PRESTART);
 
-      Enumeration enumeration = joblist.getJobs(); 
+      Enumeration<Job> enumeration = joblist.getJobs(); 
       StringBuffer endedJobInfo = new StringBuffer(); 
       
       while (enumeration.hasMoreElements()) {
-      Job j = (Job) enumeration.nextElement();
+      Job j =  enumeration.nextElement();
       
       String status = j.getStatus(); 
       if (status.equals(Job.JOB_STATUS_ACTIVE)) { 

@@ -43,6 +43,7 @@ import java.io.FileOutputStream;
 import javax.naming.*;
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Vector;
 import java.sql.*;
 import javax.naming.spi.ObjectFactory;
 
@@ -71,7 +72,7 @@ extends JDTestcase {
 Constructor.
 **/
    public JDDSGetReference (AS400 systemObject,
-                            Hashtable<?,?> namesAndVars,
+                            Hashtable<String,Vector<String>> namesAndVars,
                             int runMode,
                             FileOutputStream fileOutputStream,
                             

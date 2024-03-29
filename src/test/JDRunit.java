@@ -64,7 +64,6 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
 
-import com.ibm.as400.access.AS400JDBCDriver;
 
 import test.JD.DataSource.JDDatabaseOverride;
 import test.JTA.JTACleanupTx;
@@ -76,8 +75,8 @@ public class JDRunit {
   public static final String TMP = "/tmp";
   public static String testcaseCode = JTOpenTestEnvironment.testcaseHomeDirectory;
 
-  static Hashtable rdbToCreatedUserid = new Hashtable();
-  static Hashtable rdbToCreatedPassword = new Hashtable();
+  static Hashtable<String, String> rdbToCreatedUserid = new Hashtable<String, String>();
+  static Hashtable<String, String> rdbToCreatedPassword = new Hashtable<String, String>();
   static boolean debug = false;
   static boolean passwordDebug = false; 
   static ServerSocket socket;
@@ -510,7 +509,7 @@ public class JDRunit {
     StringBuffer rerunCommands = new StringBuffer();
 
     String htmlFile = JDReport.getReportName(initials);
-    Hashtable addedTestcaseHashtable = new Hashtable();
+    Hashtable<String, String> addedTestcaseHashtable = new Hashtable<String, String>();
 
     BufferedReader reader = new BufferedReader(new FileReader(htmlFile));
     String line = reader.readLine();
@@ -613,9 +612,9 @@ public class JDRunit {
 
     StringBuffer body = new StringBuffer();
     String htmlFile = JDReport.getReportName(initials);
-    Vector regressedTestcases = new Vector();
-    Vector notattTestcases = new Vector();
-    Vector failedTestcases = new Vector();
+    Vector<String> regressedTestcases = new Vector<String>();
+    Vector<String> notattTestcases = new Vector<String>();
+    Vector<String> failedTestcases = new Vector<String>();
 
     // Process the report
     BufferedReader reader = new BufferedReader(new FileReader(htmlFile));
@@ -788,7 +787,7 @@ public class JDRunit {
         + "cgi-pase/JDReport.acgi?INITIALS=" + initials + "&DAYS=14\n");
     if (regressionCount > 0 && regressionCount < 10) {
       body.append("\n-------------REGRESSION DETAILS-------------\n");
-      Enumeration enumeration = regressedTestcases.elements();
+      Enumeration<String> enumeration = regressedTestcases.elements();
       while (enumeration.hasMoreElements()) {
         body.append(enumeration.nextElement() + "\n");
       }
@@ -803,7 +802,7 @@ public class JDRunit {
     if (notattCount > 0) {
 
       body.append("\nNOTATT DETAILS\n");
-      Enumeration enumeration = notattTestcases.elements();
+      Enumeration<String> enumeration = notattTestcases.elements();
       while (enumeration.hasMoreElements()) {
         body.append(enumeration.nextElement() + "\n");
       }
@@ -1112,7 +1111,7 @@ public class JDRunit {
         prefixCheck = initials.substring(0, starIndex);
         suffixCheck = initials.substring(starIndex + 1);
       }
-      Vector initialsVector = new Vector();
+      Vector<String> initialsVector = new Vector<String>();
 
       File outDirectory = new File("ct");
 
@@ -1153,7 +1152,7 @@ public class JDRunit {
       }
       returnString = new String[returnSize];
       for (int i = 0; i < returnSize; i++) {
-        returnString[i] = (String) initialsVector.elementAt(i);
+        returnString[i] = initialsVector.elementAt(i);
       }
 
     }
@@ -1683,7 +1682,7 @@ public class JDRunit {
   }
 
   public static String createProfile(String SYSTEM, String newUserid,
-      String newPassword, String userid, char[] encryptedPassword, Vector inputVector) {
+      String newPassword, String userid, char[] encryptedPassword, Vector<String> inputVector) {
     if (newPassword == null)
       newPassword = "abc212cb";
     String sql = "notSet";
@@ -2051,7 +2050,7 @@ public class JDRunit {
     // Determine if inherited properties need to be set
     //
     Properties systemProperties = System.getProperties();
-    Enumeration keys = systemProperties.keys();
+    Enumeration<?> keys = systemProperties.keys();
     while (keys.hasMoreElements()) {
       String property = (String) keys.nextElement();
       for (int i = 0; i < inheritedProperties.length; i++) {
@@ -2516,7 +2515,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
      
       
       /* Check to see if profile created */
-      String createdUserid = (String) rdbToCreatedUserid.get(SYSTEM);
+      String createdUserid = rdbToCreatedUserid.get(SYSTEM);
       if (createdUserid == null || !createdUserid.equals(newUserid)) {
 
         /* create the profile for the test on the system */
@@ -2533,7 +2532,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       } else {
         /* Use what was already set up */
         testUserid = newUserid;
-        testPassword = (String) rdbToCreatedPassword.get(SYSTEM);
+        testPassword = rdbToCreatedPassword.get(SYSTEM);
         encryptedTestPassword = PasswordVault.getEncryptedPassword(testPassword); 
       }
 
@@ -2668,9 +2667,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     inputVector.addElement("echo exit");
     inputVector.addElement("exit");
 
-    Enumeration enumeration = inputVector.elements();
+    Enumeration<String> enumeration = inputVector.elements();
     while (enumeration.hasMoreElements()) {
-      String line = (String) enumeration.nextElement();
+      String line = enumeration.nextElement();
       writer.println(line);
     }
 
@@ -2686,13 +2685,11 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     /* Run the script in a shell process */
     String[] cmdArray1;
-    String shellCommand;
     String shellArgs = iniProperties.getProperty("shellArgs");
     if (shellArgs == null) {
       cmdArray1 = new String[1];
       cmdArray1[0] = shellBinary;
       System.out.println("Shell binary1 is " + shellBinary);
-      shellCommand = cmdArray1[0];
       /* Fix the command line if running on windows in */
       if (debug)
         System.out.println("JDRunit: osVersion=" + JTOpenTestEnvironment.osVersion);
@@ -2718,7 +2715,6 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       cmdArray1 = new String[2];
       cmdArray1[0] = shellBinary;
       System.out.println("Shell binary2 is " + shellBinary);
-      shellCommand = cmdArray1[0];
       cmdArray1[1] = shellArgs;
       if (debug)
         System.out.println("JDRunit: Shell command (with args) is: "
@@ -2770,7 +2766,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       JDJSTPTestcase.debug = true;
 
     /* Assynchronously start the process output threads */
-    Vector hangMessagesFound = new Vector();
+    Vector<String> hangMessagesFound = new Vector<String>();
 
     JDJSTPOutputThread stdoutThread = JDJSTPTestcase.startProcessOutput(
         shellTestProcess, runitOutputFile, true, hangMessages, hangMessagesException,
@@ -3082,7 +3078,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             shellProcessOutputStream.write(outString.getBytes());
             shellProcessOutputStream.flush();
             String shellOutputFile = runitOutputFile + ".shell";
-            Vector shellHangMessagesFound = new Vector();
+            Vector<String> shellHangMessagesFound = new Vector<String>();
             JDJSTPOutputThread stdoutThread2 = JDJSTPTestcase
                 .startProcessOutput(shellProcess, shellOutputFile, true,
                     hangMessages, hangMessagesException, shellHangMessagesFound, encoding);
@@ -3210,7 +3206,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     enumeration = inputVector.elements();
     while (enumeration.hasMoreElements()) {
-      String line = (String) enumeration.nextElement();
+      String line = enumeration.nextElement();
 
       writer.println(line);
     }
@@ -3220,10 +3216,10 @@ public void setExtraJavaArgs(String extraJavaArgs) {
      * Build the results as the test is running so less post processing needs to
      * be done
      */
-    Vector testcasesVector = new Vector();
-    Vector failedVector = new Vector();
-    Vector rxpVector = new Vector();
-    Hashtable rerunHashtable = new Hashtable();
+    Vector<String> testcasesVector = new Vector<String>();
+    Vector<String> failedVector = new Vector<String>();
+    Vector<String> rxpVector = new Vector<String>();
+    Hashtable<String, Vector<String>> rerunHashtable = new Hashtable<String, Vector<String>>();
     int resultsWritten = 0;
     boolean noOutput = true;
     int successfulCount = 0;
@@ -3275,9 +3271,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         String testcase = line.substring(0, spaceIndex).trim();
         String variation = line.substring(spaceIndex + 1, failedIndex).trim();
 
-        Vector variationsVector = (Vector) rerunHashtable.get(testcase);
+        Vector<String> variationsVector = rerunHashtable.get(testcase);
         if (variationsVector == null) {
-          variationsVector = new Vector();
+          variationsVector = new Vector<String>();
           rerunHashtable.put(testcase, variationsVector);
         }
         variationsVector.addElement(variation);
@@ -3297,9 +3293,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         String testcase = line.substring(0, spaceIndex).trim();
         String variation = line.substring(spaceIndex + 1, failedIndex).trim();
 
-        Vector variationsVector = (Vector) rerunHashtable.get(testcase);
+        Vector<String> variationsVector = rerunHashtable.get(testcase);
         if (variationsVector == null) {
-          variationsVector = new Vector();
+          variationsVector = new Vector<String>();
           rerunHashtable.put(testcase, variationsVector);
         }
         variationsVector.addElement(variation);
@@ -3358,7 +3354,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             + fatalErrorString);
         System.out.println("JDRunit: ERROR: fatal error Message="
             + fatalErrorMessage);
-        Vector badTestVector = new Vector();
+        Vector<String> badTestVector = new Vector<String>();
         String testBase1 = testBaseProperties.getProperty(test);
         if (!testBase1.equals(test)) {
           badTestVector.add(test);
@@ -3384,10 +3380,10 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         // Add bad results records
         //
 
-        Hashtable todoTests = readTodo();
+        Hashtable<String, String> todoTests = readTodo();
         enumeration = badTestVector.elements();
         while (enumeration.hasMoreElements()) {
-          String testcase = (String) enumeration.nextElement();
+          String testcase = enumeration.nextElement();
           if (todoTests.get(testcase) == null) {
             resultsWriter.println(dateString + " " + AS400lc + " " + testcase
                 + " 0 1 0 1 66.666");
@@ -3406,7 +3402,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     failedCount += failedVector.size();
     enumeration = failedVector.elements();
     while (enumeration.hasMoreElements()) {
-      String failedTest = (String) enumeration.nextElement();
+      String failedTest = enumeration.nextElement();
       System.out.println(failedTest);
     }
     System.out.println("------------------");
@@ -3421,10 +3417,10 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     enumeration = rerunHashtable.keys();
     int commandCount = 0;
     while (enumeration.hasMoreElements()) {
-      String testcase = (String) enumeration.nextElement();
+      String testcase = enumeration.nextElement();
       String rerunCommand = "java test.JDRunit " + initials + " " + testcase
           + " ";
-      Vector variationsVector = (Vector) rerunHashtable.get(testcase);
+      Vector variationsVector = rerunHashtable.get(testcase);
       Enumeration varEnum = variationsVector.elements();
       boolean first = true;
       while (varEnum.hasMoreElements()) {
@@ -3458,7 +3454,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     System.out.println("JDRunit: Dumping the output files that failed");
     enumeration = rxpVector.elements();
     while (enumeration.hasMoreElements()) {
-      String rxpFile = (String) enumeration.nextElement();
+      String rxpFile = enumeration.nextElement();
       System.out.println("Processing file " + rxpFile);
     }
 
@@ -3500,8 +3496,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     }
   }
 
-        public static Hashtable readTodo() {
-                Hashtable returnHashtable = new Hashtable();
+        public static Hashtable<String, String> readTodo() {
+                Hashtable<String, String> returnHashtable = new Hashtable<String, String>();
 
                 try {
                         File todoFile = new File("ini/TODO.ini");

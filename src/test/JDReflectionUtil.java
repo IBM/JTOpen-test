@@ -14,15 +14,11 @@
 package test;
 
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.io.Reader;
 import java.lang.reflect.*;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400JDBCDataSource;
 
 import java.util.Enumeration;
 

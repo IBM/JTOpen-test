@@ -56,6 +56,7 @@ These testcase test java stored procedures and Java user defined functions on th
 To do this, they must be able to load code on the server. This superclass contains static
 functions that permit this to be done. 
 **/
+@SuppressWarnings("deprecation")
 public class JDJSTPTestcase
 extends JDTestcase
 {
@@ -110,7 +111,7 @@ Constructor.
 **/
     public JDJSTPTestcase (AS400 systemObject,
                        String testcaseName,
-                       Hashtable namesAndVars,
+                       Hashtable <String, Vector<String>>namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        
@@ -799,7 +800,6 @@ Constructor.
 	// check out the sun.boot.class.path.  Only add if contains a
 	// /home/ directory
 	//
-	String javaVmName  = System.getProperty("java.vm.name");
 
 	String value = System.getProperty("sun.boot.class.path");
 	if (value != null) {
@@ -2268,7 +2268,7 @@ Constructor.
 							 boolean toStdout,
 							 String[] hangMessages,
 							 String[] hangMessagesException,
-							 Vector hangMessagesFound, 
+							 Vector<String> hangMessagesFound, 
 							 int encoding) throws Exception {
 	 if (debug) {
 	     System.out.println("JDJSTPTestcase.startProcessOutput");
@@ -5059,7 +5059,6 @@ Constructor.
 
     String expectedOutput;
     File checkFile; 
-    String javaVmName = System.getProperty("java.vm.name");
     String variationString="."+inVariation;
     if (inVariation.length() == 0) variationString = "";
 
@@ -5177,8 +5176,6 @@ Constructor.
 		getFileFromServer(output);
 	 } else if (testext.equals("sh")) {
 		command = "rm "+output+";  touch -C 819 "+output+"; cd "+nativeBaseDir+"/"+sourcepath+";   ./"+ testPgm+" "+variation +" > "+output +" 2>&1";
-		if (false) 	
-		command = "rm "+output+";  touch -C 819 "+output+"; cd "+nativeBaseDir+"/"+sourcepath+";   ./"+ testPgm+" "+variation +" | tee "+output +" > "+output+".2 2>&1";
 
 		File f1 = new File(output);
 		if (f1.exists()) f1.delete();
@@ -6084,14 +6081,14 @@ Constructor.
      }
 
 
-    static Hashtable jdbcReplaceHashtable = new Hashtable();  
+    static Hashtable<String, String> jdbcReplaceHashtable = new Hashtable<String,String>();  
     
     static void setJdbcReplace(String from, String to) {
       jdbcReplaceHashtable.put(from, to); 
     }
     
     static String jdbcReplace(String line) {
-      Enumeration keys = jdbcReplaceHashtable.keys(); 
+      Enumeration<String> keys = jdbcReplaceHashtable.keys(); 
       while (keys.hasMoreElements()) {
         String key = (String) keys.nextElement(); 
         String value = (String) jdbcReplaceHashtable.get(key);
@@ -6100,7 +6097,7 @@ Constructor.
       return line; 
     }
 
-    private static void runJdbcClient(String command, String output,
+     private static void runJdbcClient(String command, String output,
         String userId, char[] encryptedPassword) throws SQLException, IOException  {
       InputStream in; 
       PrintStream out;

@@ -14,7 +14,7 @@ package test;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Vector;
+
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
@@ -195,40 +195,40 @@ Performs setup needed before running testcases.
       // Repeat the following 'if' block for each testcase.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCDataSourceTestcase"))
       {
-         AS400JDBCDataSourceTestcase tc = new AS400JDBCDataSourceTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCDataSourceTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());	//@A1C //@A2C
+         AS400JDBCDataSourceTestcase tc = new AS400JDBCDataSourceTestcase(systemObject_,  namesAndVars_.get("AS400JDBCDataSourceTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());	//@A1C //@A2C
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCDataSourceTestcase");
       }
 
       if (/*allTestcases ||*/ namesAndVars_.containsKey("AS400JDBCDataSourceSerialTestcase"))
       {
-         AS400JDBCDataSourceSerialTestcase tc = new AS400JDBCDataSourceSerialTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCDataSourceSerialTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());
+         AS400JDBCDataSourceSerialTestcase tc = new AS400JDBCDataSourceSerialTestcase(systemObject_,  namesAndVars_.get("AS400JDBCDataSourceSerialTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCDataSourceSerialTestcase");
       }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCDataSourcePropertiesTestcase"))
       {
-         AS400JDBCDataSourcePropertiesTestcase tc = new AS400JDBCDataSourcePropertiesTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCDataSourcePropertiesTestcase"), runMode_, fileOutputStream_,  password_);
+         AS400JDBCDataSourcePropertiesTestcase tc = new AS400JDBCDataSourcePropertiesTestcase(systemObject_,  namesAndVars_.get("AS400JDBCDataSourcePropertiesTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCDataSourcePropertiesTestcase");
       }
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCDataSourceBeanInfoTestcase"))
       {
-         AS400JDBCDataSourceBeanInfoTestcase tc = new AS400JDBCDataSourceBeanInfoTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCDataSourceBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
+         AS400JDBCDataSourceBeanInfoTestcase tc = new AS400JDBCDataSourceBeanInfoTestcase(systemObject_,  namesAndVars_.get("AS400JDBCDataSourceBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCDataSourceBeanInfoTestcase");
       }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCConnectionPoolDataSourceTestcase"))
       {
-         AS400JDBCConnectionPoolDataSourceTestcase tc = new AS400JDBCConnectionPoolDataSourceTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCConnectionPoolDataSourceTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
+         AS400JDBCConnectionPoolDataSourceTestcase tc = new AS400JDBCConnectionPoolDataSourceTestcase(systemObject_,  namesAndVars_.get("AS400JDBCConnectionPoolDataSourceTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCConnectionPoolDataSourceTestcase");
       }
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCConnectionPoolDataSourceBeanInfoTestcase"))
       {
-         AS400JDBCConnectionPoolDataSourceBeanInfoTestcase tc = new AS400JDBCConnectionPoolDataSourceBeanInfoTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCConnectionPoolDataSourceBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
+         AS400JDBCConnectionPoolDataSourceBeanInfoTestcase tc = new AS400JDBCConnectionPoolDataSourceBeanInfoTestcase(systemObject_,  namesAndVars_.get("AS400JDBCConnectionPoolDataSourceBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCConnectionPoolDataSourceBeanInfoTestcase");
       }
@@ -236,7 +236,7 @@ Performs setup needed before running testcases.
       // Testcase for AS400JDBCManagedConnectionPoolDataSource.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCMCPDSTestcase"))
       {
-         AS400JDBCMCPDSTestcase tc = new AS400JDBCMCPDSTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCMCPDSTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
+         AS400JDBCMCPDSTestcase tc = new AS400JDBCMCPDSTestcase(systemObject_,  namesAndVars_.get("AS400JDBCMCPDSTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCMCPDSTestcase");
       }
@@ -244,13 +244,13 @@ Performs setup needed before running testcases.
       // Testcase for AS400JDBCManagedDataSource.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCMDSTestcase"))
       {
-         AS400JDBCMDSTestcase tc = new AS400JDBCMDSTestcase(systemObject_, (Vector) namesAndVars_.get("AS400JDBCMDSTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
+         AS400JDBCMDSTestcase tc = new AS400JDBCMDSTestcase(systemObject_,  namesAndVars_.get("AS400JDBCMDSTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
          testcases_.addElement(tc);
          namesAndVars_.remove("AS400JDBCMDSTestcase");
       }
 
       // Put out error message for each invalid testcase name.
-      for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+      for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
       {
          System.out.println("Testcase " + e.nextElement() + " not found.");
       }

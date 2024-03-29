@@ -26,15 +26,15 @@ public class JDHandleDumpAnalyzer {
 
   // Analysis variables
   public int lastAllocatedHandles = 0;
-  public Hashtable connectionsHashtable = new Hashtable();
+  public Hashtable<String, String> connectionsHashtable = new Hashtable<String,String>();
   public Hashtable connectionToStatementVectorHashtable = new Hashtable();
   public Hashtable connectionToReusableVectorHashtable = new Hashtable();
   public Hashtable connectionToDescriptorVectorHashtable = new Hashtable();
-  public Hashtable statementsHashtable = new Hashtable();
-  public Hashtable reusableHashtable   = new Hashtable();
-  public Hashtable descriptorsHashtable = new Hashtable();
-  public Hashtable descriptorToStatementHashtable = new Hashtable();
-  public Hashtable descriptorToReusableHashtable = new Hashtable();
+  public Hashtable<String,String> statementsHashtable = new Hashtable<String,String>();
+  public Hashtable<String,String> reusableHashtable   = new Hashtable<String,String>();
+  public Hashtable<String,String> descriptorsHashtable = new Hashtable<String,String>();
+  public Hashtable<String,String> descriptorToStatementHashtable = new Hashtable<String,String>();
+  public Hashtable<String,String> descriptorToReusableHashtable = new Hashtable<String,String>();
 
   public int maxConnection = 0;
   public int minConnection = 200000;
@@ -547,7 +547,7 @@ public class JDHandleDumpAnalyzer {
     if (out != null)
       out
           .println("CONNECTION | STMTCOUNT | REUSEABLECCOUNT | DESCRIPTOR COUNT | ESTIMATED DESCRIPTOR COUNT");
-    Enumeration enumeration = connectionsHashtable.keys();
+    Enumeration<String> enumeration = connectionsHashtable.keys();
     while (enumeration.hasMoreElements()) {
       String connectionString = (String) enumeration.nextElement();
       int connectionStatementCount;

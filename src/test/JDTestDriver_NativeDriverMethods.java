@@ -14,7 +14,6 @@
 package test;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -168,7 +167,7 @@ for default testing. Else returns pooled or XA connection
             // property is specified in both the url and the Properties,
             // the one in url should be used.
 
-            Enumeration e = info.propertyNames();
+            Enumeration<?> e =  info.propertyNames();
 
             while (e.hasMoreElements()) {
                String field = (String)e.nextElement();
@@ -220,7 +219,7 @@ for default testing. Else returns pooled or XA connection
             // property is specified in both the url and the Properties,
             // the one in url should be used.
 
-            Enumeration e = info.propertyNames();
+            Enumeration<?> e = info.propertyNames();
 
             while (e.hasMoreElements()) {
                String field = (String)e.nextElement();

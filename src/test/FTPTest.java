@@ -14,7 +14,7 @@
 package test;
 
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -361,6 +361,7 @@ Creates Testcase objects for all the testcases in this component.
 	       try {
 		   System.out.println("Attempting to extract test/FtPTestDirArchive.zip to /"); 
 		   ZipFile zipFile = new ZipFile( "test/FTPTestDirArchive.zip");
+		   @SuppressWarnings("unchecked")
 		   Enumeration<ZipEntry> entries = (Enumeration<ZipEntry>) zipFile.entries();
 		   while (entries.hasMoreElements()) {
 		       ZipEntry entry = (ZipEntry) entries.nextElement();
@@ -388,7 +389,7 @@ Creates Testcase objects for all the testcases in this component.
 
 		       } 
 		   }
-
+		   zipFile.close(); 
 	       } catch (Exception e) {
 		   e.printStackTrace(); 
 		   System.out.println("\nERROR: Local directory does not contain a FTPTestDir subdirectory tree. Many variations may fail.");

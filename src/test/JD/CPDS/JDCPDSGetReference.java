@@ -32,6 +32,7 @@ import javax.naming.spi.ObjectFactory;
 import javax.sql.DataSource;
 
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 /**
@@ -58,7 +59,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDCPDSGetReference (AS400 systemObject,
-                               Hashtable<?,?> namesAndVars,
+                               Hashtable<String,Vector<String>> namesAndVars,
                                int runMode,
                                FileOutputStream fileOutputStream,
                                

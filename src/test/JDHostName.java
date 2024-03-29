@@ -74,8 +74,8 @@ public class JDHostName {
   /* Return the known aliases for the current host name*/ 
   public static String[]  getAliases(String hostname) { 
     initializeProperties();
-    Vector aliases = new Vector(); 
-    Enumeration keys = renameProperties.keys();
+    Vector<String> aliases = new Vector<String>(); 
+    Enumeration<Object> keys = renameProperties.keys();
     while (keys.hasMoreElements()) {
       String key = (String) keys.nextElement(); 
       String value = renameProperties.getProperty(key); 

@@ -124,7 +124,7 @@ public class JDPSTest extends JDTestDriver {
 
   private Connection[] handleConnections;
 
-  private Vector handles = null; 
+  private Vector<PreparedStatement> handles = null; 
 
 
 
@@ -211,7 +211,7 @@ Performs setup needed before running testcases.
           handleConnections[i] = getConnection(getBaseURL(), systemObject_
               .getUserId(), encryptedPassword_);
         }
-        handles = new Vector();
+        handles = new Vector<PreparedStatement>();
 
         int currentHandle = 0;
         long nextPrint = 0;

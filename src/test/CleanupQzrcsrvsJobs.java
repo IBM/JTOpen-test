@@ -45,15 +45,15 @@ public class CleanupQzrcsrvsJobs {
       if (system == null) { 
         as400 = new AS400(); 
       } else { 
-        as400 = new AS400(system, userid, password); 
+        as400 = new AS400(system, userid, password.toCharArray()); 
       }
       
       JobList joblist = new JobList(as400); 
       joblist.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_ACTIVE, Boolean.TRUE);
       joblist.addJobSelectionCriteria(JobList.SELECTION_JOB_NAME, "QZRCSRVS");
-      Hashtable userSet = new Hashtable(); 
+      Hashtable<String, String> userSet = new Hashtable<String, String>(); 
       SimpleDateFormat simpleDateFormat = new SimpleDateFormat(); 
-      Enumeration enumeration = joblist.getJobs(); 
+      Enumeration<?> enumeration = joblist.getJobs(); 
       long currentTimeMillis = System.currentTimeMillis(); 
       while (enumeration.hasMoreElements()) { 
         Job j = (Job) enumeration.nextElement();
@@ -67,7 +67,7 @@ public class CleanupQzrcsrvsJobs {
              System.out.println("-------------------"); 
              System.out.println("Job name is "+j.getNumber()+"/"+j.getUser()+"/"+j.getName()+" user is "+user); 
              JobLog joblog = j.getJobLog();
-             Enumeration messageEnumeration = joblog.getMessages();
+             Enumeration<?> messageEnumeration = joblog.getMessages();
              boolean endJob = false;
              // 
              // Look for message of the following form.  If the message is older than 1 hour then 
@@ -124,7 +124,7 @@ public class CleanupQzrcsrvsJobs {
       
       System.out.println("-----------------------------------------"); 
       System.out.println("Here are the users found on the system"); 
-      Enumeration userEnumeration = userSet.keys(); 
+      Enumeration<String> userEnumeration = userSet.keys(); 
       while (userEnumeration.hasMoreElements()) {
         System.out.println(userEnumeration.nextElement()); 
       }

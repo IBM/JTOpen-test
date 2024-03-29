@@ -1499,7 +1499,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    AS400 as400 = new AS400();
 	    AS400CertificateUserProfileUtil aAS400CertificateUserProfileUtil = new AS400CertificateUserProfileUtil(as400, goodUsrPrfName);
 	    resetValues();
-	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
 	    aAS400CertificateUserProfileUtil.setSystem(oldAS400);
 	    aAS400CertificateUserProfileUtil.addPropertyChangeListener(this);
 	    AS400 newAS400 = systemObject_;
@@ -1561,7 +1561,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    AS400 as400 = new AS400();
 	    AS400CertificateUserProfileUtil aAS400CertificateUserProfileUtil = new AS400CertificateUserProfileUtil(as400, goodUsrPrfName);
 	    resetValues();
-	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
 	    aAS400CertificateUserProfileUtil.setSystem(oldAS400);
 	    aAS400CertificateUserProfileUtil.addVetoableChangeListener(this);
 	    AS400 newAS400 = systemObject_;
@@ -1633,7 +1633,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    AS400 as400 = new AS400();
 	    AS400CertificateUserProfileUtil aAS400CertificateUserProfileUtil = new AS400CertificateUserProfileUtil(as400, goodUsrPrfName);
 	    resetValues();
-	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
 	    aAS400CertificateUserProfileUtil.setSystem(oldAS400);
 	    veto_ = true;
 	    aAS400CertificateUserProfileUtil.addVetoableChangeListener(this);
@@ -1669,7 +1669,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	
 	try
 	{
-	    AS400 badSystem = new AS400("rchasxxx", "JAVA", "JTEAM1");
+	    AS400 badSystem = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
 	    AS400CertificateUserProfileUtil aAS400CertificateUserProfileUtil = new AS400CertificateUserProfileUtil(badSystem, goodUsrPrfName);
 	    String newUSName = "/QSYS.LIB/CERTTEST1.USRPRF";
 	    aAS400CertificateUserProfileUtil.setPath(newUSName);

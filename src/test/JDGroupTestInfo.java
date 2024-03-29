@@ -57,15 +57,15 @@ public class JDGroupTestInfo {
   static int lastCount = 0;
   static long nextRunTime = 0L;
 
-  private static Hashtable groupTestSubsystemsHashtable = null;
-  private static Hashtable groupTestJobsHashtable = null;
+  private static Hashtable<String,String> groupTestSubsystemsHashtable = null;
+  private static Hashtable<String,String> groupTestJobsHashtable = null;
 
   private static boolean isGroupTestJob(String currentSubsystem, String jobName) {
     //
     // Setup if needed
     //
     if (groupTestSubsystemsHashtable == null) {
-      groupTestSubsystemsHashtable = new Hashtable();
+      groupTestSubsystemsHashtable = new Hashtable<String,String>();
       for (int i = 0; i < groupTestSubsystems.length; i++) {
         String key = groupTestSubsystems[i];
         String value = key;
@@ -74,7 +74,7 @@ public class JDGroupTestInfo {
     }
 
     if (groupTestJobsHashtable == null) {
-      groupTestJobsHashtable = new Hashtable();
+      groupTestJobsHashtable = new Hashtable<String, String>();
       for (int i = 0; i < groupTestJobs.length; i++) {
         String key = groupTestJobs[i];
         String value = key;

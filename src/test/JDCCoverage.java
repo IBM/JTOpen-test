@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -54,14 +55,14 @@ public class JDCCoverage extends JDJSTPTestcase {
   /**
    * Constructor.
    **/
-  public JDCCoverage(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCCoverage(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password) {
     super(systemObject, "JDCCoverage", namesAndVars, runMode, fileOutputStream,
  password);
   }
 
   public JDCCoverage(AS400 systemObject, String testcaseName,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,
  password);

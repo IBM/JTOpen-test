@@ -28,6 +28,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.util.Vector;
+
 import javax.sql.*; 
 
 import com.ibm.as400.access.AS400;
@@ -58,7 +60,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDCPDSConnectionSort (AS400 systemObject,
-                                 Hashtable<?,?> namesAndVars,
+                                 Hashtable<String,Vector<String>> namesAndVars,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  

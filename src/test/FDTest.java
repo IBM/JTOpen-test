@@ -13,7 +13,6 @@
 
 package test;
 
-import java.util.Vector;
 
 import test.MiscAH.FDConstructAndGet;
 import test.MiscAH.FDInvUsage;
@@ -112,7 +111,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       FDConstructAndGet tc =
         new FDConstructAndGet(systemObject_,
-                     (Vector) namesAndVars_.get("FDConstructAndGet"), runMode_,
+                      namesAndVars_.get("FDConstructAndGet"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("FDConstructAndGet");
@@ -122,7 +121,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       FDInvUsage tc =
         new FDInvUsage(systemObject_,
-                     (Vector) namesAndVars_.get("FDInvUsage"), runMode_,
+                      namesAndVars_.get("FDInvUsage"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("FDInvUsage");
@@ -132,7 +131,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       FDSet tc =
         new FDSet(systemObject_,
-                     (Vector) namesAndVars_.get("FDSet"), runMode_,
+                      namesAndVars_.get("FDSet"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("FDSet");
@@ -142,14 +141,14 @@ Creates Testcase objects for all the testcases in this component.
     {
       FDSerialization tc =
         new FDSerialization(systemObject_,
-                     (Vector) namesAndVars_.get("FDSerialization"), runMode_,
+                      namesAndVars_.get("FDSerialization"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("FDSerialization");
     }
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

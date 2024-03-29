@@ -42,7 +42,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.lang.reflect.Constructor;
 import java.sql.*;
 import java.util.Date;

@@ -82,7 +82,7 @@ public abstract class JDTestDriver extends TestDriver {
   public static final int DB_LUW = 1;
   public static final int DB_ZOS = 2;
 
-  // This field and contants can be used to verify which release
+  // This field and constants can be used to verify which release
   // is being tested.
   public static final int RELEASE_NONE = 0;
   public static final int RELEASE_V7R1M0 = 710;
@@ -90,7 +90,7 @@ public abstract class JDTestDriver extends TestDriver {
   public static final int RELEASE_V7R3M0 = 730;
   public static final int RELEASE_V7R4M0 = 740;
   public static final int RELEASE_V7R5M0 = 750;
-  public static final int RELEASE_V7R5M0_PLUS = 999;
+  public static final int RELEASE_V7R5M0_PLUS = 888;
  
   public static final String CLIENT_windows = "windows";
   public static final String CLIENT_as400 = "as400";
@@ -570,6 +570,9 @@ public abstract class JDTestDriver extends TestDriver {
    * @return The AS/400 release.
    **/
   public int getRelease() {
+    if (!driverSetupDone) {
+      driverSetup();
+    }
     return release_;
   }
 
@@ -659,6 +662,8 @@ public abstract class JDTestDriver extends TestDriver {
           registerDriver(DRIVER_CLASS_NATIVE_RMI, DRIVER_NATIVE_RMI);
 
         // Was a release specified?
+        else if (token.equalsIgnoreCase("V7R1M0"))
+          release_ = RELEASE_V7R1M0;
         else if (token.equalsIgnoreCase("V7R2M0"))
           release_ = RELEASE_V7R2M0;
         else if (token.equalsIgnoreCase("V7R3M0"))
@@ -667,7 +672,7 @@ public abstract class JDTestDriver extends TestDriver {
           release_ = RELEASE_V7R4M0;
         else if (token.equalsIgnoreCase("V7R5M0")) 
           release_ = RELEASE_V7R5M0; 
-         else if (token.indexOf("V7R") >= 0 )
+         else if (token.toUpperCase().indexOf("V7R") >= 0 )
           release_ = RELEASE_V7R5M0_PLUS;
       
         // Was "secondary URL mode" specified?

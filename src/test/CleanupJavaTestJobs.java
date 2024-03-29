@@ -76,9 +76,9 @@ public class CleanupJavaTestJobs {
 					as400 = new AS400();
 
 				} else {
-					as400 = new AS400(system, userid, password);
+					as400 = new AS400(system, userid, password.toCharArray());
 				}
-				Hashtable userSet = new Hashtable();
+				Hashtable<String, String> userSet = new Hashtable<String, String>();
 
 				for (int i = 0; i < 2; i++) {
 
@@ -99,7 +99,7 @@ public class CleanupJavaTestJobs {
 
 				    SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
 				    joblist.load(); 
-				    Enumeration enumeration = joblist.getJobs();
+				    Enumeration<?> enumeration = joblist.getJobs();
 				    long currentTimeMillis = System.currentTimeMillis();
 				    boolean continueLoop=true;
 				    int jobCount = 0; 
@@ -120,7 +120,7 @@ public class CleanupJavaTestJobs {
 						System.out.println("Job name is " + j.getNumber() + "/"
 								   + j.getUser() + "/" + j.getName() + " user is " + user +" function name is "+functionName);
 						JobLog joblog = j.getJobLog();
-						Enumeration messageEnumeration = joblog.getMessages();
+						Enumeration<?> messageEnumeration = joblog.getMessages();
 						boolean endJob = false;
 						//
 						// Look for message of the following form. If the
@@ -232,7 +232,7 @@ public class CleanupJavaTestJobs {
 				} /* for i */
 				System.out.println("-----------------------------------------");
 				System.out.println("Here are the users found on the system");
-				Enumeration userEnumeration = userSet.keys();
+				Enumeration<String> userEnumeration = userSet.keys();
 				while (userEnumeration.hasMoreElements()) {
 					System.out.println(userEnumeration.nextElement());
 				}

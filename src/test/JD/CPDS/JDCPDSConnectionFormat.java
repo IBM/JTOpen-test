@@ -32,6 +32,7 @@ import test.JD.JDSetupCollection;
 import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Vector;
 import java.sql.*;
 import javax.sql.DataSource;
 
@@ -64,7 +65,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDCPDSConnectionFormat (AS400 systemObject,
-                                   Hashtable<?,?> namesAndVars,
+                                   Hashtable<String,Vector<String>> namesAndVars,
                                    int runMode,
                                    FileOutputStream fileOutputStream,
                                    String password)

@@ -23,8 +23,6 @@ package test;
 import test.JD.JDSetupCollection;
 
 import java.sql.Connection;
-import java.util.Enumeration;
-import java.util.Vector;
 
 
 

@@ -161,9 +161,9 @@ public class JDTestcase extends Testcase {
    * Constructor.
    **/
 
-  public JDTestcase(AS400 systemObject, String testcaseName, Hashtable namesAndVars, int runMode,
+  public JDTestcase(AS400 systemObject, String testcaseName, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, String password) {
-    super(systemObject, testcaseName, -1, (Vector) namesAndVars.get(testcaseName), runMode, fileOutputStream, password);
+    super(systemObject, testcaseName, -1,  namesAndVars.get(testcaseName), runMode, fileOutputStream, password);
 
     initializeFields(testcaseName);
 
@@ -172,9 +172,9 @@ public class JDTestcase extends Testcase {
   /**
    * Constructor.
    **/
-  public JDTestcase(AS400 systemObject, String testcaseName, Hashtable namesAndVars, int runMode,
+  public JDTestcase(AS400 systemObject, String testcaseName, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, String password, String pwrSysUid, String pwrSysPwd) {
-    super(systemObject, testcaseName, -1, (Vector) namesAndVars.get(testcaseName), runMode, fileOutputStream, password,
+    super(systemObject, testcaseName, -1, namesAndVars.get(testcaseName), runMode, fileOutputStream, password,
         pwrSysUid, pwrSysPwd);
 
     initializeFields(testcaseName);
@@ -1887,7 +1887,7 @@ public class JDTestcase extends Testcase {
       } else {
 
         try {
-          Class skipClass = Class.forName("test.JDVariationSkip2");
+          Class.forName("test.JDVariationSkip2");
         } catch (Exception e) {
           // If class does not exist then return true
           return true;
@@ -1935,7 +1935,7 @@ public class JDTestcase extends Testcase {
       // TimeUnit unit,
       // BlockingQueue<Runnable> workQueue)
 
-      Class[] argTypes = new Class[5];
+      Class<?>[] argTypes = new Class[5];
       argTypes[0] = Integer.TYPE;
       argTypes[1] = Integer.TYPE;
       argTypes[2] = Long.TYPE;
@@ -1955,7 +1955,7 @@ public class JDTestcase extends Testcase {
 
       // ScheduledThreadPoolExecutor(int corePoolSize)
 
-      Class[] argTypes = new Class[1];
+      Class<?>[] argTypes = new Class[1];
       argTypes[0] = Integer.TYPE;
       Object[] args = new Object[1];
       args[0] = new Integer(5);

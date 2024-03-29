@@ -33,7 +33,7 @@ public class CmdTest extends TestDriver
     /**
    * 
    */
-  private static final long serialVersionUID = 1L;
+public static final long serialVersionUID = 1L;
     public static boolean assumeCommandsThreadSafe_ = false;
 
     // Determine if testcase is running on an iSeries server.

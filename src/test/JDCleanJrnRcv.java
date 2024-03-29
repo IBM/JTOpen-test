@@ -104,7 +104,7 @@ public class JDCleanJrnRcv {
 
     ObjectList jrnList = new ObjectList(as400, "*ALL", "Q*", "*JRN");
 
-    Enumeration enumeration = jrnList.getObjects();
+    Enumeration<?> enumeration = jrnList.getObjects();
     int totalDeletedCount = 0;
     long totalDeletedSize = 0L;
     int totalSkippedCount = 0; 
