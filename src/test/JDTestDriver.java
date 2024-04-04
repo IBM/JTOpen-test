@@ -174,6 +174,8 @@ public abstract class JDTestDriver extends TestDriver {
   private int subDriver_ = DRIVER_NONE;
   private int db_ = DB_SYSTEMI;
   static Class<?> driverManager_ = null;
+
+  private static Hashtable nativeAttemptedHashtable = null ;
   private boolean lobSupport_;
   private boolean datalinkSupport_;
   private boolean returnValueSupport_; 
@@ -1319,8 +1321,13 @@ public abstract class JDTestDriver extends TestDriver {
       else
           attemptedPassword = "null"; 
       if ( !"BOGUSID".equals(uid)) {
-      System.out.println("Warning: unable to get native connection using secure password = "+attemptedPassword+" uid="+uid+" url="+url);
-      e.printStackTrace(System.out);
+        // Only print the warning once. 
+        if (nativeAttemptedHashtable  == null) nativeAttemptedHashtable = new Hashtable(); 
+        if (nativeAttemptedHashtable.get(uid) == null) {
+          nativeAttemptedHashtable.put(uid,uid); 
+          System.out.println("Warning: unable to get native connection using secure password = "+attemptedPassword+" uid="+uid+" url="+url);
+         e.printStackTrace(System.out);
+        }
       }
       String pwd = PasswordVault.decryptPasswordLeak(encryptedPwd);
       connection = DriverManager.getConnection(url, uid, pwd);

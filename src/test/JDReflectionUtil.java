@@ -1453,7 +1453,7 @@ public class JDReflectionUtil {
 
 	Class[] argTypes = new Class[0];
 	method = thisClass.getMethod(methodName, argTypes);
-    method.setAccessible(true); //allow toolbox proxy methods to be invoked
+        method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	Object[] args = new Object[0];
 	try {
 	    method.invoke(o, args);

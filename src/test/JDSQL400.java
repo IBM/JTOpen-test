@@ -2608,7 +2608,7 @@ public class JDSQL400 implements Runnable {
           if (debugger != null) {
             JDReflectionUtil.callMethod_V(debugger,  "stopDebugger");
           }
-          JDReflectionUtil.createObject("test.JDDebugger", portNumber, out);
+          debugger = new JDDebugger(portNumber,out); 
           
           JDReflectionUtil.callMethod_V(debugger,  "start"); 
           out.println("DEBUGGER attached");
