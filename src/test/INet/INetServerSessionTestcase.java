@@ -35,6 +35,7 @@ import java.util.Hashtable;
 public class INetServerSessionTestcase extends Testcase
 {
    private ISeriesNetServer netserver_;
+   private ISeriesNetServer pwrNetserver_;
    private ISeriesNetServerSession[] sessionList_;
 
    private static final boolean DEBUG = false;
@@ -81,7 +82,8 @@ public class INetServerSessionTestcase extends Testcase
 	jcifs = new JCIFSUtility(pwrSys_.getSystemName(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 
        netserver_ = new ISeriesNetServer(systemObject_);
-       sessionList_ = netserver_.listSessions();
+       pwrNetserver_ = new ISeriesNetServer(pwrSys_);
+       sessionList_ = pwrNetserver_.listSessions();
 
        if (sessionList_.length == 0)
           throw new IllegalStateException("No sessions are active.  To start a session: Go to a PC and use Network Neighborhood to map a drive to \\\\" + systemObject_.getSystemName() + "\\ROOT , then open any file on the mapped drive (WordPad is better than NotePad).  You might also need to open the mapped drive using Windows Explorer.");
@@ -128,7 +130,7 @@ public class INetServerSessionTestcase extends Testcase
             ISeriesNetServerSession session = sessionList_[0];
             ///System.out.println("session ID: " + session.getID());
             ///System.out.println ("About to call listConnectionsForSession().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {}
-            ISeriesNetServerConnection[] connectionsList = netserver_.listConnectionsForSession(session.getID());
+            ISeriesNetServerConnection[] connectionsList = pwrNetserver_.listConnectionsForSession(session.getID());
             ///System.out.println ("Called listConnectionsForSession().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {}
             if (connectionsList != null) {
               succeeded();
@@ -452,7 +454,7 @@ public class INetServerSessionTestcase extends Testcase
               failed("Session has invalid attribute value(s).");
               return;
             }
-            netserver_.refresh(sess);
+            pwrNetserver_.refresh(sess);
             if (!validateAttributeValues(sess)) {
               failed("Session has invalid attribute value(s) after refresh.");
               return;

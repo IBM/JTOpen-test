@@ -65,7 +65,7 @@ public class NetServerSessionTestcase extends Testcase
 
 	jcifs = new JCIFSUtility(pwrSys_.getSystemName(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 
-       NetServer netser = new NetServer(systemObject_);
+       NetServer netser = new NetServer(pwrSys_);
        sessionList_ = netser.listSessions();
 
        if (sessionList_.getListLength() == 0)

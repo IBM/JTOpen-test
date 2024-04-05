@@ -75,11 +75,11 @@ public class INetServerFileShareTestcase extends Testcase
          netserverPwr_.removeShare("TOOLBOXTST");
          netserverPwr_.createFileShare("TOOLBOXTST", "/root");
        }
-       shareList_ = netserver_.listFileShares();
+       shareList_ = netserverPwr_.listFileShares();
        if (shareList_.length == 0)
           throw new IllegalStateException("No file shares were found.  Create at least one file share on " + systemObject_.getSystemName());
 
-       ISeriesNetServerFileShare[] shares = netserver_.listFileShares("TOOLBOXTST");
+       ISeriesNetServerFileShare[] shares = netserverPwr_.listFileShares("TOOLBOXTST");
        share_ = shares[0];
     }
 
@@ -458,7 +458,7 @@ public class INetServerFileShareTestcase extends Testcase
               failed("Share has invalid attribute value(s).");
               return;
             }
-            netserver_.refresh(share);
+            netserverPwr_.refresh(share);
             if (!validateAttributeValues(share)) {
               failed("Share has invalid attribute value(s) after refresh.");
               return;

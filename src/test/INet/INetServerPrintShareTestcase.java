@@ -81,11 +81,11 @@ public class INetServerPrintShareTestcase extends Testcase
          netserverPwr_.removeShare("PRTTOOLBOX");
          netserverPwr_.createPrintShare("PRTTOOLBOX", "QGPL", "QPRINT");
        }
-       shareList_ = netserver_.listPrintShares();
+       shareList_ = netserverPwr_.listPrintShares();
        if (shareList_.length == 0)
           throw new IllegalStateException("No print shares were found.  Create at least one print share on " + systemObject_.getSystemName());
 
-       ISeriesNetServerPrintShare[] shares = netserver_.listPrintShares("PRTTOOLBOX");
+       ISeriesNetServerPrintShare[] shares = netserverPwr_.listPrintShares("PRTTOOLBOX");
        share_ = shares[0];
     }
 
@@ -588,7 +588,7 @@ public class INetServerPrintShareTestcase extends Testcase
               failed("Share has invalid attribute value(s).");
               return;
             }
-            netserver_.refresh(share);
+            netserverPwr_.refresh(share);
             if (!validateAttributeValues(share)) {
               failed("Share has invalid attribute value(s) after refresh.");
               return;

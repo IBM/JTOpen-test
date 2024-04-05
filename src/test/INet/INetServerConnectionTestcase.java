@@ -38,6 +38,7 @@ public class INetServerConnectionTestcase extends Testcase
     // Private data.
     ///private VIFSSandbox     sandbox_;
     private ISeriesNetServer netserver_;
+    private ISeriesNetServer pwrNetserver_;
     private ISeriesNetServerSession[] sessionList_;
 
     static final boolean DEBUG = false;
@@ -82,7 +83,8 @@ public class INetServerConnectionTestcase extends Testcase
 	jcifs = new JCIFSUtility(pwrSys_.getSystemName(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 
        netserver_ = new ISeriesNetServer(systemObject_);
-       sessionList_ = netserver_.listSessions();
+       pwrNetserver_ = new ISeriesNetServer(pwrSys_);
+       sessionList_ = pwrNetserver_.listSessions();
 
        if (sessionList_.length == 0)
           throw new IllegalStateException("No sessions are active.  To start a session: Go to a PC and use Network Neighborhood to map a drive to \\\\" + systemObject_.getSystemName() + "\\ROOT , then open any file on the mapped drive.");
@@ -241,7 +243,7 @@ public class INetServerConnectionTestcase extends Testcase
                                "CONNECTIONS FOR SESSION " +wsName+" ("+sessID+")\n" +
                                "-----------------------------------\n");
           }
-          ISeriesNetServerConnection[] connections = netserver_.listConnectionsForSession(sessID);
+          ISeriesNetServerConnection[] connections = pwrNetserver_.listConnectionsForSession(sessID);
           for (int j=0; j<connections.length; j++)
           {
             ISeriesNetServerConnection conn = connections[j];
@@ -277,7 +279,7 @@ public class INetServerConnectionTestcase extends Testcase
                                "CONNECTIONS FOR SESSION " +wsName+" ("+sessID+")\n" +
                                "-----------------------------------\n");
           }
-          ISeriesNetServerConnection[] connections = netserver_.listConnectionsForSession(wsName);
+          ISeriesNetServerConnection[] connections = pwrNetserver_.listConnectionsForSession(wsName);
           for (int j=0; j<connections.length; j++)
           {
             ISeriesNetServerConnection conn = connections[j];
@@ -304,7 +306,7 @@ public class INetServerConnectionTestcase extends Testcase
       try
       {
         // Get list of all shares.
-        ISeriesNetServerShare[] shares = netserver_.listShares();
+        ISeriesNetServerShare[] shares = pwrNetserver_.listShares();
         for (int i=0; i<shares.length; i++)
         {
           ISeriesNetServerShare share = shares[i];
@@ -315,7 +317,7 @@ public class INetServerConnectionTestcase extends Testcase
                                "CONNECTIONS FOR SHARE " +shareName+" ("+shareType+")\n" +
                                "-----------------------------------\n");
           }
-          ISeriesNetServerConnection[] connections = netserver_.listConnectionsForShare(shareName);
+          ISeriesNetServerConnection[] connections = pwrNetserver_.listConnectionsForShare(shareName);
           for (int j=0; j<connections.length; j++)
           {
             ISeriesNetServerConnection conn = connections[j];
@@ -324,7 +326,7 @@ public class INetServerConnectionTestcase extends Testcase
               failed("Connection has invalid attribute value(s).");
               return;
             }
-            netserver_.refresh(conn);
+            pwrNetserver_.refresh(conn);
             if (!validateAttributeValues(conn)) {
               failed("Connection has invalid attribute value(s) after refresh.");
               return;
