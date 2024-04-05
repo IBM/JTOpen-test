@@ -2124,7 +2124,14 @@ public class FATestcase extends Testcase
             String testValue = "*NONE";
     
             String returnValue = fa.getAudit();
-            assertCondition(returnValue.equals(testValue));
+            // Auditing can be enabled on a system, so we should support the values
+            // that can be seen. 
+            boolean passed = returnValue.equals(testValue);
+            if (!passed) {
+                testValue="*ALL";
+              passed = returnValue.equals(testValue);
+            }
+            assertCondition(returnValue.equals(testValue), "Got '"+returnValue+"' sb '"+testValue+"'");
         }
         catch (Exception e)
         {

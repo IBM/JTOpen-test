@@ -1871,7 +1871,7 @@ public class DDMRegressionTestcase extends Testcase
           systemObject_.connectService(AS400.RECORDACCESS);
           systemObject_.disconnectService(AS400.RECORDACCESS);
         }
-        else if (i == 2 || i == 3)
+        else if (i == 2 || i == 3 || i == 4 || i == 5)
         {
           systemObject_.connectService(AS400.RECORDACCESS);
           systemObject_.disconnectService(AS400.RECORDACCESS);

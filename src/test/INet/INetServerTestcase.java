@@ -75,7 +75,7 @@ public class INetServerTestcase extends Testcase
       super.setup();
       netserver_ = new ISeriesNetServer(systemObject_);
       netserverPwr_ = new ISeriesNetServer(pwrSys_);
-      original_NetServer_Name = netserver_.getName();
+      original_NetServer_Name = netserverPwr_.getName();
       if (original_NetServer_Name != null) {
         original_NetServer_Name = original_NetServer_Name.toUpperCase();
       }
@@ -238,7 +238,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            ISeriesNetServer netser = new ISeriesNetServer(systemObject_);
+            ISeriesNetServer netser = new ISeriesNetServer(pwrSys_);
             if (validateAttributeValues(netser)) succeeded();
             else failed();
         }
@@ -520,8 +520,8 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            netserver_.refresh();
-            String value = netserver_.getName();
+            netserverPwr_.refresh();
+            String value = netserverPwr_.getName();
 
             ///System.out.println(value + ", " + original_NetServer_NamePending);
             assertCondition(value.equalsIgnoreCase(original_NetServer_Name));
@@ -540,9 +540,9 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            netserver_.refresh();
-            netserver_.getName();
-            String value = netserver_.getName();
+            netserverPwr_.refresh();
+            netserverPwr_.getName();
+            String value = netserverPwr_.getName();
 
             assertCondition(value.equalsIgnoreCase(original_NetServer_Name));
         }
@@ -559,8 +559,8 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            netserver_.setName("TOOLBOX");
-            String value = netserver_.getName();
+            netserverPwr_.setName("TOOLBOX");
+            String value = netserverPwr_.getName();
 
             assertCondition(value.equalsIgnoreCase(original_NetServer_Name));
             cleanup();
@@ -578,10 +578,10 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            netserver_.setName("TOOLBOX");
-            netserver_.refresh();
+            netserverPwr_.setName("TOOLBOX");
+            netserverPwr_.refresh();
 
-            String value = netserver_.getName();
+            String value = netserverPwr_.getName();
 
             assertCondition(value.equalsIgnoreCase(original_NetServer_Name));
         }
@@ -1050,10 +1050,10 @@ public class INetServerTestcase extends Testcase
         try
         {
             startIfStopped(false);
-            netserver_.refresh();
-            String asString = netserver_.toString();
+            netserverPwr_.refresh();
+            String asString = netserverPwr_.toString();
             ///System.out.println("DEBUG: toString() returned: |" + asString + "|");
-            String expected = "ISeriesNetServer (system: "+systemObject_.getSystemName()+"; name: "+netserver_.getName()+"):";
+            String expected = "ISeriesNetServer (system: "+pwrSys_.getSystemName()+"; name: "+netserverPwr_.getName()+"):";
             ///System.out.println("DEBUG: expected: |" + expected +"|");
             assertCondition(asString.startsWith(expected));
         }
@@ -1092,7 +1092,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            ISeriesNetServer netser = new ISeriesNetServer(systemObject_);
+            ISeriesNetServer netser = new ISeriesNetServer(pwrSys_);
             ISeriesNetServerFileShare[] fileSharesList = netser.listFileShares();
             long listLength = fileSharesList.length;
             String[] s = new String[(int)listLength];
@@ -1137,7 +1137,7 @@ public class INetServerTestcase extends Testcase
         try
         {
 
-            ISeriesNetServer netser = new ISeriesNetServer(systemObject_);
+            ISeriesNetServer netser = new ISeriesNetServer(pwrSys_);
 
 	    // 04/05/2022 list all 
             ISeriesNetServerFileShare[] fileSharesList = netser.listFileShares("*ALL" /* "QIBM" */);
@@ -1205,7 +1205,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            ISeriesNetServer netser = new ISeriesNetServer(systemObject_);
+            ISeriesNetServer netser = new ISeriesNetServer(pwrSys_);
             ISeriesNetServerPrintShare[] printSharesList = netser.listPrintShares();
             long listLength = printSharesList.length;
             String[] s = new String[(int)listLength];
@@ -1241,9 +1241,9 @@ public class INetServerTestcase extends Testcase
     {
       try
       {
-        ISeriesNetServerShare[] allShares = netserver_.listShares();
-        ISeriesNetServerFileShare[] fileShares = netserver_.listFileShares();
-        ISeriesNetServerPrintShare[] printShares = netserver_.listPrintShares();
+        ISeriesNetServerShare[] allShares = netserverPwr_.listShares();
+        ISeriesNetServerFileShare[] fileShares = netserverPwr_.listFileShares();
+        ISeriesNetServerPrintShare[] printShares = netserverPwr_.listPrintShares();
         if (DEBUG) {
           System.out.println("Total shares: " + allShares.length +"; file shares: " + fileShares.length+"; print shares: " + printShares.length);
         }
@@ -1308,7 +1308,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-            ISeriesNetServer netser = new ISeriesNetServer(systemObject_);
+            ISeriesNetServer netser = new ISeriesNetServer(pwrSys_);
             ISeriesNetServerPrintShare[] printSharesList = netser.listPrintShares("BOGUSTOOLBOX");
             long listLength = printSharesList.length;
             String[] s = new String[(int)listLength];
@@ -1763,7 +1763,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-           ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+           ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
            if (ns.getDescription().length() > 0  )
               succeeded();
@@ -1811,7 +1811,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-           ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+           ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
            if (ns.getDomainName().length() > 0)
               succeeded();
             else
@@ -1862,7 +1862,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-           ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+           ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
            if (ns.getGuestUserProfile().length() >= 0  )
               succeeded();
@@ -1940,13 +1940,13 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-           ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+           ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
            if (ns.getIdleTimeout() > 0 ||
                ns.getIdleTimeout() == -1)
               succeeded();
             else
-              failed("ISeriesNetServer idle timeout is not valid.");
+              failed("ISeriesNetServer idle timeout is not valid but is "+ns.getIdleTimeout());
         }
         catch (Exception e)
         {
@@ -2053,7 +2053,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-           ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+           ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
            if (ns.getName().length() > 0 )
               succeeded();
@@ -2165,7 +2165,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-           ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+           ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
            if (ns.getWINSPrimaryAddress().length() >= 0 )
               succeeded();
@@ -2214,7 +2214,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-           ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+           ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
            if (ns.getWINSScopeID().length() >= 0 )
               succeeded();
@@ -2264,7 +2264,7 @@ public class INetServerTestcase extends Testcase
     {
         try
         {
-           ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+           ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
            if (ns.getWINSSecondaryAddress().length() >= 0 )
               succeeded();
@@ -2398,7 +2398,7 @@ public class INetServerTestcase extends Testcase
           return;
         }
 
-        ISeriesNetServer ns = new ISeriesNetServer(systemObject_);
+        ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
         int authMethod = ns.getAuthenticationMethod();
         assertCondition(authMethod >= ISeriesNetServerFileShare.NOT_ENABLED &&
                         authMethod  <= ISeriesNetServerFileShare.ENABLED_AND_MIXED,

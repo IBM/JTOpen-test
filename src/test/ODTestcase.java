@@ -14,14 +14,8 @@
 package test;
 
 
-import java.util.Date;
-import java.util.Enumeration;
 import java.lang.Long;
-import java.net.UnknownHostException;
-import java.io.IOException;
-
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.ErrorCompletingRequestException;
 import com.ibm.as400.access.ObjectDescription;
 import com.ibm.as400.access.ObjectDoesNotExistException;
@@ -142,7 +136,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, path_);
-			succeeded();	
+			assertCondition(od != null);	
 		} 
 		catch (Exception e) 
 		{
@@ -161,7 +155,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(null, path_);
-			failed("Exception didn't occur.");
+			failed("Exception didn't occur."+od);
 
 		} 
 		catch (Exception e) 
@@ -182,7 +176,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, (String)null);
-			failed("Exception didn't occur.");
+			failed("Exception didn't occur."+od);
 		} 
 		catch (Exception e) {
 			assertExceptionIs(e, "NullPointerException", "path");
@@ -201,7 +195,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, lib_, name_, type_);
-			succeeded();	
+			assertCondition(od != null); 	
 		} 
 		catch (Exception e) 
 		{
@@ -221,7 +215,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(null, lib_, name_, type_);
-			failed("Exception didn't occur.");	
+			failed("Exception didn't occur."+od);	
 		} 
 		catch (Exception e) 
 		{
@@ -241,7 +235,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, null, name_, type_);
-			failed("Exception didn't occur.");
+			failed("Exception didn't occur."+od);
 			
 		} 
 		catch (Exception e) 
@@ -262,7 +256,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, lib_, null, type_);
-			failed("Exception didn't occur.");		
+			failed("Exception didn't occur."+od);		
 		} 
 		catch (Exception e) 
 		{
@@ -282,7 +276,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, lib_, name_, null);
-			failed("Exception didn't occur.");		
+			failed("Exception didn't occur."+od);		
 		} 
 		catch (Exception e) 
 		{
@@ -301,7 +295,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, ObjectDescription.CURRENT_LIBRARY, name_, type_);
-			succeeded();	
+			assertCondition(od != null); 	
 		} 
 		catch (Exception e) 
 		{
@@ -323,7 +317,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, ObjectDescription.LIBRARY_LIST , name_, type_);
-			succeeded();	
+			assertCondition(od != null); 	
 		} 
 		catch (Exception e) 
 		{
@@ -346,7 +340,7 @@ public class ODTestcase extends Testcase
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_,
 					"/FAKE.LIB/FAKE.LIB/FAKE.MSGQ");
-			failed("Exception didn't occur.");
+			failed("Exception didn't occur."+od);
 		} 
 		catch (Exception e) 
 		{
@@ -510,11 +504,11 @@ public class ODTestcase extends Testcase
 		{
 
 			AS400 system = new AS400(systemObject_.getSystemName(), "fakeuser",
-					"password");
+					"password".toCharArray());
 			ObjectDescription od = new ObjectDescription(system, dpath_);
 			system.setGuiAvailable(false);
 			od.exists();
-			failed("Exception didn't occur.");
+			failed("Exception didn't occur."+od);
 		} 
 		catch (Exception e) 
 		{
@@ -1192,7 +1186,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
      		
-			AS400 system = new AS400(systemObject_.getSystemName(), "fakeuser", "password");
+			AS400 system = new AS400(systemObject_.getSystemName(), "fakeuser", "password".toCharArray());
 			ObjectDescription od = new ObjectDescription(system, path_);
 			system.setGuiAvailable(false);
 		
@@ -1434,7 +1428,7 @@ public class ODTestcase extends Testcase
 		try 
 		{
      		
-			AS400 system = new AS400(systemObject_.getSystemName(), "fakeuser", "password");
+			AS400 system = new AS400(systemObject_.getSystemName(), "fakeuser", "password".toCharArray());
 			ObjectDescription od = new ObjectDescription(system, path_);
 			system.setGuiAvailable(false);
 		
@@ -1626,7 +1620,8 @@ public class ODTestcase extends Testcase
 		      ObjectList objList1 = new ObjectList(systemObject_, "ODLOCKLIB", ObjectList.ALL, ObjectList.ALL);
 		      int size = objList1.getLength();
 		      com.ibm.as400.access.ObjectDescription[] objectEntry = objList1.getObjects(0, size);
-		    		      
+		    		
+		      boolean passed = true; 
 		      for (i=0; i<objectEntry.length; ++i)
 		      {
 		        System.out.println("Entry["+i+"/"+objectEntry.length+"]= "+objectEntry[i]); // Calls the ObjectDescription.toString() method	        
@@ -1635,16 +1630,16 @@ public class ODTestcase extends Testcase
 		        //No locks were applied so this should return zero
 		        if(lockEntry.length == 0)
 		        {
-		        	succeeded();  	
+		        	// Keep passed at true 
 		        }
 		        else
 		        {
-		        	failed("Objects should not have locks.");
+		        	passed = false; 
 		        }		       
 		      }    
-		      
 		      cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
 		      cmd.run();
+                      assertCondition(passed, "Object should not have locks");
 		} 
 		catch (Exception e) 
 		{    
@@ -1702,15 +1697,6 @@ public class ODTestcase extends Testcase
 		        }   
 		      }
 		      
-		        //One lock was applied to DDA1 so this should return 1 but no locks were applied for DDA2.
-		        if(DDA1locks  == 1 && DDA2locks == 0)
-		        {
-		        	succeeded();  	
-		        }
-		        else
-		        {
-		        	failed("Expecting DDA1locks = 1 and DDA2locks = 0 and got " + "DDA1locks = " + DDA1locks + " DDA2locks " + DDA2locks);
-		        }
 		        
 		      //DLCOBJ so DDA1 has no locks left.
 		      cmd.setCommand("DLCOBJ OBJ((ODLOCKLIB/DDA1 *DTAARA *EXCLRD)) SCOPE(*LCKSPC) ");
@@ -1721,6 +1707,15 @@ public class ODTestcase extends Testcase
 		      cmd.run();
 		      cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
 		      cmd.run();
+                      //One lock was applied to DDA1 so this should return 1 but no locks were applied for DDA2.
+                      if(DDA1locks  == 1 && DDA2locks == 0)
+                      {
+                              succeeded();    
+                      }
+                      else
+                      {
+                              failed("Expecting DDA1locks = 1 and DDA2locks = 0 and got " + "DDA1locks = " + DDA1locks + " DDA2locks " + DDA2locks);
+                      }
 		} 
 		catch (Exception e) 
 		{    
@@ -1770,6 +1765,15 @@ public class ODTestcase extends Testcase
 		        }        
  
 		      }
+                      //DLCOBJ so DDA1 has no locks left.
+                      cmd.setCommand("DLCOBJ OBJ((ODLOCKLIB/DDA1 *DTAARA *SHRRD)) SCOPE(*JOB)");
+                      cmd.run();
+                      cmd.setCommand("DLCOBJ OBJ((ODLOCKLIB/DDA1 *DTAARA *EXCL)) SCOPE(*THREAD)");
+                      cmd.run();
+                      
+                     //Delete objects 
+                  cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+                  cmd.run();
 		      
 		        //Two locks were applied to DDA1 so this should return 1.
 		        if(DDA1locks  == 1 )
@@ -1781,15 +1785,6 @@ public class ODTestcase extends Testcase
 		        	failed("Expecting DDA1locks = 1  and got " + "DDA1locks = " + DDA1locks);
 		        }
 		        
-		      //DLCOBJ so DDA1 has no locks left.
-		        cmd.setCommand("DLCOBJ OBJ((ODLOCKLIB/DDA1 *DTAARA *SHRRD)) SCOPE(*JOB)");
-		        cmd.run();
-		        cmd.setCommand("DLCOBJ OBJ((ODLOCKLIB/DDA1 *DTAARA *EXCL)) SCOPE(*THREAD)");
-		        cmd.run();
-		        
-		       //Delete objects 
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
-	     	    cmd.run();
 		} 
 		catch (Exception e) 
 		{    
@@ -1899,7 +1894,7 @@ public class ODTestcase extends Testcase
 	public void Var058() 
 	{
 		
-		int i = 0;
+		
 
 		try 
 		{	
