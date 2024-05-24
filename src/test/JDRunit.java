@@ -2227,6 +2227,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     String setClasspath = "CLASSPATH="+toolboxJar+":"+testcaseCode+":"
         + ":/qibm/proddata/java400/ext/translator.zip:"
         + toolsJar
+        + ":jars/googleauth-1.5.0.jar:jars/commons-codec-1.16.0.jar"
         + ":jars/servlet.jar:jars/jcifs.jar:jars/fscontext.jar:jars/providerutil.jar";
 
     
@@ -2318,12 +2319,14 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       }
       setClasspath = "CLASSPATH=\"" + toolboxJar + ";" +  testcaseCode+ ";"
           + currentClasspath+";"
-          + toolsJar + ";" + System.getProperty("user.dir")
-          + ""+File.separator+"jars"+File.separator+"db2_classes.jar;" + System.getProperty("user.dir")
-          + ""+File.separator+"jars"+File.separator+"fscontext.jar;" + System.getProperty("user.dir")
-          + ""+File.separator+"jars"+File.separator+"providerutil.jar;" + System.getProperty("user.dir")
-          + ""+File.separator+"jars"+File.separator+"servlet.jar;" + System.getProperty("user.dir")
-          + ""+File.separator+"jars"+File.separator+"jcifs.jar;" + 
+          + toolsJar + ";" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"db2_classes.jar;" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"fscontext.jar;" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"providerutil.jar;" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"servlet.jar;" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"jcifs.jar;" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"googleauth-1.5.0.jar;"+
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"commons-codec-1.16.0.jar;" +
           jccJars + ";" +
 
           /*
@@ -2343,11 +2346,13 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       }
 
       setClasspath = "CLASSPATH=\""+testcaseCode+":" + toolboxJar + ":"
-          + toolsJar + ":"  + System.getProperty("user.dir")
-          + "/jars/fscontext.jar:" + System.getProperty("user.dir")
-          + "/jars/providerutil.jar:" + System.getProperty("user.dir")
-          + "/jars/servlet.jar:" + System.getProperty("user.dir")
-          + "/jars/jcifs.jar" + "\"";
+          + toolsJar + ":"  
+          + System.getProperty("user.dir") + "/jars/fscontext.jar:" 
+          + System.getProperty("user.dir") + "/jars/providerutil.jar:" 
+          + System.getProperty("user.dir") + "/jars/servlet.jar:" 
+          + System.getProperty("user.dir") + "/jars/googleauth-1.5.0.jar:"
+          + System.getProperty("user.dir") + "/jars/commons-codec-1.16.0.jar:"
+          + System.getProperty("user.dir") + "/jars/jcifs.jar" + "\"";
 
       if (System.getProperty("user.name").equalsIgnoreCase("JAVA")) {
         display = ":9";

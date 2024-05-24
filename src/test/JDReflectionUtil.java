@@ -16,6 +16,7 @@ package test;
 import java.io.InputStream;
 import java.io.Reader;
 import java.lang.reflect.*;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -507,6 +508,55 @@ public class JDReflectionUtil {
        }
 
     }
+
+     public static Object callMethod_O(Object o, String methodName, 
+         String p1, char[] p2,
+         char[] p3, String p4, String p5, int p6, String p7, int p8,
+         int p9, int p10) throws Exception {
+
+
+       java.lang.reflect.Method method;
+
+       Class thisClass = o.getClass();
+       // System.out.println("Class of object is "+thisClass);
+       Class[] argTypes = new Class[10];
+       argTypes[0] = Class.forName("java.lang.String");
+       argTypes[1] = Class.forName("[C");
+       argTypes[2] = argTypes[1];
+       argTypes[3] = argTypes[0];
+       argTypes[4] = Class.forName("java.net.InetAddress");
+       argTypes[5] = Integer.TYPE;
+       argTypes[6] = argTypes[4]; 
+       argTypes[7] = Integer.TYPE;
+       argTypes[8] = Integer.TYPE;
+       argTypes[9] = Integer.TYPE;
+       
+       method = thisClass.getMethod(methodName, argTypes);
+       method.setAccessible(true); //allow toolbox proxy methods to be invoked
+       Object[] args = new Object[10];
+       args[0] = p1;
+       args[1] = p2;
+       args[2] = p3;
+       args[3] = p4;
+       args[4] = p5;
+       args[5] = p6;
+       args[6] = p7;
+       args[7] = p8;
+       args[8] = p9;
+       args[9] = p10;
+       try {
+           // System.out.println("Calling method");
+           Object outObject = method.invoke(o, args);
+           // System.out.println("outObject is "+outObject);
+           return outObject;
+       } catch (java.lang.reflect.InvocationTargetException ite) {
+           handleIte(ite);
+           return "";
+       }
+     
+     
+     
+     }
 
 
 
@@ -1774,6 +1824,44 @@ public class JDReflectionUtil {
   
   
   
+  public static void callMethod_V(Object o, String methodName, String p1, char[] p2,
+      char[] p3, String p4, InetAddress p5, int p6, InetAddress p7, int p8) throws Exception {
+    Class thisClass = o.getClass();
+    Class[] argTypes = new Class[8];
+    argTypes[0] = String.class;
+    argTypes[1] = Class.forName("[C");;
+    argTypes[2] = argTypes[1];
+    argTypes[3] = String.class; 
+    argTypes[4] = Class.forName("java.net.InetAddress");
+    argTypes[5] = Integer.TYPE; 
+    argTypes[6] = argTypes[4]; 
+    argTypes[7] = Integer.TYPE; 
+    
+    Method method = thisClass.getMethod(methodName, argTypes);
+    method.setAccessible(true); 
+
+
+    if (method == null) {
+      throw new Exception("Unable to find method ");
+    }
+    Object[] args = new Object[2];
+    args[0] = p1;
+    args[1] = p2;
+    args[2] = p3;
+    args[3] = p4;
+    args[4] = p5;
+    args[5] = p6;
+    args[6] = p7;
+    args[7] = p8;
+    try {
+      method.invoke(o, args);
+    } catch (java.lang.reflect.InvocationTargetException ite) {
+      handleIte(ite);
+
+    }
+    
+    
+  }
 
 
   /* Return the list of parameter classes to check for the specifed parameter */
@@ -3075,7 +3163,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
 
     /**
-     * call a static method whihc returns an object.
+     * call a static method which returns an object.
      *
      * Examples
      *
@@ -3258,6 +3346,31 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
        }
        return returnObject;
     }
+
+     public static Object callStaticMethod_O(String classname, String methodName, boolean parm1, String parm2) throws Exception {
+
+       Object returnObject = null;
+       Class thisClass =  Class.forName(classname);
+
+       java.lang.reflect.Method method;
+
+       Class[] argTypes = new Class[2];
+       argTypes[0] = Boolean.TYPE; 
+       argTypes[1] = Class.forName("java.lang.String"); 
+
+       method = thisClass.getMethod(methodName, argTypes);
+       method.setAccessible(true); 
+       Object[] args = new Object[2];
+       args[0] = new Boolean(parm1); 
+       args[1] = parm2; 
+       try {
+           returnObject =  method.invoke(null, args);
+       } catch (java.lang.reflect.InvocationTargetException ite) {
+           handleIte(ite);
+       }
+       return returnObject;
+    }
+
 
      
           public static Object callStaticMethod_O(String classname, String methodName, int parm1, int parm2, int parm3) throws Exception {
@@ -3713,6 +3826,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
       return c.isInstance(ts1); 
     }
 
+
+ 
 
 
 
