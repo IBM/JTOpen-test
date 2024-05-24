@@ -3172,7 +3172,29 @@ public abstract class Testcase {
 		  // For this to be used,  googleauth-1.5.0.jar and commons-codec-1.16.0.jar must in the classpath.
 		  // The authentication information is read from ini/netrc.ini and must match the configuration
 		  // on the system. 
+	    try { 
 		  googleAuthenticator_ = JDReflectionUtil.createObject("com.warrenstrange.googleauth.GoogleAuthenticator");
+	    } catch (Exception e) { 
+	       // On the IBM i the default SUN:SHA1PRNG generator required by GoogleAuthenticator is not available.
+	      // switch to the default one.
+	      String strongAlgorithms = java.security.Security.getProperty("securerandom.strongAlgorithms"); 
+	      if (strongAlgorithms != null) { 
+	        int commaIndex = strongAlgorithms.indexOf(","); 
+	        if (commaIndex >= 0) {
+	          strongAlgorithms = strongAlgorithms.substring(0,commaIndex);
+	        }
+	        // Get the algorithm / provider combination if possible
+	        int colonIndex = strongAlgorithms.indexOf(":"); 
+	        if (colonIndex >= 0) { 
+	          String provider = strongAlgorithms.substring(colonIndex+1); 
+	          System.setProperty("com.warrenstrange.googleauth.rng.algorithmProvider", provider);
+	          strongAlgorithms = strongAlgorithms.substring(0,colonIndex); 
+	        }
+	        System.setProperty("com.warrenstrange.googleauth.rng.algorithm", strongAlgorithms);
+	      }
+	      // Try to create again
+	      googleAuthenticator_ = JDReflectionUtil.createObject("com.warrenstrange.googleauth.GoogleAuthenticator");
+	    }
 		  StringBuffer iniInfo = new StringBuffer();
 		  Properties properties = new Properties(); 
 	      InputStream fileInputStream = JDRunit.loadResource("ini/netrc.ini", iniInfo);
