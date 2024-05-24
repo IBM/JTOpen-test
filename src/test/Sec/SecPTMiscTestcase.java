@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.util.Random;
 
 import com.ibm.as400.access.AS400;
@@ -31,6 +32,7 @@ import com.ibm.as400.security.auth.ProfileTokenCredentialBeanInfo;
 import com.ibm.as400.security.auth.RetrieveFailedException;
 import com.ibm.as400.security.auth.UserProfilePrincipal;
 
+import test.JDReflectionUtil;
 import test.PasswordVault;
 import test.SecAuthTest;
 import test.Testcase;
@@ -658,6 +660,7 @@ public class SecPTMiscTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Throwable e)
@@ -848,6 +851,520 @@ public class SecPTMiscTestcase extends Testcase
         sys.disconnectAllServices();
       }
     }
+
+    
+    public void Var027() { notApplicable();}
+    public void Var028() { notApplicable();}
+    public void Var029() { notApplicable();}
+    public void Var030() { notApplicable();}
+    public void Var031() { notApplicable();}
+    /* Tests for Additional Authentication Factor (duplicated from above) */ 
+
+   /**
+    Test serialization and restoration of an active profile token.
+    **/
+   public void Var032()
+   {    
+       if (checkAdditionalAuthenticationFactor(systemName_)) {
+       AS400 sys = null;
+       if (isLocal_)
+       {
+           sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+       }
+       else
+       {
+           sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
+       }
+       try
+       {
+           initMfaUser(); 
+           ProfileTokenCredential pt1 = null;
+           ProfileTokenCredential pt2 = null;
+
+           // Create a single-use ProfileTokenCredential with a 10 min timeout.
+           pt1 = new ProfileTokenCredential();
+           pt1.setSystem(sys);
+           pt1.setTimeoutInterval(600);
+           pt1.setTokenType(ProfileTokenCredential.TYPE_SINGLE_USE);
+           
+           JDReflectionUtil.callMethod_V(pt1, 
+               "setEnhancedToken",
+               mfaUserid_, 
+               mfaPassword_,
+               mfaFactor_, 
+               "", 
+               (InetAddress)null,
+               0,
+               (InetAddress)null,
+               0) ;
+
+           // Test token validity; retrieve the token time to expiration.
+           pt1.getTimeToExpiration();
+
+           // Serialize the token.
+           ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("ptoken.dat"));
+           out.writeObject(pt1);
+           out.close();
+
+           // Deserialize the token.
+           ObjectInputStream in = new ObjectInputStream(new FileInputStream("ptoken.dat"));
+           pt2 = (ProfileTokenCredential)in.readObject();
+           in.close();
+
+           File fd = new File("ptoken.dat");
+           fd.delete();
+
+           // Reset the system user and password (not serialized).
+           if (isLocal_)
+           {
+               pt2.getSystem().setUserId("*CURRENT");
+               pt2.getSystem().setPassword("*CURRENT".toCharArray());
+           }
+           else
+           {
+               pt2.getSystem().setUserId(SecAuthTest.uid2);
+               pt2.getSystem().setPassword(SecAuthTest.pwd2.toCharArray());
+           }
+
+           // Test token validity; compare the token time to expiration.
+           assertCondition(pt1.equals(pt2) && pt2.getTimeToExpiration() >= pt1.getTimeToExpiration(), "Unexpected time to expiration.");
+
+           sys.disconnectAllServices();
+           pt2.getSystem().disconnectAllServices();
+
+           SecAuthTest.removeToken(pwrSys_, pt1.getToken());
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       }
+   }
+
+   public void Var033() { notApplicable(); }
+   public void Var034() { notApplicable(); }
+   public void Var035() { notApplicable(); }
+   public void Var036() { notApplicable(); }
+   public void Var037() { notApplicable(); }
+   public void Var038() { notApplicable(); }
+   public void Var039() { notApplicable(); }
+ 
+   /**
+    Test successful creation of a profile token for a signed-on system based only on user ID and password authentication criteria.
+    **/
+   public void Var040()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+       AS400 sys = null;
+       if (isLocal_)
+       {
+           sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+       }
+       else
+       {
+           sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       }
+       try
+       {
+         initMfaUser();
+           int tokenType = ProfileTokenCredential.TYPE_SINGLE_USE;
+           int timeoutInterval = 3600; 
+           ProfileTokenCredential pt = (ProfileTokenCredential) JDReflectionUtil.callMethod_O 
+               (sys, "getEnhancedToken", mfaUserid_, mfaPassword_, mfaFactor_,"",(
+                   String)null,0,(String )null,0,tokenType,timeoutInterval);
+           
+           assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && 
+               pt.getTokenType() == ProfileTokenCredential.TYPE_SINGLE_USE && pt.getTimeToExpiration() > 3000, "Unexpected profile token properties.");
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+     }
+   }
+
+   /**
+    Test successful creation of a profile token for a signed-on system based on specific authentication criteria.
+    **/
+   public void Var041()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+       AS400 sys = null;
+       if (isLocal_)
+       {
+           sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+       }
+       else
+       {
+           sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       }
+       try
+       {
+         initMfaUser();
+         
+           ProfileTokenCredential pt = (ProfileTokenCredential) JDReflectionUtil.callMethod_O 
+               (sys, "getEnhancedToken", mfaUserid_, mfaPassword_, mfaFactor_,"",(
+                   String )null,0,(String )null,0,ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
+           assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeToExpiration() >= 300 && pt.getTimeToExpiration() <= 444, "Unexpected profile token properties.");
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+   public void Var042() {notApplicable(); } 
+   public void Var043() {notApplicable(); } 
+ public void Var044() {notApplicable(); } 
+ public void Var045() {notApplicable(); } 
+   /**
+    Test failed creation of a profile token due to null user parm.
+    **/
+   public void Var046()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+       AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       try
+       {
+           sys.getProfileToken(null, "PWD".toCharArray());
+           failed("Token create did not fail as expected.");
+       }
+       catch (Exception e)
+       {
+           assertExceptionIs(e, "NullPointerException", "userId");
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+   /**
+    Test failed creation of a profile token due to null password parm.
+    **/
+   public void Var047()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+
+       AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       try
+       {
+           sys.getProfileToken("UID", (char[]) null);
+           failed("Token create did not fail as expected.");
+       }
+       catch (Exception e)
+       {
+           assertExceptionIs(e, "NullPointerException", "password");
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+   /**
+    Test failed creation of a profile token due to illegal user parm.
+    **/
+   public void Var048()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+
+       AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       try
+       {
+           sys.getProfileToken("ABCDEFGHIJK", "PWD".toCharArray());
+           failed("Token create did not fail as expected.");
+       }
+       catch (ExtendedIllegalArgumentException iae)
+       {
+           assertCondition(iae.getReturnCode() == ExtendedIllegalArgumentException.LENGTH_NOT_VALID, "Unexpected return code on exception >> " + iae.getReturnCode());
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+   /**
+    Test failed creation of a profile token due to illegal password parm.
+    **/
+   public void Var049()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+       AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       try
+       {
+           sys.getProfileToken("UID", "ABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXY1234".toCharArray());
+           failed("Token create did not fail as expected.");
+       }
+       catch (ExtendedIllegalArgumentException iae)
+       {
+           assertCondition(iae.getReturnCode() == ExtendedIllegalArgumentException.LENGTH_NOT_VALID, "Unexpected return code on exception >> " + iae.getReturnCode());
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+   /**
+    Test failed creation of a profile token for a signed-on system by specifying password *CURRENT.
+    **/
+   public void Var050()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+       if (!isLocal_)
+       {
+           notApplicable();
+           return;
+       }
+       try
+       {
+           AS400 system = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+           // Connect to command, forces pre-resolution of any user/password info.
+           system.connectService(AS400.COMMAND);
+           try
+           {
+               // Attempt to generate the token.
+               ProfileTokenCredential pt = system.getProfileToken(ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
+               failed("Token create did not fail as expected. pt="+pt);
+           }
+           catch (Exception e)
+           {
+               assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
+           }
+           catch (Throwable e)
+           {
+             failed(e, "Unexpected exception.");
+           }
+           finally
+           {
+               system.disconnectAllServices();
+               system.close(); 
+           }
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+   }
+   }
+   /**
+    Test successful creation of a profile token for a signed-on system based on specific authentication criteria.
+    **/
+   public void Var051()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+
+       AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       try
+       {
+           ProfileTokenCredential pt = sys.getProfileToken(ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
+           assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeToExpiration() >= 300 && pt.getTimeToExpiration() <= 444, "Unexpected profile token properties.");
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+   /**
+    Test failed creation of a profile token due to illegal type parm.
+    **/
+   public void Var052()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+
+       AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       try
+       {
+           sys.getProfileToken(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1);
+           failed("Token create did not fail as expected.");
+       }
+       catch (AS400SecurityException ase)
+       {
+           assertCondition(ase.getReturnCode() == AS400SecurityException.REQUEST_NOT_SUPPORTED, "Unexpected return code on exception >> " + ase.getReturnCode());
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+
+   /**
+    Test failed authentication (token-based) for unsupported password parm.
+    Original var 14
+    **/
+   public void Var053()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+       AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       try
+       {
+           sys.authenticate("QSECXXXXXX", "*NOPWD".toCharArray());
+           failed("Authentication did not fail as expected.");
+       }
+       catch (AS400SecurityException iae)
+       {
+           StringBuffer sb = new StringBuffer();
+           printStackTraceToStringBuffer(iae, sb); 
+           assertCondition(((iae.getReturnCode() == AS400SecurityException.SIGNON_CHAR_NOT_VALID) ||
+                           (iae.getReturnCode() == AS400SecurityException.USERID_UNKNOWN)) , "Unexpected return code on exception >> " + iae.getReturnCode()+"\n"+sb.toString());
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+   /**
+    Test failed authentication (token-based) for unsupported password parm.
+    Original Var 15
+    **/
+   public void Var054()
+   {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+
+       AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+       try
+       {
+           sys.authenticate("QSECXXXXXX", "*NOPWDCHK".toCharArray());
+           failed("Authentication did not fail as expected.");
+       }
+       catch (AS400SecurityException iae)
+       {
+           StringBuffer sb = new StringBuffer();
+           printStackTraceToStringBuffer( iae, sb);
+           assertCondition(((iae.getReturnCode() == AS400SecurityException.SIGNON_CHAR_NOT_VALID) 
+               || (iae.getReturnCode() == AS400SecurityException.USERID_UNKNOWN)), 
+               "Unexpected return code on exception >> " + iae.getReturnCode()+"\n"+sb.toString());
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+       finally
+       {
+           sys.disconnectAllServices();
+       }
+   }
+   }
+   /**
+    * Test failed authentication (token-based) for unsupported password parm.
+    * Another variant var014 with incorrect character
+    **/
+   public void Var055() {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+       char[] charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
+       AS400 sys = new AS400(systemObject_.getSystemName(), pwrSysUserID_,
+                             charPassword);
+       PasswordVault.clearPassword(charPassword);    
+     CommandCall cmd = null;
+   String user = "USER"; 
+
+     try {
+       user = generateClientUser("TBX25"); 
+       cmd = new CommandCall(sys);
+       cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
+
+       sys.authenticate(user, "*NOPWD\u00c0".toCharArray());
+       failed("Authentication did not fail as expected.");
+     } catch (AS400SecurityException iae) {
+       StringBuffer sb = new StringBuffer();
+       printStackTraceToStringBuffer(iae, sb);
+       assertCondition(
+           ((iae.getReturnCode() == AS400SecurityException.SIGNON_CHAR_NOT_VALID)),
+           "Unexpected return code on exception >> " + iae.getReturnCode()
+               + "\n" + sb.toString());
+     } catch (Throwable e) {
+       failed(e, "Unexpected exception.");
+     } finally {
+       if (cmd != null) {
+         try {
+           cmd.run("DLTUSRPRF "+user+" ");
+         } catch (Exception e) {
+           e.printStackTrace();
+         }
+       }
+       sys.disconnectAllServices();
+     }
+   }
+   }
+   /**
+    * Test failed authentication (token-based) for unsupported password parm.
+    * Another variant of var015 with incorrect character
+    **/
+   public void Var056() {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
+     AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1,
+         SecAuthTest.pwd1.toCharArray());
+     CommandCall cmd = null;
+   String user = "USER"; 
+
+     try {
+       user = generateClientUser("TBX26"); 
+       cmd = new CommandCall(sys);
+       cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
+       sys.authenticate(user, "*NOPWDCHK\u00c0".toCharArray());
+       failed("Authentication did not fail as expected.");
+     } catch (AS400SecurityException iae) {
+       StringBuffer sb = new StringBuffer();
+       printStackTraceToStringBuffer(iae, sb);
+       assertCondition(
+           ((iae.getReturnCode() == AS400SecurityException.SIGNON_CHAR_NOT_VALID)),
+           "Unexpected return code on exception >> " + iae.getReturnCode()
+               + "\n" + sb.toString());
+     } catch (Throwable e) {
+       failed(e, "Unexpected exception.");
+     } finally {
+       if (cmd != null) {
+         try {
+           cmd.run("DLTUSRPRF "+user+" ");
+         } catch (Exception e) {
+           e.printStackTrace();
+         }
+       }
+       sys.disconnectAllServices();
+     }
+   }
+   }
 
 
 }

@@ -519,6 +519,12 @@ public abstract class Testcase {
     }
 
     systemObject_ = system;
+    if (systemName_ == null) { 
+      systemName_ = systemObject_.getSystemName(); 
+    }
+    if (userId_ == null) { 
+      userId_ = systemObject_.getUserId(); 
+    }
     name_ = name;
     totalVariations_ = totalVariations;
     variationsToRun_ = variationsToRun != null ? variationsToRun : new Vector<String>();

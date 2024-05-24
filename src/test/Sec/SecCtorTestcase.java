@@ -1207,4 +1207,94 @@ public class SecCtorTestcase extends Testcase
 		system.disconnectAllServices();
 	}
     }
+
+    public void Var036() { notApplicable(); }
+    public void Var037() { notApplicable(); }
+    public void Var038() { notApplicable(); }
+    public void Var039() { notApplicable(); }
+    public void Var040() { notApplicable(); }
+    
+    // test AS400 constructor with given profile token
+    public void Var041() {
+      if (checkAdditionalAuthenticationFactor(systemName_)) {
+        try {
+          initMfaUser();
+          String s = System.getProperty("os.name");
+          boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
+          if (!onI5OS) {
+            notApplicable();
+            return;
+          }
+          ProfileTokenCredential profileToken = new ProfileTokenCredential();
+          AS400 system = new AS400(systemName_);
+
+          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+          profileToken.setSystem(system);
+          profileToken.setTimeoutInterval(3600);
+          profileToken.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
+          // TODO:  Call the right constructor 
+          profileToken.setTokenExtended(userId_, charPassword);
+          PasswordVault.clearPassword(charPassword);
+
+          try {
+            system.connectService(AS400.COMMAND);
+            assertCondition(system.getUserId().equals(userId_), "User ID doesn't equal system.getUserId()="
+                + system.getUserId() + " userId_=" + userId_ + "  -- added September 2011");
+          } catch (Exception e) {
+            failed(e, "Unexpected exception.");
+          } finally {
+            system.disconnectAllServices();
+          }
+        } catch (Exception e) {
+          failed(e, "Unexpected exception.");
+          return;
+        }
+      }
+    }
+    
+    
+    
+    // test AS400 constructor with profile token created by provider 
+    public void Var042() {
+        AS400 system = null;
+        if (checkAdditionalAuthenticationFactor(systemName_)) { 
+           // TODO: update this test. 
+        try {
+            String s = System.getProperty("os.name");
+            boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
+            if (!onI5OS) {
+                notApplicable();
+                return;
+            }
+            DefaultProfileTokenProvider provider = new DefaultProfileTokenProvider();
+            provider.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
+            provider.setTimeoutInterval(3600);
+            provider.setUserId(userId_);
+            char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+
+            provider.setPassword(charPassword);
+
+            system = new AS400(systemName_, provider);
+
+
+
+            system.connectService(AS400.COMMAND);
+
+            // Because of a bug in DefaultProfileTokenProvider, a copy of the charPassword was not made.
+            // Clear it here.
+            // TODO:  After fix move to after the setPassword method
+            PasswordVault.clearPassword(charPassword);
+
+            assertCondition(system.getUserId().equals(userId_), "User ID doesn't equal system.getUserId()="+system.getUserId()+" userId_="+userId_+"  -- added September 2011");
+        } catch (Exception e) {
+            failed(e, "Unexpected exception.");
+        } finally {
+            if (system != null)
+                system.disconnectAllServices();
+        }
+        }
+    }
+
+
+
 }
