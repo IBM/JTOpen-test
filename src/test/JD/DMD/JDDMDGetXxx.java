@@ -2669,4 +2669,23 @@ public class JDDMDGetXxx extends JDTestcase {
     }
   }
 
+  /**
+   * getDatabaseProductVersion() - Should return the correct version on an open
+   * connection on a toolbox connection when the port number is specified. 
+    **/
+  public void Var112() {
+    if (checkToolbox()) {
+      try {
+        String urlWithPort = "jdbc:as400://" + systemObject_.getSystemName() + ":8471";
+
+        Connection connection = testDriver_.getConnection(urlWithPort, systemObject_.getUserId(), encryptedPassword_);
+        DatabaseMetaData dmd = connection.getMetaData();
+        assertCondition(dmd.getDatabaseProductVersion().equals(getReleaseAsString()),
+            "Product Version=" + dmd.getDatabaseProductVersion() + " sb " + getReleaseAsString());
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception");
+      }
+    }
+  }
+
 }
