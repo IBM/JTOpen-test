@@ -82,7 +82,7 @@ JDRunit setup.
 5.  Create a ini directory to hold configuration files
     mkdir ini
 6.  Run the setup program to extract the sample .ini configuration files.  The files will need to be edited as described below. 
-    java -jar JTOpen-test.jar test.JTOpenTestSetup.jar 
+    java -cp JTOpen-test.jar test.JTOpenTestSetup 
     The setup will also make sure the latest release of JTOpen-test.jar is begin. 
     It will also check the test environment.   
 7.  Edit the ini/netrc.ini file and add the appropriate credentials.
