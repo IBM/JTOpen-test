@@ -439,7 +439,7 @@ Deals with all work involved in parsing a Connection URL.
                return false;
 
             if (sysNameTok.hasMoreTokens()) {
-               String schema = sysNameTok.nextToken(); //cmvc
+               String schema = sysNameTok.nextToken(); 
                System.out.println("schema=" + schema);
                JDReflectionUtil.callMethod_V(ds,  "setLibraries", schema); 
             
@@ -479,7 +479,7 @@ Deals with all work involved in parsing a Connection URL.
       else if (field.equals("blocking enabled")) {
          JDReflectionUtil.callMethod_V(ds,"setUseBlocking",Boolean.valueOf(value).booleanValue());
       }
-      else if (field.equals("block criteria")) {     // cmvc
+      else if (field.equals("block criteria")) {     
          JDReflectionUtil.callMethod_V(ds,"setUseBlocking",Boolean.valueOf(value).booleanValue());
       }
       else if (field.equals("date format")) {
@@ -534,7 +534,7 @@ Deals with all work involved in parsing a Connection URL.
          // and currently errors is ignored anyway (even when
          // specified in the url)
       }
-      else if (field.equals("reuse objects")) { // cmvc
+      else if (field.equals("reuse objects")) { 
          if (value.equalsIgnoreCase("true")) {
             JDReflectionUtil.callMethod_V(ds,"setReuseObjects",true);
          }
@@ -543,7 +543,7 @@ Deals with all work involved in parsing a Connection URL.
          }
 
       }
-      else if (field.equals("lob threshold")) { // cmvc
+      else if (field.equals("lob threshold")) { 
 	  JDReflectionUtil.callMethod_V(ds,"setLobThreshold",Integer.valueOf(value).intValue()); 
       }
       else if (field.equals("data truncation")) {
@@ -570,13 +570,13 @@ Deals with all work involved in parsing a Connection URL.
           e.printStackTrace();
         }
       }
-      else if (field.equals("extended dynamic")) { // cmvc
+      else if (field.equals("extended dynamic")) { 
          // ignored
       }
-      else if (field.equals("package cache")) { // cmvc
+      else if (field.equals("package cache")) { 
          // ignored
       }
-      else if (field.equals("package library")) { // cmvc
+      else if (field.equals("package library")) { 
          // ignored
       }
       else if (field.equals("cursor hold")) {

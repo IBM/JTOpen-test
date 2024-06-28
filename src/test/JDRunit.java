@@ -2699,17 +2699,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       if (debug)
         System.out.println("JDRunit: osVersion=" + JTOpenTestEnvironment.osVersion);
       if (JTOpenTestEnvironment.isWindows && cmdArray1[0].indexOf("/bin") >= 0) {
-        //
-        // Get CYGWIN location from user.dir
-        //
-        String userDir = System.getProperty("user.dir");
-        int homeIndex = userDir.indexOf(""+File.separator+"home"+File.separator+"");
-        if (homeIndex >= 0) { 
-             cmdArray1[0] = userDir.substring(0, homeIndex)
-                + cmdArray1[0].replace('/', '\\');
-        } else {
-                 cmdArray1[0] = JTOpenTestEnvironment.cygwinBase+  cmdArray1[0].replace('/', '\\');
-        }
+         cmdArray1[0] = JTOpenTestEnvironment.cygwinBase+  cmdArray1[0].replace('/', '\\');
       }
 
       if (debug)

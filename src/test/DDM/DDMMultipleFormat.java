@@ -199,7 +199,7 @@ public class DDMMultipleFormat extends Testcase
         System.out.println("Either library DDMTESTSAV does not exist or you");
         System.out.println("do not have authority to it.");
         System.out.println("ftp DDMTESTSAV.SAVF in binary from");
-        System.out.println("/as400/v3r2m0t.jacl/cur/cmvc/java.pgm/yjac.jacl/test on CMVC");
+        System.out.println("test/ in GIT");
         System.out.println("to the AS/400 system to which you are running.");
         System.out.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
         throw new Exception("");

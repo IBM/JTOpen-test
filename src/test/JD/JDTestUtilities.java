@@ -552,8 +552,6 @@ public class JDTestUtilities
     Automates the setup described in jdreadme.txt.
     The AS400password should be the password that correlates to the AS/400
     userid that's part of the systemObject.
-    The AFSuserid should have read access to the family and component products
-    at the cur level in CMVC.
 
     Currently, the JDSetupTest driver is used to call this method and setup
     JDBC on a particular 400. It can be called multiple times, if necessary;
@@ -604,40 +602,9 @@ public class JDTestUtilities
       System.out.println("Starting ftp...");
       try
       {
-/*@B0D
-        String port = null;
-        FTPConnection rsftp = new FTPConnection();
-        FTPConnection asftp = new FTPConnection();
-
-        rsftp.openConnection(rs6000, AFSuserid, AFSpassword);
-        rsftp.cwd("/as400/v3r2m0t.jacl/cur/cmvc/java.pgm/yjac.jacl/test");
-        rsftp.setBinary();
-
-        asftp.openConnection(systemObject.getSystemName(), systemObject.getUserId(), AS400password);
-        asftp.cwd("QGPL");
-        asftp.setBinary();
-
-        port = asftp.receive("jdbcstp.savf");
-        rsftp.send(port, "jdbcstp.savf");
-        asftp.readResponse();
-        asftp.readResponse();
-
-        port = asftp.receive("jddmdlib.savf");
-        rsftp.send(port, "jddmdlib.savf");
-        asftp.readResponse();
-        asftp.readResponse();
-
-        port = asftp.receive("jddmdtst.savf");
-        rsftp.send(port, "jddmdtst.savf");
-        asftp.readResponse();
-        asftp.readResponse();
-
-        rsftp.sendCommand("quit");
-        asftp.sendCommand("quit");
-*/
 
       FTP aix = new FTP(rs6000, AFSuserid, AFSpassword);
-      aix.cd("/as400/v5r2m0t.jacl/cur/cmvc/java.pgm/yjac.jacl/test");
+      aix.cd("/github/JTOpen-test/test");
       aix.setDataTransferType(FTP.BINARY);
       FTP os400 = new FTP(systemObject.getSystemName(), systemObject.getUserId(), AS400password);
       os400.cd("QGPL");

@@ -32,12 +32,6 @@ See TestDriver for calling syntax.
 public class SetupDriver extends TestDriver
 {
 
-  // 10/27/2010 -- Removed rs6000_ stuff.  We expect save files to be loaded onto the
-  //               client system with the rest of the tests. 
-  // 
-  // String rs6000_ = null; // rs6000 with cmvc save files
-  // String rsUserId_ = null; // userid with access to cmvc
-  // String rsPassword_ = null; // password associated with AFSid_
 
   static final int MAXTOKENS = 3; // maximum tokens interpreted in "-misc" parameter
 
