@@ -60,7 +60,7 @@ public class FTPTest extends TestDriver
          System.out.println("     Unix:   token = ~uid ");
          System.out.println("     AS/400: token = / ");
          System.out.println();
-         System.out.println("  3) In cmvc, the test directory has FTPTestDirArchive.zip. ");
+         System.out.println("  3) In git, the test directory has FTPTestDirArchive.zip. ");
          System.out.println("     This zip file has files and directories used in list and get/put tests. ");
          System.out.println("     Unzip this file into TWO PLACES: ");
          System.out.println("     a) The current directory on the client. ");

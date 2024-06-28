@@ -964,7 +964,7 @@ public class JDReport {
     writer.println(
         "<hr>Note:  This report is regenerated when any of the individual reports are generated<br>");
     writer.println(
-        "The source for this report generator can be found under /as400/v7r1m0t.jacl/cur/cmvc/java.pgm/yjac.jacl<br>");
+        "The source for this report generator can be found as JDReport.java in https://github.com/IBM/JTOpen-test<br>");
 
     writer.println("</body>");
     writer.println("</html>");
@@ -1125,7 +1125,7 @@ public class JDReport {
     writer.println(
         "<hr>Note:  This report is regenerated when any of the individual reports are generated<br>");
     writer.println(
-        "The source for this report generator can be found under /as400/v7r1m0t.jacl/cur/cmvc/java.pgm/yjac.jacl<br>");
+        "The source for this report generator can be found as JDReport.java in https://github.com/IBM/JTOpen-test<br>");
 
     writer.println("</body>");
     writer.println("</html>");
@@ -1223,7 +1223,7 @@ public class JDReport {
     writer.println(
         "<hr>Note:  This report is regenerated when any of the individual reports are generated<br>");
     writer.println(
-        "The source for this report generator can be found under /as400/v7r1m0t.jacl/cur/cmvc/java.pgm/yjac.jacl<br>");
+        "The source for this report generator can be found as JDReport.java in https://github.com/IBM/JTOpen-test<br>");
 
     writer.println("</body>");
     writer.println("</html>");
@@ -1316,7 +1316,7 @@ public class JDReport {
     writer.println(
         "<hr>Note:  This report is regenerated when any of the individual reports are generated<br>");
     writer.println(
-        "The source for this report generator can be found under /as400/v7r1m0t.jacl/cur/cmvc/java.pgm/yjac.jacl<br>");
+        "The source for this report generator can be found as JDReport.java in https://github.com/IBM/JTOpen-test<br>");
 
     writer.println("</body>");
     writer.println("</html>");

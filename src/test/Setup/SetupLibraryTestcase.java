@@ -80,7 +80,7 @@ public abstract class SetupLibraryTestcase extends Testcase {
      cmd.setCommand("CRTSAVF QGPL/"+saveFile);
      cmd.run();
   
-     // FTP files from CMVC on to the 400
+     // FTP files from GIT on to the 400
      output_.println("Starting ftp...");
   
      File directory = new File("savf"); 

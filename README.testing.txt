@@ -92,7 +92,9 @@ JDRunit setup.
 11. Copy the ini/runitxx8Sx.ini to a file that represents the JVM used for the test.  The 8S is a sample configuration for a Java 8 test on a PC. 
 12. Download the latest JTOpen release. 
     java -cp JTOpen-test.jar test.JTOpenDownloadReleaseJars
-13. For the IFS tests, get a copy of jcifs.jar and copy into the jar directory.     
+13. For the IFS tests, get a copy of jcifs.jar and copy into the jar directory.   
+14. Copy the java certificate store to /home/jdbctest/cacerts. Add the necessary certificates in order to establish 
+    secure (TLS) connections to the server you are testing.   
 
 *Note: to refresh the test jar, you can use
 java -cp .:JTOpen-test.jar test.JTOpenTestSetup
