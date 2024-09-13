@@ -54,9 +54,7 @@ of the JDBC DatabaseMetaData class:
 <li>GetFunctionParameters()
 </ul>
 **/
-public class JDDMDGetFunctionParameters
-
-extends JDTestcase
+public class JDDMDGetFunctionParameters extends JDTestcase
 {
 
 

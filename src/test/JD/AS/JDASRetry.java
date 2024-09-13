@@ -38,6 +38,15 @@ import test.SocketProxy;
  **/
 public class JDASRetry extends JDASTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDASRetry";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDASTest.main(newArgs); 
+   }
 
     public static final int MAXIMUM_CONNECTION_OVERHEAD = 100; 
     public static final int MINIMUM_CONNECTION_OVERHEAD = 0; 

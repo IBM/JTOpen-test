@@ -54,6 +54,15 @@ of the JDBC Clob class:
 public class JDLobLargeLob2
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobLargeLob2";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
 
     // Private data.
     private Connection          connection_;
@@ -713,6 +722,15 @@ setString(long, String) - Should not throw an exception when length of str to wr
 **/
     public void Var017()
     {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobLargeLob2";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
         if (checkUpdateableLobsSupport ()) {
             try {
                 rs2_=statement_.executeQuery(TABLE_QUERY);
@@ -873,6 +891,15 @@ setString(long, String, int, int) - Should not throw an exception when length of
 **/
     public void Var022()
     {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobLargeLob2";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
 	if (checkUpdateableLobsSupport ()) {
             try {
                 rs2_=statement_.executeQuery(TABLE_QUERY);

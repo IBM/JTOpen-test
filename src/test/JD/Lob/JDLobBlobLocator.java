@@ -53,6 +53,15 @@ of the JDBC Blob class:
 public class JDLobBlobLocator
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobBlobLocator";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
 
   // The native JDBC driver will free the locators in blocks of 32
   public final static int FREE_LOCATOR_BLOCK_SIZE=32; 
@@ -611,6 +620,15 @@ SQL400 - The test is saying it will test the right thing but then
 **/
     public void Var008()
     {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobBlobLocator";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
             if (checkJdbc20 ()) {
                 if (checkLobSupport ()) {
                     try {
@@ -1918,6 +1936,15 @@ Verify blobs live beyond the life of the row.
     **/
     public void Var054()                                                                    
     {                                                                                       
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobBlobLocator";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
         if (checkUpdateableLobsSupport ()) {                                                
             try {                                                                           
                 rs2_=statement2_.executeQuery("SELECT * FROM " + TABLE_);                    
@@ -2244,6 +2271,15 @@ Verify blobs live beyond the life of the row.
     **/
     public void Var063()                                                                    
     {                                                                                       
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobBlobLocator";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
         if (checkUpdateableLobsSupport ()) {                                                
             try {                                                                           
                 rs2_=statement2_.executeQuery("SELECT * FROM " + TABLE_);                    
@@ -3024,6 +3060,15 @@ setBytes(long, byte[]) - Should update blob with an unchanged blob.
     **/
     public void Var084()                                                                    
     {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobBlobLocator";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
 	if (v5r2nativeFunctions_) {
 	    notApplicable("Testcase added for V5R3"); 
 	} else { 

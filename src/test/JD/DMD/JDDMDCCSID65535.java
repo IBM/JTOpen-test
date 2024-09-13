@@ -53,6 +53,15 @@ import java.util.Vector;
  * </ul>
  **/
 public class JDDMDCCSID65535 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDDMDCCSID65535";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDDMDTest.main(newArgs); 
+   }
   public final static String added = " -- added 03/01/2022";
   public static boolean useDbmon = true; 
   // Private data.

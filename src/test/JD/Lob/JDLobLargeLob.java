@@ -51,6 +51,15 @@ of the JDBC Blob class:
 public class JDLobLargeLob
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobLargeLob";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
 
 
 
@@ -454,6 +463,15 @@ Performs cleanup needed after running variations.
    *      long as it is within the limits of maxLength_
    **/
   public void Var003() {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobLargeLob";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
     if (checkJdbc20()) {
       try {
         rs_.absolute(3);
@@ -833,6 +851,15 @@ found at the end of the lob, and start is right where the pattern occurs.
     **/
     public void Var019()
     {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobLargeLob";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
 	// Use the sb to record the time.
 	// Tool box takes a long time on the updateRow method
 	// 
@@ -1080,6 +1107,15 @@ found at the end of the lob, and start is right where the pattern occurs.
     **/
     public void Var024()
     {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobLargeLob";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
         if (checkUpdateableLobsSupport ()) {
             try {
                 rs2_=statement_.executeQuery("SELECT * FROM " + TABLE_ +" ORDER BY ID");
