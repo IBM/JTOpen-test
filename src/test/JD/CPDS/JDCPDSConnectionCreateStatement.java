@@ -54,6 +54,15 @@ import test.PasswordVault;
  * </ul>
  **/
 public class JDCPDSConnectionCreateStatement extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCPDSConnectionCreateStatement";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCPDSTest.main(newArgs); 
+   }
 
   //
   // Changed 3/3/05 to use connection object since we always compile

@@ -23,6 +23,7 @@ package test.JD.CS;
 
 import com.ibm.as400.access.AS400;
 
+import test.JDCSTest;
 import test.JDSetupProcedure;
 import test.JDTestcase;
 
@@ -50,7 +51,15 @@ of the JDBC CallableStatement class:
 public class JDCSExecute
 extends JDTestcase
 {
-
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCSExecute";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCSTest.main(newArgs); 
+   }
 
     // Private data.
     private Connection      connection_;

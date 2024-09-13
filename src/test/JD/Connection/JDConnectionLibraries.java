@@ -53,6 +53,15 @@ properties with respect to the JDBC Connection class:
 **/
 public class JDConnectionLibraries 
 extends JDTestcase implements TimeoutThreadCallback {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDConnectionLibraries";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDConnectionTest.main(newArgs); 
+   }
 
   static  boolean newChecklibraryList = true; 
 

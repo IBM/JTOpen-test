@@ -16,6 +16,7 @@ package test.JD.Driver;
 
 import com.ibm.as400.access.AS400;
 
+import test.JDDriverTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
@@ -37,6 +38,16 @@ In particular, the interaction with the new JDBC methods is tested.
 public class JDDriverTimestamp
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception { 
+    // Note:  reflection is used to get the classname, so this can be pasted easily into other Testcase classes
+    String[] newArgs = new String[args.length+2];
+    newArgs[0] = "-tc"; 
+    newArgs[1] = new Object() { }.getClass().getEnclosingClass().getSimpleName();
+    for (int i = 0; i < args.length; i++) { 
+      newArgs[2+i]=args[i]; 
+    }
+    JDDriverTest.main(newArgs); 
+  }
 
     private String timestampClassName;
     private Class timestampClass;

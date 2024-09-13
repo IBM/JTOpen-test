@@ -50,6 +50,15 @@ Testcase JDCSNamed.  This tests the use of named parameters.
 public class JDCSNamed
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCSNamed";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCSTest.main(newArgs); 
+   }
   public final static int GETSTRING = 1;
   public final static int GETBYTES  = 2;
   public final static int SETSTRING = 1;

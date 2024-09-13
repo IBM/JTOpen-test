@@ -49,6 +49,15 @@ method of the JDBC CallableStatement class:
 public class JDCSGetBigDecimal
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCSGetBigDecimal";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCSTest.main(newArgs); 
+   }
     // table names
     private static String INTEGER_TABLE = JDCSTest.COLLECTION + ".int_tab";
     private static String INTEGER_PROCEDURE = JDCSTest.COLLECTION + ".int_proc";

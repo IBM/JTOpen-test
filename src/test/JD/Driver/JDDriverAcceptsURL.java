@@ -31,6 +31,7 @@ package test.JD.Driver;
 
 import com.ibm.as400.access.AS400;
 
+import test.JDDriverTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
@@ -40,7 +41,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Hashtable;
 
-
+import java.util.Vector; 
 
 /**
 Testcase JDDriverAcceptsURL.  This tests the following method
@@ -54,6 +55,16 @@ public class JDDriverAcceptsURL
 extends JDTestcase
 {
 
+    public static void main(String args[]) throws Exception { 
+      // Note:  reflection is used to classname, so this can be pasted easily into other Testcase classes
+      String[] newArgs = new String[args.length+2];
+      newArgs[0] = "-tc"; 
+      newArgs[1] = new Object() { }.getClass().getEnclosingClass().getSimpleName();
+      for (int i = 0; i < args.length; i++) { 
+        newArgs[2+i]=args[i]; 
+      }
+      JDDriverTest.main(newArgs); 
+    }
 
 
     // Private data.

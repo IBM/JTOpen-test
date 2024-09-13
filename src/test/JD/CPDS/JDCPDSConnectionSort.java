@@ -53,6 +53,15 @@ The connection is obtained by using DB2ConnectionPool
 **/
 public class JDCPDSConnectionSort
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCPDSConnectionSort";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCPDSTest.main(newArgs); 
+   }
 
     String clearPassword_ = null; 
 

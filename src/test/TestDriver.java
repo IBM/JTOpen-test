@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,6 +30,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.Date; 
@@ -701,6 +703,57 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       throw new Exception("Incomplete jndi specification.");
     }
 
+    // Get the default values as needed 
+    StringBuffer sb = new StringBuffer(); 
+    
+    if (systemName_ == null) { 
+      systemName_ = getDefault("system",sb);
+    }
+    if (userId_ == null) {
+      userId_ = getDefault("uid",sb); 
+    }
+    if (password_ == null) { 
+      /* Note: If using defaults, we will leak the password as a string.  That is ok for testcase code. */ 
+      password_ = getDefault("pwd",sb); 
+      encryptedPassword_ = PasswordVault.getEncryptedPassword(password_); 
+    }
+    if (pwrSysUserID_ == null) {
+      String pwrSys = getDefault("pwrSys",sb); 
+      StringTokenizer pwrSysTokenizer = new StringTokenizer(pwrSys, ",");
+      int numberOfTokens = pwrSysTokenizer.countTokens();
+      if (numberOfTokens != 2) {
+        throw new Exception("Wrong number of -pwrSys parameters from default store: "
+            + numberOfTokens);
+      }
+      pwrSysUserID_ = pwrSysTokenizer.nextToken();
+      pwrSysPassword_ = pwrSysTokenizer.nextToken();
+      pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPassword_); 
+      
+    }
+    if (testLib_ == null) { 
+      testLib_ = getDefault("lib", sb); 
+      if (testLib_ == null) { 
+        testLib_ = "JTOPENLIB";
+        sb.append("-lib defaulted to "+testLib_+"\n" ); 
+      }
+    }
+
+    if (directory_ == null) { 
+      directory_ = getDefault("directory", sb); 
+      if (directory_ == null) { 
+        directory_ = "/";
+        sb.append("-directory defaulted to "+directory_ +"\n"); 
+      }
+    }
+
+    if (misc_ == null) { 
+      misc_ = getDefault("misc", sb); 
+      if (misc_ == null) { 
+        misc_ = "toolbox,v7r5m0";
+        sb.append("-misc defaulted to "+misc_ +"\n"); 
+      }
+    }
+
     // Instantiate the system object.
     if (useSSL_ == true) {
       systemObject_ = new SecureAS400();
@@ -770,7 +823,9 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     } else {
       out_ = new PrintWriter(System.out, true);
     }
-
+    if (sb.length()>0) { 
+      out_.println(sb.toString()); 
+    }
     allTestcases_ = (namesAndVars_.size() == 0);
     pwrSysStatic_ = pwrSys_; 
     // Fill in the testcase_ array.
@@ -799,6 +854,47 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     if (exitError)  {
     	usage(); 
     }
+  }
+
+  /** 
+   * Get a default setting. 
+   * The default settings are first obtained from JTOPEN_setting environment variable.  
+   * Next ini/defaults.ini file is check for JTOPEN_setting
+   */ 
+  static boolean iniDefaultsChecked = false; 
+  static Properties iniDefaults = null; 
+  private static String getDefault(String setting, StringBuffer sb) {
+    String property = "JTOPEN_"+setting; 
+    String envvar = System.getenv(property); 
+    if (envvar != null) { 
+      sb.append("Setting: "+setting+" retrieved from envvar "+property+"\n");
+      return envvar; 
+    }
+    if (!iniDefaultsChecked) { 
+      iniDefaultsChecked = true; 
+      try {
+        FileInputStream input = new FileInputStream("ini/defaults.ini");
+        iniDefaults = new Properties();
+        iniDefaults.load(input); 
+      } catch (FileNotFoundException e) {
+        iniDefaults = null; 
+        sb.append("Warning:  ini/defaults.ini not found in "+System.getProperty("user.dir")+"\n"); 
+      } catch (IOException e) {
+        iniDefaults = null; 
+        sb.append("Warning: exception -- "+e.toString()+" -- loading ini/defaults.ini in "+System.getProperty("user.dir")+"\n");
+      } 
+    }
+    if (iniDefaults != null) { 
+      String value = iniDefaults.getProperty(property); 
+      if (value != null) { 
+        sb.append("Setting: "+setting+" retrieved from property "+property+" in ini/defaults.ini\n");
+        return value; 
+      }
+      sb.append("WARNING: Not able to read "+property+" as envvar and from ini/defaults.ini in"+System.getProperty("user.dir")+"\n");
+    } else {
+       sb.append("WARNING: Not able to read "+property+" as envvar and ini/defaults.ini does not exist\n");
+    }
+    return null;
   }
 
   /**

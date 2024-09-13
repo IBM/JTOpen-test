@@ -11,11 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDriverPerformance.java
@@ -627,9 +622,21 @@ public class JDDriverPerformance extends JDTestcase {
 
   };
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
       if (args.length < 5) {
-	  System.out.println("Usage:  java test.JDDriverPerformance <URL> <userid> <password> <CREATE|RUN> <testcase> [<iterations>]");
+	  System.out.println("To run stand alone:  java test.JDDriverPerformance <URL> <userid> <password> <CREATE|RUN> <testcase> [<iterations>]");
+	  System.out.println("Currently running as a testcase"); 
+          // Note: reflection is used to get the classname, so this can be pasted easily
+          // into other Testcase classes
+          String[] newArgs = new String[args.length + 2];
+          newArgs[0] = "-tc";
+          newArgs[1] = new Object() {
+          }.getClass().getEnclosingClass().getSimpleName();
+          for (int i = 0; i < args.length; i++) {
+            newArgs[2 + i] = args[i];
+          }
+          JDDriverTest.main(newArgs);
+
       } else {
 	  try {
 	      String schema = "JDPERFDATA";

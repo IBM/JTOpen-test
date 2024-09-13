@@ -57,6 +57,15 @@ import java.math.BigInteger;
  </ul>
  **/
 public class JDCSGetRowId extends JDCSGetTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCSGetRowId";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCSTest.main(newArgs); 
+   }
   String added = " -- added by native driver 02/07/2007 "; 
 
   /**

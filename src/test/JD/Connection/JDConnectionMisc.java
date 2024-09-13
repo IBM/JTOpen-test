@@ -61,6 +61,15 @@ of the JDBC Connection class:
 **/
 public class JDConnectionMisc
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDConnectionMisc";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDConnectionTest.main(newArgs); 
+   }
 
 
 
@@ -735,6 +744,15 @@ isValid -- Verify that a negative value throws an exception.
 
 
   class KillThread extends Thread {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDConnectionMisc";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDConnectionTest.main(newArgs); 
+   }
       Connection c = null;
       StringBuffer statusStringBuffer = new StringBuffer(); 
       public KillThread(Connection c) {
@@ -1214,6 +1232,15 @@ getConnection -- test a bogus subsystem property
 
 
   class SignonThread extends Thread {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDConnectionMisc";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDConnectionTest.main(newArgs); 
+   }
     Connection c = null;
     boolean keepRunning = true;
     boolean checkUser = false;
