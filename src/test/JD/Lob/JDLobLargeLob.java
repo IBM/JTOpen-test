@@ -20,7 +20,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
 import test.Testcase;
-import test.JDLobTest.JDTestBlob;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +27,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -463,15 +461,6 @@ Performs cleanup needed after running variations.
    *      long as it is within the limits of maxLength_
    **/
   public void Var003() {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobLargeLob";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
     if (checkJdbc20()) {
       try {
         rs_.absolute(3);
@@ -851,15 +840,6 @@ found at the end of the lob, and start is right where the pattern occurs.
     **/
     public void Var019()
     {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobLargeLob";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
 	// Use the sb to record the time.
 	// Tool box takes a long time on the updateRow method
 	// 
@@ -1107,15 +1087,6 @@ found at the end of the lob, and start is right where the pattern occurs.
     **/
     public void Var024()
     {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobLargeLob";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
         if (checkUpdateableLobsSupport ()) {
             try {
                 rs2_=statement_.executeQuery("SELECT * FROM " + TABLE_ +" ORDER BY ID");

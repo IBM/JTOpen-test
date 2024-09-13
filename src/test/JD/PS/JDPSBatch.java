@@ -67,6 +67,15 @@ of the JDBC PreparedStatement class:
 **/
 public class JDPSBatch
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPSBatch";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPSTest.main(newArgs); 
+   }
 
 
     boolean runningJ9 = false;

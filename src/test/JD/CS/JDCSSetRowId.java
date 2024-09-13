@@ -60,7 +60,7 @@ public class JDCSSetRowId extends JDCSSetTestcase {
      for (int i = 0; i < args.length; i++) {
        newArgs[2+i]=args[i];
      }
-     test.JDCSTest.main(newArgs); 
+    JDCSTest .main(newArgs); 
    }
 
   // Private data.

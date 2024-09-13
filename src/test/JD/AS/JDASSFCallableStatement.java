@@ -57,6 +57,7 @@ public class JDASSFCallableStatement extends JDASTestcase {
      }
      test.JDASTest.main(newArgs); 
    }
+
   static final int RUN_SECONDS = 20;
 
   private String systemName;
@@ -438,15 +439,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   }
 
   public class SetIntMethodTest  extends IntProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     
     public String getProcedureName() { return "JDASSFCSMT01";}
     public String getTestDescription() { return "Test setInt()";} 
@@ -464,15 +456,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
   
   public class SetBooleanMethodTest extends IntProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     
     public String getProcedureName() { return "JDASSFCSMT02";}
     public String getTestDescription() { return "Test setBoolean()";} 
@@ -496,15 +479,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
   /* Test setByte() */
   public class SetByteMethodTest  extends IntProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
    
     public String getProcedureName() { return "JDASSFCSMT03";}
     public String getTestDescription() { return "Test setByte()";} 
@@ -588,15 +562,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
   }
   public class SetFloatMethodTest extends DoubleProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT06";}
     public String getTestDescription() { return "Test setFloat()";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -610,15 +575,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
   /* Test setDouble() */
   public class SetDoubleMethodTest extends DoubleProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
    
     public String getProcedureName() { return "JDASSFCSMT07";}
     public String getTestDescription() { return "Test setDouble()";} 
@@ -650,15 +606,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
   }
   public class SetBigDecimalMethodTest extends DecimalProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
    
     public String getProcedureName() { return "JDASSFCSMT08";}
     public String getTestDescription() { return "Test setBigDecimal()";} 
@@ -689,15 +636,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
   }
   public class SetStringMethodTest extends VarcharProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
    
     public String getProcedureName() { return "JDASSFCSMT9";}
     public String getTestDescription() { return "Test setString()";} 
@@ -712,15 +650,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
   /* Test setObject() */
   public class SetObjectMethodTest extends DecimalProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
    
     public String getProcedureName() { return "JDASSFCSMT10";}
     public String getTestDescription() { return "Test setObject()";} 
@@ -735,15 +664,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
   /* Test setObject(targetType) */
   public class SetObjectTargetTypeMethodTest extends DecimalProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
    
     public String getProcedureName() { return "JDASSFCSMT11";}
     public String getTestDescription() { return "Test setObject(..,targetType)";} 
@@ -759,15 +679,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
   /* Test setObject(targetType, scale) */
   public class SetObjectTargetTypeScaleMethodTest extends DecimalProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
    
     public String getProcedureName() { return "JDASSFCSMT12";}
     public String getTestDescription() { return "Test setObject(..,targetType, scale)";} 
@@ -791,15 +702,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
   }
   public class SetBytesMethodTest extends VarbinaryProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
    
     public String getProcedureName() { return "JDASSFCSMT13";}
     public String getTestDescription() { return "Test setBytes()";} 
@@ -846,15 +748,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
   }
   public class SetDateMethodTest extends DateProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSCPSMT14";}
     public String getTestDescription() { return "Test setDate()";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -888,15 +781,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
   }
   public class SetTimeMethodTest extends TimeProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT15";}
     public String getTestDescription() { return "Test setTime()";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -934,15 +818,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
   }
   public class SetTimestampMethodTest extends TimestampProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT16";}
     public String getTestDescription() { return "Test setTimestamp()";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -959,15 +834,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setAsciiStreamLength() */
 
   public class SetAsciiStreamLengthMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT17";}
     public String getTestDescription() { return "Test setAsciiStream(length)";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -1028,15 +894,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setCharacterStream() */
   
   public class SetCharacterStreamLengthMethodTest extends VarcharProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     String setString; 
     public String getProcedureName() { return "JDASSFCSMT19";}
     public String getTestDescription() { return "Test setCharacterStream(length)";} 
@@ -1056,15 +913,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setDate() */
   
   public class SetDateCalMethodTest extends DateProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSCPSMT20";}
     public String getTestDescription() { return "Test setDate(cal)";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -1080,15 +928,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setTime() */
 
   public class SetTimeCalMethodTest extends TimeProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT21";}
     public String getTestDescription() { return "Test setTime(cal)";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -1105,15 +944,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setTimestamp() */
 
   public class SetTimestampCalMethodTest extends TimestampProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT22";}
     public String getTestDescription() { return "Test setTimestamp(cal)";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -1129,15 +959,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setNull() */
 
   public class SetNullMethodTest extends VarcharProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT23";}
     public String getTestDescription() { return "Test setNull()";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -1162,15 +983,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setNull() */
 
   public class SetNullTypeNameMethodTest extends VarcharProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT24";}
     public String getTestDescription() { return "Test setNull(typename)";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -1193,15 +1005,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
         
 /* SetURL */ 
   public class SetURLMethodTest extends VarcharProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     URL url = null; 
     public String getProcedureName() { return "JDASSFCSMT25";}
     public String getTestDescription() { return "Test setURL()";} 
@@ -1255,15 +1058,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
      
   }
   public class SetAsciiStreamMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT26";}
     public String getTestDescription() { return "Test setAsciiStream()";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -1289,15 +1083,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setAsciiStreamLength(long length) */
 
   public class SetAsciiStreamLongLengthMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT27";}
     public String getTestDescription() { return "Test setAsciiStream(longLength)";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -1349,15 +1134,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
   }
   public class SetBinaryStreamMethodTest extends BlobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     byte[] bytesArray = { 0x31, 0x32, 0x33, 0x34, 0x35 };
     public String getProcedureName() { return "JDASSFCSMT28";}
     public String getTestDescription() { return "Test setAsciiStream()";} 
@@ -1383,15 +1159,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setBinaryStream(long length) */
 
   public class SetBinaryStreamLongLengthMethodTest extends BlobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     byte[] bytesArray = { 0x31, 0x32, 0x33, 0x34, 0x35 };
     public String getProcedureName() { return "JDASSFCSMT29";}
     public String getTestDescription() { return "Test setAsciiStream(long length)";} 
@@ -1417,15 +1184,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setBlob() */
 
   public class SetBlobMethodTest extends BlobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     Blob blob = null; 
     byte[] blobBytes = null; 
     public String getProcedureName() { return "JDASSFCSMT30";}
@@ -1456,15 +1214,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setBlob(inputStream) */
 
   public class SetBlobInputStreamMethodTest extends SetBlobMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT31";}
     public String getTestDescription() { return "Test setBlob(inputStream)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1483,15 +1232,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setBlob(inputStream) */
 
   public class SetBlobInputStreamLengthMethodTest extends SetBlobMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT32";}
     public String getTestDescription() { return "Test setBlob(inputStream, long length)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1511,15 +1251,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setCharacterStream() */
   
   public class SetCharacterStreamMethodTest extends SetCharacterStreamLengthMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT33";}
     public String getTestDescription() { return "Test setCharacterStream()";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1537,15 +1268,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   /* Test setCharacterStream(longLength) */
   
   public class SetCharacterStreamLongLengthMethodTest extends SetCharacterStreamLengthMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getProcedureName() { return "JDASSFCSMT34";}
     public String getTestDescription() { return "Test setCharacterStream(long Length)";} 
     public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1561,15 +1283,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   }
 
   public class SetClobMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     Clob clob = null; 
     String clobString = null; 
     public String getProcedureName() { return "JDASSFCSMT35";}
@@ -1589,15 +1302,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     }
 
     public class SetClobReaderMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() { return "JDASSFCSMT36";}
       public String getTestDescription() { return "Test setClob(reader)";} 
       public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1611,15 +1315,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     }
 
     public class SetClobReaderLengthMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() { return "JDASSFCSMT37";}
       public String getTestDescription() { return "Test setClob(reader)";} 
       public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1636,15 +1331,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
     
     public class SetNCharacterStreamReaderMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() { return "JDASSFCSMT38";}
       public String getTestDescription() { return "Test setNCharacterStream(reader)";} 
       public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1658,15 +1344,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     }
 
     public class SetNCharacterStreamReaderLengthMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() { return "JDASSFCSMT39";}
       public String getTestDescription() { return "Test setNCharacterStream(reader, length)";} 
       public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1682,15 +1359,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     
 
     public class SetNClobReaderMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() { return "JDASSFCSMT40";}
       public String getTestDescription() { return "Test setNClob(reader)";} 
       public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1704,15 +1372,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     }
 
     public class SetNClobReaderLengthMethodTest extends ClobProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() { return "JDASSFCSMT41";}
       public String getTestDescription() { return "Test setNClob(reader, length)";} 
       public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -1727,15 +1386,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   
 
     public class SetNStringMethodTest extends VarcharProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       
       public String getProcedureName() { return "JDASSFCSMT42";}
       public String getTestDescription() { return "Test setString()";} 
@@ -1982,15 +1632,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     }
     
     public abstract class IntOutputOnlyDefinition extends GetOutputOnlyMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureDefinition() {
         return "(IN P1 INT, OUT P2 INT) LANGUAGE SQL BEGIN SET P2 = P1; END "; 
       }
@@ -2004,15 +1645,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
       
     }
     public class GetIntMethodTest extends IntOutputOnlyDefinition { 
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() {  return "JDASSFCSMT51"; } 
       public String getTestDescription() {  return "test getInt()"; }  
       public boolean doGetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2035,15 +1667,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     }
 
     public abstract class IntInputOutputDefinition extends GetInputOutputMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureDefinition() {
         return "(INOUT P1 INT) LANGUAGE SQL BEGIN SET P1 = P1 + P1; END "; 
       }
@@ -2057,15 +1680,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
       
     }
     public class GetIntIOMethodTest extends IntInputOutputDefinition { 
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() {  return "JDASSFCSMT52"; } 
       public String getTestDescription() {  return "test getInt()"; }  
       public boolean doGetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2085,15 +1699,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
     /* getBoolean */ 
     public class GetBooleanMethodTest extends IntOutputOnlyDefinition { 
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() {  return "JDASSFCSMT53"; } 
       public String getTestDescription() {  return "test getBoolean()"; }
       public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -2118,15 +1723,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
     /* getBoolean */ 
     public class GetBooleanIOMethodTest extends IntInputOutputDefinition { 
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() {  return "JDASSFCSMT54"; } 
       public String getTestDescription() {  return "test getBoolean()"; }
       public void doSetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws Exception {
@@ -2151,15 +1747,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
     /* GetByte */ 
     public class GetByteMethodTest extends IntOutputOnlyDefinition { 
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() {  return "JDASSFCSMT55"; } 
       public String getTestDescription() {  return "test getByte()"; }  
       public boolean doGetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2178,15 +1765,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
     }
 
     public class GetByteIOMethodTest extends IntInputOutputDefinition { 
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
       public String getProcedureName() {  return "JDASSFCSMT56"; } 
       public String getTestDescription() {  return "test getByte()"; }  
       public boolean doGetMethod(CallableStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2225,15 +1803,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
 
   
   public class SetBooleanBooleanMethodTest extends BooleanProcedureDefinition {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFCallableStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     
     public String getProcedureName() { return "JDASSFCSMT57";}
     public String getTestDescription() { return "Test setBoolean() to Boolean";} 

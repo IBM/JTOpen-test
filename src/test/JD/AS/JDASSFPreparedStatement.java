@@ -1613,15 +1613,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetDateCalMethodTest extends SetDateMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+ 
     public String getTableName() { return "JDASSFPSMT22";}
     public String getTestDescription() { return "Test setDate(cal)";} 
     public String getTableDefinition() { return "(C1 DATE)";}
@@ -1637,15 +1629,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetTimeCalMethodTest extends SetTimeMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+ 
     public String getTableName() { return "JDASSFPSMT23";}
     public String getTestDescription() { return "Test setTime(cal)";} 
     public String getTableDefinition() { return "(C1 Time)";}
@@ -1662,15 +1646,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetTimestampCalMethodTest extends SetTimestampMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+ 
     public String getTableName() { return "JDASSFPSMT24";}
     public String getTestDescription() { return "Test setTimestamp(cal)";} 
     public String getTableDefinition() { return "(C1 Timestamp)";}
@@ -1710,15 +1686,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
         
   public class SetNullStringMethodTest extends SetNullMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+ 
     public String getTableName() { return "JDASSFPSMT26";}
     public String getTestDescription() { return "Test setNull(String)";} 
     public String getTableDefinition() { return "(C1 VARCHAR(80))";}
@@ -2041,15 +2009,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetClobReaderMethodTest extends SetClobMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+ 
     public String getTableName() { return "JDASSFPSMT37";}
     public String getTestDescription() { return "Test setClob(reader)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2064,15 +2024,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetClobReaderLengthMethodTest extends SetClobMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+ 
     public String getTableName() { return "JDASSFPSMT38";}
     public String getTestDescription() { return "Test setClob(reader length)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2087,15 +2039,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetNClobReaderMethodTest extends SetClobMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+  
     public String getTableName() { return "JDASSFPSMT39";}
     public String getTestDescription() { return "Test setNClob(reader)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2159,15 +2103,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetBinaryStreamMethodTest extends SetBinaryStreamLengthMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+  
     public String getTableName() { return "JDASSFPSMT42";}
     public String getTestDescription() { return "Test setBinaryStream()";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2183,15 +2119,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetBinaryStreamLongLengthMethodTest extends SetBinaryStreamLengthMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
+ 
     public String getTableName() { return "JDASSFPSMT43";}
     public String getTestDescription() { return "Test setBinaryStream(long length)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2208,16 +2136,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
   
   public class SetBlobInputStreamMethodTest extends SetBlobMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() { return "JDASSFPSMT44";}
+   public String getTableName() { return "JDASSFPSMT44";}
     public String getTestDescription() { return "Test setBlob(inputStream)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       blobBytes = new byte[5]; 
@@ -2234,16 +2153,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetBlobInputStreamLengthMethodTest extends SetBlobMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() { return "JDASSFPSMT45";}
+     public String getTableName() { return "JDASSFPSMT45";}
     public String getTestDescription() { return "Test setBlob(inputStream length)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       blobBytes = new byte[5]; 
@@ -2261,15 +2171,6 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
 
   public class SetCharacterStreamMethodTest extends SetCharacterStreamLengthMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getTableName() { return "JDASSFPSMT46";}
     public String getTestDescription() { return "Test setCharacterStream()";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2285,15 +2186,6 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetCharacterStreamLongLengthMethodTest extends SetCharacterStreamLengthMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getTableName() { return "JDASSFPSMT47";}
     public String getTestDescription() { return "Test setCharacterStream(long length)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2310,16 +2202,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   
 
   public class SetNCharacterStreamMethodTest extends SetCharacterStreamLengthMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() { return "JDASSFPSMT48";}
+   public String getTableName() { return "JDASSFPSMT48";}
     public String getTestDescription() { return "Test setNCharacterStream()";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       StringReader reader = new StringReader("12345"); 
@@ -2334,15 +2217,6 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetNCharacterStreamLongLengthMethodTest extends SetCharacterStreamLengthMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
     public String getTableName() { return "JDASSFPSMT49";}
     public String getTestDescription() { return "Test setNCharacterStream(long length)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
@@ -2358,16 +2232,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
   
   public class SetNClobReaderLengthMethodTest extends SetClobMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() { return "JDASSFPSMT50";}
+     public String getTableName() { return "JDASSFPSMT50";}
     public String getTestDescription() { return "Test setNClob(reader length)";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       clobString = "12345"; 
@@ -2382,16 +2247,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
 
   public class SetNStringMethodTest extends SetStringMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() { return "JDASSFPSMT51";}
+     public String getTableName() { return "JDASSFPSMT51";}
     public String getTestDescription() { return "Test setNString()";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       pstmt.setNString(1,  "String"+i ); 
@@ -2429,16 +2285,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
 
   public class SetDBDefaultMethodTest extends SetDB2DefaultMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() { return "JDASSFPSMT53";}
+     public String getTableName() { return "JDASSFPSMT53";}
     public String getTestDescription() { return "Test setDBDefault()";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       pstmt.setDBDefault(1); 
@@ -2452,16 +2299,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
 
   public class SetDB2UnassignedMethodTest extends SetDB2DefaultMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() { return "JDASSFPSMT54";}
+     public String getTableName() { return "JDASSFPSMT54";}
     public String getTestDescription() { return "Test setDB2Unassigned()";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       pstmt.setDB2Unassigned(1); 
@@ -2474,16 +2312,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class SetDBUnassignedMethodTest extends SetDB2DefaultMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() { return "JDASSFPSMT55";}
+   public String getTableName() { return "JDASSFPSMT55";}
     public String getTestDescription() { return "Test setDBUnassigned()";} 
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       pstmt.setDBUnassigned(1); 
@@ -2497,16 +2326,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
   
   public class GetDB2ParameterNameMethodTest extends ClearParametersMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() {      return "JDASSFPSMT56";  }
+     public String getTableName() {      return "JDASSFPSMT56";  }
     public String getTestDescription() {      return "Test getDB2ParameterName()";    }
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb,
         int i) throws SQLException {
@@ -2530,16 +2350,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   }
 
   public class GetParameterMetadataMethodTest extends ClearParametersMethodTest {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDASSFPreparedStatement";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDASTest.main(newArgs); 
-   }
-    public String getTableName() {      return "JDASSFPSMT57";  }
+     public String getTableName() {      return "JDASSFPSMT57";  }
     public String getTestDescription() {      return "Test getParameterMetadata()";    }
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb,
         int i) throws SQLException {

@@ -71,6 +71,15 @@ of the JDBC PreparedStatement class (4 parameters):
 public class JDPSSetObject4
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPSSetObject4";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPSTest.main(newArgs); 
+   }
 
 
 

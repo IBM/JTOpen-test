@@ -582,15 +582,7 @@ Closing of connection when job ends.  Check that the connection does not hang wh
 
 
     public class JDConnectionCloseRunnable extends Thread {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDConnectionClose";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDConnectionTest.main(newArgs); 
-   }
+  
 	Connection c_;
 	String query_;
 	boolean done_;

@@ -347,15 +347,6 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE )			// @D4
     **/
     public void Var008()
     {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobBlob";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
         if (checkJdbc20 ()) {
             try {
                 rs_.absolute (2);
@@ -1396,15 +1387,6 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE )			// @D4
     **/
     public void Var052()                                                                    
     {                                                                                       
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobBlob";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
         if (checkUpdateableLobsSupport ()) {                                                
             try {                                                                           
                 rs2_=statement2_.executeQuery("SELECT * FROM " + TABLE_);                    
@@ -1647,15 +1629,6 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE )			// @D4
     **/
     public void Var060()                                                                    
     {                                                                                       
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobBlob";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
         if (checkUpdateableLobsSupport ()) {                                                
             try {                                                                           
                 rs2_=statement2_.executeQuery("SELECT * FROM " + TABLE_);                    
@@ -2089,15 +2062,6 @@ if(getDriver() == JDTestDriver.DRIVER_NATIVE )			// @D4
     **/
     public void Var073()                                                                    
     {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobBlob";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
 	if (v5r2nativeFunctions_) {
 	    notApplicable(); 
 	} else { 

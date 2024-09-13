@@ -152,6 +152,15 @@ various scenarios are handled correctly by the JDBC driver.
 **/
 public class JDPSDataTruncation
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPSDataTruncation";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPSTest.main(newArgs); 
+   }
 
 
     // Private data.

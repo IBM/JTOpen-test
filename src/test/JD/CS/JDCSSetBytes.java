@@ -36,6 +36,7 @@ import java.util.Hashtable;
 
 import com.ibm.as400.access.AS400;
 
+import test.JDCSTest;
 import test.JDSetupProcedure;
 
 /**
@@ -56,7 +57,7 @@ extends JDCSSetTestcase
      for (int i = 0; i < args.length; i++) {
        newArgs[2+i]=args[i];
      }
-     test.JDCSTest.main(newArgs); 
+     JDCSTest.main(newArgs); 
    }
 
 

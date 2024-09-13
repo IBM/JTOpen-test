@@ -1049,15 +1049,6 @@ read(byte[],int,int) - Passing length that extends past the end of the array.
 **/
    public void Var035()
    {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobInputStream";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
       if (checkJdbc20 ()) {
          if (checkLobSupport ()) {
             try {
@@ -2589,15 +2580,6 @@ SQL400 - Clob variations.
 **/
    public void Var092()
    {
-  public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDLobInputStream";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDLobTest.main(newArgs); 
-   }
       if (checkJdbc20 ()) {
          if (checkLobSupport ()) {
             try {
