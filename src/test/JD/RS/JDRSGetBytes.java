@@ -39,6 +39,15 @@ import test.JD.JDTestUtilities;
  * </ul>
  **/
 public class JDRSGetBytes extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDRSGetBytes";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDRSTest.main(newArgs); 
+   }
 
   // Private data.
   private Statement statement_;

@@ -32,6 +32,15 @@ methods of the JDBC ResultSet class:
 **/
 public class JDRSCursorScrollInsensitiveFromCall
 extends JDRSCursorScroll {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDRSCursorScrollInsensitiveFromCall";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDRSTest.main(newArgs); 
+   }
 
 
 /**
