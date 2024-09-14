@@ -729,6 +729,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
         pwrSysPassword_ = pwrSysTokenizer.nextToken();
         pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPassword_);
       }
+
     }
     if (testLib_ == null) { 
       testLib_ = getDefault("lib", sb); 
