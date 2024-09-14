@@ -39,6 +39,15 @@ import test.socketProxy.*;
 * Testcase JDASSeamlessFailover
 **/
 public class JDASSeamlessFailover extends JDASTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDASSeamlessFailover";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDASTest.main(newArgs); 
+   }
 int RUN_SECONDS = 20;
 
 protected String systemName;

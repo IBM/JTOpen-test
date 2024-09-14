@@ -39,6 +39,15 @@ This also stresses the use of different CCSIDs..
 public class JDStatementStressTest206
 extends JDStatementStressTest
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDStatementStressTest206";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDStatementTest.main(newArgs); 
+   }
 
   
 /**

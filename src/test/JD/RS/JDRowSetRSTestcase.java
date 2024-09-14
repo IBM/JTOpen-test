@@ -58,6 +58,15 @@ Testcase JDRowSetRSTestcase.
 public class JDRowSetRSTestcase
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDRowSetRSTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDRSTest.main(newArgs); 
+   }
     private String jndiName_ = "jdbc/customer";
             static final String key2_            = "JDRowSetRSTestcase2";
     private static String select_         = "SELECT * FROM " + JDRSTest.RSTEST_UPDATE;

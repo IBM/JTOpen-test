@@ -29,6 +29,15 @@ the test will run for a specific amount of time to try to detect errors.
 public class JDRSStressNoBlockPSDirectMap
 extends JDRSStress
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDRSStressNoBlockPSDirectMap";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDRSStressTest.main(newArgs); 
+   }
 
 /**
 Constructor.

@@ -53,6 +53,15 @@ of the JDBC Statement class:
 public class JDStatementBatch
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDStatementBatch";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDStatementTest.main(newArgs); 
+   }
 
 
     // Private data. (These values must be reset in setup because

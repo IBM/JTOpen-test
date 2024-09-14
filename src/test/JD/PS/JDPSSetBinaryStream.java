@@ -65,6 +65,15 @@ import java.util.Vector;
  * </ul>
  **/
 public class JDPSSetBinaryStream extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPSSetBinaryStream";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPSTest.main(newArgs); 
+   }
 
   // Constants.
   private static final String PACKAGE = "JDPSSBS";
@@ -760,6 +769,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
           + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
 
       class BadInputStream extends InputStream {
+  
         public BadInputStream() {
           super();
         }
@@ -2800,6 +2810,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
    **/
   public void Var142() {
     class ByteArrayInputStream2 extends ByteArrayInputStream {
+ 
       public ByteArrayInputStream2(byte[] buf) {
         super(buf);
       }

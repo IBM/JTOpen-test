@@ -40,6 +40,15 @@ import com.ibm.as400.access.CommandCall;                 //@A5A
  **/
 public class AS400JDBCRowSetCtorTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400JDBCRowSetCtorTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.AS400JDBCRowSetTest.main(newArgs); 
+   }
     private static final String JNDI_FILE = "com.sun.jndi.fscontext.RefFSContextFactory";
     private static final String JNDI_LDAP = "com.ibm.jndi.LDAPCtxFactory";
     private static final String TEST_FILE_NAME = "/tmp/AS400JDBCRowSetCtorTestcase.file"; 

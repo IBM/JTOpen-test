@@ -56,6 +56,15 @@ of the JDBC ResultSetMetaData class:
 public class JDRSMDGetSchemaName
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDRSMDGetSchemaName";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDRSMDTest.main(newArgs); 
+   }
 
     // Private data.
     private ResultSet rs_            = null;

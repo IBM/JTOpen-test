@@ -64,20 +64,6 @@ public class JDRSGetRowTest
 
 
 
-/**
-Run the test as an application.  This should be called
-from the test driver's main().
-
-@param  args        The command line arguments.
-
-@exception Exception If an exception occurs.
-**/
-   public static void main (String args[])
-   throws Exception
-   {
-      runApplication (new JDRSGetRowTest (args));
-   }
-
 
 
 /**

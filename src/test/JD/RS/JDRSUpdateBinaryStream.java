@@ -47,6 +47,15 @@ of the JDBC ResultSet class:
 public class JDRSUpdateBinaryStream
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDRSUpdateBinaryStream";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDRSTest.main(newArgs); 
+   }
 
 
 
@@ -1032,6 +1041,7 @@ updateBinaryStream() - Update a VARBINARY parameter to a bad input stream.
 
             class BadInputStream extends InputStream
             {
+ 
                 public BadInputStream () {
                     super ();
                 }                

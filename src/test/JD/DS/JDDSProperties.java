@@ -108,6 +108,15 @@ of the JDBC Driver class:
 **/
 public class JDDSProperties
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDDSProperties";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDDSTest.main(newArgs); 
+   }
 
 
    private static final String DATA_SOURCE_TOOLBOX_NAME = "local connection toolbox";

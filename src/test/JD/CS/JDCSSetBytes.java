@@ -36,6 +36,7 @@ import java.util.Hashtable;
 
 import com.ibm.as400.access.AS400;
 
+import test.JDCSTest;
 import test.JDSetupProcedure;
 
 /**
@@ -49,6 +50,15 @@ method of the JDBC CallableStatement class:
 public class JDCSSetBytes
 extends JDCSSetTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCSSetBytes";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     JDCSTest.main(newArgs); 
+   }
 
 
 

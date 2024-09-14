@@ -43,6 +43,15 @@ import java.util.TimeZone;
  * </ul>
  **/
 public class JDRSGetTimestamp extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDRSGetTimestamp";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDRSTest.main(newArgs); 
+   }
   static String NATIVE_TIMESTAMP_CLASSNAME = "com.ibm.db2.jdbc.app.DB2JDBCTimestamp";
 
   // Private data.

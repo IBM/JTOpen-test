@@ -63,6 +63,15 @@ of the JDBC PreparedStatement class:
 **/
 public class JDPSSetBlob40
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPSSetBlob40";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPSTest.main(newArgs); 
+   }
 
 
 
@@ -926,7 +935,7 @@ setBlob() - Set a VARBINARY parameter to a bad input stream.
                                                                 + " (C_VARBINARY_20) VALUES (?)");
 
             class BadInputStream extends InputStream {
-                public BadInputStream () {
+           public BadInputStream () {
                     super ();
                 }                
                 public int available () throws IOException {

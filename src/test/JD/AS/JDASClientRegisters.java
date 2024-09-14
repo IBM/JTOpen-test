@@ -38,6 +38,15 @@ import test.SocketProxy;
  * Testcase JDASClientRegisters
  **/
 public class JDASClientRegisters extends JDASTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDASClientRegisters";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDASTest.main(newArgs); 
+   }
 
   private String systemName;
   private String password; 

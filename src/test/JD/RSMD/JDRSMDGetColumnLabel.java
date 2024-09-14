@@ -52,6 +52,15 @@ import java.util.Hashtable;
  * </ul>
  **/
 public class JDRSMDGetColumnLabel extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDRSMDGetColumnLabel";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDRSMDTest.main(newArgs); 
+   }
 
   private static final String PACKAGE = "JDRSMDGCL";
   private static final String PACKAGE_CACHE_NO = "extended dynamic=false";

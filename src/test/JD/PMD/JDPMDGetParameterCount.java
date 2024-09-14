@@ -58,6 +58,15 @@ of the JDBC PreparedStatement class:
 public class JDPMDGetParameterCount
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPMDGetParameterCount";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPMDTest.main(newArgs); 
+   }
 
     // Private data.
     private Connection          connection_;

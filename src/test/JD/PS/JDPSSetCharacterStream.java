@@ -70,6 +70,15 @@ of the JDBC PreparedStatement class:
 public class JDPSSetCharacterStream
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPSSetCharacterStream";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPSTest.main(newArgs); 
+   }
 
 
 
@@ -805,6 +814,7 @@ setCharacterStream() - Set a VARCHAR(50) parameter to a bad reader.
 
                 class BadReader extends StringReader
                 {
+    
                     public BadReader () {
                         super ("Hi Mom!");
                     }

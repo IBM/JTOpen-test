@@ -54,6 +54,15 @@ method of the JDBC CallableStatement class:
 public class JDCSGetClob
 extends JDCSGetTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCSGetClob";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCSTest.main(newArgs); 
+   }
 
 
    // Note.. LARGECLOB_SIZE must be a multiple of 200

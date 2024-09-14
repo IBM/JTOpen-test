@@ -52,6 +52,15 @@ method of the JDBC CallableStatement class:
 public class JDCSGetCharacterStream
 extends JDCSGetTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCSGetCharacterStream";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCSTest.main(newArgs); 
+   }
     static boolean RUNTOOLONG = false; 
 
    // Note.. LARGECLOB_SIZE must be a multiple of 200

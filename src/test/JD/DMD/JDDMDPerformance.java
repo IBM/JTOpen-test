@@ -58,6 +58,15 @@ of the JDBC DatabaseMetaData class:
 **/
 public class JDDMDPerformance
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDDMDPerformance";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDDMDTest.main(newArgs); 
+   }
     public final static String added = " -- added by native driver 05/03/2006"; 
 
 

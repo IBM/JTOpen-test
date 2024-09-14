@@ -43,6 +43,15 @@ of the JDBC Statement Listener class:
 **/
 public class JDStatementListener
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDStatementListener";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDSLTest.main(newArgs); 
+   }
 
 
 

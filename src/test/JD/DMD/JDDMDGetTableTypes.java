@@ -64,6 +64,15 @@ of the JDBC DatabaseMetaData class:
 </ul>
 **/
 public class JDDMDGetTableTypes extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDDMDGetTableTypes";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDDMDTest.main(newArgs); 
+   }
 
 
     // Private data.

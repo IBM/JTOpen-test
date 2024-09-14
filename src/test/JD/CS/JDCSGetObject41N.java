@@ -41,6 +41,15 @@ This tests the new method for JDBC 4.1
 public class JDCSGetObject41N
 extends JDCSGetObject41
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDCSGetObject41N";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDCSTest.main(newArgs); 
+   }
 
 /**
 Constructor.

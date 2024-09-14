@@ -20,7 +20,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
 import test.Testcase;
-import test.JDLobTest.JDTestBlob;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +27,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -51,6 +49,15 @@ of the JDBC Blob class:
 public class JDLobLargeLob
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDLobLargeLob";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDLobTest.main(newArgs); 
+   }
 
 
 

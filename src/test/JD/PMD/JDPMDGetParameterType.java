@@ -60,6 +60,15 @@ of the JDBC ParameterMetaData class:
 public class JDPMDGetParameterType
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPMDGetParameterType";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPMDTest.main(newArgs); 
+   }
 
     // Private data.
     private Connection          connection_;

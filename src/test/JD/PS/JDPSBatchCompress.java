@@ -61,6 +61,15 @@ input compression setting for block update.
 **/
 public class JDPSBatchCompress
 extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPSBatchCompress";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPSTest.main(newArgs); 
+   }
   
      static int RUN_MINUTES = 1; 
      static {
@@ -3158,7 +3167,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
     
     
 
-  public static void main(String[] args) {
+  public static void oldMain(String[] args) {
       int[][] workingDataTypes = {
 	  { TYPE_VARCHARFBD32700, TYPE_BLOB },
 	  { TYPE_INTEGER, TYPE_VARCHAR1000, TYPE_VARCHAR256,  TYPE_BLOB, },

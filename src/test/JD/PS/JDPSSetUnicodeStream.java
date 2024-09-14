@@ -61,6 +61,15 @@ of the JDBC PreparedStatement class:
 public class JDPSSetUnicodeStream
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDPSSetUnicodeStream";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDPSTest.main(newArgs); 
+   }
 
 
 
@@ -802,6 +811,7 @@ setUnicodeStream() - Set a VARCHAR(50) parameter to a bad input stream.
 
             class BadInputStream extends InputStream
             {
+ 
                 public BadInputStream () {
                     super ();
                 }
