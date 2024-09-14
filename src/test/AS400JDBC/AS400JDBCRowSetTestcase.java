@@ -41,6 +41,15 @@ import com.ibm.as400.access.CommandCall;                   //@A7A
  **/
 public class AS400JDBCRowSetTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400JDBCRowSetTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.AS400JDBCRowSetTest.main(newArgs); 
+   }
     // Environment variables.
     // private static final int OS_AS400 = 0;
     // private static final int OS_WINDOWS = 1;

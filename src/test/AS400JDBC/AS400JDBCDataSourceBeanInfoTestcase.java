@@ -34,6 +34,15 @@ import test.Testcase;
  **/
 public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400JDBCDataSourceBeanInfoTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.AS400JDBCDataSourceTest.main(newArgs); 
+   }
 
    /**
      Constructor.  This is called from the AS400JDBCDataSourcePropertiesTest constructor.

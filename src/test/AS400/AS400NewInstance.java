@@ -38,6 +38,15 @@ import java.util.Vector;
  * public static AS400 newInstance(boolean useSSL, AS400 system)
  **/
 public class AS400NewInstance extends Testcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400NewInstance";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.AS400Test.main(newArgs); 
+   }
 
   StringBuffer sb = new StringBuffer();
   private Connection connection_; 

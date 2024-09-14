@@ -130,6 +130,9 @@ public class JTOpenDownloadDevJars {
 	    }
 
 	    String disableSSL = System.getenv("DISABLESSL");
+	    if (disableSSL != null) { 
+	      disableSSL = System.getProperty("DISABLESSL"); 
+	    }
 	    if (disableSSL != null) {
 		System.out.println("DISABLESSL set");
 		DisableSSL.go(); 
@@ -149,18 +152,19 @@ public class JTOpenDownloadDevJars {
             sql = "SELECT URL,"
                 + "TIMESTAMP( SUBSTRING(UPDATED_AT,1,10) || ' ' || SUBSTRING(UPDATED_AT,12,8)) + CURRENT TIMEZONE AS UPDATED , "
                 + "CURRENT TIMEZONE as CURRENT_TIMEZONE, "
-                + " BRANCH"
+                + " NAME, BRANCH"
                 + " FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' "
                 + "COLUMNS ( "
                 + "URL VARCHAR(200) CCSID 1208 PATH '$.url', "
                 + "UPDATED_AT VARCHAR(40) PATH '$.updated_at', "
+                + "NAME VARCHAR(40) PATH '$.name',"
                 + "BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  ))  "
                 + "ORDER BY UPDATED_AT desc FETCH FIRST 10 ROWS ONLY";
             System.out.println("FYI:  Latests artifacts are the following: "+sql); 
             ResultSet rs = stmt.executeQuery(sql);
-            System.out.println("URL,UPDATED_CURRENT_TIMEZONE,TIMEZONE,BRANCH"); 
+            System.out.println("URL,UPDATED_CURRENT_TIMEZONE,TIMEZONE,NAME,BRANCH"); 
             while (rs.next()) { 
-              System.out.println(rs.getString(1)+","+rs.getTimestamp(2)+","+rs.getString(3)+","+rs.getString(4));
+              System.out.println(rs.getString(1)+","+rs.getTimestamp(2)+","+rs.getString(3)+","+rs.getString(4)+","+rs.getString(5));
             }
             rs.close(); 
             // run the query to get the latest URL
@@ -172,13 +176,20 @@ public class JTOpenDownloadDevJars {
 		    + "COLUMNS ( "
 		    + "URL VARCHAR(200) CCSID 1208 PATH '$.url', "
 		    + "UPDATED_AT VARCHAR(40) PATH '$.updated_at', "
-		    + "BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='main' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
+	            + "NAME VARCHAR(40) PATH '$.name',"
+		    + "BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='main' AND NAME='Package' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    } else if ("ANY".equalsIgnoreCase(branch)) {
-		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  ))  ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
+		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' "
+		    + "COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', "
+                    + "NAME VARCHAR(40) PATH '$.name',"
+		    + "BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  )) WHERE NAME='Package' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    } else {
-		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  )) WHERE BRANCH='"+branch+"' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
+		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"','{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), '$.artifacts[*]' "
+		    + "COLUMNS ( URL VARCHAR(200) CCSID 1208 PATH '$.url', UPDATED_AT VARCHAR(40) PATH '$.updated_at', "
+                    + "NAME VARCHAR(40) PATH '$.name',"
+		    + "BRANCH VARCHAR(120) PATH '$.workflow_run.head_branch'  )) WHERE  NAME='Package' and BRANCH='"+branch+"' ORDER BY UPDATED_AT desc FETCH FIRST 1 ROWS ONLY";
 	    }
-	    System.out.println("Running to get latest artifact from BRANCH: "+sql); 
+	    System.out.println("Running to get latest Package artifact from BRANCH: "+sql); 
 	    rs = stmt.executeQuery(sql);
 	    String downloadUrl;
 	    String updatedAt;

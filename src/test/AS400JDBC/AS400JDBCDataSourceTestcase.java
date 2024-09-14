@@ -44,6 +44,15 @@ import test.JD.*;
  **/
 public class AS400JDBCDataSourceTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400JDBCDataSourceTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.AS400JDBCDataSourceTest.main(newArgs); 
+   }
     // Environment variables.
     private static final int OS_AS400 = 0;
     private static final int OS_WINDOWS = 1;
