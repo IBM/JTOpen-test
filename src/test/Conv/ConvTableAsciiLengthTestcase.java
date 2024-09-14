@@ -25,6 +25,15 @@ import test.Testcase;
  **/
 public class ConvTableAsciiLengthTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "ConvTableAsciiLengthTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.ConvTest.main(newArgs); 
+   }
     /**
      Runs the variations requested.
      Loops through all of the ASCII CCSIDs the Toolbox supports and tests their internal lengths.

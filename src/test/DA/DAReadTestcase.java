@@ -52,6 +52,15 @@ import java.math.BigDecimal;
  **/
 public class DAReadTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DAReadTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DATest.main(newArgs); 
+   }
     // New methods were added in JTOpen 6.2 (spec version V6R1M0 PTF 4)
     private static boolean areRawBytesMethodsDefined_ = true;
 

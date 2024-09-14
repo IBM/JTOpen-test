@@ -718,17 +718,17 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       encryptedPassword_ = PasswordVault.getEncryptedPassword(password_); 
     }
     if (pwrSysUserID_ == null) {
-      String pwrSys = getDefault("pwrSys",sb); 
-      StringTokenizer pwrSysTokenizer = new StringTokenizer(pwrSys, ",");
-      int numberOfTokens = pwrSysTokenizer.countTokens();
-      if (numberOfTokens != 2) {
-        throw new Exception("Wrong number of -pwrSys parameters from default store: "
-            + numberOfTokens);
+      String pwrSys = getDefault("pwrSys", sb);
+      if (pwrSys != null) {
+        StringTokenizer pwrSysTokenizer = new StringTokenizer(pwrSys, ",");
+        int numberOfTokens = pwrSysTokenizer.countTokens();
+        if (numberOfTokens != 2) {
+          throw new Exception("Wrong number of -pwrSys parameters from default store: " + numberOfTokens);
+        }
+        pwrSysUserID_ = pwrSysTokenizer.nextToken();
+        pwrSysPassword_ = pwrSysTokenizer.nextToken();
+        pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPassword_);
       }
-      pwrSysUserID_ = pwrSysTokenizer.nextToken();
-      pwrSysPassword_ = pwrSysTokenizer.nextToken();
-      pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPassword_); 
-      
     }
     if (testLib_ == null) { 
       testLib_ = getDefault("lib", sb); 
@@ -890,7 +890,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
         sb.append("Setting: "+setting+" retrieved from property "+property+" in ini/defaults.ini\n");
         return value; 
       }
-      sb.append("WARNING: Not able to read "+property+" as envvar and from ini/defaults.ini in"+System.getProperty("user.dir")+"\n");
+      sb.append("WARNING: Not able to read "+property+" as envvar and from ini/defaults.ini in "+System.getProperty("user.dir")+"\n");
     } else {
        sb.append("WARNING: Not able to read "+property+" as envvar and ini/defaults.ini does not exist\n");
     }

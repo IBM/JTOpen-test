@@ -64,6 +64,15 @@ import java.math.BigDecimal;
  **/
 public class DAGetSetTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DAGetSetTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DATest.main(newArgs); 
+   }
     /**
      Verify invalid usage of CharacterDataArea::getLength().
      Try to get the length of a data area which has no system set.

@@ -21,6 +21,15 @@ import test.TestDriver;
 
 public class CmdStressTestcase extends ProxyStressTest implements Runnable
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "CmdStressTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.ProxyStressTest.main(newArgs); 
+   }
     // Private variables
     private Thread thread_;
     private boolean isRunning_;

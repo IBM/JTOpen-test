@@ -28,6 +28,15 @@ import test.Testcase;
  **/
 public class ConvTableWriterTestcase extends Testcase implements Runnable
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "ConvTableWriterTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.ConvTest.main(newArgs); 
+   }
     private static final String testfile_ = "ctw.tst";
     private static final String testdata_ = "This is test data for ConvTableWriterTestcase.\nMom\nDad\n\n";
 
