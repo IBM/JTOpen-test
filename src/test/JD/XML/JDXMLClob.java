@@ -85,6 +85,15 @@ of the JDBC XML class when used against a clob column:
 public class JDXMLClob
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDXMLClob";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDXMLTest.main(newArgs); 
+   }
   public static final String DOMSOURCE="javax.xml.transform.dom.DOMSource"; 
   public static final String SAXSOURCE="javax.xml.transform.sax.SAXSource"; 
   public static final String STAXSOURCE="javax.xml.transform.stax.StAXSource"; 

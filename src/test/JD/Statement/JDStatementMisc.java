@@ -61,6 +61,15 @@ of the JDBC Statement class:
 public class JDStatementMisc
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDStatementMisc";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDStatementTest.main(newArgs); 
+   }
     private static final boolean DEBUG = false;
 
     // table name
@@ -616,6 +625,7 @@ extends JDTestcase
             
             class AuxThread extends Thread
             {
+ 
                 private Statement s_;
                 private boolean success_ = false;
 		private boolean done_ = false;

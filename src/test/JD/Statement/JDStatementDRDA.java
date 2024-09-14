@@ -50,6 +50,15 @@ of the JDBC Statement class:
 public class JDStatementDRDA
 extends JDTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JDStatementDRDA";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JDStatementTest.main(newArgs); 
+   }
 
 
    // Private data.
