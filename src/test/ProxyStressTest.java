@@ -91,8 +91,8 @@ public class ProxyStressTest
          System.out.println("\n-pwrSys option missing, JDBC testcases may fail.\n");
    }
 
-
-   public static void main (String args[]) 
+ 
+   public static void main (String args[]) throws Exception 
    {
       ProxyStressTest pst = new ProxyStressTest(args);
       

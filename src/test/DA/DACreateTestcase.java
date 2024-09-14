@@ -47,6 +47,15 @@ import test.Testcase;
  **/
 public class DACreateTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DACreateTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DATest.main(newArgs); 
+   }
   // Original settings of the "threadsafe" properties.
   // We don't want static, since we want to pick up any dynamic changes.
   private final String COMMANDCALL_THREADSAFE_OLD = SystemProperties.getProperty(SystemProperties.COMMANDCALL_THREADSAFE);

@@ -34,6 +34,15 @@ import test.Testcase;
  **/
 public class CmdRunTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "CmdRunTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.CmdTest.main(newArgs); 
+   }
     static final boolean DEBUG = false;
     static boolean dftThreadSafe_ = CmdTest.assumeCommandsThreadSafe_;
 

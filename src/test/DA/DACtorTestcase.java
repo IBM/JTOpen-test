@@ -37,6 +37,15 @@ import com.ibm.as400.access.IllegalPathNameException;
  **/
 public class DACtorTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DACtorTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DATest.main(newArgs); 
+   }
     /**
      Construct a character data area passing a null for the system.
      An NullPointerException should be thrown.

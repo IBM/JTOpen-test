@@ -25,6 +25,15 @@ import com.ibm.as400.access.*;
 **/
 public class ConvTableMixedLengthTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "ConvTableMixedLengthTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.ConvTest.main(newArgs); 
+   }
   /**
     Verifies internal tables for ccsid 1364.
     Result: Variation should be successful.
