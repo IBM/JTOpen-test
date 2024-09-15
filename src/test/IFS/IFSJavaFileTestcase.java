@@ -83,6 +83,15 @@ Testcase IFSJavaFileTestcase.
 public class IFSJavaFileTestcase
 extends IFSGenericTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSJavaFileTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
 
 
   // Private data.
@@ -4692,6 +4701,15 @@ class JavaFilter83
 
 class IFSJavaFilter83 extends JavaFilter83 implements IFSFileFilter
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSJavaFileTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
   PrintWriter output_;
 
   public IFSJavaFilter83(PrintWriter output)
@@ -4709,6 +4727,15 @@ class IFSJavaFilter83 extends JavaFilter83 implements IFSFileFilter
 
 class NativeJavaFileFilter83 extends JavaFilter83 implements FileFilter
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSJavaFileTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
   PrintWriter output_;
 
   public NativeJavaFileFilter83(PrintWriter output)
@@ -4726,6 +4753,15 @@ class NativeJavaFileFilter83 extends JavaFilter83 implements FileFilter
 
 class NativeJavaNameFilter83 extends JavaFilter83 implements FilenameFilter
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSJavaFileTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
   PrintWriter output_;
 
   public NativeJavaNameFilter83(PrintWriter output)

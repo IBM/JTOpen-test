@@ -35,6 +35,15 @@ Tests the following methods:
 **/
 public class INInstallTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "INInstallTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.InstallTest.main(newArgs); 
+   }
 
     String target = InstallTest.targetPath + "test" + File.separator;
     String targetNoSep = InstallTest.targetPath + "test";

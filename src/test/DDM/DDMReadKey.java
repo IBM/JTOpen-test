@@ -44,6 +44,15 @@ import java.io.ByteArrayOutputStream;
 **/
 public class DDMReadKey extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMReadKey";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   long start;
   long time;
   Record[] records_;
@@ -7078,6 +7087,15 @@ protected void cleanup()
 
 class DDMFormat3Field1Key extends RecordFormat
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMReadKey";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
 
   DDMFormat3Field1Key(AS400 sys)
   {
@@ -7092,6 +7110,15 @@ class DDMFormat3Field1Key extends RecordFormat
 
 class DDMFormatReadKey3 extends RecordFormat
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMReadKey";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   static AS400Bin4 bin = new AS400Bin4();
   static AS400ZonedDecimal zon = new AS400ZonedDecimal(15,5);
   static AS400PackedDecimal pac = new AS400PackedDecimal(15,5);

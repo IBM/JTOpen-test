@@ -34,6 +34,15 @@ import java.util.Hashtable;
 **/
 public class INetServerSessionTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "INetServerSessionTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.INetServerTest.main(newArgs); 
+   }
    private ISeriesNetServer netserver_;
    private ISeriesNetServer pwrNetserver_;
    private ISeriesNetServerSession[] sessionList_;

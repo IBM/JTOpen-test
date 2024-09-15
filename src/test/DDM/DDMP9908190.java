@@ -31,6 +31,15 @@ import test.Testcase;
 **/
 public class DDMP9908190 extends Testcase implements Runnable
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMP9908190";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   String testLib_ = null;
   private boolean brief_;
 

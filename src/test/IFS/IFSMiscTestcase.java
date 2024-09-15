@@ -44,6 +44,15 @@ Test methods not covered by other testcases.
 **/
 public class IFSMiscTestcase extends IFSGenericTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSMiscTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
 
   private final static String dotFilesDirName_ = "/DotFiles";
   private boolean createdDotFilesDir_;
@@ -2442,6 +2451,15 @@ class Filter83
 
 class IFSFilter83 extends Filter83 implements IFSFileFilter
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSMiscTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
   PrintWriter output_;
 
   public IFSFilter83(PrintWriter output)
@@ -2459,6 +2477,15 @@ class IFSFilter83 extends Filter83 implements IFSFileFilter
 
 class NativeFilter83 extends Filter83 implements FilenameFilter
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSMiscTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
   PrintWriter output_;
 
   public NativeFilter83(PrintWriter output)

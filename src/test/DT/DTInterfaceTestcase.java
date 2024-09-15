@@ -24,6 +24,15 @@ import test.Testcase;
  **/
 public class DTInterfaceTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DTInterfaceTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DTTest.main(newArgs); 
+   }
   // New method was added in JTOpen 6.3: AS400DataType.getJavaType()
   private static boolean isGetJavaTypeMethodDefined_ = true;
   static {

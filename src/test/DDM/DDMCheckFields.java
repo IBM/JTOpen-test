@@ -32,6 +32,15 @@ import test.PasswordVault;
 import test.Testcase;
 
 public class DDMCheckFields extends Testcase implements Runnable {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMCheckFields";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
 
   String testLib_ = "DDMCHKFLD";
   boolean qigc_ = true; // Is DBCS installed on the 400? See setup().

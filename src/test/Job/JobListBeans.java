@@ -49,6 +49,15 @@ import test.misc.TestUtilities;
  **/
 public class JobListBeans extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JobListBeans";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JobTest.main(newArgs); 
+   }
     /**
      Serialization - when no properties have been set.
      **/

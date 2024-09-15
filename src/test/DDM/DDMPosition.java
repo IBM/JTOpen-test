@@ -56,6 +56,15 @@ import java.io.ByteArrayOutputStream;
  * blocking factor.
  **/
 public class DDMPosition extends Testcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMPosition";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   // Blocking factor to be used for opens. This is used to check
   // that caching acts the same as when we always retrieve from the system.
   // Default indicate to not use caching
