@@ -31,6 +31,16 @@ import test.Testcase;
  * </ul>
  **/
 public class SecPortMapperTestcase extends Testcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SecPortMapperTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SecAuthTest.main(newArgs); 
+   }
+
   int invalidServiceNumber = 9;
   /**
    * <dl>

@@ -33,6 +33,15 @@ import test.UserSpaceTest;
  **/
 public class UserSpaceChgAttrTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "UserSpaceChgAttrTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.UserSpaceTest.main(newArgs); 
+   }
     private AS400 usSystem_;
     private String userSpacePathName_ = "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USATTRIB.USRSPC";
     private String pre_existingUserSpace_ = "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/PREEXIST.USRSPC";

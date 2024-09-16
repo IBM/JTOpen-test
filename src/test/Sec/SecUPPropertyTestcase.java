@@ -37,6 +37,15 @@ import test.Testcase;
  **/
 public class SecUPPropertyTestcase extends Testcase implements PropertyChangeListener, VetoableChangeListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SecUPPropertyTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SecAuthTest.main(newArgs); 
+   }
     private PropertyChangeEvent pce_ = null;
     private boolean vetoChange_ = false;
 

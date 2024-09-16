@@ -27,6 +27,15 @@ import test.Testcase;
  **/
 public class SSLConnectTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SSLConnectTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SSLTest.main(newArgs); 
+   }
     /**
      Try to connect to an invalid service.
      **/

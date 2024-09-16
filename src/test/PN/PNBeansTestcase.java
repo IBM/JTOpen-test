@@ -46,6 +46,15 @@ import test.Testcase;
  **/
 public class PNBeansTestcase extends Testcase implements PropertyChangeListener, VetoableChangeListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "PNBeansTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.PNTest.main(newArgs); 
+   }
     private Vector changeEvents = new Vector();
 
     public void propertyChange(PropertyChangeEvent event)

@@ -53,6 +53,15 @@ import test.Testcase;
  **/
 public class SecPHActionTestcase extends Testcase implements AS400CredentialListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SecPHActionTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SecAuthTest.main(newArgs); 
+   }
     private static int refreshCount_ = 0;
     private static AS400CredentialEvent ace_ = null;
     AS400 nativeSystemObject = null;

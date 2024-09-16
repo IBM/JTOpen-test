@@ -32,6 +32,15 @@ import test.Testcase;
  **/
 public class SecSignonTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SecSignonTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SecTest.main(newArgs); 
+   }
     /**
      Create a default AS400 object and connect.
      A signon prompt should be displayed, with default user enabled and unchecked, and cache password enabled and checked.

@@ -43,6 +43,15 @@ import test.Testcase;
  **/
 public class SecCtorTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SecCtorTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SecTest.main(newArgs); 
+   }
     // Retrieve and verify correct state.
     private void assertValidState(AS400 system, String failMessage)
     {

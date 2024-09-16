@@ -27,6 +27,15 @@ import java.io.FileInputStream;
  * Testcase SecVrmTestcase.
  **/
 public class SecVrmTestcase extends Testcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SecVrmTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SecTest.main(newArgs); 
+   }
 
   /* no longer testing to V7R1 */
   /* no longer testing to V7R2 */

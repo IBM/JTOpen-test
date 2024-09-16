@@ -24,6 +24,15 @@ import test.Testcase;
  **/
 public class SecChangePasswordTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SecChangePasswordTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SecTest.main(newArgs); 
+   }
     /**
      Create a default (no system name, no user id) AS400 object, and try to change password.
      An InvalidObjectStateException should be generated.
