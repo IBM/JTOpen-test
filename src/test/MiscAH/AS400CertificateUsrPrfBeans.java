@@ -45,6 +45,15 @@ import test.Testcase;
  **/
 public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyChangeListener, VetoableChangeListener, AS400CertificateListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400CertificateUsrPrfBeans";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.AS400CertificateTest.main(newArgs); 
+   }
     String goodUsrPrfName = "/QSYS.LIB/CERTTEST.USRPRF";
     String userProfileName_ = "CERTTEST";
     String propertyName;

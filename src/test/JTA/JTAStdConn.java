@@ -38,6 +38,15 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 
 public class JTAStdConn extends JTATestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JTAStdConn";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JTAStdTest.main(newArgs); 
+   }
 
   private String insStr = "JTAConn";
   private String basTbl = JTATest.COLLECTION + ".CHARTAB";

@@ -30,6 +30,17 @@ import test.misc.ThreadedTestcase;
 class NPThreadTestcase
   extends ThreadedTestcase
 {
+  
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "NPThreadTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.NPPrintTest.main(newArgs); 
+   }
+
  /**
   * Creates a new NPThreadTestcase.
   * This is called from ThreadTest::createTestcases().

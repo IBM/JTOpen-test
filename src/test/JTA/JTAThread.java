@@ -35,6 +35,15 @@ import javax.sql.XADataSource;
 
 
 public class JTAThread extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JTAThread";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JTATest.main(newArgs); 
+   }
    public final int INSERT         = 1;
    public final int QUERY          = 2;
    public final int TX_STARTNEW    = 1;

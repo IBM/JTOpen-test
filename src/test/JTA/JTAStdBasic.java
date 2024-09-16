@@ -27,6 +27,15 @@ import javax.transaction.xa.XAResource;
 import javax.transaction.xa.XAException;
 
 public class JTAStdBasic extends JTATestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JTAStdBasic";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JTAStdTest.main(newArgs); 
+   }
 
    private String insStr = "JTABasic";
    private String basTbl = JTATest.COLLECTION + ".CHARTAB";

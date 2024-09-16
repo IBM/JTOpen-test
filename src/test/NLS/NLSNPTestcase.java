@@ -33,6 +33,15 @@ import test.Testcase;
 **/
 public class NLSNPTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "NLSNPTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.NLSTest.main(newArgs); 
+   }
   String printer_; // name of printer to test to
 
   String np_lib = getResource("NP_LIB");
@@ -999,7 +1008,7 @@ public class NLSNPTestcase extends Testcase
 
   class NLSDBCSOnlyNoKeyFormat extends RecordFormat
   {
-    NLSDBCSOnlyNoKeyFormat()
+     NLSDBCSOnlyNoKeyFormat()
     {
       super("KEYFMT");
       addFieldDescription(new DBCSOnlyFieldDescription(new AS400Text(10), "field1"));

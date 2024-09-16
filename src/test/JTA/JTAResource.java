@@ -50,6 +50,15 @@ import java.io.*;
  * </ul>
  **/
 public class JTAResource extends JTATestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JTAResource";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JTAStdTest.main(newArgs); 
+   }
   //
   // Print the global ids so we can figure out which testcase has a leak.
   // This is needed if we can't drop a table at the end.

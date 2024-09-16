@@ -30,6 +30,15 @@ import test.JD.JDTestUtilities;
 import javax.sql.XADataSource;
 
 public class JTAInsert extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JTAInsert";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JTATest.main(newArgs); 
+   }
    private final static String TABLENAME = "CHARTABINS";
    private String basTbl = JTATest.COLLECTION + "."+TABLENAME;
    private Connection c;

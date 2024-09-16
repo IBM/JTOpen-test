@@ -31,6 +31,15 @@ import java.util.Hashtable;
 
 public class JTAConnTransIso
       extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JTAConnTransIso";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JTATest.main(newArgs); 
+   }
    // Private data.
    private String         table_      = JTATest.COLLECTION + ".CONTXISO";
    private              String         url_;

@@ -34,6 +34,15 @@ import java.io.*; //@B0A
 **/
 public class FDSerialization extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "FDSerialization";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.FDTest.main(newArgs); 
+   }
   // Values for the various properties of a FieldDescription.
   // Use to set the base state of a field description object and
   // to verify the state after de-serialization.

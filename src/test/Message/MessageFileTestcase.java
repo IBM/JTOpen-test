@@ -33,6 +33,15 @@ import test.Testcase;
  **/
 public class MessageFileTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "MessageFileTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.MessageTest.main(newArgs); 
+   }
     private final static String messageFilePathName = "/QSYS.LIB/QCPFMSG.MSGF";
     private final static int LEFT_TO_RIGHT = BidiStringType.DEFAULT;
     private final static int CCSID_OF_JOB = MessageFile.CCSID_OF_JOB;

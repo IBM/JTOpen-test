@@ -42,6 +42,15 @@ import java.text.SimpleDateFormat;
 public class FTPQuickVerification extends    Testcase
                                implements FTPListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "FTPQuickVerification";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.FTPTest.main(newArgs); 
+   }
     private String user_     = null;
     private String password_ = null;
     private String system_   = null;

@@ -34,6 +34,15 @@ import com.ibm.as400.access.IFSFileInputStream;
   **/
 public class CommTraceTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "CommTraceTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.CommTraceDriver.main(newArgs); 
+   }
 // $$$ TO DO $$$
 // Replace "ExampleDriver" with the name of your test driver program.
 /**

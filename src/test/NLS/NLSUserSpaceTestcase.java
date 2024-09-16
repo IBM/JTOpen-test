@@ -35,6 +35,15 @@ import com.ibm.as400.access.ExtendedIllegalArgumentException;
 **/
 public class NLSUserSpaceTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "NLSUserSpaceTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.NLSTest.main(newArgs); 
+   }
   private String userSpacePathName_ = "/QSYS.LIB/USTEST.LIB/USNLSTEST.USRSPC";
   private String operatingSystem_;
   private boolean DOS_;
