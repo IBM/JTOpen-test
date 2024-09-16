@@ -58,6 +58,15 @@ import java.io.ByteArrayOutputStream;
 **/
 public class DDMCaching extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMCaching";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   long start;
   long time;
   String blanks10 = "          ";
@@ -5009,6 +5018,15 @@ protected void cleanup()
 
 class DDMFormatCaching extends RecordFormat
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMCaching";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   static AS400Bin4 bin = new AS400Bin4();
   static AS400ZonedDecimal zon = new AS400ZonedDecimal(15,5);
   static AS400PackedDecimal pac = new AS400PackedDecimal(15,5);

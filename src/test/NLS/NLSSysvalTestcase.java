@@ -36,6 +36,15 @@ import com.ibm.as400.access.ExtendedIllegalArgumentException;
 **/
 public class NLSSysvalTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "NLSSysvalTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.NLSTest.main(newArgs); 
+   }
   AS400 PwrSys_ = NLSTest.PwrSys;
 
   Vector strings = null;

@@ -29,6 +29,15 @@ import com.ibm.as400.access.ConnectionDroppedException;
 
 public class IFSConnectTestcase extends IFSGenericTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSConnectTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
 
 /**
 Constructor.

@@ -47,10 +47,31 @@ RUNJVA  CLASS(test.AS400CertificateTest) PARM('-system' 'rchasjew' '-uid'  'DENN
 See TestDriver for remaining calling syntax.
 @see TestDriver
 **/
-public class AS400CertificateTest extends TestDriverApplet
+public class AS400CertificateTest extends TestDriver
 {
     public static AS400 PwrSys = null;
 
+    /**
+    Main for running standalone application tests.
+    **/
+   public static void main(String args[])
+   {
+       try {
+           AS400CertificateTest example = new AS400CertificateTest(args);
+           example.init();
+           example.start();
+           example.stop();
+           example.destroy();
+           }
+       catch (Exception e)
+           {
+           System.out.println("Program terminated abnormally.");
+           e.printStackTrace();
+           }
+
+       // Needed to make the virtual machine quit.
+          System.exit(0);
+   }
 
 
 /**

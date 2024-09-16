@@ -6664,7 +6664,7 @@ Constructor.
       * Testing code
       */
 
-     public static void main(String args[]) {
+     public static void main(String args[]) throws Exception  {
 	 try {
 	   globalURL = args[0]; 
 	   globalUserId = args[1]; 

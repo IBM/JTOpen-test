@@ -63,6 +63,15 @@ import com.ibm.as400.access.ExtendedIllegalStateException;
 **/
 public class RFRecordMisc extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "RFRecordMisc";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.RFTest.main(newArgs); 
+   }
   Record rec;       // Record for use in the variations
   // Contains the Java objects to use to create
   // the AS/400 data for contents byte array.

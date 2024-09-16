@@ -70,6 +70,15 @@ import java.io.UnsupportedEncodingException;
  **/
 public class JobLogTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JobLogTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JobTest.main(newArgs); 
+   }
     private static final boolean DEBUG = false;
 
     private void printErrors(AS400Message[] msgs)

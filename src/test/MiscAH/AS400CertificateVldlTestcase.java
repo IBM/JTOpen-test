@@ -52,6 +52,15 @@ Test methods for AS400CertificateVldlUtil.
 **/
 public class AS400CertificateVldlTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400CertificateVldlTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.AS400CertificateTest.main(newArgs); 
+   }
   private int maxUserSpaceSize_ = 16776704;
   private AS400 certSystem_;
   private static String ifsDirName_ = "/";

@@ -35,6 +35,15 @@ import java.sql.*;
 **/
 public class DDMP9936798 extends Testcase implements Runnable
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMP9936798";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   String testLib_ = null;
   AS400 pwrSys_;
 

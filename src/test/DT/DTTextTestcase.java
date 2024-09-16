@@ -26,6 +26,15 @@ import test.Testcase;
  **/
 public class DTTextTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DTTextTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DTTest.main(newArgs); 
+   }
     // AS400Text needs an AS400 object to be run proxified; some variations don't use one.
     boolean proxified()
     {

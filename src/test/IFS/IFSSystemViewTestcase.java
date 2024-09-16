@@ -30,6 +30,15 @@ import test.IFSTests;
  * IFSRandomAccessFile.
  **/
 public class IFSSystemViewTestcase extends IFSGenericTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSSystemViewTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
   String collection_ = "COL";
 
   /**

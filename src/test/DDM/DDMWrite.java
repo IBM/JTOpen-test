@@ -54,6 +54,15 @@ import com.ibm.as400.access.TimestampFieldDescription;
 **/
 public class DDMWrite extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMWrite";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   long start;
   long time;
   int bf_ = 1;
@@ -2847,7 +2856,7 @@ public class DDMWrite extends Testcase
 
   class DDMFormatDateAndTime extends RecordFormat
   {
-    DDMFormatDateAndTime(AS400 sys)
+     DDMFormatDateAndTime(AS400 sys)
     {
       super("DateAndTime");
       AS400Date date0 = new AS400Date(AS400.getDefaultTimeZone(sys));

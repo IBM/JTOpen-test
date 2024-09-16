@@ -28,6 +28,15 @@ import test.PasswordVault;
 import test.JD.JDTestUtilities;
 
 public class JTALocal extends JDTestcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JTALocal";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JTATest.main(newArgs); 
+   }
 
    // private String insStr = "JTALocal";
    private String TABLE1 = JTATest.COLLECTION + ".LOC1TBL";

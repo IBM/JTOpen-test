@@ -40,6 +40,15 @@ import test.Testcase;
  **/
 public class MessageFileBeansTestcase extends Testcase implements PropertyChangeListener, VetoableChangeListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "MessageFileBeansTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.MessageTest.main(newArgs); 
+   }
     String goodMFName  = "/QSYS.LIB/QCPFMSG.MSGF";
     String goodMFName2 = "/QSYS.LIB/QJVAMSG.MSGF";
     String propertyName;

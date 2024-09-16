@@ -22,6 +22,15 @@ import test.Testcase;
  **/
 public class DTFloat4Testcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DTFloat4Testcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DTTest.main(newArgs); 
+   }
     /**
      Test: Construct an AS400Float4 object.
      Result: No exception should be thrown.

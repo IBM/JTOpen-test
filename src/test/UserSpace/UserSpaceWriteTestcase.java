@@ -37,6 +37,15 @@ import test.UserSpaceTest;
  * Test write methods for UserSpace.
  **/
 public class UserSpaceWriteTestcase extends Testcase {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "UserSpaceWriteTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.UserSpaceTest.main(newArgs); 
+   }
   private int maxUserSpaceSize_ = 16776704;
   private AS400 usSystem_;
   private static String userSpacePathName_ = "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USWRITE.USRSPC";
@@ -528,7 +537,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
    * if it writes up to length+1 if dataBuffer has length greater than length.
    **/
   public void Var010() {
-    UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
+     UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
 
     try {
       aUserSpace.create(4095, true, " ", (byte) 0x00, "create UserSpace",
@@ -1661,7 +1670,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
    * length.
    **/
   public void Var046() {
-    UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
+     UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
 
     try {
       aUserSpace.create(4095, true, " ", (byte) 0x00, "create UserSpace",

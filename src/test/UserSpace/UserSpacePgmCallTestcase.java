@@ -26,6 +26,15 @@ Test write methods for UserSpace.
 **/
 public class UserSpacePgmCallTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "UserSpacePgmCallTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.UserSpaceTest.main(newArgs); 
+   }
   private int maxUserSpaceSize_ = 16776704;
   private AS400 usSystem_;
   private static String userSpacePathName_ = "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USWRITE.USRSPC";
@@ -1749,7 +1758,7 @@ dataBuffer has length greater than length.
 **/
   public void Var046()
   {
-     UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
+      UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
      aUserSpace.setMustUseProgramCall(true);
      try
      {
@@ -1780,7 +1789,7 @@ dataBuffer has length greater than length.
 **/
   public void Var047()
   {
-     UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
+      UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
      aUserSpace.setMustUseProgramCall(true);
      try
      {

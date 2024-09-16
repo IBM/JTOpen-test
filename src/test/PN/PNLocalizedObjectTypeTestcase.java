@@ -27,6 +27,15 @@ import test.Testcase;
  **/
 public class PNLocalizedObjectTypeTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "PNLocalizedObjectTypeTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.PNTest.main(newArgs); 
+   }
     // Indicates if an array contains a given element.
     // @param  array  The array.
     // @param  element  The element.

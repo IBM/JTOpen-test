@@ -46,6 +46,15 @@ import test.Testcase;
  **/
 public class SysvalGroupTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SysvalGroupTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SysvalTestDriver.main(newArgs); 
+   }
     /**
      Test valid usage of SystemValueGroup::add().
      Try to call add() on a system value group that was created using the default constructor.

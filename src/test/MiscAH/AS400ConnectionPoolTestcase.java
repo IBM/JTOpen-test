@@ -64,6 +64,16 @@ It also tests ConnectionPoolEventSupport.
 public class AS400ConnectionPoolTestcase
 extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400ConnectionPoolTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.AS400ConnectionPoolTest.main(newArgs); 
+   }
+
     // Private data.
     static final int variations_ = 148;  //variation count
     private static final boolean DEBUG = false;

@@ -26,6 +26,15 @@ import test.Testcase;
  **/
 public class PgmRLETestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "PgmRLETestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.PgmTest.main(newArgs); 
+   }
     String prog3_ = "/QSYS.LIB/W95LIB.LIB/PROG3.PGM";
     String prog3p0_;
     short prog3p2_;

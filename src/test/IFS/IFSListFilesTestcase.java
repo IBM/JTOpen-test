@@ -35,6 +35,15 @@ Test IFSFile.listFiles().
 **/
 public class IFSListFilesTestcase extends IFSGenericTestcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSListFilesTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
   // Can use "/./QSYS.LIB" or "/." to test.
   private static String smallIfsDirName_ = "/QSYS.LIB/QSYSINC.LIB"; 
   private boolean brief_;
@@ -960,6 +969,15 @@ class ListFilesFilter83
 
 class IFSListFilesFilter83 extends ListFilesFilter83 implements IFSFileFilter
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "IFSListFilesTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.IFSTests.main(newArgs); 
+   }
   PrintWriter output_;
 
   public IFSListFilesFilter83(PrintWriter output)

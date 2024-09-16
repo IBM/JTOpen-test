@@ -29,6 +29,15 @@ import test.Testcase;
 **/
 public class NLSDQTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "NLSDQTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.NLSTest.main(newArgs); 
+   }
   long start;
   long time;
   boolean failed;  // Keeps track of failure in multi-part tests.

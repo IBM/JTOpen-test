@@ -35,6 +35,15 @@ import com.ibm.as400.access.ObjectDoesNotExistException;
  **/
 public class UserSpaceCrtDltTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "UserSpaceCrtDltTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.UserSpaceTest.main(newArgs); 
+   }
     private boolean setupUnauthorized_ = false;
     private boolean setupAuthority_ = false;
     private String testAuth = UserSpaceTest.COLLECTION+"TA"; 

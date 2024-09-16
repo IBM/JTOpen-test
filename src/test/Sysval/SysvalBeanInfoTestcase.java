@@ -43,6 +43,15 @@ import com.ibm.as400.access.ExtendedIllegalStateException;
  **/
 public class SysvalBeanInfoTestcase extends Testcase implements PropertyChangeListener, VetoableChangeListener, SystemValueListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SysvalBeanInfoTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SysvalTestDriver.main(newArgs); 
+   }
     String goodYear = "";
     String goodDay = "";
     String propertyName;

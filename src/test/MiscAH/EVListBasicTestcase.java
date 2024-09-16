@@ -32,6 +32,15 @@ import java.util.Vector;
  **/
 public class EVListBasicTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "EVListBasicTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.EVTest.main(newArgs); 
+   }
     public static final String EV_PREFIX_  = "TBX";
     private static final int LOGIN_TIMEOUT = 2000; /* 4 seconds */
 

@@ -105,6 +105,15 @@ import test.Testcase;
  **/
 public class DQBeansTestcase extends Testcase implements DataQueueListener, ObjectListener, PropertyChangeListener, VetoableChangeListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DQBeansTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DQTest.main(newArgs); 
+   }
     String goodDQName = "/QSYS.LIB/QTEMP.LIB/BEAN.DTAQ";
 
     DataQueueEvent dqEvent;

@@ -37,6 +37,15 @@ import test.Testcase;
  **/
 public class PNAttributesTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "PNAttributesTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.PNTest.main(newArgs); 
+   }
     /**
      Use setPath passing a null parm.
      A NullPointerException should be thrown, identifying the null parm.

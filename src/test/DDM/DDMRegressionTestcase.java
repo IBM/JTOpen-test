@@ -34,6 +34,15 @@ Test general usage of DDM for the regression bucket. Includes variations from ot
 **/
 public class DDMRegressionTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "DDMRegressionTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.DDMTest.main(newArgs); 
+   }
   String testLib_ = null;
   String fileName_ = null;
 

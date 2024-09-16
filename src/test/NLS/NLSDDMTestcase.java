@@ -32,6 +32,15 @@ import test.DDM.DDMFormat1Field0Key;
 **/
 public class NLSDDMTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "NLSDDMTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.NLSTest.main(newArgs); 
+   }
   long start;
   long time;
 //  boolean failed;  // Keeps track of failure in multi-part tests.
@@ -3592,7 +3601,7 @@ public class NLSDDMTestcase extends Testcase
 
   class NLSDBCSJAPTestingFormat extends RecordFormat
   {
-
+ 
     NLSDBCSJAPTestingFormat(AS400 sys)
     {
       super("SIMPLEDBCS");
@@ -3606,7 +3615,7 @@ public class NLSDDMTestcase extends Testcase
 
   class NLSDBCSKORTestingFormat extends RecordFormat
   {
-
+ 
     NLSDBCSKORTestingFormat(AS400 sys)
     {
       super("SMPDBCSKOR");
@@ -3620,7 +3629,7 @@ public class NLSDDMTestcase extends Testcase
 
   class NLSDBCSTCHTestingFormat extends RecordFormat
   {
-
+ 
     NLSDBCSTCHTestingFormat(AS400 sys)
     {
       super("SMPDBCSTCH");
@@ -3634,7 +3643,7 @@ public class NLSDDMTestcase extends Testcase
 
   class NLSDBCSSCHTestingFormat extends RecordFormat
   {
-
+ 
     NLSDBCSSCHTestingFormat(AS400 sys)
     {
       super("SMPDBCSSCH");

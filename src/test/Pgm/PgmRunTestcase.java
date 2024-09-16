@@ -57,6 +57,15 @@ import test.Testcase;
  **/
 public class PgmRunTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "PgmRunTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.PgmTest.main(newArgs); 
+   }
     String goodPgm_ = "/QSYS.LIB/W95LIB.LIB/PROG3.PGM";
     String Prog25_ = "/QSYS.LIB/W95LIB.LIB/PROG25.PGM";
     String Prog35_ = "/QSYS.LIB/W95LIB.LIB/PROG35.PGM";

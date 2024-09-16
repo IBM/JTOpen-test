@@ -32,6 +32,15 @@ import java.util.StringTokenizer;            //@A2A
 **/
 public class NetServerTestcase extends Testcase
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "NetServerTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.INetServerTest.main(newArgs); 
+   }
      
     private String original_NetServer_Name;
     private String original_NetServer_NamePending;

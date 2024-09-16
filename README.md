@@ -9,11 +9,11 @@ The structure is that individual tests are named xxxTest.  Within tests, there a
 To run a test, you run the main test class and specify parameters that control how the test runs. 
 For example, the following will run the AS400JPingTest.
 ```
-java AS400JPingTest  -lib <libraryForTest> -system <systemName> -uid <userId> -pwd <password> -pwrSys <privilegedUserid,privilegedPassword> -directory / -misc <testtype>,<release> -asp <IASPname>
+java -cp JTOpen-test.jar:jt400.jar test.AS400JPingTest  -lib <libraryForTest> -system <systemName> -uid <userId> -pwd <password> -pwrSys <privilegedUserid,privilegedPassword> -directory / -misc <testtype>,<release> -asp <IASPname>
 ```
 A recent change also allows running a test with no parameters.  The needed parameters are taken from environment variables or from a ini/defaults.ini file that resides in the current diretory.  A test run will indicate where those values are obtained from. 
 ```
-Java AS400JPingTestcase
+java -cp JTOpen-test.jar:jt400.jar test.MiscAH.AS400JPingTestcase
 ```
 Here is an example of running the JDAcceptsURL testcase (replace the $... variables with the correct values). 
 ```

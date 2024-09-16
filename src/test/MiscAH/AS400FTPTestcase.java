@@ -29,6 +29,15 @@ import java.lang.String;
 public class AS400FTPTestcase extends    Testcase
                          implements FTPListener
 {
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "AS400FTPTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.FTPTest.main(newArgs); 
+   }
     private String user_     = null;
     private String password_ = null;
     private String system_   = null;
