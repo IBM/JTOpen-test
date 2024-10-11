@@ -116,15 +116,15 @@ public class AS400NewInstance extends Testcase {
         char[] password = PasswordVault.decryptPassword(encryptedPassword_);
         testAs400.setUserId(userId_);
         testAs400.setPassword(password);
-        testAs400.authenticate();
-        boolean isAlive = testAs400.isConnectionAlive(AS400.HOSTCNN);
+        JDReflectionUtil.callMethod_V(testAs400, "authenticate");
+        boolean isAlive = testAs400.isConnectionAlive(8); /* 8 is AS400.HOSTCNN */
         PasswordVault.clearPassword(password);
         Job[] jobs = testAs400.getJobs(AS400.SIGNON);
         for (int i = 0; i < jobs.length; i++) {
           String serverJobName = jobs[i].getNumber() + "/" + jobs[i].getUser() + "/" + jobs[i].getName();
           sb.append("connected to " + serverJobName);
         }
-        Job[] jobsHostcnn = testAs400.getJobs(AS400.HOSTCNN);
+        Job[] jobsHostcnn = testAs400.getJobs(8);
         for (int i = 0; i < jobsHostcnn.length; i++) {
           String serverJobName = jobsHostcnn[i].getNumber() + "/" + jobsHostcnn[i].getUser() + "/"
               + jobsHostcnn[i].getName();
