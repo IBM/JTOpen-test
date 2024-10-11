@@ -28,10 +28,12 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Random;
@@ -77,6 +79,9 @@ public class JDDriverConnect extends JDTestcase {
   private Driver driver_;
   String letter_;
   int jdk_;
+  boolean exitProgramChecked_ = false; 
+  boolean exitProgramEnabled_ = false; 
+  Connection pwrConnection_ = null; 
   /**
    * Constructor.
    **/
@@ -111,6 +116,20 @@ public class JDDriverConnect extends JDTestcase {
 
     letter_ = JDDriverTest.COLLECTION
         .substring(JDDriverTest.COLLECTION.length() - 1);
+    
+     
+    Properties properties = new Properties(); 
+    properties.put("user",testDriver_.pwrSysUserID_);
+    properties.put("prompt","false"); 
+    char[] charPassword = PasswordVault.decryptPassword(testDriver_.pwrSysEncryptedPassword_); 
+    Class[] argTypes = new Class[3]; 
+    argTypes[0] = baseURL_.getClass(); 
+    argTypes[1] = properties.getClass(); 
+    argTypes[2] = charPassword.getClass(); ;
+    pwrConnection_ = (Connection) JDReflectionUtil.callMethod_O(driver_, "connect", argTypes, baseURL_, properties, charPassword);
+    Arrays.fill(charPassword,' '); 
+
+
   }
 
   protected void cleanup() throws Exception {
@@ -123,7 +142,9 @@ public class JDDriverConnect extends JDTestcase {
     //
     // When this happens, the locks my still be held.
     //
-
+    cleanupExitProgam();
+    cleanupExitProgramFiles();
+    pwrConnection_.close(); 
     System.gc();
     try {
       Thread.sleep(10000);
@@ -2792,92 +2813,308 @@ public class JDDriverConnect extends JDTestcase {
 
 
   /*
-   * test the leaking of server jobs in DEQW state on take descript 
+   * test the leaking of server jobs in DEQW state on take descript
    */
 
   public void Var058() {
-      if (checkToolbox()) { 
-	  if (toolboxNative) {
-	      StringBuffer sb = new StringBuffer(); 
-	      try {
-		  Random random = new Random(); 
-		  boolean passed = true;
-		  sb.append("Getting base connection\n");
-		  System.out.println("..Running leak test with user id "+userId_); 
-		  Connection connection = testDriver_.getConnection (baseURL_,userId_, encryptedPassword_);
+    if (checkToolbox()) {
+      if (toolboxNative) {
+        StringBuffer sb = new StringBuffer();
+        try {
+          Random random = new Random();
+          boolean passed = true;
+          sb.append("Getting base connection\n");
+          System.out.println("..Running leak test with user id " + userId_);
+          Connection connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
 
-                  /* Run for 6 seconds in 10 sec batches */
-		  for (int i = 0; i < 6  && passed ; i++) { 
-	
-		      Connection [] connections = new Connection[20];
-		      long endtime = System.currentTimeMillis() + 10000; 
-		      while ( System.currentTimeMillis() < endtime ) {
-			  int index  = random.nextInt(connections.length);
-			  if (connections[index] != null) {
-			  // Let the garbage collector close
-			  // sb.append("Closing connection at index "+index+"\n"); 
-			  // connections[index].close();
-			  }
-			  sb.append("Opening  connection at index "+index+"\n"); 
-			  connections[index] = testDriver_.getConnection (baseURL_,userId_, encryptedPassword_); 
-		      }
-		      for (int index = 0; index < connections.length; index++) {
-			  if (connections[index] != null) {
-			      sb.append("Closing connection at index "+index+"\n"); 
-			      connections[index].close();
-			  }
-		      } 
+          /* Run for 6 seconds in 10 sec batches */
+          for (int i = 0; i < 6 && passed; i++) {
 
-		      Statement s = connection.createStatement();
+            Connection[] connections = new Connection[20];
+            long endtime = System.currentTimeMillis() + 10000;
+            while (System.currentTimeMillis() < endtime) {
+              int index = random.nextInt(connections.length);
+              if (connections[index] != null) {
+                // Let the garbage collector close
+                // sb.append("Closing connection at index "+index+"\n");
+                // connections[index].close();
+              }
+              sb.append("Opening  connection at index " + index + "\n");
+              connections[index] = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
+            }
+            for (int index = 0; index < connections.length; index++) {
+              if (connections[index] != null) {
+                sb.append("Closing connection at index " + index + "\n");
+                connections[index].close();
+              }
+            }
 
-		      ResultSet rs = s.executeQuery("select JOB_NAME  from table( qsys2.active_job_info  ()) A, TABLE(qsys2.STACK_INFO(JOB_NAME)) B where JOB_STATUS='DEQW' and JOB_NAME like '%QUSER%' and PROCEDURE_NAME='takedescriptor'" ); 
-		      while (rs.next()) {
-			  passed = false;
-			  sb.append("ERROR:  Found job with takedescriptor in stack "+rs.getString(1)+"\n"); 
-		      }
-		      s.close(); 
-		  }
-		  connection.close();
-		  assertCondition(passed, sb); 
-		  
-	      } catch (Exception e) {
-		  failed(e, "unexpected exception");
-	      }
-	  } else {
-	      notApplicable("Toolbox native test"); 
-	  }
-      } /* checkToolbox */
-  } /* Var058 */ 
+            Statement s = connection.createStatement();
 
-  /* Var059 Check that a connection can be established using an additional authentication factor */ 
+            ResultSet rs = s.executeQuery(
+                "select JOB_NAME  from table( qsys2.active_job_info  ()) A, TABLE(qsys2.STACK_INFO(JOB_NAME)) B where JOB_STATUS='DEQW' and JOB_NAME like '%QUSER%' and PROCEDURE_NAME='takedescriptor'");
+            while (rs.next()) {
+              passed = false;
+              sb.append("ERROR:  Found job with takedescriptor in stack " + rs.getString(1) + "\n");
+            }
+            s.close();
+          }
+          connection.close();
+          assertCondition(passed, sb);
+
+        } catch (Exception e) {
+          failed(e, "unexpected exception");
+        }
+      } else {
+        notApplicable("Toolbox native test");
+      }
+    } /* checkToolbox */
+  } /* Var058 */
+
+  /*
+   * Var059 Check that a connection can be established using an additional
+   * authentication factor
+   */
   public void Var059() {
-	  if (checkToolbox()) {
-		  String systemName = systemObject_.getSystemName(); 
-		  if (checkAdditionalAuthenticationFactor(systemName)) {
-			  try { 
-				 initMfaUser(); 
-				 String mfaFactorString = new String(mfaFactor_); 
-				 Connection c = DriverManager.getConnection(
-						 "jdbc:as400:"+ systemName+";additionalAuthenticationFactor="+mfaFactorString,
-						 mfaUserid_, 
-						 new String(mfaPassword_)); 
-				 Statement s = c.createStatement();
-				 ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
-				 rs.next();
-				 String currentUser = rs.getString(1); 
-				 System.out.println("current MFA user is "+currentUser); 
-				 assertCondition(c != null && mfaUserid_.equalsIgnoreCase(currentUser), 
-						 "currentUser="+currentUser+" MFAUserID="+mfaUserid_);
-			  } catch (Exception e) {
-				  failed(e, "unexpected exception");
-		      }
-		  }
-	  }
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX ||
+        getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      String systemName = systemObject_.getSystemName();
+      if (checkAdditionalAuthenticationFactor(systemName)) {
+        try {
+          initMfaUser();
+          String mfaFactorString = new String(mfaFactor_);
+          String url;
+          if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+            url = "jdbc:as400:" + systemName + ";additionalAuthenticationFactor=" + mfaFactorString;
+          } else {
+            url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString;
+          }
+          Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("VALUES CURRENT USER");
+          rs.next();
+          String currentUser = rs.getString(1);
+          System.out.println("current MFA user is " + currentUser);
+          assertCondition(c != null && mfaUserid_.equalsIgnoreCase(currentUser),
+              "currentUser=" + currentUser + " MFAUserID=" + mfaUserid_);
+        } catch (Exception e) {
+          failed(e, "unexpected exception");
+        }
+      }
+    } else {
+      notApplicable("TOOLBOX or NATIVE variation"); 
+    }
   }
-  public void Var060() { notApplicable();}
-  public void Var061() { notApplicable();}
-  public void Var062() { notApplicable();}
-  public void Var063() { notApplicable();}
+ 
+  /*
+   * Var060 Check that a connection is not established for MFA user without additional
+   * authentication factor
+   */
+  public void Var060() {
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX ||
+        getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      String systemName = systemObject_.getSystemName();
+      if (checkAdditionalAuthenticationFactor(systemName)) {
+        try {
+          initMfaUser();
+          String url;
+          if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+            url = "jdbc:as400:" + systemName+";prompt=false" ;
+          } else {
+            url = "jdbc:db2:localhost";
+          }
+          try { 
+          Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("VALUES CURRENT USER");
+          rs.next();
+          String currentUser = rs.getString(1);
+          System.out.println("current MFA user is " + currentUser);
+          assertCondition(false,
+              "Able to connect as MFS user without mfaFactor currentUser=" + currentUser + " MFAUserID=" + mfaUserid_);
+          } catch (SQLException e) { 
+            String[] expected = {"Password is incorrect"};
+            assertExceptionContains(e,expected, "Connecting via MFA user with additional factor"); 
+          }
+        } catch (Exception e) {
+          failed(e, "unexpected exception");
+        }
+      }
+    } else {
+      notApplicable("TOOLBOX or NATIVE variation"); 
+    }
+  }
+ 
+  /* Check new Driver based connection methods. Connect with USERID and password  */
+  public void Var061() { 
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX ||
+        getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      Driver driver ; 
+      try { 
+        String url; 
+        String expectedJobName; 
+      if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
+        driver = new AS400JDBCDriver(); 
+        String systemName = systemObject_.getSystemName();
+        url = "jdbc:as400:" + systemName+";prompt=false" ;
+        expectedJobName="QZDASOINIT"; 
+      } else {
+        driver = (Driver) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver","getDriver");
+        url = "jdbc:db2:localhost";
+        expectedJobName="QSQSRVR"; 
+      }
+      Properties properties = new Properties(); 
+      properties.put("user",userId_);
+      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
+      Class[] argTypes = new Class[3]; 
+      argTypes[0] = url.getClass(); 
+      argTypes[1] = properties.getClass(); 
+      argTypes[2] = charPassword.getClass(); ;
+      Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties, charPassword);
+      Arrays.fill(charPassword,' '); 
+      
+      Statement s = c.createStatement(); 
+      ResultSet rs = s.executeQuery("VALUES JOB_NAME"); 
+      rs.next(); 
+      String jobName = rs.getString(1); 
+      rs.close();
+      s.close();
+      c.close(); 
+      
+      assertCondition((jobName.indexOf(expectedJobName) >= 0), 
+            "jobName "+jobName+" does not contain "+expectedJobName);
+      
+      } catch (Exception e) {
+        failed(e, "unexpected exception");
+      }
+  
+    } else {
+      notApplicable("Native and toolbox Driver connection tests");
+    }
+  }
+
+  /* Check new Driver based connection methods 
+     Connect with MFA parameter */
+  public void Var062() {
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      String systemName = systemObject_.getSystemName();
+      if (checkAdditionalAuthenticationFactor(systemName)) {
+
+        Driver driver;
+        try {
+          String url;
+          String expectedJobName;
+          initMfaUser();
+
+          if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+            driver = new AS400JDBCDriver();
+            url = "jdbc:as400:" + systemName + ";prompt=false";
+            expectedJobName = "QZDASOINIT";
+          } else {
+            driver = (Driver) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
+            url = "jdbc:db2:localhost";
+           
+            expectedJobName = "QSQSRVR";
+          }
+          Properties properties = new Properties();
+          properties.put("user", mfaUserid_);
+          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+
+          Class[] argTypes = new Class[4];
+          argTypes[0] = url.getClass();
+          argTypes[1] = properties.getClass();
+          argTypes[2] = mfaPassword_.getClass();
+          ;
+          argTypes[3] = mfaFactor_.getClass();
+          Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties,
+              charPassword, mfaFactor_);
+          Arrays.fill(charPassword, ' ');
+
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("select JOB_NAME, CURRENT USER from sysibm.sysdummy1");
+          rs.next();
+          String jobName = rs.getString(1);
+          String currentUser = rs.getString(2);
+          rs.close();
+          s.close();
+          c.close();
+
+          assertCondition((jobName.indexOf(expectedJobName) >= 0) &&
+                currentUser.equalsIgnoreCase(mfaUserid_),
+              "jobName " + jobName + " does not contain " + expectedJobName + " or user="+
+                currentUser+" is not "+mfaUserid_);
+
+        } catch (Exception e) {
+          failed(e, "unexpected exception connecting using Driver.connect method MFA password");
+        }
+
+      }
+
+      
+    } else {
+      notApplicable("Native and toolbox Driver connection tests");
+    }
+  }
+ /* Check new Driver based connection methods 
+  Connect with MFA in URL */
+public void Var063() {
+ if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
+   String systemName = systemObject_.getSystemName();
+   if (checkAdditionalAuthenticationFactor(systemName)) {
+
+     Driver driver;
+     try {
+       String url;
+       String expectedJobName;
+       initMfaUser();
+
+       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+         driver = new AS400JDBCDriver();
+         url = "jdbc:as400:" + systemName + ";prompt=false;additionalAuthenticationFactor="+new String(mfaFactor_);
+         expectedJobName = "QZDASOINIT";
+       } else {
+         driver = (Driver) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
+         url = "jdbc:db2:localhost;additionalAuthenticationFactor="+new String(mfaFactor_); 
+         expectedJobName = "QSQSRVR";
+       }
+       Properties properties = new Properties();
+       properties.put("user", mfaUserid_);
+       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+
+       Class[] argTypes = new Class[3];
+       argTypes[0] = url.getClass();
+       argTypes[1] = properties.getClass();
+       argTypes[2] = mfaPassword_.getClass();
+       Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties,
+           charPassword);
+       Arrays.fill(charPassword, ' ');
+
+       Statement s = c.createStatement();
+       ResultSet rs = s.executeQuery("select JOB_NAME, CURRENT USER from sysibm.sysdummy1");
+       rs.next();
+       String jobName = rs.getString(1);
+       String currentUser = rs.getString(2);
+       rs.close();
+       s.close();
+       c.close();
+
+       assertCondition((jobName.indexOf(expectedJobName) >= 0) &&
+             currentUser.equalsIgnoreCase(mfaUserid_),
+           "jobName " + jobName + " does not contain " + expectedJobName + " or user="+
+             currentUser+" is not "+mfaUserid_);
+
+     } catch (Exception e) {
+       failed(e, "unexpected exception connecting using Driver.connect method MFA password");
+     }
+
+   }
+
+   
+ } else {
+   notApplicable("Native and toolbox Driver connection tests");
+ }
+}
+
   public void Var064() { notApplicable();}
   public void Var065() { notApplicable();}
   public void Var066() { notApplicable();}
@@ -3091,5 +3328,399 @@ public class JDDriverConnect extends JDTestcase {
     }
   }
 
+  public void Var073() { notApplicable();}
+  public void Var074() { notApplicable();}
+  public void Var075() { notApplicable();}
+  public void Var076() { notApplicable();}
+  public void Var077() { notApplicable();}
+  public void Var078() { notApplicable();}
+  public void Var079() { notApplicable();}
+  public void Var080() { notApplicable();}
 
+  /* Tests for connecting to system with exit program */ 
+  /* Return false if the system does not support the exit program. */ 
+  /* If the correct exit program exists then return true. Make sure the MFA user uses the exit program */
+  /* If an exit program does not exist, create the exit program and make sure the MFA users users the exit program */ 
+  /* If a different exit program exists, then throw an SQLException */ 
+  
+  public boolean checkExitProgram() throws Exception {
+    if (!exitProgramChecked_) {
+      String systemName = systemObject_.getSystemName();
+      if (checkAdditionalAuthenticationFactor(systemName)) {
+        Statement stmt = pwrConnection_.createStatement(); 
+        /* Check the exit point program */ 
+        String sql = "select EXIT_PROGRAM_LIBRARY, EXIT_PROGRAM "
+            + "from qsys2.exit_program_info " 
+            + "WHERE EXIT_POINT_NAME='QIBM_QSY_AUTH' "
+            + "ORDER BY EXIT_PROGRAM_NUMBER fetch first 1 rows only"; 
+        String exitProgramLibrary = null; 
+        String exitProgram = null; 
+        ResultSet rs = stmt.executeQuery(sql); 
+        if (rs.next()) { 
+          exitProgramLibrary = rs.getString(1); 
+          exitProgram = rs.getString(2); 
+        }
+        rs.close(); 
+        if ((exitProgramLibrary != null && !exitProgramLibrary.equals("JDTESTINFO")) || 
+            (exitProgram        != null && !exitProgram.equals("AUTHEXIT"))) {
+          stmt.close(); 
+          throw new SQLException("INVALID EXIT PROGRAM "+exitProgramLibrary+"/"+exitProgram+" FOR QIBM_QSY_AUTH .. please remove"); 
+        }
+        if (exitProgramLibrary == null) { 
+          /* Create and install the exit program */ 
+          String [] exitProgramText = {
+              "#include <qusec.h>           ",
+              "#include <stdio.h> ",
+              "#include <qusrjobi.h>  ",
+              "#include <stdlib.h> ",
+              "#include <eauth1.h>          ",
+              "#include <sys/stat.h>",
+              "#include <qmhsndpm.h>",
+              
+              " int main (int argc, char *argv[]) {",
+              "    int rc2;",
+              "    Qus_EC_t errorCode;",
+              "    Qwc_JOBI0600_t jobi;",
+              "    char * dest;",
+              "    char jobname[30];",
+              "    char filename[80];",
+              "    char ipAddress[50]; ",
+              "    char * wrkFile; ",
+              "    FILE * fp;",
+              "    char       msg_key [4];",
+              "    Qsy_Authentication_Info_t * info= (  Qsy_Authentication_Info_t *) argv[1];",
+              "    int * rc = (int *) argv[2]; ",
+              "    int i; ",
+              "    QUSRJOBI(&jobi,",
+              "             sizeof(jobi),",
+              "             \"JOBI0600\",",
+              "             \"*                         \",",
+              "             \"                \");",
+              "",
+              "    strcpy(filename,\"/tmp/authexit\");",
+              "    mkdir(filename, S_IRWXU | S_IRWXG | S_IRWXO );",
+              "    wrkFile = filename+strlen(filename);",
+              "    *wrkFile='/';",
+              "    wrkFile++;",
+              "",
+              "     dest = jobname;",
+              "    for (i = 0; i < 6; i++) {",
+              "       *dest = jobi.Job_Number[i];",
+              "       *wrkFile =  jobi.Job_Number[i];",
+              "       if (*dest != ' ') {",
+              "           dest++;",
+              "           wrkFile++; ",
+              "       }",
+              "    }",
+              "    *dest = '/'; dest++;",
+              "    *wrkFile='.'; wrkFile++; ",
+              "    for (i = 0; i < 10; i++) {",
+              "      *dest = jobi.User_Name[i];",
+              "      *wrkFile=jobi.User_Name[i];",
+              "      if (*dest != ' ')  {",
+              "          dest++;",
+              "          wrkFile++; ",
+              "      }",
+              "    }",
+              "    *dest = '/'; dest++;",
+              "    *wrkFile = '.'; wrkFile++; ",
+              "    for (i = 0; i < 10; i++) {",
+              "      *dest = jobi.Job_Name[i];",
+              "      *wrkFile = jobi.Job_Name[i];",
+              "      if (*dest != ' ') {",
+              "          dest++;",
+              "          wrkFile++;",
+              "      }",
+              "    }",
+              "    strcpy(wrkFile,\".txt\"); ",
+              "    *dest = '\0'; ",
+              "    memset(&errorCode,0,sizeof(errorCode)); ",
+
+              "    QMHSNDPM (",
+              "              \"CPF9898\",                /* message id                  */",
+              "              \"QCPFMSG   *LIBL     \",   /* Qualified message file name */",
+              "              filename,                  /* Message data                */",
+              "              strlen(filename),          /* Length of message data      */",
+              "              \"*DIAG     \",             /* Message type                */",
+              "              \"*         \",             /* Call stack entry            */",
+              "              0,                        /* Call stack counter          */",
+              "              msg_key,                  /* Message key                 */",
+              "              &errorCode                 /* Error code                  */",
+              "              );",
+
+              "     fp = fopen(filename,\"w\");",
+              "    fprintf(fp,\"Exit_Point_Name=%20.20s\\n\",info->Exit_Point_Name);",
+              "    fprintf(fp,\"Exit_Point_Format_Name=%8.8s\\n\",info->Exit_Point_Format_Name);",
+              "    fprintf(fp,\"User_Profile_Name=%8.8s\\n\",info->User_Profile_Name);",
+              "    fprintf(fp,\"Remote_Port=%d\\n\",info->Authentication_Caller.Remote_Port);",
+              "    fprintf(fp,\"Local_Port=%d\\n\",info->Authentication_Caller.Local_Port);",
+              "    strncpy(ipAddress,",
+              "            info->Authentication_Caller.Remote_IPAddress,",
+              "            info->Authentication_Caller.Remote_IPAddress_Len);",
+              "    ipAddress[info->Authentication_Caller.Remote_IPAddress_Len]='\0';",
+              "    fprintf(fp,\"Remote_IPAddress=%s\\n\",ipAddress);",
+              "    strncpy(ipAddress,",
+              "            info->Authentication_Caller.Local_IPAddress,",
+              "            info->Authentication_Caller.Local_IPAddress_Len);",
+              "    ipAddress[info->Authentication_Caller.Local_IPAddress_Len]='\0';",
+              "    fprintf(fp,\"Local_IPAddress=%s\\n\",ipAddress);",
+
+             "     fprintf(fp,\"Verification_ID=%30.30s\\n\",",
+              "            info->Authentication_Caller.Verification_ID);",
+
+             "     fflush(fp); ",
+              "    fclose(fp); ",
+
+             "     return(0); ",
+              "}",
+	  }; 
+          StringBuffer sb = new StringBuffer(); 
+          for (int i = 0; i < exitProgramText.length; i++) {
+            sb.append(exitProgramText[i]); 
+            sb.append("\n"); 
+          }
+          sql = "CALL IFS_WRITE_UTF8(PATH_NAME=>?,LINE=>?,OVERWRITE=>'REPLACE')"; 
+          PreparedStatement ps = pwrConnection_.prepareStatement(sql); 
+          ps.setString(1, "/tmp/authexit.c"); 
+          ps.setString(2, sb.toString()); 
+          ps.execute(); 
+          ps.close(); 
+          
+          sql = "CALL QSYS2.QCMDEXC('CRTCMOD MODULE(JDTESTINFO/AUTHEXIT) "
+              + "SRCSTMF(''/tmp/authexit.c'') DBGVIEW(*ALL) SYSIFCOPT(*IFSIO)') ";
+          stmt.execute(sql); 
+          
+          sql = "CALL QSYS2.QCMDEXC('CRTPGM PGM(JDTESTINFO/AUTHEXIT) MODULE(JDTESTINFO/AUTHEXIT)')";  
+          stmt.execute(sql); 
+          
+          sql = "CALL QSYS2.QCMDEXC('ADDEXITPGM EXITPNT(QIBM_QSY_AUTH) FORMAT(AUTH0100) PGMNBR(1) "
+              + "PGM(JDTESTINFO/AUTHEXIT) THDSAFE(*YES)')"; 
+          stmt.execute(sql); 
+          exitProgramChecked_ = true;
+          exitProgramEnabled_ = true;
+        } else { /*exit program defined */ 
+          exitProgramChecked_ = true;
+          exitProgramEnabled_ = true;
+        }
+
+        /* Check the user setting */ 
+        /* Make sure the MFA user is enabled to use the exit program */ 
+        initMfaUser(); 
+        sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF("+mfaUserid_+") AUTHMTH(*TOTP *REGFAC)')";       
+        stmt.execute(sql); 
+        stmt.close(); 
+      } else {
+        exitProgramChecked_ = true;
+        exitProgramEnabled_ = false;
+        return false; /* notApplicable already issued */
+      }
+    } /* exitProgramChecked_ */
+    if (!exitProgramEnabled_) {
+      notApplicable("Exit program not possible on this system");
+    }
+    return exitProgramEnabled_;
+  }
+
+  public void cleanupExitProgam() throws SQLException { 
+    if (exitProgramEnabled_) {
+      Statement stmt=pwrConnection_.createStatement(); 
+      String sql = "CALL QSYS2.QCMDEXC('RMVEXITPGM EXITPNT(QIBM_QSY_AUTH) FORMAT(AUTH0100) PGMNBR(1)')"; 
+      stmt.execute(sql); 
+      stmt.close(); 
+
+    }
+  }
+  
+  /* Test that the exit program information is correct for native and for toolbox non-secure */ 
+  public void Var081() { 
+    try { 
+      
+      StringBuffer sb = new StringBuffer(); 
+      boolean successful = true; 
+      if (checkExitProgram()) {
+          // Create a simple MFA connection and check the exit information. 
+        initMfaUser();
+        String mfaFactorString = new String(mfaFactor_);
+        String url;
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+          url = "jdbc:as400:" + systemObject_.getSystemName() + ";secure=false;additionalAuthenticationFactor=" + mfaFactorString;
+        } else {
+          url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString;
+        }
+        Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
+        rs.next();
+        String currentUser = rs.getString(1);
+        System.out.println("current MFA user is " + currentUser);
+        String jobName= rs.getString(2).replace('/','.'); 
+        if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
+          successful = false; sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_+"\n");
+        }
+        /* Read the output file using IFS_READ */ 
+        boolean foundProfileName= false;
+        boolean foundVerificationId = false; 
+        boolean foundRemotePort  = false;
+        boolean foundLocalPort = false;
+        boolean foundRemoteIp = false;
+        boolean foundLocalIp = false;
+        String expectedVerificationId; 
+        String expectedRemotePort="NOTSET";
+        String expectedLocalPort="NOTSET";
+        String expectedRemoteIp="NOTSET";
+        String expectedLocalIp="NOTSET";
+        
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+          
+          expectedVerificationId="Verification_ID=QIBM_OS400_QZBS_SVR_DATABASE"; 
+
+          String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
+          rs = s.executeQuery(sql);
+          if (rs.next()) {
+            expectedRemoteIp = "Remote_IPAddress=" + rs.getString(1);
+            expectedRemotePort = "Remote_Port=" + rs.getString(2);
+            expectedLocalIp = "Local_IPAddress=" + rs.getString(3);
+            expectedLocalPort = "Local_Port=" + rs.getString(4);
+          }
+          rs.close();
+          
+        } else {
+          expectedVerificationId="Verification_ID=QIBM_OS400_QJDB_JDBC"; 
+          expectedRemotePort="Remote_Port=0";
+          expectedLocalPort="Local_Port=0";
+          expectedRemoteIp="Remote_IPAddress=";
+          expectedLocalIp="Local_IPAddress=";
+        }
+        c.close(); 
+
+        
+        Statement pwrStmt = pwrConnection_.createStatement(); 
+        String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/"+jobName+".txt'))";
+        rs = pwrStmt.executeQuery(sql);
+        while(rs.next()) { 
+          String line = rs.getString(1).trim(); 
+          sb.append(line); 
+          sb.append("\n"); 
+          if (line.equals("User_Profile_Name="+mfaUserid_)) {
+            foundProfileName = true;
+          }
+          if (line.equals(expectedVerificationId))   foundVerificationId = true; 
+          if (line.equals(expectedLocalIp)) foundLocalIp = true; 
+          if (line.equals(expectedLocalPort)) foundLocalPort = true; 
+          if (line.equals(expectedRemoteIp)) foundRemoteIp = true; 
+          if (line.equals(expectedRemotePort)) foundRemotePort = true; 
+        }
+        rs.close(); 
+        pwrStmt.close(); 
+        if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
+        if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
+        if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
+        if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
+        if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+"\n"); }
+        if (!foundRemotePort) { successful = false; sb.append("Did not find expected:"+expectedRemotePort+"\n"); }
+        assertCondition(successful, sb);
+      }
+    } catch (Exception e) { 
+      failed(e, "Unexpected exception"); 
+    }
+  }
+
+
+  /* Test that the exit program information is correct for toolbox non-secure */ 
+  public void Var082() { 
+    try { 
+      StringBuffer sb = new StringBuffer(); 
+      boolean successful = true; 
+      if (checkToolbox() && checkExitProgram()) {
+          // Create a simple MFA connection and check the exit information. 
+        initMfaUser();
+        cleanupExitProgramFiles(); 
+        String mfaFactorString = new String(mfaFactor_);
+        String url;
+        url = "jdbc:as400:" + systemObject_.getSystemName() + ";secure=true;additionalAuthenticationFactor=" + mfaFactorString;
+        Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
+        rs.next();
+        String currentUser = rs.getString(1);
+        System.out.println("current MFA user is " + currentUser);
+        String jobName= rs.getString(2).replace('/','.'); 
+        if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
+          successful = false; sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_+"\n");
+        }
+        /* Read the output file using IFS_READ */ 
+        boolean foundProfileName= false;
+        boolean foundVerificationId = false; 
+        boolean foundLocalPort = false;
+        boolean foundRemoteIp = false;
+        boolean foundLocalIp = false;
+        String expectedVerificationId; 
+        String expectedLocalPort="NOTSET";
+        String expectedRemoteIp="NOTSET";
+        String expectedLocalIp="NOTSET";
+        
+          
+          expectedVerificationId="Verification_ID=QIBM_QZBS_SVR_HOSTCNN"; 
+
+          String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
+          rs = s.executeQuery(sql);
+          if (rs.next()) {
+            expectedRemoteIp = "Remote_IPAddress=" + rs.getString(1);
+            expectedLocalIp = "Local_IPAddress=" + rs.getString(3);
+            expectedLocalPort = "Local_Port=9480";
+          }
+          rs.close();
+          
+        c.close(); 
+
+        
+        Statement pwrStmt = pwrConnection_.createStatement(); 
+        sql = "select LINE,PATH_NAME from "
+            + "table(qsys2.IFS_OBJECT_STATISTICS('/tmp/authexit')), "
+            + "TABLE(QSYS2.IFS_READ_UTF8(PATH_NAME)) WHERE OBJECT_TYPE='*STMF'";
+        rs = pwrStmt.executeQuery(sql);
+        while(rs.next()) { 
+          String line = rs.getString(1).trim(); 
+          sb.append(line); 
+          sb.append("\n"); 
+          if (line.equals("User_Profile_Name="+mfaUserid_)) {
+            foundProfileName = true;
+          }
+          if (line.equals(expectedVerificationId))   foundVerificationId = true; 
+          if (line.equals(expectedLocalIp)) foundLocalIp = true; 
+          if (line.equals(expectedLocalPort)) foundLocalPort = true; 
+          if (line.equals(expectedRemoteIp)) foundRemoteIp = true; 
+        }
+        rs.close(); 
+        pwrStmt.close(); 
+        if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
+        if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
+        if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
+        if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
+        if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+"\n"); }
+        assertCondition(successful, sb);
+      }
+    } catch (Exception e) { 
+      failed(e, "Unexpected exception"); 
+    }
+  }
+
+ 
+
+  /* Remove the old exit program files */ 
+  private void cleanupExitProgramFiles() throws SQLException {
+    Statement stmt=pwrConnection_.createStatement(); 
+    String sql = "select SYSTOOLS.IFS_UNLINK(PATH_NAME) "
+        + "from table(qsys2.IFS_OBJECT_STATISTICS('/tmp/authexit')) "
+        + "WHERE OBJECT_TYPE='*STMF'"; 
+    ResultSet rs = stmt.executeQuery(sql); 
+    while (rs.next()) {
+      
+    }
+    rs.close(); 
+    stmt.close(); 
+  }
+
+  
+  
 }

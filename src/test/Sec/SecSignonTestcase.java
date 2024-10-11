@@ -14,12 +14,8 @@
 package test.Sec;
 
 import java.net.InetAddress;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400JDBCDataSource;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
@@ -89,6 +85,7 @@ public class SecSignonTestcase extends Testcase
                 finally
                 {
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
                     AS400.clearPasswordCache();
                     AS400.removeDefaultUser(systemName_);
                 }
@@ -135,6 +132,7 @@ public class SecSignonTestcase extends Testcase
                 try
                 {
                     sys.connectService(AS400.COMMAND);
+              
                     assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
                 }
                 catch (Exception e)
@@ -151,6 +149,7 @@ public class SecSignonTestcase extends Testcase
                 finally
                 {
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
                     AS400.clearPasswordCache();
                     AS400.removeDefaultUser(systemName_);
                 }
@@ -2422,17 +2421,16 @@ AS400.addPasswordCacheEntry(systemName_, "", charPassword);
 	public void Var055() {
 		String systemName = systemObject_.getSystemName();
 		if (checkAdditionalAuthenticationFactor(systemName)) {
-			boolean passed = true; 
 			StringBuffer sb = new StringBuffer(); 
 			sb.append("Connect using bad mfa\n"); 
 			try {
-			 
 				initMfaUser(); 
 				sb.append("new AS400("+systemObject_.getSystemName()+","+
-						mfaUserid_+","+ new String(mfaPassword_)+",000000\n"); 
+						mfaUserid_+","+ new String(mfaPassword_)+",000000)\n"); 
 				AS400 as400 = (AS400) JDReflectionUtil.createObject("com.ibm.as400.access.AS400",systemObject_.getSystemName(),
 						mfaUserid_, mfaPassword_, "0000000".toCharArray());
-				
+				as400.setGuiAvailable(false);
+				as400.connectService(AS400.SIGNON);
 				assertCondition(false, sb); 
 				
 			} catch (Exception e) {
@@ -2455,7 +2453,7 @@ AS400.addPasswordCacheEntry(systemName_, "", charPassword);
 						mfaUserid_+","+ new String(mfaPassword_)+"," + new String(mfaFactor_)+"\n"); 
 				AS400 as400 = (AS400) JDReflectionUtil.createObject("com.ibm.as400.access.AS400",systemObject_.getSystemName(),
 						mfaUserid_, mfaPassword_, mfaFactor_);
-
+				as400.setGuiAvailable(false); 
 				as400.connectService(AS400.COMMAND);
 				as400.connectService(AS400.DATAQUEUE);
 				as400.connectService(AS400.DATABASE);
@@ -2529,7 +2527,6 @@ AS400.addPasswordCacheEntry(systemName_, "", charPassword);
 	public void Var057() {
 		String systemName = systemObject_.getSystemName();
 		if (checkAdditionalAuthenticationFactor(systemName)) {
-			boolean passed = true; 
 			StringBuffer sb = new StringBuffer(); 
 			sb.append("Connect using bad mfa\n"); 
 			try {
