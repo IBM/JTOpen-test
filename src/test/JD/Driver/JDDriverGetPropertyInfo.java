@@ -120,8 +120,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     try {
       DriverPropertyInfo[] propertyInfo = driver_.getPropertyInfo(baseURL_,
           properties_);
-      boolean passed = (propertyInfo.length == NUMBER_OF_PROPERTIES)
-          || (propertyInfo.length == NUMBER_OF_PROPERTIES + 1);
+      boolean passed = (propertyInfo.length == NUMBER_OF_PROPERTIES);
       assertCondition(passed, "propertyInfo.length = " + propertyInfo.length
           + " AND SHOULD BE equal to NUMBER_OF_PROPERTIES = "
           + NUMBER_OF_PROPERTIES);
