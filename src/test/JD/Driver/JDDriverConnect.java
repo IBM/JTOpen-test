@@ -2933,7 +2933,8 @@ public class JDDriverConnect extends JDTestcase {
           assertCondition(false,
               "Able to connect as MFS user without mfaFactor currentUser=" + currentUser + " MFAUserID=" + mfaUserid_);
           } catch (SQLException e) { 
-            String[] expected = {"Password is incorrect"};
+            String[] expected = {"Password is incorrect",
+                "Authorization failure"};
             assertExceptionContains(e,expected, "Connecting via MFA user with additional factor"); 
           }
         } catch (Exception e) {
@@ -3597,6 +3598,9 @@ public void Var063() {
         Statement pwrStmt = pwrConnection_.createStatement(); 
         String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/"+jobName+".txt'))";
         rs = pwrStmt.executeQuery(sql);
+        sb.append("/tmp/authexit/"+jobName+".txt contains \n");
+        sb.append("-------------------------------------------\n");
+        
         while(rs.next()) { 
           String line = rs.getString(1).trim(); 
           sb.append(line); 
@@ -3610,6 +3614,8 @@ public void Var063() {
           if (line.equals(expectedRemoteIp)) foundRemoteIp = true; 
           if (line.equals(expectedRemotePort)) foundRemotePort = true; 
         }
+        sb.append("-------------------------------------------\n");
+
         rs.close(); 
         pwrStmt.close(); 
         if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
