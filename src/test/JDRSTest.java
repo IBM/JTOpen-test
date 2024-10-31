@@ -2070,39 +2070,42 @@ public class JDRSTest extends JDTestDriver {
    *              If an exception occurs.
    **/
   public void cleanup() throws Exception {
-    boolean dropUDTfailed = false;
-    if (areLobsSupported()) {
-      cleanupTable(statement_, RSTEST_GETDL);
-    }
-    cleanupTable(statement_, RSTEST_GET);
+    /* Only cleanup if there are no failures */ 
+    if (totalFail_ == 0) {
+      boolean dropUDTfailed = false;
+      if (areLobsSupported()) {
+        cleanupTable(statement_, RSTEST_GETDL);
+      }
+      cleanupTable(statement_, RSTEST_GET);
 
-    cleanupTable(statement_, RSTEST_GETX);
+      cleanupTable(statement_, RSTEST_GETX);
 
-    cleanupTable(statement_, RSTEST_POS);
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      cleanupTable(statement_, RSTEST_BINARY);
-      cleanupTable(statement_, RSTEST_GRAPHIC);
-    }
-    cleanupTable(statement_, RSTEST_UPDATE);
-    cleanupTable(statement_, RSTEST_SCROLL);
-    cleanupTable(statement_, RSTEST_SENSITIVE); // @G1A
+      cleanupTable(statement_, RSTEST_POS);
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+        cleanupTable(statement_, RSTEST_BINARY);
+        cleanupTable(statement_, RSTEST_GRAPHIC);
+      }
+      cleanupTable(statement_, RSTEST_UPDATE);
+      cleanupTable(statement_, RSTEST_SCROLL);
+      cleanupTable(statement_, RSTEST_SENSITIVE); // @G1A
 
-    if (areLobsSupported()) {
+      if (areLobsSupported()) {
 
-      statement_.executeUpdate("DROP DISTINCT TYPE " + COLLECTION + ".SSN");
-    }
+        statement_.executeUpdate("DROP DISTINCT TYPE " + COLLECTION + ".SSN");
+      }
 
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      cleanupTable(statement_, RSTEST_GETXML);
-      cleanupTable(statement_, RSTEST_UPDATEXML);
+      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+        cleanupTable(statement_, RSTEST_GETXML);
+        cleanupTable(statement_, RSTEST_UPDATEXML);
 
-    }
+      }
 
-    statement_.close();
+      statement_.close();
 
-    if (dropUDTfailed) {
-      System.out.println("Deleting collection since drop UDT failed");
-      dropCollections(connection_);
+      if (dropUDTfailed) {
+        System.out.println("Deleting collection since drop UDT failed");
+        dropCollections(connection_);
+      }
     }
     connection_.close();
   }

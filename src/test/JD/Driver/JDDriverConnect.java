@@ -33,6 +33,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -44,12 +45,14 @@ import com.ibm.as400.access.IFSSystemView;
 import com.ibm.as400.access.SecureAS400; //@A2A
 
 import test.JDDriverTest;
+import test.JDJobName;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JTOpenTestEnvironment;
 import test.JVMInfo;
 import test.PasswordVault;
+import test.Sec.AuthExit;
 
 /**
  * Testcase JDDriverConnect. This tests the following method of the JDBC Driver
@@ -64,71 +67,63 @@ import test.PasswordVault;
  * </ul>
  **/
 public class JDDriverConnect extends JDTestcase {
-  public static void main(String args[]) throws Exception { 
-    // Note:  reflection is used to get the classname, so this can be pasted easily into other Testcase classes
-    String[] newArgs = new String[args.length+2];
-    newArgs[0] = "-tc"; 
-    newArgs[1] = new Object() { }.getClass().getEnclosingClass().getSimpleName();
-    for (int i = 0; i < args.length; i++) { 
-      newArgs[2+i]=args[i]; 
+  public static void main(String args[]) throws Exception {
+    // Note: reflection is used to get the classname, so this can be pasted easily
+    // into other Testcase classes
+    String[] newArgs = new String[args.length + 2];
+    newArgs[0] = "-tc";
+    newArgs[1] = new Object() {
+    }.getClass().getEnclosingClass().getSimpleName();
+    for (int i = 0; i < args.length; i++) {
+      newArgs[2 + i] = args[i];
     }
-    JDDriverTest.main(newArgs); 
+    JDDriverTest.main(newArgs);
   }
 
   // Private data.
   private Driver driver_;
   String letter_;
   int jdk_;
-  boolean exitProgramChecked_ = false; 
-  boolean exitProgramEnabled_ = false; 
-  Connection pwrConnection_ = null; 
+  boolean exitProgramChecked_ = false;
+  boolean exitProgramEnabled_ = false;
+  Connection pwrConnection_ = null;
+  private boolean skipExitCleanup = false;
+
   /**
    * Constructor.
    **/
- 
-    public JDDriverConnect (AS400 systemObject,
-                         Hashtable namesAndVars,
-                         int runMode,
-                         FileOutputStream fileOutputStream,
-                         String password,
-                         String powerUserID,
-                         String powerPassword)
-    {
-        super (systemObject, "JDDriverMisc",
-               namesAndVars, runMode, fileOutputStream, 
-               password, powerUserID, powerPassword);
 
-        systemObject_ = systemObject;
+  public JDDriverConnect(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      String password, String powerUserID, String powerPassword) {
+    super(systemObject, "JDDriverMisc", namesAndVars, runMode, fileOutputStream, password, powerUserID, powerPassword);
 
-    }
+    systemObject_ = systemObject;
 
-
+  }
 
   /**
    * Performs setup needed before running variations.
    * 
-   * @exception Exception
-   *              If an exception occurs.
+   * @exception Exception If an exception occurs.
    **/
   protected void setup() throws Exception {
     jdk_ = JVMInfo.getJDK();
     driver_ = DriverManager.getDriver(baseURL_);
 
-    letter_ = JDDriverTest.COLLECTION
-        .substring(JDDriverTest.COLLECTION.length() - 1);
-    
-     
-    Properties properties = new Properties(); 
-    properties.put("user",testDriver_.pwrSysUserID_);
-    properties.put("prompt","false"); 
-    char[] charPassword = PasswordVault.decryptPassword(testDriver_.pwrSysEncryptedPassword_); 
-    Class[] argTypes = new Class[3]; 
-    argTypes[0] = baseURL_.getClass(); 
-    argTypes[1] = properties.getClass(); 
-    argTypes[2] = charPassword.getClass(); ;
-    pwrConnection_ = (Connection) JDReflectionUtil.callMethod_O(driver_, "connect", argTypes, baseURL_, properties, charPassword);
-    Arrays.fill(charPassword,' '); 
+    letter_ = JDDriverTest.COLLECTION.substring(JDDriverTest.COLLECTION.length() - 1);
 
+    Properties properties = new Properties();
+    properties.put("user", testDriver_.pwrSysUserID_);
+    properties.put("prompt", "false");
+    char[] charPassword = PasswordVault.decryptPassword(testDriver_.pwrSysEncryptedPassword_);
+    Class[] argTypes = new Class[3];
+    argTypes[0] = baseURL_.getClass();
+    argTypes[1] = properties.getClass();
+    argTypes[2] = charPassword.getClass();
+    ;
+    pwrConnection_ = (Connection) JDReflectionUtil.callMethod_O(driver_, "connect", argTypes, baseURL_, properties,
+        charPassword);
+    Arrays.fill(charPassword, ' ');
 
   }
 
@@ -142,9 +137,11 @@ public class JDDriverConnect extends JDTestcase {
     //
     // When this happens, the locks my still be held.
     //
-    cleanupExitProgam();
-    cleanupExitProgramFiles();
-    pwrConnection_.close(); 
+    if (!skipExitCleanup) {
+      AuthExit.cleanupExitProgam(pwrConnection_);
+      AuthExit.cleanupExitProgramFiles(pwrConnection_);
+    }
+    pwrConnection_.close();
     System.gc();
     try {
       Thread.sleep(10000);
@@ -188,26 +185,27 @@ public class JDDriverConnect extends JDTestcase {
    * connect() - Should return a connection when the properties are null.
    **/
   public void Var003() {
-	  if (checkPasswordLeak()) {
-    if (getDriver() == JDTestDriver.DRIVER_JCC) {
-      notApplicable("JCC Driver does not permit null USERID");
-    } else {
-      try {
-        String url = baseURL_ + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.3");
-        Connection c = driver_.connect(url, null);
-        boolean success = (c != null);
+    if (checkPasswordLeak()) {
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        notApplicable("JCC Driver does not permit null USERID");
+      } else {
+        try {
+          String url = baseURL_ + ";user=" + userId_ + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.3");
+          Connection c = driver_.connect(url, null);
+          boolean success = (c != null);
 
-        // Close the connection.
-        if (c != null) {
-          c.close();
+          // Close the connection.
+          if (c != null) {
+            c.close();
+          }
+
+          assertCondition(success);
+        } catch (Exception e) {
+          failed(e, "Unexpected exception");
         }
-
-        assertCondition(success);
-      } catch (Exception e) {
-        failed(e, "Unexpected exception");
       }
     }
-	  }
   }
 
   /**
@@ -215,43 +213,12 @@ public class JDDriverConnect extends JDTestcase {
    * in the properties object, then we can run statements.
    **/
   public void Var004() {
-	  if (checkPasswordLeak()) {
-    try {
-      String url = baseURL_;
-      Properties p = new Properties();
-      p.put("user", userId_);
-      p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.4"));
-
-      Connection c = driver_.connect(url, p);
-
-      // Run a query.
-      Statement s = c.createStatement();
-      ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-      boolean found = rs.next();
-
-      // Close the connection.
-      c.close();
-
-      assertCondition(found, "DID NOT FIND ROW IN SELECT * FROM QIWS.QCUSTCDT");
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
-    }
-	  }
-  }
-
-  /**
-   * connect() - When a valid URL is specified, and user and password are passed
-   * in the URL, then we can run statements.
-   **/
-  public void Var005() {
-	  if (checkPasswordLeak()) {
-    if (getDriver() == JDTestDriver.DRIVER_JCC) {
-      notApplicable("JCC Driver does not permit null USERID");
-    } else {
-
+    if (checkPasswordLeak()) {
       try {
-        String url = baseURL_ + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.5");
+        String url = baseURL_;
         Properties p = new Properties();
+        p.put("user", userId_);
+        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.4"));
 
         Connection c = driver_.connect(url, p);
 
@@ -263,14 +230,46 @@ public class JDDriverConnect extends JDTestcase {
         // Close the connection.
         c.close();
 
-        assertCondition(found);
+        assertCondition(found, "DID NOT FIND ROW IN SELECT * FROM QIWS.QCUSTCDT");
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
     }
   }
+
+  /**
+   * connect() - When a valid URL is specified, and user and password are passed
+   * in the URL, then we can run statements.
+   **/
+  public void Var005() {
+    if (checkPasswordLeak()) {
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        notApplicable("JCC Driver does not permit null USERID");
+      } else {
+
+        try {
+          String url = baseURL_ + ";user=" + userId_ + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.5");
+          Properties p = new Properties();
+
+          Connection c = driver_.connect(url, p);
+
+          // Run a query.
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+          boolean found = rs.next();
+
+          // Close the connection.
+          c.close();
+
+          assertCondition(found);
+        } catch (Exception e) {
+          failed(e, "Unexpected Exception");
+        }
+      }
+    }
   }
-  
+
   /**
    * connect() - When a valid URL is specified, and user and password are passed
    * in both the URL and properties, then we can run statements. Verify that the
@@ -333,26 +332,24 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /**
-   * connect() - When a valid URL is specified, but the user is not a valid
-   * user, then an exception should be thrown.
+   * connect() - When a valid URL is specified, but the user is not a valid user,
+   * then an exception should be thrown.
    **/
   public void Var008() {
-    if (checkPasswordLeak()) { 
-    try {
-      String url = baseURL_;
-      Properties p = new Properties();
-      p.put("user", "MRNOBODY");
-      p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.8"));
-      p.put("prompt", "false");
+    if (checkPasswordLeak()) {
+      try {
+        String url = baseURL_;
+        Properties p = new Properties();
+        p.put("user", "MRNOBODY");
+        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.8"));
+        p.put("prompt", "false");
 
-      Connection c = driver_.connect(url, p);
+        Connection c = driver_.connect(url, p);
 
-      failed(
-          "Did not throw exception.  This variation is expected to fail if a secondary URL was specified. "
-              + c);
-    } catch (Exception e) {
-      assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-    }
+        failed("Did not throw exception.  This variation is expected to fail if a secondary URL was specified. " + c);
+      } catch (Exception e) {
+        assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
     }
   }
 
@@ -370,9 +367,7 @@ public class JDDriverConnect extends JDTestcase {
 
       Connection c = driver_.connect(url, p);
 
-      failed(
-          "Did not throw exception.  This variation is expected to fail if a secondary URL was specified. "
-              + c);
+      failed("Did not throw exception.  This variation is expected to fail if a secondary URL was specified. " + c);
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
     }
@@ -383,90 +378,48 @@ public class JDDriverConnect extends JDTestcase {
    * property, then a warning is posted, but we can still run statements.
    **/
   public void Var010() {
-    if (checkPasswordLeak()) { 
-    if (getDriver() == JDTestDriver.DRIVER_JCC) {
-      notApplicable("JCC Driver does not permit null USERID");
-    } else {
+    if (checkPasswordLeak()) {
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        notApplicable("JCC Driver does not permit null USERID");
+      } else {
 
-      try {
-        String url = baseURL_ + ";user=" + userId_ + ";himom=look at me"
-            + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.10");
-        Properties p = new Properties();
+        try {
+          String url = baseURL_ + ";user=" + userId_ + ";himom=look at me" + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.10");
+          Properties p = new Properties();
 
-        Connection c = driver_.connect(url, p);
-        SQLWarning w = c.getWarnings();
+          Connection c = driver_.connect(url, p);
+          SQLWarning w = c.getWarnings();
 
-        // Run a query.
-        Statement s = c.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-        boolean found = rs.next();
+          // Run a query.
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+          boolean found = rs.next();
 
-        // Close the connection.
-        c.close();
+          // Close the connection.
+          c.close();
 
-        assertCondition((found) && (w != null),
-            "found=" + found + " sb true warning is " + w);
-      } catch (Exception e) {
-        failed(e, "Unexpected Exception");
+          assertCondition((found) && (w != null), "found=" + found + " sb true warning is " + w);
+        } catch (Exception e) {
+          failed(e, "Unexpected Exception");
+        }
       }
     }
   }
-  }
+
   /**
    * "errors" property - Set to "basic", verify that only first level text is
    * returned.
    **/
   public void Var011() {
-    if (checkPasswordLeak()) { 
-
-    try {
-      String url = baseURL_;
-      Properties p = new Properties();
-      p.put("user", userId_);
-      p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.11"));
-      p.put("errors", "basic");
-
-      Connection c = driver_.connect(url, p);
-
-      // Run a query.
-      Statement s = c.createStatement();
-      String messageText = null;
-      try {
-        s.executeQuery("SELECT * FROM QIWS.BADNAME");
-        messageText = "QUERY:  SELECT * FROM QIWS.BADNAME worked";
-      } catch (SQLException e) {
-        messageText = e.getMessage();
-      }
-      s.close();
-
-      // Close the connection.
-      c.close();
-
-      assertCondition(messageText.indexOf(". . .") == -1,
-          "Did not find '. . .' in '" + messageText + "'");
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
-    }
-    }
-  }
-
-  /**
-   * "errors" property - Set to "full", verify that first and second level text
-   * is returned.
-   **/
-  public void Var012() {
-    if (checkPasswordLeak()) { 
-
-    if (getDriver() == JDTestDriver.DRIVER_JCC) {
-      notApplicable("JCC Driver does not have 'errors' property");
-    } else {
+    if (checkPasswordLeak()) {
 
       try {
         String url = baseURL_;
         Properties p = new Properties();
         p.put("user", userId_);
-        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.12"));
-        p.put("errors", "full");
+        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.11"));
+        p.put("errors", "basic");
 
         Connection c = driver_.connect(url, p);
 
@@ -475,7 +428,7 @@ public class JDDriverConnect extends JDTestcase {
         String messageText = null;
         try {
           s.executeQuery("SELECT * FROM QIWS.BADNAME");
-          messageText = "ERROR:  query worked";
+          messageText = "QUERY:  SELECT * FROM QIWS.BADNAME worked";
         } catch (SQLException e) {
           messageText = e.getMessage();
         }
@@ -484,11 +437,52 @@ public class JDDriverConnect extends JDTestcase {
         // Close the connection.
         c.close();
 
-        assertCondition(messageText.indexOf(". . .") > 0);
+        assertCondition(messageText.indexOf(". . .") == -1, "Did not find '. . .' in '" + messageText + "'");
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
     }
+  }
+
+  /**
+   * "errors" property - Set to "full", verify that first and second level text is
+   * returned.
+   **/
+  public void Var012() {
+    if (checkPasswordLeak()) {
+
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        notApplicable("JCC Driver does not have 'errors' property");
+      } else {
+
+        try {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", userId_);
+          p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.12"));
+          p.put("errors", "full");
+
+          Connection c = driver_.connect(url, p);
+
+          // Run a query.
+          Statement s = c.createStatement();
+          String messageText = null;
+          try {
+            s.executeQuery("SELECT * FROM QIWS.BADNAME");
+            messageText = "ERROR:  query worked";
+          } catch (SQLException e) {
+            messageText = e.getMessage();
+          }
+          s.close();
+
+          // Close the connection.
+          c.close();
+
+          assertCondition(messageText.indexOf(". . .") > 0);
+        } catch (Exception e) {
+          failed(e, "Unexpected Exception");
+        }
+      }
     }
   }
 
@@ -496,14 +490,14 @@ public class JDDriverConnect extends JDTestcase {
    * "secure" property - Verify that secure connections work.
    * 
    * <p>
-   * You need the certificate (e.g. KeyRing.class) in the classpath to get this
-   * to work. Also need the com.ibm.sslight package in the classpath.
+   * You need the certificate (e.g. KeyRing.class) in the classpath to get this to
+   * work. Also need the com.ibm.sslight package in the classpath.
    * 
    * <p>
-   * Also, the following command needs to be run once (on any client machine)
-   * for each AS/400 that you're testing to. Note that once this command has
-   * been run from *any* client machine for a particular AS/400, that AS/400 is
-   * good until the next scratch-install.
+   * Also, the following command needs to be run once (on any client machine) for
+   * each AS/400 that you're testing to. Note that once this command has been run
+   * from *any* client machine for a particular AS/400, that AS/400 is good until
+   * the next scratch-install.
    * 
    * java com.ibm.sslight.nlstools.keyrng com.ibm.as400.access.KeyRing connect
    * rchasxxx:9475
@@ -515,27 +509,26 @@ public class JDDriverConnect extends JDTestcase {
    * today. There is no network layer to the native driver.
    **/
   public void Var013() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (checkNotGroupTest()) {
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-        notApplicable("'secure' property not supported.");
-        return;
-      }
+      if (checkNotGroupTest()) {
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+          notApplicable("'secure' property not supported for Native JDBC driver.");
+          return;
+        }
 
-      if (proxy_ != null && (!proxy_.equals(""))) {
-        notApplicable("'secure' property does not work for proxy driver");
-        return;
-      }
+        if (proxy_ != null && (!proxy_.equals(""))) {
+          notApplicable("'secure' property does not work for proxy driver");
+          return;
+        }
 
-      try {
-        String url = baseURL_;
-        Properties p = new Properties();
-        p.put("user", userId_);
-        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.13"));
-        p.put("secure", "true");
+        try {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", userId_);
+          p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.13"));
+          p.put("secure", "true");
 
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
           Connection c = driver_.connect(url, p);
 
           // Run a query.
@@ -551,56 +544,47 @@ public class JDDriverConnect extends JDTestcase {
           c.close();
 
           assertCondition(rows >= 10);
-        } else {
-          try {
-            Connection c = driver_.connect(url, p);
-            failed("Did not throw exception. " + c);
-          } catch (Exception e) {
-            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-          }
+        } catch (Exception e) {
+          failed(e, "SSL not configured. " + "If you get a certificate chaining error, you need "
+              + "to get the CA certificate and install it using "
+              + "keytool -import -keystore /QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/jre/lib/security/cacerts -file /tmp/cert.ca2 -storepass changeit");
         }
-      } catch (Exception e) {
-        failed(e, "SSL not configured. "
-            + "If you get a certificate chaining error, you need "
-            + "to get the CA certificate and install it using "
-            + "keytool -import -keystore /QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/jre/lib/security/cacerts -file /tmp/cert.ca2 -storepass changeit");
       }
-    }
     }
   }
 
   /**
-   * "trace" property - Set to "false", verify that driver manager tracing is
-   * not turned on.
+   * "trace" property - Set to "false", verify that driver manager tracing is not
+   * turned on.
    **/
   public void Var014() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    // @A1C Changed variation because if user has set tracing on
-    // @A1C previous to this call, the code no longer turns it off.
-    if (isToolboxDriver() && DriverManager.getLogWriter() != null) // @A1A @A3C
-    {
-      notApplicable("variation is no longer applicable"); // @A1A
-      return; // @A1A
-    } // @A1A
-    try {
-      String url = baseURL_;
-      Properties p = new Properties();
-      p.put("user", userId_);
-      p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.14"));
-      p.put("trace", "false");
+      // @A1C Changed variation because if user has set tracing on
+      // @A1C previous to this call, the code no longer turns it off.
+      if (isToolboxDriver() && DriverManager.getLogWriter() != null) // @A1A @A3C
+      {
+        notApplicable("variation is no longer applicable"); // @A1A
+        return; // @A1A
+      } // @A1A
+      try {
+        String url = baseURL_;
+        Properties p = new Properties();
+        p.put("user", userId_);
+        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.14"));
+        p.put("trace", "false");
 
-      Connection c = driver_.connect(url, p);
+        Connection c = driver_.connect(url, p);
 
-      boolean trace = (DriverManager.getLogWriter() != null);
+        boolean trace = (DriverManager.getLogWriter() != null);
 
-      // Close the connection.
-      c.close();
+        // Close the connection.
+        c.close();
 
-      assertCondition(trace == false);
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
-    }
+        assertCondition(trace == false);
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception");
+      }
     }
   }
 
@@ -609,86 +593,86 @@ public class JDDriverConnect extends JDTestcase {
    * turned on.
    */
   public void Var015() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    PrintWriter before = DriverManager.getLogWriter();
-    if (isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE) {
-      // If there is a log writer or log stream in the DriverManager, then
-      // according to the DriverManager javadoc, all JDBC drivers should be
-      // logging. If there is not one set (e.g. set to null), all drivers
-      // should not be logging. However, since we have our own Toolbox tracing,
-      // we are
-      // nicer than that. We let the user turn off Toolbox JDBC tracing without
-      // turning off DriverManager tracing. And vice-versa: If Toolbox JDBC
-      // tracing is
-      // turned on via the Trace class, we will log our JDBC traces there... we
-      // don't
-      // muck with the DriverManager logging until someone sets a log writer or
-      // log
-      // stream into it.
-      DriverManager.setLogWriter(new PrintWriter(System.out));
-    }
-    Properties p = new Properties();
-    String url = baseURL_;
+      PrintWriter before = DriverManager.getLogWriter();
+      if (isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE) {
+        // If there is a log writer or log stream in the DriverManager, then
+        // according to the DriverManager javadoc, all JDBC drivers should be
+        // logging. If there is not one set (e.g. set to null), all drivers
+        // should not be logging. However, since we have our own Toolbox tracing,
+        // we are
+        // nicer than that. We let the user turn off Toolbox JDBC tracing without
+        // turning off DriverManager tracing. And vice-versa: If Toolbox JDBC
+        // tracing is
+        // turned on via the Trace class, we will log our JDBC traces there... we
+        // don't
+        // muck with the DriverManager logging until someone sets a log writer or
+        // log
+        // stream into it.
+        DriverManager.setLogWriter(new PrintWriter(System.out));
+      }
+      Properties p = new Properties();
+      String url = baseURL_;
 
-    try {
-      p.put("user", userId_);
-      p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.15"));
-      if (getDriver() == JDTestDriver.DRIVER_JCC) {
-        File file = new File("/tmp/jcc.trace");
-        if (file.exists()) {
-          file.delete();
+      try {
+        p.put("user", userId_);
+        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.15"));
+        if (getDriver() == JDTestDriver.DRIVER_JCC) {
+          File file = new File("/tmp/jcc.trace");
+          if (file.exists()) {
+            file.delete();
+          }
+          p.put("traceLevel", "255");
+          p.put("traceFile", "/tmp/jcc.trace");
+        } else if (getDriver() == JDTestDriver.DRIVER_JCC) {
+          p.put("debug", "true");
+        } else {
+          p.put("trace", "true");
+
         }
-        p.put("traceLevel", "255");
-        p.put("traceFile", "/tmp/jcc.trace");
-      } else if (getDriver() == JDTestDriver.DRIVER_JCC) {
-        p.put("debug", "true");
-      } else {
-        p.put("trace", "true");
+        output_.println("");
+        output_.println("Note to tester:");
+        output_.println("Some trace information may appear here.");
+        output_.println("This is okay, since this variation is");
+        output_.println("testing that JDBC tracing works correctly.");
+        output_.println("");
 
+        Connection c = driver_.connect(url, p);
+
+        boolean trace;
+        if (getDriver() == JDTestDriver.DRIVER_JCC) {
+          File file = new File("/tmp/jcc.trace");
+          trace = file.exists();
+        } else {
+          trace = (DriverManager.getLogWriter() != null);
+        }
+        // Close the connection.
+        c.close();
+
+        assertCondition(trace == true, "Error File does not exist");
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception");
+      } finally {
+        /* if (getDriver() != JDTestDriver.DRIVER_TOOLBOX) //@A3A */// @B1A
+        // If it's anything BUT the native driver, use the properties.
+        // If it's the native driver, then you MUST set the logstream to null.
+        // if (getDriver() != JDTestDriver.DRIVER_NATIVE) //@B1A
+        // {
+        // Turn off tracing using command in reverse.
+        // try
+        // {
+        // p.put("trace", "false"); //@A1A
+        // driver_.connect(url, p); //@A1A
+        // }
+        // catch (Exception e)
+        // {
+        // failed(e,"Unexpected Exception");
+        // }
+        // }
+        // else
+        DriverManager.setLogWriter(before);
       }
-      output_.println("");
-      output_.println("Note to tester:");
-      output_.println("Some trace information may appear here.");
-      output_.println("This is okay, since this variation is");
-      output_.println("testing that JDBC tracing works correctly.");
-      output_.println("");
-
-      Connection c = driver_.connect(url, p);
-
-      boolean trace;
-      if (getDriver() == JDTestDriver.DRIVER_JCC) {
-        File file = new File("/tmp/jcc.trace");
-        trace = file.exists();
-      } else {
-        trace = (DriverManager.getLogWriter() != null);
-      }
-      // Close the connection.
-      c.close();
-
-      assertCondition(trace == true, "Error File does not exist");
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
-    } finally {
-      /* if (getDriver() != JDTestDriver.DRIVER_TOOLBOX) //@A3A */// @B1A
-      // If it's anything BUT the native driver, use the properties.
-      // If it's the native driver, then you MUST set the logstream to null.
-      // if (getDriver() != JDTestDriver.DRIVER_NATIVE) //@B1A
-      // {
-      // Turn off tracing using command in reverse.
-      // try
-      // {
-      // p.put("trace", "false"); //@A1A
-      // driver_.connect(url, p); //@A1A
-      // }
-      // catch (Exception e)
-      // {
-      // failed(e,"Unexpected Exception");
-      // }
-      // }
-      // else
-      DriverManager.setLogWriter(before);
-    }
     }
   }
 
@@ -696,56 +680,52 @@ public class JDDriverConnect extends JDTestcase {
    * "driver" property - Set to "toolbox", verify that the connection works.
    */
   public void Var016() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    try {
-      if (isToolboxDriver()) {
-        String url = baseURL_;
-        Properties p = new Properties();
-        p.put("user", userId_);
-        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.16"));
-        p.put("driver", "toolbox");
+      try {
+        if (checkToolbox()) {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", userId_);
+          p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.16"));
+          p.put("driver", "toolbox");
 
-        Connection c = driver_.connect(url, p);
-        if (c != null) {
-          c.close();
-        }
-        assertCondition(c != null);
-      } else
-        notApplicable();
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
+          Connection c = driver_.connect(url, p);
+          if (c != null) {
+            c.close();
+          }
+          assertCondition(c != null);
+        } 
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception");
+      }
     }
-  }
   }
 
   /**
    * "driver" property - Set to "native", verify that the connection works.
    **/
   public void Var017() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    try {
-      if ((isToolboxDriver())) // pdd native driver should load and throw exc if
-                               // on windows &&
-                               // (getOS().equalsIgnoreCase("os/400")))
-      {
-        String url = baseURL_;
-        Properties p = new Properties();
-        p.put("user", userId_);
-        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.17"));
-        p.put("driver", "native");
+      try {
+        if (checkToolbox()) 
+        {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", userId_);
+          p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.17"));
+          p.put("driver", "native");
 
-        Connection c = driver_.connect(url, p);
-        if (c != null) {
-          c.close();
-        }
-        assertCondition(c != null);
-      } else
-        notApplicable();
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception connecting with native and "+userId_);
-    }
+          Connection c = driver_.connect(url, p);
+          if (c != null) {
+            c.close();
+          }
+          assertCondition(c != null);
+        } 
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception connecting with native and " + userId_);
+      }
     }
   }
 
@@ -760,9 +740,8 @@ public class JDDriverConnect extends JDTestcase {
 
     try {
       AS400JDBCDriver d = new AS400JDBCDriver();
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-      AS400 o = new AS400(systemObject_.getSystemName(),
-          systemObject_.getUserId(), charPassword);
+      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      AS400 o = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
       PasswordVault.clearPassword(charPassword);
 
       Connection c = d.connect(o);
@@ -817,11 +796,10 @@ public class JDDriverConnect extends JDTestcase {
 
     try {
       AS400JDBCDriver d = new AS400JDBCDriver();
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-      AS400 o = new AS400(systemObject_.getSystemName(),
-          systemObject_.getUserId(), charPassword);
+      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      AS400 o = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
       PasswordVault.clearPassword(charPassword);
-     String schema = null;
+      String schema = null;
       Properties p = new Properties();
 
       Connection c = d.connect(o, p, schema);
@@ -849,44 +827,43 @@ public class JDDriverConnect extends JDTestcase {
    * "driver" property to "native" should complete successfully.
    **/
   public void Var021() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (!isToolboxDriver()) {
-      notApplicable("connect(AS400) variation");
-      return;
-    }
+      if (!isToolboxDriver()) {
+        notApplicable("connect(AS400) variation");
+        return;
+      }
 
-    try {
-      AS400JDBCDriver d = new AS400JDBCDriver();
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-      AS400 o = new AS400(systemObject_.getSystemName(),
-          systemObject_.getUserId(), charPassword);
-     PasswordVault.clearPassword(charPassword);
-      String schema = null;
-      Properties p = new Properties();
+      try {
+        AS400JDBCDriver d = new AS400JDBCDriver();
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        AS400 o = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+        PasswordVault.clearPassword(charPassword);
+        String schema = null;
+        Properties p = new Properties();
 
-      p.put("user", userId_);
-      p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.21"));
-      p.put("driver", "native");
+        p.put("user", userId_);
+        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.21"));
+        p.put("driver", "native");
 
-      Connection c = d.connect(o, p, schema);
+        Connection c = d.connect(o, p, schema);
 
-      // Run a query.
-      Statement s = c.createStatement();
-      ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-      int rows = 0;
-      while (rs.next())
-        ++rows;
-      rs.close();
-      s.close();
+        // Run a query.
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+        int rows = 0;
+        while (rs.next())
+          ++rows;
+        rs.close();
+        s.close();
 
-      // Close the connection.
-      c.close();
+        // Close the connection.
+        c.close();
 
-      assertCondition(rows >= 10);
-    } catch (Exception e) {
-      failed(e, "Unexpected exception");
-    }
+        assertCondition(rows >= 10);
+      } catch (Exception e) {
+        failed(e, "Unexpected exception");
+      }
     }
   }
 
@@ -895,50 +872,49 @@ public class JDDriverConnect extends JDTestcase {
    * "driver" property to "toolbox" should complete successfully.
    **/
   public void Var022() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (!isToolboxDriver()) {
-      notApplicable("connect(AS400) variation");
-      return;
-    }
+      if (!isToolboxDriver()) {
+        notApplicable("connect(AS400) variation");
+        return;
+      }
 
-    try {
-      AS400JDBCDriver d = new AS400JDBCDriver();
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-     AS400 o = new AS400(systemObject_.getSystemName(),
-          systemObject_.getUserId(), charPassword);
-     PasswordVault.clearPassword(charPassword);
-      String schema = null;
-      Properties p = new Properties();
+      try {
+        AS400JDBCDriver d = new AS400JDBCDriver();
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        AS400 o = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+        PasswordVault.clearPassword(charPassword);
+        String schema = null;
+        Properties p = new Properties();
 
-      p.put("user", userId_);
-      p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.22"));
-      p.put("driver", "toolbox");
+        p.put("user", userId_);
+        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.22"));
+        p.put("driver", "toolbox");
 
-      Connection c = d.connect(o, p, schema);
+        Connection c = d.connect(o, p, schema);
 
-      // Run a query.
-      Statement s = c.createStatement();
-      ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-      int rows = 0;
-      while (rs.next())
-        ++rows;
-      rs.close();
-      s.close();
+        // Run a query.
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+        int rows = 0;
+        while (rs.next())
+          ++rows;
+        rs.close();
+        s.close();
 
-      // Close the connection.
-      c.close();
+        // Close the connection.
+        c.close();
 
-
-      assertCondition(rows >= 10);
-    } catch (Exception e) {
-      failed(e, "Unexpected exception");
+        assertCondition(rows >= 10);
+      } catch (Exception e) {
+        failed(e, "Unexpected exception");
+      }
     }
   }
-  }
+
   /**
-   * connect(AS400, Properties, String) - Passing a null Properties object
-   * should throw a null pointer exception.
+   * connect(AS400, Properties, String) - Passing a null Properties object should
+   * throw a null pointer exception.
    **/
   public void Var023() {
     if (!isToolboxDriver()) {
@@ -948,10 +924,9 @@ public class JDDriverConnect extends JDTestcase {
 
     try {
       AS400JDBCDriver d = new AS400JDBCDriver();
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-      AS400 o = new AS400(systemObject_.getSystemName(),
-          systemObject_.getUserId(), charPassword);
-     PasswordVault.clearPassword(charPassword);
+      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      AS400 o = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+      PasswordVault.clearPassword(charPassword);
       Properties p = null;
       String schema = null;
 
@@ -963,8 +938,8 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /**
-   * connect(AS400, Properties, String) - Passing a null AS400 object should
-   * throw null pointer exception.
+   * connect(AS400, Properties, String) - Passing a null AS400 object should throw
+   * null pointer exception.
    **/
   public void Var024() {
     if (!isToolboxDriver()) {
@@ -1003,10 +978,9 @@ public class JDDriverConnect extends JDTestcase {
 
       try {
         AS400JDBCDriver d = new AS400JDBCDriver();
-       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-       SecureAS400 o = new SecureAS400(systemObject_.getSystemName(),
-            systemObject_.getUserId(), charPassword);
-     PasswordVault.clearPassword(charPassword);
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        SecureAS400 o = new SecureAS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+        PasswordVault.clearPassword(charPassword);
 
         Connection c = d.connect(o);
 
@@ -1067,12 +1041,11 @@ public class JDDriverConnect extends JDTestcase {
 
       try {
         AS400JDBCDriver d = new AS400JDBCDriver();
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
-      SecureAS400 o = new SecureAS400(systemObject_.getSystemName(),
-            systemObject_.getUserId(), charPassword);
-       PasswordVault.clearPassword(charPassword);
-      String schema = null;
+        SecureAS400 o = new SecureAS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+        PasswordVault.clearPassword(charPassword);
+        String schema = null;
         Properties p = new Properties();
 
         Connection c = d.connect(o, p, schema);
@@ -1097,110 +1070,108 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /**
-   * connect(String, Properties, SecureAS400) - Passing valid objects and
-   * setting "driver" property to "native" should complete successfully.
+   * connect(String, Properties, SecureAS400) - Passing valid objects and setting
+   * "driver" property to "native" should complete successfully.
    **/
   public void Var028() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (checkNotGroupTest()) {
-      if (!isToolboxDriver()) {
-        notApplicable("connect(AS400) variation");
-        return;
+      if (checkNotGroupTest()) {
+        if (!isToolboxDriver()) {
+          notApplicable("connect(AS400) variation");
+          return;
+        }
+
+        if (proxy_ != null && (!proxy_.equals(""))) {
+          notApplicable("SecureAS400 object does not work for proxy driver");
+          return;
+        }
+
+        // @B2A
+
+        try {
+          AS400JDBCDriver d = new AS400JDBCDriver();
+          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+          SecureAS400 o = new SecureAS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+          PasswordVault.clearPassword(charPassword);
+          String schema = null;
+          Properties p = new Properties();
+
+          p.put("user", userId_);
+          p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.28"));
+          p.put("driver", "native");
+
+          Connection c = d.connect(o, p, schema);
+
+          // Run a query.
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+          int rows = 0;
+          while (rs.next())
+            ++rows;
+          rs.close();
+          s.close();
+
+          // Close the connection.
+          c.close();
+
+          assertCondition(rows >= 10);
+        } catch (Exception e) {
+          failed(e, "SSL not configured.");
+        }
       }
-
-      if (proxy_ != null && (!proxy_.equals(""))) {
-        notApplicable("SecureAS400 object does not work for proxy driver");
-        return;
-      }
-
-      // @B2A
-
-      try {
-        AS400JDBCDriver d = new AS400JDBCDriver();
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-      SecureAS400 o = new SecureAS400(systemObject_.getSystemName(),
-            systemObject_.getUserId(), charPassword);
-       PasswordVault.clearPassword(charPassword);
-      String schema = null;
-        Properties p = new Properties();
-
-        p.put("user", userId_);
-        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.28"));
-        p.put("driver", "native");
-
-        Connection c = d.connect(o, p, schema);
-
-        // Run a query.
-        Statement s = c.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-        int rows = 0;
-        while (rs.next())
-          ++rows;
-        rs.close();
-        s.close();
-
-        // Close the connection.
-        c.close();
-
-        assertCondition(rows >= 10);
-      } catch (Exception e) {
-        failed(e, "SSL not configured.");
-      }
-    }
     }
   }
 
   /**
-   * connect(String, Properties, SecureAS400) - Passing valid objects and
-   * setting "driver" property to "toolbox" should complete successfully.
+   * connect(String, Properties, SecureAS400) - Passing valid objects and setting
+   * "driver" property to "toolbox" should complete successfully.
    **/
   public void Var029() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (checkNotGroupTest()) {
-      if (!isToolboxDriver()) {
-        notApplicable("connect(AS400) variation");
-        return;
+      if (checkNotGroupTest()) {
+        if (!isToolboxDriver()) {
+          notApplicable("connect(AS400) variation");
+          return;
+        }
+
+        if (proxy_ != null && (!proxy_.equals(""))) {
+          notApplicable("SecureAS400 object does not work for proxy driver");
+          return;
+        }
+
+        try {
+          AS400JDBCDriver d = new AS400JDBCDriver();
+          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+          SecureAS400 o = new SecureAS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+          PasswordVault.clearPassword(charPassword);
+          String schema = null;
+          Properties p = new Properties();
+
+          p.put("user", userId_);
+          p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.29"));
+          p.put("driver", "toolbox");
+
+          Connection c = d.connect(o, p, schema);
+
+          // Run a query.
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+          int rows = 0;
+          while (rs.next())
+            ++rows;
+          rs.close();
+          s.close();
+
+          // Close the connection.
+          c.close();
+
+          assertCondition(rows >= 10);
+        } catch (Exception e) {
+          failed(e, "SSL not configured.");
+        }
       }
-
-      if (proxy_ != null && (!proxy_.equals(""))) {
-        notApplicable("SecureAS400 object does not work for proxy driver");
-        return;
-      }
-
-      try {
-        AS400JDBCDriver d = new AS400JDBCDriver();
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-      SecureAS400 o = new SecureAS400(systemObject_.getSystemName(),
-            systemObject_.getUserId(), charPassword);
-      PasswordVault.clearPassword(charPassword);
-       String schema = null;
-        Properties p = new Properties();
-
-        p.put("user", userId_);
-        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.29"));
-        p.put("driver", "toolbox");
-
-        Connection c = d.connect(o, p, schema);
-
-        // Run a query.
-        Statement s = c.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-        int rows = 0;
-        while (rs.next())
-          ++rows;
-        rs.close();
-        s.close();
-
-        // Close the connection.
-        c.close();
-
-        assertCondition(rows >= 10);
-      } catch (Exception e) {
-        failed(e, "SSL not configured.");
-      }
-    }
     }
   }
 
@@ -1216,11 +1187,10 @@ public class JDDriverConnect extends JDTestcase {
 
     try {
       AS400JDBCDriver d = new AS400JDBCDriver();
-       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-     SecureAS400 o = new SecureAS400(systemObject_.getSystemName(),
-          systemObject_.getUserId(), charPassword);
-       PasswordVault.clearPassword(charPassword);
-    Properties p = null;
+      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      SecureAS400 o = new SecureAS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+      PasswordVault.clearPassword(charPassword);
+      Properties p = null;
       String schema = null;
 
       Connection c = d.connect(o, p, schema);
@@ -1231,8 +1201,8 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /**
-   * connect(SecureAS400, Properties, String) - Passing a null AS400 object
-   * should throw null pointer exception.
+   * connect(SecureAS400, Properties, String) - Passing a null AS400 object should
+   * throw null pointer exception.
    **/
   public void Var031() {
     if (!isToolboxDriver()) {
@@ -1270,12 +1240,11 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /**
-   * connect() - When a valid URL is specified, but the password is empty, then
-   * an exception should be thrown.
+   * connect() - When a valid URL is specified, but the password is empty, then an
+   * exception should be thrown.
    **/
   public void Var032() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1286,26 +1255,21 @@ public class JDDriverConnect extends JDTestcase {
 
         Connection c = driver_.connect(url, p);
 
-        failed(
-            "Did not throw exception when passing empty password but passing userId   = "
-                + getUser(c) + "-- native driver added 8/19/2003");
+        failed("Did not throw exception when passing empty password but passing userId   = " + getUser(c)
+            + "-- native driver added 8/19/2003");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
     }
 
   }
 
   /**
-   * connect() - When a valid URL is specified, but the password is not set,
-   * then an exception should be thrown.
+   * connect() - When a valid URL is specified, but the password is not set, then
+   * an exception should be thrown.
    **/
   public void Var033() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1315,26 +1279,21 @@ public class JDDriverConnect extends JDTestcase {
 
         Connection c = driver_.connect(url, p);
 
-        failed(
-            "Did not throw exception when not passing password but passing userId  = "
-                + getUser(c) + " -- native driver added 8/19/2003");
+        failed("Did not throw exception when not passing password but passing userId  = " + getUser(c)
+            + " -- native driver added 8/19/2003");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
     }
 
   }
 
   /**
-   * connect() - When a valid URL is specified, but the password is *NONE, then
-   * an exception should be thrown.
+   * connect() - When a valid URL is specified, but the password is *NONE, then an
+   * exception should be thrown.
    **/
   public void Var034() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1345,15 +1304,11 @@ public class JDDriverConnect extends JDTestcase {
 
         Connection c = driver_.connect(url, p);
 
-        failed(
-            "Did not throw exception when passing *NONE password but passing userId = "
-                + getUser(c) + "  -- native driver added 8/19/2003");
+        failed("Did not throw exception when passing *NONE password but passing userId = " + getUser(c)
+            + "  -- native driver added 8/19/2003");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
     }
 
   }
@@ -1363,8 +1318,7 @@ public class JDDriverConnect extends JDTestcase {
    * then an exception should be thrown.
    **/
   public void Var035() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1375,15 +1329,11 @@ public class JDDriverConnect extends JDTestcase {
 
         Connection c = driver_.connect(url, p);
 
-        failed(
-            "Did not throw exception when passing ******** password but passing userId = "
-                + getUser(c) + "  -- native driver added 8/19/2003");
+        failed("Did not throw exception when passing ******** password but passing userId = " + getUser(c)
+            + "  -- native driver added 8/19/2003");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
     }
 
   }
@@ -1394,36 +1344,32 @@ public class JDDriverConnect extends JDTestcase {
    * the subprotocol using equals instead of startsWith to account for this.
    **/
   public void Var036() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+      if (checkNative()) {
 
-      try {
-        String url = "jdbc:db2j:localhost";
-        Properties p = new Properties();
-        p.put("user", userId_);
-        p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.36"));
+        try {
+          String url = "jdbc:db2j:localhost";
+          Properties p = new Properties();
+          p.put("user", userId_);
+          p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.36"));
 
-        Connection c = driver_.connect(url, p);
-        assertCondition(c == null,
-            "Connection was not null when using db2j as subprotocol -- native driver added 3/3/2004");
-      } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added by native 3/3/2004");
+          Connection c = driver_.connect(url, p);
+          assertCondition(c == null,
+              "Connection was not null when using db2j as subprotocol -- native driver added 3/3/2004");
+        } catch (Exception e) {
+          failed(e, "Unexpected Exception -- added by native 3/3/2004");
+        }
       }
-    } else {
-      notApplicable(
-          "connect Native Driver V5R3 variation -- native driver added 3/3/2004");
     }
   }
-  }
+
   /**
    * connect() - When a valid URL is specified, but the user and id are empty,
    * then an exception should be thrown.
    **/
   public void Var037() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1435,25 +1381,20 @@ public class JDDriverConnect extends JDTestcase {
         Connection c = driver_.connect(url, p);
 
         failed(
-            "Did not throw exception when passing userid and password as blank -- native driver added 12/11/2007"
-                + c);
+            "Did not throw exception when passing userid and password as blank -- native driver added 12/11/2007" + c);
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
     }
 
   }
 
   /**
-   * connect() - When a valid URL is specified, but the user and id are
-   * *CURRENT, then an exception should be thrown.
+   * connect() - When a valid URL is specified, but the user and id are *CURRENT,
+   * then an exception should be thrown.
    **/
   public void Var038() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1464,15 +1405,11 @@ public class JDDriverConnect extends JDTestcase {
 
         Connection c = driver_.connect(url, p);
 
-        failed(
-            "Did not throw exception when passing userid and password as *CURRENT -- native driver added 12/11/2007 "
-                + c);
+        failed("Did not throw exception when passing userid and password as *CURRENT -- native driver added 12/11/2007 "
+            + c);
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
     }
 
   }
@@ -1482,8 +1419,7 @@ public class JDDriverConnect extends JDTestcase {
    * then an exception should be thrown.
    **/
   public void Var039() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1500,20 +1436,16 @@ public class JDDriverConnect extends JDTestcase {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
     }
 
   }
 
   /**
-   * connect() - When a valid URL is specified, but the user and id are
-   * *CURRENT, then an exception should be thrown.
+   * connect() - When a valid URL is specified, but the user and id are *CURRENT,
+   * then an exception should be thrown.
    **/
   public void Var040() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1530,20 +1462,16 @@ public class JDDriverConnect extends JDTestcase {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
     }
 
   }
 
   /**
-   * connect() - When a valid URL is specified, but the user and id are
-   * *CURRENT, then an exception should be thrown.
+   * connect() - When a valid URL is specified, but the user and id are *CURRENT,
+   * then an exception should be thrown.
    **/
   public void Var041() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (checkNative()) {
 
       try {
         String url = baseURL_;
@@ -1560,270 +1488,148 @@ public class JDDriverConnect extends JDTestcase {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
-    }
-
-  }
-
-  public void enableWorkaround() {
-    try {
-      String url = baseURL_ + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.workaround");
-      Connection c = driver_.connect(url, null);
-      Statement s = c.createStatement();
-      s.executeUpdate(
-          "CALL QSYS.QCMDEXC(' CRTDTAARA DTAARA(QSYS/QSQCLICON) TYPE(*CHAR) LEN(7)  VALUE(*PRVCHK)        ',   0000000070.00000)");
-      s.close();
-      c.close();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-  }
-
-  public void disableWorkaround() {
-
-    try {
-      String url = baseURL_ + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.disable");
-      Connection c = driver_.connect(url, null);
-      Statement s = c.createStatement();
-      s.executeUpdate(
-          "CALL QSYS.QCMDEXC(' DLTDTAARA DTAARA(QSYS/QSQCLICON)                  ',   0000000040.00000)");
-      s.close();
-      c.close();
-    } catch (Exception e) {
-      e.printStackTrace();
     }
 
   }
 
   /**
    * connect() - When a valid URL is specified, but the user and id are empty,
-   * then an exception should be not be thrown when workaround enabled.
+   * then an exception should be thrown.
    **/
   public void Var042() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      enableWorkaround();
-      try {
-        String url = baseURL_;
-        Properties p = new Properties();
-        p.put("user", "");
-        p.put("password", "");
-        p.put("prompt", "false");
+      if (checkNative()) {
+        try {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", "");
+          p.put("password", "");
+          p.put("prompt", "false");
 
-        Connection c = driver_.connect(url, p);
-        c.close();
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          assertCondition(true);
-        } else {
-          failed(
-              "Did not throw exception when passing userid and password as blanks in V7R1 with dataarea created ");
+          Connection c = driver_.connect(url, p);
+          c.close();
+          failed("Did not throw exception when passing userid and password as blanks  ");
 
-        }
-
-      } catch (Exception e) {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          failed(e,
-              "Threw exception when passing userid and password as blank when workaround enabled -- native driver added 1/2/2008");
-        } else {
+        } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
-
       }
-      disableWorkaround();
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
-    }
     }
   }
 
   /**
-   * Passing *CURRENT when workaround enabled.
+   * Passing *CURRENT
    **/
   public void Var043() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+      if (checkNative()) {
 
-      enableWorkaround();
-      try {
-        String url = baseURL_;
-        Properties p = new Properties();
-        p.put("user", "*CURRENT");
-        p.put("password", "*CURRENT");
-        p.put("prompt", "false");
+        try {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", "*CURRENT");
+          p.put("password", "*CURRENT");
+          p.put("prompt", "false");
 
-        Connection c = driver_.connect(url, p);
-        c.close();
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          assertCondition(true);
-        } else {
-          failed(
-              "Did not throw exception when passing userid and password as *CURRENT in V7R1 with dataarea created ");
+          Connection c = driver_.connect(url, p);
+          c.close();
 
-        }
-
-      } catch (Exception e) {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          failed(e,
-              "With workaround, threw exception when passing userid and password as *CURRENT -- native driver added 1/2/2008");
-        } else {
+        } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+
         }
-
       }
-      disableWorkaround();
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
-    }
 
+    }
   }
-  }
+
   /**
    * connect() - When a valid URL is specified, but the user and id are empty,
    * then an exception should be thrown.
    **/
   public void Var044() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      enableWorkaround();
-      try {
-        String url = baseURL_;
-        Properties p = new Properties();
-        p.put("user", "       ");
-        p.put("password", "       ");
-        p.put("prompt", "false");
+      if (checkNative()) {
+        try {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", "       ");
+          p.put("password", "       ");
+          p.put("prompt", "false");
 
-        Connection c = driver_.connect(url, p);
-        c.close();
+          Connection c = driver_.connect(url, p);
+          c.close();
 
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          assertCondition(true);
-        } else {
-          failed(
-              "Did not throw exception when passing userid and password as blanks in V7R1 with dataarea created ");
+          failed("Did not throw exception when passing userid and password as blanks  ");
 
-        }
-
-      } catch (Exception e) {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          failed(
-              "With workaround, threw exception when passing userid and password as many blanks -- native driver added 1/2/2008");
-        } else {
+        } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
-      disableWorkaround();
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
-    }
     }
   }
 
   /**
-   * connect() - When a valid URL is specified, but the user and id are
-   * *CURRENT, then an exception should be thrown.
+   * connect() - When a valid URL is specified, but the user and id are *CURRENT,
+   * then an exception should be thrown.
    **/
   public void Var045() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+      if (checkNative()) {
 
-      enableWorkaround();
-      try {
-        String url = baseURL_;
-        Properties p = new Properties();
-        p.put("user", "         *CURRENT");
-        p.put("password", "*CURRENT");
-        p.put("prompt", "false");
+        try {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", "         *CURRENT");
+          p.put("password", "*CURRENT");
+          p.put("prompt", "false");
 
-        Connection c = driver_.connect(url, p);
-        c.close();
+          Connection c = driver_.connect(url, p);
+          c.close();
 
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          assertCondition(true);
-        } else {
-          failed(
-              "Did not throw exception when passing userid and password as *CURRENT in V7R1 with dataarea created ");
+          failed("Did not throw exception when passing userid and password as *CURRENT  ");
 
-        }
+        } catch (Exception e) {
 
-      } catch (Exception e) {
-
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          failed(e,
-              "With workaround, threw exception when passing userid and password as '   *CURRENT' -- native driver added 1/2/2008");
-        } else {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-        }
 
+        }
       }
-      disableWorkaround();
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
-    }
     }
   }
 
   /**
-   * connect() - When a valid URL is specified, but the user and id are
-   * *CURRENT, then an exception should be thrown.
+   * connect() - When a valid URL is specified, but the user and id are *CURRENT,
+   * then an exception should be thrown.
    **/
   public void Var046() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      enableWorkaround();
-      try {
-        String url = baseURL_;
-        Properties p = new Properties();
-        p.put("user", "*cUrReNt");
-        p.put("password", "*CURRENT");
-        p.put("prompt", "false");
+      if (checkNative()) {
+        try {
+          String url = baseURL_;
+          Properties p = new Properties();
+          p.put("user", "*cUrReNt");
+          p.put("password", "*CURRENT");
+          p.put("prompt", "false");
 
-        Connection c = driver_.connect(url, p);
-        c.close();
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-          assertCondition(true);
-        } else {
-          failed(
-              "Did not throw exception when passing userid and password as *CURRENT in V7R1 with dataarea created ");
+          Connection c = driver_.connect(url, p);
+          c.close();
+          failed("Did not throw exception when passing userid and password as *CURRENT ");
 
-        }
-
-      } catch (Exception e) {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-
-          failed(
-              "With workaround, threw  exception when passing userid and password as '   *cUrReNt' -- native driver added 1/2/2008");
-        } else {
+        } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-        }
 
+        }
+        return;
       }
-      disableWorkaround();
-    } else {
-      notApplicable("connect Native Driver  V5R3 variation ");
-      return;
-    }
     }
   }
 
-
-    
   /**
    * connect() - Should throw exception when id/pass are "" or *CURRENT With no
    * user/password in url properties
@@ -1848,7 +1654,7 @@ public class JDDriverConnect extends JDTestcase {
       try {
         conn1 = DriverManager.getConnection(url);
       } catch (Exception e) {
-        sb.append("***** part0 failed to connect ** url="+url+ " Stack trace is\n");
+        sb.append("***** part0 failed to connect ** url=" + url + " Stack trace is\n");
         passed = false;
         printStackTraceToStringBuffer(e, sb);
 
@@ -1885,8 +1691,7 @@ public class JDDriverConnect extends JDTestcase {
       try {
         conn1 = DriverManager.getConnection(url, "*CURRENT", "*CURRENT");// use
                                                                          // current?
-        sb.append(
-            "part4 connected with *CURRENT id/pass to " + conn1 + ";  \n");
+        sb.append("part4 connected with *CURRENT id/pass to " + conn1 + ";  \n");
         passed = false;
       } catch (Exception e) {
         // failed as expected
@@ -1910,133 +1715,136 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /**
-   * connect() - Should throw exception when id/pass are "" or *CURRENT With
-   * some user/password in url properties
+   * connect() - Should throw exception when id/pass are "" or *CURRENT With some
+   * user/password in url properties
    **/
   public void Var048() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    /*
-     * if(!JDTestDriver.getClientOS().equals( JDTestDriver.CLIENT_as400)){
-     * notApplicable("i5 platform TC"); return; }
-     */
-    if (toolboxNative) {
-      notApplicable("toolbox native allows connect");
-      return;
-    }
-    try {
-      String url = baseURL_ + ";prompt=false;";
-
-      String stats = "";
-      Connection conn1;
-      // part 0
+      /*
+       * if(!JDTestDriver.getClientOS().equals( JDTestDriver.CLIENT_as400)){
+       * notApplicable("i5 platform TC"); return; }
+       */
+      if (toolboxNative) {
+        notApplicable("toolbox native allows connect");
+        return;
+      }
       try {
-        String url2 = url + "user=;password=";
-        conn1 = DriverManager.getConnection(url2);
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX)
-            && (JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400))) {
-          // Toolbox local allows this to work
-        } else {
-          stats += "part0 connected with empty user/pass in url;  ";
+        String url = baseURL_ + ";prompt=false;";
+
+        String stats = "";
+        Connection conn1;
+        // part 0
+        try {
+          String url2 = url + "user=;password=";
+          conn1 = DriverManager.getConnection(url2);
+          if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX)
+              && (JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400))) {
+            // Toolbox local allows this to work
+          } else {
+            stats += "part0 connected with empty user/pass in url;  ";
+          }
+        } catch (Exception e) {
+          // failed as expected
         }
-      } catch (Exception e) {
-        // failed as expected
-      }
 
-      // part 1;
-      try {
-        String url2 = url + "user=;password=";
-        conn1 = DriverManager.getConnection(url2, null, null);
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX)
-            && (JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400))) {
-          // Toolbox local allows this to work
-        } else {
+        // part 1;
+        try {
+          String url2 = url + "user=;password=";
+          conn1 = DriverManager.getConnection(url2, null, null);
+          if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX)
+              && (JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400))) {
+            // Toolbox local allows this to work
+          } else {
 
-          stats += "part1 connected with empty user/pass in url;  ";
+            stats += "part1 connected with empty user/pass in url;  ";
+          }
+        } catch (Exception e) {
+          // failed as expected
         }
+
+        // part 2
+        try {
+          String url2 = url + "user=wrong;password=wrong";
+          conn1 = DriverManager.getConnection(url2);
+          stats += "part2 connected with wrong id/pass to " + conn1 + ";  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
+
+        // part 3
+        try {
+          String url2 = url + "user=;password=";
+          conn1 = DriverManager.getConnection(url2, "", "");
+          stats += "part3 connected with emptystring id/pass;  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
+
+        // part 4
+        try {
+          String url2 = url + "user=*CURRENT;password=*CURRENT";
+          conn1 = DriverManager.getConnection(url2);
+          stats += "part4 connected with *CURRENT id/pass;  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
+
+        // part 4a make sure we still can connect with userid password
+        try {
+          String urlB = url + ";user=" + userId_ + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.48");// should
+          // override
+          // ""
+          // parms
+          conn1 = DriverManager.getConnection(urlB, "", "");
+
+        } catch (Exception e) {
+          stats += "part4a failed to connect;  ";
+        }
+
+        // part 5
+        try {
+          String url2 = url + "user=javactl;password=*CURRENT";
+          conn1 = DriverManager.getConnection(url2);
+          stats += "part5 connected with *CURRENT pass;  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
+
+        // part 6 (code update 2)
+        try {
+          String urlB = url + ";user=" + userId_ + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.48");// should
+          // override
+          // ""
+          // parms
+          conn1 = DriverManager.getConnection(urlB, "", "");
+
+        } catch (Exception e) {
+          stats += "part6 failed to connect;  ";
+        }
+
+        // part 7 (code update 2)
+        try {
+          Properties props = new Properties();
+          props.put("user", "");
+          props.put("password", "");
+          String urlB = url + ";user=" + userId_ + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.48");// should
+          // override
+          // ""
+          // parms
+          conn1 = DriverManager.getConnection(urlB, props);
+
+        } catch (Exception e) {
+          stats += "part7 failed to connect;  ";
+        }
+
+        assertCondition(stats.equals(""), stats);
       } catch (Exception e) {
-        // failed as expected
+        failed(e, "Unexpected Exception");
       }
-
-      // part 2
-      try {
-        String url2 = url + "user=wrong;password=wrong";
-        conn1 = DriverManager.getConnection(url2);
-        stats += "part2 connected with wrong id/pass to " + conn1 + ";  ";
-      } catch (Exception e) {
-        // failed as expected
-      }
-
-      // part 3
-      try {
-        String url2 = url + "user=;password=";
-        conn1 = DriverManager.getConnection(url2, "", "");
-        stats += "part3 connected with emptystring id/pass;  ";
-      } catch (Exception e) {
-        // failed as expected
-      }
-
-      // part 4
-      try {
-        String url2 = url + "user=*CURRENT;password=*CURRENT";
-        conn1 = DriverManager.getConnection(url2);
-        stats += "part4 connected with *CURRENT id/pass;  ";
-      } catch (Exception e) {
-        // failed as expected
-      }
-
-      // part 4a make sure we still can connect with userid password
-      try {
-        String urlB = url + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.48");// should
-                                                                          // override
-                                                                          // ""
-                                                                          // parms
-        conn1 = DriverManager.getConnection(urlB, "", "");
-
-      } catch (Exception e) {
-        stats += "part4a failed to connect;  ";
-      }
-
-      // part 5
-      try {
-        String url2 = url + "user=javactl;password=*CURRENT";
-        conn1 = DriverManager.getConnection(url2);
-        stats += "part5 connected with *CURRENT pass;  ";
-      } catch (Exception e) {
-        // failed as expected
-      }
-
-      // part 6 (code update 2)
-      try {
-        String urlB = url + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.48");// should
-                                                                          // override
-                                                                          // ""
-                                                                          // parms
-        conn1 = DriverManager.getConnection(urlB, "", "");
-
-      } catch (Exception e) {
-        stats += "part6 failed to connect;  ";
-      }
-
-      // part 7 (code update 2)
-      try {
-        Properties props = new Properties();
-        props.put("user", "");
-        props.put("password", "");
-        String urlB = url + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.48");// should
-                                                                          // override
-                                                                          // ""
-                                                                          // parms
-        conn1 = DriverManager.getConnection(urlB, props);
-
-      } catch (Exception e) {
-        stats += "part7 failed to connect;  ";
-      }
-
-      assertCondition(stats.equals(""), stats);
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
-    }
     }
 
   }
@@ -2046,159 +1854,162 @@ public class JDDriverConnect extends JDTestcase {
    * user/password in properties object
    **/
   public void Var049() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
-      notApplicable("i5 platform TC");
-      return;
-    }
-    if (proxy_ != null && (!proxy_.equals(""))) {
-      notApplicable("*CURRENT does not work for proxy driver");
-      return;
-    }
-
-    try {
-
-      String url = baseURL_;
-      Connection conn1 = null;
-      String passwordLeak = PasswordVault.decryptPasswordLeak(testDriver_.pwrSysEncryptedPassword_,"JDDriverConnect Var049"); 
-      Connection pwrConn = DriverManager.getConnection(url,
-          testDriver_.pwrSysUserID_, passwordLeak);// use current
-
-      String stats = "";
-
-      // part 0
-      try {
-        Properties p = new Properties();
-        /// p.put ("user", "*cUrReNt");
-        // p.put ("password", "*CURRENT");
-        p.put("prompt", "false");
-
-        String url2 = url;
-        conn1 = DriverManager.getConnection(url2, p);
-
-      } catch (Exception e) {
-        stats += "part0 failed to connect;  ";
+      if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
+        notApplicable("i5 platform TC");
+        return;
+      }
+      if (proxy_ != null && (!proxy_.equals(""))) {
+        notApplicable("*CURRENT does not work for proxy driver");
+        return;
       }
 
-      // part 1;
       try {
-        Properties p = new Properties();
-        p.put("user", "");
-        p.put("password", "");
-        p.put("prompt", "false");
-        String url2 = url;
-        conn1 = DriverManager.getConnection(url2, p);
-        stats += "part1 connected with empty user/pass in url;  ";
-      } catch (Exception e) {
-        // failed as expected
-      }
 
-      // part 1a; Always do a good connect after a bad one to keep the profile
-      // from being disabled.
-      try {
-        String urlB = baseURL_ + ";errors=full";
-        conn1 = DriverManager.getConnection(urlB, userId_, PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.49"));
+        String url = baseURL_;
+        Connection conn1 = null;
+        String passwordLeak = PasswordVault.decryptPasswordLeak(testDriver_.pwrSysEncryptedPassword_,
+            "JDDriverConnect Var049");
+        Connection pwrConn = DriverManager.getConnection(url, testDriver_.pwrSysUserID_, passwordLeak);// use current
 
-      } catch (Exception e) {
-        System.err.println("Exception");
-        e.printStackTrace();
-        System.err.flush();
-        stats += "part2a failed to connect;  ";
-      }
+        String stats = "";
 
-      // part 2
-      try {
-        Properties p = new Properties();
-        p.put("user", "wrong");
-        p.put("password", "wrong");
-        p.put("prompt", "false");
-        String url2 = url;
-        conn1 = DriverManager.getConnection(url2, p);
-        stats += "part2 connected with wrong id/pass " + conn1 + ";  ";
-      } catch (Exception e) {
-        // failed as expected
-      }
+        // part 0
+        try {
+          Properties p = new Properties();
+          /// p.put ("user", "*cUrReNt");
+          // p.put ("password", "*CURRENT");
+          p.put("prompt", "false");
 
-      // part 2a; Always do a good connect after a bad one to keep the profile
-      // from being disabled.
-      try {
-        String urlB = baseURL_ + ";errors=full";
-        conn1 = DriverManager.getConnection(urlB, userId_, PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.49"));
+          String url2 = url;
+          conn1 = DriverManager.getConnection(url2, p);
 
-      } catch (Exception e) {
-        System.err.println("Exception");
-        e.printStackTrace();
-        System.err.flush();
-        stats += "part2a failed to connect;  ";
-      }
+        } catch (Exception e) {
+          stats += "part0 failed to connect;  ";
+        }
 
-      // part 4
-      try {
-        Properties p = new Properties();
-        p.put("user", "*current");
-        p.put("password", "*current");
-        p.put("prompt", "false");
-        String url2 = url;
-        conn1 = DriverManager.getConnection(url2, p);
-        stats += "part4 connected with *CURRENT id/pass;  ";
-      } catch (Exception e) {
-        // failed as expected
-      }
+        // part 1;
+        try {
+          Properties p = new Properties();
+          p.put("user", "");
+          p.put("password", "");
+          p.put("prompt", "false");
+          String url2 = url;
+          conn1 = DriverManager.getConnection(url2, p);
+          stats += "part1 connected with empty user/pass in url;  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
 
-      for (int i = 0; i < 20; i++) {
-        // part 4a make sure we still can connect with userid password
+        // part 1a; Always do a good connect after a bad one to keep the profile
+        // from being disabled.
         try {
           String urlB = baseURL_ + ";errors=full";
-          conn1 = DriverManager.getConnection(urlB, userId_, PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.49"));
-          conn1.close();
+          conn1 = DriverManager.getConnection(urlB, userId_,
+              PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.49"));
+
         } catch (Exception e) {
           System.err.println("Exception");
           e.printStackTrace();
           System.err.flush();
-          stats += "part4a failed to connect;  ";
+          stats += "part2a failed to connect;  ";
         }
-      }
 
-      // part 5
-      try {
-        Properties p = new Properties();
-        p.put("user", userId_);
-        p.put("password", "*current");
-        p.put("prompt", "false");
-        String url2 = url;
-        conn1 = DriverManager.getConnection(url2, p);
-        stats += "part5 connected with *CURRENT pass;  ";
+        // part 2
+        try {
+          Properties p = new Properties();
+          p.put("user", "wrong");
+          p.put("password", "wrong");
+          p.put("prompt", "false");
+          String url2 = url;
+          conn1 = DriverManager.getConnection(url2, p);
+          stats += "part2 connected with wrong id/pass " + conn1 + ";  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
+
+        // part 2a; Always do a good connect after a bad one to keep the profile
+        // from being disabled.
+        try {
+          String urlB = baseURL_ + ";errors=full";
+          conn1 = DriverManager.getConnection(urlB, userId_,
+              PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.49"));
+
+        } catch (Exception e) {
+          System.err.println("Exception");
+          e.printStackTrace();
+          System.err.flush();
+          stats += "part2a failed to connect;  ";
+        }
+
+        // part 4
+        try {
+          Properties p = new Properties();
+          p.put("user", "*current");
+          p.put("password", "*current");
+          p.put("prompt", "false");
+          String url2 = url;
+          conn1 = DriverManager.getConnection(url2, p);
+          stats += "part4 connected with *CURRENT id/pass;  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
+
+        for (int i = 0; i < 20; i++) {
+          // part 4a make sure we still can connect with userid password
+          try {
+            String urlB = baseURL_ + ";errors=full";
+            conn1 = DriverManager.getConnection(urlB, userId_,
+                PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.49"));
+            conn1.close();
+          } catch (Exception e) {
+            System.err.println("Exception");
+            e.printStackTrace();
+            System.err.flush();
+            stats += "part4a failed to connect;  ";
+          }
+        }
+
+        // part 5
+        try {
+          Properties p = new Properties();
+          p.put("user", userId_);
+          p.put("password", "*current");
+          p.put("prompt", "false");
+          String url2 = url;
+          conn1 = DriverManager.getConnection(url2, p);
+          stats += "part5 connected with *CURRENT pass;  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
+
+        //
+        // Part 5 sometimes disables the profile... Re-enable it
+        //
+        Statement stmt = pwrConn.createStatement();
+        String sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + userId_ + ") STATUS(*ENABLED)   ')";
+        stmt.executeUpdate(sql);
+
+        // part 5a make sure we still can connect with userid password
+        try {
+          String urlB = baseURL_ + ";errors=full";
+          conn1 = DriverManager.getConnection(urlB, userId_,
+              PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.49"));
+
+        } catch (Exception e) {
+          System.err.println("Exception");
+          e.printStackTrace();
+          System.err.flush();
+          System.out.flush();
+          stats += "part5a failed to connect;  ";
+        }
+
+        pwrConn.close();
+        assertCondition(stats.equals(""), stats);
       } catch (Exception e) {
-        // failed as expected
+        failed(e, "Unexpected Exception");
       }
-
-      //
-      // Part 5 sometimes disables the profile... Re-enable it
-      //
-      Statement stmt = pwrConn.createStatement();
-      String sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + userId_
-          + ") STATUS(*ENABLED)   ')";
-      stmt.executeUpdate(sql);
-
-      // part 5a make sure we still can connect with userid password
-      try {
-        String urlB = baseURL_ + ";errors=full";
-        conn1 = DriverManager.getConnection(urlB, userId_, PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.49"));
-
-      } catch (Exception e) {
-        System.err.println("Exception");
-        e.printStackTrace();
-        System.err.flush();
-        System.out.flush();
-        stats += "part5a failed to connect;  ";
-      }
-
-      pwrConn.close();
-      assertCondition(stats.equals(""), stats);
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
-    }
     }
   }
 
@@ -2256,17 +2067,17 @@ public class JDDriverConnect extends JDTestcase {
       // part 3
       try {
         conn1 = DriverManager.getConnection(url, "", "");// use current
-	stats += "part3 connected with blank userid/password;   "; 
+        stats += "part3 connected with blank userid/password;   ";
       } catch (Exception e) {
-	  // Should now fail, Jan 2023
-      
+        // Should now fail, Jan 2023
+
       }
 
       // part 4
       try {
         conn1 = DriverManager.getConnection(url, "*CURRENT", "*CURRENT");// use
                                                                          // current
-	stats += "part4 connected *CURRENT *CURRENT ;  ";
+        stats += "part4 connected *CURRENT *CURRENT ;  ";
       } catch (Exception e) {
         // should now fail , Jan 2023
       }
@@ -2275,16 +2086,14 @@ public class JDDriverConnect extends JDTestcase {
       try {
         // try connecting with either "java" or "javactl"...
         try {
-          conn1 = DriverManager.getConnection(url, testDriver_.pwrSysUserID_,
-              "*CURRENT");// use current
-	  stats += "part5 connected with *CURRENT password"; 
+          conn1 = DriverManager.getConnection(url, testDriver_.pwrSysUserID_, "*CURRENT");// use current
+          stats += "part5 connected with *CURRENT password";
         } catch (Exception e1) {
-          conn1 = DriverManager.getConnection(url,
-              System.getProperty("user.name"), "*CURRENT");// use current
-	  stats += "part5 connected with *CURRENT password"; 
+          conn1 = DriverManager.getConnection(url, System.getProperty("user.name"), "*CURRENT");// use current
+          stats += "part5 connected with *CURRENT password";
         }
       } catch (Exception e) {
-	  // Should fail, Jan 2023
+        // Should fail, Jan 2023
 
       }
 
@@ -2296,137 +2105,138 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /**
-   * connect() - Should throw exception when id/pass are "" or *CURRENT With
-   * some user/password in url properties copy of 048 but with secure current
-   * user = false
+   * connect() - Should throw exception when id/pass are "" or *CURRENT With some
+   * user/password in url properties copy of 048 but with secure current user =
+   * false
    **/
   public void Var051() {
-    if (checkPasswordLeak()) { 
+    if (checkPasswordLeak()) {
 
-    if (!isToolboxDriver()) {
-      notApplicable("Toolbox TC");
-      return;
-    }
-    if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
-      notApplicable("i5 platform TC");
-      return;
-    }
-    if (proxy_ != null && (!proxy_.equals(""))) {
-      notApplicable("*CURRENT does not work for proxy driver");
-      return;
-    }
-
-    try {
-      String url = baseURL_ + ";prompt=false;secure current user=false;";
-
-      String stats = "";
-      Connection conn1;
-
-      // part 0
-      try {
-        String url2 = url + "user=;password=";
-        conn1 = DriverManager.getConnection(url2);
-	stats += "part0 conneced with blank userid /password;  "; 
-      } catch (Exception e) {
-
+      if (!isToolboxDriver()) {
+        notApplicable("Toolbox TC");
+        return;
+      }
+      if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
+        notApplicable("i5 platform TC");
+        return;
+      }
+      if (proxy_ != null && (!proxy_.equals(""))) {
+        notApplicable("*CURRENT does not work for proxy driver");
+        return;
       }
 
-      // part 1;
       try {
-        String url2 = url + "user=;password=";
-        conn1 = DriverManager.getConnection(url2, null, null);
-	stats += "part1 conneced with blank userid /password;  "; 
-      } catch (Exception e) {
+        String url = baseURL_ + ";prompt=false;secure current user=false;";
 
-      }
+        String stats = "";
+        Connection conn1;
 
-      // part 2
-      try {
-        String url2 = url + "user=wrong;password=wrong";
-        conn1 = DriverManager.getConnection(url2);
-        stats += "part2 connected with wrong id/pass " + conn1 + " ;  ";
-      } catch (Exception e) {
-        // failed as expected
-      }
-
-      // part 3
-      try {
-        String url2 = url + "user=;password=";
-        conn1 = DriverManager.getConnection(url2, "", "");
-        stats += "part3 connected with blank userid/password;  "; 
-      } catch (Exception e) {
-
-      }
-
-      // part 4
-      try {
-        String url2 = url + "user=*CURRENT;password=*CURRENT";
-        conn1 = DriverManager.getConnection(url2);
-	stats += "part4 connected with *CURRENT userid/password;  "; 
-
-      } catch (Exception e) {
-  
-      }
-
-      // part 5
-      try {
-        // try connecting with either "java" or "javactl"...
+        // part 0
         try {
-
-          String url2 = url + "user=" + testDriver_.pwrSysUserID_
-              + ";password=*CURRENT";
+          String url2 = url + "user=;password=";
           conn1 = DriverManager.getConnection(url2);
- 	stats += "part4 connected with *CURRENT password;  "; 
-       } catch (Exception e1) {
+          stats += "part0 conneced with blank userid /password;  ";
+        } catch (Exception e) {
 
-          String url2 = url + "user=" + System.getProperty("user.name")
-              + ";password=*CURRENT";
-          conn1 = DriverManager.getConnection(url2);
-	  stats += "part4 connected with *CURRENT password;  "; 
         }
 
+        // part 1;
+        try {
+          String url2 = url + "user=;password=";
+          conn1 = DriverManager.getConnection(url2, null, null);
+          stats += "part1 conneced with blank userid /password;  ";
+        } catch (Exception e) {
+
+        }
+
+        // part 2
+        try {
+          String url2 = url + "user=wrong;password=wrong";
+          conn1 = DriverManager.getConnection(url2);
+          stats += "part2 connected with wrong id/pass " + conn1 + " ;  ";
+        } catch (Exception e) {
+          // failed as expected
+        }
+
+        // part 3
+        try {
+          String url2 = url + "user=;password=";
+          conn1 = DriverManager.getConnection(url2, "", "");
+          stats += "part3 connected with blank userid/password;  ";
+        } catch (Exception e) {
+
+        }
+
+        // part 4
+        try {
+          String url2 = url + "user=*CURRENT;password=*CURRENT";
+          conn1 = DriverManager.getConnection(url2);
+          stats += "part4 connected with *CURRENT userid/password;  ";
+
+        } catch (Exception e) {
+
+        }
+
+        // part 5
+        try {
+          // try connecting with either "java" or "javactl"...
+          try {
+
+            String url2 = url + "user=" + testDriver_.pwrSysUserID_ + ";password=*CURRENT";
+            conn1 = DriverManager.getConnection(url2);
+            stats += "part4 connected with *CURRENT password;  ";
+          } catch (Exception e1) {
+
+            String url2 = url + "user=" + System.getProperty("user.name") + ";password=*CURRENT";
+            conn1 = DriverManager.getConnection(url2);
+            stats += "part4 connected with *CURRENT password;  ";
+          }
+
+        } catch (Exception e) {
+
+        }
+
+        // part 6 (code update 2)
+        try {
+          String urlB = url + ";user=" + userId_ + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.51");// should
+          // override
+          // ""
+          // parms
+          conn1 = DriverManager.getConnection(urlB, "", "");
+
+        } catch (Exception e) {
+          stats += "part6 failed to connect;  ";
+        }
+
+        // part 7 (code update 2)
+        try {
+          Properties props = new Properties();
+          props.put("user", "");
+          props.put("password", "");
+          String urlB = url + ";user=" + userId_ + ";password="
+              + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.51");// should
+          // override
+          // ""
+          // parms
+          conn1 = DriverManager.getConnection(urlB, props);
+
+        } catch (Exception e) {
+          stats += "part7 failed to connect;  ";
+        }
+
+        assertCondition(stats.equals(""), stats);
       } catch (Exception e) {
- 
+        failed(e, "Unexpected Exception");
       }
 
-      // part 6 (code update 2)
-      try {
-        String urlB = url + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.51");// should
-                                                                          // override
-                                                                          // ""
-                                                                          // parms
-        conn1 = DriverManager.getConnection(urlB, "", "");
-
-      } catch (Exception e) {
-        stats += "part6 failed to connect;  ";
-      }
-
-      // part 7 (code update 2)
-      try {
-        Properties props = new Properties();
-        props.put("user", "");
-        props.put("password", "");
-        String urlB = url + ";user=" + userId_ + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.51");// should
-                                                                          // override
-                                                                          // ""
-                                                                          // parms
-        conn1 = DriverManager.getConnection(urlB, props);
-
-      } catch (Exception e) {
-        stats += "part7 failed to connect;  ";
-      }
-
-      assertCondition(stats.equals(""), stats);
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
     }
+  }
 
-  }
-  }
   /**
    * connect() - Should throw exception when id/pass are "" or *CURRENT With
-   * user/password in properties object * copy of 049 but with secure current
-   * user = false
+   * user/password in properties object * copy of 049 but with secure current user
+   * = false
    **/
   public void Var052() {
     if (!isToolboxDriver()) {
@@ -2452,13 +2262,13 @@ public class JDDriverConnect extends JDTestcase {
       // part 0
       try {
         Properties p = new Properties();
-         p.put("prompt", "false");
+        p.put("prompt", "false");
         p.put("secure current user", "false");
         String url2 = url;
         conn1 = DriverManager.getConnection(url2, p);
 
       } catch (Exception e) {
-	  stats += "part0 failed to connect with no userid/passsword; "; 
+        stats += "part0 failed to connect with no userid/passsword; ";
       }
 
       // part 1;
@@ -2470,7 +2280,7 @@ public class JDDriverConnect extends JDTestcase {
         p.put("secure current user", "false");
         String url2 = url;
         conn1 = DriverManager.getConnection(url2, p);
-        stats += "part1 connected with blank userid/password; "; 
+        stats += "part1 connected with blank userid/password; ";
       } catch (Exception e) {
 
       }
@@ -2513,7 +2323,7 @@ public class JDDriverConnect extends JDTestcase {
           p.put("secure current user", "false");
           String url2 = url;
           conn1 = DriverManager.getConnection(url2, p);
-	  stats += "part4 connected with *CURRENT password ;  ";
+          stats += "part4 connected with *CURRENT password ;  ";
         } catch (Exception e1) {
 
           Properties p = new Properties();
@@ -2523,11 +2333,11 @@ public class JDDriverConnect extends JDTestcase {
           p.put("secure current user", "false");
           String url2 = url;
           conn1 = DriverManager.getConnection(url2, p);
-	  stats += "part4 connected with *CURRENT password ;  ";
+          stats += "part4 connected with *CURRENT password ;  ";
         }
 
       } catch (Exception e) {
- 
+
       }
 
       assertCondition(stats.equals(""), stats);
@@ -2547,8 +2357,8 @@ public class JDDriverConnect extends JDTestcase {
     }
 
     /**
-     * This testcase tries to use the GUI. When running on the 400, the
-     * following error is seen. 5/5/2009
+     * This testcase tries to use the GUI. When running on the 400, the following
+     * error is seen. 5/5/2009
      *
      * java.awt.AWTError: AWT class or API used without specifying property
      * os400.awt.native=true or java.awt.headless=true at
@@ -2576,25 +2386,22 @@ public class JDDriverConnect extends JDTestcase {
      */
 
     if (JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
-      notApplicable(
-          "Test attempts to use GUI.  Not Applicable when running on 400");
+      notApplicable("Test attempts to use GUI.  Not Applicable when running on 400");
       return;
     }
 
     if (JTOpenTestEnvironment.isLinux) {
-      notApplicable(
-          "Test attempts to use GUI.  Not Applicable when running on linux");
+      notApplicable("Test attempts to use GUI.  Not Applicable when running on linux");
       return;
     }
 
     try {
       // use an AS400 object
       AS400JDBCDriver d = new AS400JDBCDriver();
-       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-     AS400 o = new AS400(systemObject_.getSystemName(),
-          systemObject_.getUserId(), charPassword);
-       PasswordVault.clearPassword(charPassword);
-    IFSSystemView v = new IFSSystemView(o);
+      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      AS400 o = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+      PasswordVault.clearPassword(charPassword);
+      IFSSystemView v = new IFSSystemView(o);
       File[] flist = v.getFiles(new File("c:\\"), true);
 
       // next reuse AS400 object
@@ -2619,11 +2426,11 @@ public class JDDriverConnect extends JDTestcase {
 
   }
 
-  public void testBadProfile(String goodUser, String goodPasswd, String badUser,
-      String badPasswd, String expectedBadConnectException,
-      String expectedBadConnectException2, String expectedBadConnectException3,
+  public void testBadProfile(String goodUser, String goodPasswd, String badUser, String badPasswd,
+      String expectedBadConnectException, String expectedBadConnectException2, String expectedBadConnectException3,
       String added) {
     String badConnectException = "NO EXCEPTION";
+    StringBuffer sb = new StringBuffer(); 
     try {
 
       // Grab a bunch of connection to improve the likelihood of the
@@ -2632,20 +2439,19 @@ public class JDDriverConnect extends JDTestcase {
       Connection[] c2 = new Connection[20];
       String[] jobnames = new String[20];
       try {
-        StringBuffer sb = new StringBuffer();
         for (int i = 0; i < c2.length; i++) {
-          c2[i] = DriverManager.getConnection(baseURL_ + ";errors=full",
-              badUser, badPasswd);
+          c2[i] = DriverManager.getConnection(baseURL_ + ";errors=full", badUser, badPasswd);
           if (c2[i] instanceof com.ibm.as400.access.AS400JDBCConnection) {
             com.ibm.as400.access.AS400JDBCConnection c = (com.ibm.as400.access.AS400JDBCConnection) c2[i];
             String jobname = c.getServerJobIdentifier();
-            sb.append("Job[" + i + "]=" + jobname + "\n");
+            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis()) ;
+            sb.append(currentTimestamp+": Job[" + i + "]=" + jobname + "\n");
             jobnames[i] = jobname;
-          } else if (JDReflectionUtil.instanceOf(c2[i],"com.ibm.db2.jdbc.app.DB2Driver")) {
-            Object c =  c2[i];
-            String jobname = JDReflectionUtil.callMethod_S(c,
-                "getServerJobName");
-            sb.append("Job[" + i + "]=" + jobname + "\n");
+          } else if (JDReflectionUtil.instanceOf(c2[i], "com.ibm.db2.jdbc.app.DB2Driver")) {
+            Object c = c2[i];
+            String jobname = JDReflectionUtil.callMethod_S(c, "getServerJobName");
+            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis()) ;
+            sb.append(currentTimestamp+": Job[" + i + "]=" + jobname + "\n");
             jobnames[i] = jobname;
           }
 
@@ -2659,8 +2465,8 @@ public class JDDriverConnect extends JDTestcase {
 
         }
 
-        System.out.println(
-            "Error did not get exception after connecting with pad proflie .  Sleeping for 120 seconds.");
+        System.out
+            .println("Error did not get exception after connecting with bad proflie .  Sleeping for 120 seconds.");
         System.out.println("Please check the following jobs " + sb.toString());
         try {
           Thread.sleep(120000);
@@ -2674,8 +2480,7 @@ public class JDDriverConnect extends JDTestcase {
           }
         }
 
-        badConnectException = "NO EXCEPTION after " + c2.length
-            + " attempts with " + badUser;
+        badConnectException = "NO EXCEPTION after " + c2.length + " attempts with " + badUser;
       } catch (Exception e) {
         badConnectException = e.toString();
       }
@@ -2688,21 +2493,21 @@ public class JDDriverConnect extends JDTestcase {
       int exceptionCount = 0;
       int attemptCount = 0;
       Connection[][] c3 = new Connection[2][c2.length];
-      boolean keepLooping = true; 
-      for (int j = 0; j < 2 && keepLooping ; j++) {
+      boolean keepLooping = true;
+      for (int j = 0; j < 2 && keepLooping; j++) {
         for (int i = 0; i < c3[j].length && keepLooping; i++) {
           try {
             attemptCount++;
-            System.out.println("[" + i + "] Connecting with " + goodUser);
-            c3[j][i] = DriverManager.getConnection(baseURL_ + ";errors=full",
-                goodUser, goodPasswd);
+            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis()) ;
+            sb.append(currentTimestamp+" : [" + i + "] Connecting with " + goodUser +"\n");
+            c3[j][i] = DriverManager.getConnection(baseURL_ + ";errors=full", goodUser, goodPasswd);
             c3[j][i].createStatement();
           } catch (SQLException ex) {
             exceptionCount++;
             thrownException = ex;
-            String tracing = System.getProperty("com.ibm.as400.access.Trace.category"); 
-            if (tracing != null) { 
-              keepLooping = false; 
+            String tracing = System.getProperty("com.ibm.as400.access.Trace.category");
+            if (tracing != null) {
+              keepLooping = false;
             }
           }
         }
@@ -2728,35 +2533,32 @@ public class JDDriverConnect extends JDTestcase {
         }
       }
 
-      assertCondition(
-          badConnectException.indexOf(expectedBadConnectException) >= 0
+      assertCondition(badConnectException.indexOf(expectedBadConnectException) >= 0
 
-              || badConnectException.indexOf(expectedBadConnectException2) >= 0
-              || badConnectException.indexOf(expectedBadConnectException3) >= 0,
-          "Expected '" + expectedBadConnectException + "' or '"
-              + expectedBadConnectException2.replace(' ', '_') + "' or '"
-              + expectedBadConnectException3.replace(' ', '_') + "' got '"
-              + badConnectException + "'" + added);
+          || badConnectException.indexOf(expectedBadConnectException2) >= 0
+          || badConnectException.indexOf(expectedBadConnectException3) >= 0,
+          "Expected '" + expectedBadConnectException + "' or '" + expectedBadConnectException2.replace(' ', '_')
+              + "' or '" + expectedBadConnectException3.replace(' ', '_') + "' got '" + badConnectException + "'"
+               + sb.toString() + added);
 
     } catch (Exception e) {
-      failed(e, "Unexpected Exception" + added + "  badConnectionException="
-          + badConnectException);
+      failed(e, "Unexpected Exception" + added + "  badConnectionException=" + badConnectException+" "+sb.toString());
     }
 
   }
 
-  public void Var054() { notApplicable(); }
+  public void Var054() {
+    notApplicable();
+  }
 
-  public void executeStatements(Statement s1, String[] commands)
-      throws SQLException {
+  public void executeStatements(Statement s1, String[] commands) throws SQLException {
     for (int i = 0; i < commands.length; i++) {
       String command = commands[i];
       s1.executeUpdate(command);
     }
   }
 
-  public void executeStatementsIgnoreErrors(Statement s1, String[] commands,
-      String[] expectedErrors) {
+  public void executeStatementsIgnoreErrors(Statement s1, String[] commands, String[] expectedErrors) {
     for (int i = 0; i < commands.length; i++) {
       String command = commands[i];
       try {
@@ -2778,11 +2580,11 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   public void Var055() {
-     notApplicable(); 
+    notApplicable();
   }
 
   public void Var056() {
-     assertCondition(true);
+    assertCondition(true);
   }
 
   /*
@@ -2790,11 +2592,9 @@ public class JDDriverConnect extends JDTestcase {
    */
 
   public void Var057() {
-    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-        && JTOpenTestEnvironment.isOS400) {
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && JTOpenTestEnvironment.isOS400) {
       try {
-        Connection c = DriverManager
-            .getConnection("jdbc:as400:localhost;driver=native");
+        Connection c = DriverManager.getConnection("jdbc:as400:localhost;driver=native");
 
         String className = c.getClass().getName();
         String expected = "DB2Connection";
@@ -2809,8 +2609,6 @@ public class JDDriverConnect extends JDTestcase {
     }
 
   }
-
-
 
   /*
    * test the leaking of server jobs in DEQW state on take descript
@@ -2876,8 +2674,7 @@ public class JDDriverConnect extends JDTestcase {
    * authentication factor
    */
   public void Var059() {
-    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX ||
-        getDriver() == JDTestDriver.DRIVER_NATIVE) {
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
       String systemName = systemObject_.getSystemName();
       if (checkAdditionalAuthenticationFactor(systemName)) {
         try {
@@ -2902,100 +2699,102 @@ public class JDDriverConnect extends JDTestcase {
         }
       }
     } else {
-      notApplicable("TOOLBOX or NATIVE variation"); 
+      notApplicable("TOOLBOX or NATIVE variation");
     }
   }
- 
+
   /*
-   * Var060 Check that a connection is not established for MFA user without additional
-   * authentication factor
+   * Var060 Check that a connection is not established for MFA user without
+   * additional authentication factor
    */
   public void Var060() {
-    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX ||
-        getDriver() == JDTestDriver.DRIVER_NATIVE) {
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
       String systemName = systemObject_.getSystemName();
       if (checkAdditionalAuthenticationFactor(systemName)) {
         try {
           initMfaUser();
           String url;
           if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-            url = "jdbc:as400:" + systemName+";prompt=false" ;
+            url = "jdbc:as400:" + systemName + ";prompt=false";
           } else {
             url = "jdbc:db2:localhost";
           }
-          try { 
-          Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
-          Statement s = c.createStatement();
-          ResultSet rs = s.executeQuery("VALUES CURRENT USER");
-          rs.next();
-          String currentUser = rs.getString(1);
-          System.out.println("current MFA user is " + currentUser);
-          assertCondition(false,
-              "Able to connect as MFS user without mfaFactor currentUser=" + currentUser + " MFAUserID=" + mfaUserid_);
-          } catch (SQLException e) { 
-            String[] expected = {"Password is incorrect",
-                "Authorization failure"};
-            assertExceptionContains(e,expected, "Connecting via MFA user with additional factor"); 
+          try {
+            Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery("VALUES CURRENT USER");
+            rs.next();
+            String currentUser = rs.getString(1);
+            System.out.println("current MFA user is " + currentUser);
+            assertCondition(false, "Able to connect as MFS user without mfaFactor currentUser=" + currentUser
+                + " MFAUserID=" + mfaUserid_);
+          } catch (SQLException e) {
+            String[] expected = { "Password is incorrect", "Authorization failure" };
+            assertExceptionContains(e, expected, "Connecting via MFA user with additional factor");
           }
         } catch (Exception e) {
           failed(e, "unexpected exception");
         }
       }
     } else {
-      notApplicable("TOOLBOX or NATIVE variation"); 
+      notApplicable("TOOLBOX or NATIVE variation");
     }
   }
- 
-  /* Check new Driver based connection methods. Connect with USERID and password  */
-  public void Var061() { 
-    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX ||
-        getDriver() == JDTestDriver.DRIVER_NATIVE) {
-      Driver driver ; 
-      try { 
-        String url; 
-        String expectedJobName; 
-      if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
-        driver = new AS400JDBCDriver(); 
-        String systemName = systemObject_.getSystemName();
-        url = "jdbc:as400:" + systemName+";prompt=false" ;
-        expectedJobName="QZDASOINIT"; 
-      } else {
-        driver = (Driver) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver","getDriver");
-        url = "jdbc:db2:localhost";
-        expectedJobName="QSQSRVR"; 
-      }
-      Properties properties = new Properties(); 
-      properties.put("user",userId_);
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
-      Class[] argTypes = new Class[3]; 
-      argTypes[0] = url.getClass(); 
-      argTypes[1] = properties.getClass(); 
-      argTypes[2] = charPassword.getClass(); ;
-      Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties, charPassword);
-      Arrays.fill(charPassword,' '); 
-      
-      Statement s = c.createStatement(); 
-      ResultSet rs = s.executeQuery("VALUES JOB_NAME"); 
-      rs.next(); 
-      String jobName = rs.getString(1); 
-      rs.close();
-      s.close();
-      c.close(); 
-      
-      assertCondition((jobName.indexOf(expectedJobName) >= 0), 
-            "jobName "+jobName+" does not contain "+expectedJobName);
-      
+
+  /*
+   * Check new Driver based connection methods. Connect with USERID and password
+   */
+  public void Var061() {
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      Driver driver;
+      try {
+        String url;
+        String expectedJobName;
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+          driver = new AS400JDBCDriver();
+          String systemName = systemObject_.getSystemName();
+          url = "jdbc:as400:" + systemName + ";prompt=false";
+          expectedJobName = "QZDASOINIT";
+        } else {
+          driver = (Driver) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
+          url = "jdbc:db2:localhost";
+          expectedJobName = "QSQSRVR";
+        }
+        Properties properties = new Properties();
+        properties.put("user", userId_);
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        Class[] argTypes = new Class[3];
+        argTypes[0] = url.getClass();
+        argTypes[1] = properties.getClass();
+        argTypes[2] = charPassword.getClass();
+        ;
+        Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties,
+            charPassword);
+        Arrays.fill(charPassword, ' ');
+
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("VALUES JOB_NAME");
+        rs.next();
+        String jobName = rs.getString(1);
+        rs.close();
+        s.close();
+        c.close();
+
+        assertCondition((jobName.indexOf(expectedJobName) >= 0),
+            "jobName " + jobName + " does not contain " + expectedJobName);
+
       } catch (Exception e) {
         failed(e, "unexpected exception");
       }
-  
+
     } else {
       notApplicable("Native and toolbox Driver connection tests");
     }
   }
 
-  /* Check new Driver based connection methods 
-     Connect with MFA parameter */
+  /*
+   * Check new Driver based connection methods Connect with MFA parameter
+   */
   public void Var062() {
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
       String systemName = systemObject_.getSystemName();
@@ -3014,7 +2813,7 @@ public class JDDriverConnect extends JDTestcase {
           } else {
             driver = (Driver) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
             url = "jdbc:db2:localhost";
-           
+
             expectedJobName = "QSQSRVR";
           }
           Properties properties = new Properties();
@@ -3040,10 +2839,9 @@ public class JDDriverConnect extends JDTestcase {
           s.close();
           c.close();
 
-          assertCondition((jobName.indexOf(expectedJobName) >= 0) &&
-                currentUser.equalsIgnoreCase(mfaUserid_),
-              "jobName " + jobName + " does not contain " + expectedJobName + " or user="+
-                currentUser+" is not "+mfaUserid_);
+          assertCondition((jobName.indexOf(expectedJobName) >= 0) && currentUser.equalsIgnoreCase(mfaUserid_),
+              "jobName " + jobName + " does not contain " + expectedJobName + " or user=" + currentUser + " is not "
+                  + mfaUserid_);
 
         } catch (Exception e) {
           failed(e, "unexpected exception connecting using Driver.connect method MFA password");
@@ -3051,83 +2849,100 @@ public class JDDriverConnect extends JDTestcase {
 
       }
 
-      
     } else {
       notApplicable("Native and toolbox Driver connection tests");
     }
   }
- /* Check new Driver based connection methods 
-  Connect with MFA in URL */
-public void Var063() {
- if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
-   String systemName = systemObject_.getSystemName();
-   if (checkAdditionalAuthenticationFactor(systemName)) {
-
-     Driver driver;
-     try {
-       String url;
-       String expectedJobName;
-       initMfaUser();
-
-       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-         driver = new AS400JDBCDriver();
-         url = "jdbc:as400:" + systemName + ";prompt=false;additionalAuthenticationFactor="+new String(mfaFactor_);
-         expectedJobName = "QZDASOINIT";
-       } else {
-         driver = (Driver) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
-         url = "jdbc:db2:localhost;additionalAuthenticationFactor="+new String(mfaFactor_); 
-         expectedJobName = "QSQSRVR";
-       }
-       Properties properties = new Properties();
-       properties.put("user", mfaUserid_);
-       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-
-       Class[] argTypes = new Class[3];
-       argTypes[0] = url.getClass();
-       argTypes[1] = properties.getClass();
-       argTypes[2] = mfaPassword_.getClass();
-       Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties,
-           charPassword);
-       Arrays.fill(charPassword, ' ');
-
-       Statement s = c.createStatement();
-       ResultSet rs = s.executeQuery("select JOB_NAME, CURRENT USER from sysibm.sysdummy1");
-       rs.next();
-       String jobName = rs.getString(1);
-       String currentUser = rs.getString(2);
-       rs.close();
-       s.close();
-       c.close();
-
-       assertCondition((jobName.indexOf(expectedJobName) >= 0) &&
-             currentUser.equalsIgnoreCase(mfaUserid_),
-           "jobName " + jobName + " does not contain " + expectedJobName + " or user="+
-             currentUser+" is not "+mfaUserid_);
-
-     } catch (Exception e) {
-       failed(e, "unexpected exception connecting using Driver.connect method MFA password");
-     }
-
-   }
-
-   
- } else {
-   notApplicable("Native and toolbox Driver connection tests");
- }
-}
-
-  public void Var064() { notApplicable();}
-  public void Var065() { notApplicable();}
-  public void Var066() { notApplicable();}
-  public void Var067() { notApplicable();}
-  public void Var068() { notApplicable();}
-  public void Var069() { notApplicable();}
-  public void Var070() { notApplicable();}
-
-
 
   /*
-   * Connect after connecting with a bad profile. 
+   * Check new Driver based connection methods Connect with MFA in URL
+   */
+  public void Var063() {
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      String systemName = systemObject_.getSystemName();
+      if (checkAdditionalAuthenticationFactor(systemName)) {
+
+        Driver driver;
+        try {
+          String url;
+          String expectedJobName;
+          initMfaUser();
+
+          if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+            driver = new AS400JDBCDriver();
+            url = "jdbc:as400:" + systemName + ";prompt=false;additionalAuthenticationFactor=" + new String(mfaFactor_);
+            expectedJobName = "QZDASOINIT";
+          } else {
+            driver = (Driver) JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
+            url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + new String(mfaFactor_);
+            expectedJobName = "QSQSRVR";
+          }
+          Properties properties = new Properties();
+          properties.put("user", mfaUserid_);
+          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+
+          Class[] argTypes = new Class[3];
+          argTypes[0] = url.getClass();
+          argTypes[1] = properties.getClass();
+          argTypes[2] = mfaPassword_.getClass();
+          Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties,
+              charPassword);
+          Arrays.fill(charPassword, ' ');
+
+          Statement s = c.createStatement();
+          ResultSet rs = s.executeQuery("select JOB_NAME, CURRENT USER from sysibm.sysdummy1");
+          rs.next();
+          String jobName = rs.getString(1);
+          String currentUser = rs.getString(2);
+          rs.close();
+          s.close();
+          c.close();
+
+          assertCondition((jobName.indexOf(expectedJobName) >= 0) && currentUser.equalsIgnoreCase(mfaUserid_),
+              "jobName " + jobName + " does not contain " + expectedJobName + " or user=" + currentUser + " is not "
+                  + mfaUserid_);
+
+        } catch (Exception e) {
+          failed(e, "unexpected exception connecting using Driver.connect method MFA password");
+        }
+
+      }
+
+    } else {
+      notApplicable("Native and toolbox Driver connection tests");
+    }
+  }
+
+  public void Var064() {
+    notApplicable();
+  }
+
+  public void Var065() {
+    notApplicable();
+  }
+
+  public void Var066() {
+    notApplicable();
+  }
+
+  public void Var067() {
+    notApplicable();
+  }
+
+  public void Var068() {
+    notApplicable();
+  }
+
+  public void Var069() {
+    notApplicable();
+  }
+
+  public void Var070() {
+    notApplicable();
+  }
+
+  /*
+   * Connect after connecting with a bad profile.
    */
 
   public void Var071() {
@@ -3154,20 +2969,17 @@ public void Var063() {
           expectedBadConnectException = "Communication link failure";
         }
 
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
           expectedBadConnectException = "Processing of the SQL statement ended";
         }
-        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_); 
+        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
         c1 = DriverManager.getConnection(baseURL_ + ";errors=full", pwrSysUserID_, powerPassword);
-
 
         // Delete and recreate the bad profile
         s1 = c1.createStatement();
 
         try {
-          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "DLTUSRPRF " + badUser
-			   + "  OWNOBJOPT(*CHGOWN JAVA) '  ) ");
+          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "DLTUSRPRF " + badUser + "  OWNOBJOPT(*CHGOWN JAVA) '  ) ");
         } catch (Exception e) {
           if (e.toString().indexOf("not found") >= 0) {
             // Just ignore */
@@ -3177,19 +2989,15 @@ public void Var063() {
           }
         }
 
-        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "CRTUSRPRF USRPRF(" + badUser
-            + ") PASSWORD(" + badPasswd + ")                               ',"
-            + "0000000070.00000 ) ");
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "CRTUSRPRF USRPRF(" + badUser + ") PASSWORD(" + badPasswd
+            + ")                               '," + "0000000070.00000 ) ");
 
-        s1.executeUpdate("CALL QSYS.QCMDEXC('"
-            + "GRTOBJAUT OBJ(QGPL/QDFTJOBD) OBJTYPE(*JOBD) USER(" + badUser
-            + ") AUT(*EXCLUDE)                                        ',"
-            + "0000000080.00000 ) ");
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "GRTOBJAUT OBJ(QGPL/QDFTJOBD) OBJTYPE(*JOBD) USER(" + badUser
+            + ") AUT(*EXCLUDE)                                        '," + "0000000080.00000 ) ");
 
         try {
 
-          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "DLTUSRPRF " + goodUser
-              + "     OWNOBJOPT(*CHGOWN JAVA) ') ");
+          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "DLTUSRPRF " + goodUser + "     OWNOBJOPT(*CHGOWN JAVA) ') ");
         } catch (Exception e) {
           if (e.toString().indexOf("not found") >= 0) {
             // Just ignore */
@@ -3199,17 +3007,15 @@ public void Var063() {
           }
         }
 
-        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "CRTUSRPRF USRPRF(" + goodUser
-            + ") PASSWORD(" + goodPasswd + ")                               ',"
-            + "0000000070.00000 ) ");
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD(" + goodPasswd
+            + ")                               '," + "0000000070.00000 ) ");
       } catch (Exception e) {
         failed(e, "Error during testcase setup " + added);
         return;
       }
 
-      testBadProfile(goodUser, goodPasswd, badUser, badPasswd,
-          expectedBadConnectException, expectedBadConnectException2,
-          expectedBadConnectException3, added);
+      testBadProfile(goodUser, goodPasswd, badUser, badPasswd, expectedBadConnectException,
+          expectedBadConnectException2, expectedBadConnectException3, added);
 
       System.gc();
       try {
@@ -3228,35 +3034,6 @@ public void Var063() {
     if (checkNotGroupTest() && checkPasswordLeak()) {
       String added = " -- added 01/03/2012 connect after connect with bad profile (because of bad library list entry) CPS 8P6TF6  PTFs 61:SI45605,71:SI45604 ";
 
-      // If we are running with the toolbox driver and the jt400Native.jar
-      // then this testcase will fail prior to V7R2. Mark as successful
-      // if prior to V7R2.
-      if ((getRelease() < JDTestDriver.RELEASE_V7R2M0)
-          && (System.getProperty("java.class.path").toLowerCase()
-              .indexOf("jt400native") > 0)) {
-        System.out.println(
-            "Connect with bad profile not applicable for jt400Native.jar and before V7R2.  See issue 45361");
-        assertCondition(true);
-        return;
-      }
-
-      // If we are running with the toolbox driver in V6R1, we don't get an
-      // error
-      if ((isToolboxDriver())
-          && (getRelease() == JDTestDriver.RELEASE_V7R1M0)) {
-        notApplicable("Toolbox in V6R1 does not throw error");
-        return;
-      }
-
-      // Not fixed for V5R4
-
-      if ((getDriver() == JDTestDriver.DRIVER_NATIVE)
-          && (getRelease() == JDTestDriver.RELEASE_V7R1M0)) {
-        System.out.println("PTF for APAR SE45716 not created to V5R4");
-        assertCondition(true);
-        return;
-      }
-
       String goodUser = "JDBGDUS2" + letter_;
       String goodPasswd = "xyz123zyz";
       String badUser = "JDBBDUS2" + letter_;
@@ -3273,37 +3050,30 @@ public void Var063() {
           expectedBadConnectException = "Communication link failure";
 
         }
-        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_); 
+        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
         c1 = DriverManager.getConnection(baseURL_ + ";errors=full", pwrSysUserID_, powerPassword);
-
 
         // Delete and recreate the bad profile
         s1 = c1.createStatement();
 
-        String deleteCommands[] = {
-            "CALL QSYS2.QCMDEXC('DLTUSRPRF " + badUser + " OWNOBJOPT(*CHGOWN JAVA)  ') ",
+        String deleteCommands[] = { "CALL QSYS2.QCMDEXC('DLTUSRPRF " + badUser + " OWNOBJOPT(*CHGOWN JAVA)  ') ",
             "CALL QSYS.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)      ',0000000030.00000 ) ",
             "CALL QSYS.QCMDEXC('DLTLIB JDBADLIB         ',0000000020.00000 ) ",
             "CALL QSYS.QCMDEXC('DLTJOBD JOBD(QGPL/JDBADLIBL)  ', 0000000030.00000 )",
-            "CALL QSYS2.QCMDEXC('DLTUSRPRF " + goodUser    + "  OWNOBJOPT(*CHGOWN JAVA)  ') ", };
+            "CALL QSYS2.QCMDEXC('DLTUSRPRF " + goodUser + "  OWNOBJOPT(*CHGOWN JAVA)  ') ", };
         String expectedErrors[] = { "not found" };
         executeStatementsIgnoreErrors(s1, deleteCommands, expectedErrors);
 
-        String createCommands[] = {
-            "CALL QSYS.QCMDEXC('CRTLIB JDBADLIB      ',0000000020.00000 ) ",
+        String createCommands[] = { "CALL QSYS.QCMDEXC('CRTLIB JDBADLIB      ',0000000020.00000 ) ",
             "CALL QSYS.QCMDEXC('CRTJOBD JOBD(QGPL/JDBADLIBL) JOBQ(QINTER) INLLIBL(JDBADLIB)                                    ',"
                 + "0000000080.00000 ) ",
-            "CALL QSYS.QCMDEXC('CRTUSRPRF USRPRF(" + badUser + ") PASSWORD("
-                + badPasswd
-                + ") JOBD(QGPL/JDBADLIBL)                                    ',"
-                + "0000000090.00000 ) ",
-            "CALL QSYS.QCMDEXC('GRTOBJAUT OBJ(QSYS/JDBADLIB) OBJTYPE(*LIB) USER("
-                + badUser
+            "CALL QSYS.QCMDEXC('CRTUSRPRF USRPRF(" + badUser + ") PASSWORD(" + badPasswd
+                + ") JOBD(QGPL/JDBADLIBL)                                    '," + "0000000090.00000 ) ",
+            "CALL QSYS.QCMDEXC('GRTOBJAUT OBJ(QSYS/JDBADLIB) OBJTYPE(*LIB) USER(" + badUser
                 + ") AUT(*EXCLUDE)                                                                                           ',"
                 + "0000000080.00000 ) ",
-            "CALL QSYS.QCMDEXC('CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD("
-                + goodPasswd + ")                               ',"
-                + "0000000070.00000 ) ", };
+            "CALL QSYS.QCMDEXC('CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD(" + goodPasswd
+                + ")                               '," + "0000000070.00000 ) ", };
         executeStatements(s1, createCommands);
 
       } catch (Exception e) {
@@ -3311,9 +3081,8 @@ public void Var063() {
         return;
       }
 
-      testBadProfile(goodUser, goodPasswd, badUser, badPasswd,
-          expectedBadConnectException, expectedBadConnectException2,
-          expectedBadConnectException3, added);
+      testBadProfile(goodUser, goodPasswd, badUser, badPasswd, expectedBadConnectException,
+          expectedBadConnectException2, expectedBadConnectException3, added);
 
       System.gc();
 
@@ -3329,187 +3098,56 @@ public void Var063() {
     }
   }
 
-  public void Var073() { notApplicable();}
-  public void Var074() { notApplicable();}
-  public void Var075() { notApplicable();}
-  public void Var076() { notApplicable();}
-  public void Var077() { notApplicable();}
-  public void Var078() { notApplicable();}
-  public void Var079() { notApplicable();}
-  public void Var080() { notApplicable();}
+  public void Var073() {
+    notApplicable();
+  }
 
-  /* Tests for connecting to system with exit program */ 
-  /* Return false if the system does not support the exit program. */ 
-  /* If the correct exit program exists then return true. Make sure the MFA user uses the exit program */
-  /* If an exit program does not exist, create the exit program and make sure the MFA users users the exit program */ 
-  /* If a different exit program exists, then throw an SQLException */ 
-  
+  public void Var074() {
+    notApplicable();
+  }
+
+  public void Var075() {
+    notApplicable();
+  }
+
+  public void Var076() {
+    notApplicable();
+  }
+
+  public void Var077() {
+    notApplicable();
+  }
+
+  public void Var078() {
+    notApplicable();
+  }
+
+  public void Var079() {
+    notApplicable();
+  }
+
+  public void Var080() {
+    notApplicable();
+  }
+
+  /* Tests for connecting to system with exit program */
+  /* Return false if the system does not support the exit program. */
+  /*
+   * If the correct exit program exists then return true. Make sure the MFA user
+   * uses the exit program
+   */
+  /*
+   * If an exit program does not exist, create the exit program and make sure the
+   * MFA users users the exit program
+   */
+  /* If a different exit program exists, then throw an SQLException */
+
   public boolean checkExitProgram() throws Exception {
     if (!exitProgramChecked_) {
       String systemName = systemObject_.getSystemName();
       if (checkAdditionalAuthenticationFactor(systemName)) {
-        Statement stmt = pwrConnection_.createStatement(); 
-        /* Check the exit point program */ 
-        String sql = "select EXIT_PROGRAM_LIBRARY, EXIT_PROGRAM "
-            + "from qsys2.exit_program_info " 
-            + "WHERE EXIT_POINT_NAME='QIBM_QSY_AUTH' "
-            + "ORDER BY EXIT_PROGRAM_NUMBER fetch first 1 rows only"; 
-        String exitProgramLibrary = null; 
-        String exitProgram = null; 
-        ResultSet rs = stmt.executeQuery(sql); 
-        if (rs.next()) { 
-          exitProgramLibrary = rs.getString(1); 
-          exitProgram = rs.getString(2); 
-        }
-        rs.close(); 
-        if ((exitProgramLibrary != null && !exitProgramLibrary.equals("JDTESTINFO")) || 
-            (exitProgram        != null && !exitProgram.equals("AUTHEXIT"))) {
-          stmt.close(); 
-          throw new SQLException("INVALID EXIT PROGRAM "+exitProgramLibrary+"/"+exitProgram+" FOR QIBM_QSY_AUTH .. please remove"); 
-        }
-        if (exitProgramLibrary == null) { 
-          /* Create and install the exit program */ 
-          String [] exitProgramText = {
-              "#include <qusec.h>           ",
-              "#include <stdio.h> ",
-              "#include <qusrjobi.h>  ",
-              "#include <stdlib.h> ",
-              "#include <eauth1.h>          ",
-              "#include <sys/stat.h>",
-              "#include <qmhsndpm.h>",
-              
-              " int main (int argc, char *argv[]) {",
-              "    int rc2;",
-              "    Qus_EC_t errorCode;",
-              "    Qwc_JOBI0600_t jobi;",
-              "    char * dest;",
-              "    char jobname[30];",
-              "    char filename[80];",
-              "    char ipAddress[50]; ",
-              "    char * wrkFile; ",
-              "    FILE * fp;",
-              "    char       msg_key [4];",
-              "    Qsy_Authentication_Info_t * info= (  Qsy_Authentication_Info_t *) argv[1];",
-              "    int * rc = (int *) argv[2]; ",
-              "    int i; ",
-              "    QUSRJOBI(&jobi,",
-              "             sizeof(jobi),",
-              "             \"JOBI0600\",",
-              "             \"*                         \",",
-              "             \"                \");",
-              "",
-              "    strcpy(filename,\"/tmp/authexit\");",
-              "    mkdir(filename, S_IRWXU | S_IRWXG | S_IRWXO );",
-              "    wrkFile = filename+strlen(filename);",
-              "    *wrkFile='/';",
-              "    wrkFile++;",
-              "",
-              "     dest = jobname;",
-              "    for (i = 0; i < 6; i++) {",
-              "       *dest = jobi.Job_Number[i];",
-              "       *wrkFile =  jobi.Job_Number[i];",
-              "       if (*dest != ' ') {",
-              "           dest++;",
-              "           wrkFile++; ",
-              "       }",
-              "    }",
-              "    *dest = '/'; dest++;",
-              "    *wrkFile='.'; wrkFile++; ",
-              "    for (i = 0; i < 10; i++) {",
-              "      *dest = jobi.User_Name[i];",
-              "      *wrkFile=jobi.User_Name[i];",
-              "      if (*dest != ' ')  {",
-              "          dest++;",
-              "          wrkFile++; ",
-              "      }",
-              "    }",
-              "    *dest = '/'; dest++;",
-              "    *wrkFile = '.'; wrkFile++; ",
-              "    for (i = 0; i < 10; i++) {",
-              "      *dest = jobi.Job_Name[i];",
-              "      *wrkFile = jobi.Job_Name[i];",
-              "      if (*dest != ' ') {",
-              "          dest++;",
-              "          wrkFile++;",
-              "      }",
-              "    }",
-              "    strcpy(wrkFile,\".txt\"); ",
-              "    *dest = '\0'; ",
-              "    memset(&errorCode,0,sizeof(errorCode)); ",
-
-              "    QMHSNDPM (",
-              "              \"CPF9898\",                /* message id                  */",
-              "              \"QCPFMSG   *LIBL     \",   /* Qualified message file name */",
-              "              filename,                  /* Message data                */",
-              "              strlen(filename),          /* Length of message data      */",
-              "              \"*DIAG     \",             /* Message type                */",
-              "              \"*         \",             /* Call stack entry            */",
-              "              0,                        /* Call stack counter          */",
-              "              msg_key,                  /* Message key                 */",
-              "              &errorCode                 /* Error code                  */",
-              "              );",
-
-              "     fp = fopen(filename,\"w\");",
-              "    fprintf(fp,\"Exit_Point_Name=%20.20s\\n\",info->Exit_Point_Name);",
-              "    fprintf(fp,\"Exit_Point_Format_Name=%8.8s\\n\",info->Exit_Point_Format_Name);",
-              "    fprintf(fp,\"User_Profile_Name=%8.8s\\n\",info->User_Profile_Name);",
-              "    fprintf(fp,\"Remote_Port=%d\\n\",info->Authentication_Caller.Remote_Port);",
-              "    fprintf(fp,\"Local_Port=%d\\n\",info->Authentication_Caller.Local_Port);",
-              "    strncpy(ipAddress,",
-              "            info->Authentication_Caller.Remote_IPAddress,",
-              "            info->Authentication_Caller.Remote_IPAddress_Len);",
-              "    ipAddress[info->Authentication_Caller.Remote_IPAddress_Len]='\0';",
-              "    fprintf(fp,\"Remote_IPAddress=%s\\n\",ipAddress);",
-              "    strncpy(ipAddress,",
-              "            info->Authentication_Caller.Local_IPAddress,",
-              "            info->Authentication_Caller.Local_IPAddress_Len);",
-              "    ipAddress[info->Authentication_Caller.Local_IPAddress_Len]='\0';",
-              "    fprintf(fp,\"Local_IPAddress=%s\\n\",ipAddress);",
-
-             "     fprintf(fp,\"Verification_ID=%30.30s\\n\",",
-              "            info->Authentication_Caller.Verification_ID);",
-
-             "     fflush(fp); ",
-              "    fclose(fp); ",
-
-             "     return(0); ",
-              "}",
-	  }; 
-          StringBuffer sb = new StringBuffer(); 
-          for (int i = 0; i < exitProgramText.length; i++) {
-            sb.append(exitProgramText[i]); 
-            sb.append("\n"); 
-          }
-          sql = "CALL IFS_WRITE_UTF8(PATH_NAME=>?,LINE=>?,OVERWRITE=>'REPLACE')"; 
-          PreparedStatement ps = pwrConnection_.prepareStatement(sql); 
-          ps.setString(1, "/tmp/authexit.c"); 
-          ps.setString(2, sb.toString()); 
-          ps.execute(); 
-          ps.close(); 
-          
-          sql = "CALL QSYS2.QCMDEXC('CRTCMOD MODULE(JDTESTINFO/AUTHEXIT) "
-              + "SRCSTMF(''/tmp/authexit.c'') DBGVIEW(*ALL) SYSIFCOPT(*IFSIO)') ";
-          stmt.execute(sql); 
-          
-          sql = "CALL QSYS2.QCMDEXC('CRTPGM PGM(JDTESTINFO/AUTHEXIT) MODULE(JDTESTINFO/AUTHEXIT)')";  
-          stmt.execute(sql); 
-          
-          sql = "CALL QSYS2.QCMDEXC('ADDEXITPGM EXITPNT(QIBM_QSY_AUTH) FORMAT(AUTH0100) PGMNBR(1) "
-              + "PGM(JDTESTINFO/AUTHEXIT) THDSAFE(*YES)')"; 
-          stmt.execute(sql); 
-          exitProgramChecked_ = true;
-          exitProgramEnabled_ = true;
-        } else { /*exit program defined */ 
-          exitProgramChecked_ = true;
-          exitProgramEnabled_ = true;
-        }
-
-        /* Check the user setting */ 
-        /* Make sure the MFA user is enabled to use the exit program */ 
-        initMfaUser(); 
-        sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF("+mfaUserid_+") AUTHMTH(*TOTP *REGFAC)')";       
-        stmt.execute(sql); 
-        stmt.close(); 
+        initMfaUser();
+        AuthExit.assureExitProgramExists(pwrConnection_, mfaUserid_);
       } else {
         exitProgramChecked_ = true;
         exitProgramEnabled_ = false;
@@ -3522,29 +3160,24 @@ public void Var063() {
     return exitProgramEnabled_;
   }
 
-  public void cleanupExitProgam() throws SQLException { 
-    if (exitProgramEnabled_) {
-      Statement stmt=pwrConnection_.createStatement(); 
-      String sql = "CALL QSYS2.QCMDEXC('RMVEXITPGM EXITPNT(QIBM_QSY_AUTH) FORMAT(AUTH0100) PGMNBR(1)')"; 
-      stmt.execute(sql); 
-      stmt.close(); 
+  /*
+   * Test that the exit program information is correct for native and for toolbox
+   * non-secure
+   */
+  public void Var081() {
+    try {
 
-    }
-  }
-  
-  /* Test that the exit program information is correct for native and for toolbox non-secure */ 
-  public void Var081() { 
-    try { 
-      
-      StringBuffer sb = new StringBuffer(); 
-      boolean successful = true; 
+      StringBuffer sb = new StringBuffer();
+      boolean successful = true;
       if (checkExitProgram()) {
-          // Create a simple MFA connection and check the exit information. 
+        String jobName;
+        // Create a simple MFA connection and check the exit information.
         initMfaUser();
         String mfaFactorString = new String(mfaFactor_);
         String url;
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-          url = "jdbc:as400:" + systemObject_.getSystemName() + ";secure=false;additionalAuthenticationFactor=" + mfaFactorString;
+          url = "jdbc:as400:" + systemObject_.getSystemName() + ";secure=false;additionalAuthenticationFactor="
+              + mfaFactorString;
         } else {
           url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString;
         }
@@ -3554,26 +3187,33 @@ public void Var063() {
         rs.next();
         String currentUser = rs.getString(1);
         System.out.println("current MFA user is " + currentUser);
-        String jobName= rs.getString(2).replace('/','.'); 
-        if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
-          successful = false; sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_+"\n");
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+          jobName = rs.getString(2).replace('/', '.');
+        } else {
+          jobName = JDJobName.getJobName().replace('/', '.');
         }
-        /* Read the output file using IFS_READ */ 
-        boolean foundProfileName= false;
-        boolean foundVerificationId = false; 
-        boolean foundRemotePort  = false;
+        System.out.println("Job with exit information is " + jobName);
+        rs.close();
+        if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
+          successful = false;
+          sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_ + "\n");
+        }
+        /* Read the output file using IFS_READ */
+        boolean foundProfileName = false;
+        boolean foundVerificationId = false;
+        boolean foundRemotePort = false;
         boolean foundLocalPort = false;
         boolean foundRemoteIp = false;
         boolean foundLocalIp = false;
-        String expectedVerificationId; 
-        String expectedRemotePort="NOTSET";
-        String expectedLocalPort="NOTSET";
-        String expectedRemoteIp="NOTSET";
-        String expectedLocalIp="NOTSET";
-        
+        String expectedVerificationId;
+        String expectedRemotePort = "NOTSET";
+        String expectedLocalPort = "NOTSET";
+        String expectedRemoteIp = "NOTSET";
+        String expectedLocalIp = "NOTSET";
+
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-          
-          expectedVerificationId="Verification_ID=QIBM_OS400_QZBS_SVR_DATABASE"; 
+
+          expectedVerificationId = "Verification_ID=QIBM_OS400_QZBS_SVR_DATABASE";
 
           String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
           rs = s.executeQuery(sql);
@@ -3584,149 +3224,281 @@ public void Var063() {
             expectedLocalPort = "Local_Port=" + rs.getString(4);
           }
           rs.close();
-          
-        } else {
-          expectedVerificationId="Verification_ID=QIBM_OS400_QJDB_JDBC"; 
-          expectedRemotePort="Remote_Port=0";
-          expectedLocalPort="Local_Port=0";
-          expectedRemoteIp="Remote_IPAddress=";
-          expectedLocalIp="Local_IPAddress=";
-        }
-        c.close(); 
 
-        
-        Statement pwrStmt = pwrConnection_.createStatement(); 
-        String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/"+jobName+".txt'))";
+        } else {
+          expectedVerificationId = "Verification_ID=QIBM_QJDB_JDBC";
+          expectedRemotePort = "Remote_Port=0";
+          expectedLocalPort = "Local_Port=0";
+          expectedRemoteIp = "Remote_IPAddress=";
+          expectedLocalIp = "Local_IPAddress=";
+        }
+        c.close();
+
+        Statement pwrStmt = pwrConnection_.createStatement();
+        String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/" + jobName + ".txt'))";
         rs = pwrStmt.executeQuery(sql);
-        sb.append("/tmp/authexit/"+jobName+".txt contains \n");
+        sb.append("/tmp/authexit/" + jobName + ".txt contains \n");
         sb.append("-------------------------------------------\n");
-        
-        while(rs.next()) { 
-          String line = rs.getString(1).trim(); 
-          sb.append(line); 
-          sb.append("\n"); 
-          if (line.equals("User_Profile_Name="+mfaUserid_)) {
+
+        while (rs.next()) {
+          String line = rs.getString(1).trim();
+          sb.append(line);
+          sb.append("\n");
+          if (line.equals("User_Profile_Name=" + mfaUserid_)) {
             foundProfileName = true;
           }
-          if (line.equals(expectedVerificationId))   foundVerificationId = true; 
-          if (line.equals(expectedLocalIp)) foundLocalIp = true; 
-          if (line.equals(expectedLocalPort)) foundLocalPort = true; 
-          if (line.equals(expectedRemoteIp)) foundRemoteIp = true; 
-          if (line.equals(expectedRemotePort)) foundRemotePort = true; 
+          if (line.equals(expectedVerificationId))
+            foundVerificationId = true;
+          if (line.equals(expectedLocalIp))
+            foundLocalIp = true;
+          if (line.equals(expectedLocalPort))
+            foundLocalPort = true;
+          if (line.equals(expectedRemoteIp))
+            foundRemoteIp = true;
+          if (line.equals(expectedRemotePort))
+            foundRemotePort = true;
         }
         sb.append("-------------------------------------------\n");
 
-        rs.close(); 
-        pwrStmt.close(); 
-        if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
-        if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
-        if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
-        if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
-        if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+"\n"); }
-        if (!foundRemotePort) { successful = false; sb.append("Did not find expected:"+expectedRemotePort+"\n"); }
+        rs.close();
+        pwrStmt.close();
+        if (!foundProfileName) {
+          successful = false;
+          sb.append("Did not find USER PROFILE in /tmp/authexit/" + jobName + ".txt\n");
+        }
+        if (!foundVerificationId) {
+          successful = false;
+          sb.append("Did not find verification id:" + expectedVerificationId + "\n");
+        }
+        if (!foundLocalIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalIp + "\n");
+        }
+        if (!foundLocalPort) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalPort + "\n");
+        }
+        if (!foundRemoteIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedRemoteIp + "\n");
+        }
+        if (!foundRemotePort) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedRemotePort + "\n");
+        }
+        if (!successful)
+          skipExitCleanup = true;
         assertCondition(successful, sb);
       }
-    } catch (Exception e) { 
-      failed(e, "Unexpected exception"); 
+    } catch (Exception e) {
+      failed(e, "Unexpected exception");
     }
   }
 
-
-  /* Test that the exit program information is correct for toolbox non-secure */ 
-  public void Var082() { 
-    try { 
-      StringBuffer sb = new StringBuffer(); 
-      boolean successful = true; 
+  /* Test that the exit program information is correct for toolbox non-secure */
+  public void Var082() {
+    try {
+      StringBuffer sb = new StringBuffer();
+      boolean successful = true;
       if (checkToolbox() && checkExitProgram()) {
-          // Create a simple MFA connection and check the exit information. 
+        // Create a simple MFA connection and check the exit information.
         initMfaUser();
-        cleanupExitProgramFiles(); 
+        AuthExit.cleanupExitProgramFiles(pwrConnection_);
         String mfaFactorString = new String(mfaFactor_);
         String url;
-        url = "jdbc:as400:" + systemObject_.getSystemName() + ";secure=true;additionalAuthenticationFactor=" + mfaFactorString;
+        url = "jdbc:as400:" + systemObject_.getSystemName() + ";secure=true;additionalAuthenticationFactor="
+            + mfaFactorString;
         Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
         Statement s = c.createStatement();
         ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
         rs.next();
         String currentUser = rs.getString(1);
         System.out.println("current MFA user is " + currentUser);
-        String jobName= rs.getString(2).replace('/','.'); 
+        String jobName = rs.getString(2).replace('/', '.');
         if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
-          successful = false; sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_+"\n");
+          successful = false;
+          sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_ + "\n");
         }
-        /* Read the output file using IFS_READ */ 
-        boolean foundProfileName= false;
-        boolean foundVerificationId = false; 
+        /* Read the output file using IFS_READ */
+        boolean foundProfileName = false;
+        boolean foundVerificationId = false;
         boolean foundLocalPort = false;
         boolean foundRemoteIp = false;
         boolean foundLocalIp = false;
-        String expectedVerificationId; 
-        String expectedLocalPort="NOTSET";
-        String expectedRemoteIp="NOTSET";
-        String expectedLocalIp="NOTSET";
-        
-          
-          expectedVerificationId="Verification_ID=QIBM_QZBS_SVR_HOSTCNN"; 
+        String expectedVerificationId;
+        String expectedLocalPort = "NOTSET";
+        String expectedRemoteIp = "NOTSET";
+        String expectedLocalIp = "NOTSET";
 
-          String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
-          rs = s.executeQuery(sql);
-          if (rs.next()) {
-            expectedRemoteIp = "Remote_IPAddress=" + rs.getString(1);
-            expectedLocalIp = "Local_IPAddress=" + rs.getString(3);
-            expectedLocalPort = "Local_Port=9480";
-          }
-          rs.close();
-          
-        c.close(); 
+        expectedVerificationId = "Verification_ID=QIBM_QZBS_SVR_HOSTCNN";
 
-        
-        Statement pwrStmt = pwrConnection_.createStatement(); 
-        sql = "select LINE,PATH_NAME from "
-            + "table(qsys2.IFS_OBJECT_STATISTICS('/tmp/authexit')), "
+        String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
+        rs = s.executeQuery(sql);
+        if (rs.next()) {
+          expectedRemoteIp = "Remote_IPAddress=" + rs.getString(1);
+          expectedLocalIp = "Local_IPAddress=" + rs.getString(3);
+          expectedLocalPort = "Local_Port=9480";
+        }
+        rs.close();
+
+        c.close();
+
+        Statement pwrStmt = pwrConnection_.createStatement();
+        String pathname = null;
+        sql = "select LINE,PATH_NAME from " + "table(qsys2.IFS_OBJECT_STATISTICS('/tmp/authexit')), "
             + "TABLE(QSYS2.IFS_READ_UTF8(PATH_NAME)) WHERE OBJECT_TYPE='*STMF'";
         rs = pwrStmt.executeQuery(sql);
-        while(rs.next()) { 
-          String line = rs.getString(1).trim(); 
-          sb.append(line); 
-          sb.append("\n"); 
-          if (line.equals("User_Profile_Name="+mfaUserid_)) {
+        while (rs.next()) {
+          String line = rs.getString(1).trim();
+          pathname = rs.getString(2).trim();
+          sb.append(line);
+          sb.append("\n");
+          if (line.equals("User_Profile_Name=" + mfaUserid_)) {
             foundProfileName = true;
           }
-          if (line.equals(expectedVerificationId))   foundVerificationId = true; 
-          if (line.equals(expectedLocalIp)) foundLocalIp = true; 
-          if (line.equals(expectedLocalPort)) foundLocalPort = true; 
-          if (line.equals(expectedRemoteIp)) foundRemoteIp = true; 
+          if (line.equals(expectedVerificationId))
+            foundVerificationId = true;
+          if (line.equals(expectedLocalIp))
+            foundLocalIp = true;
+          if (line.equals(expectedLocalPort))
+            foundLocalPort = true;
+          if (line.equals(expectedRemoteIp))
+            foundRemoteIp = true;
         }
-        rs.close(); 
-        pwrStmt.close(); 
-        if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
-        if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
-        if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
-        if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
-        if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+"\n"); }
+        rs.close();
+        pwrStmt.close();
+        if (!foundProfileName) {
+          successful = false;
+          sb.append("Did not find USER PROFILE in " + pathname + "\n");
+        }
+        if (!foundVerificationId) {
+          successful = false;
+          sb.append("Did not find verification id:" + expectedVerificationId + "\n");
+        }
+        if (!foundLocalIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalIp + "\n");
+        }
+        if (!foundLocalPort) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalPort + "\n");
+        }
+        if (!foundRemoteIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedRemoteIp + "\n");
+        }
+        if (!successful)
+          skipExitCleanup = true;
         assertCondition(successful, sb);
       }
-    } catch (Exception e) { 
-      failed(e, "Unexpected exception"); 
+    } catch (Exception e) {
+      failed(e, "Unexpected exception");
     }
   }
 
- 
+  /* Test user supplied settings are passed for native driver */
+  public void Var083() {
+    try {
 
-  /* Remove the old exit program files */ 
-  private void cleanupExitProgramFiles() throws SQLException {
-    Statement stmt=pwrConnection_.createStatement(); 
-    String sql = "select SYSTOOLS.IFS_UNLINK(PATH_NAME) "
-        + "from table(qsys2.IFS_OBJECT_STATISTICS('/tmp/authexit')) "
-        + "WHERE OBJECT_TYPE='*STMF'"; 
-    ResultSet rs = stmt.executeQuery(sql); 
-    while (rs.next()) {
-      
+      StringBuffer sb = new StringBuffer();
+      boolean successful = true;
+      if (checkNative() && checkExitProgram()) {
+        String jobName;
+        // Create a simple MFA connection and check the exit information.
+        initMfaUser();
+        String mfaFactorString = new String(mfaFactor_);
+        String url;
+        url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString
+            + ";authenticationVerificationId=MYAPP_SUPER_SERVER" + ";authenticationLocalIP=1.2.3.4"
+            + ";authenticationLocalPort=80" + ";authenticationRemoteIP=5.6.7.8" + ";authenticationRemotePort=2134";
+        sb.append("Connecting using URL " + url + "\n");
+        Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
+        rs.next();
+        String currentUser = rs.getString(1);
+        System.out.println("current MFA user is " + currentUser);
+        jobName = JDJobName.getJobName().replace('/', '.');
+        System.out.println("Job with exit information is " + jobName);
+        rs.close();
+        if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
+          successful = false;
+          sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_ + "\n");
+        }
+        /* Read the output file using IFS_READ */
+        boolean foundProfileName = false;
+        boolean foundVerificationId = false;
+        boolean foundRemotePort = false;
+        boolean foundLocalPort = false;
+        boolean foundRemoteIp = false;
+        boolean foundLocalIp = false;
+
+        String expectedVerificationId = "Verification_ID=MYAPP_SUPER_SERVER";
+        String expectedRemotePort = "Remote_Port=2134";
+        String expectedLocalPort = "Local_Port=80";
+        String expectedRemoteIp = "Remote_IPAddress=5.6.7.8";
+        String expectedLocalIp = "Local_IPAddress=1.2.3.4";
+        c.close();
+
+        Statement pwrStmt = pwrConnection_.createStatement();
+        String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/" + jobName + ".txt'))";
+        rs = pwrStmt.executeQuery(sql);
+        sb.append("/tmp/authexit/" + jobName + ".txt contains \n");
+        sb.append("-------------------------------------------\n");
+
+        while (rs.next()) {
+          String line = rs.getString(1).trim();
+          sb.append(line);
+          sb.append("\n");
+          if (line.equals("User_Profile_Name=" + mfaUserid_)) {
+            foundProfileName = true;
+          }
+          if (line.equals(expectedVerificationId))
+            foundVerificationId = true;
+          if (line.equals(expectedLocalIp))
+            foundLocalIp = true;
+          if (line.equals(expectedLocalPort))
+            foundLocalPort = true;
+          if (line.equals(expectedRemoteIp))
+            foundRemoteIp = true;
+          if (line.equals(expectedRemotePort))
+            foundRemotePort = true;
+        }
+        sb.append("-------------------------------------------\n");
+
+        rs.close();
+        pwrStmt.close();
+        if (!foundProfileName) {
+          successful = false;
+          sb.append("Did not find USER PROFILE in /tmp/authexit/" + jobName + ".txt\n");
+        }
+        if (!foundVerificationId) {
+          successful = false;
+          sb.append("Did not find verification id:" + expectedVerificationId + "\n");
+        }
+        if (!foundLocalIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalIp + "\n");
+        }
+        if (!foundLocalPort) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalPort + "\n");
+        }
+        if (!foundRemoteIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedRemoteIp + "\n");
+        }
+        if (!foundRemotePort) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedRemotePort + "\n");
+        }
+        if (!successful)
+          skipExitCleanup = true;
+        assertCondition(successful, sb);
+      }
+    } catch (Exception e) {
+      failed(e, "Unexpected exception");
     }
-    rs.close(); 
-    stmt.close(); 
   }
 
-  
-  
 }

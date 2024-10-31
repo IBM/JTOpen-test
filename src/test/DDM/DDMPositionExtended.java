@@ -57,12 +57,29 @@ public class DDMPositionExtended extends Testcase
   public DDMPositionExtended(AS400            systemObject,
                              Vector           variationsToRun,
                              int              runMode,
-                             FileOutputStream fileOutputStream)
+                             FileOutputStream fileOutputStream,  
+                            String testLib,
+                             int blockingFactor, AS400 pwrsys)
   {
     // Replace the third parameter (3) with the total number of variations
     // in this testcase.
     super(systemObject, "DDMPositionExtended", 18,
           variationsToRun, runMode, fileOutputStream);
+     testLib_ = testLib;
+    pwrSys_ = pwrsys; // Added for @A1A
+
+  }
+
+  protected void setup() throws Exception {
+    try {
+      // Make sure ther user has access to the QIWS/QCUSTCDT file
+      CommandCall c = new CommandCall(pwrSys_);
+      c.run(" GRTOBJAUT OBJ(QIWS/QCUSTCDT) OBJTYPE(*FILE) USER("+systemObject_.getUserId()+") AUT(*USE)   "); 
+      
+      } catch (Exception e) {
+      e.printStackTrace(output_);
+      throw e;
+    }
   }
 
   /**
@@ -71,6 +88,14 @@ public class DDMPositionExtended extends Testcase
   public void run()
   {
     boolean allVariations = (variationsToRun_.size() == 0);
+    // Do any necessary setup work for the variations
+    try {
+      setup();
+    } catch (Exception e) {
+      // Testcase setup did not complete successfully
+      System.out.println("Unable to complete setup; variations not run");
+      return;
+    }
 
     if (runMode_ != ATTENDED)
     {

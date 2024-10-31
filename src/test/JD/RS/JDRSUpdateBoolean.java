@@ -22,7 +22,6 @@ import test.JDTestcase;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable;
@@ -710,7 +709,7 @@ updateBoolean() - Update a INTEGER, with the value false.
             JDRSTest.position (rs2, key_);
             int v = rs2.getInt ("C_INTEGER");
             rs2.close ();
-            assertCondition (v == 0);
+            assertCondition (v == 0, "Got "+v+" expected 0 positioned to "+key_+" using "+select_);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

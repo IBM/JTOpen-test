@@ -165,7 +165,7 @@ Test IFSRandomAccessFile.seek(long).
       file.read(data2);
       file.seek(9);
       int i = file.read();
-      assertCondition(isEqual(data1, data2) && i == dataIn[9]);
+      assertCondition(areEqual(data1, data2) && i == dataIn[9]);
       file.close();
     }
     catch(Exception e)
@@ -185,7 +185,7 @@ IFSRandomAccessFile.skipBytes(int) if argument one is invalid.
     try
     {
       file = new IFSRandomAccessFile(systemObject_, ifsPathName_, "rw");
-      file.skipBytes(-1);
+      file.skipBytes(-1L);
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -208,9 +208,9 @@ Test skipBytes(int).
       IFSRandomAccessFile file =
         new IFSRandomAccessFile(systemObject_, ifsPathName_, "r");
       file.read();
-      assertCondition(file.skipBytes(1) == 1 && file.read() == 2 &&
-             file.skipBytes(2) == 2 && file.read() == 5 &&
-             file.skipBytes(3) == 3 && file.read() == 9);
+      assertCondition(file.skipBytes(1L) == 1 && file.read() == 2 &&
+             file.skipBytes(2L) == 2 && file.read() == 5 &&
+             file.skipBytes(3L) == 3 && file.read() == 9);
       file.close();
     }
     catch(Exception e)
@@ -624,12 +624,7 @@ File.list().
 **/
   public void Var024()
   {
-    if (false /*isApplet_*/)
-    {
-      notApplicable();
-      return;
-    }
-
+ 
     try
     {
       IFSFile file1 = new IFSFile(systemObject_, ifsDirName_);
@@ -1259,7 +1254,7 @@ Run IFSFile.getSubtype() against everything in QSYS.LIB/QGPL.LIB.
     {
       if (DEBUG) System.out.println("Directory: /QIBM/ProdData/HTTP/Public/jt400");
       IFSFile dir = new IFSFile(systemObject_, "/QIBM/ProdData/HTTP/Public/jt400");
-      java.util.Enumeration enumeration = dir.enumerateFiles();
+      Enumeration<IFSFile> enumeration = dir.enumerateFiles();
       while (enumeration.hasMoreElements())
       {
         IFSFile file = (IFSFile)enumeration.nextElement();
@@ -1280,7 +1275,7 @@ Run IFSFile.getSubtype() against everything in QSYS.LIB/QGPL.LIB.
       {
         if (DEBUG) System.out.println("Directory: /QSYS.LIB");
         IFSFile dir = new IFSFile(systemObject_, "/QSYS.LIB");
-        java.util.Enumeration enumeration = dir.enumerateFiles();
+        Enumeration<IFSFile> enumeration = dir.enumerateFiles();
         while (enumeration.hasMoreElements())
         {
           IFSFile file = (IFSFile)enumeration.nextElement();
@@ -1301,7 +1296,7 @@ Run IFSFile.getSubtype() against everything in QSYS.LIB/QGPL.LIB.
       {
         if (DEBUG) System.out.println("Directory: /QSYS.LIB/QGPL.LIB");
         IFSFile dir = new IFSFile(systemObject_, "/QSYS.LIB/QGPL.LIB");
-        java.util.Enumeration enumeration = dir.enumerateFiles();
+        Enumeration<IFSFile> enumeration = dir.enumerateFiles();
         while (enumeration.hasMoreElements())
         {
           try
@@ -1403,7 +1398,7 @@ Verify that IFSFile.setLastModified(-1) sets the last modified date to the curre
       raFile.close();
 
       if (file.length() != data.length ||
-          !isEqual(data1, data)) {
+          !areEqual(data1, data)) {
         failed("File data is not correct");
       }
       else
@@ -1441,6 +1436,7 @@ Note to tester: This can be a long-running variation.
         data[i] = (byte) i;
       }
       os.write(data);
+      os.close(); 
       IFSFile file = new IFSFile(systemObject_, ifsPathName_);
       IFSRandomAccessFile raFile = new IFSRandomAccessFile(systemObject_, ifsPathName_, "r");
 
@@ -1524,6 +1520,7 @@ Note to tester: This can be a long-running variation.
         data[i] = (byte) i;
       }
       os.write(data);
+      os.close(); 
       IFSFile file = new IFSFile(systemObject_, ifsPathName_);
       IFSRandomAccessFile raFile = new IFSRandomAccessFile(systemObject_, ifsPathName_, "r");
 
@@ -1531,11 +1528,11 @@ Note to tester: This can be a long-running variation.
 
       //raFile.setLength(MAX_FILE_LENGTH);       // This takes a *long* time!
       //long lengthMax = file.length();
-      raFile.setLength(500);
+      raFile.setLength(500L);
       long length500 = file.length();
-      raFile.setLength(0);
+      raFile.setLength(0L);
       long length0 = file.length();
-      raFile.setLength(100);
+      raFile.setLength(100L);
       long length100 = file.length();
 
       assertCondition(lengthInit == 256 &&
@@ -1561,7 +1558,7 @@ IFSRandomAccessFile.setLength() if parameter is < 0.
     try
     {
       file = new IFSRandomAccessFile(systemObject_, ifsPathName_, "rw");
-      file.setLength(-1);
+      file.setLength(-1L);
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1581,7 +1578,7 @@ IFSRandomAccessFile.setLength() if parameter exceeds maximum allowable value.
     try
     {
       file = new IFSRandomAccessFile(systemObject_, ifsPathName_, "rw");
-      file.setLength(MAX_FILE_LENGTH+1);
+      file.setLength((long) MAX_FILE_LENGTH+1);
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1594,7 +1591,7 @@ IFSRandomAccessFile.setLength() if parameter exceeds maximum allowable value.
   static final boolean verifyFileCount(IFSFile dir, int expectedCount) throws IOException
   {
     boolean result = true;
-    Enumeration enumeration = dir.enumerateFiles("*");
+    Enumeration<?> enumeration = dir.enumerateFiles("*");
     int counter = 0;
     if (DEBUG) System.out.println("Enumerating files");
     while (enumeration.hasMoreElements())
@@ -1897,7 +1894,7 @@ when there are more than 128 items in a directory.
       }
       else
       {
-        Enumeration enumeration = dir.enumerateFiles();
+        Enumeration<?> enumeration = dir.enumerateFiles();
         int num = 0;
         while (enumeration.hasMoreElements())
         {

@@ -96,12 +96,14 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
                                    // qaqqinilib, ignore warnings, commit hold,
                                    // maximum blocked input rows (#40), lob
                                    // block size(#41)
-      } else {
+      } else if (vrm_ <= 750) {
         NUMBER_OF_PROPERTIES = 44; // V7R1 added servermode subsystem,
                                    // concurrent access resolution, maximum
                                    // blocked input rows (#42), lob block size
                                    // (#43) (query replace truncated parm) #44
 
+      } else {
+        NUMBER_OF_PROPERTIES = 50; // 6 more properties for MFA
       }
     } else if (getDriver() == JDTestDriver.DRIVER_JCC) {
       NUMBER_OF_PROPERTIES = 2;

@@ -71,6 +71,9 @@ public class JDSchedulerRunnable implements Runnable {
   }
 
   public void runNext() throws Exception {
+    int failedCount = 0; ; 
+    int successfulCount = 0; 
+
     if (initials != null) {
       long startTime = System.currentTimeMillis();
       java.util.Date d = new java.util.Date(System.currentTimeMillis());
@@ -191,7 +194,10 @@ public class JDSchedulerRunnable implements Runnable {
               runUntilFail = true;
             }
             JDRunit runit = new JDRunit(initials, runAction, null, outputFile);
-            int failedCount = runit.go();
+            JDRunitGoOutput goOutput = runit.go();
+            failedCount = goOutput.getFailedCount(); 
+            successfulCount = goOutput.getSuccessfulCount(); 
+            
             if (runUntilFail) {
               if (failedCount == 0) {
                 // Reschedule the test
@@ -235,6 +241,8 @@ public class JDSchedulerRunnable implements Runnable {
 
           }
         }
+        /* Only update statistics for a run where more than half were successfule  */ 
+        if (failedCount < (successfulCount + failedCount) / 2 ) {
         synchronized (c) {
 
           long endTime = System.currentTimeMillis();
@@ -303,7 +311,7 @@ public class JDSchedulerRunnable implements Runnable {
           deleteRunStatement.executeUpdate();
           deleteRunStatement.close(); 
         } /* sychronized c */
-
+        } /* if enough successful */ 
       } catch (Throwable e) {
         out.println("JDSchedulerRunnable:  Warning Status update failed sql="
             + sql);

@@ -59,12 +59,7 @@ extends JDTestcase
     // 
     // private ResultSet           rs_;
     //
-    // The v5r2nativeFunctions is so that the native driver will pass the
-    // regression bucket in V5R2.  There are many known problems here, but
-    // if the problems are fixed in the native driver for V5R2, then this
-    // code can be removed.
-    // 
-    public static String TABLE_          = JDLobTest.COLLECTION + ".VISIBILITY";
+      public static String TABLE_          = JDLobTest.COLLECTION + ".VISIBILITY";
     public static int BLOBSIZE_=100000;
     public static int CLOBSIZE_=100000;
     public static int THRESHOLD_ = 2000000; 

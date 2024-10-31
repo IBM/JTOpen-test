@@ -26,7 +26,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -967,6 +966,30 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       e.printStackTrace(out_);
     }
 
+    // Output status for each testcase.
+    for (Enumeration<Testcase> e = testcases_.elements(); e.hasMoreElements();) {
+      Testcase tc = (Testcase) e.nextElement();
+      tc.outputResults();
+      // Also add the number from each testcase (e.g JDConnectionClose) to the
+      // numbers for the bucket (e.g. JDConnectionTest).
+      totalTime_ += tc.getTimeToRun();
+      totalVars_ += tc.getTotalVariations();
+      totalSuc_ += tc.getSucceeded();
+      totalFail_ += tc.getFailed();
+      totalNotAp_ += tc.getNotApplicable();
+
+      // Also save the results
+      String[] results = new String[6];
+      results[0] = tc.getName();
+      results[1] = "" + tc.getSucceeded();
+      results[2] = "" + tc.getFailed();
+      results[3] = "" + tc.getNotApplicable();
+      results[4] = "" + tc.getTimeToRun();
+
+      testcaseResults.add(results);
+
+    }
+
     // Perform test driver cleanup.
     try {
       if (!skipCleanup) { 
@@ -993,29 +1016,6 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       e.printStackTrace(out_);
     }
 
-    // Output status for each testcase.
-    for (Enumeration<Testcase> e = testcases_.elements(); e.hasMoreElements();) {
-      Testcase tc = (Testcase) e.nextElement();
-      tc.outputResults();
-      // Also add the number from each testcase (e.g JDConnectionClose) to the
-      // numbers for the bucket (e.g. JDConnectionTest).
-      totalTime_ += tc.getTimeToRun();
-      totalVars_ += tc.getTotalVariations();
-      totalSuc_ += tc.getSucceeded();
-      totalFail_ += tc.getFailed();
-      totalNotAp_ += tc.getNotApplicable();
-
-      // Also save the results
-      String[] results = new String[6];
-      results[0] = tc.getName();
-      results[1] = "" + tc.getSucceeded();
-      results[2] = "" + tc.getFailed();
-      results[3] = "" + tc.getNotApplicable();
-      results[4] = "" + tc.getTimeToRun();
-
-      testcaseResults.add(results);
-
-    }
 
     if (checkPasswordLeak) {
       int leakCount = 0; 
@@ -1175,10 +1175,6 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
     }
 
-    if (!TestDriverStatic.servlet_ && !TestDriverStatic.systemExitDisabled_) {
-      TestDriverStatic.restoreSecurityManager();
-      System.exit(0);
-    }
   }
 
   /**

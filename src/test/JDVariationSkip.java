@@ -477,15 +477,13 @@ public class JDVariationSkip {
   }
   public static int getReleaseIndex(int release) throws Exception {
       switch (release) {
-          case 540: return 0;
-          case 610: return 1;
-          case 710: return 2;
-          case 720: return 3;
-          case 730: return 4;
-          case 740: return 5;
-          case 750: return 6;
-          case 760: return 7;
-          case 999: return 8; /* should be MAX_RELEASE_COUNT-1 */ 
+          case JDTestDriver.RELEASE_V7R1M0: return 2;
+          case JDTestDriver.RELEASE_V7R2M0: return 3;
+          case JDTestDriver.RELEASE_V7R3M0: return 4;
+          case JDTestDriver.RELEASE_V7R4M0: return 5;
+          case JDTestDriver.RELEASE_V7R5M0: return 6;
+          case JDTestDriver.RELEASE_V7R5M0_PLUS: return 7;
+          case 999: return 9; /* should be MAX_RELEASE_COUNT-1 */ 
           default:
             throw new Exception("Invalid release "+release);
       }

@@ -99,6 +99,7 @@ public class DDMPosition extends Testcase {
     pwrSys_ = pwrsys; // Added for @A1A
   }
 
+ 
   /**
    * Runs the variations requested.
    **/
@@ -344,6 +345,7 @@ public class DDMPosition extends Testcase {
    **/
   protected void setup() throws Exception {
     try {
+     
       // Delete and recreate library DDMTEST
       CommandCall c = new CommandCall(pwrSys_);
       deleteLibrary(c, testLib_);

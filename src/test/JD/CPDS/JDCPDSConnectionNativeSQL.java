@@ -61,7 +61,6 @@ extends JDTestcase {
     private              Connection     connection_;
     private              int            vrm_;
     private              boolean        nativeDriver_ = false; 
-    private              boolean        v5r2nativeFunctions_ = false;
 
 
 /**
@@ -98,7 +97,6 @@ Performs setup needed before running variations.
 	    JDReflectionUtil.callMethod_V(dataSource,"setPassword",clearPassword_);
 	    connection_ = dataSource.getConnection ();
 
-	    v5r2nativeFunctions_ = (getDriver() == JDTestDriver.DRIVER_NATIVE);
 	    nativeDriver_ = getDriver() == JDTestDriver.DRIVER_NATIVE; 
 	    if (nativeDriver_) {
 		// @H1A  native driver uses different notion of VRM 
@@ -1599,24 +1597,6 @@ difference supported at V5R1 and higher
     public void Var069()
     {
 	if (checkJdbc20StdExt()) {
-	    if (v5r2nativeFunctions_) {
-		try {
-		    String sql = "SELECT {fn difference(CHARCOL1,CHARCOL2)} FROM MYTABLE";
-		    String expected = "SELECT DIFFERENCE(CHARCOL1, CHARCOL2) FROM MYTABLE";
-		    String translated = connection_.nativeSQL (sql);
-
-		    boolean condition = translated.equals (expected);
-		    if (!condition) {
-			System.out.println("expected   = '"+expected+"'");
-			System.out.println("translated = '"+translated+"'");  
-		    } 
-		    assertCondition (condition); 
-
-		}
-		catch (Exception e) {
-		    failed(e , "Unexpected Exception");
-		}
-	    } else { 
 
 		    try {
 			String sql = "SELECT {fn difference(INTEGERCOL)} FROM MYTABLE";
@@ -1634,7 +1614,6 @@ difference supported at V5R1 and higher
 		    catch (Exception e) {
 			failed(e , "Unexpected Exception");
 		    }
-	    }
 	}
     }
 
@@ -1744,9 +1723,6 @@ nativeSQL() "fn" - Test LOCATE scalar function.
 	    try {
 		String sql = "SELECT {fn locate(CHARCOL1,CHARCOL2,5)} FROM MYTABLE";
 		String expected = "SELECT LOCATE(CHARCOL1,CHARCOL2,5) FROM MYTABLE";
-		if ( nativeDriver_) {
-		    expected = "SELECT LOCATE(CHARCOL1, CHARCOL2, 5) FROM MYTABLE";
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    } 
@@ -1769,9 +1745,6 @@ The native driver returns STRIP prior to v5r3.
 	    try {
 		String sql = "SELECT {fn ltrim(CHARCOL)} FROM MYTABLE";
 		String expected = "SELECT LTRIM(CHARCOL) FROM MYTABLE";
-		if ( nativeDriver_) {
-		    expected = "SELECT STRIP(CHARCOL,L,' ') FROM MYTABLE"; 
-		}
 		String translated = connection_.nativeSQL (sql);
 		assertCondition (translated.equalsIgnoreCase (expected), "actual("+translated+")!=expected("+expected+")");
 	    }
@@ -1791,16 +1764,6 @@ repeat supported at V5R3 and higher
     public void Var076()
     {
 	if (checkJdbc20StdExt()) {
-	    if (v5r2nativeFunctions_) {
-		try {
-		    String sql = "SELECT {fn repeat(CHARCOL,6)} FROM MYTABLE";
-		    String translated = connection_.nativeSQL (sql);
-		    failed("Didn't throw SQLException but got "+translated);
-		}
-		catch (Exception e) {
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		}
-	    } else {
 		try {
 		    String sql = "SELECT {fn repeat(CHARCOL,6)} FROM MYTABLE";
 		    String expected = "SELECT REPEAT(CHARCOL,6) FROM MYTABLE";
@@ -1810,7 +1773,6 @@ repeat supported at V5R3 and higher
 		catch (Exception e) {
 			failed(e, "Unexpected Exception");
 		}
-	    }
 	}
     }
 
@@ -1824,17 +1786,6 @@ replace supported at V5R3 and higher
     public void Var077()
     {
 	if (checkJdbc20StdExt()) {
-	    if (v5r2nativeFunctions_) {
-		try {
-		    String sql = "SELECT {fn replace(CHARCOL,'HELLO','GOODBYE')} FROM MYTABLE";
-		    String translated = connection_.nativeSQL (sql);
-		    failed("Didn't throw SQLException but got "+translated);
-		}
-		catch (Exception e) {
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		}
-
-	    } else { 
 
 		try {
 		    String sql = "SELECT {fn replace(CHARCOL,'HELLO','GOODBYE')} FROM MYTABLE";
@@ -1846,7 +1797,6 @@ replace supported at V5R3 and higher
 			failed(e, "Unexpected Exception");
 		}
 	    }
-	}
     }
 
 
@@ -2035,16 +1985,6 @@ dayname supported at V5R3 and higher
     public void Var086()
     {
 	if (checkJdbc20StdExt()) {
-	    if (v5r2nativeFunctions_) {
-		try {
-		    String sql = "SELECT {fn dayname(DATECOL)} FROM MYTABLE";
-		    String translated = connection_.nativeSQL (sql);
-		    failed("Didn't throw SQLException but got "+translated);
-		}
-		catch (Exception e) {
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		}
-	    } else { 
 
 		try {
 		    String sql = "SELECT {fn dayname(DATECOL)} FROM MYTABLE";
@@ -2055,7 +1995,6 @@ dayname supported at V5R3 and higher
 		catch (Exception e) {
 			failed(e, "Unexpected Exception");
 		}
-	    }
 	}
 
     }
@@ -2200,16 +2139,6 @@ monthname supported at V5R3 and higher
     public void Var093()
     {
 	if (checkJdbc20StdExt()) {
-	    if (v5r2nativeFunctions_) {
-		try {
-		    String sql = "SELECT {fn monthname(DATECOL)} FROM MYTABLE";
-		    String translated = connection_.nativeSQL (sql);
-		    failed("Didn't throw SQLException but got "+translated);
-		}
-		catch (Exception e) {
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		}
-	    } else { 
 
 		try {
 		    String sql = "SELECT {fn monthname(DATECOL)} FROM MYTABLE";
@@ -2221,7 +2150,6 @@ monthname supported at V5R3 and higher
 			failed(e, "Unexpected Exception");
 		}
 	    }
-	}
 
     }
 

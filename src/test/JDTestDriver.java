@@ -90,7 +90,8 @@ public abstract class JDTestDriver extends TestDriver {
   public static final int RELEASE_V7R3M0 = 730;
   public static final int RELEASE_V7R4M0 = 740;
   public static final int RELEASE_V7R5M0 = 750;
-  public static final int RELEASE_V7R5M0_PLUS = 888;
+  public static final int RELEASE_V7R5M0_PLUS = RELEASE_V7R5M0 + 10;
+  
  
   public static final String CLIENT_windows = "windows";
   public static final String CLIENT_as400 = "as400";
@@ -1555,6 +1556,9 @@ public abstract class JDTestDriver extends TestDriver {
 
 	      }
 	  }
+	  // Always disable SELF
+	  stmt.executeUpdate("set sysibmadm.selfcodes=''"); 
+	        
 	  stmt.close();
       }
   }
