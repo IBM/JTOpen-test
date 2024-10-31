@@ -146,7 +146,7 @@ Creates the testcases.
 
       addTestcase (new JDDSProperties (systemObject_,
                                        namesAndVars_, runMode_, fileOutputStream_, 
-                                       password_));
+                                       password_, pwrSysUserID_, pwrSysPassword_) );
 
       addTestcase (new JDDSMisc (systemObject_,
                                  namesAndVars_, runMode_, fileOutputStream_, 

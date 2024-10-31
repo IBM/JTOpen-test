@@ -18,11 +18,11 @@ import test.JDRSTest;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -61,7 +61,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDRSWarnings (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          
@@ -310,9 +310,16 @@ getWarning() - Return warnings resulting from a fetch operation.
 	String info = " -- added 8/2/2011 to test issue 45931 warnings should be returned by fetch operation "; 
         if (checkJdbc20 ()) {
 	    try {
+	        String sql = "select  current user, job_name from SYSIBM.SYSDUMMY1";
+	        ResultSet rs = statement_.executeQuery (sql);
+	        rs.next(); 
+	        String user  = rs.getString(1); 
+	        String jobname = rs.getString(2); 
+	        info += "/n jobname="+jobname+" user="+user; 
+	        rs.close(); 
 		SQLWarning warnings = null; 
-		String sql = "select 1/0 from sysibm.sqlcolumns fetch first 1000 rows only "; 
-		ResultSet rs = statement_.executeQuery (sql);
+		sql = "select 1/0 from sysibm.sqlcolumns fetch first 1000 rows only "; 
+		rs = statement_.executeQuery (sql);
 		while ( rs.next () )  {
 
 		    SQLWarning w = rs.getWarnings ();

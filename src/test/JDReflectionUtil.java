@@ -2600,7 +2600,7 @@ try {
       while (method == null && checkClass != null) {
         try {
 
-          // Find the implementes for the class
+          // Find the implements for the class
           Class[] interfaces = checkClass.getInterfaces();
           for (int j = 0; method == null && j < interfaces.length; j++) {
             tryArgs += "(" + interfaces[j].getName() + ",int) ";

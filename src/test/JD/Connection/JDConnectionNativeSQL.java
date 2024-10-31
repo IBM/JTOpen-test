@@ -62,7 +62,6 @@ extends JDTestcase
     
     private static       int            VRM_710 = AS400.generateVRM(7,1,0);
     private boolean    nativeDriver_ = false;
-    private              boolean        nativeFunctions_ = false;
 
 
 /**
@@ -92,7 +91,6 @@ Performs setup needed before running variations.
     {
         connection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
 
-	nativeFunctions_ = ( (getDriver() == JDTestDriver.DRIVER_NATIVE));
         nativeDriver_ = getDriver() == JDTestDriver.DRIVER_NATIVE;
 	if (nativeDriver_) {
             // @H1A  native driver uses different notion of VRM 
@@ -1455,24 +1453,6 @@ difference supported at V5R1 and higher
 **/
     public void Var069()
     {
-	if (nativeFunctions_) {
-	    try {
-		String sql = "SELECT {fn difference(CHARCOL1,CHARCOL2)} FROM MYTABLE";
-		String expected = "SELECT DIFFERENCE(CHARCOL1, CHARCOL2) FROM MYTABLE";
-		String translated = connection_.nativeSQL (sql);
-
-		boolean condition = translated.equals (expected);
-		if (!condition) {
-		    System.out.println("expected   = '"+expected+"'");
-		    System.out.println("translated = '"+translated+"'");  
-		} 
-		assertCondition (condition); 
-
-	    }
-	    catch (Exception e) {
-		failed(e , "Unexpected Exception");
-	    }
-	} else { 
 		try {
 		    String sql = "SELECT {fn difference(INTEGERCOL)} FROM MYTABLE";
 		    String expected = "SELECT DIFFERENCE(INTEGERCOL) FROM MYTABLE";
@@ -1482,7 +1462,6 @@ difference supported at V5R1 and higher
 		catch (Exception e) {
 		    failed(e, "Unexpected Exception");
 		}
-	}
     }
 
 
@@ -1616,16 +1595,6 @@ repeat supported at V5R3 and higher
 **/
     public void Var076()
     {
-	if (nativeFunctions_) {
-	    try {
-		String sql = "SELECT {fn repeat(CHARCOL,6)} FROM MYTABLE";
-		String translated = connection_.nativeSQL (sql);
-		failed("Didn't throw SQLException but got "+translated);
-	    }
-	    catch (Exception e) {
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	    }
-	} else {
 	    try {
 		String sql = "SELECT {fn repeat(CHARCOL,6)} FROM MYTABLE";
 		String expected = "SELECT REPEAT(CHARCOL,6) FROM MYTABLE";
@@ -1637,7 +1606,6 @@ repeat supported at V5R3 and higher
 	    catch (Exception e) {
 		failed(e, "Unexpected Exception");
 	    }
-	}
     }
 
 
@@ -1649,17 +1617,6 @@ replace supported at V5R3 and higher
 **/
     public void Var077()
     {
-	if (nativeFunctions_) {
-	    try {
-		String sql = "SELECT {fn replace(CHARCOL,'HELLO','GOODBYE')} FROM MYTABLE";
-		String translated = connection_.nativeSQL (sql);
-		failed("Didn't throw SQLException but got "+translated);
-	    }
-	    catch (Exception e) {
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	    }
-
-	} else { 
 	    try {
 		String sql = "SELECT {fn replace(CHARCOL,'HELLO','GOODBYE')} FROM MYTABLE";
 		String expected = "SELECT REPLACE(CHARCOL,'HELLO','GOODBYE') FROM MYTABLE";
@@ -1671,7 +1628,6 @@ replace supported at V5R3 and higher
 	    catch (Exception e) {
 		failed(e, "Unexpected Exception");
 	    }
-	}
     }
 
 
@@ -1867,16 +1823,6 @@ dayname supported at V5R3 and higher
 **/
     public void Var086()
     {
-	if (nativeFunctions_) {
-	    try {
-		String sql = "SELECT {fn dayname(DATECOL)} FROM MYTABLE";
-		String translated = connection_.nativeSQL (sql);
-		failed("Didn't throw SQLException but got "+translated);
-	    }
-	    catch (Exception e) {
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	    }
-	} else { 
 	    try {
 		String sql = "SELECT {fn dayname(DATECOL)} FROM MYTABLE";
 		String expected = "SELECT DAYNAME(DATECOL) FROM MYTABLE";
@@ -1888,7 +1834,6 @@ dayname supported at V5R3 and higher
 	    catch (Exception e) {
 		failed(e, "Unexpected Exception");
 	    }
-	}
     }
 
 
@@ -2023,16 +1968,6 @@ monthname supported at V5R3 and higher
 **/
     public void Var093()
     {
-	if (nativeFunctions_) {
-	    try {
-		String sql = "SELECT {fn monthname(DATECOL)} FROM MYTABLE";
-		String translated = connection_.nativeSQL (sql);
-		failed("Didn't throw SQLException but got "+translated);
-	    }
-	    catch (Exception e) {
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	    }
-	} else { 
 	    try {
 		String sql = "SELECT {fn monthname(DATECOL)} FROM MYTABLE";
 		String expected = "SELECT MONTHNAME(DATECOL) FROM MYTABLE";
@@ -2044,7 +1979,6 @@ monthname supported at V5R3 and higher
 	    catch (Exception e) {
 		failed(e, "Unexpected Exception");
 	    }
-	}
     }
 
 
@@ -3159,9 +3093,6 @@ nativeSQL() - Pass a string with a comment.  The comment will be > 32 K , and wi
 **/
     public void Var147()
     {
-	if (nativeFunctions_) {
-	    notApplicable(); 
-	}  else { 
 	    try {
             if ((isToolboxDriver()) && ( vrm_ > VRM_710))
             {
@@ -3189,7 +3120,6 @@ nativeSQL() - Pass a string with a comment.  The comment will be > 32 K , and wi
 	    catch (Exception e) {
 		failed(e , "Unexpected Exception");
 	    }
-	}
     }
 
 /**
@@ -3198,9 +3128,6 @@ when the comment line ends before the entire SQL string ends.
 **/
     public void Var148()
     {
-	if (nativeFunctions_) {
-	    notApplicable(); 
-	}  else { 
         if ((isToolboxDriver()) && ( vrm_ > VRM_710))
         {
             notApplicable();  //new limit is 2m in toolbox v5r4
@@ -3223,7 +3150,6 @@ when the comment line ends before the entire SQL string ends.
 	    catch (Exception e) {
 		failed(e , "Unexpected Exception");
 	    }
-	}
     }
 
 /**
@@ -3232,9 +3158,6 @@ when the comment line ends before the entire SQL string ends.
 **/
     public void Var149()
     {
-	if (nativeFunctions_) {
-	    notApplicable(); 
-	}  else { 
 
         if ((isToolboxDriver()) && ( vrm_ > VRM_710))
         {
@@ -3262,7 +3185,6 @@ when the comment line ends before the entire SQL string ends.
 	    catch (Exception e) {
 		failed(e , "Unexpected Exception");
 	    }
-	}
     }
 
 
@@ -3275,9 +3197,6 @@ when the comment contains some invalid JDBC escape syntax.
 **/
     public void Var150()
     {
-	if (nativeFunctions_) {
-	    notApplicable(); 
-	}  else { 
           if ((isToolboxDriver()) && ( vrm_ > VRM_710))
           {
               notApplicable();  //new limit is 2m in toolbox v5r4
@@ -3303,7 +3222,6 @@ when the comment contains some invalid JDBC escape syntax.
 	    catch (Exception e) {
 		failed(e , "Unexpected Exception");
 	    }
-	}
     }
 
 
@@ -3313,9 +3231,6 @@ when the comment contains some invalid JDBC escape syntax.
 **/
     public void Var151()
     {
-	if (nativeFunctions_) {
-	    notApplicable(); 
-	}  else { 
           if ((isToolboxDriver()) && ( vrm_ > VRM_710))
           {
               notApplicable();  //new limit is 2m in toolbox v5r4
@@ -3341,7 +3256,6 @@ when the comment contains some invalid JDBC escape syntax.
 	    catch (Exception e) {
 		failed(e , "Unexpected Exception");
 	    }
-	}
     }
 
 
@@ -3351,9 +3265,6 @@ when the comment contains some invalid JDBC escape syntax.
 **/
     public void Var152()
     {
-	if (nativeFunctions_) {
-	    notApplicable(); 
-	}  else { 
           if ((isToolboxDriver()) && ( vrm_ > VRM_710))
           {
               notApplicable();  //new limit is 2m in toolbox v5r4
@@ -3380,7 +3291,6 @@ when the comment contains some invalid JDBC escape syntax.
 	    catch (Exception e) {
 		failed(e , "Unexpected Exception");
 	    }
-	}
     }
 
 

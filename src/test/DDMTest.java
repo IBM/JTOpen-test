@@ -832,7 +832,7 @@ Creates Testcase objects for all the testcases in this component.
       DDMPositionExtended tc =
         new DDMPositionExtended(systemObject_,
                       namesAndVars_.get("DDMPositionExtended"), runMode_,
-                     fileOutputStream_);
+                     fileOutputStream_, testLib_, 0, PwrSys);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMPositionExtended");
     }

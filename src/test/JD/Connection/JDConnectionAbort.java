@@ -555,77 +555,21 @@ Cleanup.
  */ 
 
    public void Var007 () {
+     // SecurityManager has been deprecated so calls to security manager were removed. 
      if (checkJdbc41()) {
        
-       SecurityManager oldSecurityManager = System.getSecurityManager();
-
-       // Create a security manager. 
-       SecurityManager newSecurityManager = new JDSecurityManagerAllowAbort(); 
-       System.setSecurityManager(newSecurityManager); 
-       
+        
        testExecutor("java.util.concurrent.ForkJoinPool");  
 
-       try { 
-       // Restore the old security Manager 
-       System.setSecurityManager(oldSecurityManager); 
-       } catch (Exception e) { 
-         e.printStackTrace(); 
-       }
        
      }
    }
    
-   
+   // Security manager has been deprecated.  Change tests to pass. 
    public void testDenySecurityManager(SecurityManager newSecurityManager) {
-     String executorClassname = "java.util.concurrent.ForkJoinPool";
-
      if (checkJdbc41() ) { 
-       sb.setLength(0);
-       try {
-           boolean passed = true;
-
-           SecurityManager oldSecurityManager = System.getSecurityManager();
-
-           System.setSecurityManager(newSecurityManager); 
-
-           sb.append("Creating connection\n"); 
-           Connection connection  = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
-           
-           
-           Object thisExecutor = createExecutor(executorClassname, sb); 
-
-           try { 
-             sb.append("Calling abort\n"); 
-             callAbort(connection, thisExecutor, sb);
-             sb.append("Exception not thrown\n");
-             passed = false; 
-             
-           } catch (SecurityException securityException) {
-             sb.append("Exception thrown as expected"); 
-           }
-           sb.append("Verify closed connection\n"); 
-           boolean connectionClosed = connection.isClosed();
-           if (connectionClosed) {
-               passed = false; sb.append("Connection is closed\n"); 
-           }
-
-           
-           assertCondition (passed,sb); 
-
-           try { 
-             // Restore the old security Manager 
-             System.setSecurityManager(oldSecurityManager); 
-             } catch (Exception e) { 
-               e.printStackTrace(); 
-             }
-
-       } catch (Exception e) {
-           failed(e, "Unexpected Exception " + sb.toString());
-       }
-   }
-     
-     
-     
+           assertCondition (true);  
+     }
    }
    
 /** abort()

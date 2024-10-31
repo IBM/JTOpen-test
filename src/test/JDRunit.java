@@ -406,6 +406,9 @@ public class JDRunit {
 
             } else {
               if (jdSchedulerId == null) {
+                if (pid == 0) {
+                  initialize(); 
+                }
                 String outputFile = TMP + "/runit" + initials + ".out." + pid
                     + "." + nextRunNumber();
                 JDRunit runit = new JDRunit(initials, test, variations,
@@ -1242,6 +1245,7 @@ public class JDRunit {
                 + initials);
 
             JDRunit runit;
+            if (pid == 0) initialize(); 
             String outputFile = TMP + "/runit" + initials + ".out." + pid + "."
                 + nextRunNumber();
             if (args.length == 3) {
@@ -2134,11 +2138,14 @@ public void setExtraJavaArgs(String extraJavaArgs) {
    * Go will run the test in a separate process and store the output in the
    * appropriate location.  Returns the number of failures. 
    */
-  public int go() throws Exception {
+  public JDRunitGoOutput  go() throws Exception {
     
     int failedCount = 0; 
+    int successfulCount = 0; 
+    
     boolean forceReport = false;
     long thisRunNumber = nextRunNumber();
+    if (pid == 0) initialize(); 
     String runitInputFile = TMP + "/runit" + initials + ".in." + pid + "."
         + thisRunNumber;
     String runitOutputFile;
@@ -3217,7 +3224,6 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     Hashtable<String, Vector<String>> rerunHashtable = new Hashtable<String, Vector<String>>();
     int resultsWritten = 0;
     boolean noOutput = true;
-    int successfulCount = 0;
     BufferedReader outputReader = new BufferedReader(new FileReader(
         runitOutputFile));
     // System.out.println("JDEBUG: reading output "+output);
@@ -3478,7 +3484,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     }
 
 
-    return failedCount; 
+    return new JDRunitGoOutput(failedCount, successfulCount); 
   } 
 
   public static long runNumber = 0L;

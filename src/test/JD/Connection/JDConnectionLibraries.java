@@ -2155,7 +2155,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                                                          + JDConnectionTest.SCHEMAS_LEN128, userId_, encryptedPassword_);
                String defaultSchema = getDefaultSchema (c);
                c.close ();
-               assertCondition (compareLongSchemas(JDConnectionTest.SCHEMAS_LEN128, defaultSchema), "v7r7 host support required."); //note only returned as 10 chars
+               assertCondition (compareLongSchemas(JDConnectionTest.SCHEMAS_LEN128, defaultSchema), "future host support required."); //note only returned as 10 chars
            }
            catch (Exception e) {
                failed(e, "Unexpected exception");
@@ -2194,7 +2194,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                                                          + " " + COLLECTION2, userId_, encryptedPassword_);
                String defaultSchema = getDefaultSchema (c);
                c.close ();
-               assertCondition (compareLongSchemas(JDConnectionTest.SCHEMAS_LEN128, defaultSchema), "v7r7 host support required."); //note only returned as 10 chars
+               assertCondition (compareLongSchemas(JDConnectionTest.SCHEMAS_LEN128, defaultSchema), "future host support required."); //note only returned as 10 chars
            }
            catch (Exception e) {
                failed(e,"Unexpected Exception");
@@ -2222,7 +2222,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                                                          + "," + JDConnectionTest.COLLECTION, userId_, encryptedPassword_);
                String defaultSchema = getDefaultSchema (c);
                c.close ();
-               assertCondition (compareLongSchemas(defaultSchema, JDConnectionTest.SCHEMAS_LEN128), "v7r7 host support required."); //note only returned as 10 chars
+               assertCondition (compareLongSchemas(defaultSchema, JDConnectionTest.SCHEMAS_LEN128), "future host support required."); //note only returned as 10 chars
            }
            catch (Exception e) {
                failed(e,"Unexpected Exception");
@@ -2256,7 +2256,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                    System.out.println("defaultSchema is "+defaultSchema);
                }
 
-               assertCondition (condition, "v7r7 host support required.");
+               assertCondition (condition, "future host support required.");
 
            }
            catch (Exception e) {
@@ -2284,7 +2284,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                                                          + "," + COLLECTION2, userId_, encryptedPassword_);
                String defaultSchema = getDefaultSchema (c);
                c.close ();
-               assertCondition (compareLongSchemas(defaultSchema, JDConnectionTest.SCHEMAS_LEN128), "v7r7 host support required."); //note only returned as 10 chars
+               assertCondition (compareLongSchemas(defaultSchema, JDConnectionTest.SCHEMAS_LEN128), "future host support required."); //note only returned as 10 chars
            }
            catch (Exception e) {
                failed(e,"Unexpected Exception");
@@ -2318,7 +2318,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                sb.append("\ndefaultSchema is '"+defaultSchema+"'\n"); 
                boolean success = checkLibraryList (c, shortName,sb);
                c.close ();
-               assertCondition (success, "Longer schema name not found in library list - v7r7 host support required."+sb);
+               assertCondition (success, "Longer schema name not found in library list - future host support required."+sb);
            }
            catch (Exception e) {
                failed(e, "Unexpected exception");

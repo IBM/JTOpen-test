@@ -259,7 +259,7 @@ Performs cleanup needed after running variations.
 	}
     } 
 
-
+    
    /**
     *
     */
@@ -269,7 +269,7 @@ Performs cleanup needed after running variations.
 		if (System.getProperty("java.home").indexOf("openjdk") >= 0) {
 		    notApplicable("Does not run in openjdk "); 
 		} else {
-		    doit("test.JTAUseIASP.java", "Make sure the current user has access to JDIASP33.IASPCOMMIT2 on the IASP.");
+		    doit("test.JTA.JTAUseIASP.java", "Make sure the current user has access to JDIASP33.IASPCOMMIT2 on the IASP.");
 		}
 	    } else {
 		notApplicable("NO IASP AVAILABLE ON SYSTEM"); 

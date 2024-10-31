@@ -25,17 +25,21 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
+import test.JDJobName;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JTOpenTestEnvironment;
 import test.PasswordVault;
+import test.Sec.AuthExit;
 
 import java.io.FileOutputStream;
 import javax.naming.*;
 import javax.sql.DataSource;
 
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Properties;
 import java.util.Vector;
 import java.sql.*;
 import java.io.PrintWriter;
@@ -141,15 +145,16 @@ Constructor.
                           Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
-                          
-                          String password)
+                          String password,
+                          String powerUserID,
+                          String powerPassword)
    {
       super (systemObject, "JDDSProperties",
              namesAndVars, runMode, fileOutputStream,
-             password);
+             password,powerUserID, powerPassword);
    }
 
-
+  
 
 /**
 Performs setup needed before running variations.
@@ -2386,6 +2391,9 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
 	  if (checkDecFloatSupport()) { 
 	      try {
 		  String expected="round half even"; 
+		  if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+		    expected="half even"; 
+		  }
                        ctx_.rebind(bindName_, dataSource_);
                        Object ds = ctx_.lookup(bindName_); 
                        String property = JDReflectionUtil.callMethod_S(ds, "getDecfloatRoundingMode");
@@ -3217,8 +3225,419 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
 
 
 
+         /**
+          * getAdditionalAuthenticationFactor() -- call
+          * getAdditionalAuthenticationFactor() to check the default value, should be ""
+          **/
+         public void Var112() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkRelease750plus(added)) {
+             if (checkNative()) {
+               try {
+                 Object ds;
+                 ctx_.rebind(bindName_, dataSource_);
+
+                 ds = ctx_.lookup(bindName_);
+                 String property = JDReflectionUtil.callMethod_S(ds, "getAdditionalAuthenticationFactor");
+                 assertCondition("".equals(property), "Expecting: \"\" Received: \"" + property + "\"" + added);
+                 ctx_.unbind(bindName_);
+               } catch (Exception e) {
+                 failed(e, "Unexpected Exception " + added);
+               }
+             }
+           }
+         }
+
+         /**
+         setAdditionalAuthenticationFactor(), getAdditionalAuthenticationFactor() -- call setAdditionalAuthenticationFactor() to set it to
+         "@@@@@@" and check that it was changed correctly
+         **/
+         public void Var113() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkNative() && checkRelease750plus(added)) {
+             try {
+               Object ds;
+               ds = dataSource_;
+
+               JDReflectionUtil.callMethod_V(ds, "setAdditionalAuthenticationFactor", "123456");
+               String propertyBeforeSerialization = JDReflectionUtil.callMethod_S(ds, "getAdditionalAuthenticationFactor");
+               ctx_.rebind(bindName_, ds);
+               ds = ctx_.lookup(bindName_);
+               String propertyAfterSerialization  = JDReflectionUtil.callMethod_S(ds, "getAdditionalAuthenticationFactor");
+               assertCondition("123456".equals(propertyAfterSerialization) &&
+                               "123456".equals(propertyBeforeSerialization),
+                   "Expecting: \"123456\" BeforeSerialization: \""+propertyBeforeSerialization+"\" AfterSerialization: \"" + propertyAfterSerialization + "\"" + added);
+               ctx_.unbind(bindName_);
+             } catch (Exception e) {
+               failed(e, "Unexpected Exception" + added);
+             }
+           }
+         }
 
 
+         /**
+          * getAuthenticationVerificationId() -- call
+          * getAuthenticationVerificationId() to check the default value, should be ""
+          **/
+         public void Var114() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkRelease750plus(added)) {
+             if (checkNative()) {
+               try {
+                 Object ds;
+                 ctx_.rebind(bindName_, dataSource_);
 
+                 ds = ctx_.lookup(bindName_);
+                 String property = JDReflectionUtil.callMethod_S(ds, "getAuthenticationVerificationId");
+                 assertCondition("".equals(property), "Expecting: \"\" Received: \"" + property + "\"" + added);
+                 ctx_.unbind(bindName_);
+               } catch (Exception e) {
+                 failed(e, "Unexpected Exception " + added);
+               }
+             }
+           }
+         }
+
+         /**
+         setAuthenticationVerificationId(), getAuthenticationVerificationId() -- call setAuthenticationVerificationId() to set it to
+         "@@@@@@" and check that it was changed correctly
+         **/
+         public void Var115() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkNative() && checkRelease750plus(added)) {
+             try {
+               Object ds;
+               ds = dataSource_;
+
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationVerificationId", "MY_SUPER_APP");
+               String propertyBeforeSerialization = JDReflectionUtil.callMethod_S(ds, "getAuthenticationVerificationId");
+               ctx_.rebind(bindName_, ds);
+               ds = ctx_.lookup(bindName_);
+               String propertyAfterSerialization  = JDReflectionUtil.callMethod_S(ds, "getAuthenticationVerificationId");
+               assertCondition("MY_SUPER_APP".equals(propertyAfterSerialization) &&
+                               "MY_SUPER_APP".equals(propertyBeforeSerialization),
+                   "Expecting: \"MY_SUPER_APP\" BeforeSerialization: \""+propertyBeforeSerialization+"\" AfterSerialization: \"" + propertyAfterSerialization + "\"" + added);
+               ctx_.unbind(bindName_);
+             } catch (Exception e) {
+               failed(e, "Unexpected Exception" + added);
+             }
+           }
+         }
+
+         /**
+          * getAuthenticationLocalIP() -- call
+          * getAuthenticationLocalIP() to check the default value, should be ""
+          **/
+         public void Var116() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkRelease750plus(added)) {
+             if (checkNative()) {
+               try {
+                 Object ds;
+                 ctx_.rebind(bindName_, dataSource_);
+
+                 ds = ctx_.lookup(bindName_);
+                 String property = JDReflectionUtil.callMethod_S(ds, "getAuthenticationLocalIP");
+                 assertCondition("".equals(property), "Expecting: \"\" Received: \"" + property + "\"" + added);
+                 ctx_.unbind(bindName_);
+               } catch (Exception e) {
+                 failed(e, "Unexpected Exception " + added);
+               }
+             }
+           }
+         }
+
+         /**
+         setAuthenticationLocalIP(), getAuthenticationLocalIP() -- call setAuthenticationLocalIP() to set it to
+         "@@@@@@" and check that it was changed correctly
+         **/
+         public void Var117() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkNative() && checkRelease750plus(added)) {
+             try {
+               Object ds;
+               ds = dataSource_;
+
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalIP", "123456");
+               String propertyBeforeSerialization = JDReflectionUtil.callMethod_S(ds, "getAuthenticationLocalIP");
+               ctx_.rebind(bindName_, ds);
+               ds = ctx_.lookup(bindName_);
+               String propertyAfterSerialization  = JDReflectionUtil.callMethod_S(ds, "getAuthenticationLocalIP");
+               assertCondition("123456".equals(propertyAfterSerialization) &&
+                               "123456".equals(propertyBeforeSerialization),
+                   "Expecting: \"123456\" BeforeSerialization: \""+propertyBeforeSerialization+"\" AfterSerialization: \"" + propertyAfterSerialization + "\"" + added);
+               ctx_.unbind(bindName_);
+             } catch (Exception e) {
+               failed(e, "Unexpected Exception" + added);
+             }
+           }
+         }
+
+         /**
+          * getAuthenticationRemoteIP() -- call
+          * getAuthenticationRemoteIP() to check the default value, should be ""
+          **/
+         public void Var118() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkRelease750plus(added)) {
+             if (checkNative()) {
+               try {
+                 Object ds;
+                 ctx_.rebind(bindName_, dataSource_);
+
+                 ds = ctx_.lookup(bindName_);
+                 String property = JDReflectionUtil.callMethod_S(ds, "getAuthenticationRemoteIP");
+                 assertCondition("".equals(property), "Expecting: \"\" Received: \"" + property + "\"" + added);
+                 ctx_.unbind(bindName_);
+               } catch (Exception e) {
+                 failed(e, "Unexpected Exception " + added);
+               }
+             }
+           }
+         }
+
+         /**
+         setAuthenticationRemoteIP(), getAuthenticationRemoteIP() -- call setAuthenticationRemoteIP() to set it to
+         "@@@@@@" and check that it was changed correctly
+         **/
+         public void Var119() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkNative() && checkRelease750plus(added)) {
+             try {
+               Object ds;
+               ds = dataSource_;
+
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemoteIP", "123456");
+               String propertyBeforeSerialization = JDReflectionUtil.callMethod_S(ds, "getAuthenticationRemoteIP");
+               ctx_.rebind(bindName_, ds);
+               ds = ctx_.lookup(bindName_);
+               String propertyAfterSerialization  = JDReflectionUtil.callMethod_S(ds, "getAuthenticationRemoteIP");
+               assertCondition("123456".equals(propertyAfterSerialization) &&
+                               "123456".equals(propertyBeforeSerialization),
+                   "Expecting: \"123456\" BeforeSerialization: \""+propertyBeforeSerialization+"\" AfterSerialization: \"" + propertyAfterSerialization + "\"" + added);
+               ctx_.unbind(bindName_);
+             } catch (Exception e) {
+               failed(e, "Unexpected Exception" + added);
+             }
+           }
+         }
+
+
+         /**
+          * getAuthenticationLocalPort() -- call
+          * getAuthenticationLocalPort() to check the default value, should be ""
+          **/
+         public void Var120() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkRelease750plus(added)) {
+             if (checkNative()) {
+               try {
+                 Object ds;
+                 ctx_.rebind(bindName_, dataSource_);
+
+                 ds = ctx_.lookup(bindName_);
+                 int port  = JDReflectionUtil.callMethod_I(ds, "getAuthenticationLocalPort");
+                 assertCondition(port == 0, "Expecting: 0 Received: " + port + "" + added);
+                 ctx_.unbind(bindName_);
+               } catch (Exception e) {
+                 failed(e, "Unexpected Exception " + added);
+               }
+             }
+           }
+         }
+
+         /**
+         setAuthenticationLocalPort(), getAuthenticationLocalPort() -- call setAuthenticationLocalPort() to set it to
+         "@@@@@@" and check that it was changed correctly
+         **/
+         public void Var121() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkNative() && checkRelease750plus(added)) {
+             try {
+               Object ds;
+               ds = dataSource_;
+
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalPort", 12345);
+               int portBeforeSerialization = JDReflectionUtil.callMethod_I(ds, "getAuthenticationLocalPort");
+               ctx_.rebind(bindName_, ds);
+               ds = ctx_.lookup(bindName_);
+               int portAfterSerialization  = JDReflectionUtil.callMethod_I(ds, "getAuthenticationLocalPort");
+               assertCondition(12345 == portAfterSerialization &&
+                               12345 == portBeforeSerialization,
+                   "Expecting: 123456\" BeforeSerialization: \""+portBeforeSerialization+"\" AfterSerialization: \"" + portAfterSerialization + "\"" + added);
+               ctx_.unbind(bindName_);
+             } catch (Exception e) {
+               failed(e, "Unexpected Exception" + added);
+             }
+           }
+         }
+
+         /**
+          * getAuthenticationRemotePort() -- call
+          * getAuthenticationRemotePort() to check the default value, should be ""
+          **/
+         public void Var122() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkRelease750plus(added)) {
+             if (checkNative()) {
+               try {
+                 Object ds;
+                 ctx_.rebind(bindName_, dataSource_);
+
+                 ds = ctx_.lookup(bindName_);
+                 int property = JDReflectionUtil.callMethod_I(ds, "getAuthenticationRemotePort");
+                 assertCondition(0 == property, "Expecting: 0 Received: " + property + "" + added);
+                 ctx_.unbind(bindName_);
+               } catch (Exception e) {
+                 failed(e, "Unexpected Exception " + added);
+               }
+             }
+           }
+         }
+
+         /**
+         setAuthenticationRemotePort(), getAuthenticationRemotePort() -- call setAuthenticationRemotePort() to set it to
+         "@@@@@@" and check that it was changed correctly
+         **/
+         public void Var123() {
+           String added = " -- new V7R5+ property added by native driver";
+           if (checkNative() && checkRelease750plus(added)) {
+             try {
+               Object ds;
+               ds = dataSource_;
+
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemotePort", 12345);
+               int portBeforeSerialization = JDReflectionUtil.callMethod_I(ds, "getAuthenticationRemotePort");
+               ctx_.rebind(bindName_, ds);
+               ds = ctx_.lookup(bindName_);
+               int portAfterSerialization  = JDReflectionUtil.callMethod_I(ds, "getAuthenticationRemotePort");
+               assertCondition((12345 == portAfterSerialization) &&
+                               (12345 == portBeforeSerialization),
+                   "Expecting: \"12345\" BeforeSerialization: \""+portBeforeSerialization+"\" AfterSerialization: \"" + portAfterSerialization + "\"" + added);
+               ctx_.unbind(bindName_);
+             } catch (Exception e) {
+               failed(e, "Unexpected Exception" + added);
+             }
+           }
+         }
+
+         /**
+          * Check that the information is registered correctly in the exit program
+          */
+         
+         
+         public void Var124() {
+           String added = " -- new V7R5+ property added by native driver";
+           String systemName = systemObject_.getSystemName();
+           if (checkNative() && checkRelease750plus(added) && checkAdditionalAuthenticationFactor(systemName)) {
+             try {
+               boolean successful = true; 
+               StringBuffer sb = new StringBuffer(); 
+               
+               Driver driver_ = DriverManager.getDriver(baseURL_);
+
+               Properties properties = new Properties(); 
+               properties.put("user",testDriver_.pwrSysUserID_);
+               properties.put("prompt","false"); 
+               char[] charPassword = PasswordVault.decryptPassword(testDriver_.pwrSysEncryptedPassword_); 
+               Class[] argTypes = new Class[3]; 
+               argTypes[0] = baseURL_.getClass(); 
+               argTypes[1] = properties.getClass(); 
+               argTypes[2] = charPassword.getClass(); ;
+               Connection pwrConnection_ = (Connection) JDReflectionUtil.callMethod_O(driver_, "connect", argTypes, baseURL_, properties, charPassword);
+               Arrays.fill(charPassword,' '); 
+
+             
+               Object ds;
+               ds = dataSource_;
+               initMfaUser(); 
+               String mfaFactorString = new String(mfaFactor_);
+               AuthExit.assureExitProgramExists(pwrConnection_, mfaUserid_);
+               JDReflectionUtil.callMethod_V(dataSource_, "setUser", mfaUserid_);
+               JDReflectionUtil.callMethod_V(dataSource_, "setPassword", mfaPassword_);
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemotePort", 12345);
+               JDReflectionUtil.callMethod_V(ds, "setAdditionalAuthenticationFactor", mfaFactorString);
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationVerificationId", "MYAPP_SUPER_SERVER");
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalIP", "1.2.3.4");
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalPort", 80);
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemoteIP", "5.6.7.8");
+               JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemotePort", 2134);                       
+                       
+               Connection c = ((DataSource) ds).getConnection(); 
+                       Statement s = c.createStatement();
+                   ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
+                   rs.next();
+                   String currentUser = rs.getString(1);
+                   System.out.println("current MFA user is " + currentUser);
+                   String jobName = JDJobName.getJobName().replace('/','.');
+                   System.out.println("Job with exit information is "+jobName);
+                   rs.close(); 
+                   if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
+                     successful = false; sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_+"\n");
+                   }
+                   /* Read the output file using IFS_READ */ 
+                   boolean foundProfileName= false;
+                   boolean foundVerificationId = false; 
+                   boolean foundRemotePort  = false;
+                   boolean foundLocalPort = false;
+                   boolean foundRemoteIp = false;
+                   boolean foundLocalIp = false;
+                   
+                   String  expectedVerificationId="Verification_ID=MYAPP_SUPER_SERVER"; 
+                   String  expectedRemotePort="Remote_Port=2134";
+                   String  expectedLocalPort="Local_Port=80";
+                   String  expectedRemoteIp="Remote_IPAddress=5.6.7.8";
+                   String  expectedLocalIp="Local_IPAddress=1.2.3.4";
+                   c.close(); 
+
+                   
+                   Statement pwrStmt = pwrConnection_.createStatement(); 
+                   String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/"+jobName+".txt'))";
+                   rs = pwrStmt.executeQuery(sql);
+                   sb.append("/tmp/authexit/"+jobName+".txt contains \n");
+                   sb.append("-------------------------------------------\n");
+                   
+                   while(rs.next()) { 
+                     String line = rs.getString(1).trim(); 
+                     sb.append(line); 
+                     sb.append("\n"); 
+                     if (line.equals("User_Profile_Name="+mfaUserid_)) {
+                       foundProfileName = true;
+                     }
+                     if (line.equals(expectedVerificationId))   foundVerificationId = true; 
+                     if (line.equals(expectedLocalIp)) foundLocalIp = true; 
+                     if (line.equals(expectedLocalPort)) foundLocalPort = true; 
+                     if (line.equals(expectedRemoteIp)) foundRemoteIp = true; 
+                     if (line.equals(expectedRemotePort)) foundRemotePort = true; 
+                   }
+                   sb.append("-------------------------------------------\n");
+
+                   rs.close(); 
+                   pwrStmt.close(); 
+                   if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
+                   if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
+                   if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
+                   if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
+                   if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+"\n"); }
+                   if (!foundRemotePort) { successful = false; sb.append("Did not find expected:"+expectedRemotePort+"\n"); }
+
+                   if (successful) {
+                     AuthExit.cleanup(pwrConnection_); 
+                   }
+                   pwrConnection_.close(); 
+                   assertCondition(successful, sb);
+               ctx_.unbind(bindName_);
+             } catch (Exception e) {
+               failed(e, "Unexpected Exception" + added);
+             }
+           }
+         }
+
+         
+         
+  
+
+         
+         
    
 }

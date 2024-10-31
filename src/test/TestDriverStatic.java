@@ -371,9 +371,10 @@ public class TestDriverStatic
       return staticTestcaseResults;
     }
 
-    public static void restoreSecurityManager() {
-      System.setSecurityManager(defaultSecurityManager_); 
-    }
+    // Remove deprecated code
+    // public static void restoreSecurityManager() {
+    //   System.setSecurityManager(defaultSecurityManager_); 
+    // }
 
 }
 

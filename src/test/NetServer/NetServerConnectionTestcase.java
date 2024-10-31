@@ -36,7 +36,7 @@ public class NetServerConnectionTestcase extends Testcase
      for (int i = 0; i < args.length; i++) {
        newArgs[2+i]=args[i];
      }
-     test.INetServerTest.main(newArgs); 
+     test.NetServerTest.main(newArgs); 
    }
     
     // Private data.
@@ -74,10 +74,20 @@ public class NetServerConnectionTestcase extends Testcase
 	// Establish a connection using jcifs
       lockSystem("NETSVR",600); 
 
+      
 	jcifs = new JCIFSUtility(pwrSys_.getSystemName(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 
 	
        NetServer ns = new NetServer(systemObject_);
+       
+       // Use must have *IOSYSCFG special authority or authority to the
+       // QIBM_IOSYSCFG_VIEW function usage identifier.
+
+       
+       CommandCall c = new CommandCall(pwrSys_);
+       c.run("CHGFCNUSG FCNID(QIBM_IOSYSCFG_VIEW) USER("+systemObject_.getUserId()+") USAGE(*ALLOWED)"); 
+       
+       
        ResourceList connectionList = ns.listSessionConnections();
        connectionList.waitForComplete();
        if (connectionList.getListLength() == 0) {

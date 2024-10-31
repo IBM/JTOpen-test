@@ -263,13 +263,13 @@ Performs cleanup needed after running variations.
         command =
           "java " + propClasspath + propSocket +
           propSecSys + propVerbose + propTraceCategory + propTraceFile +
-          " test.JTAUDBCrash2Vars";
+          " test.JTA.JTAUDBCrash2Vars";
         
       } else { 
         command =
             "java " + propClasspath + propSocket +
             propSecSys + propVerbose + propTraceCategory + propTraceFile +
-            " test.JTAStdCrash2Vars";
+            " test.JTA.JTAStdCrash2Vars";
       }
 
       String cmdA[] = new String[9];
@@ -282,9 +282,9 @@ Performs cleanup needed after running variations.
       cmdA[6]="-classpath";
       cmdA[7]=System.getProperty("java.class.path") + System.getProperty("path.separator") + System.getProperty("user.dir");
       if (useUDBDataSource) { 
-        cmdA[8]="test.JTAUDBCrash2Vars";
+        cmdA[8]="test.JTA.JTAUDBCrash2Vars";
       } else { 
-         cmdA[8]="test.JTAStdCrash2Vars";
+         cmdA[8]="test.JTA.JTAStdCrash2Vars";
       }
 
       JTATest.verboseOut("Start subprocess1: " + command);
@@ -378,13 +378,13 @@ Performs cleanup needed after running variations.
        command =
          "java " + propClasspath + propSocket +
          propSecSys + propVerbose +
-         " test.JTAUDBCrash2Vars";
+         " test.JTA.JTAUDBCrash2Vars";
        
      } else { 
        command =
            "java " + propClasspath + propSocket +
            propSecSys + propVerbose +
-           " test.JTAStdCrash2Vars";
+           " test.JTA.JTAStdCrash2Vars";
      }
 
      String cmdA[] = new String[7];
@@ -395,9 +395,9 @@ Performs cleanup needed after running variations.
      cmdA[4]="-classpath";
      cmdA[5]=System.getProperty("java.class.path") + System.getProperty("path.separator") + System.getProperty("user.dir");
      if (useUDBDataSource) { 
-       cmdA[6]="test.JTAUDBCrash2Vars";
+       cmdA[6]="test.JTA.JTAUDBCrash2Vars";
      } else { 
-         cmdA[6]="test.JTAStdCrash2Vars";
+         cmdA[6]="test.JTA.JTAStdCrash2Vars";
      }
 
      JTATest.verboseOut("Start subprocess 2 : " + command);

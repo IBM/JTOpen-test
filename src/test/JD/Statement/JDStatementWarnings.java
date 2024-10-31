@@ -38,6 +38,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * Testcase JDStatementWarnings. This tests the following methods of the JDBC
@@ -67,7 +68,7 @@ public class JDStatementWarnings extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDStatementWarnings(AS400 systemObject, Hashtable namesAndVars,
+  public JDStatementWarnings(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDStatementWarnings", namesAndVars, runMode,
@@ -476,9 +477,7 @@ public class JDStatementWarnings extends JDTestcase {
   }
 
   /**
-   * getWarnings() -- Make sure a data conversion warning is returned in V5R3
-   * (this probably works for toolbox earlier then this. Recreates the problem
-   * documented in Database issue 6771
+   * getWarnings() -- Make sure a data conversion warning is returned.
    */
 
   public void Var009() {
@@ -490,6 +489,9 @@ public class JDStatementWarnings extends JDTestcase {
         try {
           s.executeUpdate("drop table " + tablename);
         } catch (Exception e) {
+           String message = e.toString(); 
+           if (message.indexOf("not found") < 0)
+               throw e; 
         }
 
         s.executeUpdate("create table " + tablename + "(cstts timestamp)");
@@ -848,7 +850,7 @@ public class JDStatementWarnings extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     } else {
-	notApplicable("V7R3 and later version"); 
+	notApplicable("TOOLBOX V7R3 and later version"); 
     }
   }
 
@@ -994,7 +996,7 @@ public class JDStatementWarnings extends JDTestcase {
         }
       }
     } else {
-	notApplicable("V7R3 and later version"); 
+	notApplicable("TOOLBOX V7R3 and later version"); 
     }
 
   }

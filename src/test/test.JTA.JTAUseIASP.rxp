@@ -1,0 +1,21 @@
+jdbcLevel: .*
+IGNORE_EXTRA:JTOpenTestEnvironment.*
+.*
+IASP name is .*
+IGNORE_EXTRA:Calling System.load(/QSYS.LIB/QGPL.LIB/JDJOBNM011.SRVPGM)
+IGNORE_EXTRA:Completed System.load(/QSYS.LIB/QGPL.LIB/JDJOBNM011.SRVPGM)
+IASP .* work
+Catalog is .*
+IGNORE_EXTRA:ZoneInfo: ZoneInfoFile not found: zi/ZoneInfoMappings
+IGNORE_EXTRA:ZoneInfo: ZoneInfoFile not found: zi/ZoneInfoMappings
+SYSBASE no work
+Catalog is .*
+IASP .* work
+Catalog is .*
+SYSBASE work
+Catalog is .*
+IASP .* work
+Catalog is .*
+SYSBASE no work
+Catalog is .*
+Testcase passed

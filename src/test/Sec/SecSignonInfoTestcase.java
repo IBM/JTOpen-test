@@ -17,6 +17,7 @@ import java.util.GregorianCalendar;
 import com.ibm.as400.access.AS400;
 
 import test.JDReflectionUtil;
+import test.JDTestDriver;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -289,9 +290,12 @@ public class SecSignonInfoTestcase extends Testcase {
   public void Var011() {
 
     try {
+      boolean expectedValue = false; 
+      if (getRelease() > JDTestDriver.RELEASE_V7R5M0) 
+        expectedValue = true; 
       boolean accepted = JDReflectionUtil.callStaticMethod_B("com.ibm.as400.access.AS400",
           "isAdditionalAuthenticationFactorAccepted", systemName_);
-      assertCondition(accepted == false);
+      assertCondition(accepted == expectedValue, "AS400.isAdditionalAuthenticationFactorAccepted="+accepted+" sb "+expectedValue);
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     }

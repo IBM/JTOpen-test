@@ -1892,7 +1892,7 @@ public class JDTestcase extends Testcase {
           // If class does not exist then return true
           return true;
         }
-        reason = (String) JDReflectionUtil.callStaticMethod_O("test.JDVariationSkip", "skipReason", driver_, subDriver_,
+        reason = (String) JDReflectionUtil.callStaticMethod_O("test.JDVariationSkip2", "skipReason", driver_, subDriver_,
             getRelease(), getName(), getVariation());
         if (reason != null) {
           notApplicable(reason);
