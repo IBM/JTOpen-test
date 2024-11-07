@@ -18,7 +18,7 @@ import java.beans.*;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;   
 import com.ibm.as400.access.Job;
 import com.ibm.as400.security.auth.*;
 

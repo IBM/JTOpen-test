@@ -202,10 +202,10 @@ public class IFSTests extends TestDriver
       e.printStackTrace();
     }
 
-    /* 
+    
     if (!IsRunningOnOS400)
     {
-    */ 
+    
       try {
 	    Class.forName("com.ibm.as400.vaccess.IFSFileSystemView");
       }
@@ -247,11 +247,11 @@ public class IFSTests extends TestDriver
           pwrSys_.setGuiAvailable(false);
         } catch (PropertyVetoException e) {}  // will never happen
       }
-  
+    }
 
     // Reports invalid testcase names.
-    for (Enumeration e = namesAndVars_.keys (); e.hasMoreElements (); ) {
-      String name = (String)e.nextElement ();
+    for (Enumeration<String> e = namesAndVars_.keys (); e.hasMoreElements (); ) {
+      String name = e.nextElement ();
       System.out.println ("IFSTests: Testcase " + name + " not found.");
     }
   }

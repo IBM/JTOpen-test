@@ -1,0 +1,118 @@
+#!/QOpensys/usr/bin/ksh
+#
+#
+# make sure the classpath has the needed toolbox classes
+#
+UNAME=`uname`
+FILESEP='/'
+echo UNAME is $UNAME
+#
+UVERSION=`uname -v`
+URELEASE=`uname -r`
+CLASSPATH=".:/qibm/proddata/http/public/jt400/lib/java8/jt400.jar:/qibm/proddata/http/public/jt400/lib/jt400Servlet.jar:/home/jdbctest/jars/servlet.jar:/home/jdbctest/jars/sslightx.zip:/qibm/proddata/os400/java400/jdk/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/32bit/lib/tools.jar:./db2_classes.jar:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar:/home/jdbctest/jars/jcifs.jar"
+#
+# if the cli/exp directories contain jar files, unjar them and then delete them
+#
+echo ----------------------------------------
+echo -- removing com/ibm/as400
+echo ----------------------------------------
+rm -fr com/ibm/as400
+#
+echo ----------------------------------------
+echo .. expanding jar files
+echo ----------------------------------------
+find cli/exp -name 'C*.jar'  | sed 's%^\(.*\)/\([^/]*\)%pwd=`pwd`; cd \1; jar xvf \2; rm \2 ; cd $pwd %'  | sh 
+#
+find xml/xmlDecomp -name '*.jar'  | sed 's%^\(.*\)/\([^/]*\)%pwd=`pwd`; cd \1; jar xvf \2; rm \2 ; cd $pwd %'  | sh 
+#
+#
+echo ----------------------------------------
+echo done expanding jar files 
+echo ----------------------------------------
+#
+echo 'CLASSPATH set to '$CLASSPATH
+#
+# C.. compile only what is needed... 
+#
+mkdir -p /tmp2
+COMPILELIST=/tmp2/compilelist.$$
+#
+rm -f rm "$COMPILELIST"*
+# compile at least something so that the split command works
+touch -C 819 $COMPILELIST
+#
+echo test"$FILESEP"JDReport.java >> $COMPILELIST
+#
+echo COMPILELIST is $COMPILELIST
+#
+  if [ ! -e test/PrepareCompile.class ] ; then
+     echo Compiling test/PrepareCompile.java
+     javac -g test/PrepareCompile.java
+  fi
+  if [ test/PrepareCompile.java -nt test/PrepareCompile.class ] ; then
+     echo Compiling test/PrepareCompile.java
+     javac -g test/PrepareCompile.java
+  fi
+  echo 'Preparing for compile'
+  java test.PrepareCompile $COMPILELIST 
+  echo 'Done preparing for compile' 
+#
+# Don't compile some of the toolbox testcases that we don't use and don't compile on all
+# releases 
+#
+echo 'removing JDDataSourceSocketOptionsTestcase'
+grep -v JDDataSourceSocketOptionsTestcase $COMPILELIST > $COMPILELIST.new 
+sort -u $COMPILELIST.new > $COMPILELIST
+rm $COMPILELIST.new
+#
+# Remove old files 
+#
+rm -f test/JDASTestcase.java
+rm -f test/JDASTestcase.class
+rm -f test/JDSetupCollection.java
+rm -f test/JDSetupCollection.class
+rm -f test/SocketProxyPair.java
+rm -f test/SocketProxyPair.class
+rm -f test/JDASSeamlessFailover*
+rm -f test/JDConnectionMisc.*
+# javac -g -source 1.6 -target 1.6 -cp  .:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar scripts/Mail.java
+javac -g -source 1.6 -target 1.6 -cp "$CLASSPATH" scripts/Mail.java         
+grep -v Lite $COMPILELIST > $COMPILELIST.new
+echo '============= Compile list ========================'
+cat $COMPILELIST.new
+echo '==================================================='
+# touch  $COMPILELIST.0
+rm -f $COMPILELIST.0
+echo split -l 25 $COMPILELIST.new  $COMPILELIST.
+split -l 25 $COMPILELIST.new  $COMPILELIST.
+echo After split:  processing $COMPILELIST.*
+error=0
+
+for file in $COMPILELIST.*
+do #
+  files=`cat $file  | tr '\015' '\040 ' | tr '\012' '\040 '`
+  echo Compiling $files
+  echo UVERSION is $UVERSION
+  echo UNAME is '"'$UNAME'"'
+  echo URELEASE is '"'$URELEASE'"'
+  JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit
+  export JAVA_HOME
+  echo JAVA_HOME is $JAVA_HOME
+  echo "javac -classpath $CLASSPATH -g -source 1.6  -target 1.6 $files"
+  javac -classpath "$CLASSPATH" -g -source 1.6 -target 1.6 $files
+  if [ $? -ne 0 ] ; then
+      echo 'COMPILE ERROR' 
+      error=1;
+  fi #
+done #
+
+
+
+chmod +x scripts/*.sh
+
+if [ $error -eq  0 ] ; then
+        rm -f $COMPILELIST*
+else
+  echo not cleaning because of error $COMPILELIST*
+fi
+exit $error

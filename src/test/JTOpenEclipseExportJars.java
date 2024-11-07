@@ -19,7 +19,9 @@ import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector; 
-import com.ibm.as400.access.*; 
+import com.ibm.as400.access.*;
+
+import test.misc.TestUtilities; 
 /**
  * This class is designed to update an IBM i system with the latest JTOpen jar files build in the Eclipse environment.
  * 
@@ -59,7 +61,10 @@ public class JTOpenEclipseExportJars  {
       AS400 as400 = new AS400(as400Name, userid, password.toCharArray()); 
       transferFiles(as400, gitDirectory); 
       System.out.println("Files transferred"); 
-      System.out.println("DONE"); 
+      System.out.println("==================================================================================================="); 
+      System.out.println("DONE exporting to "+as400Name+" at "+ (new Timestamp(System.currentTimeMillis()))); 
+      System.out.println("==================================================================================================="); 
+      TestUtilities.beep(); 
     } catch (Exception e) {
       e.printStackTrace(System.out);
       usage(); 

@@ -777,13 +777,21 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     }
     if (password_ != null) {
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_); 
+      try { 
       systemObject_.setPassword(charPassword);
+      } catch (java.lang.NoSuchMethodError nsme) { 
+        systemObject_.setPassword(new String(charPassword));
+      }
       PasswordVault.clearPassword(charPassword); 
 
     }
     if (pwrSysPassword_ != null) {
       char[] charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_); 
+      try { 
       pwrSys_.setPassword(charPassword);
+      } catch (java.lang.NoSuchMethodError nsme) { 
+        pwrSys_.setPassword(new String(charPassword));; 
+      }     
       PasswordVault.clearPassword(charPassword); 
     }
     if (!proxy_.equals("")) {

@@ -709,53 +709,72 @@ public static void deleteFile(String system, String userId, char[] encryptedPass
   }
 
   public static long fileLength(String system, String userId, char[] encryptedPassword,
-      String filename) throws MalformedURLException, SmbException {
+      String filename) throws MalformedURLException, SmbException, SQLException {
+    if (useJdbc) { 
+      long length = 0; 
+      if (jdbcConnection_ == null) {
+        setupJdbcConnection(system, userId, encryptedPassword);
+      }
+      String sql="select DATA_SIZE FROM TABLE(QSYS2.IFS_OBJECT_STATISTICS(?,'NO','*STMF'))";
+      PreparedStatement ps = jdbcConnection_.prepareStatement(sql);
+      ps.setString(1, filename);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        length = rs.getLong(1); 
+      } else {
+        ps.close();
+        throw new SQLException(filename+"not found"); 
+      }
+      ps.close(); 
+      return length; 
+      
+    } else { 
     String url = getUrl(system, userId, encryptedPassword, filename);
 
     SmbFile smbFile = new SmbFile(url);
     return smbFile.length();
+    }
   }
 
-  public static boolean checkExpectedRead2(String system, String userId,
-      char[] encryptedPassword, String ifsPathName, int x1, int x2) throws IOException, SQLException {
-	  if (useJdbc) { 
-		  
-		  
-			if (jdbcConnection_ == null) {
-				setupJdbcConnection(system, userId, encryptedPassword);
-			}
-			String sql = "SELECT LINE FROM TABLE(QSYS2.IFS_READ_BINARY(?))";
-			PreparedStatement ps = jdbcConnection_.prepareStatement(sql);
-			ps.setString(1, ifsPathName);
-			
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				Blob blob = rs.getBlob(1); 
-				if (blob.length() < 2) {
-					return false; 
-				} else {
-					byte[] bytes = blob.getBytes(1,2); 
-					if (bytes[0] == x1 && bytes[1] == x2) {
-						return true; 
-					} else { 
-						return false; 
-					}
-				}
-			} else {
-				ps.close(); 
-				return false; 
-			}
-	  } else { 
-    String url = getUrl(system, userId, encryptedPassword, ifsPathName);
+  public static boolean checkExpectedRead2(String system, String userId, char[] encryptedPassword, String ifsPathName,
+      int x1, int x2) throws IOException, SQLException {
+    if (useJdbc) {
 
-    if (debug)
-      System.out.println("JCIFSUtility.debug:  checkExpectedRead2 url=" + url);
+      if (jdbcConnection_ == null) {
+        setupJdbcConnection(system, userId, encryptedPassword);
+      }
+      String sql = "SELECT LINE FROM TABLE(QSYS2.IFS_READ_BINARY(?))";
+      PreparedStatement ps = jdbcConnection_.prepareStatement(sql);
+      ps.setString(1, ifsPathName);
 
-    InputStream fis = new SmbFileInputStream(url);
-    boolean passed =    fis.read() == x1 && fis.read() == x2;
-    fis.close(); 
-    return passed; 
-	  }
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        Blob blob = rs.getBlob(1);
+        if (blob.length() < 2) {
+          return false;
+        } else {
+          byte[] bytes = blob.getBytes(1, 2);
+          if (bytes[0] == x1 && bytes[1] == x2) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      } else {
+        ps.close();
+        return false;
+      }
+    } else {
+      String url = getUrl(system, userId, encryptedPassword, ifsPathName);
+
+      if (debug)
+        System.out.println("JCIFSUtility.debug:  checkExpectedRead2 url=" + url);
+
+      InputStream fis = new SmbFileInputStream(url);
+      boolean passed = fis.read() == x1 && fis.read() == x2;
+      fis.close();
+      return passed;
+    }
   }
 
 }

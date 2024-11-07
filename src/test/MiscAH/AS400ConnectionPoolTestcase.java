@@ -1249,8 +1249,11 @@ extends Testcase
             p.returnConnectionToPool(o);
             p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), 
                             passwordChars);
-            assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 0 
-                            && p.getActiveConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 1);      
+            int availableConnectionCount = p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) ;
+            int activeConnectionCount = p.getActiveConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()); 
+            assertCondition(availableConnectionCount == 0 
+                            && activeConnectionCount == 1, "activeConnectionCount="+activeConnectionCount+" sb 1 "
+                                + " availableConnectionCount="+availableConnectionCount+" sb 0");      
             p.close();
          PasswordVault.clearPassword(passwordChars);
         }
@@ -1280,8 +1283,11 @@ extends Testcase
             p.returnConnectionToPool(o);
             p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), 
                             passwordChars, service);
-            assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 0 
-                            && p.getActiveConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 1);      
+            int availableConnectionCount = p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) ;
+            int activeConnectionCount = p.getActiveConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()); 
+            assertCondition(availableConnectionCount == 0 
+                            &&  activeConnectionCount == 1, "activeConnectionCount="+activeConnectionCount+" sb 1 "
+                                + " availableConnectionCount="+availableConnectionCount+" sb 0");      
             p.close();
          PasswordVault.clearPassword(passwordChars);
         }

@@ -3135,6 +3135,17 @@ public abstract class Testcase {
     }
   }
   
+  /** 
+   * Check to see if the test is running in attended mode
+   */
+  protected boolean checkAttended() { 
+    if (runMode_ == UNATTENDED) {
+      notApplicable("ATTENDED TESTCASE");
+      return false; 
+    } else { 
+      return true; 
+    }
+  }
   /**
    * Checks if the system supports the additional authentication factor. If not, this will report "not
    * applicable".
