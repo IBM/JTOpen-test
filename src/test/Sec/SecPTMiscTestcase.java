@@ -25,7 +25,6 @@ import java.util.Random;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
-import com.ibm.as400.access.AuthenticationIndicator;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.security.auth.AS400BasicAuthenticationPrincipal;
@@ -226,11 +225,26 @@ public class SecPTMiscTestcase extends Testcase
     {
         try
         {
-            // Create a bogus token value.
+          /* ProfileTokenCredential pt = new ProfileTokenCredential(systemObject_, tBytes, ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444,false); */
+          
+          // Create a bogus token value.
             byte[] tBytes = new byte[ProfileTokenCredential.TOKEN_LENGTH];
             new Random().nextBytes(tBytes);
+            Class[] argTypes = new Class[5];
+            Object[] args = new Object[5]; 
+            args[0] = systemObject_; 
+            argTypes[0] = args[0].getClass(); 
+            args[1]=tBytes; 
+            argTypes[1] = args[1].getClass(); 
+            args[2] = new Integer(ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE);
+            argTypes[2] = Integer.TYPE; 
+            args[3] = new Integer(444); 
+            argTypes[3] = Integer.TYPE; 
+            args[4]  = new Boolean(false); 
+            args[4] = Boolean.TYPE; 
+            
             // Create the token object.
-            ProfileTokenCredential pt = new ProfileTokenCredential(systemObject_, tBytes, ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444,false);
+            ProfileTokenCredential pt  = (ProfileTokenCredential) JDReflectionUtil.createObject("com.ibm.as400.security.auth.ProfileTokenCredential",argTypes, args); 
             // Test the values.
             assertCondition(pt.getSystem().equals(systemObject_) && SecAuthTest.compareBytes(pt.getToken(), tBytes) && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeoutInterval() == 444, "Values specified on constructor not assigned.");
         }
@@ -891,8 +905,7 @@ public class SecPTMiscTestcase extends Testcase
          // Create a single-use ProfileTokenCredential with a 10 min timeout.
 
          pt1 = new ProfileTokenCredential();
-         UserProfilePrincipal principal = new UserProfilePrincipal(mfaUserid_);
-         pt1.initialize(principal, mfaPassword_, mfaFactor_, AuthenticationIndicator.APPLICATION_AUTHENTICATION, 
+         initializeProfileToken (pt1, mfaUserid_, mfaPassword_, mfaFactor_, 4 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
              "", /* verification id  */
              "", 0, /* remote IP and port */
              "", 0, /* local IP and port */
@@ -948,6 +961,39 @@ public class SecPTMiscTestcase extends Testcase
    public void Var038() { notApplicable(); }
    public void Var039() { notApplicable(); }
  
+   public void initializeProfileToken(ProfileTokenCredential pt, String userid, char[] password, char[] factor, int authenticationIndicator,  
+       String verificationId, String remoteIp, int remotePort, String localIp, int localPort, boolean isPrivate, boolean reusable, boolean renewable, int timeoutInterval ) throws Exception {
+     UserProfilePrincipal principal = new UserProfilePrincipal(userid);
+     
+     Class[] argTypes = new Class[13];
+     Object[] args = new Object[13]; 
+     args[0] = principal;   argTypes[0] = args[0].getClass();
+     args[1] = password;    argTypes[1] = args[1].getClass();
+     args[2] = factor;      argTypes[2] = args[2].getClass();
+     args[3] = new Integer(authenticationIndicator);  argTypes[3] = Integer.TYPE; 
+     args[4] = verificationId; argTypes[4] = args[4].getClass();
+     args[5] = remoteIp;   argTypes[5] = args[5].getClass(); 
+     args[6] = new Integer(remotePort);  argTypes[6] = Integer.TYPE; 
+     args[7] = localIp; argTypes[5] = args[7].getClass(); 
+     args[8] = new Integer(localPort);  argTypes[8] = Integer.TYPE; 
+     args[9] = new Boolean(isPrivate);   argTypes[9] = Boolean.TYPE;
+     args[10] = new Boolean(reusable);  argTypes[10] = Boolean.TYPE;
+     args[11] = new Boolean(renewable);  argTypes[11] = Boolean.TYPE;
+     args[12] = new Integer(timeoutInterval); argTypes[12] = Integer.TYPE; 
+         
+     
+     JDReflectionUtil.callMethod_V(pt, "initialize",  argTypes, args);
+     // pt.initialize(principal, password, factor,  authenticationIndication , 
+     //    verificationId, /* verification id  */
+     //    remoteIp, remotePort, /* remote IP and port */
+     //    localIp, localPort, /* local IP and port */
+     //    isPrivate, /* private */
+     //    reusable, /* not reusable */
+     //    renewable, /* not renewable */
+     //     timeoutInterval); /* timeout */ 
+         
+         
+   }
    /**
     Test successful creation of a profile token for a signed-on system based only on user ID and password authentication criteria.
     **/
@@ -969,8 +1015,9 @@ public class SecPTMiscTestcase extends Testcase
            int timeoutInterval = 3600; 
            ProfileTokenCredential pt =  new ProfileTokenCredential();
            pt.setSystem(sys);
-           UserProfilePrincipal principal = new UserProfilePrincipal(mfaUserid_);
-           pt.initialize(principal, mfaPassword_, mfaFactor_, AuthenticationIndicator.APPLICATION_AUTHENTICATION, 
+          
+           
+           initializeProfileToken(pt,mfaUserid_, mfaPassword_, mfaFactor_,  5 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
                "", /* verification id  */
                "", 0, /* remote IP and port */
                "", 0, /* local IP and port */
@@ -1035,8 +1082,7 @@ public class SecPTMiscTestcase extends Testcase
    
            ProfileTokenCredential pt =  new ProfileTokenCredential();
            pt.setSystem(sys);
-           UserProfilePrincipal principal = new UserProfilePrincipal(mfaUserid_);
-           pt.initialize(principal, mfaPassword_, mfaFactor_, AuthenticationIndicator.APPLICATION_AUTHENTICATION, 
+           initializeProfileToken ( pt, mfaUserid_,  mfaPassword_, mfaFactor_, 5 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
                "", /* verification id  */
                "", 0, /* remote IP and port */
                "", 0, /* local IP and port */
