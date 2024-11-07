@@ -71,7 +71,6 @@ public class JDSchedulerRunnable implements Runnable {
 
   public void runNext() throws Exception {
     int failedCount = 0;
-    ;
     int successfulCount = 0;
 
     if (initials != null) {
