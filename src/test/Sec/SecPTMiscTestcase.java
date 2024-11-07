@@ -20,14 +20,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.util.Random;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.security.auth.AS400BasicAuthenticationPrincipal;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 import com.ibm.as400.security.auth.ProfileTokenCredentialBeanInfo;
 import com.ibm.as400.security.auth.RetrieveFailedException;
@@ -151,7 +149,7 @@ public class SecPTMiscTestcase extends Testcase
             // Test token validity; compare the token time to expiration.
             assertCondition(pt1.equals(pt2) && pt2.getTimeToExpiration() >= pt1.getTimeToExpiration(), "Unexpected time to expiration.");
 
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
             pt2.getSystem().disconnectAllServices();
 
             SecAuthTest.removeToken(pwrSys_, pt1.getToken());
@@ -367,7 +365,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { try { sys.close(); } catch (Exception e) {}  } catch (Exception e) {} 
         }
     }
 
@@ -396,7 +394,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -425,7 +423,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -446,7 +444,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -471,7 +469,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -510,7 +508,7 @@ public class SecPTMiscTestcase extends Testcase
           e.printStackTrace();
         }
       }
-      sys.close();
+      try { sys.close(); } catch (Exception e) {} 
     }
   }
 
@@ -549,7 +547,7 @@ public class SecPTMiscTestcase extends Testcase
           e.printStackTrace();
         }
       }
-      sys.close();
+      try { sys.close(); } catch (Exception e) {} 
     }
   }
 
@@ -574,7 +572,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -599,7 +597,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -624,7 +622,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -649,8 +647,8 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
-            sys.close(); 
+            try { sys.close(); } catch (Exception e) {} 
+            try { sys.close(); } catch (Exception e) {}  
         }
     }
 
@@ -712,7 +710,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -737,7 +735,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -767,7 +765,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -797,7 +795,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.close();
+            try { sys.close(); } catch (Exception e) {} 
         }
     }
 
@@ -837,7 +835,7 @@ public class SecPTMiscTestcase extends Testcase
             e.printStackTrace();
           }
         }
-        sys.close();
+        try { sys.close(); } catch (Exception e) {} 
       }
     }
 
@@ -874,7 +872,7 @@ public class SecPTMiscTestcase extends Testcase
             e.printStackTrace();
           }
         }
-        sys.close();
+        try { sys.close(); } catch (Exception e) {} 
       }
     }
 
@@ -943,7 +941,7 @@ public class SecPTMiscTestcase extends Testcase
          assertCondition(pt1.equals(pt2) && pt2.getTimeToExpiration() >= pt1.getTimeToExpiration(),
              "Unexpected time to expiration.");
 
-         sys.close();
+         try { sys.close(); } catch (Exception e) {} 
          pt2.getSystem().disconnectAllServices();
 
          SecAuthTest.removeToken(pwrSys_, pt1.getToken());
@@ -1055,7 +1053,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
      }
    }
@@ -1121,7 +1119,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1151,7 +1149,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1178,7 +1176,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1205,7 +1203,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1231,7 +1229,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1296,7 +1294,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1323,7 +1321,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1354,7 +1352,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1386,7 +1384,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.close();
+           try { sys.close(); } catch (Exception e) {} 
        }
    }
    }
@@ -1427,7 +1425,7 @@ public class SecPTMiscTestcase extends Testcase
            e.printStackTrace();
          }
        }
-       sys.close();
+       try { sys.close(); } catch (Exception e) {} 
      }
    }
    }
@@ -1465,7 +1463,7 @@ public class SecPTMiscTestcase extends Testcase
            e.printStackTrace();
          }
        }
-       sys.close();
+       try { sys.close(); } catch (Exception e) {} 
      }
    }
    }
