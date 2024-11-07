@@ -101,8 +101,6 @@ public class ORTestcase extends Testcase
 	try { reader.close(); }
 	catch ( Exception e ) { System.out.println("Can not close the file."); }
 
-	// Remove the file
-	deleteFile();
     }
 
 
@@ -1077,9 +1075,12 @@ public class ORTestcase extends Testcase
           ObjectReferences or = new ObjectReferences(systemObject_, PATH);
   	    ObjectReferences.JobUsingObjectStructure[] jobs = or.getJobUsingObjectStructures();
           String expected = "QUSER";
-  
+          if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+            expected = "QUSER_NC";
+          }
+          
           String returned = jobs[0].getJobUser();
-          assertCondition(returned.equals(expected));
+          assertCondition(returned.equals(expected), "Job user is "+returned+" expected QUSER from reference to "+PATH);
       }
       catch (Exception e)
       {

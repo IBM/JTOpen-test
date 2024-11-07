@@ -15,6 +15,7 @@ package test.Sec;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.util.Arrays;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
@@ -165,7 +166,9 @@ public class SecPHActionTestcase extends Testcase implements AS400CredentialList
             ProfileTokenCredential pt = new ProfileTokenCredential();
             pt.setSystem(systemObject_);
             pt.addCredentialListener(this);
-            pt.setTokenExtended(SecAuthTest.uid1, SecAuthTest.pwd1);
+            char[] password = SecAuthTest.pwd1.toCharArray();
+            pt.setTokenExtended(SecAuthTest.uid1, password);
+            Arrays.fill(password, '\0'); 
             // Reset internal state.
             resetState();
             // Perform test.

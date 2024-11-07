@@ -25,8 +25,10 @@ import java.util.Random;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.AuthenticationIndicator;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.security.auth.AS400BasicAuthenticationPrincipal;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 import com.ibm.as400.security.auth.ProfileTokenCredentialBeanInfo;
 import com.ibm.as400.security.auth.RetrieveFailedException;
@@ -150,7 +152,7 @@ public class SecPTMiscTestcase extends Testcase
             // Test token validity; compare the token time to expiration.
             assertCondition(pt1.equals(pt2) && pt2.getTimeToExpiration() >= pt1.getTimeToExpiration(), "Unexpected time to expiration.");
 
-            sys.disconnectAllServices();
+            sys.close();
             pt2.getSystem().disconnectAllServices();
 
             SecAuthTest.removeToken(pwrSys_, pt1.getToken());
@@ -228,7 +230,7 @@ public class SecPTMiscTestcase extends Testcase
             byte[] tBytes = new byte[ProfileTokenCredential.TOKEN_LENGTH];
             new Random().nextBytes(tBytes);
             // Create the token object.
-            ProfileTokenCredential pt = new ProfileTokenCredential(systemObject_, tBytes, ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
+            ProfileTokenCredential pt = new ProfileTokenCredential(systemObject_, tBytes, ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444,false);
             // Test the values.
             assertCondition(pt.getSystem().equals(systemObject_) && SecAuthTest.compareBytes(pt.getToken(), tBytes) && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeoutInterval() == 444, "Values specified on constructor not assigned.");
         }
@@ -351,7 +353,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -380,7 +382,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -409,7 +411,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -430,7 +432,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -455,7 +457,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -494,7 +496,7 @@ public class SecPTMiscTestcase extends Testcase
           e.printStackTrace();
         }
       }
-      sys.disconnectAllServices();
+      sys.close();
     }
   }
 
@@ -533,7 +535,7 @@ public class SecPTMiscTestcase extends Testcase
           e.printStackTrace();
         }
       }
-      sys.disconnectAllServices();
+      sys.close();
     }
   }
 
@@ -558,7 +560,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -583,7 +585,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -608,7 +610,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -633,7 +635,8 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
+            sys.close(); 
         }
     }
 
@@ -695,7 +698,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -720,7 +723,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -750,7 +753,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -780,7 +783,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         finally
         {
-            sys.disconnectAllServices();
+            sys.close();
         }
     }
 
@@ -820,7 +823,7 @@ public class SecPTMiscTestcase extends Testcase
             e.printStackTrace();
           }
         }
-        sys.disconnectAllServices();
+        sys.close();
       }
     }
 
@@ -857,7 +860,7 @@ public class SecPTMiscTestcase extends Testcase
             e.printStackTrace();
           }
         }
-        sys.disconnectAllServices();
+        sys.close();
       }
     }
 
@@ -872,82 +875,69 @@ public class SecPTMiscTestcase extends Testcase
    /**
     Test serialization and restoration of an active profile token.
     **/
-   public void Var032()
-   {    
-       if (checkAdditionalAuthenticationFactor(systemName_)) {
+   public void Var032() {
+     if (checkAdditionalAuthenticationFactor(systemName_)) {
        AS400 sys = null;
-       if (isLocal_)
-       {
-           sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+       if (isLocal_) {
+         sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+       } else {
+         sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
        }
-       else
-       {
-           sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
+       try {
+         initMfaUser();
+         ProfileTokenCredential pt1 = null;
+         ProfileTokenCredential pt2 = null;
+
+         // Create a single-use ProfileTokenCredential with a 10 min timeout.
+
+         pt1 = new ProfileTokenCredential();
+         UserProfilePrincipal principal = new UserProfilePrincipal(mfaUserid_);
+         pt1.initialize(principal, mfaPassword_, mfaFactor_, AuthenticationIndicator.APPLICATION_AUTHENTICATION, 
+             "", /* verification id  */
+             "", 0, /* remote IP and port */
+             "", 0, /* local IP and port */
+             true, /* private */
+             false, /* not reusable */
+             false, /* not renewable */
+             600); /* timeout */
+
+         // Test token validity; retrieve the token time to expiration.
+         pt1.getTimeToExpiration();
+
+         // Serialize the token.
+         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("ptoken.dat"));
+         out.writeObject(pt1);
+         out.close();
+
+         // Deserialize the token.
+         ObjectInputStream in = new ObjectInputStream(new FileInputStream("ptoken.dat"));
+         pt2 = (ProfileTokenCredential) in.readObject();
+         in.close();
+
+         File fd = new File("ptoken.dat");
+         fd.delete();
+
+         // Reset the system user and password (not serialized).
+         if (isLocal_) {
+           pt2.getSystem().setUserId("*CURRENT");
+           pt2.getSystem().setPassword("*CURRENT".toCharArray());
+         } else {
+           pt2.getSystem().setUserId(SecAuthTest.uid2);
+           pt2.getSystem().setPassword(SecAuthTest.pwd2.toCharArray());
+         }
+
+         // Test token validity; compare the token time to expiration.
+         assertCondition(pt1.equals(pt2) && pt2.getTimeToExpiration() >= pt1.getTimeToExpiration(),
+             "Unexpected time to expiration.");
+
+         sys.close();
+         pt2.getSystem().disconnectAllServices();
+
+         SecAuthTest.removeToken(pwrSys_, pt1.getToken());
+       } catch (Throwable e) {
+         failed(e, "Unexpected exception.");
        }
-       try
-       {
-           initMfaUser(); 
-           ProfileTokenCredential pt1 = null;
-           ProfileTokenCredential pt2 = null;
-
-           // Create a single-use ProfileTokenCredential with a 10 min timeout.
-           pt1 = new ProfileTokenCredential();
-           pt1.setSystem(sys);
-           pt1.setTimeoutInterval(600);
-           pt1.setTokenType(ProfileTokenCredential.TYPE_SINGLE_USE);
-           
-           JDReflectionUtil.callMethod_V(pt1, 
-               "setEnhancedToken",
-               mfaUserid_, 
-               mfaPassword_,
-               mfaFactor_, 
-               "", 
-               (InetAddress)null,
-               0,
-               (InetAddress)null,
-               0) ;
-
-           // Test token validity; retrieve the token time to expiration.
-           pt1.getTimeToExpiration();
-
-           // Serialize the token.
-           ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("ptoken.dat"));
-           out.writeObject(pt1);
-           out.close();
-
-           // Deserialize the token.
-           ObjectInputStream in = new ObjectInputStream(new FileInputStream("ptoken.dat"));
-           pt2 = (ProfileTokenCredential)in.readObject();
-           in.close();
-
-           File fd = new File("ptoken.dat");
-           fd.delete();
-
-           // Reset the system user and password (not serialized).
-           if (isLocal_)
-           {
-               pt2.getSystem().setUserId("*CURRENT");
-               pt2.getSystem().setPassword("*CURRENT".toCharArray());
-           }
-           else
-           {
-               pt2.getSystem().setUserId(SecAuthTest.uid2);
-               pt2.getSystem().setPassword(SecAuthTest.pwd2.toCharArray());
-           }
-
-           // Test token validity; compare the token time to expiration.
-           assertCondition(pt1.equals(pt2) && pt2.getTimeToExpiration() >= pt1.getTimeToExpiration(), "Unexpected time to expiration.");
-
-           sys.disconnectAllServices();
-           pt2.getSystem().disconnectAllServices();
-
-           SecAuthTest.removeToken(pwrSys_, pt1.getToken());
-       }
-       catch (Throwable e)
-       {
-           failed(e, "Unexpected exception.");
-       }
-       }
+     }
    }
 
    public void Var033() { notApplicable(); }
@@ -976,22 +966,49 @@ public class SecPTMiscTestcase extends Testcase
        try
        {
          initMfaUser();
-           int tokenType = ProfileTokenCredential.TYPE_SINGLE_USE;
            int timeoutInterval = 3600; 
-           ProfileTokenCredential pt = (ProfileTokenCredential) JDReflectionUtil.callMethod_O 
-               (sys, "getEnhancedToken", mfaUserid_, mfaPassword_, mfaFactor_,"",(
-                   String)null,0,(String )null,0,tokenType,timeoutInterval);
+           ProfileTokenCredential pt =  new ProfileTokenCredential();
+           pt.setSystem(sys);
+           UserProfilePrincipal principal = new UserProfilePrincipal(mfaUserid_);
+           pt.initialize(principal, mfaPassword_, mfaFactor_, AuthenticationIndicator.APPLICATION_AUTHENTICATION, 
+               "", /* verification id  */
+               "", 0, /* remote IP and port */
+               "", 0, /* local IP and port */
+               true, /* private */
+               false, /* not reusable */
+               false, /* not renewable */
+               timeoutInterval); /* timeout */
+           boolean passed = true; 
+           StringBuffer sb = new StringBuffer(); 
+           if (!isLocal_) {
+             if (!pt.getSystem().equals(sys)) {
+               passed = false;
+               sb.append("pt.getSystem():" + pt.getSystem() + " != sys:" + sys + "\n");
+             }
+           }
+           if ( pt.getToken() == null) {
+             passed =false; 
+             sb.append("pt.getToken() is null\n"); 
+           }
+           if (pt.getTokenType() != ProfileTokenCredential.TYPE_SINGLE_USE) {
+             passed = false; 
+             sb.append("pt.getTokenType():"+pt.getTokenType()+" != ProfileTokenCredential.TYPE_SINGLE_USE:"+ProfileTokenCredential.TYPE_SINGLE_USE+"\n"); 
+           }
+           if (pt.getTimeToExpiration() < 3000 )  {
+             passed = false; 
+             sb.append("pt.GetTimeExpiration() = "+pt.getTimeToExpiration()+" sb >= 3000 ");
+           }
+
            
-           assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && 
-               pt.getTokenType() == ProfileTokenCredential.TYPE_SINGLE_USE && pt.getTimeToExpiration() > 3000, "Unexpected profile token properties.");
-       }
+           assertCondition(passed, sb); 
+             }
        catch (Throwable e)
        {
            failed(e, "Unexpected exception.");
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
      }
    }
@@ -1015,10 +1032,42 @@ public class SecPTMiscTestcase extends Testcase
        {
          initMfaUser();
          
-           ProfileTokenCredential pt = (ProfileTokenCredential) JDReflectionUtil.callMethod_O 
-               (sys, "getEnhancedToken", mfaUserid_, mfaPassword_, mfaFactor_,"",(
-                   String )null,0,(String )null,0,ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
-           assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeToExpiration() >= 300 && pt.getTimeToExpiration() <= 444, "Unexpected profile token properties.");
+   
+           ProfileTokenCredential pt =  new ProfileTokenCredential();
+           pt.setSystem(sys);
+           UserProfilePrincipal principal = new UserProfilePrincipal(mfaUserid_);
+           pt.initialize(principal, mfaPassword_, mfaFactor_, AuthenticationIndicator.APPLICATION_AUTHENTICATION, 
+               "", /* verification id  */
+               "", 0, /* remote IP and port */
+               "", 0, /* local IP and port */
+               true, /* private */
+               true, /*  reusable */
+               false, /* not renewable */
+               444); /* timeout */
+
+           boolean passed = true; 
+           StringBuffer sb = new StringBuffer(); 
+           if (!isLocal_) {
+             if (!pt.getSystem().equals(sys)) {
+               passed = false;
+               sb.append("pt.getSystem():" + pt.getSystem() + " != sys:" + sys + "\n");
+             }
+           }
+           if ( pt.getToken() == null) {
+             passed =false; 
+             sb.append("pt.getToken() is null\n"); 
+           }
+           if (pt.getTokenType() != ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE) {
+             passed = false; 
+             sb.append("pt.getTokenType():"+pt.getTokenType()+" != ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE:"+ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE+"\n"); 
+           }
+           int timeToExpiration = pt.getTimeToExpiration();
+           if ( timeToExpiration < 300 || timeToExpiration >  444) {
+             passed = false; 
+             sb.append("pt.GetTimeExpiration() = "+timeToExpiration+" sb >= 300 and <= 444");
+           }
+           assertCondition( passed, sb); 
+           
        }
        catch (Throwable e)
        {
@@ -1026,7 +1075,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1056,7 +1105,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1083,7 +1132,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1110,7 +1159,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1136,7 +1185,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1201,7 +1250,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1228,7 +1277,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1259,7 +1308,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1291,7 +1340,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        finally
        {
-           sys.disconnectAllServices();
+           sys.close();
        }
    }
    }
@@ -1332,7 +1381,7 @@ public class SecPTMiscTestcase extends Testcase
            e.printStackTrace();
          }
        }
-       sys.disconnectAllServices();
+       sys.close();
      }
    }
    }
@@ -1370,7 +1419,7 @@ public class SecPTMiscTestcase extends Testcase
            e.printStackTrace();
          }
        }
-       sys.disconnectAllServices();
+       sys.close();
      }
    }
    }

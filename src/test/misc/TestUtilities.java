@@ -29,6 +29,10 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Enumeration;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.SourceDataLine;
+
 
 
 /**
@@ -317,6 +321,20 @@ Serializes and deserializes an object.
 
    	    return object2;
    	}
+
+
+
+public static void beep() {
+  try { 
+    java.awt.Toolkit.getDefaultToolkit().beep();
+  } catch (Exception e) { 
+    String osName = System.getProperty("os.name"); 
+    if (osName.toUpperCase().indexOf("WINDOWS") >= 0) {
+    System.out.println("Exception on os.name="+osName);
+    e.printStackTrace(System.out); 
+    }
+  }
+}
 
 
 }

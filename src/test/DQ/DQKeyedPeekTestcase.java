@@ -26,6 +26,7 @@ import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.ConnectionDropper;
 import test.DQTest;
+import test.JDTestDriver;
 import test.Testcase;
 
 /**
@@ -84,8 +85,14 @@ public class DQKeyedPeekTestcase extends Testcase
         }
         else
         {
+          if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+            user =   "QUSER_NC  ";
+            user1 =  "QUSER_NC  ";
+            
+          } else { 
             user =   "QUSER     ";
 	    user1 =  "QUSER     ";
+          }
             server = "QZHQSSR";
 	    server1= "QZHQSSR";
         }

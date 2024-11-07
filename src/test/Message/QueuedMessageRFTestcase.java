@@ -20,6 +20,7 @@ import com.ibm.as400.resource.Presentation;
 import com.ibm.as400.access.QSYSObjectPathName;
 import com.ibm.as400.resource.ResourceMetaData;
 
+import test.JDTestDriver;
 import test.MessageSandbox;
 import test.MessageTest;
 import test.Testcase;
@@ -1056,11 +1057,15 @@ public class QueuedMessageRFTestcase extends Testcase {
           .getAttributeValue(RQueuedMessage.SENDER_USER_NAME);
       value2 = (String) qmsg2
           .getAttributeValue(RQueuedMessage.SENDER_USER_NAME);
-      if (!(value0.equals("QUSER")) || !(value1.equals("QUSER"))
-          || !(value2.equals("QUSER"))) {
+      String expectedUser = "QUSER"; 
+      if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+        expectedUser = "QUSER_NC"; 
+      }
+      if (!(value0.equals(expectedUser)) || !(value1.equals(expectedUser))
+          || !(value2.equals(expectedUser))) {
         // If running on-thread, then tolerate a different name.
         if (!MessageTest.runningOnThread_) {
-          failed("Bad message SENDER_USER_NAME value.");
+          failed("Bad message SENDER_USER_NAME values "+value0+","+value1+","+value2+" sb "+expectedUser);
           return;
         }
       }
@@ -1077,20 +1082,21 @@ public class QueuedMessageRFTestcase extends Testcase {
           .getAttributeValue(RQueuedMessage.SENDER_USER_NAME);
       value5 = (String) qmsgrcv2
           .getAttributeValue(RQueuedMessage.SENDER_USER_NAME);
-      if (value3.equals("QUSER") && value4.equals("QUSER")
-          && value5.equals("QUSER"))
+      if (value3.equals(expectedUser) && value4.equals(expectedUser)
+          && value5.equals(expectedUser))
         succeeded();
       else {
         // If running on-thread, then tolerate a different name.
         if (MessageTest.runningOnThread_)
           succeeded();
         else {
-          failed("Bad message SENDER_USER_NAME value.");
+          failed("Bad message SENDER_USER_NAME values "+value3+","+value4+","+value5+" sb "+expectedUser);
         }
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     }
+    
   }
 
   /**

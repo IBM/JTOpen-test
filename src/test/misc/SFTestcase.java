@@ -1278,6 +1278,7 @@ public class SFTestcase extends Testcase {
     SaveFile sf2 = null;
     String sfName = "VAR020";
     try {
+      sb.append("Appending to save option 31 DNS .. If failure make sure system has option 31\n");
       // Save a product into a savefile, uninstall the product, then restore the
       // product from the savefile.
 
@@ -1298,9 +1299,7 @@ public class SFTestcase extends Testcase {
 
       String option = "31"; // DNS
       Product product1 = new Product(pwrSys_, toolboxProdName, option);
-      if (DEBUG)
-        System.out.println(
-            "DEBUG: Saving product/option " + toolboxProdName + "/" + option);
+      sb.append("Saving product/option " + toolboxProdName + "/" + option+"\n");
       sf2.save(product1);
 
       SaveFileEntry[] entries = sf2.listEntries();
@@ -1308,7 +1307,7 @@ public class SFTestcase extends Testcase {
       boolean okSoFar = checkEqualsAndCompareTo(entries);
 
       Product[] prods = sf2.listProducts();
-      sb.append("DEBUG: Entries in savefile " + sf2.getPath() + ":\n");
+      sb.append("Entries in savefile " + sf2.getPath() + ":\n");
       for (int i = 0; i < entries.length; i++) {
         sb.append(entries[i].getName());
         sb.append("\n");

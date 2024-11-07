@@ -70,7 +70,12 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
      **/
     public void propertyChange(PropertyChangeEvent evt)
     {
+      String propertyName = evt.getPropertyName();
+      if ("tokenCreator".equals(propertyName) || "remoteIPAddress".equals(propertyName)) {
+        // Ignore the reordered events
+      } else {
         pce_ = evt;
+      }
     }
 
     /**
@@ -78,13 +83,17 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
      @param  evt  A <code>PropertyChangeEvent</code> object describing the event source and the property that has changed.
      @exception  PropertyVetoException  If the recipient wishes the property change to be rolled back.
      **/
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException
-    {
-        if (vetoChange_)
-        {
-            throw new PropertyVetoException("test", evt);
+    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+      String propertyName = evt.getPropertyName();
+      if ("tokenCreator".equals(propertyName) || "remoteIPAddress".equals(propertyName)) {
+
+        // Ignore the reordered events
+      } else {
+        if (vetoChange_) {
+          throw new PropertyVetoException("test", evt);
         }
         pce_ = evt;
+      }
     }
 
     /**
@@ -570,6 +579,7 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
      **/
     public void Var019()
     {
+        String propertyName=""; 
         try
         {
             // Create objects.
@@ -580,11 +590,16 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
             // Reset state info.
             resetState();
             // Assign the property value.
+            pce_ = null; 
             pt.setTokenExtended(SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
             // Test the result.
             if (pce_ != null)
             {
-                assertCondition(pce_.getNewValue() != null && SecAuthTest.compareBytes((byte[])pce_.getNewValue(), pt.getToken()), "Property change failed.");
+                propertyName = pce_.getPropertyName(); 
+                Object newValue = pce_.getNewValue(); 
+                Class<? extends Object> newValueClass = null; 
+                if (newValue != null) newValueClass = newValue.getClass(); 
+                assertCondition(newValue != null && SecAuthTest.compareBytes((byte[])newValue, pt.getToken()), "Property change failed. newValue="+newValue+" newValueClass="+newValueClass);
             }
             else
             {
@@ -593,7 +608,7 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
         }
         catch (Exception e)
         {
-            failed(e, "Unexpected exception.");
+            failed(e, "Unexpected exception. propertyName="+propertyName);
         }
     }
 
@@ -622,7 +637,8 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
             catch (PropertyVetoException pve)
             {
                 // Test the result.
-                assertCondition(pve.getPropertyChangeEvent().getNewValue() != null && (byte[])pve.getPropertyChangeEvent().getOldValue() == null, "Veto of property change failed.");
+                PropertyChangeEvent changeEvent = pve.getPropertyChangeEvent(); 
+                assertCondition(changeEvent.getNewValue() != null && changeEvent.getOldValue() == null, "Veto of property change failed.");
             }
         }
         catch (Exception e)

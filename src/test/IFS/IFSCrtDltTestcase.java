@@ -20,6 +20,8 @@ import java.util.Hashtable;
 import java.util.Random;
 import com.ibm.as400.access.*;
 
+import test.JDTestDriver;
+
 
 
 /**
@@ -60,8 +62,14 @@ Constructor.
     throws Exception
   {
 
+    
     super.setup(); 
     
+    // Make sure the user has access to '/QOpenSys/tmp' 
+    
+    CommandCall cc = new CommandCall(pwrSys_); 
+    String command = "CHGAUT OBJ('/QOpenSys/tmp') USER("+systemObject_.getUserId()+") DTAAUT(*RWX)"; 
+    cc.run(command); 
     
    
     dirName_ = "/"; 
@@ -643,6 +651,7 @@ the old name no longer exists.
     // operation to the file server rather than the correct delete file.
     public void Var021()                                          //@A2A
     {
+      StringBuffer sb = new StringBuffer(); 
       try
       {
         String libName = "IFSCDv21";
@@ -655,46 +664,52 @@ the old name no longer exists.
         c.run("CRTLIB "+libName);
 
         IFSFile lib1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB");
-        if (DEBUG) System.out.println("lib1 AbsPath: " + lib1.getAbsolutePath());
-        if (DEBUG) System.out.println("lib1 Exists: "+lib1.exists());
-        if (DEBUG) System.out.println("lib1 IsDirectory/IsFile = " + lib1.isDirectory()+"/"+ lib1.isFile());
+        sb.append("lib1 AbsPath: " + lib1.getAbsolutePath()+"\n");
+        sb.append("lib1 Exists: "+lib1.exists()+"\n");
+        sb.append("lib1 IsDirectory/IsFile = " + lib1.isDirectory()+"/"+ lib1.isFile()+"\n");
 
         c.run("CRTOUTQ "+libName+"/"+objName);
         IFSFile file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".OUTQ");
-        if (DEBUG) System.out.println("file1 AbsPath: " + file1.getAbsolutePath());
-        if (DEBUG) System.out.println("file1 Exists: "+file1.exists());
-        if (DEBUG) System.out.println("file1 IsDirectory/IsFile = " + file1.isDirectory()+"/"+ file1.isFile());
+        sb.append("file1 AbsPath: " + file1.getAbsolutePath()+"\n");
+        sb.append("file1 Exists: "+file1.exists()+"\n");
+        sb.append("file1 IsDirectory/IsFile = " + file1.isDirectory()+"/"+ file1.isFile()+"\n");
         boolean deleted2 = file1.delete();
-        if (DEBUG) System.out.println("file1: deleted2 = " + deleted2);
+        sb.append("file1: deleted2 = " + deleted2+"\n");
 
         c.run("CRTSAVF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted3 = file1.delete();
-        if (DEBUG) System.out.println("file1: deleted3 = " + deleted3);
+        sb.append("file1: deleted3 = " + deleted3+"\n");
 
         c.run("CRTDSPF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted4 = file1.delete();
-        if (DEBUG) System.out.println("file1: deleted4 = " + deleted4);
+        sb.append("file1: deleted4 = " + deleted4+"\n");
 
         c.run("CRTSRCPF FILE("+libName+"/"+objName+")");
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted5 = file1.delete();
-        if (DEBUG) System.out.println("file1: deleted5 = " + deleted5);
+        sb.append("file1: deleted5 = " + deleted5+"\n");
 
-        c.run("CRTTAPF FILE("+libName+"/"+objName+")");
-        file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
-        boolean deleted6 = file1.delete();
-        if (DEBUG) System.out.println("file1: deleted6 = " + deleted6);
+        boolean deleted6 = true;
+        /* After 7.5, IOSYSCFG special authority is need to create this file */ 
+        if (getRelease() <= JDTestDriver.RELEASE_V7R5M0) {
+          String command = "CRTTAPF FILE(" + libName + "/" + objName + ")";
+          c.run(command);
+          sb.append(".. ran " + command);
+          file1 = new IFSFile(systemObject_, "/QSYS.LIB/" + libName + ".LIB/" + objName + ".FILE");
+          deleted6 = file1.delete();
+          sb.append("file1: deleted6 = " + deleted6 + "\n");
+        }
 
         c.run("CRTPRTF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted7 = file1.delete();
-        if (DEBUG) System.out.println("file1: deleted7 = " + deleted7);
+        sb.append("file1: deleted7 = " + deleted7+"\n");
 
         // now delete the original library created at top of this var
         boolean deleted1 = lib1.delete();
-        if (DEBUG) System.out.println("lib1: deleted1 = " + deleted1);
+        sb.append("lib1: deleted1 = " + deleted1+"\n");
 
         if (deleted1 == deleted2 == deleted3 == deleted4 == deleted5 == deleted6 == deleted7 == true)
         {
@@ -702,7 +717,88 @@ the old name no longer exists.
         }
         else
         {
-          failed("delete() of (at least one) QSYS object failed");
+          failed("delete() of (at least one) QSYS object failed \n"+sb.toString());
+        }
+      }     
+      catch(Exception e)
+      {
+        failed(e);
+      }  
+    }
+
+
+    // Duplicate of VAR200 but with all authority. 
+    public void Var022()                                          //@A2A
+    {
+      StringBuffer sb = new StringBuffer(); 
+      try
+      {
+        String libName = "IFSCDv22";
+        String objName = "IFSCDv22";
+        CommandCall c = new CommandCall(pwrSys_);
+        c.run("CHGJOB INQMSGRPY(*SYSRPYL)");
+
+        c = new CommandCall(systemObject_, "DLTLIB "+libName);
+        c.run();
+        c.run("CRTLIB "+libName);
+
+        IFSFile lib1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB");
+        sb.append("lib1 AbsPath: " + lib1.getAbsolutePath()+"\n");
+        sb.append("lib1 Exists: "+lib1.exists()+"\n");
+        sb.append("lib1 IsDirectory/IsFile = " + lib1.isDirectory()+"/"+ lib1.isFile()+"\n");
+
+        c.run("CRTOUTQ "+libName+"/"+objName);
+        IFSFile file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".OUTQ");
+        sb.append("file1 AbsPath: " + file1.getAbsolutePath()+"\n");
+        sb.append("file1 Exists: "+file1.exists()+"\n");
+        sb.append("file1 IsDirectory/IsFile = " + file1.isDirectory()+"/"+ file1.isFile()+"\n");
+        boolean deleted2 = file1.delete();
+        sb.append("file1: deleted2 = " + deleted2+"\n");
+
+        c.run("CRTSAVF "+libName+"/"+objName);
+        file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
+        boolean deleted3 = file1.delete();
+        sb.append("file1: deleted3 = " + deleted3+"\n");
+
+        c.run("CRTDSPF "+libName+"/"+objName);
+        file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
+        boolean deleted4 = file1.delete();
+        sb.append("file1: deleted4 = " + deleted4+"\n");
+
+        c.run("CRTSRCPF FILE("+libName+"/"+objName+")");
+        file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
+        boolean deleted5 = file1.delete();
+        sb.append("file1: deleted5 = " + deleted5+"\n");
+
+        /* After 7.5, IOSYSCFG special authority is need to create this file */ 
+        String command = "CRTTAPF FILE("+libName+"/"+objName+")";
+        c.run(command);
+        sb.append(".. ran "+command);
+        file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
+        boolean deleted6 = file1.delete();
+        sb.append("file1: deleted6 = " + deleted6+"\n");
+
+        c.run("CRTPRTF "+libName+"/"+objName);
+        file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
+        boolean deleted7 = file1.delete();
+        sb.append("file1: deleted7 = " + deleted7+"\n");
+
+        // now delete the original library created at top of this var
+        boolean deleted1 = false;
+        if (deleted2 == deleted3 == deleted4 == deleted5 == deleted6 == deleted7 == true) {
+          deleted1 = lib1.delete();
+          sb.append("lib1: deleted1 = " + deleted1 + "\n");
+        } else {
+          sb.append("Did not delete library because testcase failed\n");
+        }
+
+        if (deleted1 == deleted2 == deleted3 == deleted4 == deleted5 == deleted6 == deleted7 == true)
+        {
+          succeeded();
+        }
+        else
+        {
+          failed("delete() of (at least one) QSYS object failed \n"+sb.toString());
         }
       }     
       catch(Exception e)

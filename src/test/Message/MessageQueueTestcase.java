@@ -20,6 +20,7 @@ import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.MessageQueue;
 import com.ibm.as400.access.QueuedMessage;
 
+import test.JDTestDriver;
 import test.MessageSandbox;
 import test.MessageTest;
 import test.Testcase;
@@ -1883,6 +1884,7 @@ public class MessageQueueTestcase extends Testcase {
    * Verify QueuedMessage() values are available for getFromJob, etc.
    **/
   public void Var078() {
+    StringBuffer sb = new StringBuffer(); 
     try {
       sandbox_.setNumberOfMessages(3);
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
@@ -1896,12 +1898,13 @@ public class MessageQueueTestcase extends Testcase {
           if (!m.getFromJobName().trim().equals("QZRCSRVS")) {
             // If running on-thread, then tolerate a different job name.
             if (!MessageTest.runningOnThread_)
+              sb.append("FAILED job name "+m.getFromJobName().trim()+" is not QZRCSRVS\n");
               succeeded = false;
           }
-          if (DEBUG) {
-            System.out.print("Message " + String.valueOf(count) + ":");
-            System.out.println(" From job name: " + m.getFromJobName());
-          }
+          
+          sb.append("Message " + String.valueOf(count) + ":\n");
+          sb.append(" From job name: " + m.getFromJobName()+"\n");
+          
         }
         if (m.getFromJobNumber() != null) {
           String aNumber = m.getFromJobNumber().trim();
@@ -1909,47 +1912,54 @@ public class MessageQueueTestcase extends Testcase {
             for (int index = 0; index < aNumber.length(); index++) {
               if (!(java.lang.Character.isDigit(aNumber.charAt(index)))) {
                 succeeded = false;
+                sb.append("FAILED: no digit in job number "+aNumber+"\n"); 
               }
             }
           } catch (Exception xcp) {
-            succeeded = false;
+            sb.append("FAILED: Got Exception\n"); 
+            printStackTraceToStringBuffer(xcp, sb); 
+            succeeded = false; 
+            
           }
-          if (DEBUG) {
-            System.out.print("Message " + String.valueOf(count) + ":");
-            System.out.println("  From job number: " + m.getFromJobNumber());
-          }
+          
+            sb.append("Message " + String.valueOf(count) + ":\n");
+            sb.append("  From job number: " + m.getFromJobNumber()+"\n");
+          
         }
         if (m.getKey() == null) {
           succeeded = false;
-          if (DEBUG) {
-            System.out.print("Message " + String.valueOf(count) + ":");
-            System.out.println("  Key is null: ");
-          }
+       
+          sb.append("FAILED Message " + String.valueOf(count) + ":\n");
+          sb.append("  Key is null: \n");
+          
         }
         if (m.getReplyStatus() != null) {
           if (!m.getReplyStatus().trim().equals("N")) {
+            sb.append("FAILED getReplyStatus is not N\n"  );
             succeeded = false;
           }
-          if (DEBUG) {
-            System.out.print("Message " + String.valueOf(count) + ":");
-            System.out.println("  Reply status: " + m.getReplyStatus());
-          }
+          
+          sb.append("  Reply status: " + m.getReplyStatus()+"\n");
+         
         }
         if (m.getUser() != null) {
-          if (!m.getUser().trim().equals("QUSER")) {
+          String expectedUser = "USER"; 
+          if (getRelease() > JDTestDriver.RELEASE_V7R5M0) 
+            expectedUser="QUSER_NC"; 
+          if (!m.getUser().trim().equals(expectedUser)) {
             // If running on-thread, then tolerate a different job name.
-            if (!MessageTest.runningOnThread_)
+            if (!MessageTest.runningOnThread_) {
               succeeded = false;
+              sb.append("FAILED User="+m.getUser()+" sb "+expectedUser+"\n"); 
+            }
           }
-          if (DEBUG) {
-            System.out.print("Message " + String.valueOf(count) + ":");
-            System.out.println("  User: " + m.getUser());
-          }
+          sb.append("Message " + String.valueOf(count) + ":\n");
+          sb.append("  User: " + m.getUser()+"\n");
         }
       }
-      assertCondition(succeeded == true);
+      assertCondition(succeeded == true, sb);
     } catch (Exception e) {
-      failed(e, "Unexpected Exception.");
+      failed(e, "Unexpected Exception.\n" + sb.toString());
     }
   }
 

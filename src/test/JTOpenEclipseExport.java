@@ -31,7 +31,7 @@ public class JTOpenEclipseExport  {
   public static void usage() { 
     System.out.println("Usage:  java  test.JTOpenEclipseExport IBMi userid password   ");
     System.out.println("   Updates an IBM i system with the latest test changes in the Eclipse Environment");
-    System.out.println("   Uses {user.dir}/lastUpdate as a time marker"); 
+    System.out.println("   Uses {user.dir}/lastUpdate.$system as a time marker"); 
   }
  
   public static void main(String args[]) {
@@ -53,7 +53,7 @@ public class JTOpenEclipseExport  {
       }
       System.out.println("Current directory is "+currentDirectory);
       long startTime = System.currentTimeMillis(); 
-      String lastTimeFilename = homeDirectory+File.separatorChar+"lastUpdate"; 
+      String lastTimeFilename = homeDirectory+File.separatorChar+"lastUpdate."+as400Name; 
       File lastTimeFile = new File(lastTimeFilename); 
       if (!lastTimeFile.exists()) { 
         lastTimeFile.createNewFile(); 
@@ -71,7 +71,9 @@ public class JTOpenEclipseExport  {
       lastTimeFile.setLastModified(startTime);
    
       compileFiles(as400); 
+      System.out.println("==================================================================================================="); 
       System.out.println("DONE exporting to "+as400Name+" at "+ (new Timestamp(System.currentTimeMillis()))); 
+      System.out.println("==================================================================================================="); 
     } catch (Exception e) {
       e.printStackTrace(System.out);
       usage(); 
@@ -112,6 +114,20 @@ public class JTOpenEclipseExport  {
       char[] buffer = new char[65536];
       int bytesRead = fileReader.read(buffer );
       while (bytesRead >= 0) { 
+        /* Replace any CR in the file */ 
+        for (int i = 0; i < bytesRead; i++) { 
+          if (buffer[i] < 0x20) { 
+            switch (buffer[i]) { 
+            case 0x0a:
+            case 0x09:  
+              break; 
+            default:
+              buffer[i]=0x20;
+              break;
+            }
+            
+          }
+        }
         ifsFileWriter.write(buffer, 0, bytesRead);
         bytesRead = fileReader.read(buffer );
       }

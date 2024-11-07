@@ -26,6 +26,7 @@ import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.ConnectionDropper;
 import test.DQTest;
+import test.JDTestDriver;
 import test.Testcase;
 
 /**
@@ -40,6 +41,7 @@ import test.Testcase;
  **/
 public class DQKeyedReadTestcase extends Testcase
 {
+  String expectedQuser = null; 
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
      newArgs[0] = "-tc";
@@ -59,6 +61,13 @@ public class DQKeyedReadTestcase extends Testcase
       usingNativeOptimizations_ = true;
     }
     super.setup();
+    if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+      expectedQuser =   "QUSER_NC  ";
+     
+    } else { 
+      expectedQuser =   "QUSER     ";
+    }
+    
   }
     String getPaddedUser()
     {
@@ -416,7 +425,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    String user = getPaddedUser();
 	    String job = "QZHQSSRV".substring(0,7);
 	    if (usingNativeOptimizations_) job = DQTest.SERVERNAME_NATIVE.substring(0,7); 
-	    String sender = (usingNativeOptimizations_) ? user : "QUSER     ";
+	    String sender = (usingNativeOptimizations_) ? user : expectedQuser;
 
 	    dq.create(10, 80, "*USE", true, false, "");
 	    try
@@ -482,7 +491,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    String user = getPaddedUser();
 	    String job = "QZHQSSRV".substring(0,7);
 	    if (usingNativeOptimizations_) job = DQTest.SERVERNAME_NATIVE.substring(0,7); 
-	    String sender = (usingNativeOptimizations_) ? user : "QUSER     ";
+	    String sender = (usingNativeOptimizations_) ? user : expectedQuser;
 
 	    dq.create(10, 80, "*USE", true, false, "");
 	    try
@@ -2165,7 +2174,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    String user = getPaddedUser();
 	    String job = "QZHQSSRV".substring(0,7);
 	    if (usingNativeOptimizations_) job = DQTest.SERVERNAME_NATIVE.substring(0,7); 
-	    String sender = (usingNativeOptimizations_) ? user : "QUSER     ";
+	    String sender = (usingNativeOptimizations_) ? user : expectedQuser;
 	    dq.create(10, 80, "*USE", true, false, "");
 	    try
 	    {
@@ -2231,7 +2240,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    String user = getPaddedUser();
 	    String job = "QZHQSSRV".substring(0,7);
 	    if (usingNativeOptimizations_) job = DQTest.SERVERNAME_NATIVE.substring(0,7); 
-	    String sender = (usingNativeOptimizations_) ? user : "QUSER     ";
+	    String sender = (usingNativeOptimizations_) ? user : expectedQuser;
 	    dq.create(10, 80, "*USE", true, false, "");
 	    try
 	    {

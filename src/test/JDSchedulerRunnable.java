@@ -241,9 +241,20 @@ public class JDSchedulerRunnable implements Runnable {
 
           }
         }
-        /* Only update statistics for a run where more than half were successfule  */ 
-        if (failedCount < (successfulCount + failedCount) / 2 ) {
         synchronized (c) {
+          PreparedStatement deleteRunStatement = c
+              .prepareStatement("DELETE from " + runTable
+                  + " WHERE ADDED_TS=? AND INITIALS=? and ACTION=? ");
+
+          deleteRunStatement.setTimestamp(1, addedTs);
+          deleteRunStatement.setString(2, initials);
+          deleteRunStatement.setString(3, action);
+          deleteRunStatement.executeUpdate();
+          deleteRunStatement.close(); 
+
+          /* Only update statistics for a run where more than half were successfule  */ 
+
+          if (failedCount < (successfulCount + failedCount) / 2 ) {
 
           long endTime = System.currentTimeMillis();
           String statsQuery = "SELECT COUNT, AVERAGE_SECONDS, RECENT_AVERAGE_SECONDS from "
@@ -301,17 +312,9 @@ public class JDSchedulerRunnable implements Runnable {
           insertStatsPs.setDouble(6, lastSeconds);
           insertStatsPs.executeUpdate();
           insertStatsPs.close();
-          PreparedStatement deleteRunStatement = c
-              .prepareStatement("DELETE from " + runTable
-                  + " WHERE ADDED_TS=? AND INITIALS=? and ACTION=? ");
-
-          deleteRunStatement.setTimestamp(1, addedTs);
-          deleteRunStatement.setString(2, initials);
-          deleteRunStatement.setString(3, action);
-          deleteRunStatement.executeUpdate();
-          deleteRunStatement.close(); 
-        } /* sychronized c */
         } /* if enough successful */ 
+        
+        } /* synchronized c */
       } catch (Throwable e) {
         out.println("JDSchedulerRunnable:  Warning Status update failed sql="
             + sql);
