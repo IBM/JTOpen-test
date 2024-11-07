@@ -241,6 +241,8 @@ public class JDSchedulerRunnable implements Runnable {
 
           }
         }
+        /* Only update statistics for a run where more than half were successfule  */ 
+        if (failedCount < (successfulCount + failedCount) / 2 ) {
         synchronized (c) {
           PreparedStatement deleteRunStatement = c
               .prepareStatement("DELETE from " + runTable
