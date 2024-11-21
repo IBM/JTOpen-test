@@ -143,7 +143,7 @@ public class JDCleanCore {
       "Failed to create thread",
   };
   
-  // Search strings in rder they are found in field
+  // Search strings in order they are found in field
   // Once the a string has been found, the algorithm will
   // try to find the remaining strings in the current set
   // without checking the other sets 

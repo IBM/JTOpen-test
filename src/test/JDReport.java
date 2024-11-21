@@ -123,15 +123,21 @@ public class JDReport {
   /**
    * Return array containing the following information
    *
-   * @return String[0] Notatt Count String[1] Regressed Count String[2] Failed
-   *         Count String[3] Success Count String[4] Regressed Testcases
-   *         String[5] Run minutes String[6] Failed Testcases
+   * @return String[0] Notatt Count 
+   *         String[1] Regressed Count 
+   *         String[2] Failed Count 
+   *         String[3] Success Count 
+   *         String[4] Regressed Testcases
+   *         String[5] Run minutes 
+   *         String[6] Failed Testcases
+   *         String[7] Scheduled Count
+   *         
    */
-  public static String[] getStats(File htmlFile) {
+  public static String[] getStats(File htmlFile, Connection c) {
     int iRegressedCount = 0;
     int iFailedCount = 0;
 
-    String[] output = new String[7];
+    String[] output = new String[8];
     output[0] = "0";
     output[1] = "Unknown";
     output[2] = "Unknown";
@@ -139,6 +145,7 @@ public class JDReport {
     output[4] = "";
     output[5] = "Unknown";
     output[6] = "";
+    output[7] = ""; 
     StringBuffer regressedTestcases = new StringBuffer();
     regressedTestcases.append("<table border>");
     StringBuffer failedTestcases = new StringBuffer();
@@ -231,7 +238,24 @@ public class JDReport {
         output[6] = " in " + failedTestcasesCount + testsLabel;
 
       }
-
+      
+      if (c != null) { 
+        String filename = htmlFile.getName(); 
+        int latestIndex = filename.indexOf("latest"); 
+        int htmlIndex   = filename.indexOf(".html"); 
+        if (latestIndex >= 0 && htmlIndex > 0) { 
+          String initials = filename.substring(6,htmlIndex); 
+          String sql = "select count(*) from JDTESTINFO.SCHED1 WHERE INITIALS = ?";
+          PreparedStatement ps = c.prepareStatement(sql); 
+          ps.setString(1, initials); 
+          ResultSet rs = ps.executeQuery(); 
+          if (rs.next()) {
+            output[7] = rs.getString(1); 
+          }
+          rs.close(); 
+          ps.close(); 
+        }
+      }
       reader.close();
     } catch (Exception e) {
       e.printStackTrace();
@@ -239,12 +263,12 @@ public class JDReport {
     return output;
   }
 
-  public static String formatLine(String next, Timestamp jarTimestamp) {
+  public static String formatLine(String next, Timestamp jarTimestamp, Connection c) {
     File htmlFile = new File("ct/" + next);
     Timestamp changeDate = new Timestamp(htmlFile.lastModified());
     String changeDateString = changeDate.toString();
     String compactDateString = changeDateString.replace(' ', 'x');
-    String[] stats = getStats(htmlFile);
+    String[] stats = getStats(htmlFile, c);
 
     long jarTime = 0;
     if (jarTimestamp != null)
@@ -275,31 +299,36 @@ public class JDReport {
         returnString = "<tr><td>" + changeDateString;
       }
     }
+    String schedCount = stats[7]; 
+    if (Integer.parseInt(schedCount) > 0) { 
+      schedCount="<font color=\"red\"> ** " + schedCount + " ** </font>";
+    }
+    
     if ("0".equals(stats[0])) {
       returnString += "<td><a href=\"" + next + "?" + compactDateString + "\">"
           + describeTest(next) + " Test Results</a>";
       if ("0".equals(stats[1])) {
         returnString += "<td>" + stats[0] + "<td><font color=\"darkgreen\"><b>"
             + stats[1] + "</b></font>" + stats[4] + "<td>" + stats[2] + stats[6]
-            + "<td>" + stats[3] + "<td>" + stats[5];
+            + "<td>" + stats[3] + "<td>" + stats[5]+ "<td>" + schedCount;
       } else {
         returnString += "<td>" + stats[0] + "<td>" + stats[1] + stats[4]
             + "<td>" + stats[2] + stats[6] + "<td>" + stats[3] + "<td>"
-            + stats[5];
+            + stats[5]+ "<td>" + schedCount;
       }
     } else {
       returnString += "<td><a href=\"" + next + "?" + compactDateString + "\">"
           + describeTest(next)
           + " Test Results</a><td><font color=\"red\">ERROR " + stats[0]
           + "</font><td>" + stats[1] + stats[4] + "<td>" + stats[2] + stats[6]
-          + "<td>" + stats[3] + "<td>" + stats[5];
+          + "<td>" + stats[3] + "<td>" + stats[5] + "<td>" + schedCount;
     }
 
     return returnString;
   }
 
   public static String formatHeader() {
-    return "<th>Date<th>Test<th>NotAtt<th>Regressed<th>Failed<th>Success<th>RunMinutes";
+    return "<th>Date<th>Test<th>NotAtt<th>Regressed<th>Failed<th>Success<th>RunMinutes<th>ScheduledCount";
   }
 
   public static boolean isNativeJDBC(String initials) {
@@ -678,7 +707,7 @@ public class JDReport {
     return input + " " + description;
   }
 
-  public static void createIndex() throws Exception {
+  public static void createIndex(Connection nativeConnection) throws Exception {
 
     String filename = "ct/index.html";
     System.out.println("Creating index file " + filename);
@@ -745,7 +774,7 @@ public class JDReport {
     while (iterator.hasNext()) {
       String next = (String) iterator.next();
       if (isMustRun(next)) {
-        String line = formatLine(next, null);
+        String line = formatLine(next, null, nativeConnection);
         totalRunMinutes += getRunMinutesFromLine(line);
         sb.append(line);
         sb.append("\n");
@@ -760,11 +789,11 @@ public class JDReport {
 
     String[] cliSuffixes = { "R.html", "S.html", "W.html", "Y.html", "Z.html" };
     totalRunMinutes += addSection(writer, sortedSet, "CLI TESTING", cliSuffixes,
-        null);
+        null,nativeConnection);
 
     String[] jccSuffixes = { "J.html" };
     totalRunMinutes += addSection(writer, sortedSet, "JCC TESTING ",
-        jccSuffixes, null);
+        jccSuffixes, null,nativeConnection);
 
     Timestamp nativeTimestamp = null;
     String nativeInfo = "db2_classes.jar:";
@@ -787,7 +816,7 @@ public class JDReport {
     String[] jdbcNativeSuffixes = { "N.html", "M.html", "K.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC NATIVE TESTING " + nativeInfo, jdbcNativeSuffixes,
-        nativeTimestamp);
+        nativeTimestamp,nativeConnection);
 
     nativeTimestamp = null;
     nativeInfo = "/home/jdbcsrcj/com/ibm/db2/jdbc/app/DB2Driver.class:";
@@ -806,7 +835,7 @@ public class JDReport {
 
     String[] jdbcNativeDebugSuffixes = { "D.html" };
     addSection(writer, sortedSet, "JDBC NATIVE DEBUG TESTING " + nativeInfo,
-        jdbcNativeDebugSuffixes, nativeTimestamp);
+        jdbcNativeDebugSuffixes, nativeTimestamp,nativeConnection);
 
     Timestamp jstpTimestamp = null;
     String jstpInfo = "db2_classes.jar:";
@@ -828,7 +857,7 @@ public class JDReport {
     String[] jstpSuffixes = { "O.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JAVA STORED PROCEDURES TESTING " + jstpInfo, jstpSuffixes,
-        jstpTimestamp);
+        jstpTimestamp,nativeConnection);
 
     Timestamp toolboxTimestamp = null;
     Timestamp toolboxBuildTimestamp = null;
@@ -913,49 +942,49 @@ public class JDReport {
         "Q.html", "1.html", "2.html", "P.html", };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX TESTING " + toolboxInfo, jdbcToolboxSuffixes,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
     String[] jdbcToolboxNativeSuffixes = { "U.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX NATIVE TESTING " + toolboxInfo, jdbcToolboxNativeSuffixes,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
    
     
     String[] toolboxProxySuffixes = { "V.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX PROXY TESTING " + toolboxInfo, toolboxProxySuffixes,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
     String[] toolboxSuffixes = { "A.html" };
     totalRunMinutes += addSection(writer, sortedSet,
-        "TOOLBOX TESTING " + toolboxInfo, toolboxSuffixes, toolboxTimestamp);
+        "TOOLBOX TESTING " + toolboxInfo, toolboxSuffixes, toolboxTimestamp,nativeConnection);
 
     String[] toolboxNativeSuffixes = { "B.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "TOOLBOX NATIVE TESTING " + toolboxInfo, toolboxNativeSuffixes,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
     String[] jtopenliteSuffixes = { "L.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC jtopenlite TESTING " + jtopenliteInfo, jtopenliteSuffixes,
-        jtopenliteTimestamp);
+        jtopenliteTimestamp,nativeConnection);
 
     String[] androidSuffixes = { "G.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC toolbox android TESTING " + jt400androidInfo, androidSuffixes,
-        jt400androidTimestamp);
+        jt400androidTimestamp,nativeConnection);
 
     
     String[] java11Strings = { "B6","BO" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JAVA 11 TESTING " + toolboxInfo+ " " + nativeInfo, java11Strings,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
     String[] java17Strings = { "C6" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JAVA 17 TESTING " + toolboxInfo+ " " + nativeInfo, java17Strings,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
 
     writer.println("<hr>Total Run Minutes=" + totalRunMinutes
@@ -973,7 +1002,7 @@ public class JDReport {
 
   }
 
-  public static void createToolboxIndex() throws Exception {
+  public static void createToolboxIndex(Connection nativeConnection) throws Exception {
 
     String filename = "ct/toolbox.html";
     System.out.println("Creating index file " + filename);
@@ -1088,36 +1117,36 @@ public class JDReport {
         "I.html", "1.html", "2.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX TESTING " + toolboxInfo, jdbcToolboxSuffixes,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
     String[] jdbcToolboxNativeSuffixes = { "U.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX NATIVE TESTING " + toolboxInfo, jdbcToolboxNativeSuffixes,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
     String[] toolboxProxySuffixes = { "V.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX PROXY TESTING " + toolboxInfo, toolboxProxySuffixes,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
     String[] toolboxSuffixes = { "A.html" };
     totalRunMinutes += addSection(writer, sortedSet,
-        "TOOLBOX TESTING " + toolboxInfo, toolboxSuffixes, toolboxTimestamp);
+        "TOOLBOX TESTING " + toolboxInfo, toolboxSuffixes, toolboxTimestamp,nativeConnection);
 
     String[] toolboxNativeSuffixes = { "B.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "TOOLBOX NATIVE TESTING " + toolboxInfo, toolboxNativeSuffixes,
-        toolboxTimestamp);
+        toolboxTimestamp,nativeConnection);
 
     String[] jtopenliteSuffixes = { "L.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC jtopenlite TESTING " + jtopenliteInfo, jtopenliteSuffixes,
-        jtopenliteTimestamp);
+        jtopenliteTimestamp,nativeConnection);
 
     String[] androidSuffixes = { "G.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC toolbox android TESTING " + jt400androidInfo, androidSuffixes,
-        jt400androidTimestamp);
+        jt400androidTimestamp,nativeConnection);
 
     writer.println("<hr>Total Run Minutes=" + totalRunMinutes
         + " Total run hours=" + (totalRunMinutes / 60) + " Total run days="
@@ -1134,7 +1163,7 @@ public class JDReport {
 
   }
 
-  public static void createNativeIndex() throws Exception {
+  public static void createNativeIndex(Connection nativeConnection) throws Exception {
 
     String filename = "ct/native.html";
     System.out.println("Creating index file " + filename);
@@ -1215,7 +1244,7 @@ public class JDReport {
     String[] jdbcNativeSuffixes = { "N.html", "P.html", "M.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC NATIVE TESTING " + nativeInfo, jdbcNativeSuffixes,
-        nativeTimestamp);
+        nativeTimestamp,nativeConnection);
 
     writer.println("<hr>Total Run Minutes=" + totalRunMinutes
         + " Total run hours=" + (totalRunMinutes / 60) + " Total run days="
@@ -1232,7 +1261,7 @@ public class JDReport {
 
   }
 
-  public static void createJvmIndex() throws Exception {
+  public static void createJvmIndex(Connection nativeConnection) throws Exception {
 
     String filename = "ct/jvm.html";
     System.out.println("Creating index file " + filename);
@@ -1309,7 +1338,7 @@ public class JDReport {
 
       String jvm = (String) iterator.next();
       // System.out.println("Processing JVM "+jvm);
-      addJvmSection(writer, sortedSet, "JVM " + jvm, jvm, null);
+      addJvmSection(writer, sortedSet, "JVM " + jvm, jvm, null, nativeConnection);
 
     }
 
@@ -1327,7 +1356,7 @@ public class JDReport {
 
   // return the run minutes
   public static double addJvmSection(PrintWriter writer, TreeSet<String> sortedSet,
-      String header, String jvm, Timestamp jarTimestamp) {
+      String header, String jvm, Timestamp jarTimestamp, Connection nativeConnection) {
     int sectionCount = 0;
     StringBuffer sb = new StringBuffer();
     double totalRunMinutes = 0.0;
@@ -1345,7 +1374,7 @@ public class JDReport {
           String thisJvm = next.substring(latestIndex + 8, latestIndex + 10);
           // System.out.println("This JVM ="+thisJvm+" compare to "+jvm);
           if (thisJvm.equals(jvm)) {
-            String line = formatLine(next, jarTimestamp);
+            String line = formatLine(next, jarTimestamp, nativeConnection);
             sb.append(line);
             totalRunMinutes += getRunMinutesFromLine(line);
 
@@ -1369,7 +1398,7 @@ public class JDReport {
 
   // return the run minutes
   public static double addSection(PrintWriter writer, TreeSet<String> sortedSet,
-      String header, String[] suffixes, Timestamp jarTimestamp) {
+      String header, String[] suffixes, Timestamp jarTimestamp, Connection nativeConnection) {
     int sectionCount = 0;
     StringBuffer sb = new StringBuffer();
     double totalRunMinutes = 0.0;
@@ -1382,7 +1411,7 @@ public class JDReport {
       String next = (String) iterator.next();
       for (int i = 0; i < suffixes.length; i++) {
         if ((next.indexOf(suffixes[i]) > 0)) {
-          String line = formatLine(next, jarTimestamp);
+          String line = formatLine(next, jarTimestamp, nativeConnection);
           sb.append(line);
           totalRunMinutes += getRunMinutesFromLine(line);
 
@@ -1851,6 +1880,61 @@ public class JDReport {
 
       Timestamp compareTimestamp = null;
       String query = null;
+      String osName = System.getProperty("os.name"); 
+      if ("OS/400".equals(osName))   {
+          /* check to see if anything is running */ 
+         try { 
+          PreparedStatement ps = connection.prepareStatement("SELECT CURRENT TIMESTAMP, ACTION,STARTED_TS FROM JDTESTINFO.SCRUN1 WHERE INITIALS=?");
+          ps.setString(1, initials);
+          rs = ps.executeQuery(); 
+          while (rs.next()) {
+            String test = rs.getString(2);
+            if (! "REPORT".equals(test)  && (!"EMAIL".equals(test))) {
+              writer.println(" <h2> At "+ rs.getString(1) +" currently running: "+test+" started at "+rs.getString(3)+"</h2> ");
+              break;
+            }
+          }
+          rs.close(); 
+          ps.close(); 
+          
+          ps = connection.prepareStatement("SELECT CURRENT TIMESTAMP, INITIALS, COUNT(*),MAX(ADDED_TS) FROM JDTESTINFO.SCHED1 WHERE INITIALS= ? GROUP BY INITIALS" );
+          ps.setString(1, initials);
+          rs = ps.executeQuery(); 
+          if (rs.next()) {
+            int scheduledCount = rs.getInt(3); 
+            String summary = " <h2> At "+rs.getString(1)+" "+rs.getString(3)+" tests currently scheduled with max add time = "+rs.getString(4)+"</h2> "; 
+
+            rs.close(); 
+            ps.close(); 
+            ps = connection.prepareStatement("SELECT ACTION, PRIORITY, ADDED_TS FROM JDTESTINFO.SCHED1 WHERE INITIALS= ? ORDER BY PRIORITY,ADDED_TS" );
+            ps.setString(1, initials);
+            rs = ps.executeQuery(); 
+            if (rs.next()) {
+              String action = rs.getString(1);
+              if (!"EMAIL".equals(action) || scheduledCount > 2 ) { 
+                writer.println(summary); 
+                 writer.println(" <h2> Next scheduled action is "+action+"</h2> ");
+              } 
+            }
+            rs.close(); 
+            ps.close(); 
+            
+              
+          } else {
+            rs.close(); 
+            ps.close(); 
+
+          }
+          
+          
+          
+         } catch (SQLException sqlex) { 
+           System.out.println("Error generating running information"); 
+           sqlex.printStackTrace(System.out); 
+         }
+      }
+           
+      
       if (true) {
 
         System.out.print(
@@ -3209,13 +3293,21 @@ public class JDReport {
         touchFile.setLastModified(maxFinishTimestamp.getTime());
       }
 
-      connection.close();
 
       System.out.println("Creating index");
-      createIndex();
-      createJvmIndex();
-      createToolboxIndex();
-      createNativeIndex();
+      if ("OS/400".equals(osName))   {
+        createIndex(connection);
+        createJvmIndex(connection);
+        createToolboxIndex(connection);
+        createNativeIndex(connection);
+      } else {
+        createIndex(null); 
+        createJvmIndex(null);
+        createToolboxIndex(null);
+        createNativeIndex(null );
+
+      }
+      connection.close();
 
       if (!noExit) {
         System.out.println("JDReport calling System.exit(0)");

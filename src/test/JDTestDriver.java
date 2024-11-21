@@ -1103,7 +1103,7 @@ public abstract class JDTestDriver extends TestDriver {
       }
     }
 
-    postConnectProcessing(connection, testInfo);
+    postConnectProcessing(connection, testInfo, url);
     return connection;
 
   }
@@ -1216,7 +1216,7 @@ public abstract class JDTestDriver extends TestDriver {
       }
       
     }
-    postConnectProcessing(connection, testInfo);
+    postConnectProcessing(connection, testInfo, url);
     return connection;
   }
 
@@ -1434,7 +1434,7 @@ public abstract class JDTestDriver extends TestDriver {
 
       }
     }
-    postConnectProcessing(connection, testInfo);
+    postConnectProcessing(connection, testInfo, url);
     return connection;
   }
 
@@ -1472,7 +1472,7 @@ public abstract class JDTestDriver extends TestDriver {
     return testInfo.toString();
   }
 
-  public void postConnectProcessing(Connection connection, String testInfo)
+  public void postConnectProcessing(Connection connection, String testInfo, String url)
     throws Exception {
       String dbmon = System.getProperty("dbmon");
 
@@ -1535,29 +1535,33 @@ public abstract class JDTestDriver extends TestDriver {
       String databaseProductName = dmd.getDatabaseProductName();
       if (databaseProductName.indexOf("400") >= 0) { 
 
-    // Always change the job to leave a joblog
-	  Statement stmt = connection.createStatement();
-	  String sql = ""; 
-	  try {
-	      sql = "call qsys2.qcmdexc('CHGJOB LOG(4 00 *SECLVL)     ')"; 
-	      stmt.executeUpdate(sql);
-	  } catch (Exception e) {	
-	      System.out.println("Warning:  SQL failed -- "+sql);
-	      e.printStackTrace(System.out);
-	      try {
-		  sql = "VALUES CURRENT USER"; 
-		  ResultSet rs = stmt.executeQuery(sql); 
-		  rs.next(); 
-		  System.out.println("... current User is "+rs.getString(1)); 
-		  rs.close(); 
-	      } catch (SQLException sqlex) { 
-		  System.out.println("Warning:  SQL failed -- "+sql);
-		  e.printStackTrace(System.out);
+    // Always change the job to leave a joblog -- unless a readonly connection 
+    Statement stmt = connection.createStatement();
+    String sql = "";
+    if (url.toLowerCase().indexOf("access=read only") < 0) {
+      try {
+        sql = "call qsys2.qcmdexc('CHGJOB LOG(4 00 *SECLVL)     ')";
+        stmt.executeUpdate(sql);
+      } catch (Exception e) {
+        System.out.println("Warning:  SQL failed -- " + sql);
+        e.printStackTrace(System.out);
+        try {
+          sql = "VALUES CURRENT USER";
+          ResultSet rs = stmt.executeQuery(sql);
+          rs.next();
+          System.out.println("... current User is " + rs.getString(1));
+          rs.close();
+        } catch (SQLException sqlex) {
+          System.out.println("Warning:  SQL failed -- " + sql);
+          e.printStackTrace(System.out);
 
-	      }
+        }
+      }
+    }
+	  // Disable self unless connection is readonly
+	  if ((url.toLowerCase().indexOf("access=read only") < 0) && (url.toLowerCase().indexOf("access=read call") < 0 )) { 
+	   stmt.executeUpdate("set sysibmadm.selfcodes=''"); 
 	  }
-	  // Always disable SELF
-	  stmt.executeUpdate("set sysibmadm.selfcodes=''"); 
 	        
 	  stmt.close();
       }

@@ -86,6 +86,9 @@ public class JDJSTPOutputThread extends Thread {
        }
        if (writer != null) {
 	   writer.print(currentString);
+	   if (currentString.indexOf(TestDriver.RUN_COMPLETED) >= 0) {
+	     flushOnce= true; 
+	   }
 	   if (doFlush || flushOnce ) {
 	       if (flushOnce) flushOnce = false; 
 	       writer.flush();

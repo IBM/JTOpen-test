@@ -1943,7 +1943,7 @@ public class MessageQueueTestcase extends Testcase {
          
         }
         if (m.getUser() != null) {
-          String expectedUser = "USER"; 
+          String expectedUser = "QUSER"; 
           if (getRelease() > JDTestDriver.RELEASE_V7R5M0) 
             expectedUser="QUSER_NC"; 
           if (!m.getUser().trim().equals(expectedUser)) {

@@ -239,7 +239,7 @@ public class SecPTMiscTestcase extends Testcase
             args[3] = new Integer(444); 
             argTypes[3] = Integer.TYPE; 
             args[4]  = new Boolean(false); 
-            args[4] = Boolean.TYPE; 
+            argTypes[4] = Boolean.TYPE; 
             
             // Create the token object.
             ProfileTokenCredential pt  = (ProfileTokenCredential) JDReflectionUtil.createObject("com.ibm.as400.security.auth.ProfileTokenCredential",argTypes, args); 

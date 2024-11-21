@@ -355,12 +355,12 @@ public class JDSchedulerServer extends JDScheduler {
                           || (jobsInSystem > 400000)) {
                         String[] cleanArgs = { "localhost" };
                         JDJobName.sendProgramMessage(
-                            "calling JDCleanSplf for testcases ");
+                            "calling JDCleanSplfJdbc for testcases ");
                         try {
-                          JDCleanSplf.main(cleanArgs);
+                          JDCleanSplfJdbc.main(cleanArgs);
                         } catch (Exception e) {
                           JDJobName.sendProgramMessage(
-                              "exception in JDCleanSplf" + e);
+                              "exception in JDCleanSplfJdbc" + e);
                         }
 
                         systemStatus.reset();
@@ -368,26 +368,26 @@ public class JDSchedulerServer extends JDScheduler {
                             .getPercentSystemASPUsed();
                         jobsInSystem = systemStatus.getJobsInSystem();
                         JDJobName.sendProgramMessage(
-                            "back from JDCleanSplf aspUsed = "
+                            "back from JDCleanSplfJdbc aspUsed = "
                                 + percentSystemASPUsed + "jobsInSystem="
                                 + jobsInSystem);
 
                         String[] cleanArgsAll = { "localhost", "null", "null",
                             "10", "ALL" };
                         JDJobName.sendProgramMessage(
-                            "calling JDCleanSplf for all splf older than 10 days");
+                            "calling JDCleanSplfJdbc for all splf older than 10 days");
                         try {
-                          JDCleanSplf.main(cleanArgsAll);
+                          JDCleanSplfJdbc.main(cleanArgsAll);
                         } catch (Exception e) {
                           JDJobName.sendProgramMessage(
-                              "exception in JDCleanSplf" + e);
+                              "exception in JDCleanSplfJdbc" + e);
                         }
                         systemStatus.reset();
                         percentSystemASPUsed = systemStatus
                             .getPercentSystemASPUsed();
                         jobsInSystem = systemStatus.getJobsInSystem();
                         JDJobName.sendProgramMessage(
-                            "back from JDCleanSplf aspUsed ="
+                            "back from JDCleanSplfJdbc aspUsed ="
                                 + percentSystemASPUsed + " jobsInSystem="
                                 + jobsInSystem);
 
