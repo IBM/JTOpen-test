@@ -164,7 +164,8 @@ public class JDRunit {
       "JVMDUMP",
       "Exception in thread \"main\" java.lang.NoClassDefFoundError:",
       "IncompatibleClassChangeError",
-      "connection to \":9.0\" refused by server", };
+      "connection to \":9.0\" refused by server", 
+      TestDriver.RUN_COMPLETED};
 
   static String[] hangMessagesException = { "User requested", "JVMDUMP034I","/tmp/passwordLeakCoreDump"};
 
@@ -2706,7 +2707,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       if (debug)
         System.out.println("JDRunit: osVersion=" + JTOpenTestEnvironment.osVersion);
       if (JTOpenTestEnvironment.isWindows && cmdArray1[0].indexOf("/bin") >= 0) {
-         cmdArray1[0] = JTOpenTestEnvironment.cygwinBase+  cmdArray1[0].replace('/', '\\');
+        cmdArray1[0] = JTOpenTestEnvironment.cygwinBase + cmdArray1[0].replace('/', '\\');
       }
 
       if (debug)
@@ -2719,28 +2720,24 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       System.out.println("Shell binary2 is " + shellBinary);
       cmdArray1[1] = shellArgs;
       if (debug)
-        System.out.println("JDRunit: Shell command (with args) is: "
-            + cmdArray1[0] + " " + cmdArray1[1]);
+        System.out.println("JDRunit: Shell command (with args) is: " + cmdArray1[0] + " " + cmdArray1[1]);
     }
     if (on400) {
-      JDJobName.sendProgramMessage("GD "+Thread.currentThread().getName()+" " + date.toString() + " Running "
-          + initials + " " + testArgs);
-    } 
+      JDJobName.sendProgramMessage(
+          "GD " + Thread.currentThread().getName() + " " + date.toString() + " Running " + initials + " " + testArgs);
+    }
 
     Process shellTestProcess;
     String shellTestProcessInfo = "";
     // If current JVM is PASE, but target JVM is classic. Don't inherit
     // any environment variables.
     // This scenario should only typically happened on V6R1
-    if ((System.getProperty("java.home").indexOf("QOpenSys") > 0)
-        && (javaHome.indexOf("QOpenSys") == -1)) {
-      String[] envp = { "PATH=/usr/bin:", "HOME="+testcaseCode, };
+    if ((System.getProperty("java.home").indexOf("QOpenSys") > 0) && (javaHome.indexOf("QOpenSys") == -1)) {
+      String[] envp = { "PATH=/usr/bin:", "HOME=" + testcaseCode, };
       if (debug)
-        System.out.println("Calling exec1 with envp and cmdArray[0]="
-            + cmdArray1[0]);
+        System.out.println("Calling exec1 with envp and cmdArray[0]=" + cmdArray1[0]);
       shellTestProcess = runtime.exec(cmdArray1, envp);
-      shellTestProcessInfo = "Running with envp cmdArray1[" + cmdArray1.length
-          + "] ";
+      shellTestProcessInfo = "Running with envp cmdArray1[" + cmdArray1.length + "] ";
       for (int i = 0; i < cmdArray1.length; i++) {
         shellTestProcessInfo += cmdArray1[i] + " ";
       }
@@ -2759,10 +2756,10 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     OutputStream stdin = shellTestProcess.getOutputStream();
     JDJSTPInputThread inputThread;
     int encoding = JDJSTPOutputThread.ENCODING_UNKNOWN;
-        if (debug)
-          System.out.println("InputStream is ASCII");
-        inputThread = new JDJSTPInputThread(stdin, runitInputFile);
-        encoding = JDJSTPOutputThread.ENCODING_ASCII;
+    if (debug)
+      System.out.println("InputStream is ASCII");
+    inputThread = new JDJSTPInputThread(stdin, runitInputFile);
+    encoding = JDJSTPOutputThread.ENCODING_ASCII;
 
     if (debug)
       JDJSTPTestcase.debug = true;
@@ -2770,9 +2767,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     /* Assynchronously start the process output threads */
     Vector<String> hangMessagesFound = new Vector<String>();
 
-    JDJSTPOutputThread stdoutThread = JDJSTPTestcase.startProcessOutput(
-        shellTestProcess, runitOutputFile, true, hangMessages, hangMessagesException,
-        hangMessagesFound, encoding);
+    JDJSTPOutputThread stdoutThread = JDJSTPTestcase.startProcessOutput(shellTestProcess, runitOutputFile, true,
+        hangMessages, hangMessagesException, hangMessagesFound, encoding);
 
     /* start the input after output is ready */
     inputThread.start();
@@ -2790,8 +2786,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     // There is not a wait mechanism for the process.
     // So loop and wait for process completion
     currentTime = System.currentTimeMillis();
-    while (!processCompleted && currentTime < endTime
-        && hangMessagesFound.size() == 0) {
+    while (!processCompleted && currentTime < endTime && hangMessagesFound.size() == 0) {
       // System.out.println("JDEBUG: process checked " + currentTime + "<"+
       // endTime);
       try {
@@ -2802,7 +2797,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           System.out.println("Running info: " + shellTestProcessInfo);
           if (on400) {
             Date d = new Date();
-            JDJobName.sendProgramMessage("LD " +Thread.currentThread().getName()+" " + d.toString() + " Rc=" + rc
+            JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString() + " Rc=" + rc
                 + " from " + initials + " " + testArgs);
 
           }
@@ -2821,201 +2816,189 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     stdoutThread.addOutputString("Done at " + (new Date()) + "\n");
     if (hangMessagesFound.size() > 0) {
-      StringBuffer body = new StringBuffer();
-      String outString = " Severe Error Running  " + initials + " " + testArgs
-          + "\n";
-      stdoutThread.addOutputString(outString);
-      body.append(outString);
-      if (on400) {
-        Date d = new Date();
-        JDJobName.sendProgramMessage("LD " +Thread.currentThread().getName()+" " + d.toString() + outString);
-      }
-
       String hangMessage = (String) hangMessagesFound.elementAt(0);
-      outString = "ERROR:  JDRunit: Hang message found : " + hangMessage + "\n";
-      stdoutThread.addOutputString(outString);
-      body.append(outString);
-      System.out.print(outString);
-      if (on400) {
-        Date d = new Date();
-        JDJobName.sendProgramMessage("LD "+Thread.currentThread().getName()+" "  + d.toString() + outString);
-      }
-
-      //
-      // Check to see if we can recover
-      //
-      boolean recovered = false;
-      if (on400) {
-        if ((hangMessage.indexOf("sun.awt.X11GraphicsEnvironment") > 0)
-            || (hangMessage.indexOf("connection to \":9.0\"") > 0)) {
-          /* Something went wrong with the VNC server */
-          /* kill it */
-          String command = "SBMJOB CMD(QSH CMD('system wrkactjob | grep vnc | "
-              + "grep -i "
-              + System.getProperty("user.name")
-              + " | "
-              + " sed ''s%^ *\\([^ ][^ ]*\\) *\\([^ ][^ ]*\\) *\\([^ ][^ ]*\\) .*%system endjob \"job(\\3/\\2/\\1)\"%'' |"
-              + " sh'))";
-          System.out.println("Attempting kill using " + command);
-          stdoutThread.addOutputString("Attempting kill using " + command
-              + "\n");
-
-          JDJobName.system(command);
-          recovered = true;
-        }
-      }
-
-      if (onLinux) {
-        System.out.println("on linux");
-        if ((hangMessage.indexOf("sun.awt.X11GraphicsEnvironment") > 0)
-            || (hangMessage.indexOf("connection to \":9.0\"") > 0)) {
-          /* Something went wrong with the VNC server */
-          /* kill it */
-          String commands[] = new String[4];
-          commands[0] = "/bin/bash";
-          commands[1] = "--verbose";
-          commands[2] = "-c";
-          commands[3] = "/bin/ps -ef | grep Xvnc | grep -v grep | sed 's%^\\([^ ][^ ]*\\)  *\\([^ ][^ ]*\\) .*%kill -9 \\2%' | sh ";
-          System.out.println("Attempting kill using " + commands[3]);
-          Process shellProcess = runtime.exec(commands);
-          StringBuffer outputBuffer = new StringBuffer();
-          JDJSTPOutputThread cmdStdoutThread = new JDJSTPOutputThread(
-              shellProcess.getInputStream(), outputBuffer, null,
-              JDJSTPOutputThread.ENCODING_ASCII);
-          JDJSTPOutputThread stderrThread = new JDJSTPOutputThread(
-              shellProcess.getErrorStream(), outputBuffer, null,
-              JDJSTPOutputThread.ENCODING_ASCII);
-          cmdStdoutThread.start();
-          stderrThread.start();
-          cmdStdoutThread.join();
-          stderrThread.join();
-
-          shellProcess.waitFor();
-          System.out.println("Process complete exitValue = "
-              + shellProcess.exitValue());
-          System.out.println(outputBuffer.toString());
-
-          recovered = true;
-        }
-
-      }
-      if (!recovered) {
-        // Try to dump the job log
-
-        String jobname = stdoutThread.getParsedJobName();
-        outString = "Job name was " + jobname + "\n";
+      if (hangMessage.indexOf(TestDriver.RUN_COMPLETED) >= 0) {
+        /*
+         * We can exit this test. If the job is hung after this point, it will need to
+         * be manually cleaned up
+         */
+        processCompleted = true; 
+      } else {
+        StringBuffer body = new StringBuffer();
+        String outString = " Severe Error Running  " + initials + " " + testArgs + "\n";
         stdoutThread.addOutputString(outString);
-        System.out.println(outString);
-        if (jobname != null) {
-          if (on400) {
-            String command = "DSPJOBLOG JOB(" + jobname + ") OUTPUT(*PRINT)";
-            outString = "Dumping job log to *PRINT using " + command + "\n";
-            stdoutThread.addOutputString(outString);
-            System.out.println(outString);
-            JDJobName.system(command);
-          }
-        }
-        System.out
-            .println("ERROR:  JDRunit: Generating report and sleeping for 60 seconds");
+        body.append(outString);
         if (on400) {
           Date d = new Date();
-          JDJobName
-              .sendProgramMessage("LD "+Thread.currentThread().getName()+" " 
-                  + d.toString()
-                  + "ERROR:  JDRunit: Generating report and sleeping for 60 seconds");
+          JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString() + outString);
         }
 
-        /* Wait for 1 minutes to allow dump output to occur */
-        fatalError = true;
-        try {
-          long waitDumpStartTime = System.currentTimeMillis();
-          String[] reportArgs = new String[1];
-          reportArgs[0] = initials;
-          JDReport.main(reportArgs);
-          long waitDumpEndTime = System.currentTimeMillis();
-          while ((waitDumpEndTime - waitDumpStartTime) < 60000) {
-            Thread.sleep(1000);
-            waitDumpEndTime = System.currentTimeMillis();
+        outString = "ERROR:  JDRunit: Hang message found : " + hangMessage + "\n";
+        stdoutThread.addOutputString(outString);
+        body.append(outString);
+        System.out.print(outString);
+        if (on400) {
+          Date d = new Date();
+          JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString() + outString);
+        }
+
+        //
+        // Check to see if we can recover
+        //
+        boolean recovered = false;
+        if (on400) {
+          if ((hangMessage.indexOf("sun.awt.X11GraphicsEnvironment") > 0)
+              || (hangMessage.indexOf("connection to \":9.0\"") > 0)) {
+            /* Something went wrong with the VNC server */
+            /* kill it */
+            String command = "SBMJOB CMD(QSH CMD('system wrkactjob | grep vnc | " + "grep -i "
+                + System.getProperty("user.name") + " | "
+                + " sed ''s%^ *\\([^ ][^ ]*\\) *\\([^ ][^ ]*\\) *\\([^ ][^ ]*\\) .*%system endjob \"job(\\3/\\2/\\1)\"%'' |"
+                + " sh'))";
+            System.out.println("Attempting kill using " + command);
+            stdoutThread.addOutputString("Attempting kill using " + command + "\n");
+
+            JDJobName.system(command);
+            recovered = true;
           }
-          forceReport = true;
-        } catch (Exception sleepEx) {
-          /* ignore */
         }
 
-        // If the hang messages include JVMDUMP -- wait for processing to be
-        // complete (another 5 minutes).
+        if (onLinux) {
+          System.out.println("on linux");
+          if ((hangMessage.indexOf("sun.awt.X11GraphicsEnvironment") > 0)
+              || (hangMessage.indexOf("connection to \":9.0\"") > 0)) {
+            /* Something went wrong with the VNC server */
+            /* kill it */
+            String commands[] = new String[4];
+            commands[0] = "/bin/bash";
+            commands[1] = "--verbose";
+            commands[2] = "-c";
+            commands[3] = "/bin/ps -ef | grep Xvnc | grep -v grep | sed 's%^\\([^ ][^ ]*\\)  *\\([^ ][^ ]*\\) .*%kill -9 \\2%' | sh ";
+            System.out.println("Attempting kill using " + commands[3]);
+            Process shellProcess = runtime.exec(commands);
+            StringBuffer outputBuffer = new StringBuffer();
+            JDJSTPOutputThread cmdStdoutThread = new JDJSTPOutputThread(shellProcess.getInputStream(), outputBuffer,
+                null, JDJSTPOutputThread.ENCODING_ASCII);
+            JDJSTPOutputThread stderrThread = new JDJSTPOutputThread(shellProcess.getErrorStream(), outputBuffer, null,
+                JDJSTPOutputThread.ENCODING_ASCII);
+            cmdStdoutThread.start();
+            stderrThread.start();
+            cmdStdoutThread.join();
+            stderrThread.join();
 
-        int MAXRETRIES = 15;
-        if (vectorContainsString(hangMessagesFound, "JVM requested System dump")) {
-          int retryCount = 1;
-          boolean shellTestProcessAlive = true;
-          while (shellTestProcessAlive
-              && retryCount <= MAXRETRIES
-              && (!vectorContainsString(hangMessagesFound, "Snap dump written"))) {
-            System.out
-                .println("JVM requested System dump, waiting for dump to complete.  RetryCount="
-                    + retryCount
-                    + "/"
-                    + MAXRETRIES
-                    + " Sleeping for 60 seconds ");
+            shellProcess.waitFor();
+            System.out.println("Process complete exitValue = " + shellProcess.exitValue());
+            System.out.println(outputBuffer.toString());
+
+            recovered = true;
+          }
+
+        }
+        if (!recovered) {
+          // Try to dump the job log
+
+          String jobname = stdoutThread.getParsedJobName();
+          outString = "Job name was " + jobname + "\n";
+          stdoutThread.addOutputString(outString);
+          System.out.println(outString);
+          if (jobname != null) {
             if (on400) {
-              Date d = new Date();
-              JDJobName
-                  .sendProgramMessage("LD "+Thread.currentThread().getName()+" " 
-                      + d.toString()
-                      + "JVM requested System dump, waiting for dump to complete.  RetryCount="
-                      + retryCount + "/" + MAXRETRIES
-                      + " Sleeping for 60 seconds ");
+              String command = "DSPJOBLOG JOB(" + jobname + ") OUTPUT(*PRINT)";
+              outString = "Dumping job log to *PRINT using " + command + "\n";
+              stdoutThread.addOutputString(outString);
+              System.out.println(outString);
+              JDJobName.system(command);
             }
+          }
+          System.out.println("ERROR:  JDRunit: Generating report and sleeping for 60 seconds");
+          if (on400) {
+            Date d = new Date();
+            JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString()
+                + "ERROR:  JDRunit: Generating report and sleeping for 60 seconds");
+          }
 
-            retryCount++;
-            try {
-              Thread.sleep(60000);
-            } catch (Exception sleepEx) {
-              /* ignore */
+          /* Wait for 1 minutes to allow dump output to occur */
+          fatalError = true;
+          try {
+            long waitDumpStartTime = System.currentTimeMillis();
+            String[] reportArgs = new String[1];
+            reportArgs[0] = initials;
+            JDReport.main(reportArgs);
+            long waitDumpEndTime = System.currentTimeMillis();
+            while ((waitDumpEndTime - waitDumpStartTime) < 60000) {
+              Thread.sleep(1000);
+              waitDumpEndTime = System.currentTimeMillis();
             }
-            try {
-              shellTestProcess.exitValue();
-              shellTestProcessAlive = false;
-            } catch (IllegalThreadStateException itse) {
-              // Process is still alive.
+            forceReport = true;
+          } catch (Exception sleepEx) {
+            /* ignore */
+          }
+
+          // If the hang messages include JVMDUMP -- wait for processing to be
+          // complete (another 5 minutes).
+
+          int MAXRETRIES = 15;
+          if (vectorContainsString(hangMessagesFound, "JVM requested System dump")) {
+            int retryCount = 1;
+            boolean shellTestProcessAlive = true;
+            while (shellTestProcessAlive && retryCount <= MAXRETRIES
+                && (!vectorContainsString(hangMessagesFound, "Snap dump written"))) {
+              System.out.println("JVM requested System dump, waiting for dump to complete.  RetryCount=" + retryCount
+                  + "/" + MAXRETRIES + " Sleeping for 60 seconds ");
+              if (on400) {
+                Date d = new Date();
+                JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString()
+                    + "JVM requested System dump, waiting for dump to complete.  RetryCount=" + retryCount + "/"
+                    + MAXRETRIES + " Sleeping for 60 seconds ");
+              }
+
+              retryCount++;
+              try {
+                Thread.sleep(60000);
+              } catch (Exception sleepEx) {
+                /* ignore */
+              }
+              try {
+                shellTestProcess.exitValue();
+                shellTestProcessAlive = false;
+              } catch (IllegalThreadStateException itse) {
+                // Process is still alive.
+              }
             }
+          }
+
+          //
+          // Send an e-mail about the hung message
+          //
+          try {
+            String toAddress = iniProperties.getProperty("EMAIL");
+            if (!toAddress.equals("xxx@github.com")) {
+              String fromAddress = iniProperties.getProperty("EMAIL");
+              String subject = " Severe Error Running  " + initials + " " + testArgs;
+
+              String hostname = JDHostName.getHostName();
+              hostname = hostname.toUpperCase();
+
+              if (hostname.indexOf('.') < 0) {
+                hostname = hostname + "." + getDomain(hostname);
+              }
+
+              String URLBASE = "http://" + hostname + ":6050/";
+              String htmlFile = JDReport.getReportName(initials);
+
+              if (htmlFile.indexOf("ct/") == 0)
+                htmlFile = htmlFile.substring(3);
+              body.append("\n\nSee details at " + URLBASE + htmlFile + "\n");
+              body.append("Test output " + URLBASE + "/out/" + initials + "/runit." + dateStringNoSpace + "\n");
+
+              sendEMail(toAddress, fromAddress, subject, body, iniProperties.getProperty("mail.smtp.host"));
+            }
+          } catch (Exception e) {
+            System.out.println("Error sending mail");
+            e.printStackTrace();
           }
         }
-
-        //
-        // Send an e-mail about the hung message
-        //
-        try {
-          String toAddress = iniProperties.getProperty("EMAIL");
-          if (!toAddress.equals("xxx@github.com")) { 
-          String fromAddress = iniProperties.getProperty("EMAIL");
-          String subject = " Severe Error Running  " + initials + " "
-              + testArgs;
-
-          String hostname = JDHostName.getHostName();
-          hostname = hostname.toUpperCase();
-
-          if (hostname.indexOf('.') < 0) {
-            hostname = hostname + "." + getDomain(hostname);
-          }
-
-          String URLBASE = "http://" + hostname + ":6050/";
-          String htmlFile = JDReport.getReportName(initials);
-
-          if (htmlFile.indexOf("ct/") == 0)
-            htmlFile = htmlFile.substring(3);
-          body.append("\n\nSee details at " + URLBASE + htmlFile + "\n");
-          body.append("Test output " + URLBASE + "/out/" + initials + "/runit."
-              + dateStringNoSpace + "\n");
-
-          sendEMail(toAddress, fromAddress, subject, body, iniProperties.getProperty("mail.smtp.host"));
-          }
-        } catch (Exception e) {
-          System.out.println("Error sending mail");
-          e.printStackTrace();
-        }
-      }
+      } /* RUN_COMPLETED_ NOT FOUND */
     } /* hangMessages found */
 
     if (!processCompleted) {

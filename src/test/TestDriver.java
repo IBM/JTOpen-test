@@ -102,7 +102,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   static final long serialVersionUID = 1L;
 
   static TestDriverTimeoutThread timeoutThread = null;
-
+  static final String RUN_COMPLETED="TESTDRIVER RUN COMPLETED"; 
   protected String outputFileName_ = null;
   // Set of Testcase objects for this component. This is filled in by the
   // createTestcases() method.
@@ -1130,6 +1130,37 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     } else {
     }
 
+    out_.println(RUN_COMPLETED); 
+    out_.flush(); 
+    // Check to see if there is an extra AS400 Read Daemon thread.  If so, call System.exit to make sure the test ends. 
+    ThreadGroup rootThreadGroup = Thread.currentThread().getThreadGroup();
+    ThreadGroup parentThreadGroup = rootThreadGroup.getParent(); 
+    while (parentThreadGroup != null) {
+      rootThreadGroup = parentThreadGroup; 
+      parentThreadGroup = rootThreadGroup.getParent(); 
+    }
+    if (threadGroupHasAS400ReadDaemon(rootThreadGroup)) {
+      out_.println("Calling System.exit(0) because AS400ReadDaemon found"); 
+      System.exit(0); 
+      
+    }
+    
+    
+  }
+
+  private boolean threadGroupHasAS400ReadDaemon(ThreadGroup threadGroup) {
+    int threadCount = threadGroup.activeCount(); 
+    
+    Thread[] threadList = new Thread[threadCount+10];
+    threadCount = threadGroup.enumerate(threadList );
+    for (int i = 0; i < threadCount; i++) { 
+      String  threadName = threadList[i].getName(); 
+      if (threadName.indexOf("AS400 Read Daemon")>=0) {
+        return true; 
+      }
+    }
+    
+    return false;
   }
 
   /**
@@ -1423,7 +1454,10 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     out_.println(heading1);
     if (totalFail_ == 0) {
     	out_.println("NO FAILURES DETECTED DURING THIS RUN"); 
+    } else { 
+      out_.println(totalFail_ + " FAILURES DETECTED DURING THIS RUN"); 
     }
+  
   }
 
   static String arrayToString(String[] strings) {

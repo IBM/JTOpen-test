@@ -232,7 +232,7 @@ public class AS400JDBCRowSetTestcase extends Testcase
                 env_.put("java.naming.security.credentials", authorityPwd_);                       //@A2A
             }                                                                                    //@A2A
             else
-            	env_.put(Context.PROVIDER_URL,"file:.");  //@pda for linux authority. default is "/" location of file created
+            	env_.put(Context.PROVIDER_URL,"file:.");  
            
 
             env_.put(Context.INITIAL_CONTEXT_FACTORY, jndiType_);

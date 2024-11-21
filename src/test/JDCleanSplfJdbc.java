@@ -315,8 +315,8 @@ public class JDCleanSplfJdbc {
     }
   }
 
-  public static void runCleaningQuery(Statement stmt, String query, JDCleanSplfJdbc clean) throws SQLException {
-    System.out.println("Running query " + query);
+  public static void runCleaningQuery(PrintStream out, Statement stmt, String query, JDCleanSplfJdbc clean) throws SQLException {
+    out.println("Running query " + query);
 
     ResultSet rs = stmt.executeQuery(query);
     while (rs.next()) { 
@@ -357,7 +357,7 @@ public class JDCleanSplfJdbc {
           + " FROM QSYS2 . OUTPUT_QUEUE_ENTRIES_BASIC WHERE CREATE_TIMESTAMP >= '"
           + startTimestamp.toString() + "'" + " AND CREATE_TIMESTAMP <= '" + endTimestamp.toString() + "'";
       System.out.println(query);
-      runCleaningQuery(stmt, query, clean); 
+      runCleaningQuery(out, stmt, query, clean); 
       stmt.close(); 
       
     } else {
@@ -375,8 +375,8 @@ public class JDCleanSplfJdbc {
           + " FROM QSYS2 . OUTPUT_QUEUE_ENTRIES_BASIC WHERE " + " USER_NAME IN (" + userInClause + ") AND "
           + " CREATE_TIMESTAMP >= '" + startTimestamp.toString() + "'" + " AND CREATE_TIMESTAMP <= '"
           + endTimestamp.toString() + "'";
-      System.out.println(query);
-      runCleaningQuery(stmt, query, clean);
+      out.println(query);
+      runCleaningQuery(out,stmt, query, clean);
       stmt.close();
     }
     long finishMillis = System.currentTimeMillis();
@@ -402,7 +402,7 @@ public class JDCleanSplfJdbc {
     String query = " SELECT USER_NAME, SPOOLED_FILE_NAME, FILE_NUMBER ,JOB_NAME ,  CREATE_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
         + " FROM QSYS2 . OUTPUT_QUEUE_ENTRIES_BASIC WHERE  CREATE_TIMESTAMP >= '"
         + startTimestamp.toString() + "'" + " AND CREATE_TIMESTAMP <= '" + endTimestamp.toString() + "'";
-    runCleaningQuery(stmt, query, clean); 
+    runCleaningQuery(out, stmt, query, clean); 
     stmt.close(); 
     System.out.println("Running query " + query);
 
