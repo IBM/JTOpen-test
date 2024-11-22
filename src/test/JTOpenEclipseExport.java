@@ -81,7 +81,7 @@ public class JTOpenEclipseExport  {
 
   }
 
-  private static void compileFiles(AS400 as400) throws AS400SecurityException, ErrorCompletingRequestException, IOException, InterruptedException, PropertyVetoException {
+  protected static void compileFiles(AS400 as400) throws AS400SecurityException, ErrorCompletingRequestException, IOException, InterruptedException, PropertyVetoException {
    System.out.println("Running compile "); 
    CommandCall cc = new CommandCall(as400);
    String compileCommand = "QSH CMD('cd /home/jdbctest; test/AllQshCompileScript > /tmp/JTOpenCompile.out 2>&1') "; 
@@ -97,11 +97,29 @@ public class JTOpenEclipseExport  {
    bufferedReader.close(); 
   }
 
-  private static void transferFiles(AS400 as400, String testDirectory, Vector<String> fileList) throws IOException, AS400SecurityException {
+  static void bufferCleanup(byte[] buffer, int length, boolean binary) { 
+    if (!binary) { 
+      /* Replace any CR in the file */ 
+      for (int i = 0; i < length; i++) { 
+        if (buffer[i] < 0x20) { 
+          switch (buffer[i]) { 
+          case 0x0a:
+          case 0x09:  
+            break; 
+          default:
+            buffer[i]=0x20;
+            break;
+          }
+        }
+      }
+    }
+  }
+  static void transferFiles(AS400 as400, String testDirectory, Vector<String> fileList) throws IOException, AS400SecurityException {
     System.out.println("Transferring "+fileList.size()+" files"); 
     Enumeration<String> enumeration = fileList.elements(); 
     while (enumeration.hasMoreElements()) {
       String localFilename = enumeration.nextElement(); 
+      boolean binary = isBinaryFile(localFilename); 
       String remoteFilename = getRemoteFilename(testDirectory, localFilename);
       System.out.println("Transferring to "+remoteFilename);
       IFSFile ifsFile = new IFSFile(as400, remoteFilename);
@@ -109,33 +127,26 @@ public class JTOpenEclipseExport  {
       verifyParent(ifsFile); 
       ifsFile.createNewFile(); 
       ifsFile.setCCSID(1208); 
-      IFSFileWriter ifsFileWriter = new IFSFileWriter(ifsFile, 1208);
-      FileReader fileReader = new FileReader(testDirectory+File.separatorChar+localFilename); 
-      char[] buffer = new char[65536];
-      int bytesRead = fileReader.read(buffer );
+      IFSFileOutputStream ifsFileOutputStream = new IFSFileOutputStream(ifsFile);
+      FileInputStream fileInputStream = new FileInputStream(testDirectory+File.separatorChar+localFilename); 
+      byte[] buffer = new byte[65536];
+      int bytesRead = fileInputStream.read(buffer );
       while (bytesRead >= 0) { 
-        /* Replace any CR in the file */ 
-        for (int i = 0; i < bytesRead; i++) { 
-          if (buffer[i] < 0x20) { 
-            switch (buffer[i]) { 
-            case 0x0a:
-            case 0x09:  
-              break; 
-            default:
-              buffer[i]=0x20;
-              break;
-            }
-            
-          }
-        }
-        ifsFileWriter.write(buffer, 0, bytesRead);
-        bytesRead = fileReader.read(buffer );
+        bufferCleanup(buffer, bytesRead, binary); 
+        ifsFileOutputStream.write(buffer, 0, bytesRead);
+        bytesRead = fileInputStream.read(buffer );
       }
-      fileReader.close(); 
-      ifsFileWriter.close(); 
+      fileInputStream.close(); 
+      ifsFileOutputStream.close(); 
      
     }
     
+  }
+
+  static boolean isBinaryFile(String localFilename) {
+    if (localFilename.endsWith(".zip")) return true; 
+    if (localFilename.endsWith(".savf")) return true; 
+    return false; 
   }
 
   private static void verifyParent(IFSFile ifsFile) throws IOException {
