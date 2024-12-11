@@ -21,7 +21,7 @@
 // So that the classpath is correct and all directories are available.
 //
 // Configuration is read from ini directory.
-// Test output if read from the ct diretory
+// Test output is read from the ct diretory
 // Output is placed in the ct directory
 //
 // A web server to run the results exists in the ct directory and
@@ -48,7 +48,6 @@ import java.util.Date;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 
@@ -60,6 +59,8 @@ public class JDReport {
   public static boolean debug = false;
   public static boolean reset = false;
   public static boolean noExit = false;
+  public static String SCHEMA = "JDTESTINFO";
+
   static {
     String debugProperty = System.getProperty("debug");
     if (debugProperty != null)
@@ -1520,7 +1521,9 @@ public class JDReport {
   public static ResultSet exQ(PrintStream writer, Statement s, String sql)
       throws SQLException {
     try {
-      outputQuery(writer, sql);
+      if (writer!=null) { 
+          outputQuery(writer, sql);
+      }
       if (debug)
         System.out.println("exQ: " + sql);
       return s.executeQuery(sql);
@@ -1597,19 +1600,405 @@ public class JDReport {
     return new Timestamp(maxTime);
   }
 
+  
+  public static void refreshRawFile(String SCHEMA, String rawfile, Connection connection, PrintStream writer, 
+      String outfile, StringBuffer outputSb, boolean resetRegression, long regressionEarliestTime, Vector<String> newRunitOut) throws SQLException, IOException { 
+  /* read the current list of inserted entries from rawfile */
+  Hashtable<String, Hashtable<Timestamp, Timestamp>> insertedHashtable = new Hashtable<String, Hashtable<Timestamp, Timestamp>>();
+
+  outputSb.append("Reading existing SQL table\n");
+
+  Statement s = connection.createStatement();
+  ResultSet rs = exQ(writer, s,
+      "select FINISHTIME, TESTCASE from " + SCHEMA + "." + rawfile);
+  while (rs.next()) {
+    Timestamp ts = rs.getTimestamp(1);
+    String testcase = rs.getString(2);
+
+    Hashtable<Timestamp, Timestamp> h2 = (Hashtable<Timestamp, Timestamp>) insertedHashtable.get(testcase);
+    if (h2 == null) {
+      h2 = new Hashtable<Timestamp, Timestamp>();
+      insertedHashtable.put(testcase, h2);
+    }
+    h2.put(ts, ts);
+  }
+
+
+  outputSb.append("Reading the output file and inserting new values\n");
+  {
+    String insertSql = " INSERT INTO " + SCHEMA + "." + rawfile
+        + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    PreparedStatement insertStatement = connection
+        .prepareStatement(insertSql);
+    BufferedReader reader = new BufferedReader(new FileReader(outfile));
+    String line = reader.readLine();
+    while (line != null) {
+      /* get the pieces of the line */
+      /* 2010-04-28 08:14:40 lp08ut23 JDCLIWGPosZ 50 0 948 0 56.504 */
+      String finishtimeString;
+      String system;
+      String testcase;
+      String succeeded;
+      String failed;
+      String notAppl;
+      String notAtt;
+      String runtime;
+
+      String originalLine = line;
+      line = line.trim();
+      int start = 0;
+      int spaceIndex = line.indexOf(" ");
+      if (spaceIndex > 0) {
+        spaceIndex = line.indexOf(" ", spaceIndex + 1);
+        if (spaceIndex > 0) {
+          finishtimeString = line.substring(start, spaceIndex);
+          start = nextNonSpace(line, spaceIndex);
+          spaceIndex = line.indexOf(" ", start);
+          if (spaceIndex > 0) {
+            system = line.substring(start, spaceIndex);
+            start = nextNonSpace(line, spaceIndex);
+            spaceIndex = line.indexOf(" ", start);
+            if (spaceIndex > 0) {
+              testcase = line.substring(start, spaceIndex).trim();
+              start = nextNonSpace(line, spaceIndex);
+              spaceIndex = line.indexOf(" ", start);
+              if (spaceIndex > 0) {
+                succeeded = line.substring(start, spaceIndex);
+                start = nextNonSpace(line, spaceIndex);
+                spaceIndex = line.indexOf(" ", start);
+                if (spaceIndex > 0) {
+                  failed = line.substring(start, spaceIndex);
+                  start = nextNonSpace(line, spaceIndex);
+                  spaceIndex = line.indexOf(" ", start);
+                  if (spaceIndex > 0) {
+                    notAppl = line.substring(start, spaceIndex);
+                    start = nextNonSpace(line, spaceIndex);
+                    spaceIndex = line.indexOf(" ", start);
+                    if (spaceIndex > 0) {
+                      notAtt = line.substring(start, spaceIndex);
+                      start = nextNonSpace(line, spaceIndex);
+                      runtime = line.substring(start);
+
+                      if (debug)
+                        outputSb.append("Processing line :" + line+"\n");
+
+                      Timestamp ts;
+                      try {
+                        ts = Timestamp.valueOf(finishtimeString);
+                      } catch (Exception e) {
+                        outputSb.append("Error processing timestamp "
+                            + finishtimeString + " in line:" + line+"\n");
+                        ts = new Timestamp(0);
+                      }
+                      if (resetRegression
+                          && (ts.getTime() < regressionEarliestTime)) {
+                        if (debug) {
+                          outputSb.append("Skipping " + originalLine+"\n");
+                          outputSb.append(
+                              "finishtimeString=" + finishtimeString+"\n");
+                          outputSb.append("ts = " + ts+"\n");
+                          outputSb.append("ts.getTime() = " + ts.getTime()+"\n");
+                          outputSb.append(
+                              "earliestTime = " + regressionEarliestTime);
+                        }
+                      } else {
+                        if (resetRegression) {
+                          if (newRunitOut != null) {
+                            newRunitOut.addElement(originalLine);
+                          }
+                        }
+                        boolean found = false;
+                        Hashtable<Timestamp, Timestamp> ht = (Hashtable<Timestamp,Timestamp>) insertedHashtable
+                            .get(testcase);
+                        if (ht != null) {
+                          Object x = ht.get(ts);
+                          if (x != null) {
+                            if (debug) {
+                              outputSb.append("Hash " + testcase + "+"
+                                  + ts + " is " + x+"\n");
+                            }
+                            found = true;
+                          }
+                        } else {
+                          ht = new Hashtable<Timestamp, Timestamp>();
+                          insertedHashtable.put(testcase, ht);
+                        }
+                        if (!found) {
+                          try {
+                            insertStatement.setTimestamp(1, ts);
+                            insertStatement.setString(2, system);
+                            insertStatement.setString(3, testcase.trim());
+                            insertStatement.setString(4, succeeded);
+                            insertStatement.setString(5, failed);
+                            insertStatement.setString(6, notAppl);
+                            insertStatement.setString(7, notAtt);
+                            insertStatement.setString(8, runtime);
+                            insertStatement.executeUpdate();
+                            ht.put(ts, ts);
+
+                            if (debug)
+                              outputSb.append("Inserted "
+                                  + finishtimeString + " " + testcase+"\n");
+                          } catch (Exception e) {
+                            StringBuffer sb = new StringBuffer();
+
+                            sb.append("Error inserting into " + SCHEMA + "."
+                                + rawfile + "\n");
+                            sb.append(insertSql);
+                            sb.append(" 1 '" + ts + "'\n");
+                            sb.append(" 2 '" + system + "'\n");
+                            sb.append(" 3 '" + testcase + "'("
+                                + testcase.length() + ")\n");
+                            sb.append(" 4 '" + succeeded + "'\n");
+                            sb.append(" 5 '" + failed + "'\n");
+                            sb.append(" 6 '" + notAppl + "'\n");
+                            sb.append(" 7 '" + notAtt + "'\n");
+                            sb.append(" 8 '" + runtime + "'\n");
+                            outputSb.append(sb.toString());
+                            if (writer != null) { 
+                            writer.println(
+                                "<pre>Exception " + e + " processing "
+                                    + sb.toString() + "</pre>");
+                            }
+                            e.printStackTrace();
+                            
+                          }
+
+                        } else {
+                          if (debug)
+                            outputSb.append("Skipping "
+                                + finishtimeString + " " + testcase+"\n");
+                        }
+                      } /* not resetRegression */
+                    } else {
+                      outputSb.append(
+                          "Unable to find eighth space in line:" + line+"\n");
+                    }
+
+                  } else {
+                    outputSb.append(
+                        "Unable to find seventh space in line:" + line+"\n");
+                  }
+
+                } else {
+                  outputSb.append(
+                      "Unable to find sixth space in line:" + line+"\n");
+                }
+
+              } else {
+                System.out
+                    .println("Unable to find fifth space in line:" + line+"\n");
+              }
+
+            } else {
+              System.out
+                  .println("Unable to find fourth space in line:" + line+"\n");
+            }
+          } else {
+            System.out
+                .println("Unable to find third space in line:" + line+"\n");
+          }
+        } else {
+          outputSb.append("Unable to find second space in line:" + line+"\n");
+        }
+      } else {
+        outputSb.append("Unable to find first space in line:" + line+"\n");
+      }
+
+      line = reader.readLine();
+    }
+
+    insertStatement.close();
+    reader.close();
+  }
+  s.close(); 
+  }
+
+
+  
+  public static Connection getConnection(boolean on400, String USERID,  char[] encryptedPassword, String MASTERUSERID, char[] encryptedMasterPassword, StringBuffer outputBuffer ) throws Exception {
+    Connection connection = null; 
+  if (on400) {
+    String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
+    try {
+      connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,
+          PASSWORD);
+    } catch (Exception e) {
+      System.out.println("Failed to connect using "+USERID+","+PASSWORD); 
+      String eMessage = e.toString().toLowerCase();
+      if (eMessage.indexOf("authorization failure") < 0) {
+        throw e;
+      } else {
+        JDRunit.resetId("jdbc:db2:*LOCAL", MASTERUSERID, encryptedMasterPassword,
+            USERID, encryptedPassword);
+        /* try again to get connection */
+        connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,
+            PASSWORD);
+        return connection; 
+      }
+    }
+  } else {
+    Driver driver = null; 
+    try {
+      Class.forName("com.ibm.as400.access.AS400JDBCDriver");
+    } catch (ClassNotFoundException cnfe) {
+      // Load it manually
+      // Add a classloader to the system to find the classes..
+      // Looks for the classes in known locations
+      URL[] urls = new URL[1];
+      // Look for activation.jar
+      String[] jt400JarLocations = { JTOpenTestEnvironment.testcaseHomeDirectory+"/jars/jt400.jar",
+          "jars/jt400.jar", };
+      for (int i = 0; i < jt400JarLocations.length
+          && urls[0] == null; i++) {
+        File tryFile = new File(jt400JarLocations[i]);
+        if (tryFile.exists()) {
+          urls[0] = new URL("file:" + jt400JarLocations[i]);
+        }
+      }
+
+      if (urls[0] == null) {
+        System.out.println("Error:  Unable to find jar files. Checked ");
+        for (int i = 0; i < jt400JarLocations.length; i++) {
+          System.out.println(jt400JarLocations[i]);
+        }
+      }
+
+      URLClassLoader loader = new URLClassLoader(urls);
+      Class<?> driverClass = loader
+          .loadClass("com.ibm.as400.access.AS400JDBCDriver");
+
+      Class<?>[] parameterTypes = new Class<?>[0];
+
+      Constructor<?> driverConstructor = driverClass
+          .getConstructor(parameterTypes);
+
+      Object[] parameters = new Object[0];
+      System.out.println("Getting Driver from " + urls[0]);
+      driver = (Driver) driverConstructor.newInstance(parameters);
+
+      System.out.println("Registering driver " + driver);
+      DriverManager.registerDriver(driver);
+      System.out.println("Registered drivers");
+      Enumeration<?> enumeration = DriverManager.getDrivers();
+      while (enumeration.hasMoreElements()) {
+        Object x = enumeration.nextElement();
+        System.out.println(x);
+      }
+      System.out.println("-------------");
+      
+    }
+    String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
+
+    try {
+      System.out.println("Connecting to " + AS400);
+      // Use keep alive=true for the toolbox driver. This will be ignored by
+      // the native driver
+      connection = DriverManager.getConnection(
+          "jdbc:as400:" + AS400
+              + ";keep alive=true;thread used=false;prompt=false",
+          USERID, PASSWORD);
+    } catch (SQLException sqlex) {
+      String message = sqlex.toString();
+      if (message.indexOf("No suitable") >= 0) {
+        System.out.println("Unable to find driver");
+        sqlex.printStackTrace(System.out);
+        System.out.println("loaded drivers are ");
+        Enumeration<?> enumeration = DriverManager.getDrivers();
+        while (enumeration.hasMoreElements()) {
+          Object x = enumeration.nextElement();
+          System.out.println(x);
+        }
+      } else {
+        sqlex.printStackTrace(System.out);
+      }
+      if (driver != null) {
+        Properties properties = new Properties();
+        properties.put("user", USERID);
+        properties.put("password", PASSWORD);
+        String CONNECTNAME = AS400;
+        try {
+          connection = driver.connect("jdbc:as400:" + CONNECTNAME
+              + ";keep alive=true;thread used=false", properties);
+        } catch (Exception e) {
+          CONNECTNAME = AS400 + "."+JTOpenTestEnvironment.getDefaultServerDomain();
+          try {
+            connection = driver.connect("jdbc:as400:" + CONNECTNAME
+                + ";keep alive=true;thread used=false", properties);
+          } catch (Exception e2) {
+            System.out
+                .println("Error:  Unable to connect to " + CONNECTNAME);
+
+          }
+
+        }
+      }
+
+    }
+
+  }
+  //
+  // Call setNetworkTimeout via reflection if possible
+  //
+  if ((connection != null)
+      && connection.getClass().getName().indexOf("AS400JDBC") > 0) {
+    try {
+      JDReflectionUtil.callMethod_V(connection, "setNetworkTimeout",
+          3600000);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  return connection; 
+
+  }
+
+  /* Setup the user info.  Must be called after iniProperties is set */ 
+  public static void setupUserInfo() {
+    USERID = iniProperties.getProperty("USERID");
+    String PASSWORD = JDRunit.getPropertyPassword(USERID); 
+    if (PASSWORD == null) PASSWORD = iniProperties.getProperty("PASSWORD");
+    encryptedPassword = PasswordVault.getEncryptedPassword(PASSWORD);
+    
+    MASTERUSERID = iniProperties.getProperty("MASTERUSERID");
+      String MASTERPASSWORD = JDRunit.getPropertyPassword(MASTERUSERID); 
+      if (MASTERPASSWORD == null) MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
+      encryptedMasterPassword = PasswordVault.getEncryptedPassword(MASTERPASSWORD); 
+    
+  }
+  static String USERID ;
+  static char[] encryptedPassword; 
+  static String MASTERUSERID ;
+  static char[] encryptedMasterPassword; 
+
+  
   public static void main(String args[]) {
     PrintStream writer = null;
     queryCount = 0;
+    StringBuffer outputBuffer = new StringBuffer(); 
     try {
       boolean resetRegression = false;
       long regressionDays = 0;
       long regressionEarliestTime = 0;
       Vector<String> newRunitOut = null;
-      ClassLoader loader = null;
-      Driver driver = null;
       boolean on400 = false;
+      on400 = JTOpenTestEnvironment.isOS400;
+
+      
+      
+      Connection connection = null;
       String initials = args[0];
+      if (initials.equals("UPDATE_ALL_RO")) {
+        
+          updateAllRo(on400); 
+        
+      } else { 
       readIni(initials);
+      setupUserInfo();
+      connection = getConnection(on400, USERID, encryptedPassword, MASTERUSERID, encryptedMasterPassword, outputBuffer); 
+      System.out.println(outputBuffer); 
+      outputBuffer.setLength(0); 
+
       if (args.length >= 3) {
         if (args[1].equals("RESET_REGRESSION")) {
           resetRegression = true;
@@ -1631,21 +2020,6 @@ public class JDReport {
         }
       }
 
-      String USERID = iniProperties.getProperty("USERID");
-      char[] encryptedPassword; 
-      {
-      String PASSWORD = JDRunit.getPropertyPassword(USERID); 
-      if (PASSWORD == null) PASSWORD = iniProperties.getProperty("PASSWORD");
-      encryptedPassword = PasswordVault.getEncryptedPassword(PASSWORD);
-      }
-      
-      String MASTERUSERID = iniProperties.getProperty("MASTERUSERID");
-      char[] encryptedMasterPassword; 
-      {
-        String MASTERPASSWORD = JDRunit.getPropertyPassword(MASTERUSERID); 
-        if (MASTERPASSWORD == null) MASTERPASSWORD = iniProperties.getProperty("MASTERPASSWORD");
-        encryptedMasterPassword = PasswordVault.getEncryptedPassword(MASTERPASSWORD); 
-      } 
       String description = (String) iniProperties.get("description");
       if (description == null) {
         description = "Description not set in runit" + initials + ".ini";
@@ -1723,143 +2097,9 @@ public class JDReport {
 
       writer.println("<br>");
 
-        on400 = JTOpenTestEnvironment.isOS400;
 
-      Connection connection = null;
-
-      if (on400) {
-        String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
-        try {
-          connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,
-              PASSWORD);
-        } catch (Exception e) {
-          System.out.println("Failed to connect using "+USERID+","+PASSWORD); 
-          String eMessage = e.toString().toLowerCase();
-          if (eMessage.indexOf("authorization failure") < 0) {
-            writer.close(); 
-            throw e;
-          } else {
-            JDRunit.resetId("jdbc:db2:*LOCAL", MASTERUSERID, encryptedMasterPassword,
-                USERID, encryptedPassword);
-            /* try again to get connection */
-            connection = DriverManager.getConnection("jdbc:db2:*LOCAL", USERID,
-                PASSWORD);
-          }
-        }
-      } else {
-        try {
-          Class.forName("com.ibm.as400.access.AS400JDBCDriver");
-
-        } catch (ClassNotFoundException cnfe) {
-          // Load it manually
-
-          // Add a classloader to the system to find the classes..
-          // Looks for the classes in known locations
-          URL[] urls = new URL[1];
-          // Look for activation.jar
-          String[] jt400JarLocations = { JTOpenTestEnvironment.testcaseHomeDirectory+"/jars/jt400.jar",
-              "jars/jt400.jar", };
-          for (int i = 0; i < jt400JarLocations.length
-              && urls[0] == null; i++) {
-            File tryFile = new File(jt400JarLocations[i]);
-            if (tryFile.exists()) {
-              urls[0] = new URL("file:" + jt400JarLocations[i]);
-            }
-          }
-
-          if (urls[0] == null) {
-            System.out.println("Error:  Unable to find jar files. Checked ");
-            for (int i = 0; i < jt400JarLocations.length; i++) {
-              System.out.println(jt400JarLocations[i]);
-            }
-          }
-
-          loader = new URLClassLoader(urls);
-          Class<?> driverClass = loader
-              .loadClass("com.ibm.as400.access.AS400JDBCDriver");
-
-          Class<?>[] parameterTypes = new Class<?>[0];
-
-          Constructor<?> driverConstructor = driverClass
-              .getConstructor(parameterTypes);
-
-          Object[] parameters = new Object[0];
-          System.out.println("Getting Driver from " + urls[0]);
-          driver = (Driver) driverConstructor.newInstance(parameters);
-
-          System.out.println("Registering driver " + driver);
-          DriverManager.registerDriver(driver);
-          System.out.println("Registered drivers");
-          Enumeration<?> enumeration = DriverManager.getDrivers();
-          while (enumeration.hasMoreElements()) {
-            Object x = enumeration.nextElement();
-            System.out.println(x);
-          }
-          System.out.println("-------------");
-        }
-        String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
-
-        try {
-          System.out.println("Connecting to " + AS400);
-          // Use keep alive=true for the toolbox driver. This will be ignored by
-          // the native driver
-          connection = DriverManager.getConnection(
-              "jdbc:as400:" + AS400
-                  + ";keep alive=true;thread used=false;prompt=false",
-              USERID, PASSWORD);
-        } catch (SQLException sqlex) {
-          String message = sqlex.toString();
-          if (message.indexOf("No suitable") >= 0) {
-            System.out.println("Unable to find driver");
-            sqlex.printStackTrace(System.out);
-            System.out.println("loaded drivers are ");
-            Enumeration<?> enumeration = DriverManager.getDrivers();
-            while (enumeration.hasMoreElements()) {
-              Object x = enumeration.nextElement();
-              System.out.println(x);
-            }
-          } else {
-            sqlex.printStackTrace(System.out);
-          }
-          if (driver != null) {
-            Properties properties = new Properties();
-            properties.put("user", USERID);
-            properties.put("password", PASSWORD);
-            String CONNECTNAME = AS400;
-            try {
-              connection = driver.connect("jdbc:as400:" + CONNECTNAME
-                  + ";keep alive=true;thread used=false", properties);
-            } catch (Exception e) {
-              CONNECTNAME = AS400 + "."+JTOpenTestEnvironment.getDefaultServerDomain();
-              try {
-                connection = driver.connect("jdbc:as400:" + CONNECTNAME
-                    + ";keep alive=true;thread used=false", properties);
-              } catch (Exception e2) {
-                System.out
-                    .println("Error:  Unable to connect to " + CONNECTNAME);
-
-              }
-
-            }
-          }
-
-        }
-
-      }
-
-      //
-      // Call setNetworkTimeout via reflection if possible
-      //
-      if ((connection != null)
-          && connection.getClass().getName().indexOf("AS400JDBC") > 0) {
-        try {
-          JDReflectionUtil.callMethod_V(connection, "setNetworkTimeout",
-              3600000);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      }
-
+        
+       
       String sql;
       Statement s = null;
       if (connection != null) {
@@ -2216,7 +2456,6 @@ public class JDReport {
       String RUNONE = "java test.JDRunit " + initials + " ";
       String notes = "notes" + initials;
 
-      String SCHEMA = "JDTESTINFO";
 
       String rawindex = rawfile + "II1";
       String regressedIndex = regressed + "II1";
@@ -2261,24 +2500,6 @@ public class JDReport {
         exUpIE(s,updateAlias); 
       }
       
-      
-      /* read the current list of inserted entries from rawfile */
-      Hashtable<String, Hashtable<Timestamp, Timestamp>> insertedHashtable = new Hashtable<String, Hashtable<Timestamp, Timestamp>>();
-
-      rs = exQ(writer, s,
-          "select FINISHTIME, TESTCASE from " + SCHEMA + "." + rawfile);
-      while (rs.next()) {
-        Timestamp ts = rs.getTimestamp(1);
-        String testcase = rs.getString(2);
-
-        Hashtable<Timestamp, Timestamp> h2 = (Hashtable<Timestamp, Timestamp>) insertedHashtable.get(testcase);
-        if (h2 == null) {
-          h2 = new Hashtable<Timestamp, Timestamp>();
-          insertedHashtable.put(testcase, h2);
-        }
-        h2.put(ts, ts);
-      }
-
       /* creates the notes table */
       System.out.println("Creating the notes table ");
 
@@ -2319,192 +2540,9 @@ public class JDReport {
         file.createNewFile();
       }
 
-      System.out.println("Reading the output file and inserting new values");
-      {
-        String insertSql = " INSERT INTO " + SCHEMA + "." + rawfile
-            + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement insertStatement = connection
-            .prepareStatement(insertSql);
-        BufferedReader reader = new BufferedReader(new FileReader(outfile));
-        String line = reader.readLine();
-        while (line != null) {
-          /* get the pieces of the line */
-          /* 2010-04-28 08:14:40 lp08ut23 JDCLIWGPosZ 50 0 948 0 56.504 */
-          String finishtimeString;
-          String system;
-          String testcase;
-          String succeeded;
-          String failed;
-          String notAppl;
-          String notAtt;
-          String runtime;
-
-          String originalLine = line;
-          line = line.trim();
-          int start = 0;
-          int spaceIndex = line.indexOf(" ");
-          if (spaceIndex > 0) {
-            spaceIndex = line.indexOf(" ", spaceIndex + 1);
-            if (spaceIndex > 0) {
-              finishtimeString = line.substring(start, spaceIndex);
-              start = nextNonSpace(line, spaceIndex);
-              spaceIndex = line.indexOf(" ", start);
-              if (spaceIndex > 0) {
-                system = line.substring(start, spaceIndex);
-                start = nextNonSpace(line, spaceIndex);
-                spaceIndex = line.indexOf(" ", start);
-                if (spaceIndex > 0) {
-                  testcase = line.substring(start, spaceIndex).trim();
-                  start = nextNonSpace(line, spaceIndex);
-                  spaceIndex = line.indexOf(" ", start);
-                  if (spaceIndex > 0) {
-                    succeeded = line.substring(start, spaceIndex);
-                    start = nextNonSpace(line, spaceIndex);
-                    spaceIndex = line.indexOf(" ", start);
-                    if (spaceIndex > 0) {
-                      failed = line.substring(start, spaceIndex);
-                      start = nextNonSpace(line, spaceIndex);
-                      spaceIndex = line.indexOf(" ", start);
-                      if (spaceIndex > 0) {
-                        notAppl = line.substring(start, spaceIndex);
-                        start = nextNonSpace(line, spaceIndex);
-                        spaceIndex = line.indexOf(" ", start);
-                        if (spaceIndex > 0) {
-                          notAtt = line.substring(start, spaceIndex);
-                          start = nextNonSpace(line, spaceIndex);
-                          runtime = line.substring(start);
-
-                          if (debug)
-                            System.out.println("Processing line :" + line);
-
-                          Timestamp ts;
-                          try {
-                            ts = Timestamp.valueOf(finishtimeString);
-                          } catch (Exception e) {
-                            System.out.println("Error processing timestamp "
-                                + finishtimeString + " in line:" + line);
-                            ts = new Timestamp(0);
-                          }
-                          if (resetRegression
-                              && (ts.getTime() < regressionEarliestTime)) {
-                            if (debug) {
-                              System.out.println("Skipping " + originalLine);
-                              System.out.println(
-                                  "finishtimeString=" + finishtimeString);
-                              System.out.println("ts = " + ts);
-                              System.out
-                                  .println("ts.getTime() = " + ts.getTime());
-                              System.out.println(
-                                  "earliestTime = " + regressionEarliestTime);
-                            }
-                          } else {
-                            if (resetRegression) {
-                              if (newRunitOut != null) {
-                                newRunitOut.addElement(originalLine);
-                              }
-                            }
-                            boolean found = false;
-                            Hashtable<Timestamp, Timestamp> ht = (Hashtable<Timestamp,Timestamp>) insertedHashtable
-                                .get(testcase);
-                            if (ht != null) {
-                              Object x = ht.get(ts);
-                              if (x != null) {
-                                if (debug) {
-                                  System.out.println("Hash " + testcase + "+"
-                                      + ts + " is " + x);
-                                }
-                                found = true;
-                              }
-                            } else {
-                              ht = new Hashtable<Timestamp, Timestamp>();
-                              insertedHashtable.put(testcase, ht);
-                            }
-                            if (!found) {
-                              try {
-                                insertStatement.setTimestamp(1, ts);
-                                insertStatement.setString(2, system);
-                                insertStatement.setString(3, testcase.trim());
-                                insertStatement.setString(4, succeeded);
-                                insertStatement.setString(5, failed);
-                                insertStatement.setString(6, notAppl);
-                                insertStatement.setString(7, notAtt);
-                                insertStatement.setString(8, runtime);
-                                insertStatement.executeUpdate();
-                                ht.put(ts, ts);
-
-                                if (debug)
-                                  System.out.println("Inserted "
-                                      + finishtimeString + " " + testcase);
-                              } catch (Exception e) {
-                                StringBuffer sb = new StringBuffer();
-
-                                sb.append("Error inserting into " + SCHEMA + "."
-                                    + rawfile + "\n");
-                                sb.append(insertSql);
-                                sb.append(" 1 '" + ts + "'\n");
-                                sb.append(" 2 '" + system + "'\n");
-                                sb.append(" 3 '" + testcase + "'("
-                                    + testcase.length() + ")\n");
-                                sb.append(" 4 '" + succeeded + "'\n");
-                                sb.append(" 5 '" + failed + "'\n");
-                                sb.append(" 6 '" + notAppl + "'\n");
-                                sb.append(" 7 '" + notAtt + "'\n");
-                                sb.append(" 8 '" + runtime + "'\n");
-                                System.out.println(sb.toString());
-                                writer.println(
-                                    "<pre>Exception " + e + " processing "
-                                        + sb.toString() + "</pre>");
-                                e.printStackTrace();
-                              }
-
-                            } else {
-                              if (debug)
-                                System.out.println("Skipping "
-                                    + finishtimeString + " " + testcase);
-                            }
-                          } /* not resetRegression */
-                        } else {
-                          System.out.println(
-                              "Unable to find eighth space in line:" + line);
-                        }
-
-                      } else {
-                        System.out.println(
-                            "Unable to find seventh space in line:" + line);
-                      }
-
-                    } else {
-                      System.out.println(
-                          "Unable to find sixth space in line:" + line);
-                    }
-
-                  } else {
-                    System.out
-                        .println("Unable to find fifth space in line:" + line);
-                  }
-
-                } else {
-                  System.out
-                      .println("Unable to find fourth space in line:" + line);
-                }
-              } else {
-                System.out
-                    .println("Unable to find third space in line:" + line);
-              }
-            } else {
-              System.out.println("Unable to find second space in line:" + line);
-            }
-          } else {
-            System.out.println("Unable to find first space in line:" + line);
-          }
-
-          line = reader.readLine();
-        }
-
-        insertStatement.close();
-        reader.close();
-      }
-
+      StringBuffer outputSb = new StringBuffer(); 
+      refreshRawFile(SCHEMA, rawfile, connection, writer, 
+          outfile, outputSb, resetRegression, regressionEarliestTime, newRunitOut) ;
       if (resetRegression) {
         PrintWriter fileWriter = new PrintWriter(
             new FileWriter(outfile + ".new"));
@@ -3313,6 +3351,7 @@ public class JDReport {
         System.out.println("JDReport calling System.exit(0)");
         System.exit(0);
       }
+      }
     } catch (Exception e) {
 
       if (writer != null) {
@@ -3333,6 +3372,102 @@ public class JDReport {
       }
     }
 
+  }
+
+  /* Update all the JDTESTINFO.RO files from the     ct/runitXXXX.out files
+   * 
+   */
+
+  private static void updateAllRo(boolean on400 ) {
+    try { 
+    File ctDir = new File("ct"); 
+    if (ctDir.exists() && ctDir.isDirectory()) { 
+      File[] files = ctDir.listFiles();
+      
+      Vector<String> initialsVector = new Vector<String>(); 
+      
+      for (int i = 0; i < files.length; i++) { 
+        File f = files[i]; 
+        String filename = f.getName(); 
+        if (filename.endsWith(".out") && filename.startsWith("runit")) {
+          String initials = filename.substring(5,10); 
+          System.out.println("FOUND initials "+initials); 
+          initialsVector.add(initials); 
+        }
+      }
+      // Find an ini file to establish the connection 
+      Connection connection = null; 
+      {
+        Enumeration<String> enumeration = initialsVector.elements();
+        while (enumeration.hasMoreElements() && (connection == null)) {
+          String initials = enumeration.nextElement();
+          readIni(initials);
+          setupUserInfo();
+          if (USERID != null) {
+            StringBuffer outputBuffer = new StringBuffer();
+            System.out.println("Setting up connection"); 
+            connection = getConnection(on400, USERID, encryptedPassword, MASTERUSERID, encryptedMasterPassword,
+                outputBuffer);
+            System.out.println("Connection ="+connection); 
+            System.out.println(outputBuffer.toString());
+          }
+        }
+      }
+      if (connection != null) { 
+        
+        Enumeration<String> enumeration = initialsVector.elements();
+        while (enumeration.hasMoreElements()) {
+          String initials = enumeration.nextElement();
+          StringBuffer outputSb = new StringBuffer(); 
+          String rawFile = "RO"+initials; 
+          System.out.println("refreshing "+rawFile); 
+          try { 
+            /* check to see if refresh needs to happen */ 
+            File outputFile = new File("ct/runit"+initials+".out");
+            long lastModifiedStreamFile = outputFile.lastModified();
+            Timestamp sfTs = new Timestamp(lastModifiedStreamFile); 
+            long lastModifiedSql = 0; 
+            String sql = "select LAST_CHANGE_TIMESTAMP from qsys2.systablestat where table_name='"+rawFile+"' and TABLE_SCHEMA='"+SCHEMA+"'"; 
+            System.out.println("Running "+sql); 
+            Statement s = connection.createStatement(); 
+            ResultSet rs = s.executeQuery(sql);
+            rs.next(); 
+            Timestamp ts = rs.getTimestamp(1); 
+            rs.close(); 
+            s.close(); 
+            lastModifiedSql = ts.getTime(); 
+            if (lastModifiedStreamFile > lastModifiedSql) { 
+              
+              System.out.println(sfTs.toString()+" last modified ct/runit"+initials+".out ");
+              System.out.println(ts             +" last modified table"); 
+              
+              refreshRawFile( SCHEMA, rawFile, connection, null, 
+              "ct/runit"+initials+".out",  outputSb, false /* resetRegression */, 0 /*regressionEarliestTime*/, null /* newRunitOut */ ) ;
+          System.out.println(outputSb.toString()); 
+            } else {
+              System.out.println(SCHEMA+"."+rawFile+" is up to date"); 
+            }
+          } catch (Exception e) { 
+            System.out.println("===================================================");
+            System.out.println("Processing of "+initials+" failed"); 
+            e.printStackTrace(System.out); 
+            System.out.println(outputSb.toString());
+            System.out.println("===================================================");
+          }
+        }     
+        
+        
+      } else { 
+        System.out.println("ERROR:  Unable to obtain connection"); 
+      }
+
+    } else {
+      System.out.println("Error ct directory does not exist"); 
+    }
+    } catch (Exception e) { 
+      System.out.println("Error: UPDATE_ALL_RO_FAILED"); 
+      e.printStackTrace(System.out); 
+    }
   }
 
   private static boolean isServletHtmlTestbase(String base) {

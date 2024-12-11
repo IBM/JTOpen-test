@@ -152,8 +152,10 @@ public class SecAuthTest extends TestDriver
     public static void createProfiles(AS400 pwrSys) throws Exception {
 
         CommandCall cmd = new CommandCall(pwrSys);
-        cmd.run("CRTUSRPRF USRPRF(" + uid1 + ") PASSWORD(" + pwd1 + ") USRCLS(*USER) TEXT('Test profile: Robb Wiedrich 3-3856')");
-        cmd.run("CRTUSRPRF USRPRF(" + uid2 + ") PASSWORD(" + pwd2 + ") USRCLS(*USER) TEXT('Test profile: Robb Wiedrich 3-3856')");
+        String command = "CRTUSRPRF USRPRF(" + uid1 + ") PASSWORD(" + pwd1 + ") USRCLS(*USER) TEXT('JTOpen Test profile')";
+        cmd.run(command);
+        command = "CRTUSRPRF USRPRF(" + uid2 + ") PASSWORD(" + pwd2 + ") USRCLS(*USER) TEXT('JTOPEN Test profile')";
+        cmd.run(command);
 
     }
 

@@ -182,6 +182,12 @@ Creates Testcase objects for all the testcases in this component.
           new AS400NewInstance(systemObject_,
                   namesAndVars_, runMode_,
                   fileOutputStream_, testLib_, password_, PwrSys);
+      tc.setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, 
+          proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
+          namesAndVars_, runMode_, fileOutputStream_, 
+          pwrSysUserID_, pwrSysPassword_);
+           
+
       testcases_.addElement(tc);
       namesAndVars_.remove("AS400NewInstance");
     }

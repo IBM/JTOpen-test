@@ -97,7 +97,6 @@ public class JTOpenDownloadDevJars {
 
 	    String jdk14Path = jdk14newPath;
 	    System.out.println("osVersion is '" + JTOpenTestEnvironment.osVersion+"'");
-	    String osVersion = JTOpenTestEnvironment.osVersion; 
 	    if (JTOpenTestEnvironment.isWindows ||
 	        JTOpenTestEnvironment.isLinux ||
 	        JTOpenTestEnvironment.isAIX)  {
@@ -130,7 +129,7 @@ public class JTOpenDownloadDevJars {
 	    }
 
 	    String disableSSL = System.getenv("DISABLESSL");
-	    if (disableSSL != null) { 
+	    if (disableSSL == null) { 
 	      disableSSL = System.getProperty("DISABLESSL"); 
 	    }
 	    if (disableSSL != null) {
@@ -169,6 +168,9 @@ public class JTOpenDownloadDevJars {
             rs.close(); 
             // run the query to get the latest URL
 	    String branch = System.getenv("BRANCH");
+	    if (branch == null) { 
+	      branch = System.getProperty("BRANCH");
+	    }
 	    if (branch == null) { 
 		sql = "SELECT * FROM JSON_TABLE( HTTP_GET('"+artifactsUrl+"',"
 		    + "'{\"headers\":{\"Accept\":\"application/vnd.github+json\"}, \"sslTolerate\":true}'), "

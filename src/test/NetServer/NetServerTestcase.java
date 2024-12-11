@@ -1288,7 +1288,7 @@ public class NetServerTestcase extends Testcase
             NetServer ns = new NetServer(pwrSys_);
 
             CommandCall cmd = new CommandCall(pwrSys_);
-            if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile - Robb Wiedrich 3-3856')"))
+            if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('JTOpen Toolbox test profile ')"))
                failed("Setup for this variation failed.");
 
             String orig = (String)ns.getAttributeValue(NetServer.GUEST_USER_PROFILE_PENDING);

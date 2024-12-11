@@ -26,6 +26,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.security.auth.AS400BasicAuthenticationPrincipal;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 import com.ibm.as400.security.auth.ProfileTokenCredentialBeanInfo;
 import com.ibm.as400.security.auth.RetrieveFailedException;
@@ -57,6 +58,16 @@ public class SecPTMiscTestcase extends Testcase
      }
      test.SecAuthTest.main(newArgs); 
    }
+  
+  
+  public void setup() throws Exception {
+    SecAuthTest.createProfiles(pwrSys_); 
+  } 
+
+  public void cleanup() throws Exception {
+    SecAuthTest.deleteProfiles(pwrSys_); 
+  } 
+
     /**
      Test serialization and restoration of an uninitialized profile token.
      **/
@@ -108,6 +119,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         try
         {
+          sys.setGuiAvailable(false);
             ProfileTokenCredential pt1 = null;
             ProfileTokenCredential pt2 = null;
 
@@ -223,13 +235,13 @@ public class SecPTMiscTestcase extends Testcase
     {
         try
         {
-          /* ProfileTokenCredential pt = new ProfileTokenCredential(systemObject_, tBytes, ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444,false); */
+          /* ProfileTokenCredential pt = new ProfileTokenCredential(systemObject_, tBytes, ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444); */
           
           // Create a bogus token value.
             byte[] tBytes = new byte[ProfileTokenCredential.TOKEN_LENGTH];
             new Random().nextBytes(tBytes);
-            Class[] argTypes = new Class[5];
-            Object[] args = new Object[5]; 
+            Class[] argTypes = new Class[4];
+            Object[] args = new Object[4]; 
             args[0] = systemObject_; 
             argTypes[0] = args[0].getClass(); 
             args[1]=tBytes; 
@@ -238,8 +250,6 @@ public class SecPTMiscTestcase extends Testcase
             argTypes[2] = Integer.TYPE; 
             args[3] = new Integer(444); 
             argTypes[3] = Integer.TYPE; 
-            args[4]  = new Boolean(false); 
-            argTypes[4] = Boolean.TYPE; 
             
             // Create the token object.
             ProfileTokenCredential pt  = (ProfileTokenCredential) JDReflectionUtil.createObject("com.ibm.as400.security.auth.ProfileTokenCredential",argTypes, args); 
@@ -355,6 +365,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             ProfileTokenCredential pt = sys.getProfileToken(ProfileTokenCredential.TYPE_SINGLE_USE, 5);
             // Verify a unique token is returned.
             assertCondition(pt != null && pt != sys.getProfileToken(ProfileTokenCredential.TYPE_SINGLE_USE, 5), "Unique token not returned.");
@@ -385,6 +396,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         try
         {
+          sys.setGuiAvailable(false);
             ProfileTokenCredential pt = sys.getProfileToken(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
             assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_SINGLE_USE && pt.getTimeToExpiration() > 3000, "Unexpected profile token properties.");
         }
@@ -414,6 +426,7 @@ public class SecPTMiscTestcase extends Testcase
         }
         try
         {
+          sys.setGuiAvailable(false);
             ProfileTokenCredential pt = sys.getProfileToken(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(), ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
             assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeToExpiration() >= 300 && pt.getTimeToExpiration() <= 444, "Unexpected profile token properties.");
         }
@@ -435,6 +448,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.authenticate(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
             succeeded();
         }
@@ -456,6 +470,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.authenticate("QSECXXXXXX", "ZZZZZZZZZZ".toCharArray());
             failed("Authentication did not fail as expected.");
         }
@@ -484,6 +499,7 @@ public class SecPTMiscTestcase extends Testcase
     PasswordVault.clearPassword(charPassword);    
     CommandCall cmd = null;
     try {
+      sys.setGuiAvailable(false);
       user =  generateClientUser("TBX14");
       cmd = new CommandCall(sys);
       cmd.run("CRTUSRPRF "+user+" PASSWORD(ASDF23ASD)");
@@ -524,6 +540,7 @@ public class SecPTMiscTestcase extends Testcase
     CommandCall cmd = null;
     String user = ""; 
     try {
+      sys.setGuiAvailable(false);
       user = generateClientUser("TBX15"); 
       cmd = new CommandCall(sys);
       cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
@@ -559,6 +576,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.getProfileToken(null, "PWD".toCharArray());
             failed("Token create did not fail as expected.");
         }
@@ -584,6 +602,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.getProfileToken("UID", (char[]) null);
             failed("Token create did not fail as expected.");
         }
@@ -609,6 +628,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.getProfileToken("ABCDEFGHIJK", "PWD".toCharArray());
             failed("Token create did not fail as expected.");
         }
@@ -634,6 +654,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.getProfileToken("UID", "ABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXY1234".toCharArray());
             failed("Token create did not fail as expected.");
         }
@@ -666,6 +687,7 @@ public class SecPTMiscTestcase extends Testcase
         {
             AS400 system = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
             // Connect to command, forces pre-resolution of any user/password info.
+            system.setGuiAvailable(false);
             system.connectService(AS400.COMMAND);
             try
             {
@@ -701,6 +723,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             ProfileTokenCredential pt = sys.getProfileToken(ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
             assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeToExpiration() >= 300 && pt.getTimeToExpiration() <= 444, "Unexpected profile token properties.");
         }
@@ -722,6 +745,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.getProfileToken(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1);
             failed("Token create did not fail as expected.");
         }
@@ -749,6 +773,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.authenticate("QSECXXXXXX", "*NOPWD".toCharArray());
             failed("Authentication did not fail as expected.");
         }
@@ -778,6 +803,7 @@ public class SecPTMiscTestcase extends Testcase
         AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
+          sys.setGuiAvailable(false);
             sys.authenticate("QSECXXXXXX", "*NOPWDCHK".toCharArray());
             failed("Authentication did not fail as expected.");
         }
@@ -812,6 +838,7 @@ public class SecPTMiscTestcase extends Testcase
     String user = "USER"; 
 
       try {
+        sys.setGuiAvailable(false);
         user = generateClientUser("TBX25"); 
         cmd = new CommandCall(sys);
         cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
@@ -850,6 +877,7 @@ public class SecPTMiscTestcase extends Testcase
     String user = "USER"; 
 
       try {
+        sys.setGuiAvailable(false);
         user = generateClientUser("TBX26"); 
         cmd = new CommandCall(sys);
         cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
@@ -896,6 +924,7 @@ public class SecPTMiscTestcase extends Testcase
          sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
        }
        try {
+         sys.setGuiAvailable(false);
          initMfaUser();
          ProfileTokenCredential pt1 = null;
          ProfileTokenCredential pt2 = null;
@@ -903,6 +932,7 @@ public class SecPTMiscTestcase extends Testcase
          // Create a single-use ProfileTokenCredential with a 10 min timeout.
 
          pt1 = new ProfileTokenCredential();
+         pt1.setSystem(sys);
          initializeProfileToken (pt1, mfaUserid_, mfaPassword_, mfaFactor_, 4 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
              "", /* verification id  */
              "", 0, /* remote IP and port */
@@ -962,33 +992,36 @@ public class SecPTMiscTestcase extends Testcase
    public void initializeProfileToken(ProfileTokenCredential pt, String userid, char[] password, char[] factor, int authenticationIndicator,  
        String verificationId, String remoteIp, int remotePort, String localIp, int localPort, boolean isPrivate, boolean reusable, boolean renewable, int timeoutInterval ) throws Exception {
      UserProfilePrincipal principal = new UserProfilePrincipal(userid);
+     Class[] argTypes; 
+     Object[] args; 
+     Object info; 
+
+     argTypes = new Class[5];
+     args = new Object[5]; 
+     args[0] = verificationId; argTypes[0] = args[0].getClass();
+     args[1] = remoteIp;   argTypes[1] = args[1].getClass(); 
+     args[2] = new Integer(remotePort);  argTypes[2] = Integer.TYPE; 
+     args[3] = localIp; argTypes[3] = args[3].getClass(); 
+     args[4] = new Integer(localPort);  argTypes[4] = Integer.TYPE; 
+     info = JDReflectionUtil.createObject("com.ibm.as400.security.auth.ProfileTokenEnhancedInfo", argTypes, args);
      
-     Class[] argTypes = new Class[13];
-     Object[] args = new Object[13]; 
-     args[0] = principal;   argTypes[0] = args[0].getClass();
+     argTypes = new Class[9];
+     args = new Object[9]; 
+     args[0] = principal;   argTypes[0] = AS400BasicAuthenticationPrincipal.class; 
      args[1] = password;    argTypes[1] = args[1].getClass();
      args[2] = factor;      argTypes[2] = args[2].getClass();
      args[3] = new Integer(authenticationIndicator);  argTypes[3] = Integer.TYPE; 
-     args[4] = verificationId; argTypes[4] = args[4].getClass();
-     args[5] = remoteIp;   argTypes[5] = args[5].getClass(); 
-     args[6] = new Integer(remotePort);  argTypes[6] = Integer.TYPE; 
-     args[7] = localIp; argTypes[5] = args[7].getClass(); 
-     args[8] = new Integer(localPort);  argTypes[8] = Integer.TYPE; 
-     args[9] = new Boolean(isPrivate);   argTypes[9] = Boolean.TYPE;
-     args[10] = new Boolean(reusable);  argTypes[10] = Boolean.TYPE;
-     args[11] = new Boolean(renewable);  argTypes[11] = Boolean.TYPE;
-     args[12] = new Integer(timeoutInterval); argTypes[12] = Integer.TYPE; 
-         
-     
+     args[4] = new Boolean(isPrivate);   argTypes[4] = Boolean.TYPE;
+     args[5] = new Boolean(reusable);  argTypes[5] = Boolean.TYPE;
+     args[6] = new Boolean(renewable);  argTypes[6] = Boolean.TYPE;
+     args[7] = new Integer(timeoutInterval); argTypes[7] = Integer.TYPE; 
+     args[8] = info; argTypes[8] = info.getClass();   
+  
+ 
      JDReflectionUtil.callMethod_V(pt, "initialize",  argTypes, args);
-     // pt.initialize(principal, password, factor,  authenticationIndication , 
-     //    verificationId, /* verification id  */
-     //    remoteIp, remotePort, /* remote IP and port */
-     //    localIp, localPort, /* local IP and port */
-     //    isPrivate, /* private */
-     //    reusable, /* not reusable */
-     //    renewable, /* not renewable */
-     //     timeoutInterval); /* timeout */ 
+     
+     // com.ibm.as400.security.auth.ProfileTokenEnhancedInfo info2 = new com.ibm.as400.security.auth.ProfileTokenEnhancedInfo(verificationId, remoteIp, remotePort, localIp, localPort);
+     // pt.initialize(principal, password, factor, authenticationIndicator, isPrivate, reusable, renewable, timeoutInterval, info2);
          
          
    }
@@ -1009,6 +1042,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        try
        {
+         sys.setGuiAvailable(false);
          initMfaUser();
            int timeoutInterval = 3600; 
            ProfileTokenCredential pt =  new ProfileTokenCredential();
@@ -1026,9 +1060,9 @@ public class SecPTMiscTestcase extends Testcase
            boolean passed = true; 
            StringBuffer sb = new StringBuffer(); 
            if (!isLocal_) {
-             if (!pt.getSystem().equals(sys)) {
+             if (!pt.getSystem().getSystemName().equals(sys.getSystemName())) {
                passed = false;
-               sb.append("pt.getSystem():" + pt.getSystem() + " != sys:" + sys + "\n");
+               sb.append("pt.getSystem():" + pt.getSystem().getSystemName() + " != sys:" + sys.getSystemName() + "\n");
              }
            }
            if ( pt.getToken() == null) {
@@ -1075,6 +1109,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        try
        {
+         sys.setGuiAvailable(false);
          initMfaUser();
          
    
@@ -1092,9 +1127,9 @@ public class SecPTMiscTestcase extends Testcase
            boolean passed = true; 
            StringBuffer sb = new StringBuffer(); 
            if (!isLocal_) {
-             if (!pt.getSystem().equals(sys)) {
+             if (!pt.getSystem().getSystemName().equals(sys.getSystemName())) {
                passed = false;
-               sb.append("pt.getSystem():" + pt.getSystem() + " != sys:" + sys + "\n");
+               sb.append("pt.getSystem():" + pt.getSystem().getSystemName() + " != sys:" + sys.getSystemName() + "\n");
              }
            }
            if ( pt.getToken() == null) {
@@ -1136,6 +1171,7 @@ public class SecPTMiscTestcase extends Testcase
        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
        try
        {
+         sys.setGuiAvailable(false);
            sys.getProfileToken(null, "PWD".toCharArray());
            failed("Token create did not fail as expected.");
        }
@@ -1163,6 +1199,7 @@ public class SecPTMiscTestcase extends Testcase
        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
        try
        {
+         sys.setGuiAvailable(false);
            sys.getProfileToken("UID", (char[]) null);
            failed("Token create did not fail as expected.");
        }
@@ -1190,6 +1227,7 @@ public class SecPTMiscTestcase extends Testcase
        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
        try
        {
+         sys.setGuiAvailable(false);
            sys.getProfileToken("ABCDEFGHIJK", "PWD".toCharArray());
            failed("Token create did not fail as expected.");
        }
@@ -1216,6 +1254,7 @@ public class SecPTMiscTestcase extends Testcase
        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
        try
        {
+         sys.setGuiAvailable(false);
            sys.getProfileToken("UID", "ABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXYABCDEFGHIJKLMNOPQRSTUVWXY1234".toCharArray());
            failed("Token create did not fail as expected.");
        }
@@ -1251,6 +1290,7 @@ public class SecPTMiscTestcase extends Testcase
            system.connectService(AS400.COMMAND);
            try
            {
+             system.setGuiAvailable(false);
                // Attempt to generate the token.
                ProfileTokenCredential pt = system.getProfileToken(ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
                failed("Token create did not fail as expected. pt="+pt);
@@ -1285,6 +1325,7 @@ public class SecPTMiscTestcase extends Testcase
        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
        try
        {
+         sys.setGuiAvailable(false);
            ProfileTokenCredential pt = sys.getProfileToken(ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
            assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeToExpiration() >= 300 && pt.getTimeToExpiration() <= 444, "Unexpected profile token properties.");
        }
@@ -1308,6 +1349,7 @@ public class SecPTMiscTestcase extends Testcase
        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
        try
        {
+         sys.setGuiAvailable(false);
            sys.getProfileToken(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1);
            failed("Token create did not fail as expected.");
        }
@@ -1336,6 +1378,7 @@ public class SecPTMiscTestcase extends Testcase
        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
        try
        {
+         sys.setGuiAvailable(false);
            sys.authenticate("QSECXXXXXX", "*NOPWD".toCharArray());
            failed("Authentication did not fail as expected.");
        }
@@ -1367,6 +1410,7 @@ public class SecPTMiscTestcase extends Testcase
        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
        try
        {
+         sys.setGuiAvailable(false);
            sys.authenticate("QSECXXXXXX", "*NOPWDCHK".toCharArray());
            failed("Authentication did not fail as expected.");
        }
@@ -1402,6 +1446,7 @@ public class SecPTMiscTestcase extends Testcase
    String user = "USER"; 
 
      try {
+       sys.setGuiAvailable(false);
        user = generateClientUser("TBX25"); 
        cmd = new CommandCall(sys);
        cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
@@ -1441,6 +1486,7 @@ public class SecPTMiscTestcase extends Testcase
    String user = "USER"; 
 
      try {
+       sys.setGuiAvailable(false);
        user = generateClientUser("TBX26"); 
        cmd = new CommandCall(sys);
        cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
