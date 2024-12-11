@@ -379,7 +379,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
      boolean passed = true; 
       try
       {
-	 int expectedCount = 113; 
+	 int expectedCount = 115; 
          AS400JDBCDataSourceBeanInfo bi = new AS400JDBCDataSourceBeanInfo();
          PropertyDescriptor[] pd = bi.getPropertyDescriptors();
          if (pd.length != expectedCount)  //@A1C @W1c @A3C @A4C //@B1C //@C1C //@PDC //@pdc //@pdc //@D3C //@AC1 //@cc1 @dmy  90=query timeout mechanism 91=query replace truncated parameter
@@ -430,7 +430,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
          propertyTypes.put("packageCriteria", "java.lang.String");
          propertyTypes.put("packageError", "java.lang.String");
          propertyTypes.put("packageLibrary", "java.lang.String");
-         propertyTypes.put("password", "java.lang.String");
+         propertyTypes.put("password", "[C");
          propertyTypes.put("portNumber", "int");
          propertyTypes.put("prefetch", "boolean");
          propertyTypes.put("prompt", "boolean");
@@ -512,7 +512,9 @@ propertyTypes.put("clientRerouteAlternatePortNumber","java.lang.String");
 propertyTypes.put("maxRetriesForClientReroute","int"); 
 propertyTypes.put("retryIntervalForClientReroute","int"); 
 propertyTypes.put("enableSeamlessFailover","int"); 
-
+propertyTypes.put("additionalAuthenticationFactor","[C"); 
+    propertyTypes.put("stayAlive","int"); 
+    
 
          
          for (int i=0; i< pd.length; i++)
@@ -645,6 +647,8 @@ getPropertyMethods.put("maxRetriesForClientReroute","getMaxRetriesForClientRerou
 getPropertyMethods.put("retryIntervalForClientReroute","getRetryIntervalForClientReroute"); 
 getPropertyMethods.put("enableSeamlessFailover","getEnableSeamlessFailover"); 
 
+getPropertyMethods.put("additionalAuthenticationFactor","getAdditionalAuthenticationFactor"); 
+getPropertyMethods.put("stayAlive","getStayAlive"); 
 
          for (int i=0; i< pd.length; i++)
          {
@@ -807,6 +811,9 @@ setPropertyMethods.put("maxRetriesForClientReroute","setMaxRetriesForClientRerou
 setPropertyMethods.put("retryIntervalForClientReroute","setRetryIntervalForClientReroute"); 
 setPropertyMethods.put("enableSeamlessFailover","setEnableSeamlessFailover"); 
 
+setPropertyMethods.put("additionalAuthenticationFactor","setAdditionalAuthenticationFactor");
+setPropertyMethods.put("stayAlive","setStayAlive"); 
+    
 
 
 Properties setPropertyMethods2 = new Properties()	 ;
@@ -981,6 +988,8 @@ propertyShortDescs.put("useDrdaMetadataVersion","Specifies if the DRDA metadata 
 
          propertyShortDescs.put("extendedMetadata", "extendedMetadata");
          propertyShortDescs.put("portNumber", "Specifies the port number used to connect to the ZDA server.");
+         propertyShortDescs.put("additionalAuthenticationFactor","Specifies the additional authentication factor to be used in conjunction with the password."); 
+         propertyShortDescs.put("stayAlive","Specifies the number of seconds between pings to the Host Server.  This is used to prevent a connection from being viewed as inactive.  A value of 0 means to not send pings to keep the connection alive"); 
 
          for (int i=0; i< pd.length; i++)
          {

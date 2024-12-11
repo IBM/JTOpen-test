@@ -1322,7 +1322,19 @@ public class JDStatementStressTest extends JDTestcase {
    * basic multithreaded case with Callable, Select, and Update
    **/
   public void Var001() {
+  
+    if (getSubDriver() == JDTestDriver.SUBDRIVER_JTOPENCA) {
+      notApplicable("Multiple threads uses same connection causes problems for JDTOPENCA");
+      return; 
+    }
+    
+    if (getSubDriver() == JDTestDriver.SUBDRIVER_JTOPENSF) {
+      notApplicable("Multiple threads uses same connection causes problems for JDTOPENSF");
+      return; 
+    }
+
     try {
+      
       JDStatementStressUpdate ust[] = new JDStatementStressUpdate[2];
       for (int i = 1; i <= ust.length; i++) {
         ust[i - 1] = new JDStatementStressUpdate(testDriver_, connection_, i,

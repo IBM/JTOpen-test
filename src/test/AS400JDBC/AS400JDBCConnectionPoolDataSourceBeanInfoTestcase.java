@@ -597,7 +597,7 @@ propertyTypes.put("clientRerouteAlternatePortNumber","java.lang.String");
 propertyTypes.put("maxRetriesForClientReroute","int"); 
 propertyTypes.put("retryIntervalForClientReroute","int"); 
 propertyTypes.put("enableSeamlessFailover","int"); 
-propertyTypes.put("additionalAuthenticationFactore", "[C");
+propertyTypes.put("additionalAuthenticationFactor", "[C");
 propertyTypes.put("stayAlive",  "int"); 
 
 

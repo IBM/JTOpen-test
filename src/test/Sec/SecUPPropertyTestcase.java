@@ -72,6 +72,14 @@ public class SecUPPropertyTestcase extends Testcase implements PropertyChangeLis
         pce_ = evt;
     }
 
+    public void setup() throws Exception {
+      SecAuthTest.createProfiles(pwrSys_); 
+    } 
+
+    public void cleanup() throws Exception {
+      SecAuthTest.deleteProfiles(pwrSys_); 
+    } 
+
     /**
      Test default value for system.
      **/
@@ -303,6 +311,9 @@ public class SecUPPropertyTestcase extends Testcase implements PropertyChangeLis
     {
         try
         {
+          StringBuffer sb = new StringBuffer(); 
+          boolean passed = true; 
+          
             // Create objects.
             UserProfilePrincipal upp = new UserProfilePrincipal();
             upp.setUserProfileName(SecAuthTest.uid2);
@@ -310,7 +321,24 @@ public class SecUPPropertyTestcase extends Testcase implements PropertyChangeLis
 
             // Test the result.
             User user = upp.getUser();
-            assertCondition(user.getName().equals(upp.getUserProfileName()) && user.getSystem().equals(upp.getSystem()) && user.getStatus().equals("*ENABLED"), "Unexpected user attribute.");
+            if (user == null) { 
+              passed= false; sb.append("user is null\n"); 
+            } else {
+              if (! user.getName().equals(upp.getUserProfileName()) ) {
+                passed = false; 
+                sb.append("user.getName()="+user.getName()+" sb "+upp.getUserProfileName()+"\n"); 
+              }
+              if (!user.getSystem().equals(upp.getSystem())) { 
+                passed = false; 
+                sb.append("user.getSystem()="+user.getSystem()+" sb "+upp.getSystem());
+                
+              }
+              if (!user.getStatus().equals("*ENABLED")) { 
+                passed=false; 
+                sb.append("user.getStatus()="+user.getStatus()+" sb *ENABLED\n"); 
+              }
+            }
+            assertCondition(passed, sb);
         }
         catch (Exception e)
         {

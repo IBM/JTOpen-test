@@ -90,13 +90,28 @@ public class AS400NewInstance extends Testcase {
       char[] password = PasswordVault.decryptPassword(encryptedPassword_);
       testAs400.setPassword(password);
       testAs400.connectService(AS400.SIGNON);
+      testAs400.connectService(AS400.RECORDACCESS);
       PasswordVault.clearPassword(password);
       Job[] jobs = testAs400.getJobs(AS400.SIGNON);
+      if (jobs.length == 0) { 
+        sb.append("Error: no jobs for SIGNON"); 
+        succeeded = false; 
+      }
       for (int i = 0; i < jobs.length; i++) {
         String serverJobName = jobs[i].getNumber() + "/" + jobs[i].getUser() + "/" + jobs[i].getName();
         sb.append("connected to " + serverJobName);
       }
-      assertCondition(jobs.length > 0 && succeeded, sb);
+      Job[] jobs2 = testAs400.getJobs(AS400.RECORDACCESS);
+      if (jobs2.length == 0) { 
+        sb.append("Error: no jobs for RECORDACCESS"); 
+        succeeded = false; 
+      }
+      for (int i = 0; i < jobs2.length; i++) {
+        String serverJobName = jobs2[i].getNumber() + "/" + jobs2[i].getUser() + "/" + jobs2[i].getName();
+        sb.append("connected to " + serverJobName);
+      }
+
+      assertCondition(succeeded, sb);
     } catch (Exception e) {
       failed(e, "Unexpected Exception: " + sb.toString());
     }
@@ -139,4 +154,54 @@ public class AS400NewInstance extends Testcase {
     }
   }
 
+  /* Save as Var001 but with MFA */ 
+  
+  public void Var003() {
+    boolean succeeded = true;
+    if (checkAdditionalAuthenticationFactor(systemName_)) {
+
+    try {
+
+      sb.setLength(0);
+      sb.append("Java home is " + System.getProperty("java.home"));
+      sb.append(AboutToolbox.getVersionDescription() + "\n");
+      sb.append("Calling newInstance to " + systemName_ + "\n");
+      AS400 testAs400 = (AS400) JDReflectionUtil.callStaticMethod_O("com.ibm.as400.access.AS400", "newInstance", true,
+          systemName_);
+      testAs400.setGuiAvailable(false);
+      initMfaUser();
+      testAs400.setUserId(mfaUserid_);
+      testAs400.setPassword(mfaPassword_);
+      testAs400.setAdditionalAuthenticationFactor(mfaFactor_);
+      sb.append("Connecting to SIGNON with "+mfaUserid_+"/"+new String(mfaPassword_)+" and factor "+new String(mfaFactor_)+"\n"); 
+      testAs400.connectService(AS400.SIGNON);
+      testAs400.connectService(AS400.RECORDACCESS);
+      sb.append("Connecting to RECORD with "+mfaUserid_+"/"+new String(mfaPassword_)+" and factor "+ new String(mfaFactor_)+"\n"); 
+
+      Job[] jobs = testAs400.getJobs(AS400.SIGNON);
+      if (jobs.length == 0) { 
+        sb.append("Error: no jobs for SIGNON"); 
+        succeeded = false; 
+      }
+      for (int i = 0; i < jobs.length; i++) {
+        String serverJobName = jobs[i].getNumber() + "/" + jobs[i].getUser() + "/" + jobs[i].getName();
+        sb.append("connected to " + serverJobName);
+      }
+      Job[] jobs2 = testAs400.getJobs(AS400.RECORDACCESS);
+      if (jobs2.length == 0) { 
+        sb.append("Error: no jobs for RECORDACCESS"); 
+        succeeded = false; 
+      }
+      for (int i = 0; i < jobs2.length; i++) {
+        String serverJobName = jobs2[i].getNumber() + "/" + jobs2[i].getUser() + "/" + jobs2[i].getName();
+        sb.append("connected to " + serverJobName);
+      }
+
+      assertCondition(succeeded, sb);
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception: " + sb.toString());
+    }
+    }
+  }
+  
 }
