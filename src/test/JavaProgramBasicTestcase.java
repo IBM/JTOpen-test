@@ -125,7 +125,7 @@ constructor() with 2 parms - Pass null for system.
 	} 
         try {
             JavaProgram u = new JavaProgram(null, JavaProgramTest.classFilePath_);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+u);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -145,7 +145,7 @@ constructor() with 2 parms - Pass null for name.
 	} 
         try {
             JavaProgram u = new JavaProgram(systemObject_, null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+u);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -165,7 +165,7 @@ because the constructor does not check the validity.
 	    return; 
 	} 
         try {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             JavaProgram u = new JavaProgram(bogus, "BadJavaProgram");
             assertCondition ((u.getSystem() == bogus) 
                     && (u.getPath().equals("BadJavaProgram")));
@@ -393,7 +393,7 @@ setPath() - Set to a valid name after the JavaProgram has made a connection.
             JavaProgram u = new JavaProgram(systemObject_, JavaProgramTest.classFilePath_);
             int optimization = u.getOptimizationLevel();
             u.setPath("alabama");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+optimization);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -434,7 +434,7 @@ since the validity is not checked here.
 	    return; 
 	} 
         try {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             JavaProgram u = new JavaProgram(systemObject_, "scarolina");
             u.setSystem(bogus);
             assertCondition ((u.getSystem().getSystemName().equals("bogus"))
@@ -458,7 +458,7 @@ verify that it is used.
 	    return; 
 	} 
         try {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             JavaProgram u = new JavaProgram(bogus, JavaProgramTest.jarFilePath_);
             u.setSystem(systemObject_);
             int optimization = u.getOptimizationLevel();
@@ -490,7 +490,7 @@ setSystem() - Set to a valid name after the JavaProgram object has made a connec
             JavaProgram u = new JavaProgram(systemObject_, JavaProgramTest.jarFilePath_);
             int optimization = u.getOptimizationLevel();
             u.setSystem(systemObject_);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception "+optimization);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");

@@ -19,17 +19,14 @@ import com.ibm.as400.resource.ResourceMetaData;
 
 import test.RIFSTest;
 import test.Testcase;
-import test.RIFSTest.ResourceListener_;
 import test.misc.VIFSSandbox;
 
 import com.ibm.as400.resource.RIFSFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -49,6 +46,7 @@ of the RIFSFile class, inherited from BufferedResource:
 <li>setAttributeValue() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileGenericAttributeTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -68,7 +66,6 @@ extends Testcase {
 
 
     // Private data.
-    private AS400           pwrSys_;
     private VIFSSandbox     sandbox_;
 
 
@@ -77,7 +74,7 @@ extends Testcase {
 Constructor.
 **/
     public RIFSFileGenericAttributeTestcase (AS400 systemObject,
-                              Hashtable namesAndVars,
+        Hashtable<String, Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -316,7 +313,7 @@ commitAttributeChanges() - When the connection is bogus.
         try {
             AS400 system = new AS400("Toolbox", "is", "cool");
             system.setGuiAvailable(false);
-            RIFSFile u = new RIFSFile(system, "ClifNock");
+            RIFSFile u = new RIFSFile(system, "ClifLock");
             u.setAttributeValue(RIFSFile.LAST_MODIFIED, new Date());
             u.commitAttributeChanges();
             failed ("Didn't throw exception");
@@ -424,7 +421,6 @@ each attribute.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            boolean found = false;
             // I did not hardcode an exact length...otherwise, we
             // have to change this every time we add a property.
             assertCondition((amd.length > 10) 
@@ -447,7 +443,7 @@ getAttributeMetaData() with 1 parameter - Pass null.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData amd = u.getAttributeMetaData(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+amd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -464,7 +460,7 @@ getAttributeMetaData() with 1 parameter - Pass an invalid attribute ID.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData amd = u.getAttributeMetaData(new Date());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+amd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -566,7 +562,7 @@ getAttributeUnchangedValue() - When there is no connection.
         try {
             RIFSFile u = new RIFSFile();
             Object value = u.getAttributeUnchangedValue(RIFSFile.LAST_MODIFIED);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+value );
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -584,7 +580,7 @@ getAttributeUnchangedValue() - Pass null.
             IFSFile f = sandbox_.createFile("Rich");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
             Object value = u.getAttributeUnchangedValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -602,7 +598,7 @@ getAttributeUnchangedValue() - Pass an invalid attribute ID.
             IFSFile f = sandbox_.createFile("Susan");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
             Object value = u.getAttributeUnchangedValue(new AS400());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -749,7 +745,7 @@ getAttributeValue() - When there is no connection.
         try {
             RIFSFile u = new RIFSFile();
             Object value = u.getAttributeValue(RIFSFile.LAST_MODIFIED);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -768,7 +764,7 @@ getAttributeValue() - When the connection is bogus.
             system.setGuiAvailable(false);
             RIFSFile u = new RIFSFile(system, "Friend");
             Object value = u.getAttributeValue(RIFSFile.LAST_MODIFIED);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -803,7 +799,7 @@ getAttributeValue() - Pass null.
             IFSFile f = sandbox_.createFile("Pat");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
             Object value = u.getAttributeValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -821,7 +817,7 @@ getAttributeValue() - Pass an invalid attribute ID.
             IFSFile f = sandbox_.createFile("Doug");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
             Object value = u.getAttributeValue("Yo");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception for "+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -1064,7 +1060,7 @@ hasUncommittedAttributeChanges() - Pass null.
             IFSFile f = sandbox_.createFile("Brent");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
             boolean pending = u.hasUncommittedAttributeChanges(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception "+pending);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -1082,7 +1078,7 @@ hasUncommittedAttributeChanges() - Pass an invalid attribute ID.
             IFSFile f = sandbox_.createFile("Warren");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
             boolean pending = u.hasUncommittedAttributeChanges("Go Toolbox");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception "+pending);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");

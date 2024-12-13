@@ -540,7 +540,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
           try {
             Clob p = (Clob) JDReflectionUtil.callMethod_O(csTypes_, "getNClob",
                 20);
-            assertCondition(compare(p, "Chris Smith"));
+            assertCondition(compare(p, "Chris Smyth"));
           } catch (Exception e) {
             failed(e, "Unexpected Exception");
           }
@@ -562,7 +562,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
           try {
             Clob p = (Clob) JDReflectionUtil.callMethod_O(csTypes2_,
                 "getNClob", 20);
-            assertCondition(compare(p, "Chris Smith"));
+            assertCondition(compare(p, "Chris Smyth"));
           } catch (Exception e) {
             failed(e, "Unexpected Exception");
           }
@@ -582,7 +582,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
           try {
             Clob p = (Clob) JDReflectionUtil.callMethod_O(csTypes_, "getNClob",
                 21);
-            assertCondition(compare(p, "Jeff Lee"));
+            assertCondition(compare(p, "Jeff Lex"));
           } catch (Exception e) {
             failed(e, "Unexpected Exception");
           }
@@ -604,7 +604,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
           try {
             Clob p = (Clob) JDReflectionUtil.callMethod_O(csTypes2_,
                 "getNClob", 21);
-            assertCondition(compare(p, "Jeff Lee"));
+            assertCondition(compare(p, "Jeff Lex"));
           } catch (Exception e) {
             failed(e, "Unexpected Exception");
           }
@@ -961,7 +961,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
           try {
             Clob p = (Clob) JDReflectionUtil.callMethod_OS(csTypes_,
                 "getNClob", "P_CLOB");
-            assertCondition(compare(p, "Chris Smith"));
+            assertCondition(compare(p, "Chris Smyth"));
           } catch (Exception e) {
             failed(e, "Unexpected Exception");
           }
@@ -983,7 +983,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
           try {
             Clob p = (Clob) JDReflectionUtil.callMethod_OS(csTypes2_,
                 "getNClob", "P_CLOB");
-            assertCondition(compare(p, "Chris Smith"));
+            assertCondition(compare(p, "Chris Smyth"));
           } catch (Exception e) {
             failed(e, "Unexpected Exception");
           }
@@ -1003,7 +1003,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
           try {
             Clob p = (Clob) JDReflectionUtil.callMethod_OS(csTypes_,
                 "getNClob", "P_DBCLOB");
-            assertCondition(compare(p, "Jeff Lee"));
+            assertCondition(compare(p, "Jeff Lex"));
           } catch (Exception e) {
             failed(e, "Unexpected Exception");
           }
@@ -1025,7 +1025,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
           try {
             Clob p = (Clob) JDReflectionUtil.callMethod_OS(csTypes2_,
                 "getNClob", "P_DBCLOB");
-            assertCondition(compare(p, "Jeff Lee"));
+            assertCondition(compare(p, "Jeff Lex"));
           } catch (Exception e) {
             failed(e, "Unexpected Exception");
           }

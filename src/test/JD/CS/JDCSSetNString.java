@@ -1981,7 +1981,7 @@ SQLDataFactory.convertScientificNotation method
 
 
         
-        //@pdc just changed entries that are failing on jvm1.6 
+        //just changed entries that are failing on jvm1.6 
         String[] inputExpectedScientific = {
                 /* 0*/     "1.0",                    "1.000000000000000",
                 /* 2*/    "1.0E1",                   "10.000000000000000",

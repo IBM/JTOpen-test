@@ -21,12 +21,8 @@
 
 package test;
 
-import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.JavaApplicationCallBeanInfo;
-import java.awt.TextArea;
 import java.beans.BeanInfo;
-import java.io.FileOutputStream;
-import java.util.Vector;
 
 /**
 The JavaAppBeanInfoTestcase class tests the methods of JavaApplicationCallBeanInfo.
@@ -46,8 +42,7 @@ extends Testcase
 {
 
     // Private data.
-    private static final int    variations_ = 11;
-    private boolean inNetscape = false;
+    static final int    variations_ = 11;
 
 
 /**
@@ -57,16 +52,7 @@ Runs the variations.
     {
         boolean allVariations = (variationsToRun_.size () == 0);
 
-        Class fred = null;
-        try { fred = Class.forName("netscape.security.PrivilegeManager"); }
-        catch (Throwable e) {}
-
-        if (fred != null)
-        {
-           inNetscape = true;
-           System.out.println("We think we are in Netscape");
-        }
-
+    
 
         if ((allVariations || variationsToRun_.contains ("1")) && runMode_ != ATTENDED) {
             setVariation (1);
@@ -131,7 +117,7 @@ Method tested:JavaApplicationCallBeanInfo().
     {
         try {
             JavaApplicationCallBeanInfo f = new JavaApplicationCallBeanInfo();
-            succeeded();
+            succeeded("bean info is "+f);
         }
         catch (Throwable t) {
             failed (t, "Unexpected Exception");
@@ -204,9 +190,7 @@ Method tested:getIcon().
 **/
      public void Var006 ()
     {
-        if (inNetscape)
-          notApplicable("-- Cannot load Icon in Netscape");
-        else if (onAS400_) {
+       if (onAS400_) {
           notApplicable("-- Cannot load Icon when running natively");
         }
         else
@@ -230,9 +214,7 @@ Method tested:getIcon().
 **/
     public void Var007 ()
     {
-        if (inNetscape)
-          notApplicable("-- Cannot load Icon in Netscape");
-        else if (onAS400_) {
+        if (onAS400_) {
           notApplicable("-- Cannot load Icon when running natively");
         }
         else
@@ -256,9 +238,7 @@ Method tested:getIcon().
 **/
      public void Var008 ()
     {
-        if (inNetscape)
-          notApplicable("-- Cannot load Icon in Netscape");
-        else if (onAS400_) {
+        if (onAS400_) {
           notApplicable("-- Cannot load Icon when running natively");
         }
         else
@@ -284,9 +264,7 @@ Method tested:getIcon().
 **/
     public void Var009 ()
     {
-        if (inNetscape)
-          notApplicable("-- Cannot load Icon in Netscape");
-        else if (onAS400_) {
+        if (onAS400_) {
           notApplicable("-- Cannot load Icon when running natively");
         }
         else

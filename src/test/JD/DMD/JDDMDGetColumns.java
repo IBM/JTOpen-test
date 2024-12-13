@@ -4234,20 +4234,20 @@ SQL400 - The native driver will return null for a remarks field that
 	    }
 	} else {
 	    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-		if(getJdbcLevel() >= 4)                         //@N1A
-		    if(getRelease() < JDTestDriver.RELEASE_V7R1M0) { //@N1A
+		if(getJdbcLevel() >= 4)                         
+		    if(getRelease() < JDTestDriver.RELEASE_V7R1M0) { 
 			message.append("Expected = toolboxJDBC40Expected42\n");
-			expected42 = toolboxJDBC40Expected42;       //@N1A  //@pdc
-		    } else  {                                          //@N1A
+			expected42 = toolboxJDBC40Expected42;       
+		    } else  {                                         
 			message.append("Expected = toolboxJDBC40Expected42V5R5\n");
-			expected42 = toolboxJDBC40Expected42V5R5;     //@N1A //@pdc
+			expected42 = toolboxJDBC40Expected42V5R5;    
 		    }
-		else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) { // @M1A @N1C
+		else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) { 
 		    message.append("Expected = toolboxJDBC42\n");
 		    expected42 = toolboxExpected42;
-		} else {                                             // @M1A
+		} else {                                             
 		    message.append("Expected = toolboxExpected42V5R5\n");
-		    expected42 = toolboxExpected42V5R5;           // @M1A
+		    expected42 = toolboxExpected42V5R5;           
 		}
 	    }
 	}

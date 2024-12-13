@@ -132,13 +132,13 @@ public class EndProxyServer extends PxClientConnectionAdapter
     public static void main(String args[])
     {
         // Expection options for the EndProxyServer application.
-        Vector expectedOptions = new Vector();
+        Vector<String> expectedOptions = new Vector<String>();
         expectedOptions.addElement("-proxyServer");
         expectedOptions.addElement("-verbose");
         expectedOptions.addElement("-help");
 
         // Shortcuts for the EndProxyServer application.
-        Hashtable shortcuts = new Hashtable();
+        Hashtable<String, String> shortcuts = new Hashtable<String, String>();
         shortcuts.put("-ps", "-proxyServer");
         shortcuts.put("-v", "-verbose");
         shortcuts.put("-h", "-help");

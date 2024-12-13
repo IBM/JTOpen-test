@@ -20,12 +20,6 @@
 package test;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-import java.util.Vector;
-import test.TestDriver;
-import test.Testcase;
 import com.ibm.as400.access.*;
 
 /**

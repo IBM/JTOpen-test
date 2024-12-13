@@ -132,7 +132,7 @@ Performs setup needed before running variations.
 	} else {
 	    statement1_ = connection1_.createStatement ();
 	}
-        // @PDC to match current behavior for toolbox date and time
+        // to match current behavior for toolbox date and time
         if (isToolboxDriver())
         {
             typeInfo[14] = new JDRSSQLTypeInfo("DATE", GETSTRING, dateSet, dateReadToolBox);

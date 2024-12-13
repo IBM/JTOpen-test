@@ -261,7 +261,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             AS400 system = new AS400("Toolbox", "is", "cool");
             system.setGuiAvailable(false);
-            RUser u = new RUser(system, "ClifNock");
+            RUser u = new RUser(system, "ClifRock");
             u.setAttributeValue(RUser.ASSISTANCE_LEVEL, RUser.ASSISTANCE_LEVEL_BASIC);
             u.commitAttributeChanges();
             failed("Didn't throw exception");

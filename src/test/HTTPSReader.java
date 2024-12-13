@@ -72,7 +72,7 @@ public class HTTPSReader {
     }
     bufferedReader.close(); 
     
-    if (false) {
+    if (debug) {
 	System.out.println(" ---- read ----- ");
 	System.out.println(outputBuffer);
 

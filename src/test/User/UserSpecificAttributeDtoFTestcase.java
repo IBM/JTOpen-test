@@ -1119,7 +1119,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         {
             RUser u = new RUser(pwrSys_, user_);
             u.setAttributeValue(RUser.FULL_NAME, "*DFT");
-            u.setAttributeValue(RUser.LAST_NAME, "Nock");
+            u.setAttributeValue(RUser.LAST_NAME, "Rock");
             u.setAttributeValue(RUser.FIRST_NAME, "Clifton");
             u.setAttributeValue(RUser.MIDDLE_NAME, "Malcolm");
             u.setAttributeValue(RUser.PREFERRED_NAME, "Clif");
@@ -1127,7 +1127,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
 
             RUser u2 = new RUser(pwrSys_, user_);
             Object value = u2.getAttributeValue(RUser.FULL_NAME);
-            assertCondition(((String)value).equalsIgnoreCase("Nock, Clifton Malcolm (Clif)"));
+            assertCondition(((String)value).equalsIgnoreCase("Rock, Clifton Malcolm (Clif)"));
         }
         catch (Exception e)
         {

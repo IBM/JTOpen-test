@@ -814,7 +814,7 @@ was returned in the result set.
             if (checkLobSupport ()) {
                try {
                   Object p =  JDReflectionUtil.callMethod_O(csTypesLob_, "getSQLXML", 20);
-                  assertCondition (compare (p, "<d>Chris Smith</d>",sb),sb);
+                  assertCondition (compare (p, "<d>Chris Smyth</d>",sb),sb);
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -839,7 +839,7 @@ SQL400 - let this work.
             if (checkLobSupport ()) {
               try {
                  Object p =  JDReflectionUtil.callMethod_O(csTypesLobLocator_,"getSQLXML", 20);
-                 assertCondition (compare (p, "<d>Chris Smith</d>",sb),sb);
+                 assertCondition (compare (p, "<d>Chris Smyth</d>",sb),sb);
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -862,7 +862,7 @@ was returned in the result set and is a DBCLOB.
             if (checkLobSupport ()) {
                try {
                   Object p =  JDReflectionUtil.callMethod_O(csTypesLob_, "getSQLXML", 21);
-                  assertCondition (compare (p, "<d>Jeff Lee</d>",sb),sb);
+                  assertCondition (compare (p, "<d>Jeff Lex</d>",sb),sb);
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -888,7 +888,7 @@ SQL400 - let this work.
             if (checkLobSupport ()) {
               try {
                  Object p =  JDReflectionUtil.callMethod_O(csTypesLobLocator_,"getSQLXML", 21);
-                 assertCondition (compare (p, "<d>Jeff Lee</d>",sb),sb);
+                 assertCondition (compare (p, "<d>Jeff Lex</d>",sb),sb);
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -1251,7 +1251,7 @@ was returned in the result set.
             if (checkLobSupport ()) {
                try {
                   Object p =  JDReflectionUtil.callMethod_OS(csTypesLob_, "getSQLXML", "P_CLOB");
-                  assertCondition (compare (p, "<d>Chris Smith</d>",sb),sb);
+                  assertCondition (compare (p, "<d>Chris Smyth</d>",sb),sb);
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -1275,7 +1275,7 @@ SQL400 - let this work.
             if (checkLobSupport ()) {
               try {
                  Object p =  JDReflectionUtil.callMethod_OS(csTypesLobLocator_,"getSQLXML", "P_CLOB");
-                 assertCondition (compare (p, "<d>Chris Smith</d>",sb),sb);
+                 assertCondition (compare (p, "<d>Chris Smyth</d>",sb),sb);
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -1297,7 +1297,7 @@ was returned in the result set and is a DBCLOB.
             if (checkLobSupport ()) {
                try {
                   Object p =  JDReflectionUtil.callMethod_OS(csTypesLob_, "getSQLXML", "P_DBCLOB");
-                  assertCondition (compare (p, "<d>Jeff Lee</d>",sb),sb);
+                  assertCondition (compare (p, "<d>Jeff Lex</d>",sb),sb);
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -1321,7 +1321,7 @@ SQL400 - let this work.
             if (checkLobSupport ()) {
               try {
                  Object p =  JDReflectionUtil.callMethod_OS(csTypesLobLocator_,"getSQLXML", "P_DBCLOB");
-                 assertCondition (compare (p, "<d>Jeff Lee</d>",sb),sb);
+                 assertCondition (compare (p, "<d>Jeff Lex</d>",sb),sb);
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }

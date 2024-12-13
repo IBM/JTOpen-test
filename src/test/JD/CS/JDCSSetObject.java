@@ -598,12 +598,12 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var027() {
     if (checkJdbc20()) {
       try {
-        cs.setObject(20, new JDLobTest.JDTestClob("Chris Smith"));
+        cs.setObject(20, new JDLobTest.JDTestClob("Chris Smyth"));
         cs.execute();
 
         Object p = cs.getObject(20);
 
-        assertCondition(compare((Clob) p, "Chris Smith"));
+        assertCondition(compare((Clob) p, "Chris Smyth"));
 
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -945,10 +945,10 @@ public class JDCSSetObject extends JDCSSetTestcase {
     if (checkNamedParametersSupport()) {
       if (checkLobSupport()) {
         try {
-          cs.setObject("P_CLOB", new JDLobTest.JDTestClob("Chris Smith"));
+          cs.setObject("P_CLOB", new JDLobTest.JDTestClob("Chris Smyth"));
           cs.execute();
           Object p = cs.getObject("P_CLOB");
-          assertCondition(compare((Clob) p, "Chris Smith"));
+          assertCondition(compare((Clob) p, "Chris Smyth"));
 
         } catch (Exception e) {
           failed(e, "Unexpected Exception");

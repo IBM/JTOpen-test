@@ -350,7 +350,7 @@ public class JDCleanSplfJdbc {
     Timestamp endTimestamp = new Timestamp(endFilterTime);
     long startMillis = System.currentTimeMillis();
     String userInClause=""; 
-    Enumeration enumeration = deleteUserIds.keys(); 
+    Enumeration<String> enumeration = deleteUserIds.keys(); 
     boolean addComma = false; 
     if (deleteAll) { 
       String query = " SELECT USER_NAME, SPOOLED_FILE_NAME, FILE_NUMBER ,JOB_NAME ,  CREATE_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
@@ -362,7 +362,7 @@ public class JDCleanSplfJdbc {
       
     } else {
       while (enumeration.hasMoreElements()) {
-        String userId = (String) enumeration.nextElement();
+        String userId = enumeration.nextElement();
         if (addComma) {
           userInClause += ",";
         } else {

@@ -13,7 +13,6 @@
 
 package test;
 
-import java.awt.Color;
 
 /**
 This class is a simple 16 color index color scheme.  The colors are:

@@ -4438,11 +4438,11 @@ public class AS400JDBCMDSTestcase extends Testcase
     **/
     public void Var149()
     {       
-        // testcase does not work when on AS/400 because Jim's code
-        // will grab the password for the current job if we don't
+        // testcase does not work when on AS/400 because
+        // the password is grabbed for the current job if we don't
         // specify it.  Just move on.
         //if (JDTestDriver.OSName_.equalsIgnoreCase("OS/400"))
-        if (environment_ == OS_AS400)  //@pdc
+        if (environment_ == OS_AS400) 
         {                            
             succeeded();
             return;

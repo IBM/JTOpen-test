@@ -154,10 +154,7 @@ Fixed by native driver in V6R1
 
 
 
-Excepts from note by
-
-Christopher M Farrar/Santa Teresa/IBM
-11/02/2007 07:09 PM
+Excepts from note on 11/02/2007 by
 
 The simplest way to express the standard SQL rules are that unquoted identifiers are converted to UPPER CASE during the parsing process, that all quoted (delimited) identifiers are left in their given, specified case, and all identifier comparison is done in a case sensitive manner after the parse completes.
 

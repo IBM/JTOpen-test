@@ -187,7 +187,7 @@ Performs setup needed before running variations.
         if ((driver == JDTestDriver.DRIVER_NATIVE) ||
             (driver == JDTestDriver.DRIVER_JCC) ||
             (driver == JDTestDriver.DRIVER_TOOLBOX) ||
-	    (driver == JDTestDriver.DRIVER_JTOPENLITE) ) //@C0  //@PDC
+	    (driver == JDTestDriver.DRIVER_JTOPENLITE) ) //@C0  
         {
             s.executeUpdate("GRANT UPDATE(COLUMN1) ON " + JDDMDTest.COLLECTION + ".CPRIVS TO QUSER");  /*@D1C*/
 
@@ -307,7 +307,7 @@ verify all columns.
             //@C0
             //The result set created by the native driver will only have rows representing the priviliges
             //that have been granted.
-            if (getDriver()==JDTestDriver.DRIVER_JTOPENLITE ||getDriver()==JDTestDriver.DRIVER_JCC || getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@PDC
+            if (getDriver()==JDTestDriver.DRIVER_JTOPENLITE ||getDriver()==JDTestDriver.DRIVER_JCC || getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
             {
 		int expectedRows = 1;
 		int expectedRowsBig = 17;
@@ -463,7 +463,7 @@ columns should be returned.
             if (getDriver () == JDTestDriver.DRIVER_JCC ||
                 getDriver () == JDTestDriver.DRIVER_NATIVE ||
 		getDriver () == JDTestDriver.DRIVER_JTOPENLITE ||
-               (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@PDC
+               (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
             {
                 while (rs.next ()) {
                     ++rows;
@@ -613,7 +613,7 @@ exactly.  All matching columns should be returned.
             //in the result set.
             if (getDriver () == JDTestDriver.DRIVER_NATIVE ||
 		getDriver () == JDTestDriver.DRIVER_JTOPENLITE ||
-		(getDriver() == JDTestDriver.DRIVER_JCC) || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@PDC
+		(getDriver() == JDTestDriver.DRIVER_JCC) || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
             {
                 assertCondition (rows == 0 || (rows == 8 && check1 && check2),
                     "rows = "+rows+" sb 0/8 \n"+sb.toString());
@@ -685,7 +685,7 @@ All matching columns should be returned.
             //@C0
             //no privileges were granted to the CPRIVS2 table so we do not expect any rows
             //in the result set.
-            if (getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@PDC
+            if (getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
             {
                 assertCondition (rows == 0 || (rows == 8 && check1 & check1), "rows = "+rows+" sb 0/8\n"+sb.toString());
             }
@@ -1071,7 +1071,7 @@ exactly.  All matching columns should be returned.
 
             rs.close ();
             //@C0
-            if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || (getDriver () == JDTestDriver.DRIVER_NATIVE) ||(getDriver () == JDTestDriver.DRIVER_JCC) || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@PDC
+            if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || (getDriver () == JDTestDriver.DRIVER_NATIVE) ||(getDriver () == JDTestDriver.DRIVER_JCC) || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
             {
 		assertCondition(rows == 0 || (rows==8 && check1 && check2 ) , "rows="+rows+"sb 0 or 8 \n"+sb.toString() );
             }
@@ -1196,7 +1196,7 @@ columns should be returned.
 
             rs.close ();
             //@C0
-            if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || (getDriver () == JDTestDriver.DRIVER_NATIVE) || (getDriver () == JDTestDriver.DRIVER_JCC) || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@PDC
+            if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || (getDriver () == JDTestDriver.DRIVER_NATIVE) || (getDriver () == JDTestDriver.DRIVER_JCC) || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
             {
                 assertCondition(rows == 0 || (rows == 8 && check1 && check2 ) ,
                     "rows="+rows+" sb 0/8  check1="+check1+" check2="+check2+" \n"+sb.toString());
@@ -1328,7 +1328,7 @@ there is a match.  All matching columns should be returned.
             rs.close ();
 
             //@C0
-            if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getDriver () == JDTestDriver.DRIVER_JCC || getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata()) ) //@pdc
+            if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getDriver () == JDTestDriver.DRIVER_JCC || getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata()) ) 
             {
                 assertCondition (success && ((check2 && (rows == 1)) ||
                     (check1 && check2 && check3 && check4
@@ -1385,7 +1385,7 @@ there is a match.  All matching columns should be returned.
             // System.out.println ("rows = " + rows);
 
             rs.close ();
-            if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getDriver () == JDTestDriver.DRIVER_JCC ||  getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@pdc
+            if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getDriver () == JDTestDriver.DRIVER_JCC ||  getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
             {
                 assertCondition ((success && check1 && (rows == 1)) ||
                                   (success && check1 && check2
@@ -1484,7 +1484,7 @@ columns should be returned.
                 rs.close ();
 
 
-                if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getDriver () == JDTestDriver.DRIVER_JCC ||  getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@pdc
+                if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getDriver () == JDTestDriver.DRIVER_JCC ||  getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
                 {
                     assertCondition (success && (rows==1 || rows == 9),
                         "Added by Toolbox 8/11/2004 for 128 byte column names rows = "+rows+" sb 1/9,  success ="+success+" "+sb.toString() );
@@ -3411,7 +3411,7 @@ getColumnPrivileges() - Use readonly connection.
             if (getDriver () == JDTestDriver.DRIVER_JCC ||
                 getDriver () == JDTestDriver.DRIVER_NATIVE ||
 		getDriver () == JDTestDriver.DRIVER_JTOPENLITE ||
-               (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) //@PDC
+               (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
             {
                 while (rs.next ()) {
                     ++rows;

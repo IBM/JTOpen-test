@@ -539,7 +539,7 @@ public class JTAResource extends JTATestcase {
         }
 
         boolean condition = false;
-        // @PDC toolbox driver behavoir
+        //  toolbox driver behavoir
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           condition = (errorCode2 == expectedErrorCode2) && (rowCount == 0);
         } else {
@@ -650,7 +650,7 @@ public class JTAResource extends JTATestcase {
         xar.rollback(xid);
         xac.close();
         int rowCount = countRows(-4432);
-        // @PDC toolbox driver
+        //  toolbox driver
         boolean condition = false;
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           condition = (errorCode == XAException.XAER_PROTO) && (rowCount == 0);
@@ -880,7 +880,7 @@ public class JTAResource extends JTATestcase {
         xac.close();
 
         int rowCount = countRows(-23400);
-        // @PDC toolbox driver behavoir
+        //  toolbox driver behavoir
         boolean condition = false;
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           condition = (rowCount == 0);
@@ -1721,7 +1721,7 @@ public class JTAResource extends JTATestcase {
           }
           assertCondition(condition);
         } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-          // @PDC
+          // 
           assertCondition((errorCode2 == XAException.XAER_INVAL)
               && (countRows(476) == 0));
         } else {
@@ -1788,7 +1788,7 @@ public class JTAResource extends JTATestcase {
           }
 
         } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-          // @PDC
+          // 
           condition = (errorCode1 == XAException.XA_RBROLLBACK)
               && (errorCode2 == 0) && (rowCount) == 0;
           if (!condition) {
@@ -1852,7 +1852,7 @@ public class JTAResource extends JTATestcase {
         xac.close();
 
         int rowCount = countRows(-165476);
-        // @PDC
+        // 
         boolean condition = false;
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           condition = (rowCount == 0);
@@ -1954,7 +1954,7 @@ public class JTAResource extends JTATestcase {
                 + rowCount);
           }
         } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-          // @PDC toolbox
+          //  toolbox
           condition = (errorCode == 0) && (rowCount == 1);
           if (!condition) {
             System.out.println("errorCode should be 0 , but is " + errorCode);
@@ -2027,7 +2027,7 @@ public class JTAResource extends JTATestcase {
         boolean success = xar.setTransactionTimeout(12345);
         if (!useUDBDataSource) {
           if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-            assertCondition(success == true); // @PDC
+            assertCondition(success == true); 
           } else
             assertCondition(success == false);
         } else {

@@ -14,7 +14,6 @@ package test;
 
 
 import java.io.*;
-import java.util.*;
 /**
  *
 **/
@@ -54,8 +53,6 @@ public class GetMethodCount
       for (line = in.readLine(); line.indexOf(" Method") == -1; line = in.readLine())
       {
       }
-      Vector classes = new Vector();
-      Vector aClass;
       int methodCount = 0;
       while (line != null)
       {

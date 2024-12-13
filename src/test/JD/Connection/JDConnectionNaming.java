@@ -346,8 +346,7 @@ Fixed in V5R5 using issue 33770.
 **/
 
     public void Var011() {
-        //@PDC na on toolbox driver for now
-	if (isToolboxDriver()) {
+       if (isToolboxDriver()) {
 	    notApplicable("toolbox driver possible todo");
 	    return;
 	}

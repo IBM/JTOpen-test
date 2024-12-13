@@ -1257,7 +1257,7 @@ even though it is declared to be. @D2A
 		      stmt.executeUpdate(command); 
 
             Statement statement;
-            if (isToolboxDriver()){ //@PDC 
+            if (isToolboxDriver()){ 
                 statement =
                     connection_.createStatement
                        (ResultSet.TYPE_FORWARD_ONLY,

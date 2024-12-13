@@ -749,7 +749,7 @@ super.cleanup();
 
                 byte[] check = new byte[] { (byte) 'D', (byte) 'a', (byte) 'v',
                     (byte) 'e', (byte) ' ', (byte) 'E',
-                    (byte) 'g', (byte) 'l', (byte) 'e'};     // Should be 'Dave Egle'
+                    (byte) 'g', (byte) 'g', (byte) 'e'};     // Should be 'Dave Egge'
 		    StringBuffer sb = new StringBuffer(); 
 		    boolean passed = areEqual (p, check, sb);
                 assertCondition(passed,sb);
@@ -1339,7 +1339,7 @@ super.cleanup();
 
                 byte[] check = new byte[] { (byte) 'D', (byte) 'a', (byte) 'v',
                     (byte) 'e', (byte) ' ', (byte) 'E',
-                    (byte) 'g', (byte) 'l', (byte) 'e'};     // Should be 'Dave Egle'
+                    (byte) 'g', (byte) 'g', (byte) 'e'};     // Should be 'Dave Egge'
 		    StringBuffer sb = new StringBuffer();
 		    boolean passed = areEqual (p, check, sb); 
                 assertCondition (passed,sb);

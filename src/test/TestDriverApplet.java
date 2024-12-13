@@ -808,7 +808,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
       }
 
       allTestcases_ = (namesAndVars_.size() == 0);
-      pwrSysStatic_ = pwrSys_; //@pdc before createTestcases so that eath testcase setup can access pwrsysstatic
+      pwrSysStatic_ = pwrSys_; //before createTestcases so that eath testcase setup can access pwrsysstatic
       // Fill in the testcase_ array.
       createTestcases();
 

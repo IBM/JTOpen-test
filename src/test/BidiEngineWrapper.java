@@ -8,16 +8,16 @@ import com.ibm.as400.access.*;
 
 public class BidiEngineWrapper {
 
-	private static String LRO = "\u202D";
-	private static String RLO = "\u202E";
+ static String LRO = "\u202D";
+ static String RLO = "\u202E";
 
-	private static String LRE = "\u202A";
-	private static String RLE = "\u202B";
-	private static String PDF = "\u202C";
+ static String LRE = "\u202A";
+ static String RLE = "\u202B";
+ static String PDF = "\u202C";
 
-    private static final int ST1 = 1;
-    private static final int ST2 = 2;
-    private static final int ST3 = 3;
+ static final int ST1 = 1;
+ static final int ST2 = 2;
+ static final int ST3 = 3;
     private static final int ST4 = 4;
     private static final int ST5 = 5;
     private static final int ST6 = 6;
@@ -26,9 +26,9 @@ public class BidiEngineWrapper {
     private static final int ST9 = 9;
     private static final int ST10 = 10;
     private static final int ST11 = 11;
-    private static final int ST12 = 12;
-    private static final int ST13 = 13;
-    private static final int ST14 = 14;
+    static final int ST12 = 12;
+    static final int ST13 = 13;
+    static final int ST14 = 14;
     
     //static BidiTransform bdx = new BidiTransform();
     
@@ -115,7 +115,7 @@ public class BidiEngineWrapper {
         }
     }    
     public static void main(String[] args) {
-    	String src = "\uFEF0\uFE91\uFEAE\uFECB\u0020\u0074\u0068\u0069\u0073\u0020\u0069\u0073\u0020\u0074\u0065\u0073\u0074\u0020\uFE8E\uFEF4\uFEE7\uFE8E\uFE9B\u0020\uFEED\u0020\uFEFB\uFEED\uFE8D";
+    	// String src = "\uFEF0\uFE91\uFEAE\uFECB\u0020\u0074\u0068\u0069\u0073\u0020\u0069\u0073\u0020\u0074\u0065\u0073\u0074\u0020\uFE8E\uFEF4\uFEE7\uFE8E\uFE9B\u0020\uFEED\u0020\uFEFB\uFEED\uFE8D";
     		//"\u05d0\u05d1 ABC \u05d2\u05d3";
     //		"\u06d0\u06d1 ABC \u06d2\u06d3";
     	/*

@@ -517,7 +517,7 @@ Performs cleanup needed after running variations.
 
 
    public void Var009() {
-       //@PDC na on toolbox driver for now
+       //na on toolbox driver for now
        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
            notApplicable("toolbox driver behavior since v5r3");
            return;

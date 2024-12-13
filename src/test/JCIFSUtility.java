@@ -37,7 +37,6 @@ import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -266,16 +265,16 @@ public static void deleteFile(String system, String userId, char[] encryptedPass
 
           // SmbFile has a bug in that it returns the files several time.. Make
           // sure they are unique
-          Hashtable uniqueNames = new Hashtable();
+          Hashtable<String, String> uniqueNames = new Hashtable<String, String>();
           for (int i = 0; i < files.length; i++) {
             uniqueNames.put(files[i], "X");
           }
 
           files = new String[uniqueNames.size()];
-          Enumeration keys = uniqueNames.keys();
+          Enumeration<String> keys = uniqueNames.keys();
           int i = 0;
           while (keys.hasMoreElements()) {
-            files[i] = (String) keys.nextElement();
+            files[i] = keys.nextElement();
             i++;
           }
           return files;
@@ -676,7 +675,6 @@ public static void deleteFile(String system, String userId, char[] encryptedPass
 	  
 	  
 	  if (useJdbc) {
-		  	boolean result; 
 			if (jdbcConnection_ == null) {
 				setupJdbcConnection(system, userId, encryptedPassword);
 			}

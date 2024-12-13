@@ -1886,7 +1886,7 @@ public class JDReport {
         System.out.println(x);
       }
       System.out.println("-------------");
-      
+      loader.close(); 
     }
     String PASSWORD = PasswordVault.decryptPasswordLeak(encryptedPassword) ; 
 

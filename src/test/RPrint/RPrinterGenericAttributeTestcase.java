@@ -278,7 +278,7 @@ commitAttributeChanges() - When the connection is bogus.
         try {
             AS400 system = new AS400("Toolbox", "is", "cool");
             system.setGuiAvailable(false);
-            RPrinter u = new RPrinter(system, "ClifNock");
+            RPrinter u = new RPrinter(system, "ClifRock");
             u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, RPrinter.SEPARATOR_PAGE_DEVICE);
             u.commitAttributeChanges();
             failed ("Didn't throw exception");
