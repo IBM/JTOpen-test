@@ -335,7 +335,7 @@ public class JTAStdConn extends JTATestcase {
   }
 
   public void Var004() {
-    // @PDC na on toolbox driver for now
+    //  na on toolbox driver for now
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
       notApplicable("Non-toolbox test only.");
       return;

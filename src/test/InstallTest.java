@@ -23,7 +23,6 @@ import test.IN.INIsUpdateNeededTestcase;
 import test.IN.INUnInstallTestcase;
 
 import java.util.Enumeration;
-import java.util.StringTokenizer;
 import java.net.URL;
 import java.io.File;
 import java.io.InputStream;

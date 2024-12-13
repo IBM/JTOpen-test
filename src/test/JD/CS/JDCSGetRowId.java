@@ -663,7 +663,7 @@ public class JDCSGetRowId extends JDCSGetTestcase {
 
         byte[] check = new byte[]
           { (byte) 'D', (byte) 'a', (byte) 'v', (byte) 'e', (byte) ' ',
-              (byte) 'E', (byte) 'g', (byte) 'l', (byte) 'e' }; // Should be 'Dave Egle'
+              (byte) 'E', (byte) 'g', (byte) 'g', (byte) 'e' }; // Should be 'Dave Egge'
 
         byte[] ba = (byte[]) JDReflectionUtil.callMethod_O(p, "getBytes");
         assertCondition(areEqual(ba, check), added);
@@ -1224,7 +1224,7 @@ public class JDCSGetRowId extends JDCSGetTestcase {
 
         byte[] check = new byte[]
           { (byte) 'D', (byte) 'a', (byte) 'v', (byte) 'e', (byte) ' ',
-              (byte) 'E', (byte) 'g', (byte) 'l', (byte) 'e' }; // Should be 'Dave Egle'
+              (byte) 'E', (byte) 'g', (byte) 'g', (byte) 'e' }; // Should be 'Dave Egge'
         byte[] ba = (byte[]) JDReflectionUtil.callMethod_O(p, "getBytes");
 
         assertCondition(areEqual(ba, check), added);

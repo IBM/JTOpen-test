@@ -378,7 +378,7 @@ SQL400 - The Native JDBC driver has changed so that it will
             assertCondition ((s.equals (system_.toUpperCase ()))
                              || (s.equalsIgnoreCase("localhost"))
                              || (s.equalsIgnoreCase("*LOCAL"))
-                             || (s.equals(getRealCatalogName())), "s = "+s);   // @C1A //@pdc can have local db/catalog name diff from host name
+                             || (s.equals(getRealCatalogName())), "s = "+s);   //can have local db/catalog name diff from host name
         }
         catch (Exception e) {
             failed(e, "Unexpected Exception");
@@ -410,7 +410,7 @@ SQL400 - The Native JDBC driver has changed so that it will
             assertCondition ((s.equals (system_.toUpperCase ()))
                              || (s.equalsIgnoreCase("localhost"))
                              || (s.equalsIgnoreCase("*LOCAL"))
-                             || (s.equals(getRealCatalogName())), "s = "+s);   // @C1A //@pdc can have local db/catalog name diff from host name
+                             || (s.equals(getRealCatalogName())), "s = "+s);   // can have local db/catalog name diff from host name
         }
         catch (Exception e) {
             failed(e, "Unexpected Exception");

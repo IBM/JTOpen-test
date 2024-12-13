@@ -717,15 +717,26 @@ Constructor.
 	        //
 	       // Update the FILES in the env library if the library is newer 
 	       // 
-	       command = " DSPOBJD OBJ("+library+") OBJTYPE(*LIB) OUTPUT(*OUTFILE) OUTFILE("+
-		 envLibrary+"/"+library+")"; 
-	       if (debug) System.out.println("JDJSTP.debug: Checking "+command);
-	       try { 
-		   serverCommand(command, false);
-	       } catch (Exception e) {
-		   System.out.println("Warning:  Command = "+command);
-		   e.printStackTrace(); 
-	       } 
+	       boolean retry = true;
+	       while (retry) { 
+	         retry = false; 
+  	       command = " DSPOBJD OBJ("+library+") OBJTYPE(*LIB) OUTPUT(*OUTFILE) OUTFILE("+
+  		 envLibrary+"/"+library+")"; 
+  	       if (debug) System.out.println("JDJSTP.debug: Checking "+command);
+  	       try { 
+  		   serverCommand(command, false);
+  	       } catch (Exception e) {
+  	         String message = e.toString(); 
+  	         if (message.indexOf("type *LIB not found") >= 0 ) {
+  	           Statement s = cmdConn.createStatement(); 
+  	           s.execute("CREATE COLLECTION "+library); 
+  	           retry = true; 
+  	         } else { 
+  		   System.out.println("Warning:  Command = "+command);
+  		   e.printStackTrace(); 
+  	         }
+  	       } 
+	       }
 
 
 	       command = "DELETE FROM "+envLibrary+".FILES WHERE SOURCE LIKE '%"+library+"%' AND "+

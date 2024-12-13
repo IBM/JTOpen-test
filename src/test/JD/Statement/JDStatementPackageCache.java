@@ -223,8 +223,7 @@ public class JDStatementPackageCache extends JDTestcase {
       // first, clean up the old package
       try {
         CommandCall cc = new CommandCall(system);
-        cc.run("DLTSQLPKG SQLPKG(" + collection + "/DAWPKG9899)"); // pdc 9899
-                                                                   // is current
+        cc.run("DLTSQLPKG SQLPKG(" + collection + "/DAWPKG9899)"); // is current
                                                                    // package
                                                                    // ending
         AS400Message[] ml = cc.getMessageList();
@@ -555,7 +554,7 @@ public class JDStatementPackageCache extends JDTestcase {
       // sql cache.
       connection = testDriver_.getConnection(connect_string,systemObject_.getUserId(), encryptedPassword_);
 
-      // pdc use reflection for proxy server
+      // use reflection for proxy server
       String job = JDReflectionUtil.callMethod_S(connection,
           "getServerJobIdentifier");
 

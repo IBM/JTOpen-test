@@ -146,7 +146,7 @@ public class JDPerformanceUtil {
           } catch (Exception e2) {
             // ignore
           }
-          //@pdc v6r1, "client" is a reserved keyword... issue 36340
+          // v6r1, "client" is a reserved keyword.
           stmt.executeUpdate("CREATE TABLE JDPERFRES.RESULTS2("+
               "RUNTIMESTAMP TIMESTAMP, "+
               "TEST         VARCHAR(100),"+
@@ -572,7 +572,7 @@ public class JDPerformanceUtil {
       pstmt.close();
 
       System.out.println("Best run results by Driver, JAVA_HOME");
-      //@pdc v6r1, per issue36340, client is a reserved keyword
+      // client is a reserved keyword
       pstmt = connection_.prepareStatement(
           "SELECT TEST, CLIENTX, SERVER, JAVAHOME, DRIVER, COUNT(RUNMICROS) AS COUNT , MIN(RUNMICROS) AS MINRUN, AVG(RUNMICROS) AS AVGRUN FROM JDPERFRES.RESULTS2 WHERE TEST=? GROUP BY TEST, CLIENTX, SERVER, JAVAHOME, DRIVER ORDER BY DRIVER, JAVAHOME");
       pstmt.setString(1, testname); 

@@ -300,7 +300,7 @@ Tests the getting and setting of the TCP SO_TIMEOUT socket option.
                 char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
                 AS400JDBCDataSource dataSource = new AS400JDBCDataSource(system_, userId_, charPassword);
                 PasswordVault.clearPassword(charPassword);
-                dataSource.setSoTimeout(1000); //@pdc for slower networks
+                dataSource.setSoTimeout(1000); //for slower networks
                 if (dataSource.getSoTimeout() != 1000) {
                     failed("TCP SO_TIMEOUT option not set.");
                     return;

@@ -576,10 +576,10 @@ SQL400 - For this test to return UTC timezone information,
 
 	    String tz = System.getProperty("user.timezone");
 
- 	    // Make this work for V5R4 group test -- same result as before @PDC change
+ 	    // Make this work for V5R4 group test -- same result as before 
             // For the V5R4 group test, the timezone is set to UTC  @H2A 
  	    if ((isToolboxDriver()) &&
- 		(getRelease() == JDTestDriver.RELEASE_V7R1M0 || getRelease() >= JDTestDriver.RELEASE_V7R1M0) &&
+ 		( getRelease() >= JDTestDriver.RELEASE_V7R1M0) &&
  		(JTOpenTestEnvironment.isOS400) &&
                  "UTC".equals(tz)) {
                 assertCondition (v.toString ().equals ("1998-04-08"));
@@ -587,7 +587,7 @@ SQL400 - For this test to return UTC timezone information,
  	    }
  
 
-	    if (((getDriver () == JDTestDriver.DRIVER_NATIVE  && "UTC".equals(tz)) )) {  //@F1A //@pdc
+	    if (((getDriver () == JDTestDriver.DRIVER_NATIVE  && "UTC".equals(tz)) )) {  
                assertCondition (v.toString ().equals ("1998-04-08"),
 				"got "+v.toString()+" expected 1998-04-08 tz="+tz);
 	    } else	 { 
@@ -1664,7 +1664,7 @@ getDate() - Get from a TIMESTAMP.
     public void Var066 ()
     {
       if (getDriver () == JDTestDriver.DRIVER_JCC) {
-        notApplicable("JCC doesn't normalize when getting from timestamep"); 
+        notApplicable("JCC doesn't normalize when getting from timestamp"); 
         return; 
       }
         try {

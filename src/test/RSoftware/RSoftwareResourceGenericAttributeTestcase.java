@@ -323,7 +323,7 @@ commitAttributeChanges() - When the connection is bogus.
         try {
             AS400 system = new AS400("Toolbox", "is", "cool");
             system.setGuiAvailable(false);
-            RSoftwareResource u = new RSoftwareResource(system, "ClifNock");
+            RSoftwareResource u = new RSoftwareResource(system, "ClifRock");
             u.setAttributeValue(RSoftwareResource.LICENSED_INTERNAL_CODE_OPTIONS, "AllowInlining");
             u.commitAttributeChanges();
             failed ("Didn't throw exception");

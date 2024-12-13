@@ -352,9 +352,9 @@ public class JDXMLXML extends JDTestcase {
     { 0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6F,
         0x6E, 0x3D, 0x22, 0x31, 0x2E, 0x30, 0x22, 0x20, 0x65, 0x6e, 0x63 , 0x6f,
         0x64, 0x69, 0x6e, 0x67, 0x3d , 0x22, 0x55, 0x54, 0x46, 0x2d, 0x38, 0x22, 
-        0x3f, 0x3e, 0x3c, 0x54, 0x45, 0x53, 0x54, 0x2f, 0x3e}; //@pdc <?xml version="1.0" encoding="UTF-8"?><TEST/>
+        0x3f, 0x3e, 0x3c, 0x54, 0x45, 0x53, 0x54, 0x2f, 0x3e}; // <?xml version="1.0" encoding="UTF-8"?><TEST/>
 
-  public static byte[] ROW2_1208_ = ROW1_1208_;//@pdc  <?xml version="1.0" encoding="UTF-8"?><TEST/>
+  public static byte[] ROW2_1208_ = ROW1_1208_;//  <?xml version="1.0" encoding="UTF-8"?><TEST/>
 
 	
   public static byte[] ROW2_LUW_ = {0x3c,0x54,0x45,0x53,0x54,0x2f,0x3e
@@ -362,7 +362,7 @@ public class JDXMLXML extends JDTestcase {
 
   public static byte[] ROW3_LUW_ = {0x3c,0x54,0x45,0x53,0x54,0x2f,0x3e
   };
-  public static byte[] ROW3_1208_ = ROW1_1208_;//@pdc  <?xml version="1.0" encoding="UTF-8"?><TEST/>
+  public static byte[] ROW3_1208_ = ROW1_1208_;//  <?xml version="1.0" encoding="UTF-8"?><TEST/>
 
   public static byte[] ROW3_1208_37_ =
     { 0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6F,
@@ -391,7 +391,7 @@ public class JDXMLXML extends JDTestcase {
         0x3F, 0x3E,  0x3C,
         0x54, 0x4F, 0x50, 0x20, 0x61, 0x74, 0x74, 0x72, 0x69, 0x62, 0x3D, 0x22,
         0x54, 0x4F, 0x50, 0x22, 0x3E, 0x54, 0x4F, 0x50, 0x3C, 0x2F, 0x54, 0x4F,
-        0x50, 0x3E }; //@pdc <?xml version="1.0" encoding="UTF-8"?><TOP attrib="TOP">TOP</TOP>
+        0x50, 0x3E }; //<?xml version="1.0" encoding="UTF-8"?><TOP attrib="TOP">TOP</TOP>
  
 
   public static byte[] ROW5_LUW_ = {0x3c, 0x54, 0x4f, 0x50, 0x20, 0x61, 0x74, 0x74, 0x72, 0x69, 0x62, 0x3d, 0x22, 0x54, 0x4f, 0x50, 0x22, 0x3e, 0x54, 0x4f, 0x50, 0x3c, 0x2f, 0x54, 0x4f, 0x50, 0x3e }; 
@@ -471,7 +471,7 @@ public class JDXMLXML extends JDTestcase {
       (byte)0X00, (byte)0X3e }; //"?<?xml version="1.0" encoding="UTF-16BE"?><TEST/>"  with BOM at beginning
  
 
-  public static byte[] ROW2_1200_ = ROW1_1200_;  //@PDC
+  public static byte[] ROW2_1200_ = ROW1_1200_;  
 
   public static byte[] ROW3_1200_ =
     { 0x00, 0x3C, 0x00, 0x3F, 0x00, 0x78, 0x00, 0x6D, 0x00, 0x6C, 0x00, 0x20,
@@ -485,7 +485,7 @@ public class JDXMLXML extends JDTestcase {
         0x00, 0x3c, 0x00, 0x54, 0x00, 0x45, 0x00, 0x53, 0x00, 0x54, 0x00, 0x2f,
         0x00, 0x3e };
 
-  public static byte[] ROW3_1200_M_ =  ROW1_1200_;  //@PDC
+  public static byte[] ROW3_1200_M_ =  ROW1_1200_;  
 
   public static byte[] ROW4_1200_ = 
           {(byte)0Xfe, (byte)0Xff, (byte)0X00, (byte)0X3c, (byte)0X00, (byte)0X3f, (byte)0X00, (byte)0X78, 
@@ -543,9 +543,9 @@ public class JDXMLXML extends JDTestcase {
       (byte)0X00, (byte)0X3e}; //"?<?xml version="1.0" encoding="UTF-16BE"?><TOP attrib="TOP">TOP</TOP>"
 
 
-  public static byte[] ROW6_1200_ = ROW5_1200_M_;//@pdc
+  public static byte[] ROW6_1200_ = ROW5_1200_M_;
 
-  public static byte[] ROW7_1200_ = ROW5_1200_M_;//@pdc
+  public static byte[] ROW7_1200_ = ROW5_1200_M_;
 
   public static byte[] ROW8_1200_ = { 
    0x00, 0x4E,  /* N */ 
@@ -558,7 +558,7 @@ public class JDXMLXML extends JDTestcase {
   };
 
 
-  public static byte[] ROW9_1200_ = ROW5_1200_M_; //@pdc
+  public static byte[] ROW9_1200_ = ROW5_1200_M_; 
 
   public static byte[] ROW10_1200_ =
     { 0x00, 0x3C, 0x00, 0x3F, 0x00, 0x78, 0x00, 0x6D, 0x00, 0x6C, 0x00, 0x20,
@@ -626,12 +626,12 @@ public class JDXMLXML extends JDTestcase {
       (byte)0x95, (byte)0x83, (byte)0x96, (byte)0x84, (byte)0x89, (byte)0x95, (byte)0x87, 
             0x7e,       0x7f, (byte)0xc9, (byte)0xc2, (byte)0xd4, (byte)0xf0, (byte)0xf3, 
       (byte)0xf7,       0x7f,       0x6f,       0x6e,       0x4c, (byte)0xe3, (byte)0xc5, 
-      (byte)0xe2, (byte)0xe3,       0x61,       0x6e};//<?xml version="1.0" encoding="IBM037"?><TEST/>  i5 returns decl and optimized xml //@pdc
+      (byte)0xe2, (byte)0xe3,       0x61,       0x6e};//<?xml version="1.0" encoding="IBM037"?><TEST/>  i5 returns decl and optimized xml //
 
-  public static byte[] ROW2_37_ = ROW1_37_; //@pdc same as row1 with decl and optimized xml
+  public static byte[] ROW2_37_ = ROW1_37_; // same as row1 with decl and optimized xml
  
 
-  public static byte[] ROW3_37_ = ROW1_37_;  //@pdc same as row1 with decl and optimized xml
+  public static byte[] ROW3_37_ = ROW1_37_;  // same as row1 with decl and optimized xml
    
 
   public static byte[] ROW4_37_ =
@@ -642,16 +642,16 @@ public class JDXMLXML extends JDTestcase {
       (byte)0xe3, (byte)0xd6, (byte)0xd7, (byte)0x40, (byte)0x81, (byte)0xa3, (byte)0xa3, (byte)0x99, (byte)0x89, (byte)0x82, 
       (byte)0x7e, (byte)0x7f, (byte)0xe3, (byte)0xd6, (byte)0xd7, (byte)0x7f, (byte)0x6e, (byte)0xe3, (byte)0xd6, (byte)0xd7, 
       (byte)0x4c, (byte)0x61, (byte)0xe3, (byte)0xd6, (byte)0xd7, (byte)0x6e};
-      //@PDC  <?xml version="1.0" encoding="IBM037"?><TOP attrib="TOP">TOP</TOP>
+      //  <?xml version="1.0" encoding="IBM037"?><TOP attrib="TOP">TOP</TOP>
  
 
   public static byte[] ROW5_37_ = ROW4_37_;
-  //@PDC <?xml version="1.0" encoding="IBM037"?><TOP attrib="TOP">TOP</TOP>
+  // <?xml version="1.0" encoding="IBM037"?><TOP attrib="TOP">TOP</TOP>
  
   
-  public static byte[] ROW6_37_ = ROW5_37_; //@pdc <?xml version="1.0" encoding="IBM037"?><TOP attrib="TOP">TOP</TOP>
+  public static byte[] ROW6_37_ = ROW5_37_; // <?xml version="1.0" encoding="IBM037"?><TOP attrib="TOP">TOP</TOP>
 
-  public static byte[] ROW7_37_ =ROW5_37_; //@pdc <?xml version="1.0" encoding="IBM037"?><TOP attrib="TOP">TOP</TOP>
+  public static byte[] ROW7_37_ =ROW5_37_; // <?xml version="1.0" encoding="IBM037"?><TOP attrib="TOP">TOP</TOP>
  
 
 

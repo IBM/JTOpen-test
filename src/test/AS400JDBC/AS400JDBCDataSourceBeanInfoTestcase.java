@@ -382,7 +382,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
 	 int expectedCount = 115; 
          AS400JDBCDataSourceBeanInfo bi = new AS400JDBCDataSourceBeanInfo();
          PropertyDescriptor[] pd = bi.getPropertyDescriptors();
-         if (pd.length != expectedCount)  //@A1C @W1c @A3C @A4C //@B1C //@C1C //@PDC //@pdc //@pdc //@D3C //@AC1 //@cc1 @dmy  90=query timeout mechanism 91=query replace truncated parameter
+         if (pd.length != expectedCount)  
          {
             failMessage.append("Wrong number of property descriptors returned: " + String.valueOf(pd.length)+" sb "+expectedCount+" \n");
 	    passed = false; 

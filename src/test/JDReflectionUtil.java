@@ -3076,7 +3076,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
       *
       * JDReflectionUtil.callMethod_V(ps, "setBlob", "col1", is, (long) 4);
       */
-    //@pdc adding _IS (inputStream) to method name so that abiguity errors get fixed on calls like callMethod_V(o, "aa", "bb", null, 1) //null type is not known.
+    // adding _IS (inputStream) to method name so that abiguity errors get fixed on calls like callMethod_V(o, "aa", "bb", null, 1) //null type is not known.
     public static void callMethod_V_IS(Object o, String methodName, String parameterName, InputStream inputStream, long length) throws Exception {
 
         java.lang.reflect.Method method;
@@ -3585,7 +3585,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
         oneArgs[0] = arg;
         Object newObject =null;
         try {
-            Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); //@pdc find protected constructor also
+            Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
 
             constructor.setAccessible(true);  //@PDA allo call of protected.
             newObject = constructor.newInstance(oneArgs);
@@ -3607,7 +3607,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
        oneArgs[0] = new Long(arg);
        Object newObject =null;
        try {
-           Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); //@pdc find protected constructor also
+           Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
 
            constructor.setAccessible(true);  //@PDA allo call of protected.
            newObject = constructor.newInstance(oneArgs);
@@ -3633,7 +3633,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
        oneArgs[0] = arg;
        Object newObject =null;
        try {
-           Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); //@pdc find protected constructor also
+           Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
 
            constructor.setAccessible(true);  //@PDA allo call of protected.
            newObject = constructor.newInstance(oneArgs);
@@ -3686,7 +3686,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
        twoArgs[1] = new Integer(arg2); 
        Object newObject =null;
        try {
-           Constructor constructor = objectClass11.getDeclaredConstructor(twoArgsTypes); //@pdc find protected constructor also
+           Constructor constructor = objectClass11.getDeclaredConstructor(twoArgsTypes); // find protected constructor also
 
            constructor.setAccessible(true);  //@PDA allo call of protected.
            newObject = constructor.newInstance(twoArgs);

@@ -1694,7 +1694,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             long diff2 = check - checkpoint1;
 
             //ibm jvm has some slow reactions to events that can cause this to fail (time from event firing and actual event-queue removal is slow).  adding a bit of extra time for this.
-            if ( (diff1 > 45000 && diff1 < 75000) && (diff2 < 30600 && diff2 > 29000) ) { //@pdc adding 1000 miliseconds fudge-factor (diff2 < 30100 && diff2 > 29500) 
+            if ( (diff1 > 45000 && diff1 < 75000) && (diff2 < 30600 && diff2 > 29000) ) { // adding 1000 miliseconds fudge-factor (diff2 < 30100 && diff2 > 29500) 
               finishLongRunning("AS400JDBCConnectionPoolTestcase", 45, true  );
 
                 succeeded();

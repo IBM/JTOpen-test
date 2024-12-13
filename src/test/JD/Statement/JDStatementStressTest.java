@@ -1524,7 +1524,6 @@ public class JDStatementStressTest extends JDTestcase {
   }
 
   public void Var012() {
-    // @PDC per Jim, na for toolbox
     if (isToolboxDriver())
       notApplicable();
     else
@@ -1781,7 +1780,6 @@ public class JDStatementStressTest extends JDTestcase {
   }
 
   public void Var071() {
-    // @PDC per Jim, na for toolbox
     if (isToolboxDriver())
       notApplicable();
     else if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
@@ -1957,7 +1955,6 @@ public class JDStatementStressTest extends JDTestcase {
   public void Var100() {
 
     if (isToolboxDriver()) {
-      // @PDC per Jim, na for toolbox
       notApplicable();
     } else {
 
@@ -2035,8 +2032,7 @@ public class JDStatementStressTest extends JDTestcase {
   }
 
   public void Var112() {
-    // @PDC per Jim, na for toolbox
-    if (isToolboxDriver())
+   if (isToolboxDriver())
       notApplicable();
     else
       ccsidTestParm(112, 420, "added by native driver 02/06/2006");
@@ -2294,7 +2290,6 @@ public class JDStatementStressTest extends JDTestcase {
   }
 
   public void Var171() {
-    // @PDC per Jim, na for toolbox
     if (isToolboxDriver()) {
       notApplicable();
       return;
@@ -2328,7 +2323,6 @@ public class JDStatementStressTest extends JDTestcase {
 
   public void Var178() {
 
-    // @PDC per Jim, na for toolbox
     if (isToolboxDriver())
       notApplicable();
     else
@@ -2437,7 +2431,6 @@ public class JDStatementStressTest extends JDTestcase {
   public void Var200() {
 
     if (isToolboxDriver()) {
-      // @PDC per Jim, na for toolbox
       notApplicable();
     } else {
 

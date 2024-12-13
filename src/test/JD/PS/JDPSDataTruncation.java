@@ -2148,7 +2148,7 @@ Ensure warnings are posted when parameter marker on set too long.
 		//
 		String expectedWarning = "01004"; 
 
-        if (getJDK() >= 160) {//pdc may be running under jdk16 and jdbc30 implementation
+        if (getJDK() >= 160) {// may be running under jdk16 and jdbc30 implementation
 		    expectedWarning = "22001"; 
 		} 
 		
@@ -2510,7 +2510,7 @@ public void Var075() {
       //
       String expectedWarning = "01004";
 
-      if (getJDK() >= 160) {// pdc may be running under jdk16 and jdbc30
+      if (getJDK() >= 160) {// may be running under jdk16 and jdbc30
                             // implementation
         expectedWarning = "22001";
       }
@@ -2573,7 +2573,7 @@ public void Var075() {
       //
       String expectedWarning = "01004";
 
-      if (getJDK() >= 160) {// pdc may be running under jdk16 and jdbc30
+      if (getJDK() >= 160) {//  may be running under jdk16 and jdbc30
                             // implementation
         expectedWarning = "22001";
       }

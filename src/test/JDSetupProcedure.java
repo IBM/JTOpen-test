@@ -20,7 +20,6 @@ import test.JD.JDSetupCollection;
 import test.JD.JDTestUtilities;
 
 import java.math.BigDecimal;
-//import java.math.*;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -134,9 +133,9 @@ public class JDSetupProcedure {
   public static String STP_CSARRDAT = COLLECTION + ".JDCSARRDAT"; // array of
                                                                   // date
   public static String STP_CSARRTIM = COLLECTION + ".JDCSARRTIM"; // array of
-                                                                  // tim
+                                                                  // time
   public static String STP_CSARRTS = COLLECTION + ".JDCSARRTS"; // array of
-                                                                // timestame
+                                                                // timestamp
   public static String STP_CSARRBY = COLLECTION + ".JDCSARRBY"; // array of
                                                                 // binary
   public static String STP_CSARRVBY = COLLECTION + ".JDCSARRVBY"; // array of
@@ -390,7 +389,7 @@ public class JDSetupProcedure {
     STP_CSARRBLO = COLLECTION + ".JDCSARRBLO"; // array of bLOB(100)
     STP_CSARRDAT = COLLECTION + ".JDCSARRDAT"; // array of date
     STP_CSARRTIM = COLLECTION + ".JDCSARRTIM"; // array of tim
-    STP_CSARRTS = COLLECTION + ".JDCSARRTS"; // array of timestame
+    STP_CSARRTS = COLLECTION + ".JDCSARRTS"; // array of timestamp
     STP_CSARRBY = COLLECTION + ".JDCSARRBY"; // array of binary
     STP_CSARRVBY = COLLECTION + ".JDCSARRVBY"; // array of varbinary
     STP_CSARRXML = COLLECTION + ".JDCSARRXML"; // array of xml
@@ -873,8 +872,8 @@ public class JDSetupProcedure {
         buffer.append(
             "   SET P_DATALINK        = 'https://github.com/IBM/JTOpen-test/blob/main/README.md';"
                 + "   SET P_BLOB            = BLOB(X'446176652045676C65');" // @B1C
-                + "   SET P_CLOB            = CLOB('Chris Smith');" // @B1C
-                + "   SET P_DBCLOB          = CLOB('Jeff Lee');"); // @B1C
+                + "   SET P_CLOB            = CLOB('Chris Smyth');" // @B1C
+                + "   SET P_DBCLOB          = CLOB('Jeff Lex');"); // @B1C
       if (supportedFeatures.bigintSupport) // @B0A
         buffer.append("   SET P_BIGINT = 987662234567;"); // @B0A
       if (supportedFeatures.decfloatSupport) {
@@ -952,9 +951,9 @@ public class JDSetupProcedure {
       if (supportedFeatures.lobSupport)
         buffer.append(
             "   SET P_DATALINK        = 'https://github.com/IBM/JTOpen-test/blob/main/README.md';"
-                + "   SET P_BLOB            = BLOB('<d>Dave Egle</d>');" // @B1C
-                + "   SET P_CLOB            = CLOB('<d>Chris Smith</d>');" // @B1C
-                + "   SET P_DBCLOB          = CLOB('<d>Jeff Lee</d>');"); // @B1C
+                + "   SET P_BLOB            = BLOB('<d>Dave Egge</d>');" // @B1C
+                + "   SET P_CLOB            = CLOB('<d>Chris Smyth</d>');" // @B1C
+                + "   SET P_DBCLOB          = CLOB('<d>Jeff Lex</d>');"); // @B1C
       if (supportedFeatures.bigintSupport) // @B0A
         buffer.append("   SET P_BIGINT = 987662234567;"); // @B0A
       if (supportedFeatures.decfloatSupport) {
@@ -1837,7 +1836,7 @@ public class JDSetupProcedure {
      * STP_CSARRCLO ); //array of CLOB(100) dropProcedure(c, STP_CSARRBLO );
      * //array of bLOB(100) dropProcedure(c, STP_CSARRDAT ); //array of date
      * dropProcedure(c, STP_CSARRTIM ); //array of tim dropProcedure(c,
-     * STP_CSARRTS ); //array of timestame dropProcedure(c, STP_CSARRBY );
+     * STP_CSARRTS ); //array of timestamp dropProcedure(c, STP_CSARRBY );
      * //array of binary dropProcedure(c, STP_CSARRVBY ); //array of varbinary
      * dropProcedure(c, STP_CSARRXML );
      */
@@ -1855,12 +1854,12 @@ public class JDSetupProcedure {
     STP_RS1S = COLLECTION + ".JDRSONES";
     STP_RS3 = COLLECTION + ".JDRSTHREE";
     STP_CS0 = COLLECTION + ".JDCSNONE";
-    STP_CS1 = COLLECTION + ".JDCSONE"; // @E1A
-    STP_CSRV = COLLECTION + ".JDCSRV"; // @C2A
+    STP_CS1 = COLLECTION + ".JDCSONE"; 
+    STP_CSRV = COLLECTION + ".JDCSRV"; 
     STP_CSPARMS = COLLECTION + ".JDCSPARMS";
     STP_CSPARMSRS = COLLECTION + ".JDCSPARMSRS";
-    STP_CSPARMSRV = COLLECTION + ".JDCSPARMSRV"; // @C2A
-    STP_CSPARMSRV = COLLECTION + ".JDCSPARMSRSRV"; // @C2A
+    STP_CSPARMSRV = COLLECTION + ".JDCSPARMSRV"; 
+    STP_CSPARMSRV = COLLECTION + ".JDCSPARMSRSRV"; 
     STP_CSTYPESOUT = COLLECTION + ".JDCSTYPESOUT";
     STP_CSTYPESOUTX = COLLECTION + ".JDCSTYPESOUTX";
     STP_CSTYPESOUTB = COLLECTION + ".JDCSTYPESOUTB";
@@ -1868,10 +1867,10 @@ public class JDSetupProcedure {
     STP_CSTYPESINOUT = COLLECTION + ".JDCSTYPESIO";
     STP_CSTYPESINOUTX = COLLECTION + ".JDCSTYPESIOX";
     STP_CSTYPESNULL = COLLECTION + ".JDCSTYPESNL";
-    STP_CSINOUT = COLLECTION + ".JDCSIO"; // @D1A
+    STP_CSINOUT = COLLECTION + ".JDCSIO"; 
     STP_CSNULLTEST = COLLECTION + ".JDCSNULLTEST";
-    STP_CSSRS = COLLECTION + ".JDCSSRS"; // @KBA
-    STP_CSMSRS = COLLECTION + ".JDCSMSRS"; // @KBA
+    STP_CSSRS = COLLECTION + ".JDCSSRS"; 
+    STP_CSMSRS = COLLECTION + ".JDCSMSRS"; 
     /*
      * No need to drop, these are created/droped in TC STP_CSARRSUM = COLLECTION
      * + ".JDCSARRSUM"; STP_CSARRINT = COLLECTION + ".JDCSARRINT"; STP_CSARRINT2
@@ -1896,7 +1895,7 @@ public class JDSetupProcedure {
      * ".JDCSARRBLO"; //array of bLOB(100) STP_CSARRDAT = COLLECTION +
      * ".JDCSARRDAT"; //array of date STP_CSARRTIM = COLLECTION + ".JDCSARRTIM";
      * //array of tim STP_CSARRTS = COLLECTION + ".JDCSARRTS"; //array of
-     * timestame STP_CSARRBY = COLLECTION + ".JDCSARRBY"; //array of binary
+     * timestam STP_CSARRBY = COLLECTION + ".JDCSARRBY"; //array of binary
      * STP_CSARRVBY = COLLECTION + ".JDCSARRVBY"; //array of varbinary
      * STP_CSARRXML = COLLECTION + ".JDCSARRXML"; //array of xml
      */
@@ -1949,8 +1948,8 @@ public class JDSetupProcedure {
     dropProcedure(c, STP_CSARRCLO); // array of CLOB(100)
     dropProcedure(c, STP_CSARRBLO); // array of bLOB(100)
     dropProcedure(c, STP_CSARRDAT); // array of date
-    dropProcedure(c, STP_CSARRTIM); // array of tim
-    dropProcedure(c, STP_CSARRTS); // array of timestame
+    dropProcedure(c, STP_CSARRTIM); // array of time
+    dropProcedure(c, STP_CSARRTS); // array of timestamp
     dropProcedure(c, STP_CSARRBY); // array of binary
     dropProcedure(c, STP_CSARRVBY); // array of varbinary
     dropProcedure(c, STP_CSARRXML);

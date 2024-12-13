@@ -36,6 +36,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 /**
@@ -74,7 +75,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDStatementQueryTimeout (AS400 systemObject,
-                            Hashtable namesAndVars,
+        Hashtable<String, Vector<String>> namesAndVars,
                             int runMode,
                             FileOutputStream fileOutputStream,
                             
@@ -319,18 +320,10 @@ extends JDTestcase
     /**
     setQueryTimeout() - Pass a valid value and verify that
     timeout does occur.
-    
-    SQL400 - Today, the native driver will not honor the timeout value.
-             This is something that we are looking into supporting in
-             the v4r4 timeframe.
     **/
     public void Var006()
     {
-        // Clif (01/20/1999) - I have verified that the query timeout
-        //                     is indeed working.  However, on fast
-        //                     servers, this variation may fail.  We
-        //                     need to come up with a slower query.
-
+ 
         // ODBC uses this to test:
         //
         // SELECT * FROM QSYS2.SYSTABLES, QSYS2.SYSVIEWS, QSYS2.SYSCOLUMNS
@@ -362,7 +355,6 @@ extends JDTestcase
                 try
                 {
                     queryStart = System.currentTimeMillis();   
-                    //@C1D s.executeQuery (slow_);
                     //33923 - v5r5 optimizer is smarter...
                     if   (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
                         s.executeQuery (query +  " optimize for all rows"); 

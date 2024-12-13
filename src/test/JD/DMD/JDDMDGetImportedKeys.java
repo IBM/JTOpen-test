@@ -576,7 +576,7 @@ SQL400 - The native driver reports the update and delete rules in the following
 		    if (getDriver () == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata())    {
 		        success = success && (updateRule == DatabaseMetaData.importedKeyRestrict);
 		        success = success && (deleteRule == DatabaseMetaData.importedKeyRestrict);
-		        success = success && (pkName.equals("IKKEY1")); // @PDC
+		        success = success && (pkName.equals("IKKEY1")); 
 		    } else  {
 		        if (!(updateRule == DatabaseMetaData.importedKeyNoAction)) {
 		            success = false;

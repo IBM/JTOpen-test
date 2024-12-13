@@ -618,7 +618,7 @@ was returned in the result set.
             if (checkLobSupport ()) {
                try {
                   Clob p = csTypes_.getClob (20);
-                  assertCondition (compare (p, "Chris Smith"));
+                  assertCondition (compare (p, "Chris Smyth"));
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -643,7 +643,7 @@ SQL400 - let this work.
               try {
                 csTypes2_.execute(); 
                  Clob p = csTypes2_.getClob (20);
-                 assertCondition (compare (p, "Chris Smith"));
+                 assertCondition (compare (p, "Chris Smyth"));
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -665,7 +665,7 @@ was returned in the result set and is a DBCLOB.
             if (checkLobSupport ()) {
                try {
                   Clob p = csTypes_.getClob (21);
-                  assertCondition (compare (p, "Jeff Lee"));
+                  assertCondition (compare (p, "Jeff Lex"));
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -689,7 +689,7 @@ SQL400 - let this work.
             if (checkLobSupport ()) {
               try {
                  Clob p = csTypes2_.getClob (21);
-                 assertCondition (compare (p, "Jeff Lee"));
+                 assertCondition (compare (p, "Jeff Lex"));
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -1048,7 +1048,7 @@ was returned in the result set.
             if (checkLobSupport ()) {
                try {
                   Clob p = csTypes_.getClob ("P_CLOB");
-                  assertCondition (compare (p, "Chris Smith"));
+                  assertCondition (compare (p, "Chris Smyth"));
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -1070,7 +1070,7 @@ SQL400 - let this work.
             if (checkLobSupport ()) {
               try {
                  Clob p = csTypes2_.getClob ("P_CLOB");
-                 assertCondition (compare (p, "Chris Smith"));
+                 assertCondition (compare (p, "Chris Smyth"));
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -1090,7 +1090,7 @@ was returned in the result set and is a DBCLOB.
             if (checkLobSupport ()) {
                try {
                   Clob p = csTypes_.getClob ("P_DBCLOB");
-                  assertCondition (compare (p, "Jeff Lee"));
+                  assertCondition (compare (p, "Jeff Lex"));
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -1112,7 +1112,7 @@ SQL400 - let this work.
             if (checkLobSupport ()) {
               try {
                  Clob p = csTypes2_.getClob ("P_DBCLOB");
-                 assertCondition (compare (p, "Jeff Lee"));
+                 assertCondition (compare (p, "Jeff Lex"));
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }

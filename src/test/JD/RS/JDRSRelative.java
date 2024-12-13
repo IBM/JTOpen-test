@@ -226,7 +226,7 @@ relative() - Should work on a 1 row result set.
                 rs.next ();
                 boolean success2 = rs.relative (1);
                 rs.close ();
-                //@pdc first relative should be true, since it contains 1 row
+                // first relative should be true, since it contains 1 row
                 assertCondition ((success1 == true)  && (success2 == false),
 				 "\nFor query first rs.relative(1) returned "+success1+" sb true since 1 row in in query" +
 				 "\nlast rs.relative(1) returned "+success2+" sb false"+

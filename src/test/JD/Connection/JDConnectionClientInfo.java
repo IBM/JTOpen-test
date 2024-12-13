@@ -345,7 +345,7 @@ Performs cleanup needed after running variations.
                 ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_O(md, "getClientInfoProperties");
                 Object toolboxValues[][] =  { { "ApplicationName", new Integer(255), "", "The name of the application currently utilizing the connection." }, 
                         { "ClientUser", new Integer(255), "", "The name of the user that the application using the connection is performing work for.  This may not be the same as the user name that was used in establishing the connection."},
-                        { "ClientHostname", new Integer(255), "", "The hostname of the system the application using the connection is running on."}, //@PDc system
+                        { "ClientHostname", new Integer(255), "", "The hostname of the system the application using the connection is running on."}, 
                         { "ClientAccounting", new Integer(255), "", "Accounting information."},
                         { "ClientProgramID", new Integer(255), "", "Program identification information."}};
                 Object nativeValues[][] =  { { "ApplicationName", new Integer(255), "", "The name of the application currently utilizing the connection." },

@@ -647,7 +647,7 @@ getCharacterStream() - Get a type that was registered as a BLOB.
                Reader p = (Reader) JDReflectionUtil.callMethod_O(csTypes_,getMethodName, 19);
                String expected = "446176652045676C65";
 	       if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		   expected = "Dave Egle";
+		   expected = "Dave Egge";
 	       }
                assertCondition (compare(p, expected,sb),sb.toString()+" -- updated 11/17/2011 ");
             } catch (Exception e) {
@@ -668,7 +668,7 @@ was returned in the result set.
          if (checkJdbc40 ()) {
                try {
                   Reader p = (Reader) JDReflectionUtil.callMethod_O(csTypes_,getMethodName, 20);
-                  assertCondition (compare (p, "Chris Smith",sb),sb);
+                  assertCondition (compare (p, "Chris Smyth",sb),sb);
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -689,7 +689,7 @@ SQL400 - let this work.
          if (checkJdbc40 ()) {
               try {
                  Reader p = (Reader) JDReflectionUtil.callMethod_O(csTypes2_,getMethodName,20);
-                 assertCondition (compare (p, "Chris Smith",sb),sb);
+                 assertCondition (compare (p, "Chris Smyth",sb),sb);
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -708,7 +708,7 @@ was returned in the result set and is a DBCLOB.
          if (checkJdbc40 ()) {
                try {
                   Reader p = (Reader) JDReflectionUtil.callMethod_O(csTypes_,getMethodName, 21);
-                  assertCondition (compare (p, "Jeff Lee",sb),sb);
+                  assertCondition (compare (p, "Jeff Lex",sb),sb);
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -729,7 +729,7 @@ SQL400 - let this work.
          if (checkJdbc40 ()) {
               try {
                  Reader p = (Reader) JDReflectionUtil.callMethod_O(csTypes2_,getMethodName,21);
-                 assertCondition (compare (p, "Jeff Lee",sb),sb);
+                 assertCondition (compare (p, "Jeff Lex",sb),sb);
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -1113,7 +1113,7 @@ getCharacterStream() - Get a type that was registered as a BLOB.
                Reader p = (Reader) JDReflectionUtil.callMethod_OS(csTypes_,getMethodName, "P_BLOB");
                String expected = "446176652045676C65";  /* primed via toolbox */ 
 	       if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		   expected = "Dave Egle"; 
+		   expected = "Dave Egge"; 
 	       }
 
                assertCondition (compare(p, expected,sb),sb.toString()+" -- updated 11/17/2011 ");
@@ -1133,7 +1133,7 @@ was returned in the result set.
         if (checkJdbc40 ()) {
                try {
                   Reader p = (Reader) JDReflectionUtil.callMethod_OS(csTypes_,getMethodName, "P_CLOB");
-                  assertCondition (compare (p, "Chris Smith",sb),sb);
+                  assertCondition (compare (p, "Chris Smyth",sb),sb);
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -1152,7 +1152,7 @@ SQL400 - let this work.
     if(checkJdbc40()) {
               try {
                  Reader p = (Reader) JDReflectionUtil.callMethod_OS(csTypes2_,getMethodName,"P_CLOB");
-                 assertCondition (compare (p, "Chris Smith",sb),sb);
+                 assertCondition (compare (p, "Chris Smyth",sb),sb);
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }
@@ -1169,7 +1169,7 @@ was returned in the result set and is a DBCLOB.
    if(checkJdbc40()) {
                try {
                   Reader p = (Reader) JDReflectionUtil.callMethod_OS(csTypes_,getMethodName, "P_DBCLOB");
-                  assertCondition (compare (p, "Jeff Lee",sb),sb);
+                  assertCondition (compare (p, "Jeff Lex",sb),sb);
                } catch (Exception e) {
                   failed (e, "Unexpected Exception");
                }
@@ -1188,7 +1188,7 @@ SQL400 - let this work.
      if(checkJdbc40()) {
               try {
                  Reader p = (Reader) JDReflectionUtil.callMethod_OS(csTypes2_,getMethodName,"P_DBCLOB");
-                 assertCondition (compare (p, "Jeff Lee",sb),sb);
+                 assertCondition (compare (p, "Jeff Lex",sb),sb);
               } catch (Exception e) {
                  failed (e, "Unexpected Exception");
               }

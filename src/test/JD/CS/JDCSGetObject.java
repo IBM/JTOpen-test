@@ -626,9 +626,9 @@ getObject() - Get a type that was registered as a CLOB.
             try {
                 Object p = csTypes_.getObject(20);
                 if (isJdbc20()) 
-                   assertCondition (compare ((Clob)p, "Chris Smith"));
+                   assertCondition (compare ((Clob)p, "Chris Smyth"));
                 else
-                   assertCondition (((String) p).equals ("Chris Smith"));
+                   assertCondition (((String) p).equals ("Chris Smyth"));
 
             }
             catch (Exception e) {
@@ -1039,9 +1039,9 @@ getObject() - Get a type that was registered as a CLOB.
 		try {
 		    Object p = csTypes_.getObject("P_CLOB");
 		    if (isJdbc20()) 
-			assertCondition (compare ((Clob)p, "Chris Smith"));
+			assertCondition (compare ((Clob)p, "Chris Smyth"));
 		    else
-			assertCondition (((String) p).equals ("Chris Smith"));
+			assertCondition (((String) p).equals ("Chris Smyth"));
 
 		}
 		catch (Exception e) {

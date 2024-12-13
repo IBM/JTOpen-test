@@ -83,11 +83,11 @@ public class GetNotTested
       for (line = in.readLine(); line.indexOf("Class") == -1; line = in.readLine())
       {
       }
-      Vector classes = new Vector();
-      Vector aClass;
+      Vector<Vector<String>> classes = new Vector<Vector<String>>();
+      Vector<String> aClass;
       while (line != null)
       {
-        aClass = new Vector();
+        aClass = new Vector<String>();
         aClass.addElement(line);
         for (line = in.readLine(); line != null && line.indexOf("Class") != 0; line = in.readLine())
         {

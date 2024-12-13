@@ -798,7 +798,7 @@ extends JDCSGetTestcase
                 {
 		    String expected = "446176652045676C65"; 
 		    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-			expected = "Dave Egle"; 
+			expected = "Dave Egge"; 
 		    }
 		    if(p.equals(expected))
 			succeeded();
@@ -827,10 +827,10 @@ extends JDCSGetTestcase
             try
             {
                 String p = (String) JDReflectionUtil.callMethod_O(csTypes_, "getNString", 20);
-                if(p.equals("Chris Smith"))
+                if(p.equals("Chris Smyth"))
                     succeeded();
                 else
-                    failed(p + " != Chris Smith");
+                    failed(p + " != Chris Smyth");
             }
             catch(Exception e)
             {
@@ -1597,7 +1597,7 @@ extends JDCSGetTestcase
                     {
 		    String expected = "446176652045676C65"; 
 		    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-			expected = "Dave Egle"; 
+			expected = "Dave Egge"; 
 		    }
 		    if(p.equals(expected))
 			succeeded();
@@ -1629,10 +1629,10 @@ extends JDCSGetTestcase
                 try
                 {
                     String p = (String) JDReflectionUtil.callMethod_OS(csTypes_, "getNString", "P_CLOB");
-                    if(p.equals("Chris Smith"))
+                    if(p.equals("Chris Smyth"))
                         succeeded();
                     else
-                        failed(p + " != Chris Smith");
+                        failed(p + " != Chris Smyth");
 
                 }
                 catch(Exception e)

@@ -35,7 +35,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
-import test.JDTestDriver;
+
 import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
@@ -4648,9 +4648,8 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
     **/
     public void Var149()
     {       
-        // testcase does not work when on AS/400 because Jim's code
-        // will grab the password for the current job if we don't
-        // specify it.  Just move on.
+        // testcase does not work when on AS/400 the password for th current user is
+        // automatically allocated .
 	System.out.println("osVersion is "+JTOpenTestEnvironment.osVersion); 
         if (JTOpenTestEnvironment.isOS400)
         {                            

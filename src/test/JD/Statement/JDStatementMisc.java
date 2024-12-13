@@ -1037,7 +1037,7 @@ extends JDTestcase
 
 
     /**
-    Parse comments.  Test nested comment fix for Jim Flanagan.  Old behavior was  
+    Parse comments.  Test nested comment fix .  Old behavior was  
     java.sql.SQLException: [SQL0104] TOKEN / WAS NOT VALID. VALID TOKENS: FROM INTO.  
     **/
     public void Var031()
@@ -1063,7 +1063,7 @@ extends JDTestcase
 
 
     /**
-    Parse comments.  Test nested comment fix for Jim Flanagan.  Old behavior was
+    Parse comments.  Test nested comment fix.  Old behavior was
     java.sql.SQLException: [SQL0104] TOKEN * WAS NOT VALID. VALID TOKENS: ( <IDENTIFIER>. 
     **/
     public void Var032()
@@ -1089,7 +1089,7 @@ extends JDTestcase
 
 
     /**
-    Parse comments.  Test nested comment fix for Jim Flanagan.  Old behavior was 
+    Parse comments.  Test nested comment fix.  Old behavior was 
     java.sql.SQLException: [SQL0104] TOKEN / WAS NOT VALID. VALID TOKENS: FROM INTO.
     **/
     public void Var033()

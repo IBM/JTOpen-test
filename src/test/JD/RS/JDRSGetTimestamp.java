@@ -454,8 +454,7 @@ public class JDRSGetTimestamp extends JDTestcase {
           return;
         }
 
-        if (((getDriver() == JDTestDriver.DRIVER_NATIVE && "UTC".equals(tz)))) { // @F1A
-                                                                                 // //@pdc
+        if (((getDriver() == JDTestDriver.DRIVER_NATIVE && "UTC".equals(tz)))) { 
           assertCondition(v.toString().equals("1998-11-18 03:13:42.987654"),
               " got " + v.toString() + "expected 1998-11-18 03:13:42.987654 tz="
                   + tz);

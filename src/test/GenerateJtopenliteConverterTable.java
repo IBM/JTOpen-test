@@ -1,6 +1,5 @@
 package test; 
 import java.io.*;
-import java.util.*;
 import com.ibm.as400.access.*; 
 
 public class GenerateJtopenliteConverterTable
