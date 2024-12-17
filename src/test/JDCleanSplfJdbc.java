@@ -353,9 +353,10 @@ public class JDCleanSplfJdbc {
     Enumeration<String> enumeration = deleteUserIds.keys(); 
     boolean addComma = false; 
     if (deleteAll) { 
-      String query = " SELECT USER_NAME, SPOOLED_FILE_NAME, FILE_NUMBER ,JOB_NAME ,  CREATE_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
-          + " FROM QSYS2 . OUTPUT_QUEUE_ENTRIES_BASIC WHERE CREATE_TIMESTAMP >= '"
-          + startTimestamp.toString() + "'" + " AND CREATE_TIMESTAMP <= '" + endTimestamp.toString() + "'";
+      String query = " SELECT JOB_USER, SPOOLED_FILE_NAME, SPOOLED_FILE_NUMBER ,JOB_NUMBER || '/' ||  JOB_USER || '/' ||  JOB_NAME ,  CREATION_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
+          + " FROM TABLE(QSYS2 . SPOOLED_FILE_INFO ( STARTING_TIMESTAMP => '"
+          + startTimestamp.toString() + "'" + " , ENDING_TIMESTAMP =>'" + endTimestamp.toString() + "'))";
+
       System.out.println(query);
       runCleaningQuery(out, stmt, query, clean); 
       stmt.close(); 
@@ -399,9 +400,9 @@ public class JDCleanSplfJdbc {
     Timestamp endTimestamp = new Timestamp(endFilterTime);
     long startMillis = System.currentTimeMillis();
     Statement stmt = c.createStatement(); 
-    String query = " SELECT USER_NAME, SPOOLED_FILE_NAME, FILE_NUMBER ,JOB_NAME ,  CREATE_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
-        + " FROM QSYS2 . OUTPUT_QUEUE_ENTRIES_BASIC WHERE  CREATE_TIMESTAMP >= '"
-        + startTimestamp.toString() + "'" + " AND CREATE_TIMESTAMP <= '" + endTimestamp.toString() + "'";
+    String query = " SELECT JOB_USER, SPOOLED_FILE_NAME, SPOOLED_FILE_NUMBER ,JOB_NUMBER || '/' ||  JOB_USER || '/' ||  JOB_NAME ,  CREATION_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
+        + " FROM TABLE(QSYS2 . SPOOLED_FILE_INFO ( STARTING_TIMESTAMP => '"
+        + startTimestamp.toString() + "'" + " , ENDING_TIMESTAMP =>'" + endTimestamp.toString() + "'))";
     runCleaningQuery(out, stmt, query, clean); 
     stmt.close(); 
     System.out.println("Running query " + query);

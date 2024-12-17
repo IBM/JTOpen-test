@@ -745,13 +745,14 @@ super.cleanup();
         {
             try
             {
+              StringBuffer sb = new StringBuffer(); 
+                
                 byte[] p = csTypes_.getBytes (19);
 
                 byte[] check = new byte[] { (byte) 'D', (byte) 'a', (byte) 'v',
                     (byte) 'e', (byte) ' ', (byte) 'E',
                     (byte) 'g', (byte) 'g', (byte) 'e'};     // Should be 'Dave Egge'
-		    StringBuffer sb = new StringBuffer(); 
-		    boolean passed = areEqual (p, check, sb);
+                boolean passed = areEqual (p, check, sb);
                 assertCondition(passed,sb);
             }
             catch(Exception e)

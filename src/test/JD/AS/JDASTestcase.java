@@ -2785,8 +2785,9 @@ public class JDASTestcase extends JDTestcase {
         killThread.start();
         int transactionCount = 0;
         int transactionsAttempted = 0;
-        while (System.currentTimeMillis() < endMillis && passed
-            && (transactionCount < RUN_TRANSACTIONS)) {
+        while ( (killCount == 0 && passed) || 
+        		(System.currentTimeMillis() < endMillis && passed
+            && (transactionCount < RUN_TRANSACTIONS))){
           boolean retry = true;
           int t = random.nextInt(psTransactions.length);
           while (retry && (System.currentTimeMillis() < endMillis && passed)) {
@@ -3031,9 +3032,10 @@ public class JDASTestcase extends JDTestcase {
     testCSTypeParameters(csTypeTransactions, csTypeParms, javaType, connection, killerConnection, killThread, runSeconds, sb);
   }
   
-  public boolean printInfo = false; 
-  public boolean propertyChecked = false; 
-  public void infoAppend(StringBuffer sb, String info) { 
+  public static boolean printInfo = false; 
+  public static boolean propertyChecked = false; 
+  public static void infoAppend(StringBuffer sb, String info) { 
+    synchronized(sb) {
     if (!propertyChecked) { 
       String prop = System.getProperty("com.ibm.as400.access.Trace.category"); 
       if (prop != null ) {
@@ -3041,10 +3043,13 @@ public class JDASTestcase extends JDTestcase {
       }
       propertyChecked=true; 
     }
+    Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis()); 
+    info = currentTimestamp.toString()+":"+info; 
     sb.append(info); 
     if (printInfo) {
       System.out.print(info);
       System.out.flush(); 
+    }
     }
   }
   
@@ -3361,6 +3366,8 @@ public class JDASTestcase extends JDTestcase {
               if (sqlcode != -4498) {
                 synchronized (sb) {
                   infoAppend(sb,"Bad exception received\n");
+                  infoAppend(sb, "sqlcode = "+sqlcode);
+                  infoAppend(sb, "sqlstate = "+e.getSQLState()); 
                   printStackTraceToStringBuffer(e, sb);
                 }
                 throw e;
@@ -3403,6 +3410,9 @@ public class JDASTestcase extends JDTestcase {
           System.out.println("Transactions attempted = "
               + transactionsAttempted + " transactions completed="
               + transactionCount);
+          if (debug) {
+        	  System.out.println(sb.toString()); 
+          }
         }
         /* Close the connection */
         connection.close();
@@ -3455,6 +3465,7 @@ public class JDASTestcase extends JDTestcase {
 
       while (running_) {
         synchronized (sb_) {
+          
           sb_.append("SwitchKillThread sleeping for " + sleepMilliseconds_
               + "\n");
         }
@@ -3543,25 +3554,22 @@ public class JDASTestcase extends JDTestcase {
 
     public void run() {
       while (running_) {
-        synchronized (sb_) {
-          sb_.append("KillThread sleeping for " + sleepMilliseconds_ + "\n");
-        }
+        infoAppend(sb_, "KillThread sleeping for " + sleepMilliseconds_ + "\n");
+        
         try {
           Thread.sleep(sleepMilliseconds_);
         } catch (InterruptedException e) {
         }
         String sql = "call qsys2.qcmdexc('endjob job(" + killjob_
             + ") option(*immed)')";
-        synchronized (sb_) {
-          sb_.append("Killing job  using " + sql + "\n");
-        }
+        infoAppend(sb_,"Killing job  using " + sql + "\n");
         try {
           Statement s = c_.createStatement();
           s.executeUpdate(sql);
           s.close();
         } catch (SQLException e) {
           synchronized (sb_) {
-            sb_.append("Kill thread hit exception\n");
+            infoAppend(sb_, "Kill thread hit exception\n");
             printStackTraceToStringBuffer(e, sb_);
           }
         }
@@ -3580,7 +3588,7 @@ public class JDASTestcase extends JDTestcase {
 
       }
       synchronized (sb_) {
-        sb_.append("Kill thread done\n");
+        infoAppend(sb_, "Kill thread done\n");
       }
 
     }

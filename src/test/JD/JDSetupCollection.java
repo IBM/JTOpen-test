@@ -254,7 +254,7 @@ other test userids can use it.
         // other users may create tables in it.
         if (created) {
 
-	    String sql = "CALL QSYS.QCMDEXC('CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM) DLTRCV(*YES)  JRNRCV(*GEN) THRESHOLD(100000)                          ',0000000100.00000)";
+	    String sql = "CALL QSYS2.QCMDEXC('CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM) DLTRCV(*YES)  JRNRCV(*GEN) THRESHOLD(100000)')";
 
 	    try {
 		s.executeUpdate(sql); 

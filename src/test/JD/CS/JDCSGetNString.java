@@ -796,7 +796,7 @@ extends JDCSGetTestcase
             {
                 String p = (String) JDReflectionUtil.callMethod_O(csTypes_, "getNString", 19);
                 {
-		    String expected = "446176652045676C65"; 
+		    String expected = "446176652045676765"; 
 		    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 			expected = "Dave Egge"; 
 		    }
@@ -1595,7 +1595,7 @@ extends JDCSGetTestcase
                 {
                     String p = (String) JDReflectionUtil.callMethod_OS(csTypes_, "getNString", "P_BLOB");
                     {
-		    String expected = "446176652045676C65"; 
+		    String expected = "446176652045676765"; 
 		    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 			expected = "Dave Egge"; 
 		    }

@@ -31,6 +31,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 
 import test.JDASTest;
+import test.PasswordVault;
 import test.SocketProxy;
 
 /**
@@ -85,7 +86,9 @@ public class JDASDSClientReroute1 extends JDASClientReroute
 				// String url = "jdbc:as400:localhost:"+localPort+";enableClientAffinitiesList=1;retryIntervalForClientReroute=10"; 
 
 				sb.append("Connecting to datasouce\n");
-				AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost", systemObject_.getUserId(), encryptedPassword_); 
+				char[] pwdChars = PasswordVault.decryptPassword(encryptedPassword_);
+				      
+				AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost", systemObject_.getUserId(), pwdChars); 
 				ds.setPortNumber(localPort);
 				ds.setEnableClientAffinitiesList(1);
 				ds.setRetryIntervalForClientReroute(10);; 
@@ -176,7 +179,9 @@ public class JDASDSClientReroute1 extends JDASClientReroute
 				
         sb.append("Connecting to datasource -- enableClientAffinitiesList=1;retryIntervalForClientReroute=10;"
             + "clientRerouteAlternateServerName=localhost;clientRerouteAlternatePortNumber="+localPort2+"\n");
-        AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost", systemObject_.getUserId(), encryptedPassword_); 
+        char[] pwdChars = PasswordVault.decryptPassword(encryptedPassword_);
+
+        AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost", systemObject_.getUserId(), pwdChars); 
         ds.setEnableClientAffinitiesList(1);
         ds.setPortNumber(localPort1);
         ds.setRetryIntervalForClientReroute(10);
@@ -293,7 +298,9 @@ public class JDASDSClientReroute1 extends JDASClientReroute
 				
 				
         sb.append("Connecting to datasouce wih former URL "+urlX+"\n");
-        AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost", systemObject_.getUserId(), encryptedPassword_); 
+        char[] pwdChars = PasswordVault.decryptPassword(encryptedPassword_);
+
+        AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost", systemObject_.getUserId(), pwdChars); 
         ds.setPortNumber(7);
         ds.setEnableClientAffinitiesList(1);
         ds.setRetryIntervalForClientReroute(10);; 
@@ -408,7 +415,9 @@ public class JDASDSClientReroute1 extends JDASClientReroute
 				String urlX = "jdbc:as400:serverdoesnotexist.org;enableClientAffinitiesList=1;retryIntervalForClientReroute=10;"+
 				"clientRerouteAlternateServerName=localhost,localhost,"+systemName+";clientRerouteAlternatePortNumber="+localPort1+","+localPort2;
 				sb.append("Connecting to datasouce wih former URL "+urlX+"\n");
-        AS400JDBCDataSource ds = new AS400JDBCDataSource("serverdoesnotexist.org", systemObject_.getUserId(), encryptedPassword_); 
+	                            char[] pwdChars = PasswordVault.decryptPassword(encryptedPassword_);
+
+        AS400JDBCDataSource ds = new AS400JDBCDataSource("serverdoesnotexist.org", systemObject_.getUserId(), pwdChars); 
         
         ds.setEnableClientAffinitiesList(1);
         ds.setRetryIntervalForClientReroute(10);; 

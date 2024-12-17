@@ -645,7 +645,7 @@ getCharacterStream() - Get a type that was registered as a BLOB.
          if (checkJdbc40 ()) {
             try {
                Reader p = (Reader) JDReflectionUtil.callMethod_O(csTypes_,getMethodName, 19);
-               String expected = "446176652045676C65";
+               String expected = "446176652045676765";
 	       if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		   expected = "Dave Egge";
 	       }
@@ -1111,7 +1111,7 @@ getCharacterStream() - Get a type that was registered as a BLOB.
       if (checkJdbc40 ()) {
             try {
                Reader p = (Reader) JDReflectionUtil.callMethod_OS(csTypes_,getMethodName, "P_BLOB");
-               String expected = "446176652045676C65";  /* primed via toolbox */ 
+               String expected = "446176652045676765";  /* primed via toolbox */ 
 	       if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		   expected = "Dave Egge"; 
 	       }
