@@ -838,7 +838,7 @@ extends JDCSGetTestcase
             {
                 String p = csTypes_.getString (19);
 
-		String expected = "4461766520456767W65";
+		String expected = "446176652045676765";
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE)  {
 		    expected = "Dave Egge"; 
 		} 
