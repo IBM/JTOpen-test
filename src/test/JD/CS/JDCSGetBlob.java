@@ -72,7 +72,7 @@ extends JDCSGetTestcase
 
 
    static final byte[] expected = { (byte) 'D', (byte) 'a', (byte) 'v', (byte) 'e', (byte) ' ',
-      (byte) 'E', (byte) 'g', (byte) 'l', (byte) 'e'};
+      (byte) 'E', (byte) 'g', (byte) 'g', (byte) 'e'};
 
 
 /**

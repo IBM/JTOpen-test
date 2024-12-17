@@ -1558,16 +1558,17 @@ public abstract class JDTestDriver extends TestDriver {
         }
       }
     }
-	  // Disable self unless connection is readonly
-	  if ((url.toLowerCase().indexOf("access=read only") < 0) && (url.toLowerCase().indexOf("access=read call") < 0 )) { 
-	   stmt.executeUpdate("set sysibmadm.selfcodes=''"); 
-	  }
-	        
-	  stmt.close();
+    if (getRelease() >= JDTestDriver.RELEASE_V7R4M0) {
+      // Disable self unless connection is readonly
+      if ((url.toLowerCase().indexOf("access=read only") < 0) && (url.toLowerCase().indexOf("access=read call") < 0)) {
+        stmt.executeUpdate("set sysibmadm.selfcodes=''");
       }
+    }
+    stmt.close();
   }
+}
 
-  void runCommand(Connection connection, String command, boolean SQLNaming)
+void runCommand(Connection connection, String command, boolean SQLNaming)
       throws SQLException {
     String sql = "";
     try {

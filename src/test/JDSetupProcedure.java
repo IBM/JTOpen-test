@@ -871,7 +871,7 @@ public class JDSetupProcedure {
       if (supportedFeatures.lobSupport)
         buffer.append(
             "   SET P_DATALINK        = 'https://github.com/IBM/JTOpen-test/blob/main/README.md';"
-                + "   SET P_BLOB            = BLOB(X'446176652045676C65');" // @B1C
+                + "   SET P_BLOB            = BLOB(X'446176652045676765');" // Dave Egge 
                 + "   SET P_CLOB            = CLOB('Chris Smyth');" // @B1C
                 + "   SET P_DBCLOB          = CLOB('Jeff Lex');"); // @B1C
       if (supportedFeatures.bigintSupport) // @B0A

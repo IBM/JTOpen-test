@@ -162,7 +162,11 @@ public abstract class Testcase {
   private String lockDtaaraName_;
 
   protected static boolean debug = false;
-  
+  static { 
+    if (System.getProperty("test.Testcase.debug") != null) { 
+      debug = true; 
+    }
+  }
   // Constant used in stringToBytes()
   // Note that 0x11 is "undefined".
   private static final byte[] b1_ = { 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11,

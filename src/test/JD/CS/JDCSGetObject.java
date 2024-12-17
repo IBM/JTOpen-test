@@ -26,7 +26,6 @@ import com.ibm.as400.access.AS400;
 import test.JDCSTest;
 import test.JDSetupProcedure;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;

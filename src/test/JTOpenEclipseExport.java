@@ -15,7 +15,6 @@ package test;
 
 import java.beans.PropertyVetoException;
 import java.io.*;
-import java.nio.CharBuffer;
 import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.Vector; 
