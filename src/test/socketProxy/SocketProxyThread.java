@@ -1,10 +1,12 @@
 package test.socketProxy;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class SocketProxyThread extends Thread {
 
@@ -21,6 +23,8 @@ public class SocketProxyThread extends Thread {
   SocketProxyStreamThread toClient = null ; 
   Socket serverSocket_ = null; 
   long processedBytes = 0; 
+  int serverLocalPort_;
+  private Exception savedException_ = null;  
   
   public SocketProxyThread(SocketProxyMasterThread socketProxyMasterThread, String threadName, Socket socket, String serverName, int serverPort,  PrintWriter printWriter) {
       socketProxyMasterThread_ =  socketProxyMasterThread; 
@@ -29,14 +33,24 @@ public class SocketProxyThread extends Thread {
       serverName_ = serverName; 
       serverPort_ = serverPort; 
       printWriter_ = printWriter; 
-      setName(threadName); 
+      
+      try {
+        serverSocket_ = new Socket(serverName_, serverPort_);
+        serverLocalPort_ = serverSocket_.getLocalPort(); 
+        threadName_ = threadName_ + " slp="+serverLocalPort_; 
+        setName(threadName_); 
+      } catch (Exception e) {
+        savedException_  = e; 
+      } 
 
   }
   
   public void run() { 
       try { 
+        if (savedException_ != null) { 
+          throw savedException_; 
+        }
       // Create the socket and streams to the server
-      serverSocket_ = new Socket(serverName_, serverPort_); 
       InputStream serverInputStream = serverSocket_.getInputStream(); 
       OutputStream serverOutputStream = serverSocket_.getOutputStream();
       
@@ -156,5 +170,9 @@ public class SocketProxyThread extends Thread {
       return 0; 
     }
    }
+
+  public int getServerLocalPort() {
+   return serverLocalPort_; 
+  }
 
 }

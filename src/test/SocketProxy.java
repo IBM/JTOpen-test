@@ -77,7 +77,9 @@ public class SocketProxy implements Runnable {
   InputStream inputStream_;
   SocketProxyMasterThread masterThread; 
   boolean done;
-  ServerSocket serverSocket_; 
+  ServerSocket serverSocket_;
+  private boolean masterThreadServiceEnded = false ;
+  
   
   public SocketProxy(PrintStream out, InputStream in, int proxyPort,
       String serverName, int serverPort) throws IOException {
@@ -111,7 +113,7 @@ public class SocketProxy implements Runnable {
 
     masterThread = 
         new SocketProxyMasterThread(serverSocket_, serverName_, serverPort_, printWriter_, this); 
-
+    
   }
   
   public void run() {
@@ -139,7 +141,7 @@ public class SocketProxy implements Runnable {
       try { 
         if (masterThread != null) { 
           masterThread.endService(); 
-          masterThread = null; 
+          masterThreadServiceEnded = true; 
         }
       } catch (Throwable t2) { 
         printWriter_.println("Throwable caught ending masterThread ");
@@ -153,7 +155,10 @@ public class SocketProxy implements Runnable {
 
   public void endService() { 
     if (masterThread != null) { 
-      masterThread.endService();
+      if (!masterThreadServiceEnded) {
+        masterThread.endService();
+        masterThreadServiceEnded  = true; 
+      }
       masterThread = null; 
     } 
     done = true; 
@@ -172,12 +177,33 @@ public class SocketProxy implements Runnable {
   	return proxyPort_; 
   }
   
-  public long getActiveByteCount() { 
+  public int getServerLocalPort() { 
+    if (masterThread != null )
+      return masterThread.getServerLocalPort();
+    return -1; 
+  }
+  public int getConnectionCount() { 
+    if (masterThread != null) { 
+      return masterThread.getConnectionCount();
+    } 
+    return -1; 
+  }
+
+  
+  public long getActiveByteCount() {
+    if (masterThread != null) { 
   	return masterThread.getActiveByteCount(); 
+    } else { 
+      return -1; 
+    }
   }
 
   public int getFailedConnectCount() {
+    if (masterThread != null) { 
       return masterThread.getFailedConnectCount(); 
+    } else { 
+      return -1; 
+    }
   }
 
   public void endActiveConnections() { 
@@ -186,7 +212,6 @@ public class SocketProxy implements Runnable {
 
   public void enable(boolean b) {
 	  masterThread.enable(b); 
-	  
   }
   
   public void setOutputFailedAttempts(PrintStream stream) {

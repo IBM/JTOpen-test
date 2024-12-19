@@ -51,6 +51,10 @@ public class JDASTestcase extends JDTestcase {
 
   protected String url_;
 
+  public int killCount;
+
+  private boolean seamless_;
+
   protected static String[] setupSql = {
       "create or replace variable COLLECTION.GVCALTCINT INT",
       "create or replace table    COLLECTION.GVCALTCT1(C1 INT,C2 BIGINT)",
@@ -2644,6 +2648,7 @@ public class JDASTestcase extends JDTestcase {
   }
 
   public Connection createDSConnectionFromURL(String url) throws Exception {
+   
    Hashtable h = getPropertiesFromUrl(url);
    String system = (String) h.get("system"); 
    
@@ -2669,7 +2674,11 @@ public class JDASTestcase extends JDTestcase {
      } else {
        throw new Exception("Unable to processing URL property : "+property+"="+value); 
      }
-     
+     if (url.indexOf("Seamless") > 0) {
+       seamless_ = false; 
+     } else {
+       seamless_ = true; 
+     }
    }
    
     
@@ -2747,20 +2756,21 @@ public class JDASTestcase extends JDTestcase {
       KillThread killThread, int runSeconds, StringBuffer sb) {
 
     Random random = new Random(1);
-    int killCount = 0;
+    killCount = 0;
     int killTime =  MINIMUM_TRANSACTION_MILLISECONDS; 
     int minimumTransactionMilliseconds = MINIMUM_TRANSACTION_MILLISECONDS;
     boolean passed = true;
+    infoAppend(sb, "testPSTypeParmeters");; 
     infoAppend(sb,"Test a connection with enableClientAffinitiesList\n");
     infoAppend(sb,"Make sure the connection is re-established after it drops\n");
     infoAppend(sb,"It will be dropped randomly\n");
     infoAppend(sb,"This test uses prepared statements with type parameter markers\n");
-
+    infoAppend(sb,"killThread is "+killThread+"\n");
     try {
 
       if (checkToolboxFixDate(TOOLBOX_FIX_DATE)) {
         PreparedStatement[][] psTransactions = new PreparedStatement[psTypeTransactions.length][];
-        for (int i = 0; i < psTypeTransactions.length; i++) {
+        for      (int i = 0; i < psTypeTransactions.length; i++) {
           String[] sqlInTransaction = psTypeTransactions[i];
           PreparedStatement[] psInTransaction = new PreparedStatement[sqlInTransaction.length];
           psTransactions[i] = psInTransaction;
@@ -2783,11 +2793,12 @@ public class JDASTestcase extends JDTestcase {
         }
         long endMillis = System.currentTimeMillis() + runSeconds * 1000;
         killThread.start();
+        killThread.waitUntilReady(); 
         int transactionCount = 0;
         int transactionsAttempted = 0;
-        while ( (killCount == 0 && passed) || 
-        		(System.currentTimeMillis() < endMillis && passed
-            && (transactionCount < RUN_TRANSACTIONS))){
+        int serverLocalPort = 0; 
+        while (System.currentTimeMillis() < endMillis && passed
+            && (transactionCount < RUN_TRANSACTIONS)) {
           boolean retry = true;
           int t = random.nextInt(psTransactions.length);
           while (retry && (System.currentTimeMillis() < endMillis && passed)) {
@@ -2796,6 +2807,15 @@ public class JDASTestcase extends JDTestcase {
 
               synchronized (sb) {
                 infoAppend(sb,"TC=" + transactionCount + " T=" + t + "\n");
+                Statement s = connection.createStatement(); 
+                ResultSet rs = s.executeQuery("select REMOTE_PORT from qsys2.netstat_job_info a where a.JOB_NAME=qsys2.JOB_NAME and LOCAL_PORT=8471"); 
+                if (rs.next()) {
+                  int currentServerLocalPort = rs.getInt(1);
+                  if (currentServerLocalPort != serverLocalPort) {
+                      serverLocalPort = currentServerLocalPort;
+                  infoAppend(sb, "Server connection is "+serverLocalPort+"/8471\n");
+                  }
+                }
               }
               PreparedStatement[] psInT = psTransactions[t];
               String[][][] parameterSets = psTypeParms[t];
@@ -2978,6 +2998,10 @@ public class JDASTestcase extends JDTestcase {
         }
         connection.close();
         killerConnection.close();
+        if (killCount == 0 && !seamless_ ) {
+          sb.append("FAILED because kill count is zero\n");
+          passed = false; 
+        }
         assertCondition(passed, sb);
 
       }
@@ -3057,9 +3081,10 @@ public class JDASTestcase extends JDTestcase {
       String[][][][] csTypeParms, int javaType, Connection connection, Connection killerConnection,
       KillThread killThread, int runSeconds, StringBuffer sb) {
     Random random = new Random();
-    int killCount = 0;
+    killCount = 0;
     int killTime = 0; 
     boolean passed = true;
+    infoAppend(sb, "testCSTypeParameters\n"); 
     infoAppend(sb,"Test a connection with enableClientAffinitiesList\n");
     infoAppend(sb,"Make sure the connection is re-established after it drops\n");
     infoAppend(sb,"It will be dropped randomly\n");
@@ -3447,12 +3472,28 @@ public class JDASTestcase extends JDTestcase {
     }
 
     public void run() {
-
-      // Make sure a proxy is enabled
-      int pick = random_.nextInt(proxies_.length);
-
+      // See if only one proxy is in use.  If so, then use that one.
+      int pick = -1; 
+      for (int i = 0; i < proxies_.length && pick != -2; i++) {
+        int count =  proxies_[i].getConnectionCount(); 
+        if (count > 0) {
+          if (pick == -1) {
+            pick = i;        /* Chose this if none selected */ 
+          } else {
+            pick = -2;      /* -2 indicates we found multiple */ 
+          }
+        }
+      }
+      // Randomly pick one if none or many found
+      if (pick < 0) { 
+        pick = random_.nextInt(proxies_.length);
+        sb_.append("SwitchKillThread: Chose random proxy\n"); 
+      } else {
+        sb_.append("SwitchKillThread: Using in-use  proxy\n"); 
+      }
+      
       synchronized (sb_) {
-        sb_.append("Enabling proxy at index " + pick + " \n");
+        sb_.append("SwitchKillThread: Enabling proxy at index " + pick  + " port= " +proxies_[pick].getPortNumber()+"/"+proxies_[pick].getServerLocalPort()+" c="+proxies_[pick].getConnectionCount()+ " \n");
       }
       proxies_[pick].enable(true);
 
@@ -3460,13 +3501,14 @@ public class JDASTestcase extends JDTestcase {
       for (int i = 0; i < proxies_.length; i++) {
         if (i != pick) {
           proxies_[i].enable(false);
+          sb_.append("SwitchKillThread: disabling proxy at index " + i  + " port= " +proxies_[i].getPortNumber()+"/"+proxies_[i].getServerLocalPort()+" c="+proxies_[i].getConnectionCount()+ " \n");
         }
       }
-
+      ready_ = true; 
       while (running_) {
         synchronized (sb_) {
           
-          sb_.append("SwitchKillThread sleeping for " + sleepMilliseconds_
+          sb_.append("SwitchKillThread: sleeping for " + sleepMilliseconds_
               + "\n");
         }
         try {
@@ -3474,7 +3516,7 @@ public class JDASTestcase extends JDTestcase {
         } catch (InterruptedException e) {
         }
         synchronized (sb_) {
-          sb_.append("Ending proxy \n");
+          sb_.append("SwitchKillThread: Ending proxy \n");
         }
 
         int newPick = random_.nextInt(proxies_.length);
@@ -3483,7 +3525,7 @@ public class JDASTestcase extends JDTestcase {
           newPick = random_.nextInt(proxies_.length);
         }
         synchronized (sb_) {
-          sb_.append("Enabling proxy at index " + newPick + " \n");
+          sb_.append("SwitchKillthread: Enabling proxy at index " + newPick + " port= " +proxies_[newPick].getPortNumber()+"/"+proxies_[newPick].getServerLocalPort()+" c="+proxies_[newPick].getConnectionCount()+  " \n");
         }
         proxies_[newPick].enable(true);
         // Allow time for the proxy to become active
@@ -3493,7 +3535,7 @@ public class JDASTestcase extends JDTestcase {
 
         }
         synchronized (sb_) {
-          sb_.append("Ending proxy at index " + pick + "\n");
+          sb_.append("SwitchKillthread: Ending proxy at index " + pick  + " port= " +proxies_[pick].getPortNumber()+"/"+proxies_[pick].getServerLocalPort()+" c="+proxies_[pick].getConnectionCount()+ "\n");
         }
 
         proxies_[pick].enable(false);
@@ -3504,19 +3546,27 @@ public class JDASTestcase extends JDTestcase {
         waiting_ = true;
 
         // Now wait for reset before continuing
+        // sometimes the reset doesn't work. In that case, we keep going. 
         synchronized (this) {
-          while (waiting_ && running_) {
+          long timeoutTime = System.currentTimeMillis() + 10000; /* ten seconds should be long enough */ 
+          while (waiting_ && running_ & System.currentTimeMillis() < timeoutTime) {
             try {
               this.wait(250);
             } catch (Exception e) {
 
             }
           }
+          if (waiting_ == true && running_ == true) {   
+             sb_.append("SwitchKillThread:  continuing because reset not found within 10 seconds\n");
+             waiting_ = false; 
+          } else {
+            sb_.append("SwitchKillThread:  loop bottom\n"); 
+          }
         }
 
       }
       synchronized (sb_) {
-        sb_.append("Switchkill thread done\n");
+        sb_.append("SwitchKillThread done\n");
       }
 
     }
@@ -3524,13 +3574,15 @@ public class JDASTestcase extends JDTestcase {
   }
 
   class KillThread extends Thread {
+    
     private Connection c_;
     String killjob_;
     int sleepMilliseconds_;
     StringBuffer sb_;
     boolean running_ = true;
     boolean waiting_ = false;
-
+    boolean ready_ = false; 
+    
     public KillThread(Connection c, String killjob, int sleepMilliseconds,
         StringBuffer sb) {
       c_ = c;
@@ -3538,7 +3590,25 @@ public class JDASTestcase extends JDTestcase {
       sleepMilliseconds_ = sleepMilliseconds;
       sb_ = sb;
     }
-
+    public void waitUntilReady() throws InterruptedException {
+      infoAppend(sb_,  "waiting for KillThread to be ready\n");
+      boolean ready = false; 
+      synchronized(this) {
+        ready = ready_; 
+      }
+      while (!ready) {
+          sleep(100);
+        synchronized(this) {
+          ready = ready_; 
+        }
+      }
+      
+      infoAppend(sb_,  "waiting for KillThread complete\n");
+      
+    }
+    public String toString() { 
+      return(this.getClass().toString()+" sleepMilliseconds_ = "+sleepMilliseconds_+" killjob_ = "+killjob_+"\n"); 
+    }
     public synchronized void reset(int sleepMilliseconds, String killjob) {
       killjob_ = killjob;
       sleepMilliseconds_ = sleepMilliseconds;
@@ -3554,22 +3624,22 @@ public class JDASTestcase extends JDTestcase {
 
     public void run() {
       while (running_) {
-        infoAppend(sb_, "KillThread sleeping for " + sleepMilliseconds_ + "\n");
-        
+        infoAppend(sb_, "KillThread: sleeping for " + sleepMilliseconds_ + "\n");
+        ready_ = true; 
         try {
           Thread.sleep(sleepMilliseconds_);
         } catch (InterruptedException e) {
         }
         String sql = "call qsys2.qcmdexc('endjob job(" + killjob_
             + ") option(*immed)')";
-        infoAppend(sb_,"Killing job  using " + sql + "\n");
+        infoAppend(sb_,"KillThread: Killing job  using " + sql + "\n");
         try {
           Statement s = c_.createStatement();
           s.executeUpdate(sql);
           s.close();
         } catch (SQLException e) {
           synchronized (sb_) {
-            infoAppend(sb_, "Kill thread hit exception\n");
+            infoAppend(sb_, "KillThread: hit exception\n");
             printStackTraceToStringBuffer(e, sb_);
           }
         }
@@ -3588,7 +3658,7 @@ public class JDASTestcase extends JDTestcase {
 
       }
       synchronized (sb_) {
-        infoAppend(sb_, "Kill thread done\n");
+        infoAppend(sb_, "KillThread: done\n");
       }
 
     }
