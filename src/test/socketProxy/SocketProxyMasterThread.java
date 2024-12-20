@@ -23,8 +23,10 @@ public class SocketProxyMasterThread extends Thread {
   long startTime = 0;
   int localPort_ = 0;
   int failedConnectCount_ = 0;
+  int serverLocalPort_ = 0; 
   private long toServerByteCount_ = Long.MAX_VALUE;
   private long toClientByteCount_ = Long.MAX_VALUE;
+  int connectionCount_ = 0;
   
   public SocketProxyMasterThread(ServerSocket serverSocket, String serverName,
       int serverPort, PrintWriter printWriter, SocketProxy master) {
@@ -40,13 +42,29 @@ public class SocketProxyMasterThread extends Thread {
 
   }
 
+  public int getServerLocalPort() { 
+
+    Object[] threads;
+    synchronized (threadList) {
+      threads = threadList.toArray();
+    }
+    for (int i = 0; i < threads.length; i++) {
+      int thisLocalPort = ((SocketProxyThread) threads[i]).getServerLocalPort();
+      if (thisLocalPort > serverLocalPort_) serverLocalPort_ = thisLocalPort; 
+    }
+    
+    return serverLocalPort_; 
+  }
+  
+  public int getConnectionCount() { 
+    return connectionCount_; 
+  }
   public void setOutputFailedAttempts(PrintStream stream) {
     outputFailedAttempts = stream;
     startTime = System.currentTimeMillis();
   }
 
   public void run() {
-    int count = 0;
     int exceptionCount = 0;
     threadList = new Vector();
     while (running) {
@@ -63,14 +81,15 @@ public class SocketProxyMasterThread extends Thread {
         if (isEnabled) {
 	    printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" starting thread to process"); 
           SocketProxyThread socketProxyThread = new SocketProxyThread(this,
-              "PROXY_THREAD_" + count, socket, serverName_, serverPort_,
+              "PROXY_THREAD_" + connectionCount_+" "+socket+" to "+serverName_+"/"+serverPort_, socket, serverName_, serverPort_,
               printWriter_);
           synchronized (threadList) {
             threadList.add(socketProxyThread);
           }
           socketProxyThread.endAfterByteCount(toServerByteCount_, toClientByteCount_); 
+          serverLocalPort_ = socketProxyThread.getServerLocalPort(); 
           socketProxyThread.start();
-          count++;
+          connectionCount_++;
         } else {
 	    printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" not enabled"); 
           failedConnectCount_++;
@@ -139,6 +158,10 @@ public class SocketProxyMasterThread extends Thread {
 
   public void removeSocketProxyThread(SocketProxyThread socketProxyThread) {
     synchronized (threadList) {
+      
+        int thisLocalPort = socketProxyThread.getServerLocalPort();
+        if (thisLocalPort > serverLocalPort_) serverLocalPort_ = thisLocalPort; 
+ 
       threadList.remove(socketProxyThread);
     }
   }

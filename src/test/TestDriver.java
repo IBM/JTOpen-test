@@ -1139,7 +1139,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       rootThreadGroup = parentThreadGroup; 
       parentThreadGroup = rootThreadGroup.getParent(); 
     }
-    if (threadGroupHasAS400ReadDaemon(rootThreadGroup)) {
+    if (threadGroupHasAS400ReadDaemon(rootThreadGroup, out_)) {
       out_.println("Calling System.exit(0) because AS400ReadDaemon found"); 
       System.exit(0); 
       
@@ -1148,19 +1148,20 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     
   }
 
-  private boolean threadGroupHasAS400ReadDaemon(ThreadGroup threadGroup) {
+  private boolean threadGroupHasAS400ReadDaemon(ThreadGroup threadGroup, PrintWriter out) {
     int threadCount = threadGroup.activeCount(); 
-    
+    boolean found = false; 
     Thread[] threadList = new Thread[threadCount+10];
     threadCount = threadGroup.enumerate(threadList );
     for (int i = 0; i < threadCount; i++) { 
       String  threadName = threadList[i].getName(); 
       if (threadName.indexOf("AS400 Read Daemon")>=0) {
-        return true; 
+         out.println("Found "+threadName); 
+        found =  true; 
       }
     }
     
-    return false;
+    return found;
   }
 
   /**
