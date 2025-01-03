@@ -878,6 +878,14 @@ public abstract class Testcase {
    *              If an exception occurs.
    **/
   protected void cleanup() throws Exception {
+    if (pwrSys_ != null) { 
+      pwrSys_.close(); 
+      pwrSys_ = null ; 
+    }
+    if (systemObject_ != null) { 
+      systemObject_.close(); 
+      systemObject_ = null; 
+    }
   }
 
   public String deleteLibrary(String command) {

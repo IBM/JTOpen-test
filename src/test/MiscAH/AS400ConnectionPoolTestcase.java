@@ -523,6 +523,8 @@ extends Testcase
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == numOfConnections
                             && p.getActiveConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 2, 
                             "connections are "+conn1+"  " +conn2);
+            conn1.close();
+            conn2.close(); 
             p.close();
         }
         catch (Exception e)
@@ -552,7 +554,8 @@ extends Testcase
                    service, numOfConnections);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == numOfConnections++
                             && p.getActiveConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 1);
-             p.close();
+            
+            p.close();
          PasswordVault.clearPassword(passwordChars);
         }
         catch (Exception e)

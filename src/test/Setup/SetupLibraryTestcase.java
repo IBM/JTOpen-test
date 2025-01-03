@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.FTP;
 
@@ -74,11 +75,32 @@ public abstract class SetupLibraryTestcase extends Testcase {
      
      CommandCall cmd = new CommandCall(pwrSys_);
      
+
+     String remoteName = ""; 
+     int savfIndex = saveFile.indexOf(".savf"); 
+     if (savfIndex > 0) { 
+       remoteName=saveFile.substring(0,savfIndex).toUpperCase(); 
+     } else { 
+        throw new Exception("Unable to find .savf in "+saveFile); 
+     }
+
      // Create the necessary save files in preparation
      // for object restoration.
+     String command = "DLTF QGPL/"+remoteName; 
+     cmd.setCommand(command);
+     boolean success = cmd.run();
+     if (!success) { 
+       output_.println("Warning: Command failed "+command); 
+     }
+    
      output_.println("Creating master save file...");
-     cmd.setCommand("CRTSAVF QGPL/"+saveFile);
-     cmd.run();
+     command = "CRTSAVF QGPL/"+remoteName;
+     cmd.setCommand(command);
+     success = cmd.run();
+     if (!success) { 
+       output_.println("Error: Command failed "+command); 
+       throw new Exception("Command failed "+command);  
+     }
   
      // FTP files from GIT on to the 400
      output_.println("Starting ftp...");
@@ -113,13 +135,6 @@ public abstract class SetupLibraryTestcase extends Testcase {
        }
      }
      
-     String remoteName = ""; 
-     int savfIndex = saveFile.indexOf(".savf"); 
-     if (savfIndex > 0) { 
-       remoteName=saveFile.substring(0,savfIndex).toUpperCase(); 
-     } else { 
-        throw new Exception("Unable to find .savf in "+saveFile); 
-     }
      
      FTP os400 = new FTP(pwrSys_.getSystemName(), pwrSys_.getUserId(), PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_));
      os400.cd("QGPL");
@@ -132,16 +147,25 @@ public abstract class SetupLibraryTestcase extends Testcase {
      os400.disconnect();
    
      // Restore objects from save files to appropriate locations
+     command = "RSTLIB SAVLIB("+library+") DEV(*SAVF) SAVF(QGPL/"+remoteName+")";
      output_.println("Restoring objects and libraries...");
-     cmd.setCommand("RSTLIB SAVLIB("+library+") DEV(*SAVF) SAVF(QGPL/"+remoteName+")");
-     cmd.run();
-  
+     cmd.setCommand(command);
+     boolean rc = cmd.run();
+     if (rc == false) {
+       System.out.println("Restore failed using "+command); 
+       output_.println("Restore failed using "+command); 
+       AS400Message[] list = cmd.getMessageList();
+       for (int i = 0; i < list.length; i++) {
+         System.out.println(list[i].getID()+":"+ list[i].getText());
+       }
+     } else { 
      // Delete the necessary save files.
      output_.println("Deleting master save file...");
      cmd.setCommand("DLTF QGPL/"+remoteName);
      cmd.run();
   
      output_.println("Restore of "+library+" on "+pwrSys_.getSystemName()+" is complete.");
+     }  
      
    }
 

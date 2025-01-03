@@ -26,6 +26,7 @@ import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.MessageFile;
 
 import test.JDReflectionUtil;
+import test.JDTestDriver;
 import test.Testcase;
 
 /**
@@ -829,6 +830,10 @@ public class MessageFileTestcase extends Testcase
             m = aMessageFile.getMessage("CPD0095");
 
             String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &";
+            
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              helpText  = "&N Cause . . . . . :   The numeric value specified for parameter &";
+            }
             // Just check the first few words.  The message changes from release to release.
 
 //            String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &3 in the command definition object, is too large.  The parameter types and their allowed maximum values follow: &P -- *INT2: The maximum value is 32767. &P -- *INT4: The maximum value is 2147483647. &P -- *DEC:  The maximum value for this parameter is limited by its defined length.  It is defined with LEN(&4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";
@@ -884,6 +889,9 @@ public class MessageFileTestcase extends Testcase
             String helpText =
               "\nCause . . . . . :   The numeric value specified parameter &2, which is defined as type &" ;
             // Just check the first few words.  The message changes from release to release.
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              helpText  = "\nCause . . . . . :   The numeric value specified for parameter &2, which is defined as type &";
+            }
 
 //            String helpText =
 //              "\nCause . . . . . :   The numeric value specified parameter &2, which is defined as type &3 in the command definition object, is too large.  The parameter types and their allowed maximum values follow:" +
@@ -960,6 +968,9 @@ public class MessageFileTestcase extends Testcase
 
             String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &";
             // Just check the first few words.  The message changes from release to release.
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              helpText  = "&N Cause . . . . . :   The numeric value specified for parameter &2, which is defined as type &";
+            }
 
 //            String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &3 in the command definition object, is too large.  The parameter types and their allowed maximum values follow: &P -- *INT2: The maximum value is 32767. &P -- *INT4: The maximum value is 2147483647. &P -- *DEC:  The maximum value for this parameter is limited by its defined length.  It is defined with LEN(&4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";
 //            String helpText2 = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &5 in the command definition object, is not valid.  The parameter types and their allowed values follow: &P -- *INT2:  The range of values is -32768 to 32767. &P -- *INT4:  The range of values is -2147483648 to 2147483647. &P -- *UINT2: The range of values is 0 to 65535. &P -- *UINT4: The range of values is 0 to 4294967295. &P -- *DEC:  The range of values for this parameter is limited by its defined length.  It is defined with LEN(&4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";
@@ -977,6 +988,9 @@ public class MessageFileTestcase extends Testcase
 
             helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &";
             // Just check the first few words.  The message changes from release to release.
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              helpText  = "&N Cause . . . . . :   The numeric value specified for parameter &2, which is defined as type &";
+            }
 
             // Message changed in v4r5.
             if (!m.getHelp().startsWith(helpText))
@@ -1116,6 +1130,9 @@ public class MessageFileTestcase extends Testcase
             m = aMessageFile.getMessage("CPD0095", (byte[]) null, LEFT_TO_RIGHT);
 
             String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &";
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              helpText  = "&N Cause . . . . . :   The numeric value specified for parameter &2, which is defined as type &";
+            }
             // Just check the first few words.  The message changes from release to release.
 
 //            String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &3 in the command definition object, is too large.  The parameter types and their allowed maximum values follow: &P -- *INT2: The maximum value is 32767. &P -- *INT4: The maximum value is 2147483647. &P -- *DEC:  The maximum value for this parameter is limited by its defined length.  It is defined with LEN(&4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";
@@ -1228,6 +1245,9 @@ public class MessageFileTestcase extends Testcase
 
 //            String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &3 in the command definition object, is too large.  The parameter types and their allowed maximum values follow: &P -- *INT2: The maximum value is 32767. &P -- *INT4: The maximum value is 2147483647. &P -- *DEC:  The maximum value for this parameter is limited by its defined length.  It is defined with LEN(&4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";
 //            String helpText2 = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &5 in the command definition object, is not valid.  The parameter types and their allowed values follow: &P -- *INT2:  The range of values is -32768 to 32767. &P -- *INT4:  The range of values is -2147483648 to 2147483647. &P -- *UINT2: The range of values is 0 to 65535. &P -- *UINT4: The range of values is 0 to 4294967295. &P -- *DEC:  The range of values for this parameter is limited by its defined length.  It is defined with LEN(&4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              helpText  = "&N Cause . . . . . :   The numeric value specified for parameter &2, which is defined as type &";
+            }
 
             // Message changed in v4r5.
             if (!m.getHelp().startsWith(helpText))
@@ -1253,7 +1273,9 @@ public class MessageFileTestcase extends Testcase
             helpText  = "&N Cause . . . . . :   The numeric value specified parameter parameter2, which is defined as type parm3 in the command definition object, is too large.  The parameter types and their allowed maximum values follow: &P -- *INT2: The maximum value is 32767. &P -- *INT4: The maximum value is 2147483647. &P -- *DEC:  The maximum value for this parameter is limited by its defined length.  It is defined with LEN(prm4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";
             String helpText2 = "&N Cause . . . . . :   The numeric value specified parameter parameter2, which is defined as type parameter5 in the command definition object, is not valid.  The parameter types and their allowed values follow: &P -- *INT2:  The range of values is -32768 to 32767. &P -- *INT4:  The range of values is -2147483648 to 2147483647. &P -- *UINT2: The range of values is 0 to 65535. &P -- *UINT4: The range of values is 0 to 4294967295. &P -- *DEC:  The range of values for this parameter is limited by its defined length.  It is defined with LEN(prm4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";
             String helpText_v7r1 = "&N Cause . . . . . :   The numeric value specified parameter parameter2, which is defined as type parameter5 in the command definition object, is not valid.  The parameter types and their allowed values follow: &P -- *INT2:  The range of values is -32768 to 32767. &P -- *INT4:  The range of values is -2147483648 to 2147483647. &P -- *UINT2: The range of values is 0 to 65535. &P -- *UINT4: The range of values is 0 to 4294967295. &P -- *DEC:  The range of values for this parameter is limited by its defined length.  It is defined with LEN(prm4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the Information Center.";
-
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              helpText_v7r1  = "&N Cause . . . . . :   The numeric value specified for parameter parameter2, which is defined as type parameter5 in the command definition object, is not valid.  The parameter types and their allowed values follow: &P -- *INT2:  The range of values is -32768 to 32767. &P -- *INT4:  The range of values is -2147483648 to 2147483647. &P -- *UINT2: The range of values is 0 to 65535. &P -- *UINT4: The range of values is 0 to 4294967295. &P -- *DEC:  The range of values for this parameter is limited by its defined length.  It is defined with LEN(prm4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &P -- *X:  This error occurred for the CALL or CALLPRC command or for a command parameter defined with type *X where the passed parameter has more than 10 significant integer digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the Information Center.";
+            }
             // Message changed in v4r5.
             if (!m.getHelp().equalsIgnoreCase(helpText) &&
                 !m.getHelp().equalsIgnoreCase(helpText2) &&
@@ -1349,6 +1371,9 @@ public class MessageFileTestcase extends Testcase
             m = aMessageFile.getMessage("CPD0095", (byte[]) null, LEFT_TO_RIGHT, ccsid, CCSID_EBCDIC);
 
             String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &";
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              helpText  = "&N Cause . . . . . :   The numeric value specified for parameter &2, which is defined as type &";
+            }
             // Just check the first few words.  The message changes from release to release.
 
 //            String helpText  = "&N Cause . . . . . :   The numeric value specified parameter &2, which is defined as type &3 in the command definition object, is too large.  The parameter types and their allowed maximum values follow: &P -- *INT2: The maximum value is 32767. &P -- *INT4: The maximum value is 2147483647. &P -- *DEC:  The maximum value for this parameter is limited by its defined length.  It is defined with LEN(&4) in the command definition object. &P -- *N:  This error occurred in an expression with a numeric value with more than 15 significant digits. &N Recovery  . . . :   Enter a numeric value that is valid for the parameter, or enter one of the special values that is defined for the parameter. More information on parameters and special values can be found in the CL Reference manual.";

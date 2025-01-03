@@ -33,13 +33,13 @@ import test.misc.TestUtilities;
 public class JTOpenEclipseExportJars  {
 
   public static void usage() { 
-    System.out.println("Usage:  java  test.JDTOpenEclipseExport IBMi userid password eclipse directory  ");
+    System.out.println("Usage:  java  test.JDTOpenEclipseExportJars IBMi userid password eclipse directory  ");
     System.out.println("   Updates an IBM i system with the latest JTOpen jar files from the Eclipse Environment");
   }
  
   public static void main(String args[]) {
     try {
-      System.out.println("Usage:  java  test.JDTOpenEclipseExport IBMi userid password  JTOpenDirectory  ");
+      System.out.println("Usage:  java  test.JDTOpenEclipseExportJars IBMi userid password  JTOpenDirectory  ");
       System.out.println("   Updates an IBM i system with the latest changes in the Eclipse Environment");
 
       String as400Name = args[0]; 
@@ -55,6 +55,7 @@ public class JTOpenEclipseExportJars  {
       if (!gitDirectoryFile.exists()) { 
         System.out.println("Error. directory "+gitDirectory+" does not exist.  user.home is not the git root");
       }
+      System.out.println("gitDirectory is "+gitDirectory); 
       System.out.println("Current directory is "+currentDirectory);
       /* C:\Users\JohnEberhard\git\JTOpenWorking\target\jt400-20.0.7.jar */ 
       

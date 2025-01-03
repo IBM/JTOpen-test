@@ -284,6 +284,7 @@ public class SecSignonInfoTestcase extends Testcase {
     }
   }
 
+  
   /**
    * Test isAdditionalAuthenticationFactorAccepted
    **/
