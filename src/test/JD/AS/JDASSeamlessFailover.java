@@ -395,7 +395,7 @@ url = "jdbc:as400:localhost:7;enableClientAffinitiesList=1;enableSeamlessFailove
 sb.append("Connecting to " + url + "\n");
 connection = testDriver_.getConnection(url,
 systemObject_.getUserId(), encryptedPassword_);
-
+seamless_= true; 
 
 
 } catch (Exception e) {
@@ -504,7 +504,7 @@ ds.setClientRerouteAlternatePortNumber(localPort1
 + localPort2
 + "," + localPort3 + "," + localPort4);
 connection = ds.getConnection(); 
-
+seamless_ = true; 
 
 } catch (Exception e) {
 failed(e);

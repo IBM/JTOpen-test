@@ -53,7 +53,8 @@ public class JDASTestcase extends JDTestcase {
 
   public int killCount;
 
-  private boolean seamless_;
+  
+  protected boolean seamless_;
 
   protected static String[] setupSql = {
       "create or replace variable COLLECTION.GVCALTCINT INT",
@@ -2618,7 +2619,7 @@ public class JDASTestcase extends JDTestcase {
       infoAppend(sb,"Connecting to " + url + "\n");
       Connection connection = testDriver_.getConnection(url,
           systemObject_.getUserId(), encryptedPassword_);
-
+      
       testPSTypeParameters(psTypeTransactions, psTypeParms, javaType,
           connection, killerConnection, killThread, runSeconds, sb);
     } catch (Exception e) {
@@ -2674,10 +2675,10 @@ public class JDASTestcase extends JDTestcase {
      } else {
        throw new Exception("Unable to processing URL property : "+property+"="+value); 
      }
-     if (url.indexOf("Seamless") > 0) {
-       seamless_ = false; 
-     } else {
+     if (url.indexOf("enableSeamlessFailover=1") > 0) {
        seamless_ = true; 
+     } else {
+       seamless_ = false; 
      }
    }
    
