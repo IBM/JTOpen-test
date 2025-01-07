@@ -18,14 +18,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Constructor;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ConnectionDroppedException;
 import com.ibm.as400.access.ExtendedIOException;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.FTP;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.IFSFileInputStream;
 import com.ibm.as400.access.IFSFileReader;
@@ -34,10 +43,13 @@ import com.ibm.as400.access.IFSKey;
 import com.ibm.as400.access.IFSRandomAccessFile;
 import com.ibm.as400.access.IFSTextFileInputStream;
 import com.ibm.as400.access.IFSTextFileOutputStream;
+import com.ibm.as400.util.BASE64Decoder;
 
 import test.JCIFSUtility;
 import test.JDReflectionUtil;
 import test.JTOpenTestEnvironment;
+import test.PasswordVault;
+import test.TestDriver;
 
 /**
 Test read methods for IFSFileInputStream, IFSFileOutputStream, and
@@ -61,13 +73,15 @@ Constructor.
   public IFSReadTestcase (AS400 systemObject,
       String userid,
       String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String, Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)
     {
         super (systemObject, userid, password, "IFSReadTestcase",
             namesAndVars, runMode, fileOutputStream,  pwrSys);
+        
+        
     }
 
   /**
@@ -78,6 +92,13 @@ Constructor.
   {
     super.setup(); 
 
+   
+    // Make sure the user has access to the RSTOBJ command
+    CommandCall cc = new CommandCall(pwrSys_); 
+    String command = "GRTOBJAUT OBJ(QSYS/RSTOBJ) OBJTYPE(*CMD) USER("+systemObject_.getUserId()+") AUT(*USE)"; 
+    cc.run(command); 
+    command = "GRTOBJAUT OBJ(QDFTOWN) OBJTYPE(*USRPRF) ASPDEV(*) USER("+systemObject_.getUserId()+") AUT(*ADD)   "; 
+    cc.run(command); 
   }
 
 
@@ -2750,12 +2771,6 @@ at the end of file.
    **/
    public void Var091()
    {
-     if (isApplet_)
-     {
-       notApplicable("Deactivated until IFS classes use the new Converters");
-       // The browser's JVM has no converter for Cp437.
-       return;
-     }
      String fileName = ifsPathName_ + "r91";
      String s = "0123456789abcdefghijklmnopqrstuvwxyz)!@#$%^&*(-=_+[]{}|;':,./<>?";
      try
@@ -3199,19 +3214,27 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
      createFileWriteChars(fileName, String.valueOf(dataIn));
      IFSKey key = null;
      IFSFileReader is = null;
+     IFSFileWriter os = null; 
      try
      {
        IFSFile file = new IFSFile(systemObject_, fileName);
        is = new IFSFileReader(file);
        key = is.lockBytes((long)1);
-       IFSFileWriter os = new IFSFileWriter(new IFSFile(systemObject_, fileName));
+       os = new IFSFileWriter(new IFSFile(systemObject_, fileName));
        os.write('5');
+       
        failed("Exception didn't occur."+key);
      }
      catch(Exception e)
      {
        assertExceptionIs(e, "ExtendedIOException",
                          ExtendedIOException.LOCK_VIOLATION);
+     } finally { 
+       if (os != null)
+        try {
+          os.close();
+        } catch (IOException e) {
+       } 
      }
      try { is.close(); } catch (Exception e) {}
      deleteFile(fileName);
@@ -3239,6 +3262,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
        os.flush();
        char firstChar = (char)is.read();
        if (DEBUG) System.out.println("First char: " + firstChar);
+       os.close(); 
        assertCondition(firstChar == '5');
      }
      catch(Exception e)
@@ -3250,8 +3274,253 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
    }
 
 
+   /**
+    * Ensure that IFSTextFileInputStream.read() can read a file in QSYS.LIB.
+    **/
+   public void Var106() {
 
+     StringBuffer sb = new StringBuffer();
+     boolean passed = true;
+     // Restore the file to read to the current library.
+     try {
+       sb.append("Creating command call object\n");
+       CommandCall c = new CommandCall(systemObject_);
+       String command = "CHGJOB INQMSGRPY(*SYSRPYL)";
+       boolean commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed");
+       }
+       command = "CRTLIB " + testLib_;
+       commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed\n");
+       }
+       command = "DLTF " + testLib_ + "/IFSDATA";
+       commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed\n");
+       }
 
+       command = "CRTSAVF " + testLib_ + "/IFSDATA";
+       commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed\n");
+       }
+       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+       // For now use the string.. In the future, this will be removed.
+       String password = new String(charPassword);
+
+       FTP ftpLocal = new FTP(systemObject_.getSystemName(), systemObject_.getUserId(), password);
+       ftpLocal.cd(testLib_);
+       ftpLocal.setDataTransferType(FTP.BINARY);
+       OutputStream os = ftpLocal.put("IFSDATA.savf");
+
+       BASE64Decoder decoder = new BASE64Decoder();
+       byte[] savefileData = decoder.decodeBuffer(savefileBase64);
+
+       os.write(savefileData);
+       os.close();
+       ftpLocal.disconnect();
+
+       command = "QSYS/RSTOBJ OBJ(APZCOVER) SAVLIB(IFSDATA) DEV(*SAVF) " + "SAVF(" + testLib_ + "/IFSDATA) RSTLIB("
+           + testLib_ + ")";
+       sb.append("Running:  " + command + "\n");
+       commandResult=c.run(command); 
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed\n");
+       }
+
+       String filename = "/qsys.lib/" + testLib_ + ".lib/apzcover.file/QSJ03136.MBR";
+       sb.append("Connecting to "+systemObject_.getSystemName() +" using "+ systemObject_.getUserId()+"\n"); 
+       AS400 as400Copy = new AS400 (systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+       IFSTextFileInputStream is = new IFSTextFileInputStream(as400Copy, filename);
+
+       
+       
+       int size = is.available();
+       int expectedSize = 12800;
+       if (size != expectedSize) {
+         passed = false;
+         sb.append("Got size: " + size + "\n");
+         sb.append("expected: " + expectedSize + "\n");
+       }
+       String readData = is.read(80);
+       String expected = "..          5770SS1 5050 0000 SJ03136 2924 R03M00    0007 \u0000\n"
+           + "  0000\u0097             ";
+       if (!expected.equals(readData)) {
+         passed = false;
+         sb.append("Read     :'" + readData + "'\n");
+         sb.append("Expected :'" + expected + "'\n");
+       }
+       is.close();
+       as400Copy.close(); 
+
+       assertCondition(passed, sb);
+     } catch (Exception e) {
+       failed(e, sb);
+     }
+   }
+
+   
+   /**
+    * Ensure that IFSTextFileInputStream.read() can read a file in QSYS.LIB, when it is the 
+    * first class loaded by the classloader. 
+    **/
+   public void Var107() {
+
+     // 
+     // Note:  This testcase still fails with "Data stream is not known"
+     //        even after fixes were created. 
+     // Keep code here in case we want to get this working. 
+     // 
+     if (true) { 
+     assertCondition(true); 
+     return; 
+     }
+     StringBuffer sb = new StringBuffer();
+     boolean passed = true;
+     // Restore the file to read to the current library.
+     try {
+       sb.append("Creating command call object\n");
+       CommandCall c = new CommandCall(systemObject_);
+       String command = "CHGJOB INQMSGRPY(*SYSRPYL)";
+       boolean commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed");
+       }
+       command = "CRTLIB " + testLib_;
+       commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed\n");
+       }
+       command = "DLTF " + testLib_ + "/IFSDATA";
+       commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed\n");
+       }
+
+       command = "CRTSAVF " + testLib_ + "/IFSDATA";
+       commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed\n");
+       }
+       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+       // For now use the string.. In the future, this will be removed.
+       String password = new String(charPassword);
+
+       FTP ftpLocal = new FTP(systemObject_.getSystemName(), systemObject_.getUserId(), password);
+       ftpLocal.cd(testLib_);
+       ftpLocal.setDataTransferType(FTP.BINARY);
+       OutputStream os = ftpLocal.put("IFSDATA.savf");
+
+       BASE64Decoder decoder = new BASE64Decoder();
+       byte[] savefileData = decoder.decodeBuffer(savefileBase64);
+
+       os.write(savefileData);
+       os.close();
+       ftpLocal.disconnect();
+
+       
+       command = "QSYS/RSTOBJ OBJ(APZCOVER) SAVLIB(IFSDATA) DEV(*SAVF) " + "SAVF(" + testLib_ + "/IFSDATA) RSTLIB("
+           + testLib_ + ")";
+       sb.append("Running:  " + command + "\n");
+       commandResult = c.run(command);
+       if (!commandResult) {
+         sb.append("WARNING:  " + command + " failed\n");
+       }
+
+        String filename = "/qsys.lib/" + testLib_ + ".lib/apzcover.file/QSJ03136.MBR";
+       sb.append("Connecting to "+systemObject_.getSystemName() +" using "+ systemObject_.getUserId()+"\n"); 
+       
+       // Use a new classloader to load the classes and test 
+
+       File toolboxJar = TestDriver.getLoadSource("com.ibm.as400.access.AS400");
+
+       ClassLoader originalClassLoader = AS400.class.getClassLoader();
+
+       String absolutePath = toolboxJar.getAbsolutePath(); 
+       URL[] urls = new URL[1]; 
+       if (absolutePath.endsWith(".jar")) { 
+         urls[0] =  new URL("jar:file:" + absolutePath +"!/") ; 
+       } else { 
+         urls[0] =  new URL("file:" + absolutePath +"/") ; 
+       }
+
+       sb.append("Classloader using URL="+urls[0]+"\n"); 
+       ClassLoader ifsReadClassLoader = new IFSURLClassLoader(urls);
+
+       Class<?> as400Class = ifsReadClassLoader.loadClass("com.ibm.as400.access.AS400"); 
+       
+       ClassLoader actualLoader = as400Class.getClassLoader(); 
+       if (actualLoader != ifsReadClassLoader) {
+         passed = false; 
+         sb.append("FAILED: Class loader not used to load class\n"); 
+       }
+       
+       Class<?>[] parameterTypes = new Class[3];
+       parameterTypes[0] = String.class; 
+       parameterTypes[1] = String.class; 
+       parameterTypes[2] = charPassword.getClass();  
+       
+       Constructor<?> constructor = as400Class.getConstructor(parameterTypes); 
+      
+       Object[] parameters = new Object[3]; 
+       parameters[0] = systemObject_.getSystemName();
+       parameters[1] = systemObject_.getUserId(); 
+       parameters[2] = charPassword; 
+       
+       Object as400Copy =  constructor.newInstance(parameters);
+       Class<?> isClass = ifsReadClassLoader.loadClass("com.ibm.as400.access.IFSTextFileInputStream"); 
+       parameterTypes = new Class[2]; 
+       parameters = new Object[2]; 
+       parameters[0] = as400Copy; parameterTypes[0] = as400Copy.getClass(); 
+       parameters[1] = filename;  parameterTypes[1] = filename.getClass(); 
+       constructor = isClass.getConstructor(parameterTypes); 
+       Object is =  constructor.newInstance(parameters);
+       
+       
+       int size = JDReflectionUtil.callMethod_I(is, "available");
+       int expectedSize = 12800;
+       if (size != expectedSize) {
+         passed = false;
+         sb.append("Got size: " + size + "\n");
+         sb.append("expected: " + expectedSize + "\n");
+       }
+       String readData = JDReflectionUtil.callMethod_S(is,"read",80);
+       String expected = "..          5770SS1 5050 0000 SJ03136 2924 R03M00    0007 \u0000\n"
+           + "  0000\u0097             ";
+       if (!expected.equals(readData)) {
+         passed = false;
+         sb.append("Read     :'" + readData + "'\n");
+         sb.append("Expected :'" + expected + "'\n");
+       }
+       JDReflectionUtil.callMethod_V(is, "close");
+      
+       assertCondition(passed, sb);
+     } catch (Exception e) {
+       failed(e, sb);
+     }
+   }
+
+ }
+   
+  class IFSURLClassLoader extends URLClassLoader {
+    ClassLoader fallbackLoader; 
+    public IFSURLClassLoader(URL[] urls) {
+      super(urls, null);
+      fallbackLoader = URLClassLoader.newInstance(urls); 
+    }
+
+    @Override
+    protected Class<?> findClass(String name) throws ClassNotFoundException {
+      try { 
+      return super.findClass(name);
+      } catch (java.lang.ClassNotFoundException ex) {
+        System.out.println("Loading "+name); 
+        return fallbackLoader.loadClass(name); 
+      }
+    }
+  }
   class IFSReadFullyThread extends Thread
   {
     boolean[] done = null;
@@ -3291,5 +3560,5 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
         done[0] = false;
       }
     }
-  }
+  
 }

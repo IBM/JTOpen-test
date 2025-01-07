@@ -447,7 +447,7 @@ public class SecEventTestcase extends Testcase implements ConnectionListener
                 sys.connectService(AS400.DATABASE);
                 sys.connectService(AS400.RECORDACCESS);
 
-                sys.disconnectAllServices();
+                sys.disconnectAllServices(); sys.close(); 
 
                 if (connectCount == disconnectCount)
                 {

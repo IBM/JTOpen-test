@@ -3162,6 +3162,19 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
         }
      }
 
+     
+     public static void callStaticMethod_V(String classname, String methodName, Class[] argTypes, Object[] args)
+         throws Exception {
+       Class thisClass = Class.forName(classname);
+       java.lang.reflect.Method method;
+       method = thisClass.getDeclaredMethod(methodName, argTypes);
+       method.setAccessible(true);
+       try {
+         method.invoke(null, args);
+       } catch (java.lang.reflect.InvocationTargetException ite) {
+         handleIte(ite);
+       }
+     }
 
     /**
      * call a static method which returns an object.

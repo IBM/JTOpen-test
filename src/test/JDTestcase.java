@@ -370,7 +370,7 @@ public class JDTestcase extends Testcase {
    * Checks if we are using the native driver with a native JVM. If not, this will
    * report "not applicable". B1A
    **/
-  protected boolean checkNative() {
+  public boolean checkNative() {
     if ((driver_ != JDTestDriver.DRIVER_NATIVE) && (driver_ != JDTestDriver.DRIVER_NATIVE_RMI)) {
       notApplicable("JDBC Native Driver variation.");
       return false;
