@@ -2694,7 +2694,25 @@ public abstract class Testcase {
       return false;
     }  
   }
-  
+  public boolean checkNative() { 
+    
+	  if (isNative_) {
+		  return true; 
+	  } else {
+		  notApplicable("Native test"); 
+		  return false; 
+	  }
+  }
+
+  public boolean check750plus() {
+    if (release_ > JDTestDriver.RELEASE_V7R5M0) {
+      return true;
+    } else {
+      notApplicable("Test for release after 7.5");
+      return false;
+    }
+  }
+
   public void createFile(File file) {
     try {
       FileOutputStream fos = new FileOutputStream(file);

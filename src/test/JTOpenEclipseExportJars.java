@@ -13,10 +13,8 @@
 
 package test;
 
-import java.beans.PropertyVetoException;
 import java.io.*;
 import java.sql.Timestamp;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector; 
 import com.ibm.as400.access.*;
@@ -33,13 +31,13 @@ import test.misc.TestUtilities;
 public class JTOpenEclipseExportJars  {
 
   public static void usage() { 
-    System.out.println("Usage:  java  test.JDTOpenEclipseExportJars IBMi userid password eclipse directory  ");
+    System.out.println("Usage:  java  test.JTOpenEclipseExportJars IBMi userid password eclipse directory  ");
     System.out.println("   Updates an IBM i system with the latest JTOpen jar files from the Eclipse Environment");
   }
  
   public static void main(String args[]) {
     try {
-      System.out.println("Usage:  java  test.JDTOpenEclipseExportJars IBMi userid password  JTOpenDirectory  ");
+      System.out.println("Usage:  java  test.JTOpenEclipseExportJars IBMi userid password  JTOpenDirectory  ");
       System.out.println("   Updates an IBM i system with the latest changes in the Eclipse Environment");
 
       String as400Name = args[0]; 
@@ -76,9 +74,9 @@ public class JTOpenEclipseExportJars  {
 
   private static void transferFiles(AS400 as400, String jarDirectory) throws IOException, AS400SecurityException {
     String [][] files = {
-        {"java8.jar",         "/qibm/proddata/os400/jt400/lib/java8/jt400.jar"},
+        {".jar",         "/qibm/proddata/os400/jt400/lib/java8/jt400.jar"},
         {"java11.jar",        "/qibm/proddata/os400/jt400/lib/java9/jt400.jar"},
-        {"native-java8.jar",  "/qibm/proddata/os400/jt400/lib/java8/jt400Native.jar"},
+        {"native.jar",  "/qibm/proddata/os400/jt400/lib/java8/jt400Native.jar"},
         {"native-java11.jar", "/qibm/proddata/os400/jt400/lib/java9/jt400Native.jar"},
     };
     
@@ -95,6 +93,11 @@ public class JTOpenEclipseExportJars  {
       int firstDash = jarFile.indexOf('-');
       if (firstDash > 0) { 
         int secondDash = jarFile.indexOf('-',firstDash+1); 
+        if (secondDash < 0) { /* look for jt400-21.0.0.jar */ 
+          secondDash = jarFile.indexOf(".jar"); 
+          if (secondDash > 0) 
+            secondDash--; 
+        }
         if (secondDash > 0) {
           String endPart = jarFile.substring(secondDash+1); 
           String remoteFilename = (String) hashtable.get(endPart); 
