@@ -14,13 +14,6 @@
 
 package test.JD.RS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDRSTest;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JVMInfo;
-
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -28,6 +21,13 @@ import java.sql.DataTruncation;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDRSTest;
+import test.JDTestDriver;
+import test.JDTestcase;
 
 
 
@@ -56,6 +56,7 @@ extends JDTestcase
 
     // Private data.
     private static final String key_            = "JDRSUpdateFloat";
+    private static final String key1_            = "JDRSUpdateFloat 1";
     private static String select_         = "SELECT * FROM "
                                                     + JDRSTest.RSTEST_UPDATE;
 
@@ -69,7 +70,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSUpdateFloat (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -465,10 +466,10 @@ row.
         if (checkJdbc20 ()) {
         try {
             rs_.moveToInsertRow ();
-            rs_.updateString ("C_KEY", "JDRSUpdateFloat 1");
+            rs_.updateString ("C_KEY", key1_);
             rs_.updateFloat ("C_FLOAT", 98765);
             rs_.insertRow ();
-            JDRSTest.position (rs_, "JDRSUpdateFloat 1");
+            JDRSTest.position (rs_, key1_);
             assertCondition (rs_.getFloat ("C_FLOAT") == 98765);
         }
         catch (Exception e) {
@@ -1378,22 +1379,14 @@ causes a data truncation error.
      */    
     
     public void Var055 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
-	    dfpTest(JDRSTest.RSTEST_DFP16, Float.MAX_VALUE, "340282350000000000000000000000000000000");
-	} else { 
 	    dfpTest(JDRSTest.RSTEST_DFP16, Float.MAX_VALUE, "3.4028235E+38");
-	}
     }
 
     /**
      * updateFloat -- set a DFP16 value (MIN_VALUE)
      */    
     public void Var056 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
-	    dfpTest(JDRSTest.RSTEST_DFP16, Float.MIN_VALUE, "0.0000000000000000000000000000000000000000000014");
-	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP16, Float.MIN_VALUE, "1.4E-45"); 
-	} 
     }
 
     /** 
@@ -1548,22 +1541,14 @@ causes a data truncation error.
      * updateFloat -- set a DFP34 value (MAX_VALUE)
      */    
     public void Var089 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
-	    dfpTest(JDRSTest.RSTEST_DFP34, Float.MAX_VALUE, "340282350000000000000000000000000000000");
-	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, Float.MAX_VALUE, "3.4028235E+38");
-	} 
     }
 
     /**
      * updateFloat -- set a DFP34 value (MIN_VALUE)
      */    
     public void Var090 () {
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver()) && false) {
-	    dfpTest(JDRSTest.RSTEST_DFP34, Float.MIN_VALUE, "0.0000000000000000000000000000000000000000000014");
-	} else {
 	    dfpTest(JDRSTest.RSTEST_DFP34, Float.MIN_VALUE, "1.4E-45");
-	}
     }
 
     /** 
@@ -1698,6 +1683,7 @@ updateFloat() - Update a BOOLEAN
         if (checkJdbc20 ()) {
         if (checkBooleanSupport()) {
         try {
+            JDRSTest.position (rs_, key1_);
             JDRSTest.position (rs_, key_);
             rs_.updateFloat ("C_BOOLEAN", 428372);
             rs_.updateRow ();

@@ -19,7 +19,6 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JTOpenTestEnvironment;
 import test.JD.JDTestUtilities;
 
 import java.io.FileOutputStream;
@@ -31,7 +30,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -75,7 +74,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDRSGetString (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -2637,7 +2636,6 @@ the result set.
 
 	int expectedOffset=1;
 
-	String vmName = System.getProperty("java.vm.name");
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 	    if (getRelease() >= JDTestDriver.RELEASE_V7R4M0) {
 		expectedOffset=1;

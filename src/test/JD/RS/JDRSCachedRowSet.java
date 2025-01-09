@@ -22,12 +22,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import javax.sql.RowSet;
-import javax.sql.rowset.CachedRowSet;
 
 import com.ibm.as400.access.AS400;
 
@@ -68,7 +68,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSCachedRowSet (AS400 systemObject,
-                               Hashtable namesAndVars,
+                               Hashtable<String,Vector<String>> namesAndVars,
                                int runMode,
                                FileOutputStream fileOutputStream,
                                

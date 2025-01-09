@@ -33,7 +33,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDRSGetSQLXML. This tests the following method of the JDBC ResultSet
@@ -66,7 +66,7 @@ public class JDRSGetSQLXML extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDRSGetSQLXML(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDRSGetSQLXML(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetSQLXML", namesAndVars, runMode,

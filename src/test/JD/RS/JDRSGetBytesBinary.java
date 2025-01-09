@@ -21,13 +21,13 @@ import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -76,7 +76,7 @@ extends JDTestcase
 Constructor.
 **/
    public JDRSGetBytesBinary (AS400 systemObject,
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         
@@ -164,7 +164,7 @@ getBytes() - Should work when the column index is valid.
                                                   + JDRSTest.RSTEST_BINARY);
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             byte[] v = rs.getBytes (4);
-            assertCondition (isEqual (v, twelve), "New testcase added by Native");
+            assertCondition (areEqual (v, twelve), "New testcase added by Native");
          } catch (Exception e) {
             failed (e, "Unexpected Exception - New testcase added by Native");
          }
@@ -185,7 +185,7 @@ getBytes() - Should work when the column name is valid.
                                                   + JDRSTest.RSTEST_BINARY);
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             byte[] v = rs.getBytes ("C_BINARY_20");
-            assertCondition (isEqual (v, eleven), "New testcase added by Native");
+            assertCondition (areEqual (v, eleven), "New testcase added by Native");
          } catch (Exception e) {
             failed (e, "Unexpected Exception - New testcase added by Native");
          }
@@ -209,7 +209,7 @@ getBytes() - Should work when an update is pending.
                   (byte) 0xAB, (byte) 0xBC};
                rs_.updateBytes ("C_VARBINARY_20", test);
                byte[] v = rs_.getBytes ("C_VARBINARY_20");
-               assertCondition (isEqual (v, test), "New testcase added by Native");
+               assertCondition (areEqual (v, test), "New testcase added by Native");
             } catch (Exception e) {
                failed (e, "Unexpected Exception - New testcase added by Native");
             }
@@ -238,7 +238,7 @@ getBytes() - Should work when an update has been done.
                rs_.updateBytes ("C_BINARY_20", test);
                rs_.updateRow ();
                byte[] v = rs_.getBytes ("C_BINARY_20");
-               assertCondition (isEqual (v, test), "New testcase added by Native");
+               assertCondition (areEqual (v, test), "New testcase added by Native");
             } catch (Exception e) {
                failed (e, "Unexpected Exception - New testcase added by Native");
             }
@@ -267,7 +267,7 @@ row, when an insert is pending.
                byte[] test = new byte[] { (byte) 0xBC, (byte) 0xCD};
                rs_.updateBytes ("C_VARBINARY_20", test);
                byte[] v = rs_.getBytes ("C_VARBINARY_20");
-               assertCondition (isEqual (v, test), "New testcase added by Native");
+               assertCondition (areEqual (v, test), "New testcase added by Native");
             } catch (Exception e) {
                failed (e, "Unexpected Exception - New testcase added by Native");
             }
@@ -299,7 +299,7 @@ row, when an insert has been done.
                rs_.updateBytes ("C_VARBINARY_20", test);
                rs_.insertRow ();
                byte[] v = rs_.getBytes ("C_VARBINARY_20");
-               assertCondition (isEqual (v, test), "New testcase added by Native");
+               assertCondition (areEqual (v, test), "New testcase added by Native");
             } catch (Exception e) {
                failed (e, "Unexpected Exception - New testcase added by Native");
             }
@@ -345,7 +345,7 @@ getBytes() - Get from a BINARY.
                                                      + JDRSTest.RSTEST_BINARY);
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             byte[] v = rs.getBytes ("C_BINARY_20");
-            assertCondition (isEqual (v, eleven), "New testcase added by Native");
+            assertCondition (areEqual (v, eleven), "New testcase added by Native");
          } catch (Exception e) {
             failed (e, "Unexpected Exception - New testcase added by Native");
          }
@@ -368,7 +368,7 @@ getBytes() - Get from a VARBINARY.
                                                      + JDRSTest.RSTEST_BINARY);
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             byte[] v = rs.getBytes ("C_VARBINARY_20");
-            assertCondition (isEqual (v, twelve), "New testcase added by Native");
+            assertCondition (areEqual (v, twelve), "New testcase added by Native");
          } catch (Exception e) {
             failed (e, "Unexpected Exception - New testcase added by Native");
          }
@@ -401,7 +401,7 @@ to a value shorter than the byte array.
             byte[] expected =  { (byte) 'E', (byte) 'l', (byte) 'e', (byte) 'v', (byte) 'e', (byte) 'n',
                (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ',
                (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' '};
-            assertCondition ((isEqual (v, expected)) && (w == null), "New testcase added by Native");
+            assertCondition ((areEqual (v, expected)) && (w == null), "New testcase added by Native");
          } catch (Exception e) {
             failed (e, "Unexpected Exception - New testcase added by Native");
          }

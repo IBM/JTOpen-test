@@ -14,18 +14,18 @@
 
 package test.JD.RS;
 
+import java.io.FileOutputStream;
+import java.sql.DataTruncation;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -67,7 +67,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSUpdateBytes (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -279,7 +279,7 @@ updateBytes() - Should work when the column index is valid.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -368,7 +368,7 @@ updateBytes() - Should work when the column name is valid.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -415,7 +415,7 @@ not yet been issued (i.e. update is still pending).
             JDRSTest.position (rs_, key_);
             byte[] ba = new byte[] { (byte) 0, (byte) 1, (byte) -1, (byte) 2, (byte) -2 };
             rs_.updateBytes ("C_VARBINARY_20", ba);
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -438,7 +438,7 @@ been issued, but cursor has not been repositioned.
             byte[] ba = new byte[] { (byte) 0, (byte) 56, (byte) 1, (byte) -1, (byte) 2, (byte) -2 };
             rs_.updateBytes ("C_VARBINARY_20", ba);
             rs_.updateRow ();
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -464,7 +464,7 @@ been issued and cursor has been repositioned.
             rs_.beforeFirst ();
             JDRSTest.position (rs_, key_);
             byte[] v = rs_.getBytes ("C_VARBINARY_20");
-            assertCondition (isEqual (ba, v));
+            assertCondition (areEqual (ba, v));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -490,7 +490,7 @@ row.
             rs_.updateBytes ("C_VARBINARY_20", ba);
             rs_.insertRow ();
             JDRSTest.position (rs_, "JDRSUpdateBytes 1");
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -511,7 +511,7 @@ insert has not yet been issued (i.e. insert is still pending).
             rs_.moveToInsertRow ();
             byte[] ba = new byte[] { (byte) 121, (byte) 0, (byte) 56, (byte) -1, (byte) 2, (byte) -2 };
             rs_.updateBytes ("C_VARBINARY_20", ba);
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -729,7 +729,7 @@ updateBytes() - Update a BINARY.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_BINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -783,7 +783,7 @@ updateBytes() - Update a VARBINARY with a "normal" byte array.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -808,7 +808,7 @@ updateBytes() - Update a VARBINARY, with an empty array.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -833,7 +833,7 @@ updateBytes() - Update a VARBINARY, with single element array.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -939,7 +939,7 @@ SQL400 - the native driver expects this update to work correctly.
                    JDRSTest.position (rs2, key_);
                    byte[] v = rs2.getBytes ("C_BLOB");
                    rs2.close ();
-                   assertCondition (isEqual (v, ba));
+                   assertCondition (areEqual (v, ba));
                 //} else {                                                          //@D1D
                    //failed ("Didn't throw SQLException");                          //@D1D
                 //}                                                                 //@D1D

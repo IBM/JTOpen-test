@@ -16,10 +16,9 @@ package test.JD.RS;
 
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -49,12 +48,12 @@ public class JDRSGetStringBIDI extends JDTestcase {
 
   // Private data.
   private String properties_ = "NOTSET";
-  private static String table_ = JDRSTest.COLLECTION + ".JDRSGSBIDI";
+  // private static String table_ = JDRSTest.COLLECTION + ".JDRSGSBIDI";
 
   /**
    * Constructor.
    **/
-  public JDRSGetStringBIDI(AS400 systemObject, Hashtable namesAndVars,
+  public JDRSGetStringBIDI(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetStringBIDI", namesAndVars, runMode,
@@ -69,7 +68,7 @@ public class JDRSGetStringBIDI extends JDTestcase {
    **/
   protected void setup() throws Exception {
     reconnect("");
-    table_ = JDRSTest.COLLECTION + ".JDRSGSBIDI";
+    // table_ = JDRSTest.COLLECTION + ".JDRSGSBIDI";
   }
 
   /**

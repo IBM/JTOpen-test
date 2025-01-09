@@ -13,19 +13,19 @@
 
 package test.JD.RS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDRSTest;
-import test.JDTestDriver;
-import test.JDTestcase;
-
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDRSTest;
+import test.JDTestDriver;
+import test.JDTestcase;
 
 
 
@@ -67,7 +67,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSUpdateTime (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -148,7 +148,7 @@ closed.
                 + JDRSTest.RSTEST_UPDATE + " FOR UPDATE");
             rs.next ();
             rs.close ();
-            rs.updateTime ("C_TIME", new Time (10,01,12));
+            rs.updateTime ("C_TIME", Time.valueOf("10:01:12"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -172,7 +172,7 @@ not updatable.
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_UPDATE);
             rs.next ();
-            rs.updateTime ("C_TIME", new Time (4,6,23));
+            rs.updateTime ("C_TIME", Time.valueOf("04:06:23"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -187,12 +187,12 @@ not updatable.
 updateTime() - Should throw exception when cursor is not pointing
 to a row.
 **/
-    public void Var003()
+     public void Var003()
     {
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, null);
-            rs_.updateTime ("C_TIME", new Time (8,7,23));
+            rs_.updateTime ("C_TIME", Time.valueOf("08:07:23"));
             rs_.updateRow(); 
             failed ("Didn't throw SQLException");
         }
@@ -213,7 +213,7 @@ is an invalid index.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime (100, new Time (19,3,12));
+            rs_.updateTime (100, Time.valueOf("19:03:12"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -233,7 +233,7 @@ is 0.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime (0, new Time (23,34,23));
+            rs_.updateTime (0, Time.valueOf("23:34:23"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -253,7 +253,7 @@ is -1.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime (-1, new Time (14,24,9));
+            rs_.updateTime (-1, Time.valueOf("14:24:09"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -272,7 +272,7 @@ updateTime() - Should work when the column index is valid.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (19,22,40);
+            Time d = Time.valueOf("19:22:40");
             rs_.updateTime (20, d);
             rs_.updateRow ();
             ResultSet rs2 = statement2_.executeQuery (select_);
@@ -301,7 +301,7 @@ name is null.
         } else { 
           try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime (null, new Time (19,49,59));
+            rs_.updateTime (null, Time.valueOf("19:49:59"));
             failed ("Didn't throw SQLException");
           }
           catch (Exception e) {
@@ -321,7 +321,7 @@ name is an empty string.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("", new Time (9,59,34));
+            rs_.updateTime ("", Time.valueOf("09:59:34"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -341,7 +341,7 @@ name is invalid.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("INVALID", new Time (15,9,34));
+            rs_.updateTime ("INVALID", Time.valueOf("15:09:34"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -360,7 +360,7 @@ updateTime() - Should work when the column name is valid.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (10,8,0);
+            Time d = Time.valueOf("10:08:00");
             rs_.updateTime ("C_TIME", d);
             rs_.updateRow ();
             ResultSet rs2 = statement2_.executeQuery (select_);
@@ -412,7 +412,7 @@ not yet been issued (i.e. update is still pending).
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (14,04,00);
+            Time d = Time.valueOf("14:04:00");
             rs_.updateTime ("C_TIME", d);
             Time v = rs_.getTime ("C_TIME");
             assertCondition (v.toString ().equals (d.toString ()));
@@ -435,7 +435,7 @@ been issued, but cursor has not been repositioned.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (6,4,8);
+            Time d = Time.valueOf("06:04:08");
             rs_.updateTime ("C_TIME", d);
             rs_.updateRow ();
             Time v = rs_.getTime ("C_TIME");
@@ -459,7 +459,7 @@ been issued and cursor has been repositioned.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (4,8,30);
+            Time d = Time.valueOf("04:08:30");
             rs_.updateTime ("C_TIME", d);
             rs_.updateRow ();
             rs_.beforeFirst ();
@@ -486,7 +486,7 @@ row.
         try {
             rs_.moveToInsertRow ();
             rs_.updateString ("C_KEY", "JDRSUpdateTime 1");
-            Time d = new Time (10,8,30);
+            Time d = Time.valueOf("10:08:30");
             rs_.updateTime ("C_Time", d);
             rs_.insertRow ();
             JDRSTest.position (rs_, "JDRSUpdateTime 1");
@@ -510,7 +510,7 @@ insert has not yet been issued (i.e. insert is still pending).
         if (checkJdbc20 ()) {
         try {
             rs_.moveToInsertRow ();
-            Time d = new Time (4,8,05);
+            Time d = Time.valueOf("04:08:05");
             rs_.updateTime ("C_TIME", d);
             Time v = rs_.getTime ("C_TIME");
             assertCondition (v.toString ().equals (d.toString ()));
@@ -532,7 +532,7 @@ updateTime() - Should throw an exception on a deleted row.
         try {
             JDRSTest.position (rs_, "DUMMY_ROW");
             rs_.deleteRow ();
-            rs_.updateTime ("C_TIME", new Time (14,34,5));
+            rs_.updateTime ("C_TIME", Time.valueOf("14:34:05"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -550,7 +550,7 @@ updateTime() - Update a SMALLINT.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_SMALLINT", new Time (12,34,19));
+            rs_.updateTime ("C_SMALLINT", Time.valueOf("12:34:19"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -569,7 +569,7 @@ updateTime() - Update a INTEGER.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_INTEGER", new Time (12,51,49));
+            rs_.updateTime ("C_INTEGER", Time.valueOf("12:51:49"));
             failed ("Didn't throw SQLException");
        }
        catch (Exception e) {
@@ -588,7 +588,7 @@ updateTime() - Update a REAL.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_REAL", new Time (14,44,19));
+            rs_.updateTime ("C_REAL", Time.valueOf("14:44:19"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -607,7 +607,7 @@ updateTime() - Update a FLOAT.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_FLOAT", new Time (18,41,5));
+            rs_.updateTime ("C_FLOAT", Time.valueOf("18:41:05"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -626,7 +626,7 @@ updateTime() - Update a DOUBLE.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_DOUBLE", new Time (3,41,5));
+            rs_.updateTime ("C_DOUBLE", Time.valueOf("03:41:05"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -645,7 +645,7 @@ updateTime() - Update a DECIMAL.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_DECIMAL_105", new Time (12,34,49));
+            rs_.updateTime ("C_DECIMAL_105", Time.valueOf("12:34:49"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -664,7 +664,7 @@ updateTime() - Update a NUMERIC.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_NUMERIC_105", new Time (11,9,49));
+            rs_.updateTime ("C_NUMERIC_105", Time.valueOf("1:0,:,49"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -685,7 +685,7 @@ SQL400 - The native JDBC driver, be default, will show times in ISO format.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (10,8,0);
+            Time d = Time.valueOf("10:08:00");
             rs_.updateTime ("C_CHAR_50", d);
             rs_.updateRow ();
             ResultSet rs2 = statement2_.executeQuery (select_);
@@ -715,7 +715,7 @@ updateTime() - Update a CHAR, when the value is too big.
         try {
             JDRSTest.position (rs_, key_);
             expectedColumn = rs_.findColumn ("C_CHAR_1");
-            Time d = new Time (8,0,0);
+            Time d = Time.valueOf("08:00:00");
             rs_.updateTime ("C_CHAR_1", d);
             rs_.updateRow ();
             failed ("Didn't throw SQLException");
@@ -744,7 +744,7 @@ SQL400 - The native JDBC driver, be default, will show times in ISO format.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (9,22,40);
+            Time d = Time.valueOf("09:22:40");
             rs_.updateTime ("C_VARCHAR_50", d);
             rs_.updateRow ();
             ResultSet rs2 = statement2_.executeQuery (select_);
@@ -772,7 +772,7 @@ updateTime() - Update a BINARY.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_BINARY_20", new Time (21,32,34));
+            rs_.updateTime ("C_BINARY_20", Time.valueOf("21:32:34"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -791,7 +791,7 @@ updateTime() - Update a VARBINARY.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_VARBINARY_20", new Time (21,33,34));
+            rs_.updateTime ("C_VARBINARY_20", Time.valueOf("21:33:34"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -811,7 +811,7 @@ updateTime() - Update a CLOB.
         if (checkLobSupport ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateTime ("C_CLOB", new Time (21,33,34));
+                rs_.updateTime ("C_CLOB", Time.valueOf("21:33:34"));
                 failed ("Didn't throw SQLException");
             }
             catch (Exception e) {
@@ -832,7 +832,7 @@ updateTime() - Update a DBCLOB.
         if (checkLobSupport ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateTime ("C_DBCLOB", new Time (23,3,34));
+                rs_.updateTime ("C_DBCLOB", Time.valueOf("23:03:34"));
                 failed ("Didn't throw SQLException");
             }
             catch (Exception e) {
@@ -853,7 +853,7 @@ updateTime() - Update a BLOB.
         if (checkLobSupport ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateTime ("C_BLOB", new Time (22,32,34));
+                rs_.updateTime ("C_BLOB", Time.valueOf("22:32:34"));
                 failed ("Didn't throw SQLException");
             }
             catch (Exception e) {
@@ -873,7 +873,7 @@ updateTime() - Update a DATE.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (1,9,22);
+            Time d = Time.valueOf("01:09:22");
             rs_.updateTime ("C_DATE", d);
             rs_.updateRow ();
             ResultSet rs2 = statement2_.executeQuery (select_);
@@ -898,7 +898,7 @@ updateTime() - Update a TIME.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (21,33,24);
+            Time d = Time.valueOf("21:33:24");
             rs_.updateTime ("C_TIME", d);
             rs_.updateRow ();
             ResultSet rs2 = statement2_.executeQuery (select_);
@@ -923,7 +923,7 @@ updateTime() - Update a TIMESTAMP.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            Time d = new Time (19,22,40);
+            Time d = Time.valueOf("19:22:40");
             rs_.updateTime ("C_TIMESTAMP", d);
             rs_.updateRow ();
             ResultSet rs2 = statement2_.executeQuery (select_);
@@ -954,7 +954,7 @@ updateTime() - Update a DATALINK.
             /*
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateTime ("C_DATALINK", new Time (21,32,34));
+                rs_.updateTime ("C_DATALINK", Time.valueOf("21:32:34"));
                 failed ("Didn't throw SQLException");
             }
             catch (Exception e) {
@@ -978,7 +978,7 @@ SQL400 - The native JDBC driver, be default, will show times in ISO format.
         if (checkLobSupport ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateTime ("C_DISTINCT", new Time (13,23,4));
+                rs_.updateTime ("C_DISTINCT", Time.valueOf("13:23:04"));
                 rs_.updateRow ();
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 JDRSTest.position (rs2, key_);
@@ -1007,7 +1007,7 @@ updateTime() - Update a BIGINT.
         if (checkBigintSupport()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_BIGINT", new Time (12,51,49));
+            rs_.updateTime ("C_BIGINT", Time.valueOf("12:51:49"));
             failed ("Didn't throw SQLException");
        }
        catch (Exception e) {
@@ -1068,7 +1068,7 @@ updateTime() - Update a BOOLEAN.
         if (checkBooleanSupport()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_BOOLEAN", new Time (12,51,49));
+            rs_.updateTime ("C_BOOLEAN", Time.valueOf("12:51:49"));
             failed ("Didn't throw SQLException");
        }
        catch (Exception e) {

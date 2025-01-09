@@ -17,7 +17,6 @@ package test.JD.RS;
 import com.ibm.as400.access.AS400;
 
 import java.io.FileOutputStream;
-import java.sql.*;
 import java.util.*;
 
 
@@ -47,7 +46,7 @@ extends JDRSCursorScroll {
 Constructor.
 **/
     public JDRSCursorScrollSensitiveFromCall (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          

@@ -20,7 +20,6 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JVMInfo;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -31,7 +30,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -64,14 +63,14 @@ extends JDTestcase {
     private Statement           statement_;
     private ResultSet           rs_;
 
-    private Hashtable foundExceptions_; 
+    private Hashtable<String,String> foundExceptions_; 
 
 
 /**
 Constructor.
 **/
     public JDRSGetObject41 (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -385,15 +384,15 @@ name is invalid.
 	    String query     = testSpec[1];
 	    int columnCount = testSpec.length - 2;
 	    sb.append("Testing class "+className+"\n");
-	    Class lookupClass = Class.forName(className); 
+	    Class<?> lookupClass = Class.forName(className); 
 	    
-	    Class xmlClass = null;
+	    Class<?> xmlClass = null;
       try {
         xmlClass = Class.forName("java.sql.SQLXML");
       } catch (Exception e) {
       }
 
-      Class rowidClass = null;
+      Class<?> rowidClass = null;
       try {
         rowidClass = Class.forName("java.sql.RowId");
       } catch (Exception e) {
@@ -409,7 +408,7 @@ name is invalid.
 		    Object o = JDReflectionUtil.callMethod_O(rs, "getObject", i, lookupClass);
                     String objectString;
                     String objectClassName; 
-                    Class objectClass = null; 
+                    Class<?> objectClass = null; 
                     if (o == null) {
                       objectString="null";
                       objectClass = lookupClass; 
@@ -480,7 +479,7 @@ name is invalid.
 			} 
 
 			if (foundExceptions_ == null) {
-			    foundExceptions_ = new Hashtable(); 
+			    foundExceptions_ = new Hashtable<String,String>(); 
 			}
 			if (foundExceptions_.get(checkException) == null) {
 			    foundExceptions_.put(checkException, checkException);
@@ -4055,12 +4054,7 @@ name is invalid.
               "null"};
 
 
-           String[] testArrayClob = {
-              "java.lang.Object",
-              "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
-              "CLOB=<h>hello</h>",
-              "null"};
-
+  
 
            testGetObject(testArray);
         }
@@ -4202,20 +4196,6 @@ name is invalid.
             "null", 
             "null",
             "null"};
-
-    String[] testArray15 = {
-            "java.lang.Object",
-            "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('ABC' as NCHAR(10)), CAST('ABC' AS NVARCHAR(100)), CAST('ABC' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
-            "BYTEARRAY=1122",
-            "ABC       ",
-            "ABC",
-            "CLOB=ABC", 
-            "null", 
-            "null", 
-            "null",
-            "null"};
-
-
 	    
         testGetObject(testArray);
       }
@@ -4924,15 +4904,15 @@ name is invalid.
 	    String query     = testSpec[1];
 	    int columnCount = testSpec.length - 2;
 	    sb.append("Testing class "+className+"\n");
-	    Class lookupClass = Class.forName(className); 
+	    Class<?> lookupClass = Class.forName(className); 
 	    
-	    Class xmlClass = null;
+	    Class<?> xmlClass = null;
       try {
         xmlClass = Class.forName("java.sql.SQLXML");
       } catch (Exception e) {
       }
 
-      Class rowidClass = null;
+      Class<?> rowidClass = null;
       try {
         rowidClass = Class.forName("java.sql.RowId");
       } catch (Exception e) {
@@ -4950,7 +4930,7 @@ name is invalid.
 		    Object o = JDReflectionUtil.callMethod_O(rs, "getObject", columnName, lookupClass);
                     String objectString;
                     String objectClassName; 
-                    Class objectClass = null; 
+                    Class<?> objectClass = null; 
                     if (o == null) {
                       objectString="null";
                       objectClass = lookupClass; 
@@ -5021,7 +5001,7 @@ name is invalid.
 			} 
 
 			if (foundExceptions_ == null) {
-			    foundExceptions_ = new Hashtable(); 
+			    foundExceptions_ = new Hashtable<String,String>(); 
 			}
 			if (foundExceptions_.get(checkException) == null) {
 			    foundExceptions_.put(checkException, checkException);

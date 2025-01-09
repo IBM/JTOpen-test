@@ -1,5 +1,17 @@
 package test.JD.RS;
 
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.sql.DataTruncation;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDJobName;
@@ -7,19 +19,6 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Hashtable;
 
 
 
@@ -48,6 +47,7 @@ extends JDTestcase
 
     // Private data.
     private static final String key_ = "JDRSUpdateNString";
+    private static final String key1_= "JDRSUpdateNString 1";
     private static String select_    = "SELECT * FROM " + JDRSTest.RSTEST_UPDATE;
 
     private Statement           statement_;
@@ -60,7 +60,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDRSUpdateNString (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -521,10 +521,10 @@ extends JDTestcase
             try
             {
                 rs_.moveToInsertRow ();
-                JDReflectionUtil.callMethod_V(rs_, "updateNString", "C_KEY", "JDRSUpdateNString 1");
+                JDReflectionUtil.callMethod_V(rs_, "updateNString", "C_KEY", key1_);
                 JDReflectionUtil.callMethod_V(rs_, "updateNString", "C_VARCHAR_50", "Foreign keys");
                 rs_.insertRow ();
-                JDRSTest.position (rs_, "JDRSUpdateNString 1");
+                JDRSTest.position (rs_, key1_);
                 assertCondition (rs_.getString ("C_VARCHAR_50").equals ("Foreign keys"));
             }
             catch(Exception e)
@@ -2339,6 +2339,7 @@ extends JDTestcase
     if (checkJdbc40()) {
       if (checkBooleanSupport()) {
         try {
+          JDRSTest.position(rs_, key1_);
           JDRSTest.position(rs_, key_);
           JDReflectionUtil.callMethod_V(rs_, "updateNString", "C_BOOLEAN",
               inString);

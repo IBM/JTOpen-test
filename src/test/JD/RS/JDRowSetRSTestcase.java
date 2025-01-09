@@ -34,8 +34,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 // import java.security.interfaces.DSAKey;
 import java.sql.*;
 import javax.sql.*;
@@ -89,7 +87,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRowSetRSTestcase (AS400 systemObject,
-                               Hashtable namesAndVars,
+                               Hashtable<String,Vector<String>> namesAndVars,
                                int runMode,
                                FileOutputStream fileOutputStream,
                                
@@ -382,6 +380,7 @@ Forces a single warning to be posted to the statement.
 
 @exception Exception If an exception occurs.
 **/
+    @SuppressWarnings("deprecation")
     public void forceWarning (RowSet rs)
     throws Exception
     {   //@A1
@@ -389,7 +388,7 @@ Forces a single warning to be posted to the statement.
         {
                 position(rs, "NUMBER_POS");                                                     //@C1A
                 // This should force the warning "data truncation".
-                ((AS400JDBCRowSet)rs).getBigDecimal ("C_NUMERIC_105", 0);                       //@C1A
+                ((AS400JDBCRowSet)rs).getBigDecimal ("C_NUMERIC_105",0);                       //@C1A
                 //((AS400JDBCRowSet)rs).updateString ("VALUE", "Lots more than 25 characters.");  //@C1D
         }
         else
@@ -933,7 +932,7 @@ reported.
 
           rowset.beforeFirst ();
           int rowCountBefore = 0;
-          Vector keysBefore = new Vector ();
+          Vector<String> keysBefore = new Vector<String> ();
           while (rowset.next ())
           {
               ++rowCountBefore;
@@ -954,7 +953,7 @@ reported.
           rowset2.execute();
 
           int rowCountAfter = 0;
-          Vector keysAfter = new Vector ();
+          Vector<String> keysAfter = new Vector<String> ();
           while (rowset2.next ()) {
               ++rowCountAfter;
               keysAfter.addElement (rowset2.getString ("C_KEY"));
@@ -1273,6 +1272,7 @@ getBigDecimal() - Should work when the column name is valid.
 /**
 getBigDecimal() with 2 parameters - Should work when the column index is valid.
 **/
+    @SuppressWarnings("deprecation")
     public void Var017()
     {
         try {
@@ -3052,7 +3052,7 @@ getString() - Should work when the column name is valid.
          rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
          rowset.setMaxRows(25);
 
-         Map m = rowset.getTypeMap();
+         Map<String, Class<?>> m = rowset.getTypeMap();
          if (getDriver () == JDTestDriver.DRIVER_NATIVE)
          {
              assertCondition(m == null);

@@ -30,6 +30,7 @@ import java.sql.ResultSet;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -72,7 +73,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDRSBeforeFirst (AS400 systemObject,
-                            Hashtable namesAndVars,
+                            Hashtable<String,Vector<String>> namesAndVars,
                             int runMode,
                             FileOutputStream fileOutputStream,
                             
@@ -601,6 +602,7 @@ then moveToCurrentRow().
 /**
 beforeFirst() - Should clear any warnings.
 **/
+    @SuppressWarnings("deprecation")
     public void Var019 ()
     {
         if (checkJdbc20 ()) {
@@ -1878,6 +1880,7 @@ then moveToCurrentRow().
 /**
 beforeFirst() - Should clear any warnings.
 **/
+    @SuppressWarnings("deprecation")
     public void Var069 ()
     {
         if (checkJdbc20 ()) {

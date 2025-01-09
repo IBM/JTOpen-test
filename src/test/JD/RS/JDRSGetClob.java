@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * Testcase JDRSGetClob. This tests the following method of the JDBC ResultSet
@@ -64,7 +65,7 @@ public class JDRSGetClob extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDRSGetClob(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDRSGetClob(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetClob", namesAndVars, runMode, fileOutputStream,
@@ -75,7 +76,7 @@ public class JDRSGetClob extends JDTestcase {
    * Constructor.
    **/
   public JDRSGetClob(AS400 systemObject, String testcaseName,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,
  password);
