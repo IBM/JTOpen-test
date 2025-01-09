@@ -32,6 +32,7 @@ import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.TimeZone;
+import java.util.Vector;
 import java.util.GregorianCalendar; 
 
 
@@ -74,7 +75,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSGetDate (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

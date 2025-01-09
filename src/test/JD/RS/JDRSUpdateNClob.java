@@ -13,16 +13,8 @@
 
 package test.JD.RS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDRSTest;
-import test.JDReflectionUtil;
-import test.JDTestDriver;
-import test.JDTestcase;
-
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -31,6 +23,14 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDRSTest;
+import test.JDReflectionUtil;
+import test.JDTestDriver;
+import test.JDTestcase;
 
 
 
@@ -72,7 +72,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDRSUpdateNClob (AS400 systemObject,
-                                      Hashtable namesAndVars,
+                                      Hashtable<String,Vector<String>> namesAndVars,
                                       int runMode,
                                       FileOutputStream fileOutputStream,
                                       
@@ -445,9 +445,8 @@ extends JDTestcase
             try
             {
                 JDRSTest.position (rs_, key_);
-                Class[] argClasses = new Class[2]; 
+                Class<?>[] argClasses = new Class<?>[2]; 
                 argClasses[0] = String.class;
-                // TODO.. This will need to change when really running JDBC40 
                 try { 
                     argClasses[1] = Class.forName("java.sql.NClob"); 
                 } catch (Exception e) {

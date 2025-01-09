@@ -24,7 +24,6 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.Date;
 
@@ -34,7 +33,8 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Map;
 
 
@@ -65,14 +65,14 @@ extends JDTestcase {
     private Statement           statement_;
     private Statement           statement0_;
     private ResultSet           rs_;
-    java.util.Map               map_;
+    java.util.Map<String, Class<?>>               map_;
     private boolean canRun = false; 
 
 /**
 Constructor.
 **/
     public JDRSGetObjectUDT (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -302,7 +302,7 @@ if the type map is null.
 		    ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
 							     + JDRSTest.RSTEST_GET);
 		    JDRSTest.position0 (rs, "DATE_2000");
-		    Object s = rs.getObject (1, (Map) null);
+		    Object s = rs.getObject (1, (Map<String, Class<?>>) null);
 		    failed ("Didn't throw SQLException s="+s);
 		} catch (Exception e) {
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -326,7 +326,7 @@ index and type map are valid.
 	    if (checkJdbc20 ()) {
 		try {
    		   JDRSTest.position (rs_, "DATE_2000");
-		   Object s = rs_.getObject (1, new Hashtable ());
+		   Object s = rs_.getObject (1, new HashMap<String, Class<?>> ());
 		   assertCondition (s.equals ("DATE_2000"));
 		} catch (Exception e) {
 		    failed (e, "Unexpected Exception");
@@ -441,7 +441,7 @@ if the type map is null.
         if (checkJdbc20 ()) {
             try {
                 JDRSTest.position (rs_, "DATE_2000");
-                Object s = rs_.getObject ("C_KEY", (Map) null);
+                Object s = rs_.getObject ("C_KEY", (Map<String, Class<?>>) null);
                 failed ("Didn't throw SQLException s="+s);
             } catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -462,7 +462,7 @@ index and type map are valid.
 		try {
 
 		JDRSTest.position (rs_, "DATE_2000");
-		Object s = rs_.getObject ("C_KEY", new Hashtable ());
+		Object s = rs_.getObject ("C_KEY", new Hashtable<String, Class<?>> ());
 		assertCondition (s.equals ("DATE_2000"));
 
 

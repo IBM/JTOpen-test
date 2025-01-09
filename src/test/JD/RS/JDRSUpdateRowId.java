@@ -14,19 +14,19 @@
 
 package test.JD.RS;
 
+import java.io.FileOutputStream;
+import java.sql.DataTruncation;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -69,7 +69,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSUpdateRowId (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -297,7 +297,7 @@ updateRowId() - Should work when the column index is valid.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba), baseAdded);
+            assertCondition (areEqual (v, ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -389,7 +389,7 @@ updateRowId() - Should work when the column name is valid.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba), baseAdded);
+            assertCondition (areEqual (v, ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -415,7 +415,7 @@ value is null.
         try {
             JDRSTest.position (rs_, key_);
             
-            Class[] argTypes = new Class[2];
+            Class<?>[] argTypes = new Class<?>[2];
             argTypes[0] = Class.forName("java.lang.String");
             try {
                 argTypes[1] = Class.forName("java.sql.RowId"); 
@@ -454,7 +454,7 @@ not yet been issued (i.e. update is still pending).
             JDRSTest.position (rs_, key_);
             byte[] ba = new byte[] { (byte) 0, (byte) 1, (byte) -1, (byte) 2, (byte) -2 };
             JDReflectionUtil.callMethod_V(rs_, "updateRowId", "C_VARBINARY_20", createRowId(ba));
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba), baseAdded);
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -483,7 +483,7 @@ been issued, but cursor has not been repositioned.
             byte[] ba = new byte[] { (byte) 0, (byte) 56, (byte) 1, (byte) -1, (byte) 2, (byte) -2 };
             JDReflectionUtil.callMethod_V(rs_, "updateRowId", "C_VARBINARY_20", createRowId(ba));
             rs_.updateRow ();
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba), baseAdded);
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -515,7 +515,7 @@ been issued and cursor has been repositioned.
             rs_.beforeFirst ();
             JDRSTest.position (rs_, key_);
             byte[] v = rs_.getBytes ("C_VARBINARY_20");
-            assertCondition (isEqual (ba, v), baseAdded);
+            assertCondition (areEqual (ba, v), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -547,7 +547,7 @@ row.
             JDReflectionUtil.callMethod_V(rs_, "updateRowId", "C_VARBINARY_20", createRowId(ba));
             rs_.insertRow ();
             JDRSTest.position (rs_, "JDRSUpdateRowId 1");
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba), baseAdded);
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -574,7 +574,7 @@ insert has not yet been issued (i.e. insert is still pending).
             rs_.moveToInsertRow ();
             byte[] ba = new byte[] { (byte) 121, (byte) 0, (byte) 56, (byte) -1, (byte) 2, (byte) -2 };
             JDReflectionUtil.callMethod_V(rs_, "updateRowId", "C_VARBINARY_20", createRowId(ba));
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba), baseAdded);
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -798,7 +798,7 @@ updateRowId() - Update a BINARY.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_BINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba), baseAdded);
+            assertCondition (areEqual (v, ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -864,7 +864,7 @@ updateRowId() - Update a VARBINARY with a "normal" byte array.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba), baseAdded);
+            assertCondition (areEqual (v, ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -895,7 +895,7 @@ updateRowId() - Update a VARBINARY, with an empty array.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba), baseAdded);
+            assertCondition (areEqual (v, ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -926,7 +926,7 @@ updateRowId() - Update a VARBINARY, with single element array.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba), baseAdded);
+            assertCondition (areEqual (v, ba), baseAdded);
         }
         catch (Exception e) {
             //toolbox does not support rowid on this type
@@ -1044,7 +1044,7 @@ SQL400 - the native driver expects this update to work correctly.
                    JDRSTest.position (rs2, key_);
                    byte[] v = rs2.getBytes ("C_BLOB");
                    rs2.close ();
-                   assertCondition (isEqual (v, ba), baseAdded);
+                   assertCondition (areEqual (v, ba), baseAdded);
                 //} else {                                                          //@D1D
                    //failed ("Didn't throw SQLException"+baseAdded);                          //@D1D
                 //}                                                                 //@D1D

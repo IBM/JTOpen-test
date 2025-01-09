@@ -32,8 +32,9 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Hashtable;
-import java.util.Map; 
+import java.util.Hashtable; 
+import java.util.Map;
+import java.util.Vector; 
 
 
 
@@ -80,7 +81,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDRSGetObject (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -274,7 +275,7 @@ if the type map is null.
                 ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
                                                          + JDRSTest.RSTEST_GET);
                 JDRSTest.position0 (rs, "DATE_2000");
-                Object s = rs.getObject (1, (Map) null);
+                Object s = rs.getObject (1, (Map<String, Class<?>>) null);
                 failed ("Didn't throw SQLException"+s);
             } catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -398,7 +399,7 @@ if the type map is null.
         if (checkJdbc20 ()) {
             try {
 		rs_ = JDRSTest.position (driver_, statement_, statementQuery_,  rs_, "DATE_2000");
-                Object s = rs_.getObject ("C_KEY", (Map) null);
+                Object s = rs_.getObject ("C_KEY", (Map<String, Class<?>>) null);
                 failed ("Didn't throw SQLException"+s);
             } catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1154,7 +1155,7 @@ to a value shorter than the string.
 							   + JDRSTest.RSTEST_GETXML);
 		   rs.next();
 		   Object s = rs.getObject("C_XML");
-		   Class c = s.getClass();
+		   Class<?> c = s.getClass();
 
 		   boolean passed = Class.forName("java.sql.SQLXML").isInstance(s);
 		   StringBuffer sb = new StringBuffer();
@@ -1165,7 +1166,7 @@ to a value shorter than the string.
 	      // Ignore class not found exception
 		       }
 		       if (!passed) {
-			   Class interfaces[] = c.getInterfaces();
+			   Class<?> interfaces[] = c.getInterfaces();
 			   sb.append("There are " + interfaces.length + " interfaces");
 			   for (int i = 0; i < interfaces.length; i++) {
 			       sb.append("\nImplements " + interfaces[i]);

@@ -14,17 +14,18 @@
 
 package test.JD.RS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDRSTest;
-import test.JDTestDriver;
-import test.JDTestcase;
-
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDRSTest;
+import test.JDTestDriver;
+import test.JDTestcase;
 
 
 
@@ -66,7 +67,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSUpdateBoolean (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

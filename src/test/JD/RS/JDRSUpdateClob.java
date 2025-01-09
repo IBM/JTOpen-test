@@ -14,18 +14,9 @@
 
 package test.JD.RS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDRSTest;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JDLobTest.JDTestClob;
-
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -33,6 +24,14 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDRSTest;
+import test.JDTestDriver;
+import test.JDTestcase;
 
 
 
@@ -74,7 +73,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDRSUpdateClob (AS400 systemObject,
-                                      Hashtable namesAndVars,
+                                      Hashtable<String,Vector<String>> namesAndVars,
                                       int runMode,
                                       FileOutputStream fileOutputStream,
                                       

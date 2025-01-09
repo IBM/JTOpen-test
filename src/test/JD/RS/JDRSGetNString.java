@@ -31,6 +31,7 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -72,7 +73,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDRSGetNString (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           

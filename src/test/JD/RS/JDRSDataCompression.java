@@ -21,14 +21,11 @@ import test.JDTestcase;
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -71,7 +68,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDRSDataCompression (AS400 systemObject,
-                                Hashtable namesAndVars,
+                                Hashtable<String,Vector<String>> namesAndVars,
                                 int runMode,
                                 FileOutputStream fileOutputStream,
                                 
@@ -183,11 +180,11 @@ Performs cleanup needed after running variations.
         rs.next();
         boolean check = (rs.getInt(1) == 1);
         check = check && (rs.getString(2).equals(repeatingString_));
-        check = check && (isEqual(rs.getBytes(3), repeatingBytes_));
+        check = check && (areEqual(rs.getBytes(3), repeatingBytes_));
         rs.next();
         check = check && (rs.getInt(1) == 2);
         check = check && (rs.getString(2).equals(nonRepeatingString_));
-        check = check && (isEqual(rs.getBytes(3), nonRepeatingBytes_));
+        check = check && (areEqual(rs.getBytes(3), nonRepeatingBytes_));
 
         rs.close();
 
@@ -227,8 +224,8 @@ Performs cleanup needed after running variations.
         String text3 = rs.getString(5);
 
         boolean check = true;
-        check = check && (isEqual(odd, odd2));
-        check = check && (isEqual(even, even2));
+        check = check && (areEqual(odd, odd2));
+        check = check && (areEqual(even, even2));
         check = check && (text.equals(text2));
         check = check && (text.equals(text3));
         check = check && (rs.next() == false);

@@ -26,6 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -66,7 +67,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSGetBigDecimal (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -166,7 +167,8 @@ closed.
 getBigDecimal() with 2 parameters - Should throw exception when the result 
 set is closed.
 **/
-    public void Var002()
+    @SuppressWarnings("deprecation")
+   public void Var002()
     {
         try {
             Statement s = connection_.createStatement ();
@@ -208,6 +210,7 @@ to a row.
 getBigDecimal() with 2 parameters - Should throw exception when cursor 
 is not pointing to a row.
 **/
+    @SuppressWarnings("deprecation")
     public void Var004()
     {
         try {
@@ -247,6 +250,7 @@ is an invalid index.
 getBigDecimal() with 2 parameters - Should throw an exception when the 
 column is an invalid index.
 **/
+    @SuppressWarnings("deprecation")
     public void Var006()
     {
         try {
@@ -287,6 +291,7 @@ is 0.
 getBigDecimal() with 2 parameters - Should throw an exception when the column
 is 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var008()
     {
         try {
@@ -327,6 +332,7 @@ is -1.
 getBigDecimal() with 2 parameters - Should throw an exception when the column
 is -1.
 **/
+    @SuppressWarnings("deprecation")
     public void Var010()
     {
         try {
@@ -365,6 +371,7 @@ getBigDecimal() - Should work when the column index is valid.
 /**
 getBigDecimal() with 2 parameters - Should work when the column index is valid.
 **/
+    @SuppressWarnings("deprecation")
     public void Var012()
     {
         try {
@@ -415,6 +422,7 @@ name is null.
 getBigDecimal() with 2 parameters - Should throw an exception when the column
 name is null.
 **/
+    @SuppressWarnings("deprecation")
     public void Var014()
     {
         if (checkJdbc20 ()) {
@@ -460,6 +468,7 @@ name is an empty string.
 getBigDecimal() with 2 parameters - Should throw an exception when the column
 name is an empty string.
 **/
+    @SuppressWarnings("deprecation")
     public void Var016()
     {
         try {
@@ -500,6 +509,7 @@ name is invalid.
 getBigDecimal() - Should throw an exception when the column
 name is invalid.
 **/
+    @SuppressWarnings("deprecation")
     public void Var018()
     {
         try {
@@ -538,6 +548,7 @@ getBigDecimal() - Should work when the column name is valid.
 /**
 getBigDecimal() with 2 parameters - Should work when the column name is valid.
 **/
+    @SuppressWarnings("deprecation")
     public void Var020()
     {
         try {
@@ -558,7 +569,8 @@ getBigDecimal() with 2 parameters - Should work when the column name is valid.
 getBigDecimal() with 2 parameters - Should throw an exception when the
 scale is -1.
 **/
-    public void Var021()
+    @SuppressWarnings("deprecation")
+ public void Var021()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC  ) {
          notApplicable("LUW does not throw exception when scale is -1");
@@ -581,7 +593,8 @@ scale is -1.
 /**
 getBigDecimal() with 2 parameters - Should work when the scale is 0.
 **/
-    public void Var022()
+    @SuppressWarnings("deprecation")
+   public void Var022()
     {
         try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -600,7 +613,8 @@ getBigDecimal() with 2 parameters - Should work when the scale is 0.
 /**
 getBigDecimal() with 2 parameters - Should work when the scale is 3.
 **/
-    public void Var023()
+    @SuppressWarnings("deprecation")
+ public void Var023()
     {
         try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -639,7 +653,8 @@ getBigDecimal() - Should work when an update is pending.
 /**
 getBigDecimal() with 2 parameters - Should work when an update is pending.
 **/
-    public void Var025()
+    @SuppressWarnings("deprecation")
+   public void Var025()
     {
         if (checkJdbc20 ()) {
         try {
@@ -680,7 +695,8 @@ getBigDecimal() - Should work when an update has been done.
 /**
 getBigDecimal() with 2 parameters - Should work when an update has been done.
 **/
-    public void Var027()
+    @SuppressWarnings("deprecation")
+   public void Var027()
     {
         if (checkJdbc20 ()) {
         try {
@@ -723,7 +739,8 @@ row, when an insert is pending.
 getBigDecimal() with 2 parameters - Should work when the current row is 
 the insert row, when an insert is pending.
 **/
-    public void Var029()
+    @SuppressWarnings("deprecation")
+   public void Var029()
     {
         if (checkJdbc20 ()) {
         try {
@@ -770,7 +787,8 @@ row, when an insert has been done.
 getBigDecimal() with 2 parameters - Should work when the current row is 
 the insert row, when an insert has been done.
 **/
-    public void Var031()
+    @SuppressWarnings("deprecation")
+ public void Var031()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC  ) {
         notApplicable("JCC does not work when moving to insert row"); 
@@ -820,6 +838,7 @@ getBigDecimal() - Should throw an exception on a deleted row.
 /**
 getBigDecimal() with 2 parameters - Should throw an exception on a deleted row.
 **/
+    @SuppressWarnings("deprecation")
     public void Var033()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC  ) {
@@ -863,6 +882,7 @@ getBigDecimal() - Should return null when the column is NULL.
 /**
 getBigDecimal() with 2 parameters - Should return null when the column is NULL.
 **/
+    @SuppressWarnings("deprecation")
     public void Var035 ()
     {
         try {
@@ -903,6 +923,7 @@ getBigDecimal() - Get from a SMALLINT.
 /**
 getBigDecimal() with 2 parameters - Get from a SMALLINT, scale = 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var037 ()
     {
         try {
@@ -926,6 +947,7 @@ getBigDecimal() with 2 parameters - Get from a SMALLINT, scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a SMALLINT, scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var038 ()
     {
         try {
@@ -968,6 +990,7 @@ getBigDecimal() - Get from a INTEGER.
 /**
 getBigDecimal() with 2 parameters - Get from a INTEGER, scale = 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var040 ()
     {
         try {
@@ -987,6 +1010,7 @@ getBigDecimal() with 2 parameters - Get from a INTEGER, scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a INTEGER, scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var041 ()
     {
         try {
@@ -1025,6 +1049,7 @@ getBigDecimal() - Get from a REAL.
 /**
 getBigDecimal() with 2 parameters - Get from a REAL, scale = 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var043 ()
     {
         try {
@@ -1044,6 +1069,7 @@ getBigDecimal() with 2 parameters - Get from a REAL, scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a REAL, scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var044 ()
     {
         try {
@@ -1082,7 +1108,8 @@ getBigDecimal() - Get from a FLOAT.
 /**
 getBigDecimal() with 2 parameters - Get from a FLOAT, scale = 0.
 **/
-    public void Var046 ()
+    @SuppressWarnings("deprecation")
+   public void Var046 ()
     {
         try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -1107,7 +1134,8 @@ getBigDecimal() with 2 parameters - Get from a FLOAT, scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a FLOAT, scale = 3.
 **/
-    public void Var047 ()
+    @SuppressWarnings("deprecation")
+   public void Var047 ()
     {
         try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -1145,7 +1173,8 @@ getBigDecimal() - Get from a DOUBLE.
 /**
 getBigDecimal() with 2 parameters - Get from a DOUBLE, scale = 0.
 **/
-    public void Var049 ()
+    @SuppressWarnings("deprecation")
+   public void Var049 ()
     {
         try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
@@ -1170,6 +1199,7 @@ getBigDecimal() with 2 parameters - Get from a DOUBLE, scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a DOUBLE, scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var050 ()
     {
         try {
@@ -1208,6 +1238,7 @@ getBigDecimal() - Get from a DECIMAL(5,0).
 /**
 getBigDecimal() with 2 parameters - Get from a DECIMAL(5,0), scale = 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var052 ()
     {
         try {
@@ -1227,6 +1258,7 @@ getBigDecimal() with 2 parameters - Get from a DECIMAL(5,0), scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a DECIMAL(5,0), scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var053 ()
     {
         try {
@@ -1265,6 +1297,7 @@ getBigDecimal() - Get from a DECIMAL(10,5).
 /**
 getBigDecimal() with 2 parameters - Get from a DECIMAL(10,5), scale = 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var055 ()
     {
         try {
@@ -1292,6 +1325,7 @@ getBigDecimal() with 2 parameters - Get from a DECIMAL(10,5), scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a DECIMAL(10,5), scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var056 ()
     {
         try {
@@ -1337,6 +1371,7 @@ getBigDecimal() - Get from a NUMERIC(5,0).
 /**
 getBigDecimal() with 2 parameters - Get from a NUMERIC(5,0), scale = 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var058 ()
     {
         try {
@@ -1356,6 +1391,7 @@ getBigDecimal() with 2 parameters - Get from a NUMERIC(5,0), scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a NUMERIC(5,0), scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var059 ()
     {
         try {
@@ -1394,6 +1430,7 @@ getBigDecimal() - Get from a NUMERIC(10,5).
 /**
 getBigDecimal() with 2 parameters - Get from a NUMERIC(10,5), scale = 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var061 ()
     {
         try {
@@ -1413,6 +1450,7 @@ getBigDecimal() with 2 parameters - Get from a NUMERIC(10,5), scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a NUMERIC(10,5), scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var062 ()
     {
         try {
@@ -1453,6 +1491,7 @@ to an int.
 getBigDecimal() with 2 parameters - Get from a CHAR, where the value does 
 not translate to an int.
 **/
+    @SuppressWarnings("deprecation")
     public void Var064 ()
     {
         try {
@@ -1493,6 +1532,7 @@ to an int.
 getBigDecimal() with 2 parameters - Get from a CHAR, where the 
 value does translate to an int.
 **/
+    @SuppressWarnings("deprecation")
     public void Var066 ()
     {
         try {
@@ -1534,6 +1574,7 @@ getBigDecimal() with 2 parameters - Get from a CHAR, where
 the value does translate to an int, except that it has a decimal 
 point.
 **/
+    @SuppressWarnings("deprecation")
     public void Var068 ()
     {
         try {
@@ -1574,6 +1615,7 @@ to an int.
 getBigDecimal() with 2 parameters - Get from a VARCHAR, where the value 
 does not translate to an int.
 **/
+    @SuppressWarnings("deprecation")
     public void Var070 ()
     {
         try {
@@ -1614,6 +1656,7 @@ to an int.
 getBigDecimal() with 2 parameters - Get from a VARCHAR, where 
 the value does translate to an int.
 **/
+    @SuppressWarnings("deprecation")
     public void Var072 ()
     {
         try {
@@ -1654,6 +1697,7 @@ to an int, except that it has a decimal point
 getBigDecimal() with 2 parameters - Get from a VARCHAR, where the value 
 does translate to an int, except that it has a decimal point
 **/
+    @SuppressWarnings("deprecation")
     public void Var074 ()
     {
         try {
@@ -1699,6 +1743,7 @@ getBigDecimal() - Get from a BINARY.
 /**
 getBigDecimal() with 2 parameters - Get from a BINARY.
 **/
+    @SuppressWarnings("deprecation")
     public void Var076 ()
     {
         try {
@@ -1737,6 +1782,7 @@ getBigDecimal() - Get from a VARBINARY.
 /**
 getBigDecimal() with 2 parameters - Get from a VARBINARY.
 **/
+    @SuppressWarnings("deprecation")
     public void Var078 ()
     {
         try {
@@ -1777,6 +1823,7 @@ getBigDecimal() - Get from a CLOB.
 /**
 getBigDecimal() with 2 parameters - Get from a CLOB.
 **/
+    @SuppressWarnings("deprecation")
     public void Var080 ()
     {
         if (checkLobSupport ()) {
@@ -1819,7 +1866,8 @@ getBigDecimal() - Get from a DBCLOB.
 /**
 getBigDecimal() with 2 parameters - Get from a DBCLOB.
 **/
-    public void Var082 ()
+    @SuppressWarnings("deprecation")
+   public void Var082 ()
     {
         if (checkLobSupport ()) {
             try {
@@ -1861,7 +1909,8 @@ getBigDecimal() - Get from a BLOB.
 /**
 getBigDecimal() with 2 parameters - Get from a BLOB.
 **/
-    public void Var084 ()
+    @SuppressWarnings("deprecation")
+   public void Var084 ()
     {
         if (checkLobSupport ()) {
             try {
@@ -1901,6 +1950,7 @@ getBigDecimal() - Get from a DATE.
 /**
 getBigDecimal() with 2 parameters - Get from a DATE.
 **/
+    @SuppressWarnings("deprecation")
     public void Var086 ()
     {
         try {
@@ -1939,6 +1989,7 @@ getBigDecimal() - Get from a TIME.
 /**
 getBigDecimal() with 2 parameters - Get from a TIME.
 **/
+    @SuppressWarnings("deprecation")
     public void Var088 ()
     {
         try {
@@ -1977,6 +2028,7 @@ getBigDecimal() - Get from a TIMESTAMP.
 /**
 getBigDecimal() with 2 parameters - Get from a TIMESTAMP.
 **/
+    @SuppressWarnings("deprecation")
     public void Var090 ()
     {
         try {
@@ -2020,6 +2072,7 @@ getBigDecimal() - Get from a DATALINK.
 /**
 getBigDecimal() with 2 parameters - Get from a DATALINK.
 **/
+    @SuppressWarnings("deprecation")
     public void Var092 ()
     {
         if (checkLobSupport ()) {
@@ -2063,6 +2116,7 @@ getBigDecimal() - Get from a DISTINCT.
 /**
 getBigDecimal() with 2 parameters - Get from a DISTINCT.
 **/
+    @SuppressWarnings("deprecation")
     public void Var094 ()
     {
         if (checkLobSupport ()) {
@@ -2105,6 +2159,7 @@ getBigDecimal() - Get from a BIGINT.
 /**
 getBigDecimal() with 2 parameters - Get from a BIGINT, scale = 0.
 **/
+    @SuppressWarnings("deprecation")
     public void Var096 ()
     {
         if (checkBigintSupport ()) {
@@ -2126,6 +2181,7 @@ getBigDecimal() with 2 parameters - Get from a BIGINT, scale = 0.
 /**
 getBigDecimal() with 2 parameters - Get from a BIGINT, scale = 3.
 **/
+    @SuppressWarnings("deprecation")
     public void Var097 ()
     {
         if (checkBigintSupport ()) {

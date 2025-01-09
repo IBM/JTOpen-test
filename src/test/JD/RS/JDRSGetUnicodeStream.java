@@ -30,7 +30,7 @@ import java.sql.ResultSet;
 
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDRSGetUnicodeStream. This tests the following method of the JDBC
@@ -71,7 +71,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDRSGetUnicodeStream(AS400 systemObject, Hashtable namesAndVars,
+  public JDRSGetUnicodeStream(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetUnicodeStream", namesAndVars, runMode,
@@ -166,6 +166,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Should throw exception when the result set is closed.
    **/
+  @SuppressWarnings("deprecation")
   public void Var001() {
     try {
       Statement s = connection_.createStatement();
@@ -183,6 +184,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Should throw exception when cursor is not pointing to
    * a row.
    **/
+  @SuppressWarnings("deprecation")
   public void Var002() {
     try {
       ResultSet rs = statement0_.executeQuery("SELECT * FROM "
@@ -198,6 +200,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Should throw an exception when the column is an
    * invalid index.
    **/
+  @SuppressWarnings("deprecation")
   public void Var003() {
     try {
       ResultSet rs = statement0_.executeQuery("SELECT * FROM "
@@ -213,6 +216,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Should throw an exception when the column is 0.
    **/
+  @SuppressWarnings("deprecation")
   public void Var004() {
     try {
       ResultSet rs = statement0_.executeQuery("SELECT * FROM "
@@ -228,6 +232,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Should throw an exception when the column is -1.
    **/
+  @SuppressWarnings("deprecation")
   public void Var005() {
     try {
       ResultSet rs = statement0_.executeQuery("SELECT * FROM "
@@ -243,6 +248,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Should work when the column index is valid.
    **/
+  @SuppressWarnings("deprecation")
   public void Var006() {
     try {
       sb.setLength(0); 
@@ -269,6 +275,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Should throw an exception when the column name is
    * null.
    **/
+  @SuppressWarnings("deprecation")
   public void Var007() {
     if (getDriver() == JDTestDriver.DRIVER_JCC) {
       notApplicable("JCC throws null pointer exception when column name is null ");
@@ -290,6 +297,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Should throw an exception when the column name is an
    * empty string.
    **/
+  @SuppressWarnings("deprecation")
   public void Var008() {
     try {
       ResultSet rs = statement0_.executeQuery("SELECT * FROM "
@@ -306,6 +314,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Should throw an exception when the column name is
    * invalid.
    **/
+  @SuppressWarnings("deprecation")
   public void Var009() {
     try {
       ResultSet rs = statement0_.executeQuery("SELECT * FROM "
@@ -322,7 +331,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Should throw an exception when the column name is
    * valid.
    **/
-  public void Var010() {
+  @SuppressWarnings("deprecation")
+ public void Var010() {
     sb.setLength(0); 
 
     try {
@@ -348,7 +358,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Should work when an update is pending.
    **/
-  public void Var011() {
+  @SuppressWarnings("deprecation")
+ public void Var011() {
     sb.setLength(0); 
 
     if (checkJdbc20()) {
@@ -372,7 +383,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Should work when an update has been done.
    **/
-  public void Var012() {
+  @SuppressWarnings("deprecation")
+ public void Var012() {
     if (checkJdbc20()) {
       sb.setLength(0); 
 
@@ -401,7 +413,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Should work when the current row is the insert row,
    * when an insert is pending.
    **/
-  public void Var013() {
+  @SuppressWarnings("deprecation")
+ public void Var013() {
     if (checkJdbc20()) {
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
         notApplicable("JCC does not support moveToInserRow");
@@ -430,6 +443,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Should work when the current row is the insert row,
    * when an insert has been done.
    **/
+  @SuppressWarnings("deprecation")
   public void Var014() {
     if (checkJdbc20()) {
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -459,6 +473,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Should throw an exception on a deleted row.
    **/
+  @SuppressWarnings("deprecation")
   public void Var015() {
     if (checkJdbc20()) {
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -479,6 +494,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Should return null when the column is NULL.
    **/
+  @SuppressWarnings("deprecation")
   public void Var016() {
     try {
       ResultSet rs = statement0_.executeQuery("SELECT * FROM "
@@ -495,7 +511,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a SMALLINT.
    **/
-  public void Var017() {
+  @SuppressWarnings("deprecation")
+ public void Var017() {
     sb.setLength(0); 
     try {
       ResultSet rs = statement0_.executeQuery("SELECT * FROM "
@@ -516,7 +533,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a INTEGER.
    **/
-  public void Var018() {
+  @SuppressWarnings("deprecation")
+ public void Var018() {
 
     sb.setLength(0); 
     try {
@@ -539,6 +557,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a REAL.
    **/
+  @SuppressWarnings("deprecation")
   public void Var019() {
     sb.setLength(0); 
     try {
@@ -558,6 +577,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a FLOAT.
    **/
+  @SuppressWarnings("deprecation")
   public void Var020() {
     sb.setLength(0); 
     try {
@@ -579,6 +599,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a DOUBLE.
    **/
+  @SuppressWarnings("deprecation")
   public void Var021() {
     sb.setLength(0); 
     try {
@@ -598,7 +619,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a DECIMAL.
    **/
-  public void Var022() {
+  @SuppressWarnings("deprecation")
+ public void Var022() {
     sb.setLength(0); 
     sb.append(" -- getUnicodeStream from decimal -- updated 12/14/2011"); 
     try {
@@ -616,7 +638,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a NUMERIC.
    **/
-  public void Var023() {
+  @SuppressWarnings("deprecation")
+ public void Var023() {
     sb.setLength(0); 
     sb.append(" -- getUnicodeStream from numeric -- updated 12/14/2011"); 
 
@@ -635,7 +658,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from an empty CHAR.
    **/
-  public void Var024() {
+  @SuppressWarnings("deprecation")
+ public void Var024() {
     sb.setLength(0);
 
     try {
@@ -661,7 +685,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a full CHAR.
    **/
-  public void Var025() {
+  @SuppressWarnings("deprecation")
+ public void Var025() {
     sb.setLength(0);
 
     try {
@@ -687,6 +712,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from an empty VARCHAR.
    **/
+  @SuppressWarnings("deprecation")
   public void Var026() {
     sb.setLength(0);
 
@@ -710,6 +736,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a full VARCHAR.
    **/
+  @SuppressWarnings("deprecation")
   public void Var027() {
     try {
       sb.setLength(0);
@@ -733,6 +760,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a BINARY.
    **/
+  @SuppressWarnings("deprecation")
   public void Var028() {
     try {
       sb.setLength(0);
@@ -757,6 +785,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a VARBINARY.
    **/
+  @SuppressWarnings("deprecation")
   public void Var029() {
     try {
       sb.setLength(0);
@@ -782,6 +811,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Get from a CLOB, when the CLOB data is returned in the
    * result set.
    **/
+  @SuppressWarnings("deprecation")
   public void Var030() {
     if (checkLobSupport()) {
 	sb.setLength(0);
@@ -807,6 +837,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Get from a CLOB, when the CLOB locator is returned in
    * the result set.
    **/
+  @SuppressWarnings("deprecation")
   public void Var031() {
     if (checkLobSupport()) {
 	sb.setLength(0);
@@ -833,6 +864,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Get from a DBCLOB, when the DBCLOB data is returned in
    * the result set.
    **/
+  @SuppressWarnings("deprecation")
   public void Var032() {
     if (checkLobSupport()) {
 	sb.setLength(0);
@@ -859,6 +891,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Get from a DBCLOB, when the DBCLOB locator is returned
    * in the result set.
    **/
+  @SuppressWarnings("deprecation")
   public void Var033() {
     if (checkLobSupport()) {
 	sb.setLength(0);
@@ -885,6 +918,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Get from a BLOB, when the BLOB data is returned in the
    * result set.
    **/
+  @SuppressWarnings("deprecation")
   public void Var034() {
     if (checkLobSupport()) {
 	sb.setLength(0);
@@ -911,6 +945,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Get from a BLOB, when the BLOB locator is returned in
    * the result set.
    **/
+  @SuppressWarnings("deprecation")
   public void Var035() {
     if (checkLobSupport()) {
 	sb.setLength(0);
@@ -945,6 +980,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a DATE.
    **/
+  @SuppressWarnings("deprecation")
   public void Var036() {
     sb.setLength(0);
       sb.append(" getUnicodeStream from DATE -- updated 12/14/2011"); 
@@ -966,6 +1002,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a TIME.
    **/
+  @SuppressWarnings("deprecation")
   public void Var037() {
     sb.setLength(0);
     try {
@@ -985,6 +1022,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a TIMESTAMP.
    **/
+  @SuppressWarnings("deprecation")
   public void Var038() {
     sb.setLength(0);
     try {
@@ -1013,7 +1051,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * full URL value for the datalink. This is, in essence, a String and can be
    * retrieved with getUnicodeStream as other Strings can.
    **/
-  public void Var039() {
+  @SuppressWarnings("deprecation")
+ public void Var039() {
     if (checkDatalinkSupport()) {
       try {
         Statement s = connection_.createStatement();
@@ -1047,7 +1086,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * full URL value for the datalink. This is, in essence, a String and can be
    * retrieved with getUnicodeStream as other Strings can.
    **/
-  public void Var040() {
+  @SuppressWarnings("deprecation")
+ public void Var040() {
     if (checkDatalinkSupport()) {
       try {
         Statement s = connection_.createStatement();
@@ -1073,7 +1113,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a DISTINCT.
    **/
-  public void Var041() {
+  @SuppressWarnings("deprecation")
+public void Var041() {
     if (checkLobSupport()) {
       sb.setLength(0);
 
@@ -1098,7 +1139,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from a BIGINT.
    **/
-  public void Var042() {
+  @SuppressWarnings("deprecation")
+ public void Var042() {
     sb.setLength(0);
      sb.append(" -- getUnicodeStream from BIGINT  updated 12/14/2011"); 
     if (checkBigintSupport()) {
@@ -1119,6 +1161,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Verify that no DataTruncation is posted when the max
    * field size is set to 0.
    **/
+  @SuppressWarnings("deprecation")
   public void Var043() {
     sb.setLength(0);
 
@@ -1149,7 +1192,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
    * getUnicodeStream() - Verify that data is truncated without a DataTruncation
    * posted when the max field size is set to a value shorter than the string.
    **/
-  public void Var044() {
+  @SuppressWarnings("deprecation")
+ public void Var044() {
     sb.setLength(0);
 
     try {
@@ -1179,7 +1223,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from DFP16:
    **/
-  public void Var045() {
+  @SuppressWarnings("deprecation")
+ public void Var045() {
     if (checkDecFloatSupport()) {
       sb.setLength(0);
       try {
@@ -1200,7 +1245,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
   /**
    * getUnicodeStream() - Get from DFP34:
    **/
-  public void Var046() {
+  @SuppressWarnings("deprecation")
+ public void Var046() {
     
     if (checkDecFloatSupport()) {
       sb.setLength(0);
@@ -1262,7 +1308,8 @@ public class JDRSGetUnicodeStream extends JDTestcase {
 /**
 getUnicodeStream() - Get from a BOOLEAN true .
 **/
-    public void Var049 ()
+  @SuppressWarnings("deprecation")
+   public void Var049 ()
     {
 	if (checkBooleanSupport()) { 
 	    sb.setLength(0); 
@@ -1287,7 +1334,8 @@ getUnicodeStream() - Get from a BOOLEAN true .
 /**
 getUnicodeStream() - Get from a BOOLEAN false .
 **/
-    public void Var050 ()
+  @SuppressWarnings("deprecation")
+   public void Var050 ()
     {
 	if (checkBooleanSupport()) { 
 	    sb.setLength(0); 
@@ -1309,6 +1357,7 @@ getUnicodeStream() - Get from a BOOLEAN false .
 /**
 getUnicodeStream() - Get from a BOOLEAN null .
 **/
+  @SuppressWarnings("deprecation")
     public void Var051 ()
     {
 	if (checkBooleanSupport()) { 

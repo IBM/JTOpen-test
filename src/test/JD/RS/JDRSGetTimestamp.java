@@ -31,7 +31,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.TimeZone;
 
 /**
@@ -64,7 +64,7 @@ public class JDRSGetTimestamp extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDRSGetTimestamp(AS400 systemObject, Hashtable namesAndVars,
+  public JDRSGetTimestamp(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetTimestamp", namesAndVars, runMode,
@@ -428,6 +428,7 @@ public class JDRSGetTimestamp extends JDTestcase {
    * For now, we just take the defaults and expect the calendar to be ignored in
    * our testing.
    **/
+  @SuppressWarnings("deprecation")
   public void Var018() {
     if (checkJdbc20()) {
       try {
@@ -1095,6 +1096,7 @@ public class JDRSGetTimestamp extends JDTestcase {
    * Timestamp unit tests
    */
 
+  @SuppressWarnings("unlikely-arg-type")
   public void Var059() {
     if (checkTimestamp12Support()) {
 	StringBuffer sb = new StringBuffer();
@@ -1523,7 +1525,7 @@ public class JDRSGetTimestamp extends JDTestcase {
           }
 
           total++;
-          Class[] argTypes = new Class[1];
+          Class<?>[] argTypes = new Class[1];
           argTypes[0] = Class.forName("java.lang.Object");
           Object[] args = new Object[1];
           args[0] = ts2;

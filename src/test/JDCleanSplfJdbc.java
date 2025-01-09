@@ -354,7 +354,7 @@ public class JDCleanSplfJdbc {
     boolean addComma = false; 
     if (deleteAll) { 
       String query = " SELECT JOB_USER, SPOOLED_FILE_NAME, SPOOLED_FILE_NUMBER ,JOB_NUMBER || '/' ||  JOB_USER || '/' ||  JOB_NAME ,  CREATION_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
-          + " FROM TABLE(QSYS2 . SPOOLED_FILE_INFO ( STARTING_TIMESTAMP => '"
+          + " FROM TABLE(QSYS2 . SPOOLED_FILE_INFO (USER_NAME=>'*ALL', STARTING_TIMESTAMP => '"
           + startTimestamp.toString() + "'" + " , ENDING_TIMESTAMP =>'" + endTimestamp.toString() + "'))";
 
       System.out.println(query);
@@ -401,7 +401,7 @@ public class JDCleanSplfJdbc {
     long startMillis = System.currentTimeMillis();
     Statement stmt = c.createStatement(); 
     String query = " SELECT JOB_USER, SPOOLED_FILE_NAME, SPOOLED_FILE_NUMBER ,JOB_NUMBER || '/' ||  JOB_USER || '/' ||  JOB_NAME ,  CREATION_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
-        + " FROM TABLE(QSYS2 . SPOOLED_FILE_INFO ( STARTING_TIMESTAMP => '"
+        + " FROM TABLE(QSYS2 . SPOOLED_FILE_INFO (USER_NAME=>'*ALL', STARTING_TIMESTAMP => '"
         + startTimestamp.toString() + "'" + " , ENDING_TIMESTAMP =>'" + endTimestamp.toString() + "'))";
     runCleaningQuery(out, stmt, query, clean); 
     stmt.close(); 

@@ -21,13 +21,13 @@ import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -64,7 +64,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDRSAbsolute (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          
@@ -1105,6 +1105,7 @@ then moveToCurrentRow().
 /**
 absolute() - Should clear any warnings.
 **/
+    @SuppressWarnings("deprecation")
     public void Var037 ()
     {
         if (checkJdbc20 ()) {

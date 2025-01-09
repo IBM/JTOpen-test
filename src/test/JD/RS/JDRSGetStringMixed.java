@@ -16,10 +16,9 @@ package test.JD.RS;
 
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -49,12 +48,12 @@ public class JDRSGetStringMixed extends JDTestcase {
 
   // Private data.
   private String properties_ = "NOTSET";
-  private static String table_ = JDRSTest.COLLECTION + ".JDRSGSUNSP";
+  // private static String table_ = JDRSTest.COLLECTION + ".JDRSGSUNSP";
 
   /**
    * Constructor.
    **/
-  public JDRSGetStringMixed(AS400 systemObject, Hashtable namesAndVars,
+  public JDRSGetStringMixed(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetStringMixed", namesAndVars, runMode,
@@ -69,7 +68,7 @@ public class JDRSGetStringMixed extends JDTestcase {
    **/
   protected void setup() throws Exception {
     reconnect("errors=full");
-    table_ = JDRSTest.COLLECTION + ".JDRSGSUNSP";
+    // table_ = JDRSTest.COLLECTION + ".JDRSGSUNSP";
   }
 
   /**

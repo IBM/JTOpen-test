@@ -14,22 +14,20 @@
 
 package test.JD.RS;
 
+import java.io.FileOutputStream;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLWarning;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -70,7 +68,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSNext (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -546,6 +544,7 @@ then moveToCurrentRow().
 /**
 next() - Should clear any warnings.
 **/
+    @SuppressWarnings("deprecation")
     public void Var017 ()
     {
         if (checkJdbc20 ()) {

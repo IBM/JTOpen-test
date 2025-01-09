@@ -14,20 +14,18 @@
 
 package test.JD.RS;
 
+import java.io.FileOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -55,7 +53,7 @@ Constructor.
 **/
     public JDRSTestcase (AS400 systemObject,
 		       String testname, 
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -250,7 +248,6 @@ Performs cleanup needed after running variations.
      */    
     public void baseTruncationTest(String x, String method ) {
 
-        if(true ) { 
             try {
                 Statement stmt = connection_.createStatement(); 
                 ResultSet rs = stmt.executeQuery ("SELECT "+x+" FROM SYSIBM.SYSDUMMY1");    
@@ -277,9 +274,6 @@ Performs cleanup needed after running variations.
             catch (Exception e2) { 
                 failed(e2, "Unexpected Exception"); 
             }
-        } else {
-            notApplicable("V5R5 and later 'numeric truncation test'");
-        }
   }
     
     

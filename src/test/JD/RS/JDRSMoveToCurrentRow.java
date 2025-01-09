@@ -14,20 +14,17 @@
 
 package test.JD.RS;
 
+import java.io.FileOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLWarning;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -55,7 +52,6 @@ extends JDTestcase
 
 
     // Private data.
-    private DatabaseMetaData    dmd_;
     private Statement           statement_;
     private Statement           statement2_;
 
@@ -65,7 +61,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSMoveToCurrentRow (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -89,7 +85,6 @@ Performs setup needed before running variations.
 	if (connection_ != null) connection_.close();
         if (isJdbc20 ()) {
             connection_ = testDriver_.getConnection (baseURL_ + ";data truncation=true", userId_, encryptedPassword_);
-            dmd_ = connection_.getMetaData ();
     
             // This statement is forward only.
             statement_ = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
@@ -586,6 +581,7 @@ then moveToCurrentRow() (i.e., a superfluous moveToCurrentRow()).
 /**
 moveToCurrentRow() - Should clear any warnings.
 **/
+    @SuppressWarnings("deprecation")
     public void Var020 ()
     {
         if (checkJdbc20 ()) {

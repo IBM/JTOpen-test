@@ -12,17 +12,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.JD.RS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDRSTest;
-import test.JDTestcase;
-
 import java.io.FileOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDRSTest;
+import test.JDTestcase;
 
 
 
@@ -119,6 +119,7 @@ Forces a single warning to be posted to the statement.
 
 @exception Exception If an exception occurs.
 **/
+    @SuppressWarnings("deprecation")
     public void forceWarning (ResultSet rs)
     throws Exception
     {
@@ -254,6 +255,7 @@ reported.
 getWarning() - Returns the first warning when 2 warnings have been
 reported.
 **/
+    @SuppressWarnings("deprecation")
     public void Var006()
     {
         if (checkJdbc20 ()) {

@@ -14,25 +14,23 @@
 
 package test.JD.RS;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.DataTruncation;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDWeirdInputStream;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.SQLException;
-
-import java.sql.ResultSet;
-
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -73,7 +71,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSUpdateBinaryStream (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -285,7 +283,7 @@ updateBinaryStream() - Should work when the column index is valid.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -374,7 +372,7 @@ updateBinaryStream() - Should work when the column name is valid.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -440,7 +438,7 @@ not yet been issued (i.e. update is still pending).
             JDRSTest.position (rs_, key_);
             byte[] ba = new byte[] { (byte) 0, (byte) 1, (byte) -1, (byte) 2, (byte) -2 };
             rs_.updateBinaryStream ("C_VARBINARY_20", new ByteArrayInputStream (ba), ba.length);
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -463,7 +461,7 @@ been issued, but cursor has not been repositioned.
             byte[] ba = new byte[] { (byte) 0, (byte) 56, (byte) 1, (byte) -1, (byte) 2, (byte) -2 };
             rs_.updateBinaryStream ("C_VARBINARY_20", new ByteArrayInputStream (ba), ba.length);
             rs_.updateRow ();
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -489,7 +487,7 @@ been issued and cursor has been repositioned.
             rs_.beforeFirst ();
             JDRSTest.position (rs_, key_);
             byte[] v = rs_.getBytes ("C_VARBINARY_20");
-            assertCondition (isEqual (ba, v));
+            assertCondition (areEqual (ba, v));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -514,7 +512,7 @@ row.
             rs_.updateBinaryStream ("C_VARBINARY_20", new ByteArrayInputStream (ba), ba.length);
             rs_.insertRow ();
             JDRSTest.position (rs_, "JDRSUpdateBinaryStream 1");
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -535,7 +533,7 @@ insert has not yet been issued (i.e. insert is still pending).
             rs_.moveToInsertRow ();
             byte[] ba = new byte[] { (byte) 121, (byte) 0, (byte) 56, (byte) -1, (byte) 2, (byte) -2 };
             rs_.updateBinaryStream ("C_VARBINARY_20", new ByteArrayInputStream (ba), ba.length);
-            assertCondition (isEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
+            assertCondition (areEqual (rs_.getBytes ("C_VARBINARY_20"), ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -753,7 +751,7 @@ updateBinaryStream() - Update a BINARY.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_BINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -807,7 +805,7 @@ and the length equal to the full stream.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -835,7 +833,7 @@ and the length less than the full stream.
 		isToolboxDriver() )			// @D2
 	    {
                 byte[] afterUpdate = rs_.getBytes("C_VARBINARY_20");
-                assertCondition(isEqual(afterUpdate, expected));
+                assertCondition(areEqual(afterUpdate, expected));
             }
             else
                 failed ("Didn't throw SQLException");
@@ -892,7 +890,7 @@ and the length 1.
 		isToolboxDriver() )			// @D2
             {
                     byte[] afterUpdate = rs_.getBytes("C_VARBINARY_20");            //allow updateBinaryStream if length is less than stream length
-                    assertCondition(isEqual(afterUpdate, expected));
+                    assertCondition(areEqual(afterUpdate, expected));
             }
             else
                 failed ("Didn't throw SQLException");
@@ -960,7 +958,7 @@ updateBinaryStream() - Update a VARBINARY, with an empty array.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -985,7 +983,7 @@ updateBinaryStream() - Update a VARBINARY, with single element array.
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba));
+            assertCondition (areEqual (v, ba));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1131,7 +1129,7 @@ SQL400 - the native driver expects this update to work correctly.
                    JDRSTest.position (rs2, key_);
                    byte[] v = rs2.getBytes ("C_BLOB");
                    rs2.close ();
-                   assertCondition (isEqual (v, ba));
+                   assertCondition (areEqual (v, ba));
                 //} else {                                                              //@D1D
                    //failed ("Didn't throw SQLException");                              //@D1D
                 //}                                                                     //@D1D
@@ -1306,7 +1304,7 @@ updateBinaryStream() - Should work with weird input stream
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba), "Not equal "+added );
+            assertCondition (areEqual (v, ba), "Not equal "+added );
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception "+added);
@@ -1348,7 +1346,7 @@ updateBinaryStream() - Should work with weird input stream and reading part
             JDRSTest.position (rs2, key_);
             byte[] v = rs2.getBytes ("C_VARBINARY_20");
             rs2.close ();
-            assertCondition (isEqual (v, ba), "Not equal "+added );
+            assertCondition (areEqual (v, ba), "Not equal "+added );
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception "+added);

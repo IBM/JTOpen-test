@@ -41,7 +41,6 @@ public class JDRSGetRowTest
    /**
    * 
    */
-  private static final long serialVersionUID = 1L;
   Connection connection_; 
   // Constants.
    public static  String COLLECTION     = "JDTESTRS";
@@ -102,7 +101,6 @@ Performs setup needed before running testcases.
    public void setup ()
    throws Exception
    {
-      boolean tableCreated;
       super.setup(); // @D2A
 
       if (connection_ != null) connection_.close();

@@ -20,7 +20,6 @@ import test.JDJobName;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JVMInfo;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
@@ -28,12 +27,12 @@ import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Hashtable;
+import java.util.Hashtable; 
+import java.util.Vector;
 
 
 
@@ -62,6 +61,7 @@ extends JDTestcase
 
     // Private data.
     private static final String key_ = "JDRSUpdateString";
+    private static final String key1_ = "JDRSUpdateString 1"; 
     private static String select_    = "SELECT * FROM " + JDRSTest.RSTEST_UPDATE;
 
     private Statement           statement_;
@@ -75,7 +75,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDRSUpdateString (AS400 systemObject,
-			     Hashtable namesAndVars,
+			     Hashtable<String,Vector<String>> namesAndVars,
 			     int runMode,
 			     FileOutputStream fileOutputStream,
 			     
@@ -534,10 +534,10 @@ extends JDTestcase
 	    try
 	    {
 		rs_.moveToInsertRow ();
-		rs_.updateString ("C_KEY", "JDRSUpdateString 1");
+		rs_.updateString ("C_KEY", key1_);
 		rs_.updateString ("C_VARCHAR_50", "Foreign keys");
 		rs_.insertRow ();
-		JDRSTest.position (rs_, "JDRSUpdateString 1");
+		JDRSTest.position (rs_, key1_);
 		assertCondition (rs_.getString ("C_VARCHAR_50").equals ("Foreign keys"));
 	    }
 	    catch(Exception e)
@@ -2649,6 +2649,9 @@ extends JDTestcase
     if (checkJdbc20()) {
       if (checkBooleanSupport()) {
         try {
+          // A previous commit could have lost lock on position. 
+          // We need to make sure that server knows we want to re-obtain  the lock
+          JDRSTest.position(rs_,key1_);
           JDRSTest.position(rs_, key_);
           rs_.updateString("C_BOOLEAN", inString);
           rs_.updateRow();

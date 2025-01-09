@@ -25,6 +25,7 @@ import java.sql.ResultSet;
  
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 
@@ -57,7 +58,7 @@ extends JDRSTestcase
 Constructor.
 **/
     public JDRSGetByte (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

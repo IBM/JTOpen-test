@@ -28,7 +28,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.TimeZone;
 
 /**
@@ -60,7 +60,7 @@ public class JDRSGetTime extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDRSGetTime(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDRSGetTime(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetTime", namesAndVars, runMode, fileOutputStream,
@@ -419,6 +419,7 @@ public class JDRSGetTime extends JDTestcase {
    * For now, we just take the defaults and expect the calendar to be ignored in
    * our testing.
    **/
+  @SuppressWarnings("deprecation")
   public void Var018() {
     Calendar c = new GregorianCalendar();
     c.getTimeZone();

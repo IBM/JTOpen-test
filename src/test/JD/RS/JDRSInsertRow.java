@@ -14,19 +14,17 @@
 
 package test.JD.RS;
 
+import java.io.FileOutputStream;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -70,7 +68,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSInsertRow (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -241,11 +239,12 @@ with a non-nullable column NOT specified.
     {
         if (checkJdbc20 ()) {
         try {
+          /*
             Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.COLLECTION + ".ISNONULL");
- 
+ */
             rs_.moveToInsertRow ();
             rs_.updateInt ("A", 747);
             rs_.updateInt ("C", -222);
@@ -428,7 +427,7 @@ insertRow() - Should insert a row with all but 3 nulls when exactly
                 afterNulls[i] = rs2.wasNull ();
             }
             int insertedColumn1 = rs2.findColumn ("C_INTEGER") - 1;
-            int insertedColumn2 = rs2.findColumn ("C_SMALLINT") - 1;
+            rs2.findColumn ("C_SMALLINT") ;
             int insertedColumn3 = rs2.findColumn ("C_CHAR_1") - 1;
             rs2.close ();
 
@@ -479,7 +478,7 @@ being updated when not repositioned.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            int columnCount = rs_.getMetaData ().getColumnCount ();
+            rs_.getMetaData ().getColumnCount ();
 
             rs_.moveToInsertRow ();
             rs_.updateString ("C_VARCHAR_50", "Space people");
@@ -504,7 +503,7 @@ being updated when repositioned.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            int columnCount = rs_.getMetaData ().getColumnCount ();
+            rs_.getMetaData ().getColumnCount ();
 
             rs_.moveToInsertRow ();
             rs_.updateString ("C_VARCHAR_50", "Martians");

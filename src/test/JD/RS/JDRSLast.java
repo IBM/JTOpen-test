@@ -28,7 +28,7 @@ import java.sql.ResultSet;
 
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -72,7 +72,7 @@ extends JDTestcase {
 Constructor.
 **/
    public JDRSLast (AS400 systemObject,
-                    Hashtable namesAndVars,
+                    Hashtable<String,Vector<String>> namesAndVars,
                     int runMode,
                     FileOutputStream fileOutputStream,
                     
@@ -591,7 +591,8 @@ then moveToCurrentRow().
 /**
 last() - Should clear any warnings.
 **/
-   public void Var019 ()
+   @SuppressWarnings("deprecation")
+  public void Var019 ()
    {
       if (checkJdbc20 ()) {
          try {
@@ -1942,7 +1943,8 @@ then moveToCurrentRow().
 /**
 last() - Should clear any warnings.
 **/
-   public void Var079 ()
+   @SuppressWarnings("deprecation")
+  public void Var079 ()
    {
       if (checkJdbc20 ()) {
          try {

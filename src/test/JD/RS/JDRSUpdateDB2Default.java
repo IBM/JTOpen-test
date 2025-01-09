@@ -14,19 +14,19 @@
 
 package test.JD.RS;
 
+import java.io.FileOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -73,7 +73,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSUpdateDB2Default (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -86,7 +86,7 @@ Constructor.
 
     public JDRSUpdateDB2Default (AS400 systemObject,
 				 String testname, 
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -462,7 +462,7 @@ name is null.
       if (checkJdbc20 ()) {
         try {
           JDRSTest.position (rs_, key_);
-          Class[] argTypes = new Class[1]; 
+          Class<?>[] argTypes = new Class<?>[1]; 
           argTypes[0] = Class.forName("java.lang.String"); 
           Object args[] = new Object[1]; 
           args[0] = null; 

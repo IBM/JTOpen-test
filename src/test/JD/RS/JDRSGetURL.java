@@ -22,11 +22,10 @@ import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.net.URL;
 
 /**
@@ -56,7 +55,7 @@ public class JDRSGetURL extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDRSGetURL(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDRSGetURL(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetURL", namesAndVars, runMode, fileOutputStream,

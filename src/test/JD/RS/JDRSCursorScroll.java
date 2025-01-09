@@ -67,7 +67,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDRSCursorScroll (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          
@@ -81,7 +81,7 @@ Constructor.
 
     public JDRSCursorScroll (AS400 systemObject,
 			     String testName, 
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          
@@ -1600,7 +1600,7 @@ getRow()
   public void stressScroll(long seed, int RUNMILLIS, String info) {
 
     boolean success = true;
-    Vector log = new Vector();
+    Vector<String> log = new Vector<String>();
     StringBuffer sb = new StringBuffer();
     String firstMethodString = null;
 
@@ -1786,7 +1786,7 @@ getRow()
           if (!success) {
             sb.append(" -- Table is " + table49);
             sb.append(" -- Log is \n");
-            Enumeration enumeration = log.elements();
+            Enumeration<String> enumeration = log.elements();
             while (enumeration.hasMoreElements()) {
               sb.append((String) enumeration.nextElement());
               sb.append("\n");
@@ -1827,7 +1827,7 @@ getRow()
 	   return; 
        } 
 	    boolean success=true; 
-        Vector log = new Vector(); 
+        Vector<String> log = new Vector<String>(); 
         StringBuffer sb = new StringBuffer(); 
 
 	CallableStatement cs = null; 
@@ -1992,7 +1992,7 @@ getRow()
                   if (!success) {
 		    sb.append(" -- Table is "+table49); 
                     sb.append(" -- Log is \n"); 
-                    Enumeration enumeration = log.elements(); 
+                    Enumeration<String> enumeration = log.elements(); 
                     while (enumeration.hasMoreElements()) {
                       sb.append((String) enumeration.nextElement()); 
                       sb.append("\n"); 

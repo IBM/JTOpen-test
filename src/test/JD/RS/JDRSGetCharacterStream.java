@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * Testcase JDRSGetCharacterStream. This tests the following method of the JDBC
@@ -65,7 +66,7 @@ public class JDRSGetCharacterStream extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDRSGetCharacterStream(AS400 systemObject, Hashtable namesAndVars,
+  public JDRSGetCharacterStream(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSGetCharacterStream", namesAndVars, runMode,
@@ -73,7 +74,7 @@ public class JDRSGetCharacterStream extends JDTestcase {
   }
 
   public JDRSGetCharacterStream(AS400 systemObject, String testcaseName,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,
  password);
