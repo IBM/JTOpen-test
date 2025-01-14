@@ -146,6 +146,13 @@ public class AuthExit {
         sql = "CALL QSYS2.QCMDEXC('ADDEXITPGM EXITPNT(QIBM_QSY_AUTH) FORMAT(AUTH0100) PGMNBR(1) "
             + "PGM(JDTESTINFO/AUTHEXIT) THDSAFE(*YES)')";
         stmt.execute(sql);
+        
+        /* Need to make sure exit program is accessible  */ 
+        sql = "CALL QSYS2.QCMDEXC('CHGAUT OBJ(''/qsys.lib/jdtestinfo.lib'') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*NONE) ')"; 
+        stmt.execute(sql);
+        sql = "CALL QSYS2.QCMDEXC('CHGAUT OBJ(''/qsys.lib/jdtestinfo.lib/authexit.pgm'') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*NONE) ')"; 
+        stmt.execute(sql); 
+        
       } /* exit program library is null */
 
       sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + userid + ") AUTHMTH(*TOTP *REGFAC)')";

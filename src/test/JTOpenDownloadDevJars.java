@@ -226,10 +226,10 @@ public class JTOpenDownloadDevJars {
             copyFile(  tmpDir+"/jt400-native.jar",        jdk14Path+"/jt400Native.jar");
             renameFile(tmpDir+"/jt400-javadoc.jar",       jdk14Path+"/jt400-javadoc.jar");
             renameFile(tmpDir+"/jt400-sources.jar",       jdk14Path+"/jt400-sources.jar");
-	    renameFile(tmpDir+"/jt400.jar",               jdk16Path+"/jt400.jar");
-            renameFile(tmpDir+"/jt400-native.jar",        jdk16Path+"/jt400Native.jar");
-	    renameFile(tmpDir+"/jt400-java8.jar",         jdk18Path+"/jt400.jar");
-            renameFile(tmpDir+"/jt400-native-java8.jar",  jdk18Path+"/jt400Native.jar");
+            copyFile(  tmpDir+"/jt400.jar",               jdk16Path+"/jt400.jar");
+            copyFile(  tmpDir+"/jt400-native.jar",        jdk16Path+"/jt400Native.jar");
+	    renameFile(tmpDir+"/jt400.jar",               jdk18Path+"/jt400.jar");
+            renameFile(tmpDir+"/jt400-native.jar",        jdk18Path+"/jt400Native.jar");
 	    renameFile(tmpDir+"/jt400-java11.jar",        jdk9Path+ "/jt400.jar");
 	    renameFile(tmpDir+"/jt400-native-java11.jar", jdk9Path+ "/jt400Native.jar");
 

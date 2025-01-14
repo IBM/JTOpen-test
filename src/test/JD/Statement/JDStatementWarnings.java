@@ -490,8 +490,17 @@ public class JDStatementWarnings extends JDTestcase {
           s.executeUpdate("drop table " + tablename);
         } catch (Exception e) {
            String message = e.toString(); 
-           if (message.indexOf("not found") < 0)
-               throw e; 
+           if (message.indexOf("not found") < 0) {
+               if (message.indexOf("Not authorized")>=0) { 
+                 Connection pwrConnection = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
+                 Statement pwrStatement = pwrConnection.createStatement(); 
+                 pwrStatement.executeUpdate("drop table " + tablename);
+                 pwrStatement.close(); 
+                 pwrConnection.close(); 
+               } else { 
+                 throw e; 
+               }        
+           } /* else OK */ 
         }
 
         s.executeUpdate("create table " + tablename + "(cstts timestamp)");
@@ -898,6 +907,12 @@ public class JDStatementWarnings extends JDTestcase {
         rs.next(); 
         sb.append("\nCurrent user is "+rs.getString(1)); 
 
+        // Run a query that fails
+        try { 
+            s.executeQuery("FAIL_QUERY"); 
+        } catch (Exception e) { 
+          
+        }
 	int retryCount = 5;
 	while (retryCount > 0) { 
 	    sql = "SELECT * FROM TABLE(QSYS2.JOB_DESCRIPTION_INFO('JDSTWJOBD', '"+collection_+"'))";
@@ -915,7 +930,7 @@ public class JDStatementWarnings extends JDTestcase {
               passed = false;
             }
           } else {
-        		retryCount = 0; 
+            retryCount = 0; 
 		String w1ExpectedState = "01548";
 		int w1ExpectedCode = 100;
 		String w1ExpectedMessage = "Procedure or user-defined function JOB_DESCRIPTION_INFO in QSYS2 returned a warning SQLSTATE";
@@ -923,17 +938,23 @@ public class JDStatementWarnings extends JDTestcase {
 		    passed = false;
 		    sb.append("\nError: w1ExpectedState sb " + w1ExpectedState + " but was "
 			      + w1.getSQLState());
+		} else {
+		  sb.append("\nGot Expected state"); 
 		}
 		if (w1ExpectedCode != w1.getErrorCode()) {
 		    passed = false;
 		    sb.append("\nError: w1ExpectedCode sb " + w1ExpectedCode + " but was "
 			      + w1.getErrorCode());
+		} else {
+		  sb.append("\nGot expected error code"); 
 		}
 		String w1Message = w1.getMessage();
 		if (w1Message == null || (w1Message.indexOf(w1ExpectedMessage) < 0)) {
 		    passed = false;
 		    sb.append("\nError: w1ExpectedMessage sb " + w1ExpectedMessage
 			      + " but was " + w1.getMessage());
+		} else {
+		  sb.append("\nGot expected message"); 
 		}
 	    }
 	}
@@ -968,7 +989,7 @@ public class JDStatementWarnings extends JDTestcase {
         
         if ((statementWarningCount + resultSetWarningCount) == 0) {
           passed = false; 
-          sb.append("\nError:  No warnings occurred");
+          sb.append("\nError:  No warnings occurred from query: "+sql);
         } else {
           sb.append("\nstatementWarningCount="+statementWarningCount); 
           sb.append("\nresultSetWarningCount="+resultSetWarningCount);

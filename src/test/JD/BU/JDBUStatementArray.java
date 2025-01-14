@@ -93,9 +93,9 @@ Performs setup needed before running variations.
         try {
 
 
-	    JDBUTest.BUTESTDATA = "BUSATSTDTA";
-	    JDBUTest.BUTEST     = "BUSATEST";
-	    JDBUTest.BUTESTLOB  = "BUSATSTLOB"; 
+	    JDBUTest.BUTESTDATA = collection_+".BUSATSTDTA";
+	    JDBUTest.BUTEST     = collection_+".BUSATEST";
+	    JDBUTest.BUTESTLOB  = collection_+".BUSATSTLOB"; 
 
 	    url = baseURL_;
 	    connection_ = testDriver_.getConnection (url, systemObject_.getUserId(), encryptedPassword_);

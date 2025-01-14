@@ -1326,7 +1326,7 @@ public abstract class JDTestDriver extends TestDriver {
         if (nativeAttemptedHashtable  == null) nativeAttemptedHashtable = new Hashtable(); 
         if (nativeAttemptedHashtable.get(uid) == null) {
           nativeAttemptedHashtable.put(uid,uid); 
-          System.out.println("Warning: unable to get native connection using secure password = "+attemptedPassword+" uid="+uid+" url="+url);
+          System.out.println("JDTestDriver: Warning: unable to get native connection using secure password = "+attemptedPassword+" uid="+uid+" url="+url);
          e.printStackTrace(System.out);
         }
       }

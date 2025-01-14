@@ -374,13 +374,13 @@ extends JDTestcase
                 catch(SQLException e)
                 {
                     // check for the right information in the query
-                    e.printStackTrace(System.out); 
+                    // e.printStackTrace(System.out); 
                     String exceptionMessage = e.toString();
                     String[]  expectedMessage = { "TimeoutException", "Operation cancelled", "Processing of the SQL statement ended", "666" } ; //sql number on all versions
                     // Because of the current toolbox implementation, the query will
                     // not even attempt to run, but will get
 		    // [SQL0666] SQL query exceeds specified time limit or storage limit.
-		    System.out.println("Got exception: '"+exceptionMessage+"' for query '"+query+"'"); 
+		    // System.out.println("Got exception: '"+exceptionMessage+"' for query '"+query+"'"); 
                     for (int i = 0; i < expectedMessage.length; i++){
                         if (exceptionMessage.indexOf(expectedMessage[i]) >= 0) { 
                             success = true;
@@ -465,7 +465,7 @@ extends JDTestcase
     {
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE ) {
-	    System.out.println("Var008 is toolbox only test for QRYTIMLMT");
+	    // System.out.println("Var008 is toolbox only test for QRYTIMLMT");
 	    assertCondition(true);
 	    return; 
 	} 

@@ -29,7 +29,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.CallableStatement;
@@ -39,6 +38,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Vector;
 import java.io.*; 
 
 /**
@@ -65,13 +65,13 @@ extends JDTestcase {
     String pwrPwd_;
     char[] encryptedPwrPwd_; 
     
-    Hashtable userProfiles = new Hashtable();  
+    Hashtable<String,String> userProfiles = new Hashtable<String,String>();  
 
 /**
 Constructor.
 **/
     public JDConnectionCCSID (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -83,7 +83,7 @@ Constructor.
                password);
         pwrUID_ = pwrUID;   //@H2A
         pwrPwd_ = pwrPwd;   //@H2A
-        encryptedPassword_ = PasswordVault.getEncryptedPassword(pwrPwd); 
+        encryptedPwrPwd_ = PasswordVault.getEncryptedPassword(pwrPwd); 
 
     }
 
@@ -281,7 +281,7 @@ Performs cleanup needed after running variations.
     public void cleanupProfiles() {
       String sql="";
       try {
-        Enumeration keys = userProfiles.keys(); 
+        Enumeration<String> keys = userProfiles.keys(); 
         Statement s = connection_.createStatement(); 
         while (keys.hasMoreElements()) {
           String key = (String) keys.nextElement(); 

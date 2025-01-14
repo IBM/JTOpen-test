@@ -111,7 +111,13 @@ public class INetServerTestcase extends Testcase
     protected void cleanup ()
     throws Exception
     {
-      if (DEBUG) System.out.println("Performing INetServerTestcase cleanup...");
+      localCleanup(); 
+      super.cleanup();
+      unlockSystem();
+    }
+
+    protected void localCleanup() throws Exception {
+      if (DEBUG) System.out.println("Performing INetServerTestcase localCleanup...");
       if (original_NetServer_Name != null) {
         ISeriesNetServer server = new ISeriesNetServer(pwrSys_);
         server.setName(original_NetServer_Name);
@@ -122,10 +128,8 @@ public class INetServerTestcase extends Testcase
       if (okToStopNetServer_) {
         stopAndStart(true);
       }
-      super.cleanup();
-      unlockSystem();
+      
     }
-
 
 ///    /**
 ///    Construct a ISeriesNetServer with no parameters.
@@ -467,7 +471,7 @@ public class INetServerTestcase extends Testcase
             failed (e, "Unexpected Exception");
         }
         finally {
-          try { cleanup(); } catch (Exception exc) { exc.printStackTrace(); }
+          try { localCleanup(); } catch (Exception exc) { exc.printStackTrace(); }
         }
     }
 
@@ -572,7 +576,7 @@ public class INetServerTestcase extends Testcase
             String value = netserverPwr_.getName();
 
             assertCondition(value.equalsIgnoreCase(original_NetServer_Name));
-            cleanup();
+            localCleanup();
         }
         catch (Exception e)
         {
@@ -614,7 +618,7 @@ public class INetServerTestcase extends Testcase
 ///
 ///            assertCondition(value.equals("TOOLBOX"));
 ///
-///            cleanup();
+///            localCleanup();
 ///
 ///        }
 ///        catch (Exception e)

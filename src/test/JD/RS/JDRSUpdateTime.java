@@ -664,7 +664,7 @@ updateTime() - Update a NUMERIC.
         if (checkJdbc20 ()) {
         try {
             JDRSTest.position (rs_, key_);
-            rs_.updateTime ("C_NUMERIC_105", Time.valueOf("1:0,:,49"));
+            rs_.updateTime ("C_NUMERIC_105", Time.valueOf("01:00:49"));
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
