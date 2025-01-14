@@ -3527,20 +3527,21 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
          
          
          public void Var124() {
-           String added = " -- new V7R5+ property added by native driver";
+           String addedInfo = " -- new V7R5+ property added by native driver";
+           StringBuffer sb = new StringBuffer(addedInfo); 
            String systemName = systemObject_.getSystemName();
-           if (checkNative() && checkRelease750plus(added) && checkAdditionalAuthenticationFactor(systemName)) {
+           if (checkNative() && checkRelease750plus(addedInfo) && checkAdditionalAuthenticationFactor(systemName)) {
              try {
                boolean successful = true; 
-               StringBuffer sb = new StringBuffer(); 
                
                Driver driver_ = DriverManager.getDriver(baseURL_);
 
+               sb.append("\nConnecting using "+testDriver_.pwrSysUserID_);
                Properties properties = new Properties(); 
                properties.put("user",testDriver_.pwrSysUserID_);
                properties.put("prompt","false"); 
                char[] charPassword = PasswordVault.decryptPassword(testDriver_.pwrSysEncryptedPassword_); 
-               Class[] argTypes = new Class[3]; 
+               Class<?>[] argTypes = new Class[3]; 
                argTypes[0] = baseURL_.getClass(); 
                argTypes[1] = properties.getClass(); 
                argTypes[2] = charPassword.getClass(); ;
@@ -3562,15 +3563,15 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
                JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalPort", 80);
                JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemoteIP", "5.6.7.8");
                JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemotePort", 2134);                       
-                       
+               sb.append("\nconnecting using "+mfaUserid_+" AAF="+mfaFactorString);
                Connection c = ((DataSource) ds).getConnection(); 
                        Statement s = c.createStatement();
                    ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
                    rs.next();
                    String currentUser = rs.getString(1);
-                   System.out.println("current MFA user is " + currentUser);
+                   sb.append("\ncurrent MFA user is " + currentUser);
                    String jobName = JDJobName.getJobName().replace('/','.');
-                   System.out.println("Job with exit information is "+jobName);
+                   sb.append("\nJob with exit information is "+jobName);
                    rs.close(); 
                    if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
                      successful = false; sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_+"\n");
@@ -3628,7 +3629,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
                    assertCondition(successful, sb);
                ctx_.unbind(bindName_);
              } catch (Exception e) {
-               failed(e, "Unexpected Exception" + added);
+               failed(e, "Unexpected Exception "+sb.toString());
              }
            }
          }

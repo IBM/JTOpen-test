@@ -612,16 +612,9 @@ extends JDTestcase
             return; 
         }
 
-
-        if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) { 
-          notApplicable("Not working in V5R3/V5R4 after testcase fix");
-	  return; 
-        }
         
         try
         {
-
-            
             
             class AuxThread extends Thread
             {
@@ -721,6 +714,7 @@ extends JDTestcase
             boolean done = false; 
             boolean success = false; 
             AuxThread t = null; 
+            long queryTime = 0; 
             while (retry) {
               s1 = connection2_.createStatement ();
               retry = false;
@@ -730,11 +724,7 @@ extends JDTestcase
 	      int[] sqlcode = new int[2];
               sqlcode[0] = -952;
 	      sqlcode[1] = -99999; 
-              if   (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-                t = new AuxThread(s1, message, sqlcode, query  +  " optimize for all rows");
-              } else { 
-                t = new AuxThread(s1, message, sqlcode, query);
-              }
+	      t = new AuxThread(s1, message, sqlcode, query  +  " optimize for all rows");
 
               t.start();
 
@@ -744,7 +734,7 @@ extends JDTestcase
               s1.close();
 	      done = t.getDone();
 	      success = t.getSuccess();
-              long queryTime = t.getQueryTime(); 
+              queryTime = t.getQueryTime(); 
               if (queryTime>=0 && queryTime <= 2500) { 
                 // Query ran too fast.. Retry
                 retry = true; 
@@ -758,6 +748,7 @@ extends JDTestcase
             assertCondition( done &&  success, 
                 "Cancel did not work done = "+ done+
                 " success = "+success+
+                " queryTime = "+queryTime+
                 "\n modified 7/7/05 by native driver to verify that cancel worked message="+
                 threadMessage);
             // It would be good to verify that an exception was thrown
@@ -866,7 +857,6 @@ extends JDTestcase
 	    }
 	    catch(Exception e)
 	    {
-		e.printStackTrace(); 
 	    // @G1 Changes for v5r3 Cli issue the error now
 		// AS of 08/04 the CLI will also issue the error in V5R2 
 		if((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))
@@ -882,11 +872,13 @@ extends JDTestcase
 			    // 
 			    succeeded(); 
 			} 
-			else
-			    failed("Wrong message.  Received " + message + " expected ERROR OCCURRED IN SQL CALL LEVEL INTERFACE ");
+			else {
+			    failed(e, "Wrong message.  Received " + message + " expected ERROR OCCURRED IN SQL CALL LEVEL INTERFACE ");
+			}
 		    }
-		    else
+		    else {
 			failed(e, "wrong exception");
+		    }
 		}
 		else if(getDriver () == JDTestDriver.DRIVER_NATIVE)
 		{
@@ -896,7 +888,7 @@ extends JDTestcase
 			if(message.indexOf("TOO LONG") >= 0)	
 			    succeeded();
 			else
-			    failed("Wrong message.  Received " + message + " expected SQL statement too long or complex");
+			    failed(e, "Wrong message.  Received " + message + " expected SQL statement too long or complex");
 		    }
 		    else
 			failed(e, "wrong exception");
@@ -909,7 +901,7 @@ extends JDTestcase
 			if(message.indexOf("TOO LONG") >= 0)
 			    succeeded();
 			else
-			    failed("Wrong message.  Received " + message + " expected SQL statement too long or complex");
+			    failed(e, "Wrong message.  Received " + message + " expected SQL statement too long or complex");
 		    }
 		    else
 			failed(e, "wrong exception");   

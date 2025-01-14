@@ -1199,9 +1199,9 @@ extends JDTestcase
     **/
     public void Var115() { testGetSource(rs37_, "C_BLOB", 4, "javax.xml.transform.dom.DOMSource", EXPECTED_ROW4_S1208_PLUS_STANDALONE_, null); }
     public void Var116() {
-	// In JDK 11, the ccsid 37 is no longer handled in the binary data.
+	// In JDK 11 and beyond, the ccsid 37 is no longer handled in the binary data.
       int jdk = JVMInfo.getJDK(); 
-	if (jdk == JVMInfo.JDK_V11 ) { notApplicable("CCSID 37 no longer works in transformers");  return; }
+	if (jdk >= JVMInfo.JDK_V11 ) { notApplicable("CCSID 37 no longer works in transformers for JDK = "+jdk);  return; }
 	testGetSource(rs37_, "C_BLOB", 5, "javax.xml.transform.dom.DOMSource", EXPECTED_ROW5_S1208_T_PLUS_STANDALONE_37_, null);
     }
     public void Var117() { testGetSource(rs37_, "C_BLOB", 8, "javax.xml.transform.dom.DOMSource", ROW8_S_, "XML PARSING ERROR"); }

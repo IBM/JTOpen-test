@@ -39,7 +39,7 @@ public class NetServerTestcase extends Testcase
      for (int i = 0; i < args.length; i++) {
        newArgs[2+i]=args[i];
      }
-     test.INetServerTest.main(newArgs); 
+     test.NetServerTest.main(newArgs); 
    }
      
     private String original_NetServer_Name;
@@ -63,7 +63,7 @@ public class NetServerTestcase extends Testcase
         pwrSys_ = pwrSys;
 	pwrSysUserID_ = pwrUserid;
 	
-  pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrPassword);
+        pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrPassword);
         if(pwrSys == null)
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
 
@@ -117,7 +117,7 @@ public class NetServerTestcase extends Testcase
 
 
     /**
-    Performs cleanup needed after running variations.
+    Performs cleanup needed after running all variations.
     
     @exception Exception If an exception occurs.
     **/
@@ -131,10 +131,19 @@ public class NetServerTestcase extends Testcase
        waitForStart(server); 
 
        jcifs.close(); 
-       super.cleanup();
        unlockSystem();
+       
+       super.cleanup();
     }
 
+    void setNamePending() throws Exception{
+      NetServer server = new NetServer(pwrSys_);   //@A1C
+      server.setAttributeValue(NetServer.NAME_PENDING, original_NetServer_NamePending);
+      server.commitAttributeChanges();
+      server.start(true);
+      waitForStart(server); 
+
+    }
     
     /**
     Construct a NetServer with no parameters.
@@ -285,9 +294,8 @@ public class NetServerTestcase extends Testcase
             String name2 = (String)netser.getAttributeValue(NetServer.NAME_PENDING);
             Boolean allowSysName2 = (Boolean)netser.getAttributeValue(NetServer.ALLOW_SYSTEM_NAME_PENDING);
             
-            assertCondition((name2.equals(newName)) && (allowSysName2.equals(Boolean.TRUE)), "netser2="+netser2);
 
-            cleanup();
+            assertCondition((name2.equals(newName)) && (allowSysName2.equals(Boolean.TRUE)), "netser2="+netser2);
         }
         catch (Exception e) 
         {
@@ -353,11 +361,13 @@ public class NetServerTestcase extends Testcase
     {
         try 
         {
+          
+          setNamePending();
             NetServer netser2 = new NetServer(systemObject_);
             
             String value = (String)netser2.getAttributeUnchangedValue(NetServer.NAME_PENDING);
             
-            assertCondition(value.equals(original_NetServer_NamePending));
+            assertCondition(value.equals(original_NetServer_NamePending), "value is "+value+" sb "+original_NetServer_NamePending);
         }
         catch (Exception e) 
         {
@@ -372,11 +382,12 @@ public class NetServerTestcase extends Testcase
     {
         try 
         {
+          setNamePending();
             NetServer netser = new NetServer(systemObject_);
             netser.getAttributeValue(NetServer.NAME_PENDING);
             String value = (String)netser.getAttributeUnchangedValue(NetServer.NAME_PENDING);
             
-            assertCondition(value.equals(original_NetServer_NamePending));
+            assertCondition(value.equals(original_NetServer_NamePending), "value is "+value+" sb "+original_NetServer_NamePending);
         }
         catch (Exception e) 
         {
@@ -391,12 +402,12 @@ public class NetServerTestcase extends Testcase
     {
         try 
         {
+          setNamePending();
             NetServer netser = new NetServer(systemObject_);
             netser.setAttributeValue(NetServer.NAME_PENDING, new String("TOOLBOX"));
             String value = (String)netser.getAttributeUnchangedValue(NetServer.NAME_PENDING);
             
             assertCondition(value.equals(original_NetServer_NamePending));
-            cleanup();
         }
         catch (Exception e) 
         {
@@ -410,14 +421,17 @@ public class NetServerTestcase extends Testcase
     public void Var015()
     {
         try 
-        {
+        
+        {  
+          
+            setNamePending();
             NetServer netser = new NetServer(pwrSys_);   //@A1C
             netser.setAttributeValue(NetServer.NAME_PENDING, new String("TOOLBOX"));
             netser.refreshAttributeValues();
 
             String value = (String)netser.getAttributeUnchangedValue(NetServer.NAME);
 
-            assertCondition(value.equals(original_NetServer_Name));
+            assertCondition(value.equals(original_NetServer_Name), "value is "+value+" sb "+original_NetServer_Name);
         }
         catch (Exception e) 
         {
@@ -439,7 +453,6 @@ public class NetServerTestcase extends Testcase
             
             assertCondition(value.equals("TOOLBOX"));
 
-            cleanup();
             
         }
         catch (Exception e) 
@@ -593,8 +606,8 @@ public class NetServerTestcase extends Testcase
     {
         try 
         {
-            cleanup();
 
+          setNamePending();
             NetServer netser = new NetServer(pwrSys_);   //@A1C
             if(!netser.isStarted())
             {
