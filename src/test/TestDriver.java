@@ -758,10 +758,14 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     if (useSSL_ == true) {
       systemObject_ = new SecureAS400();
       pwrSys_ = new SecureAS400();
+      
     } else {
       systemObject_ = new AS400();
       pwrSys_ = new AS400();
     }
+    systemObject_.setGuiAvailable(false);
+    pwrSys_.setGuiAvailable(false);
+    
     if (systemName_ != null) {
 	if (systemName_.equals("DB2M_LCL")) {
 	    systemName_ = "localhost"; 
