@@ -1394,6 +1394,7 @@ public class JDTestcase extends Testcase {
   protected static int getToolboxDriverMinorVersion() {
     if (toolboxDriverMinorVersion_ == 0) {
       String specVersion = getToolboxSpecificationVersion(); // e.g. "6.1.0.4"
+      System.out.println("specVersion is "+specVersion);
       String finalDigit = specVersion.substring(1 + specVersion.lastIndexOf('.'));
       try {
         toolboxDriverMinorVersion_ = Integer.parseInt(finalDigit);
