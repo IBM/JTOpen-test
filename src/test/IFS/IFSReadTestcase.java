@@ -91,7 +91,7 @@ Constructor.
         try { 
         ProfileTokenCredential pt = new ProfileTokenCredential();
         pt.setSystem(systemObject_);
-        pt.setTokenType(ProfileTokenCredential.TYPE_SINGLE_USE);
+        pt.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
         pt.setTokenExtended(userid,password); 
         
         
