@@ -191,7 +191,9 @@ public abstract class JDTestDriver extends TestDriver {
   private boolean defSchemaSet = false;
   private String collection_ = null; 
   private boolean driverSetupDone = false; 
-  private AS400JDBCDriver as400JdbcDriver_ = new AS400JDBCDriver(); 
+  private AS400JDBCDriver as400JdbcDriver_ = new AS400JDBCDriver();
+
+  public static boolean expectException = false; ; 
 
   /**
    * Static initializer.
@@ -1422,7 +1424,9 @@ public abstract class JDTestDriver extends TestDriver {
           try { 
             connection = as400JdbcDriver_.connect(url, uid, pwdChars);
           } catch (Exception e) { 
-            System.out.println("Unable to connect using as400JdbcDriver_.connect("+url+","+uid+","+new String(pwdChars)+")"); 
+            if (!expectException) { 
+              System.out.println("Unable to connect using as400JdbcDriver_.connect("+url+","+uid+","+new String(pwdChars)+")"); 
+            }
             throw e; 
           } finally { 
             PasswordVault.clearPassword(pwdChars); 

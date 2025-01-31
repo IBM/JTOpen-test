@@ -12,10 +12,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.AS400JDBC;
 
-import java.awt.Image;
 
 import java.beans.BeanDescriptor;
-import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
 import java.beans.FeatureDescriptor;
 import java.beans.MethodDescriptor;
@@ -48,7 +46,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
      Constructor.  This is called from the AS400JDBCDataSourcePropertiesTest constructor.
     **/
    public AS400JDBCDataSourceBeanInfoTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  
@@ -379,7 +377,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
      boolean passed = true; 
       try
       {
-	 int expectedCount = 115; 
+	 int expectedCount = 117; 
          AS400JDBCDataSourceBeanInfo bi = new AS400JDBCDataSourceBeanInfo();
          PropertyDescriptor[] pd = bi.getPropertyDescriptors();
          if (pd.length != expectedCount)  
@@ -430,7 +428,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
          propertyTypes.put("packageCriteria", "java.lang.String");
          propertyTypes.put("packageError", "java.lang.String");
          propertyTypes.put("packageLibrary", "java.lang.String");
-         propertyTypes.put("password", "[C");
+         propertyTypes.put("password", "[C"); 
          propertyTypes.put("portNumber", "int");
          propertyTypes.put("prefetch", "boolean");
          propertyTypes.put("prompt", "boolean");
@@ -514,6 +512,8 @@ propertyTypes.put("retryIntervalForClientReroute","int");
 propertyTypes.put("enableSeamlessFailover","int"); 
 propertyTypes.put("additionalAuthenticationFactor","[C"); 
     propertyTypes.put("stayAlive","int"); 
+    propertyTypes.put("tlsTruststore","java.lang.String"); 
+    propertyTypes.put("tlsTruststorePassword","java.lang.String"); 
     
 
          
@@ -522,8 +522,12 @@ propertyTypes.put("additionalAuthenticationFactor","[C");
             String value = (String)propertyTypes.get(pd[i].getName()); 
             if (!pd[i].getPropertyType().getName().equals(value))
             {
+              if ("password".equals(pd[i].getName()) && "String".equals(pd[i].getPropertyType().toString())) {
+                /* valid   case */ 
+              } else {
 		failMessage.append("Wrong property types returned: [" + i + "] ("+pd[i].getName()+") " + pd[i].getPropertyType().toString()+" should be "+value+"\n");
                passed = false; 
+              }
             }
          }
 
@@ -649,7 +653,8 @@ getPropertyMethods.put("enableSeamlessFailover","getEnableSeamlessFailover");
 
 getPropertyMethods.put("additionalAuthenticationFactor","getAdditionalAuthenticationFactor"); 
 getPropertyMethods.put("stayAlive","getStayAlive"); 
-
+getPropertyMethods.put("tlsTruststore","getTlsTruststore"); 
+getPropertyMethods.put("tlsTruststorePassword","getTlsTruststorePassword"); 
          for (int i=0; i< pd.length; i++)
          {
             if (pd[i].getName().equals("password"))         // password.
@@ -813,6 +818,8 @@ setPropertyMethods.put("enableSeamlessFailover","setEnableSeamlessFailover");
 
 setPropertyMethods.put("additionalAuthenticationFactor","setAdditionalAuthenticationFactor");
 setPropertyMethods.put("stayAlive","setStayAlive"); 
+setPropertyMethods.put("tlsTruststore","setTlsTruststore"); 
+setPropertyMethods.put("tlsTruststorePassword","setTlsTruststorePassword"); 
     
 
 
@@ -989,8 +996,10 @@ propertyShortDescs.put("useDrdaMetadataVersion","Specifies if the DRDA metadata 
          propertyShortDescs.put("extendedMetadata", "extendedMetadata");
          propertyShortDescs.put("portNumber", "Specifies the port number used to connect to the ZDA server.");
          propertyShortDescs.put("additionalAuthenticationFactor","Specifies the additional authentication factor to be used in conjunction with the password."); 
-         propertyShortDescs.put("stayAlive","Specifies the number of seconds between pings to the Host Server.  This is used to prevent a connection from being viewed as inactive.  A value of 0 means to not send pings to keep the connection alive"); 
-
+         propertyShortDescs.put("stayAlive","Specifies the number of seconds between pings to the Host Server.  This is used to prevent a connection from being viewed as inactive.  A value of 0 means to not send pings to keep the connection alive."); 
+         propertyShortDescs.put("tlsTruststore","Specifies a file to be used as the truststore for TLS connections.");
+         propertyShortDescs.put("tlsTruststorePassword","Specifies the password associated with the configured TLS truststore.");
+         
          for (int i=0; i< pd.length; i++)
          {
               

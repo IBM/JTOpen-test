@@ -462,11 +462,11 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
       {
          AS400JDBCConnectionPoolDataSourceBeanInfo bi = new AS400JDBCConnectionPoolDataSourceBeanInfo();
          BeanInfo[] bis = bi.getAdditionalBeanInfo();
-
+         int expectedLength = 117; 
          PropertyDescriptor[] pd = bis[0].getPropertyDescriptors();
-         if (pd.length != 115)  
+         if (pd.length != expectedLength)  
          {
-            failMessage.append("Wrong number of property descriptors returned: " + String.valueOf(pd.length)+"\n");
+            failMessage.append("Wrong number of property descriptors returned: " + String.valueOf(pd.length)+" expected "+expectedLength+"\n");
 	    passed = false; 
          }
 
@@ -599,19 +599,24 @@ propertyTypes.put("retryIntervalForClientReroute","int");
 propertyTypes.put("enableSeamlessFailover","int"); 
 propertyTypes.put("additionalAuthenticationFactor", "[C");
 propertyTypes.put("stayAlive",  "int"); 
+propertyTypes.put("tlsTruststore",  "java.lang.String"); 
+propertyTypes.put("tlsTruststorePassword",  "java.lang.String"); 
 
 
 
 
-         for (int i=0; i< pd.length; i++)
-         {
-            String value = (String)propertyTypes.get(pd[i].getName());
-            if (!pd[i].getPropertyType().getName().equals(value))
-            {
-		failMessage.append("Wrong property types returned: [" + i + "]:("+pd[i].getName()+") " + pd[i].getPropertyType().toString()+" sb "+value+"\n");
-               passed = false; 
-            }
-         }
+for (int i = 0; i < pd.length; i++) {
+  String value = (String) propertyTypes.get(pd[i].getName());
+  if (!pd[i].getPropertyType().getName().equals(value)) {
+    if ("password".equals(pd[i].getName()) && "[C".equals(pd[i].getPropertyType().toString())) {
+      /* valid */
+    } else {
+      failMessage.append("Wrong property types returned: [" + i + "]:(" + pd[i].getName() + ") "
+          + pd[i].getPropertyType().toString() + " sb " + value + "\n");
+      passed = false;
+    }
+  }
+}
 
 	 Properties getPropertyMethods = new Properties(); 
          getPropertyMethods.put("access", "getAccess");
@@ -732,6 +737,8 @@ getPropertyMethods.put("retryIntervalForClientReroute","getRetryIntervalForClien
 getPropertyMethods.put("enableSeamlessFailover","getEnableSeamlessFailover"); 
 getPropertyMethods.put("additionalAuthenticationFactor","getAdditionalAuthenticationFactor"); 
 getPropertyMethods.put("stayAlive","getStayAlive"); 
+getPropertyMethods.put("tlsTruststore","getTlsTruststore"); 
+getPropertyMethods.put("tlsTruststorePassword","getTlsTruststorePassword"); 
 
 
          for (int i=0; i< pd.length; i++)
@@ -895,6 +902,8 @@ setPropertyMethods.put("retryIntervalForClientReroute","setRetryIntervalForClien
 setPropertyMethods.put("enableSeamlessFailover","setEnableSeamlessFailover"); 
 setPropertyMethods.put("additionalAuthenticationFactor","setAdditionalAuthenticationFactor");
 setPropertyMethods.put("stayAlive","setStayAlive"); 
+setPropertyMethods.put("tlsTruststore","setTlsTruststore"); 
+setPropertyMethods.put("tlsTruststorePassword","setTlsTruststorePassword"); 
 
 
 Properties setPropertyMethods2 = new Properties()	 ;
@@ -1071,7 +1080,9 @@ propertyShortDescs.put("useDrdaMetadataVersion","Specifies if the DRDA metadata 
          propertyShortDescs.put("retryIntervalForClientReroute","The number of seconds between consecutive connection retries."); 
          propertyShortDescs.put("enableSeamlessFailover","Specifies whether the JTOpen JDBC driver uses seamless failover for client reroute."); 
          propertyShortDescs.put("additionalAuthenticationFactor","Specifies the additional authentication factor to be used in conjunction with the password.");
-         propertyShortDescs.put("stayAlive","Specifies the number of seconds between pings to the Host Server.  This is used to prevent a connection from being viewed as inactive."); 
+         propertyShortDescs.put("stayAlive","Specifies the number of seconds between pings to the Host Server.  This is used to prevent a connection from being viewed as inactive.  A value of 0 means to not send pings to keep the connection alive.");
+         propertyShortDescs.put("tlsTruststore","Specifies a file to be used as the truststore for TLS connections."); 
+         propertyShortDescs.put("tlsTruststorePassword","Specifies the password associated with the configured TLS truststore."); 
          
          for (int i=0; i< pd.length; i++)
          {

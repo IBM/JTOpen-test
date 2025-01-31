@@ -59,6 +59,7 @@ import test.JD.Connection.JDConnectionSort;
 import test.JD.Connection.JDConnectionStress;
 import test.JD.Connection.JDConnectionTransactionIsolation;
 import test.JD.Connection.JDConnectionTranslateHex;
+import test.JD.Connection.JDConnectionTrustStore;
 import test.JD.Connection.JDConnectionWarnings;
 import test.JD.Connection.JDConnectionWrapper;
 
@@ -295,6 +296,10 @@ Creates the testcases.
       addTestcase (new JDConnectionTransactionIsolation (systemObject_,
                                                          namesAndVars_, runMode_, fileOutputStream_, 
                                                          password_));
+      
+      addTestcase (new JDConnectionTrustStore (systemObject_,
+          namesAndVars_, runMode_, fileOutputStream_, 
+          password_));
 
       addTestcase (new JDConnectionWarnings (systemObject_,
                                              namesAndVars_, runMode_, fileOutputStream_, 
