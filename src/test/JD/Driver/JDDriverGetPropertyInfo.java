@@ -86,7 +86,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     driver_ = DriverManager.getDriver(baseURL_);
 
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-      NUMBER_OF_PROPERTIES = 103;  // stay alive 
+      NUMBER_OF_PROPERTIES = 105;  // TLS Trust store
       
     } else if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       int vrm_ = testDriver_.getRelease();
@@ -120,22 +120,34 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
   public void Var001() {
 
     try {
+      StringBuffer sb = new StringBuffer(); 
+
       DriverPropertyInfo[] propertyInfo = driver_.getPropertyInfo(baseURL_,
           properties_);
-      boolean passed = (propertyInfo.length == NUMBER_OF_PROPERTIES);
-      assertCondition(passed, "propertyInfo.length = " + propertyInfo.length
-          + " AND SHOULD BE equal to NUMBER_OF_PROPERTIES = "
-          + NUMBER_OF_PROPERTIES);
-      if (!passed) {
 
-        System.out.println("Property Count = " + propertyInfo.length);
+      boolean passed = true; 
+      sb.append("\nProperty Count = " + propertyInfo.length);
 
-        for (int i = 0; i < propertyInfo.length; i++) {
-          System.out.println("[" + i + "]<" + propertyInfo[i].name + "><"
-              + propertyInfo[i].description + "><" + propertyInfo[i].value
-              + ">");
+      for (int i = 0; i < propertyInfo.length; i++) {
+        sb.append("\n[" + i + "]<" + propertyInfo[i].name + "><"
+            + propertyInfo[i].description + "><" + propertyInfo[i].value
+            + ">");
+        if (propertyInfo[i].description.indexOf("999") >= 0) {
+          if (!"REMOVED".equals(propertyInfo[i].name)) {
+            passed = false;
+            sb.append("\n **** Bad property description  found");
+          }
         }
       }
+
+      if (propertyInfo.length != NUMBER_OF_PROPERTIES) { 
+        passed = false; 
+        sb.append("\npropertyInfo.length = " + propertyInfo.length
+            + " AND SHOULD BE equal to NUMBER_OF_PROPERTIES = "
+            + NUMBER_OF_PROPERTIES);
+      }
+      
+      assertCondition(passed,sb);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
