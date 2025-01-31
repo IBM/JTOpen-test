@@ -35,7 +35,7 @@ jobs:
       run: mkdir staging && mv target/JTOpen-test-${{ env.project_version }}-jar-with-dependencies.jar staging/JTOpen-test-${{ env.project_version }}.jar
 
     - name: Create the release and upload artifact
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v4
       with:
         tag_name: v${{ env.project_version }}
         name: v${{ env.project_version }}
