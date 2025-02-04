@@ -264,8 +264,8 @@ public class JDReport {
     return output;
   }
 
-  public static String formatLine(String next, Timestamp jarTimestamp, Connection c) {
-    File htmlFile = new File("ct/" + next);
+  public static String formatLine(String next, Timestamp jarTimestamp, Connection c, String directory) {
+    File htmlFile = new File(directory+"/" + next);
     Timestamp changeDate = new Timestamp(htmlFile.lastModified());
     String changeDateString = changeDate.toString();
     String compactDateString = changeDateString.replace(' ', 'x');
@@ -708,9 +708,9 @@ public class JDReport {
     return input + " " + description;
   }
 
-  public static void createIndex(Connection nativeConnection) throws Exception {
+  public static void createIndex(Connection nativeConnection, String webDirectory) throws Exception {
 
-    String filename = "ct/index.html";
+    String filename = webDirectory+"/index.html";
     System.out.println("Creating index file " + filename);
 
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
@@ -723,8 +723,8 @@ public class JDReport {
         "<head>\n" + "<title>" + hostname + " Regression Test Report</title>\n"
             + "</head>\n" + "\n" + "<body>\n");
 
-    /* Get the list of file from ct */
-    File directory = new File("ct");
+    /* Get the list of file from the testDirectory*/
+    File directory = new File(webDirectory);
 
     File[] files = directory.listFiles();
 
@@ -766,6 +766,11 @@ public class JDReport {
         1000; /* ms / sec */
 
     StringBuffer sb = new StringBuffer();
+    
+    sb.append("<h2>JDTESTINFO.SYSNOTES</h2>\n");
+    appendSysNotes(sb, nativeConnection); 
+    sb.append("<a href=\"cgi-pase/AddSysNote.acgi\">Add System Note</a>\n"); 
+    
     sb.append("<h2>MUSTRUN RESULTS </h2>\n");
     sb.append("<table border>\n");
     sb.append(formatHeader());
@@ -775,7 +780,7 @@ public class JDReport {
     while (iterator.hasNext()) {
       String next = (String) iterator.next();
       if (isMustRun(next)) {
-        String line = formatLine(next, null, nativeConnection);
+        String line = formatLine(next, null, nativeConnection, webDirectory);
         totalRunMinutes += getRunMinutesFromLine(line);
         sb.append(line);
         sb.append("\n");
@@ -790,11 +795,11 @@ public class JDReport {
 
     String[] cliSuffixes = { "R.html", "S.html", "W.html", "Y.html", "Z.html" };
     totalRunMinutes += addSection(writer, sortedSet, "CLI TESTING", cliSuffixes,
-        null,nativeConnection);
+        null,nativeConnection, webDirectory);
 
     String[] jccSuffixes = { "J.html" };
     totalRunMinutes += addSection(writer, sortedSet, "JCC TESTING ",
-        jccSuffixes, null,nativeConnection);
+        jccSuffixes, null,nativeConnection, webDirectory);
 
     Timestamp nativeTimestamp = null;
     String nativeInfo = "db2_classes.jar:";
@@ -817,7 +822,7 @@ public class JDReport {
     String[] jdbcNativeSuffixes = { "N.html", "M.html", "K.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC NATIVE TESTING " + nativeInfo, jdbcNativeSuffixes,
-        nativeTimestamp,nativeConnection);
+        nativeTimestamp,nativeConnection, webDirectory);
 
     nativeTimestamp = null;
     nativeInfo = "/home/jdbcsrcj/com/ibm/db2/jdbc/app/DB2Driver.class:";
@@ -836,7 +841,7 @@ public class JDReport {
 
     String[] jdbcNativeDebugSuffixes = { "D.html" };
     addSection(writer, sortedSet, "JDBC NATIVE DEBUG TESTING " + nativeInfo,
-        jdbcNativeDebugSuffixes, nativeTimestamp,nativeConnection);
+        jdbcNativeDebugSuffixes, nativeTimestamp,nativeConnection, webDirectory);
 
     Timestamp jstpTimestamp = null;
     String jstpInfo = "db2_classes.jar:";
@@ -858,7 +863,7 @@ public class JDReport {
     String[] jstpSuffixes = { "O.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JAVA STORED PROCEDURES TESTING " + jstpInfo, jstpSuffixes,
-        jstpTimestamp,nativeConnection);
+        jstpTimestamp,nativeConnection, webDirectory);
 
     Timestamp toolboxTimestamp = null;
     Timestamp toolboxBuildTimestamp = null;
@@ -943,49 +948,49 @@ public class JDReport {
         "Q.html", "1.html", "2.html", "P.html", };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX TESTING " + toolboxInfo, jdbcToolboxSuffixes,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] jdbcToolboxNativeSuffixes = { "U.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX NATIVE TESTING " + toolboxInfo, jdbcToolboxNativeSuffixes,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
    
     
     String[] toolboxProxySuffixes = { "V.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX PROXY TESTING " + toolboxInfo, toolboxProxySuffixes,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] toolboxSuffixes = { "A.html" };
     totalRunMinutes += addSection(writer, sortedSet,
-        "TOOLBOX TESTING " + toolboxInfo, toolboxSuffixes, toolboxTimestamp,nativeConnection);
+        "TOOLBOX TESTING " + toolboxInfo, toolboxSuffixes, toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] toolboxNativeSuffixes = { "B.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "TOOLBOX NATIVE TESTING " + toolboxInfo, toolboxNativeSuffixes,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] jtopenliteSuffixes = { "L.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC jtopenlite TESTING " + jtopenliteInfo, jtopenliteSuffixes,
-        jtopenliteTimestamp,nativeConnection);
+        jtopenliteTimestamp,nativeConnection, webDirectory);
 
     String[] androidSuffixes = { "G.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC toolbox android TESTING " + jt400androidInfo, androidSuffixes,
-        jt400androidTimestamp,nativeConnection);
+        jt400androidTimestamp,nativeConnection, webDirectory);
 
     
     String[] java11Strings = { "B6","BO" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JAVA 11 TESTING " + toolboxInfo+ " " + nativeInfo, java11Strings,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] java17Strings = { "C6" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JAVA 17 TESTING " + toolboxInfo+ " " + nativeInfo, java17Strings,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
 
     writer.println("<hr>Total Run Minutes=" + totalRunMinutes
@@ -1003,7 +1008,42 @@ public class JDReport {
 
   }
 
-  public static void createToolboxIndex(Connection nativeConnection) throws Exception {
+  private static void appendSysNotes(StringBuffer sb, Connection connection) {
+    String sql = "";
+    try {
+      Statement s = connection.createStatement();
+      boolean retry = true;
+      while (retry) {
+        try {
+          retry = false;
+          sql = "SELECT * FROM JDTESTINFO.SYSNOTES where TS > CURRENT TIMESTAMP - 7 days ORDER BY TS ";
+          ResultSet rs = s.executeQuery(sql);
+          sb.append("<table border>\n");
+          sb.append("<tr><th>TS<th>NOTE</tr>\n");
+          while (rs.next()) {
+            sb.append("<tr><td>" + rs.getString(1) + "<td>" + rs.getString(2) + "</tr>");
+          }
+          sb.append("</table>\n");
+
+        } catch (SQLException e) {
+          String message = e.toString();
+          if (message.indexOf("not found") >= 0) {
+            sql = "CREATE TABLE JDTESTINFO.SYSNOTES(TS TIMESTAMP, NOTE VARCHAR(80))";
+            s.executeUpdate(sql);
+            retry = true;
+          } else {
+            throw e;
+          }
+        }
+      }
+      s.close();
+    } catch (Exception e) {
+      System.out.println("SQL was " + sql);
+      e.printStackTrace(System.out);
+    }
+  }
+
+  public static void createToolboxIndex(Connection nativeConnection, String webDirectory) throws Exception {
 
     String filename = "ct/toolbox.html";
     System.out.println("Creating index file " + filename);
@@ -1118,36 +1158,36 @@ public class JDReport {
         "I.html", "1.html", "2.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX TESTING " + toolboxInfo, jdbcToolboxSuffixes,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] jdbcToolboxNativeSuffixes = { "U.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX NATIVE TESTING " + toolboxInfo, jdbcToolboxNativeSuffixes,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] toolboxProxySuffixes = { "V.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX PROXY TESTING " + toolboxInfo, toolboxProxySuffixes,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] toolboxSuffixes = { "A.html" };
     totalRunMinutes += addSection(writer, sortedSet,
-        "TOOLBOX TESTING " + toolboxInfo, toolboxSuffixes, toolboxTimestamp,nativeConnection);
+        "TOOLBOX TESTING " + toolboxInfo, toolboxSuffixes, toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] toolboxNativeSuffixes = { "B.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "TOOLBOX NATIVE TESTING " + toolboxInfo, toolboxNativeSuffixes,
-        toolboxTimestamp,nativeConnection);
+        toolboxTimestamp,nativeConnection, webDirectory);
 
     String[] jtopenliteSuffixes = { "L.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC jtopenlite TESTING " + jtopenliteInfo, jtopenliteSuffixes,
-        jtopenliteTimestamp,nativeConnection);
+        jtopenliteTimestamp,nativeConnection, webDirectory);
 
     String[] androidSuffixes = { "G.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC toolbox android TESTING " + jt400androidInfo, androidSuffixes,
-        jt400androidTimestamp,nativeConnection);
+        jt400androidTimestamp,nativeConnection, webDirectory);
 
     writer.println("<hr>Total Run Minutes=" + totalRunMinutes
         + " Total run hours=" + (totalRunMinutes / 60) + " Total run days="
@@ -1164,7 +1204,7 @@ public class JDReport {
 
   }
 
-  public static void createNativeIndex(Connection nativeConnection) throws Exception {
+  public static void createNativeIndex(Connection nativeConnection, String webDirectory) throws Exception {
 
     String filename = "ct/native.html";
     System.out.println("Creating index file " + filename);
@@ -1245,7 +1285,7 @@ public class JDReport {
     String[] jdbcNativeSuffixes = { "N.html", "P.html", "M.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC NATIVE TESTING " + nativeInfo, jdbcNativeSuffixes,
-        nativeTimestamp,nativeConnection);
+        nativeTimestamp,nativeConnection, webDirectory);
 
     writer.println("<hr>Total Run Minutes=" + totalRunMinutes
         + " Total run hours=" + (totalRunMinutes / 60) + " Total run days="
@@ -1262,7 +1302,7 @@ public class JDReport {
 
   }
 
-  public static void createJvmIndex(Connection nativeConnection) throws Exception {
+  public static void createJvmIndex(Connection nativeConnection, String webDirectory) throws Exception {
 
     String filename = "ct/jvm.html";
     System.out.println("Creating index file " + filename);
@@ -1339,7 +1379,7 @@ public class JDReport {
 
       String jvm = (String) iterator.next();
       // System.out.println("Processing JVM "+jvm);
-      addJvmSection(writer, sortedSet, "JVM " + jvm, jvm, null, nativeConnection);
+      addJvmSection(writer, sortedSet, "JVM " + jvm, jvm, null, nativeConnection, webDirectory);
 
     }
 
@@ -1357,7 +1397,7 @@ public class JDReport {
 
   // return the run minutes
   public static double addJvmSection(PrintWriter writer, TreeSet<String> sortedSet,
-      String header, String jvm, Timestamp jarTimestamp, Connection nativeConnection) {
+      String header, String jvm, Timestamp jarTimestamp, Connection nativeConnection, String webDirectory) {
     int sectionCount = 0;
     StringBuffer sb = new StringBuffer();
     double totalRunMinutes = 0.0;
@@ -1375,7 +1415,7 @@ public class JDReport {
           String thisJvm = next.substring(latestIndex + 8, latestIndex + 10);
           // System.out.println("This JVM ="+thisJvm+" compare to "+jvm);
           if (thisJvm.equals(jvm)) {
-            String line = formatLine(next, jarTimestamp, nativeConnection);
+            String line = formatLine(next, jarTimestamp, nativeConnection, webDirectory);
             sb.append(line);
             totalRunMinutes += getRunMinutesFromLine(line);
 
@@ -1399,7 +1439,7 @@ public class JDReport {
 
   // return the run minutes
   public static double addSection(PrintWriter writer, TreeSet<String> sortedSet,
-      String header, String[] suffixes, Timestamp jarTimestamp, Connection nativeConnection) {
+      String header, String[] suffixes, Timestamp jarTimestamp, Connection nativeConnection, String webDirectory) {
     int sectionCount = 0;
     StringBuffer sb = new StringBuffer();
     double totalRunMinutes = 0.0;
@@ -1412,7 +1452,7 @@ public class JDReport {
       String next = (String) iterator.next();
       for (int i = 0; i < suffixes.length; i++) {
         if ((next.indexOf(suffixes[i]) > 0)) {
-          String line = formatLine(next, jarTimestamp, nativeConnection);
+          String line = formatLine(next, jarTimestamp, nativeConnection, webDirectory);
           sb.append(line);
           totalRunMinutes += getRunMinutesFromLine(line);
 
@@ -3334,15 +3374,15 @@ public class JDReport {
 
       System.out.println("Creating index");
       if ("OS/400".equals(osName))   {
-        createIndex(connection);
-        createJvmIndex(connection);
-        createToolboxIndex(connection);
-        createNativeIndex(connection);
+        createIndex(connection, "ct");
+        createJvmIndex(connection, "ct");
+        createToolboxIndex(connection, "ct");
+        createNativeIndex(connection,"ct");
       } else {
-        createIndex(null); 
-        createJvmIndex(null);
-        createToolboxIndex(null);
-        createNativeIndex(null );
+        createIndex(null,"ct"); 
+        createJvmIndex(null, "ct");
+        createToolboxIndex(null, "ct");
+        createNativeIndex(null,"ct" );
 
       }
       connection.close();
