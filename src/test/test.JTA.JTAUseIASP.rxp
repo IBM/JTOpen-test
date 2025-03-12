@@ -1,4 +1,5 @@
 jdbcLevel: .*
+IGNORE_EXTRA:Warning:  JTOPEN_TEST_DIR environment variable not set.*
 IGNORE_EXTRA:JTOpenTestEnvironment.*
 .*
 IASP name is .*
