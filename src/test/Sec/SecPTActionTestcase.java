@@ -852,12 +852,12 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
 
             // Perform test.
             String originalID = null;
-            if (isNative_ && profileHandleImplNativeAvailable) originalID = new AS400().getUserId();
+            if (profileHandleImplNativeAvailable || (System.getProperty("os.name").indexOf("400") > 0)) originalID = new AS400().getUserId();
             SecAuthTest.removeToken(pt.getSystem(), pt.getToken());
             try
             {
                 pt.swap(false);
-                failed("Expected exception not signalled.");
+                failed("Expected exception not signalled. Should have failed after removing token");
             }
             catch (SwapFailedException sfe)
             {
@@ -867,7 +867,14 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
                 }
                 else
                 {
-                    assertCondition((originalID != null) && originalID.equals(new AS400().getUserId()) && latestEvent_ == null && sfe.getAS400Message() != null && sfe.getAS400Message().getID().equals("CPF2274"), "Expected message not returned.");
+                    assertCondition((originalID != null) && originalID.equals(new AS400().getUserId()) && latestEvent_ == null && sfe.getAS400Message() != null && sfe.getAS400Message().getID().equals("CPF2274"), 
+                        "Expected message not returned."+
+                        "\nprofileHandleImplNativeAvailable="+profileHandleImplNativeAvailable+
+                        "\noriginalID="+originalID+
+                        "\nexpectedUser="+ (new AS400().getUserId())+
+                        "\nlatestEvent_="+latestEvent_ +
+                        "\nsfe.getAS400message="+sfe.getAS400Message()+
+                        "\nexpected CPF2274"); 
                 }
             }
         }

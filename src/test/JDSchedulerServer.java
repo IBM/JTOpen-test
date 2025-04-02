@@ -201,6 +201,7 @@ public class JDSchedulerServer extends JDScheduler {
                   // Try to recover from SQL0901 or other exception by getting
                   // new
                   // connection
+                  resetThreadJdbcConnection();
                   c = getCurrentThreadJdbcConnection();
                   System.out.println("Using connection " + c);
                 }
@@ -236,7 +237,7 @@ public class JDSchedulerServer extends JDScheduler {
                   }
                   Thread.sleep(30000);
                   // Try to recover from SQL0901 by getting new connection
-
+                  resetThreadJdbcConnection();
                   c = getCurrentThreadJdbcConnection();
                 }
               } /* repeatQuery */
@@ -553,7 +554,7 @@ public class JDSchedulerServer extends JDScheduler {
             } catch (Exception e2) {
 
             }
-
+            resetThreadJdbcConnection();
             c = getCurrentThreadJdbcConnection();
           }
 

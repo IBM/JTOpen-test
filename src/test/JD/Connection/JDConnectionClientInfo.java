@@ -851,7 +851,7 @@ Performs cleanup needed after running variations.
   public void Var009() {
     if (checkNative()) {
       String testProfile = "ISSUE67424";
-      String testPassword = "J8VATEAM";
+      String testPassword = "J8VAPASS";
       StringBuffer sb = new StringBuffer();
       sb.append("-- Added 10/19/2021 for issue 67424/CPS C7GCHE");
       try {
@@ -917,7 +917,7 @@ Performs cleanup needed after running variations.
   public void Var010() {
     if (checkNative() ) {
       String testProfile = "ISSUE67424";
-      String testPassword = "J8VATEAM";
+      String testPassword = "J8VAPASS";
       StringBuffer sb = new StringBuffer();
       sb.append("-- Added 10/19/2021 for issue 67424/CPS C7GCHE");
       try {

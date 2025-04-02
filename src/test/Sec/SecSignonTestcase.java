@@ -14,6 +14,7 @@
 package test.Sec;
 
 import java.net.InetAddress;
+import java.util.Arrays;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
@@ -1859,10 +1860,11 @@ public class SecSignonTestcase extends Testcase {
       sb.append("Connect using bad mfa\n");
       try {
         initMfaUser();
-        sb.append("new AS400(" + systemObject_.getSystemName() + "," + mfaUserid_ + "," + new String(mfaPassword_)
-            + ",000000)\n");
+        sb.append("new AS400(" + systemObject_.getSystemName() + "," + mfaUserid_ + ",....,000000)\n");
+        char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
         AS400 as400 = (AS400) JDReflectionUtil.createObject("com.ibm.as400.access.AS400", systemObject_.getSystemName(),
-            mfaUserid_, mfaPassword_, "0000000".toCharArray());
+            mfaUserid_, mfaPassword, "0000000".toCharArray());
+        Arrays.fill(mfaPassword, ' ');
         as400.setGuiAvailable(false);
         as400.connectService(AS400.SIGNON);
         assertCondition(false, sb);
@@ -1883,10 +1885,13 @@ public class SecSignonTestcase extends Testcase {
       try {
 
         initMfaUser();
-        sb.append("new AS400(" + systemObject_.getSystemName() + "," + mfaUserid_ + "," + new String(mfaPassword_) + ","
+        sb.append("new AS400(" + systemObject_.getSystemName() + "," + mfaUserid_ + ",....,"
             + new String(mfaFactor_) + "\n");
+        char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
         AS400 as400 = (AS400) JDReflectionUtil.createObject("com.ibm.as400.access.AS400", systemObject_.getSystemName(),
-            mfaUserid_, mfaPassword_, mfaFactor_);
+            mfaUserid_, mfaPassword, mfaFactor_);
+        Arrays.fill(mfaPassword, ' ');
+        
         as400.setGuiAvailable(false);
         as400.connectService(AS400.COMMAND);
         as400.connectService(AS400.DATAQUEUE);
@@ -1967,7 +1972,9 @@ public class SecSignonTestcase extends Testcase {
 
         initMfaUser();
         sb.append("new AS400(" + systemObject_.getSystemName() + "," + mfaUserid_ + ")\n");
-        AS400 as400 = new AS400(systemObject_.getSystemName(), mfaUserid_, mfaPassword_);
+        char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
+        AS400 as400 = new AS400(systemObject_.getSystemName(), mfaUserid_, mfaPassword);
+        Arrays.fill(mfaPassword, ' '); 
         sb.append("Setting af to 000000\n");
         as400.setGuiAvailable(false);
         JDReflectionUtil.callMethod_V(as400, "setAdditionalAuthenticationFactor", "000000".toCharArray());
@@ -1994,8 +2001,13 @@ public class SecSignonTestcase extends Testcase {
 
         initMfaUser();
         sb.append(
-            "new AS400(" + systemObject_.getSystemName() + "," + mfaUserid_ + "," + new String(mfaPassword_) + ")\n");
-        AS400 as400 = new AS400(systemObject_.getSystemName(), mfaUserid_, mfaPassword_);
+            "new AS400(" + systemObject_.getSystemName() + "," + mfaUserid_ + ",...)\n");
+        char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
+
+        AS400 as400 = new AS400(systemObject_.getSystemName(), mfaUserid_, mfaPassword);
+
+        Arrays.fill(mfaPassword, ' '); 
+
         as400.setGuiAvailable(false);
         JDReflectionUtil.callMethod_V(as400, "setAdditionalAuthenticationFactor", mfaFactor_);
         as400.connectService(AS400.COMMAND);

@@ -24,6 +24,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.Vector;
+import java.util.Arrays;
 import java.util.Properties;
 import java.sql.*;
 import javax.naming.Context;
@@ -5550,9 +5551,11 @@ notApplicable("SSLight Testcase");
 
 			try {
 				 initMfaUser(); 
+				 char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
 				AS400JDBCDataSource ds = (AS400JDBCDataSource) 
 						JDReflectionUtil.createObject("com.ibm.as400.access.AS400JDBCDataSource", systemObject_.getSystemName(),
-						mfaUserid_, mfaPassword_, mfaFactor_);
+						mfaUserid_, mfaPassword, mfaFactor_);
+				Arrays.fill(mfaPassword,' '); 
 				
 				Connection c= ds.getConnection();
 				
@@ -5579,9 +5582,10 @@ notApplicable("SSLight Testcase");
 			try {
 				 initMfaUser(); 
 				AS400JDBCDataSource ds = new AS400JDBCDataSource(systemObject_.getSystemName());
-				
+				char[] mfaPassword =  PasswordVault.decryptPassword(mfaEncryptedPassword_);
 				Connection c= (Connection) JDReflectionUtil.callMethod_O(ds,"getConnection",
-						mfaUserid_, mfaPassword_, mfaFactor_);
+						mfaUserid_, mfaPassword, mfaFactor_);
+				Arrays.fill(mfaPassword,' '); 
 				
 				 Statement s = c.createStatement();
 				 ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 

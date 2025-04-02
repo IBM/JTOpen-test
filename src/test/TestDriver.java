@@ -32,6 +32,7 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.Arrays;
 import java.util.Date; 
 import java.util.jar.*;
 
@@ -232,8 +233,11 @@ public abstract class TestDriver implements TestDriverI, Runnable,
         } else {
           systemObject_ = (AS400) s2.readObject();
         } /* useSSL_ */ 
-        if (encryptedPassword_ != null)
-          systemObject_.setPassword(PasswordVault.decryptPassword(encryptedPassword_));
+        if (encryptedPassword_ != null) {
+            char[] password = PasswordVault.decryptPassword(encryptedPassword_);
+          systemObject_.setPassword(password);
+          Arrays.fill(password, ' ');
+        }
         s2.close();
       } else {
         out_.println("Serialized file not found: " + SERIAL_FILE_NAME);
@@ -784,6 +788,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       try { 
       systemObject_.setPassword(charPassword);
       } catch (java.lang.NoSuchMethodError nsme) { 
+        System.out.println("Warning:  password passed as String");
         systemObject_.setPassword(new String(charPassword));
       }
       PasswordVault.clearPassword(charPassword); 
@@ -794,6 +799,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       try { 
       pwrSys_.setPassword(charPassword);
       } catch (java.lang.NoSuchMethodError nsme) { 
+        System.out.println("Warning:  pwrPassword passed as String");
         pwrSys_.setPassword(new String(charPassword));; 
       }     
       PasswordVault.clearPassword(charPassword); 
@@ -1032,19 +1038,44 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     if (checkPasswordLeak) {
       int leakCount = 0; 
       int leakFreeCount = 0; 
-      String filename = "/tmp/passwordLeakCoreDump8.bin";
+      String jvmIdentifier="JVM";
+      String javaHome = System.getProperty("java.home"); 
+      /* Look for IBM i JMV /QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/jre */ 
+      int jdkIndex = javaHome.indexOf("/jdk"); 
+      if (jdkIndex >= 0) {
+        int slashIndex = javaHome.indexOf('/',jdkIndex+4);      
+        if (slashIndex >0) { 
+          jvmIdentifier+="."+javaHome.substring(jdkIndex+4,slashIndex)+"."+javaHome.substring(slashIndex+1,slashIndex+3); 
+        }
+      } else {
+         jvmIdentifier += "."+System.getProperty("java.version"); 
+      }
+      String filename = "/tmp/passwordLeakCoreDump."+jvmIdentifier+".bin";
       long startMillis = System.currentTimeMillis(); 
       PasswordLeakTool.forceDump(filename);
       String [] passwords ;
       String password = new String(PasswordVault.decryptPassword(encryptedPassword_));
       String pwrPassword = new String(PasswordVault.decryptPassword(pwrSysEncryptedPassword_));
+      char[] leakPassChars = new char[8]; 
+      leakPassChars[0]='L';
+      leakPassChars[1]='E';
+      leakPassChars[2]='A';
+      leakPassChars[3]='K';
+      leakPassChars[4]='P';
+      leakPassChars[5]='A';
+      leakPassChars[6]='S';
+      leakPassChars[7]='S';
+      
+      String leakPass = new String(leakPassChars); 
       if (password.equals(pwrPassword)) {
-        passwords = new String[1]; 
-        passwords[0]=password;
-      } else {
         passwords = new String[2]; 
         passwords[0]=password;
+        passwords[1]=leakPass;
+      } else {
+        passwords = new String[3]; 
+        passwords[0]=password;
         passwords[1]=pwrPassword;
+        passwords[2]=leakPass;
       }
       String leakInfo = PasswordLeakTool.scanDumpForPasswords(filename, passwords );
       if (leakInfo == null) { 

@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -316,20 +317,23 @@ public class SecPHMiscTestcase extends Testcase
           rs.close(); 
           
           sb.append("Attempting to create profile handle\n"); 
-         // static native void createProfileHandle2Native(byte[] profileHandle, 
-         //     String userId, char[] password, char[] additionalAuthenticationFactor,
-         //     String verificationId, String remoteIpAddress, int jRemotePort,   String localIpAddress, int jLocalPort ) throws NativeException;
+          // static native void createProfileHandle2Native(* byte[] profileHandle, String userId, 
+          //     byte[] bytes, char[] additionalAuthenticationFactor,
+          //     String verificationId, String remoteIpAddress, int jRemotePort,   String localIpAddress, int jLocalPort ) throws NativeException;
+          char[] charArray = new char[1]; 
           Class<?>[] argTypes = new Class[9];
           Object[] args = new Object[9]; 
           args[0] = profileHandle; argTypes[0] = args[0].getClass();           /* profile handle */
           args[1] = testUser;      argTypes[1] = args[1].getClass();           /* userid */
-          args[2] = testPass;      argTypes[2] = args[2].getClass();           /* password */ 
-          args[3] = null;          argTypes[3] = args[2].getClass();           /* AAF */ 
+          byte[] testPassBytes = new String(testPass).getBytes("UTF-16");
+          args[2] = testPassBytes;      argTypes[2] = testPassBytes.getClass();           /* password */ 
+          args[3] = null;          argTypes[3] = charArray.getClass();           /* AAF */ 
           args[4] = null;          argTypes[4] = args[1].getClass();           /* verification id */ 
           args[5] = null ;          argTypes[5] = args[1].getClass();           /* Remote id */ 
           args[6] = new Integer(0);  argTypes[6] = Integer.TYPE;               /* Remote port */  
           args[7] = null ;          argTypes[7] = args[1].getClass();           /* local id */ 
           args[8] = new Integer(0);  argTypes[8] = Integer.TYPE;               /* local port */  
+
           
           JDReflectionUtil.callStaticMethod_V("com.ibm.as400.access.AS400ImplNative","createProfileHandle2Native", argTypes, args);
          

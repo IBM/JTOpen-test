@@ -18,6 +18,7 @@ import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 
@@ -1311,8 +1312,11 @@ public class SecCtorTestcase extends Testcase {
         profileToken.setSystem(system);
         profileToken.setTimeoutInterval(3600);
         profileToken.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
-        JDReflectionUtil.callMethod_V(profileToken, "setTokenExtended", mfaUserid_, mfaPassword_, mfaFactor_);
+        char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
+        JDReflectionUtil.callMethod_V(profileToken, "setTokenExtended", mfaUserid_, mfaPassword, mfaFactor_);
         PasswordVault.clearPassword(charPassword);
+        Arrays.fill(mfaPassword, ' '); 
+
         try {
           system.connectService(AS400.COMMAND);
           AS400 system2 = new AS400(systemName_, profileToken);
@@ -1355,10 +1359,12 @@ public class SecCtorTestcase extends Testcase {
         provider.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
         provider.setTimeoutInterval(3600);
         provider.setUserId(mfaUserid_);
-        provider.setPassword(mfaPassword_);
+        char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
+        provider.setPassword(mfaPassword);
         JDReflectionUtil.callMethod_V(provider,"setAdditionalAuthenticationFactor",mfaFactor_);
         
         system = new AS400(systemName_, provider);
+        Arrays.fill(mfaPassword,' '); 
         system.setGuiAvailable(false);
         system.connectService(AS400.COMMAND);
 

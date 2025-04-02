@@ -295,7 +295,7 @@ public class JDStatementDelimiters extends JDTestcase {
         assertCondition(schema.equals(collection1NoDelim_) && table.equals("MYTABLE")
             && column1.equals("MYCOLUMN") && column2.equals("My Column")
             && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != JDDelim, or "
+            && column4.equals("Yes, \"My Column\""), schema + " != "+collection1NoDelim_+", or "
             + table + " != MYTABLE, or " + column1 + " != MYCOLUMN, or "
             + column2 + " != My Column, or " + column3 + " != MYCO%LUMN, or "
             + column4 + " != Yes, \"My Column\"");
