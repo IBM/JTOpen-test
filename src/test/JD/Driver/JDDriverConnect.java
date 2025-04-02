@@ -121,9 +121,12 @@ public class JDDriverConnect extends JDTestcase {
     argTypes[1] = properties.getClass();
     argTypes[2] = charPassword.getClass();
     ;
-    pwrConnection_ = (Connection) JDReflectionUtil.callMethod_O(driver_, "connect", argTypes, baseURL_, properties,
+    try { 
+       pwrConnection_ = (Connection) JDReflectionUtil.callMethod_O(driver_, "connect", argTypes, baseURL_, properties,
         charPassword);
-    Arrays.fill(charPassword, ' ');
+    } finally { 
+       Arrays.fill(charPassword, ' ');
+    }
 
   }
 
@@ -2675,6 +2678,7 @@ public class JDDriverConnect extends JDTestcase {
    */
   public void Var059() {
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      if (checkPasswordLeak()) {
       String systemName = systemObject_.getSystemName();
       if (checkAdditionalAuthenticationFactor(systemName)) {
         try {
@@ -2686,7 +2690,9 @@ public class JDDriverConnect extends JDTestcase {
           } else {
             url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString;
           }
-          Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+          String mfaPassword = new String(PasswordVault.decryptPassword(mfaEncryptedPassword_));
+          Connection c = DriverManager.getConnection(url, mfaUserid_, mfaPassword);
+          
           Statement s = c.createStatement();
           ResultSet rs = s.executeQuery("VALUES CURRENT USER");
           rs.next();
@@ -2697,6 +2703,7 @@ public class JDDriverConnect extends JDTestcase {
         } catch (Exception e) {
           failed(e, "unexpected exception");
         }
+      }
       }
     } else {
       notApplicable("TOOLBOX or NATIVE variation");
@@ -2709,6 +2716,7 @@ public class JDDriverConnect extends JDTestcase {
    */
   public void Var060() {
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      if (checkPasswordLeak()) {
       String systemName = systemObject_.getSystemName();
       if (checkAdditionalAuthenticationFactor(systemName)) {
         try {
@@ -2720,7 +2728,9 @@ public class JDDriverConnect extends JDTestcase {
             url = "jdbc:db2:localhost";
           }
           try {
-            Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+            String mfaPassword = new String(PasswordVault.decryptPassword(mfaEncryptedPassword_));
+            
+            Connection c = DriverManager.getConnection(url, mfaUserid_, mfaPassword);
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("VALUES CURRENT USER");
             rs.next();
@@ -2735,6 +2745,7 @@ public class JDDriverConnect extends JDTestcase {
         } catch (Exception e) {
           failed(e, "unexpected exception");
         }
+      }
       }
     } else {
       notApplicable("TOOLBOX or NATIVE variation");
@@ -2819,16 +2830,18 @@ public class JDDriverConnect extends JDTestcase {
           Properties properties = new Properties();
           properties.put("user", mfaUserid_);
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+          char[] mfaPassword =    PasswordVault.decryptPassword(mfaEncryptedPassword_);
 
           Class[] argTypes = new Class[4];
           argTypes[0] = url.getClass();
           argTypes[1] = properties.getClass();
-          argTypes[2] = mfaPassword_.getClass();
+          argTypes[2] = mfaPassword.getClass();
           ;
           argTypes[3] = mfaFactor_.getClass();
           Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties,
               charPassword, mfaFactor_);
           Arrays.fill(charPassword, ' ');
+          Arrays.fill(mfaPassword, ' ');
 
           Statement s = c.createStatement();
           ResultSet rs = s.executeQuery("select JOB_NAME, CURRENT USER from sysibm.sysdummy1");
@@ -2880,14 +2893,16 @@ public class JDDriverConnect extends JDTestcase {
           Properties properties = new Properties();
           properties.put("user", mfaUserid_);
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+          char[] mfaPassword =    PasswordVault.decryptPassword(mfaEncryptedPassword_);
 
           Class[] argTypes = new Class[3];
           argTypes[0] = url.getClass();
           argTypes[1] = properties.getClass();
-          argTypes[2] = mfaPassword_.getClass();
+          argTypes[2] = mfaPassword.getClass();
           Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", argTypes, url, properties,
               charPassword);
           Arrays.fill(charPassword, ' ');
+          Arrays.fill(mfaPassword, ' ');
 
           Statement s = c.createStatement();
           ResultSet rs = s.executeQuery("select JOB_NAME, CURRENT USER from sysibm.sysdummy1");
@@ -3170,6 +3185,7 @@ public class JDDriverConnect extends JDTestcase {
       StringBuffer sb = new StringBuffer();
       boolean successful = true;
       if (checkExitProgram()) {
+        if (checkPasswordLeak()) {
         String jobName;
         // Create a simple MFA connection and check the exit information.
         initMfaUser();
@@ -3181,7 +3197,9 @@ public class JDDriverConnect extends JDTestcase {
         } else {
           url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString;
         }
-        Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+        String mfaPassword = new String(PasswordVault.decryptPassword(mfaEncryptedPassword_));
+
+        Connection c = DriverManager.getConnection(url, mfaUserid_, mfaPassword);
         Statement s = c.createStatement();
         ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
         rs.next();
@@ -3289,6 +3307,7 @@ public class JDDriverConnect extends JDTestcase {
         if (!successful)
           skipExitCleanup = true;
         assertCondition(successful, sb);
+        }
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception");
@@ -3300,7 +3319,7 @@ public class JDDriverConnect extends JDTestcase {
     try {
       StringBuffer sb = new StringBuffer();
       boolean successful = true;
-      if (checkToolbox() && checkExitProgram()) {
+      if (checkToolbox() && checkExitProgram() && checkPasswordLeak()) {
         // Create a simple MFA connection and check the exit information.
         initMfaUser();
         AuthExit.cleanupExitProgramFiles(pwrConnection_);
@@ -3308,7 +3327,9 @@ public class JDDriverConnect extends JDTestcase {
         String url;
         url = "jdbc:as400:" + systemObject_.getSystemName() + ";secure=true;additionalAuthenticationFactor="
             + mfaFactorString;
-        Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+        String mfaPassword = new String(PasswordVault.decryptPassword(mfaEncryptedPassword_));
+
+        Connection c = DriverManager.getConnection(url, mfaUserid_, mfaPassword);
         Statement s = c.createStatement();
         ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
         rs.next();
@@ -3402,7 +3423,7 @@ public class JDDriverConnect extends JDTestcase {
 
       StringBuffer sb = new StringBuffer();
       boolean successful = true;
-      if (checkNative() && checkExitProgram()) {
+      if (checkNative() && checkExitProgram() && checkPasswordLeak()) {
         String jobName;
         // Create a simple MFA connection and check the exit information.
         initMfaUser();
@@ -3412,7 +3433,9 @@ public class JDDriverConnect extends JDTestcase {
             + ";authenticationVerificationId=MYAPP_SUPER_SERVER" + ";authenticationLocalIP=1.2.3.4"
             + ";authenticationLocalPort=80" + ";authenticationRemoteIP=5.6.7.8" + ";authenticationRemotePort=2134";
         sb.append("Connecting using URL " + url + "\n");
-        Connection c = DriverManager.getConnection(url, mfaUserid_, new String(mfaPassword_));
+        String mfaPassword = new String(PasswordVault.decryptPassword(mfaEncryptedPassword_));
+
+        Connection c = DriverManager.getConnection(url, mfaUserid_, mfaPassword);
         Statement s = c.createStatement();
         ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
         rs.next();

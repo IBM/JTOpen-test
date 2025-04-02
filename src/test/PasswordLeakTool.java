@@ -36,8 +36,10 @@ public class PasswordLeakTool {
   static boolean ibmJVM = false;
   static String javaHome;
   static String osName;
-  static String dummyPassword;
+  static String reversePassword;
+  static String userid; 
   static String jdmpviewPath;
+  static String leakString; 
   static int osType = 0;
   public static final int OS_WINDOWS = 1;
   public static final int OS_IBM_I = 2;
@@ -198,10 +200,11 @@ public class PasswordLeakTool {
       }
       // Done, cleanup
       String[][] heapInfo = getHeapInfo(data);
-      /* dumpHeapInfo(heapInfo); */
+      dumpHeapInfo(heapInfo); 
       int memoryBoundary = 1;
       int bytesToPrint = 16;
       int matchesToDisplay = 16;
+      Exception foundException = null; 
       for (int k = 0; k < passwords.length; k++) {
         String password = passwords[k];
         bytesToPrint = password.length() * 2;
@@ -214,27 +217,37 @@ public class PasswordLeakTool {
           for (int j = 0; j < searchHexStrings.length; j++) {
             /* Add 32 to see if purposely leaked */
             bytesToPrint = (searchHexStrings[j].length() - 2) / 2 + 32;
-            String findCommand = "find " + searchHexStrings[j] + ","
-                + heapInfo[i][0] + "," + heapInfo[i][1] + "," + memoryBoundary
-                + "," + bytesToPrint + "," + matchesToDisplay;
-           
-            System.out.println("PasswordLeakTool.scanDumpForPasswords: running " + findCommand);
-            printWriter.println(findCommand);
-            printWriter.println("readyForCommand");
-            printWriter.flush();
+            String findCommand = "find " + searchHexStrings[j] + "," + heapInfo[i][0] + "," + heapInfo[i][1] + ","
+                + memoryBoundary + "," + bytesToPrint + "," + matchesToDisplay;
 
-            data = waitForPrompt(outputBuffer);
-            if (debug) {
-              System.out.println("DEBUG: -----------------------------");
-              System.out.println(data);
-              System.out.println("DEBUG: -----------------------------");
-            }
-            if (data.indexOf("#0") >= 0) {
-              String info="Found "+searchHexStrings[j]+" in heap #"+i+" searchstring #"+j+" password #"+k+"\n";
-              System.out.println("PasswordLeakTool.scanDumpForPasswords: "+info); 
-              sb.append(info); 
-              sb.append("Find command="+findCommand+"\n"); 
-              sb.append(data);
+            System.out.println("PasswordLeakTool.scanDumpForPasswords: running " + findCommand);
+            if (foundException == null) {
+              try {
+                printWriter.println(findCommand);
+                printWriter.println("readyForCommand");
+                printWriter.flush();
+
+                data = waitForPrompt(outputBuffer);
+                if (debug) {
+                  System.out.println("DEBUG: -----------------------------");
+                  System.out.println(data);
+                  System.out.println("DEBUG: -----------------------------");
+                }
+              } catch (Exception e) {
+                data = "#0  Exception encountered"; 
+                System.out.println("Exception found.. going to generate all search strings");
+                e.printStackTrace(System.out);
+                foundException = e;
+              }
+
+              if (data.indexOf("#0") >= 0) {
+                String info = "Found " + searchHexStrings[j] + " in heap #" + i + " searchstring #" + j + " password #"
+                    + k + "\n";
+                System.out.println("PasswordLeakTool.scanDumpForPasswords: " + info);
+                sb.append(info);
+                sb.append("Find command=" + findCommand + "\n");
+                sb.append(data);
+              }
             }
           }
         }
@@ -383,7 +396,6 @@ public class PasswordLeakTool {
       System.out
           .println("Heap " + i + " : " + heapInfo[i][0] + " " + heapInfo[i][1]);
     }
-
   }
 
   /* Wait for the unrecognized command to show up. An invalid command is */
@@ -432,9 +444,10 @@ public class PasswordLeakTool {
     return heapInfo;
   }
 
+  final static int PROMPT_WAIT_SECONDS = 300; 
   private static String waitForPrompt(StringBuffer outputBuffer)
       throws Exception {
-    long endMillis = System.currentTimeMillis() + 60000;
+    long endMillis = System.currentTimeMillis() +PROMPT_WAIT_SECONDS * 1000;
     int promptIndex = outputBuffer.indexOf("Unrecognised command:");
     while (promptIndex < 0 && System.currentTimeMillis() < endMillis) {
       Thread.sleep(2000);
@@ -443,7 +456,8 @@ public class PasswordLeakTool {
     if (promptIndex < 0) {
       System.out.println("--------------- Got ----------------------\n");
       System.out.println(outputBuffer.toString());
-      throw new Exception("Unable to get prompt in 60 seconds");
+      System.out.println("------------------------------------------\n");
+      throw new Exception("Unable to get prompt in "+PROMPT_WAIT_SECONDS+" seconds");
     }
 
     String data = outputBuffer.toString();
@@ -455,24 +469,29 @@ public class PasswordLeakTool {
 
   public static void usage() {
     System.out.println(
-        "java test.PasswordLeakTool [AS400JAVACONNECT system] [AS400JAVADATASOURCE system] [PASSWORD pwd]* " +
-        "[ENCRYPTPASSWORD] [DECRYPTPASSWORD] "
-        + "[DUMP dumpfile]* [SCAN dumpfile pwd]* ");
+        "java test.PasswordLeakTool [USER userid] [REVPASS reversedPassword] [AS400JAVACONNECT system] [AS400JAVADATASOURCE system]  " +
+        "[ENCRYPTPASSWORD] [DECRYPTPASSWORD] [LEAKSTRINGPASSWORD] [PBKEYSPEC]"
+        + "[DUMP dumpfile]* [SCAN dumpfile reversedPassword]* ");
     System.out.println(
-        "                    i.e.  AS400JAVACONNECT    system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  USERID user1 REVPASS dr0wssap AS400JAVACONNECT    system  DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dr0wssap   ");
     System.out.println(
-        "                    i.e.  AS400JAVADATASOURCE system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  USERID user1 REVPASS dr0wssap AS400JAVADATASOURCE system  DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dr0wssap  ");
     System.out.println(
-        "                    i.e.  AS400JAVAJDBC       system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  USERID user1 REVPASS dr0wssap AS400JAVAJDBC       system  DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dr0wssap ");
     System.out.println(
-        "                    i.e.  DB2JAVAJDBC         system PASSWORD dummyPassword DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dummyPassword SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  USERID user1 REVPASS dr0wssap DB2JAVAJDBC         system  DUMP /tmp/dumpFile.txt SCAN /tmp/dumpFile.txt dr0wssap  ");
 
     System.out.println(
-        "                    i.e.  ENCRYPTPASSWORD DECRYPTPASSWORD DUMP /tmp/dumpFile.txt  SCAN /tmp/dumpFile.txt JAVAPASSWORD  ");
+        "                    i.e.  REVPASS dr0wssap ENCRYPTPASSWORD DECRYPTPASSWORD DUMP /tmp/dumpFile.txt  SCAN /tmp/dumpFile.txt   ");
+    System.out.println(); 
+    System.out.println(
+        "        Recommended JVM flags:   -D-XX:+UseNoGC -D-verbose:gc -D-Xgcpolicy:nogc -D-Xnocompressedrefs ");
 
   }
 
-  public static AS400JDBCDataSource ds = null; 
+  public static AS400JDBCDataSource ds = null;
+  private static byte[] outputBytes;
+  private static char[] outputChars; 
   public static void main(String[] args) {
     
     String TRANSFORMATION = "AES/CBC/PKCS5Padding";
@@ -490,11 +509,16 @@ public class PasswordLeakTool {
     try {
       while (i < args.length) {
         String command = args[i];
-        if (command.equalsIgnoreCase("PASSWORD")) {
+        if (command.equalsIgnoreCase("USERID")) {
           i++;
-          dummyPassword = new String(args[i]);
-          System.out.println("Setting dummyPassword=" + args[i]);
-          dummyPassword = null;
+          userid = args[i]; 
+        } else if (command.equalsIgnoreCase("REVPASS")) {
+            i++;
+            reversePassword = args[i]; 
+        } else if (command.equalsIgnoreCase("LEAKSTRINGPASSWORD")) {
+          char[] passwordArray=getPasswordArray(); 
+          leakString = new String(passwordArray); 
+          Arrays.fill(passwordArray, '\0');
         } else if (command.equalsIgnoreCase("DUMP")) {
           i++;
           System.out.println("Forcing dump to " + args[i]);
@@ -504,20 +528,9 @@ public class PasswordLeakTool {
           String dumpFile = args[i];
           i++;
           String[] passwords = new String[1];
-          passwords[0] = args[i];
-          if (passwords[0].equals("JAVAPASSWORD")) {
-            char[] passwordArray = new char[8];
-            passwordArray[4] = 't';
-            passwordArray[5] = 'e';
-            passwordArray[6] = 'a';
-            passwordArray[7] = 'm';
-            passwordArray[0] = 'j';
-            passwordArray[1] = '8';
-            passwordArray[2] = 'v';
-            passwordArray[3] = 'a';
-            passwords[0] = new String(passwordArray);
-          }
-          System.out.println("Scanning dump (" + dumpFile + ") for password "
+          passwords[0] = new String(reverseString(args[i]));
+          
+          System.out.println("Scanning dump (" + dumpFile + ") for password ("
               + passwords[0] + ")");
 
           String output = scanDumpForPasswords(dumpFile, passwords);
@@ -530,52 +543,32 @@ public class PasswordLeakTool {
           }
         } else if (command.equalsIgnoreCase("AS400JAVACONNECT")) {
           i++;
-          char[] passwordArray = new char[8];
-          passwordArray[4] = 't';
-          passwordArray[5] = 'e';
-          passwordArray[6] = 'a';
-          passwordArray[7] = 'm';
-          passwordArray[0] = 'j';
-          passwordArray[1] = '8';
-          passwordArray[2] = 'v';
-          passwordArray[3] = 'a';
-
-          AS400 as400 = new AS400(args[i], "JAVA", passwordArray);
+          if (userid == null) throw new Exception ("USERID not set");
+          char[] passwordArray = getPasswordArray(); 
+          
+          AS400 as400 = new AS400(args[i], userid, passwordArray);
           Arrays.fill(passwordArray, '\0');
 
           as400.passwordLevel();
           as400.passwordLevel();
           as400.passwordLevel();
           as400.disconnectAllServices(); 
+          as400.close(); 
         } else if (command.equalsIgnoreCase("AS400JAVADATASOURCE")) {
           i++;
-          char[] passwordArray = new char[8];
-          passwordArray[4] = 't';
-          passwordArray[5] = 'e';
-          passwordArray[6] = 'a';
-          passwordArray[7] = 'm';
-          passwordArray[0] = 'j';
-          passwordArray[1] = '8';
-          passwordArray[2] = 'v';
-          passwordArray[3] = 'a';
+          if (userid == null) throw new Exception ("USERID not set");
+          char[] passwordArray=getPasswordArray(); 
 
-           ds = new AS400JDBCDataSource(args[i], "JAVA", passwordArray);
+          ds = new AS400JDBCDataSource(args[i], userid, passwordArray);
           Arrays.fill(passwordArray, '\0');
  
         } else if (command.equalsIgnoreCase("AS400JAVAJDBC")) {
           i++;
-          char[] passwordArray = new char[8];
-          passwordArray[4] = 't';
-          passwordArray[5] = 'e';
-          passwordArray[6] = 'a';
-          passwordArray[7] = 'm';
-          passwordArray[0] = 'j';
-          passwordArray[1] = '8';
-          passwordArray[2] = 'v';
-          passwordArray[3] = 'a';
+          if (userid == null) throw new Exception ("USERID not set");
+          char[] passwordArray=getPasswordArray(); 
 
           AS400JDBCDriver driver = new AS400JDBCDriver(); 
-          Connection c = driver.connect("jdbc:as400:"+args[i],  "JAVA", passwordArray);
+          Connection c = driver.connect("jdbc:as400:"+args[i],  userid, passwordArray);
           Arrays.fill(passwordArray, '\0');
           Statement s = c.createStatement(); 
           ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
@@ -585,18 +578,11 @@ public class PasswordLeakTool {
           
         } else if (command.equalsIgnoreCase("DB2JAVAJDBC")) {
           i++;
-          char[] passwordArray = new char[8];
-          passwordArray[4] = 't';
-          passwordArray[5] = 'e';
-          passwordArray[6] = 'a';
-          passwordArray[7] = 'm';
-          passwordArray[0] = 'j';
-          passwordArray[1] = '8';
-          passwordArray[2] = 'v';
-          passwordArray[3] = 'a';
+          if (userid == null) throw new Exception ("USERID not set");
+          char[] passwordArray=getPasswordArray(); 
 
           Object driver = JDReflectionUtil.callStaticMethod_O("com.ibm.db2.jdbc.app.DB2Driver", "getDriver");
-          Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", "jdbc:db2:"+args[i],  "JAVA", passwordArray);
+          Connection c = (Connection) JDReflectionUtil.callMethod_O(driver, "connect", "jdbc:db2:"+args[i],  userid, passwordArray);
           Arrays.fill(passwordArray, '\0');
           Statement s = c.createStatement(); 
           ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
@@ -605,15 +591,7 @@ public class PasswordLeakTool {
           System.out.println("JDBC connection to "+args[i]+" created and CURRENT USER is "+currentUser); 
 
         } else if (command.equalsIgnoreCase("ENCRYPTPASSWORD")) {
-          char[] passwordArray = new char[8];
-          passwordArray[4] = 't';
-          passwordArray[5] = 'e';
-          passwordArray[6] = 'a';
-          passwordArray[7] = 'm';
-          passwordArray[0] = 'j';
-          passwordArray[1] = '8';
-          passwordArray[2] = 'v';
-          passwordArray[3] = 'a';
+          char[] passwordArray=getPasswordArray(); 
 
           KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
           secretKey = keyGenerator.generateKey();
@@ -635,13 +613,42 @@ public class PasswordLeakTool {
 
           cipher = Cipher.getInstance(TRANSFORMATION);
           cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
-          byte[] outputBytes = cipher.doFinal(encryptedPassword);
-          char[] outputChars = new char[outputBytes.length / 2];
+          outputBytes = cipher.doFinal(encryptedPassword);
+          outputChars = new char[outputBytes.length / 2];
           for (int j = 0; j < outputChars.length; j++) {
                   outputChars[j] = (char) ((outputBytes[2 * j] << 8) + outputBytes[2 * j + 1]);
           }
           Arrays.fill(outputBytes, (byte) 0); /* Clear intermediary storage */
           Arrays.fill(outputChars, '\0');     /* Clean encrypted output */ 
+          
+
+        }  else if (command.equalsIgnoreCase("PBEKEYSPEC")) {
+          char[] passwordArray=getPasswordArray(); 
+
+          byte[] salt = {0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,
+              0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,0x1a,0x1b,0x1c,0x1d,0x1e,0x1f}; 
+          
+          final PBEKeySpec spec = new PBEKeySpec(passwordArray, salt, 10022, 64 * 8); // takes a bit length so *8
+          Arrays.fill(passwordArray, ' ');
+          spec.clearPassword();
+
+        }  else if (command.equalsIgnoreCase("GENERATESECRET")) {
+          SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+
+          char[] passwordArray=getPasswordArray(); 
+
+          byte[] salt = {0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f,
+              0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,0x1a,0x1b,0x1c,0x1d,0x1e,0x1f}; 
+          
+          final PBEKeySpec spec = new PBEKeySpec(passwordArray, salt, 10022, 64 * 8); // takes a bit length so *8
+          SecretKey secret = factory.generateSecret(spec);
+          
+          Arrays.fill(passwordArray, ' ');
+          spec.clearPassword();
+          
+          
+          
+       
           
         } else {
           System.out.println("Invalid command " + command);
@@ -649,10 +656,25 @@ public class PasswordLeakTool {
 
         i++;
       }
-    } catch (Exception e) {
+    } catch (Exception e) {     
       e.printStackTrace();
       usage();
     }
   }
 
+  private static char[] getPasswordArray() throws Exception {
+    if (reversePassword == null) throw new Exception("REVPASS not set"); 
+    return reverseString(reversePassword); 
+  }
+
+  private static char[] reverseString(String s) { 
+    int len = s.length(); 
+    char[] passwordArray = new char[len]; 
+    for (int i = 0; i < len; i++) { 
+      passwordArray[len-1-i] = s.charAt(i); 
+    }
+    
+    return passwordArray;
+    
+  }
 }

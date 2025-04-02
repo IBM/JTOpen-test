@@ -44,7 +44,7 @@ import java.util.Vector;
  * </ul>
  * 
  * The file cacerts should exist in the current directory (normally
- * /home/jdbctest) and should contain the certificates need for SSL to the
+ * /home/jdbctest) and should contain the certificates need for SSL to use the
  * target system. The password for the cacerts file should be the default
  * password changeit.
  **/
@@ -201,7 +201,11 @@ public class JDConnectionTrustStore extends JDTestcase {
    **/
   public void Var002() {
     if (checkToolbox()) {
-      String expectedErrorMessage = "The filename, directory name, or volume label syntax is incorrect"; 
+      String[] expectedErrorMessages = {
+          "The filename, directory name, or volume label syntax is incorrect",
+          "A file or directory in the path name does not exist."
+      };
+      
       try {
         boolean passed = false;
         sb.setLength(0);
@@ -213,7 +217,7 @@ public class JDConnectionTrustStore extends JDTestcase {
         c.close();
         assertCondition(passed, sb);
       } catch (Exception e) {
-        assertExceptionContains(e, expectedErrorMessage, sb);
+        assertExceptionContains(e, expectedErrorMessages, sb.toString());
       }
     }
   }
@@ -223,7 +227,11 @@ public class JDConnectionTrustStore extends JDTestcase {
    **/
   public void Var003() {
     if (checkToolbox()) {
-      String expectedErrorMessage = "The filename, directory name, or volume label syntax is incorrect"; 
+      String[] expectedErrorMessages = {
+          "The filename, directory name, or volume label syntax is incorrect",
+          "A file or directory in the path name does not exist."
+      };
+
       try {
         boolean passed = false;
         sb.setLength(0);
@@ -235,7 +243,7 @@ public class JDConnectionTrustStore extends JDTestcase {
         c.close();
         assertCondition(passed, sb);
       } catch (Exception e) {
-        assertExceptionContains(e, expectedErrorMessage, sb);
+        assertExceptionContains(e, expectedErrorMessages, sb.toString());
       }
     }
   }

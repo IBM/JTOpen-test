@@ -1448,7 +1448,8 @@ public class JobUnattendedTestcase extends Testcase
         {
             Job job = new Job(pwrSys_, jobName_, userName_, jobNumber_);
             int i = job.getEndSeverity();
-            assertCondition(i != 0);
+            /* This test assumes that ENDSEV in the job and job description is set to something other than 0 for interactive jobs. */
+            assertCondition(i != 0, "end severity for job "+jobName_ +" "+ userName_+" "+jobNumber_+"is "+i+" non zero ");
         }
         catch (Exception e)
         {

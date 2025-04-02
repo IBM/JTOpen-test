@@ -133,9 +133,9 @@ public abstract class Testcase {
   Object googleAuthenticator_ = null; 
   protected String mfaSecret_; 
   protected String mfaUserid_;
-  protected char[] mfaPassword_; 
+  protected char[] mfaEncryptedPassword_; 
   protected char[] mfaFactor_;
-
+  protected int    mfaIntervalSeconds_; 
   // Any output should be written here.
   protected PrintWriter output_;
 
@@ -474,11 +474,11 @@ public abstract class Testcase {
    * @param fileOutputStream
    *          The output stream to which to write the results.
    * @param password
-   *          The user profile password.
+   *          The user profile password or, if ending in .txt or .rev, the file to read the password from. 
    * @param pwrSysUid
    *          The power user profile.
    * @param pwrSysPwd
-   *          The power user password.
+   *          The power user password or, if ending in .txt or .rev, the file to read the password from..
    **/
   public Testcase(AS400 system, String name, int totalVariations,
       Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream,
@@ -488,8 +488,11 @@ public abstract class Testcase {
     pwrSysUserID_ = pwrSysUid;
     pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPwd);
     char[] pwrSysPasswordChars = PasswordVault.decryptPassword(pwrSysEncryptedPassword_); 
-    pwrSys_ = new AS400(systemObject_.getSystemName(), pwrSysUserID_, pwrSysPasswordChars);
-    PasswordVault.clearPassword(pwrSysPasswordChars); 
+    try { 
+      pwrSys_ = new AS400(systemObject_.getSystemName(), pwrSysUserID_, pwrSysPasswordChars);
+    } finally {
+      PasswordVault.clearPassword(pwrSysPasswordChars); 
+    }
 
     String userName = System.getProperty("user.name");
 
@@ -3245,14 +3248,14 @@ public abstract class Testcase {
 	      mfaUserid_ = properties.getProperty("MFAUSERID"); 
 	      String password  = properties.getProperty("MFAPASSWORD");
 	      if (password != null) { 
-	    	  mfaPassword_ = password.toCharArray(); 
+	    	  mfaEncryptedPassword_ = PasswordVault.getEncryptedPassword(password); 
 	      } else {
-	    	  mfaPassword_ = null; 
+	    	  mfaEncryptedPassword_ = null; 
 	      }
 	      mfaSecret_ = properties.getProperty("MFASECRET");
 	      
 	      if (mfaUserid_ == null)   throw new Exception("MFAUSERID not in netrc.ini"); 
-	      if (mfaPassword_ == null) throw new Exception("MFAPASSWORD not in netrc.ini"); 
+	      if (mfaEncryptedPassword_ == null) throw new Exception("MFAPASSWORD not in netrc.ini"); 
 	      if (mfaSecret_ == null)   throw new Exception("MFASECRET not in netrc.ini"); 
 
 		  mfaInitialized=true; 
@@ -3266,6 +3269,7 @@ public abstract class Testcase {
 	  String command = "CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(*NONE)   ";
 	  cc.run(command); 
 	  command = "CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(1)   ";
+	  mfaIntervalSeconds_ = 60; 
 	  cc.run(command); 
 	  String mfaFactorString = ""+JDReflectionUtil.callMethod_I(googleAuthenticator_,  "getTotpPassword", mfaSecret_);
 	  while (mfaFactorString.length() < 6) {

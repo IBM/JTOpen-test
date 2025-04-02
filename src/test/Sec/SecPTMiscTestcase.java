@@ -20,18 +20,23 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.util.Arrays;
 import java.util.Random;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.Job;
 import com.ibm.as400.security.auth.AS400BasicAuthenticationPrincipal;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 import com.ibm.as400.security.auth.ProfileTokenCredentialBeanInfo;
 import com.ibm.as400.security.auth.RetrieveFailedException;
 import com.ibm.as400.security.auth.UserProfilePrincipal;
 
+import test.JDJobName;
 import test.JDReflectionUtil;
 import test.PasswordVault;
 import test.SecAuthTest;
@@ -49,6 +54,8 @@ import test.Testcase;
  **/
 public class SecPTMiscTestcase extends Testcase
 {
+  Connection pwrConnection_; 
+  
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
      newArgs[0] = "-tc";
@@ -62,6 +69,8 @@ public class SecPTMiscTestcase extends Testcase
   
   public void setup() throws Exception {
     SecAuthTest.createProfiles(pwrSys_); 
+    AS400JDBCDriver driver = new AS400JDBCDriver();
+    pwrConnection_ = driver.connect(pwrSys_); 
   } 
 
   public void cleanup() throws Exception {
@@ -933,7 +942,9 @@ public class SecPTMiscTestcase extends Testcase
 
          pt1 = new ProfileTokenCredential();
          pt1.setSystem(sys);
-         initializeProfileToken (pt1, mfaUserid_, mfaPassword_, mfaFactor_, 4 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
+         char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
+
+         initializeProfileToken (pt1, mfaUserid_, mfaPassword, mfaFactor_, 4 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
              "", /* verification id  */
              "", 0, /* remote IP and port */
              "", 0, /* local IP and port */
@@ -941,7 +952,7 @@ public class SecPTMiscTestcase extends Testcase
              false, /* not reusable */
              false, /* not renewable */
              600); /* timeout */
-
+         Arrays.fill(mfaPassword,' ');
          // Test token validity; retrieve the token time to expiration.
          pt1.getTimeToExpiration();
 
@@ -1021,7 +1032,7 @@ public class SecPTMiscTestcase extends Testcase
      JDReflectionUtil.callMethod_V(pt, "initialize",  argTypes, args);
      
      // com.ibm.as400.security.auth.ProfileTokenEnhancedInfo info2 = new com.ibm.as400.security.auth.ProfileTokenEnhancedInfo(verificationId, remoteIp, remotePort, localIp, localPort);
-     // pt.initialize(principal, password, factor, authenticationIndicator, isPrivate, reusable, renewable, timeoutInterval, info2);
+     // pt.initialize(principal, password, factor, authenticationIndicator, isPrivate, reusable, renewable, timeoutInterval, info);
          
          
    }
@@ -1049,7 +1060,9 @@ public class SecPTMiscTestcase extends Testcase
            pt.setSystem(sys);
           
            
-           initializeProfileToken(pt,mfaUserid_, mfaPassword_, mfaFactor_,  5 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
+           char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
+           
+           initializeProfileToken(pt,mfaUserid_, mfaPassword, mfaFactor_,  5 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
                "", /* verification id  */
                "", 0, /* remote IP and port */
                "", 0, /* local IP and port */
@@ -1057,6 +1070,7 @@ public class SecPTMiscTestcase extends Testcase
                false, /* not reusable */
                false, /* not renewable */
                timeoutInterval); /* timeout */
+           Arrays.fill(mfaPassword,' ');
            boolean passed = true; 
            StringBuffer sb = new StringBuffer(); 
            if (!isLocal_) {
@@ -1073,9 +1087,14 @@ public class SecPTMiscTestcase extends Testcase
              passed = false; 
              sb.append("pt.getTokenType():"+pt.getTokenType()+" != ProfileTokenCredential.TYPE_SINGLE_USE:"+ProfileTokenCredential.TYPE_SINGLE_USE+"\n"); 
            }
-           if (pt.getTimeToExpiration() < 3000 )  {
+           int minimumExpirationTime = timeoutInterval - 30 ; 
+           if (minimumExpirationTime > mfaIntervalSeconds_ - 30 ) {
+             minimumExpirationTime = mfaIntervalSeconds_ - 30 ; 
+           }
+           
+           if (pt.getTimeToExpiration() < minimumExpirationTime )  {
              passed = false; 
-             sb.append("pt.GetTimeExpiration() = "+pt.getTimeToExpiration()+" sb >= 3000 ");
+             sb.append("pt.GetTimeExpiration() = "+pt.getTimeToExpiration()+" sb >=  "+minimumExpirationTime);
            }
 
            
@@ -1099,6 +1118,8 @@ public class SecPTMiscTestcase extends Testcase
    {
      if (checkAdditionalAuthenticationFactor(systemName_)) {
        AS400 sys = null;
+       try
+       {
        if (isLocal_)
        {
            sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
@@ -1106,16 +1127,19 @@ public class SecPTMiscTestcase extends Testcase
        else
        {
            sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+           sys.connectService(AS400.COMMAND);
        }
-       try
-       {
          sys.setGuiAvailable(false);
          initMfaUser();
+         AuthExit.assureExitProgramExists(pwrConnection_, mfaUserid_);
+         AuthExit.clearOutputFiles(pwrConnection_); 
+         String jobName; 
          
-   
            ProfileTokenCredential pt =  new ProfileTokenCredential();
            pt.setSystem(sys);
-           initializeProfileToken ( pt, mfaUserid_,  mfaPassword_, mfaFactor_, 5 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
+           char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
+
+           initializeProfileToken ( pt, mfaUserid_,  mfaPassword, mfaFactor_, 5 /* AuthenticationIndicator.APPLICATION_AUTHENTICATION */ , 
                "", /* verification id  */
                "", 0, /* remote IP and port */
                "", 0, /* local IP and port */
@@ -1123,7 +1147,7 @@ public class SecPTMiscTestcase extends Testcase
                true, /*  reusable */
                false, /* not renewable */
                444); /* timeout */
-
+           Arrays.fill(mfaPassword, ' ');
            boolean passed = true; 
            StringBuffer sb = new StringBuffer(); 
            if (!isLocal_) {
@@ -1131,7 +1155,13 @@ public class SecPTMiscTestcase extends Testcase
                passed = false;
                sb.append("pt.getSystem():" + pt.getSystem().getSystemName() + " != sys:" + sys.getSystemName() + "\n");
              }
+             jobName="QUSER_NC.QZSOSIGN";
+           } else { 
+             
+              jobName=JDJobName.getJobName().replace('/','.');
+              jobName="QUSER_NC.QZRCSRVS";
            }
+           
            if ( pt.getToken() == null) {
              passed =false; 
              sb.append("pt.getToken() is null\n"); 
@@ -1140,11 +1170,33 @@ public class SecPTMiscTestcase extends Testcase
              passed = false; 
              sb.append("pt.getTokenType():"+pt.getTokenType()+" != ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE:"+ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE+"\n"); 
            }
+           int expectedExpirationMaximum = 444; 
+           int expectedExpirationMinimum = expectedExpirationMaximum - 30; 
+           
            int timeToExpiration = pt.getTimeToExpiration();
-           if ( timeToExpiration < 300 || timeToExpiration >  444) {
+           if ( expectedExpirationMinimum < expectedExpirationMinimum || timeToExpiration > expectedExpirationMaximum) {
              passed = false; 
-             sb.append("pt.GetTimeExpiration() = "+timeToExpiration+" sb >= 300 and <= 444");
+             sb.append("pt.GetTimeExpiration() = "+timeToExpiration+" sb >= "+expectedExpirationMinimum+" and <= "+expectedExpirationMaximum);
            }
+           
+           String  expectedVerificationId="Verification_ID=QIBM_OS400_JT400"; 
+           String  expectedRemotePort=null; /* don't check remote port */ 
+           String  expectedLocalPort="Local_Port=8476";
+           String expectedRemoteIp = null; /* don't check remote IP as it can vary and may be different than the local IP address because of network configuration */ 
+           String expectedLocalIp = null; /* don't check local ip */ 
+             
+
+           if (!AuthExit.checkResult(pwrConnection_, jobName, mfaUserid_, sb, expectedVerificationId,
+               expectedRemotePort, expectedLocalPort, expectedRemoteIp, expectedLocalIp)) {
+             passed = false;
+           }
+
+           if (passed) {
+             AuthExit.cleanup(pwrConnection_);
+           }
+
+           
+           
            assertCondition( passed, sb); 
            
        }

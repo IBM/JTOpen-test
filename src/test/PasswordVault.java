@@ -66,8 +66,9 @@ public class PasswordVault {
     encryptedPassword = encryptedHashtable.get(passwordName);
     if (encryptedPassword == null) {
       char[] password = null;
-      if (passwordName.endsWith(".txt")) {
+      if (passwordName.endsWith(".txt") || passwordName.endsWith(".rev")) {
         try {
+          
           File file = new File("ini/" + passwordName);
           if (!file.exists()) {
             throw new Exception("Password file " + file.getAbsolutePath() + " does not exist");
@@ -87,8 +88,15 @@ public class PasswordVault {
           fileInputStream.close();
 
           password = new char[len];
-          for (int i = 0; i < len; i++) {
-            password[i] = buffer[i];
+          if (passwordName.endsWith(".rev")) {
+            for (int i = 0; i < len; i++) {
+              password[i] = buffer[len - 1 - i];
+            }
+            
+          } else {
+            for (int i = 0; i < len; i++) {
+              password[i] = buffer[i];
+            }
           }
           clearPassword(buffer);
         } catch (Exception e) {

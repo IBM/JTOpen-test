@@ -23,6 +23,7 @@ import test.JDTestDriver;
 import test.PasswordVault;
 import test.Testcase;
 
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -171,12 +172,13 @@ public class AS400NewInstance extends Testcase {
       testAs400.setGuiAvailable(false);
       initMfaUser();
       testAs400.setUserId(mfaUserid_);
-      testAs400.setPassword(mfaPassword_);
+      char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);;
+      testAs400.setPassword(mfaPassword);
       testAs400.setAdditionalAuthenticationFactor(mfaFactor_);
-      sb.append("Connecting to SIGNON with "+mfaUserid_+"/"+new String(mfaPassword_)+" and factor "+new String(mfaFactor_)+"\n"); 
+      sb.append("Connecting to SIGNON with "+mfaUserid_+"/... and factor "+new String(mfaFactor_)+"\n"); 
       testAs400.connectService(AS400.SIGNON);
       testAs400.connectService(AS400.RECORDACCESS);
-      sb.append("Connecting to RECORD with "+mfaUserid_+"/"+new String(mfaPassword_)+" and factor "+ new String(mfaFactor_)+"\n"); 
+      sb.append("Connecting to RECORD with "+mfaUserid_+"/... and factor "+ new String(mfaFactor_)+"\n"); 
 
       Job[] jobs = testAs400.getJobs(AS400.SIGNON);
       if (jobs.length == 0) { 
@@ -196,7 +198,7 @@ public class AS400NewInstance extends Testcase {
         String serverJobName = jobs2[i].getNumber() + "/" + jobs2[i].getUser() + "/" + jobs2[i].getName();
         sb.append("connected to " + serverJobName);
       }
-
+      Arrays.fill(mfaPassword, ' '); 
       assertCondition(succeeded, sb);
     } catch (Exception e) {
       failed(e, "Unexpected Exception: " + sb.toString());

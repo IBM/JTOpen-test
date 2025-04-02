@@ -3530,7 +3530,7 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
            String addedInfo = " -- new V7R5+ property added by native driver";
            StringBuffer sb = new StringBuffer(addedInfo); 
            String systemName = systemObject_.getSystemName();
-           if (checkNative() && checkRelease750plus(addedInfo) && checkAdditionalAuthenticationFactor(systemName)) {
+           if (checkNative() && checkRelease750plus(addedInfo) && checkAdditionalAuthenticationFactor(systemName) && checkPasswordLeak()) {
              try {
                boolean successful = true; 
                
@@ -3555,7 +3555,8 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
                String mfaFactorString = new String(mfaFactor_);
                AuthExit.assureExitProgramExists(pwrConnection_, mfaUserid_);
                JDReflectionUtil.callMethod_V(dataSource_, "setUser", mfaUserid_);
-               JDReflectionUtil.callMethod_V(dataSource_, "setPassword", mfaPassword_);
+               String mfaPassword = PasswordVault.decryptPasswordLeak(mfaEncryptedPassword_);
+               JDReflectionUtil.callMethod_V(dataSource_, "setPassword", mfaPassword);
                JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemotePort", 12345);
                JDReflectionUtil.callMethod_V(ds, "setAdditionalAuthenticationFactor", mfaFactorString);
                JDReflectionUtil.callMethod_V(ds, "setAuthenticationVerificationId", "MYAPP_SUPER_SERVER");
@@ -3576,61 +3577,28 @@ setReturnExtendedMetaData(), getReturnExtendedMetaData() -- call setExtendedMeta
                    if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
                      successful = false; sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_+"\n");
                    }
-                   /* Read the output file using IFS_READ */ 
-                   boolean foundProfileName= false;
-                   boolean foundVerificationId = false; 
-                   boolean foundRemotePort  = false;
-                   boolean foundLocalPort = false;
-                   boolean foundRemoteIp = false;
-                   boolean foundLocalIp = false;
-                   
+                   c.close(); 
+
                    String  expectedVerificationId="Verification_ID=MYAPP_SUPER_SERVER"; 
                    String  expectedRemotePort="Remote_Port=2134";
                    String  expectedLocalPort="Local_Port=80";
-                   String  expectedRemoteIp="Remote_IPAddress=5.6.7.8";
-                   String  expectedLocalIp="Local_IPAddress=1.2.3.4";
-                   c.close(); 
+                   String expectedRemoteIp = "Remote_IPAddress=5.6.7.8";
+                   String expectedLocalIp = "Local_IPAddress=1.2.3.4";
 
-                   
-                   Statement pwrStmt = pwrConnection_.createStatement(); 
-                   String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/"+jobName+".txt'))";
-                   rs = pwrStmt.executeQuery(sql);
-                   sb.append("/tmp/authexit/"+jobName+".txt contains \n");
-                   sb.append("-------------------------------------------\n");
-                   
-                   while(rs.next()) { 
-                     String line = rs.getString(1).trim(); 
-                     sb.append(line); 
-                     sb.append("\n"); 
-                     if (line.equals("User_Profile_Name="+mfaUserid_)) {
-                       foundProfileName = true;
-                     }
-                     if (line.equals(expectedVerificationId))   foundVerificationId = true; 
-                     if (line.equals(expectedLocalIp)) foundLocalIp = true; 
-                     if (line.equals(expectedLocalPort)) foundLocalPort = true; 
-                     if (line.equals(expectedRemoteIp)) foundRemoteIp = true; 
-                     if (line.equals(expectedRemotePort)) foundRemotePort = true; 
+                   if (!AuthExit.checkResult(pwrConnection_, jobName, mfaUserid_, sb, expectedVerificationId,
+                       expectedRemotePort, expectedLocalPort, expectedRemoteIp, expectedLocalIp)) {
+                     successful = false;
                    }
-                   sb.append("-------------------------------------------\n");
-
-                   rs.close(); 
-                   pwrStmt.close(); 
-                   if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
-                   if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
-                   if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
-                   if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
-                   if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+"\n"); }
-                   if (!foundRemotePort) { successful = false; sb.append("Did not find expected:"+expectedRemotePort+"\n"); }
 
                    if (successful) {
-                     AuthExit.cleanup(pwrConnection_); 
+                     AuthExit.cleanup(pwrConnection_);
                    }
-                   pwrConnection_.close(); 
+                   pwrConnection_.close();
                    assertCondition(successful, sb);
-               ctx_.unbind(bindName_);
-             } catch (Exception e) {
-               failed(e, "Unexpected Exception "+sb.toString());
-             }
+                   ctx_.unbind(bindName_);
+                 } catch (Exception e) {
+                   failed(e, "Unexpected Exception " + sb.toString());
+                 }
            }
          }
 

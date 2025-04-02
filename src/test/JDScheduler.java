@@ -466,6 +466,12 @@ public class JDScheduler {
   /**
    * Implements a thread based pooled connection
    */
+  
+  public static void resetThreadJdbcConnection() {
+    Thread currentThread = Thread.currentThread();
+    threadConnectionHashtable.remove(currentThread);
+    
+  }
 
   public static Connection getCurrentThreadJdbcConnection() throws Exception {
     Thread currentThread = Thread.currentThread();

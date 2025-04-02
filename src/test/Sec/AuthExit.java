@@ -26,6 +26,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
+import java.util.Vector;
+
+import test.Testcase;
 
 public class AuthExit {
 
@@ -35,7 +39,7 @@ public class AuthExit {
   static boolean exitProgramChecked_ = false;
   static boolean exitProgramEnabled_ = false;
   static boolean skipExitCleanup = false;
-
+  
   public static void cleanup(Connection c) throws Exception {
     if (!skipExitCleanup) {
       cleanupExitProgam(c);
@@ -185,5 +189,120 @@ public class AuthExit {
     rs.close();
     stmt.close();
   }
+  
+  public static boolean checkResult(
+      Connection pwrConnection,
+      String jobName,  /* format is jobname with / replaced by .s */ 
+      String mfaUserid,
+      StringBuffer sb,
+  String  expectedVerificationId, 
+  String  expectedRemotePort,
+  String  expectedLocalPort,
+  String  expectedRemoteIp,
+  String  expectedLocalIp) {
 
+
+  boolean foundProfileName = false; 
+  boolean foundVerificationId = false; 
+  boolean foundLocalIp =    (expectedLocalIp == null)    ? true : false; 
+  boolean foundLocalPort =  (expectedLocalPort == null)  ? true : false; 
+  boolean foundRemoteIp =   (expectedRemoteIp == null)   ? true : false; 
+  boolean foundRemotePort = (expectedRemotePort == null) ? true : false; 
+  boolean successful = true; 
+  
+  try { 
+  Statement pwrStmt = pwrConnection.createStatement(); 
+  
+  String filename="/tmp/authexit/"+jobName+".txt"; 
+  
+  Vector<String> pathNames = getPathNames(pwrConnection); 
+  Enumeration<String> enumerator = pathNames.elements();
+  boolean found = false; 
+  while (!found && enumerator.hasMoreElements()) { 
+    String path = enumerator.nextElement(); 
+    if (path.indexOf(jobName)>=0) {
+      filename=path; 
+      found = true; 
+    }
+  }
+  
+  String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('"+filename+"'))";
+  ResultSet rs = pwrStmt.executeQuery(sql);
+  sb.append(filename+" contains \n");
+  sb.append("-------------------------------------------\n");
+  int lineCount = 0; 
+  while(rs.next()) { 
+    lineCount++; 
+    String line = rs.getString(1).trim(); 
+    sb.append(line); 
+    sb.append("\n"); 
+    if (line.equals("User_Profile_Name="+mfaUserid)) {
+      foundProfileName = true;
+    }
+    if (!foundVerificationId && line.equals(expectedVerificationId))   foundVerificationId = true; 
+    if (!foundLocalIp && line.equals(expectedLocalIp)) foundLocalIp = true; 
+    if (!foundLocalPort && line.equals(expectedLocalPort)) foundLocalPort = true; 
+    if (!foundRemoteIp && line.equals(expectedRemoteIp)) foundRemoteIp = true; 
+    if (!foundRemotePort && line.equals(expectedRemotePort)) foundRemotePort = true; 
+  }
+  sb.append("-------------------------------------------\n");
+  rs.close(); 
+  if (lineCount == 0) { 
+    successful = false; 
+   
+    sb.append("Error File with "+jobName+" not found\n"); 
+    sb.append("Possible files\n"); 
+    sql = "SELECT PATH_NAME, OBJECT_TYPE, DATA_SIZE, OBJECT_OWNER "+
+    " FROM TABLE (QSYS2.IFS_OBJECT_STATISTICS(START_PATH_NAME => '/tmp/authexit',  SUBTREE_DIRECTORIES => 'NO'))"; 
+    rs = pwrStmt.executeQuery(sql);
+    while(rs.next()) {
+      sb.append(rs.getString(1)+","+rs.getString(2)+","+rs.getString(3)+","+rs.getString(4)+"\n");
+    }
+    sb.append("--- end of results --- \n"); 
+    rs.close(); 
+  }
+
+  pwrStmt.close(); 
+  if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
+  if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
+  if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
+  if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
+  if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+"\n"); }
+  if (!foundRemotePort) { successful = false; sb.append("Did not find expected:"+expectedRemotePort+"\n"); }
+
+  } catch (SQLException sqlex ) { 
+    sb.append("Hit exception "+sqlex); 
+    Testcase.printStackTraceToStringBuffer(sqlex,sb); 
+    successful = false; 
+  }
+  return successful; 
+  }
+  
+  public static Vector<String> getPathNames(Connection pwrConnection) throws SQLException { 
+Vector<String> pathNames = new Vector<String>(); 
+    
+    Statement pwrStmt = pwrConnection.createStatement(); 
+    String sql = "SELECT PATH_NAME, OBJECT_TYPE, DATA_SIZE, OBJECT_OWNER "+
+    " FROM TABLE (QSYS2.IFS_OBJECT_STATISTICS(START_PATH_NAME => '/tmp/authexit',  SUBTREE_DIRECTORIES => 'NO'))"; 
+    ResultSet rs = pwrStmt.executeQuery(sql);
+    while(rs.next()) {
+      pathNames.add(rs.getString(1)); 
+    }
+    rs.close(); 
+    return pathNames; 
+  }
+
+  public static void clearOutputFiles(Connection pwrConnection) throws SQLException {
+    Vector<String> pathNames = getPathNames(pwrConnection); 
+    Statement pwrStmt = pwrConnection.createStatement(); 
+    Enumeration<String> enumerator = pathNames.elements();
+    while (enumerator.hasMoreElements()) { 
+      String path = enumerator.nextElement(); 
+      String sql = "VALUES SYSTOOLS.IFS_UNLINK('"+path+"')"; 
+      pwrStmt.execute(sql);
+    }
+    
+       
+    
+  }
 }
