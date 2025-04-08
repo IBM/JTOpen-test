@@ -1162,10 +1162,11 @@ public class SecCtorTestcase extends Testcase {
 
   // test AS400 constructor with given profile token
   public void Var032() {
+   
     String s = System.getProperty("os.name");
     boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
     if (!onI5OS) {
-      notApplicable();
+      notApplicable("on IBM i only");
       return;
     }
     ProfileTokenCredential profileToken = new ProfileTokenCredential();
@@ -1235,34 +1236,28 @@ public class SecCtorTestcase extends Testcase {
   // test AS400 constructor with profile token created by provider
   public void Var035() {
     AS400 system = null;
+    System.setProperty("com.ibm.as400.access.AS400.guiAvailable","false");
 
     try {
-      String s = System.getProperty("os.name");
-      boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
-      if (!onI5OS) {
-        notApplicable();
-        return;
-      }
       DefaultProfileTokenProvider provider = new DefaultProfileTokenProvider();
       provider.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
       provider.setTimeoutInterval(3600);
       provider.setUserId(userId_);
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
+      char[] charPassword = null; 
+      provider.setSystem(systemObject_);
+      charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       provider.setPassword(charPassword);
-
       system = new AS400(systemName_, provider);
-
       system.connectService(AS400.COMMAND);
 
       // Because of a bug in DefaultProfileTokenProvider, a copy of the charPassword
       // was not made.
       // Clear it here.
       // TODO: After fix move to after the setPassword method
-      PasswordVault.clearPassword(charPassword);
-
-      assertCondition(system.getUserId().equals(userId_), "User ID doesn't equal system.getUserId()="
-          + system.getUserId() + " userId_=" + userId_ + "  -- added September 2011");
+      if (charPassword != null) PasswordVault.clearPassword(charPassword);
+      assertCondition(system.getUserId().equalsIgnoreCase(userId_), "User ID doesn't equal system.getUserId()="
+            + system.getUserId() + " userId_=" + userId_ + "  -- added September 2011");
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     } finally {
@@ -1271,24 +1266,97 @@ public class SecCtorTestcase extends Testcase {
     }
   }
 
+  
+  // test AS400 constructor with profile token created by provider
+  // Using custom IP address and verification Id
   public void Var036() {
-    notApplicable();
+
+  
+    AS400 system = null;
+    System.setProperty("com.ibm.as400.access.AS400.guiAvailable","false");
+
+    try {
+      DefaultProfileTokenProvider provider = new DefaultProfileTokenProvider();
+      provider.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
+      provider.setTimeoutInterval(3600);
+      provider.setUserId(userId_);
+      provider.setVerificationID("MY_OWN_VERIFICATION_ID");
+      JDReflectionUtil.callMethod_V(provider,"setRemoteIPAddress","11.22.33.44");
+      char[] charPassword = null; 
+      provider.setSystem(systemObject_);
+      charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      provider.setPassword(charPassword);
+      system = new AS400(systemName_, provider);
+      system.connectService(AS400.COMMAND);
+
+      // Because of a bug in DefaultProfileTokenProvider, a copy of the charPassword
+      // was not made.
+      // Clear it here.
+      // TODO: After fix move to after the setPassword method
+      if (charPassword != null) PasswordVault.clearPassword(charPassword);
+      assertCondition(system.getUserId().equalsIgnoreCase(userId_), "User ID doesn't equal system.getUserId()="
+            + system.getUserId() + " userId_=" + userId_ + "  -- added September 2011");
+    } catch (Exception e) {
+      failed(e, "Unexpected exception.");
+    } finally {
+      if (system != null)
+        system.disconnectAllServices();
+    }
+  
+  
   }
 
+  
+  
+  // test AS400 constructor with profile token created by provider
+  // Using IP address of 127.0.0.1 address and verification Id
+
   public void Var037() {
-    notApplicable();
+   
+    
+    AS400 system = null;
+    System.setProperty("com.ibm.as400.access.AS400.guiAvailable","false");
+
+    try {
+      DefaultProfileTokenProvider provider = new DefaultProfileTokenProvider();
+      provider.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
+      provider.setTimeoutInterval(3600);
+      provider.setUserId(userId_);
+      provider.setVerificationID("MY_OWN_VERIFICATION_ID");
+      JDReflectionUtil.callMethod_V(provider,"setRemoteIPAddress","127.0.0.1");
+      char[] charPassword = null; 
+      provider.setSystem(systemObject_);
+      charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      provider.setPassword(charPassword);
+      system = new AS400(systemName_, provider);
+      system.connectService(AS400.COMMAND);
+
+      // Because of a bug in DefaultProfileTokenProvider, a copy of the charPassword
+      // was not made.
+      // Clear it here.
+      // TODO: After fix move to after the setPassword method
+      if (charPassword != null) PasswordVault.clearPassword(charPassword);
+      assertCondition(system.getUserId().equalsIgnoreCase(userId_), "User ID doesn't equal system.getUserId()="
+            + system.getUserId() + " userId_=" + userId_ + "  -- added September 2011");
+    } catch (Exception e) {
+      failed(e, "Unexpected exception.");
+    } finally {
+      if (system != null)
+        system.disconnectAllServices();
+    }
+
   }
 
   public void Var038() {
-    notApplicable();
+    notApplicable("Future variation");
   }
 
   public void Var039() {
-    notApplicable();
+    notApplicable("Future variation");
   }
 
   public void Var040() {
-    notApplicable();
+    notApplicable("Future variation");
   }
 
   // test AS400 constructor with given profile token
@@ -1296,19 +1364,12 @@ public class SecCtorTestcase extends Testcase {
     if (checkAdditionalAuthenticationFactor(systemName_)) {
       try {
         initMfaUser();
-        String s = System.getProperty("os.name");
-        boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
         AS400 system;
-        if (!onI5OS) {
-          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-          system = new AS400(systemName_, userId_, charPassword);
-        } else {
-          system = new AS400(systemName_);
-        }
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        system = new AS400(systemName_, userId_, charPassword);
 
         ProfileTokenCredential profileToken = new ProfileTokenCredential();
         system.setGuiAvailable(false);
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
         profileToken.setSystem(system);
         profileToken.setTimeoutInterval(3600);
         profileToken.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
@@ -1345,16 +1406,13 @@ public class SecCtorTestcase extends Testcase {
     if (checkAdditionalAuthenticationFactor(systemName_)) {
       AS400 remoteSystem = null;
       try {
-        String s = System.getProperty("os.name");
-        boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
+//        String s = System.getProperty("os.name");
+//         boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
         DefaultProfileTokenProvider provider = new DefaultProfileTokenProvider();
-        if (!onI5OS) {
-          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-          remoteSystem = new AS400(systemName_, userId_, charPassword);
-          PasswordVault.clearPassword(charPassword);
-          provider.setSystem(remoteSystem);
-
-        }
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        remoteSystem = new AS400(systemName_, userId_, charPassword);
+        PasswordVault.clearPassword(charPassword);
+        provider.setSystem(remoteSystem);
         initMfaUser();
         provider.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
         provider.setTimeoutInterval(3600);
@@ -1395,4 +1453,7 @@ public class SecCtorTestcase extends Testcase {
     }
   }
 
+  
+  
+  
 }

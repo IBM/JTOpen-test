@@ -17,6 +17,7 @@ import com.ibm.as400.access.*;
 
 import test.FTPTest;
 import test.JTOpenTestEnvironment;
+import test.PasswordVault;
 import test.Testcase;
 
 import java.io.RandomAccessFile;
@@ -43,7 +44,8 @@ public class FTPModeTestcase extends    Testcase
      test.FTPTest.main(newArgs); 
    }
     private String user_     = null;
-    private String localPassword = null;
+    private char[] clearPassword = null;
+    String clearPasswordString = null; 
     private String system_   = null;
     private String testDirectory = "FTPTestDir";
     private String testDirectoryDeep = "FTPTestDir/rootDir/subdir2";
@@ -112,11 +114,17 @@ public class FTPModeTestcase extends    Testcase
           }
         }
 
+        if ((password == null) || (password.length() < 1)) {
+          System.out.println("===> warning, variations will fail because no -password specified");
+        } else { 
+          char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
+          clearPassword = PasswordVault.decryptPassword(encryptedPassword); 
+          clearPasswordString = new String(clearPassword); 
+        }
 
         if (systemObject_ != null)
         {
            user_     = userid;
-           localPassword = password;
            system_   = systemObject_.getSystemName();
         }
 
@@ -125,8 +133,6 @@ public class FTPModeTestcase extends    Testcase
         if ((user_ == null) || (user_.length() < 1))
            System.out.println("===> warning, variations will fail because no -uid specified");
 
-        if ((localPassword == null) || (localPassword.length() < 1))
-           System.out.println("===> warning, variations will fail because no -password specified");
 
         if ((system_ == null) || (system_.length() < 1))
            System.out.println("===> warning, variations will fail because no -system specified");
@@ -260,7 +266,7 @@ public class FTPModeTestcase extends    Testcase
        try
        {
           boolean ftpRC;                                          //@A1A
-          FTP c = new FTP(system_, user_, localPassword);
+          FTP c = new FTP(system_, user_, clearPasswordString);
           c.setMode(ftpMode_);
           c.cd(initialToken_);
           ftpRC = c.cd(targetDir);                                //@A1C
@@ -291,7 +297,7 @@ public class FTPModeTestcase extends    Testcase
     {
        try
        {
-          FTP c = new FTP(system_, user_, localPassword);
+          FTP c = new FTP(system_, user_, clearPasswordString);
           c.setMode(ftpMode_);
           c.cd(initialToken_);
           c.cd(targetDir);
@@ -449,7 +455,7 @@ Clear the "FTP.reuseSocket" system property.
              c.setMode(ftpMode_);
              c.setServer(system_);
              c.setUser(user_);
-             c.setPassword(localPassword);
+             c.setPassword(clearPasswordString);
              c.noop();
              c.disconnect();
            }
@@ -541,7 +547,7 @@ Clear the "FTP.reuseSocket" system property.
           {
              FTP c = new FTP("");
              c.setUser(user_);
-             c.setPassword(localPassword);
+             c.setPassword(clearPasswordString);
              c.setMode(ftpMode_);
              c.noop();
           }
@@ -582,7 +588,7 @@ Clear the "FTP.reuseSocket" system property.
           {
              FTP c = new FTP(system_);
              c.setUser(user_);
-             c.setPassword(localPassword);
+             c.setPassword(clearPasswordString);
              c.setMode(ftpMode_);
              c.noop();
           }
@@ -614,7 +620,7 @@ Clear the "FTP.reuseSocket" system property.
 
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
 
              if (! (c.getServer().equals(system_)))
@@ -639,7 +645,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(null, user_, localPassword);
+             FTP c = new FTP(null, user_, clearPasswordString);
              c.noop();
           }
           catch (Exception e)
@@ -657,7 +663,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, null, localPassword);
+             FTP c = new FTP(system_, null, clearPasswordString);
              c.noop();
           }
           catch (Exception e)
@@ -693,7 +699,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP("", user_, localPassword);
+             FTP c = new FTP("", user_, clearPasswordString);
              c.noop();
           }
           catch (Exception e)
@@ -711,7 +717,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, "", localPassword);
+             FTP c = new FTP(system_, "", clearPasswordString);
              c.noop();
           }
           catch (Exception e)
@@ -747,7 +753,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.noop();
           }
           catch (Exception e)
@@ -780,7 +786,7 @@ Clear the "FTP.reuseSocket" system property.
 
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
 
              c.setDataTransferType(FTP.ASCII);
@@ -795,7 +801,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
 
              c.setMode(ftpMode_);
              c.setDataTransferType(FTP.ASCII);
@@ -820,7 +826,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setDataTransferType(FTP.BINARY);
              c.setDataTransferType(FTP.ASCII);
              c.setMode(ftpMode_);
@@ -863,7 +869,7 @@ Clear the "FTP.reuseSocket" system property.
 
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setDataTransferType(FTP.BINARY);
              c.setMode(ftpMode_);
           }
@@ -877,7 +883,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
 
              c.setDataTransferType(FTP.BINARY);
              c.setMode(ftpMode_);
@@ -902,7 +908,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setDataTransferType(FTP.ASCII);
              c.setDataTransferType(FTP.BINARY);
              c.setMode(ftpMode_);
@@ -945,7 +951,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(null);
           }
@@ -964,7 +970,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd("");
           }
           catch (Exception e)
@@ -982,7 +988,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (c.cd("/notThere"))
              {
                 failed("cd to notThere worked and shouldn't have");
@@ -1008,7 +1014,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
 
              c.cd(initialToken_);
 
@@ -1053,7 +1059,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -1076,7 +1082,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -1129,7 +1135,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -1152,7 +1158,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -1202,7 +1208,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectoryDeep);
@@ -1364,7 +1370,7 @@ Clear the "FTP.reuseSocket" system property.
              c.setMode(ftpMode_);
              c.setServer(system_);
              c.setUser(user_);
-             c.setPassword(localPassword);
+             c.setPassword(clearPasswordString);
              c.cd(initialToken_);
              c.setUser(user_);
              failed("No exception when setting user after connect");
@@ -1388,7 +1394,7 @@ Clear the "FTP.reuseSocket" system property.
              FTP c = new FTP();
              c.setServer(system_);
              c.setUser("baddS8");
-             c.setPassword(localPassword);
+             c.setPassword(clearPasswordString);
              c.cd(initialToken_);
              failed("no exception 8");
              Continue = false;
@@ -1561,7 +1567,7 @@ Clear the "FTP.reuseSocket" system property.
              FTP c = new FTP();
              c.setServer("badds8");
              c.setUser(user_);
-             c.setPassword(localPassword);
+             c.setPassword(clearPasswordString);
              c.cd(initialToken_);
              failed("no failure when uid bad (system name = badds8) ");
              Continue = false;
@@ -1583,7 +1589,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.noop();
              c.setServer("fred");
              failed("no exception when setting server after connection established");
@@ -1624,7 +1630,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.setCurrentDirectory(null);
           }
@@ -1643,7 +1649,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setCurrentDirectory("");
           }
           catch (Exception e)
@@ -1661,7 +1667,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (c.setCurrentDirectory("/notThere"))
              {
                 failed("cd to notThere worked and shouldn't have");
@@ -1687,7 +1693,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
 
              c.setCurrentDirectory(initialToken_);
 
@@ -1822,7 +1828,7 @@ Clear the "FTP.reuseSocket" system property.
              c.setServer(system_);
              c.setUser(user_);
              c.setPassword("fred");
-             c.setPassword(localPassword);
+             c.setPassword(clearPasswordString);
              c.cd(initialToken_);
           }
           catch (Exception e)
@@ -1860,7 +1866,7 @@ Clear the "FTP.reuseSocket" system property.
 
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
 
              c.setCurrentDirectory(initialToken_);
@@ -1885,7 +1891,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1910,7 +1916,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1959,7 +1965,7 @@ Clear the "FTP.reuseSocket" system property.
 
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
 
              c.setCurrentDirectory(initialToken_);
@@ -1984,7 +1990,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
 
              c.setCurrentDirectory(initialToken_);
@@ -2010,7 +2016,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -2072,7 +2078,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.noop();
              if (c.getLastMessage().startsWith("200"))
              {}
@@ -2200,7 +2206,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.disconnect();
           }
@@ -2215,7 +2221,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.connect();
           }
@@ -2230,7 +2236,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.connect();
              c.disconnect();
@@ -2353,7 +2359,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.noop();
              c.setPort(100);
              failed("no exception (5)");
@@ -2412,7 +2418,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("1 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.get(null, "fred");
              failed("no exception (1)");
              Continue = false;
@@ -2434,7 +2440,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.get("fred", (String) null);
              failed("no exception (2)");
              Continue = false;
@@ -2456,7 +2462,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.get("fred", "");
              failed("no exception (3)");
              Continue = false;
@@ -2478,7 +2484,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.get("", "fred");
              failed("no exception (4)");
              Continue = false;
@@ -2500,7 +2506,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("5 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -2528,7 +2534,7 @@ Clear the "FTP.reuseSocket" system property.
              String source   = targetDirFull + "PureJava.html";
              String original = testDirectory + File.separator + "PureJava.html";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -2584,7 +2590,7 @@ Clear the "FTP.reuseSocket" system property.
              String source   = targetDirFull + "jt400.jar";
              String original = testDirectory + File.separator + "jt400.jar";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -2632,7 +2638,7 @@ Clear the "FTP.reuseSocket" system property.
              String source   = targetDirFull + "javasp.savf";
              String original = testDirectory + File.separator + "javasp.savf";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -2670,7 +2676,7 @@ Clear the "FTP.reuseSocket" system property.
              String source   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -2712,7 +2718,7 @@ Clear the "FTP.reuseSocket" system property.
                                "rootDir"     + File.separator +
                                "subdir2"     + File.separator + "FSTOOL.EXE";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -2752,7 +2758,7 @@ Clear the "FTP.reuseSocket" system property.
                                "rootDir"     + File.separator +
                                "subdir2"     + File.separator + "FSTOOL.EXE";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -2823,7 +2829,7 @@ Clear the "FTP.reuseSocket" system property.
           try
           {
              java.io.File fred = new java.io.File("fred");
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.get(null, fred);
              failed("no exception (1a)");
              Continue = false;
@@ -2845,7 +2851,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("13 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.get("fred", (java.io.File) null);
              failed("no exception (2a)");
              Continue = false;
@@ -2868,7 +2874,7 @@ Clear the "FTP.reuseSocket" system property.
           try
           {
              java.io.File fred = new java.io.File("fred");
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.get("", fred);
              failed("no exception (4a)");
              Continue = false;
@@ -2891,7 +2897,7 @@ Clear the "FTP.reuseSocket" system property.
           try
           {
              java.io.File fred = new java.io.File(targetDirFull + "fred");
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.get("notThere", targetDirFull + fred);
@@ -2918,7 +2924,7 @@ Clear the "FTP.reuseSocket" system property.
              String source   = targetDirFull + "PureJava.html";
              String original = testDirectory + File.separator + "PureJava.html";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(testDirectory);
@@ -2956,7 +2962,7 @@ Clear the "FTP.reuseSocket" system property.
              String source   = targetDirFull + "jt400.jar";
              String original = testDirectory + File.separator + "jt400.jar";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -3003,7 +3009,7 @@ Clear the "FTP.reuseSocket" system property.
              String source   = targetDirFull + "javasp.savf";
              String original = testDirectory + File.separator + "javasp.savf";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -3040,7 +3046,7 @@ Clear the "FTP.reuseSocket" system property.
              String source   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.ASCII);
@@ -3111,7 +3117,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("1 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              InputStream i = c.get(null);
              failed("no exception (1) for "+i);
              Continue = false;
@@ -3134,7 +3140,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              InputStream i = c.get("");
              failed("no exception (3) for " +i );
              Continue = false;
@@ -3157,7 +3163,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              InputStream i = c.get("notThere");
@@ -3187,7 +3193,7 @@ Clear the "FTP.reuseSocket" system property.
              String target   = targetDirFull + "PureJava.html";
              String original = testDirectory + File.separator + "PureJava.html";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -3229,7 +3235,7 @@ Clear the "FTP.reuseSocket" system property.
              String target   = targetDirFull + "jt400.jar";
              String original = testDirectory + File.separator + "jt400.jar";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -3269,7 +3275,7 @@ Clear the "FTP.reuseSocket" system property.
              String target   = targetDirFull + "javasp.savf";
              String original = testDirectory + File.separator + "javasp.savf";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -3309,7 +3315,7 @@ Clear the "FTP.reuseSocket" system property.
              String target   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.ASCII);
@@ -3401,7 +3407,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -3425,7 +3431,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.put((java.io.File) null, "fred");
              failed("no exception (1)");
              Continue = false;
@@ -3447,7 +3453,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.put("fred", null);
              failed("no exception (2)");
              Continue = false;
@@ -3469,7 +3475,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("5 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.put("fred", "");
              failed("no exception (3)");
              Continue = false;
@@ -3491,7 +3497,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("6 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.put("", "fred");
              failed("no exception (4)");
              Continue = false;
@@ -3513,7 +3519,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("7 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.put(targetDirFull + "fred", "notThere");
@@ -3541,7 +3547,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -3602,7 +3608,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -3653,7 +3659,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -3703,7 +3709,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -3754,7 +3760,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -3827,7 +3833,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("14 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -3851,7 +3857,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("15 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.put((java.io.File) null, "fred");
              failed("no exception (1a)");
              Continue = false;
@@ -3873,7 +3879,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("16 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.put(new java.io.File("fred"), null);
              failed("no exception (2a)");
              Continue = false;
@@ -3895,7 +3901,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("17 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.put(new java.io.File("fred"), "");
              failed("no exception (3a)");
              Continue = false;
@@ -3917,7 +3923,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("18 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.put(new java.io.File(targetDirFull + "fred"), "notThere");
@@ -3945,7 +3951,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4003,7 +4009,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4050,7 +4056,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4097,7 +4103,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -4180,7 +4186,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
@@ -4205,7 +4211,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              OutputStream o = c.put(null);
              failed("no exception (1) for "+o);
              Continue = false;
@@ -4228,7 +4234,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              OutputStream o = c.put("");
              failed("no exception (4) for "+o);
              Continue = false;
@@ -4256,7 +4262,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 5v.
              c.setMode(ftpMode_);
              c.cd(initialToken_);
@@ -4308,7 +4314,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 6v.
              c.setMode(ftpMode_);
              c.cd(initialToken_);
@@ -4361,7 +4367,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 7v.
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -4413,7 +4419,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 8v.
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -4590,7 +4596,7 @@ Clear the "FTP.reuseSocket" system property.
              String target   = "a.a";
              String original = testDirectory  + File.separator + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
 
              c.put(original, "notThere/a.a/b.b");
@@ -4613,7 +4619,7 @@ Clear the "FTP.reuseSocket" system property.
        {
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
 
              c.get("notThere/a.a/b.b", "b.b");
@@ -4676,7 +4682,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.setMode(ftpMode_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
@@ -4701,7 +4707,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.append((java.io.File) null, "fred");
              failed("no exception (1)");
              Continue = false;
@@ -4723,7 +4729,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.append("fred", null);
              failed("no exception (2)");
              Continue = false;
@@ -4745,7 +4751,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("5 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.append("fred", "");
              failed("no exception (3)");
              Continue = false;
@@ -4767,7 +4773,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("6 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.append("", "fred");
              failed("no exception (4)");
              Continue = false;
@@ -4789,7 +4795,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("7 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.append(targetDirFull + "fred", "notThere");
@@ -4817,7 +4823,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 8v.
              c.setMode(ftpMode_);
              c.cd(initialToken_);
@@ -4867,7 +4873,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 9v.
              c.setMode(ftpMode_);
              c.cd(initialToken_);
@@ -4917,7 +4923,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 10v.
              c.setMode(ftpMode_);
              c.cd(initialToken_);
@@ -4967,7 +4973,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -5015,7 +5021,7 @@ Clear the "FTP.reuseSocket" system property.
              String target   = "PureJava.html";
              String original = testDirectory;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5046,7 +5052,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 13v.
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -5093,7 +5099,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              if (aix_) c.setReuseSocket(false);  // Avoid hang in block 14v.
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -5631,7 +5637,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -5655,7 +5661,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              OutputStream o = c.append(null);
              failed("no exception (1) for "+o);
              Continue = false;
@@ -5678,7 +5684,7 @@ Clear the "FTP.reuseSocket" system property.
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              OutputStream o = c.append("");
              failed("no exception (4) for "+ o);
              Continue = false;
@@ -5706,7 +5712,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5755,7 +5761,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5805,7 +5811,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5855,7 +5861,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -5907,7 +5913,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5957,7 +5963,7 @@ Clear the "FTP.reuseSocket" system property.
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, localPassword);
+             FTP c = new FTP(system_, user_, clearPasswordString);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -6036,7 +6042,7 @@ Clear the "FTP.reuseSocket" system property.
 
         sb.append("2 \n");
 	sb.append("..new FTP "+system_+","+user_+"\n"); 
-        conn = new FTP(system_, user_, localPassword);
+        conn = new FTP(system_, user_, clearPasswordString);
 	sb.append("setMode("+ftpMode_+")\n"); 
         conn.setMode(ftpMode_);
 	sb.append("..cd "+initialToken_+"\n"); 

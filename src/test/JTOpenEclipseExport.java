@@ -25,54 +25,101 @@ import com.ibm.as400.access.*;
  * 
  * 
  */
-public class JTOpenEclipseExport  {
+public class JTOpenEclipseExport extends Thread  {
 
+  String as400Name_;
+  String userid_;
+  String password_;
+  
+  public JTOpenEclipseExport(String as400Name, String userid, String password) {
+    as400Name_ = as400Name; 
+    userid_ = userid;
+    password_ = password; 
+  }
+  
+  public void run()  {
+    try { 
+    export(as400Name_,userid_,password_); 
+    } catch (Exception e) { 
+      synchronized(System.out) { 
+        System.out.println("Exception caught exporting to "+as400Name_); 
+        e.printStackTrace(System.out); 
+      }
+    }
+  }
   public static void usage() { 
-    System.out.println("Usage:  java  test.JTOpenEclipseExport IBMi userid password   ");
-    System.out.println("   Updates an IBM i system with the latest test changes in the Eclipse Environment");
+    System.out.println("Usage:  java  test.JTOpenEclipseExport IBMi[+IBMi]* userid password   ");
+    System.out.println("   Updates IBM i systems with the latest test changes in the Eclipse Environment");
     System.out.println("   Uses {user.dir}/lastUpdate.$system as a time marker"); 
   }
+
+  public static void export(String as400Name, String userid, String password) throws Exception {   
+    String prefix = as400Name+":"; 
+    String currentDirectory = System.getProperty("user.dir");
+    // Home directory should be the base of the git repository
+    String homeDirectory = System.getProperty("user.home"); 
+    String testDirectory = currentDirectory+File.separatorChar + "src" ;
+    File testDirectoryFile = new File(testDirectory+File.separatorChar+"test"); 
+    if (!testDirectoryFile.exists()) { 
+      System.out.println(prefix+"Error. directory "+testDirectory+File.separatorChar+"test"+" does not exist.  user.home is not the git root");
+    }
+    System.out.println(prefix+"Current directory is "+currentDirectory);
+    long startTime = System.currentTimeMillis(); 
+    String lastTimeFilename = homeDirectory+File.separatorChar+"lastUpdate."+as400Name; 
+    File lastTimeFile = new File(lastTimeFilename); 
+    if (!lastTimeFile.exists()) { 
+      lastTimeFile.createNewFile(); 
+      lastTimeFile.setLastModified(startTime - 24 * 60 * 60000);
+      System.out.println(prefix+lastTimeFilename+" does not exist.  Creating a new one a day old"); 
+    }
+    long lastModifiedTime = lastTimeFile.lastModified(); 
+    Timestamp lastModifiedTimestamp = new Timestamp(lastModifiedTime); 
+    System.out.println(prefix+"Comparing against "+lastTimeFilename+" "+lastModifiedTimestamp.toString()); 
+    
+    Vector<String> fileList = buildFileList(testDirectoryFile, "test", lastModifiedTime); 
+    AS400 as400 = new AS400(as400Name, userid, password.toCharArray()); 
+    transferFiles(as400, testDirectory, fileList); 
+    System.out.println(prefix+"Files transferred"); 
+    lastTimeFile.setLastModified(startTime);
  
+    compileFiles(as400); 
+    synchronized(System.out) {  
+       System.out.println(prefix+"==================================================================================================="); 
+       System.out.println(prefix+"DONE exporting to "+as400Name+" at "+ (new Timestamp(System.currentTimeMillis()))); 
+       System.out.println(prefix+"==================================================================================================="); 
+    }
+  }
+  
   public static void main(String args[]) {
     try {
       System.out.println("Usage:  java  test.JDTOpenEclipseExport IBMi userid password   ");
       System.out.println("   Updates an IBM i system with the latest changes in the Eclipse Environment");
 
+      
       String as400Name = args[0]; 
       System.out.println("EXPORTING to "+as400Name); 
       String userid = args[1]; 
       String password = args[2]; 
-      String currentDirectory = System.getProperty("user.dir");
-      // Home directory should be the base of the git repository
-      String homeDirectory = System.getProperty("user.home"); 
-      String testDirectory = currentDirectory+File.separatorChar + "src" ;
-      File testDirectoryFile = new File(testDirectory+File.separatorChar+"test"); 
-      if (!testDirectoryFile.exists()) { 
-        System.out.println("Error. directory "+testDirectory+File.separatorChar+"test"+" does not exist.  user.home is not the git root");
+      if (as400Name.indexOf('+') < 0) { 
+         export(as400Name, userid, password); 
+      } else {
+        String[] systems = as400Name.split("\\+");
+        JTOpenEclipseExport[] threads = new JTOpenEclipseExport[systems.length];
+        for (int i = 0; i < systems.length; i++) { 
+          threads[i] = new JTOpenEclipseExport(systems[i],userid,password); 
+        }
+        for (int i = 0; i < systems.length; i++) { 
+          System.out.println("Starting export for system "+systems[i]); 
+          threads[i].start(); 
+        }
+        for (int i = 0; i < systems.length; i++) { 
+          System.out.println("Waiting for export for system "+systems[i]); 
+          threads[i].join(); 
+          System.out.println("Export completed for system "+systems[i]); 
+        }
+        
+        System.out.println("All exports done"); 
       }
-      System.out.println("Current directory is "+currentDirectory);
-      long startTime = System.currentTimeMillis(); 
-      String lastTimeFilename = homeDirectory+File.separatorChar+"lastUpdate."+as400Name; 
-      File lastTimeFile = new File(lastTimeFilename); 
-      if (!lastTimeFile.exists()) { 
-        lastTimeFile.createNewFile(); 
-        lastTimeFile.setLastModified(startTime - 24 * 60 * 60000);
-        System.out.println(lastTimeFilename+" does not exist.  Creating a new one a day old"); 
-      }
-      long lastModifiedTime = lastTimeFile.lastModified(); 
-      Timestamp lastModifiedTimestamp = new Timestamp(lastModifiedTime); 
-      System.out.println("Comparing against "+lastTimeFilename+" "+lastModifiedTimestamp.toString()); 
-      
-      Vector<String> fileList = buildFileList(testDirectoryFile, "test", lastModifiedTime); 
-      AS400 as400 = new AS400(as400Name, userid, password.toCharArray()); 
-      transferFiles(as400, testDirectory, fileList); 
-      System.out.println("Files transferred"); 
-      lastTimeFile.setLastModified(startTime);
-   
-      compileFiles(as400); 
-      System.out.println("==================================================================================================="); 
-      System.out.println("DONE exporting to "+as400Name+" at "+ (new Timestamp(System.currentTimeMillis()))); 
-      System.out.println("==================================================================================================="); 
     } catch (Exception e) {
       e.printStackTrace(System.out);
       usage(); 
@@ -81,7 +128,8 @@ public class JTOpenEclipseExport  {
   }
 
   protected static void compileFiles(AS400 as400) throws AS400SecurityException, ErrorCompletingRequestException, IOException, InterruptedException, PropertyVetoException {
-   System.out.println("Running compile "); 
+   String prefix=as400+":";  
+   System.out.println(prefix+"Running compile "); 
    CommandCall cc = new CommandCall(as400);
    String compileCommand = "QSH CMD('cd /home/jdbctest; test/AllQshCompileScript > /tmp/JTOpenCompile.out 2>&1') "; 
    cc.run(compileCommand);
@@ -90,7 +138,7 @@ public class JTOpenEclipseExport  {
    BufferedReader bufferedReader = new BufferedReader(reader); 
    String line = bufferedReader.readLine(); 
    while (line != null) { 
-     System.out.println(line);
+     System.out.println(prefix+line);
      line = bufferedReader.readLine(); 
    }
    bufferedReader.close(); 
@@ -114,13 +162,14 @@ public class JTOpenEclipseExport  {
     }
   }
   static void transferFiles(AS400 as400, String testDirectory, Vector<String> fileList) throws IOException, AS400SecurityException {
-    System.out.println("Transferring "+fileList.size()+" files"); 
+    String prefix = as400+":";
+    System.out.println(prefix+"Transferring "+fileList.size()+" files"); 
     Enumeration<String> enumeration = fileList.elements(); 
     while (enumeration.hasMoreElements()) {
       String localFilename = enumeration.nextElement(); 
       boolean binary = isBinaryFile(localFilename); 
       String remoteFilename = getRemoteFilename(testDirectory, localFilename);
-      System.out.println("Transferring to "+remoteFilename);
+      System.out.println(prefix+"Transferring to "+remoteFilename);
       IFSFile ifsFile = new IFSFile(as400, remoteFilename);
       ifsFile.delete(); 
       verifyParent(ifsFile); 

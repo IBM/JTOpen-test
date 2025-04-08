@@ -905,7 +905,17 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     if (iniDefaults != null) { 
       String value = iniDefaults.getProperty(property); 
       if (value != null) { 
-        sb.append("Setting: "+setting+" retrieved from property "+property+" in "+System.getProperty("user.dir")+"/ini/defaults.ini\n");
+        String printValue = value; 
+        if ((property.indexOf("pwd") >= 0) && (value.indexOf(".rev")<0)) {
+          printValue = "***PASSWORD***"; 
+        }
+        if ((property.indexOf("pwSys")>=0) && (value.indexOf(".rev")<0)) {
+          int commaIndex = value.indexOf(","); 
+          if (commaIndex > 0) { 
+            printValue = value.substring(0,commaIndex)+",***PASSWORD***";
+          }
+        }
+        sb.append("Setting: "+setting+"="+printValue+" retrieved from property "+property+" in "+System.getProperty("user.dir")+"/ini/defaults.ini\n");
         return value; 
       }
       sb.append("WARNING: Not able to read "+property+" as envvar and from ini/defaults.ini in "+System.getProperty("user.dir")+"\n");

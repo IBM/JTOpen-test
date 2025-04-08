@@ -16,6 +16,7 @@ package test.MiscAH;
 import com.ibm.as400.access.*;
 
 import test.FTPTest;
+import test.PasswordVault;
 import test.TestDriverStatic;
 import test.Testcase;
 
@@ -40,7 +41,7 @@ public class FTPReconnect extends    Testcase
      test.FTPTest.main(newArgs); 
    }
     private String user_     = null;
-    private String password_ = null;
+    private String clearPasswordString_ = null;
     private String system_   = null;
     private String testDirectory = "FTPTestDir";
     private String initialToken_ = null;
@@ -61,6 +62,7 @@ public class FTPReconnect extends    Testcase
     AS400 pwrSys_ = null;
 
     FTPEvent ftpEvent = null;
+    private char[] clearPassword_;
 
 
     public FTPReconnect (AS400 systemObject,
@@ -99,11 +101,18 @@ public class FTPReconnect extends    Testcase
           }
         }
 
+        if ((password == null) || (password.length() < 1)) {
+          System.out.println("===> warning, variations will fail because no -password specified");
+        } else { 
+            char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
+            clearPassword_ = PasswordVault.decryptPassword(encryptedPassword); 
+            clearPasswordString_ = new String(clearPassword_); 
+        }
+
 
         if (systemObject_ != null)
         {
            user_     = userid;
-           password_ = password;
            system_   = systemObject_.getSystemName();
         }
 
@@ -111,9 +120,6 @@ public class FTPReconnect extends    Testcase
 
         if ((user_ == null) || (user_.length() < 1))
            System.out.println("===> warning, variations will fail because no -uid specified");
-
-        if ((password_ == null) || (password_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -password specified");
 
         if ((system_ == null) || (system_.length() < 1))
            System.out.println("===> warning, variations will fail because no -system specified");
@@ -259,7 +265,7 @@ public class FTPReconnect extends    Testcase
     {
        try
        {
-          FTP c = new FTP(system_, user_, password_);
+          FTP c = new FTP(system_, user_, clearPasswordString_);
           c.cd(initialToken_);
           c.cd(targetDir);
           c.issueCommand("DELE " + "a.a");
@@ -329,7 +335,7 @@ public class FTPReconnect extends    Testcase
           {
 	      // try 4 times to fail
 	      for (int i = 0; i < 4; i++) { 
-		  FTP c = new FTP(system_, user_, password_);
+		  FTP c = new FTP(system_, user_, clearPasswordString_);
 		  c.setDataTransferType(FTP.ASCII);
 
 		  System.out.println("==> Will now wait " + timeout + " milliseconds for a timeout");
@@ -386,7 +392,7 @@ public class FTPReconnect extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setDataTransferType(FTP.ASCII);
 
              System.out.println("==> Will now wait " + timeout + " milliseconds for a timeout");
@@ -424,7 +430,7 @@ public class FTPReconnect extends    Testcase
           {
             String[] result = null; 
 	      for (int i = 0 ; i < 4; i++) { 
-		  FTP c = new FTP(system_, user_, password_);
+		  FTP c = new FTP(system_, user_, clearPasswordString_);
 		  c.cd(initialToken_);
 		  c.cd(testDirectory);
 
@@ -488,7 +494,7 @@ public class FTPReconnect extends    Testcase
 
        String source   = targetDirFull + "PureJava.html";
        String original = "FTPTest" + File.separator + "PureJava.html";
-       FTP c = new FTP(system_, user_, password_);
+       FTP c = new FTP(system_, user_, clearPasswordString_);
 
        if (Continue)
        {
@@ -578,7 +584,7 @@ public class FTPReconnect extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -606,7 +612,7 @@ public class FTPReconnect extends    Testcase
              // String original = testDirectory  + File.separator + target;
              // String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);

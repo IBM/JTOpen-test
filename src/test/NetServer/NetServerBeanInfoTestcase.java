@@ -94,8 +94,8 @@ public class NetServerBeanInfoTestcase extends Testcase
    }
 
    protected void cleanup() throws Exception {
-     super.cleanup();
      unlockSystem();
+     super.cleanup();
 
    }
 

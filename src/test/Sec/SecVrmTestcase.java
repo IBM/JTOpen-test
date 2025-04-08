@@ -152,6 +152,7 @@ public class SecVrmTestcase extends Testcase {
       AS400 system = new AS400(VNEXT_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);
       system.setMustUseSockets(mustUseSockets_);
+      system.setGuiAvailable(false);
       system.connectService(AS400.FILE);
       try {
         assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + VNEXT_SYSTEM_NAME);
@@ -172,8 +173,9 @@ public class SecVrmTestcase extends Testcase {
       AS400 system = new AS400(VNEXT_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);
       system.setMustUseSockets(mustUseSockets_);
+      system.setGuiAvailable(false);
       system.connectService(AS400.PRINT);
-      try {
+     try {
         int release = system.getRelease();
         assertCondition(release == 6, "Incorrect release =" + release + " - test runs to " + VNEXT_SYSTEM_NAME);
       } finally {
@@ -193,6 +195,7 @@ public class SecVrmTestcase extends Testcase {
       AS400 system = new AS400(V7R3_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);
       system.setMustUseSockets(mustUseSockets_);
+      system.setGuiAvailable(false);
       system.connectService(AS400.FILE);
       try {
         assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + V7R3_SYSTEM_NAME);
@@ -213,6 +216,7 @@ public class SecVrmTestcase extends Testcase {
       AS400 system = new AS400(V7R3_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);
       system.setMustUseSockets(mustUseSockets_);
+      system.setGuiAvailable(false);
       system.connectService(AS400.PRINT);
       try {
         assertCondition(system.getRelease() == 3, "Incorrect release - test runs to " + V7R3_SYSTEM_NAME);
@@ -232,6 +236,7 @@ public class SecVrmTestcase extends Testcase {
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       AS400 system = new AS400(V7R3_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);
+      system.setGuiAvailable(false);
       system.setMustUseSockets(mustUseSockets_);
       assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + V7R3_SYSTEM_NAME);
     } catch (Exception e) {
@@ -247,6 +252,7 @@ public class SecVrmTestcase extends Testcase {
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       AS400 system = new AS400(V7R3_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);
+      system.setGuiAvailable(false);
       system.setMustUseSockets(mustUseSockets_);
       assertCondition(system.getRelease() == 3, "Incorrect release - test runs to " + V7R3_SYSTEM_NAME);
     } catch (Exception e) {
@@ -262,6 +268,7 @@ public class SecVrmTestcase extends Testcase {
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       AS400 system = new AS400(V7R3_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);
+      system.setGuiAvailable(false);
       system.setMustUseSockets(mustUseSockets_);
       assertCondition(system.getModification() == 0, "Incorrect modification - test runs to " + V7R3_SYSTEM_NAME);
     } catch (Exception e) {
@@ -276,6 +283,7 @@ public class SecVrmTestcase extends Testcase {
     try {
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       AS400 system = new AS400(V7R3_SYSTEM_NAME, userId_, charPassword);
+      system.setGuiAvailable(false);
       PasswordVault.clearPassword(charPassword);
       system.setMustUseSockets(mustUseSockets_);
       assertCondition(system.getVRM() == 0x00070300, "VRM not correct - test runs to " + V7R3_SYSTEM_NAME);
@@ -293,6 +301,7 @@ public class SecVrmTestcase extends Testcase {
       AS400 system = new AS400(V7R4_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);
       system.setMustUseSockets(mustUseSockets_);
+      system.setGuiAvailable(false);
       system.connectService(AS400.FILE);
       try {
         assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + V7R4_SYSTEM_NAME);
@@ -314,6 +323,7 @@ public class SecVrmTestcase extends Testcase {
         AS400 system = new AS400(V7R4_SYSTEM_NAME, userId_, charPassword);
         PasswordVault.clearPassword(charPassword);
         system.setMustUseSockets(mustUseSockets_);
+        system.setGuiAvailable(false);
         system.connectService(AS400.PRINT);
         try {
           assertCondition(system.getRelease() == 4, "Incorrect release - test runs to " + V7R4_SYSTEM_NAME);
@@ -335,6 +345,7 @@ public class SecVrmTestcase extends Testcase {
         AS400 system = new AS400(V7R4_SYSTEM_NAME, userId_, charPassword);
         PasswordVault.clearPassword(charPassword);
         system.setMustUseSockets(mustUseSockets_);
+        system.setGuiAvailable(false);
         assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + V7R4_SYSTEM_NAME);
       } catch (Exception e) {
         failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME);
@@ -351,6 +362,7 @@ public class SecVrmTestcase extends Testcase {
         AS400 system = new AS400(V7R4_SYSTEM_NAME, userId_, charPassword);
         PasswordVault.clearPassword(charPassword);
         system.setMustUseSockets(mustUseSockets_);
+        system.setGuiAvailable(false);
         assertCondition(system.getRelease() == 4, "Incorrect release - test runs to " + V7R4_SYSTEM_NAME);
       } catch (Exception e) {
         failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME);
@@ -367,6 +379,7 @@ public class SecVrmTestcase extends Testcase {
         AS400 system = new AS400(V7R4_SYSTEM_NAME, userId_, charPassword);
         PasswordVault.clearPassword(charPassword);
         system.setMustUseSockets(mustUseSockets_);
+        system.setGuiAvailable(false);
         assertCondition(system.getModification() == 0, "Incorrect modification - test runs to " + V7R4_SYSTEM_NAME);
       } catch (Exception e) {
         failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME);
@@ -383,6 +396,7 @@ public class SecVrmTestcase extends Testcase {
         AS400 system = new AS400(V7R4_SYSTEM_NAME, userId_, charPassword);
         PasswordVault.clearPassword(charPassword);
         system.setMustUseSockets(mustUseSockets_);
+        system.setGuiAvailable(false);
         assertCondition(system.getVRM() == 0x00070400,
             "VRM " + Integer.toHexString(system.getVRM()) + " not correct - test runs to " + V7R4_SYSTEM_NAME);
       } catch (Exception e) {

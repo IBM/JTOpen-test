@@ -16,19 +16,16 @@ package test.MiscAH;
 import com.ibm.as400.access.*;
 
 import test.FTPTest;
+import test.PasswordVault;
 import test.Testcase;
 
 import java.beans.*;
 
 import java.io.*;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 import java.lang.Integer;
 import java.lang.String;
-import java.text.SimpleDateFormat;
-import java.awt.Image;
 
 
 public class FTPBeans
@@ -46,7 +43,7 @@ public class FTPBeans
      test.FTPTest.main(newArgs); 
    }
     private String user_     = null;
-    private String password_ = null;
+    private String clearPasswordString_ = null;
     private String system_   = null;
     private String testDirectory = "FTPTestDir";
     private String initialToken_ = null;
@@ -75,6 +72,7 @@ public class FTPBeans
     private boolean windows_;
     private boolean linux_;
     private boolean aix_;
+    private char[] clearPassword_;
 
     public FTPBeans (AS400 systemObject,
                            Hashtable namesAndVars,
@@ -109,11 +107,18 @@ public class FTPBeans
           }
         }
 
+        if ((password == null) || (password.length() < 1)) {
+          System.out.println("===> warning, variations will fail because no -password specified");
+        } else { 
+            char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
+            clearPassword_ = PasswordVault.decryptPassword(encryptedPassword); 
+            clearPasswordString_ = new String(clearPassword_); 
+        }
+
 
         if (systemObject_ != null)
         {
            user_     = userid;
-           password_ = password;
            system_   = systemObject_.getSystemName();
         }
 
@@ -122,7 +127,7 @@ public class FTPBeans
         if ((user_ == null) || (user_.length() < 1))
            System.out.println("===> warning, variations will fail because no -uid specified");
 
-        if ((password_ == null) || (password_.length() < 1))
+        if ((clearPasswordString_ == null) || (clearPasswordString_.length() < 1))
            System.out.println("===> warning, variations will fail because no -password specified");
 
         if ((system_ == null) || (system_.length() < 1))
@@ -623,7 +628,7 @@ public class FTPBeans
        {
           beansCleanup();
 
-          FTP c = new FTP(system_, user_, password_);
+          FTP c = new FTP(system_, user_, clearPasswordString_);
           c.addFTPListener(this);
           c.connect();
 
@@ -664,7 +669,7 @@ public class FTPBeans
        {
           beansCleanup();
 
-          FTP c = new FTP(system_, user_, password_);
+          FTP c = new FTP(system_, user_, clearPasswordString_);
           c.connect();
           c.addFTPListener(this);
           c.disconnect();
@@ -708,7 +713,7 @@ public class FTPBeans
        {
           beansCleanup();
 	  System.out.println("FTPBeans.var11: creating FTP "); 
-          FTP c = new FTP(system_, user_, password_);
+          FTP c = new FTP(system_, user_, clearPasswordString_);
           c.addFTPListener(this);
 	  System.out.println("FTPBeans.var11: calling ls.  If this hangs, check QGPL for DDM files  "); 
           c.ls();
@@ -895,7 +900,7 @@ public class FTPBeans
        {
           beansCleanup();
 
-          FTP c = new FTP(system_, user_, password_);
+          FTP c = new FTP(system_, user_, clearPasswordString_);
           c.ls();
 
           FileOutputStream f = new FileOutputStream("FtpClient2.ser");
@@ -906,7 +911,7 @@ public class FTPBeans
           FileInputStream in = new FileInputStream("FtpClient2.ser");
           ObjectInputStream s2 = new ObjectInputStream(in);
           FTP c2 = (FTP) s2.readObject();
-          c2.setPassword(password_);
+          c2.setPassword(clearPasswordString_);
 
           c2.ls();
           succeeded();

@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -92,7 +93,10 @@ Constructor.
         ProfileTokenCredential pt = new ProfileTokenCredential();
         pt.setSystem(systemObject_);
         pt.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
-        pt.setTokenExtended(userid,password); 
+        char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
+        char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
+        pt.setTokenExtended(userid,clearPassword); 
+        Arrays.fill(clearPassword, ' ');
         
         
         profileTokenSystemObject_ = new AS400(systemObject_.getSystemName(), pt); 

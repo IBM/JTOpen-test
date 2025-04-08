@@ -16,6 +16,7 @@ package test.MiscAH;
 import com.ibm.as400.access.*;
 
 import test.FTPTest;
+import test.PasswordVault;
 import test.Testcase;
 
 import java.beans.PropertyChangeEvent;
@@ -52,7 +53,7 @@ public class FTPQuickVerification extends    Testcase
      test.FTPTest.main(newArgs); 
    }
     private String user_     = null;
-    private String password_ = null;
+    private String clearPasswordString_ = null;
     private String system_   = null;
     private String testDirectory = "FTPTestDir";
     private String testDirectoryDeep = "FTPTestDir/rootDir/subdir2";
@@ -74,6 +75,7 @@ public class FTPQuickVerification extends    Testcase
     private boolean cleanup = true;
 
     private AS400 pwrSys_ = null;
+    private char[] clearPassword_;
 
     public FTPQuickVerification (AS400 systemObject,
                               ///Vector variationsToRun,
@@ -104,10 +106,17 @@ public class FTPQuickVerification extends    Testcase
            System.out.println();
         }
 
+        if ((password == null) || (password.length() < 1)) {
+          System.out.println("===> warning, variations will fail because no -password specified");
+        } else { 
+            char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
+            clearPassword_ = PasswordVault.decryptPassword(encryptedPassword); 
+            clearPasswordString_ = new String(clearPassword_); 
+        }
+
         if (systemObject_ != null)
         {
            user_     = userid;
-           password_ = password;
            system_   = systemObject_.getSystemName();
         }
 
@@ -116,7 +125,7 @@ public class FTPQuickVerification extends    Testcase
         if ((user_ == null) || (user_.length() < 1))
            System.out.println("===> warning, variations will fail because no -uid specified");
 
-        if ((password_ == null) || (password_.length() < 1))
+        if ((clearPasswordString_ == null) || (clearPasswordString_.length() < 1))
            System.out.println("===> warning, variations will fail because no -password specified");
 
         if ((system_ == null) || (system_.length() < 1))
@@ -214,7 +223,7 @@ public class FTPQuickVerification extends    Testcase
     {
        try
        {
-          FTP c = new FTP(system_, user_, password_);
+          FTP c = new FTP(system_, user_, clearPasswordString_);
           c.cd(initialToken_);
           c.cd(targetDir);
           c.issueCommand("DELE " + "a.a");
@@ -274,7 +283,7 @@ public class FTPQuickVerification extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setDataTransferType(FTP.ASCII);
           }
@@ -288,7 +297,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setDataTransferType(FTP.ASCII);
 
@@ -312,7 +321,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setDataTransferType(FTP.BINARY);
              c.setDataTransferType(FTP.ASCII);
              String msg = c.getLastMessage();
@@ -354,7 +363,7 @@ public class FTPQuickVerification extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setDataTransferType(FTP.BINARY);
           }
           catch (Exception e)
@@ -367,7 +376,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setDataTransferType(FTP.BINARY);
 
@@ -391,7 +400,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setDataTransferType(FTP.ASCII);
              c.setDataTransferType(FTP.BINARY);
              String msg = c.getLastMessage();
@@ -433,7 +442,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(null);
           }
           catch (Exception e)
@@ -451,7 +460,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd("");
           }
           catch (Exception e)
@@ -469,7 +478,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              if (c.cd("/notThere"))
              {
                 failed("cd to notThere worked and shouldn't have");
@@ -495,7 +504,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.cd(initialToken_);
 
@@ -540,7 +549,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              String[] result = c.dir();
@@ -562,7 +571,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.cd("rootDir");
@@ -614,7 +623,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              String[] result = c.ls();
@@ -636,7 +645,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.cd("rootDir");
@@ -668,7 +677,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectoryDeep);
              String[] result = c.ls();
@@ -827,7 +836,7 @@ public class FTPQuickVerification extends    Testcase
              FTP c = new FTP();
              c.setServer(system_);
              c.setUser(user_);
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.cd(initialToken_);
              c.setUser(user_);
              failed("No exception when setting user after connect");
@@ -851,7 +860,7 @@ public class FTPQuickVerification extends    Testcase
              FTP c = new FTP();
              c.setServer(system_);
              c.setUser("baddS8");
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.cd(initialToken_);
              failed("no exception 8");
              Continue = false;
@@ -886,7 +895,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setCurrentDirectory(null);
           }
           catch (Exception e)
@@ -904,7 +913,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setCurrentDirectory("");
           }
           catch (Exception e)
@@ -922,7 +931,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              if (c.setCurrentDirectory("/notThere"))
              {
                 failed("cd to notThere worked and shouldn't have");
@@ -948,7 +957,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
 
@@ -1082,7 +1091,7 @@ public class FTPQuickVerification extends    Testcase
              c.setServer(system_);
              c.setUser(user_);
              c.setPassword("fred");
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.cd(initialToken_);
           }
           catch (Exception e)
@@ -1120,7 +1129,7 @@ public class FTPQuickVerification extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              String cd = c.getCurrentDirectory();
@@ -1144,7 +1153,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1169,7 +1178,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1218,7 +1227,7 @@ public class FTPQuickVerification extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              String cd = c.pwd();
@@ -1242,7 +1251,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1267,7 +1276,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1329,7 +1338,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.noop();
              if (c.getLastMessage().startsWith("200"))
              {}
@@ -1385,7 +1394,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("1 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get(null, "fred");
              failed("no exception (1)");
              Continue = false;
@@ -1407,7 +1416,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get("fred", (String) null);
              failed("no exception (2)");
              Continue = false;
@@ -1429,7 +1438,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get("fred", "");
              failed("no exception (3)");
              Continue = false;
@@ -1451,7 +1460,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get("", "fred");
              failed("no exception (4)");
              Continue = false;
@@ -1473,7 +1482,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("5 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.get("notThere", targetDirFull + "fred");
@@ -1500,7 +1509,7 @@ public class FTPQuickVerification extends    Testcase
              String source   = targetDirFull + "PureJava.html";
              String original = testDirectory + File.separator + "PureJava.html";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -1537,7 +1546,7 @@ public class FTPQuickVerification extends    Testcase
              String source   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.ASCII);
@@ -1578,7 +1587,7 @@ public class FTPQuickVerification extends    Testcase
                                "rootDir"     + File.separator +
                                "subdir2"     + File.separator + "FSTOOL.EXE";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -1617,7 +1626,7 @@ public class FTPQuickVerification extends    Testcase
                                "rootDir"     + File.separator +
                                "subdir2"     + File.separator + "FSTOOL.EXE";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -1684,7 +1693,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -1708,7 +1717,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put((java.io.File) null, "fred");
              failed("no exception (1)");
              Continue = false;
@@ -1730,7 +1739,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put("fred", null);
              failed("no exception (2)");
              Continue = false;
@@ -1752,7 +1761,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("5 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put("fred", "");
              failed("no exception (3)");
              Continue = false;
@@ -1774,7 +1783,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("6 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put("", "fred");
              failed("no exception (4)");
              Continue = false;
@@ -1796,7 +1805,7 @@ public class FTPQuickVerification extends    Testcase
           System.out.print("7 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.put(targetDirFull + "fred", "notThere");
@@ -1825,7 +1834,7 @@ public class FTPQuickVerification extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -1872,7 +1881,7 @@ public class FTPQuickVerification extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -1920,7 +1929,7 @@ public class FTPQuickVerification extends    Testcase
              String original = testDirectory;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -1970,7 +1979,7 @@ public class FTPQuickVerification extends    Testcase
              String target   = "a.a";
              String original = testDirectory  + File.separator + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
 
              c.put(original, "notThere/a.a/b.b");
@@ -1993,7 +2002,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
 
              c.get("notThere/a.a/b.b", "b.b");
