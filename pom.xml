@@ -5,7 +5,7 @@
   <groupId>JTOpen-test</groupId>
   <artifactId>JTOpen-test</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
   <name>JTOpen-test</name>
   <description>Testcases for JTOpen</description>
   <build>
@@ -55,7 +55,7 @@
     <dependency>
       <groupId>net.sf.jt400</groupId>
       <artifactId>jt400</artifactId>
-      <version>20.0.8</version>
+      <version>21.0.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

@@ -13,10 +13,6 @@ jobs:
     - uses: actions/checkout@v3
       name: Check out
 
-    - name: Get Maven project version
-      run: |
-        echo "project_version=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec  --file pom.xml)" >> $GITHUB_ENV
-        cat $GITHUB_ENV
 
     - name: Set up JDK 8
       uses: actions/setup-java@v3
@@ -24,7 +20,13 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
+        
+    - name: Get Maven project version
+      run: |
+        echo "project_version=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec  --file pom.xml)" >> $GITHUB_ENV
+        cat $GITHUB_ENV
 
+   
     - name: Build with Maven (Java 8)
       run: mvn -B package --file pom.xml
 
@@ -35,7 +37,7 @@ jobs:
       run: mkdir staging && mv target/JTOpen-test-${{ env.project_version }}-jar-with-dependencies.jar staging/JTOpen-test-${{ env.project_version }}.jar
 
     - name: Create the release and upload artifact
-      uses: softprops/action-gh-release@v4
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: v${{ env.project_version }}
         name: v${{ env.project_version }}
