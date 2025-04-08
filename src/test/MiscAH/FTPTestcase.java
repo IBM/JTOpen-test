@@ -16,28 +16,18 @@ package test.MiscAH;
 import com.ibm.as400.access.*;
 
 import test.FTPTest;
+import test.PasswordVault;
 import test.Testcase;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
 
 import java.io.RandomAccessFile;
 import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
 import java.util.Arrays;
-import java.lang.Integer;
 import java.lang.String;
-import java.text.SimpleDateFormat;
 
 
 public class FTPTestcase extends    Testcase
@@ -53,7 +43,7 @@ public class FTPTestcase extends    Testcase
      test.FTPTest.main(newArgs); 
    }
     private String user_     = null;
-    private String password_ = null;
+    private String clearPasswordString_ = null;
     private String system_   = null;
     private String testDirectory = "FTPTestDir";
     private String testDirectoryDeep = "FTPTestDir/rootDir/subdir2";
@@ -73,6 +63,7 @@ public class FTPTestcase extends    Testcase
     private FTPEvent ftpEvent = null;
 
     private boolean cleanup = true;
+    private char[] clearPassword_;
 
     public FTPTestcase (AS400 systemObject,
                               Hashtable namesAndVars,
@@ -107,11 +98,17 @@ public class FTPTestcase extends    Testcase
           }
         }
 
+        if ((password == null) || (password.length() < 1)) {
+          System.out.println("===> warning, variations will fail because no -password specified");
+        } else { 
+            char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
+            clearPassword_ = PasswordVault.decryptPassword(encryptedPassword); 
+            clearPasswordString_ = new String(clearPassword_); 
+        }
 
         if (systemObject_ != null)
         {
            user_     = userid;
-           password_ = password;
            system_   = systemObject_.getSystemName();
         }
 
@@ -120,8 +117,6 @@ public class FTPTestcase extends    Testcase
         if ((user_ == null) || (user_.length() < 1))
            System.out.println("===> warning, variations will fail because no -uid specified");
 
-        if ((password_ == null) || (password_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -password specified");
 
         if ((system_ == null) || (system_.length() < 1))
            System.out.println("===> warning, variations will fail because no -system specified");
@@ -243,7 +238,7 @@ public class FTPTestcase extends    Testcase
     {
        try
        {
-          FTP c = new FTP(system_, user_, password_);
+          FTP c = new FTP(system_, user_, clearPasswordString_);
           c.cd(initialToken_);
           c.cd(targetDir);
           c.issueCommand("DELE " + "a.a");
@@ -270,7 +265,7 @@ public class FTPTestcase extends    Testcase
     {
        try
        {
-          FTP c = new FTP(system_, user_, password_);
+          FTP c = new FTP(system_, user_, clearPasswordString_);
           c.cd(initialToken_);
           c.cd(targetDir);
 
@@ -399,7 +394,7 @@ public class FTPTestcase extends    Testcase
              c = new FTP();
              c.setServer(system_);
              c.setUser(user_);
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.noop();
              c.disconnect();
            }
@@ -489,7 +484,7 @@ public class FTPTestcase extends    Testcase
           {
              FTP c = new FTP("");
              c.setUser(user_);
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.noop();
           }
           catch (Exception e)
@@ -528,7 +523,7 @@ public class FTPTestcase extends    Testcase
           {
              FTP c = new FTP(system_);
              c.setUser(user_);
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.noop();
           }
           catch (Exception e)
@@ -559,7 +554,7 @@ public class FTPTestcase extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              if (! (c.getServer().equals(system_)))
              {
@@ -583,7 +578,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(null, user_, password_);
+             FTP c = new FTP(null, user_, clearPasswordString_);
              c.noop();
           }
           catch (Exception e)
@@ -601,7 +596,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, null, password_);
+             FTP c = new FTP(system_, null, clearPasswordString_);
              c.noop();
           }
           catch (Exception e)
@@ -637,7 +632,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP("", user_, password_);
+             FTP c = new FTP("", user_, clearPasswordString_);
              c.noop();
           }
           catch (Exception e)
@@ -655,7 +650,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, "", password_);
+             FTP c = new FTP(system_, "", clearPasswordString_);
              c.noop();
           }
           catch (Exception e)
@@ -691,7 +686,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.noop();
           }
           catch (Exception e)
@@ -724,7 +719,7 @@ public class FTPTestcase extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setDataTransferType(FTP.ASCII);
           }
@@ -738,7 +733,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setDataTransferType(FTP.ASCII);
 
@@ -762,7 +757,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setDataTransferType(FTP.BINARY);
              c.setDataTransferType(FTP.ASCII);
              String msg = c.getLastMessage();
@@ -804,7 +799,7 @@ public class FTPTestcase extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setDataTransferType(FTP.BINARY);
           }
           catch (Exception e)
@@ -817,7 +812,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setDataTransferType(FTP.BINARY);
 
@@ -841,7 +836,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setDataTransferType(FTP.ASCII);
              c.setDataTransferType(FTP.BINARY);
              String msg = c.getLastMessage();
@@ -883,7 +878,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(null);
           }
           catch (Exception e)
@@ -901,7 +896,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd("");
           }
           catch (Exception e)
@@ -919,7 +914,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              if (c.cd("/notThere"))
              {
                 failed("cd to notThere worked and shouldn't have");
@@ -945,7 +940,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.cd(initialToken_);
 
@@ -990,7 +985,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              String[] result = c.dir();
@@ -1012,7 +1007,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.cd("rootDir");
@@ -1064,7 +1059,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              String[] result = c.ls();
@@ -1086,7 +1081,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.cd("rootDir");
@@ -1118,7 +1113,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectoryDeep);
              String[] result = c.ls();
@@ -1277,7 +1272,7 @@ public class FTPTestcase extends    Testcase
              FTP c = new FTP();
              c.setServer(system_);
              c.setUser(user_);
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.cd(initialToken_);
              c.setUser(user_);
              failed("No exception when setting user after connect");
@@ -1301,7 +1296,7 @@ public class FTPTestcase extends    Testcase
              FTP c = new FTP();
              c.setServer(system_);
              c.setUser("baddS8");
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.cd(initialToken_);
              failed("no exception 8");
              Continue = false;
@@ -1474,7 +1469,7 @@ public class FTPTestcase extends    Testcase
              FTP c = new FTP();
              c.setServer("badds8");
              c.setUser(user_);
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.cd(initialToken_);
              failed("no failure when uid bad (system name = badds8) ");
              Continue = false;
@@ -1496,7 +1491,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.noop();
              c.setServer("fred");
              failed("no exception when setting server after connection established");
@@ -1537,7 +1532,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setCurrentDirectory(null);
           }
           catch (Exception e)
@@ -1555,7 +1550,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setCurrentDirectory("");
           }
           catch (Exception e)
@@ -1573,7 +1568,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              if (c.setCurrentDirectory("/notThere"))
              {
                 failed("cd to notThere worked and shouldn't have");
@@ -1599,7 +1594,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
 
@@ -1733,7 +1728,7 @@ public class FTPTestcase extends    Testcase
              c.setServer(system_);
              c.setUser(user_);
              c.setPassword("fred");
-             c.setPassword(password_);
+             c.setPassword(clearPasswordString_);
              c.cd(initialToken_);
           }
           catch (Exception e)
@@ -1771,7 +1766,7 @@ public class FTPTestcase extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              String cd = c.getCurrentDirectory();
@@ -1795,7 +1790,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1820,7 +1815,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1869,7 +1864,7 @@ public class FTPTestcase extends    Testcase
 
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              String cd = c.pwd();
@@ -1893,7 +1888,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1918,7 +1913,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
 
              c.setCurrentDirectory(initialToken_);
              c.setCurrentDirectory(testDirectory);
@@ -1980,7 +1975,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.noop();
              if (c.getLastMessage().startsWith("200"))
              {}
@@ -2105,7 +2100,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.disconnect();
           }
           catch (Exception e)
@@ -2119,7 +2114,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.connect();
           }
           catch (Exception e)
@@ -2133,7 +2128,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.connect();
              c.disconnect();
              if (c.connect())
@@ -2253,7 +2248,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.noop();
              c.setPort(100);
              failed("no exception (5)");
@@ -2310,7 +2305,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("1 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get(null, "fred");
              failed("no exception (1)");
              Continue = false;
@@ -2332,7 +2327,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get("fred", (String) null);
              failed("no exception (2)");
              Continue = false;
@@ -2354,7 +2349,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get("fred", "");
              failed("no exception (3)");
              Continue = false;
@@ -2376,7 +2371,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get("", "fred");
              failed("no exception (4)");
              Continue = false;
@@ -2398,7 +2393,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("5 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.get("notThere", targetDirFull + "fred");
@@ -2425,7 +2420,7 @@ public class FTPTestcase extends    Testcase
              String source   = targetDirFull + "PureJava.html";
              String original = testDirectory + File.separator + "PureJava.html";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -2462,7 +2457,7 @@ public class FTPTestcase extends    Testcase
              String source   = targetDirFull + "jt400.jar";
              String original = testDirectory + File.separator + "jt400.jar";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -2509,7 +2504,7 @@ public class FTPTestcase extends    Testcase
              String source   = targetDirFull + "javasp.savf";
              String original = testDirectory + File.separator + "javasp.savf";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -2546,7 +2541,7 @@ public class FTPTestcase extends    Testcase
              String source   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.ASCII);
@@ -2587,7 +2582,7 @@ public class FTPTestcase extends    Testcase
                                "rootDir"     + File.separator +
                                "subdir2"     + File.separator + "FSTOOL.EXE";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -2626,7 +2621,7 @@ public class FTPTestcase extends    Testcase
                                "rootDir"     + File.separator +
                                "subdir2"     + File.separator + "FSTOOL.EXE";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -2695,7 +2690,7 @@ public class FTPTestcase extends    Testcase
           try
           {
              java.io.File fred = new java.io.File("fred");
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get(null, fred);
              failed("no exception (1a)");
              Continue = false;
@@ -2717,7 +2712,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("13 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get("fred", (java.io.File) null);
              failed("no exception (2a)");
              Continue = false;
@@ -2740,7 +2735,7 @@ public class FTPTestcase extends    Testcase
           try
           {
              java.io.File fred = new java.io.File("fred");
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.get("", fred);
              failed("no exception (4a)");
              Continue = false;
@@ -2763,7 +2758,7 @@ public class FTPTestcase extends    Testcase
           try
           {
              java.io.File fred = new java.io.File(targetDirFull + "fred");
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.get("notThere", targetDirFull + fred);
@@ -2790,7 +2785,7 @@ public class FTPTestcase extends    Testcase
              String source   = targetDirFull + "PureJava.html";
              String original = testDirectory + File.separator + "PureJava.html";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -2827,7 +2822,7 @@ public class FTPTestcase extends    Testcase
              String source   = targetDirFull + "jt400.jar";
              String original = testDirectory + File.separator + "jt400.jar";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -2874,7 +2869,7 @@ public class FTPTestcase extends    Testcase
              String source   = targetDirFull + "javasp.savf";
              String original = testDirectory + File.separator + "javasp.savf";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -2911,7 +2906,7 @@ public class FTPTestcase extends    Testcase
              String source   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.ASCII);
@@ -2980,7 +2975,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("1 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              InputStream i = c.get(null);
              failed("no exception (1)");
              Continue = false;
@@ -3003,7 +2998,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              InputStream i = c.get("");
              failed("no exception (3)");
              Continue = false;
@@ -3026,7 +3021,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              InputStream i = c.get("notThere");
@@ -3056,7 +3051,7 @@ public class FTPTestcase extends    Testcase
              String target   = targetDirFull + "PureJava.html";
              String original = testDirectory + File.separator + "PureJava.html";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -3098,7 +3093,7 @@ public class FTPTestcase extends    Testcase
              String target   = targetDirFull + "jt400.jar";
              String original = testDirectory + File.separator + "jt400.jar";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -3138,7 +3133,7 @@ public class FTPTestcase extends    Testcase
              String target   = targetDirFull + "javasp.savf";
              String original = testDirectory + File.separator + "javasp.savf";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.BINARY);
@@ -3178,7 +3173,7 @@ public class FTPTestcase extends    Testcase
              String target   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.setDataTransferType(FTP.ASCII);
@@ -3269,7 +3264,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -3293,7 +3288,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put((java.io.File) null, "fred");
              failed("no exception (1)");
              Continue = false;
@@ -3315,7 +3310,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put("fred", null);
              failed("no exception (2)");
              Continue = false;
@@ -3337,7 +3332,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("5 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put("fred", "");
              failed("no exception (3)");
              Continue = false;
@@ -3359,7 +3354,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("6 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put("", "fred");
              failed("no exception (4)");
              Continue = false;
@@ -3381,7 +3376,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("7 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.put(targetDirFull + "fred", "notThere");
@@ -3409,7 +3404,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -3467,7 +3462,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -3514,7 +3509,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -3561,7 +3556,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -3609,7 +3604,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -3682,7 +3677,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("14 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -3706,7 +3701,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("15 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put((java.io.File) null, "fred");
              failed("no exception (1a)");
              Continue = false;
@@ -3728,7 +3723,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("16 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put(new java.io.File("fred"), null);
              failed("no exception (2a)");
              Continue = false;
@@ -3750,7 +3745,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("17 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.put(new java.io.File("fred"), "");
              failed("no exception (3a)");
              Continue = false;
@@ -3772,7 +3767,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("18 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.put(new java.io.File(targetDirFull + "fred"), "notThere");
@@ -3800,7 +3795,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -3858,7 +3853,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -3905,7 +3900,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -3952,7 +3947,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -4035,7 +4030,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -4059,7 +4054,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              OutputStream o = c.put(null);
              failed("no exception (1)");
              Continue = false;
@@ -4082,7 +4077,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              OutputStream o = c.put("");
              failed("no exception (4)");
              Continue = false;
@@ -4110,7 +4105,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4159,7 +4154,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4209,7 +4204,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4259,7 +4254,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -4439,7 +4434,7 @@ public class FTPTestcase extends    Testcase
              String target   = "a.a";
              String original = testDirectory  + File.separator + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
 
              c.put(original, "notThere/a.a/b.b");
@@ -4462,7 +4457,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
 
              c.get("notThere/a.a/b.b", "b.b");
@@ -4530,7 +4525,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -4554,7 +4549,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.append((java.io.File) null, "fred");
              failed("no exception (1)");
              Continue = false;
@@ -4576,7 +4571,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.append("fred", null);
              failed("no exception (2)");
              Continue = false;
@@ -4598,7 +4593,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("5 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.append("fred", "");
              failed("no exception (3)");
              Continue = false;
@@ -4620,7 +4615,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("6 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.append("", "fred");
              failed("no exception (4)");
              Continue = false;
@@ -4642,7 +4637,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("7 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.append(targetDirFull + "fred", "notThere");
@@ -4670,7 +4665,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4717,7 +4712,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4764,7 +4759,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4811,7 +4806,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -4859,7 +4854,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4890,7 +4885,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -4936,7 +4931,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5027,7 +5022,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("14 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -5051,7 +5046,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("15 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.append((java.io.File) null, "fred");
              failed("no exception (1a)");
              Continue = false;
@@ -5073,7 +5068,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("16 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.append(new java.io.File("fred"), null);
              failed("no exception (2a)");
              Continue = false;
@@ -5095,7 +5090,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("17 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.append(new java.io.File("fred"), "");
              failed("no exception (3a)");
              Continue = false;
@@ -5117,7 +5112,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("18 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(testDirectory);
              c.append(new java.io.File(targetDirFull + "fred"), "notThere");
@@ -5145,7 +5140,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5192,7 +5187,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5239,7 +5234,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5286,7 +5281,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -5335,7 +5330,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5381,7 +5376,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5472,7 +5467,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("2 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              String message = c.issueCommand("MKD " + compareDir);
 
@@ -5496,7 +5491,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("3 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              OutputStream o = c.append(null);
              failed("no exception (1)");
              Continue = false;
@@ -5519,7 +5514,7 @@ public class FTPTestcase extends    Testcase
           System.out.print("4 ");
           try
           {
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              OutputStream o = c.append("");
              failed("no exception (4)");
              Continue = false;
@@ -5547,7 +5542,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5596,7 +5591,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5646,7 +5641,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5696,7 +5691,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
@@ -5749,7 +5744,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5799,7 +5794,7 @@ public class FTPTestcase extends    Testcase
              String original = testDirectory  + File.separator + target;
              String compare  = compareDirFull + target;
 
-             FTP c = new FTP(system_, user_, password_);
+             FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
              c.setDataTransferType(FTP.BINARY);
@@ -5878,7 +5873,7 @@ public class FTPTestcase extends    Testcase
 
 
         sb.append("2 ");
-        conn = new FTP(system_, user_, password_);
+        conn = new FTP(system_, user_, clearPasswordString_);
         conn.cd(initialToken_);
         String message = conn.issueCommand("MKD " + compareDir);
 
@@ -6029,7 +6024,7 @@ public class FTPTestcase extends    Testcase
         ///     sb.append("3 ");
         ///     try
         ///     {
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.put((java.io.File) null, "fred");
         ///       failed("no exception (1)");
         ///       return;
@@ -6049,7 +6044,7 @@ public class FTPTestcase extends    Testcase
         ///     sb.append("4 ");
         ///     try
         ///     {
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.put("fred", null);
         ///       failed("no exception (2)");
         ///       return;
@@ -6069,7 +6064,7 @@ public class FTPTestcase extends    Testcase
         ///     sb.append("5 ");
         ///     try
         ///     {
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.put("fred", "");
         ///       failed("no exception (3)");
         ///       return;
@@ -6089,7 +6084,7 @@ public class FTPTestcase extends    Testcase
         ///     sb.append("6 ");
         ///     try
         ///     {
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.put("", "fred");
         ///       failed("no exception (4)");
         ///       return;
@@ -6109,7 +6104,7 @@ public class FTPTestcase extends    Testcase
         ///     sb.append("7 ");
         ///     try
         ///     {
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.cd(initialToken_);
         ///       c.cd(testDirectory);
         ///       c.put(targetDirFull + "fred", "notThere");
@@ -6135,7 +6130,7 @@ public class FTPTestcase extends    Testcase
         ///       String original = testDirectory  + File.separator + target;
         ///       String compare  = compareDirFull + target;
 
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.cd(initialToken_);
         ///       c.cd(compareDir);
         ///       c.setDataTransferType(FTP.BINARY);
@@ -6191,7 +6186,7 @@ public class FTPTestcase extends    Testcase
         ///       String original = testDirectory  + File.separator + target;
         ///       String compare  = compareDirFull + target;
 
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.cd(initialToken_);
         ///       c.cd(compareDir);
         ///       c.setDataTransferType(FTP.BINARY);
@@ -6236,7 +6231,7 @@ public class FTPTestcase extends    Testcase
         ///       String original = testDirectory  + File.separator + target;
         ///       String compare  = compareDirFull + target;
 
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.cd(initialToken_);
         ///       c.cd(compareDir);
         ///       c.setDataTransferType(FTP.BINARY);
@@ -6281,7 +6276,7 @@ public class FTPTestcase extends    Testcase
         ///       String original = testDirectory  + File.separator + target;
         ///       String compare  = compareDirFull + target;
 
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.cd(initialToken_);
         ///       c.cd(compareDir);
         ///       c.setDataTransferType(FTP.ASCII);
@@ -6327,7 +6322,7 @@ public class FTPTestcase extends    Testcase
         ///       String original = testDirectory;
         ///       String compare  = compareDirFull + target;
 
-        ///       FTP c = new FTP(system_, user_, password_);
+        ///       FTP c = new FTP(system_, user_, clearPasswordString_);
         ///       c.cd(initialToken_);
         ///       c.cd(compareDir);
         ///       c.setDataTransferType(FTP.BINARY);

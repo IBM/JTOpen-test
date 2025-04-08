@@ -14,6 +14,7 @@
 package test;
 
 import java.util.Vector;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.io.IOException;
 import java.lang.Integer;
@@ -147,7 +148,9 @@ Creates Testcase objects for all the testcases in this component.
     }
   	else
   	{
-      PwrSys = new AS400(systemName_,  pwrSysUserID_, pwrSysPassword_ );
+      char[] pwrSysCharPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
+   PwrSys = new AS400(systemObject_.getSystemName(), pwrSysUserID_, pwrSysCharPassword);  
+   Arrays.fill(pwrSysCharPassword, ' ');
   
   	}
   

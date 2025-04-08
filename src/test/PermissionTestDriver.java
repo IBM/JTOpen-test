@@ -14,6 +14,7 @@
 package test;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Enumeration;
 import test.TestDriver;
 import test.Permission.PermissionDLOUnattendedTestcase;
@@ -134,8 +135,10 @@ Creates Testcase objects for all the testcases in this component.
 	   } 
 	   
      	if (!(pwrSys_.getUserId()).equals(""))
-	    {        	        	
-     		 PwrSys = new AS400(systemObject_.getSystemName(), pwrSysUserID_, pwrSysPassword_);  
+	    {     
+     	         char[] pwrSysCharPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
+     		 PwrSys = new AS400(systemObject_.getSystemName(), pwrSysUserID_, pwrSysCharPassword);  
+     	         Arrays.fill(pwrSysCharPassword, ' ');
 	    }
      	
      	else

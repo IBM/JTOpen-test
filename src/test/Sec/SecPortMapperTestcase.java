@@ -13,11 +13,18 @@
 
 package test.Sec;
 
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.ExtendedIllegalStateException;
 
+import test.JDReflectionUtil;
 import test.PasswordVault;
+import test.TestDriver;
 import test.Testcase;
 
 /**
@@ -41,31 +48,89 @@ public class SecPortMapperTestcase extends Testcase {
      test.SecAuthTest.main(newArgs); 
    }
 
+  class SecPortClassLoader extends URLClassLoader {
+    ClassLoader fallbackLoader; 
+    public SecPortClassLoader(URL[] urls) {
+      super(urls, null);
+      fallbackLoader = URLClassLoader.newInstance(urls); 
+    }
+
+    @Override
+    protected Class<?> findClass(String name) throws ClassNotFoundException {
+      try { 
+      return super.findClass(name);
+      } catch (java.lang.ClassNotFoundException ex) {
+        System.out.println("Loading "+name); 
+        return fallbackLoader.loadClass(name); 
+      }
+    }
+  }
+
+  ClassLoader secPortClassLoader;
+  protected void setup() throws Exception {
+    // Use a new classloader to load the classes and test 
+
+    File toolboxJar = TestDriver.getLoadSource("com.ibm.as400.access.AS400");
+
+    ClassLoader originalClassLoader = AS400.class.getClassLoader();
+
+    String absolutePath = toolboxJar.getAbsolutePath(); 
+    URL[] urls = new URL[1]; 
+    if (absolutePath.endsWith(".jar")) { 
+      urls[0] =  new URL("jar:file:" + absolutePath +"!/") ; 
+    } else { 
+      urls[0] =  new URL("file:" + absolutePath +"/") ; 
+    }
+
+    secPortClassLoader = new SecPortClassLoader(urls);
+
+  }
   int invalidServiceNumber = 9;
-  /**
-   * <dl>
-   * <dt>Test:</dt>
-   * <dd>Call AS400::getServicePort(AS400.FILE) before the file service has been
-   * connected.</dd>
-   * <dt>Result:</dt>
-   * <dd>Verify AS400.USE_PORT_MAPPER is returned.</dd>
-   * </dl>
-   **/
-  public void Var001() {
+  
+  
+  public void testService(int service) { 
     try {
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      AS400 system = new AS400(systemName_, userId_, charPassword);
-      PasswordVault.clearPassword(charPassword);
-      system.setMustUseSockets(mustUseSockets_);
-      int service = AS400.FILE;
+      
+      Class<?> as400Class = secPortClassLoader.loadClass("com.ibm.as400.access.AS400"); 
+      
+      
+      Class<?>[] parameterTypes = new Class[3];
+      parameterTypes[0] = String.class; 
+      parameterTypes[1] = String.class; 
+      parameterTypes[2] = charPassword.getClass();  
+      
+      Constructor<?> constructor = as400Class.getConstructor(parameterTypes); 
+     
+      Object[] parameters = new Object[3]; 
+      parameters[0] = systemName_;
+      parameters[1] = userId_; 
+      parameters[2] = charPassword; 
+      
+      Object as400Copy =  constructor.newInstance(parameters);
 
-      int port = system.getServicePort(service);
-      system.close();
+     
+      PasswordVault.clearPassword(charPassword);
+      JDReflectionUtil.callMethod_V(as400Copy, "setMustUseSockets", mustUseSockets_);
+
+      int port = JDReflectionUtil.callMethod_I(as400Copy,"getServicePort",service);
+      JDReflectionUtil.callMethod_V(as400Copy,"close"); 
       assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     }
+ 
   }
+  /**
+   * <dl>
+   * <dt>Test:</dt>
+   * <dd>Call AS400::getServicePort(AS400.FILE) before the file service has been
+   * connected by any AS400 object.</dd>
+   * <dt>Result:</dt>
+   * <dd>Verify AS400.USE_PORT_MAPPER is returned.</dd>
+   * </dl>
+   **/
+  public void Var001() { testService(AS400.FILE); } 
 
   /**
    * <dl>
@@ -76,21 +141,7 @@ public class SecPortMapperTestcase extends Testcase {
    * <dd>Verify AS400.USE_PORT_MAPPER is returned.</dd>
    * </dl>
    **/
-  public void Var002() {
-    try {
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      AS400 system = new AS400(systemName_, userId_, charPassword);
-      PasswordVault.clearPassword(charPassword);
-      system.setMustUseSockets(mustUseSockets_);
-      int service = AS400.PRINT;
-
-      int port = system.getServicePort(service);
-      system.close();
-      assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
-    } catch (Exception e) {
-      failed(e, "Unexpected exception.");
-    }
-  }
+  public void Var002() { testService(AS400.PRINT); } 
 
   /**
    * <dl>
@@ -101,21 +152,8 @@ public class SecPortMapperTestcase extends Testcase {
    * <dd>Verify AS400.USE_PORT_MAPPER is returned.</dd>
    * </dl>
    **/
-  public void Var003() {
-    try {
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      AS400 system = new AS400(systemName_, userId_, charPassword);
-      PasswordVault.clearPassword(charPassword);
-      system.setMustUseSockets(mustUseSockets_);
-      int service = AS400.COMMAND;
-
-      int port = system.getServicePort(service);
-      system.close();
-      assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
-    } catch (Exception e) {
-      failed(e, "Unexpected exception.");
-    }
-  }
+  public void Var003() { testService(AS400.COMMAND); } 
+    
 
   /**
    * <dl>
@@ -126,22 +164,8 @@ public class SecPortMapperTestcase extends Testcase {
    * <dd>Verify AS400.USE_PORT_MAPPER is returned.</dd>
    * </dl>
    **/
-  public void Var004() {
-    try {
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      AS400 system = new AS400(systemName_, userId_, charPassword);
-      PasswordVault.clearPassword(charPassword);
-      system.setMustUseSockets(mustUseSockets_);
-      int service = AS400.DATAQUEUE;
-
-      int port = system.getServicePort(service);
-      system.close();
-      assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
-    } catch (Exception e) {
-      failed(e, "Unexpected exception.");
-    }
-  }
-
+  public void Var004() {testService(AS400.DATAQUEUE); } 
+ 
   /**
    * <dl>
    * <dt>Test:</dt>
@@ -151,21 +175,7 @@ public class SecPortMapperTestcase extends Testcase {
    * <dd>Verify AS400.USE_PORT_MAPPER is returned.</dd>
    * </dl>
    **/
-  public void Var005() {
-    try {
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      AS400 system = new AS400(systemName_, userId_, charPassword);
-      PasswordVault.clearPassword(charPassword);
-      system.setMustUseSockets(mustUseSockets_);
-      int service = AS400.DATABASE;
-
-      int port = system.getServicePort(service);
-      system.close();
-      assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
-    } catch (Exception e) {
-      failed(e, "Unexpected exception.");
-    }
-  }
+  public void Var005() {testService(AS400.DATABASE); } 
 
   /**
    * <dl>
@@ -201,21 +211,7 @@ public class SecPortMapperTestcase extends Testcase {
    * <dd>Verify AS400.USE_PORT_MAPPER is returned.</dd>
    * </dl>
    **/
-  public void Var007() {
-    try {
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      AS400 system = new AS400(systemName_, userId_, charPassword);
-      PasswordVault.clearPassword(charPassword);
-      system.setMustUseSockets(mustUseSockets_);
-      int service = AS400.CENTRAL;
-
-      int port = system.getServicePort(service);
-      system.close();
-      assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
-    } catch (Exception e) {
-      failed(e, "Unexpected exception.");
-    }
-  }
+  public void Var007() {testService(AS400.CENTRAL);}
 
   /**
    * <dl>
@@ -226,24 +222,8 @@ public class SecPortMapperTestcase extends Testcase {
    * <dd>Verify AS400.USE_PORT_MAPPER is returned.</dd>
    * </dl>
    **/
-  public void Var008() {
-    try {
-      // Note: Testcase only works if a connection has never
-      // been made to the system. Using a bogus system name
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      AS400 system = new AS400("X" + systemName_, userId_, charPassword);
-      PasswordVault.clearPassword(charPassword);
-      system.setMustUseSockets(mustUseSockets_);
-      int service = AS400.SIGNON;
-
-      int port = system.getServicePort(service);
-      system.close();
-      assertCondition(port == AS400.USE_PORT_MAPPER,
-          "Port incorrect: " + port + " sb USE_PORT_MAPPER=" + AS400.USE_PORT_MAPPER);
-    } catch (Exception e) {
-      failed(e, "Unexpected exception.");
-    }
-  }
+  public void Var008() {testService(AS400.SIGNON);}
+   
 
   /**
    * <dl>
