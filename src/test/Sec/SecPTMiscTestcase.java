@@ -27,17 +27,19 @@ import java.util.Random;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.AuthenticationIndicator;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.Job;
 import com.ibm.as400.security.auth.AS400BasicAuthenticationPrincipal;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 import com.ibm.as400.security.auth.ProfileTokenCredentialBeanInfo;
+import com.ibm.as400.security.auth.ProfileTokenEnhancedInfo;
 import com.ibm.as400.security.auth.RetrieveFailedException;
 import com.ibm.as400.security.auth.UserProfilePrincipal;
 
 import test.JDJobName;
 import test.JDReflectionUtil;
+import test.JDTestDriver;
 import test.PasswordVault;
 import test.SecAuthTest;
 import test.Testcase;
@@ -82,10 +84,14 @@ public class SecPTMiscTestcase extends Testcase
      **/
     public void Var001()
     {
+       StringBuffer sb = new StringBuffer(); 
         try
         {
+            boolean passed = true; 
+          
             ProfileTokenCredential pt1 = null;
             ProfileTokenCredential pt2 = null;
+            ProfileTokenCredential pt3 = null;
 
             // Create a single-use ProfileTokenCredential with a 60 second timeout.
             pt1 = new ProfileTokenCredential();
@@ -99,16 +105,70 @@ public class SecPTMiscTestcase extends Testcase
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("ptoken.dat"));
             pt2 = (ProfileTokenCredential)in.readObject();
             in.close();
-
+            
+            byte[] dummyBytes = new byte[ProfileTokenCredential.TOKEN_LENGTH];
+            pt3 = new ProfileTokenCredential(systemObject_, dummyBytes, ProfileTokenCredential.TYPE_SINGLE_USE, 536);
+            
+            if (pt1.equals(null)) {
+              passed = false; sb.append("\npt1.equals(null)");
+            }
+            if (!pt1.equals(pt1)) { 
+              passed = false; sb.append("\n!pt1.equals(pt1)");
+            }
+            if (pt1.equals("A_STRING")) {
+              passed = false; sb.append("\npt1.equals('A_STRING')");
+            }
+            
+            if (pt1.equals(pt3)) {
+              passed = false; sb.append("\npt1.equals(pt3)");
+            }
+            
+            ProfileTokenCredential pt4 = new ProfileTokenCredential(systemObject_, dummyBytes, ProfileTokenCredential.TYPE_SINGLE_USE, 555, "VERIFICATION_ID" , "123.23.23.23",73,"132.23.52.63",88);
+            if (pt4.getSystem() == null) { 
+              passed = false; sb.append("\npt4.getSystem() = null"); 
+            }
+            if (pt4.getToken() == null) { 
+              passed = false; sb.append("\npt4.getToken() == null"); 
+            }
+            
             // Test token attributes.
-            assertCondition(pt2.equals(pt1) && pt2.getSystem() == null && pt2.getPrincipal() == null && pt2.getToken() == null, "Unexpected attribute value.");
+            // assertCondition(pt2.equals(pt1) && pt2.getSystem() == null && pt2.getPrincipal() == null && pt2.getToken() == null, "Unexpected attribute value.");
+            if (!pt2.equals(pt1)) { 
+              passed = false; sb.append("\n pt1 != pt2");
+            }
+            if (pt2.getSystem() != null) { 
+              passed = false; sb.append("\npt2.getSystem() != null"); 
+            }
+            if (pt2.getToken() != null) { 
+              passed = false; sb.append("\npt2.getToken() != null"); 
+            }
+            
+            
+            // More coverage test -- including deprecated. 
+            ProfileTokenCredential pt5 = new ProfileTokenCredential();
+            UserProfilePrincipal principal = new UserProfilePrincipal("TEST5"); 
+            pt5.setSystem(systemObject_);
+            
+            UserProfilePrincipal upp = new UserProfilePrincipal(); 
+            upp.initialize(SecAuthTest.uid2);
+            
+            
+            
+            pt5.initialize(upp, SecAuthTest.pwd2, true /* isPrivate */, false /*isReusable*/, false /*isRenewable */, 111); 
+            if (pt5.isRenewable()) {
+              passed = false; sb.append("\npt5.isRenewable()");
+            }
+            if (pt5.isReusable()) {
+              passed = false; sb.append("\npt5.isReusable()");
+            }
+            assertCondition(passed, sb); 
 
             File fd = new File("ptoken.dat");
             fd.delete();
         }
         catch (Throwable e)
         {
-            failed(e, "Unexpected exception.");
+            failed(e,  sb);
         }
     }
 
@@ -278,17 +338,18 @@ public class SecPTMiscTestcase extends Testcase
     {
         try
         {
+          // Create and initialize the principal.
+          UserProfilePrincipal upp = new UserProfilePrincipal();
+          upp.initialize(SecAuthTest.uid2);
             // Check if system where test profiles were created is local.
-            if (!isLocal_)
-            {
-                notApplicable();
-                return;
-            }
-            // Create and initialize the principal.
-            UserProfilePrincipal upp = new UserProfilePrincipal();
-            upp.initialize(SecAuthTest.uid2);
             // Create and initialize the credential.
             ProfileTokenCredential pt = new ProfileTokenCredential();
+            if (!isLocal_)
+            {
+              upp.setSystem(systemObject_);
+              pt.setSystem(systemObject_);
+            }
+            
             pt.initialize(upp, SecAuthTest.pwd2.toCharArray(), false, true, true, 444);
             // Test the initialized values.
             assertCondition(pt.getPrincipal().equals(upp) && pt.getToken() != null && pt.getTimeoutInterval() == 444 && pt.getSystem() != null && pt.isReusable() && pt.isRenewable() && !pt.isPrivate(), "Incorrect initialized value.");
@@ -312,8 +373,8 @@ public class SecPTMiscTestcase extends Testcase
             // Not applicable when running on client.
             if (!isNative_)
             {
-                notApplicable();
-                return;
+                // notApplicable();
+                // return;
             }
             // Create and initialize the credential.
             ProfileTokenCredential pt = new ProfileTokenCredential();
@@ -340,14 +401,13 @@ public class SecPTMiscTestcase extends Testcase
     {
         try
         {
+          // Create and initialize the principal.
+            UserProfilePrincipal upp = new UserProfilePrincipal();
             // Check if system where test profiles were created is local.
             if (!isLocal_)
             {
-                notApplicable();
-                return;
+              upp.setSystem(systemObject_);
             }
-            // Create and initialize the principal.
-            UserProfilePrincipal upp = new UserProfilePrincipal();
             upp.initialize(SecAuthTest.uid1);
             // Create and initialize the credential.
             ProfileTokenCredential pt = new ProfileTokenCredential();
@@ -406,7 +466,13 @@ public class SecPTMiscTestcase extends Testcase
         try
         {
           sys.setGuiAvailable(false);
-            ProfileTokenCredential pt = sys.getProfileToken(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
+         
+            ProfileTokenCredential pt;
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              pt = sys.getProfileToken(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(),null,ProfileTokenCredential.TYPE_SINGLE_USE, 3600, "*NOUSE","*NOUSE");
+            } else {
+              pt = sys.getProfileToken(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
+            }
             assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_SINGLE_USE && pt.getTimeToExpiration() > 3000, "Unexpected profile token properties.");
         }
         catch (Throwable e)
@@ -436,7 +502,12 @@ public class SecPTMiscTestcase extends Testcase
         try
         {
           sys.setGuiAvailable(false);
-            ProfileTokenCredential pt = sys.getProfileToken(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(), ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
+            ProfileTokenCredential pt;
+            if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+              pt = sys.getProfileToken(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(),null,ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444, "*NOUSE","*NOUSE");
+            } else {
+              pt = sys.getProfileToken(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(), ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE, 444);
+            }
             assertCondition(pt.getSystem().equals(sys) && pt.getToken() != null && pt.getTokenType() == ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE && pt.getTimeToExpiration() >= 300 && pt.getTimeToExpiration() <= 444, "Unexpected profile token properties.");
         }
         catch (Throwable e)
@@ -689,7 +760,7 @@ public class SecPTMiscTestcase extends Testcase
     {
         if (!isLocal_)
         {
-            notApplicable();
+            notApplicable("*CURRENT usage");
             return;
         }
         try
@@ -914,11 +985,11 @@ public class SecPTMiscTestcase extends Testcase
     }
 
     
-    public void Var027() { notApplicable();}
-    public void Var028() { notApplicable();}
-    public void Var029() { notApplicable();}
-    public void Var030() { notApplicable();}
-    public void Var031() { notApplicable();}
+    public void Var027() { notApplicable("Future variation");}
+    public void Var028() { notApplicable("Future variation");}
+    public void Var029() { notApplicable("Future variation");}
+    public void Var030() { notApplicable("Future variation");}
+    public void Var031() { notApplicable("Future variation");}
     /* Tests for Additional Authentication Factor (duplicated from above) */ 
 
    /**
@@ -992,13 +1063,13 @@ public class SecPTMiscTestcase extends Testcase
      }
    }
 
-   public void Var033() { notApplicable(); }
-   public void Var034() { notApplicable(); }
-   public void Var035() { notApplicable(); }
-   public void Var036() { notApplicable(); }
-   public void Var037() { notApplicable(); }
-   public void Var038() { notApplicable(); }
-   public void Var039() { notApplicable(); }
+   public void Var033() { notApplicable("Future variation"); }
+   public void Var034() { notApplicable("Future variation"); }
+   public void Var035() { notApplicable("Future variation"); }
+   public void Var036() { notApplicable("Future variation"); }
+   public void Var037() { notApplicable("Future variation"); }
+   public void Var038() { notApplicable("Future variation"); }
+   public void Var039() { notApplicable("Future variation"); }
  
    public void initializeProfileToken(ProfileTokenCredential pt, String userid, char[] password, char[] factor, int authenticationIndicator,  
        String verificationId, String remoteIp, int remotePort, String localIp, int localPort, boolean isPrivate, boolean reusable, boolean renewable, int timeoutInterval ) throws Exception {
@@ -1150,16 +1221,22 @@ public class SecPTMiscTestcase extends Testcase
            Arrays.fill(mfaPassword, ' ');
            boolean passed = true; 
            StringBuffer sb = new StringBuffer(); 
-           if (!isLocal_) {
+           String  expectedLocalPort="Local_Port=8476";
+           if (!onAS400_) {
              if (!pt.getSystem().getSystemName().equals(sys.getSystemName())) {
                passed = false;
                sb.append("pt.getSystem():" + pt.getSystem().getSystemName() + " != sys:" + sys.getSystemName() + "\n");
              }
              jobName="QUSER_NC.QZSOSIGN";
            } else { 
+             expectedLocalPort="Local_Port=0";
              
+             if (isNative_) {
               jobName=JDJobName.getJobName().replace('/','.');
+             } else {
               jobName="QUSER_NC.QZRCSRVS";
+             }
+
            }
            
            if ( pt.getToken() == null) {
@@ -1181,7 +1258,6 @@ public class SecPTMiscTestcase extends Testcase
            
            String  expectedVerificationId="Verification_ID=QIBM_OS400_JT400"; 
            String  expectedRemotePort=null; /* don't check remote port */ 
-           String  expectedLocalPort="Local_Port=8476";
            String expectedRemoteIp = null; /* don't check remote IP as it can vary and may be different than the local IP address because of network configuration */ 
            String expectedLocalIp = null; /* don't check local ip */ 
              
@@ -1210,10 +1286,10 @@ public class SecPTMiscTestcase extends Testcase
        }
    }
    }
-   public void Var042() {notApplicable(); } 
-   public void Var043() {notApplicable(); } 
- public void Var044() {notApplicable(); } 
- public void Var045() {notApplicable(); } 
+   public void Var042() {notApplicable("Future variation"); } 
+   public void Var043() {notApplicable("Future variation"); } 
+ public void Var044() {notApplicable("Future variation"); } 
+ public void Var045() {notApplicable("Future variation"); } 
    /**
     Test failed creation of a profile token due to null user parm.
     **/
@@ -1332,7 +1408,7 @@ public class SecPTMiscTestcase extends Testcase
      if (checkAdditionalAuthenticationFactor(systemName_)) {
        if (!isLocal_)
        {
-           notApplicable();
+           notApplicable("Local test: Using *CURRENT");
            return;
        }
        try
@@ -1565,6 +1641,709 @@ public class SecPTMiscTestcase extends Testcase
      }
    }
    }
+
+   
+   /**
+   Test failed initialization (null token).
+   **/
+  public void Var057()
+  {
+      try
+      {
+          // Create and initialize the principal.
+          UserProfilePrincipal upp = new UserProfilePrincipal();
+          upp.initialize(SecAuthTest.uid1);
+          // Create and initialize the credential.
+          ProfileTokenCredential pt = new ProfileTokenCredential();
+          try
+          {
+              // set null token
+              pt.setToken(null); 
+              assertCondition(false, "exception not thrown for")   ;
+              
+          }
+          catch (Throwable e)
+          {
+              assertCondition(e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID, "Unexpected exception during initialization.");
+          }
+      }
+      catch (Throwable e)
+      {
+          failed(e, "Unexpected exception.");
+      }
+  }
+
+  
+  /**
+  Test failed initialization (null token).
+  **/
+ public void Var058()
+ {
+     try
+     {
+         // Create and initialize the principal.
+         UserProfilePrincipal upp = new UserProfilePrincipal();
+         upp.initialize(SecAuthTest.uid1);
+         // Create and initialize the credential.
+         ProfileTokenCredential pt = new ProfileTokenCredential();
+         try
+         {
+             ProfileTokenEnhancedInfo enhancedProfileInfo = new ProfileTokenEnhancedInfo(); 
+            // set null token
+             pt.setToken(null, enhancedProfileInfo); 
+             assertCondition(false, "exception not thrown for")   ;
+             
+         }
+         catch (Throwable e)
+         {
+             assertCondition(e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID, "Unexpected exception during initialization.");
+         }
+     }
+     catch (Throwable e)
+     {
+         failed(e, "Unexpected exception.");
+     }
+ }
+
+ 
+ /**
+ Test failed initialization (null token).
+ **/
+public void Var059()
+{
+    try
+    {
+        // Create and initialize the principal.
+        UserProfilePrincipal upp = new UserProfilePrincipal();
+        upp.initialize(SecAuthTest.uid1);
+        // Create and initialize the credential.
+        ProfileTokenCredential pt = new ProfileTokenCredential();
+        try
+        {
+            ProfileTokenEnhancedInfo enhancedProfileInfo = new ProfileTokenEnhancedInfo(); 
+           // set null token
+            byte[] badToken = new byte[10]; 
+            pt.setToken(badToken, enhancedProfileInfo); 
+            assertCondition(false, "exception not thrown for")   ;
+            
+        }
+        catch (Throwable e)
+        {
+          boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.LENGTH_NOT_VALID;
+          if (!passed) e.printStackTrace();
+          assertCondition( passed, "Unexpected exception during initialization.");
+        }
+    }
+    catch (Throwable e)
+    {
+        failed(e, "Unexpected exception.");
+    }
+}
+
+
+/**
+Test failed initialization (null token).
+**/
+public void Var060()
+{
+   try
+   {
+       // Create and initialize the principal.
+       UserProfilePrincipal upp = new UserProfilePrincipal();
+       upp.initialize(SecAuthTest.uid1);
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+      
+          ProfileTokenEnhancedInfo enhancedProfileInfo = new ProfileTokenEnhancedInfo(); 
+         
+          pt.setSystem(pwrSys_);
+          pt.setToken(upp,ProfileTokenCredential.PW_NOPWD ) ;
+          
+          ProfileTokenCredential pt2 = new ProfileTokenCredential();
+          pt2.setSystem(pwrSys_);
+          pt2.setTokenExtended(upp, SecAuthTest.pwd1.toCharArray()) ;
+             
+          ProfileTokenCredential pt3 = new ProfileTokenCredential();
+          pt3.setSystem(pwrSys_);
+          pt3.setTokenExtended(upp, SecAuthTest.pwd1) ;
+          
+          ProfileTokenCredential pt4 = new ProfileTokenCredential();
+          pt4.setSystem(pwrSys_);
+          pt4.setTokenExtended(SecAuthTest.uid1,  SecAuthTest.pwd1 ) ;
+          
+          ProfileTokenCredential pt5 = new ProfileTokenCredential();
+          pt5.setSystem(pwrSys_);
+          
+          pt5.setLocalIPAddress("1.2.3.4");
+          pt5.setRemotePort(33);
+          pt5.setLocalPort(6323); 
+          pt5.setAuthenticationIndicator(AuthenticationIndicator.APPLICATION_AUTHENTICATION);
+          pt5.getAuthenticationIndicator(); 
+          pt5.setTokenCreator(ProfileTokenCredential.CREATOR_NATIVE_API);
+          pt5.setTokenExtended(SecAuthTest.uid1,  SecAuthTest.pwd1.toCharArray()) ;
+
+          assertCondition(pt != null); 
+      
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setToken(null Userid ) 
+**/
+public void Var061()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           String nullString = null;
+           pt.setToken(nullString, ProfileTokenCredential.PW_NOPWDCHK); 
+           assertCondition(false, "exception not thrown for")   ;
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+/**
+Test failed setToken(userid too long ) 
+**/
+public void Var062()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setToken("BIG45678901", ProfileTokenCredential.PW_NOPWDCHK); 
+           assertCondition(false, "exception not thrown for")   ;
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.LENGTH_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setToken(big internal value ) 
+**/
+public void Var063()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setToken("BIG", 999); 
+           assertCondition(false, "exception not thrown for")   ;
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+
+
+/**
+Test failed setTokenExtended (userid null ) 
+**/
+public void Var064()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setTokenExtended((String) null,"X".toCharArray(), null);  
+           assertCondition(false, "exception not thrown for")   ;
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+
+/**
+Test failed setTokenExtended (userid too long ) 
+**/
+public void Var065()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setTokenExtended("BIG45678901","X".toCharArray(), null);  
+           assertCondition(false, "exception not thrown for")   ;
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.LENGTH_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setTokenExtended (password null  ) 
+**/
+public void Var066()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setTokenExtended("Userid",(char[]) null, null);  
+           assertCondition(false, "exception not thrown for")   ;
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+
+/**
+Test failed setVerificationIdd(too big)  
+**/
+public void Var067()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setVerificationID("BIG4567890123456789012345678901");
+           assertCondition(false, "exception not thrown for")   ;
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.LENGTH_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setLocalIpAddress(too big)  
+**/
+public void Var068()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setLocalIPAddress("BIG45678911234567892123456789312345678941234567");
+           assertCondition(false, "exception not thrown for pt.setLocalIPAddress(\"BIG45678911234567892123456789312345678941234567\")")   ;
+                 }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.LENGTH_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setRemoteIpAddress(too big)  
+**/
+public void Var069()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setRemoteIPAddress("BIG45678911234567892123456789312345678941234567");
+           assertCondition(false,"exception not thrown for pt.setRemoteIPAddress(\"BIG45678911234567892123456789312345678941234567\");");
+          
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.LENGTH_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setRemotePort(too small)  
+**/
+public void Var070()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setRemotePort(-1); 
+           assertCondition(false,"exception not thrown for pt.setRemotePort(-1))");
+
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setRemotePort(too big)  
+**/
+public void Var071()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setRemotePort(65536); 
+           assertCondition(false,"exception not thrown for pt.setRemotePort(65536)");
+   
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+
+/**
+Test failed setLocalPort(too small)  
+**/
+public void Var072()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setLocalPort(-1); 
+           assertCondition(false,"exception not thrown for pt.setLocalPort(-1)");
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setLocalPort(too big)  
+**/
+public void Var073()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setLocalPort(65536); 
+           assertCondition(false,"exception not thrown for pt.setLocalPort(65536)");
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setAuthenticationIndicator(too small ) 
+**/
+public void Var074()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setAuthenticationIndicator(0);
+           assertCondition(false,"exception not thrown for pt.setAuthenticationIndicator(0)");
+            
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+/**
+Test failed setAuthenticationIndicator(too big ) 
+**/
+public void Var075()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setAuthenticationIndicator(6);
+           assertCondition(false,"exception not thrown for pt.setAuthenticationIndicator(6)");
+           
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+/**
+Test failed setTokenCreator(too small ) 
+**/
+public void Var076()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setTokenCreator(-1);
+           assertCondition(false,"exception not thrown for pt.setTokenCreator(0)");
+           
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.RANGE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+/**
+Test failed setTokenCreator(too big ) 
+**/
+public void Var077()
+{
+   try
+   {
+       // Create and initialize the principal.
+       // Create and initialize the credential.
+       ProfileTokenCredential pt = new ProfileTokenCredential();
+       pt.setSystem(systemObject_);
+       try
+       {
+           
+           pt.setTokenCreator(3);
+           assertCondition(false,"exception not thrown for pt.setTokenCreator(3)");
+                     
+       }
+       catch (Throwable e)
+       {
+         boolean passed = e instanceof ExtendedIllegalArgumentException && ((ExtendedIllegalArgumentException)e).getReturnCode() == ExtendedIllegalArgumentException.RANGE_NOT_VALID;
+         if (!passed) e.printStackTrace();
+         assertCondition( passed, "Unexpected exception during initialization.");
+       }
+   }
+   catch (Throwable e)
+   {
+       failed(e, "Unexpected exception.");
+   }
+}
+
+
+
+
+
+
+
+
 
 
 }
