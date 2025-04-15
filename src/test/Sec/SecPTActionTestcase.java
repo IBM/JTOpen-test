@@ -647,6 +647,8 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
      **/
     public void Var018()
     {
+        boolean passed = true; 
+        StringBuffer sb = new StringBuffer(); 
         try
         {
           
@@ -660,9 +662,11 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
         }
 		pt.setSystem(sameSys_);
 		canUseNativeOptimizations = sameSys_.canUseNativeOptimizations();  
+		sb.append("\nruning isLocal_ path"); 
 	    } else {
 		pt.setSystem(systemObject_);
 		canUseNativeOptimizations = systemObject_.canUseNativeOptimizations();
+		sb.append("\nruning !isLocal_ path"); 
 	    }
             pt.addCredentialListener(this);
             pt.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
@@ -680,9 +684,10 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
                 int swapEvt = 0;
                 AS400 swappedConnection = null;
 		
-                if (canUseNativeOptimizations)
-                {
-                  originalID = new AS400().getUserId();
+                if (canUseNativeOptimizations)      {
+                  sb.append("\ncanUseNativeOptimizations");
+                  AS400 originalConnection = new AS400(); 
+                  originalID = originalConnection.getUserId();
                   // Swap.
                   AS400Credential cr = pt.swap(true);
                   swappedConnection = new AS400();
@@ -703,10 +708,13 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
                   cr.addCredentialListener(this);
                   cr.swap(false);
                   swappedBackUid = swappedConnection.getUserId(true); // force refresh of userID info
+                  sb.append("\nswappedBackUsid="+swappedBackUid);
                 }
 
                 else  // running remotely
                 {
+                  sb.append("\n!canUseNativeOptimizations");
+
                   // First create a swap-back credential.
                   ProfileTokenCredential cr = new ProfileTokenCredential();
 		  if (isLocal_) { 
@@ -716,7 +724,7 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
 		  } 
                   cr.addCredentialListener(this);
                   cr.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
-                   char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+                  char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
                   cr.setTokenExtended(userId_, charPassword);
                   PasswordVault.clearPassword(charPassword);
 		  if (isLocal_) { 
@@ -744,22 +752,37 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
                   }
                 }
 
-                // Test results.
-                if (DEBUG) {
-                  System.out.println("originalID == |" + originalID + "|; SecAuthTest.uid2 == |" + SecAuthTest.uid2 + "|; swapUid == |" + swapUid + "|; swappedBackUid == |" + swappedBackUid + "|; swapEvt == " + swapEvt);
+                sb.append("\noriginalID == |" + originalID + "|; SecAuthTest.uid2 == |" + SecAuthTest.uid2 + "|; swapUid == |" + swapUid + "|; swappedBackUid == |" + swappedBackUid + "|; swapEvt == " + swapEvt);
+                if (!SecAuthTest.uid2.equalsIgnoreCase(swapUid)) {
+                  passed = false; 
+                  sb.append("\nFAIL: SwapFailed swapUid="+swapUid+" expected SecauthTst.uid2=SecAuthTest.uid2");
                 }
-                if (SecAuthTest.uid2.equalsIgnoreCase(swapUid) && swapEvt == AS400CredentialEvent.CR_SWAP)
-                {
-                  assertCondition(originalID.equalsIgnoreCase(swappedBackUid) && latestEvent_ != null && latestEvent_.getID() == AS400CredentialEvent.CR_SWAP, "Swap back failed");
+                if (swapEvt != AS400CredentialEvent.CR_SWAP) {
+                  passed=false;
+                  sb.append("\nsFAIL: wapEvt="+swapEvt+" sb AS400CredentialEvent.CR_SWAP="+AS400CredentialEvent.CR_SWAP);
                 }
-                else
-                {
-                  failed("Swap failed.");
+                
+                if (!originalID.equalsIgnoreCase(swappedBackUid)) {
+                  passed = false; 
+                  sb.append("\nFAIL: Swap back failed originalID="+originalID+" swappedBackUid="+swappedBackUid);
                 }
+                if (latestEvent_ == null) { 
+                  passed = false; 
+                  sb.append("\nFAIL: latestEvent is false"); 
+                } else {
+                  if (latestEvent_.getID() != AS400CredentialEvent.CR_SWAP) {
+                    passed = false; 
+                    sb.append("\nFAIL:  latestEvent.getID() = "+latestEvent_.getID()+" sb AS400CredentialEvent.CR_SWAP="+AS400CredentialEvent.CR_SWAP); 
+                  }
+                }
+                
+                assertCondition(passed, sb); 
+                
+                
             }
             catch (Exception e)
             {
-              failed(e, "Unexpected exception.");
+              failed(e, sb);
             }
         }
         catch (Exception e)

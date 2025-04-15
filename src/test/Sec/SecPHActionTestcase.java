@@ -138,7 +138,9 @@ public class SecPHActionTestcase extends Testcase implements AS400CredentialList
       ProfileTokenCredential pt = new ProfileTokenCredential();
       pt.setSystem(systemObject_);
       pt.addCredentialListener(this);
+      
       pt.setTokenExtended(SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
+      
       // Reset internal state.
       resetState();
       // Perform test.
