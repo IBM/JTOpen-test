@@ -724,6 +724,8 @@ public class DDMRecordDescription extends Testcase
   **/
   public void Var007()
   {
+    String testTable="BOOLEAN1";
+
     if (getRelease() < JDTestDriver.RELEASE_V7R5M0)  {
       notApplicable("Boolean test"); 
       return; 
@@ -736,19 +738,19 @@ public class DDMRecordDescription extends Testcase
       AS400JDBCDriver driver = new AS400JDBCDriver(); 
       Connection c = driver.connect(systemObject_); 
       Statement stmt = c.createStatement(); 
-      String sql="CREATE OR REPLACE TABLE "+testLib_+".BOOLEAN1 (C1 INT, C2 BOOLEAN)";
+      String sql="CREATE OR REPLACE TABLE "+testLib_+"."+testTable+" (C1 INT, C2 BOOLEAN)";
       sb.append("\nRunning: "+sql);
       stmt.executeUpdate(sql); 
-      sql="INSERT INTO   "+testLib_+".BOOLEAN1 VALUES(0,FALSE)";
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(0,FALSE)";
       sb.append("\nRunning: "+sql);
       stmt.executeUpdate(sql); 
-      sql="INSERT INTO   "+testLib_+".BOOLEAN1 VALUES(1,TRUE)";
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(1,TRUE)";
       sb.append("\nRunning: "+sql);
       stmt.executeUpdate(sql); 
       
       c.close(); 
       
-      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/BOOLEAN1.FILE");
+      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/"+testTable+".FILE");
       sf.setRecordFormat();
       RecordFormat rf = sf.getRecordFormat();
       FieldDescription fd0 = rf.getFieldDescription(0); 
@@ -794,7 +796,7 @@ public class DDMRecordDescription extends Testcase
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTF "+testLib_+"/BOOLEAN1");
+        cc.run("DLTF "+testLib_+"/"+testTable+"");
       }
       catch(Exception e) {}
     }
@@ -806,6 +808,7 @@ public class DDMRecordDescription extends Testcase
   **/
   public void Var008()
   {
+    String testTable="TS1";
     if (getRelease() < JDTestDriver.RELEASE_V7R4M0)  {
       notApplicable("timestamp(26) test"); 
       return; 
@@ -818,19 +821,19 @@ public class DDMRecordDescription extends Testcase
       AS400JDBCDriver driver = new AS400JDBCDriver(); 
       Connection c = driver.connect(systemObject_); 
       Statement stmt = c.createStatement(); 
-      String sql="CREATE OR REPLACE TABLE "+testLib_+".TS1 (C1 INT, C2 TIMESTAMP(12))";
+      String sql="CREATE OR REPLACE TABLE "+testLib_+"."+testTable+" (C1 INT, C2 TIMESTAMP(12))";
       sb.append("\nRunning: "+sql);
       stmt.executeUpdate(sql); 
-      sql="INSERT INTO   "+testLib_+".TS1 VALUES(0,'2024-04-01 11:22:33.123456')";
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(0,'2024-04-01 11:22:33.123456')";
       sb.append("\nRunning: "+sql);
       stmt.executeUpdate(sql); 
-      sql="INSERT INTO   "+testLib_+".TS1 VALUES(1,'2024-04-01 11:22:33.123456123456')";
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(1,'2024-04-01 11:22:33.123456123456')";
       sb.append("\nRunning: "+sql);
       stmt.executeUpdate(sql); 
       
       c.close(); 
       
-      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/TS1.FILE");
+      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/"+testTable+".FILE");
       sf.setRecordFormat();
       RecordFormat rf = sf.getRecordFormat();
       FieldDescription fd0 = rf.getFieldDescription(0); 
@@ -861,6 +864,89 @@ public class DDMRecordDescription extends Testcase
         passed = false; 
         sb.append("\n for val11 got "+val11+" sb "+expected);
       }
+      sf.close(); 
+      assertCondition(passed, sb); 
+    }
+    catch(Exception e)
+    {
+      failed(e, sb);
+    }
+    finally
+    {
+      try
+      {
+        CommandCall cc = new CommandCall(pwrSys_);
+        cc.run("DLTF "+testLib_+"/"+testTable);
+      }
+      catch(Exception e) {}
+    }
+  }
+
+  /**
+   * Tests SQL DECFLOAT(16) DECFLOAT(34) data type in a RecordFormat.
+  **/
+  public void Var009()
+  {
+    String testTable="DF1";
+    if (getRelease() < JDTestDriver.RELEASE_V7R4M0)  {
+      notApplicable("DECFLOAT test"); 
+      return; 
+    }
+    StringBuffer sb = new StringBuffer(); 
+    sb.append("\nTESTING DECFLOAT(16) and DECFLOAT(34) needs code fix and test update");
+    boolean passed = true; 
+    try
+    {   
+      
+      AS400JDBCDriver driver = new AS400JDBCDriver(); 
+      Connection c = driver.connect(systemObject_); 
+      Statement stmt = c.createStatement(); 
+      String sql="CREATE OR REPLACE TABLE "+testLib_+"."+testTable+" (C1 INT, C2 DECFLOAT(16), C3 DECFLOAT(34))";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(0,0.0,0.0)";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(1,1.0,1.0)";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      
+      c.close(); 
+      
+      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/"+testTable+".FILE");
+      sf.setRecordFormat();
+      RecordFormat rf = sf.getRecordFormat();
+      FieldDescription fd0 = rf.getFieldDescription(0); 
+
+      Record[] recs = sf.readAll();
+      Integer val00 = (Integer) recs[0].getField(0);
+      String val01 = (String) recs[0].getField(1);
+      String val02 = (String) recs[0].getField(2);
+      Integer val10 = (Integer) recs[1].getField(0);
+      String val11 = (String) recs[1].getField(1);
+      String val12 = (String) recs[1].getField(2);
+           if (val00.intValue() != 0 ) {
+        passed = false; 
+        sb.append("\n for val00 got "+val00+" sb 0");
+      }
+
+      String expected = "2024-04-01-11.22.33.123456000000";
+      if (! expected.equals(val01)) {
+        passed = false; 
+        sb.append("\n for val01 got "+val01+" sb "+expected);
+      }
+      
+      if (val10.intValue() != 1 ) {
+        passed = false; 
+        sb.append("\n for val10 got "+val10+" sb 1");
+      }
+
+      expected="2024-04-01-11.22.33.123456123456";
+      if (! expected.equals(val11)) {
+        passed = false; 
+        sb.append("\n for val11 got "+val11+" sb "+expected);
+      }
+      sf.close(); 
       
       assertCondition(passed, sb); 
     }
@@ -873,13 +959,105 @@ public class DDMRecordDescription extends Testcase
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTF "+testLib_+"/BOOLEAN1");
+        cc.run("DLTF "+testLib_+"/"+testTable+"");
       }
       catch(Exception e) {}
     }
   }
 
   
+  /**
+   * Tests SQL CLOB AND DBCLOB data type in a RecordFormat.
+  **/
+  public void Var010()
+  {
+    String testTable="CLOB1";
+    if (getRelease() < JDTestDriver.RELEASE_V7R4M0)  {
+      notApplicable("CLOB test"); 
+      return; 
+    }
+    StringBuffer sb = new StringBuffer(); 
+    sb.append("\nTESTING CLOB(16000) and DBCLOB(16000): needs code fix and test update");
+    boolean passed = true; 
+    try
+    {   
+      
+      AS400JDBCDriver driver = new AS400JDBCDriver(); 
+      Connection c = driver.connect(systemObject_); 
+      Statement stmt = c.createStatement(); 
+      String sql="CREATE OR REPLACE TABLE "+testLib_+"."+testTable+" (C1 INT, C2 CLOB(16000), C3 DBCLOB(16000) CCSID 1200)";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(0,'ZERO','ZERO')";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(1,'ONE','ONE')";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      
+      c.close(); 
+      
+      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/"+testTable+".FILE");
+      sf.setRecordFormat();
+      RecordFormat rf = sf.getRecordFormat();
+      FieldDescription fd0 = rf.getFieldDescription(0); 
+
+      Record[] recs = sf.readAll();
+      Integer val00 = (Integer) recs[0].getField(0);
+      String val01 = (String) recs[0].getField(1);
+      String val02 = (String) recs[0].getField(2);
+      Integer val10 = (Integer) recs[1].getField(0);
+      String val11 = (String) recs[1].getField(1);
+      String val12 = (String) recs[1].getField(2);
+           if (val00.intValue() != 0 ) {
+        passed = false; 
+        sb.append("\n for val00 got "+val00+" sb 0");
+      }
+
+      String expected = "ZERO";
+      if (! expected.equals(val01)) {
+        passed = false; 
+        sb.append("\n for val01 got "+val01+" sb "+expected);
+      }
+
+      if (! expected.equals(val02)) {
+        passed = false; 
+        sb.append("\n for val02 got "+val02+" sb "+expected);
+      }
+
+      if (val10.intValue() != 1 ) {
+        passed = false; 
+        sb.append("\n for val10 got "+val10+" sb 1");
+      }
+
+      expected="ONE";
+      if (! expected.equals(val11)) {
+        passed = false; 
+        sb.append("\n for val11 got "+val11+" sb "+expected);
+      }
+      if (! expected.equals(val12)) {
+        passed = false; 
+        sb.append("\n for val12 got "+val12+" sb "+expected);
+      }
+      sf.close(); 
+      
+      assertCondition(passed, sb); 
+    }
+    catch(Exception e)
+    {
+      failed(e, sb);
+    }
+    finally
+    {
+      try
+      {
+        CommandCall cc = new CommandCall(pwrSys_);
+        cc.run("DLTF "+testLib_+"/"+testTable+"");
+      }
+      catch(Exception e) {}
+    }
+  }
+
   
   
 }
