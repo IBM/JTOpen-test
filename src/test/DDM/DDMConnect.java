@@ -41,12 +41,12 @@ public class DDMConnect extends Testcase {
   /**
    * Constructor. This is called from the DDMTest constructor.
    **/
-  public DDMConnect(AS400 systemObject, Vector variationsToRun, int runMode,
+  public DDMConnect(AS400 systemObject, Vector<String> variationsToRun, int runMode,
       FileOutputStream fileOutputStream,  String testLib) {
 
-    /* replace third parameter with the number of variations */
-    super(systemObject, "DDMConnect", 3, variationsToRun, runMode,
+    super(systemObject, "DDMConnect", variationsToRun, runMode,
         fileOutputStream);
+    
   }
 
   /**
