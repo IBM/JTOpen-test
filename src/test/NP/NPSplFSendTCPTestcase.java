@@ -41,7 +41,7 @@ public class NPSplFSendTCPTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPSplFSendTCPTestcase(AS400            systemObject,
-				 Vector           variationsToRun,
+				 Vector<String> variationsToRun,
 				 int              runMode,
 				 FileOutputStream fileOutputStream)
     {

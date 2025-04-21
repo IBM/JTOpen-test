@@ -13,29 +13,29 @@
 
 package test.NLS;
 
-import java.io.*;
-
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Exception;
-import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.DataArea;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CharConverter;
 import com.ibm.as400.access.CharacterDataArea;
+import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.DecimalDataArea;
 import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.LocalDataArea;
 import com.ibm.as400.access.LogicalDataArea;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.CharConverter;
 import com.ibm.as400.access.ObjectDescription;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.JTOpenTestEnvironment;
 import test.Testcase;
-
-import java.math.BigDecimal;
 
 /**
  *Testcase NLSDATestcase.  This test class verifies the use of DBCS Strings
@@ -52,7 +52,6 @@ public class NLSDATestcase extends Testcase
      }
      test.NLSTest.main(newArgs); 
    }
-  private String userSpacePathName_ = "/QSYS.LIB/DATEST.LIB/DANLSTEST.DTAARA";
   private String operatingSystem_;
   private boolean DOS_;
 
@@ -65,7 +64,7 @@ public class NLSDATestcase extends Testcase
   Constructor.
   **/
   public NLSDATestcase(AS400            systemObject,
-                              Vector           variationsToRun,
+                              Vector<String>        variationsToRun,
                               int              runMode,
                               FileOutputStream fileOutputStream
                               )
@@ -788,7 +787,7 @@ public class NLSDATestcase extends Testcase
           ObjectDescription obj = new ObjectDescription(systemObject_, "/QSYS.LIB/QTEMP.LIB/CRTTEST.DTAARA");
           if (getTextDescription(obj).equals(desc))
           {
-            succeeded();
+            assertCondition(true, "da="+da); 
           }
           else
           {
@@ -825,7 +824,7 @@ public class NLSDATestcase extends Testcase
           ObjectDescription obj = new ObjectDescription(systemObject_, "/QSYS.LIB/QTEMP.LIB/CRTTEST.DTAARA");
           if (getTextDescription(obj).equals(desc))
           {
-            succeeded();
+            assertCondition(true, "da="+da); 
           }
           else
           {
@@ -862,7 +861,7 @@ public class NLSDATestcase extends Testcase
           ObjectDescription obj = new ObjectDescription(systemObject_, "/QSYS.LIB/QTEMP.LIB/CRTTEST.DTAARA");
           if (getTextDescription(obj).equals(desc))
           {
-            succeeded();
+            assertCondition(true, "da="+da); 
           }
           else
           {
@@ -889,7 +888,7 @@ public class NLSDATestcase extends Testcase
       try
       {
         CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/"+dbcs_string10+".DTAARA");
-        succeeded();
+        assertCondition(true, "da="+da); 
       }
       catch(Exception e)
       {
@@ -907,7 +906,7 @@ public class NLSDATestcase extends Testcase
       try
       {
         DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/"+dbcs_string10+".DTAARA");
-        succeeded();
+        assertCondition(true, "da="+da); 
       }
       catch(Exception e)
       {
@@ -925,7 +924,7 @@ public class NLSDATestcase extends Testcase
       try
       {
         LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/"+dbcs_string10+".DTAARA");
-        succeeded();
+        assertCondition(true, "da="+da); 
       }
       catch(Exception e)
       {
@@ -1544,7 +1543,7 @@ public class NLSDATestcase extends Testcase
           }
           else
           {
-            failed(e, "Wrong exception info.");
+            failed(e, "Wrong exception info. length="+length);
           }
         }
         finally
@@ -1586,7 +1585,7 @@ public class NLSDATestcase extends Testcase
           }
           else
           {
-            failed(e, "Wrong exception info.");
+            failed(e, "Wrong exception info."+length);
           }
         }
         finally
@@ -1664,7 +1663,7 @@ public class NLSDATestcase extends Testcase
           String data = da.read();
           if (expected.equals(data.trim()))
           {
-            succeeded();
+            assertCondition(true, "length="+length+","+dataLength); 
           }
           else
           {
@@ -1889,7 +1888,7 @@ public class NLSDATestcase extends Testcase
         try
         {
           da.write(toWrite,0);
-          failed("Expected exception did not occur.");
+          failed("Expected exception did not occur."+length);
         }
         catch(Exception e)
         {
@@ -1932,7 +1931,7 @@ public class NLSDATestcase extends Testcase
         try
         {
           da.write(toWrite);
-          failed("Expected exception did not occur.");
+          failed("Expected exception did not occur."+length);
         }
         catch(Exception e)
         {

@@ -76,12 +76,12 @@ public class ManifestTest extends TestDriver
     // Repeat the following 'if' block for each testcase.
     if (allTestcases || namesAndVars_.containsKey("ManifestTestcase"))
     {
-      ManifestTestcase tc = new ManifestTestcase(systemObject_, (Vector) namesAndVars_.get("ManifestTestcase"), runMode_, fileOutputStream_);
+      ManifestTestcase tc = new ManifestTestcase(systemObject_, (Vector<String>) namesAndVars_.get("ManifestTestcase"), runMode_, fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("ManifestTestcase");
     }
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

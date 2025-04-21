@@ -47,7 +47,7 @@ public class NPOutQClearTestcase extends Testcase
      * Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPOutQClearTestcase(AS400            systemObject,
-				 Vector           variationsToRun,
+				 Vector<String> variationsToRun,
 				 int              runMode,
 				 FileOutputStream fileOutputStream)
     {

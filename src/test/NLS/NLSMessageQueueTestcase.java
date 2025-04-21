@@ -102,7 +102,7 @@ public class NLSMessageQueueTestcase extends Testcase {
   /**
    * Constructor.
    **/
-  public NLSMessageQueueTestcase(AS400 systemObject, Vector variationsToRun,
+  public NLSMessageQueueTestcase(AS400 systemObject, Vector<String> variationsToRun,
       int runMode, FileOutputStream fileOutputStream) {
     super(systemObject, "NLSMessageQueueTestcase", variations_,
         variationsToRun, runMode, fileOutputStream);
@@ -235,7 +235,7 @@ public class NLSMessageQueueTestcase extends Testcase {
       f.sendInquiry(inquiryText, sandboxReply_.getQueue().getPath());
 
       if (DEBUG) {
-        Enumeration e = f.getMessages();
+        Enumeration<QueuedMessage> e = f.getMessages();
         while (e.hasMoreElements()) {
           QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -245,7 +245,7 @@ public class NLSMessageQueueTestcase extends Testcase {
         System.out.println("");
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       while (e.hasMoreElements()) {
         QueuedMessage message2 = (QueuedMessage) e.nextElement();
         // Verify that the message text is correct.
@@ -330,11 +330,12 @@ public class NLSMessageQueueTestcase extends Testcase {
       }
 
       // Check that the messages got sent.
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int count = 0; e.hasMoreElements(); count++) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
         if (DEBUG) {
+          System.out.print("Count: "+count); 
           System.out.print("Key: " + message.getKey());
           System.out.println(" -> " + message.getText());
         }
@@ -359,7 +360,7 @@ public class NLSMessageQueueTestcase extends Testcase {
         System.out.println("");
       }
 
-      Enumeration e2 = f.getMessages();
+      Enumeration<QueuedMessage> e2 = f.getMessages();
       for (int count = 0; e2.hasMoreElements(); count++) {
         QueuedMessage message = (QueuedMessage) e2.nextElement();
 
@@ -382,7 +383,7 @@ public class NLSMessageQueueTestcase extends Testcase {
         System.out.println("");
       }
 
-      Enumeration eReply = fReply.getMessages();
+      Enumeration<QueuedMessage> eReply = fReply.getMessages();
       for (int count = 0; eReply.hasMoreElements(); count++) {
         QueuedMessage message = (QueuedMessage) eReply.nextElement();
         if (DEBUG) {
@@ -418,7 +419,7 @@ public class NLSMessageQueueTestcase extends Testcase {
       String infoText = dbcs_string50;
       f.sendInformational(infoText);
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       QueuedMessage message = null;
       while (e.hasMoreElements()) {
         message = (QueuedMessage) e.nextElement();
@@ -450,7 +451,7 @@ public class NLSMessageQueueTestcase extends Testcase {
       f.sendInformational(message);
 
       QueuedMessage TheMessage = null;
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       while (e.hasMoreElements()) {
         TheMessage = (QueuedMessage) e.nextElement();
       }
@@ -486,7 +487,7 @@ public class NLSMessageQueueTestcase extends Testcase {
         f.sendInformational(messageList[count]);
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       boolean succeeded = true;
       for (int counter = 0; counter < messageCount; counter++) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
@@ -573,7 +574,7 @@ public class NLSMessageQueueTestcase extends Testcase {
             converter.toBytes(substitutionList[count]));
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int counter = 0; e.hasMoreElements(); counter++) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -634,7 +635,7 @@ public class NLSMessageQueueTestcase extends Testcase {
             converter.toBytes(substitutionList[count]));
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int counter = 0; e.hasMoreElements(); counter++) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -743,7 +744,7 @@ public class NLSMessageQueueTestcase extends Testcase {
             .getPath());
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int counter = 0; e.hasMoreElements(); counter++) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -816,7 +817,7 @@ public class NLSMessageQueueTestcase extends Testcase {
             sandboxReply_.getQueue().getPath());
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       if (!e.hasMoreElements())
         succeeded = false;
       for (int counter = 0; e.hasMoreElements(); counter++) {
@@ -943,21 +944,21 @@ public class NLSMessageQueueTestcase extends Testcase {
       System.out.println("Sent message");
       // /System.out.print("Press ENTER to continue."); try {System.in.read();}
       // catch(Exception e) {}
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       if (!e.hasMoreElements()) {
         System.out.println("No messages received.");
         succeeded = false;
       }
-      Vector msgKeys = new Vector();
-      for (int counter = 0; e.hasMoreElements(); counter++) {
+      Vector<MessageKey> msgKeys = new Vector<MessageKey>();
+      while ( e.hasMoreElements()) {
         QueuedMessage listedMessage = (QueuedMessage) e.nextElement();
 
         byte[] msgKey = listedMessage.getKey();
         msgKeys.addElement(new MessageKey(msgKey));
       }
 
-      Enumeration e1 = msgKeys.elements();
-      for (int counter = 0; e1.hasMoreElements(); counter++) {
+      Enumeration<MessageKey> e1 = msgKeys.elements();
+      while ( e1.hasMoreElements()) {
         byte[] msgKey = ((MessageKey) e1.nextElement()).getKey();
         QueuedMessage message = f.receive(msgKey);
 

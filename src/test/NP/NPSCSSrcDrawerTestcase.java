@@ -43,7 +43,7 @@ public class NPSCSSrcDrawerTestcase extends Testcase
   Constructor.  This is called from NPPrintTest::createTestcases().
   **/
   public NPSCSSrcDrawerTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {

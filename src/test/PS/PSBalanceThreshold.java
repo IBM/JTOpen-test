@@ -26,7 +26,6 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -60,20 +59,21 @@ extends Testcase
 Constructor.
 **/
     public PSBalanceThreshold (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String, Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
                                     String password)
     {
         super (systemObject, "PSBalanceThreshold",
-               (Vector) namesAndVars.get ("PSBalanceThreshold"), 
+               namesAndVars.get ("PSBalanceThreshold"), 
                runMode, fileOutputStream,
                password);
     }
 
 
 
+    @SuppressWarnings("unused")
     private int getBalanceThreshold(int port)
         throws IOException
     {

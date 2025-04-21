@@ -45,7 +45,7 @@ public class RFSerialization extends Testcase
    *Constructor.  This is called from RFTest::createTestcases().
   **/
   public RFSerialization(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream,
                          

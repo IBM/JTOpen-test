@@ -51,7 +51,7 @@ public class NPAFPRListSpooledFileFilterTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPAFPRListSpooledFileFilterTestcase(AS400            systemObject,
-                                            Vector           variationsToRun,
+                                            Vector<String> variationsToRun,
                                             int              runMode,
                                             FileOutputStream fileOutputStream)
     {

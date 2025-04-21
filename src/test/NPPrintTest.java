@@ -14,7 +14,6 @@
 package test;
 
 import java.io.IOException;
-import java.util.Vector;
 import java.util.Enumeration;
 
 import com.ibm.as400.access.AS400;
@@ -207,7 +206,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtParmGetFloatTestcase tc =
                       new NPPrtParmGetFloatTestcase(systemObject_,
-                                                    (Vector)namesAndVars_.get("NPPrtParmGetFloatTestcase"),
+                                                    namesAndVars_.get("NPPrtParmGetFloatTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
                     testcases_.addElement(tc);
@@ -219,7 +218,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtParmSetFloatTestcase tc =
                       new NPPrtParmSetFloatTestcase(systemObject_,
-                                                    (Vector)namesAndVars_.get("NPPrtParmSetFloatTestcase"),
+                                                    namesAndVars_.get("NPPrtParmSetFloatTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
                     testcases_.addElement(tc);
@@ -231,7 +230,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtParmGetIntTestcase tc =
                       new NPPrtParmGetIntTestcase(systemObject_,
-                                                  (Vector)namesAndVars_.get("NPPrtParmGetIntTestcase"),
+                                                  namesAndVars_.get("NPPrtParmGetIntTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
                     testcases_.addElement(tc);
@@ -243,7 +242,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtParmSetIntTestcase tc =
                       new NPPrtParmSetIntTestcase(systemObject_,
-                                                  (Vector)namesAndVars_.get("NPPrtParmSetIntTestcase"),
+                                                  namesAndVars_.get("NPPrtParmSetIntTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
                     testcases_.addElement(tc);
@@ -255,7 +254,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtParmGetStrTestcase tc =
                       new NPPrtParmGetStrTestcase(systemObject_,
-                                                  (Vector)namesAndVars_.get("NPPrtParmGetStrTestcase"),
+                                                  namesAndVars_.get("NPPrtParmGetStrTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
                     testcases_.addElement(tc);
@@ -267,7 +266,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtParmSetStrTestcase tc =
                       new NPPrtParmSetStrTestcase(systemObject_,
-                                                  (Vector)namesAndVars_.get("NPPrtParmSetStrTestcase"),
+                                                  namesAndVars_.get("NPPrtParmSetStrTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
                     testcases_.addElement(tc);
@@ -281,7 +280,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjectInStrAvailableTestcase tc =
                       new NPPrtObjectInStrAvailableTestcase(systemObject_,
-                                                            (Vector)namesAndVars_.get("NPPrtObjectInStrAvailableTestcase"),
+                                                            namesAndVars_.get("NPPrtObjectInStrAvailableTestcase"),
                                                             runMode_,
                                                             fileOutputStream_);
                     testcases_.addElement(tc);
@@ -292,7 +291,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjectInStrCloseTestcase tc =
                       new NPPrtObjectInStrCloseTestcase(systemObject_,
-                                                        (Vector)namesAndVars_.get("NPPrtObjectInStrCloseTestcase"),
+                                                        namesAndVars_.get("NPPrtObjectInStrCloseTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -303,7 +302,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjectInStrMarkTestcase tc =
                       new NPPrtObjectInStrMarkTestcase(systemObject_,
-                                                       (Vector)namesAndVars_.get("NPPrtObjectInStrMarkTestcase"),
+                                                       namesAndVars_.get("NPPrtObjectInStrMarkTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -314,7 +313,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjectInStrMarkSupTestcase tc =
                       new NPPrtObjectInStrMarkSupTestcase(systemObject_,
-                                                          (Vector)namesAndVars_.get("NPPrtObjectInStrMarkSupTestcase"),
+                                                          namesAndVars_.get("NPPrtObjectInStrMarkSupTestcase"),
                                                           runMode_,
                                                           fileOutputStream_);
                     testcases_.addElement(tc);
@@ -325,7 +324,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjectInStrReadTestcase tc =
                       new NPPrtObjectInStrReadTestcase(systemObject_,
-                                                       (Vector)namesAndVars_.get("NPPrtObjectInStrReadTestcase"),
+                                                       namesAndVars_.get("NPPrtObjectInStrReadTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -336,7 +335,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjectInStrResetTestcase tc =
                       new NPPrtObjectInStrResetTestcase(systemObject_,
-                                                        (Vector)namesAndVars_.get("NPPrtObjectInStrResetTestcase"),
+                                                        namesAndVars_.get("NPPrtObjectInStrResetTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -347,7 +346,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjectInStrSkipTestcase tc =
                       new NPPrtObjectInStrSkipTestcase(systemObject_,
-                                                       (Vector)namesAndVars_.get("NPPrtObjectInStrSkipTestcase"),
+                                                       namesAndVars_.get("NPPrtObjectInStrSkipTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -362,7 +361,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjPageInStrTestcase tc =
                       new NPPrtObjPageInStrTestcase(systemObject_,
-                                                    (Vector)namesAndVars_.get("NPPrtObjPageInStrTestcase"),
+                                                    namesAndVars_.get("NPPrtObjPageInStrTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
                     testcases_.addElement(tc);
@@ -376,7 +375,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtObjTransInStrTestcase tc =
                       new NPPrtObjTransInStrTestcase(systemObject_,
-                                                    (Vector)namesAndVars_.get("NPPrtObjTransInStrTestcase"),
+                                                    namesAndVars_.get("NPPrtObjTransInStrTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
                     testcases_.addElement(tc);
@@ -393,7 +392,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFOutStrCloseTestcase tc =
                       new NPSplFOutStrCloseTestcase(systemObject_,
-                                                    (Vector)namesAndVars_.get("NPSplFOutStrCloseTestcase"),
+                                                    namesAndVars_.get("NPSplFOutStrCloseTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
                     testcases_.addElement(tc);
@@ -405,7 +404,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFOutStrCtorTestcase tc =
                       new NPSplFOutStrCtorTestcase(systemObject_,
-                                                   (Vector)namesAndVars_.get("NPSplFOutStrCtorTestcase"),
+                                                   namesAndVars_.get("NPSplFOutStrCtorTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
                     testcases_.addElement(tc);
@@ -417,7 +416,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFOutStrFlushTestcase tc =
                       new NPSplFOutStrFlushTestcase(systemObject_,
-                                                    (Vector)namesAndVars_.get("NPSplFOutStrFlushTestcase"),
+                                                    namesAndVars_.get("NPSplFOutStrFlushTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
                     testcases_.addElement(tc);
@@ -429,7 +428,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFOutStrGetSplFTestcase tc =
                       new NPSplFOutStrGetSplFTestcase(systemObject_,
-                                                      (Vector)namesAndVars_.get("NPSplFOutStrGetSplFTestcase"),
+                                                      namesAndVars_.get("NPSplFOutStrGetSplFTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
                     testcases_.addElement(tc);
@@ -441,7 +440,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFOutStrWriteTestcase tc =
                       new NPSplFOutStrWriteTestcase(systemObject_,
-                                                    (Vector)namesAndVars_.get("NPSplFOutStrWriteTestcase"),
+                                                    namesAndVars_.get("NPSplFOutStrWriteTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
                     testcases_.addElement(tc);
@@ -457,7 +456,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFCtorTestcase tc =
                       new NPSplFCtorTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPSplFCtorTestcase"),
+                                             namesAndVars_.get("NPSplFCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -470,7 +469,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFAnsMsgTestcase tc =
                       new NPSplFAnsMsgTestcase(systemObject_,
-                                               (Vector)namesAndVars_.get("NPSplFAnsMsgTestcase"),
+                                               namesAndVars_.get("NPSplFAnsMsgTestcase"),
                                                runMode_,
                                                fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -482,7 +481,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFDeleteTestcase tc =
                       new NPSplFDeleteTestcase(systemObject_,
-                                               (Vector)namesAndVars_.get("NPSplFDeleteTestcase"),
+                                               namesAndVars_.get("NPSplFDeleteTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -494,7 +493,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFGetInputStreamTestcase tc =
                       new NPSplFGetInputStreamTestcase(systemObject_,
-                                                       (Vector)namesAndVars_.get("NPSplFGetInputStreamTestcase"),
+                                                       namesAndVars_.get("NPSplFGetInputStreamTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -506,7 +505,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFGetMessageTestcase tc =
                       new NPSplFGetMessageTestcase(systemObject_,
-                                                   (Vector)namesAndVars_.get("NPSplFGetMessageTestcase"),
+                                                   namesAndVars_.get("NPSplFGetMessageTestcase"),
                                                    runMode_,
                                                    fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -519,7 +518,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFNameTestcase tc =
                       new NPSplFNameTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPSplFNameTestcase"),
+                                             namesAndVars_.get("NPSplFNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -531,7 +530,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFHoldTestcase tc =
                       new NPSplFHoldTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPSplFHoldTestcase"),
+                                             namesAndVars_.get("NPSplFHoldTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -543,7 +542,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFMoveOutQTestcase tc =
                       new NPSplFMoveOutQTestcase(systemObject_,
-                                                 (Vector)namesAndVars_.get("NPSplFMoveOutQTestcase"),
+                                                 namesAndVars_.get("NPSplFMoveOutQTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -555,7 +554,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFMoveSplFTestcase tc =
                       new NPSplFMoveSplFTestcase(systemObject_,
-                                                 (Vector)namesAndVars_.get("NPSplFMoveSplFTestcase"),
+                                                 namesAndVars_.get("NPSplFMoveSplFTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -567,7 +566,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFMoveToTopTestcase tc =
                       new NPSplFMoveToTopTestcase(systemObject_,
-                                                  (Vector)namesAndVars_.get("NPSplFMoveToTopTestcase"),
+                                                  namesAndVars_.get("NPSplFMoveToTopTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
                     testcases_.addElement(tc);
@@ -579,7 +578,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFReleaseTestcase tc =
                       new NPSplFReleaseTestcase(systemObject_,
-                                                (Vector)namesAndVars_.get("NPSplFReleaseTestcase"),
+                                                namesAndVars_.get("NPSplFReleaseTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -591,7 +590,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFSendNetTestcase tc =
                       new NPSplFSendNetTestcase(systemObject_,
-                                                (Vector)namesAndVars_.get("NPSplFSendNetTestcase"),
+                                                namesAndVars_.get("NPSplFSendNetTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -603,7 +602,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFSendTCPTestcase tc =
                       new NPSplFSendTCPTestcase(systemObject_,
-                                                (Vector)namesAndVars_.get("NPSplFSendTCPTestcase"),
+                                                namesAndVars_.get("NPSplFSendTCPTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -615,7 +614,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFSetAttrsTestcase tc =
                       new NPSplFSetAttrsTestcase(systemObject_,
-                                                 (Vector)namesAndVars_.get("NPSplFSetAttrsTestcase"),
+                                                 namesAndVars_.get("NPSplFSetAttrsTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -628,7 +627,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFSystemTestcase tc =
                       new NPSplFSystemTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPSplFSystemTestcase"),
+                                             namesAndVars_.get("NPSplFSystemTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -640,7 +639,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFUpdateTestcase tc =
                       new NPSplFUpdateTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPSplFUpdateTestcase"),
+                                             namesAndVars_.get("NPSplFUpdateTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -656,7 +655,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListFormTypeFilterTestcase tc =
                       new NPSplFListFormTypeFilterTestcase(systemObject_,
-                                                           (Vector)namesAndVars_.get("NPSplFListFormTypeFilterTestcase"),
+                                                           namesAndVars_.get("NPSplFListFormTypeFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -668,7 +667,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListQueueFilterTestcase tc =
                       new NPSplFListQueueFilterTestcase(systemObject_,
-                                                        (Vector)namesAndVars_.get("NPSplFListQueueFilterTestcase"),
+                                                        namesAndVars_.get("NPSplFListQueueFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -680,7 +679,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListSystemTestcase tc =
                       new NPSplFListSystemTestcase(systemObject_,
-                                                   (Vector)namesAndVars_.get("NPSplFListSystemTestcase"),
+                                                   namesAndVars_.get("NPSplFListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
                     testcases_.addElement(tc);
@@ -692,7 +691,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListUserDataFilterTestcase tc =
                       new NPSplFListUserDataFilterTestcase(systemObject_,
-                                                           (Vector)namesAndVars_.get("NPSplFListUserDataFilterTestcase"),
+                                                           namesAndVars_.get("NPSplFListUserDataFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -703,7 +702,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListDateFilterTestcase tc =
                       new NPSplFListDateFilterTestcase(systemObject_,
-                                                           (Vector)namesAndVars_.get("NPSplFListDateFilterTestcase"),
+                                                           namesAndVars_.get("NPSplFListDateFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -714,7 +713,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListJobSystemFilterTestcase tc =
                       new NPSplFListJobSystemFilterTestcase(systemObject_,
-                                                           (Vector)namesAndVars_.get("NPSplFListJobSystemFilterTestcase"),
+                                                           namesAndVars_.get("NPSplFListJobSystemFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -725,7 +724,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListUserFilterTestcase tc =
                       new NPSplFListUserFilterTestcase(systemObject_,
-                                                       (Vector)namesAndVars_.get("NPSplFListUserFilterTestcase"),
+                                                       namesAndVars_.get("NPSplFListUserFilterTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -737,7 +736,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListCtorTestcase tc =
                       new NPSplFListCtorTestcase(systemObject_,
-                                                 (Vector)namesAndVars_.get("NPSplFListCtorTestcase"),
+                                                 namesAndVars_.get("NPSplFListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -749,7 +748,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListOpenAsyncTestcase tc =
                       new NPSplFListOpenAsyncTestcase(systemObject_,
-                                                      (Vector)namesAndVars_.get("NPSplFListOpenAsyncTestcase"),
+                                                      namesAndVars_.get("NPSplFListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
                     testcases_.addElement(tc);
@@ -761,7 +760,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListOpenSyncTestcase tc =
                       new NPSplFListOpenSyncTestcase(systemObject_,
-                                                     (Vector)namesAndVars_.get("NPSplFListOpenSyncTestcase"),
+                                                     namesAndVars_.get("NPSplFListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -773,7 +772,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListListenerTestcase tc =
                       new NPSplFListListenerTestcase(systemObject_,
-                                                     (Vector)namesAndVars_.get("NPSplFListListenerTestcase"),
+                                                     namesAndVars_.get("NPSplFListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -785,7 +784,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListResetFilterTestcase tc =
                       new NPSplFListResetFilterTestcase(systemObject_,
-                                                        (Vector)namesAndVars_.get("NPSplFListResetFilterTestcase"),
+                                                        namesAndVars_.get("NPSplFListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -799,7 +798,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListAttrsToRetTestcase tc =
                       new NPSplFListAttrsToRetTestcase(systemObject_,
-                                                       (Vector)namesAndVars_.get("NPSplFListAttrsToRetTestcase"),
+                                                       namesAndVars_.get("NPSplFListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -811,7 +810,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSplFListSerializeTestcase tc =
                       new NPSplFListSerializeTestcase(systemObject_,
-                                                      (Vector)namesAndVars_.get("NPSplFListSerializeTestcase"),
+                                                      namesAndVars_.get("NPSplFListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -827,7 +826,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQCtorTestcase tc =
                       new NPOutQCtorTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPOutQCtorTestcase"),
+                                             namesAndVars_.get("NPOutQCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -839,7 +838,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQClearTestcase tc =
                       new NPOutQClearTestcase(systemObject_,
-                                              (Vector)namesAndVars_.get("NPOutQClearTestcase"),
+                                              namesAndVars_.get("NPOutQClearTestcase"),
                                               runMode_,
                                               fileOutputStream_);
                     testcases_.addElement(tc);
@@ -852,7 +851,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQNameTestcase tc =
                       new NPOutQNameTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPOutQNameTestcase"),
+                                             namesAndVars_.get("NPOutQNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -865,7 +864,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQPathTestcase tc =
                       new NPOutQPathTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPOutQPathTestcase"),
+                                             namesAndVars_.get("NPOutQPathTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -877,7 +876,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQHoldTestcase tc =
                       new NPOutQHoldTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPOutQHoldTestcase"),
+                                             namesAndVars_.get("NPOutQHoldTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -891,7 +890,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQSystemTestcase tc =
                       new NPOutQSystemTestcase(systemObject_,
-                                               (Vector)namesAndVars_.get("NPOutQSystemTestcase"),
+                                               namesAndVars_.get("NPOutQSystemTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -903,7 +902,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQReleaseTestcase tc =
                       new NPOutQReleaseTestcase(systemObject_,
-                                                (Vector)namesAndVars_.get("NPOutQReleaseTestcase"),
+                                                namesAndVars_.get("NPOutQReleaseTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -915,7 +914,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQUpdateTestcase tc =
                       new NPOutQUpdateTestcase(systemObject_,
-                                               (Vector)namesAndVars_.get("NPOutQUpdateTestcase"),
+                                               namesAndVars_.get("NPOutQUpdateTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -927,7 +926,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQSerializeTestcase tc =
                       new NPOutQSerializeTestcase(systemObject_,
-                                                  (Vector)namesAndVars_.get("NPOutQSerializeTestcase"),
+                                                  namesAndVars_.get("NPOutQSerializeTestcase"),
                                                   runMode_,
                                                   fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -945,7 +944,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListQueueFilterTestcase tc =
                       new NPOutQListQueueFilterTestcase(systemObject_,
-                                                        (Vector)namesAndVars_.get("NPOutQListQueueFilterTestcase"),
+                                                        namesAndVars_.get("NPOutQListQueueFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -959,7 +958,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListSystemTestcase tc =
                       new NPOutQListSystemTestcase(systemObject_,
-                                                   (Vector)namesAndVars_.get("NPOutQListSystemTestcase"),
+                                                   namesAndVars_.get("NPOutQListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
                     testcases_.addElement(tc);
@@ -971,7 +970,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListCtorTestcase tc =
                       new NPOutQListCtorTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPOutQListCtorTestcase"),
+                                                 namesAndVars_.get("NPOutQListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -983,7 +982,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListOpenAsyncTestcase tc =
                       new NPOutQListOpenAsyncTestcase(systemObject_,
-                                                      (Vector) namesAndVars_.get("NPOutQListOpenAsyncTestcase"),
+                                                      namesAndVars_.get("NPOutQListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
                     testcases_.addElement(tc);
@@ -995,7 +994,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListOpenSyncTestcase tc =
                       new NPOutQListOpenSyncTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPOutQListOpenSyncTestcase"),
+                                                     namesAndVars_.get("NPOutQListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1007,7 +1006,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListListenerTestcase tc =
                       new NPOutQListListenerTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPOutQListListenerTestcase"),
+                                                     namesAndVars_.get("NPOutQListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1019,7 +1018,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListResetFilterTestcase tc =
                       new NPOutQListResetFilterTestcase(systemObject_,
-                                                        (Vector) namesAndVars_.get("NPOutQListResetFilterTestcase"),
+                                                        namesAndVars_.get("NPOutQListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1033,7 +1032,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListAttrsToRetTestcase tc =
                       new NPOutQListAttrsToRetTestcase(systemObject_,
-                                                       (Vector) namesAndVars_.get("NPOutQListAttrsToRetTestcase"),
+                                                       namesAndVars_.get("NPOutQListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1045,7 +1044,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPOutQListSerializeTestcase tc =
                       new NPOutQListSerializeTestcase(systemObject_,
-                                                      (Vector)namesAndVars_.get("NPOutQListSerializeTestcase"),
+                                                      namesAndVars_.get("NPOutQListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -1061,7 +1060,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDCtorTestcase tc =
                       new NPPrtDCtorTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPPrtDCtorTestcase"),
+                                             namesAndVars_.get("NPPrtDCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1075,7 +1074,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDNameTestcase tc =
                       new NPPrtDNameTestcase(systemObject_,
-                                                (Vector)namesAndVars_.get("NPPrtDNameTestcase"),
+                                                namesAndVars_.get("NPPrtDNameTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1089,7 +1088,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDSystemTestcase tc =
                       new NPPrtDSystemTestcase(systemObject_,
-                                                (Vector)namesAndVars_.get("NPPrtDSystemTestcase"),
+                                                namesAndVars_.get("NPPrtDSystemTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1101,7 +1100,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDUpdateTestcase tc =
                       new NPPrtDUpdateTestcase(systemObject_,
-                                                (Vector)namesAndVars_.get("NPPrtDUpdateTestcase"),
+                                                namesAndVars_.get("NPPrtDUpdateTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1113,7 +1112,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDSerializeTestcase tc =
                       new NPPrtDSerializeTestcase(systemObject_,
-                                                  (Vector)namesAndVars_.get("NPPrtDSerializeTestcase"),
+                                                  namesAndVars_.get("NPPrtDSerializeTestcase"),
                                                   runMode_,
                                                   fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -1131,7 +1130,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDListPrinterFilterTestcase tc =
                       new NPPrtDListPrinterFilterTestcase(systemObject_,
-                                                          (Vector)namesAndVars_.get("NPPrtDListPrinterFilterTestcase"),
+                                                          namesAndVars_.get("NPPrtDListPrinterFilterTestcase"),
                                                           runMode_,
                                                           fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1145,7 +1144,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDListSystemTestcase tc =
                       new NPPrtDListSystemTestcase(systemObject_,
-                                                   (Vector)namesAndVars_.get("NPPrtDListSystemTestcase"),
+                                                   namesAndVars_.get("NPPrtDListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1157,7 +1156,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDListCtorTestcase tc =
                       new NPPrtDListCtorTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPPrtDListCtorTestcase"),
+                                                 namesAndVars_.get("NPPrtDListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1169,7 +1168,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDListOpenAsyncTestcase tc =
                       new NPPrtDListOpenAsyncTestcase(systemObject_,
-                                                      (Vector) namesAndVars_.get("NPPrtDListOpenAsyncTestcase"),
+                                                      namesAndVars_.get("NPPrtDListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1181,7 +1180,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDListOpenSyncTestcase tc =
                       new NPPrtDListOpenSyncTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPPrtDListOpenSyncTestcase"),
+                                                     namesAndVars_.get("NPPrtDListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1193,7 +1192,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDListListenerTestcase tc =
                       new NPPrtDListListenerTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPPrtDListListenerTestcase"),
+                                                     namesAndVars_.get("NPPrtDListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1205,7 +1204,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRListResetFilterTestcase tc =
                       new NPAFPRListResetFilterTestcase(systemObject_,
-                                                        (Vector) namesAndVars_.get("NPPrtDListResetFilterTestcase"),
+                                                        namesAndVars_.get("NPPrtDListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1219,7 +1218,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDListAttrsToRetTestcase tc =
                       new NPPrtDListAttrsToRetTestcase(systemObject_,
-                                                       (Vector) namesAndVars_.get("NPPrtDListAttrsToRetTestcase"),
+                                                       namesAndVars_.get("NPPrtDListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1231,7 +1230,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtDListSerializeTestcase tc =
                       new NPPrtDListSerializeTestcase(systemObject_,
-                                                      (Vector)namesAndVars_.get("NPPrtDListSerializeTestcase"),
+                                                      namesAndVars_.get("NPPrtDListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -1247,7 +1246,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJStartTestcase tc =
                       new NPWrtJStartTestcase(systemObject_,
-                                              (Vector)namesAndVars_.get("NPWrtJStartTestcase"),
+                                              namesAndVars_.get("NPWrtJStartTestcase"),
                                               runMode_,
                                               fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1260,7 +1259,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJNameTestcase tc =
                       new NPWrtJNameTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPWrtJNameTestcase"),
+                                             namesAndVars_.get("NPWrtJNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1272,7 +1271,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJEndTestcase tc =
                       new NPWrtJEndTestcase(systemObject_,
-                                            (Vector)namesAndVars_.get("NPWrtJEndTestcase"),
+                                            namesAndVars_.get("NPWrtJEndTestcase"),
                                             runMode_,
                                             fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1285,7 +1284,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJSystemTestcase tc =
                       new NPWrtJSystemTestcase(systemObject_,
-                                               (Vector)namesAndVars_.get("NPWrtJSystemTestcase"),
+                                               namesAndVars_.get("NPWrtJSystemTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1297,7 +1296,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJUpdateTestcase tc =
                       new NPWrtJUpdateTestcase(systemObject_,
-                                               (Vector)namesAndVars_.get("NPWrtJUpdateTestcase"),
+                                               namesAndVars_.get("NPWrtJUpdateTestcase"),
                                                runMode_,
                                                fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1315,7 +1314,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListQueueFilterTestcase tc =
                       new NPWrtJListQueueFilterTestcase(systemObject_,
-                                                        (Vector)namesAndVars_.get("NPWrtJListQueueFilterTestcase"),
+                                                        namesAndVars_.get("NPWrtJListQueueFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1329,7 +1328,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListSystemTestcase tc =
                       new NPWrtJListSystemTestcase(systemObject_,
-                                                   (Vector)namesAndVars_.get("NPWrtJListSystemTestcase"),
+                                                   namesAndVars_.get("NPWrtJListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1343,7 +1342,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListWriterFilterTestcase tc =
                       new NPWrtJListWriterFilterTestcase(systemObject_,
-                                                         (Vector)namesAndVars_.get("NPWrtJListWriterFilterTestcase"),
+                                                         namesAndVars_.get("NPWrtJListWriterFilterTestcase"),
                                                          runMode_,
                                                          fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1355,7 +1354,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListCtorTestcase tc =
                       new NPWrtJListCtorTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPWrtJListCtorTestcase"),
+                                                 namesAndVars_.get("NPWrtJListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1367,7 +1366,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListOpenAsyncTestcase tc =
                       new NPWrtJListOpenAsyncTestcase(systemObject_,
-                                                      (Vector) namesAndVars_.get("NPWrtJListOpenAsyncTestcase"),
+                                                      namesAndVars_.get("NPWrtJListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1379,7 +1378,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListOpenSyncTestcase tc =
                       new NPWrtJListOpenSyncTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPWrtJListOpenSyncTestcase"),
+                                                     namesAndVars_.get("NPWrtJListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1391,7 +1390,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListListenerTestcase tc =
                       new NPWrtJListListenerTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPWrtJListListenerTestcase"),
+                                                     namesAndVars_.get("NPWrtJListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1403,7 +1402,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListResetFilterTestcase tc =
                       new NPWrtJListResetFilterTestcase(systemObject_,
-                                                        (Vector) namesAndVars_.get("NPWrtJListResetFilterTestcase"),
+                                                        namesAndVars_.get("NPWrtJListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1417,7 +1416,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListAttrsToRetTestcase tc =
                       new NPWrtJListAttrsToRetTestcase(systemObject_,
-                                                       (Vector) namesAndVars_.get("NPWrtJListAttrsToRetTestcase"),
+                                                       namesAndVars_.get("NPWrtJListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -1429,7 +1428,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPWrtJListSerializeTestcase tc =
                       new NPWrtJListSerializeTestcase(systemObject_,
-                                                      (Vector)namesAndVars_.get("NPWrtJListSerializeTestcase"),
+                                                      namesAndVars_.get("NPWrtJListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, printer_, password_);
                     testcases_.addElement(tc);
@@ -1445,7 +1444,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFCtorTestcase tc =
                       new NPPrtFCtorTestcase(systemObject_,
-                                             (Vector) namesAndVars_.get("NPPrtFCtorTestcase"),
+                                             namesAndVars_.get("NPPrtFCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1458,7 +1457,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFNameTestcase tc =
                       new NPPrtFNameTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPPrtFNameTestcase"),
+                                             namesAndVars_.get("NPPrtFNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1470,7 +1469,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFSetAttrsTestcase tc =
                       new NPPrtFSetAttrsTestcase(systemObject_,
-                                                 (Vector)namesAndVars_.get("NPPrtFSetAttrsTestcase"),
+                                                 namesAndVars_.get("NPPrtFSetAttrsTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1484,7 +1483,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFPathTestcase tc =
                       new NPPrtFPathTestcase(systemObject_,
-                                             (Vector)namesAndVars_.get("NPPrtFPathTestcase"),
+                                             namesAndVars_.get("NPPrtFPathTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1498,7 +1497,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFSystemTestcase tc =
                       new NPPrtFSystemTestcase(systemObject_,
-                                               (Vector)namesAndVars_.get("NPPrtFSystemTestcase"),
+                                               namesAndVars_.get("NPPrtFSystemTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1510,7 +1509,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFUpdateTestcase tc =
                       new NPPrtFUpdateTestcase(systemObject_,
-                                               (Vector)namesAndVars_.get("NPPrtFUpdateTestcase"),
+                                               namesAndVars_.get("NPPrtFUpdateTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1522,7 +1521,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFSerializeTestcase tc =
                       new NPPrtFSerializeTestcase(systemObject_,
-                                                  (Vector)namesAndVars_.get("NPPrtFSerializeTestcase"),
+                                                  namesAndVars_.get("NPPrtFSerializeTestcase"),
                                                   runMode_,
                                                   fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -1539,7 +1538,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListCtorTestcase tc =
                       new NPPrtFListCtorTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPPrtFListCtorTestcase"),
+                                                 namesAndVars_.get("NPPrtFListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1553,7 +1552,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListPrinterFileFilterTestcase tc =
                       new NPPrtFListPrinterFileFilterTestcase(systemObject_,
-                                                              (Vector)namesAndVars_.get("NPPrtFListPrinterFileFilterTestcase"),
+                                                              namesAndVars_.get("NPPrtFListPrinterFileFilterTestcase"),
                                                               runMode_,
                                                               fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1567,7 +1566,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListSystemTestcase tc =
                       new NPPrtFListSystemTestcase(systemObject_,
-                                                   (Vector)namesAndVars_.get("NPPrtFListSystemTestcase"),
+                                                   namesAndVars_.get("NPPrtFListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1579,7 +1578,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListOpenAsyncTestcase tc =
                       new NPPrtFListOpenAsyncTestcase(systemObject_,
-                                                      (Vector) namesAndVars_.get("NPPrtFListOpenAsyncTestcase"),
+                                                      namesAndVars_.get("NPPrtFListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1591,7 +1590,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListOpenSyncTestcase tc =
                       new NPPrtFListOpenSyncTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPPrtFListOpenSyncTestcase"),
+                                                     namesAndVars_.get("NPPrtFListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1603,7 +1602,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListListenerTestcase tc =
                       new NPPrtFListListenerTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPPrtFListListenerTestcase"),
+                                                     namesAndVars_.get("NPPrtFListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1615,7 +1614,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListResetFilterTestcase tc =
                       new NPPrtFListResetFilterTestcase(systemObject_,
-                                                        (Vector) namesAndVars_.get("NPPrtFListResetFilterTestcase"),
+                                                        namesAndVars_.get("NPPrtFListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1629,7 +1628,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListAttrsToRetTestcase tc =
                       new NPPrtFListAttrsToRetTestcase(systemObject_,
-                                                       (Vector) namesAndVars_.get("NPPrtFListAttrsToRetTestcase"),
+                                                       namesAndVars_.get("NPPrtFListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1641,7 +1640,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPPrtFListSerializeTestcase tc =
                       new NPPrtFListSerializeTestcase(systemObject_,
-                                                      (Vector)namesAndVars_.get("NPPrtFListSerializeTestcase"),
+                                                      namesAndVars_.get("NPPrtFListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -1657,7 +1656,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRCtorTestcase tc =
                       new NPAFPRCtorTestcase(systemObject_,
-                                             (Vector) namesAndVars_.get("NPAFPRCtorTestcase"),
+                                             namesAndVars_.get("NPAFPRCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1671,7 +1670,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRNameTestcase tc =
                       new NPAFPRNameTestcase(systemObject_,
-                                             (Vector) namesAndVars_.get("NPAFPRNameTestcase"),
+                                             namesAndVars_.get("NPAFPRNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1684,7 +1683,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRPathTestcase tc =
                       new NPAFPRPathTestcase(systemObject_,
-                                             (Vector) namesAndVars_.get("NPAFPRPathTestcase"),
+                                             namesAndVars_.get("NPAFPRPathTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1698,7 +1697,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRSystemTestcase tc =
                       new NPAFPRSystemTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPAFPRSystemTestcase"),
+                                               namesAndVars_.get("NPAFPRSystemTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1710,7 +1709,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRUpdateTestcase tc =
                       new NPAFPRUpdateTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPAFPRUpdateTestcase"),
+                                               namesAndVars_.get("NPAFPRUpdateTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1722,7 +1721,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRGetInputStreamTestcase tc =
                       new NPAFPRGetInputStreamTestcase(systemObject_,
-                                                       (Vector) namesAndVars_.get("NPAFPRGetInputStreamTestcase"),
+                                                       namesAndVars_.get("NPAFPRGetInputStreamTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1734,7 +1733,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRSerializeTestcase tc =
                       new NPAFPRSerializeTestcase(systemObject_,
-                                                  (Vector) namesAndVars_.get("NPAFPRSerializeTestcase"),
+                                                  namesAndVars_.get("NPAFPRSerializeTestcase"),
                                                   runMode_,
                                                   fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -1750,7 +1749,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRListCtorTestcase tc =
                       new NPAFPRListCtorTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPAFPRListCtorTestcase"),
+                                                 namesAndVars_.get("NPAFPRListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1767,7 +1766,7 @@ public class NPPrintTest extends TestDriver
                     NPAFPRListFontPelDFilterTestcase tc =
                       new NPAFPRListFontPelDFilterTestcase(
                                                            systemObject_,
-                                                           (Vector) namesAndVars_.get("NPAFPRListFontPelDFilterTestcase"),
+                                                           namesAndVars_.get("NPAFPRListFontPelDFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1782,7 +1781,7 @@ public class NPPrintTest extends TestDriver
                     NPAFPRListResourceFilterTestcase tc =
                       new NPAFPRListResourceFilterTestcase(
                                                            systemObject_,
-                                                           (Vector) namesAndVars_.get("NPAFPRListResourceFilterTestcase"),
+                                                           namesAndVars_.get("NPAFPRListResourceFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1797,7 +1796,7 @@ public class NPPrintTest extends TestDriver
                     NPAFPRListSpooledFileFilterTestcase tc =
                       new NPAFPRListSpooledFileFilterTestcase(
                                                               systemObject_,
-                                                              (Vector) namesAndVars_.get("NPAFPRListSpooledFileFilterTestcase"),
+                                                              namesAndVars_.get("NPAFPRListSpooledFileFilterTestcase"),
                                                               runMode_,
                                                               fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1812,7 +1811,7 @@ public class NPPrintTest extends TestDriver
                     NPAFPRListSystemTestcase tc =
                       new NPAFPRListSystemTestcase(
                                                    systemObject_,
-                                                   (Vector) namesAndVars_.get("NPAFPRListSystemTestcase"),
+                                                   namesAndVars_.get("NPAFPRListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1824,7 +1823,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRListOpenAsyncTestcase tc =
                       new NPAFPRListOpenAsyncTestcase(systemObject_,
-                                                      (Vector) namesAndVars_.get("NPAFPRListOpenAsyncTestcase"),
+                                                      namesAndVars_.get("NPAFPRListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1836,7 +1835,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRListOpenSyncTestcase tc =
                       new NPAFPRListOpenSyncTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPAFPRListOpenSyncTestcase"),
+                                                     namesAndVars_.get("NPAFPRListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1848,7 +1847,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRListListenerTestcase tc =
                       new NPAFPRListListenerTestcase(systemObject_,
-                                                     (Vector) namesAndVars_.get("NPAFPRListListenerTestcase"),
+                                                     namesAndVars_.get("NPAFPRListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1860,7 +1859,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRListResetFilterTestcase tc =
                       new NPAFPRListResetFilterTestcase(systemObject_,
-                                                        (Vector) namesAndVars_.get("NPAFPRListResetFilterTestcase"),
+                                                        namesAndVars_.get("NPAFPRListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1874,7 +1873,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRListAttrsToRetTestcase tc =
                       new NPAFPRListAttrsToRetTestcase(systemObject_,
-                                                       (Vector) namesAndVars_.get("NPAFPRListAttrsToRetTestcase"),
+                                                       namesAndVars_.get("NPAFPRListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1886,7 +1885,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPAFPRListSerializeTestcase tc =
                       new NPAFPRListSerializeTestcase(systemObject_,
-                                                      (Vector) namesAndVars_.get("NPAFPRListSerializeTestcase"),
+                                                      namesAndVars_.get("NPAFPRListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
                     testcases_.addElement(tc);
@@ -1901,7 +1900,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5256CtorTestcase tc =
                       new NPSCS5256CtorTestcase(systemObject_,
-                                          (Vector) namesAndVars_.get("NPSCS5256CtorTestcase"),
+                                          namesAndVars_.get("NPSCS5256CtorTestcase"),
                                           runMode_,
                                           fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1912,7 +1911,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSCRTestcase tc =
                       new NPSCSCRTestcase(systemObject_,
-                                        (Vector) namesAndVars_.get("NPSCSCRTestcase"),
+                                        namesAndVars_.get("NPSCSCRTestcase"),
                                         runMode_,
                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1923,7 +1922,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSCloseTestcase tc =
                       new NPSCSCloseTestcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCSCloseTestcase"),
+                                           namesAndVars_.get("NPSCSCloseTestcase"),
                                            runMode_,
                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1934,7 +1933,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5256EndPageTestcase tc =
                       new NPSCS5256EndPageTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPSCS5256EndPageTestcase"),
+                                                 namesAndVars_.get("NPSCS5256EndPageTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1945,7 +1944,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSFlushTestcase tc =
                       new NPSCSFlushTestcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCSFlushTestcase"),
+                                           namesAndVars_.get("NPSCSFlushTestcase"),
                                            runMode_,
                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1956,7 +1955,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSGetEncTestcase tc =
                       new NPSCSGetEncTestcase(systemObject_,
-                                            (Vector) namesAndVars_.get("NPSCSGetEncTestcase"),
+                                            namesAndVars_.get("NPSCSGetEncTestcase"),
                                             runMode_,
                                             fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1967,7 +1966,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSLFTestcase tc =
                       new NPSCSLFTestcase(systemObject_,
-                                        (Vector) namesAndVars_.get("NPSCSLFTestcase"),
+                                        namesAndVars_.get("NPSCSLFTestcase"),
                                         runMode_,
                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1978,7 +1977,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSNLTestcase tc =
                       new NPSCSNLTestcase(systemObject_,
-                                        (Vector) namesAndVars_.get("NPSCSNLTestcase"),
+                                        namesAndVars_.get("NPSCSNLTestcase"),
                                         runMode_,
                                         fileOutputStream_);
                     testcases_.addElement(tc);
@@ -1989,7 +1988,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSWriteTestcase tc =
                       new NPSCSWriteTestcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCSWriteTestcase"),
+                                           namesAndVars_.get("NPSCSWriteTestcase"),
                                            runMode_,
                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2000,7 +1999,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5256Testcase tc =
                       new NPSCS5256Testcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCS5256Testcase"),
+                                           namesAndVars_.get("NPSCS5256Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -2015,7 +2014,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5224CPITestcase tc =
                       new NPSCS5224CPITestcase(systemObject_,
-                                             (Vector) namesAndVars_.get("NPSCS5224CPITestcase"),
+                                             namesAndVars_.get("NPSCS5224CPITestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2026,7 +2025,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5224LPITestcase tc =
                       new NPSCS5224LPITestcase(systemObject_,
-                                             (Vector) namesAndVars_.get("NPSCS5224LPITestcase"),
+                                             namesAndVars_.get("NPSCS5224LPITestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2037,7 +2036,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5224Testcase tc =
                       new NPSCS5224Testcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCS5224Testcase"),
+                                           namesAndVars_.get("NPSCS5224Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -2053,7 +2052,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSAbsHorPosTestcase tc =
                       new NPSCSAbsHorPosTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPSCSAbsHorPosTestcase"),
+                                               namesAndVars_.get("NPSCSAbsHorPosTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2064,7 +2063,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSAbsVerPosTestcase tc =
                       new NPSCSAbsVerPosTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPSCSAbsVerPosTestcase"),
+                                               namesAndVars_.get("NPSCSAbsVerPosTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2075,7 +2074,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSBoldTestcase tc =
                       new NPSCSBoldTestcase(systemObject_,
-                                          (Vector) namesAndVars_.get("NPSCSBoldTestcase"),
+                                          namesAndVars_.get("NPSCSBoldTestcase"),
                                           runMode_,
                                           fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2086,7 +2085,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5219CPITestcase tc =
                       new NPSCS5219CPITestcase(systemObject_,
-                                             (Vector) namesAndVars_.get("NPSCS5219CPITestcase"),
+                                             namesAndVars_.get("NPSCS5219CPITestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2097,7 +2096,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSDestDrawerTestcase tc =
                       new NPSCSDestDrawerTestcase(systemObject_,
-                                                (Vector) namesAndVars_.get("NPSCSDestDrawerTestcase"),
+                                                namesAndVars_.get("NPSCSDestDrawerTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2108,7 +2107,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5219EndPageTestcase tc =
                       new NPSCS5219EndPageTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPSCS5219EndPageTestcase"),
+                                                 namesAndVars_.get("NPSCS5219EndPageTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2119,7 +2118,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSEnvelopeTestcase tc =
                       new NPSCSEnvelopeTestcase(systemObject_,
-                                              (Vector) namesAndVars_.get("NPSCSEnvelopeTestcase"),
+                                              namesAndVars_.get("NPSCSEnvelopeTestcase"),
                                               runMode_,
                                               fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2130,7 +2129,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSLeftMarginTestcase tc =
                       new NPSCSLeftMarginTestcase(systemObject_,
-                                                (Vector) namesAndVars_.get("NPSCSLeftMarginTestcase"),
+                                                namesAndVars_.get("NPSCSLeftMarginTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2141,7 +2140,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSPaperTestcase tc =
                       new NPSCSPaperTestcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCSPaperTestcase"),
+                                           namesAndVars_.get("NPSCSPaperTestcase"),
                                            runMode_,
                                            fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2152,7 +2151,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSQualityTestcase tc =
                       new NPSCSQualityTestcase(systemObject_,
-                                             (Vector) namesAndVars_.get("NPSCSQualityTestcase"),
+                                             namesAndVars_.get("NPSCSQualityTestcase"),
                                              runMode_,
                                              fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2163,7 +2162,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSSrcDrawerTestcase tc =
                       new NPSCSSrcDrawerTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPSCSSrcDrawerTestcase"),
+                                               namesAndVars_.get("NPSCSSrcDrawerTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2174,7 +2173,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSUnderlineTestcase tc =
                       new NPSCSUnderlineTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPSCSUnderlineTestcase"),
+                                               namesAndVars_.get("NPSCSUnderlineTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2185,7 +2184,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5219Testcase tc =
                       new NPSCS5219Testcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCS5219Testcase"),
+                                           namesAndVars_.get("NPSCS5219Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -2200,7 +2199,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSBoldTestcase tc =
                       new NPSCSBoldTestcase(systemObject_,
-                                          (Vector) namesAndVars_.get("NPSCSBoldTestcase"),
+                                          namesAndVars_.get("NPSCSBoldTestcase"),
                                           runMode_,
                                           fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2211,7 +2210,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSDuplexTestcase tc =
                       new NPSCSDuplexTestcase(systemObject_,
-                                            (Vector) namesAndVars_.get("NPSCSDuplexTestcase"),
+                                            namesAndVars_.get("NPSCSDuplexTestcase"),
                                             runMode_,
                                             fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2222,7 +2221,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSFontTestcase tc =
                       new NPSCSFontTestcase(systemObject_,
-                                          (Vector) namesAndVars_.get("NPSCSFontTestcase"),
+                                          namesAndVars_.get("NPSCSFontTestcase"),
                                           runMode_,
                                           fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2233,7 +2232,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSOrientationTestcase tc =
                       new NPSCSOrientationTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPSCSOrientationTestcase"),
+                                                 namesAndVars_.get("NPSCSOrientationTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2244,7 +2243,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSCreateSplfTestcase tc =
                       new NPSCSCreateSplfTestcase(systemObject_,
-                                                 (Vector) namesAndVars_.get("NPSCSCreateSplfTestcase"),
+                                                 namesAndVars_.get("NPSCSCreateSplfTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2255,7 +2254,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS3812Testcase tc =
                       new NPSCS3812Testcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCS3812Testcase"),
+                                           namesAndVars_.get("NPSCS3812Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -2270,7 +2269,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSHGridLineTestcase tc =
                       new NPSCSHGridLineTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPSCSHGridLineTestcase"),
+                                               namesAndVars_.get("NPSCSHGridLineTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2281,7 +2280,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSCharRotateTestcase tc =
                       new NPSCSCharRotateTestcase(systemObject_,
-                                                (Vector) namesAndVars_.get("NPSCSCharRotateTestcase"),
+                                                namesAndVars_.get("NPSCSCharRotateTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2292,7 +2291,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSFontScaleTestcase tc =
                       new NPSCSFontScaleTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPSCSFontScaleTestcase"),
+                                               namesAndVars_.get("NPSCSFontScaleTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2303,7 +2302,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSVGridLineTestcase tc =
                       new NPSCSVGridLineTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPSCSVGridLineTestcase"),
+                                               namesAndVars_.get("NPSCSVGridLineTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2314,7 +2313,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCSCreateDBCSSplfTestcase tc =
                       new NPSCSCreateDBCSSplfTestcase(systemObject_,
-                                               (Vector) namesAndVars_.get("NPSCSCreateDBCSSplfTestcase"),
+                                               namesAndVars_.get("NPSCSCreateDBCSSplfTestcase"),
                                                runMode_,
                                                fileOutputStream_);
                     testcases_.addElement(tc);
@@ -2325,7 +2324,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPSCS5553Testcase tc =
                       new NPSCS5553Testcase(systemObject_,
-                                           (Vector) namesAndVars_.get("NPSCS5553Testcase"),
+                                           namesAndVars_.get("NPSCS5553Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -2339,7 +2338,7 @@ public class NPPrintTest extends TestDriver
                     {
                     NPLDRWTestcase tc =
                       new NPLDRWTestcase(systemObject_,
-                                       (Vector)namesAndVars_.get("NPLDRWTestcase"),
+                                       namesAndVars_.get("NPLDRWTestcase"),
                                         runMode_,
                                         fileOutputStream_, printer_);
                     testcases_.addElement(tc);
@@ -2360,7 +2359,7 @@ public class NPPrintTest extends TestDriver
                     {
                     ExampleTestcase tc =
                       new ExampleTestcase(systemObject_,
-                                          (Vector) namesAndVars_.get("example"), runMode_,
+                                          namesAndVars_.get("example"), runMode_,
                                           fileOutputStream_);
                     testcases_.addElement(tc);
                     namesAndVars_.remove("example");
@@ -2369,7 +2368,7 @@ $$$ TO DO $$$ - delete this line */
 
 
                 // Put out error message for each invalid testcase name.
-                for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+                for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
                     {
                     System.out.println("Testcase " + e.nextElement() + " not found.");
                     }

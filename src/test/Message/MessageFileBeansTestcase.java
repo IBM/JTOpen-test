@@ -13,7 +13,6 @@
 
 package test.Message;
 
-import java.awt.Image;
 import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
 import java.beans.Introspector;
@@ -224,7 +223,6 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
             MessageFile mf = new MessageFile(systemObject_, goodMFName);
             resetValues();
             mf.addPropertyChangeListener(this);
-            String newPath = "/QSYS.LIB/QTEMP.LIB/CHANGE.USRSPC";
             mf.setPath(goodMFName2);
 
             assertCondition(verifyPropChange("path", goodMFName, goodMFName2, mf, mf.getPath()));
@@ -425,11 +423,13 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(mf);
             s.flush();
+            s.close(); 
+            ObjectInputStream s2 = null; 
             try
             {
                 // Deserialize mf from a file.
                 FileInputStream in = new FileInputStream("mf.ser");
-                ObjectInputStream s2 = new ObjectInputStream(in);
+                s2 = new ObjectInputStream(in);
                 MessageFile mf2 = (MessageFile)s2.readObject();
 
                 if (false == mf2.getPath().equals(mf.getPath()))
@@ -459,8 +459,10 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
             }
             finally
             {
+              if (s2 != null) s2.close(); 
                 File fd = new File("mf.ser");
                 fd.delete();
+                
             }
         }
         catch (Exception e)
@@ -489,8 +491,9 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
             catch (Exception e2)
             {
                 failed("remove when nothing on list");
+                newsys.close(); 
                 return;
-            }
+            } 
 
             mf.addPropertyChangeListener(this);
             mf.removePropertyChangeListener(this);
@@ -532,6 +535,7 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
             catch (Exception e2)
             {
                 failed("remove when nothing on list");
+                newsys.close(); 
                 return;
             }
 
@@ -561,7 +565,7 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
     {
         try
         {
-            Class beanclass = Class.forName("com.ibm.as400.access.MessageFile");
+            Class<?> beanclass = Class.forName("com.ibm.as400.access.MessageFile");
             BeanInfo beaninfo = Introspector.getBeanInfo(beanclass);
             //System.out.println("Class of beaninfo is: " + beaninfo.getClass().getName());
             // Note: Experimentation reveals that the returned BeanInfo object
@@ -582,7 +586,7 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
             //}
             PropertyDescriptor[] props = beaninfo.getPropertyDescriptors();
 
-            Vector v = new Vector();
+            Vector<String> v = new Vector<String>();
             v.addElement("path");
             v.addElement("system");
             v.addElement("helpTextFormatting");

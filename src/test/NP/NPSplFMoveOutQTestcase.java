@@ -41,7 +41,7 @@ public class NPSplFMoveOutQTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPSplFMoveOutQTestcase(AS400            systemObject,
-				  Vector           variationsToRun,
+				  Vector<String> variationsToRun,
 				  int              runMode,
 				  FileOutputStream fileOutputStream)
     {

@@ -13,9 +13,7 @@
 
 package test.NLS;
 
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 
 import java.util.Vector;
 import com.ibm.as400.access.*;
@@ -37,9 +35,6 @@ public class NLSMessageFileTestcase extends Testcase
      }
      test.NLSTest.main(newArgs); 
    }
-  private String userSpacePathName_ = "/QSYS.LIB/USTEST.LIB/USNLSTEST.USRSPC";
-  private String operatingSystem_;
-  private boolean DOS_;
 
   String dbcs_string5 = getResource("IFS_DBCS_STRING5");
   String dbcs_string10 = getResource("IFS_DBCS_STRING10");
@@ -49,7 +44,7 @@ public class NLSMessageFileTestcase extends Testcase
   Constructor.
   **/
   public NLSMessageFileTestcase(AS400            systemObject,
-                                Vector           variationsToRun,
+                                Vector<String>           variationsToRun,
                                 int              runMode,
                                 FileOutputStream fileOutputStream
                                 )
@@ -115,7 +110,7 @@ public class NLSMessageFileTestcase extends Testcase
 
         AS400Message m = aMessageFile.getMessage(dbcs_string5);
 
-        failed("no exception");
+        failed("no exception"+m);
      }
      catch(Exception e)
      {

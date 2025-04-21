@@ -13,15 +13,13 @@
 
 package test.NLS;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400File;
-import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ErrorCompletingRequestException;
@@ -60,7 +58,7 @@ public class NLSCmdTestcase extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public NLSCmdTestcase(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String>           variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream
                       )

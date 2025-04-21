@@ -43,7 +43,7 @@ public class NPSCSLeftMarginTestcase extends Testcase
   Constructor.  This is called from NPPrintTest::createTestcases().
   **/
   public NPSCSLeftMarginTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {

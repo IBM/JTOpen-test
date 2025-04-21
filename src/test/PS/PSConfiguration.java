@@ -12,27 +12,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.PS;
 
-import com.ibm.as400.access.*;
-
-import test.EndProxyServer;
-import test.Testcase;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.IOException;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
-import java.net.InetAddress;
-import java.net.Socket;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.ProxyServer;
+
+import test.EndProxyServer;
+import test.Testcase;
 
 
 
@@ -67,14 +62,14 @@ extends Testcase
 Constructor.
 **/
     public PSConfiguration (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
                                     String password)
     {
         super (systemObject, "PSConfiguration",
-               (Vector) namesAndVars.get ("PSConfiguration"), 
+               namesAndVars.get ("PSConfiguration"), 
                runMode, fileOutputStream,
                password);
     }
@@ -530,7 +525,7 @@ defaults are in effect.
         try {
             PSJdbcDrivers.deregisterAllDrivers();
             ProxyServer.main (new String[] { "-port", "7720", "-sp", "7820" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end(7720);
             assertCondition (check == true);
@@ -552,7 +547,7 @@ defaults are in effect.
         try {
             PSJdbcDrivers.deregisterAllDrivers();
             ProxyServer.main (new String[] { "-configuration", "ThisFileStillDoesNotExist","-port", "7721", "-sp", "7821" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             // Never started, not needed: EndProxyServer.end(7721);
             assertCondition (check == true);
@@ -573,7 +568,7 @@ defaults are in effect.
             PSJdbcDrivers.deregisterAllDrivers();
             String configuration = createConfiguration("jdbcDrivers=com.ibm.as400.access.AS400JDBCDriver");
             ProxyServer.main (new String[] { "-configuration", configuration,"-port", "7722", "-sp", "7822" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             boolean check1 = enumeration.nextElement().getClass().getName().equals("com.ibm.as400.access.AS400JDBCDriver");
             boolean check2 = (enumeration.hasMoreElements() == false);
@@ -596,7 +591,7 @@ defaults are in effect.
             PSJdbcDrivers.deregisterAllDrivers();
             String configuration = createConfiguration("jdbcDrivers=test.ProxyServerJdbcDriversSampleDriver");
             ProxyServer.main (new String[] { "-c", configuration,"-port", "7723", "-sp", "7823" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             boolean check1 = enumeration.nextElement().getClass().getName().equals("test.ProxyServerJdbcDriversSampleDriver");
             boolean check2 = (enumeration.hasMoreElements() == false);

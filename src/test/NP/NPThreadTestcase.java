@@ -46,7 +46,7 @@ class NPThreadTestcase
   * This is called from ThreadTest::createTestcases().
   */
   public NPThreadTestcase (AS400 systemObject,
-                             Vector variationsToRun,
+                             Vector<String> variationsToRun,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

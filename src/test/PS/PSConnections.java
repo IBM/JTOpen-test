@@ -12,23 +12,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.PS;
 
-import com.ibm.as400.access.*;
+import java.io.FileOutputStream;
+import java.net.InetAddress;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ProxyException;
+import com.ibm.as400.access.ProxyServer;
 
 import test.EndProxyServer;
 import test.PasswordVault;
 import test.Testcase;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
 
 
@@ -58,7 +54,7 @@ extends Testcase
 
 
     // Private data.
-    private Vector openConnections_ = new Vector ();
+    private Vector<Object[]> openConnections_ = new Vector<Object[]> ();
 
 
 
@@ -66,14 +62,14 @@ extends Testcase
 Constructor.
 **/
     public PSConnections (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
                                     String password)
     {
         super (systemObject, "PSConnections",
-               (Vector) namesAndVars.get ("PSConnections"), 
+               namesAndVars.get ("PSConnections"), 
                runMode, fileOutputStream,
                password);
     }
@@ -108,7 +104,7 @@ Closes some connections to the proxy server.
     {
         // The best way to close connections is to get them garbage collected!
         for(int i = 1; i <= count; ++i) {
-            Object[] systemAndCc = (Object[])openConnections_.elementAt(0);
+            Object[] systemAndCc = openConnections_.elementAt(0);
             try {
                 ((AS400)systemAndCc[0]).disconnectAllServices();
             }

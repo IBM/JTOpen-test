@@ -44,7 +44,7 @@ public class RMConstructorTestcase extends Testcase
      Constructor.
      **/
     public RMConstructorTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String, Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream)
     {
@@ -227,8 +227,8 @@ public class RMConstructorTestcase extends Testcase
             // Check that the node tree has exactly one node: a recordformat element with no children.
             // For convenience, get the children into a Vector.
             Descriptor descriptor = rfmlDoc.getDescriptor();
-            Enumeration enumeration = descriptor.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = descriptor.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -345,8 +345,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -492,8 +492,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -592,8 +592,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -609,7 +609,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child1.getChildren();
-            Vector child1children = new Vector();
+            Vector<Descriptor> child1children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child1children.addElement(child);
@@ -906,8 +906,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -926,7 +926,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child1.getChildren();
-            Vector grandChildren = new Vector();
+            Vector<Descriptor> grandChildren = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               grandChildren.addElement(child);
@@ -1058,8 +1058,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -1078,7 +1078,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child1.getChildren();
-            Vector grandChildren = new Vector();
+            Vector<Descriptor> grandChildren = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               grandChildren.addElement(child);
@@ -1214,8 +1214,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -1234,7 +1234,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child1.getChildren();
-            Vector child1children = new Vector();
+            Vector<Descriptor> child1children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child1children.addElement(child);
@@ -1265,7 +1265,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child2.getChildren();
-            Vector child2children = new Vector();
+            Vector<Descriptor> child2children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child2children.addElement(child);
@@ -1372,8 +1372,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -1392,7 +1392,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child1.getChildren();
-            Vector child1children = new Vector();
+            Vector<Descriptor> child1children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child1children.addElement(child);
@@ -1423,7 +1423,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child2.getChildren();
-            Vector child2children = new Vector();
+            Vector<Descriptor> child2children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child2children.addElement(child);
@@ -1454,7 +1454,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child3.getChildren();
-            Vector child3children = new Vector();
+            Vector<Descriptor> child3children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child3children.addElement(child);
@@ -1473,7 +1473,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child3Child1.getChildren();
-            Vector child3Child1children = new Vector();
+            Vector<Descriptor> child3Child1children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child3Child1children.addElement(child);
@@ -1482,6 +1482,7 @@ public class RMConstructorTestcase extends Testcase
             Descriptor child3Child1Child1 = (Descriptor)(child3Child1children.elementAt(0));
             String[] child3Child1Child1AttList = child3Child1Child1.getAttributeList();
 
+            @SuppressWarnings("unused")
             int child3Child1Child1NumAttrs = 0;  // number of non-null attributes
             for (int i=0; i<child3Child1Child1AttList.length; i++) {
               String attrVal = child3Child1Child1.getAttributeValue(child3Child1Child1AttList[i]);
@@ -1782,8 +1783,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -1802,7 +1803,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child1.getChildren();
-            Vector child1Children = new Vector();
+            Vector<Descriptor> child1Children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child1Children.addElement(child);
@@ -1926,8 +1927,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -1946,7 +1947,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child1.getChildren();
-            Vector grandChildren = new Vector();
+            Vector<Descriptor> grandChildren = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               grandChildren.addElement(child);
@@ -2109,8 +2110,8 @@ public class RMConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enumeration = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enumeration = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               children.addElement(child);
@@ -2141,7 +2142,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child1.getChildren();
-            Vector child1Children = new Vector();
+            Vector<Descriptor> child1Children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child1Children.addElement(child);
@@ -2160,7 +2161,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child2.getChildren();
-            Vector child2Children = new Vector();
+            Vector<Descriptor> child2Children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child2Children.addElement(child);
@@ -2179,7 +2180,7 @@ public class RMConstructorTestcase extends Testcase
             }
 
             enumeration =child2Child1.getChildren();
-            Vector child2Child1Children = new Vector();
+            Vector<Descriptor> child2Child1Children = new Vector<Descriptor>();
             while (enumeration.hasMoreElements()) {
               Descriptor child = (Descriptor)(enumeration.nextElement());
               child2Child1Children.addElement(child);
@@ -2742,6 +2743,7 @@ public class RMConstructorTestcase extends Testcase
     /**
      Test RecordFormatDocument constructor with DocName parameter. Serialize complex RFML document from Var 62. Parse serialized document and ensure results same as non-serialized document.
     **/
+    @SuppressWarnings("deprecation")
     public void Var049()
     {
 	

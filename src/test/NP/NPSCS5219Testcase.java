@@ -52,7 +52,7 @@ public class NPSCS5219Testcase extends Testcase
   Constructor.  This is called from NPPrintTest::createTestcases().
   **/
   public NPSCS5219Testcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream,
                          

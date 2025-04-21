@@ -12,9 +12,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Hashtable;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
-import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.CommandLineArguments;
 import com.ibm.as400.access.Trace;
 
 import test.Cmd.CmdStressTestcase;
@@ -23,16 +30,6 @@ import test.DDM.DDMProxyStressTestcase;
 import test.IFS.IFSProxyStressTestcase;
 import test.ServiceProgram.ServicePgmCallStressTestcase;
 import test.UserSpace.UserSpaceStressTestcase;
-
-import com.ibm.as400.access.CommandLineArguments;
-
-import java.sql.*;
-import java.lang.Thread;
-import java.util.StringTokenizer;
-import java.io.IOException;
-import java.util.Vector;
-import java.util.Hashtable;
-import java.util.Properties;
 
 
 
@@ -95,7 +92,7 @@ public class ProxyStressTest
    public static void main (String args[]) throws Exception 
    {
       ProxyStressTest pst = new ProxyStressTest(args);
-      
+      System.out.println("Created pst"+pst); 
       for (int i=1; i<=maxThreads_; i++) 
       {
          if (tc_ == null || tc_.equals("CmdStressTestcase"))
@@ -192,11 +189,12 @@ public class ProxyStressTest
  @exception  Exception  If an exception occurs.
  **/
    
-   public void parseParms(String args[]) throws Exception
+   @SuppressWarnings("deprecation")
+  public void parseParms(String args[]) throws Exception
    {
       String s,u,p,ps,th,l,tr,tc;
 
-      Vector v = new Vector();
+      Vector<String> v = new Vector<String>();
       v.addElement("-system");
       v.addElement("-uid");
       v.addElement("-pwd");
@@ -206,7 +204,7 @@ public class ProxyStressTest
       v.addElement("-trace");
       v.addElement("-tc");
 
-      Hashtable shortcuts = new Hashtable();
+      Hashtable<String,String> shortcuts = new Hashtable<String, String>();
       shortcuts.put("-help", "-h");
       shortcuts.put("-?", "-h");
       shortcuts.put("-s", "-system");

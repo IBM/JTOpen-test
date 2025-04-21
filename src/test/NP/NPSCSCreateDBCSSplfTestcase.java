@@ -41,7 +41,7 @@ public class NPSCSCreateDBCSSplfTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPSCSCreateDBCSSplfTestcase(AS400            systemObject,
-				 Vector           variationsToRun,
+				 Vector<String> variationsToRun,
 				 int              runMode,
 				 FileOutputStream fileOutputStream)
     {

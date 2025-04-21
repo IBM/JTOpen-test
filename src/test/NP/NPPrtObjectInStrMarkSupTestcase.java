@@ -41,7 +41,7 @@ public class NPPrtObjectInStrMarkSupTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPPrtObjectInStrMarkSupTestcase(AS400            systemObject,
-				  Vector           variationsToRun,
+				  Vector<String> variationsToRun,
 				  int              runMode,
 				  FileOutputStream fileOutputStream)
     {

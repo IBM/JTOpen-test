@@ -15,7 +15,6 @@ package test;
 
 import com.ibm.as400.access.AS400;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.util.Vector;
 
@@ -31,7 +30,7 @@ public class ManifestTestcase extends Testcase
   /**
    * Constructor.  This is called from the ManifestTest constructor.
    **/
-  public ManifestTestcase(AS400 systemObject, Vector variationsToRun, int runMode, FileOutputStream fileOutputStream)
+  public ManifestTestcase(AS400 systemObject, Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream)
   {
     super(systemObject, "ManifestTestcase", 9, variationsToRun, runMode, fileOutputStream);
   }
@@ -40,12 +39,14 @@ public class ManifestTestcase extends Testcase
   /**
    * Loads a class from each package to setup the testcase.
   **/
+  @SuppressWarnings("deprecation")
   public void setup()
   {
     boolean f = false;
     try
     {
-      new com.ibm.as400.access.AS400();
+      AS400 dummy = new com.ibm.as400.access.AS400();
+      dummy.close(); 
     }
     catch (NoClassDefFoundError e)
     {

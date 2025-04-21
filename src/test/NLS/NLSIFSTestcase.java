@@ -14,7 +14,6 @@
 package test.NLS;
 
 import java.io.*;
-import java.lang.*;
 
 import java.util.Vector;
 import java.util.Random;
@@ -44,10 +43,7 @@ public class NLSIFSTestcase extends Testcase
   CommandCall cmd = null;
 
   private static String ifsDirName_;
-  private static String dirName_;
-  private static String fileName_ = "File";
-  private static String ifsPathName_ = ifsDirName_ + fileName_;
-
+  
   private String operatingSystem_;
   private boolean DOS_;
 
@@ -63,7 +59,7 @@ public class NLSIFSTestcase extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public NLSIFSTestcase(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String>          variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream)
   {
@@ -97,7 +93,6 @@ public class NLSIFSTestcase extends Testcase
     output_.println("Executing applet: " + isApplet_);
 
     ifsDirName_ = IFSFile.separator;
-    dirName_ = IFSFile.separator; 
 
     // Check to see if we're connected properly
     try
@@ -223,7 +218,7 @@ public class NLSIFSTestcase extends Testcase
 
   class Collector implements IFSFileFilter
   {
-    public Vector entries = new Vector();
+    public Vector<IFSFile> entries = new Vector<IFSFile>();
 
     public boolean accept(IFSFile file)
     {
@@ -232,6 +227,7 @@ public class NLSIFSTestcase extends Testcase
     }
   }
   
+  @SuppressWarnings("rawtypes")
   boolean deleteDirectory(String pathName)
   {
     try
@@ -1240,9 +1236,10 @@ public void Var023()
   **/
 public void Var024()
   {
+  IFSFileInputStream file  = null; 
     try
     {
-      IFSFileInputStream file = new IFSFileInputStream();
+      file = new IFSFileInputStream();
       file.setPath(ifs_dbcs_path);
       if (!file.getPath().equals(ifs_dbcs_path))
         failed("Incorrect path: "+file.getPath()+" != "+ifs_dbcs_path+".\n");
@@ -1252,6 +1249,12 @@ public void Var024()
     catch(Exception e)
     {
       failed(e);
+    } finally { 
+    if (file != null)
+      try {
+        file.close();
+      } catch (IOException e) {
+      } 
     }
   }
 
@@ -1264,9 +1267,10 @@ public void Var024()
   **/
 public void Var025()
   {
+  IFSFileOutputStream file = null; 
     try
     {
-      IFSFileOutputStream file = new IFSFileOutputStream();
+      file = new IFSFileOutputStream();
       file.setPath(ifs_dbcs_path);
       if (!file.getPath().equals(ifs_dbcs_path))
         failed("Incorrect path: "+file.getPath()+" != "+ifs_dbcs_path+".\n");
@@ -1276,6 +1280,11 @@ public void Var025()
     catch(Exception e)
     {
       failed(e);
+    } finally { 
+      try {
+        file.close();
+      } catch (IOException e) {
+      } 
     }
   }
 
@@ -1338,7 +1347,7 @@ public void Var027()
         data2[i] = (byte) (s.charAt(i) & 0xff);
       }
       file2.read(data1);
-      if (!isEqual(data1, data2))
+      if (!areEqual(data1, data2))
         failMsg.append("Mismatched data: "+data1.toString()+" != "+data2.toString()+".\n");
       file2.close();
     }
@@ -1726,6 +1735,7 @@ public void Var029()
   Verify NLS bytes written to and read from a file
   using IFSFileOutputStream and IFSFileInputStream.
   **/
+@SuppressWarnings("deprecation")
 public void Var030()
   {
     StringBuffer failMsg = new StringBuffer();
@@ -1811,6 +1821,7 @@ public void Var030()
   Verify NLS bytes written to and read from a file
   using IFSTextFileOutputStream and IFSTextFileInputStream.
   **/
+@SuppressWarnings("deprecation")
 public void Var031()
   {
     StringBuffer failMsg = new StringBuffer();

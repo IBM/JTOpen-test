@@ -81,7 +81,7 @@ public class LocalSocketTest extends TestDriver
     {
       LocalSocketCtorTestcase tc =
         new LocalSocketCtorTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("LocalSocketCtorTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("LocalSocketCtorTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("LocalSocketCtorTestcase");
@@ -91,14 +91,14 @@ public class LocalSocketTest extends TestDriver
     {
       LocalSocketConnectTestcase tc =
         new LocalSocketConnectTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("LocalSocketConnectTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("LocalSocketConnectTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("LocalSocketConnectTestcase");
     }
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

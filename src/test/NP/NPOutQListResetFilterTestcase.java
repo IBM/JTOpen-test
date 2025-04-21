@@ -42,7 +42,7 @@ public class NPOutQListResetFilterTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPOutQListResetFilterTestcase(AS400            systemObject,
-                                         Vector           variationsToRun,
+                                         Vector<String> variationsToRun,
                                          int              runMode,
                                          FileOutputStream fileOutputStream)    {
         // $$$ TO DO $$$

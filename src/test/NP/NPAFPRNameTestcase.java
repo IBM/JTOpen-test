@@ -41,7 +41,7 @@ public class NPAFPRNameTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPAFPRNameTestcase(AS400            systemObject,
-                              Vector           variationsToRun,
+                              Vector<String> variationsToRun,
                               int              runMode,
                               FileOutputStream fileOutputStream)
     {

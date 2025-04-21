@@ -41,7 +41,7 @@ public class NPPrtObjectInStrSkipTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPPrtObjectInStrSkipTestcase(AS400            systemObject,
-				  Vector           variationsToRun,
+				  Vector<String> variationsToRun,
 				  int              runMode,
 				  FileOutputStream fileOutputStream)
     {

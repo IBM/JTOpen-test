@@ -49,7 +49,7 @@ public class NPPrtDSerializeTestcase extends Testcase
      * Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPPrtDSerializeTestcase(AS400            systemObject,
-                                   Vector           variationsToRun,
+                                   Vector<String> variationsToRun,
                                    int              runMode,
                                    FileOutputStream fileOutputStream,
                                    

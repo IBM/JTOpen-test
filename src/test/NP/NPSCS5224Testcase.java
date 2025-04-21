@@ -50,7 +50,7 @@ public class NPSCS5224Testcase extends Testcase
   Constructor.  This is called from NPPrintTest::createTestcases().
   **/
   public NPSCS5224Testcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream,
                          
