@@ -54,6 +54,7 @@ import java.util.Vector;
  * <li>setSortOrder(sortID)
  * </ul>
  **/
+@SuppressWarnings("deprecation")
 public class MessageQueueRFTestcase extends Testcase {
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
@@ -108,7 +109,7 @@ public class MessageQueueRFTestcase extends Testcase {
     if (a.length != b.length)
       return false;
 
-    Vector ina = new Vector(a.length);
+    Vector<Object> ina = new Vector<Object>(a.length);
     for (int i = 0; i < a.length; ++i)
       ina.addElement(a[i]);
 
@@ -300,6 +301,7 @@ public class MessageQueueRFTestcase extends Testcase {
       f.open();
       SelectionData = f.getSelectionMetaData(null);
       f.close();
+      assertCondition(false, "Selection data should be null "+SelectionData);
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");
     }
@@ -317,7 +319,7 @@ public class MessageQueueRFTestcase extends Testcase {
       f.open();
       SelectionData = f.getSelectionMetaData(RMessageQueue.LIST_DIRECTION);
       f.close();
-      succeeded();
+      assertCondition(true, "selection data is "+SelectionData);
 
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
@@ -335,6 +337,7 @@ public class MessageQueueRFTestcase extends Testcase {
       RMessageQueue f = new RMessageQueue(systemObject_, path);
       f.open();
       SelectionData = f.getSelectionMetaData(RMessageQueue.PREVIOUS);
+      assertCondition(false, "Selection data should be null "+SelectionData);
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e,
           "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -354,6 +357,7 @@ public class MessageQueueRFTestcase extends Testcase {
       SelectionData = f.getSelectionMetaData(RMessageQueue.SELECTION_CRITERIA);
       f.close();
       succeeded();
+      assertCondition(true,"SelectionData is "+SelectionData);
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     }
@@ -371,7 +375,7 @@ public class MessageQueueRFTestcase extends Testcase {
       SelectionData = f
           .getSelectionMetaData(RMessageQueue.STARTING_USER_MESSAGE_KEY);
       f.close();
-      succeeded();
+      assertCondition(true,"SelectionData is "+SelectionData);
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     }
@@ -392,7 +396,7 @@ public class MessageQueueRFTestcase extends Testcase {
       SelectionData = f
           .getSelectionMetaData(RMessageQueue.STARTING_WORKSTATION_MESSAGE_KEY);
       f.close();
-      succeeded();
+      assertCondition(true,"SelectionData is "+SelectionData);
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     }
@@ -408,7 +412,7 @@ public class MessageQueueRFTestcase extends Testcase {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
       SelectionData = f.getSelectionMetaData(RMessageQueue.LIST_DIRECTION);
-      succeeded();
+      assertCondition(true,"SelectionData is "+SelectionData);
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     }
@@ -456,7 +460,7 @@ public class MessageQueueRFTestcase extends Testcase {
       ResourceMetaData SelectionData;
       RMessageQueue f = new RMessageQueue();
       SelectionData = f.getSelectionMetaData(RMessageQueue.LIST_DIRECTION);
-      succeeded();
+      assertCondition(true,"SelectionData is "+SelectionData);
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     }
@@ -574,7 +578,6 @@ public class MessageQueueRFTestcase extends Testcase {
   public void Var023() {
     ResourceMetaData SelectionData;
     Object[] possibleValues;
-    byte[] byteValues;
     try {
       RMessageQueue f = new RMessageQueue();
       SelectionData = f
@@ -865,6 +868,8 @@ public class MessageQueueRFTestcase extends Testcase {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
       SelectionValue = f.getSelectionValue(null);
+      assertCondition(false,"SelectionData is "+SelectionValue);
+
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");
     }
@@ -879,7 +884,7 @@ public class MessageQueueRFTestcase extends Testcase {
       Object SelectionValue;
       RMessageQueue f = new RMessageQueue();
       SelectionValue = f.getSelectionValue(RMessageQueue.LIST_DIRECTION);
-      succeeded();
+      assertCondition(true,"SelectionValue is "+SelectionValue);
 
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
@@ -895,6 +900,7 @@ public class MessageQueueRFTestcase extends Testcase {
     try {
       RMessageQueue f = new RMessageQueue();
       SelectionValue = f.getSelectionValue(RMessageQueue.PREVIOUS);
+      assertCondition(false,"SelectionValue is "+SelectionValue);
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e,
           "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -2837,9 +2843,7 @@ public class MessageQueueRFTestcase extends Testcase {
    * only the correct type of messages are in queue.
    **/
   public void Var113() {
-    int i;
     Integer Int99 = new Integer(99);
-    RQueuedMessage qmsg;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       String replyPath = QSYSObjectPathName
@@ -3157,7 +3161,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * IllegalArgumentException should be thrown
    **/
   public void Var126() {
-    RQueuedMessage queuedMsg;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -3178,7 +3181,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * IllegalArgumentException should be thrown
    **/
   public void Var127() {
-    RQueuedMessage queuedMsg;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -3197,7 +3199,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * IllegalArgumentException should be thrown
    **/
   public void Var128() {
-    RQueuedMessage queuedMsg;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -3383,7 +3384,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * attribute ID.
    **/
   public void Var133() {
-    Object SelectionValue;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -3399,7 +3399,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * value and ensure reset
    **/
   public void Var134() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     int i;
     try {
@@ -3486,7 +3485,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * LIST_DIRECTION and then open list. Ensure correct Selectioning done.
    **/
   public void Var137() {
-    Object SelectionValue;
     int i;
 
     try {
@@ -3526,7 +3524,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * SELECTION_CRITERIA and then open list. Ensure correct Selectioning done.
    **/
   public void Var138() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     int i;
     try {
@@ -3608,9 +3605,8 @@ public class MessageQueueRFTestcase extends Testcase {
    * SELECTION_CRITERIA and then open list. Ensure correct Selection is done.
    **/
   public void Var139() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
-    int i, j;
+    int i; 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       String replyPath = QSYSObjectPathName
@@ -3671,7 +3667,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * SELECTION_CRITERIA and then open list. Ensure correct Selectioning done.
    **/
   public void Var140() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     int i;
     try {
@@ -3729,8 +3724,7 @@ public class MessageQueueRFTestcase extends Testcase {
    * SELECTION_CRITERIA and then open list. Ensure correct Selectioning done.
    **/
   public void Var141() {
-    Object SelectionValue;
-    RQueuedMessage queuedMsg;
+    RQueuedMessage queuedMsg=null;
     int i;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -3756,7 +3750,7 @@ public class MessageQueueRFTestcase extends Testcase {
         queuedMsg = (RQueuedMessage) f.resourceAt(i);
       }
       if (f.getListLength() == 20)
-        succeeded();
+        assertCondition(true, "last message="+queuedMsg+" g="+g);
       else
         failed("Bad list length. List length should be zero.");
       f.close();
@@ -3770,8 +3764,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * SELECTION_CRITERIA and then open list. Ensure correct Selectioning done.
    **/
   public void Var142() {
-    Object SelectionValue;
-    RQueuedMessage queuedMsg;
     int i;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -3813,8 +3805,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * SELECTION_CRITERIA and then open list. Ensure correct Selectioning done.
    **/
   public void Var143() {
-    Object SelectionValue;
-    RQueuedMessage queuedMsg;
     Integer Int99 = new Integer(99);
     int i;
     try {
@@ -3835,7 +3825,7 @@ public class MessageQueueRFTestcase extends Testcase {
       f.setSelectionValue(RMessageQueue.SEVERITY_CRITERIA, Int99);
       f.refreshContents();
       if (f.getListLength() == 0)
-        succeeded();
+        assertCondition(true, "g is "+g); 
       else {
         failed("Bad list length returned.");
         return;
@@ -3854,7 +3844,6 @@ public class MessageQueueRFTestcase extends Testcase {
     Integer Int40 = new Integer(40);
     Integer Int99 = new Integer(99);
     Integer Int0 = new Integer(0);
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     long listLength;
     int i;
@@ -3904,7 +3893,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * SELECTION_CRITERIA and then open list. Ensure correct Selectioning done.
    **/
   public void Var145() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     int i;
     try {
@@ -3925,7 +3913,7 @@ public class MessageQueueRFTestcase extends Testcase {
           RMessageQueue.MESSAGES_NEED_REPLY);
       g.refreshContents();
       if (g.getListLength() != 0) {
-        failed("Bad list length.");
+        failed("Bad list length."+replyPath);
         return;
       }
       g.setSelectionValue(RMessageQueue.SELECTION_CRITERIA, null);
@@ -3966,7 +3954,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * LIST_DIRECTION and then open list. Ensure correct Selectioning done.
    **/
   public void Var146() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     int i;
     try {
@@ -4008,8 +3995,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * LIST_DIRECTION and then open list. Ensure correct Selectioning done.
    **/
   public void Var147() {
-    Object SelectionValue;
-    RQueuedMessage qmsg;
     int i;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -4047,8 +4032,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * LIST_DIRECTION and then open list. Ensure correct Selectioning done.
    **/
   public void Var148() {
-    Object SelectionValue;
-    RQueuedMessage queuedMsg;
     int i;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -4086,7 +4069,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * LIST_DIRECTION and then open list. Ensure correct Selectioning done.
    **/
   public void Var149() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     int i;
     try {
@@ -4134,8 +4116,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * LIST_DIRECTION and then open list. Ensure correct Selectioning done.
    **/
   public void Var150() {
-    Object SelectionValue;
-    RQueuedMessage queuedMsg;
     int i;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -4173,7 +4153,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * LIST_DIRECTION and then open list. Ensure correct Selectioning done.
    **/
   public void Var151() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     int i;
     try {
@@ -4218,7 +4197,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * LIST_DIRECTION and then open list. Ensure correct Selectioning done.
    **/
   public void Var152() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg;
     int i, j;
     try {
@@ -4244,7 +4222,7 @@ public class MessageQueueRFTestcase extends Testcase {
       g.setSelectionValue(RMessageQueue.LIST_DIRECTION, RMessageQueue.NEXT);
       g.refreshContents();
       if (g.getListLength() != 13) {
-        failed("Bad list length returned.");
+        failed("Bad list length returned."+replyPath);
         return;
       }
       for (i = 0; i < g.getListLength(); ++i) {
@@ -4452,7 +4430,6 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
 
   public void Var157() {
-    Object SelectionValue;
     RQueuedMessage queuedMsg, queuedMsg2;
     int i;
     int j;
@@ -4639,7 +4616,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * getSortMetaData() -- Verify that no sort elements are returned
    **/
   public void Var160() {
-    int i;
     ResourceMetaData[] sortData;
 
     try {
@@ -4660,14 +4636,13 @@ public class MessageQueueRFTestcase extends Testcase {
    * Pass in a bad value and verify an exception is generated.
    **/
   public void Var161() {
-    int i;
     ResourceMetaData sortData;
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
       sortData = f.getSortMetaData(RMessageQueue.PREVIOUS);
-      failed("No exception thrown.");
+      failed("No exception thrown."+sortData);
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.lang.IllegalArgumentException");
     }
@@ -4678,7 +4653,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * a bad value and verify an empty array of sortIDs is generated.
    **/
   public void Var162() {
-    int i;
     Object[] sortID;
 
     try {
@@ -4699,7 +4673,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * Pass in a bad value and verify an exception is generated.
    **/
   public void Var163() {
-    int i;
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -4715,7 +4688,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * toString() --
    **/
   public void Var164() {
-    int i;
     String toStr;
 
     try {
@@ -4964,8 +4936,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * waitForComplete() runs
    **/
   public void Var178() {
-    boolean TimedOut = false;
-    int secs = 0;
     int i;
 
     try {
@@ -5003,9 +4973,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * waitForComplete() runs
    **/
   public void Var179() {
-    boolean TimedOut = false;
-    int secs = 0;
-    int i;
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5030,8 +4997,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * waitForResource() runs
    **/
   public void Var180() {
-    boolean TimedOut = false;
-    int secs = 0;
     int i;
 
     try {
@@ -5069,8 +5034,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * does not exist in the queue
    **/
   public void Var181() {
-    boolean TimedOut = false;
-    int secs = 0;
     int i;
 
     try {
@@ -5097,7 +5060,6 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var182() {
     ResourceMetaData SelectionData;
-    Object[] possibleValues;
     Presentation presObj;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5125,7 +5087,6 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var183() {
     ResourceMetaData SelectionData;
-    Object[] possibleValues;
     Presentation presObj;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5152,7 +5113,6 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var184() {
     ResourceMetaData SelectionData;
-    Object[] possibleValues;
     Presentation presObj;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5179,7 +5139,6 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var185() {
     ResourceMetaData SelectionData;
-    Object[] possibleValues;
     Presentation presObj;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5207,7 +5166,6 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var186() {
     ResourceMetaData SelectionData;
-    Object[] possibleValues;
     Presentation presObj;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5236,7 +5194,6 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var187() {
     ResourceMetaData SelectionData;
-    Object[] possibleValues;
     Presentation presObj;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5264,7 +5221,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * Pass in a bad value and verify an exception is generated.
    **/
   public void Var188() {
-    int i;
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5282,7 +5238,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * Pass in a bad value and verify an exception is generated.
    **/
   public void Var189() {
-    int i;
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -5299,7 +5254,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * queues. Pass in a bad value and verify an exception is generated.
    **/
   public void Var190() {
-    int i;
     Object sortValues[] = { RMessageQueue.LIST_DIRECTION,
         RMessageQueue.SELECTION_CRITERIA };
 
@@ -5318,7 +5272,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * queues. Pass in a bad value and verify an exception is generated.
    **/
   public void Var191() {
-    int i;
     Object sortValues[] = {};
 
     try {
@@ -5336,7 +5289,6 @@ public class MessageQueueRFTestcase extends Testcase {
    * queues. Pass in a bad value and verify an exception is generated.
    **/
   public void Var192() {
-    int i;
     Object sortValues[] = { null, null, null };
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");

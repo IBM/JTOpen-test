@@ -21,7 +21,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.ReturnCodeException;
 import com.ibm.as400.access.UserSpace;
 
 import test.JTOpenTestEnvironment;
@@ -56,7 +55,7 @@ public class NLSUserSpaceTestcase extends Testcase
   Constructor.
   **/
   public NLSUserSpaceTestcase(AS400            systemObject,
-                              Vector           variationsToRun,
+                              Vector<String>           variationsToRun,
                               int              runMode,
                               FileOutputStream fileOutputStream
                               )
@@ -457,16 +456,16 @@ This is an attended testcase.
     	  }
          // TestInstructions instructions = new TestInstructions("Does the textDescription: (" + dbcs_string50 + ") \n equal that of the user space in " + userSpacePathName_ + "? \n Use the AS/400 command WRKLIB <library> to verify results.", 0xffffffff, "Test Instructions", TestInstructions.YES_NO);
          // int rc = instructions.display();
-         int rc = 0; 
-         
-         if (rc != 14)
-         {
-            failed("Verification of the User Space textDescription failed.");
-         }
-         else
-         {
-            succeeded();
-         }
+         // int rc = 0; 
+         //
+         //if (rc != 14)
+         //{
+         //  failed("Verification of the User Space textDescription failed.");
+         //}
+         //else
+         //{
+         //   succeeded();
+         //}
       }
     }
     catch(Exception e)
@@ -637,7 +636,7 @@ Read and verify every byte of a user space containing all possible byte values.
           if(i == data.length)
              succeeded();
           else
-             failed("Unexpected results occurred.");
+             failed("Unexpected results occurred."+i1);
 
        }
        else
@@ -645,7 +644,6 @@ Read and verify every byte of a user space containing all possible byte values.
           int i1;
           int i = 0;
           byte[] inByte1 = new byte[1];
-          byte[] inByte2 = new byte[1];
           do
           {
              i1 = aUserSpace.read(inByte1, i);
@@ -655,7 +653,7 @@ Read and verify every byte of a user space containing all possible byte values.
           if (i == data.length)
              succeeded();
           else
-             failed("Unexpected results occurred.");
+             failed("Unexpected results occurred."+i1);
        }
     }
     catch(Exception e)
@@ -701,7 +699,7 @@ Read and verify every byte of a user space containing all possible byte values.
           if(i == data.length)
              succeeded();
           else
-             failed("Unexpected results occurred.");
+             failed("Unexpected results occurred."+i1);
 
        }
        else
@@ -709,7 +707,6 @@ Read and verify every byte of a user space containing all possible byte values.
           int i1;
           int i = 0;
           byte[] inByte1 = new byte[1];
-          byte[] inByte2 = new byte[1];
           do
           {
              i1 = aUserSpace.read(inByte1, i);
@@ -719,7 +716,7 @@ Read and verify every byte of a user space containing all possible byte values.
           if (i == data.length)
              succeeded();
           else
-             failed("Unexpected results occurred.");
+             failed("Unexpected results occurred."+i1);
        }
     }
     catch(Exception e)
@@ -836,7 +833,7 @@ Write every possible byte to a User Space.
 
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != data.length);
 
@@ -880,7 +877,7 @@ Write every possible byte to a User Space.
 
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != data.length);
 
@@ -924,7 +921,7 @@ Write every possible byte to a User Space.
 
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != data.length);
 

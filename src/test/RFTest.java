@@ -14,7 +14,6 @@
 package test;
 
 import java.io.IOException;
-import java.util.Vector;
 import java.util.Enumeration;
 
 import com.ibm.as400.access.AS400;
@@ -194,7 +193,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       RFMisc tc =
         new RFMisc(systemObject_,
-                     (Vector) namesAndVars_.get("RFMisc"), runMode_,
+                     namesAndVars_.get("RFMisc"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("RFMisc");
@@ -204,7 +203,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       RFNewRecord tc =
         new RFNewRecord(systemObject_,
-                     (Vector) namesAndVars_.get("RFNewRecord"), runMode_,
+                     namesAndVars_.get("RFNewRecord"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("RFNewRecord");
@@ -214,7 +213,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       RFRecord tc =
         new RFRecord(systemObject_,
-                     (Vector) namesAndVars_.get("RFRecord"), runMode_,
+                     namesAndVars_.get("RFRecord"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("RFRecord");
@@ -224,7 +223,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       RFRecordMisc tc =
         new RFRecordMisc(systemObject_,
-                     (Vector) namesAndVars_.get("RFRecordMisc"), runMode_,
+                     namesAndVars_.get("RFRecordMisc"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("RFRecordMisc");
@@ -234,7 +233,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       RFSerialization tc =
         new RFSerialization(systemObject_, 
-                     (Vector) namesAndVars_.get("RFSerialization"), runMode_,
+                     namesAndVars_.get("RFSerialization"), runMode_,
                      fileOutputStream_, password_);
       testcases_.addElement(tc);
       namesAndVars_.remove("RFSerialization");
@@ -243,14 +242,14 @@ Creates Testcase objects for all the testcases in this component.
     {
       RFEvents tc =
         new RFEvents(systemObject_,
-                     (Vector) namesAndVars_.get("RFEvents"), runMode_,
+                     namesAndVars_.get("RFEvents"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("RFEvents");
     }
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

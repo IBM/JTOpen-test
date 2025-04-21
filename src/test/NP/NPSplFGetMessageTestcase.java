@@ -45,7 +45,7 @@ public class NPSplFGetMessageTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPSplFGetMessageTestcase(AS400            systemObject,
-                                    Vector           variationsToRun,
+                                    Vector<String> variationsToRun,
                                     int              runMode,
                                     FileOutputStream fileOutputStream,
                                     

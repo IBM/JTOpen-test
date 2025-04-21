@@ -55,7 +55,7 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
      }
      test.PNTest.main(newArgs); 
    }
-    private Vector changeEvents = new Vector();
+    private Vector<PropertyChangeEvent> changeEvents = new Vector<PropertyChangeEvent>();
 
     public void propertyChange(PropertyChangeEvent event)
     {
@@ -83,7 +83,7 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
         printEvents( events, changeEvents);
     }
 
-    private void printEvents(PropertyChangeEvent[] events, Vector received)
+    private void printEvents(PropertyChangeEvent[] events, Vector<PropertyChangeEvent> received)
     {
         int expectedLength = 0; 
         if (events != null) { 
@@ -405,7 +405,7 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
 
     // ************ Constrained tests
 
-    private Vector vetoEvents = new Vector();
+    private Vector<PropertyChangeEvent> vetoEvents = new Vector<PropertyChangeEvent>();
 
     public void vetoableChange(PropertyChangeEvent event)
       throws PropertyVetoException
@@ -2081,7 +2081,7 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
         {
             public MyListener() {super();}
 
-            public Vector vetoEvents2 = new Vector();
+            public Vector<PropertyChangeEvent> vetoEvents2 = new Vector<PropertyChangeEvent>();
 
             public void vetoableChange(PropertyChangeEvent event)
               throws PropertyVetoException
@@ -2245,6 +2245,7 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
                 msg += " Want path " + old.getPath() +
                   " got path " + newobj.getPath() + "\n";
             }
+            infile2.close(); 
             if (failed)
                 failed(msg);
             else
@@ -2279,12 +2280,13 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
             ObjectOutputStream outfile2 = new ObjectOutputStream(outfile);
             outfile2.writeObject(old);
             outfile2.flush();
+            outfile2.close(); 
             old = null;
             // Deserialize to new object
             FileInputStream infile = new FileInputStream("object.tmp");
             ObjectInputStream infile2 = new ObjectInputStream(infile);
             QSYSObjectPathName newobj = (QSYSObjectPathName)infile2.readObject();
-
+            infile2.close(); 
             // Verify we do not get events for new object.
             changeEvents.removeAllElements();
             vetoEvents.removeAllElements();

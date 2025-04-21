@@ -12,22 +12,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.PS;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.ProxyServer;
 
 import test.PSTest;
 import test.Testcase;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.Hashtable;
-import java.util.Vector;
 
 
 
@@ -63,14 +57,14 @@ extends Testcase
 Constructor.
 **/
     public PSStart (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
                                     String password)
     {
         super (systemObject, "PSStart",
-               (Vector) namesAndVars.get ("PSStart"), 
+                namesAndVars.get ("PSStart"), 
                runMode, fileOutputStream,
                password);
     }

@@ -52,7 +52,7 @@ public class NPSplFListDateFilterTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPSplFListDateFilterTestcase(AS400            systemObject,
-                                            Vector           variationsToRun,
+                                            Vector<String> variationsToRun,
                                             int              runMode,
                                             FileOutputStream fileOutputStream)
     {

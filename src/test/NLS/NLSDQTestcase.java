@@ -13,7 +13,6 @@
 
 package test.NLS;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -53,7 +52,7 @@ public class NLSDQTestcase extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public NLSDQTestcase(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String>           variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream
                       )

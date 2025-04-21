@@ -40,7 +40,7 @@ public class NPSplFOutStrCloseTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPSplFOutStrCloseTestcase(AS400            systemObject,
-                                     Vector           variationsToRun,
+                                     Vector<String> variationsToRun,
 				     int              runMode,
 				     FileOutputStream fileOutputStream)
     {

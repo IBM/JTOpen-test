@@ -13,7 +13,6 @@
 
 package test.NLS;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -73,7 +72,7 @@ public class NLSDDMTestcase extends Testcase
   Constructor.  This is called from the NLSTest constructor.
   **/
   public NLSDDMTestcase(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String>           variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream
                       )
@@ -425,6 +424,7 @@ public class NLSDDMTestcase extends Testcase
       {
         output_.println("Unable to create necessary dds source files.");
         e.printStackTrace();
+        f.close(); 
         throw e;
       }
       Record[] r = new Record[2];
@@ -575,6 +575,7 @@ public class NLSDDMTestcase extends Testcase
       // Delete the files created during setup()
       SequentialFile f1 = new SequentialFile(systemObject_, "/QSYS.LIB/NLSDDMT.LIB/READRN.FILE/MBR1.MBR");
       f1.delete();
+      f1.close(); 
       }
 
     // DDMReadKey cleanup()
@@ -582,6 +583,7 @@ public class NLSDDMTestcase extends Testcase
       // Delete the files created during setup()
       KeyedFile f1 = new KeyedFile(systemObject_, "/QSYS.LIB/NLSDDMT.LIB/READKEY1.FILE/MBR1.MBR");
       f1.delete();
+      f1.close(); 
       }
     }
     catch(Exception e)
@@ -612,7 +614,7 @@ public class NLSDDMTestcase extends Testcase
     }
   }
 
-  private static String getTextDescription(ObjectDescription objDesc)
+  static String getTextDescription(ObjectDescription objDesc)
     throws AS400Exception, AS400SecurityException, ErrorCompletingRequestException, InterruptedException, IOException, ObjectDoesNotExistException
   {
     return (String)objDesc.getValue(ObjectDescription.TEXT_DESCRIPTION);
@@ -1130,7 +1132,7 @@ public class NLSDDMTestcase extends Testcase
 
       if (failMsg.length() == 0)
       {
-        succeeded();
+        assertCondition(true, "format="+format); 
       }
       else
       {
@@ -3592,6 +3594,8 @@ public class NLSDDMTestcase extends Testcase
 
   class NLSDBCSOnlyNoKeyFormat extends RecordFormat
   {
+    private static final long serialVersionUID = 1L;
+
     NLSDBCSOnlyNoKeyFormat(AS400 sys)
     {
       super("KEYFMT");
@@ -3602,6 +3606,8 @@ public class NLSDDMTestcase extends Testcase
   class NLSDBCSJAPTestingFormat extends RecordFormat
   {
  
+    private static final long serialVersionUID = 1L;
+
     NLSDBCSJAPTestingFormat(AS400 sys)
     {
       super("SIMPLEDBCS");
@@ -3616,6 +3622,8 @@ public class NLSDDMTestcase extends Testcase
   class NLSDBCSKORTestingFormat extends RecordFormat
   {
  
+    private static final long serialVersionUID = 1L;
+
     NLSDBCSKORTestingFormat(AS400 sys)
     {
       super("SMPDBCSKOR");
@@ -3630,6 +3638,8 @@ public class NLSDDMTestcase extends Testcase
   class NLSDBCSTCHTestingFormat extends RecordFormat
   {
  
+    private static final long serialVersionUID = 1L;
+
     NLSDBCSTCHTestingFormat(AS400 sys)
     {
       super("SMPDBCSTCH");
@@ -3644,6 +3654,8 @@ public class NLSDDMTestcase extends Testcase
   class NLSDBCSSCHTestingFormat extends RecordFormat
   {
  
+    private static final long serialVersionUID = 1L;
+
     NLSDBCSSCHTestingFormat(AS400 sys)
     {
       super("SMPDBCSSCH");
@@ -3657,6 +3669,8 @@ public class NLSDDMTestcase extends Testcase
 
   class NLSDBCSOnlyKeyFormat extends RecordFormat
   {
+    private static final long serialVersionUID = 1L;
+
     NLSDBCSOnlyKeyFormat(AS400 sys)
     {
       super("KEYFMT");

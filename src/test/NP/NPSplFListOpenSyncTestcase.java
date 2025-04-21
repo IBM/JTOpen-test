@@ -42,7 +42,7 @@ public class NPSplFListOpenSyncTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPSplFListOpenSyncTestcase(AS400            systemObject,
-                                      Vector           variationsToRun,
+                                      Vector<String> variationsToRun,
                                       int              runMode,
                                       FileOutputStream fileOutputStream)
     {

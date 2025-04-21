@@ -43,7 +43,7 @@ public class NPWrtJStartTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPWrtJStartTestcase(AS400            systemObject,
-                               Vector           variationsToRun,
+                               Vector<String> variationsToRun,
                                int              runMode,
                                FileOutputStream fileOutputStream,
                                

@@ -85,7 +85,7 @@ extends Testcase
 Constructor.
 **/
     public NPPrtObjTransInStrTestcase (AS400 systemObject,
-                                      Vector variationsToRun,
+                                      Vector<String> variationsToRun,
                                       int runMode,
                                       FileOutputStream fileOutputStream)
     {
@@ -100,7 +100,7 @@ Constructor.
 Constructor.
 **/
     public NPPrtObjTransInStrTestcase (AS400 systemObject,
-                                      Vector variationsToRun,
+                                      Vector<String> variationsToRun,
                                       int runMode,
                                       FileOutputStream fileOutputStream,
                                       

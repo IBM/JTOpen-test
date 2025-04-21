@@ -69,7 +69,7 @@ public class RFRecord extends Testcase
   Constructor.  This is called from the RFTest constructor.
   **/
   public RFRecord(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {

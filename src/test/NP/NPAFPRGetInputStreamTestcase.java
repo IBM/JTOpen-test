@@ -13,12 +13,12 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.PrintObjectInputStream;
 
 import test.Testcase;
 
@@ -41,7 +41,7 @@ public class NPAFPRGetInputStreamTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPAFPRGetInputStreamTestcase(AS400            systemObject,
-					Vector           variationsToRun,
+					Vector<String>           variationsToRun,
 					int              runMode,
 					FileOutputStream fileOutputStream)
     {

@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.io.IOException;
 import java.lang.Integer;
-import java.util.StringTokenizer;
 import com.ibm.as400.access.AS400;
 ///import javasoft.sqe.tests.ibm.jdbc.JDTestDriver;
 ///import javasoft.sqe.tests.ibm.jdbc.NLSJDBCTestcase;
@@ -166,13 +165,8 @@ Creates Testcase objects for all the testcases in this component.
 	ifsDir_ = IFSFile.separator;
 	
 
-	String cleanup = null;
 	cleanupFirst_ = cleanup_ ;
 	
-	if (!cleanupFirst_) 
-	{ 
-		cleanup = "noclean"; 
-	}
 	
     // Instantiate all testcases to be run.
     boolean allTestcases = (namesAndVars_.size() == 0);
@@ -187,7 +181,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSCmdTestcase tc =
         new NLSCmdTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSCmdTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSCmdTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSCmdTestcase");
@@ -197,7 +191,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSDDMTestcase tc =
         new NLSDDMTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSDDMTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSDDMTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSDDMTestcase");
@@ -207,7 +201,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSDQTestcase tc =
         new NLSDQTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSDQTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSDQTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSDQTestcase");
@@ -217,7 +211,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSIFSTestcase tc =
         new NLSIFSTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSIFSTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSIFSTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSIFSTestcase");
@@ -253,7 +247,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSMessageQueueTestcase tc =
         new NLSMessageQueueTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSMessageQueueTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSMessageQueueTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSMessageQueueTestcase");
@@ -263,7 +257,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSMessageFileTestcase tc =
         new NLSMessageFileTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSMessageFileTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSMessageFileTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSMessageFileTestcase");
@@ -273,7 +267,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSNPTestcase tc =
         new NLSNPTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSNPTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSNPTestcase"), runMode_,
                      fileOutputStream_, printer_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSNPTestcase");
@@ -283,7 +277,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSUserTestcase tc =
         new NLSUserTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSUserTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSUserTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSUserTestcase");
@@ -293,7 +287,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSUserSpaceTestcase tc =
         new NLSUserSpaceTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSUserSpaceTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSUserSpaceTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSUserSpaceTestcase");
@@ -304,7 +298,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSDATestcase tc =
         new NLSDATestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSDATestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSDATestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSDATestcase");
@@ -314,14 +308,14 @@ Creates Testcase objects for all the testcases in this component.
     {
       NLSSysvalTestcase tc =
         new NLSSysvalTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("NLSSysvalTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("NLSSysvalTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("NLSSysvalTestcase");
     }
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

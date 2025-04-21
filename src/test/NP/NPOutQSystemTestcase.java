@@ -48,7 +48,7 @@ public class NPOutQSystemTestcase extends Testcase
      * Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPOutQSystemTestcase(AS400            systemObject,
-				 Vector           variationsToRun,
+				 Vector<String> variationsToRun,
 				 int              runMode,
 				 FileOutputStream fileOutputStream)
     {

@@ -53,7 +53,7 @@ public class NLSUserTestcase extends Testcase
   Constructor.
   **/
   public NLSUserTestcase(AS400            systemObject,
-                              Vector           variationsToRun,
+                              Vector<String>           variationsToRun,
                               int              runMode,
                               FileOutputStream fileOutputStream
                               )
@@ -167,7 +167,7 @@ Verify that the User description is what is expected.
       UserList userList = new UserList (systemObject_);
       userList.setUserInfo (UserList.USER);
       uid = systemObject_.getUserId();
-      Enumeration enumeration = userList.getUsers();
+      Enumeration<User> enumeration = userList.getUsers();
       oldDesc = null;
       while (enumeration.hasMoreElements() && oldDesc == null)
       {

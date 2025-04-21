@@ -46,7 +46,7 @@ public class NPSplFListUserDataFilterTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPSplFListUserDataFilterTestcase(AS400            systemObject,
-                                            Vector           variationsToRun,
+                                            Vector<String> variationsToRun,
                                             int              runMode,
                                             FileOutputStream fileOutputStream)
     {

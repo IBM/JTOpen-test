@@ -13,22 +13,16 @@
 
 package test.NLS;
 
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.SystemValue;
 import com.ibm.as400.access.SystemValueList;
 
 import test.JTOpenTestEnvironment;
 import test.NLSTest;
 import test.Testcase;
-
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 /**
  *Testcase NLSSysvalTestcase.  This test class verifies the use of DBCS Strings
@@ -47,8 +41,8 @@ public class NLSSysvalTestcase extends Testcase
    }
   AS400 PwrSys_ = NLSTest.PwrSys;
 
-  Vector strings = null;
-  Vector arrays = null;
+  Vector<SystemValue> strings = null;
+  Vector<SystemValue> arrays = null;
 
   private String operatingSystem_;
   private boolean DOS_;
@@ -62,7 +56,7 @@ public class NLSSysvalTestcase extends Testcase
   Constructor.
   **/
   public NLSSysvalTestcase(AS400            systemObject,
-                              Vector           variationsToRun,
+                              Vector<String>          variationsToRun,
                               int              runMode,
                               FileOutputStream fileOutputStream
                               )
@@ -84,8 +78,8 @@ public class NLSSysvalTestcase extends Testcase
     {
       throw new Exception("Power user not specified");
     }
-    strings = new Vector();
-    arrays = new Vector();
+    strings = new Vector<SystemValue>();
+    arrays = new Vector<SystemValue>();
     dbcs_long = dbcs_string50+dbcs_string50+dbcs_string50+dbcs_string50;
     dbcs_long = dbcs_long+dbcs_long+dbcs_long+dbcs_long+dbcs_long;
     dbcs_long = dbcs_long+dbcs_long+dbcs_long+dbcs_long; // 4000 chars
@@ -93,7 +87,8 @@ public class NLSSysvalTestcase extends Testcase
     try
     {
         SystemValueList list = new SystemValueList(PwrSys_);
-        Vector values = list.getGroup(SystemValueList.GROUP_ALL);
+        @SuppressWarnings("unchecked")
+        Vector<SystemValue> values = list.getGroup(SystemValueList.GROUP_ALL);
         for (int i=0; i<values.size(); ++i)
         {
           SystemValue sv = (SystemValue)values.elementAt(i);
@@ -306,7 +301,7 @@ public class NLSSysvalTestcase extends Testcase
       for (int i=0; i<strings.size(); ++i)
       {
         boolean failed = false;
-        SystemValue sv = (SystemValue)strings.elementAt(i);
+        SystemValue sv = strings.elementAt(i);
         Object toSet = dbcs_long.substring(0, sv.getSize());
         Object toGet = null;
         Object original = null;
@@ -379,7 +374,7 @@ public class NLSSysvalTestcase extends Testcase
         try
         {
         boolean failed = false;
-        SystemValue sv = (SystemValue)arrays.elementAt(i);
+        SystemValue sv = arrays.elementAt(i);
         Object[] toSet = new String[] { dbcs_string5, dbcs_string5 }; // 2 items, 5 chars
         Object[] toGet = null;
         Object[] original = null;

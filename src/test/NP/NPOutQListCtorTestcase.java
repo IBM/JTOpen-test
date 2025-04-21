@@ -42,7 +42,7 @@ public class NPOutQListCtorTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPOutQListCtorTestcase(AS400            systemObject,
-                                  Vector           variationsToRun,
+                                  Vector<String> variationsToRun,
                                   int              runMode,
                                   FileOutputStream fileOutputStream)
     {

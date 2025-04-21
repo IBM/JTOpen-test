@@ -63,14 +63,14 @@ extends Testcase
 Constructor.
 **/
     public PSSecurePort (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
                                     String password)
     {
         super (systemObject, "PSSecurePort",
-               (Vector) namesAndVars.get ("PSSecurePort"), 
+               namesAndVars.get ("PSSecurePort"), 
                runMode, fileOutputStream,
                password);
     }

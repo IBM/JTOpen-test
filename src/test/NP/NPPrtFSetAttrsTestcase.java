@@ -41,7 +41,7 @@ public class NPPrtFSetAttrsTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPPrtFSetAttrsTestcase(AS400            systemObject,
-                                  Vector           variationsToRun,
+                                  Vector<String> variationsToRun,
                                   int              runMode,
                                   FileOutputStream fileOutputStream)
     {

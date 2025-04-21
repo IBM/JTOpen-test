@@ -12,24 +12,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.PS;
 
-import com.ibm.as400.access.*;
-
-import test.EndProxyServer;
-import test.Testcase;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.ProxyServer;
+
+import test.EndProxyServer;
+import test.Testcase;
 
 
 
@@ -66,14 +61,14 @@ extends Testcase
 Constructor.
 **/
     public PSJdbcDrivers (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
                                     String password)
     {
         super (systemObject, "PSJdbcDrivers",
-               (Vector) namesAndVars.get ("PSJdbcDrivers"), 
+               namesAndVars.get ("PSJdbcDrivers"), 
                runMode, fileOutputStream,
                password);
     }
@@ -86,7 +81,7 @@ Deregisters all drivers from the driver manager.
     static void deregisterAllDrivers ()
         throws SQLException
     {
-        Enumeration enumeration = DriverManager.getDrivers ();
+        Enumeration<Driver> enumeration = DriverManager.getDrivers ();
         while (enumeration.hasMoreElements ())
             DriverManager.deregisterDriver ((Driver) enumeration.nextElement ());
     }
@@ -102,7 +97,7 @@ no JDBC drivers are registered.
         try {
             deregisterAllDrivers ();
             ProxyServer.main (new String[] { "-port", "4400", "-sp", "4401" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end (4400);
             assertCondition (check == true);
@@ -124,7 +119,7 @@ Verify that the no JDBC drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "1553", "-port", Integer.toString (port) });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end (port);
             assertCondition (check == true);
@@ -146,7 +141,7 @@ Verify that the no JDBC drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", ";", "-port", Integer.toString (port), "-sp", "4402" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end (port);
             assertCondition (check == true);
@@ -168,7 +163,7 @@ Verify that the no JDBC drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "com.lame.driver", "-port", Integer.toString (port), "-sp", "4403"  });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end (port);
             assertCondition (check == true);
@@ -190,7 +185,7 @@ Verify that the driver is registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "com.ibm.as400.access.AS400JDBCDriver", "-port", Integer.toString (port), "-sp", "4404"  });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == false);
@@ -215,7 +210,7 @@ Verify that good driver is registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "com.ibm.as400.access.AS400JDBCDriver;com.lame.driver", "-port", Integer.toString (port), "-sp", "4405" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == false);
@@ -240,7 +235,7 @@ Verify that good driver is registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "com.lame.driver;com.ibm.as400.access.AS400JDBCDriver", "-port", Integer.toString (port), "-sp", "4406" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == false);
@@ -264,7 +259,7 @@ Verify that the both drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "com.ibm.as400.access.AS400JDBCDriver;test.ProxyServerJdbcDriversSampleDriver", "-port", Integer.toString (port), "-sp", "4407" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -291,7 +286,7 @@ Verify that both drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", ";com.ibm.as400.access.AS400JDBCDriver;test.ProxyServerJdbcDriversSampleDriver", "-port", Integer.toString (port), "-sp", "4408" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -318,7 +313,7 @@ Verify that both drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "com.ibm.as400.access.AS400JDBCDriver;test.ProxyServerJdbcDriversSampleDriver;", "-port", Integer.toString (port), "-sp", "4409" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -345,7 +340,7 @@ Verify that both drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "com.ibm.as400.access.AS400JDBCDriver ;test.ProxyServerJdbcDriversSampleDriver", "-port", Integer.toString (port), "-sp", "4410" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -372,7 +367,7 @@ Verify that both drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jdbcDrivers", "com.ibm.as400.access.AS400JDBCDriver; test.ProxyServerJdbcDriversSampleDriver", "-port", Integer.toString (port), "-sp", "4411" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -397,7 +392,7 @@ Verify that both drivers are registered.
             deregisterAllDrivers ();
             int port = ++port_;
             ProxyServer.main (new String[] { "-jd", "com.ibm.as400.access.AS400JDBCDriver;test.ProxyServerJdbcDriversSampleDriver", "-port", Integer.toString (port), "-sp", "4412" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -428,7 +423,7 @@ Verify that both drivers are registered.
             ProxyServer.main(new String[] { "-port", "9009", "-securePort", "9010", 
                                             "-jdbcDrivers",  "com.ibm.as400.access.AS400JDBCDriver;test.ProxyServerJdbcDriversSampleDriver" });
 
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -455,7 +450,7 @@ no JDBC drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4413" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<Driver> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end (port);
             PSConfiguration.deleteConfiguration(configuration);
@@ -479,7 +474,7 @@ Verify that the no JDBC drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=1553");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4414" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end (port);
             PSConfiguration.deleteConfiguration(configuration);
@@ -503,7 +498,7 @@ Verify that the no JDBC drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=;");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4415" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end (port);
             PSConfiguration.deleteConfiguration(configuration);
@@ -527,7 +522,7 @@ Verify that the no JDBC drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=com.lame.driver");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4416" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == false);
             EndProxyServer.end (port);
             PSConfiguration.deleteConfiguration(configuration);
@@ -551,7 +546,7 @@ Verify that the driver is registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=com.ibm.as400.access.AS400JDBCDriver");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4417" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == false);
@@ -578,7 +573,7 @@ Verify that good driver is registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=com.ibm.as400.access.AS400JDBCDriver;com.lame.driver");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4418" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == false);
@@ -605,7 +600,7 @@ Verify that good driver is registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=com.lame.driver;com.ibm.as400.access.AS400JDBCDriver");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4419" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == false);
@@ -631,7 +626,7 @@ Verify that the both drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=com.ibm.as400.access.AS400JDBCDriver;test.ProxyServerJdbcDriversSampleDriver");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4420" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -660,7 +655,7 @@ Verify that both drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=;com.ibm.as400.access.AS400JDBCDriver;test.ProxyServerJdbcDriversSampleDriver");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4421" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -689,7 +684,7 @@ Verify that both drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=com.ibm.as400.access.AS400JDBCDriver;test.ProxyServerJdbcDriversSampleDriver;");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4422" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -718,7 +713,7 @@ Verify that both drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=com.ibm.as400.access.AS400JDBCDriver ;test.ProxyServerJdbcDriversSampleDriver");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4423" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -747,7 +742,7 @@ Verify that both drivers are registered.
             String configuration = PSConfiguration.createConfiguration("jdbcDrivers=com.ibm.as400.access.AS400JDBCDriver; test.ProxyServerJdbcDriversSampleDriver");
             int port = ++port_;
             ProxyServer.main (new String[] { "-configuration", configuration, "-port", Integer.toString (port), "-sp", "4424" });
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);
@@ -780,7 +775,7 @@ jdbcDrivers= - Use it to reconfigure a running proxy server.
             ProxyServer.main(new String[] { "-port", "9011", "-securePort", "9012", 
                                             "-c",  configuration });
 
-            Enumeration enumeration = DriverManager.getDrivers ();
+            Enumeration<?> enumeration = DriverManager.getDrivers ();
             boolean check = (enumeration.hasMoreElements () == true);
             check = check && (enumeration.nextElement ().getClass ().getName ().equals ("com.ibm.as400.access.AS400JDBCDriver"));
             check = check && (enumeration.hasMoreElements () == true);

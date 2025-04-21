@@ -41,7 +41,7 @@ public class NPPrtFListOpenAsyncTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPPrtFListOpenAsyncTestcase(AS400            systemObject,
-                                               Vector           variationsToRun,
+                                               Vector<String> variationsToRun,
                                                int              runMode,
                                                FileOutputStream fileOutputStream)
     {

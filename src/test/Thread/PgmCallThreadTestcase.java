@@ -44,7 +44,7 @@ public class PgmCallThreadTestcase
   * This is called from ThreadTest::createTestcases().
   */
   public PgmCallThreadTestcase (AS400 systemObject,
-                             Vector variationsToRun,
+                             Vector<String> variationsToRun,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -59,7 +59,7 @@ public class PgmCallThreadTestcase
  /**
   * Turns on Diagnostic, error, information, and warning tracing.
   */
-  private void turnOnTracing()
+  void turnOnTracing()
   {
     Trace.setTraceDatastreamOn(false);
     Trace.setTraceDiagnosticOn(true);

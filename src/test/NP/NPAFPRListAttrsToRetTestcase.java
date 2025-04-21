@@ -13,13 +13,14 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AFPResourceList;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.PrintObject;
 
 import test.Testcase;
 
@@ -42,7 +43,7 @@ public class NPAFPRListAttrsToRetTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPAFPRListAttrsToRetTestcase(AS400            systemObject,
-                                        Vector           variationsToRun,
+                                        Vector<String>          variationsToRun,
                                         int              runMode,
                                         FileOutputStream fileOutputStream)
     {
@@ -155,7 +156,7 @@ $$$ TO DO $$$ - delete this line */
             // list the resources
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
 
             // check to see if we got some resources
             if (resList.size() > 0)
@@ -351,7 +352,7 @@ $$$ TO DO $$$ - delete this line */
             // list the resources
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
 
             // check to see if we got some resources
             if (resList.size() > 0)

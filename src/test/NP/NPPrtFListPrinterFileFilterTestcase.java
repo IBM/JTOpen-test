@@ -47,7 +47,7 @@ public class NPPrtFListPrinterFileFilterTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPPrtFListPrinterFileFilterTestcase(AS400            systemObject,
-                                               Vector           variationsToRun,
+                                               Vector<String> variationsToRun,
                                                int              runMode,
                                                FileOutputStream fileOutputStream)
     {

@@ -13,16 +13,28 @@
 
 package test.NLS;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import java.util.StringTokenizer;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.DBCSOnlyFieldDescription;
+import com.ibm.as400.access.ErrorCompletingRequestException;
 import com.ibm.as400.access.ObjectDescription; ///
+import com.ibm.as400.access.ObjectDoesNotExistException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.PrinterFile;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SCS5553Writer;
+import com.ibm.as400.access.SpooledFileOutputStream;
+import com.ibm.as400.access.WriterJob;
 
 import test.NLSTest;
 import test.Testcase;
@@ -56,7 +68,7 @@ public class NLSNPTestcase extends Testcase
   Constructor.  This is called from the NLSTest constructor.
   **/
   public NLSNPTestcase(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String>         variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -274,7 +286,6 @@ public class NLSNPTestcase extends Testcase
   {
     try
     {
-	CommandCall cmd = new CommandCall(systemObject_);
 	deleteLibrary(np_lib);
     }
     catch(Exception e)
@@ -448,8 +459,7 @@ public class NLSNPTestcase extends Testcase
   public void Var003()
   {
     StringBuffer failMsg = new StringBuffer();
-    boolean giveUp = false;
-
+ 
     // Delete the printer if it exists.
     try
     {
@@ -857,7 +867,7 @@ public class NLSNPTestcase extends Testcase
       cmdString += "TEXT('"+np_dbcs_textb+"')";
       cmd.setCommand(cmdString);
       if (cmd.run()==false)
-        failMsg.append("Could not change object text description.\n");
+        failMsg.append("Could not change object text description.\n"+attrText);
 
       pf.update();
       String newText = pf.getStringAttribute(PrintObject.ATTR_DESCRIPTION);
@@ -899,6 +909,7 @@ public class NLSNPTestcase extends Testcase
    Create a spooled file and write NLS data to it using SpooledFileOutputStream.
    Verify the data will roundtrip by reading it back in using PrintObjectInputStream.
    **/
+  @SuppressWarnings("deprecation")
   public void Var008()
   {
       StringBuffer failMsg = new StringBuffer();
@@ -1008,7 +1019,9 @@ public class NLSNPTestcase extends Testcase
 
   class NLSDBCSOnlyNoKeyFormat extends RecordFormat
   {
-     NLSDBCSOnlyNoKeyFormat()
+     private static final long serialVersionUID = 1L;
+
+    NLSDBCSOnlyNoKeyFormat()
     {
       super("KEYFMT");
       addFieldDescription(new DBCSOnlyFieldDescription(new AS400Text(10), "field1"));

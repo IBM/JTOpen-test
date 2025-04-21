@@ -13,12 +13,11 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AS400;
 
 import test.Testcase;
 
@@ -41,7 +40,7 @@ public class NPAFPRCtorTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPAFPRCtorTestcase(AS400            systemObject,
-                       Vector           variationsToRun,
+                       Vector<String>           variationsToRun,
                        int              runMode,
                        FileOutputStream fileOutputStream)
     {
@@ -329,7 +328,7 @@ $$$ TO DO $$$ - delete this line */
             // create an AFP Resource object using null system name and valid resource name
             AFPResource res = new AFPResource(null, "/QSYS.LIB/NPJAVA.LIB/P1A06462.PAGDFN");
 
-            failed("Could use null system name.");
+            failed("Could use null system name."+res);
 
             } // end try block
 
@@ -360,7 +359,7 @@ $$$ TO DO $$$ - delete this line */
             // create an AFP Resource object using valid system name and null resource name
             AFPResource res = new AFPResource(systemObject_, null);
 
-            failed("Could use null resource name.");
+            failed("Could use null resource name."+res);
 
             } // end try block
 
@@ -391,7 +390,7 @@ $$$ TO DO $$$ - delete this line */
             // create an AFP Resource object using valid system name and resource name
             AFPResource res = new AFPResource(systemObject_, "ThisIsAnInvalidName");
 
-            failed("Could use invalid resource name.");
+            failed("Could use invalid resource name."+res);
 
             } // end try block
 
@@ -423,7 +422,7 @@ $$$ TO DO $$$ - delete this line */
             // create an AFP Resource object using no parameters
             AFPResource res = new AFPResource();
 
-            succeeded();  // Note: This variation will be successful.
+            assertCondition(true,"res="+res);  // Note: This variation will be successful.
             } // end try block
 
         catch (Exception e)
@@ -451,7 +450,7 @@ $$$ TO DO $$$ - delete this line */
             // create an AFP Resource object using valid system name and resource name
             AFPResource res = new AFPResource(systemObject_, "/QSYS.LIB/NPJAVA.LIB/P1A06462.OUTQ");
 
-            failed("Could use invalid resource type name.");
+            failed("Could use invalid resource type name."+res);
 
             } // end try block
 

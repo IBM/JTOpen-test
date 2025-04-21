@@ -13,16 +13,17 @@
 
 package test.RF;
 
-import java.io.OutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.beans.PropertyVetoException;
-import com.ibm.as400.access.*;
+import java.io.FileOutputStream;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
 
 import test.Testcase;
 import test.DDM.DDMPropertyChangeListener;
@@ -75,7 +76,7 @@ public class RFEvents extends Testcase
    *Constructor.  This is called from RFTest::createTestcases().
   **/
   public RFEvents(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String>           variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {

@@ -50,7 +50,7 @@ public class NPWrtJSystemTestcase extends Testcase
      * Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPWrtJSystemTestcase(AS400            systemObject,
-                                Vector           variationsToRun,
+                                Vector<String> variationsToRun,
                                 int              runMode,
                                 FileOutputStream fileOutputStream)
     {

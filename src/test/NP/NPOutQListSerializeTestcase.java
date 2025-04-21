@@ -48,7 +48,7 @@ public class NPOutQListSerializeTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPOutQListSerializeTestcase(AS400            systemObject,
-                                       Vector           variationsToRun,
+                                       Vector<String> variationsToRun,
                                        int              runMode,
                                        FileOutputStream fileOutputStream,
                                        

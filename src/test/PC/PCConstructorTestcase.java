@@ -15,23 +15,25 @@ package test.PC;
 
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
-import java.util.Enumeration;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SystemProperties;
-import com.ibm.as400.access.Trace;
-import com.ibm.as400.data.*;
+import com.ibm.as400.data.Descriptor;
+import com.ibm.as400.data.PcmlException;
+import com.ibm.as400.data.PcmlSpecificationException;
+import com.ibm.as400.data.ProgramCallDocument;
+import com.ibm.as400.data.XmlException;
 
-import test.JVMInfo;
 import test.RMTest;
 import test.Testcase;
 
@@ -54,8 +56,6 @@ public class PCConstructorTestcase extends Testcase
 
   private static final boolean DEBUG = true; ///
 
-  private boolean isTraceOn_original_;
-  private boolean isTracePCMLOn_original_;
   private String exceptionProperty_original_;
 
   private static boolean jdk15orLater = true;
@@ -71,7 +71,7 @@ public class PCConstructorTestcase extends Testcase
      Constructor.
      **/
     public PCConstructorTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String, Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream)
     {
@@ -84,8 +84,6 @@ public class PCConstructorTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-      isTraceOn_original_ = Trace.isTraceOn();
-      isTracePCMLOn_original_ = Trace.isTracePCMLOn();
       exceptionProperty_original_ = System.getProperty(SystemProperties.THROW_SAX_EXCEPTION_IF_PARSE_ERROR);
       System.out.println("DEBUG exceptionProperty_original_ == " + exceptionProperty_original_); ///
     }
@@ -273,8 +271,8 @@ public class PCConstructorTestcase extends Testcase
             // Check that the node tree has exactly one node: a <program> element with no children.
             // For convenience, get the children into a Vector.
             Descriptor descriptor = pcmlDoc.getDescriptor();
-            Enumeration enum1 = descriptor.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enum1 = descriptor.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               children.addElement(child);
@@ -389,8 +387,8 @@ public class PCConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enum1 = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enum1 = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               children.addElement(child);
@@ -537,8 +535,8 @@ public class PCConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enum1 = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enum1 = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               children.addElement(child);
@@ -638,8 +636,8 @@ public class PCConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enum1 = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enum1 = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               children.addElement(child);
@@ -655,7 +653,7 @@ public class PCConstructorTestcase extends Testcase
             }
 
             enum1 = child1.getChildren();
-            Vector child1children = new Vector();
+            Vector<Descriptor> child1children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               child1children.addElement(child);
@@ -973,8 +971,8 @@ public class PCConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enum1 = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enum1 = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               children.addElement(child);
@@ -993,7 +991,7 @@ public class PCConstructorTestcase extends Testcase
             }
 
             enum1 = child1.getChildren();
-            Vector grandChildren = new Vector();
+            Vector<Descriptor> grandChildren = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               grandChildren.addElement(child);
@@ -1124,8 +1122,8 @@ public class PCConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enum1 = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enum1 = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               children.addElement(child);
@@ -1144,7 +1142,7 @@ public class PCConstructorTestcase extends Testcase
             }
 
             enum1 = child1.getChildren();
-            Vector grandChildren = new Vector();
+            Vector<Descriptor> grandChildren = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               grandChildren.addElement(child);
@@ -1279,8 +1277,8 @@ public class PCConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enum1 = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enum1 = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               children.addElement(child);
@@ -1299,7 +1297,7 @@ public class PCConstructorTestcase extends Testcase
             }
 
             enum1 = child1.getChildren();
-            Vector child1children = new Vector();
+            Vector<Descriptor> child1children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               child1children.addElement(child);
@@ -1330,7 +1328,7 @@ public class PCConstructorTestcase extends Testcase
             }
 
             enum1 = child2.getChildren();
-            Vector child2children = new Vector();
+            Vector<Descriptor> child2children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               child2children.addElement(child);
@@ -1843,8 +1841,8 @@ public class PCConstructorTestcase extends Testcase
               if (attrVal != null) rootNumAttrs++;
             }
 
-            Enumeration enum1 = root.getChildren();
-            Vector children = new Vector();
+            Enumeration<?> enum1 = root.getChildren();
+            Vector<Descriptor> children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               children.addElement(child);
@@ -1863,7 +1861,7 @@ public class PCConstructorTestcase extends Testcase
             }
 
             enum1 = child1.getChildren();
-            Vector child1Children = new Vector();
+            Vector<Descriptor> child1Children = new Vector<Descriptor>();
             while (enum1.hasMoreElements()) {
               Descriptor child = (Descriptor)(enum1.nextElement());
               child1Children.addElement(child);
@@ -2869,6 +2867,7 @@ public class PCConstructorTestcase extends Testcase
     /**
      Test ProgramCallDocument constructor with DocName parameter. Serialize complex PCML document from Var 62. Parse serialized document and ensure results same as non-serialized document.
     **/
+    @SuppressWarnings("deprecation")
     public void Var042()
     {
       java.io.File outFile1 = null;
@@ -3084,7 +3083,7 @@ public class PCConstructorTestcase extends Testcase
             extractFile ("com/ibm/as400/data/xpcml.xsd", xpcmlSchemaFile);
 
             ProgramCallDocument pcmlDoc = new ProgramCallDocument(systemObject_,"test.xpcml.struct_i.xpcml");
-            succeeded();
+            assertCondition(true, "pcmlDoc="+pcmlDoc); 
         }
         catch (Exception e)
         {

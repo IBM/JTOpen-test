@@ -49,7 +49,7 @@ public class NPLDRWTestcase extends Testcase
      Constructor.  This is called from NPPrintTest::createTestcases().
      **/
     public NPLDRWTestcase(AS400            systemObject,
-                          Vector           variationsToRun,
+                          Vector<String> variationsToRun,
                           int              runMode,
                           FileOutputStream fileOutputStream,
                           
