@@ -54,7 +54,7 @@ Constructor.
   public IFSListFilesTestcase (AS400 systemObject,
       String userid, 
       String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String, Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)
@@ -578,18 +578,18 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
       else //do if list lengths are not equal
       {
          failed("IFSFile listFiles.length= " + list1.length + ", IFSFile list.length= " + list2.length);
-         Vector listFilesNames = new Vector(list1.length);
+         Vector<String> listFilesNames = new Vector<String>(list1.length);
          for (int j = 0; j < list1.length; j++)
          {
              listFilesNames.addElement(list1[j].getName());
          }
-         Vector listNames = new Vector(list2.length);
+         Vector<String> listNames = new Vector<String>(list2.length);
          for (int k = 0; k < list2.length; k++)
          {
              listNames.addElement(list2[k]);
          }
          boolean print = true;
-         for (Enumeration e = listFilesNames.elements(); e.hasMoreElements(); )
+         for (Enumeration<String> e = listFilesNames.elements(); e.hasMoreElements(); )
          {
              String name = (String)e.nextElement();
              if (!(listNames.contains(name)))
@@ -603,7 +603,7 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
              }
          }
          print = true;
-         for (Enumeration f = listNames.elements(); f.hasMoreElements(); )
+         for (Enumeration<String> f = listNames.elements(); f.hasMoreElements(); )
          {
              String name2 = (String)f.nextElement();
              if (!(listFilesNames.contains(name2)))
@@ -627,7 +627,7 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
   }
 
   public String[] removeUserProfiles (String[] in) {
-      Vector v = new Vector();
+      Vector<String> v = new Vector<String>();
       for (int i = 0; i < in.length; i++) {
 	  if (in[i].indexOf(".USRPRF") < 0) {
 	      v.addElement(in[i]); 
@@ -642,7 +642,7 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
   
   
   public IFSFile[] removeUserProfiles (IFSFile[] in) {
-    Vector v = new Vector();
+    Vector<IFSFile> v = new Vector<IFSFile>();
     for (int i = 0; i < in.length; i++) {
         if (in[i].getName().indexOf(".USRPRF") < 0) {
             v.addElement(in[i]); 
@@ -767,18 +767,18 @@ Ensure that IFSFile.listFiles() returns the same files as File.list().
       else //do if list lengths are not equal
       {
          failed("IFSFile listFiles().length= " + list1.length + ", File list.length= " + list2.length);
-         Vector listFilesNames = new Vector(list1.length);
+         Vector<String> listFilesNames = new Vector<String>(list1.length);
          for (int j = 0; j < list1.length; j++)
          {
              listFilesNames.addElement(list1[j].getName());
          }
-         Vector listNames = new Vector(list2.length);
+         Vector<String> listNames = new Vector<String>(list2.length);
          for (int k = 0; k < list2.length; k++)
          {
              listNames.addElement(list2[k]);
          }
          boolean print = true;
-         for (Enumeration e = listFilesNames.elements(); e.hasMoreElements(); )
+         for (Enumeration<String> e = listFilesNames.elements(); e.hasMoreElements(); )
          {
              String name = (String)e.nextElement();
              if (!(listNames.contains(name)))
@@ -792,7 +792,7 @@ Ensure that IFSFile.listFiles() returns the same files as File.list().
              }
          }
          print = true;
-         for (Enumeration f = listNames.elements(); f.hasMoreElements(); )
+         for (Enumeration<String> f = listNames.elements(); f.hasMoreElements(); )
          {
              String name2 = (String)f.nextElement();
              if (!(listFilesNames.contains(name2)))

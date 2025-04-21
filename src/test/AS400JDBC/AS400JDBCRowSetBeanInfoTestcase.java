@@ -13,39 +13,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.AS400JDBC;
 
-import java.awt.Image;
-
 import java.beans.BeanDescriptor;
-import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
 import java.beans.FeatureDescriptor;
 import java.beans.MethodDescriptor;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
-import java.beans.PropertyVetoException;
-import java.beans.SimpleBeanInfo;
-import java.beans.VetoableChangeListener;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Vector;
 import java.util.Properties;
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400JDBCRowSet;
 import com.ibm.as400.access.AS400JDBCRowSetBeanInfo;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-
 import test.Testcase;
 
 /**
@@ -62,13 +40,12 @@ public class AS400JDBCRowSetBeanInfoTestcase extends Testcase
      }
      test.AS400JDBCRowSetTest.main(newArgs); 
    }
-   private AS400JDBCRowSet rowset_;
 
    /**
      Constructor.  This is called from the AS400JDBCConnectionPoolTest constructor.
     **/
    public AS400JDBCRowSetBeanInfoTestcase(AS400 systemObject,
-                                          Vector variationsToRun,
+                                          Vector<String> variationsToRun,
                                           int runMode,
                                           FileOutputStream fileOutputStream,
                                           
@@ -117,13 +94,14 @@ public class AS400JDBCRowSetBeanInfoTestcase extends Testcase
       try
       {
          AS400JDBCRowSetBeanInfo bi = new AS400JDBCRowSetBeanInfo();
+         assertCondition(true,"bi="+bi); 
       }
       catch(Exception e)
       {
          failed(e, "Unexpected exception");
          return;
       }
-      succeeded();
+   
    }
 
    /**
@@ -336,6 +314,7 @@ public class AS400JDBCRowSetBeanInfoTestcase extends Testcase
       try
       {
          AS400JDBCRowSetBeanInfo bi = new AS400JDBCRowSetBeanInfo();
+         assertCondition(true,"bi="+bi); 
          // Icons / GUI components no longer available in JTOpen 20.0.X
       }
       catch(Exception e)
@@ -343,7 +322,7 @@ public class AS400JDBCRowSetBeanInfoTestcase extends Testcase
          failed(e, "Unexpected exception");
          return;
       }
-      succeeded();
+      
    }
    
    /**

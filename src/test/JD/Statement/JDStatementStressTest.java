@@ -30,14 +30,11 @@ import test.JDStatementTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JTOpenTestEnvironment;
-import test.PasswordVault;
-
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -81,7 +78,7 @@ public class JDStatementStressTest extends JDTestcase {
   // Private data.
   protected Connection connection_;
   protected Statement statement_;
-  Vector badConnections = new Vector();
+  Vector<Connection> badConnections = new Vector<Connection>();
   protected int ustNum = 20;
   protected int cstNum = 20;
   protected int sstNum = 20;
@@ -1187,7 +1184,7 @@ public class JDStatementStressTest extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDStatementStressTest(AS400 systemObject, Hashtable namesAndVars,
+  public JDStatementStressTest(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String miscParm) {
     super(systemObject, "JDStatementStressTest", namesAndVars, runMode,
@@ -1204,7 +1201,7 @@ public class JDStatementStressTest extends JDTestcase {
   }
 
   public JDStatementStressTest(AS400 systemObject, String testname,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password, String miscParm) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
  password);
@@ -2691,13 +2688,13 @@ public class JDStatementStressTest extends JDTestcase {
   int getStoragePoolSize() {
     int size = -1;
     try {
-      Class c = Class.forName("com.ibm.as400.access.DBDSPool");
+      Class<?> c = Class.forName("com.ibm.as400.access.DBDSPool");
       // lookup static variable storagePool_
       Field storagePoolField = c.getDeclaredField("storagePool_");
       storagePoolField.setAccessible(true);
       Object storagePool = storagePoolField.get(null);
 
-      Class dbStoragePoolClass = storagePool.getClass();
+      Class<?> dbStoragePoolClass = storagePool.getClass();
       Field poolField = dbStoragePoolClass.getDeclaredField("pool_");
       poolField.setAccessible(true);
       Object[] pool = (Object[]) poolField.get(storagePool);
@@ -2712,7 +2709,7 @@ public class JDStatementStressTest extends JDTestcase {
   int getDBReplyRequestedDSPoolSize() {
     int size = -1;
     try {
-      Class c = Class.forName("com.ibm.as400.access.DBDSPool");
+      Class<?> c = Class.forName("com.ibm.as400.access.DBDSPool");
       // lookup static variable storagePool_
       Field storagePoolField = c.getDeclaredField("dbreplyrequesteddsPool_");
       storagePoolField.setAccessible(true);

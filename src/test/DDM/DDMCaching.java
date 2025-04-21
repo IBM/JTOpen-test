@@ -80,7 +80,7 @@ public class DDMCaching extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMCaching(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -98,7 +98,7 @@ public class DDMCaching extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMCaching(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       

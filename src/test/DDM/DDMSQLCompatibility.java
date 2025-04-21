@@ -57,7 +57,7 @@ public class DDMSQLCompatibility extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMSQLCompatibility(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream)
   {
@@ -70,7 +70,7 @@ public class DDMSQLCompatibility extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMSQLCompatibility(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       

@@ -52,7 +52,7 @@ public class DDMP9949891 extends Testcase implements Runnable
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMP9949891(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream,
                          

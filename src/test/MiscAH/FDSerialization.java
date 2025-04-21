@@ -60,7 +60,7 @@ public class FDSerialization extends Testcase
    *Constructor.  This is called from FDTest::createTestcases().
   **/
   public FDSerialization(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {

@@ -30,7 +30,7 @@ import java.sql.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameAlreadyBoundException;
-import javax.sql.DataSource;
+
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCManagedDataSource;
@@ -87,7 +87,7 @@ public class AS400JDBCMDSTestcase extends Testcase
       Constructor.  This is called from the AS400JDBCDataSourceTest constructor.
      **/
     public AS400JDBCMDSTestcase(AS400 systemObject,
-                                       Vector variationsToRun,
+                                       Vector<String> variationsToRun,
                                        int runMode,
                                        FileOutputStream fileOutputStream,
                                        
@@ -1893,6 +1893,7 @@ public class AS400JDBCMDSTestcase extends Testcase
     /**
     *  Validates that isPackageClear() returns the correct default value.
     **/
+    @SuppressWarnings("deprecation")
     public void Var066()
     {
         try
@@ -1912,6 +1913,7 @@ public class AS400JDBCMDSTestcase extends Testcase
     /**
     *  Validates that setPackageClear(boolean) sets the value as expected.
     **/
+    @SuppressWarnings("deprecation")
     public void Var067()
     {
 
@@ -2913,6 +2915,7 @@ public class AS400JDBCMDSTestcase extends Testcase
             {
                 AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
                 userName = tmpSystemObject.getUserId();
+                tmpSystemObject.close();
             }
 
             if (ds.getUser().equals(userName))
@@ -3131,7 +3134,8 @@ public class AS400JDBCMDSTestcase extends Testcase
                 AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
                 defaultValue = "localhost";
                 userName = tmpSystemObject.getUserId();
-            }
+                tmpSystemObject.close();
+           }
 
             assertCondition(ds2.getServerName().equals(defaultValue) &&
                             ds2.getUser().equals(userName) &&
@@ -3163,6 +3167,7 @@ public class AS400JDBCMDSTestcase extends Testcase
             {
                 AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
                 userName = tmpSystemObject.getUserId();
+                tmpSystemObject.close();
             }
 
             if (ds2.getServerName().equalsIgnoreCase(serverName) &&
@@ -3236,6 +3241,7 @@ public class AS400JDBCMDSTestcase extends Testcase
                 defaultValue = "localhost";
                 AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
                 userName = tmpSystemObject.getUserId();
+                tmpSystemObject.close();
             }
 
             if (ds2.getServerName().equals(defaultValue) &&
@@ -3277,6 +3283,7 @@ public class AS400JDBCMDSTestcase extends Testcase
                 defaultValue = "localhost";
                 AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
                 userName = tmpSystemObject.getUserId();
+                tmpSystemObject.close();
             }
 
             if (ds2.getServerName().equals(defaultValue) &&
@@ -3764,6 +3771,7 @@ public class AS400JDBCMDSTestcase extends Testcase
     /**
     *  Validates that setLogWriter(PrintWriter) works as expected
     **/
+    @SuppressWarnings("deprecation")
     public void Var128()
     {
         try
@@ -4168,7 +4176,7 @@ public class AS400JDBCMDSTestcase extends Testcase
         {
             AS400JDBCManagedDataSource ds = new AS400JDBCManagedDataSource(systemObject_.getSystemName(),
                                                             "garfield",
-                                                             "garfield");
+                                                             "garfield".toCharArray());
             ds.setPrompt(false);
 
             ds.getConnection();
@@ -4196,7 +4204,7 @@ public class AS400JDBCMDSTestcase extends Testcase
             ds.setPassword("garfield");
             ds.setPrompt(false);
 
-            ds.getConnection("garfield", "garfield");
+            ds.getConnection("garfield", "garfield".toCharArray());
             failed("Did not throw exception");           
         }
         catch (Exception e)

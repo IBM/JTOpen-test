@@ -70,12 +70,12 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   String collection;
 
   private String table;
-  Vector cleanupSql = new Vector();
+  Vector<String> cleanupSql = new Vector<String>();
 
   /**
    * Constructor.
    **/
-  public JDASSFPreparedStatement(AS400 systemObject, Hashtable namesAndVars,
+  public JDASSFPreparedStatement(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String pwrSysUserID, String pwrSysPassword) {
     super(systemObject, "JDASSFPreparedStatement", namesAndVars, runMode,
@@ -174,7 +174,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
       if (isToolboxFixDate(TOOLBOX_FIX_DATE)) {
 
         Statement stmt = transactionalConnection.createStatement();
-        Enumeration e = cleanupSql.elements();
+        Enumeration<String> e = cleanupSql.elements();
         while (e.hasMoreElements()) {
           try {
             String sql = (String) e.nextElement();
@@ -579,6 +579,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
   
   
   /* Test set methods */
+  @SuppressWarnings("deprecation")
   public void Var004() {
     boolean passed = true;
     StringBuffer sb = new StringBuffer();
@@ -688,7 +689,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
         try {
           rs = pstmt.executeQuery();
           passed = false;
-          sb.append("Did not throw exception within transaction\n");
+          sb.append("Did not throw exception within transaction\n"+rs);
         } catch (Exception e) {
           String expected = "connection failed but has been re-established";
           String eString = e.toString();
@@ -821,7 +822,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
           pstmt.setInt(1, 4); 
           pstmt.executeUpdate();
           passed = false;
-          sb.append("FAILED: Did not throw exception within transaction\n");
+          sb.append("FAILED: Did not throw exception within transaction\n"+rs);
         } catch (Exception e) {
           String expected = "connection failed but has been re-established";
           String eString = e.toString();
@@ -995,7 +996,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
           sb.append("Executing with previously set 5\n"); 
           pstmt.execute();
           passed = false;
-          sb.append("FAILED: Did not throw exception creating unusable proxies\n");
+          sb.append("FAILED: Did not throw exception creating unusable proxies\n"+rs);
         } catch (Exception e) {
           String expected = "Communication link failure";
           String eString = e.toString();
@@ -1226,7 +1227,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
           String expected = "Communication link failure";
           String eString = e.toString();
           if (eString.indexOf(expected) < 0) {
-            sb.append("FAILED: Did not find '" + expected + "' in '" + eString + "'");
+            sb.append("FAILED: Did not find '" + expected + "' in '" + eString + "'"+" "+rs);
             passed = false;
           }
         }
@@ -1729,6 +1730,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
     public String getTableName() { return "JDASSFPSMT28";}
     public String getTestDescription() { return "Test setUnicodeStream()";} 
     public String getTableDefinition() { return "(C1 VARCHAR(80))";}
+    @SuppressWarnings("deprecation")
     public void doSetMethod(AS400JDBCPreparedStatement pstmt, StringBuffer sb, int i) throws SQLException {
       byte[] bytesArray = { 0x00, 0x31, 0x00, 0x32, 0x00, 0x33, 0x00, 0x34, 0x00, 0x35 };
       ByteArrayInputStream unicodeStream = new ByteArrayInputStream(bytesArray); 
@@ -1907,11 +1909,11 @@ public class JDASSFPreparedStatement extends JDASTestcase {
     public boolean checkResult(ResultSet rs, StringBuffer sb, int i) throws SQLException {
       boolean passed = true; 
       Blob answer = rs.getBlob(1);
-      int answerLength = (int) answer.length();
       if (answer == null) {
         sb.append("Error checking results:  got null\n"); 
         return false; 
       }
+      int answerLength = (int) answer.length();
       byte[] answerBytes = answer.getBytes(1, answerLength);
       if (answerBytes.length != blobBytes.length) { 
         sb.append("Error checking results:  answerBytes.length = "+answerBytes.length+" sb "+blobBytes.length+"\n"); 

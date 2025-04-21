@@ -37,7 +37,7 @@ public class JDJSTPOutputThread extends Thread {
   long nextFlushMillis = 0; 
   String [] hangMessages = null;
   String [] hangMessagesException = null; 
-  Vector hangMessagesFound = null;
+  Vector<String> hangMessagesFound = null;
   String parsedJobName = null;
   String parsedPid     = null; 
   
@@ -51,7 +51,7 @@ public class JDJSTPOutputThread extends Thread {
      if (JTOpenTestEnvironment.isWindows) this.encoding = ENCODING_ASCII; 
    }
 
-   public JDJSTPOutputThread(InputStream is, StringBuffer outputBuffer, PrintWriter writer, String[] hangMessages, String[] hangMessagesException,  Vector hangMessagesFound, int encoding ) {
+   public JDJSTPOutputThread(InputStream is, StringBuffer outputBuffer, PrintWriter writer, String[] hangMessages, String[] hangMessagesException,  Vector<String> hangMessagesFound, int encoding ) {
      iStream = is; 
      this.outputBuffer = outputBuffer; 
      this.writer = writer;

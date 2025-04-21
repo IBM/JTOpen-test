@@ -87,7 +87,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
       Constructor.  This is called from the AS400JDBCDataSourceTest constructor.
      **/
     public AS400JDBCDataSourceSerialTestcase(AS400 systemObject,
-                                       Vector variationsToRun,
+                                       Vector<String> variationsToRun,
                                        int runMode,
                                        FileOutputStream fileOutputStream,
                                        

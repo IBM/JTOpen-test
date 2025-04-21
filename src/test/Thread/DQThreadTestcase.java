@@ -36,7 +36,7 @@ public class DQThreadTestcase extends ThreadedTestcase
      * Creates a new DQThreadTestcase.
      * This is called from ThreadTest::createTestcases().
      */
-    public DQThreadTestcase (AS400 systemObject, Vector variationsToRun, int runMode, FileOutputStream fileOutputStream, String password)
+    public DQThreadTestcase (AS400 systemObject, Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream, String password)
     {
 	super (systemObject, "DQThreadTestcase", 9, variationsToRun, runMode, fileOutputStream, password);
         //turnTraceOn();

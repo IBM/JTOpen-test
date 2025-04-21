@@ -61,12 +61,12 @@ public class JDASSFStatement extends JDASTestcase {
   String collection;
 
   private String table;
-  Vector cleanupSql = new Vector(); 
+  Vector<String> cleanupSql = new Vector<String>(); 
 
   /**
    * Constructor.
    **/
-  public JDASSFStatement(AS400 systemObject, Hashtable namesAndVars,
+  public JDASSFStatement(AS400 systemObject, Hashtable<String, Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String pwrSysUserID, String pwrSysPassword) {
     super(systemObject, "JDASSFStatement", namesAndVars, runMode,
@@ -165,7 +165,7 @@ public class JDASSFStatement extends JDASTestcase {
       if (isToolboxFixDate(TOOLBOX_FIX_DATE)) {
 
         Statement stmt = transactionalConnection.createStatement();
-        Enumeration e = cleanupSql.elements(); 
+        Enumeration<String> e = cleanupSql.elements(); 
         while (e.hasMoreElements()) {
           try { 
              String sql = (String) e.nextElement(); 
@@ -506,7 +506,7 @@ public class JDASSFStatement extends JDASTestcase {
         stmt.execute(sql,Statement.RETURN_GENERATED_KEYS);
         rs = stmt.getGeneratedKeys(); 
         connection.commit();
-
+        sb.append("Got rs="+rs+"\n"); 
         // Seamless path
         socketProxy.endActiveConnections();
         sql = "insert into "+table+" VALUES(2)";
@@ -1002,6 +1002,7 @@ public class JDASSFStatement extends JDASTestcase {
         stmt.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
         rs = stmt.getGeneratedKeys(); 
         connection.commit();
+        sb.append("Got rs="+rs+"\n"); 
 
         // Seamless path
         socketProxy.endActiveConnections();
@@ -1499,6 +1500,7 @@ public class JDASSFStatement extends JDASTestcase {
         stmt.executeLargeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
         rs = stmt.getGeneratedKeys(); 
         connection.commit();
+        sb.append("Got rs="+rs+"\n"); 
 
         // Seamless path
         socketProxy.endActiveConnections();
@@ -1883,6 +1885,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Within transaction path
         rs = stmt.executeQuery("SELECT * FROM SYSIBM.SYSDUMMY1");
         socketProxy.endActiveConnections();
+        sb.append("Got rs="+rs+"\n"); 
         try {
           rs = stmt.executeQuery("SELECT * FROM SYSIBM.SYSDUMMY1");
           passed = false;
@@ -2675,6 +2678,7 @@ public class JDASSFStatement extends JDASTestcase {
         rs = stmt.executeQuery("SELECT * FROM SYSIBM.SYSDUMMY1");
         stmt.close(); 
         connection.commit();
+        sb.append("Got rs="+rs+"\n"); 
         // Seamless path
         stmt = (AS400JDBCStatement) connection .createStatement();
         socketProxy.endActiveConnections();

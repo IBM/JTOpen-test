@@ -885,13 +885,13 @@ public class JDRunit {
      * 
      * import javax.activation.*; \
      */
-    Class sessionClass = null;
-    Class mimeMessageClass = null;
-    Class internetAddressClass = null;
-    Class javaxMailMessageClass = null;
-    Class transportClass = null;
-    Class addressClass = null;
-    Class addressArrayClass = null;
+    Class<?> sessionClass = null;
+    Class<?> mimeMessageClass = null;
+    Class<?> internetAddressClass = null;
+    Class<?> javaxMailMessageClass = null;
+    Class<?> transportClass = null;
+    Class<?> addressClass = null;
+    Class<?> addressArrayClass = null;
     // Class mailcapCommandMapClass = null;
     // Class commandMapClass = null;
     try {
@@ -996,14 +996,14 @@ public class JDRunit {
 
     /* java.mail.Message message = new java.mail.internet.MimeMessage(session); */
     parameterTypes[0] = sessionClass;
-    Constructor mimeMessageConstructor = mimeMessageClass
+    Constructor<?> mimeMessageConstructor = mimeMessageClass
         .getConstructor(parameterTypes);
     parms[0] = session;
     Object message = mimeMessageConstructor.newInstance(parms);
 
     /* message.setFrom(new javax.mail.internet.InternetAddress(fromAddress)); */
     parameterTypes[0] = fromAddress.getClass();
-    Constructor internetAddressConstructor = internetAddressClass
+    Constructor<?> internetAddressConstructor = internetAddressClass
         .getConstructor(parameterTypes);
     parms[0] = fromAddress;
     Object fromAddressObject = internetAddressConstructor.newInstance(parms);
@@ -1020,7 +1020,7 @@ public class JDRunit {
 
     Object[] setRecipientsArgs = new Object[2];
     Class[] innerClasses = javaxMailMessageClass.getDeclaredClasses();
-    Class innerClass = null;
+    Class<?> innerClass = null;
     for (int i = 0; i < innerClasses.length && innerClass == null; i++) {
       if (innerClasses[i].getName().indexOf("RecipientType") > 0) {
         innerClass = innerClasses[i];
@@ -1709,7 +1709,7 @@ public class JDRunit {
       }
 
       ClassLoader loader = new URLClassLoader(urls);
-      Class c = loader.loadClass("com.ibm.as400.access.AS400JDBCDriver");
+      Class<?> c = loader.loadClass("com.ibm.as400.access.AS400JDBCDriver");
       if (debug) {
         System.out.println("Debug: Class loaded " + c);
       }
@@ -3347,7 +3347,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
               + " because testbase is " + testBase1);
 
           // Find all the tests that go with this testBase
-          Enumeration keys = testBaseProperties.keys();
+          Enumeration<?> keys = testBaseProperties.keys();
           while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             if (!key.equals(test)) {
@@ -3404,8 +3404,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       String testcase = enumeration.nextElement();
       String rerunCommand = "java test.JDRunit " + initials + " " + testcase
           + " ";
-      Vector variationsVector = rerunHashtable.get(testcase);
-      Enumeration varEnum = variationsVector.elements();
+      Vector<String> variationsVector = rerunHashtable.get(testcase);
+      Enumeration<?> varEnum = variationsVector.elements();
       boolean first = true;
       while (varEnum.hasMoreElements()) {
         String variation = (String) varEnum.nextElement();
@@ -3506,10 +3506,10 @@ public void setExtraJavaArgs(String extraJavaArgs) {
                 return returnHashtable;
         }
 
-  public static boolean vectorContainsString(Vector hangMessagesFound,
+  public static boolean vectorContainsString(Vector<?> hangMessagesFound,
       String string) {
     synchronized (hangMessagesFound) {
-      Enumeration enumeration = hangMessagesFound.elements();
+      Enumeration<?> enumeration = hangMessagesFound.elements();
       while (enumeration.hasMoreElements()) {
         String line = (String) enumeration.nextElement();
         if (line.indexOf(string) >= 0) {

@@ -21,7 +21,6 @@ import test.Testcase;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -36,6 +35,7 @@ methods of the JarMaker class:
 <li>extract(File,File)
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class JMExtract
 extends Testcase
 {
@@ -45,7 +45,7 @@ extends Testcase
 Constructor.
 **/
   public JMExtract (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -127,9 +127,8 @@ Performs cleanup needed after running variations.
         File dir = jm.extract (JMTest.JUNGLE_JAR);
         // Verify that only the correct files got extracted.
         // (We expect all files to have been extracted)
-        Vector expected = new Vector ();
-        JMTest.copyList (JMTest.allJungleFiles_, expected);
-        Vector subDirs = new Vector (2);
+        Vector<String> expected = new Vector<String> ();
+        JMTest.copyStringList (JMTest.allJungleFiles_, expected);
         if (!dir.equals (CURRENT_DIR)) failed ("Didn't return CWD");
         else
           assertCondition (JMTest.verifyExtraction (CURRENT_DIR, expected));
@@ -151,13 +150,13 @@ Performs cleanup needed after running variations.
         // Remove the extraction directory if it exists.
         JMTest.deleteDirectory (new File (JMTest.JUNGLE_PACKAGE_NAME));
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add (" jungle/animal.jpg "); // leading/trailing spaces
         jm.setRequiredFiles (entryList);
         // Extract the files.
         jm.extract (JMTest.JUNGLE_JAR);
         // Verify that only the correct files got extracted.
-        Vector expected = new Vector (1);
+        Vector<String> expected = new Vector<String> (1);
         expected.add ("jungle/animal.jpg");
         assertCondition (JMTest.verifyExtraction (CURRENT_DIR, expected));
       }
@@ -178,7 +177,7 @@ Performs cleanup needed after running variations.
         // Remove the extraction directory if it exists.
         JMTest.deleteDirectory (new File (JMTest.JUNGLE_PACKAGE_NAME));
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/animal.jpg");
         entryList.add ("jungle/JungleMRI.properties");
         jm.setRequiredFiles (entryList);
@@ -204,14 +203,14 @@ Performs cleanup needed after running variations.
         // Remove the extraction directory if it exists.
         JMTest.deleteDirectory (new File (JMTest.JUNGLE_PACKAGE_NAME));
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/Animal.class");
         jm.setRequiredFiles (entryList);
         // Extract the files.
         jm.extract (JMTest.JUNGLE_JAR);
         // Verify that only the correct files got extracted.
-        Vector expected = new Vector ();
-        JMTest.copyList (entryList, expected);
+        Vector<String> expected = new Vector<String> ();
+        JMTest.copyStringList (entryList, expected);
         expected.add ("jungle/Animal$AnimalThread.class");
         expected.add ("jungle/JungleMRI.properties");
         expected.add ("jungle/animal.jpg");
@@ -234,15 +233,15 @@ Performs cleanup needed after running variations.
         // Remove the extraction directory if it exists.
         JMTest.deleteDirectory (new File (JMTest.JUNGLE_PACKAGE_NAME));
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String>(1);
         entryList.add ("jungle/prey/Prey.class");
         entryList.add ("jungle/predator/Predator.class");
         jm.setRequiredFiles (entryList);
         // Extract the files.
         jm.extract (JMTest.JUNGLE_JAR);
         // Verify that only the correct files got extracted.
-        Vector expected = new Vector ();
-        JMTest.copyList (entryList, expected);
+        Vector<String> expected = new Vector<String> ();
+        JMTest.copyStringList (entryList, expected);
         expected.add ("jungle/Animal$AnimalThread.class");
         expected.add ("jungle/Animal.class");
         expected.add ("jungle/JungleMRI.properties");
@@ -268,13 +267,13 @@ Performs cleanup needed after running variations.
         // Remove the extraction directory if it exists.
         JMTest.deleteDirectory (new File (JMTest.JUNGLE_PACKAGE_NAME));
         // Specify a required package.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle.predator");
         jm.setPackages (entryList);
         // Extract the files.
         jm.extract (JMTest.JUNGLE_JAR);
         // Verify that only the correct files got extracted.
-        Vector expected = new Vector ();
+        Vector<String> expected = new Vector<String> ();
         expected.add ("jungle/predator/Predator.class");
         expected.add ("jungle/predator/Predator.java");
         expected.add ("jungle/predator/puma.jpg");
@@ -297,14 +296,14 @@ Performs cleanup needed after running variations.
         // Remove the extraction directory if it exists.
         JMTest.deleteDirectory (new File (JMTest.JUNGLE_PACKAGE_NAME));
         // Specify a required package.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle");
         entryList.add ("jungle.prey");
         jm.setPackages (entryList);
         // Extract the files.
         jm.extract (JMTest.JUNGLE_JAR);
         // Verify that only the correct files got extracted.
-        Vector expected = new Vector ();
+        Vector<String> expected = new Vector<String> ();
         expected.add ("jungle/Animal.java");
         expected.add ("jungle/Animal.class");
         expected.add ("jungle/Animal$AnimalThread.class");
@@ -336,19 +335,19 @@ Performs cleanup needed after running variations.
         // Remove the extraction directory if it exists.
         JMTest.deleteDirectory (new File (JMTest.JUNGLE_PACKAGE_NAME));
         // Specify some additional files.
-        Vector addlFiles = new Vector (2);
+        Vector<File> addlFiles = new Vector<File> (2);
         addlFiles.add (JMTest.ADDITIONAL_FILE_1);
         addlFiles.add (JMTest.ADDITIONAL_FILE_2);
         jm.setAdditionalFiles (addlFiles);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/predator/puma.jpg");
         jm.setRequiredFiles (entryList);
         // Extract the files.
         jm.extract (JMTest.JUNGLE_JAR);
         // Verify that only the correct files got extracted.
-        Vector expected = new Vector ();
-        JMTest.copyList (entryList, expected);
+        Vector<String> expected = new Vector<String> ();
+        JMTest.copyStringList (entryList, expected);
         expected.add ("jungle/predator/puma.jpg");
 
         // String text = "Was a warning message printed to the command entry window," +
@@ -417,7 +416,7 @@ Performs cleanup needed after running variations.
         // Remove the extraction directory if it exists.
         JMTest.deleteDirectory (Dir13);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/animal.jpg");
         jm.setRequiredFiles (entryList);
         // Extract the files.

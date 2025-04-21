@@ -27,9 +27,9 @@ public class JDHandleDumpAnalyzer {
   // Analysis variables
   public int lastAllocatedHandles = 0;
   public Hashtable<String, String> connectionsHashtable = new Hashtable<String,String>();
-  public Hashtable connectionToStatementVectorHashtable = new Hashtable();
-  public Hashtable connectionToReusableVectorHashtable = new Hashtable();
-  public Hashtable connectionToDescriptorVectorHashtable = new Hashtable();
+  public Hashtable<String, Vector<String>> connectionToStatementVectorHashtable = new Hashtable<String, Vector<String>>();
+  public Hashtable<String, Vector<String>> connectionToReusableVectorHashtable = new Hashtable<String, Vector<String>>();
+  public Hashtable<String, Vector<String>> connectionToDescriptorVectorHashtable = new Hashtable<String, Vector<String>>();
   public Hashtable<String,String> statementsHashtable = new Hashtable<String,String>();
   public Hashtable<String,String> reusableHashtable   = new Hashtable<String,String>();
   public Hashtable<String,String> descriptorsHashtable = new Hashtable<String,String>();
@@ -320,10 +320,10 @@ public class JDHandleDumpAnalyzer {
               out.println("Warning: connection " + columns[2]
                   + " not found for statement " + columns[0]);
           } else {
-            Vector statementVector = (Vector) connectionToStatementVectorHashtable
+            Vector<String> statementVector = (Vector<String>) connectionToStatementVectorHashtable
                 .get(columns[2]);
             if (statementVector == null) {
-              statementVector = new Vector();
+              statementVector = new Vector<String>();
               connectionToStatementVectorHashtable.put(columns[2],
                   statementVector);
             }
@@ -399,10 +399,10 @@ public class JDHandleDumpAnalyzer {
                   + " not found for descriptor " + columns[0]);
             descriptorNoConnectionCount++;
           } else {
-            Vector descriptorVector = (Vector) connectionToDescriptorVectorHashtable
+            Vector<String> descriptorVector = (Vector<String>) connectionToDescriptorVectorHashtable
                 .get(columns[1]);
             if (descriptorVector == null) {
-              descriptorVector = new Vector();
+              descriptorVector = new Vector<String>();
               connectionToDescriptorVectorHashtable.put(columns[1],
                   descriptorVector);
             }
@@ -495,10 +495,10 @@ public class JDHandleDumpAnalyzer {
               out.println("Warning: connection " + columns[2]
                   + " not found for reusable " + columns[0]);
           } else {
-            Vector reusableVector = (Vector) connectionToReusableVectorHashtable
+            Vector<String> reusableVector = (Vector<String>) connectionToReusableVectorHashtable
                 .get(columns[2]);
             if (reusableVector == null) {
-              reusableVector = new Vector();
+              reusableVector = new Vector<String>();
               connectionToReusableVectorHashtable.put(columns[2],
                   reusableVector);
             }
@@ -552,7 +552,7 @@ public class JDHandleDumpAnalyzer {
       String connectionString = (String) enumeration.nextElement();
       int connectionStatementCount;
       int connectionReusableCount;
-      Vector statementVector = (Vector) connectionToStatementVectorHashtable
+      Vector<?> statementVector = (Vector<?>) connectionToStatementVectorHashtable
           .get(connectionString);
       if (statementVector == null) {
         connectionStatementCount = 0;
@@ -563,7 +563,7 @@ public class JDHandleDumpAnalyzer {
       if (connectionStatementCount > statementsPerConnectionMax)
         statementsPerConnectionMax = connectionStatementCount;
 
-      Vector reusableVector = (Vector) connectionToReusableVectorHashtable
+      Vector<?> reusableVector = (Vector<?>) connectionToReusableVectorHashtable
           .get(connectionString);
       if (reusableVector == null) {
         connectionReusableCount = 0;
@@ -575,7 +575,7 @@ public class JDHandleDumpAnalyzer {
         reusablePerConnectionMax = connectionReusableCount;
 
       int connectionDescriptorCount;
-      Vector descriptorVector = (Vector) connectionToDescriptorVectorHashtable
+      Vector<?> descriptorVector = (Vector<?>) connectionToDescriptorVectorHashtable
           .get(connectionString);
       if (descriptorVector == null) {
         connectionDescriptorCount = 0;
@@ -594,7 +594,7 @@ public class JDHandleDumpAnalyzer {
     /*
      * Calculate descriptorNoStatementOrReusableCount
      */
-    Enumeration descriptorEnumeration = descriptorsHashtable.keys();
+    Enumeration<String> descriptorEnumeration = descriptorsHashtable.keys();
     while (descriptorEnumeration.hasMoreElements()) {
       String descriptor = (String) descriptorEnumeration.nextElement();
       if ((descriptorToStatementHashtable.get(descriptor) == null)

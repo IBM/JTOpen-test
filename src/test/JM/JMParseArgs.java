@@ -13,24 +13,17 @@
 
 package test.JM;
 
-import utilities.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JMTest;
 import test.JTOpenTestEnvironment;
 import test.Testcase;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
-import java.util.Vector;
 
 
 
@@ -44,11 +37,7 @@ extends Testcase
   private static final boolean DEBUG = false;
   static final File CURRENT_DIR = new File (System.getProperty ("user.dir"));
   static final String CLASSPATH = System.getProperty ("java.class.path");
-  private File sourceJarFile_ = null;
-  private File destinationJarFile_ = null;
-  private boolean windows_ = false;
   private boolean DOS_ = false;
-  private boolean OS400_ = false;
   private String infoOutput_;
   private String errorOutput_;
 
@@ -56,7 +45,7 @@ extends Testcase
 Constructor.
 **/
   public JMParseArgs (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -81,16 +70,11 @@ Performs setup needed before running variations.
       String operatingSystem_ = System.getProperty("os.name");
       if (JTOpenTestEnvironment.isWindows)
       {
-        windows_ = true;
         DOS_ = true;
       }
       else if (operatingSystem_.indexOf("DOS") >= 0)
       {
         DOS_ = true;
-      }
-      else if (operatingSystem_.indexOf("OS/400") >= 0)
-      {
-          OS400_ = true;
       }
 
       output_.println("Running under: " + operatingSystem_);
@@ -158,7 +142,8 @@ This simulates a command-line invocation.
           }
           catch (IllegalThreadStateException e) {
             // Sleep a little to save on CPU cycles
-            try {Thread.currentThread().sleep(500);} catch (Exception e1){}
+            try {
+            Thread.sleep(500);} catch (Exception e1){}
           }
         }
 
@@ -507,7 +492,7 @@ This simulates a command-line invocation.
         }
 
         // Verify that only the correct files got copied.
-        Vector expected = new Vector (20);
+        Vector<String> expected = new Vector<String> (20);
         // Required entries specified.
         expected.add ("com/ibm/as400/vaccess/AS400ListModel32.gif");
         // Packages specified.
@@ -519,7 +504,7 @@ This simulates a command-line invocation.
         expected.add (JMTest.ADDITIONAL_FILE_4_NAME);
 
         // Files that should NOT get included:
-        Vector notExpected = new Vector (20);
+        Vector<String> notExpected = new Vector<String> (20);
         notExpected.add ("com/ibm/as400/access/AS400JDBCCallableStatement.class");
         notExpected.add ("com/ibm/as400/access/AS400Certificate.class");
         notExpected.add ("com/ibm/as400/access/BaseDataQueue.class");
@@ -550,7 +535,8 @@ This simulates a command-line invocation.
       }
       finally {
         // Wait for files to get closed
-        try {Thread.currentThread().sleep(500);} catch (Exception e){}
+        try {Thread.currentThread();
+        Thread.sleep(500);} catch (Exception e){}
         JMTest.deleteFile (smallJar);
       }
     }
@@ -592,7 +578,7 @@ This simulates a command-line invocation.
         printInfo ();
 
         // Verify that only the correct files got copied.
-        Vector expected = new Vector (20);
+        Vector<String> expected = new Vector<String> (20);
         // Required entries specified.
         expected.add ("com/ibm/as400/access/IFSFile16.gif");
         expected.add ("com/ibm/as400/access/UserSpace16.gif");
@@ -606,7 +592,7 @@ This simulates a command-line invocation.
         expected.add (JMTest.ADDITIONAL_FILE_2_NAME);
 
         // Files that should NOT get included:
-        Vector notExpected = new Vector (20);
+        Vector<String> notExpected = new Vector<String> (20);
         notExpected.add ("com/ibm/as400/access/AS400JDBCCallableStatement.class");
         notExpected.add ("com/ibm/as400/access/AS400Certificate.class");
         notExpected.add ("com/ibm/as400/access/BaseDataQueue.class");
@@ -641,7 +627,8 @@ This simulates a command-line invocation.
       }
       finally {
         // Wait for files to get closed
-        try {Thread.currentThread().sleep(500);} catch (Exception e){}
+        try {Thread.currentThread();
+        Thread.sleep(500);} catch (Exception e){}
         JMTest.deleteFile (smallJar);
       }
     }

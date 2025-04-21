@@ -55,7 +55,7 @@ public class DDMPositionExtended extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMPositionExtended(AS400            systemObject,
-                             Vector           variationsToRun,
+                             Vector<String> variationsToRun,
                              int              runMode,
                              FileOutputStream fileOutputStream,  
                             String testLib,

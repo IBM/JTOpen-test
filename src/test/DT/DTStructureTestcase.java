@@ -1364,8 +1364,8 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         try
         {
-            byte[] ret = conv.toBytes(new Vector());
-            failed("No exception thrown.");
+            byte[] ret = conv.toBytes(new Vector<Object>());
+            failed("No exception thrown."+ret);
         }
         catch (Exception e)
         {
@@ -1780,7 +1780,7 @@ public class DTStructureTestcase extends Testcase
 
         try
         {
-            int ret = conv.toBytes(new Vector(), new byte[16]);
+            int ret = conv.toBytes(new Vector<Object>(), new byte[16]);
             failed("No exception thrown.");
         }
         catch (Exception e)
@@ -2518,7 +2518,7 @@ public class DTStructureTestcase extends Testcase
 
         try
         {
-            int ret = conv.toBytes(new Vector(), new byte[16], 0);
+            int ret = conv.toBytes(new Vector<Object>(), new byte[16], 0);
             failed("No exception thrown.");
         }
         catch (Exception e)

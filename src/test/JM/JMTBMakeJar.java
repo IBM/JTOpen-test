@@ -21,7 +21,6 @@ import test.Testcase;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -44,18 +43,19 @@ methods of the ToolboxJarMaker class:
   </ul>
 </ul>
 **/
+@SuppressWarnings("deprecation")
 
 public class JMTBMakeJar
 extends Testcase
 {
 
-  Vector allComponents_;  // list of all Toolbox components
+  Vector<Integer> allComponents_;  // list of all Toolbox components
 
 /**
 Constructor.
 **/
     public JMTBMakeJar (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -75,35 +75,33 @@ Performs setup needed before running variations.
       JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
 
      // List of all defined components.
-     Vector c = new Vector (27);
-     allComponents_ = new Vector (27);
-     c.add (ToolboxJarMaker.AS400);
-     c.add (ToolboxJarMaker.AS400_VISUAL);
-     c.add (ToolboxJarMaker.COMMAND_CALL);
-     c.add (ToolboxJarMaker.COMMAND_CALL_VISUAL);
-     c.add (ToolboxJarMaker.DATA_DESCRIPTION);
-     c.add (ToolboxJarMaker.DATA_QUEUE);
-     c.add (ToolboxJarMaker.DATA_QUEUE_VISUAL);
-     c.add (ToolboxJarMaker.DIGITAL_CERTIFICATE);
-     c.add (ToolboxJarMaker.INTEGRATED_FILE_SYSTEM);
-     c.add (ToolboxJarMaker.INTEGRATED_FILE_SYSTEM_VISUAL);
-     c.add (ToolboxJarMaker.JDBC);
-     c.add (ToolboxJarMaker.JDBC_VISUAL);
-     c.add (ToolboxJarMaker.JOB);
-     c.add (ToolboxJarMaker.JOB_VISUAL);
-     c.add (ToolboxJarMaker.MESSAGE);
-     c.add (ToolboxJarMaker.MESSAGE_VISUAL);
-     c.add (ToolboxJarMaker.PRINT);
-     c.add (ToolboxJarMaker.PRINT_VISUAL);
-     c.add (ToolboxJarMaker.PROGRAM_CALL);
-     c.add (ToolboxJarMaker.PROGRAM_CALL_VISUAL);
-     c.add (ToolboxJarMaker.RECORD_LEVEL_ACCESS);
-     c.add (ToolboxJarMaker.RECORD_LEVEL_ACCESS_VISUAL);
-     c.add (ToolboxJarMaker.TRACE);
-     c.add (ToolboxJarMaker.USER);
-     c.add (ToolboxJarMaker.USER_SPACE);
-     c.add (ToolboxJarMaker.USER_VISUAL);
-     JMTest.copyList (c, allComponents_);
+     allComponents_ = new Vector<Integer> (27);
+     allComponents_.add (ToolboxJarMaker.AS400);
+     allComponents_.add (ToolboxJarMaker.AS400_VISUAL);
+     allComponents_.add (ToolboxJarMaker.COMMAND_CALL);
+     allComponents_.add (ToolboxJarMaker.COMMAND_CALL_VISUAL);
+     allComponents_.add (ToolboxJarMaker.DATA_DESCRIPTION);
+     allComponents_.add (ToolboxJarMaker.DATA_QUEUE);
+     allComponents_.add (ToolboxJarMaker.DATA_QUEUE_VISUAL);
+     allComponents_.add (ToolboxJarMaker.DIGITAL_CERTIFICATE);
+     allComponents_.add (ToolboxJarMaker.INTEGRATED_FILE_SYSTEM);
+     allComponents_.add (ToolboxJarMaker.INTEGRATED_FILE_SYSTEM_VISUAL);
+     allComponents_.add (ToolboxJarMaker.JDBC);
+     allComponents_.add (ToolboxJarMaker.JDBC_VISUAL);
+     allComponents_.add (ToolboxJarMaker.JOB);
+     allComponents_.add (ToolboxJarMaker.JOB_VISUAL);
+     allComponents_.add (ToolboxJarMaker.MESSAGE);
+     allComponents_.add (ToolboxJarMaker.MESSAGE_VISUAL);
+     allComponents_.add (ToolboxJarMaker.PRINT);
+     allComponents_.add (ToolboxJarMaker.PRINT_VISUAL);
+     allComponents_.add (ToolboxJarMaker.PROGRAM_CALL);
+     allComponents_.add (ToolboxJarMaker.PROGRAM_CALL_VISUAL);
+     allComponents_.add (ToolboxJarMaker.RECORD_LEVEL_ACCESS);
+     allComponents_.add (ToolboxJarMaker.RECORD_LEVEL_ACCESS_VISUAL);
+     allComponents_.add (ToolboxJarMaker.TRACE);
+     allComponents_.add (ToolboxJarMaker.USER);
+     allComponents_.add (ToolboxJarMaker.USER_SPACE);
+     allComponents_.add (ToolboxJarMaker.USER_VISUAL);
     }
 
 
@@ -173,11 +171,11 @@ Performs cleanup needed after running variations.
         // Verify that only the correct files got copied.
         // (We expect all files to have been copied)
 
-        Vector expectedJarFiles = new Vector ();
-        JMTest.copyList (JMTest.allJungleFiles_, expectedJarFiles);
+        Vector<String> expectedJarFiles = new Vector<String> ();
+        JMTest.copyStringList (JMTest.allJungleFiles_, expectedJarFiles);
 
-        Vector expectedManifestFiles = new Vector ();
-        JMTest.copyList (expectedJarFiles, expectedManifestFiles);
+        Vector<String> expectedManifestFiles = new Vector<String> ();
+        JMTest.copyStringList (expectedJarFiles, expectedManifestFiles);
         expectedManifestFiles.remove("META-INF/");
         expectedManifestFiles.remove("META-INF/MANIFEST.MF");
         expectedManifestFiles.remove("jungle/");
@@ -203,7 +201,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/animal.jpg");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -211,7 +209,7 @@ Performs cleanup needed after running variations.
 
         // Verify that only the correct files got copied.
 
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, entryList));
       }
       catch (Exception e) {
@@ -231,7 +229,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/animal.jpg");
         entryList.add ("jungle/JungleMRI.properties");
         jm.setRequiredFiles (entryList);
@@ -239,7 +237,7 @@ Performs cleanup needed after running variations.
         jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, entryList));
       }
       catch (Exception e) {
@@ -259,7 +257,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/Animal.class");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -271,7 +269,7 @@ Performs cleanup needed after running variations.
         entryList.add ("jungle/JungleMRI.properties");
         entryList.add ("jungle/animal.jpg");
 
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, entryList));
       }
       catch (Exception e) {
@@ -291,7 +289,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/prey/Prey.class");
         entryList.add ("jungle/predator/Predator.class");
         jm.setRequiredFiles (entryList);
@@ -307,7 +305,7 @@ Performs cleanup needed after running variations.
         entryList.add ("jungle/predator/Predator.class");
         entryList.add ("jungle/prey/Prey.class");
 
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, entryList));
       }
       catch (Exception e) {
@@ -327,7 +325,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required package.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle.predator");
         jm.setPackages (entryList);
         // Make the jar.
@@ -335,12 +333,12 @@ Performs cleanup needed after running variations.
 
         // Verify that only the correct files got copied.
 
-        Vector expectedEntries = new Vector();
+        Vector<String> expectedEntries = new Vector<String>();
         expectedEntries.add ("jungle/predator/Predator.class");
         expectedEntries.add ("jungle/predator/Predator.java");
         expectedEntries.add ("jungle/predator/puma.jpg");
 
-        Vector expectedJar = JMTest.addDirectoryEntries(expectedEntries);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(expectedEntries);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, expectedEntries));
       }
       catch (Exception e) {
@@ -360,7 +358,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required package.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle");
         entryList.add ("jungle.prey");
         jm.setPackages (entryList);
@@ -369,7 +367,7 @@ Performs cleanup needed after running variations.
 
         // Verify that only the correct files got copied.
 
-        Vector expectedEntries = new Vector();
+        Vector<String> expectedEntries = new Vector<String>();
         expectedEntries.add ("jungle/Animal.java");
         expectedEntries.add ("jungle/Animal.class");
         expectedEntries.add ("jungle/Animal$AnimalThread.class");
@@ -379,7 +377,7 @@ Performs cleanup needed after running variations.
         expectedEntries.add ("jungle/JungleMRI.properties");
         expectedEntries.add ("jungle/tree.jpg");
 
-        Vector expectedJar = JMTest.addDirectoryEntries(expectedEntries);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(expectedEntries);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, expectedEntries));
       }
       catch (Exception e) {
@@ -401,13 +399,13 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify some additional files.
-        Vector addlFiles = new Vector (2);
+        Vector<File> addlFiles = new Vector<File> (2);
         addlFiles.add (JMTest.ADDITIONAL_FILE_1);
         addlFiles.add (JMTest.ADDITIONAL_FILE_2);
         jm.setAdditionalFiles (addlFiles);
         // We want manifest entries for the additional files.
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/predator/puma.jpg");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -419,7 +417,7 @@ Performs cleanup needed after running variations.
         entryList.add (JMTest.ADDITIONAL_FILE_2_NAME);
         entryList.add ("jungle/predator/puma.jpg");
 
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, entryList));
       }
       catch (Exception e) {
@@ -481,7 +479,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/animal.jpg");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -489,7 +487,7 @@ Performs cleanup needed after running variations.
 
         // Verify that only the correct files got copied.
 
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         assertCondition (JMTest.verifyJar (Dir13, expectedJar, entryList));
       }
       catch (Exception e) {
@@ -574,7 +572,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("com/ibm/as400/access/Copyright.class");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -582,8 +580,8 @@ Performs cleanup needed after running variations.
 
         // Verify that only the correct files got copied.
 
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
-        Vector expectedManifest = new Vector();
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedManifest = new Vector<String>();
         expectedManifest.add("com/ibm/as400/access/");
         assertCondition (JMTest.verifyJar (JMTest.TOOLBOX_JAR_SMALL, expectedJar, expectedManifest));
       }
@@ -604,7 +602,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("com/ibm/as400/access/Trace.class");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -624,8 +622,8 @@ Performs cleanup needed after running variations.
         entryList.add ("com/ibm/as400/access/SystemProperties.class");
         entryList.add ("com/ibm/as400/access/ToolboxLogger.class");
 
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
-        Vector expectedManifest = new Vector(1);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedManifest = new Vector<String>(1);
         expectedManifest.add("com/ibm/as400/access/");
 
         assertCondition (JMTest.verifyJar (JMTest.TOOLBOX_JAR_SMALL, expectedJar, expectedManifest, true));
@@ -647,7 +645,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify required entries.
-        Vector entryList = new Vector (2);
+        Vector<String> entryList = new Vector<String> (2);
         entryList.add ("com/ibm/as400/access/Trace.class");
         entryList.add ("com/ibm/as400/access/ExecutionEnvironment.class");
         jm.setRequiredFiles (entryList);
@@ -668,8 +666,8 @@ Performs cleanup needed after running variations.
         entryList.add ("com/ibm/as400/access/ToolboxLogger.class");
         entryList.add ("com/ibm/as400/access/ConversionMaps.class");
 
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
-        Vector expectedManifest = new Vector(1);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedManifest = new Vector<String>(1);
         expectedManifest.add("com/ibm/as400/access/");
 
         assertCondition (JMTest.verifyJar (JMTest.TOOLBOX_JAR_SMALL, expectedJar, expectedManifest, true));

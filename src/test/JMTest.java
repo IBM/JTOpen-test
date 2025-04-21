@@ -103,9 +103,9 @@ extends TestDriver
   // Default size for splitting jars.
   private static final int SPLIT_SIZE_KBYTES = 2*1024; // kilobytes
 
-  public static final boolean DEBUG = false;
-  public static Vector allJungleFiles_ = null;
-  public static Vector toolboxFiles_ = null;
+  public static  boolean DEBUG = false;
+  public static Vector<String> allJungleFiles_ = null;
+  public static Vector<String> toolboxFiles_ = null;
   public static boolean foundJarMakerClassesOnClasspath_;
 
 
@@ -166,7 +166,7 @@ Performs setup needed before running testcases.
       extractTestingFilesToLocalDirectory();
 
      // Expected list of jungle jar entries, for comparison with actual results.
-     allJungleFiles_ = new Vector ();
+     allJungleFiles_ = new Vector<String> ();
      allJungleFiles_.add (MANIFEST_DIR_NAME + "/");
      allJungleFiles_.add (MANIFEST_ENTRY_NAME);
      allJungleFiles_.add ("jungle/");
@@ -185,7 +185,7 @@ Performs setup needed before running testcases.
      allJungleFiles_.add ("jungle/prey/Prey.java");
 
      // Expected list of toolbox jar entries, for comparison with actual results.
-     toolboxFiles_ = new Vector ();
+     toolboxFiles_ = new Vector<String> ();
      toolboxFiles_.add (MANIFEST_DIR_NAME + "/");
      toolboxFiles_.add (MANIFEST_ENTRY_NAME);
      toolboxFiles_.add ("com/");
@@ -225,7 +225,7 @@ Performs setup needed after running testcases.
    @param oldList The list of jar entry names (String's).  Assumed to be sorted.
    @return The augmented list.
    **/
-  public static Vector addDirectoryEntries (Vector oldList)
+  public static Vector<String> addDirectoryEntries (Vector<String> oldList)
   {
     return addDirectoryEntries(oldList, true);
   }
@@ -246,11 +246,11 @@ Performs setup needed after running testcases.
    @param oldList The list of jar entry names (String's).  Assumed to be sorted.
    @return The augmented list.
    **/
-  public static Vector addDirectoryEntries (Vector oldList, boolean addAllDirs)
+  public static Vector<String> addDirectoryEntries (Vector<String> oldList, boolean addAllDirs)
   {
     String priorPrefix = new String ("");
-    Vector augmentedList = new Vector (oldList.size ());
-    Enumeration enumeration = oldList.elements ();
+    Vector<String> augmentedList = new Vector<String> (oldList.size ());
+    Enumeration<String> enumeration = oldList.elements ();
     while (enumeration.hasMoreElements ())
     {
       String listEntry = (String)enumeration.nextElement ();
@@ -301,26 +301,26 @@ Reports whether or not two files are in fact the same file.
     try
     {
       // Get list of entries in first jar.
-      Vector actualEntries = listJarContents (actualJar);
+      Vector<String> actualEntries = listJarContents (actualJar);
 
       // Get list of entries in second jar.
-      Vector expectedEntries = listJarContents (expectedJar);
+      Vector<String> expectedEntries = listJarContents (expectedJar);
 
       // Compare the lists.
-      if (!compareLists (actualEntries, expectedEntries,
+      if (!compareStringLists (actualEntries, expectedEntries,
                          "actualEntries", "expectedEntries"))
         listsMatch = false;
       else
       {
         // Get list of entries in manifest of first jar.
-        Vector actualManifest = listManifestContents (actualJar);
+        Vector<String> actualManifest = listManifestContents (actualJar);
 
         // Get list of entries in manifest of second jar.
-        Vector expectedManifest = listManifestContents (expectedJar);
+        Vector<String> expectedManifest = listManifestContents (expectedJar);
 
         // Compare the lists.
         if (DEBUG) System.out.println ("Comparing manifests");
-        if (!compareLists (actualManifest, expectedManifest,
+        if (!compareStringLists (actualManifest, expectedManifest,
                            "actualManifest", "expectedManifest"))
           listsMatch = false;
       }
@@ -333,18 +333,18 @@ Reports whether or not two files are in fact the same file.
     return listsMatch;
   }
 
-  public static boolean compareLists (Vector list1, Vector list2)
-  { return compareLists (list1, list2, "list1", "list2"); }
+  public static boolean compareFileLists (Vector<File> list1, Vector<File> list2)
+  { return compareFileLists (list1, list2, "list1", "list2"); }
 
-  public static boolean compareLists (Vector list1, Vector list2,
+  public static boolean compareFileLists (Vector<File> list1, Vector<File> list2,
                                       String list1Name, String list2Name)
   {
-    Vector extras = new Vector ();
-    Vector missing = new Vector ();
+    Vector<Object> extras = new Vector<Object> ();
+    Vector<Object> missing = new Vector<Object> ();
     boolean listsMatch = true;
 
     // Identify elements of list1 that aren't in list2.
-    Enumeration e1 = list1.elements ();
+    Enumeration<File> e1 = list1.elements ();
     while (e1.hasMoreElements ())
     {
       Object element = e1.nextElement ();
@@ -353,7 +353,7 @@ Reports whether or not two files are in fact the same file.
     }
 
     // Identify elements of list2 that aren't in list1.
-    Enumeration e2 = list2.elements ();
+    Enumeration<File> e2 = list2.elements ();
     while (e2.hasMoreElements ())
     {
       Object element = e2.nextElement ();
@@ -366,7 +366,7 @@ Reports whether or not two files are in fact the same file.
       listsMatch = false;
       System.err.println ("Entries in " + list2Name +
                           " but not in " + list1Name + ":");
-      for (Enumeration e3 = missing.elements ();
+      for (Enumeration<Object> e3 = missing.elements ();
            e3.hasMoreElements ();
            System.err.println (e3.nextElement ()));
     }
@@ -376,13 +376,61 @@ Reports whether or not two files are in fact the same file.
       listsMatch = false;
       System.err.println ("Entries in " + list1Name +
                           " but not in " + list2Name + ":");
-      for (Enumeration e3 = extras.elements ();
+      for (Enumeration<Object> e3 = extras.elements ();
            e3.hasMoreElements ();
            System.err.println (e3.nextElement ()));
     }
 
     return listsMatch;
   }
+
+  public static boolean compareStringLists (Vector<String> list1, Vector<String> list2,
+      String list1Name, String list2Name)
+{
+Vector<Object> extras = new Vector<Object> ();
+Vector<Object> missing = new Vector<Object> ();
+boolean listsMatch = true;
+
+// Identify elements of list1 that aren't in list2.
+Enumeration<String> e1 = list1.elements ();
+while (e1.hasMoreElements ())
+{
+Object element = e1.nextElement ();
+if (!list2.contains (element))
+extras.add (element);
+}
+
+// Identify elements of list2 that aren't in list1.
+Enumeration<String> e2 = list2.elements ();
+while (e2.hasMoreElements ())
+{
+Object element = e2.nextElement ();
+if (!list1.contains (element))
+missing.add (element);
+}
+
+if (missing.size () > 0)
+{
+listsMatch = false;
+System.err.println ("Entries in " + list2Name +
+" but not in " + list1Name + ":");
+for (Enumeration<Object> e3 = missing.elements ();
+e3.hasMoreElements ();
+System.err.println (e3.nextElement ()));
+}
+
+if (extras.size () > 0)
+{
+listsMatch = false;
+System.err.println ("Entries in " + list1Name +
+" but not in " + list2Name + ":");
+for (Enumeration<Object> e3 = extras.elements ();
+e3.hasMoreElements ();
+System.err.println (e3.nextElement ()));
+}
+
+return listsMatch;
+}
 
 
   /**
@@ -575,13 +623,20 @@ Copies a file onto another file (replacing it if it exists).
     }
 
 
-  public static void copyList (Vector newKids, Vector theBlock)
+  public static void copyFileList (Vector<File> newKids, Vector<File> theBlock)
   { // Copy first list into second list.
-    Enumeration e = newKids.elements ();
+    Enumeration<File> e = newKids.elements ();
     while (e.hasMoreElements ())
       theBlock.add (e.nextElement ());
   }
 
+  public static void copyStringList (Vector<String> newKids, Vector<String> theBlock)
+  { // Copy first list into second list.
+    Enumeration<String> e = newKids.elements ();
+    while (e.hasMoreElements ())
+      theBlock.add (e.nextElement ());
+  }
+ 
 
 /**
 Extracts the various jarmaker testing files to the current directory.
@@ -913,10 +968,10 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
                    is the "base path" for the file.
    @return         The derived jar entry names (String's).
    **/
-  public static Vector generateJarEntryNames (Hashtable fileList)
+  public static Vector<String> generateJarEntryNames (Hashtable<?, ?> fileList)
   {
-    Vector entryNames = new Vector (fileList.size ());
-    Enumeration e = fileList.keys ();
+    Vector<String> entryNames = new Vector<String> (fileList.size ());
+    Enumeration<?> e = fileList.keys ();
     while (e.hasMoreElements ())
     {
       File file = (File)e.nextElement ();
@@ -932,10 +987,10 @@ Lists the entry names in the specified jar file, including the Manifest entry.
 In the returned list, files are represented as jar entrynames.
  @exception  IOException  If an exception occurs.
 **/
-  public static Vector listJarContents (File jarFile)
+  public static Vector<String> listJarContents (File jarFile)
     throws IOException
   {
-    Vector contentsList = new Vector ();
+    Vector<String> contentsList = new Vector<String> ();
     if (jarFile == null)
       System.err.println ("JMTest.listJarContents: Argument is null.");
     else if (!jarFile.exists ())
@@ -950,7 +1005,7 @@ In the returned list, files are represented as jar entrynames.
       try
       {
         zipFile = new ZipFile (jarFile);
-        Enumeration e = zipFile.entries ();
+        Enumeration<?> e = zipFile.entries ();
         while (e.hasMoreElements ()) {
           ZipEntry entry = (ZipEntry)e.nextElement ();
           String entryName = entry.getName ();
@@ -969,33 +1024,21 @@ In the returned list, files are represented as jar entrynames.
 Lists the files in (and under) the specified directory.
 In the returned list, files are represented as jar entrynames.
 **/
-  public static Vector listFiles (File file)
+  public static Vector<String> listFiles (File file)
   {
     if (file == null)
     {
       System.err.println ("JMTest.listFiles: Argument is null.");
-      return new Vector ();
+      return new Vector<String> ();
     }
     File parentDir = new File (file.getParent ());
     return listFiles (file, parentDir.getAbsolutePath ());
   }
 
-  private static Vector listFiles (Vector fileOrDirList, String basePath)
-  {
-    Vector result = new Vector ();
-    Enumeration e = fileOrDirList.elements ();
-    while (e.hasMoreElements ())
-    {
-      File fileOrDir = (File)e.nextElement ();
-      Vector subList = listFiles (fileOrDir, basePath);
-      copyList (subList, result);  // merge subList into result
-    }
-    return result;
-  }
 
-  private static Vector listFiles (File fileOrDir, String basePath)
+  private static Vector<String> listFiles (File fileOrDir, String basePath)
   {
-    Vector result = new Vector ();
+    Vector<String> result = new Vector<String> ();
     try
     {
       if (fileOrDir.isDirectory ())
@@ -1006,8 +1049,8 @@ In the returned list, files are represented as jar entrynames.
         {
           String fileName = contents[i];
           File file = new File (thisDir, fileName);
-          Vector subList = listFiles (file, basePath);
-          copyList (subList, result);  // merge subList into result
+          Vector<String> subList = listFiles (file, basePath);
+          copyStringList (subList, result);  // merge subList into result
         }
       }
       result.add (normalize (fileOrDir, basePath));
@@ -1025,9 +1068,9 @@ In the returned list, files are represented as jar entrynames.
 Lists the entry names in the manifest of the specified jar file.
 In the returned list, files are represented as jar entrynames.
 **/
-  public static Vector listManifestContents (File jarFile)
+  public static Vector<String> listManifestContents (File jarFile)
   {
-    Vector contentsList = new Vector ();
+    Vector<String> contentsList = new Vector<String> ();
     if (jarFile == null)
     {
       System.err.println ("JMTest.listManifestContents: Argument is null.");
@@ -1053,7 +1096,6 @@ In the returned list, files are represented as jar entrynames.
           // Set up for reading.  We must use a reader because we
           // are dealing with text.
           reader = new BufferedReader (new InputStreamReader (zipFile.getInputStream (manifestEntry)));
-          StringBuffer buffer = new StringBuffer ();
 
           // Read the manifest file and only record entries which
           // represent referenced files.
@@ -1121,7 +1163,7 @@ In the returned list, files are represented as jar entrynames.
    Also removes the MANIFEST.MF entry.
    @parm list A list of jar entry names (String's)
    **/
-  public static Vector removeDirectoryEntries (Vector inList)
+  public static Vector<String> removeDirectoryEntries (Vector<String> inList)
   {
     return removeDirectoryEntries(inList, true);
   }
@@ -1130,11 +1172,11 @@ In the returned list, files are represented as jar entrynames.
    @parm list A list of jar entry names (String's)
    @parm removeManifestEntry Whether to remove the MANIFEST.MF entry
    **/
-  public static Vector removeDirectoryEntries (Vector inList, boolean removeManifestEntry)
+  public static Vector<String> removeDirectoryEntries (Vector<String> inList, boolean removeManifestEntry)
   {
-    Vector outList = new Vector (inList.size ());
+    Vector<String> outList = new Vector<String> (inList.size ());
 
-    Enumeration e = inList.elements ();
+    Enumeration<String> e = inList.elements ();
     while (e.hasMoreElements ())
     {
       String entryName = (String)e.nextElement ();
@@ -1151,10 +1193,10 @@ In the returned list, files are represented as jar entrynames.
   /** Removes the entry "META-INF/MANIFEST.MF" entry from the list.  Returns a new list.
    @parm list A list of jar entry names (String's)
    **/
-  public static Vector removeManifestEntry (Vector inList)
+  public static Vector<String> removeManifestEntry (Vector<String> inList)
   {
-    Vector outList = new Vector (inList.size ());
-    copyList (inList, outList);
+    Vector<String> outList = new Vector<String> (inList.size ());
+    copyStringList (inList, outList);
     outList.remove(MANIFEST_ENTRY_NAME);
     return outList;
   }
@@ -1184,29 +1226,29 @@ In the returned list, files are represented as jar entrynames.
 /**
 Verifies that the correct files got extracted.
 **/
-    public static boolean verifyExtraction (File baseDirectory, Vector subDirs, Vector expected)
+    public static boolean verifyExtraction (File baseDirectory, Vector<String> subDirs, Vector<String> expected)
     {
-      Vector actual = new Vector ();
+      Vector<String> actual = new Vector<String> ();
       if (!subDirs.contains (MANIFEST_DIR_NAME))
         subDirs.add (MANIFEST_DIR_NAME);
-      Enumeration e = subDirs.elements ();
+      Enumeration<String> e = subDirs.elements ();
       while (e.hasMoreElements ())
       {
         String subDirName = (String)e.nextElement ();
-        Vector subList =
+        Vector<String> subList =
           listFiles (new File (baseDirectory, subDirName));
-      copyList (subList, actual);  // merge subList into cumulative list
+      copyStringList (subList, actual);  // merge subList into cumulative list
       }
 
       if (!expected.contains (MANIFEST_ENTRY_NAME))
         expected.add (MANIFEST_ENTRY_NAME);
-      return compareLists (actual, addDirectoryEntries (expected),
+      return compareStringLists (actual, addDirectoryEntries (expected),
                            "actualFiles", "expectedFiles");
     }
 
-    public static boolean verifyExtraction (File baseDirectory, Vector expected)
+    public static boolean verifyExtraction (File baseDirectory, Vector<String> expected)
     {
-      Vector subDirs = new Vector ();
+      Vector<String> subDirs = new Vector<String> ();
       subDirs.add (JUNGLE_PACKAGE_NAME);
       return verifyExtraction (baseDirectory, subDirs, expected);
     }
@@ -1215,25 +1257,25 @@ Verifies that the correct files got extracted.
 /**
 Verifies that specific files got extracted.
 **/
-    public static boolean verifyExtractionContains (File baseDirectory, Vector subDirs, Vector expected)
+    public static boolean verifyExtractionContains (File baseDirectory, Vector<String> subDirs, Vector<String> expected)
     {
       boolean result = true;
-      Vector actual = new Vector ();
+      Vector<String> actual = new Vector<String> ();
       if (!subDirs.contains (MANIFEST_DIR_NAME))
         subDirs.add (MANIFEST_DIR_NAME);
-      Enumeration e = subDirs.elements ();
+      Enumeration<String> e = subDirs.elements ();
       while (e.hasMoreElements ())
       {
         String subDirName = (String)e.nextElement ();
-        Vector subList =
+        Vector<String> subList =
           listFiles (new File (baseDirectory, subDirName));
-      copyList (subList, actual);  // merge subList into cumulative list
+      copyStringList (subList, actual);  // merge subList into cumulative list
       }
 
       if (!expected.contains (MANIFEST_ENTRY_NAME))
         expected.add (MANIFEST_ENTRY_NAME);
 
-      Enumeration e1 = expected.elements ();
+      Enumeration<String> e1 = expected.elements ();
       while (e1.hasMoreElements ()) {
         String elem = (String)e1.nextElement ();
         if (!actual.contains (elem)) {
@@ -1248,22 +1290,22 @@ Verifies that specific files got extracted.
 /**
 Verifies that specific files did NOT get extracted.
 **/
-    public static boolean verifyExtractionNotContains (File baseDirectory, Vector subDirs, Vector notExpected)
+    public static boolean verifyExtractionNotContains (File baseDirectory, Vector<String> subDirs, Vector<?> notExpected)
     {
       boolean result = true;
-      Vector actual = new Vector ();
+      Vector<String> actual = new Vector<String> ();
       if (!subDirs.contains (MANIFEST_DIR_NAME))
         subDirs.add (MANIFEST_DIR_NAME);
-      Enumeration e = subDirs.elements ();
+      Enumeration<String> e = subDirs.elements ();
       while (e.hasMoreElements ())
       {
         String subDirName = (String)e.nextElement ();
-        Vector subList =
+        Vector<String> subList =
           listFiles (new File (baseDirectory, subDirName));
-      copyList (subList, actual);  // merge subList into cumulative list
+      copyStringList (subList, actual);  // merge subList into cumulative list
       }
 
-      Enumeration e1 = notExpected.elements ();
+      Enumeration<?> e1 = notExpected.elements ();
       while (e1.hasMoreElements ()) {
         String elem = (String)e1.nextElement ();
         if (actual.contains (elem)) {
@@ -1281,13 +1323,13 @@ Verifies that specific files did NOT get extracted.
       try
       {
         // Get list of all entries in the jar.
-        Vector jarEntries = listJarContents (jarFile);
+        Vector<String> jarEntries = listJarContents (jarFile);
         jarEntries = removeDirectoryEntries (jarEntries); // exclude directories
 
         // Get list of all entries in the manifest.
-        Vector manifestEntries = listManifestContents (jarFile);
+        Vector<String> manifestEntries = listManifestContents (jarFile);
 
-        result = compareLists (jarEntries, manifestEntries,
+        result = compareStringLists (jarEntries, manifestEntries,
                                "jarEntries", "manifestEntries");
       }
       catch (Exception e) {
@@ -1332,32 +1374,32 @@ Verifies that specific files did NOT get extracted.
     // and that its size does not exceed the specified value.
     // Also verifies that every entry in the source jar file occurs
     // in exactly one of the target jar files.
-    public static boolean validateJars (File sourceJarFile, Vector targetJarFiles)
+    public static boolean validateJars (File sourceJarFile, Vector<?> targetJarFiles)
     {
       return validateJars (sourceJarFile, targetJarFiles, SPLIT_SIZE_KBYTES);
     }
-    public static boolean validateJars (File sourceJarFile, Vector targetJarFiles,
+    public static boolean validateJars (File sourceJarFile, Vector<?> targetJarFiles,
                                  long maxSizeKbytes)
     {
       return validateJars (sourceJarFile, targetJarFiles, SPLIT_SIZE_KBYTES,
                            false);
     }
-    public static boolean validateJars (File sourceJarFile, Vector targetJarFiles,
+    public static boolean validateJars (File sourceJarFile, Vector<?> targetJarFiles,
                                  long maxSizeKbytes, boolean expectOversize)
     {
       boolean result = true;
       try
       {
-        Vector targetJarEntries = new Vector ();
-        Enumeration e = targetJarFiles.elements ();
+        Vector<String> targetJarEntries = new Vector<String> ();
+        Enumeration<?> e = targetJarFiles.elements ();
         while (e.hasMoreElements ())
         {
           File targetFile = (File)e.nextElement ();
           if (!validateJar (targetFile,maxSizeKbytes,expectOversize))
             result = false;
-          Vector entriesInThisJar = listJarContents (targetFile);
+          Vector<String> entriesInThisJar = listJarContents (targetFile);
           entriesInThisJar.remove (MANIFEST_ENTRY_NAME);
-          Enumeration e1 = entriesInThisJar.elements ();
+          Enumeration<String> e1 = entriesInThisJar.elements ();
           while (e1.hasMoreElements ())
           {
             String entryName = (String)e1.nextElement ();
@@ -1373,9 +1415,9 @@ Verifies that specific files did NOT get extracted.
         }
         // Now verify that targetJarEntries matches the list of entries
         // in the source jar file.
-        Vector sourceJarEntries = listJarContents (sourceJarFile);
+        Vector<String> sourceJarEntries = listJarContents (sourceJarFile);
         sourceJarEntries.remove (MANIFEST_ENTRY_NAME);
-        if (!compareLists (targetJarEntries, sourceJarEntries,
+        if (!compareStringLists (targetJarEntries, sourceJarEntries,
                            "entriesInTargetJars", "entriesInSourceJar"))
           result = false;
       }
@@ -1391,36 +1433,36 @@ Verifies that specific files did NOT get extracted.
 Verifies that the correct files got copied into the destination jar file,
 and that the correct entries got created in the manifest.
 **/
-    public static boolean verifyJar (File destinationJar, Vector expectedContents)
+    public static boolean verifyJar (File destinationJar, Vector<String> expectedContents)
     {
       return verifyJar (destinationJar, expectedContents, removeManifestEntry(expectedContents), false);
     }
 
-    public static boolean verifyJar (File destinationJar, Vector expectedContents, boolean isToolboxJar)
+    public static boolean verifyJar (File destinationJar, Vector<String> expectedContents, boolean isToolboxJar)
     {
       return verifyJar (destinationJar, expectedContents, removeManifestEntry(expectedContents), isToolboxJar);
     }
 
-    public static boolean verifyJar (File destinationJar, Vector expectedJarEntries,
-                                 Vector expectedManifestEntries)
+    public static boolean verifyJar (File destinationJar, Vector<String> expectedJarEntries,
+                                 Vector<String> expectedManifestEntries)
     {
       return verifyJar (destinationJar, expectedJarEntries, expectedManifestEntries, false);
     }
 
     // Verifies that the destination jar exists, and contains the
     // expected files and nothing else.
-    public static boolean verifyJar (File destinationJar, Vector expectedJarEntries,
-                              Vector expectedManifestEntries, boolean isToolboxJar)
+    public static boolean verifyJar (File destinationJar, Vector<String> expectedJarEntries,
+                              Vector<String> expectedManifestEntries, boolean isToolboxJar)
     {
       boolean result = true;
       // Verify that the destination jar exists, and contains the
       // expected files and nothing else.
       try
       {
-        Vector actualJar = listJarContents (destinationJar);
-        Vector actualManifest = listManifestContents (destinationJar);
-        Vector expectedManifest = expectedManifestEntries;
-        Vector expectedJar = expectedJarEntries;
+        Vector<String> actualJar = listJarContents (destinationJar);
+        Vector<String> actualManifest = listManifestContents (destinationJar);
+        Vector<String> expectedManifest = expectedManifestEntries;
+        Vector<String> expectedJar = expectedJarEntries;
 
         // Expect the generated jar to contain a manifest.
         if (!expectedJar.contains (MANIFEST_ENTRY_NAME))
@@ -1436,9 +1478,9 @@ and that the correct entries got created in the manifest.
             expectedJar.add (COPYRIGHT_ENTRY_NAME);
         }
 
-        if (compareLists (actualManifest, expectedManifest,
+        if (compareStringLists (actualManifest, expectedManifest,
                           "actualManifest", "expectedManifest"))
-          result = compareLists (actualJar, expectedJar,
+          result = compareStringLists (actualJar, expectedJar,
                                  "actualJar", "expectedJar");
         else
         {
@@ -1454,13 +1496,13 @@ and that the correct entries got created in the manifest.
     }
 
     public static boolean verifyJarContains (File destinationJar,
-                                      Vector expectedJarEntries)
+                                      Vector<String> expectedJarEntries)
     {
       return verifyJarContains (destinationJar, expectedJarEntries, false);
     }
 
     public static boolean verifyJarContains (File destinationJar,
-                                      Vector expectedJarEntries,
+                                      Vector<String> expectedJarEntries,
                                       boolean isToolboxJar)
     {
       boolean result = true;
@@ -1468,10 +1510,10 @@ and that the correct entries got created in the manifest.
       // expected files and nothing else.
       try
       {
-        Vector actualJar = listJarContents (destinationJar);
+        Vector<String> actualJar = listJarContents (destinationJar);
 
         // Expect the generated jar to contain directory entries.
-        Vector expectedJar = addDirectoryEntries (expectedJarEntries);
+        Vector<String> expectedJar = addDirectoryEntries (expectedJarEntries);
 
         // Expect the generated jar to contain a manifest.
         if (!expectedJar.contains (MANIFEST_ENTRY_NAME))
@@ -1487,7 +1529,7 @@ and that the correct entries got created in the manifest.
             expectedJar.add (COPYRIGHT_ENTRY_NAME);
         }
 
-        Enumeration e = expectedJar.elements ();
+        Enumeration<String> e = expectedJar.elements ();
         while (e.hasMoreElements ()) {
           String elem = (String)e.nextElement ();
           if (!actualJar.contains (elem)) {
@@ -1504,16 +1546,16 @@ and that the correct entries got created in the manifest.
     }
 
     public static boolean verifyJarNotContains (File destinationJar,
-                                      Vector notExpectedJarEntries)
+                                      Vector<?> notExpectedJarEntries)
     {
       boolean result = true;
       // Verify that the destination jar exists, and contains the
       // expected files and nothing else.
       try
       {
-        Vector actualJar = listJarContents (destinationJar);
+        Vector<String> actualJar = listJarContents (destinationJar);
 
-        Enumeration e = notExpectedJarEntries.elements ();
+        Enumeration<?> e = notExpectedJarEntries.elements ();
         while (e.hasMoreElements ()) {
           String elem = (String)e.nextElement ();
           if (actualJar.contains (elem)) {
@@ -1558,7 +1600,7 @@ Creates the testcases.
         StringTokenizer tokenizer = new StringTokenizer (misc_, ",");
         String uid = tokenizer.nextToken ();
         String pwd = tokenizer.nextToken ();
-        pwrSys = new AS400 (systemObject_.getSystemName(), uid, pwd);
+        pwrSys = new AS400 (systemObject_.getSystemName(), uid, pwd.toCharArray());
         try
         {
           pwrSys.setGuiAvailable(false);
@@ -1628,7 +1670,7 @@ Creates the testcases.
                                  fileOutputStream_));
 
       // Reports invalid testcase names.
-      for (Enumeration e = namesAndVars_.keys (); e.hasMoreElements (); ) {
+      for (Enumeration<String> e = namesAndVars_.keys (); e.hasMoreElements (); ) {
         String name = (String)e.nextElement ();
         System.out.println ("Testcase " + name + " not found.");
       }

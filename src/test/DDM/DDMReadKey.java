@@ -65,7 +65,7 @@ public class DDMReadKey extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMReadKey(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -81,7 +81,7 @@ public class DDMReadKey extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMReadKey(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       

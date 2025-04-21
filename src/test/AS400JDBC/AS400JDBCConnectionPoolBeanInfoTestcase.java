@@ -12,9 +12,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.AS400JDBC;
 
-import java.awt.Image;
 import java.beans.BeanDescriptor;
-import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
 import java.beans.FeatureDescriptor;
 import java.beans.MethodDescriptor;
@@ -48,7 +46,7 @@ public class AS400JDBCConnectionPoolBeanInfoTestcase extends Testcase
      Constructor.  This is called from the AS400JDBCConnectionPoolTest constructor.
     **/
    public AS400JDBCConnectionPoolBeanInfoTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  String password)

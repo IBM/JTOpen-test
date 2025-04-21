@@ -13,15 +13,10 @@
 
 package test.Cmd;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.awt.Image;
 import java.awt.AWTError;
 import java.util.Vector;
 import java.beans.BeanInfo;
-import java.beans.SimpleBeanInfo;
 import java.beans.FeatureDescriptor;
 import java.beans.BeanDescriptor;
 import java.beans.EventSetDescriptor;
@@ -63,7 +58,7 @@ public class CommandListBeanInfoTestcase extends Testcase
     Constructor.  This is called from the CommandListTest::createTestcases method.
    **/
    public CommandListBeanInfoTestcase(AS400 systemObject,
-                                          Vector variationsToRun,
+                                          Vector<String> variationsToRun,
                                           int runMode,
                                           FileOutputStream fileOutputStream)
    {
@@ -109,13 +104,12 @@ public class CommandListBeanInfoTestcase extends Testcase
       try
       {
          CommandListBeanInfo bi = new CommandListBeanInfo();
+         assertCondition(true,"bi="+bi);
       }
       catch(Throwable e)
       {
          failed(e, "Unexpected exception");
-         return;
       }
-      succeeded();
    }
 
    /**
@@ -436,20 +430,20 @@ public class CommandListBeanInfoTestcase extends Testcase
       {
          CommandListBeanInfo bi = new CommandListBeanInfo();
          // Icons / GUI components no longer available in JTOpen 20.0.X
-
+         assertCondition(true,"bi="+bi); 
       }
       catch(AWTError e)
       {
         if (onAS400_) notApplicable("No GUI available.");
         else failed(e, "Unexpected exception");
-        return;
+       
       }
       catch(Exception e)
       {
          failed(e, "Unexpected exception");
          return;
       }
-      succeeded();
+     
    }
 
 

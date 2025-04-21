@@ -13,14 +13,11 @@
 
 package test;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
+import java.net.InetAddress;
 import java.util.Vector;
-import com.ibm.as400.access.*;
-import java.util.Date;
-import java.net.*;
+
+import com.ibm.as400.access.AS400;
 
 /**
   Testcase LocalSocketConnectTestcase.
@@ -31,7 +28,7 @@ public class LocalSocketConnectTestcase extends Testcase
   Constructor.  This is called from CmdTest::createTestcases().
   **/
   public LocalSocketConnectTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String>           variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {
@@ -231,7 +228,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -267,7 +264,8 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
+            sys.close(); 
         }
         else
         {
@@ -301,7 +299,8 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
+            sys.close(); 
         }
         else
         {
@@ -336,7 +335,8 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
+            sys.close(); 
         }
         else
         {
@@ -372,7 +372,8 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
+            sys.close(); 
         }
         else
         {
@@ -406,7 +407,8 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
+            sys.close(); 
         }
         else
         {
@@ -439,7 +441,8 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
+            sys.close(); 
         }
         else
         {
@@ -474,7 +477,8 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
+            sys.close(); 
         }
         else
         {
@@ -507,7 +511,8 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
+            sys.close(); 
         }
         else
         {
@@ -539,7 +544,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close(); 
         }
         else
         {
@@ -573,7 +578,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -605,7 +610,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -637,7 +642,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -671,7 +676,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -703,7 +708,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -735,7 +740,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -769,7 +774,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -801,7 +806,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -823,7 +828,7 @@ public class LocalSocketConnectTestcase extends Testcase
     {
         if (isAS400())
         {
-            AS400 sys = new AS400("localhost", "javatest", "jteam1");
+            AS400 sys = new AS400("localhost", "javatest", "jteam1".toCharArray());
 	    sys.setMustUseSockets(true);
             sys.connectService(AS400.RECORDACCESS);
             if (sys.isConnected(AS400.RECORDACCESS) && sys.isMustUseSockets())
@@ -834,7 +839,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -858,7 +863,7 @@ public class LocalSocketConnectTestcase extends Testcase
         {
             InetAddress ia = InetAddress.getLocalHost();
             String hn = ia.getHostName();
-            AS400 sys = new AS400(hn, "javatest", "jteam1");
+            AS400 sys = new AS400(hn, "javatest", "jteam1".toCharArray());
 	    sys.setMustUseSockets(true);
             sys.connectService(AS400.RECORDACCESS);
             if (sys.isConnected(AS400.RECORDACCESS) && sys.isMustUseSockets())
@@ -869,7 +874,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -891,7 +896,7 @@ public class LocalSocketConnectTestcase extends Testcase
     {
         if (isAS400())
         {
-            AS400 sys = new AS400("localhost", "javatest", "jteam1");
+            AS400 sys = new AS400("localhost", "javatest", "jteam1".toCharArray());
 	    sys.setMustUseSockets(true);
             sys.connectService(AS400.RECORDACCESS);
             if (sys.isConnected(AS400.RECORDACCESS) && sys.isMustUseSockets())
@@ -902,7 +907,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -924,7 +929,7 @@ public class LocalSocketConnectTestcase extends Testcase
     {
         if (isAS400())
         {
-            AS400 sys = new AS400("localhost", "javatest", "jteam1");
+            AS400 sys = new AS400("localhost", "javatest", "jteam1".toCharArray());
             sys.connectService(AS400.RECORDACCESS);
             if (!sys.isConnected(AS400.RECORDACCESS))
             {
@@ -934,7 +939,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -958,7 +963,7 @@ public class LocalSocketConnectTestcase extends Testcase
         {
             InetAddress ia = InetAddress.getLocalHost();
             String hn = ia.getHostName();
-            AS400 sys = new AS400(hn, "javatest", "jteam1");
+            AS400 sys = new AS400(hn, "javatest", "jteam1".toCharArray());
             sys.connectService(AS400.RECORDACCESS);
             if (!sys.isConnected(AS400.RECORDACCESS))
             {
@@ -968,7 +973,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {
@@ -990,7 +995,7 @@ public class LocalSocketConnectTestcase extends Testcase
     {
         if (isAS400())
         {
-            AS400 sys = new AS400("localhost", "javatest", "jteam1");
+            AS400 sys = new AS400("localhost", "javatest", "jteam1".toCharArray());
             sys.connectService(AS400.RECORDACCESS);
             if (!sys.isConnected(AS400.RECORDACCESS))
             {
@@ -1000,7 +1005,7 @@ public class LocalSocketConnectTestcase extends Testcase
             {
                 failed("connect failed");
             }
-            sys.disconnectAllServices();
+            sys.disconnectAllServices(); sys.close();
         }
         else
         {

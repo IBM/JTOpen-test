@@ -79,7 +79,7 @@ extends JDTestcase {
     private              boolean        remoteConnection_ = false; 
     static boolean systemNamingLibrariesCreated = false;
     static String  baseCollection = "BASECOL";
-    static Vector  systemNamingLibraries = null ;
+    static Vector<String>  systemNamingLibraries = null ;
     static boolean cleanupLibraries = true;
     private Connection pwrConnection_;
     private Statement  pwrStatement_; 
@@ -88,7 +88,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDConnectionMisc (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -310,7 +310,7 @@ getTypeMap() - Throws an exception, not supported.
         if (checkJdbc20 ()) {
 	    if ((getDriver () == JDTestDriver.DRIVER_NATIVE) ) {
 		try {
-		    java.util.Map map = connection_.getTypeMap ();
+		    java.util.Map<?,?> map = connection_.getTypeMap ();
 		    System.out.println("passed "+map);
 		    assertCondition(true);
 		}
@@ -1003,7 +1003,7 @@ getConnection -- test a bogus subsystem property
 
     public static void setupSystemNamingLibraries(Connection connection, String newBaseCollection ) throws Exception {
 	if (!systemNamingLibrariesCreated) {
-	  systemNamingLibraries = new Vector();
+	  systemNamingLibraries = new Vector<String>();
 	    String sql = "";
 	    try {
 		baseCollection = newBaseCollection;
@@ -1088,7 +1088,7 @@ getConnection -- test a bogus subsystem property
      * get the list of libraries created for the system naming test
      * @return
      */
-    public static Vector getSystemNamingLibraries() {
+    public static Vector<String> getSystemNamingLibraries() {
       return systemNamingLibraries;
     }
 

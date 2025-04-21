@@ -48,7 +48,7 @@ public class FDSet extends Testcase
   Constructor.  This is called from the FDTest constructor.
   **/
   public FDSet(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {

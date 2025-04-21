@@ -13,35 +13,33 @@
 package test.AS400JDBC;
 
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
-import java.sql.*;
-import javax.naming.*;
+import java.util.Vector;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NameAlreadyBoundException;
 import javax.sql.PooledConnection;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.AS400JDBCConnectionPoolDataSource;
 import com.ibm.as400.access.AS400JDBCPooledConnection;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 import test.JDReflectionUtil;
 import test.JDTestDriver;
@@ -65,8 +63,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
    }
    private PrintWriter writer_ = null;
    private String filename_ = "/tmp/poolds.log";
-   private String tag = null;
-   private boolean rejectChange = false;       
 
    // JNDI variables.
    private static final String JNDI_FILE = "com.sun.jndi.fscontext.RefFSContextFactory"; //@A2A
@@ -172,7 +168,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
      Constructor.  This is called from the AS400JDBCDataSourceTest constructor.
     **/
    public AS400JDBCConnectionPoolDataSourceTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  
@@ -619,7 +615,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
       try
       {
          AS400JDBCConnectionPoolDataSource ds = new AS400JDBCConnectionPoolDataSource();         
-         systemObject_.clearPasswordCache();
+         AS400.clearPasswordCache();
          ds.setUser(systemObject_.getUserId());
          ds.setServerName(systemObject_.getSystemName());
 
@@ -802,6 +798,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 	 {
 	     AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
          userName = tmpSystemObject.getUserId(); //@A7A
+         tmpSystemObject.close();
 	 }
 	 
          if ((ds2.getServerName().equals("") || ds2.getServerName().equals("localhost")) &&  //@A2C
@@ -837,6 +834,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 	 {
 	     AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
          userName = tmpSystemObject.getUserId(); //@A7A
+         tmpSystemObject.close();
 	 }
 	 
          if (ds2.getServerName().equalsIgnoreCase(serverName) &&
@@ -903,7 +901,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 	 {
 	     AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
          userName = tmpSystemObject.getUserId(); //@A7A
-         
+         tmpSystemObject.close();
 	 }
 	 
          if ((ds2.getServerName().equals("") || ds2.getServerName().equals("localhost")) &&  //@A2C
@@ -944,6 +942,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 	 {
 	     AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
          userName = tmpSystemObject.getUserId(); //@A7A
+         tmpSystemObject.close();
 	 }
 	 
          if ((ds2.getServerName().equals("") || ds2.getServerName().equals("localhost")) &&   //@A2C

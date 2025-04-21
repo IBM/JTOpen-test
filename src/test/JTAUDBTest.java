@@ -50,7 +50,7 @@ public class JTAUDBTest
    /**
    * 
    */
-  private static final long serialVersionUID = 1605219299733362471L;
+  static final long serialVersionUID = 1605219299733362471L;
   public static  String COLLECTION     = "JTAUDBTST";
    static boolean verbose = false; // turn off verbose output for JTA tests
 
@@ -204,7 +204,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 **/
    public static JTATransInfo[] getTransInfo() throws Exception {
       int count = -1;
-      Vector v = new Vector();
+      Vector<JTATransInfo> v = new Vector<JTATransInfo>();
 
       String cmd = "system \"WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)\"";
 

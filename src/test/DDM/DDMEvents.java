@@ -85,7 +85,7 @@ public class DDMEvents extends Testcase
    *Constructor.  This is called from DDMTest::createTestcases().
   **/
   public DDMEvents(AS400            systemObject,
-                   Vector           variationsToRun,
+                   Vector<String> variationsToRun,
                    int              runMode,
                    FileOutputStream fileOutputStream,
                    

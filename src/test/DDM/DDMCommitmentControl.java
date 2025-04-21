@@ -63,7 +63,7 @@ public class DDMCommitmentControl extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMCommitmentControl(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       String testLib,

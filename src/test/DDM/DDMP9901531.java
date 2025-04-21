@@ -44,7 +44,7 @@ public class DDMP9901531 extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMP9901531(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream,
                          

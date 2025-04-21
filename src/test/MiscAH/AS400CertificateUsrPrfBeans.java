@@ -33,8 +33,6 @@ import com.ibm.as400.access.AS400CertificateUserProfileUtil;
 import com.ibm.as400.access.AS400CertificateEvent;
 import com.ibm.as400.access.AS400Certificate;
 import com.ibm.as400.access.AS400CertificateListener;
-import com.ibm.as400.access.ObjectEvent;
-import com.ibm.as400.access.ObjectListener;
 
 import test.AS400CertificateTest;
 import test.JTOpenTestEnvironment;
@@ -74,15 +72,13 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
 
     private String operatingSystem_;
     private boolean DOS_ = false;
-    private boolean OS400_ = false;
-    private boolean usingNativeImpl = false;
-   
+    
     byte[][] testcert_ = null; // Array of X.509 test certificates
 
     /**
      * Constructor.  This is called from AS400CertificateTest::createTestcases().
      **/
-    public AS400CertificateUsrPrfBeans(AS400 systemObject, Vector variationsToRun, int runMode, FileOutputStream fileOutputStream)
+    public AS400CertificateUsrPrfBeans(AS400 systemObject, Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream)
     {
 	super(systemObject, "AS400CertificateUsrPrfBeans", 23, variationsToRun, runMode, fileOutputStream);
 
@@ -323,8 +319,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
     // Are we running on the AS/400?
     else if (operatingSystem_.indexOf("OS/400") >= 0)
     {
-      OS400_ = true;
-      usingNativeImpl = true;
       output_.println("Will use native implementation");
     }
 
@@ -606,7 +600,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
       boolean[] alreadyfound = new boolean[20];
       int i = 0, j = 0, k = 0;
 
-      loop1:
       for (i = 0; i < as400certs.length; ++i)
       {
        //look for this cert in 2nd array
@@ -622,7 +615,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
             continue;
 
            //compare cert data
-           loop3:
            for (k = 0; k < xcert.length; ++k)
            {
             if (xcert[k] != testcert[j][k])
@@ -1421,7 +1413,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	{
 	    AS400CertificateUserProfileUtil us = new AS400CertificateUserProfileUtil(systemObject_, goodUsrPrfName);
 	    us.addAS400CertificateListener(this);
-
+	    ObjectInputStream s2 = null; 
 	    // Serialize us to a file.
 	    FileOutputStream f = new FileOutputStream("us.ser");
 	    ObjectOutput s =  new ObjectOutputStream(f);
@@ -1431,7 +1423,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    {
 	        // Deserialize us from a file.
 		FileInputStream in = new FileInputStream("us.ser");
-		ObjectInputStream s2 = new ObjectInputStream(in);
+		s2 = new ObjectInputStream(in);
 		AS400CertificateUserProfileUtil us2 = (AS400CertificateUserProfileUtil)s2.readObject();
 
 		if (false == us2.getPath().equals(us.getPath()))
@@ -1456,6 +1448,8 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    }
 	    finally
 	    {
+	       if (s !=null) s.close(); 
+	       if (s2 != null) s2.close(); 
 		File fd = new File("us.ser");
 		fd.delete();
 	    }
@@ -1688,13 +1682,14 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    // Serialize a AS400CertificateUserProfileUtil to a file.
 	    FileOutputStream f = new FileOutputStream("uspace.ser");
 	    ObjectOutput s =  new ObjectOutputStream(f);
+	    ObjectInputStream s2 = null; 
 	    s.writeObject(aAS400CertificateUserProfileUtil);
 	    s.flush();
 	    try
 	    {
 	        // Deserialize a AS400CertificateUserProfileUtil from a file.
 		FileInputStream in = new FileInputStream("uspace.ser");
-		ObjectInputStream s2 = new ObjectInputStream(in);
+		s2 = new ObjectInputStream(in);
 		AS400CertificateUserProfileUtil aAS400CertificateUserProfileUtil2 = (AS400CertificateUserProfileUtil)s2.readObject();
 
 		if (false == aAS400CertificateUserProfileUtil2.getPath().equals(aAS400CertificateUserProfileUtil.getPath()))
@@ -1719,6 +1714,8 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    }
 	    finally
 	    {
+	      if (s != null) s.close(); 
+	      if (s2 != null) s2.close(); 
 		File fd = new File("uspace.ser");
 		fd.delete();
 	    }

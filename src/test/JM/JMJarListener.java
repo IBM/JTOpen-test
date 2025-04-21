@@ -24,8 +24,8 @@ import java.util.Vector;
 
 public class JMJarListener implements JarMakerListener
 {
-  public Vector started = new Vector ();
-  public Vector completed = new Vector ();
+  public Vector<JarMakerEvent> started = new Vector<JarMakerEvent> ();
+  public Vector<JarMakerEvent> completed = new Vector<JarMakerEvent> ();
 
   /**
    * Invoked at the start of dependency analysis on a class file.
@@ -48,9 +48,9 @@ public class JMJarListener implements JarMakerListener
     completed.add (event);
   }
 
-  boolean listContainsEvent (Vector eventList, JarMakerEvent event)
+  boolean listContainsEvent (Vector<JarMakerEvent> eventList, JarMakerEvent event)
   {
-    Enumeration e = eventList.elements ();
+    Enumeration<JarMakerEvent> e = eventList.elements ();
     while (e.hasMoreElements ()) {
       JarMakerEvent listElement = (JarMakerEvent)e.nextElement ();
       if (listElement.toString ().equals (event.toString ()))

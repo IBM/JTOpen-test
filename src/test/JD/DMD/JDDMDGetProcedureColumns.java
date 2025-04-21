@@ -93,7 +93,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDDMDGetProcedureColumns (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -1257,7 +1257,7 @@ columns should be returned.
     {
         try {
           message.setLength(0);
-	    Vector retrievedRows = new Vector();
+	    Vector<String> retrievedRows = new Vector<String>();
 
             ResultSet rs = dmd_.getProcedureColumns (connectionCatalog_,
                 JDDMDTest.SCHEMAS_PERCENT, "PROCCOLS%", null);
@@ -1298,7 +1298,7 @@ columns should be returned.
 		message.append("...check3  = "+check3+ " sb true -- "+JDDMDTest.COLLECTION + ".PROCCOLS(PARMXX)\n");
 		message.append("...rows    = "+rows+ " sb 4\n");
 		message.append("...rows were \n");
-		Enumeration enumeration = retrievedRows.elements();
+		Enumeration<String> enumeration = retrievedRows.elements();
 		while (enumeration.hasMoreElements()) {
 		    message.append("..."+enumeration.nextElement()+"\n");
 		}

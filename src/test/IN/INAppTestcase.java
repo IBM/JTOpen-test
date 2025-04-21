@@ -59,7 +59,7 @@ public class INAppTestcase extends Testcase
 Constructor.
 **/
    public INAppTestcase(AS400             systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
 {

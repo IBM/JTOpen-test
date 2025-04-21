@@ -115,10 +115,10 @@ public class GetNotTested
       ///////////////////////////////////////////////////////////////////
       // Sort the classes
       ///////////////////////////////////////////////////////////////////
-      Vector[] sorted = new Vector[classes.size()];
+      Vector<?>[] sorted = new Vector<?>[classes.size()];
       classes.copyInto(sorted);
       int length = sorted.length;
-      Vector temp;
+      Vector<?> temp;
       for (int j = 0; j < length; ++j)
       {
         for (int k = j + 1; k < length; ++k)
@@ -147,7 +147,7 @@ public class GetNotTested
       for (int l = 0; l < sorted.length; ++l)
       {
         z = 0;
-        for (Enumeration e = sorted[l].elements(); e.hasMoreElements();)
+        for (Enumeration<?> e = sorted[l].elements(); e.hasMoreElements();)
         {
           if (z == 1)
           {

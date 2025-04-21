@@ -1435,7 +1435,7 @@ public class JDTestcase extends Testcase {
   }
 
   public boolean checkRelease750plus(String comment) {
-    return checkRelease(JDTestDriver.RELEASE_V7R5M0_PLUS, comment);
+    return checkRelease(JDTestDriver.RELEASE_V7R6M0, comment);
   }
 
   public boolean checkRelease750(String comment) {
@@ -1599,7 +1599,7 @@ public class JDTestcase extends Testcase {
         else if (vrm == AS400.generateVRM(7, 5, 0))
           release_ = JDTestDriver.RELEASE_V7R5M0;
         else
-          release_ = JDTestDriver.RELEASE_V7R5M0_PLUS;
+          release_ = JDTestDriver.RELEASE_V7R6M0;
       } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
         e.printStackTrace(System.out);
@@ -2097,7 +2097,7 @@ public class JDTestcase extends Testcase {
     case JDTestDriver.RELEASE_V7R5M0:
       value = "75";
       break;
-    case JDTestDriver.RELEASE_V7R5M0_PLUS:
+    case JDTestDriver.RELEASE_V7R6M0:
       value = "76";
       break;
     default:

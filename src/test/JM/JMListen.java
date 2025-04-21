@@ -19,7 +19,6 @@ import com.ibm.as400.access.AS400;
 import test.JMTest;
 import test.Testcase;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -36,6 +35,7 @@ methods of the JarMaker class:
 It also tests all methods of the JarMakerEvent class,
 and of the JarMakerListener interface.
 **/
+@SuppressWarnings("deprecation")
 
 public class JMListen
 extends Testcase
@@ -45,7 +45,7 @@ extends Testcase
 Constructor.
 **/
   public JMListen (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -86,7 +86,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("jungle/animal.jpg");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -99,10 +99,10 @@ Performs cleanup needed after running variations.
     }
 
 
-    boolean validateSmallJarListeners (Vector listeners)
+    boolean validateSmallJarListeners (Vector<JMJarListener> listeners)
     {
       boolean result = true;
-      Enumeration e = listeners.elements ();
+      Enumeration<JMJarListener> e = listeners.elements ();
       for (int i=0; e.hasMoreElements (); i++)
       {
         JMJarListener jl = (JMJarListener)e.nextElement ();
@@ -126,9 +126,9 @@ Performs cleanup needed after running variations.
       return result;
     }
 
-  boolean listContainsEvent (Vector eventList, String eventString)
+  boolean listContainsEvent (Vector<JarMakerEvent> eventList, String eventString)
   {
-    Enumeration e = eventList.elements ();
+    Enumeration<JarMakerEvent> e = eventList.elements ();
     while (e.hasMoreElements ()) {
       JarMakerEvent listElement = (JarMakerEvent)e.nextElement ();
       if (listElement.toString ().equals (eventString))
@@ -137,9 +137,9 @@ Performs cleanup needed after running variations.
     return false;
   }
 
-  boolean listContainsEvent (Vector eventList, JarMakerEvent event)
+  boolean listContainsEvent (Vector<JarMakerEvent> eventList, JarMakerEvent event)
   {
-    Enumeration e = eventList.elements ();
+    Enumeration<JarMakerEvent> e = eventList.elements ();
     while (e.hasMoreElements ()) {
       JarMakerEvent listElement = (JarMakerEvent)e.nextElement ();
       if (listElement.toString ().equals (event.toString ()))
@@ -148,11 +148,11 @@ Performs cleanup needed after running variations.
     return false;
   }
 
-    void printList (Vector list)
+    void printList (Vector<JarMakerEvent> list)
     {
       if (list.size () == 0) System.err.println ("(empty list)");
       else {
-        Enumeration e = list.elements ();
+        Enumeration<JarMakerEvent> e = list.elements ();
         while (e.hasMoreElements ()) {
           JarMakerEvent event = (JarMakerEvent)e.nextElement ();
           System.err.println (event.toString ());
@@ -256,7 +256,7 @@ public void Var003()
     makeSmallJar (jm);
 
     // Verify that all the listeners got the right events
-    Vector listeners = new Vector (3);
+    Vector<JMJarListener> listeners = new Vector<JMJarListener> (3);
     listeners.add (jl1);
     listeners.add (jl2);
     listeners.add (jl3);
@@ -351,7 +351,7 @@ public void Var004()
     try
     {
       JarMakerEvent event = new JarMakerEvent (null, "someEntryName");
-      failed ("No exception");
+      failed ("No exception"+event);
       return;
     }
     catch(Exception e)
@@ -375,7 +375,7 @@ public void Var004()
     try
     {
       JarMakerEvent event = new JarMakerEvent (this, null);
-      failed ("No exception");
+      failed ("No exception "+event);
       return;
     }
     catch(Exception e)

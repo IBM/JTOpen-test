@@ -35,7 +35,7 @@ methods of the JarMaker class:
 <li>setRequiredFiles(Vector)
 </ul>
 **/
-
+@SuppressWarnings("deprecation")
 public class JMSetGet
 extends Testcase
 {
@@ -45,7 +45,7 @@ extends Testcase
 Constructor.
 **/
   public JMSetGet (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -85,7 +85,7 @@ Performs cleanup needed after running variations.
     {
       try {
         JarMaker jm = new JarMaker ();
-        Vector outList = jm.getRequiredFiles ();
+        Vector<?> outList = jm.getRequiredFiles ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -115,7 +115,7 @@ Performs cleanup needed after running variations.
     {
       JarMaker jm = new JarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<String> inList = new Vector<String> (2);
         inList.add ("booga");
         inList.add (null);
         jm.setRequiredFiles (inList);
@@ -134,7 +134,7 @@ Performs cleanup needed after running variations.
     {
       JarMaker jm = new JarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<String> inList = new Vector<String> (2);
         inList.add ("booga");
         inList.add ("");
         jm.setRequiredFiles (inList);
@@ -153,7 +153,7 @@ Performs cleanup needed after running variations.
     {
       JarMaker jm = new JarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<File> inList = new Vector<File> (2);
         inList.add (new File("booga"));
         jm.setRequiredFiles (inList);
         failed ("Didn't throw exception.");
@@ -173,12 +173,12 @@ setRequiredFiles() - Verify the setter by using the getter.
         String entry1 = new String ("com/ibm/as400/entry1");
         String entry2 = new String ("entry2.gif");
         String entry3 = new String (" java/entry3.properties ");
-        Vector inList = new Vector ();
+        Vector<String> inList = new Vector<String> ();
         inList.add (entry1);
         inList.add (entry2);
         inList.add (entry3);
         jm.setRequiredFiles (inList);
-        Vector outList = jm.getRequiredFiles ();
+        Vector<?> outList = jm.getRequiredFiles ();
         assertCondition ((outList.size () == 3) &&
                 (outList.contains (entry1)) &&
                 (outList.contains (entry2)) &&
@@ -199,7 +199,7 @@ setRequiredFiles() - previous invocation. Should augment previous invocation.
         String entry1 = new String ("com/ibm/as400/entry1");
         String entry2 = new String ("entry2.gif");
         String entry3 = new String ("java/entry3.properties");
-        Vector inList = new Vector ();
+        Vector<String> inList = new Vector<String> ();
         inList.add (entry1);
         inList.add (entry2);
         jm.setRequiredFiles (inList);
@@ -207,7 +207,7 @@ setRequiredFiles() - previous invocation. Should augment previous invocation.
         inList.add (entry2);
         inList.add (entry3);
         jm.setRequiredFiles (inList);
-        Vector outList = jm.getRequiredFiles ();
+        Vector<?> outList = jm.getRequiredFiles ();
         assertCondition ((outList.size () == 3) &&
                 (outList.contains (entry1)) &&
                 (outList.contains (entry2)) &&
@@ -231,18 +231,18 @@ setRequiredFiles() - previous invocation. Should augment previous invocation.
         JarMaker jm = new JarMaker ();
 
         File file1 = new File ("file1");
-        Vector fileList = new Vector ();
+        Vector<File> fileList = new Vector<File> ();
         fileList.add (file1);
         File baseDir = new File ("baseDir");
         jm.setAdditionalFiles (fileList, baseDir);
 
         String entry1 = new String ("com/ibm/as400/entry1");
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add (entry1);
         jm.setRequiredFiles (entryList);
 
         String pkg1 = new String ("com.ibm.as400");
-        Vector pkgList = new Vector ();
+        Vector<String> pkgList = new Vector<String> ();
         pkgList.add (pkg1);
         jm.setPackages (pkgList);
 

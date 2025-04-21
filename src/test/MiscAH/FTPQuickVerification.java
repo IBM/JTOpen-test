@@ -78,7 +78,7 @@ public class FTPQuickVerification extends    Testcase
     private char[] clearPassword_;
 
     public FTPQuickVerification (AS400 systemObject,
-                              ///Vector variationsToRun,
+                              ///Vector<String> variationsToRun,
                               Hashtable namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,

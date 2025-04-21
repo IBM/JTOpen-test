@@ -67,7 +67,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
       Constructor.  This is called from the AS400JDBCConnectionPoolTest constructor.
      **/
     public AS400JDBCConnectionPoolTestcase(AS400 systemObject,
-                                           Vector variationsToRun,
+                                           Vector<String> variationsToRun,
                                            int runMode,
                                            FileOutputStream fileOutputStream,
                                            

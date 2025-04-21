@@ -68,7 +68,7 @@ public class DDMReadRN extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMReadRN(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -84,7 +84,7 @@ public class DDMReadRN extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMReadRN(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       

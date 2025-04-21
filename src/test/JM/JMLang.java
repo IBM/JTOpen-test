@@ -21,7 +21,6 @@ import test.Testcase;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -39,17 +38,18 @@ methods of the ToolboxJarMaker class:
 </ul>
 **/
 
+@SuppressWarnings("deprecation")
 public class JMLang
 extends Testcase
 {
   static final File CURRENT_DIR = new File (System.getProperty ("user.dir"));
-  Vector allLangIDs_;  // list of all recognized language ID's
+  Vector<String> allLangIDs_;  // list of all recognized language ID's
 
 /**
 Constructor.
 **/
     public JMLang (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String, Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -69,7 +69,7 @@ Performs setup needed before running variations.
       // Remove the generated jar file if it exists.
       JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
 
-     Vector c = new Vector (16);
+     Vector<String> c = new Vector<String> (16);
 
      c.add ("de_CH");
      c.add ("de");
@@ -88,8 +88,8 @@ Performs setup needed before running variations.
      c.add ("hu");
      c.add ("pl");
 
-     allLangIDs_ = new Vector (c.size ());
-     JMTest.copyList (c, allLangIDs_);
+     allLangIDs_ = new Vector<String> (c.size ());
+     JMTest.copyStringList (c, allLangIDs_);
     }
 
 
@@ -143,7 +143,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<?> inList = new Vector<Object> (1);
         inList.add (null);
         jm.setLanguages (inList);
         failed ("Didn't throw exception.");
@@ -160,7 +160,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<String> inList = new Vector<String> (1);
         inList.add ("*");
         jm.setLanguages (inList);
         failed ("Didn't throw exception.");
@@ -177,7 +177,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector outList = jm.getLanguages ();
+        Vector<?> outList = jm.getLanguages ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -207,9 +207,9 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector ();
+        Vector<?> inList = new Vector<Object> ();
         jm.setLanguages (inList);
-        Vector outList = jm.getLanguages ();
+        Vector<?> outList = jm.getLanguages ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -224,7 +224,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<File> inList = new Vector<File> (1);
         inList.add (new File ("MRI_en_US.properties"));
         jm.setLanguages (inList);
         failed ("Didn't throw exception.");
@@ -243,13 +243,13 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<String> inList = new Vector<String> (1);
         inList.add ("zh_tw");
         inList.add ("xx_yy");
         output_.println ("(NOTE TO TESTER: Please ignore warning about " +
                          "unsupported language ID xx_yy)");
         jm.setLanguages (inList);
-        Vector outList = jm.getLanguages ();
+        Vector<?> outList = jm.getLanguages ();
         assertCondition ((outList.size () == 2) &&
                 outList.contains ("zh_TW") &&
                 outList.contains ("xx_YY"));
@@ -271,15 +271,16 @@ Performs cleanup needed after running variations.
 /**
  setLanguages - Verify using getLanguages().
  **/
+    @SuppressWarnings("unchecked")
     public void Var011 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (allLangIDs_.size ());
-        JMTest.copyList (allLangIDs_, inList);
+        Vector<String> inList = new Vector<String> (allLangIDs_.size ());
+        JMTest.copyStringList (allLangIDs_, inList);
         jm.setLanguages (inList);
-        Vector outList = jm.getLanguages ();
-        assertCondition (JMTest.compareLists (outList, inList));
+        Vector<String> outList = jm.getLanguages ();
+        assertCondition (JMTest.compareStringLists (outList, inList,"outList","inList"));
       }
       catch (Exception e) {
         failed (e, "Unexpected Exception");
@@ -311,13 +312,13 @@ Performs cleanup needed after running variations.
       printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (allLangIDs_.size ());
+        Vector<String> inList = new Vector<String> (allLangIDs_.size ());
         inList.add ("fr_CA");
         inList.add ("_zh_TW_");
         jm.setLanguageDirectory (JMTest.LANGUAGE_DIR);
         jm.setLanguages (inList);
         // Make a jar for the TRACE component.
-        Vector compList = new Vector (1);
+        Vector<Integer> compList = new Vector<Integer> (1);
         compList.add (ToolboxJarMaker.TRACE);
         jm.setComponents (compList);
         // Remove the destination jar file if it exists.
@@ -327,7 +328,7 @@ Performs cleanup needed after running variations.
 
         // Verify that only the correct files got copied.
 
-        Vector expectedJar = new Vector (20);
+        Vector<String> expectedJar = new Vector<String> (20);
         expectedJar.add ("com/ibm/as400/access/Trace.class");
         expectedJar.add ("com/ibm/as400/access/Copyright.class");
         expectedJar.add ("com/ibm/as400/access/ExtendedIllegalArgumentException.class");
@@ -349,7 +350,7 @@ Performs cleanup needed after running variations.
         expectedJar.add ("com/ibm/as400/access/CoreMRI_zh_TW.class");
         expectedJar = JMTest.addDirectoryEntries(expectedJar);
 
-        Vector expectedManifest = new Vector (10);
+        Vector<String> expectedManifest = new Vector<String> (10);
         expectedManifest.add ("com/ibm/as400/access/");
         expectedManifest.add ("com/ibm/as400/access/MRI_fr_CA.class");
         expectedManifest.add ("com/ibm/as400/access/MRI_zh_TW.class");

@@ -4414,13 +4414,13 @@ Check removeFromPool() does not affect connections in use--connection can still 
             char[] pwrSyspasswordChars = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
             AS400 conn3 = p.getConnection(pwrSys_.getSystemName(), pwrSys_.getUserId(), pwrSyspasswordChars);
             conn3.connectService(AS400.COMMAND);
-            Enumeration keys = p.getUsers();
+            Enumeration<String> keys = p.getUsers();
             String[] users = p.getUsers(systemObject_.getSystemName());
             String[] connectedUsers = p.getConnectedUsers(systemObject_.getSystemName());
             String[] systems = p.getSystemNames();
 
             // Convert the keys enumeration to an array, for inspection.
-            Vector keysV = new Vector();
+            Vector<String> keysV = new Vector<String>();
             while (keys.hasMoreElements()) {
               keysV.add(keys.nextElement());
             }
@@ -4878,6 +4878,7 @@ Check removeFromPool() does not affect connections in use--connection can still 
                     numOfConnections);      
              assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == numOfConnections); 
              p.close();
+             system.close(); 
        }
        catch (Exception e)
        {
@@ -4909,6 +4910,7 @@ Check removeFromPool() does not affect connections in use--connection can still 
          PasswordVault.clearPassword(passwordChars);
             assertCondition(conn1.isConnected(service) && conn2.isConnected(service) && 
                             p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == 0);
+            system.close(); 
             p.close();
          PasswordVault.clearPassword(passwordChars);
         }
@@ -4943,6 +4945,7 @@ Check removeFromPool() does not affect connections in use--connection can still 
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == numOfConnections
                            && p.getActiveConnectionCount(systemObject_.getSystemName(), swapToUserID_) == 2, 
                              "connections are "+conn1+","+conn2);
+            system.close(); 
             p.close();
         }
         catch (Exception e)
@@ -4977,6 +4980,7 @@ Check removeFromPool() does not affect connections in use--connection can still 
                    service, numOfConnections);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == numOfConnections++
                             && p.getActiveConnectionCount(systemObject_.getSystemName(), swapToUserID_) == 1);
+            system.close(); 
             p.close();
          PasswordVault.clearPassword(passwordChars);
         }
@@ -5012,7 +5016,8 @@ Check removeFromPool() does not affect connections in use--connection can still 
                             && p.getActiveConnectionCount(systemObject_.getSystemName(), swapToUserID_) == 1, 
                             "connections are "+conn1+","+conn2);
           PasswordVault.clearPassword(passwordChars);
-           p.close();
+          system.close(); 
+          p.close();
         }
         catch (Exception e)
         {
@@ -5028,11 +5033,12 @@ Check removeFromPool() does not affect connections in use--connection can still 
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
         char[] passwordChars = null; 
+        AS400 system = null; 
         try
         { 
           String systemName = "badSystemName";
               passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-        AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+        system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
           ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	  PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5049,7 +5055,10 @@ Check removeFromPool() does not affect connections in use--connection can still 
 	  }
 
           succeeded();  
-          p.close();
+         
+      } finally {
+        if (system != null) system.close(); 
+        
       }
     }
 
@@ -5061,9 +5070,10 @@ Check removeFromPool() does not affect connections in use--connection can still 
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
              char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+             AS400 system = null; 
         try
         {
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5077,6 +5087,11 @@ Check removeFromPool() does not affect connections in use--connection can still 
         {
 	       assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
             p.close();
+           
+            
+        }
+        finally { 
+          if (system != null) system.close(); 
         }
          PasswordVault.clearPassword(passwordChars);
 

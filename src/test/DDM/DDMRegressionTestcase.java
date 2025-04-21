@@ -51,7 +51,7 @@ public class DDMRegressionTestcase extends Testcase
     Constructor.
   **/
   public DDMRegressionTestcase(AS400            systemObject,
-                               Vector           variationsToRun,
+                               Vector<String> variationsToRun,
                                int              runMode,
                                FileOutputStream fileOutputStream,
                                
@@ -201,6 +201,7 @@ public class DDMRegressionTestcase extends Testcase
       {
         output_.println("Failure executing 'CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
         output_.println(msg);
+        f1.close(); 
         throw new Exception("");
       }
       msg = runCommand("CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')", systemObject_);
@@ -208,6 +209,7 @@ public class DDMRegressionTestcase extends Testcase
       {
         output_.println("Failure executing 'CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')'");
         output_.println(msg);
+        f1.close(); 
         throw new Exception("");
       }
 
@@ -217,8 +219,10 @@ public class DDMRegressionTestcase extends Testcase
       {
         output_.println("Failure executing 'STRJRNPF FILE("+testLib_+"/DDMLOCK) JRN(QGPL/JT4DDMJRN)'");
         output_.println(msg);
+        f1.close(); 
         throw new Exception("");
       }
+      f1.close(); 
     }
     catch(Exception e)
     {
@@ -364,7 +368,7 @@ public class DDMRegressionTestcase extends Testcase
 	      sf.setRecordFormat();
 	      Record[] recs1 = sf.readAll();
 	      sf.open();
-	      Vector vec = new Vector();
+	      Vector<Record> vec = new Vector<Record>();
 	      Record rec = sf.readNext();
 	      while (rec != null)
 	      {
@@ -433,7 +437,7 @@ public class DDMRegressionTestcase extends Testcase
       
       sf2.setRecordFormat();
       sf2.open(AS400File.READ_ONLY, 1000, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Vector vec = new Vector();
+      Vector<Record> vec = new Vector<Record>();
       sf2.positionCursorAfterLast();
       Record readRec = sf2.readPrevious();
       while (readRec != null)
@@ -452,7 +456,6 @@ public class DDMRegressionTestcase extends Testcase
           if (!cmp.equals(r))
           {
             failed("Record verification failed ("+i+"): '"+cmp+"' != '"+r+"'");
-            try { sf.close(); } catch(Exception e) {}
             return;
           }
         }
@@ -461,7 +464,6 @@ public class DDMRegressionTestcase extends Testcase
       {
         failed("Number of records not equal: "+readRecs.length+" != 1000");
         //for (int i=0; i<readRecs.length; ++i) System.out.println(readRecs[i].getField(0));
-        try { sf.close(); } catch(Exception e) {}
         return;
       }
       succeeded();
@@ -469,8 +471,9 @@ public class DDMRegressionTestcase extends Testcase
     catch(Exception e)
     {
       failed(e, "Unexpected exception.");
+    } finally {
+      try { sf2.close(); } catch(Exception e) {}
     }
-    try { sf.close(); } catch(Exception e) {}
   }
 
   /**
@@ -490,9 +493,10 @@ public class DDMRegressionTestcase extends Testcase
   public void Var003()
   {
     setVariation(3);
+    SequentialFile file = null; 
     try
     {
-      SequentialFile file = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMLOCK.FILE/MBR1.MBR");
+      file = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMLOCK.FILE/MBR1.MBR");
       file.lock(AS400File.READ_ALLOW_SHARED_WRITE_LOCK - 1);
       failed("Exception didn't occur when specifying READ_ALLOWED_SHARED_WRITE_LOCK - 1.");
     }
@@ -502,7 +506,8 @@ public class DDMRegressionTestcase extends Testcase
       {
         try
         {
-          SequentialFile file = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMLOCK.FILE/MBR1.MBR");
+          file.close(); 
+          file = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMLOCK.FILE/MBR1.MBR");
           file.lock(AS400File.WRITE_EXCLUSIVE_LOCK + 1);
           failed("Exception didn't occur when specifying WRITE_EXCLUSIVE_LOCK + 1.");
         }
@@ -521,7 +526,11 @@ public class DDMRegressionTestcase extends Testcase
       else
       {
         failed(e, "Wrong exception/text returned");
-      }
+      } 
+    } finally { 
+      if (file != null ) try { 
+        file.close(); 
+      } catch (Exception e) { } 
     }
   }
 
@@ -1486,7 +1495,7 @@ public class DDMRegressionTestcase extends Testcase
           file.lock(AS400File.WRITE_ALLOW_SHARED_READ_LOCK);
           file.lock(AS400File.WRITE_ALLOW_SHARED_WRITE_LOCK);
           locks = file.getExplicitLocks();
-          Vector v = new Vector(locks.length);
+          Vector<Integer> v = new Vector<Integer>(locks.length);
           for (int i = 0; i < locks.length; i++)
           {
             v.addElement(new Integer(locks[i]));
@@ -1767,7 +1776,7 @@ public class DDMRegressionTestcase extends Testcase
       try
       {
         rd = new AS400FileRecordDescription(null, name);
-        failed("No exception specifying null for system");
+        failed("No exception specifying null for system"+rd);
         return;
       }
       catch(Exception e)
@@ -1918,7 +1927,7 @@ public class DDMRegressionTestcase extends Testcase
       sf.setRecordFormat();
       Record[] recs1 = sf.readAll();
       sf.open();
-      Vector vec = new Vector();
+      Vector<Record> vec = new Vector<Record>();
       Record rec = sf.readNext();
       while (rec != null)
       {
@@ -1984,7 +1993,7 @@ public class DDMRegressionTestcase extends Testcase
       sf.setRecordFormat();
       Record[] recs1 = sf.readAll();
       sf.open();
-      Vector vec = new Vector();
+      Vector<Record> vec = new Vector<Record>();
       Record rec = sf.readNext();
       while (rec != null)
       {

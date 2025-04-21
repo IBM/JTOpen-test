@@ -119,7 +119,7 @@ public class JDStatementPackageCache extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDStatementPackageCache(AS400 systemObject, Hashtable namesAndVars,
+  public JDStatementPackageCache(AS400 systemObject, Hashtable<String, Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String powerUserID, String powerPassword) {
     super(systemObject, "JDStatementPackageCache", namesAndVars, runMode,
@@ -1544,7 +1544,7 @@ public class JDStatementPackageCache extends JDTestcase {
 			  ResultSet crs = cc5.getResultSet();
 			  ResultSetMetaData crsmd = crs.getMetaData();
 			  int cNumberofCols = crsmd.getColumnCount();
-			  Vector callVector = new Vector();
+			  Vector<String> callVector = new Vector<String>();
 			  sb.append("Result Set from Query"+"\n");
 			  for (xi=1;xi<cNumberofCols;xi++)
 			  {
@@ -1580,7 +1580,7 @@ public class JDStatementPackageCache extends JDTestcase {
 			  ResultSet crs = cc5.getResultSet();
 			  ResultSetMetaData crsmd = crs.getMetaData();
 			  int cNumberofCols = crsmd.getColumnCount();
-			  Vector callVector = new Vector();
+			  Vector<String> callVector = new Vector<String>();
 			  sb.append("Result Set from Query"+"\n");
 			  for (xi=1;xi<cNumberofCols;xi++)
 			  {
@@ -1730,7 +1730,7 @@ public class JDStatementPackageCache extends JDTestcase {
         ResultSet crs = cc5.getResultSet();
         ResultSetMetaData crsmd = crs.getMetaData();
         int cNumberofCols = crsmd.getColumnCount();
-        Vector callVector = new Vector();
+        Vector<String> callVector = new Vector<String>();
         sb.append("Result Set from Query"+"\n");
         for (xi=1;xi<cNumberofCols;xi++)
         {
@@ -1766,7 +1766,7 @@ public class JDStatementPackageCache extends JDTestcase {
         ResultSet crs = cc5.getResultSet();
         ResultSetMetaData crsmd = crs.getMetaData();
         int cNumberofCols = crsmd.getColumnCount();
-        Vector callVector = new Vector();
+        Vector<String> callVector = new Vector<String>();
         sb.append("Result Set from Query"+"\n");
         for (xi=1;xi<cNumberofCols;xi++)
         {
