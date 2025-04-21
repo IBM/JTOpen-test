@@ -15,12 +15,8 @@
 
 package test.MiscAH;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Properties;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.util.commtrace.Format;
 import com.ibm.as400.util.commtrace.FormatProperties;
@@ -49,7 +45,7 @@ public class CommTraceTestcase extends Testcase
   Constructor.  This is called from ExampleDriver::createTestcases().
   **/
   public CommTraceTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector <String>         variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {
@@ -270,7 +266,7 @@ public class CommTraceTestcase extends Testcase
   {
   	try {
 	    Format f = new Format();
-	    assertCondition(true==true);
+	    assertCondition(true, "format is "+f);
   	} catch (Exception e) {
    		failed (e, "Unexpected Exception");
     }
@@ -282,8 +278,8 @@ public class CommTraceTestcase extends Testcase
   public void Var002()
   {
   	try {
-	  	Format f = new Format(new AS400("bogus","bogus","bogus"));
-	  	assertCondition(true==true);
+	  	Format f = new Format(new AS400("bogus","bogus","bogus".toCharArray()));
+	  	assertCondition(true, "format is "+f);
   	} catch (Exception e) {
    		failed (e, "Unexpected Exception");
     }
@@ -296,7 +292,7 @@ public class CommTraceTestcase extends Testcase
   {
   	try {
 	  	Format f = new Format(new FormatProperties(),"bogus","bogus");
-	  	assertCondition(true==true);
+	  	assertCondition(true,"format is "+f);
   	} catch (Exception e) {
    		failed (e, "Unexpected Exception");
     }
@@ -310,7 +306,7 @@ public class CommTraceTestcase extends Testcase
   	try {
   		String[] args = {"bogus","bogus"};
 	  	Format f = new Format(args);
-	  	assertCondition(true==true);
+	  	assertCondition(true, "format is "+f);
   	} catch (Exception e) {
    		failed (e, "Unexpected Exception");
   	}	  	
@@ -324,7 +320,7 @@ public class CommTraceTestcase extends Testcase
   	try {
   		String[] args = {"-v", "true","bogus","bogus"};
 	  	Format f = new Format(args);
-	  	assertCondition(true==true);
+	  	assertCondition(true,"format="+f); 
   	} catch (Exception e) {
    		failed (e, "Unexpected Exception");
   	}	  	  
@@ -338,7 +334,7 @@ public class CommTraceTestcase extends Testcase
   	try {
   		String file = null;
 	  	Format f = new Format(file);
-	  	assertCondition(true==true);
+	  	assertCondition(true, "format="+f); 
   	} catch (Exception e) {
    		failed (e, "Unexpected Exception");
   	}	  	
@@ -367,7 +363,7 @@ public class CommTraceTestcase extends Testcase
   	try {
   		IFSFileInputStream file = null;
 	  	Format f = new Format(file);
-	  	assertCondition(true==true);
+	  	assertCondition(true, "format="+f);
   	} catch (Exception e) {
    		failed (e, "Unexpected Exception");
   	}	  	

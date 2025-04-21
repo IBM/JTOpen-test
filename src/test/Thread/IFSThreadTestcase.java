@@ -40,7 +40,7 @@ public class IFSThreadTestcase
   * This is called from ThreadTest::createTestcases().
   */
   public IFSThreadTestcase (AS400 systemObject,
-                             Vector variationsToRun,
+                             Vector<String> variationsToRun,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

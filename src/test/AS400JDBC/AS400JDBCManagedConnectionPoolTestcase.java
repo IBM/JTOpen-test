@@ -55,8 +55,7 @@ public class AS400JDBCManagedConnectionPoolTestcase extends Testcase
     private static final boolean TESTING_THREAD_SAFETY = false;
 
     private static AS400 pwrSys_;
-    private static String pwrSysPassword_;
-
+    
     // Note: For consistency, all time values are stored units of milliseconds.
     private int initialPoolSize_;  // initial # of connections in pool
     private int minPoolSize_;      // max # of connections in pool
@@ -94,7 +93,7 @@ public class AS400JDBCManagedConnectionPoolTestcase extends Testcase
       Constructor.  This is called from the AS400JDBCConnectionPoolTest constructor.
      **/
     public AS400JDBCManagedConnectionPoolTestcase(AS400 systemObject,
-                                           Vector variationsToRun,
+                                           Vector<String> variationsToRun,
                                            int runMode,
                                            FileOutputStream fileOutputStream,
                                            
@@ -106,7 +105,6 @@ public class AS400JDBCManagedConnectionPoolTestcase extends Testcase
         super(systemObject, "AS400JDBCManagedConnectionPoolTestcase", variationsToRun,
               runMode, fileOutputStream, password);
         pwrSys_ = pwrSys;
-        pwrSysPassword_ = pwrSysPassword;
         timeToRunDaemons_ = TestDriverStatic.duration_*1000;  // convert seconds to milliseconds
         if (DEBUG) System.out.println("duration == " + TestDriverStatic.duration_ + " seconds.");
     }
@@ -503,7 +501,7 @@ public class AS400JDBCManagedConnectionPoolTestcase extends Testcase
       private long maxSleepTime_;
       private String threadName_;
       private boolean firstConnection_ = true;
-      ArrayList connections_ = new ArrayList();  // list of connections that this getter currently 'owns'.
+      ArrayList<Connection> connections_ = new ArrayList<Connection>();  // list of connections that this getter currently 'owns'.
 
       ConnectionGetter(String uid, char[] encryptedPwd) {
         uid_ = uid;

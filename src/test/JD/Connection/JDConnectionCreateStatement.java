@@ -29,7 +29,6 @@ import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -75,7 +74,7 @@ extends JDTestcase {
    // If the "user" application doesn't keep a reference to the statements 
    // it creates, the Native JDBC driver will start cleaning them up for 
    // the user automatically, and we will not be able to test bounds conditions.
-   private              Vector         statements_;
+   private              Vector<Statement>         statements_;
 
 
 
@@ -83,7 +82,7 @@ extends JDTestcase {
 Constructor.
 **/
    public JDConnectionCreateStatement (AS400 systemObject,
-                                       Hashtable namesAndVars,
+                                       Hashtable<String,Vector<String>> namesAndVars,
                                        int runMode,
                                        FileOutputStream fileOutputStream,
                                        
@@ -126,7 +125,7 @@ Performs setup needed before running variations.
       connection_.commit(); // for xa testing
 
 
-      statements_ = new Vector();
+      statements_ = new Vector<Statement>();
    }
 
 

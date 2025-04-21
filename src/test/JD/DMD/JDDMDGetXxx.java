@@ -384,7 +384,7 @@ public class JDDMDGetXxx extends JDTestcase {
     case JDTestDriver.RELEASE_V7R5M0:
       release = "07.05.0000 V7R5m0";
       break;
-    case JDTestDriver.RELEASE_V7R5M0_PLUS:
+    case JDTestDriver.RELEASE_V7R6M0:
       release = "07.06.0000 V7R6m0";
       break;
     default:

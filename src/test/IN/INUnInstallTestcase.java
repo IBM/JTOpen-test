@@ -13,18 +13,17 @@
 
 package test.IN;
 
-import java.io.OutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.RandomAccessFile;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.InstallTest;
 import test.Testcase;
 import utilities.AS400ToolboxInstaller;
-import java.io.RandomAccessFile;
 
 /**
 Testcase INUnInstallTestcase.
@@ -33,6 +32,7 @@ Tests the following methods:
 <li>AS400ToolboxInstaller.uninstall
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class INUnInstallTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -52,7 +52,7 @@ public class INUnInstallTestcase extends Testcase
 Constructor.  This is called from InstallTest::createTestcases().
 **/
 public INUnInstallTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
 {
@@ -394,7 +394,7 @@ public void Var003()
     try
     {
         createFiles("test" + File.separator);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       "test");
         if (errs.size() != 0)
         {
@@ -427,7 +427,7 @@ public void Var004()
     try
     {
         createFiles(target);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                target + File.separator + ".." + File.separator + "test");
         if (errs.size() != 0)
         {
@@ -460,7 +460,7 @@ public void Var005()
     try
     {
         createFiles("test" + File.separator);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                    "." + File.separator + "test");
         if (errs.size() != 0)
         {
@@ -497,7 +497,7 @@ public void Var006()
     try
     {
         createFiles(File.separator + "test" + File.separator);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                     File.separator + "test");
         if (errs.size() != 0)
         {
@@ -534,7 +534,7 @@ public void Var007()
     try
     {
         createFiles(File.separator);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                 File.separator);
         if (errs.size() != 0)
         {
@@ -564,7 +564,7 @@ public void Var008()
     try
     {
         createFiles("." + File.separator);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       "");
         if (errs.size() != 0)
         {
@@ -594,7 +594,7 @@ public void Var009()
     try
     {
         createFiles("." + File.separator);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       ".");
         if (errs.size() != 0)
         {
@@ -625,7 +625,7 @@ public void Var010()
     try
     {
         createFiles(target);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       targetStr);
         if (errs.size() != 0)
         {
@@ -658,7 +658,7 @@ public void Var011()
     try
     {
         createFiles(target);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       target);
         if (errs.size() != 0)
         {
@@ -696,9 +696,9 @@ public void Var012()
     {
       try
       {
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       target);
-        failed("No exception");
+        failed("No exception"+errs);
       }
       catch (Exception e)
       {
@@ -729,7 +729,7 @@ public void Var013()
         InstallTest.writeFile(target + "VTEST1.TXT", "yippee");
         InstallTest.writeFile(target + "VTEST2.TXT", "wow\nwee");
 
-        Vector errs = AS400ToolboxInstaller.unInstall("*ALL",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("*ALL",
                                                       target);
         if (errs.size() != 0)
         {
@@ -789,7 +789,7 @@ public void Var014()
         createFiles(target);
         // add another package to PKG file
         InstallTest.writeFile(target + "JT400.PKG", "ACCESS\nVACCESS");
-        Vector errs = AS400ToolboxInstaller.unInstall("*ALL",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("*ALL",
                                                       target);
         if (errs.size() != 0)
         {
@@ -824,9 +824,9 @@ public void Var015()
 {
     try
     {
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       target);
-        failed("No exception");
+        failed("No exception"+errs);
     }
     catch (Exception e)
     {
@@ -844,9 +844,9 @@ public void Var016()
 {
     try
     {
-        Vector errs = AS400ToolboxInstaller.unInstall("*ALL",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("*ALL",
                                                       target);
-        failed("No exception");
+        failed("No exception"+errs);
     }
     catch (Exception e)
     {
@@ -866,9 +866,9 @@ public void Var017()
     {
         // write PKG file
         InstallTest.writeFile(target + "JT400.PKG", "ACCESS\nVACCESS");
-        Vector errs = AS400ToolboxInstaller.unInstall("*ALL",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("*ALL",
                                                       target);
-        failed("No exception");
+        failed("No exception"+errs);
     }
     catch (Exception e)
     {
@@ -896,7 +896,7 @@ public void Var018()
     try
     {
         createFiles(target);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       target);
         if (errs.size() != 0)
         {
@@ -932,7 +932,7 @@ public void Var019()
         // remove some files
         (new File(target + "TEST1.TXT")).delete();
         (new File(target + "ACCESS.LVL")).delete();
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       target);
         if (errs.size() != 0)
         {
@@ -1020,7 +1020,7 @@ public void Var020()
 
         // Files that cannot be deleted should result
         // in error.  Directories should not cause errors.
-        Vector errs = AS400ToolboxInstaller.unInstall("*ALL",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("*ALL",
                                                       target);
         boolean failed = false;
         if (errs.size() != 2)
@@ -1033,7 +1033,7 @@ public void Var020()
         {
             failed("Errors not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "TEST1.TXT");
             expected.addElement(target + "ACCESS.LVL");
             output_.println(expected);
@@ -1114,7 +1114,7 @@ public void Var021()
     try
     {
         createNestedFiles(target);
-        Vector errs = AS400ToolboxInstaller.unInstall("*ALL",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("*ALL",
                                                       target);
         if (errs.size() != 0)
         {
@@ -1155,7 +1155,7 @@ public void Var022()
         // Create extra files in subdirectories.
         InstallTest.writeFile(extraFile1, "spiders");
         InstallTest.writeFile(extraFile2, "spiders");
-        Vector errs = AS400ToolboxInstaller.unInstall("*ALL",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("*ALL",
                                                       target);
         if (errs.size() != 0)
         {
@@ -1244,7 +1244,7 @@ public void Var023()
     try
     {
         createNestedFiles(target);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       target);
         if (errs.size() != 0)
         {
@@ -1284,7 +1284,7 @@ public void Var024()
     try
     {
         createNestedFiles(target);
-        Vector errs = AS400ToolboxInstaller.unInstall("ACCESS",
+        Vector<?> errs = AS400ToolboxInstaller.unInstall("ACCESS",
                                                       target);
         if (errs.size() != 0)
         {

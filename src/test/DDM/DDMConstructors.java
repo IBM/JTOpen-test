@@ -49,7 +49,7 @@ public class DDMConstructors extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMConstructors(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream,
                          

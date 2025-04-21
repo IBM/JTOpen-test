@@ -13,14 +13,11 @@
 
 package test;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
+import java.net.InetAddress;
 import java.util.Vector;
-import com.ibm.as400.access.*;
-import java.util.Date;
-import java.net.*;
+
+import com.ibm.as400.access.AS400;
 
 /**
   Testcase LocalSocketConnectTestcase.
@@ -31,7 +28,7 @@ public class LocalSocketCtorTestcase extends Testcase
   Constructor.  This is called from CmdTest::createTestcases().
   **/
   public LocalSocketCtorTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String>           variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {
@@ -125,6 +122,7 @@ public class LocalSocketCtorTestcase extends Testcase
             {
                 failed("incorrect user ID " + sys.getUserId());
             }
+            sys.close(); 
         }
         else
         {
@@ -157,6 +155,7 @@ public class LocalSocketCtorTestcase extends Testcase
             {
                 failed("incorrect user ID " + sys.getUserId());
             }
+            sys.close(); 
         }
         else
         {
@@ -191,6 +190,7 @@ public class LocalSocketCtorTestcase extends Testcase
             {
                 failed("incorrect user ID " + sys.getUserId());
             }
+            sys.close(); 
         }
         else
         {
@@ -226,6 +226,7 @@ public class LocalSocketCtorTestcase extends Testcase
             {
                 failed("user ID was changed " + sys.getUserId());
             }
+            sys.close(); 
         }
         else
         {
@@ -251,7 +252,7 @@ public class LocalSocketCtorTestcase extends Testcase
         {
             InetAddress ia = InetAddress.getLocalHost();
             String hn = ia.getHostName();
-            AS400 sys = new AS400(hn, "testuid", "testpw");
+            AS400 sys = new AS400(hn, "testuid", "testpw".toCharArray());
 
             if (sys.getUserId().equalsIgnoreCase("testuid"))
             {
@@ -261,6 +262,7 @@ public class LocalSocketCtorTestcase extends Testcase
             {
                 failed("user ID was changed " + sys.getUserId());
             }
+            sys.close(); 
         }
         else
         {
@@ -293,6 +295,7 @@ public class LocalSocketCtorTestcase extends Testcase
             {
                 failed("guiAvailable set incorrectly");
             }
+            sys.close(); 
         }
         else
         {
@@ -328,6 +331,7 @@ public class LocalSocketCtorTestcase extends Testcase
             {
                 failed("incorrect state for guiAvailable");
             }
+            sys.close(); 
         }
         else
         {

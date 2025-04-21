@@ -2255,7 +2255,7 @@ public abstract class Testcase {
       } else if (vrm == AS400.generateVRM(7, 5, 0)) {
         release_ = JDTestDriver.RELEASE_V7R5M0;
       } else if (vrm == AS400.generateVRM(7, 6, 0)) {
-        release_ = JDTestDriver.RELEASE_V7R5M0_PLUS;
+        release_ = JDTestDriver.RELEASE_V7R6M0;
       } else {
         System.out.println("***************************");
         System.out.println(" WARNING .. release not set");

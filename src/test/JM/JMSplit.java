@@ -36,6 +36,7 @@ methods of the JarMaker class:
 <li>split(File,int)
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class JMSplit
 extends Testcase
 {
@@ -46,7 +47,7 @@ extends Testcase
 Constructor.
 **/
   public JMSplit (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -89,7 +90,7 @@ Performs cleanup needed after running variations.
    @param suffix The suffix to append to the name.
    @return A destination jar file.
    **/
-  private static File setupSplitJarFile (File sourceJarFile, int suffix)
+  static File setupSplitJarFile (File sourceJarFile, int suffix)
   {
     String sourceJarName = sourceJarFile.getName ();
     String destinationJarName;
@@ -145,6 +146,7 @@ Performs cleanup needed after running variations.
  Should simply copy the source jar file to a single
  destination jar file in the current directory.
  **/
+    @SuppressWarnings("unchecked")
     public void Var003 ()
     {
       JarMaker jm = new JarMaker ();
@@ -153,11 +155,11 @@ Performs cleanup needed after running variations.
         JMTest.deleteSplitFiles (CURRENT_DIR, "jungle", ".jar");
 
         // Split the files.
-        Vector jarList = jm.split (JMTest.JUNGLE_JAR);
+        Vector<File> jarList = jm.split (JMTest.JUNGLE_JAR);
 
         if (DEBUG) {
           output_.println ("Resulting jar files:");
-          Enumeration e = jarList.elements ();
+          Enumeration<File> e = jarList.elements ();
           while (e.hasMoreElements ()) {
             File file = (File)e.nextElement ();
             output_.println (file.getAbsolutePath ());
@@ -215,6 +217,7 @@ Performs cleanup needed after running variations.
  into jar files that are smaller than 30 kilobytes.
  The split files should get created the current directory.
  **/
+    @SuppressWarnings("unchecked")
     public void Var006 ()
     {
       JarMaker jm = new JarMaker ();
@@ -223,11 +226,11 @@ Performs cleanup needed after running variations.
         JMTest.deleteSplitFiles (CURRENT_DIR, "jungle", ".jar");
 
         // Split the files.
-        Vector jarList = jm.split (JMTest.JUNGLE_JAR, 30);
+        Vector<File> jarList = jm.split (JMTest.JUNGLE_JAR, 30);
 
         if (DEBUG) {
           output_.println ("Resulting jar files:");
-          Enumeration e = jarList.elements ();
+          Enumeration<File> e = jarList.elements ();
           while (e.hasMoreElements ()) {
             File file = (File)e.nextElement ();
             output_.println (file.getAbsolutePath ());

@@ -33,9 +33,6 @@ import com.ibm.as400.access.AS400CertificateVldlUtil;
 import com.ibm.as400.access.AS400CertificateEvent;
 import com.ibm.as400.access.AS400Certificate;
 import com.ibm.as400.access.AS400CertificateListener;
-import com.ibm.as400.access.ObjectEvent;
-import com.ibm.as400.access.ObjectListener;
-
 import test.AS400CertificateTest;
 import test.JTOpenTestEnvironment;
 import test.Testcase;
@@ -74,15 +71,13 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
 
     private String operatingSystem_;
     private boolean DOS_ = false;
-    private boolean OS400_ = false;
-    private boolean usingNativeImpl = false;
-   
+    
     byte[][] testcert_ = null; // Array of X.509 test certificates
 
     /**
      * Constructor.  This is called from AS400CertificateTest::createTestcases().
      **/
-    public AS400CertificateVldlBeans(AS400 systemObject, Vector variationsToRun, int runMode, FileOutputStream fileOutputStream)
+    public AS400CertificateVldlBeans(AS400 systemObject, Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream)
     {
 	super(systemObject, "AS400CertificateVldlBeans", 23, variationsToRun, runMode, fileOutputStream);
 
@@ -324,8 +319,6 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
     // Are we running on the AS/400?
     else if (operatingSystem_.indexOf("OS/400") >= 0)
     {
-      OS400_ = true;
-      usingNativeImpl = true;
       output_.println("Will use native implementation");
     }
 
@@ -607,7 +600,6 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
       boolean[] alreadyfound = new boolean[20];
       int i = 0, j = 0, k = 0;
 
-      loop1:
       for (i = 0; i < as400certs.length; ++i)
       {
        //look for this cert in 2nd array
@@ -623,7 +615,6 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
             continue;
 
            //compare cert data
-           loop3:
            for (k = 0; k < xcert.length; ++k)
            {
             if (xcert[k] != testcert[j][k])
@@ -673,7 +664,7 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
   {
 
     // Create a user profile and library/userspace with no authority to.
-    CommandCall cmd = new CommandCall(AS400CertificateTest.PwrSys);
+    // CommandCall cmd = new CommandCall(AS400CertificateTest.PwrSys);
 
     //read in 13 test X.509 certificates
     //last 3 are just big honkers to cause buffer overflows
@@ -721,7 +712,7 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
   protected void cleanup()
     throws Exception
   {
-     CommandCall cmd = new CommandCall(AS400CertificateTest.PwrSys);
+     // CommandCall cmd = new CommandCall(AS400CertificateTest.PwrSys);
 
      try {
 
@@ -1392,13 +1383,15 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    ObjectOutput s =  new ObjectOutputStream(f);
 	    s.writeObject(us);
 	    s.flush();
+	    s.close(); 
+	    ObjectInputStream s2 = null; 
 	    try
 	    {
 	        // Deserialize us from a file.
 		FileInputStream in = new FileInputStream("us.ser");
-		ObjectInputStream s2 = new ObjectInputStream(in);
+		s2 = new ObjectInputStream(in);
 		AS400CertificateVldlUtil us2 = (AS400CertificateVldlUtil)s2.readObject();
-
+		
 		if (false == us2.getPath().equals(us.getPath()))
 		{
 		    failed("Path changed to " + us2.getPath());
@@ -1423,6 +1416,8 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    {
 		File fd = new File("us.ser");
 		fd.delete();
+		s.close(); 
+		if (s2 != null) s2.close(); 
 	    }
 	}
 	catch (Exception e)
@@ -1473,7 +1468,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    AS400 as400 = new AS400();
 	    AS400CertificateVldlUtil aAS400CertificateVldlUtil = new AS400CertificateVldlUtil(as400, goodVldlName);
 	    resetValues();
-	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
 	    aAS400CertificateVldlUtil.setSystem(oldAS400);
 	    aAS400CertificateVldlUtil.addPropertyChangeListener(this);
 	    AS400 newAS400 = systemObject_;
@@ -1535,7 +1530,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    AS400 as400 = new AS400();
 	    AS400CertificateVldlUtil aAS400CertificateVldlUtil = new AS400CertificateVldlUtil(as400, goodVldlName);
 	    resetValues();
-	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
 	    aAS400CertificateVldlUtil.setSystem(oldAS400);
 	    aAS400CertificateVldlUtil.addVetoableChangeListener(this);
 	    AS400 newAS400 = systemObject_;
@@ -1606,7 +1601,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    AS400 as400 = new AS400();
 	    AS400CertificateVldlUtil aAS400CertificateVldlUtil = new AS400CertificateVldlUtil(as400, goodVldlName);
 	    resetValues();
-	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+	    AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
 	    aAS400CertificateVldlUtil.setSystem(oldAS400);
 	    veto_ = true;
 	    aAS400CertificateVldlUtil.addVetoableChangeListener(this);
@@ -1642,7 +1637,7 @@ Add a certificate to CERTTEST user profile, verify add event.
 	
 	try
 	{
-	    AS400 badSystem = new AS400("rchasxxx", "JAVA", "JTEAM1");
+	    AS400 badSystem = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
 	    AS400CertificateVldlUtil aAS400CertificateVldlUtil = new AS400CertificateVldlUtil(badSystem, goodVldlName);
 	    String newUSName = "/QSYS.LIB/CERTTEST.LIB/CERTTEST1.VLDL";
 	    aAS400CertificateVldlUtil.setPath(newUSName);
@@ -1654,11 +1649,12 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    ObjectOutput s =  new ObjectOutputStream(f);
 	    s.writeObject(aAS400CertificateVldlUtil);
 	    s.flush();
+	    ObjectInputStream s2 = null; 
 	    try
 	    {
 	        // Deserialize a AS400CertificateVldlUtil from a file.
 		FileInputStream in = new FileInputStream("uspace.ser");
-		ObjectInputStream s2 = new ObjectInputStream(in);
+		s2 = new ObjectInputStream(in);
 		AS400CertificateVldlUtil aAS400CertificateVldlUtil2 = (AS400CertificateVldlUtil)s2.readObject();
 
 		if (false == aAS400CertificateVldlUtil2.getPath().equals(aAS400CertificateVldlUtil.getPath()))
@@ -1685,6 +1681,8 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    {
 		File fd = new File("uspace.ser");
 		fd.delete();
+		s.close(); 
+		if (s2 != null) s2.close(); 
 	    }
 	}
 	catch (Exception e)

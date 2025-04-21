@@ -315,12 +315,12 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
      *   Lists the files in (and under) the specified directory.
      *   In the returned list, files are represented as jar entrynames.
      **/
-    public static Vector listFiles (File file)
+    public static Vector<String> listFiles (File file)
     {
        if (file == null)
        {
           System.out.println ("FTPUtilities: Argument is null.");
-          return new Vector ();
+          return new Vector<String> ();
        }
 
        File parentDir = new File (file.getParent ());
@@ -330,15 +330,15 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
 
 
 
-    private static Vector listFiles (Vector fileOrDirList, String basePath)
+    private static Vector<String> listFiles (Vector<?> fileOrDirList, String basePath)
     {
-       Vector result = new Vector ();
-       Enumeration e = fileOrDirList.elements ();
+       Vector<String> result = new Vector<String> ();
+       Enumeration<?> e = fileOrDirList.elements ();
 
        while (e.hasMoreElements ())
        {
           File fileOrDir = (File)e.nextElement ();
-          Vector subList = listFiles (fileOrDir, basePath);
+          Vector<String> subList = listFiles (fileOrDir, basePath);
           copyList (subList, result);  // merge subList into result
        }
 
@@ -348,9 +348,9 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
 
 
 
-  private static Vector listFiles (File fileOrDir, String basePath)
+  private static Vector<String> listFiles (File fileOrDir, String basePath)
   {
-    Vector result = new Vector ();
+    Vector<String> result = new Vector<String> ();
     try
     {
       ///File thisDir = new File (dir, subDir);
@@ -366,7 +366,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
           ///if (ifs.isDirectory()) prtln("  >>(directory)");
           ///if (ifs.isFile()) prtln("  >>(file)");
 
-          Vector subList = listFiles (file, basePath);
+          Vector<String> subList = listFiles (file, basePath);
           copyList (subList, result);  // merge subList into result
         }
       }
@@ -407,9 +407,9 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
    }
 
 
-   public static void copyList (Vector newKids, Vector theBlock)
+   public static void copyList (Vector<String> newKids, Vector<String> theBlock)
    {
-      Enumeration e = newKids.elements ();
+      Enumeration<String> e = newKids.elements ();
       while (e.hasMoreElements ())
          theBlock.addElement (e.nextElement ());
    }

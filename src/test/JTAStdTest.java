@@ -196,7 +196,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
 **/
    public static JTATransInfo[] getTransInfo() throws Exception {
       int count = -1;
-      Vector v = new Vector();
+      Vector<JTATransInfo> v = new Vector<JTATransInfo>();
       
       String cmd = "system \"WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)\"";
 

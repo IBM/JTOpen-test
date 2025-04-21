@@ -171,12 +171,12 @@ public class JDSQL400 implements Runnable {
   private static String conName = null;
   private static String conLabel = null;
   private static int conCount = 0;
-  private static Vector replaceFrom = new Vector();
-  private static Vector replaceTo = new Vector();
+  private static Vector<String> replaceFrom = new Vector<String>();
+  private static Vector<String> replaceTo = new Vector<String>();
   private static Properties properties = null;
-  private static Hashtable dumpCodes = null;
+  private static Hashtable<String, String> dumpCodes = null;
   private static boolean dumpAnyError = false;
-  private static Hashtable dumpTraceCodes = null;
+  private static Hashtable<String, String> dumpTraceCodes = null;
   private static boolean dumpTraceAnyError = false;
   private static boolean dumpTaken = false;
   private static int dumpNMessages = 0;
@@ -213,9 +213,9 @@ public class JDSQL400 implements Runnable {
   private static String poolUserId = null;
   private static String poolPassword = null;
   private static String poolUrl = null;
-  private static Hashtable connectionPool = new Hashtable();
-  private static Hashtable variables = new Hashtable();
-  private static Hashtable leakvarHashtable = null;
+  private static Hashtable<String, Connection> connectionPool = new Hashtable<String, Connection>();
+  private static Hashtable<String, Object> variables = new Hashtable<String, Object>();
+  private static Hashtable<Object, Object> leakvarHashtable = null;
 
   private static void putUserVariable(String key, Object value) {
 
@@ -251,9 +251,9 @@ public class JDSQL400 implements Runnable {
 
   }
 
-  private static Vector threads = new Vector();
+  private static Vector<Thread> threads = new Vector<Thread>();
 
-  private static Vector history = new Vector();
+  private static Vector<String> history = new Vector<String>();
 
   private static java.sql.Driver toolboxDriverReference = null;
 
@@ -469,7 +469,7 @@ public class JDSQL400 implements Runnable {
 
     // See what drivers are available..
     if (debug) {
-      Enumeration drivers = DriverManager.getDrivers();
+      Enumeration<?> drivers = DriverManager.getDrivers();
       System.out.println("The available drivers are");
       System.out.println("----------------------------");
       while (drivers.hasMoreElements()) {
@@ -568,9 +568,10 @@ public class JDSQL400 implements Runnable {
             }
           }
 
+          @SuppressWarnings("resource")
           ClassLoader loader = new URLClassLoader(urls);
           try {
-            Class c = loader.loadClass("com.ibm.as400.access.AS400JDBCDriver");
+            Class<?> c = loader.loadClass("com.ibm.as400.access.AS400JDBCDriver");
             if (debug) {
               System.out.println("Debug: Class loaded " + c);
             }
@@ -586,7 +587,8 @@ public class JDSQL400 implements Runnable {
                     + "Urls=" + urls[0] + "\n" + "jarLocations="
                     + jarLocations[0] + "\n");
             e2.printStackTrace();
-          }
+          } 
+          
         } /* OS/400 */
       } /* nonative != null */
     } /* driver not found */
@@ -632,7 +634,7 @@ public class JDSQL400 implements Runnable {
       // Ignore
     }
 
-    Enumeration drivers = DriverManager.getDrivers();
+    Enumeration<?> drivers = DriverManager.getDrivers();
     if (debug) {
       System.out.println("The available drivers are");
       System.out.println("----------------------------");
@@ -782,11 +784,11 @@ public class JDSQL400 implements Runnable {
       //
       // Set up the replace properties. They all start with REPLACE_
       //
-      replaceFrom = new Vector();
-      replaceTo = new Vector();
+      replaceFrom = new Vector<String>();
+      replaceTo = new Vector<String>();
 
       Properties systemProperties = System.getProperties();
-      Enumeration enumeration = systemProperties.propertyNames();
+      Enumeration<?> enumeration = systemProperties.propertyNames();
       while (enumeration.hasMoreElements()) {
         String key = (String) enumeration.nextElement();
         if (key.indexOf("REPLACE_") == 0) {
@@ -836,10 +838,10 @@ public class JDSQL400 implements Runnable {
           query = query.replace('\\', ' ').trim();
         }
       }
-      dumpCodes = new Hashtable();
+      dumpCodes = new Hashtable<String, String>();
       dumpAnyError = false;
       dumpNMessages = 0;
-      dumpTraceCodes = new Hashtable();
+      dumpTraceCodes = new Hashtable<String, String>();
       dumpTraceAnyError = false;
       putUserVariable("OUT", out);
 
@@ -1105,6 +1107,7 @@ public class JDSQL400 implements Runnable {
   // exit
   // return false to quit
   //
+  @SuppressWarnings("rawtypes")
   public static boolean executeCommand(String command, PrintStream out) {
     boolean returnCode = true;
     silent = false;
@@ -1447,7 +1450,7 @@ public class JDSQL400 implements Runnable {
         // Create a new DB2StdXADataSource using reflection
         //
         try {
-          Class xadsClass = Class
+          Class<?> xadsClass = Class
               .forName("com.ibm.db2.jdbc.app.DB2StdXADataSource");
           Class[] cparms = new Class[0];
           java.lang.reflect.Constructor constructor = xadsClass
@@ -2264,7 +2267,7 @@ public class JDSQL400 implements Runnable {
 
         if (ok) {
           try {
-            Class traceClass = Class.forName("com.ibm.db2.jdbc.app.T");
+            Class<?> traceClass = Class.forName("com.ibm.db2.jdbc.app.T");
             Class[] argClasses = new Class[1];
             argClasses[0] = Boolean.TYPE;
             java.lang.reflect.Method method = traceClass
@@ -2290,7 +2293,7 @@ public class JDSQL400 implements Runnable {
         try {
           String setting = command.substring(11).trim();
 
-          Class traceClass = Class.forName("com.ibm.db2.jdbc.app.T");
+          Class<?> traceClass = Class.forName("com.ibm.db2.jdbc.app.T");
           Class[] argClasses = new Class[1];
           argClasses[0] = Integer.TYPE;
           java.lang.reflect.Method method = traceClass.getMethod("setDb2Trace",
@@ -2352,7 +2355,7 @@ public class JDSQL400 implements Runnable {
           dumpAnyError = true;
           dumpTaken = false;
         } else if (sqlCode.toUpperCase().equals("NONE")) {
-          dumpCodes = new Hashtable();
+          dumpCodes = new Hashtable<String, String>();
           dumpAnyError = false;
           dumpTaken = false;
           dumpNMessages = 0;
@@ -2379,7 +2382,7 @@ public class JDSQL400 implements Runnable {
         if (sqlCode.toUpperCase().equals("ANY")) {
           dumpTraceAnyError = true;
         } else if (sqlCode.toUpperCase().equals("NONE")) {
-          dumpTraceCodes = new Hashtable();
+          dumpTraceCodes = new Hashtable<String, String>();
           dumpTraceAnyError = false;
         } else {
           dumpTraceCodes.put(sqlCode, sqlCode);
@@ -2479,7 +2482,7 @@ public class JDSQL400 implements Runnable {
                 if (typePattern.equals("null")) {
                   typePattern = null;
                 } else {
-                  Vector vectorList = new Vector();
+                  Vector<String> vectorList = new Vector<String>();
                   int barIndex = typePattern.indexOf('|');
                   while (barIndex > 0) {
                     String thisType = typePattern.substring(0, barIndex);
@@ -2745,7 +2748,7 @@ public class JDSQL400 implements Runnable {
       } else if (upcaseCommand.startsWith("HISTORY.CLEAR")) {
         history.clear();
       } else if (upcaseCommand.startsWith("HISTORY.SHOW")) {
-        Enumeration enumeration = history.elements();
+        Enumeration<String> enumeration = history.elements();
         while (enumeration.hasMoreElements()) {
           String info = (String) enumeration.nextElement();
           out.println(info);
@@ -2831,7 +2834,7 @@ public class JDSQL400 implements Runnable {
           out.println("rs.relative returned false");
         }
       } else if (upcaseCommand.startsWith("LEAKVAR")) {
-        leakvarHashtable = new Hashtable();
+        leakvarHashtable = new Hashtable<Object, Object>();
         putUserVariable("LEAKVAR", leakvarHashtable);
 
       } else if (upcaseCommand.startsWith("SETVAR")) {
@@ -3123,6 +3126,7 @@ public class JDSQL400 implements Runnable {
                   Statement stmtx = con.createStatement();
                   ResultSet rsx = stmtx
                       .executeQuery("select * from sysibm.sysdummy1");
+                  rsx.close(); 
                   stmtx.close();
                 } catch (Exception e) {
                   out.println("Error checking connection");
@@ -3138,7 +3142,7 @@ public class JDSQL400 implements Runnable {
                     .prepareCall("CALL QGPL.STPJOBLOG('" + filename + "')");
                 cstmt1.execute();
 
-                Hashtable mirrorJobs = new Hashtable();
+                Hashtable<String, String> mirrorJobs = new Hashtable<String, String>();
 
                 // System.out.println("Creating file");
                 File file = new File(filename);
@@ -3261,7 +3265,7 @@ public class JDSQL400 implements Runnable {
                     dumpTaken = false;
                   }
 
-                  Enumeration keys = mirrorJobs.keys();
+                  Enumeration<String> keys = mirrorJobs.keys();
                   while (keys.hasMoreElements()) {
                     String jobname = (String) keys.nextElement();
                     out.println(
@@ -3292,6 +3296,7 @@ public class JDSQL400 implements Runnable {
 			    out.println(line);
 			}
                       }
+                      bufferedReader1.close();
                       file2.delete();
                       mirrorCmdConn.close();
                       out.println(
@@ -3407,11 +3412,11 @@ public class JDSQL400 implements Runnable {
     }
   }
 
-  static Vector savedMessages = null;
+  static Vector<String> savedMessages = null;
 
   public static void saveMessage(String oldMessage) {
     if (savedMessages == null) {
-      savedMessages = new Vector();
+      savedMessages = new Vector<String>();
     }
     savedMessages.add(oldMessage);
     while (savedMessages.size() > dumpNMessages) {
@@ -3430,7 +3435,7 @@ public class JDSQL400 implements Runnable {
   }
 
   private static void dumpMessages(PrintStream out) {
-    Enumeration enumeration = savedMessages.elements();
+    Enumeration<String> enumeration = savedMessages.elements();
     while (enumeration.hasMoreElements()) {
       out.print(enumeration.nextElement());
     }
@@ -3699,6 +3704,7 @@ public class JDSQL400 implements Runnable {
     } // not enough arguments
   } // main
 
+  @SuppressWarnings("rawtypes")
   private static Object callMethod(String left, PrintStream out) {
     try {
       Object variable = null;
@@ -3708,7 +3714,7 @@ public class JDSQL400 implements Runnable {
         if (dotIndex > 0) {
           String callVariable = left.substring(0, dotIndex).trim();
           Object callObject = variables.get(callVariable);
-          Class callClass = null;
+          Class<?> callClass = null;
           left = left.substring(dotIndex + 1).trim();
           paramIndex = left.indexOf("(");
           String methodName = left.substring(0, paramIndex).trim();
@@ -4098,13 +4104,14 @@ public class JDSQL400 implements Runnable {
     w.append(stringWriter.toString());
   }
 
+  @SuppressWarnings("rawtypes")
   private static Object callNewMethod(String left, PrintStream out) {
     try {
       Object variable = null;
       int paramIndex = left.indexOf("(");
       if (paramIndex > 0) {
         String newClassName = left.substring(0, paramIndex).trim();
-        Class newClass = null;
+        Class<?> newClass = null;
         left = left.substring(paramIndex + 1);
         // Try to find the variable as a class
         try {
@@ -4366,17 +4373,18 @@ public class JDSQL400 implements Runnable {
 
   private static void showValidVariables(PrintStream out) {
     out.println("Valid variables are the following");
-    Enumeration keys = variables.keys();
+    Enumeration<String> keys = variables.keys();
     while (keys.hasMoreElements()) {
       out.println(keys.nextElement());
     }
   }
 
+  @SuppressWarnings("rawtypes")
   private static void showMethods(String left, PrintStream out)
       throws Exception {
     String callVariable = left.trim();
     Object callObject = variables.get(callVariable);
-    Class callClass = null;
+    Class<?> callClass = null;
     if (callObject == null) {
       try {
         callClass = Class.forName(callVariable);
@@ -4397,7 +4405,7 @@ public class JDSQL400 implements Runnable {
       }
       for (int m = 0; (m < methods.length); m++) {
         String methodInfo;
-        Class returnType = methods[m].getReturnType();
+        Class<?> returnType = methods[m].getReturnType();
         if (returnType != null) {
           methodInfo = returnType.getName() + " " + methods[m].getName();
         } else {
@@ -4833,6 +4841,7 @@ public class JDSQL400 implements Runnable {
     }
   }
 
+  @SuppressWarnings("rawtypes")
   private static String cleanupMessage(SQLException ex) {
     String message = ex.getMessage();
     boolean invalidCharacter = false;
@@ -4866,7 +4875,7 @@ public class JDSQL400 implements Runnable {
 
     if (db2DiagClass != null) {
       try {
-        Class objectClass = ex.getClass();
+        Class<? extends SQLException> objectClass = ex.getClass();
         if (debug) {
           System.out.println("Class of exception is " + objectClass);
         }
@@ -4880,7 +4889,7 @@ public class JDSQL400 implements Runnable {
           Object sqlca = method.invoke(ex, args);
           if (sqlca != null) {
             // sqlca.getMessage()
-            Class sqlcaClass = sqlca.getClass();
+            Class<? extends Object> sqlcaClass = sqlca.getClass();
             method = sqlcaClass.getMethod("getMessage", argTypes);
             String sqlcaMessage = (String) method.invoke(sqlca, args);
 
@@ -4900,7 +4909,7 @@ public class JDSQL400 implements Runnable {
   }
 
   private static boolean db2DiagResolved = false;
-  private static Class db2DiagClass = null;
+  private static Class<?> db2DiagClass = null;
 
   private static void printArray(PrintStream out, Array outArray)
       throws SQLException {
@@ -5299,7 +5308,7 @@ public class JDSQL400 implements Runnable {
     }
   }
 
-  static Hashtable hexToName = null;
+  static Hashtable<String, String> hexToName = null;
   static String[][] hexToNameArray = { { "1a", "SUB" }, { "a1", "INVEXCL" },
       { "a2", "CENT" }, { "a3", "POUND" }, { "a4", "CURRENT" }, { "a5", "YEN" },
       { "a6", "BBAR" }, { "a7", "SECTION" }, { "a8", "DIAERESIS" },
@@ -5330,7 +5339,7 @@ public class JDSQL400 implements Runnable {
 
   static void initializeHexToName() {
     if (hexToName == null) {
-      hexToName = new Hashtable();
+      hexToName = new Hashtable<String, String>();
       for (int i = 0; i < hexToNameArray.length; i++) {
         hexToName.put(hexToNameArray[i][0], hexToNameArray[i][1]);
       }
@@ -5870,7 +5879,7 @@ public class JDSQL400 implements Runnable {
   public static Array makeArray(Connection connection, Object parameter,
       String arrayType) throws Exception {
     Object[] objectArray = new Object[0];
-    Class argTypes[] = new Class[2];
+    Class<?> argTypes[] = new Class[2];
     argTypes[0] = "".getClass();
     argTypes[1] = objectArray.getClass();
     Array arrayParameter = (Array) JDReflectionUtil.callMethod_O(connection,
@@ -5902,7 +5911,7 @@ public class JDSQL400 implements Runnable {
         left = left.substring(colonIndex + 1);
       }
       // Put the string parameters into a vector
-      Vector parameterVector = new Vector();
+      Vector<String> parameterVector = new Vector<String>();
       String arraySep = ":";
       if (typename.equals("Time")) {
         arraySep = " ";

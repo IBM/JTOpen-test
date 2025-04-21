@@ -10,7 +10,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.JTA;
 
-import java.sql.*;
 import java.util.*;
 
 import javax.sql.XADataSource;
@@ -89,7 +88,7 @@ class JTACleanupTxTransInfo {
       debug = true;
     }
 
-    Vector v = new Vector();
+    Vector<JTACleanupTxTransInfo> v = new Vector<JTACleanupTxTransInfo>();
 
     String cmdA[] = new String[3];
     cmdA[0] = "/usr/bin/qsh";

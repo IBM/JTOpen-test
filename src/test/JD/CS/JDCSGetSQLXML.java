@@ -40,7 +40,6 @@ import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JD.JDTestUtilities;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
@@ -110,7 +109,7 @@ extends JDCSGetTestcase
 Constructor.
 **/
    public JDCSGetSQLXML (AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<?, ?> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        
@@ -280,7 +279,7 @@ Compares a SQLXML with a byte[].
    {
        try { 
 
-	   Vector stuff = new Vector(); 
+	   Vector<byte[]> stuff = new Vector<byte[]>(); 
 	   InputStream is = (InputStream) JDReflectionUtil.callMethod_O(i, "getBinaryStream");
 	   byte[] buffer = new byte[65536];
 	   byte[] answer = new byte[0]; 
@@ -299,8 +298,9 @@ Compares a SQLXML with a byte[].
 	       totalBytes += bytesRead; 
                bytesRead = is.read(buffer);
 	   } 
+	   is.close(); 
 	   answer = new byte[totalBytes];
-	   Enumeration enumeration = stuff.elements();
+	   Enumeration<byte[]> enumeration = stuff.elements();
 	   int position = 0; 
 	   while (enumeration.hasMoreElements()) {
 	       byte block[] = (byte[]) enumeration.nextElement();

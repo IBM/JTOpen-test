@@ -19,9 +19,7 @@ import com.ibm.as400.access.AS400;
 import test.JMTest;
 import test.Testcase;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -40,13 +38,13 @@ public class JMBeans
 extends Testcase
 {
 
-  Vector allBeanFiles_;  // list of all BeanInfo files
+  Vector<String> allBeanFiles_;  // list of all BeanInfo files
 
 /**
 Constructor.
 **/
     public JMBeans (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -63,7 +61,7 @@ Performs setup needed before running variations.
     protected void setup ()
         throws Exception
     {
-     Vector c = new Vector (78);
+     Vector<String> c = new Vector<String> (78);
 
      c.add ("com/ibm/as400/access/AFPResourceBeanInfo.class");
      c.add ("com/ibm/as400/access/AFPResourceListBeanInfo.class");
@@ -143,8 +141,8 @@ Performs setup needed before running variations.
      c.add ("com/ibm/as400/vaccess/VUserListBeanInfo.class");
      c.add ("com/ibm/as400/vaccess/WorkingCursorAdapterBeanInfo.class");
 
-     allBeanFiles_ = new Vector (c.size ());
-     JMTest.copyList (c, allBeanFiles_);
+     allBeanFiles_ = new Vector<String> (c.size ());
+     JMTest.copyStringList (c, allBeanFiles_);
 
     }
 
@@ -164,12 +162,13 @@ setBeanInfoIncluded() - Run makeJar (), after specifying a
 component and "beans included" option.
 Verify that the correct additional bean-related files are included.
  **/
+    @SuppressWarnings("deprecation")
     public void Var001 ()
     {
       printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Integer> inList = new Vector<Integer> (1);
         inList.add (ToolboxJarMaker.COMMAND_CALL);
         jm.setComponents (inList, true);
         // Remove the destination jar file if it exists.
@@ -178,11 +177,11 @@ Verify that the correct additional bean-related files are included.
         jm.makeJar (JMTest.TOOLBOX_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expected = new Vector ();
+        Vector<String> expected = new Vector<String> ();
         expected.add ("com/ibm/as400/access/CommandCall.class");
         expected.add ("com/ibm/as400/access/CommandCallBeanInfo.class");
-        Vector notExpected = new Vector (allBeanFiles_.size ());
-        JMTest.copyList (allBeanFiles_, notExpected);
+        Vector<String> notExpected = new Vector<String> (allBeanFiles_.size ());
+        JMTest.copyStringList (allBeanFiles_, notExpected);
         notExpected.remove ("com/ibm/as400/access/CommandCall.class");
         notExpected.remove ("com/ibm/as400/access/CommandCallBeanInfo.class");
         if (JMTest.verifyJarContains (JMTest.TOOLBOX_JAR_SMALL,

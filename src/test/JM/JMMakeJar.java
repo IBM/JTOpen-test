@@ -21,7 +21,6 @@ import test.Testcase;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -36,6 +35,7 @@ methods of the JarMaker class:
 <li>makeJar(File,File)
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class JMMakeJar
 extends Testcase
 {
@@ -44,7 +44,7 @@ extends Testcase
 Constructor.
 **/
   public JMMakeJar (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -130,9 +130,9 @@ Performs cleanup needed after running variations.
 
         // Verify that only the correct files got copied.
         // (We expect all files to have been copied)
-        Vector expectedJar = new Vector ();
-        JMTest.copyList (JMTest.allJungleFiles_, expectedJar);
-        Vector expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
+        Vector<String> expectedJar = new Vector<String> ();
+        JMTest.copyStringList (JMTest.allJungleFiles_, expectedJar);
+        Vector<String> expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
         assertCondition (JMTest.areSameFile (destJar, JMTest.JUNGLE_JAR_SMALL) &&
                 JMTest.verifyJar (destJar, expectedJar, expectedManifest));
       }
@@ -153,15 +153,15 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add ("jungle/animal.jpg");
         jm.setRequiredFiles (entryList);
         // Make the jar.
         File destJar = jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
-        Vector expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
         assertCondition (JMTest.areSameFile (destJar, JMTest.JUNGLE_JAR_SMALL) &&
                 JMTest.verifyJar (destJar, expectedJar, expectedManifest));
       }
@@ -182,7 +182,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add ("jungle/animal.jpg");
         entryList.add ("jungle/JungleMRI.properties");
         jm.setRequiredFiles (entryList);
@@ -190,8 +190,8 @@ Performs cleanup needed after running variations.
         File destJar = jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
-        Vector expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
         assertCondition (JMTest.areSameFile (destJar, JMTest.JUNGLE_JAR_SMALL) &&
                 JMTest.verifyJar (destJar, expectedJar, expectedManifest));
       }
@@ -212,18 +212,18 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add ("jungle/Animal.class");
         jm.setRequiredFiles (entryList);
         // Make the jar.
         File destJar = jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         expectedJar.add ("jungle/Animal$AnimalThread.class");
         expectedJar.add ("jungle/JungleMRI.properties");
         expectedJar.add ("jungle/animal.jpg");
-        Vector expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
+        Vector<String> expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
         assertCondition (JMTest.areSameFile (destJar, JMTest.JUNGLE_JAR_SMALL) &&
                 JMTest.verifyJar (destJar, expectedJar, expectedManifest));
       }
@@ -244,7 +244,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add ("jungle/prey/Prey.class");
         entryList.add ("jungle/predator/Predator.class");
         jm.setRequiredFiles (entryList);
@@ -252,14 +252,14 @@ Performs cleanup needed after running variations.
         File destJar = jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         expectedJar.add ("jungle/Animal$AnimalThread.class");
         expectedJar.add ("jungle/Animal.class");
         expectedJar.add ("jungle/JungleMRI.properties");
         expectedJar.add ("jungle/animal.jpg");
         expectedJar.add ("jungle/predator/Predator.class");
         expectedJar.add ("jungle/prey/Prey.class");
-        Vector expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
+        Vector<String> expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
         assertCondition (JMTest.areSameFile (destJar, JMTest.JUNGLE_JAR_SMALL) &&
                 JMTest.verifyJar (destJar, expectedJar, expectedManifest));
       }
@@ -280,18 +280,18 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required package.
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add ("jungle.predator");
         jm.setPackages (entryList);
         // Make the jar.
         File destJar = jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedManifest = new Vector ();
+        Vector<String> expectedManifest = new Vector<String> ();
         expectedManifest.add ("jungle/predator/Predator.class");
         expectedManifest.add ("jungle/predator/Predator.java");
         expectedManifest.add ("jungle/predator/puma.jpg");
-        Vector expectedJar = JMTest.addDirectoryEntries(expectedManifest);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(expectedManifest);
         assertCondition (JMTest.areSameFile (destJar, JMTest.JUNGLE_JAR_SMALL) &&
                 JMTest.verifyJar (destJar, expectedJar, expectedManifest));
       }
@@ -312,7 +312,7 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required package.
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add ("jungle");
         entryList.add ("jungle.prey");
         jm.setPackages (entryList);
@@ -320,7 +320,7 @@ Performs cleanup needed after running variations.
         File destJar = jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedManifest = new Vector ();
+        Vector<String> expectedManifest = new Vector<String> ();
         expectedManifest.add ("jungle/Animal.java");
         expectedManifest.add ("jungle/Animal.class");
         expectedManifest.add ("jungle/Animal$AnimalThread.class");
@@ -329,7 +329,7 @@ Performs cleanup needed after running variations.
         expectedManifest.add ("jungle/animal.jpg");
         expectedManifest.add ("jungle/JungleMRI.properties");
         expectedManifest.add ("jungle/tree.jpg");
-        Vector expectedJar = JMTest.addDirectoryEntries(expectedManifest);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(expectedManifest);
         assertCondition (JMTest.areSameFile (destJar, JMTest.JUNGLE_JAR_SMALL) &&
                 JMTest.verifyJar (destJar, expectedJar, expectedManifest));
       }
@@ -352,25 +352,25 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify some additional files.
-        Vector addlFiles = new Vector ();
+        Vector<File> addlFiles = new Vector<File> ();
         addlFiles.add (JMTest.ADDITIONAL_FILE_1);
         addlFiles.add (JMTest.ADDITIONAL_FILE_2);
         jm.setAdditionalFiles (addlFiles);
         // We want manifest entries for the additional files.
         //jm.requireAdditionalManifestEntries (true);
         // Specify a required entry.
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add ("jungle/predator/puma.jpg");
         jm.setRequiredFiles (entryList);
         // Make the jar.
         File destJar = jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         expectedJar.add (JMTest.ADDITIONAL_FILE_1_NAME);
         expectedJar.add (JMTest.ADDITIONAL_FILE_2_NAME);
         expectedJar.add ("jungle/predator/puma.jpg");
-        Vector expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
+        Vector<String> expectedManifest = JMTest.removeDirectoryEntries(expectedJar);
         assertCondition (JMTest.areSameFile (destJar, JMTest.JUNGLE_JAR_SMALL) &&
                 JMTest.verifyJar (destJar, expectedJar, expectedManifest));
       }
@@ -433,15 +433,15 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector ();
+        Vector<String> entryList = new Vector<String> ();
         entryList.add ("jungle/animal.jpg");
         jm.setRequiredFiles (entryList);
         // Make the jar.
         jm.makeJar (JMTest.JUNGLE_JAR, Dir13);
 
         // Verify that only the correct files got copied.
-        Vector expectedManifest = entryList;
-        Vector expectedJar = JMTest.addDirectoryEntries(entryList);
+        Vector<String> expectedManifest = entryList;
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(entryList);
         assertCondition (JMTest.verifyJar (Dir13, expectedJar, expectedManifest));
       }
       catch (Exception e) {

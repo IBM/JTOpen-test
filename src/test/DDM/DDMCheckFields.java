@@ -51,7 +51,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
   /**
    * Constructor. This is called from the DDMTest constructor.
    **/
-  public DDMCheckFields(AS400 systemObject, Vector variationsToRun,
+  public DDMCheckFields(AS400 systemObject, Vector<String> variationsToRun,
       int runMode, FileOutputStream fileOutputStream, 
       String testLib, String password, AS400 pwrSys) {
     // Replace the third parameter (3) with the total number of variations

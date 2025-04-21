@@ -19,9 +19,7 @@ import com.ibm.as400.access.AS400;
 import test.JMTest;
 import test.Testcase;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -44,13 +42,13 @@ extends Testcase
 {
   private static final boolean DEBUG = false;
 
-  Vector allCCSIDs_;  // list of all CCSID conversion tables
+  Vector<String> allCCSIDs_;  // list of all CCSID conversion tables
 
 /**
 Constructor.
 **/
     public JMCcsid (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -67,7 +65,7 @@ Performs setup needed before running variations.
     protected void setup ()
         throws Exception
     {
-     Vector c = new Vector (22);
+     Vector<String> c = new Vector<String> (22);
      c.add ("com/ibm/as400/access/ConvTable1027.class");
      c.add ("com/ibm/as400/access/ConvTable1130.class");
      c.add ("com/ibm/as400/access/ConvTable1132.class");
@@ -90,8 +88,8 @@ Performs setup needed before running variations.
      c.add ("com/ibm/as400/access/ConvTable930.class");
      c.add ("com/ibm/as400/access/ConvTable933.class");
      c.add ("com/ibm/as400/access/ConvTable937.class");
-     allCCSIDs_ = new Vector (c.size ());
-     JMTest.copyList (c, allCCSIDs_);
+     allCCSIDs_ = new Vector<String> (c.size ());
+     JMTest.copyStringList (c, allCCSIDs_);
     }
 
 
@@ -113,6 +111,7 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDs - Arg is null. Should throw an exception.
  **/
+    @SuppressWarnings("deprecation")
     public void Var001 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
@@ -128,11 +127,12 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDs - List contains a null entry. Should throw an exception.
  **/
+    @SuppressWarnings("deprecation")
     public void Var002 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (null);
         jm.setCCSIDs (inList);
         failed ("Didn't throw exception.");
@@ -145,11 +145,12 @@ Performs cleanup needed after running variations.
 /**
  getCCSIDs - No prior setCCSIDs. Should return an empty list.
  **/
+    @SuppressWarnings("deprecation")
     public void Var003 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector outList = jm.getCCSIDs ();
+        Vector<?> outList = jm.getCCSIDs ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -160,13 +161,14 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDs - Zero-length list. getCCSIDs should return an empty list.
  **/
+    @SuppressWarnings("deprecation")
     public void Var004 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector ();
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> ();
         jm.setCCSIDs (inList);
-        Vector outList = jm.getCCSIDs ();
+        Vector<?> outList = jm.getCCSIDs ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -177,11 +179,12 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDs - List contains a non-numeric entry. Should throw an exception.
  **/
+    @SuppressWarnings("deprecation")
     public void Var005 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add ("12345");  // String instead of Integer
         jm.setCCSIDs (inList);
         failed ("Didn't throw exception.");
@@ -195,11 +198,12 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDs - List contains a negative entry. Should throw an exception.
  **/
+    @SuppressWarnings("deprecation")
     public void Var006 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (new Integer (-4));
         jm.setCCSIDs (inList);
         failed ("Didn't throw exception.");
@@ -213,18 +217,19 @@ Performs cleanup needed after running variations.
  setCCSIDs - List contains an existing CCSID and a nonexistent CCSID.
  Only the ConvTable's for the existing CCSID should get included.
  **/
+    @SuppressWarnings("deprecation")
     public void Var007 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (new Integer (1027));
         inList.add (new Integer (9999));
         jm.setCCSIDs (inList);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("com/ibm/as400/access/ConvTable.class");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -233,8 +238,8 @@ Performs cleanup needed after running variations.
         // Verify that only the correct files got copied.
         entryList.add ("com/ibm/as400/access/ConvTable1027.class");
         entryList.add ("com/ibm/as400/access/ConvTable13488.class");
-        Vector notExpected = new Vector (allCCSIDs_.size ());
-        JMTest.copyList (allCCSIDs_, notExpected);
+        Vector<String> notExpected = new Vector<String> (allCCSIDs_.size ());
+        JMTest.copyStringList (allCCSIDs_, notExpected);
         notExpected.remove ("com/ibm/as400/access/ConvTable1027.class");
         notExpected.remove ("com/ibm/as400/access/ConvTable13488.class");
         assertCondition (JMTest.verifyJarContains (JMTest.TOOLBOX_JAR_SMALL,
@@ -251,18 +256,19 @@ Performs cleanup needed after running variations.
  setCCSIDs - List contains two existing CCSIDs.
  Only the ConvTable's for the two CCSIDs should get included.
  **/
+    @SuppressWarnings("deprecation")
     public void Var008 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (new Integer (930));  //@A1c
         inList.add (new Integer (933));  //@A1c
         jm.setCCSIDs (inList);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("com/ibm/as400/access/ConvTable.class");
         jm.setRequiredFiles (entryList);
         // Make the jar.
@@ -279,8 +285,8 @@ Performs cleanup needed after running variations.
         entryList.add ("com/ibm/as400/access/ConvTable834.class");
         entryList.add ("com/ibm/as400/access/ConvTable13488.class");
 
-        Vector notExpected = new Vector (allCCSIDs_.size ());
-        JMTest.copyList (allCCSIDs_, notExpected);
+        Vector<String> notExpected = new Vector<String> (allCCSIDs_.size ());
+        JMTest.copyStringList (allCCSIDs_, notExpected);
         notExpected.remove ("com/ibm/as400/access/ConvTable930.class");
         notExpected.remove ("com/ibm/as400/access/ConvTable290.class");
         notExpected.remove ("com/ibm/as400/access/ConvTable300.class");
@@ -308,6 +314,7 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDsExcluded - Arg is null. Should throw an exception.
  **/
+    @SuppressWarnings("deprecation")
     public void Var009 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
@@ -323,11 +330,12 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDsExcluded - List contains a null entry. Should throw an exception.
  **/
+    @SuppressWarnings("deprecation")
     public void Var010 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (null);
         jm.setCCSIDsExcluded (inList);
         failed ("Didn't throw exception.");
@@ -340,11 +348,12 @@ Performs cleanup needed after running variations.
 /**
  getCCSIDsExcluded - No prior setCCSIDsExcluded. Should return an empty list.
  **/
+    @SuppressWarnings("deprecation")
     public void Var011 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector outList = jm.getCCSIDsExcluded ();
+        Vector<?> outList = jm.getCCSIDsExcluded ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -356,13 +365,14 @@ Performs cleanup needed after running variations.
  setCCSIDsExcluded - Zero-length list.
  getCCSIDsExcluded should return an empty list.
  **/
+    @SuppressWarnings("deprecation")
     public void Var012 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector ();
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> ();
         jm.setCCSIDsExcluded (inList);
-        Vector outList = jm.getCCSIDsExcluded ();
+        Vector<?> outList = jm.getCCSIDsExcluded ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -373,11 +383,12 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDsExcluded - List contains a non-numeric entry. Should throw an exception.
  **/
+    @SuppressWarnings("deprecation")
     public void Var013 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add ("12345");  // String instead of Integer
         jm.setCCSIDsExcluded (inList);
         failed ("Didn't throw exception.");
@@ -391,11 +402,12 @@ Performs cleanup needed after running variations.
 /**
  setCCSIDsExcluded - List contains a negative entry. Should throw an exception.
  **/
+    @SuppressWarnings("deprecation")
     public void Var014 ()
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (new Integer (-4));
         jm.setCCSIDsExcluded (inList);
         failed ("Didn't throw exception.");
@@ -409,19 +421,20 @@ Performs cleanup needed after running variations.
  setCCSIDsExcluded - List contains an existing CCSID and a nonexistent CCSID.
  Only the ConvTable's for the existing CCSID should get excluded.
  **/
+    @SuppressWarnings("deprecation")
     public void Var015 ()
     {
       if (DEBUG) printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (new Integer (1027));
         inList.add (new Integer (9999));
         jm.setCCSIDsExcluded (inList);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("com/ibm/as400/access/ConvTable.class");
         jm.setRequiredFiles (entryList);
         output_.println ("(NOTE TO TESTER: Please ignore any warnings about CCSIDs 1027 and 9999)");
@@ -429,10 +442,10 @@ Performs cleanup needed after running variations.
         jm.makeJar (JMTest.TOOLBOX_JAR);
 
         // Verify that only the correct files got excluded.
-        Vector expected = new Vector (allCCSIDs_.size ());
-        JMTest.copyList (allCCSIDs_, expected);
+        Vector<String> expected = new Vector<String> (allCCSIDs_.size ());
+        JMTest.copyStringList (allCCSIDs_, expected);
         expected.remove ("com/ibm/as400/access/ConvTable1027.class");
-        Vector notExpected = new Vector (1);
+        Vector<String> notExpected = new Vector<String> (1);
         notExpected.add ("com/ibm/as400/access/ConvTable1027.class");
         assertCondition (JMTest.verifyJarContains (JMTest.TOOLBOX_JAR_SMALL,
                                           expected, true) &&
@@ -448,19 +461,20 @@ Performs cleanup needed after running variations.
  setCCSIDsExcluded - List contains two existing CCSIDs.
  Only the ConvTable's for the two CCSIDs should get excluded.
  **/
+    @SuppressWarnings("deprecation")
     public void Var016 ()
     {
       if (DEBUG) printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (new Integer (1027));
         inList.add (new Integer (835));
         jm.setCCSIDsExcluded (inList);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("com/ibm/as400/access/ConvTable.class");
         jm.setRequiredFiles (entryList);
         output_.println ("(NOTE TO TESTER: Please ignore any warnings about CCSIDs 1027 and 835)");
@@ -468,11 +482,11 @@ Performs cleanup needed after running variations.
         jm.makeJar (JMTest.TOOLBOX_JAR);
 
         // Verify that only the correct files got excluded.
-        Vector expected = new Vector (allCCSIDs_.size ());
-        JMTest.copyList (allCCSIDs_, expected);
+        Vector<String> expected = new Vector<String> (allCCSIDs_.size ());
+        JMTest.copyStringList (allCCSIDs_, expected);
         expected.remove ("com/ibm/as400/access/ConvTable1027.class");
         expected.remove ("com/ibm/as400/access/ConvTable835.class");
-        Vector notExpected = new Vector (2);
+        Vector<String> notExpected = new Vector<String> (2);
         notExpected.add ("com/ibm/as400/access/ConvTable1027.class");
         notExpected.add ("com/ibm/as400/access/ConvTable835.class");
         assertCondition (JMTest.verifyJarContains (JMTest.TOOLBOX_JAR_SMALL,
@@ -489,30 +503,31 @@ Performs cleanup needed after running variations.
  setCCSIDsExcluded - Prior setCCSIDs with no entries in common.
  Only the ConvTable's for the included CCSIDs should get excluded.
  **/
+    @SuppressWarnings("deprecation")
     public void Var017 ()
     {
       if (DEBUG) printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList1 = new Vector (1);
+        Vector<Comparable<?>> inList1 = new Vector<Comparable<?>> (1);
         inList1.add (new Integer (1027));
         jm.setCCSIDs (inList1);
-        Vector inList2 = new Vector (1);
+        Vector<Comparable<?>> inList2 = new Vector<Comparable<?>> (1);
         inList2.add (new Integer (835));
         jm.setCCSIDsExcluded (inList2);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("com/ibm/as400/access/ConvTable.class");
         jm.setRequiredFiles (entryList);
         // Make the jar.
         jm.makeJar (JMTest.TOOLBOX_JAR);
 
         // Verify that only the correct files got excluded.
-        Vector expected = new Vector (1);
+        Vector<String> expected = new Vector<String> (1);
         expected.add ("com/ibm/as400/access/ConvTable1027.class");
-        Vector notExpected = new Vector (1);
+        Vector<String> notExpected = new Vector<String> (1);
         notExpected.add ("com/ibm/as400/access/ConvTable835.class");
         assertCondition (JMTest.verifyJarContains (JMTest.TOOLBOX_JAR_SMALL,
                                           expected, true) &&
@@ -528,16 +543,17 @@ Performs cleanup needed after running variations.
  setCCSIDsExcluded - Prior setCCSIDs with one entry in common.
  The common CCSID should end up getting included.
  **/
+    @SuppressWarnings("deprecation")
     public void Var018 ()
     {
       if (DEBUG) printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList1 = new Vector (2);
+        Vector<Comparable<?>> inList1 = new Vector<Comparable<?>> (2);
         inList1.add (new Integer (1027));
         inList1.add (new Integer (61952));
         jm.setCCSIDs (inList1);
-        Vector inList2 = new Vector (2);
+        Vector<Comparable<?>> inList2 = new Vector<Comparable<?>> (2);
         inList2.add (new Integer (835));
         inList2.add (new Integer (61952));
         output_.println ("(NOTE TO TESTER: Please ignore warning about CCSID 61952)");
@@ -545,17 +561,17 @@ Performs cleanup needed after running variations.
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
         // Specify a required entry.
-        Vector entryList = new Vector (1);
+        Vector<String> entryList = new Vector<String> (1);
         entryList.add ("com/ibm/as400/access/ConvTable.class");
         jm.setRequiredFiles (entryList);
         // Make the jar.
         jm.makeJar (JMTest.TOOLBOX_JAR);
 
         // Verify that only the correct files got excluded.
-        Vector expected = new Vector (2);
+        Vector<String> expected = new Vector<String> (2);
         expected.add ("com/ibm/as400/access/ConvTable1027.class");
         expected.add ("com/ibm/as400/access/ConvTable61952.class");
-        Vector notExpected = new Vector (1);
+        Vector<String> notExpected = new Vector<String> (1);
         notExpected.add ("com/ibm/as400/access/ConvTable835.class");
         assertCondition (JMTest.verifyJarContains (JMTest.TOOLBOX_JAR_SMALL,
                                           expected, true) &&
@@ -571,17 +587,18 @@ Performs cleanup needed after running variations.
  setCCSIDsExcluded - Prior setCCSIDs with one entry in common.
  Should see a warning message that a CCSID was specified on both lists.
  **/
+    @SuppressWarnings("deprecation")
     public void Var019 (int runMode)
     {
       if (runMode != ATTENDED && runMode != BOTH) return;
       if (DEBUG) printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList1 = new Vector (2);
+        Vector<Comparable<?>> inList1 = new Vector<Comparable<?>> (2);
         inList1.add (new Integer (1027));
         inList1.add (new Integer (61952));
         jm.setCCSIDs (inList1);
-        Vector inList2 = new Vector (2);
+        Vector<Comparable<?>> inList2 = new Vector<Comparable<?>> (2);
         inList2.add (new Integer (835));
         inList2.add (new Integer (61952));
         jm.setCCSIDsExcluded (inList2);
@@ -597,16 +614,17 @@ Performs cleanup needed after running variations.
  setCCSIDs - Prior setCCSIDsExcluded with one entry in common.
  Should see a warning message that a CCSID was specified on both lists.
  **/
+    @SuppressWarnings("deprecation")
     public void Var020 (int runMode)
     {
       if (runMode != ATTENDED && runMode != BOTH) return;
       if (DEBUG) printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList2 = new Vector (2);
+        Vector<Comparable<?>> inList2 = new Vector<Comparable<?>> (2);
         inList2.add (new Integer (835));
         inList2.add (new Integer (61952));
-        Vector inList1 = new Vector (2);
+        Vector<Comparable<?>> inList1 = new Vector<Comparable<?>> (2);
         inList1.add (new Integer (1027));
         inList1.add (new Integer (61952));
         jm.setCCSIDs (inList1);

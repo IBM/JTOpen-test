@@ -56,7 +56,7 @@ public class DDMOpenClose extends Testcase
    Constructor.  This is called from the DDMTest constructor.
    **/
 public DDMOpenClose(AS400            systemObject,
-                    Vector           variationsToRun,
+                    Vector<String> variationsToRun,
                     int              runMode,
                     FileOutputStream fileOutputStream,
                     

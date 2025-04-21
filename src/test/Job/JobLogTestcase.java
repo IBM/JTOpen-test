@@ -1043,7 +1043,7 @@ public class JobLogTestcase extends Testcase
      	return true;
     }
 
-    private boolean validateJobMessages( QueuedMessage message, Vector keys ) 
+    private boolean validateJobMessages( QueuedMessage message, Vector<Integer> keys ) 
     {
         // Check the input value 
         if ( message == null  || keys.isEmpty() ) 
@@ -1052,7 +1052,7 @@ public class JobLogTestcase extends Testcase
 	    return false;
         }
 
-	Enumeration e = keys.elements(); 
+	Enumeration<Integer> e = keys.elements(); 
         
 	while ( e.hasMoreElements() ) 
 	{ 
@@ -1193,7 +1193,7 @@ public class JobLogTestcase extends Testcase
     /**
      Verifies the messages returned from getMessages() for the submitted job that called SNDMSGS.
      **/
-    private boolean verifyCLJobMessages(Enumeration enumeration, String[] job)
+    private boolean verifyCLJobMessages(Enumeration<QueuedMessage> enumeration, String[] job)
     {
         boolean passed = true; 
         try
@@ -1792,7 +1792,7 @@ public class JobLogTestcase extends Testcase
                 System.out.println("Number = " + job[0]);
             }
 
-            Enumeration e = j.getMessages();
+            Enumeration<QueuedMessage> e = j.getMessages();
             assertCondition(verifyCLJobMessages(e, job));
         }
         catch (Exception e)
@@ -2031,7 +2031,7 @@ public class JobLogTestcase extends Testcase
         {
             JobLog j = new JobLog(systemObject_, job[2].toLowerCase(), job[1], job[0]);
 
-            Enumeration e = j.getMessages();
+            Enumeration<QueuedMessage> e = j.getMessages();
 
             if (e.hasMoreElements())
             {
@@ -2063,7 +2063,7 @@ public class JobLogTestcase extends Testcase
         {
             JobLog j = new JobLog(systemObject_, job[2], job[1].toLowerCase(), job[0]);
 
-            Enumeration e = j.getMessages();
+            Enumeration<QueuedMessage> e = j.getMessages();
 
             if (e.hasMoreElements())
             {
@@ -2128,7 +2128,7 @@ public class JobLogTestcase extends Testcase
               System.out.println("Running on-thread, so assuming the write message was successful.");
               return true;
             }
-            Enumeration list = null; 
+            Enumeration<?> list = null; 
             if (jobs == null) { 
               jobList.setName("QZRCSRVS");
               jobList.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_ACTIVE, Boolean.TRUE);
@@ -2158,7 +2158,7 @@ public class JobLogTestcase extends Testcase
                 String lastId = "";
                 JobLog jq = new JobLog(pwrSys_, j.getName(), j.getUser(), j.getNumber());
                 sb.append("Looking at job " + j.getName() + "." + j.getUser() + "." + j.getNumber() + "\n");
-                Enumeration e = jq.getMessages();
+                Enumeration<?> e = jq.getMessages();
                 while (e.hasMoreElements()) {
                   QueuedMessage message = (QueuedMessage) e.nextElement();
                   String thisId = message.getID();
@@ -2613,7 +2613,7 @@ public class JobLogTestcase extends Testcase
     public void Var058()
     {
         // Keys to the tests to run 
-        Vector key = new Vector( 2 );
+        Vector<Integer> key = new Vector<Integer>( 2 );
 
 	// Add all tests that need to run. This is the default test so add all
 	// tests and set to 0
@@ -2655,7 +2655,7 @@ public class JobLogTestcase extends Testcase
         try
         {
             JobLog j = new JobLog(systemObject_, job[2], job[1].toLowerCase(), job[0]);
-            Enumeration e = j.getMessages();
+            Enumeration<?> e = j.getMessages();
 	    if (e.hasMoreElements() )
                 assertCondition(validateJobMessages( (QueuedMessage)e.nextElement(), key ));
         }
@@ -2686,7 +2686,7 @@ public class JobLogTestcase extends Testcase
 	    JobLog.writeMessage(systemObject_, id, AS400Message.INFORMATIONAL,"/QSYS.LIB/QSHELL.LIB/QZSHMSGF.MSGF", subst);
             JobList jobList = new JobList(pwrSys_);
             jobList.setName("QZRCSRVS");
-	    Enumeration list = jobList.getJobs();
+	    Enumeration<?> list = jobList.getJobs();
 
             while (list.hasMoreElements())
             {
@@ -2731,7 +2731,7 @@ public class JobLogTestcase extends Testcase
         
 	            
 	            // Keys to the tests to run 
-                    Vector key = new Vector( 2 );
+                    Vector<Integer> key = new Vector<Integer>( 2 );
 		    key.add( new Integer(101) );key.add( new Integer(1) ); 
 		    key.add( new Integer(201) );key.add( new Integer(1) ); 
 		    key.add( new Integer(301) );key.add( new Integer(1) ); 
@@ -2761,7 +2761,7 @@ public class JobLogTestcase extends Testcase
 		    key.add( new Integer(1303) );key.add( new Integer(1) ); 
 		    key.add( new Integer(1304) );key.add( new Integer(1) ); 
                 
-		    Enumeration e = jq.getMessages();
+		    Enumeration<?> e = jq.getMessages();
                     
 		    // Checking to see it the job is active and the ID equals
 		    // the id sent in 
@@ -2826,7 +2826,7 @@ public class JobLogTestcase extends Testcase
             JobLog j = new JobLog(systemObject_, job[2], job[1].toLowerCase(), job[0]);
 	    j.clearAttributesToRetrieve();
 	    j.addAttributeToRetrieve( JobLog.REPLACEMENT_DATA );  //201 = 7
-            Vector key = new Vector( 2 );
+            Vector<Integer> key = new Vector<Integer>( 2 );
 	    key.add( new Integer(201) );key.add( new Integer(1) ); 
             j.getMessages();
 	    succeeded();
@@ -2882,7 +2882,7 @@ public class JobLogTestcase extends Testcase
 	    // Set just REPLACEMENT_DATA
 	    j.addAttributeToRetrieve( JobLog.REPLACEMENT_DATA );  //201 = 7
             
-	    Vector key = new Vector( 2 );
+	    Vector<Integer> key = new Vector<Integer>( 2 );
 	    
 	    key.add( new Integer(201) );key.add( new Integer(1) ); 
 

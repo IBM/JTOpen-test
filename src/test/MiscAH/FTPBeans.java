@@ -75,7 +75,7 @@ public class FTPBeans
     private char[] clearPassword_;
 
     public FTPBeans (AS400 systemObject,
-                           Hashtable namesAndVars,
+                           Hashtable<String, Vector<String>> namesAndVars,
                            int runMode,
                            FileOutputStream fileOutputStream,
                            
@@ -774,7 +774,7 @@ public class FTPBeans
 	StringBuffer sb = new StringBuffer(); 
         try
         {
-          Class beanclass = Class.forName("com.ibm.as400.access.FTP");
+          Class<?> beanclass = Class.forName("com.ibm.as400.access.FTP");
           BeanInfo beaninfo = Introspector.getBeanInfo(beanclass);
           // Icons / GUI components no longer available in JTOpen 20.0.X
 
@@ -782,7 +782,7 @@ public class FTPBeans
           EventSetDescriptor[] event = beaninfo.getEventSetDescriptors();
           PropertyDescriptor[] props = beaninfo.getPropertyDescriptors();
 
-          Vector v = new Vector();
+          Vector<String> v = new Vector<String>();
           v.addElement("port");
           v.addElement("server");
           v.addElement("user");

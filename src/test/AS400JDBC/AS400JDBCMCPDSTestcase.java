@@ -163,7 +163,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
      Constructor.  This is called from the AS400JDBCDataSourceTest constructor.
     **/
    public AS400JDBCMCPDSTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  
@@ -200,7 +200,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       setPassword()
       getConnection()
    **/
-   public void Var001()
+   @SuppressWarnings("deprecation")
+  public void Var001()
    {
       Connection c = null;
       try
@@ -239,6 +240,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       AS400JDBCManagedConnectionPoolDataSource(String,String,String)
       getConnection()
    **/
+   @SuppressWarnings("deprecation")
    public void Var002()
    {
       Connection c = null;
@@ -349,7 +351,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       AS400JDBCManagedConnectionPoolDataSource(String,String,String)
       getConnection()
    **/
-   public void Var005()
+   @SuppressWarnings("deprecation")
+  public void Var005()
    {
       Connection c = null;
       Connection c2 = null;
@@ -428,7 +431,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       AS400JDBCManagedConnectionPoolDataSource(String,String,String)
       getConnection()
    **/
-   public void Var007()
+   @SuppressWarnings("deprecation")
+  public void Var007()
    {
       Connection c = null;
       Connection c2 = null;
@@ -467,6 +471,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       setServerName()
       getConnection(String,String)
    **/
+   @SuppressWarnings("deprecation")
    public void Var008()
    {
       Connection c = null;
@@ -512,7 +517,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       setPassword()
       getConnection()
    **/
-   public void Var009(int runMode)
+   @SuppressWarnings("deprecation")
+  public void Var009(int runMode)
    {
       
        if (runMode != BOTH && runMode != ATTENDED) 
@@ -557,7 +563,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       setPassword()
       getConnection()
    **/
-   public void Var010(int runMode)
+   @SuppressWarnings("deprecation")
+  public void Var010(int runMode)
    {
        if (runMode != BOTH && runMode != ATTENDED) 
        {
@@ -600,7 +607,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       setUser()
       getConnection()
    **/
-   public void Var011(int runMode)
+   @SuppressWarnings("deprecation")
+  public void Var011(int runMode)
    {
        if (runMode != BOTH && runMode != ATTENDED) 
        {
@@ -642,7 +650,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       setPassword()
       getConnection()
    **/
-   public void Var012(int runMode)
+   @SuppressWarnings("deprecation")
+  public void Var012(int runMode)
    {
        if (runMode != BOTH && runMode != ATTENDED) 
        {
@@ -797,6 +806,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
 	 {
 	     AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
 	     userName = tmpSystemObject.getUserId();
+	     tmpSystemObject.close();
 	 }
 	 
          System.out.println(ds2.getServerName() +"; "+ ds2.getUser() +"; "+ ds2.getDatabaseName() +"; "+ ds2.getDataSourceName() +"; "+ ds2.getDescription());
@@ -834,6 +844,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
 	 {
 	     AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
          userName = tmpSystemObject.getUserId();
+         tmpSystemObject.close();
 	 }
 	 
          if (ds2.getServerName().equalsIgnoreCase(serverName) &&
@@ -900,6 +911,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
 	 {
 	     AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
          userName = tmpSystemObject.getUserId();
+         tmpSystemObject.close();
 	 }
 	 
          if ((ds2.getServerName().equals("") || ds2.getServerName().equals("localhost")) &&
@@ -940,6 +952,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
 	 {
 	     AS400 tmpSystemObject = new AS400(); //allow diff logon-id as TC id
 	     userName = tmpSystemObject.getUserId();
+	     tmpSystemObject.close();
 	 }
 	 
          if ((ds2.getServerName().equals("") || ds2.getServerName().equals("localhost")) &&
@@ -1098,7 +1111,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
    *  Validates that a datasource object with serverName and user can be created set into JNDI,
    *  and then instantiated from JNDI.
    **/
-   public void Var024()
+   @SuppressWarnings("deprecation")
+  public void Var024()
    {
        if (environment_ == OS_AS400 )
        {
@@ -1174,6 +1188,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
    *  Validates that a datasource object with serverName and user can be set into JNDI,
    *  and then instantiated from JNDI and finally used to get a connection after changing properies.
    **/
+   @SuppressWarnings("deprecation")
    public void Var025()
    {
        if (environment_ == OS_AS400 )

@@ -43,7 +43,7 @@ public class ConnectionPoolPropertiesTestcase extends Testcase
      Constructor.  This is called from the ConnectionPoolPropertiesTest constructor.
     **/
    public ConnectionPoolPropertiesTestcase(AS400 systemObject,
-                                           Vector variationsToRun,
+                                           Vector<String> variationsToRun,
                                            int runMode,
                                            FileOutputStream fileOutputStream,
                                            

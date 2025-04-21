@@ -46,7 +46,7 @@ public class ConnectionPoolBeanInfoTestcase extends Testcase
      Constructor.  This is called from the AS400JDBCConnectionPoolTest constructor.
     **/
    public ConnectionPoolBeanInfoTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  String  password)

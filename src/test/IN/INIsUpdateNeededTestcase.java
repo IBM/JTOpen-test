@@ -49,7 +49,7 @@ public class INIsUpdateNeededTestcase extends Testcase
 Constructor.  This is called from InstallTest::createTestcases().
 **/
 public INIsUpdateNeededTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
 {

@@ -87,14 +87,14 @@ public class JDPSSetBinaryStream extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetBinaryStream(AS400 systemObject, Hashtable namesAndVars,
+  public JDPSSetBinaryStream(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetBinaryStream", namesAndVars, runMode,
         fileOutputStream, password);
   }
 
-  public JDPSSetBinaryStream(AS400 systemObject, String testname, Hashtable namesAndVars,
+  public JDPSSetBinaryStream(AS400 systemObject, String testname, Hashtable<String, Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, testname, namesAndVars, runMode,
@@ -2920,7 +2920,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
 
 
 
-    Vector resultVector = new Vector();
+    Vector<String[]> resultVector = new Vector<String[]>();
 
     {
       sb.append("Getting blocking connection");
@@ -3002,7 +3002,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
       ps = connection.prepareStatement(sql);
 
     }
-    Enumeration enumeration = resultVector.elements();
+    Enumeration<String[]> enumeration = resultVector.elements();
     while (enumeration.hasMoreElements()) {
       String[] result = (String[]) enumeration.nextElement();
       ps.setString(1, testcase);

@@ -37,7 +37,7 @@ public class CmdCallThreadTestcase extends ThreadedTestcase
     /**
      Creates a new CmdCallThreadTestcase.  This is called from ThreadTest::createTestcases().
      **/
-    public CmdCallThreadTestcase(AS400 systemObject, Vector variationsToRun, int runMode, FileOutputStream fileOutputStream,  String password)
+    public CmdCallThreadTestcase(AS400 systemObject, Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream,  String password)
     {
         super(systemObject, "CmdCallThreadTestcase", 5, variationsToRun, runMode, fileOutputStream, password);
     }
@@ -226,8 +226,8 @@ public class CmdCallThreadTestcase extends ThreadedTestcase
         {
             pipeInput_ = new PipedInputStream();
             CommandCall c = new CommandCall(systemObject_);
-            AS400 s1 = new AS400(system1, uid, pwd);
-            AS400 s2 = new AS400(system2, uid, pwd);
+            AS400 s1 = new AS400(system1, uid, pwd.toCharArray());
+            AS400 s2 = new AS400(system2, uid, pwd.toCharArray());
             CmdCallThread t1 = new CmdCallThread(pipeInput_, output_, this, CmdCallThread.SET_SYSTEM, c, s1, s2);
             CmdCallThread t2 = new CmdCallThread(pipeInput_, output_, this, CmdCallThread.SET_SYSTEM, c, s1, s2);
             CmdCallThread t3 = new CmdCallThread(pipeInput_, output_, this, CmdCallThread.SET_SYSTEM, c, s1, s2);
@@ -256,8 +256,8 @@ public class CmdCallThreadTestcase extends ThreadedTestcase
             CommandCall c = new CommandCall(systemObject_);
             CmdCallThread t1 = new CmdCallThread(pipeInput_, output_, this, CmdCallThread.CRTLIB, c, "T1LIB");
             CmdCallThread t2 = new CmdCallThread(pipeInput_, output_, this, CmdCallThread.SET_COMMAND, c);
-            AS400 s1 = new AS400(system1, uid, pwd);
-            AS400 s2 = new AS400(system2, uid, pwd);
+            AS400 s1 = new AS400(system1, uid, pwd.toCharArray());
+            AS400 s2 = new AS400(system2, uid, pwd.toCharArray());
             CmdCallThread t3 = new CmdCallThread(pipeInput_, output_, this, CmdCallThread.SET_SYSTEM, c, s1, s2);
             objectInput_ = new ObjectInputStream(pipeInput_);
             t1.start();

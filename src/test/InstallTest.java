@@ -237,7 +237,7 @@ public void createTestcases()
     {
       INAppTestcase tc =
         new INAppTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("INAppTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("INAppTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("INAppTestcase");
@@ -246,7 +246,7 @@ public void createTestcases()
     {
       INAttributesTestcase tc =
         new INAttributesTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("INAttributesTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("INAttributesTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("INAttributesTestcase");
@@ -256,7 +256,7 @@ public void createTestcases()
     {
       INInstallTestcase tc =
         new INInstallTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("INInstallTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("INInstallTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("INInstallTestcase");
@@ -266,7 +266,7 @@ public void createTestcases()
     {
       INIsInstalledTestcase tc =
         new INIsInstalledTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("INIsInstalledTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("INIsInstalledTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("INIsInstalledTestcase");
@@ -276,7 +276,7 @@ public void createTestcases()
     {
       INIsUpdateNeededTestcase tc =
         new INIsUpdateNeededTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("INIsUpdateNeededTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("INIsUpdateNeededTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("INIsUpdateNeededTestcase");
@@ -286,14 +286,14 @@ public void createTestcases()
     {
       INUnInstallTestcase tc =
         new INUnInstallTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("INUnInstallTestcase"), runMode_,
+                     (Vector<String>) namesAndVars_.get("INUnInstallTestcase"), runMode_,
                      fileOutputStream_);
       testcases_.addElement(tc);
       namesAndVars_.remove("INUnInstallTestcase");
     }
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

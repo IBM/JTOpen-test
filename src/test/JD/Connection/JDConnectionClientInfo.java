@@ -574,7 +574,7 @@ Performs cleanup needed after running variations.
             try   {
                 String expected = ""; 
                 if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		    if        (getRelease() == JDTestDriver.RELEASE_V7R5M0_PLUS) {
+		    if        (getRelease() == JDTestDriver.RELEASE_V7R6M0) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07060";
 		    } else if        (getRelease() == JDTestDriver.RELEASE_V7R5M0) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07050";

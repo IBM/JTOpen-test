@@ -61,7 +61,7 @@ public class EventLogTest extends TestDriver
       {
         EventLogTestcase test =
           new EventLogTestcase(systemObject_,
-                              (Vector) namesAndVars_.get("EventLogTestcase"),
+                              (Vector<String>) namesAndVars_.get("EventLogTestcase"),
                               runMode_, fileOutputStream_);
         testcases_.addElement(test);
       }
@@ -73,7 +73,7 @@ public class EventLogTest extends TestDriver
     }
 
 
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + "unknown.");
     }

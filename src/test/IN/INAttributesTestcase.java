@@ -13,13 +13,11 @@
 
 package test.IN;
 
-import java.io.OutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.Vector;
-import java.net.URL;
 import com.ibm.as400.access.AS400;
 
 import test.InstallTest;
@@ -44,6 +42,7 @@ The variations do not need conflicting CLASSPATHs, if the
 CLASSPATH is set up correctly, all variations dependent on
 the CLASSPATH should be attempted.
 **/
+@SuppressWarnings("deprecation")
 public class INAttributesTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -64,7 +63,7 @@ public class INAttributesTestcase extends Testcase
 Constructor.  This is called from InstallTest::createTestcases().
 **/
 public INAttributesTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
 {
@@ -232,7 +231,7 @@ Checks to see if <i>path</i> is in the CLASSPATH.
 
 @exception SecurityException If the CLASSPATH cannot be accessed.
 **/
-private static boolean inCP(String path)
+public boolean inCP(String path)
 {
     // Search with leading and trailing semicolons to make sure
     // paths match exactly.  Uppercase to make our check case-
@@ -442,7 +441,7 @@ Attributes before any install operations.
 **/
 public void Var001()
 {
-    Vector results;
+    Vector<?> results;
     results = AS400ToolboxInstaller.getClasspathAdditions();
     if (results.size() != 0)
     {
@@ -560,7 +559,7 @@ public void Var002()
                                       InstallTest.localURL);
 
         // Verify attribute vectors.
-        Vector results = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathAdditions();
         boolean failed = false;
         if (results.size() != 4)
             failed = true;
@@ -576,7 +575,7 @@ public void Var002()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "TEST1.ZIP");
             expected.addElement(target + "TEST2.ZIP");
             expected.addElement(target + "test1");
@@ -605,7 +604,7 @@ public void Var002()
             {
                 failed("Classpath removals not correct.");
                 output_.println("Expected:");
-                Vector expected = new Vector();
+                Vector<String> expected = new Vector<String>();
                 expected.addElement(target + "TEST3.ZIP");
                 expected.addElement(target + "TEST6.JAR");
                 expected.addElement(target + "TEST9.ZIP");
@@ -715,7 +714,7 @@ public void Var003()
                                       InstallTest.localURL);
 
         // Verify attribute vectors.
-        Vector results = AS400ToolboxInstaller.getUnexpandedFiles();
+        Vector<?> results = AS400ToolboxInstaller.getUnexpandedFiles();
         boolean failed = false;
         if (results.size() != 6)
             failed = true;
@@ -735,7 +734,7 @@ public void Var003()
         {
             failed("Unexpanded files not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "TEST1.ZIP");
             expected.addElement(target + "TEST2.ZIP");
             expected.addElement(target + "TEST4.JAR");
@@ -923,7 +922,7 @@ public void Var005()
                                       InstallTest.localURL);
 
         // Verify attribute vectors.
-        Vector results = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathAdditions();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -935,7 +934,7 @@ public void Var005()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "test1");
             expected.addElement(target + "TEST1.ZIP");
             output_.println(expected);
@@ -956,7 +955,7 @@ public void Var005()
             {
                 failed("Classpath removals not correct.");
                 output_.println("Expected:");
-                Vector expected = new Vector();
+                Vector<String> expected = new Vector<String>();
                 expected.addElement(target + "test2");
                 expected.addElement(target + "TEST6.JAR");
                 output_.println(expected);
@@ -1009,9 +1008,6 @@ public void Var006()
     }
 
 
-    String target2 = InstallTest.targetPath +
-                     "install" + File.separator +
-                     "test2" + File.separator;
     try
     {
         // Setup target to uninstall from.
@@ -1035,7 +1031,7 @@ public void Var006()
                                         target);
 
         // Verify classpath removals does not contain items not in CP.
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
         if (results.size() != 1)
             failed = true;
@@ -1045,7 +1041,7 @@ public void Var006()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(targetNoSep);
             output_.println(expected);
             output_.println("Received:");
@@ -1125,7 +1121,7 @@ public void Var006()
                                       InstallTest.localURL);
 
         // Verify attribute vectors.
-        Vector results = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathAdditions();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -1137,7 +1133,7 @@ public void Var006()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "test1");
             expected.addElement(target + "TEST1.ZIP");
             output_.println(expected);
@@ -1158,7 +1154,7 @@ public void Var006()
             {
                 failed("Classpath removals not correct.");
                 output_.println("Expected:");
-                Vector expected = new Vector();
+                Vector<String> expected = new Vector<String>();
                 expected.addElement(target + "test2");
                 expected.addElement(target + "TEST2.ZIP");
                 output_.println(expected);
@@ -1234,7 +1230,7 @@ public void Var008()
                                         target);
 
         // Verify classpath removals does not have any entries.
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -1246,7 +1242,7 @@ public void Var008()
         {
             failed("Classpath removals not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(targetNoSep);
             expected.addElement(target + "TEST1.ZIP");
             output_.println(expected);
@@ -1344,7 +1340,7 @@ public void Var009()
                                       InstallTest.localURL);
 
         // Verify attribute vectors.
-        Vector results = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathAdditions();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -1356,7 +1352,7 @@ public void Var009()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "test1");
             expected.addElement(target + "TEST1.ZIP");
             output_.println(expected);
@@ -1375,7 +1371,7 @@ public void Var009()
             {
                 failed("Classpath removals not correct.");
                 output_.println("Expected:");
-                Vector expected = new Vector();
+                Vector<String> expected = new Vector<String>();
                 expected.addElement(target + "test2");
                 expected.addElement(target + "TEST6.JAR");
                 output_.println(expected);
@@ -1396,7 +1392,7 @@ public void Var009()
                 {
                     failed("Unexpanded files not correct.");
                     output_.println("Expected:");
-                    Vector expected = new Vector();
+                    Vector<String> expected = new Vector<String>();
                     expected.addElement(target + "TEST3.ZIP");
                     expected.addElement(target + "TEST1.ZIP");
                     output_.println(expected);
@@ -1474,7 +1470,7 @@ public void Var010()
                                         target);
 
         // Verify classpath removals does not have duplicates.
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -1486,7 +1482,7 @@ public void Var010()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(targetNoSep);
             expected.addElement(target + "TEST3.ZIP");
             output_.println(expected);
@@ -1570,7 +1566,7 @@ public void Var011()
                                         target);
 
         // Verify classpath removals does not have duplicates.
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -1582,7 +1578,7 @@ public void Var011()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(targetNoSep);
             expected.addElement(target + "TEST3.ZIP");
             output_.println(expected);
@@ -1658,7 +1654,7 @@ public void Var012()
                                         target);
 
         // Verify classpath removals has subdirectories.
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -1672,7 +1668,7 @@ public void Var012()
         {
             failed("Classpath removals not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "test2");
             expected.addElement(targetNoSep);
             output_.println(expected);
@@ -1760,7 +1756,7 @@ public void Var013()
                                       InstallTest.localURL);
 
         // Verify attribute vectors.
-        Vector results = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathAdditions();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -1772,7 +1768,7 @@ public void Var013()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "test1");
             expected.addElement(target + "TEST1.ZIP");
             output_.println(expected);
@@ -1791,7 +1787,7 @@ public void Var013()
             {
                 failed("Classpath removals not correct.");
                 output_.println("Expected:");
-                Vector expected = new Vector();
+                Vector<String> expected = new Vector<String>();
                 expected.addElement(target + "test2");
                 expected.addElement(target + "TEST6.JAR");
                 output_.println(expected);
@@ -1812,7 +1808,7 @@ public void Var013()
                 {
                     failed("Unexpanded files not correct.");
                     output_.println("Expected:");
-                    Vector expected = new Vector();
+                    Vector<String> expected = new Vector<String>();
                     expected.addElement(target + "TEST3.ZIP");
                     expected.addElement(target + "TEST1.ZIP");
                     output_.println(expected);
@@ -1898,7 +1894,7 @@ public void Var014()
 
         // Verify classpath removals is aggregate of packages.
         // Vector should have a five paths.
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
         if (results.size() != 5)
             failed = true;
@@ -1918,7 +1914,7 @@ public void Var014()
         {
             failed("Classpath removals not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "TEST1.ZIP");
             expected.addElement(target + "test1");
             expected.addElement(target + "TEST2.ZIP");
@@ -2016,7 +2012,7 @@ public void Var015()
         else
         targetDir = targetDir + File.separator;
 
-        Vector results = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathAdditions();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -2028,7 +2024,7 @@ public void Var015()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(targetDir + "test1");
             expected.addElement(targetDir + "TEST1.ZIP");
             output_.println(expected);
@@ -2047,7 +2043,7 @@ public void Var015()
             {
                 failed("Classpath removals not correct.");
                 output_.println("Expected:");
-                Vector expected = new Vector();
+                Vector<String> expected = new Vector<String>();
                 expected.addElement(targetDir + "test2");
                 expected.addElement(targetDir + "TEST6.JAR");
                 output_.println(expected);
@@ -2068,7 +2064,7 @@ public void Var015()
                 {
                     failed("Unexpanded files not correct.");
                     output_.println("Expected:");
-                    Vector expected = new Vector();
+                    Vector<String> expected = new Vector<String>();
                     expected.addElement(targetDir + "TEST3.ZIP");
                     expected.addElement(targetDir + "TEST1.ZIP");
                     output_.println(expected);
@@ -2147,7 +2143,7 @@ public void Var016()
                                         targetDir);
 
         // Verify classpath removals are absolute
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
 
 
@@ -2171,7 +2167,7 @@ public void Var016()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(qualifiedDirNoSep);
             expected.addElement(qualifiedDir + "TEST3.ZIP");
             output_.println(expected);
@@ -2268,7 +2264,7 @@ public void Var016()
                                       InstallTest.localURL);
 
       // Verify attribute vectors.
-      Vector results = AS400ToolboxInstaller.getClasspathAdditions();
+      Vector<?> results = AS400ToolboxInstaller.getClasspathAdditions();
       boolean failed = false;
       if (results.size() != 2)
         failed = true;
@@ -2280,7 +2276,7 @@ public void Var016()
       {
         failed("Classpath additions not correct.");
         output_.println("Expected:");
-        Vector expected = new Vector();
+        Vector<String> expected = new Vector<String>();
         expected.addElement(target + "test1");
         expected.addElement(target + "TEST1.ZIP");
         output_.println(expected);
@@ -2300,7 +2296,7 @@ public void Var016()
         {
           failed("Classpath removals not correct.");
           output_.println("Expected:");
-          Vector expected = new Vector();
+          Vector<String> expected = new Vector<String>();
           expected.addElement(target + "test2");
           expected.addElement(target + "TEST6.JAR");
           output_.println(expected);
@@ -2322,7 +2318,7 @@ public void Var016()
           {
             failed("Unexpanded files not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "TEST3.ZIP");
             expected.addElement(target + "TEST1.ZIP");
             output_.println(expected);
@@ -2422,7 +2418,7 @@ public void Var016()
                                       InstallTest.localURL);
 
         // Verify attribute vectors.
-        Vector results = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathAdditions();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -2434,7 +2430,7 @@ public void Var016()
         {
             failed("Classpath additions not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "test1");
             expected.addElement(target + "TEST1.ZIP");
             output_.println(expected);
@@ -2453,7 +2449,7 @@ public void Var016()
             {
                 failed("Classpath removals not correct.");
                 output_.println("Expected:");
-                Vector expected = new Vector();
+                Vector<String> expected = new Vector<String>();
                 expected.addElement(target + "test2");
                 expected.addElement(target + "TEST6.JAR");
                 output_.println(expected);
@@ -2474,7 +2470,7 @@ public void Var016()
                 {
                     failed("Unexpanded files not correct.");
                     output_.println("Expected:");
-                    Vector expected = new Vector();
+                    Vector<String> expected = new Vector<String>();
                     expected.addElement(target + "TEST3.ZIP");
                     expected.addElement(target + "TEST1.ZIP");
                     output_.println(expected);
@@ -2558,7 +2554,7 @@ public void Var016()
                                         target);
 
         // Verify classpath removals has subdirectories.
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -2572,7 +2568,7 @@ public void Var016()
         {
             failed("Classpath removals not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "test2");
             expected.addElement(targetNoSep);
             output_.println(expected);
@@ -2653,7 +2649,7 @@ public void Var016()
                                         target);
 
         // Verify classpath removals has subdirectories.
-        Vector results = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> results = AS400ToolboxInstaller.getClasspathRemovals();
         boolean failed = false;
         if (results.size() != 2)
             failed = true;
@@ -2667,7 +2663,7 @@ public void Var016()
         {
             failed("Classpath removals not correct.");
             output_.println("Expected:");
-            Vector expected = new Vector();
+            Vector<String> expected = new Vector<String>();
             expected.addElement(target + "test2");
             expected.addElement(targetNoSep);
             output_.println(expected);
@@ -2755,9 +2751,9 @@ public void Var016()
                                       InstallTest.localURL);
 
         // Verify attribute vectors are now not empty.
-        Vector cpa = AS400ToolboxInstaller.getClasspathAdditions();
-        Vector cpr = AS400ToolboxInstaller.getClasspathRemovals();
-        Vector uef = AS400ToolboxInstaller.getUnexpandedFiles();
+        Vector<?> cpa = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> cpr = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> uef = AS400ToolboxInstaller.getUnexpandedFiles();
         if (cpa.size() == 0 || cpr.size() == 0 || uef.size() == 0)
             failed("Setup failed, vectors not exciting.");
         else
@@ -2856,9 +2852,9 @@ public void Var022()
                                       InstallTest.localURL);
 
         // Verify attribute vectors are now not empty.
-        Vector cpa = AS400ToolboxInstaller.getClasspathAdditions();
-        Vector cpr = AS400ToolboxInstaller.getClasspathRemovals();
-        Vector uef = AS400ToolboxInstaller.getUnexpandedFiles();
+        Vector<?> cpa = AS400ToolboxInstaller.getClasspathAdditions();
+        Vector<?> cpr = AS400ToolboxInstaller.getClasspathRemovals();
+        Vector<?> uef = AS400ToolboxInstaller.getUnexpandedFiles();
         if (cpa.size() == 0 || cpr.size() == 0 || uef.size() == 0)
             failed("Setup failed, vectors not exciting.");
         else

@@ -95,7 +95,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
   /**
    * Constructor. This is called from the AS400JDBCRowSetTestcase constructor.
    **/
-  public AS400JDBCRowSetTestcase(AS400 systemObject, Vector variationsToRun, int runMode,
+  public AS400JDBCRowSetTestcase(AS400 systemObject, Vector<String> variationsToRun, int runMode,
       FileOutputStream fileOutputStream,
 
       String password, String jndiType, String authorityUsr, // @A2A
@@ -534,7 +534,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       return "Test Ref";
     }
 
-    public java.lang.Object getObject(java.util.Map map) // @C1A
+    public java.lang.Object getObject(java.util.Map<String,Class<?>> map) // @C1A
         throws SQLException // @C1A
     { // @C1A
       // add code to test new methods //@C1A
@@ -576,11 +576,11 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       return null;
     }
 
-    public Object getArray(long pos, int count, Map map) {
+    public Object getArray(long pos, int count, Map<String, Class<?>> map) {
       return null;
     }
 
-    public Object getArray(Map map) {
+    public Object getArray(Map<String, Class<?>> map) {
       return null;
     }
 
@@ -600,11 +600,11 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       return null;
     }
 
-    public ResultSet getResultSet(long pos, int count, Map map) {
+    public ResultSet getResultSet(long pos, int count, Map<String, Class<?>> map) {
       return null;
     }
 
-    public ResultSet getResultSet(Map map) {
+    public ResultSet getResultSet(Map<String, Class<?>> map) {
       return null;
     }
 
@@ -1574,8 +1574,9 @@ public class AS400JDBCRowSetTestcase extends Testcase {
    * NullPointerException is the listener is null.
    **/
   public void Var031() {
+    AS400JDBCRowSet rowset = null; 
     try {
-      AS400JDBCRowSet rowset = new AS400JDBCRowSet();
+      rowset = new AS400JDBCRowSet();
       rowset.addPropertyChangeListener(null);
 
       failed("Unexpected results.");
@@ -1583,6 +1584,10 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       succeeded();
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
+    } finally {
+      if (rowset != null) try {
+        rowset.close(); 
+      } catch (Exception e) { }
     }
   }
 
@@ -1591,8 +1596,9 @@ public class AS400JDBCRowSetTestcase extends Testcase {
    * NullPointerException is the listener is null.
    **/
   public void Var032() {
+    AS400JDBCRowSet rowset = null; 
     try {
-      AS400JDBCRowSet rowset = new AS400JDBCRowSet();
+      rowset = new AS400JDBCRowSet();
       rowset.removePropertyChangeListener(null);
 
       failed("Unexpected results.");
@@ -1600,6 +1606,10 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       succeeded();
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
+    }finally {
+      if (rowset != null) try {
+        rowset.close(); 
+      } catch (Exception e) { }
     }
   }
 
@@ -1701,8 +1711,9 @@ public class AS400JDBCRowSetTestcase extends Testcase {
    * expected.
    **/
   public void Var036() {
+    AS400JDBCRowSet rowset = null; 
     try {
-      AS400JDBCRowSet rowset = new AS400JDBCRowSet();
+      rowset = new AS400JDBCRowSet();
       MyPropertyListener listener = new MyPropertyListener();
       rowset.addPropertyChangeListener(listener);
 
@@ -1711,6 +1722,10 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       assertCondition(listener.isChanged() && listener.getName().equals("command"));
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
+    }finally {
+      if (rowset != null) try {
+        rowset.close(); 
+      } catch (Exception e) { }
     }
   }
 
@@ -1718,8 +1733,9 @@ public class AS400JDBCRowSetTestcase extends Testcase {
    * Validates that removePropertyChangeListener(listener) works as expected
    **/
   public void Var037() {
+    AS400JDBCRowSet rowset = null; 
     try {
-      AS400JDBCRowSet rowset = new AS400JDBCRowSet();
+      rowset = new AS400JDBCRowSet();
       MyPropertyListener listener = new MyPropertyListener();
       rowset.addPropertyChangeListener(listener);
 
@@ -1736,6 +1752,10 @@ public class AS400JDBCRowSetTestcase extends Testcase {
           "before=" + before);
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
+    }finally {
+      if (rowset != null) try {
+        rowset.close(); 
+      } catch (Exception e) { }
     }
   }
 
@@ -2007,7 +2027,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.setEnvironment(env_); // @A2A //@A8C
       rowset.execute();
 
-      HashMap map = new HashMap();
+      HashMap<?, ?> map = new HashMap<Object, Object>();
       rowset.setTypeMap(map);
 
       failed("Unexpected results.");
@@ -2152,6 +2172,10 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       succeeded();
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
+    }finally {
+      if (rowset != null) try {
+        rowset.close(); 
+      } catch (Exception e) { }
     }
   }
 
@@ -2173,6 +2197,10 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       succeeded();
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
+    }finally {
+      if (rowset != null) try {
+        rowset.close(); 
+      } catch (Exception e) { }
     }
   }
 

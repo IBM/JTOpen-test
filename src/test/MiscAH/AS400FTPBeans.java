@@ -21,14 +21,10 @@ import test.Testcase;
 
 import java.beans.*;
 import java.io.*;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 import java.lang.Integer;
 import java.lang.String;
-import java.text.SimpleDateFormat;
-import java.awt.Image;
 
 
 public class AS400FTPBeans
@@ -649,7 +645,7 @@ public class AS400FTPBeans
 	StringBuffer sb = new StringBuffer(); 
         try
         {
-          Class beanclass = Class.forName("com.ibm.as400.access.AS400FTP");
+          Class<?> beanclass = Class.forName("com.ibm.as400.access.AS400FTP");
           BeanInfo beaninfo = Introspector.getBeanInfo(beanclass);
 
           // Icons / GUI components no longer available in JTOpen 20.0.X
@@ -659,7 +655,7 @@ public class AS400FTPBeans
           EventSetDescriptor[] event = beaninfo.getEventSetDescriptors();
           PropertyDescriptor[] props = beaninfo.getPropertyDescriptors();
 
-          Vector v = new Vector();
+          Vector<String> v = new Vector<String>();
           v.addElement("system");
           v.addElement("port");
           v.addElement("server");
@@ -725,7 +721,7 @@ public class AS400FTPBeans
        {
           beansCleanup();
 
-          AS400 system2 = new AS400("SysA", "UsrB", "PwdC");
+          AS400 system2 = new AS400("SysA", "UsrB", "PwdC".toCharArray());
           AS400FTP c = new AS400FTP(system2);
           c.setPort(100);
           c.setSaveFilePublicAuthority("*CHANGE");
@@ -735,11 +731,11 @@ public class AS400FTPBeans
           ObjectOutput s = new ObjectOutputStream(f);
           s.writeObject(c);
           s.flush();
-
+          s.close(); 
           FileInputStream in = new FileInputStream("Ftp.ser");
           ObjectInputStream s2 = new ObjectInputStream(in);
           AS400FTP c2 = (AS400FTP) s2.readObject();
-
+          s2.close(); 
           if (c.getSystem().getSystemName().equals(c2.getSystem().getSystemName()))
                 if (c2.getPort() == 100)
                 {

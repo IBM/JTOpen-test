@@ -40,7 +40,7 @@ public class DDMThreadTestcase extends ThreadedTestcase
   * This is called from ThreadTest::createTestcases().
   */
   public DDMThreadTestcase (AS400 systemObject,
-                             Vector variationsToRun,
+                             Vector<String> variationsToRun,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

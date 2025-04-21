@@ -73,7 +73,7 @@ public class CommandTestcase extends Testcase
       Constructor.  This is called from the HTMLTest constructor.
      **/
     public CommandTestcase(AS400 systemObject,
-                           Vector variationsToRun,
+                           Vector<String> variationsToRun,
                            int runMode,
                            FileOutputStream fileOutputStream)
     {

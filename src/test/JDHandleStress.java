@@ -34,13 +34,13 @@ public class JDHandleStress implements Runnable {
     int paramRunSeconds_;
     int paramGrowShrinkTime_;
     PrintStream out_ = null;
-    Vector  connections_;
+    Vector<Connection>  connections_;
     Connection currentConnection_;
     Statement  currentStatement_ = null; 
     // Hashtable from connection to Vector of Array[statement, result, statement handle count] on that connection
-    Hashtable connectionStatementHashtable_;
+    Hashtable<Connection, Vector<Object[]>> connectionStatementHashtable_;
     // Hashtable form connection to Integer
-    Hashtable connectionStatementMaxCountHashtable_;
+    Hashtable<Connection, Integer> connectionStatementMaxCountHashtable_;
     int allocConnectionCount_=0;
     int freeConnectionCount_=0;
     int allocStatementCount_=0;
@@ -67,10 +67,10 @@ public class JDHandleStress implements Runnable {
 	paramPercentAllocOps_ =  paramPercentAllocOps;
 	paramRunSeconds_ = paramRunSeconds;
 
-	connections_ = new Vector();
+	connections_ = new Vector<Connection>();
 
-	connectionStatementHashtable_ = new Hashtable();
-	connectionStatementMaxCountHashtable_ = new Hashtable();
+	connectionStatementHashtable_ = new Hashtable<Connection, Vector<Object[]>>();
+	connectionStatementMaxCountHashtable_ = new Hashtable<Connection, Integer>();
 
 
     }
@@ -191,7 +191,7 @@ public class JDHandleStress implements Runnable {
 	    synchronized(this) { 
 		currentConnection_ = c;
 	    }
-	    Vector connectionStatements = new Vector();
+	    Vector<Object[]> connectionStatements = new Vector<Object[]>();
 	    for (int i = 0; i < paramStatements_; i++) {
 		allocStatement(c, connectionStatements);
 		synchronized(this) { 
@@ -221,13 +221,13 @@ public class JDHandleStress implements Runnable {
 	if (connectionCount > 0) {
 	    int whichConnection = random_.nextInt(connectionCount);
 	    Connection c = null;
-	    Vector connectionStatements = null; 
+	    Vector<?> connectionStatements = null; 
 	    synchronized(this) { 
 		c = (Connection) connections_.elementAt(whichConnection);
 		currentConnection_ = c;
 		connections_.removeElementAt(whichConnection);
 
-		connectionStatements = (Vector) connectionStatementHashtable_.get(c);
+		connectionStatements = (Vector<?>) connectionStatementHashtable_.get(c);
 		connectionStatementHashtable_.remove(c);
 	    }
 	    c.close();
@@ -238,7 +238,7 @@ public class JDHandleStress implements Runnable {
 	    // Need to go through the connectionStatements and determine how many to free
 	    //
 	    synchronized(this) { 
-		Enumeration statementsEnumeration = connectionStatements.elements();
+		Enumeration<?> statementsEnumeration = connectionStatements.elements();
 		while (statementsEnumeration.hasMoreElements()) {
 		    Object[] statementAndResult = (Object[]) statementsEnumeration.nextElement();
 		    int handles = ((Integer)statementAndResult[2]).intValue();
@@ -259,14 +259,14 @@ public class JDHandleStress implements Runnable {
 	    }
 	}
 	Connection c = null; 
-	Vector connectionStatements = null; 
+	Vector<Object[]> connectionStatements = null; 
 	synchronized(this) { 
 	    int connectionCount = connections_.size();
 	    if (connectionCount > 0) {
 		int whichConnection = random_.nextInt(connectionCount);
 		c = (Connection) connections_.elementAt(whichConnection);
 		currentConnection_ = c;
-		connectionStatements = (Vector) connectionStatementHashtable_.get(c);
+		connectionStatements = (Vector<Object[]>) connectionStatementHashtable_.get(c);
 	
 	    }
 	}
@@ -278,7 +278,7 @@ public class JDHandleStress implements Runnable {
 
 
     public void allocStatement(Connection c,
-					    Vector connectionStatements)
+					    Vector<Object[]> connectionStatements)
       throws SQLException, InterruptedException {
 	synchronized (this) { 
 	    while (paused) {
@@ -365,7 +365,7 @@ public class JDHandleStress implements Runnable {
 	int whichConnection = random_.nextInt(connectionsSize);
 	Connection c = (Connection) connections_.elementAt(whichConnection);
 	currentConnection_ = c;
-	Vector connectionStatements = (Vector) connectionStatementHashtable_.get(c);
+	Vector<?> connectionStatements = (Vector<?>) connectionStatementHashtable_.get(c);
 	int statementCount = connectionStatements.size();
 	if (statementCount > 1) {
 	    try {
@@ -396,7 +396,7 @@ throws SQLException, InterruptedException {
 	int whichConnection = random_.nextInt(connectionCount);
 	Connection c = (Connection) connections_.elementAt(whichConnection);
 	currentConnection_ = c;
-	Vector connectionStatements = (Vector) connectionStatementHashtable_.get(c);
+	Vector<?> connectionStatements = (Vector<?>) connectionStatementHashtable_.get(c);
 	int statementCount = connectionStatements.size();
 	if (statementCount > 0) {
 	    int whichStatement = random_.nextInt(statementCount);

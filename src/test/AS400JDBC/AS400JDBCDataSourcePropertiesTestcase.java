@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -55,7 +54,7 @@ public class AS400JDBCDataSourcePropertiesTestcase extends Testcase
      Constructor.  This is called from the AS400JDBCDataSourcePropertiesTest constructor.
     **/
    public AS400JDBCDataSourcePropertiesTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  

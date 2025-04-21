@@ -78,13 +78,13 @@ extends JDTestcase {
     private              int             tableColumnCount = 0;  
     private              int             tableCount=0; 
     private              int             indexCount = 0; 
-    private              Vector          tableNames = new Vector(); 
+    private              Vector<String>          tableNames = new Vector<String>(); 
 
 /**
 Constructor.
 **/
     public JDDMDPerformance (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -773,7 +773,7 @@ if ((getRelease () >= JDTestDriver.RELEASE_V7R1M0)) {
       long startTime = System.currentTimeMillis(); 
       for (int i = 0; i < 10; i++) {
         int count = 0;
-        Enumeration enumeration = tableNames.elements(); 
+        Enumeration<String> enumeration = tableNames.elements(); 
         while (enumeration.hasMoreElements() ) {
           String tableName = (String) enumeration.nextElement(); 
           ResultSet rs = dmd_.getIndexInfo(null, JDDMDTest.COLLECTION,

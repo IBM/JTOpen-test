@@ -30,7 +30,6 @@ import java.sql.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameAlreadyBoundException;
-import javax.security.auth.login.CredentialException;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
@@ -83,7 +82,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
       Constructor.  This is called from the AS400JDBCDataSourceTest constructor.
      **/
     public AS400JDBCDataSourceTestcase(AS400 systemObject,
-                                       Vector variationsToRun,
+                                       Vector<String> variationsToRun,
                                        int runMode,
                                        FileOutputStream fileOutputStream,
                                        
@@ -2885,6 +2884,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
             {                                          //@A10A
                 AS400 tmpSystemObject = new AS400(); //flexible
                 userName = tmpSystemObject.getUserId();  //@A10A
+                tmpSystemObject.close(); 
             }                                          //@A10A
        
             if (ds.getUser().equals(userName)) //@A10C
@@ -3115,6 +3115,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
                 defaultValue = "localhost";
                 AS400 tmpSystemObject = new AS400(); //flexible
                 userName = tmpSystemObject.getUserId();  //@A10A
+                tmpSystemObject.close();
             }
 
             assertCondition(ds2.getServerName().equals(defaultValue) &&
@@ -3147,6 +3148,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
             {                                          //@A10A
                 AS400 tmpSystemObject = new AS400(); //flexible
                 userName = tmpSystemObject.getUserId();  //@A10A
+                tmpSystemObject.close();
             }                                          //@A10A
 
             if (ds2.getServerName().equalsIgnoreCase(serverName) &&
@@ -3220,6 +3222,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
                 defaultValue = "localhost";
                 AS400 tmpSystemObject = new AS400(); //flexible
                 userName = tmpSystemObject.getUserId();  //@A10A
+                tmpSystemObject.close();
             }
 
             if (ds2.getServerName().equals(defaultValue) &&
@@ -3261,6 +3264,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
                 defaultValue = "localhost";
                 AS400 tmpSystemObject = new AS400(); //flexible
                 userName = tmpSystemObject.getUserId();  //@A10A
+                tmpSystemObject.close();
             }
 
             if (ds2.getServerName().equals(defaultValue) &&

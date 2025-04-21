@@ -15,7 +15,6 @@ package test.Cmd;
 
 import java.io.FileOutputStream;
 
-import java.awt.Image;
 import java.util.Vector;
 import java.beans.BeanInfo;
 import java.beans.FeatureDescriptor;
@@ -59,7 +58,7 @@ public class CommandBeanInfoTestcase extends Testcase
     Constructor.  This is called from the CommandTest::createTestcases method.
    **/
    public CommandBeanInfoTestcase(AS400 systemObject,
-                                          Vector variationsToRun,
+                                          Vector<String> variationsToRun,
                                           int runMode,
                                           FileOutputStream fileOutputStream)
    {
@@ -105,13 +104,14 @@ public class CommandBeanInfoTestcase extends Testcase
       try
       {
          CommandBeanInfo bi = new CommandBeanInfo();
+         assertCondition(true, "bi="+bi); 
       }
       catch(Throwable e)
       {
          failed(e, "Unexpected exception");
-         return;
+       
       }
-      succeeded();
+      
    }
 
    /**

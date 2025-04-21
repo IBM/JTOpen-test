@@ -51,7 +51,7 @@ public class DDMSerialization extends Testcase
    * Constructor.  This is called from DDMTest::createTestcases().
   **/
   public DDMSerialization(AS400            systemObject,
-                          Vector           variationsToRun,
+                          Vector<String> variationsToRun,
                           int              runMode,
                           FileOutputStream fileOutputStream,
                           String testLib)

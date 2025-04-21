@@ -49,7 +49,7 @@ public class EventLogTestcase extends Testcase
 Constructor.
 **/
   public EventLogTestcase(AS400            systemObject,
-                           Vector           variationsToRun,
+                           Vector<String> variationsToRun,
                            int              runMode,
                            FileOutputStream fileOutputStream)
   throws IOException

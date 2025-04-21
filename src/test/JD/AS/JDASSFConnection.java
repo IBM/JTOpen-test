@@ -61,12 +61,12 @@ public class JDASSFConnection extends JDASTestcase {
   String collection;
 
   private String table;
-  Vector cleanupSql = new Vector(); 
+  Vector<String> cleanupSql = new Vector<String>(); 
 
   /**
    * Constructor.
    **/
-  public JDASSFConnection(AS400 systemObject, Hashtable namesAndVars,
+  public JDASSFConnection(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String pwrSysUserID, String pwrSysPassword) {
     super(systemObject, "JDASSFConnection", namesAndVars, runMode,
@@ -165,7 +165,7 @@ public class JDASSFConnection extends JDASTestcase {
       if (isToolboxFixDate(TOOLBOX_FIX_DATE)) {
 
         Statement stmt = transactionalConnection.createStatement();
-        Enumeration e = cleanupSql.elements(); 
+        Enumeration<String> e = cleanupSql.elements(); 
         while (e.hasMoreElements()) {
           try { 
              String sql = (String) e.nextElement(); 

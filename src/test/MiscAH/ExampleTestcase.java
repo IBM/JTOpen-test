@@ -44,7 +44,7 @@ public class ExampleTestcase extends Testcase
   Constructor.  This is called from ExampleDriver::createTestcases().
   **/
   public ExampleTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {

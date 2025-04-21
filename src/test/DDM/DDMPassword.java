@@ -47,7 +47,7 @@ public class DDMPassword extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMPassword(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream)
   {
@@ -60,7 +60,7 @@ public class DDMPassword extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMPassword(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       

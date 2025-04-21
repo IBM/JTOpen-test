@@ -90,7 +90,7 @@ public abstract class JDTestDriver extends TestDriver {
   public static final int RELEASE_V7R3M0 = 730;
   public static final int RELEASE_V7R4M0 = 740;
   public static final int RELEASE_V7R5M0 = 750;
-  public static final int RELEASE_V7R5M0_PLUS = RELEASE_V7R5M0 + 10;
+  public static final int RELEASE_V7R6M0 = 760;
   
  
   public static final String CLIENT_windows = "windows";
@@ -678,7 +678,7 @@ public abstract class JDTestDriver extends TestDriver {
         else if (token.equalsIgnoreCase("V7R5M0")) 
           release_ = RELEASE_V7R5M0; 
          else if (token.toUpperCase().indexOf("V7R") >= 0 )
-          release_ = RELEASE_V7R5M0_PLUS;
+          release_ = RELEASE_V7R6M0;
       
         // Was "secondary URL mode" specified?
         else if (token.equalsIgnoreCase("secondaryURL")) {
@@ -761,7 +761,7 @@ public abstract class JDTestDriver extends TestDriver {
       else if (vrm == AS400.generateVRM(7, 5, 0))
         release_ = RELEASE_V7R5M0;
       else 
-        release_ = RELEASE_V7R5M0_PLUS;
+        release_ = RELEASE_V7R6M0;
     }
 
     // Determine if what is supported.

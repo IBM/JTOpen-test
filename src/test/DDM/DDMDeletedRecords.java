@@ -56,7 +56,7 @@ public class DDMDeletedRecords extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMDeletedRecords(AS400            systemObject,
-                           Vector           variationsToRun,
+                           Vector<String> variationsToRun,
                            int              runMode,
                            FileOutputStream fileOutputStream,
                            

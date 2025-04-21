@@ -49,7 +49,7 @@ public class AS400JDBCPooledConnectionTestcase extends Testcase
      Constructor.  This is called from the AS400JDBCDataSourceTest constructor.
     **/
    public AS400JDBCPooledConnectionTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  

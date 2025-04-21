@@ -105,7 +105,7 @@ Constructor.
   public IFSJavaFileTestcase (AS400 systemObject,
         String userid, 
         String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String, Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)
@@ -1896,20 +1896,20 @@ list() - Should return the same directory entry names as File.list().
       {
          boolean somethingPrinted = false; 
          failed("IFSJavaFile.list().length= " + names1.length + " File.list().length = " + names2.length);
-         Vector listNames = new Vector(names1.length);  
-         Hashtable trackListNames = new Hashtable(); 
+         Vector<String> listNames = new Vector<String>(names1.length);  
+         Hashtable<String, String> trackListNames = new Hashtable<String, String>(); 
          for (int j = 0; j < names1.length; j++) 
          {
              listNames.addElement(names1[j]);
              trackListNames.put(names1[j], "X");    
          }
-         Vector fileListNames = new Vector(names2.length);
+         Vector<String> fileListNames = new Vector<String>(names2.length);
          for (int k = 0; k < names2.length; k++) 
          {
              fileListNames.addElement(names2[k]);
          }
          boolean print = true;
-         for (Enumeration e = listNames.elements(); e.hasMoreElements(); ) 
+         for (Enumeration<String> e = listNames.elements(); e.hasMoreElements(); ) 
          {
              String name = (String)e.nextElement();
              if (!(fileListNames.contains(name)))
@@ -1925,7 +1925,7 @@ list() - Should return the same directory entry names as File.list().
          }
          print = true;
          StringBuffer uniqueList = new StringBuffer(); 
-         for (Enumeration f = fileListNames.elements(); f.hasMoreElements(); ) 
+         for (Enumeration<String> f = fileListNames.elements(); f.hasMoreElements(); ) 
          {
              String name2 = (String)f.nextElement();
              if (!(listNames.contains(name2)))
@@ -2012,18 +2012,18 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
       else //do if list lengths are not equal   //@A1C
       {
         failed("IFSJavaFile.list(\"*\").length= " + list1.length + " File.list().length = " + list2.length);
-         Vector listStarNames = new Vector(list1.length);
+         Vector<String> listStarNames = new Vector<String>(list1.length);
          for (int j = 0; j < list1.length; j++) 
          {
              listStarNames.addElement(list1[j]);
          }
-         Vector fileListNames = new Vector(list2.length);
+         Vector<String> fileListNames = new Vector<String>(list2.length);
          for (int k = 0; k < list2.length; k++) 
          {
              fileListNames.addElement(list2[k]);
          }
          boolean print = true;
-         for (Enumeration e = listStarNames.elements(); e.hasMoreElements(); ) 
+         for (Enumeration<String> e = listStarNames.elements(); e.hasMoreElements(); ) 
          {
              String name = (String)e.nextElement();
              if (!(fileListNames.contains(name)))
@@ -2037,7 +2037,7 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
              }
          }
          print = true;
-         for (Enumeration f = fileListNames.elements(); f.hasMoreElements(); ) 
+         for (Enumeration<String> f = fileListNames.elements(); f.hasMoreElements(); ) 
          {
              String name2 = (String)f.nextElement();
              if (!(listStarNames.contains(name2)))
@@ -2748,18 +2748,18 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.listFi
       else //do if list lengths are not equal
       {
          failed("IFSJavaFile.listFiles().length= " + files1.length + " IFSJavaFile.listFiles(\"*\").length= " + files2.length);
-         Vector listFilesNames = new Vector(files1.length);
+         Vector<String> listFilesNames = new Vector<String>(files1.length);
          for (int j = 0; j < files1.length; j++) 
          {
              listFilesNames.addElement(files1[j].getName());
          }
-         Vector listFilesStarNames = new Vector(files2.length);
+         Vector<File> listFilesStarNames = new Vector<File>(files2.length);
          for (int k = 0; k < files2.length; k++) 
          {
              listFilesStarNames.addElement(files2[k]);
          }
          boolean print = true;
-         for (Enumeration e = listFilesNames.elements(); e.hasMoreElements(); ) 
+         for (Enumeration<String> e = listFilesNames.elements(); e.hasMoreElements(); ) 
          {
              String name = (String)e.nextElement();
              if (!(listFilesStarNames.contains(name)))
@@ -2773,9 +2773,9 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.listFi
              }
          }
          print = true;
-         for (Enumeration f = listFilesStarNames.elements(); f.hasMoreElements(); ) 
+         for (Enumeration<File> f = listFilesStarNames.elements(); f.hasMoreElements(); ) 
          {
-             String name2 = (String)f.nextElement();
+             String name2 = f.nextElement().toString();
              if (!(listFilesNames.contains(name2)))
              {
                  if (print)
@@ -2834,18 +2834,18 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.list()
       else //do if list lengths are not equal
       {
          failed("IFSJavaFile.listFiles().length= " + files1.length + " IFSJavaFile.list().length= " + files2.length);
-         Vector listFilesNames = new Vector(files1.length);
+         Vector<String> listFilesNames = new Vector<String>(files1.length);
          for (int j = 0; j < files1.length; j++) 
          {
              listFilesNames.addElement(files1[j].getName());
          }
-         Vector listNames = new Vector(files2.length);
+         Vector<String> listNames = new Vector<String>(files2.length);
          for (int k = 0; k < files2.length; k++) 
          {
              listNames.addElement(files2[k]);
          }
          boolean print = true;
-         for (Enumeration e = listFilesNames.elements(); e.hasMoreElements(); ) 
+         for (Enumeration<String> e = listFilesNames.elements(); e.hasMoreElements(); ) 
          {
              String name = (String)e.nextElement();
              if (!(listNames.contains(name)))
@@ -2859,7 +2859,7 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.list()
              }
          }
          print = true;
-         for (Enumeration f = listNames.elements(); f.hasMoreElements(); ) 
+         for (Enumeration<String> f = listNames.elements(); f.hasMoreElements(); ) 
          {
              String name2 = (String)f.nextElement();
              if (!(listFilesNames.contains(name2)))
@@ -2933,18 +2933,18 @@ IFSJavaFile.list().
       else //do if list lengths are not equal
       {
          failed("IFSJavaFile.listFiles(\"*\").length= " + list1.length + "IFSJavaFile.list().length = " + list2.length+" "+sb.toString());
-         Vector listFilesStarNames = new Vector(list1.length);
+         Vector<String> listFilesStarNames = new Vector<String>(list1.length);
          for (int j = 0; j < list1.length; j++) 
          {
              listFilesStarNames.addElement(list1[j].getName());
          }
-         Vector listNames = new Vector(list2.length);
+         Vector<String> listNames = new Vector<String>(list2.length);
          for (int k = 0; k < list2.length; k++) 
          {
              listNames.addElement(list2[k]);
          }
          boolean print = true;
-         for (Enumeration e = listFilesStarNames.elements(); e.hasMoreElements(); ) 
+         for (Enumeration<String> e = listFilesStarNames.elements(); e.hasMoreElements(); ) 
          {
              String name = (String)e.nextElement();
              if (!(listNames.contains(name)))
@@ -2958,7 +2958,7 @@ IFSJavaFile.list().
              }
          }
          print = true;
-         for (Enumeration f = listNames.elements(); f.hasMoreElements(); ) 
+         for (Enumeration<String> f = listNames.elements(); f.hasMoreElements(); ) 
          {
              String name2 = (String)f.nextElement();
              if (!(listFilesStarNames.contains(name2)))
@@ -3226,18 +3226,18 @@ list() or listFiles() is called.
       else //do if list lengths are not equal
       {
          failed("IFSJavaFile.list().length= " + names1.length + "IFSJavaFile.listFiles().length = " + list2.length);
-         Vector listNames = new Vector(names1.length);
+         Vector<String> listNames = new Vector<String>(names1.length);
          for (int j = 0; j < names1.length; j++) 
          {
              listNames.addElement(names1[j]);
          }
-         Vector listFilesNames = new Vector(list2.length);
+         Vector<File> listFilesNames = new Vector<File>(list2.length);
          for (int k = 0; k < list2.length; k++) 
          {
              listFilesNames.addElement(list2[k]);
          }
          boolean print = true;
-         for (Enumeration e = listNames.elements(); e.hasMoreElements(); ) 
+         for (Enumeration<String> e = listNames.elements(); e.hasMoreElements(); ) 
          {
              String name = (String)e.nextElement();
              if (!(listFilesNames.contains(name)))
@@ -3251,9 +3251,9 @@ list() or listFiles() is called.
              }
          }
          print = true;
-         for (Enumeration f = listFilesNames.elements(); f.hasMoreElements(); ) 
+         for (Enumeration<File> f = listFilesNames.elements(); f.hasMoreElements(); ) 
          {
-             String name2 = (String)f.nextElement();
+             String name2 = f.nextElement().toString();
              if (!(listNames.contains(name2)))
              {
                  if (print)

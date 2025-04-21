@@ -12,7 +12,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.AS400JDBC;
 
-import java.awt.Image;
 import java.beans.BeanDescriptor;
 import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
@@ -47,7 +46,7 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
      Constructor.  This is called from the AS400JDBCDataSourceTest constructor.
     **/
    public AS400JDBCConnectionPoolDataSourceBeanInfoTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream,
                                  
@@ -421,14 +420,15 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
       {
          AS400JDBCConnectionPoolDataSourceBeanInfo bi = new AS400JDBCConnectionPoolDataSourceBeanInfo();
          BeanInfo[] bis = bi.getAdditionalBeanInfo();
+         assertCondition(bis != null, "bis is null");
 
       }
       catch(Exception e)
       {
          failed(e, "Unexpected exception");
-         return;
+        
       }
-      succeeded();
+      
    }
 
    /**

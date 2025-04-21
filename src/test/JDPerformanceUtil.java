@@ -597,6 +597,7 @@ public class JDPerformanceUtil {
     }
   }
   
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public static void showResults(ResultSet rs) throws Exception  { 
     ResultSetMetaData rsmd = rs.getMetaData(); 
     int columnCount = rsmd.getColumnCount(); 

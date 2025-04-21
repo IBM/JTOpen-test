@@ -73,7 +73,7 @@ public class AS400CertificateUsrPrfTestcase extends Testcase
 Constructor.
 **/
   public AS400CertificateUsrPrfTestcase(AS400  systemObject,
-                                Vector           variationsToRun,
+                                Vector<String>          variationsToRun,
                                 int              runMode,
                                 FileOutputStream fileOutputStream)
   {
@@ -200,14 +200,7 @@ Constructor.
   {
     try
     {
-      if (false /*isApplet_*/)
-      {
          aUserSpace.delete();
-      }
-      else
-      {
-         aUserSpace.delete();
-      }
     }
     catch(Exception e)
     {
@@ -486,7 +479,6 @@ Constructor.
       boolean[] alreadyfound = new boolean[20];
       int i = 0, j = 0, k = 0;
 
-      loop1:
       for (i = 0; i < as400certs.length; ++i)
       {
        //look for this cert in 2nd array
@@ -502,7 +494,6 @@ Constructor.
             continue;
 
            //compare cert data
-           loop3:
            for (k = 0; k < xcert.length; ++k)
            {
             if (xcert[k] != testcert[j][k])
@@ -615,7 +606,7 @@ Constructor.
     try
     {
         // Create an AS400 object to be used with CERTTEST user profile.
-       certSystem_ = new AS400(systemObject_.getSystemName(), "CERTTEST", "JTEAM1");
+       certSystem_ = new AS400(systemObject_.getSystemName(), "CERTTEST", "JTEAM1".toCharArray());
 
 
        deleteLibrary(cmd, "CERTLIBUS"); 
@@ -2080,7 +2071,7 @@ verify correct exception is returned.
        certAttribute[6] = new AS400CertificateAttribute(AS400CertificateAttribute.PUBLIC_KEY_BYTES,
                                       "subjCOUNTRYx");
 
-        failed( "Expected exception did not occurr.");
+        failed( "Expected exception did not occurr."+aUsrprf);
 
 
       }
@@ -2122,7 +2113,7 @@ verify correct exception is returned.
        certAttribute[6] = new AS400CertificateAttribute(AS400CertificateAttribute.SUBJECT_COMMON_NAME,
                                       byteAttr);
 
-        failed( "Expected exception did not occurr.");
+        failed( "Expected exception did not occurr."+aUsrprf);
     }
      catch(Exception e)
      {
@@ -2470,8 +2461,7 @@ verify correct exceptionm is thrown.
 
       AS400CertificateUserProfileUtil aUsrprf = new AS400CertificateUserProfileUtil(systemObject_, userProfilePathName_);
 
-      AS400Certificate[] as400certs = null;
-
+      
       try
       {
        aUsrprf.addCertificate(testcert_[9]);
@@ -2486,7 +2476,7 @@ verify correct exceptionm is thrown.
 			non_existingUserSpace_);
                            
 
-       failed( "Expected exception did not occurr.");
+       failed( "Expected exception did not occurr."+numcerts);
 
       }
 
@@ -2516,8 +2506,7 @@ verify correct exceptionm is thrown.
 
       AS400CertificateUserProfileUtil aUsrprf = new AS400CertificateUserProfileUtil(systemObject_, "/QSYS.LIB/XKG52V9QWQ.USRPRF");
 
-      AS400Certificate[] as400certs = null;
-
+      
       try
       {
        aUsrprf.addCertificate(testcert_[9]);
@@ -2555,9 +2544,7 @@ verify correct exception was thrown
       UserSpace aUserSpace = new UserSpace(systemObject_, userSpacePathName_);
 
 
-      AS400Certificate[] as400certs = null;
-      AS400CertificateAttribute[] certAttribute = new AS400CertificateAttribute[20];
-
+      
 
       try
       {
@@ -2570,7 +2557,7 @@ verify correct exception was thrown
                                 userSpacePathName_
                                 );
 
-       failed( "Expected exception did not occurred.");
+       failed( "Expected exception did not occurred."+numcerts);
 
       }
     catch(Exception e)
@@ -2608,7 +2595,7 @@ verify correct exception was thrown
 			       null,
                                "/QSYS.LIB/CERTAUTHUS.LIB/USWRITE3.USRSPC");
       
-        failed("Expected exception did not occur (make sure -uid on command line does not have authority to CERTAUTHUS.lib/uswrite3.usrspc).");
+        failed("Expected exception did not occur (make sure -uid on command line does not have authority to CERTAUTHUS.lib/uswrite3.usrspc)."+numcerts+" "+aUserSpace);
      }
      catch(Exception e)
      {
@@ -2649,15 +2636,16 @@ verify correct exception was thrown
            throw new IOException(messageList[0].toString());
         }
 
+        UserSpace aUserSpace = null; 
         if (usingNativeImpl)
         {
-	    UserSpace aUserSpace = new UserSpace(systemObject_, "/QSYS.LIB/CERTLIBUS.LIB/USWRITE2.USRSPC");
+	    aUserSpace = new UserSpace(systemObject_, "/QSYS.LIB/CERTLIBUS.LIB/USWRITE2.USRSPC");
                                
         }
         else
         {
            
-	    UserSpace aUserSpace = new UserSpace(certSystem_, "/QSYS.LIB/CERTLIBUS.LIB/USWRITE2.USRSPC");
+	    aUserSpace = new UserSpace(certSystem_, "/QSYS.LIB/CERTLIBUS.LIB/USWRITE2.USRSPC");
 
 	}
 	
@@ -2665,7 +2653,7 @@ verify correct exception was thrown
 				null,
 				"/QSYS.LIB/CERTLIBUS.LIB/USWRITE2.USRSPC");		
 	
-        failed("Expected exception did not occur (make sure -uid does not have authority to write to CERTLIBUS.lib/uswrite2.usrspc).");
+        failed("Expected exception did not occur (make sure -uid does not have authority to write to CERTLIBUS.lib/uswrite2.usrspc)."+numcerts+" "+aUserSpace);
      }
      catch(Exception e)
      {
@@ -2832,7 +2820,7 @@ verify correct exceptionm is thrown.
 			    0,
                            8);
 
-       failed( "Expected exception did not occurr.");
+       failed( "Expected exception did not occurr."+as400certs);
 
       }
 
@@ -2872,7 +2860,7 @@ verify correct exceptionm is thrown.
                            non_existingUserSpace_,
                            8);
 
-       failed( "Expected exception did not occurr.");
+       failed( "Expected exception did not occurr."+as400certs);
 
       }
 
@@ -2912,7 +2900,7 @@ Verify correct exception msg.
 			         8);
 
 
-       failed("Expected exception did not occurr.");
+       failed("Expected exception did not occurr."+as400certs);
 
      }
      catch(Exception e)
@@ -2963,7 +2951,7 @@ Verify correct exception msg.
 					    9984321,
 					    8);
 
-       failed("Expected exception did not occurr.");
+       failed("Expected exception did not occurr."+as400certs);
 
       }
      catch(Exception e)
@@ -3003,7 +2991,7 @@ Verify correct exception msg.
 					    0,
 					    -1);
 
-       failed("Expected exception did not occurr.");
+       failed("Expected exception did not occurr."+as400certs);
 
       }
      catch(Exception e)
@@ -3040,7 +3028,7 @@ Verify correct exception msg.
        as400certs = aUsrprf.getFirstCertificates(userSpacePathName_,
 						 16385);
 
-       failed("Expected exception did not occurr.");
+       failed("Expected exception did not occurr."+as400certs);
 
       }
      catch(Exception e)
@@ -3078,7 +3066,7 @@ Verify correct exception msg.
        as400certs = aUsrprf.getFirstCertificates(userSpacePathName_,
 						 3);
 
-       failed("Expected exception did not occurr.");
+       failed("Expected exception did not occurr."+as400certs);
 
       }
      catch(Exception e)
@@ -3116,7 +3104,7 @@ verify total number returned,
 
       AS400Certificate[] as400certs = null;
 
-      Vector        certVector = new Vector();
+      Vector<AS400Certificate>        certVector = new Vector<AS400Certificate>();
 
       try
       {
@@ -3172,7 +3160,7 @@ verify total number returned,
 
        if( as400certs.length != 5)
        {
-           String msg = "Get next 5 certificates failed. number returned => " + as400certs.length;
+           String msg = "Get next 5 certificates failed. number returned => " + as400certs.length+" numcerts="+numcerts;
            failed(msg);
        }
 
@@ -3278,7 +3266,7 @@ verify total number returned,
 
       AS400Certificate[] as400certs = null;
 
-      Vector        certVector = new Vector();
+      Vector<AS400Certificate>        certVector = new Vector<AS400Certificate>();
 
       try
       {
@@ -3306,7 +3294,7 @@ verify total number returned,
            failed("Get 4 certificates failed.");
 
        if (false == certsCompare(as400certs, testcert_, 5))
-           failed( "Certificates 4 did not compare.");
+           failed( "Certificates 4 did not compare."+numcerts);
 
        //get first certs
        as400certs = aUsrprf.getFirstCertificates(userSpacePathName_,
@@ -3334,7 +3322,7 @@ verify total number returned,
        as400certs = aUsrprf.getNextCertificates(8);
 
        if (as400certs != null)
-           failed("Get next certificates 0 failed.");
+           failed("Get next certificates 0 failed."+as400certs);
 
        aUsrprf.addCertificate(testcert_[5]);
        aUsrprf.addCertificate(testcert_[6]);
@@ -3452,7 +3440,7 @@ Verify correct exception msg.
       {
        as400certs = aUsrprf.getNextCertificates(8);
 
-       failed("Expected exception did not occurr.");
+       failed("Expected exception did not occurr."+as400certs);
 
       }
      catch(Exception e)

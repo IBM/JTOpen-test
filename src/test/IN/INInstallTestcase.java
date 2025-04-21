@@ -52,7 +52,7 @@ public class INInstallTestcase extends Testcase
 Constructor.  This is called from InstallTest::createTestcases().
 **/
 public INInstallTestcase(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
 {

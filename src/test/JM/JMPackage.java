@@ -19,7 +19,6 @@ import com.ibm.as400.access.AS400;
 import test.JMTest;
 import test.Testcase;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -35,6 +34,7 @@ methods of the JarMaker class:
 <li>setPackages(Vector)
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class JMPackage
 extends Testcase
 {
@@ -44,7 +44,7 @@ extends Testcase
 Constructor.
 **/
   public JMPackage (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String, Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -86,7 +86,7 @@ public void Var001 ()
     {
       try {
         JarMaker jm = new JarMaker ();
-        Vector outList = jm.getPackages ();
+        Vector<?> outList =  jm.getPackages ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -116,7 +116,7 @@ public void Var003 ()
     {
       JarMaker jm = new JarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<String> inList = new Vector<String> (2);
         inList.add ("booga");
         inList.add (null);
         jm.setPackages (inList);
@@ -137,12 +137,12 @@ public void Var004 ()
         String entry1 = new String ("com.ibm.as400");
         String entry2 = new String ("mypackage");
         String entry3 = new String ("java.somespecialpackage");
-        Vector inList = new Vector ();
+        Vector<String> inList = new Vector<String> ();
         inList.add (entry1);
         inList.add (entry2);
         inList.add (entry3);
         jm.setPackages (inList);
-        Vector outList = jm.getPackages ();
+        Vector<?> outList = jm.getPackages ();
         assertCondition ((outList.size () == 3) &&
                 (outList.contains (entry1)) &&
                 (outList.contains (entry2)) &&
@@ -163,7 +163,7 @@ public void Var005 ()
         String entry1 = new String ("com.ibm.as400");
         String entry2 = new String ("mypackage");
         String entry3 = new String ("java.somespecialpackage");
-        Vector inList = new Vector ();
+        Vector<String> inList = new Vector<String> ();
         inList.add (entry1);
         inList.add (entry2);
         jm.setPackages (inList);
@@ -171,7 +171,7 @@ public void Var005 ()
         inList.add (entry2);
         inList.add (entry3);
         jm.setPackages (inList);
-        Vector outList = jm.getPackages ();
+        Vector<?> outList = jm.getPackages ();
         assertCondition ((outList.size () == 3) &&
                 (outList.contains (entry1)) &&
                 (outList.contains (entry2)) &&
@@ -190,21 +190,21 @@ public void Var006 ()
       try {
         JarMaker jm = new JarMaker ();
         String entry1 = new String ("jungle");
-        Vector inList = new Vector (1);
+        Vector<String> inList = new Vector<String> (1);
         inList.add (entry1);
         jm.setPackages (inList);
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
         jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedManifest = new Vector ();
+        Vector<String> expectedManifest = new Vector<String> ();
         expectedManifest.add ("jungle/Animal.java");
         expectedManifest.add ("jungle/Animal.class");
         expectedManifest.add ("jungle/Animal$AnimalThread.class");
         expectedManifest.add ("jungle/animal.jpg");
         expectedManifest.add ("jungle/JungleMRI.properties");
         expectedManifest.add ("jungle/tree.jpg");
-        Vector expectedJar = JMTest.addDirectoryEntries(expectedManifest);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(expectedManifest);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, expectedManifest));
       }
       catch (Exception e) {
@@ -221,7 +221,7 @@ public void Var007 ()
       try {
         JarMaker jm = new JarMaker ();
         String entry1 = new String ("bogus");
-        Vector inList = new Vector (1);
+        Vector<String> inList = new Vector<String> (1);
         inList.add (entry1);
         jm.setPackages (inList);
         JMTest.deleteFile (JMTest.JUNGLE_JAR_SMALL);
@@ -242,7 +242,7 @@ public void Var008 ()
         JarMaker jm = new JarMaker ();
         String entry1 = new String ("jungle");
         String entry2 = new String (" jungle.predator ");
-        Vector inList = new Vector (1);
+        Vector<String> inList = new Vector<String> (1);
         inList.add (entry1);
         inList.add (entry2);
         jm.setPackages (inList);
@@ -250,7 +250,7 @@ public void Var008 ()
         jm.makeJar (JMTest.JUNGLE_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedManifest = new Vector ();
+        Vector<String> expectedManifest = new Vector<String> ();
         expectedManifest.add ("jungle/Animal.java");
         expectedManifest.add ("jungle/Animal.class");
         expectedManifest.add ("jungle/Animal$AnimalThread.class");
@@ -260,7 +260,7 @@ public void Var008 ()
         expectedManifest.add ("jungle/predator/Predator.class");
         expectedManifest.add ("jungle/predator/Predator.java");
         expectedManifest.add ("jungle/predator/puma.jpg");
-        Vector expectedJar = JMTest.addDirectoryEntries(expectedManifest);
+        Vector<String> expectedJar = JMTest.addDirectoryEntries(expectedManifest);
         assertCondition (JMTest.verifyJar (JMTest.JUNGLE_JAR_SMALL, expectedJar, expectedManifest));
       }
       catch (Exception e) {
@@ -279,7 +279,7 @@ public void Var009 ()
         JarMaker jm = new JarMaker ();
         String entry1 = new String ("jungle");
         String entry2 = new String ("jungle.bogus");
-        Vector inList = new Vector (1);
+        Vector<String> inList = new Vector<String> (1);
         inList.add (entry1);
         inList.add (entry2);
         jm.setPackages (inList);
@@ -301,13 +301,12 @@ public void Var010 ()
         JarMaker jm = new JarMaker ();
         String entry1 = new String ("com.ibm.as400");
         String entry2 = new String ("mypackage");
-        String entry3 = new String ("java.somespecialpackage");
-        Vector inList = new Vector ();
+        Vector<String> inList = new Vector<String> ();
         inList.add (entry1);
         inList.add (entry2);
         jm.setPackages (inList);
         jm.reset ();
-        Vector outList = jm.getPackages ();
+        Vector<?> outList = jm.getPackages ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {

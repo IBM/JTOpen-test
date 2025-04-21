@@ -482,7 +482,7 @@ public class JDVariationSkip {
           case JDTestDriver.RELEASE_V7R3M0: return 4;
           case JDTestDriver.RELEASE_V7R4M0: return 5;
           case JDTestDriver.RELEASE_V7R5M0: return 6;
-          case JDTestDriver.RELEASE_V7R5M0_PLUS: return 7;
+          case JDTestDriver.RELEASE_V7R6M0: return 7;
           case 999: return 9; /* should be MAX_RELEASE_COUNT-1 */ 
           default:
             throw new Exception("Invalid release "+release);

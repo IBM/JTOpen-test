@@ -68,7 +68,7 @@ public class DDMMultipleFormat extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
 /*  public DDMMultipleFormat(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       )
@@ -84,7 +84,7 @@ public class DDMMultipleFormat extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMMultipleFormat(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -1182,7 +1182,7 @@ public class DDMMultipleFormat extends Testcase
            file.lock(AS400File.WRITE_ALLOW_SHARED_READ_LOCK);
            file.lock(AS400File.WRITE_ALLOW_SHARED_WRITE_LOCK);
            locks = file.getExplicitLocks();
-           Vector v = new Vector(locks.length);
+           Vector<Integer> v = new Vector<Integer>(locks.length);
            for (int i = 0; i < locks.length; i++)
            {
              v.addElement(new Integer(locks[i]));

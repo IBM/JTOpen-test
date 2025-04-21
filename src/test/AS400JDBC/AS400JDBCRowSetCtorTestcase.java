@@ -79,7 +79,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase
       Constructor.  This is called from the AS400JDBCRowSetTestcase constructor.
      **/
     public AS400JDBCRowSetCtorTestcase(AS400 systemObject,
-                                       Vector variationsToRun,
+                                       Vector<String> variationsToRun,
                                        int runMode,
                                        FileOutputStream fileOutputStream,
                                        

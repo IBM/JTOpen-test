@@ -20,7 +20,6 @@ import com.ibm.as400.access.SocketProperties;
 
 import test.EVTest;
 import test.Testcase;
-import test.EVTest.PropertyChangeListener_;
 
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
@@ -67,7 +66,7 @@ public class EVListBasicTestcase extends Testcase
 
         // Delete all existing environment variables.
         EnvironmentVariableList evl = new EnvironmentVariableList(pwrSys_);
-        Enumeration enumeration = evl.getEnvironmentVariables();
+        Enumeration<?> enumeration = evl.getEnvironmentVariables();
         while (enumeration.hasMoreElements())
         {
             EnvironmentVariable ev = (EnvironmentVariable)enumeration.nextElement();
@@ -92,9 +91,9 @@ public class EVListBasicTestcase extends Testcase
      @return         true if the enumeration is valid, false otherwise.
      @exception  Exception  If an exception occurs.
      **/
-    private boolean testEnumeration(Enumeration enumeration, int expected) throws Exception
+    private boolean testEnumeration(Enumeration<?> enumeration, int expected) throws Exception
     {
-        Vector v = new Vector(expected);
+        Vector<String> v = new Vector<String>(expected);
         for (int i = 0; i < expected; ++i)
             v.addElement(EV_PREFIX_ + i);
 
@@ -223,7 +222,7 @@ public class EVListBasicTestcase extends Testcase
     public void Var003()
     {
         try {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             SocketProperties socketProperties = new SocketProperties();
             socketProperties.setLoginTimeout(LOGIN_TIMEOUT); 
             bogus.setSocketProperties(socketProperties ); 
@@ -323,7 +322,7 @@ public class EVListBasicTestcase extends Testcase
     {
         try {
             EnvironmentVariableList evl = new EnvironmentVariableList();
-            AS400 system = new AS400("bogus", "bogus", "bogus");
+            AS400 system = new AS400("bogus", "bogus", "bogus".toCharArray());
             system.setGuiAvailable(false);
             SocketProperties socketProperties = new SocketProperties();
             socketProperties.setLoginTimeout(LOGIN_TIMEOUT); 
@@ -438,7 +437,7 @@ public class EVListBasicTestcase extends Testcase
     {
         try {
             EnvironmentVariableList evl = new EnvironmentVariableList();
-            AS400 system = new AS400("bogus", "bogus", "bogus");
+            AS400 system = new AS400("bogus", "bogus", "bogus".toCharArray());
             system.setGuiAvailable(false);
             SocketProperties socketProperties = new SocketProperties();
             socketProperties.setLoginTimeout(LOGIN_TIMEOUT); 
@@ -636,7 +635,7 @@ public class EVListBasicTestcase extends Testcase
     {
         try {
             EnvironmentVariableList ev = new EnvironmentVariableList();
-            AS400 system = new AS400("bogus", "bogus", "bogus");
+            AS400 system = new AS400("bogus", "bogus", "bogus".toCharArray());
             system.setGuiAvailable(false);
             SocketProperties socketProperties = new SocketProperties();
             socketProperties.setLoginTimeout(LOGIN_TIMEOUT); 
@@ -771,7 +770,7 @@ public class EVListBasicTestcase extends Testcase
     {
         try {
             EnvironmentVariableList ev = new EnvironmentVariableList(pwrSys_);
-            ev.setSystem(new AS400("Bogus", "Bogus", "Bogus"));
+            ev.setSystem(new AS400("Bogus", "Bogus", "Bogus".toCharArray()));
             succeeded();
         }
         catch (Exception e) {

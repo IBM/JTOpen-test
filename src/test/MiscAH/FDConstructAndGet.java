@@ -69,7 +69,7 @@ public class FDConstructAndGet extends Testcase
   Constructor.  This is called from the FDTest constructor.
   **/
   public FDConstructAndGet(AS400            systemObject,
-                         Vector           variationsToRun,
+                         Vector<String> variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream)
   {

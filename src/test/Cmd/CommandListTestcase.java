@@ -56,7 +56,7 @@ public class CommandListTestcase extends Testcase
      Constructor.  This is called from the HTMLTest constructor.
     **/
    public CommandListTestcase(AS400 systemObject,
-                                 Vector variationsToRun,
+                                 Vector<String> variationsToRun,
                                  int runMode,
                                  FileOutputStream fileOutputStream)
    {

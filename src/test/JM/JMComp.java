@@ -19,9 +19,7 @@ import com.ibm.as400.access.AS400;
 import test.JMTest;
 import test.Testcase;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -36,7 +34,7 @@ methods of the ToolboxJarMaker class:
 <li>setComponents
 </ul>
 **/
-
+@SuppressWarnings("deprecation")
 public class JMComp
 extends Testcase
 {
@@ -45,7 +43,7 @@ extends Testcase
 Constructor.
 **/
     public JMComp (AS400 systemObject,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream)
     {
@@ -98,7 +96,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (null);
         jm.setComponents (inList);
         failed ("Didn't throw exception.");
@@ -115,7 +113,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector outList = jm.getComponents ();
+        Vector<?> outList = jm.getComponents ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -130,9 +128,9 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector ();
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> ();
         jm.setComponents (inList);
-        Vector outList = jm.getComponents ();
+        Vector<?> outList = jm.getComponents ();
         assertCondition (outList.size () == 0);
       }
       catch (Exception e) {
@@ -147,7 +145,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add ("12345");  // String instead of Integer
         jm.setComponents (inList);
         failed ("Didn't throw exception.");
@@ -165,7 +163,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (new Integer (999));
         jm.setComponents (inList);
         failed ("Didn't throw exception.");
@@ -182,12 +180,12 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (2);
         inList.add (ToolboxJarMaker.PROGRAM_CALL);
         inList.add (ToolboxJarMaker.JDBC);
         inList.add (ToolboxJarMaker.COMMAND_CALL);
         jm.setComponents (inList);
-        Vector outList = jm.getComponents ();
+        Vector<?> outList = jm.getComponents ();
         assertCondition ((outList.size () == 3) &&
                 outList.contains (ToolboxJarMaker.PROGRAM_CALL) &&
                 outList.contains (ToolboxJarMaker.JDBC) &&
@@ -205,12 +203,12 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<Integer> inList = new Vector<Integer> (2);
         inList.add (ToolboxJarMaker.PROGRAM_CALL);
         inList.add (ToolboxJarMaker.JDBC);
         inList.add (ToolboxJarMaker.COMMAND_CALL);
         jm.setComponents (inList, false);
-        Vector outList = jm.getComponents ();
+        Vector<?> outList = jm.getComponents ();
         assertCondition ((outList.size () == 3) &&
                 outList.contains (ToolboxJarMaker.PROGRAM_CALL) &&
                 outList.contains (ToolboxJarMaker.JDBC) &&
@@ -228,12 +226,12 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<Integer> inList = new Vector<Integer> (2);
         inList.add (ToolboxJarMaker.PROGRAM_CALL);
         inList.add (ToolboxJarMaker.JDBC);
         inList.add (ToolboxJarMaker.COMMAND_CALL);
         jm.setComponents (inList, true);
-        Vector outList = jm.getComponents ();
+        Vector<?> outList = jm.getComponents ();
         assertCondition ((outList.size () == 3) &&
                 outList.contains (ToolboxJarMaker.PROGRAM_CALL) &&
                 outList.contains (ToolboxJarMaker.JDBC) &&
@@ -252,7 +250,7 @@ Performs cleanup needed after running variations.
     {
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (2);
         inList.add (ToolboxJarMaker.PROGRAM_CALL);
         inList.add (new Integer (999));
         jm.setComponents (inList);
@@ -272,7 +270,7 @@ Performs cleanup needed after running variations.
       printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (1);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
         inList.add (ToolboxJarMaker.TRACE);
         jm.setComponents (inList);
         // Remove the destination jar file if it exists.
@@ -281,7 +279,7 @@ Performs cleanup needed after running variations.
         jm.makeJar (JMTest.TOOLBOX_JAR);
 
         // Verify that only the correct files got copied.
-        Vector expectedJar = new Vector ();
+        Vector<String> expectedJar = new Vector<String> ();
         expectedJar.add ("com/ibm/as400/access/Trace.class");
         expectedJar.add ("com/ibm/as400/access/Copyright.class");
         expectedJar.add ("com/ibm/as400/access/ExtendedIllegalArgumentException.class");
@@ -295,7 +293,7 @@ Performs cleanup needed after running variations.
         expectedJar.add ("com/ibm/as400/access/ToolboxLogger.class");
         expectedJar.add ("com/ibm/as400/access/SystemProperties.class");
         expectedJar = JMTest.addDirectoryEntries(expectedJar);
-        Vector expectedManifest = new Vector ();
+        Vector<String> expectedManifest = new Vector<String> ();
         expectedManifest.add ("com/ibm/as400/access/");
         assertCondition (JMTest.verifyJar (JMTest.TOOLBOX_JAR_SMALL, expectedJar, expectedManifest, true));
       }
@@ -313,7 +311,7 @@ Performs cleanup needed after running variations.
       printVariationStartTime (); // this var may be long-running
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
-        Vector inList = new Vector (2);
+        Vector<Comparable<?>> inList = new Vector<Comparable<?>> (2);
         inList.add (ToolboxJarMaker.TRACE);
         inList.add (ToolboxJarMaker.USER_VISUAL);
         jm.setComponents (inList);
@@ -323,7 +321,7 @@ Performs cleanup needed after running variations.
         // Make the jar.
         jm.makeJar (JMTest.TOOLBOX_JAR);
         // Verify that only the correct files got copied.
-        Vector expected = new Vector (20);
+        Vector<String> expected = new Vector<String> (20);
         // Files to expect for TRACE component:
         expected.add ("com/ibm/as400/access/Trace.class");
         expected.add ("com/ibm/as400/access/Copyright.class");
@@ -344,7 +342,7 @@ Performs cleanup needed after running variations.
         expected.add ("com/ibm/as400/vaccess/VMRI.class");
 
         // Files that should NOT get included:
-        Vector notExpected = new Vector (10);
+        Vector<String> notExpected = new Vector<String> (10);
         notExpected.add ("com/ibm/as400/vaccess/VUserListBeanInfo.class");
         notExpected.add ("com/ibm/as400/access/AS400JDBCCallableStatement.class");
         notExpected.add ("com/ibm/as400/access/AS400Certificate.class");

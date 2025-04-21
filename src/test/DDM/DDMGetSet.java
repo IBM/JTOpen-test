@@ -71,7 +71,7 @@ public class DDMGetSet extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMGetSet(AS400            systemObject,
-                      Vector           variationsToRun,
+                      Vector<String> variationsToRun,
                       int              runMode,
                       FileOutputStream fileOutputStream,
                       
