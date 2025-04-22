@@ -1058,6 +1058,88 @@ public class DDMRecordDescription extends Testcase
     }
   }
 
+  /**
+   * Tests BIGINT data type in a RecordFormat.
+  **/
+  public void Var011()
+  {
+    String testTable="BI1";
+    if (getRelease() < JDTestDriver.RELEASE_V7R4M0)  {
+      notApplicable("BIGINT test"); 
+      return; 
+    }
+    StringBuffer sb = new StringBuffer(); 
+    sb.append("\nTESTING BIGINT: ");
+    boolean passed = true; 
+    try
+    {   
+      
+      AS400JDBCDriver driver = new AS400JDBCDriver(); 
+      Connection c = driver.connect(systemObject_); 
+      Statement stmt = c.createStatement(); 
+      String sql="CREATE OR REPLACE TABLE "+testLib_+"."+testTable+" (C1 INT, C2 BIGINT)";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(0,0)";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      sql="INSERT INTO   "+testLib_+"."+testTable+" VALUES(1,123567890123)";
+      sb.append("\nRunning: "+sql);
+      stmt.executeUpdate(sql); 
+      
+      c.close(); 
+      
+      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/"+testTable+".FILE");
+      sf.setRecordFormat();
+      RecordFormat rf = sf.getRecordFormat();
+      FieldDescription fd0 = rf.getFieldDescription(0); 
+
+      Record[] recs = sf.readAll();
+      Integer val00 = (Integer) recs[0].getField(0);
+      Long val01 = (Long) recs[0].getField(1);
+      Integer val10 = (Integer) recs[1].getField(0);
+      Long val11 = (Long) recs[1].getField(1);
+      if (val00.intValue() != 0 ) {
+        passed = false; 
+        sb.append("\n for val00 got "+val00+" sb 0");
+      }
+
+      Long expected = new Long(0);
+      if (! expected.equals(val01)) {
+        passed = false; 
+        sb.append("\n for val01 got "+val01+" sb "+expected);
+      }
+
+
+      if (val10.intValue() != 1 ) {
+        passed = false; 
+        sb.append("\n for val10 got "+val10+" sb 1");
+      }
+
+      expected= new Long(123567890123L);
+      if (! expected.equals(val11)) {
+        passed = false; 
+        sb.append("\n for val11 got "+val11+" sb "+expected);
+      }
+      sf.close(); 
+      
+      assertCondition(passed, sb); 
+    }
+    catch(Exception e)
+    {
+      failed(e, sb);
+    }
+    finally
+    {
+      try
+      {
+        CommandCall cc = new CommandCall(pwrSys_);
+        cc.run("DLTF "+testLib_+"/"+testTable+"");
+      }
+      catch(Exception e) {}
+    }
+  }
+
   
   
 }
