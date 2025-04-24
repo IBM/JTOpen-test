@@ -76,12 +76,106 @@ extends JDTestcase
     public static  String           cmdChecked="NO";
 
     /* Homogenious N-1 tests */ 
-    public static  String           GCLIConnect = " SERVER=NOTSET ";
-    public static  String           HCLIConnect = " SERVER=NOTSET ";
-    public static  String           ZCLIConnect = " SERVER=NOTSET ";
-    public static  String           LCLIConnect = " SERVER=NOTSET ";
+    private static  String           GCLIConnect_ = null; 
+    private static  String           HCLIConnect_ = null; 
+    private static  String           ZCLIConnect_ = null; 
+    private static  String           LCLIConnect_ = null; 
 
+    public static String getGCLIConnect() { 
+      if (GCLIConnect_ == null)  {
+         GCLIConnect_ =  " SERVER=NOTSET ";
+        //
+        // Initialize the connection string2 for the CLI test
+        //
+        String gDSN = System.getProperty("CLIWGDSN");
+        if (gDSN != null) {
+          GCLIConnect_ = " SERVER=" + gDSN + " ";
+        }
+        String gUID = System.getProperty("CLIWGUID");
+        if (gUID != null) {
+          GCLIConnect_ = GCLIConnect_ + "USERID=" + gUID.toUpperCase() + " ";
+        }
+        String gPWD = System.getProperty("CLIWGPWD");
+        if (gPWD != null) {
+          char[] encryptedPassword = PasswordVault.getEncryptedPassword(gPWD);
+          GCLIConnect_ = GCLIConnect_ + "PASSWORD=" + PasswordVault.decryptPasswordLeak(encryptedPassword) + " ";
+        }
+      }
+      return GCLIConnect_; 
+    }
 
+    
+    public static String getHCLIConnect() { 
+      if (HCLIConnect_ == null)  {
+         HCLIConnect_ =  " SERVER=NOTSET ";
+        //
+        // Initialize the connection string2 for the CLI test
+        //
+        String gDSN = System.getProperty("CLIWGDSN");
+        if (gDSN != null) {
+          HCLIConnect_ = " SERVER=" + gDSN + " ";
+        }
+        String gUID = System.getProperty("CLIWGUID");
+        if (gUID != null) {
+          HCLIConnect_ = HCLIConnect_ + "USERID=" + gUID.toUpperCase() + " ";
+        }
+        String gPWD = System.getProperty("CLIWGPWD");
+        if (gPWD != null) {
+          char[] encryptedPassword = PasswordVault.getEncryptedPassword(gPWD);
+          HCLIConnect_ = HCLIConnect_ + "PASSWORD=" + PasswordVault.decryptPasswordLeak(encryptedPassword) + " ";
+        }
+      }
+      return HCLIConnect_; 
+    }
+    
+    public static String getZCLIConnect() { 
+      if (ZCLIConnect_ == null)  {
+         ZCLIConnect_ =  " SERVER=NOTSET ";
+        //
+        // Initialize the connection string2 for the CLI test
+        //
+        String gDSN = System.getProperty("CLIWGDSN");
+        if (gDSN != null) {
+          ZCLIConnect_ = " SERVER=" + gDSN + " ";
+        }
+        String gUID = System.getProperty("CLIWGUID");
+        if (gUID != null) {
+          ZCLIConnect_ = ZCLIConnect_ + "USERID=" + gUID.toUpperCase() + " ";
+        }
+        String gPWD = System.getProperty("CLIWGPWD");
+        if (gPWD != null) {
+          char[] encryptedPassword = PasswordVault.getEncryptedPassword(gPWD);
+          ZCLIConnect_ = ZCLIConnect_ + "PASSWORD=" + PasswordVault.decryptPasswordLeak(encryptedPassword) + " ";
+        }
+      }
+      return ZCLIConnect_; 
+    }
+    
+    
+    public static String getLCLIConnect() { 
+      if (LCLIConnect_ == null)  {
+         LCLIConnect_ =  " SERVER=NOTSET ";
+        //
+        // Initialize the connection string2 for the CLI test
+        //
+        String gDSN = System.getProperty("CLIWGDSN");
+        if (gDSN != null) {
+          LCLIConnect_ = " SERVER=" + gDSN + " ";
+        }
+        String gUID = System.getProperty("CLIWGUID");
+        if (gUID != null) {
+          LCLIConnect_ = LCLIConnect_ + "USERID=" + gUID.toUpperCase() + " ";
+        }
+        String gPWD = System.getProperty("CLIWGPWD");
+        if (gPWD != null) {
+          char[] encryptedPassword = PasswordVault.getEncryptedPassword(gPWD);
+          LCLIConnect_ = LCLIConnect_ + "PASSWORD=" + PasswordVault.decryptPasswordLeak(encryptedPassword) + " ";
+        }
+      }
+      return LCLIConnect_; 
+    }
+    
+    
     public static boolean useCliJobRun = false; 
     String systemName = null ;
 
@@ -120,6 +214,22 @@ Constructor.
        super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  password);
     }
 
+    
+    public JDJSTPTestcase (AS400 systemObject,
+        String testcaseName,
+        Hashtable <String, Vector<String>>namesAndVars,
+        int runMode,
+        FileOutputStream fileOutputStream,
+        
+        String password, 
+        String pwrUserid,
+        String pwrPassword)
+{
+super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  password, pwrUserid, pwrPassword);
+}
+
+    
+    
     protected void setup() throws Exception {
       
 
@@ -429,64 +539,8 @@ Constructor.
     } catch (Exception dontCare) {
     }
 
-    //
-    // Initialize the connection string2 for the CLI test
-    //
-    String gDSN = System.getProperty("CLIWGDSN");
-    if (gDSN != null) {
-      GCLIConnect = " SERVER=" + gDSN + " ";
-    }
-    String gUID = System.getProperty("CLIWGUID");
-    if (gUID != null) {
-      GCLIConnect = GCLIConnect + "USERID=" + gUID.toUpperCase() + " ";
-    }
-    String gPWD = System.getProperty("CLIWGPWD");
-    if (gPWD != null) {
-      GCLIConnect = GCLIConnect + "PASSWORD=" + gPWD + " ";
-    }
 
-    //
-    // Initialize the connection string2 for the CLI test
-    //
-    String hDSN = System.getProperty("CLIWHDSN");
-    if (hDSN != null) {
-      HCLIConnect = " SERVER=" + hDSN + " ";
-    }
-    String hUID = System.getProperty("CLIWHUID");
-    if (hUID != null) {
-      HCLIConnect = HCLIConnect + "USERID=" + hUID.toUpperCase() + " ";
-    }
-    String hPWD = System.getProperty("CLIWHPWD");
-    if (hPWD != null) {
-      HCLIConnect = HCLIConnect + "PASSWORD=" + hPWD + " ";
-    }
-
-    String lDSN = System.getProperty("CLIWLDSN");
-    if (lDSN != null) {
-      LCLIConnect = " SERVER=" + lDSN + " ";
-    }
-    String lUID = System.getProperty("CLIWLUID");
-    if (lUID != null) {
-      LCLIConnect = LCLIConnect + "USERID=" + lUID + " ";
-    }
-    String lPWD = System.getProperty("CLIWLPWD");
-    if (lPWD != null) {
-      LCLIConnect = LCLIConnect + "PASSWORD=" + lPWD + " ";
-    }
-
-    String zDSN = System.getProperty("CLIWZDSN");
-    if (zDSN != null) {
-      ZCLIConnect = " SERVER=" + zDSN + " ";
-    }
-    String zUID = System.getProperty("CLIWZUID");
-    if (zUID != null) {
-      ZCLIConnect = ZCLIConnect + "USERID=" + zUID + " ";
-    }
-    String zPWD = System.getProperty("CLIWZPWD");
-    if (zPWD != null) {
-      ZCLIConnect = ZCLIConnect + "PASSWORD=" + zPWD + " ";
-    }
-
+ 
   }
 
     /**
