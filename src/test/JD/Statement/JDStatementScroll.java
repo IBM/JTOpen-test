@@ -21,17 +21,16 @@
 
 package test.JD.Statement;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDTestcase;
-
 import java.io.FileOutputStream;
-import java.sql.Connection;
-
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDTestcase;
 
 /**
  * Testcase JDStatementScroll. This the use of a scrollable statement
@@ -54,7 +53,7 @@ public class JDStatementScroll extends JDTestcase {
    * Constructor.
    **/
   public JDStatementScroll(AS400 systemObject,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, "JDStatementScroll", namesAndVars, runMode,
         fileOutputStream, password);

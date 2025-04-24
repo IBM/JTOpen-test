@@ -41,7 +41,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDRSMDGetColumnLabel. This tests the following method of the JDBC
@@ -94,7 +94,7 @@ public class JDRSMDGetColumnLabel extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDRSMDGetColumnLabel(AS400 systemObject, Hashtable namesAndVars,
+  public JDRSMDGetColumnLabel(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDRSMDGetColumnLabel", namesAndVars, runMode,

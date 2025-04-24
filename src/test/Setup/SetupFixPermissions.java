@@ -21,7 +21,7 @@ public class SetupFixPermissions implements Runnable {
 
   public static long lastCheck = 0;
   static Object lock = new Object(); 
-  static ArrayBlockingQueue queue = new ArrayBlockingQueue(100000); 
+  static ArrayBlockingQueue<File> queue = new ArrayBlockingQueue<File>(100000); 
   static int queueCount = 0; 
   static int workingCount = 0;
   

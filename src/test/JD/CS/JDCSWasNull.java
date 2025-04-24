@@ -24,12 +24,6 @@
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDSetupProcedure;
-import test.JDTestcase;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -37,6 +31,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDSetupProcedure;
+import test.JDTestcase;
 
 
 
@@ -74,7 +74,7 @@ extends JDTestcase
 Constructor.
 **/
    public JDCSWasNull (AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        
@@ -530,7 +530,8 @@ when the value is NULL.
 wasNull() - After getting a type that was registered as an DECIMAL
 when the value is not NULL.
 **/
-   public void Var021()
+   @SuppressWarnings("deprecation")
+  public void Var021()
    {
       try {
          csTypes_.getBigDecimal (7, 0);
@@ -547,7 +548,8 @@ when the value is not NULL.
 wasNull() - After getting a type that was registered as an DECIMAL
 when the value is NULL.
 **/
-   public void Var022()
+   @SuppressWarnings("deprecation")
+  public void Var022()
    {
       try {
          csTypes2_.getBigDecimal (7, 0);
@@ -564,7 +566,8 @@ when the value is NULL.
 wasNull() - After getting a type that was registered as an NUMERIC when
 the value is not NULL.
 **/
-   public void Var023()
+   @SuppressWarnings("deprecation")
+  public void Var023()
    {
       try {
          csTypes_.getBigDecimal (9, 0);
@@ -581,7 +584,8 @@ the value is not NULL.
 wasNull() - After getting a type that was registered as an NUMERIC when
 the value is NULL.
 **/
-   public void Var024()
+   @SuppressWarnings("deprecation")
+  public void Var024()
    {
       try {
          csTypes2_.getBigDecimal (9, 0);

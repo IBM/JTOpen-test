@@ -16,7 +16,7 @@ package test.JD.Lob;
 import com.ibm.as400.access.AS400;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -57,7 +57,7 @@ extends JDLobClobLocator
 Constructor.
 **/
     public JDLobNClobLocator (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              String password)
@@ -74,7 +74,7 @@ Constructor.
 
     public JDLobNClobLocator (AS400 systemObject,
 			     String testname, 	 
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              String password)

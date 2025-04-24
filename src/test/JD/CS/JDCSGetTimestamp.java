@@ -21,22 +21,21 @@
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDCSTest;
-import test.JDSetupProcedure;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Calendar;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDCSTest;
+import test.JDSetupProcedure;
 
 
 
@@ -70,7 +69,7 @@ extends JDCSGetTestcase
 Constructor.
 **/
    public JDCSGetTimestamp (AS400 systemObject,
-                            Hashtable namesAndVars,
+                            Hashtable<String,Vector<String>> namesAndVars,
                             int runMode,
                             FileOutputStream fileOutputStream,
                             

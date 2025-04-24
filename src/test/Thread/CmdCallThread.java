@@ -200,7 +200,7 @@ class CmdCallThread extends ComponentThread
                 error("Severities not equal");
             }
 
-            if (!Testcase.isEqual(message.getSubstitutionData(), substitutionData))
+            if (!Testcase.areEqual(message.getSubstitutionData(), substitutionData))
             {
                 error("Substitution Data not equal");
             }
@@ -252,7 +252,7 @@ class CmdCallThread extends ComponentThread
     /**
      Sets the value of the sytem to one of 2 values.  If the value retrieved doesn't match one of these 2 values the system as corrupted.
      **/
-    private void performSetSystem()
+     void performSetSystem()
     {
         try
         {

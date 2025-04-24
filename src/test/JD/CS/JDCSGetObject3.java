@@ -61,6 +61,20 @@
 
 package test.JD.CS;
 
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.net.URL;
+import java.sql.Blob;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
@@ -68,22 +82,6 @@ import test.JDLobTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Hashtable;
-import java.math.BigDecimal;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Date;
-import java.net.*;
-import java.sql.Blob;
-import java.sql.Clob;
 
 /**
 Testcase JDCSGetObject3.  This tests the following
@@ -115,7 +113,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDCSGetObject3 (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -534,7 +532,7 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT TIME
 	   JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTIME");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNTIME (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.JAVA_OBJECT);
-	    cstmt.setTime(1,new Time (22, 33, 44));
+	    cstmt.setTime(1,Time.valueOf("22:33:44"));
 	    cstmt.execute();
 
 	    Time check ;

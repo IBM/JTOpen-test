@@ -39,7 +39,6 @@ import test.JDConnectionTest;
 import test.JDHandleDump;
 import test.JDReflectionUtil;
 import test.JDTestcase;
-import test.JD.JDSecurityManagerAllowAbort;
 import test.JD.JDSecurityManagerDenyAbort;
 import test.JD.JDSecurityManagerDenySQLPermission;
 
@@ -49,7 +48,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -88,7 +87,7 @@ public class JDConnectionAbort extends JDTestcase {
 Constructor.
 **/
     public JDConnectionAbort (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -151,7 +150,7 @@ Cleanup.
     void callAbort(Connection connection, Object thisExecutor, StringBuffer sbAbort) throws Exception {
       sbAbort.append("Call abort \n"); 
       {
-        Class[] argTypes = new Class[1]; 
+        Class<?>[] argTypes = new Class[1]; 
         Object[] args = new Object[1]; 
         argTypes[0] = Class.forName("java.util.concurrent.Executor"); 
         args[0] = thisExecutor; 
@@ -213,7 +212,7 @@ Cleanup.
             //
             sb1.append("executor.awaitTermination at "+System.currentTimeMillis()+"\n");
             {
-              Class[] argTypes = new Class[2]; 
+              Class<?>[] argTypes = new Class[2]; 
               Object[] args = new Object[2];
               argTypes[0] = Long.TYPE; 
               argTypes[1] = Class.forName("java.util.concurrent.TimeUnit");
@@ -387,7 +386,7 @@ Cleanup.
 
         sb.append("executor.awaitTermination at "+System.currentTimeMillis()+"\n");
         {
-          Class[] argTypes = new Class[2];
+          Class<?>[] argTypes = new Class[2];
           Object[] args = new Object[2];
           argTypes[0] = Long.TYPE;
           argTypes[1] = Class.forName("java.util.concurrent.TimeUnit");
@@ -514,7 +513,7 @@ Cleanup.
            Object timeUnitSeconds11 = JDReflectionUtil.getStaticField_O("java.util.concurrent.TimeUnit", "SECONDS"); 
            sb.append("executor.awaitTermination\n");
            {
-             Class[] argTypes = new Class[2]; 
+             Class<?>[] argTypes = new Class[2]; 
              Object[] args = new Object[2];
              argTypes[0] = Long.TYPE; 
              argTypes[1] = Class.forName("java.util.concurrent.TimeUnit");
@@ -610,7 +609,7 @@ Cleanup.
               Connection connection  = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
               
               try { 
-              Class[] argTypes = new Class[1]; 
+              Class<?>[] argTypes = new Class[1]; 
               Object[] args = new Object[1]; 
               argTypes[0] = Class.forName("java.util.concurrent.Executor"); 
               args[0] = null ; 

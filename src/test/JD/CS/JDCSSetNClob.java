@@ -33,7 +33,6 @@
 
 package test.JD.CS;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.io.StringReader;
 import java.sql.CallableStatement;
@@ -41,6 +40,7 @@ import java.sql.Clob;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -72,7 +72,7 @@ public class JDCSSetNClob extends JDCSSetTestcase {
   /**
    * Constructor.
    **/
-  public JDCSSetNClob(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSSetNClob(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetNClob", namesAndVars, runMode, fileOutputStream,
@@ -227,7 +227,7 @@ public class JDCSSetNClob extends JDCSSetTestcase {
         JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
             supportedFeatures_, getDriver());
 
-        Class[] argClasses = new Class[2];
+        Class<?>[] argClasses = new Class[2];
         argClasses[0] = Integer.TYPE;
         // TODO.. This will need to change when really running JDBC40
         try {
@@ -902,7 +902,7 @@ public class JDCSSetNClob extends JDCSSetTestcase {
             supportedFeatures_);
         JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
             supportedFeatures_, getDriver());
-        Class[] argClasses = new Class[2];
+        Class<?>[] argClasses = new Class[2];
         argClasses[0] = Integer.TYPE;
         // TODO.. This will need to change when really running JDBC40
         try {

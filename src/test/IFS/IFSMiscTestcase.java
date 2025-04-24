@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Vector;
 import java.util.Enumeration;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Exception;
@@ -72,7 +73,7 @@ Constructor.
   public IFSMiscTestcase (AS400 systemObject,
         String userid, 
         String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>>namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)
@@ -2126,7 +2127,7 @@ Verify that setCCSID() throws exception for a nonexistent file.
 **/
   public void Var058()
   {
-    Class[] parmTypes = { int.class };
+    Class<?>[] parmTypes = { int.class };
     if (!checkMethodExists("setCCSID", parmTypes)) {
       notApplicable("No method named setCCSID()");
       return;
@@ -2152,7 +2153,7 @@ Verify that setCCSID() throws exception for a directory.
 **/
   public void Var059()
   {
-    Class[] parmTypes = { int.class };
+    Class<?>[] parmTypes = { int.class };
     if (!checkMethodExists("setCCSID", parmTypes)) {
       notApplicable("No method named setCCSID()");
       return;
@@ -2177,7 +2178,7 @@ Verify that setCCSID() successfully resets the data CCSID of a valid file.
 **/
   public void Var060()
   {
-    Class[] parmTypes = { int.class };
+    Class<?>[] parmTypes = { int.class };
     if (!checkMethodExists("setCCSID", parmTypes)) {
       notApplicable("No method named setCCSID()");
       return;
@@ -2354,7 +2355,7 @@ Test getParentFile().
 
 
   // Verifies that a method exists in class IFSFile.  Returns false if method not found.
-  static boolean checkMethodExists(String methodName, Class[] parmTypes)
+  static boolean checkMethodExists(String methodName, Class<?>[] parmTypes)
   {
     try {
       Class.forName("com.ibm.as400.access.IFSFile").getDeclaredMethod(methodName, parmTypes);

@@ -35,7 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.math.BigDecimal;
 
 
@@ -91,7 +91,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDStatementMisc (AS400 systemObject,
-                            Hashtable namesAndVars,
+                            Hashtable<String,Vector<String>> namesAndVars,
                             int runMode,
                             FileOutputStream fileOutputStream,
                             

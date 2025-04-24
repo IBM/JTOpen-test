@@ -31,7 +31,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 /**
@@ -59,7 +59,7 @@ public class JDTableName extends JDTestcase {
 Constructor.
 **/
     public JDTableName(AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        

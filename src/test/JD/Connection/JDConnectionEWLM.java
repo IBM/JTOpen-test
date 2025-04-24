@@ -33,7 +33,7 @@ import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Random;
 import javax.sql.ConnectionPoolDataSource;
 
@@ -58,7 +58,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDConnectionEWLM (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -105,13 +105,13 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
     Object armApplicationDefinition = null; 
     Object armApplication = null;
     Object armTransactionDefinition =null;
-    Class[] newArmTransactionArgs = null; 
+    Class<?>[] newArmTransactionArgs = null; 
     Object armTransaction = null;
 
     String applicationName = "JDConnectionEWLM"; 
     String transactionName = "TestTransaction";
     Object armProperties = null; 
-    Class stringClass = "".getClass(); 
+    Class<?> stringClass = "".getClass(); 
     // 
     // This is shipped on iSeries in /qibm/proddata/WLM/classes/arm.jar
     // I'm not sure what is to be used by toolbox on the PC
@@ -171,7 +171,7 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 	    //
 	    // Get the factory
 	    // 
-	    Class tranFactoryClass = Class.forName(tranFactoryName);
+	    Class<?> tranFactoryClass = Class.forName(tranFactoryName);
 	    armTransactionFactory = tranFactoryClass.newInstance();
 
 	    //
@@ -183,7 +183,7 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
             //     java.lang.String,
             //     org.opengroup.arm40.transaction.ArmIdentityProperties,
             //     org.opengroup.arm40.transaction.ArmID);
-	    Class[] newArmApplicationDefinitionArgs = new Class[3];
+	    Class<?>[] newArmApplicationDefinitionArgs = new Class[3];
             newArmApplicationDefinitionArgs[0] = stringClass;
 	    newArmApplicationDefinitionArgs[1] = Class.forName("org.opengroup.arm40.transaction.ArmIdentityProperties"); 
 	    newArmApplicationDefinitionArgs[2] = Class.forName("org.opengroup.arm40.transaction.ArmID");
@@ -196,7 +196,7 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
             //    java.lang.String,
             //    java.lang.String[]);
 	    String[] dummyStringArray = new String[1]; 
-	    Class[] newArmApplicationArgs = new Class[4];
+	    Class<?>[] newArmApplicationArgs = new Class[4];
 	    newArmApplicationArgs[0] = Class.forName("org.opengroup.arm40.transaction.ArmApplicationDefinition");
 	    newArmApplicationArgs[1] = stringClass;
 	    newArmApplicationArgs[2] = stringClass;
@@ -220,7 +220,7 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
             //   org.opengroup.arm40.transaction.ArmIdentityPropertiesTransaction,
             //   org.opengroup.arm40.transaction.ArmID);
 
-	    Class[] newArmTransactionDefinitionArgs = new Class[4];
+	    Class<?>[] newArmTransactionDefinitionArgs = new Class[4];
 	    newArmTransactionDefinitionArgs[0] = Class.forName("org.opengroup.arm40.transaction.ArmApplicationDefinition");
 	    newArmTransactionDefinitionArgs[1] = stringClass; 
 	    newArmTransactionDefinitionArgs[2] = Class.forName("org.opengroup.arm40.transaction.ArmIdentityPropertiesTransaction");

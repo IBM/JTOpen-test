@@ -21,25 +21,24 @@
 
 package test.JD.CS;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.sql.Blob;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDReflectionUtil;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.io.ByteArrayInputStream; 
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.Hashtable;
 
 
 
@@ -79,7 +78,7 @@ extends JDCSGetTestcase
 Constructor.
 **/
    public JDCSGetBlob (AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        

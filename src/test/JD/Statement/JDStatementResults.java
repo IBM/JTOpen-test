@@ -33,7 +33,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -79,7 +79,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDStatementResults (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

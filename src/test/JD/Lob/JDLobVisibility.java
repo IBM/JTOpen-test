@@ -13,22 +13,22 @@
 
 package test.JD.Lob;
 
+import java.io.FileOutputStream;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDLobTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
-
-import java.io.FileOutputStream;
-import java.sql.Blob;
-import java.sql.Clob; 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -116,7 +116,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDLobVisibility (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       String password)

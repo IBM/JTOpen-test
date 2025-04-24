@@ -21,25 +21,21 @@
 
 package test.JD.Statement;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.PasswordVault;
-import test.JD.JDTestUtilities;
-
 import java.io.FileOutputStream;
-import java.lang.reflect.Field;
-import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
-import java.util.StringTokenizer;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDSetupProcedure;
+import test.JDTestDriver;
+import test.JDTestcase;
+import test.JD.JDTestUtilities;
 
 
 
@@ -75,8 +71,6 @@ extends JDTestcase
     }
 
 
-    private static final int PROBABILITY = 3;
-    private static final int AGE = 1;
 
 
     // Private data.
@@ -91,7 +85,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDStatementStressCCSID (AS400 systemObject,
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         
@@ -104,7 +98,7 @@ Constructor.
 
     }
 
-  public JDStatementStressCCSID(AS400 systemObject, String testname,  Hashtable namesAndVars,
+  public JDStatementStressCCSID(AS400 systemObject, String testname,  Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String miscParm) {
     super(systemObject, testname, namesAndVars, runMode,
@@ -133,7 +127,7 @@ Performs setup needed before running variations.
         
         statement_ = connection_.createStatement();
 
-	String QIWS = JDSetupProcedure.setupQIWS(systemObject_,  connection_);
+	JDSetupProcedure.setupQIWS(systemObject_,  connection_);
 	
 
         connection_.commit();
@@ -166,7 +160,7 @@ Performs cleanup needed after running variations.
       String sql; 
       boolean passed = true; 
       
-      Hashtable insertHash = new Hashtable();
+      Hashtable<String,String>  insertHash= new Hashtable<String,String>();
       
       Statement stmt = connection.createStatement(); 
       

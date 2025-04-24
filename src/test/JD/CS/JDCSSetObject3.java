@@ -11,39 +11,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDCSSetObject3.java
-//
-// Tests the setObject method with 3 parameters.. 
-//
-// Classes:      JDCSSetObject3
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -58,6 +28,14 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
 
 /**
  * Testcase JDCSSetObject3. This tests the following method of the JDBC
@@ -82,7 +60,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   /**
    * Constructor.
    **/
-  public JDCSSetObject3(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSSetObject3(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetObject3", namesAndVars, runMode,
@@ -243,6 +221,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
    * setObject() - Should throw exception when the parameter is not anything
    * close to being a JDBC-style type.
    **/
+  @SuppressWarnings("rawtypes")
   public void Var009() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);

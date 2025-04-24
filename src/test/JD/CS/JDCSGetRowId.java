@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSGetRowId.java
@@ -24,12 +18,18 @@
 // Classes:      JDCSGetRowId
 //
 ////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
+
+import java.io.FileOutputStream;
+import java.math.BigInteger;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DataTruncation;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -37,16 +37,6 @@ import test.JDCSTest;
 import test.JDReflectionUtil;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.Hashtable;
-import java.math.BigInteger;
 
 /**
  Testcase JDCSGetRowId.  This tests the following
@@ -71,7 +61,7 @@ public class JDCSGetRowId extends JDCSGetTestcase {
   /**
    Constructor.
    **/
-  public JDCSGetRowId(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSGetRowId(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password) {
     super(systemObject, "JDCSGetRowId", namesAndVars, runMode,
         fileOutputStream, password);

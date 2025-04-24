@@ -26,11 +26,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
 import test.JDSetupProcedure;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -63,7 +63,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDCSScrollableResultSet(AS400 systemObject,
-				   Hashtable namesAndVars,
+				   Hashtable<String,Vector<String>> namesAndVars,
 				   int runMode,
 				   FileOutputStream fileOutputStream,
 				   
@@ -367,12 +367,13 @@ Should throw an exception if server is less than V5R3
 		String name1 = null;
 		String name2 = null;
 		String name3 = null;
+		ResultSet rs = null; 
 		boolean results = cs.execute();
 		boolean moreResults = false;
 		boolean failDone =false; 
 		if(results)
 		{
-		    ResultSet rs = cs.getResultSet();
+		    rs = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if(moreResults)
 		    {
@@ -386,7 +387,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) { 
-		    assertCondition(results && moreResults && (name3 != null) && name3.trim().equals("Abraham") && (name1 != null) && name1.trim().equals("Abraham") && (name2 != null) && name2.trim().equals("Alison"), "name3 should be Abraham but is " + name3 + ", name1 should be Abraham but is " + name1 + ", name2 should be Alison but is " + name2 + " Added by Toolbox 10/20/2003");
+		    assertCondition((rs != null) && results && moreResults && (name3 != null) && name3.trim().equals("Abraham") && (name1 != null) && name1.trim().equals("Abraham") && (name2 != null) && name2.trim().equals("Alison"), "name3 should be Abraham but is " + name3 + ", name1 should be Abraham but is " + name1 + ", name2 should be Alison but is " + name2 + " Added by Toolbox 10/20/2003");
 		}
 	    }
 	    catch (Exception e) {
@@ -409,9 +410,10 @@ Should throw an exception if server is less than V5R3
 		boolean results = cs.execute();
 		boolean moreResults = false;
 		boolean failDone=false; 
+		ResultSet rs1 = null; 
 		if(results)
 		{
-		    ResultSet rs1 = cs.getResultSet();
+		    rs1 = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if(moreResults)
 		    {
@@ -424,7 +426,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) { 
-		    assertCondition(results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
+		    assertCondition((rs1 != null) && results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
 		}
 	    }
 	    catch (Exception e) {
@@ -447,9 +449,11 @@ Should throw an exception if server is less than V5R3
 		boolean moreResults = false;
 		boolean results = cs.execute();
 		boolean failDone = false; 
+		ResultSet rs1 = null; 
+		
 		if(results)
 		{
-		    ResultSet rs1 = cs.getResultSet();
+		    rs1 = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if(moreResults)
 		    {
@@ -460,7 +464,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) { 
-		    assertCondition(results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
+		    assertCondition((rs1 != null) &&results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
 		}
 	    }
 	    catch (Exception e) {
@@ -482,9 +486,10 @@ Should throw an exception if server is less than V5R3
 		String last = null;
 		boolean moreResults = false;
 		boolean results = cs.execute();
+                ResultSet rs1 = null; 
 		if(results)
 		{
-		    ResultSet rs1 = cs.getResultSet();
+		    rs1 = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if (moreResults)
 		    {
@@ -495,7 +500,7 @@ Should throw an exception if server is less than V5R3
 			    last = rs.getString("LSTNAM").trim();
 		    }
 		}
-		    assertCondition(results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
+		    assertCondition((rs1 != null) &&results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + " Added by Toolbox 10/20/2003");
 	    }
 	    catch (Exception e) {
 		    failed (e, "Unexpected Exception - Added by Toolbox 10/20/2003");
@@ -517,9 +522,10 @@ Should throw an exception if server is less than V5R3
 		boolean moreResults = false;
 		boolean results = cs.execute();
 		boolean failDone=false; 
+                ResultSet rs1 = null; 
 		if(results)
 		{
-		    ResultSet rs1 = cs.getResultSet();
+		    rs1 = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if(moreResults)
 		    {
@@ -534,7 +540,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) { 
-		    assertCondition(results && moreResults && (first != null) && first.equals("Abraham"), "first should be Abraham but is " + first + " Added by Toolbox 10/20/2003");
+		    assertCondition((rs1 != null) &&results && moreResults && (first != null) && first.equals("Abraham"), "first should be Abraham but is " + first + " Added by Toolbox 10/20/2003");
 		}
 	    }
 	    catch (Exception e) {
@@ -960,9 +966,10 @@ Should throw an exception if server is less than V5R3
 		boolean results = cs.execute();
 		boolean moreResults = false;
 		boolean failDone =false; 
+		ResultSet rs  = null; 
 		if(results)
 		{
-		    ResultSet rs = cs.getResultSet();
+		    rs = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if(moreResults)
 		    {
@@ -976,7 +983,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) { 
-		    assertCondition(results && moreResults && (name3 != null) && name3.trim().equals("Abraham") && (name1 != null) && name1.trim().equals("Abraham") && (name2 != null) && name2.trim().equals("Alison"), "name3 should be Abraham but is " + name3 + ", name1 should be Abraham but is " + name1 + ", name2 should be Alison but is " + name2 + added); 
+		    assertCondition((rs != null) &&results && moreResults && (name3 != null) && name3.trim().equals("Abraham") && (name1 != null) && name1.trim().equals("Abraham") && (name2 != null) && name2.trim().equals("Alison"), "name3 should be Abraham but is " + name3 + ", name1 should be Abraham but is " + name1 + ", name2 should be Alison but is " + name2 + added); 
 		}
 	    }
 	    catch (Exception e) {
@@ -1000,9 +1007,11 @@ Should throw an exception if server is less than V5R3
 		boolean results = cs.execute();
 		boolean moreResults = false;
 		boolean failDone=false; 
+	              ResultSet rs1 = null; 
+
 		if(results)
 		{
-		    ResultSet rs1 = cs.getResultSet();
+		    rs1 = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if(moreResults)
 		    {
@@ -1015,7 +1024,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) { 
-		    assertCondition(results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + added); 
+		    assertCondition((rs1 != null) &&results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + added); 
 		}
 	    }
 	    catch (Exception e) {
@@ -1038,10 +1047,12 @@ Should throw an exception if server is less than V5R3
 		String last = null;
 		boolean moreResults = false;
 		boolean results = cs.execute();
-		boolean failDone = false; 
+		boolean failDone = false;    
+		ResultSet rs1 = null; 
+
 		if(results)
 		{
-		    ResultSet rs1 = cs.getResultSet();
+		     rs1 = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if(moreResults)
 		    {
@@ -1052,7 +1063,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) { 
-		    assertCondition(results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + added); 
+		    assertCondition((rs1 != null) &&results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + added); 
 		}
 	    }
 	    catch (Exception e) {
@@ -1076,9 +1087,11 @@ Should throw an exception if server is less than V5R3
 		boolean moreResults = false;
 		boolean results = cs.execute();
 		boolean failDone = false; 
+	              ResultSet rs1 = null; 
+
 		if(results)
 		{
-		    ResultSet rs1 = cs.getResultSet();
+		     rs1 = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if (moreResults)
 		    {
@@ -1090,7 +1103,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) {
-		    assertCondition(results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + added); 
+		    assertCondition((rs1 != null) &&results && moreResults && (last != null) && last.equals("Williams"), "last should be Williams but is " + last + added); 
 		}
 	    }
 	    catch (Exception e) {
@@ -1114,9 +1127,11 @@ Should throw an exception if server is less than V5R3
 		boolean moreResults = false;
 		boolean results = cs.execute();
 		boolean failDone=false; 
+	              ResultSet rs1 = null; 
+
 		if(results)
 		{
-		    ResultSet rs1 = cs.getResultSet();
+		    rs1 = cs.getResultSet();
 		    moreResults = cs.getMoreResults();
 		    if(moreResults)
 		    {
@@ -1131,7 +1146,7 @@ Should throw an exception if server is less than V5R3
 		    }
 		}
 		if (!failDone) { 
-		    assertCondition(results && moreResults && (first != null) && first.equals("Abraham"), "first should be Abraham but is " + first + added); 
+		    assertCondition((rs1 != null) &&results && moreResults && (first != null) && first.equals("Abraham"), "first should be Abraham but is " + first + added); 
 		}
 	    }
 	    catch (Exception e) {

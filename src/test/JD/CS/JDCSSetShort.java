@@ -12,26 +12,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDCSSetShort.java
-//
-// Classes:      JDCSSetShort
-//
-////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////
+
 
 package test.JD.CS;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -59,7 +48,7 @@ public class JDCSSetShort extends JDCSSetTestcase {
   /**
    * Constructor.
    **/
-  public JDCSSetShort(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSSetShort(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetShort", namesAndVars, runMode, fileOutputStream,

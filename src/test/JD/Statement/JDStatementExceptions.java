@@ -32,7 +32,7 @@ import test.PasswordVault;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Date;
 import java.sql.*;
 import java.util.Random;
@@ -72,7 +72,7 @@ public class JDStatementExceptions extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDStatementExceptions(AS400 systemObject, Hashtable namesAndVars,
+  public JDStatementExceptions(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String pwrSysUserID, String pwrSysPassword) {
     super(systemObject, "JDStatementExceptions", namesAndVars, runMode,
@@ -110,7 +110,7 @@ public class JDStatementExceptions extends JDTestcase {
   protected void checkException(Exception ex, String checkName,
       String message) {
     String checkedNames = "";
-    Class exClass = ex.getClass();
+    Class<?> exClass = ex.getClass();
     String name = exClass.getName();
     boolean found = false;
     while ((!name.equals("java.lang.Object")) && (!found)) {

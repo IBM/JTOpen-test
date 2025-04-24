@@ -23,7 +23,6 @@
 
 package test.JD.CS;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Date;
@@ -31,6 +30,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -62,7 +62,7 @@ Time sampleTime = new Time(1000);
 Constructor.
 **/
     public JDCSSetTime (AS400 systemObject,
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         

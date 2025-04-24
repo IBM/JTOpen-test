@@ -11,24 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetSQLXML.java
-//
-// Classes:      JDPSSetSQLXML
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -49,7 +31,7 @@ import java.sql.DataTruncation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -90,7 +72,7 @@ public class JDPSSetSQLXML extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetSQLXML(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDPSSetSQLXML(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetSQLXML", namesAndVars, runMode,
@@ -253,7 +235,7 @@ public class JDPSSetSQLXML extends JDTestcase {
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
 
-        Class[] argTypes = new Class[2];
+        Class<?>[] argTypes = new Class[2];
         argTypes[0] = Integer.TYPE;
         try {
           argTypes[1] = Class.forName("java.sql.SQLXML");

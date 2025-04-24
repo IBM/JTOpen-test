@@ -65,29 +65,27 @@
 
 package test.JD.CS;
 
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.net.URL;
+import java.sql.Blob;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDLobTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Hashtable;
-import java.math.BigDecimal;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Date;
-import java.net.*;
-import java.sql.Blob;
-import java.sql.Clob;
 
 /**
 Testcase JDCSGetObject2.  This tests the following
@@ -116,7 +114,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDCSGetObject2 (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -525,6 +523,7 @@ getObject() - getObject on a type registered as Date, INOUT DATE
 /**
 getObject() - getObject on a type registered as Time, INOUT TIME
 **/
+    @SuppressWarnings("deprecation")
     public void Var016()
     {
 	
@@ -1319,6 +1318,7 @@ getObject() - getObject on a type registered as boolean, INOUT DATE
 /**
 getObject() - getObject on a type registered as boolean, INOUT TIME
 **/
+    @SuppressWarnings("deprecation")
     public void Var037()
     {
 	String procName="GO2V37ADD1"; 

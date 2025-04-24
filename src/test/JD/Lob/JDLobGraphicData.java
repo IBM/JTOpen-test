@@ -13,25 +13,21 @@
 
 package test.JD.Lob;
 
+import java.io.FileOutputStream;
+import java.io.Reader;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDLobTest;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.Writer;                                      // @C1A
-import java.io.OutputStream;                                // @C1A
-import java.sql.Clob;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -78,7 +74,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDLobGraphicData (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       String password)
@@ -433,7 +429,6 @@ Performs cleanup needed after running variations.
              s = connection_.createStatement();
              rs = s.executeQuery("select " + column + " from " + TABLE_ + " where col1_int = " + (row + 100));
              rs.next();
-             Clob myclob = rs.getClob(1);
              value = rs.getString(1);
 
              returnValue = checkResults(sourceString, value);
@@ -518,8 +513,7 @@ Performs cleanup needed after running variations.
       
        try
        {
-          Clob clob = null;
-
+          
           String str = "select " + column + " from " + TABLE_ + " where col1_int = ? ";
 
           pstmt = connection_.prepareStatement(str);
@@ -629,8 +623,7 @@ Performs cleanup needed after running variations.
       
        try
        {
-          Clob clob = null;
-
+          
           String str = "select " + column + " from " + TABLE_ + " where col1_int = ? ";
 
           pstmt = connection_.prepareStatement(str);
@@ -826,8 +819,7 @@ Performs cleanup needed after running variations.
       
        try
        {
-          Clob clob = null;
-
+          
           String str = "select " + column + " from " + TABLE_ + " where col1_int = ? ";
 
           pstmt = connection_.prepareStatement(str);
@@ -1035,8 +1027,7 @@ Performs cleanup needed after running variations.
     public void Var046()
     {  
        ResultSet rs  = null;
-       ResultSet rs2 = null;
-       PreparedStatement pstmt  = null;
+        PreparedStatement pstmt  = null;
        PreparedStatement pstmt2 = null;
       
        try
@@ -1089,7 +1080,6 @@ Performs cleanup needed after running variations.
     public void Var047()
     {  
        ResultSet rs  = null;
-       ResultSet rs2 = null;
        PreparedStatement pstmt  = null;
        PreparedStatement pstmt2 = null;
       

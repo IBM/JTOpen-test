@@ -11,24 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetArray.java
-//
-// Classes:      JDPSSetArray
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -49,7 +31,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Map;
 
 /**
@@ -77,7 +59,7 @@ public class JDPSSetArray extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetArray(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDPSSetArray(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetArray", namesAndVars, runMode, fileOutputStream,
@@ -109,6 +91,8 @@ public class JDPSSetArray extends JDTestcase {
    * Test implementation of Array for use in testing.
    **/
   private static class TestArray implements Array, Serializable {
+    private static final long serialVersionUID = -4156412996315373873L;
+
     public String getBaseTypeName() throws SQLException {
       return null;
     }
@@ -121,6 +105,7 @@ public class JDPSSetArray extends JDTestcase {
       return new Object[0];
     }
 
+    @SuppressWarnings("rawtypes")
     public Object getArray(Map map) throws SQLException {
       return new Object[0];
     }
@@ -129,6 +114,7 @@ public class JDPSSetArray extends JDTestcase {
       return new Object[0];
     }
 
+    @SuppressWarnings("rawtypes")
     public Object getArray(long index, int count, Map map) throws SQLException {
       return new Object[0];
     }
@@ -137,6 +123,7 @@ public class JDPSSetArray extends JDTestcase {
       return null;
     }
 
+    @SuppressWarnings("rawtypes")
     public ResultSet getResultSet(Map map) throws SQLException {
       return null;
     }
@@ -145,6 +132,7 @@ public class JDPSSetArray extends JDTestcase {
       return null;
     }
 
+    @SuppressWarnings("rawtypes")
     public ResultSet getResultSet(long index, int count, Map map)
         throws SQLException {
       return null;

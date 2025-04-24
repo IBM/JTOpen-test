@@ -37,7 +37,7 @@ import test.PasswordVault;
 
 import java.io.FileOutputStream;
 import javax.naming.*;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 
@@ -107,7 +107,7 @@ extends JDTestcase {
     // Private data.
     private DataSource dataSource_;
     private Context ctx_;
-    private Hashtable env;
+    private Hashtable<String,String> env;
 
     protected static final String bindName_ = "JDSCPDSPropertiesTest";
 
@@ -115,7 +115,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDSCPDSProperties (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -138,7 +138,7 @@ Performs setup needed before running variations.
     {
         if (isJdbc20StdExt()) {
             dataSource_ = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DataSource");
-            env = new Hashtable();
+            env = new Hashtable<String,String>();
             env.put(Context.INITIAL_CONTEXT_FACTORY, 
                     "com.sun.jndi.fscontext.RefFSContextFactory");
             env.put(Context.PROVIDER_URL, "file:/tmp");

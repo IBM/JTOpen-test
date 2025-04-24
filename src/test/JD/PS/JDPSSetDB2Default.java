@@ -29,7 +29,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -107,7 +107,7 @@ public static String C_BOOLEAN_DEFAULT_STRING =        "0";
 Constructor.
      **/
     public JDPSSetDB2Default (AS400 systemObject,
-            Hashtable namesAndVars,
+            Hashtable<String,Vector<String>> namesAndVars,
             int runMode,
             FileOutputStream fileOutputStream,
             
@@ -121,7 +121,7 @@ Constructor.
 
     public JDPSSetDB2Default (AS400 systemObject,
         String testname,
-        Hashtable namesAndVars,
+        Hashtable<String,Vector<String>> namesAndVars,
         int runMode,
         FileOutputStream fileOutputStream,
         

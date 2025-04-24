@@ -335,17 +335,17 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
 	   return; 
        } 
        // Icons / GUI components no longer available in JTOpen 20.0.X
-
+       AS400JDBCDataSourceBeanInfo bi; 
       try
       {
-         AS400JDBCDataSourceBeanInfo bi = new AS400JDBCDataSourceBeanInfo();
+         bi = new AS400JDBCDataSourceBeanInfo();
       }
       catch(Exception e)
       {
          failed(e, "Unexpected exception");
          return;
       }
-      succeeded();
+      assertCondition(true, "Create bi="+bi);
    }                        
    
    

@@ -32,18 +32,17 @@
 
 package test.JD.PS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDTestcase;
-
 import java.io.FileOutputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDTestcase;
 
 
 
@@ -79,7 +78,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPSClose (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

@@ -45,7 +45,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDPSResults. This tests the following methods of the JDBC
@@ -76,7 +76,7 @@ public class JDPSResults extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSResults(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDPSResults(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSResults", namesAndVars, runMode, fileOutputStream,

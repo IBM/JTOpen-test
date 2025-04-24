@@ -21,16 +21,14 @@
 
 package test.JD.CPDS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDReflectionUtil;
-import test.JDTestcase;
-
 import java.io.FileOutputStream;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import javax.sql.*;
+import com.ibm.as400.access.AS400;
+
+import test.JDReflectionUtil;
+import test.JDTestcase;
 
 
 

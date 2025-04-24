@@ -33,7 +33,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDDMDGetTypeInfo. This tests the following methods of the JDBC
@@ -65,7 +65,7 @@ public class JDDMDGetTypeInfo extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDDMDGetTypeInfo(AS400 systemObject, Hashtable namesAndVars,
+  public JDDMDGetTypeInfo(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDDMDGetTypeInfo", namesAndVars, runMode,

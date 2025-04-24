@@ -21,17 +21,17 @@
 
 package test.JD.Statement;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDTestcase;
-
 import java.io.FileOutputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDTestcase;
 
 
 /**
@@ -73,7 +73,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDStatementMisc2 (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -208,7 +208,7 @@ closed statement.
                 Statement s = connection_.createStatement ();
                 s.close ();
                 int fetchDirection = s.getFetchDirection ();
-                failed("Didn't throw SQLException");
+                failed("Didn't throw SQLException"+fetchDirection);
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -314,7 +314,7 @@ closed statement.
                 Statement s = connection_.createStatement ();
                 s.close ();
                 int fetchSize = s.getFetchSize ();
-                failed("Didn't throw SQLException");
+                failed("Didn't throw SQLException"+fetchSize);
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -419,7 +419,7 @@ closed statement.
                 Statement s = connection_.createStatement ();
                 s.close ();
                 int resultSetConcurrency = s.getResultSetConcurrency ();
-                failed("Didn't throw SQLException");
+                failed("Didn't throw SQLException"+resultSetConcurrency);
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -483,7 +483,7 @@ closed statement.
                 Statement s = connection_.createStatement ();
                 s.close ();
                 int resultSetType = s.getResultSetType ();
-                failed("Didn't throw SQLException");
+                failed("Didn't throw SQLException"+resultSetType);
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");

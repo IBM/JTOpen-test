@@ -24,7 +24,7 @@ package test.JD.AS;
 
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.sql.*;
 
 import com.ibm.as400.access.AS400;
@@ -57,7 +57,7 @@ public class JDASRetry extends JDASTestcase
       Constructor.  This is called from the AS400JDBCEnableCALTest constructor.
      **/
     public JDASRetry(AS400 systemObject,
-        Hashtable namesAndVars,
+        Hashtable<String,Vector<String>> namesAndVars,
         int runMode,
         FileOutputStream fileOutputStream,
         

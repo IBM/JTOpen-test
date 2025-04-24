@@ -45,7 +45,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.DataTruncation;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -83,7 +83,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDParmStringChar (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           

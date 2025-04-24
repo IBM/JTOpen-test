@@ -42,7 +42,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.sql.SQLWarning;
 import java.util.Properties;
 
@@ -72,7 +72,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDConnectionClientInfo (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -346,11 +346,6 @@ Performs cleanup needed after running variations.
                 Object toolboxValues[][] =  { { "ApplicationName", new Integer(255), "", "The name of the application currently utilizing the connection." }, 
                         { "ClientUser", new Integer(255), "", "The name of the user that the application using the connection is performing work for.  This may not be the same as the user name that was used in establishing the connection."},
                         { "ClientHostname", new Integer(255), "", "The hostname of the system the application using the connection is running on."}, 
-                        { "ClientAccounting", new Integer(255), "", "Accounting information."},
-                        { "ClientProgramID", new Integer(255), "", "Program identification information."}};
-                Object nativeValues[][] =  { { "ApplicationName", new Integer(255), "", "The name of the application currently utilizing the connection." },
-                        { "ClientUser", new Integer(255), "", "The name of the user that the application using the connection is performing work for.  This may not be the same as the user name that was used in establishing the connection."},
-                        { "ClientHostname", new Integer(255), "", "The hostname of the system the application using the connection is running on."},
                         { "ClientAccounting", new Integer(255), "", "Accounting information."},
                         { "ClientProgramID", new Integer(255), "", "Program identification information."}};
 
@@ -791,7 +786,7 @@ Performs cleanup needed after running variations.
 		Properties  properties =
 		  (Properties) JDReflectionUtil.callMethod_O(conn, "getClientInfo");
 		String expected; 
-		Enumeration enumeration = properties.keys();
+		Enumeration<Object> enumeration = properties.keys();
                 while (enumeration.hasMoreElements()) {
                   String key = (String) enumeration.nextElement();
                   String value =  properties.getProperty(key ); 
@@ -884,7 +879,7 @@ Performs cleanup needed after running variations.
         SpooledFileList spooledFileList = new SpooledFileList(pwrAS400); 
         spooledFileList.setUserFilter(testProfile);
         spooledFileList.openSynchronously();
-        Enumeration enumeration = spooledFileList.getObjects(); 
+        Enumeration<SpooledFile> enumeration = spooledFileList.getObjects(); 
         while (enumeration.hasMoreElements()) {
           SpooledFile spooledFile = (SpooledFile) enumeration.nextElement();
           String userData = spooledFile.getStringAttribute(PrintObject.ATTR_USERDATA);
@@ -894,7 +889,7 @@ Performs cleanup needed after running variations.
             passed = false; 
           }
         }
-        
+        spooledFileList.close(); 
         sb.append("\nDeleting spool files"); 
         results = pwrCommand
             .run("DLTSPLF FILE(*SELECT) SELECT("+testProfile+")");
@@ -952,7 +947,7 @@ Performs cleanup needed after running variations.
         SpooledFileList spooledFileList = new SpooledFileList(pwrAS400); 
         spooledFileList.setUserFilter(testProfile);
         spooledFileList.openSynchronously();
-        Enumeration enumeration = spooledFileList.getObjects(); 
+        Enumeration<SpooledFile> enumeration = spooledFileList.getObjects(); 
         while (enumeration.hasMoreElements()) {
           SpooledFile spooledFile = (SpooledFile) enumeration.nextElement();
           String userData = spooledFile.getStringAttribute(PrintObject.ATTR_USERDATA);
@@ -962,6 +957,7 @@ Performs cleanup needed after running variations.
             passed = false; 
           }
         }
+        spooledFileList.close();
         
         sb.append("\nDeleting spool files"); 
         results = pwrCommand

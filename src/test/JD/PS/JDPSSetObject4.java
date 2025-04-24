@@ -11,36 +11,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetObject4.java
-//
-// Classes:      JDPSSetObject4
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
-
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDPSTest;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
@@ -57,6 +29,15 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDPSTest;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
+import test.JDTestcase;
 
 
 
@@ -68,6 +49,7 @@ of the JDBC PreparedStatement class (4 parameters):
 <li>setObject(int,Object,int,int)
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class JDPSSetObject4
 extends JDTestcase
 {
@@ -94,7 +76,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDPSSetObject4 (AS400 systemObject,
-                           Hashtable namesAndVars,
+                           Hashtable<String,Vector<String>> namesAndVars,
                            int runMode,
                            FileOutputStream fileOutputStream,
                            
@@ -375,6 +357,7 @@ extends JDTestcase
     setObject() - Should throw exception when the parameter is
     not anything close to being a JDBC-style type.
     **/
+    @SuppressWarnings("rawtypes")
     public void Var010()
     {
         try
@@ -1250,7 +1233,7 @@ extends JDTestcase
 
             byte[] b2 = new byte[20];
             System.arraycopy (b, 0, b2, 0, b.length);
-            assertCondition (isEqual (check, b2));
+            assertCondition (areEqual (check, b2));
         }
         catch(Exception e)
         {
@@ -1285,7 +1268,7 @@ extends JDTestcase
 
             byte[] b2 = new byte[20];
             System.arraycopy (b, 0, b2, 0, b.length);
-            assertCondition (isEqual (check, b2));
+            assertCondition (areEqual (check, b2));
         }
         catch(Exception e)
         {
@@ -1318,7 +1301,7 @@ extends JDTestcase
             byte[] check = rs.getBytes (1);
             rs.close ();
 
-            assertCondition (isEqual (check, b));
+            assertCondition (areEqual (check, b));
         }
         catch(Exception e)
         {
@@ -1351,7 +1334,7 @@ extends JDTestcase
             byte[] check = rs.getBytes (1);
             rs.close ();
 
-            assertCondition (isEqual (check, b));
+            assertCondition (areEqual (check, b));
         }
         catch(Exception e)
         {
@@ -1388,7 +1371,7 @@ extends JDTestcase
                     Blob check = rs.getBlob (1);
                     // rs.close ();                                                            // @F1D
 
-                    assertCondition (isEqual (check.getBytes (1, (int) check.length ()), b));  // @D1C
+                    assertCondition (areEqual (check.getBytes (1, (int) check.length ()), b));  // @D1C
                 }
                 catch(Exception e)
                 {
@@ -1426,7 +1409,7 @@ extends JDTestcase
                     Blob check = rs.getBlob (1);
                     // rs.close ();                                                            // @F1D
 
-                    assertCondition (isEqual (check.getBytes (1, (int) check.length ()), b));  // @D1C
+                    assertCondition (areEqual (check.getBytes (1, (int) check.length ()), b));  // @D1C
                 }
                 catch(Exception e)
                 {
@@ -1938,7 +1921,7 @@ extends JDTestcase
                 byte[] check = rs.getBytes (1);
                 rs.close ();
 
-                assertCondition (isEqual (check, b));
+                assertCondition (areEqual (check, b));
             }
             catch(Exception e)
             {
@@ -1980,7 +1963,7 @@ extends JDTestcase
                 byte[] check = rs.getBytes (1);
                 rs.close ();
 
-                assertCondition (isEqual (check, b));
+                assertCondition (areEqual (check, b));
             }
             catch(Exception e)
             {

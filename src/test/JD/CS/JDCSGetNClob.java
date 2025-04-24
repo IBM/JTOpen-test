@@ -37,7 +37,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDCSGetNClob. This tests the following method of the JDBC
@@ -68,7 +68,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
   /**
    * Constructor.
    **/
-  public JDCSGetNClob(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSGetNClob(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password) {
     super(systemObject, "JDCSGetNClob", namesAndVars, runMode,
         fileOutputStream, password);

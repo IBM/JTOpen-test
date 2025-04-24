@@ -43,7 +43,7 @@ import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
 Testcase JDPSetInt.  This tests the following method
@@ -76,7 +76,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPMDGetParameterTypeName (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

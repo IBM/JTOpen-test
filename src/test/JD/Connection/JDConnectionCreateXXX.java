@@ -29,7 +29,7 @@ import test.JDTestcase;
 
 import java.io.*;
 import java.sql.Connection;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.sql.*;
 
 /**
@@ -75,7 +75,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDConnectionCreateXXX (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -236,7 +236,7 @@ createBlob() -- Create empty blob and make sure it is usable with a prepared sta
 		    }
 		}
 		rs.close();
-		assertCondition((blob != null) && (outBytes != null) && isEqual(blob.getBytes(1, (int) blob.length()), outBytes), "Not equal - blob="+blob+" outBlob="+outBlob    );
+		assertCondition((blob != null) && (outBytes != null) && areEqual(blob.getBytes(1, (int) blob.length()), outBytes), "Not equal - blob="+blob+" outBlob="+outBlob    );
 	    } catch (Exception e) {
 		failed(e, "Unexpected Exception");
 	    }
@@ -268,7 +268,7 @@ createBlob() -- Create 1 meg blob and make sure it is usable with a prepared sta
 		    }
 		}
 		rs.close();
-		assertCondition((blob != null) && (outBlob != null) && isEqual(blob.getBytes(1, (int) blob.length()), outBytes), "Not equal - blob="+blob+" outBlob="+outBlob    );
+		assertCondition((blob != null) && (outBlob != null) && areEqual(blob.getBytes(1, (int) blob.length()), outBytes), "Not equal - blob="+blob+" outBlob="+outBlob    );
 	    } catch (Exception e) {
 		failed(e, "Unexpected Exception");
 	    }
@@ -305,7 +305,7 @@ createBlob() -- Create 17 meg blob and make sure it is usable with a prepared st
 		    }
 		}
 		rs.close();
-		assertCondition((blob != null) && (outBlob != null) && isEqual(blob.getBytes(1, (int) blob.length()), outBytes) &&
+		assertCondition((blob != null) && (outBlob != null) && areEqual(blob.getBytes(1, (int) blob.length()), outBytes) &&
 				(outBytes.length == seventeenMegBytes.length)
 				, "Not equal - blob="+blob+" outBlob="+outBlob +  " outBytes.length="+outBytes.length+" sb " + seventeenMegBytes.length  );
 	    } catch (Exception e) {

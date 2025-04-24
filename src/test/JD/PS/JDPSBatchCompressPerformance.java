@@ -12,23 +12,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSBatchCompressPerformance.java
-//
-// Classes:      JDPSBatchCompressPerformance
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -37,9 +20,9 @@ import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
@@ -60,7 +43,7 @@ private Connection killConnection = null ;
 Constructor.
 **/
     public JDPSBatchCompressPerformance (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -76,7 +59,7 @@ Constructor.
 
     public JDPSBatchCompressPerformance (AS400 systemObject,
 		      String testname, 
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       

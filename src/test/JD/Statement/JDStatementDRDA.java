@@ -21,21 +21,17 @@
 
 package test.JD.Statement;
 
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
 
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -71,7 +67,7 @@ extends JDTestcase
 Constructor.
 **/
    public JDStatementDRDA (AS400 systemObject,
-                           Hashtable namesAndVars,
+                           Hashtable<String,Vector<String>> namesAndVars,
                            int runMode,
                            FileOutputStream fileOutputStream,
                            

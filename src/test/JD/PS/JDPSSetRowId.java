@@ -42,7 +42,7 @@ import java.sql.DataTruncation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDPSSetRowId. This tests the following method of the JDBC
@@ -75,7 +75,7 @@ public class JDPSSetRowId extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetRowId(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDPSSetRowId(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetRowId", namesAndVars, runMode, fileOutputStream,
@@ -206,7 +206,7 @@ public class JDPSSetRowId extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
-        Class[] argTypes = new Class[2];
+        Class<?>[] argTypes = new Class[2];
         argTypes[0] = Integer.TYPE;
         try {
           argTypes[1] = Class.forName("java.sql.RowId");

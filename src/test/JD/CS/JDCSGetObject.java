@@ -38,7 +38,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Map; 
 
 
@@ -73,7 +73,7 @@ extends JDCSGetTestcase {
 Constructor.
 **/
     public JDCSGetObject (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -300,6 +300,7 @@ longer than the IN parameter.
 /**
 getObject() with typeMap arg - Get a value with a null type map.
 **/
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void Var010()
     {
         if (checkJdbc20 ()) {

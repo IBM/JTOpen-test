@@ -34,16 +34,6 @@
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -58,6 +48,14 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
 
 /**
  * Testcase JDCSSetObject3SQLType. This tests the following method of the JDBC
@@ -82,7 +80,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
   /**
    * Constructor.
    **/
-  public JDCSSetObject3SQLType(AS400 systemObject, Hashtable namesAndVars,
+  public JDCSSetObject3SQLType(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetObject3SQLType", namesAndVars, runMode,
@@ -215,7 +213,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
 
         CallableStatement cs = prepareCall(Types.NUMERIC);
 
-        Class[] argClasses = new Class[3];
+        Class<?>[] argClasses = new Class[3];
         argClasses[0] = Integer.TYPE;
         argClasses[1] = Class.forName("java.lang.Object");
         argClasses[2] = Class.forName("java.sql.SQLType");
@@ -278,6 +276,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
    * setObject() - Should throw exception when the parameter is not anything
    * close to being a JDBC-style type.
    **/
+  @SuppressWarnings("rawtypes")
   public void Var009() {
     if (checkJdbc42()) {
       try {

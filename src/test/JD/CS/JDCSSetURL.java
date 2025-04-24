@@ -26,13 +26,13 @@
 
 package test.JD.CS;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -63,7 +63,7 @@ public class JDCSSetURL extends JDCSSetTestcase {
   /**
    * Constructor.
    **/
-  public JDCSSetURL(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSSetURL(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetURL", namesAndVars, runMode, fileOutputStream,

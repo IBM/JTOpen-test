@@ -11,27 +11,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDCSSetNCharacterStream.java
-//
-// Classes:      JDCSSetNCharacterStream
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//                 	        
-// 
-//
-////////////////////////////////////////////////////////////////////////
-
 package test.JD.CS;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.io.StringReader;
 
@@ -40,6 +21,7 @@ import java.sql.Clob;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -80,7 +62,7 @@ extends JDCSSetTestcase
 Constructor.
 **/
     public JDCSSetNCharacterStream (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -244,7 +226,7 @@ SetNCharacterStream() - Should work with a valid parameter name.
                 JDSetupProcedure.setTypesParameters (cs, JDSetupProcedure.STP_CSINOUT,
                                                      supportedFeatures_);
                 JDSetupProcedure.register (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, getDriver());
-                Class[] argClasses = new Class[3]; 
+                Class<?>[] argClasses = new Class[3]; 
                 argClasses[0] = Integer.TYPE;
                 argClasses[1] = Class.forName("java.io.Reader"); 
                 argClasses[2] = Long.TYPE; 
@@ -945,7 +927,7 @@ SetNCharacterStream() - Should set to SQL NULL when the value is null.
                                                      supportedFeatures_);
                 JDSetupProcedure.register (cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, getDriver());
                 
-                Class[] argClasses = new Class[3]; 
+                Class<?>[] argClasses = new Class[3]; 
                 argClasses[0] = Integer.TYPE;
                 argClasses[1] = Class.forName("java.io.Reader"); 
                 argClasses[2] = Long.TYPE; 

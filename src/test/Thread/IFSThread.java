@@ -261,7 +261,7 @@ class IFSThread
         byte[] readData = new byte[data.length];
         raf.read(readData);
         raf.unlock(key);
-        if ( ! test.Testcase.isEqual(data, readData) )
+        if ( ! test.Testcase.areEqual(data, readData) )
           error("Lock in file " + path + " was broken");
         raf.close();
         // no lock violation occurred, note this so we can exit the loop.

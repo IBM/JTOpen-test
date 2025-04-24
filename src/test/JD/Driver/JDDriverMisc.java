@@ -43,7 +43,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.sql.Connection;
 
 
@@ -91,7 +91,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDDriverMisc (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                         
@@ -905,7 +905,7 @@ extends JDTestcase
             }catch(Exception e){
                 //ignore
             }
-            Enumeration en = DriverManager.getDrivers();   //here, we should only have one AS400JDBCDriver registered after getting error
+            Enumeration<?> en = DriverManager.getDrivers();   //here, we should only have one AS400JDBCDriver registered after getting error
 
 	    StringBuffer driverList = new StringBuffer();
             Driver nextDriver = null;

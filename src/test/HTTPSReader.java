@@ -42,14 +42,14 @@ public class HTTPSReader {
      
     }
     if (debug) System.out.println("Connection is "+connection);
-    Class cl = connection.getClass(); 
+    Class<?> cl = connection.getClass(); 
     if (debug) System.out.println(" class is "+cl); 
-    Class[] interfaces = cl.getInterfaces();
+    Class<?>[] interfaces = cl.getInterfaces();
     if (debug) System.out.println("interface count is "+interfaces.length); 
     for (int i =0; i < interfaces.length; i++) {
       if (debug) System.out.println("Interface: "+interfaces[i]); 
     }
-    Class superClass = cl.getSuperclass(); 
+    Class<?> superClass = cl.getSuperclass(); 
     while (superClass != null) {
       String className = superClass.getName();
       if (debug) System.out.println("Superclass ="+className);
@@ -93,14 +93,14 @@ public class HTTPSReader {
      
     }
     if (debug) System.out.println("Connection is "+connection);
-    Class cl = connection.getClass(); 
+    Class<?> cl = connection.getClass(); 
     if (debug) System.out.println(" class is "+cl); 
-    Class[] interfaces = cl.getInterfaces();
+    Class<?>[] interfaces = cl.getInterfaces();
     if (debug) System.out.println("interface count is "+interfaces.length); 
     for (int i =0; i < interfaces.length; i++) {
       if (debug) System.out.println("Interface: "+interfaces[i]); 
     }
-    Class superClass = cl.getSuperclass(); 
+    Class<?> superClass = cl.getSuperclass(); 
     while (superClass != null) {
       String className = superClass.getName();
       if (debug) System.out.println("Superclass ="+className);
@@ -123,11 +123,10 @@ public class HTTPSReader {
     }
     bufferedReader.close(); 
     
-    if (false) {
-	System.out.println(" ---- read ----- ");
-	System.out.println(outputBuffer);
-
-    } 
+    // if (false) {
+    // System.out.println(" ---- read ----- ");
+    // System.out.println(outputBuffer);
+    // } 
     return outputBuffer; 
     
   }

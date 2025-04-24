@@ -35,7 +35,7 @@ import test.PasswordVault;
 
 import java.io.FileOutputStream;
 import java.sql.*;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import javax.naming.Context;              // JNDI
 import javax.naming.InitialContext;       // JNDI
 import javax.naming.NamingException;      // JNDI
@@ -61,7 +61,6 @@ extends JDTestcase
      }
      test.JDPSTest.main(newArgs); 
    }
-    Hashtable env;              //@B1A      
     String jndiName_ = "jdbc/customer";
     private Connection conn_;   //@a1
     private Statement stmt_;    //used by the native driver for do some of the table setup stuff.
@@ -69,7 +68,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRowSetPSTestcase (AS400 systemObject,
-                               Hashtable namesAndVars,
+                               Hashtable<String,Vector<String>> namesAndVars,
                                int runMode,
                                FileOutputStream fileOutputStream,
                                
@@ -193,7 +192,7 @@ Performs cleanup needed after running variations.
            rowset.clearParameters ();
            
            rowset.execute();
-
+           rowset.close(); 
            failed ("Unexpected Results.  Didn't throw SQLException");
         }
         catch (Exception e) 

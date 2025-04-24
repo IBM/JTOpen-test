@@ -32,7 +32,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDCSGetByte. This tests the following method of the JDBC
@@ -59,7 +59,7 @@ public class JDCSGetByte extends JDCSGetTestcase {
   /**
    * Constructor.
    **/
-  public JDCSGetByte(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSGetByte(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password) {
     super(systemObject, "JDCSGetByte", namesAndVars, runMode, fileOutputStream,
  password);

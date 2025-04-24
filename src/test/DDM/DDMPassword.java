@@ -16,7 +16,6 @@ package test.DDM;
 import java.io.*;
 
 import java.util.Vector;
-import java.math.BigDecimal;
 import com.ibm.as400.access.*;
 
 import test.Testcase;
@@ -293,7 +292,7 @@ public class DDMPassword extends Testcase
       }
       try
       {
-         Class fred = Class.forName("com.ibm.as400.access.SystemValue");
+         Class.forName("com.ibm.as400.access.SystemValue");
       }
       catch(Throwable e)
       {
@@ -343,7 +342,7 @@ public class DDMPassword extends Testcase
       }
       try
       {
-         Class fred = Class.forName("com.ibm.as400.access.SystemValue");
+         Class.forName("com.ibm.as400.access.SystemValue");
       }
       catch(Throwable e)
       {
@@ -393,7 +392,7 @@ public class DDMPassword extends Testcase
       }
       try
       {
-         Class fred = Class.forName("com.ibm.as400.access.SystemValue");
+         Class.forName("com.ibm.as400.access.SystemValue");
       }
       catch(Throwable e)
       {
@@ -443,7 +442,7 @@ public class DDMPassword extends Testcase
       }
       try
       {
-         Class fred = Class.forName("com.ibm.as400.access.SystemValue");
+         Class.forName("com.ibm.as400.access.SystemValue");
       }
       catch(Throwable e)
       {

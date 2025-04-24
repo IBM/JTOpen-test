@@ -32,7 +32,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDCSRSDateTime. This tests the following methods of the JDBC
@@ -78,7 +78,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	/**
 	 * Constructor.
 	 */
-	public JDCSRSDateTime(AS400 systemObject, Hashtable namesAndVars,
+	public JDCSRSDateTime(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
 			int runMode, FileOutputStream fileOutputStream,
 			 String password) {
 		super(systemObject, "JDCSRSDateTime", namesAndVars, runMode,

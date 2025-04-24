@@ -11,37 +11,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDCSSetObject4SQLType.java
-//
-// Classes:      JDCSSetObject4SQLType
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -56,6 +28,14 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
 
 /**
  * Testcase JDCSSetObject4SQLType. This tests the following method of the JDBC
@@ -80,7 +60,7 @@ public class JDCSSetObject4SQLType extends JDCSSetObjectBase {
   /**
    * Constructor.
    **/
-  public JDCSSetObject4SQLType(AS400 systemObject, Hashtable namesAndVars,
+  public JDCSSetObject4SQLType(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetObject4SQLType", namesAndVars, runMode,
@@ -215,7 +195,7 @@ connectionDateTime_.close();
       try {
 
         CallableStatement cs = prepareCall(Types.NUMERIC);
-        Class[] argClasses = new Class[4];
+        Class<?>[] argClasses = new Class[4];
         argClasses[0] = Integer.TYPE;
         argClasses[1] = Class.forName("java.lang.Object");
         argClasses[2] = Class.forName("java.sql.SQLType");
@@ -276,6 +256,7 @@ connectionDateTime_.close();
    * setObject() - Should throw exception when the parameter is not anything
    * close to being a JDBC-style type.
    **/
+  @SuppressWarnings("rawtypes")
   public void Var009() {
     if (checkJdbc42()) {
       try {
@@ -2200,6 +2181,7 @@ connectionDateTime_.close();
   /**
    * setObject() - Set an DECIMAL parameter using exponential notation
    **/
+  @SuppressWarnings("deprecation")
   public void Var099() {
     String added = " -- added 12/17/2009 to test native driver for CPS 7YSU2X";
 
@@ -2429,6 +2411,7 @@ connectionDateTime_.close();
   /**
    * setObject() - Set an DECIMAL parameter with scale 0.
    **/
+  @SuppressWarnings("deprecation")
   public void Var109() {
     if (checkJdbc42()) {
       try {
@@ -2452,6 +2435,7 @@ connectionDateTime_.close();
   /**
    * setObject() - Set an DECIMAL parameter with scale less than the number.
    **/
+  @SuppressWarnings("deprecation")
   public void Var110() {
     if (checkJdbc42()) {
       try {
@@ -2474,6 +2458,7 @@ connectionDateTime_.close();
   /**
    * setObject() - Set an DECIMAL parameter with scale greater than the number.
    **/
+  @SuppressWarnings("deprecation")
   public void Var111() {
     if (checkJdbc42()) {
       try {
@@ -2496,6 +2481,7 @@ connectionDateTime_.close();
   /**
    * setObject() - Set an NUMERIC parameter with scale 0.
    **/
+  @SuppressWarnings("deprecation")
   public void Var112() {
     if (checkJdbc42()) {
       try {
@@ -2518,6 +2504,7 @@ connectionDateTime_.close();
   /**
    * setObject() - Set an NUMERIC parameter with scale less than the number.
    **/
+  @SuppressWarnings("deprecation")
   public void Var113() {
     if (checkJdbc42()) {
       try {
@@ -2541,6 +2528,7 @@ connectionDateTime_.close();
   /**
    * setObject() - Set an NUMERIC parameter with scale greater than the number.
    **/
+  @SuppressWarnings("deprecation")
   public void Var114() {
     if (checkJdbc42()) {
       try {
@@ -2868,6 +2856,7 @@ connectionDateTime_.close();
   /**
    * setObject() - Set an DECIMAL parameter using exponential notation
    **/
+  @SuppressWarnings("deprecation")
   public void Var126() {
     if (checkJdbc42()) {
       try {
@@ -2893,6 +2882,7 @@ connectionDateTime_.close();
    * setObject() - Set an DECIMAL parameter using exponential notation with 0 in
    * the exponent
    **/
+  @SuppressWarnings("deprecation")
   public void Var127() {
     if (checkJdbc42()) {
       try {
@@ -2916,6 +2906,7 @@ connectionDateTime_.close();
    * setObject() - Set an DECIMAL parameter using exponential notation with 0 as
    * the value
    **/
+  @SuppressWarnings("deprecation")
   public void Var128() {
     if (checkJdbc42()) {
       try {
@@ -2939,6 +2930,7 @@ connectionDateTime_.close();
    * setObject() - Set an DECIMAL parameter using exponential notation with 0 as
    * the value and 0 as the exponent
    **/
+  @SuppressWarnings("deprecation")
   public void Var129() {
     if (checkJdbc42()) {
       try {

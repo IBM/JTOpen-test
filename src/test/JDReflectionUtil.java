@@ -31,7 +31,7 @@ permit the testcases to compile using older jar files.
 **/
 public class JDReflectionUtil {
     static Object dummyObject = null;
-    static Class objectClass = null;
+    static Class<?> objectClass = null;
     static int jdk;
     static {
 	dummyObject = new Object();
@@ -57,12 +57,12 @@ public class JDReflectionUtil {
      *
      *  Object o = callMethod_O(ds, ... ");
      */
-     public static Object callMethod_O(Object o, String methodName, Class argType, Object p1 ) throws Exception {
+     public static Object callMethod_O(Object o, String methodName, Class<?> argType, Object p1 ) throws Exception {
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
         // System.out.println("Class of object is "+thisClass);
-        Class argTypes[] = new Class[1];
+        Class<?> argTypes[] = new Class<?>[1];
         argTypes[0] = argType;
         method = thisClass.getMethod(methodName, argTypes);
 	// In JDK 11, we cannot call setAccesible without causing a package error 
@@ -91,10 +91,10 @@ public class JDReflectionUtil {
     *
     *  Object o = callMethod_O(ds, ... ");
     */
-    public static Object callMethod_O(Object o, String methodName, Class[] argTypes, Object p1, Object p2 ) throws Exception {
+    public static Object callMethod_O(Object o, String methodName, Class<?>[] argTypes, Object p1, Object p2 ) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
+	Class<?> thisClass = o.getClass();
 	// System.out.println("Class of object is "+thisClass);
 
 	method = thisClass.getMethod(methodName, argTypes);
@@ -115,11 +115,11 @@ public class JDReflectionUtil {
 
     }
 
-    public static Object  callMethod_O(Object  o, String methodName, int p1, Class p2) throws Exception {
+    public static Object  callMethod_O(Object  o, String methodName, int p1, Class<?> p2) throws Exception {
       java.lang.reflect.Method method;
 
-      Class thisClass = o.getClass();
-      Class[] argTypes = new Class[2];
+      Class<?> thisClass = o.getClass();
+      Class<?>[] argTypes = new Class<?>[2];
       argTypes[0] = Integer.TYPE;
       argTypes[1] = Class.class;
 
@@ -142,8 +142,8 @@ public class JDReflectionUtil {
         String p1) throws Exception {
       java.lang.reflect.Method method;
 
-      Class thisClass = o.getClass();
-      Class[] argTypes = new Class[1];
+      Class<?> thisClass = o.getClass();
+      Class<?>[] argTypes = new Class<?>[1];
       argTypes[0] = String.class; 
 
       method = thisClass.getMethod(methodName, argTypes);
@@ -171,7 +171,7 @@ public class JDReflectionUtil {
     */
     
    public static Object callMethod_O(Object o, String methodName, String p1, char[] p2, char[] p3) throws Exception {
-     Class[] argTypes = new Class[3];
+     Class<?>[] argTypes = new Class<?>[3];
      argTypes[0] = Class.forName("java.lang.String");
      argTypes[1] = Class.forName("[C");
      argTypes[2] = Class.forName("[C");
@@ -179,7 +179,7 @@ public class JDReflectionUtil {
    }
 
    public static Object callMethod_O(Object o, String methodName, String p1, String p2, char[] p3) throws Exception {
-     Class[] argTypes = new Class[3];
+     Class<?>[] argTypes = new Class<?>[3];
      argTypes[0] = Class.forName("java.lang.String");
      argTypes[1] = Class.forName("java.lang.String");
      argTypes[2] = Class.forName("[C");
@@ -187,10 +187,10 @@ public class JDReflectionUtil {
    }
 
    
-    public static Object callMethod_O(Object o, String methodName, Class[] argTypes, Object p1, Object p2, Object p3 ) throws Exception {
+    public static Object callMethod_O(Object o, String methodName, Class<?>[] argTypes, Object p1, Object p2, Object p3 ) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
+	Class<?> thisClass = o.getClass();
 	// System.out.println("Class of object is "+thisClass);
 
 	method = thisClass.getMethod(methodName, argTypes);
@@ -221,10 +221,10 @@ public class JDReflectionUtil {
     *
     *  Object o = callMethod_O(ds, ... ");
     */
-    public static Object callMethod_O(Object o, String methodName, Class[] argTypes, Object p1, Object p2, Object p3, Object p4 ) throws Exception {
+    public static Object callMethod_O(Object o, String methodName, Class<?>[] argTypes, Object p1, Object p2, Object p3, Object p4 ) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
+	Class<?> thisClass = o.getClass();
 	// System.out.println("Class of object is "+thisClass);
 
 	method = thisClass.getMethod(methodName, argTypes);
@@ -257,9 +257,9 @@ public class JDReflectionUtil {
     public static Object callMethod_O(Object o, String methodName)  throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
+	Class<?> thisClass = o.getClass();
 	// System.out.println("Class of object is "+thisClass);
-	Class[] argTypes = new Class[0];
+	Class<?>[] argTypes = new Class<?>[0];
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	Object[] args = new Object[0];
@@ -286,9 +286,9 @@ public class JDReflectionUtil {
      public static Object callMethod_O(Object o, String methodName, int i )  throws Exception {
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
         // System.out.println("Class of object is "+thisClass);
-        Class[] argTypes = new Class[1];
+        Class<?>[] argTypes = new Class<?>[1];
         argTypes[0] = Integer.TYPE ;
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -310,9 +310,9 @@ public class JDReflectionUtil {
      public static Object callMethod_O(Object o, String methodName, long i )  throws Exception {
        java.lang.reflect.Method method;
 
-       Class thisClass = o.getClass();
+       Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
-       Class[] argTypes = new Class[1];
+       Class<?>[] argTypes = new Class<?>[1];
        argTypes[0] = Long.TYPE ;
        method = thisClass.getMethod(methodName, argTypes);
        method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -341,13 +341,13 @@ public class JDReflectionUtil {
     *
     *  Object o = callMethod_O(ds, ... ");
     */
-    public static Object callMethod_O(Object o, String methodName, Class c)  throws Exception {
+    public static Object callMethod_O(Object o, String methodName, Class<?> c)  throws Exception {
 
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
+	Class<?> thisClass = o.getClass();
 	// System.out.println("Class of object is "+thisClass);
-	Class[] argTypes = new Class[1];
+	Class<?>[] argTypes = new Class<?>[1];
 	argTypes[0] = Class.forName("java.lang.Class");
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -377,9 +377,9 @@ public class JDReflectionUtil {
 
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
         // System.out.println("Class of object is "+thisClass);
-        Class[] argTypes = new Class[1];
+        Class<?>[] argTypes = new Class<?>[1];
         argTypes[0] = Class.forName("java.lang.String");
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -402,9 +402,9 @@ public class JDReflectionUtil {
 
        java.lang.reflect.Method method;
 
-       Class thisClass = o.getClass();
+       Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
-       Class[] argTypes = new Class[2];
+       Class<?>[] argTypes = new Class<?>[2];
        argTypes[0] = Class.forName("java.lang.String");
        argTypes[1] = argTypes[0];
        method = thisClass.getMethod(methodName, argTypes);
@@ -429,9 +429,9 @@ public class JDReflectionUtil {
 
        java.lang.reflect.Method method;
 
-       Class thisClass = o.getClass();
+       Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
-       Class[] argTypes = new Class[2];
+       Class<?>[] argTypes = new Class<?>[2];
        argTypes[0] = Class.forName("java.lang.String");
        argTypes[1] = Object[].class; //parm type is Object[]
 
@@ -456,9 +456,9 @@ public class JDReflectionUtil {
 
        java.lang.reflect.Method method;
 
-       Class thisClass = o.getClass();
+       Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
-       Class[] argTypes = new Class[3];
+       Class<?>[] argTypes = new Class<?>[3];
        argTypes[0] = Class.forName("java.lang.String");
        argTypes[1] = argTypes[0];
        argTypes[2] = argTypes[0];
@@ -484,9 +484,9 @@ public class JDReflectionUtil {
 
        java.lang.reflect.Method method;
 
-       Class thisClass = o.getClass();
+       Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
-       Class[] argTypes = new Class[4];
+       Class<?>[] argTypes = new Class<?>[4];
        argTypes[0] = Class.forName("java.lang.String");
        argTypes[1] = argTypes[0];
        argTypes[2] = argTypes[0];
@@ -518,9 +518,9 @@ public class JDReflectionUtil {
 
        java.lang.reflect.Method method;
 
-       Class thisClass = o.getClass();
+       Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
-       Class[] argTypes = new Class[10];
+       Class<?>[] argTypes = new Class<?>[10];
        argTypes[0] = Class.forName("java.lang.String");
        argTypes[1] = Class.forName("[C");
        argTypes[2] = argTypes[1];
@@ -573,9 +573,9 @@ public class JDReflectionUtil {
 
          java.lang.reflect.Method method;
 
-         Class thisClass = o.getClass();
+         Class<?> thisClass = o.getClass();
          // System.out.println("Class of object is "+thisClass);
-         Class[] argTypes = new Class[2];
+         Class<?>[] argTypes = new Class<?>[2];
          argTypes[0] = Class.forName("java.lang.String");
          method = null;
          Object[] args = new Object[2];
@@ -586,7 +586,7 @@ public class JDReflectionUtil {
          if (parm2 == null) {
            throw new Exception("Unable to handle null parameter");
          }
-         Class checkClass = parm2.getClass();
+         Class<?> checkClass = parm2.getClass();
          String tryArgs = "";
          while (method == null && checkClass != null) {
            try {
@@ -618,7 +618,7 @@ public class JDReflectionUtil {
              try {
 
                // Find the implementes for the class
-               Class[] interfaces = checkClass.getInterfaces();
+               Class<?>[] interfaces = checkClass.getInterfaces();
                for (int j = 0; method == null && j < interfaces.length; j++) {
                  tryArgs += "(Ljava/lang/String;" + interfaces[j].getName() + ") ";
 		 argTypes[1] = interfaces[j];
@@ -675,9 +675,9 @@ public class JDReflectionUtil {
       public static Object callMethod_O(Object o, String methodName, long i, int j )  throws Exception {
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
         // System.out.println("Class of object is "+thisClass);
-        Class[] argTypes = new Class[2];
+        Class<?>[] argTypes = new Class<?>[2];
         argTypes[0] = Long.TYPE ;
         argTypes[1] = Integer.TYPE ;
         method = thisClass.getMethod(methodName, argTypes);
@@ -700,9 +700,9 @@ public class JDReflectionUtil {
       public static Object callMethod_O(Object o, String methodName, long i, long j )  throws Exception {
           java.lang.reflect.Method method;
 
-          Class thisClass = o.getClass();
+          Class<?> thisClass = o.getClass();
           // System.out.println("Class of object is "+thisClass);
-          Class[] argTypes = new Class[2];
+          Class<?>[] argTypes = new Class<?>[2];
           argTypes[0] = Long.TYPE ;
           argTypes[1] = Long.TYPE ;
           method = thisClass.getMethod(methodName, argTypes);
@@ -736,9 +736,9 @@ public class JDReflectionUtil {
     public static String callMethod_S(Object o, String methodName) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
+	Class<?> thisClass = o.getClass();
 	// System.out.println("Class of object is "+thisClass);
-	Class[] argTypes = new Class[0];
+	Class<?>[] argTypes = new Class<?>[0];
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	Object[] args = new Object[0];
@@ -765,9 +765,9 @@ public class JDReflectionUtil {
      public static String callMethod_S(Object o, String methodName, int i) throws Exception {
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
         // System.out.println("Class of object is "+thisClass);
-        Class[] argTypes = new Class[1];
+        Class<?>[] argTypes = new Class<?>[1];
         argTypes[0] = java.lang.Integer.TYPE;
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -800,9 +800,9 @@ public class JDReflectionUtil {
      public static String callMethod_S(Object o, String methodName, long l, int j) throws Exception {
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
         // System.out.println("Class of object is "+thisClass);
-        Class[] argTypes = new Class[2];
+        Class<?>[] argTypes = new Class<?>[2];
         argTypes[0] = java.lang.Long.TYPE;
         argTypes[1] = java.lang.Integer.TYPE;
         method = thisClass.getMethod(methodName, argTypes);
@@ -834,8 +834,8 @@ public class JDReflectionUtil {
     public static int callMethod_I(Object o, String methodName) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[0];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[0];
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	Object[] args = new Object[0];
@@ -859,8 +859,8 @@ public class JDReflectionUtil {
     public static int callMethod_I(Object o, String methodName, int parm) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[1];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[1];
 	argTypes[0] = java.lang.Integer.TYPE;
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -880,8 +880,8 @@ public class JDReflectionUtil {
         String parm2) throws Exception {
       java.lang.reflect.Method method;
 
-      Class thisClass = o.getClass();
-      Class[] argTypes = new Class[2];
+      Class<?> thisClass = o.getClass();
+      Class<?>[] argTypes = new Class<?>[2];
       argTypes[0] = java.lang.Long.TYPE;
       argTypes[1] = String.class; 
       method = thisClass.getMethod(methodName, argTypes);
@@ -902,8 +902,8 @@ public class JDReflectionUtil {
         String parm2, int parm3, int parm4) throws Exception {
       java.lang.reflect.Method method;
 
-      Class thisClass = o.getClass();
-      Class[] argTypes = new Class[4];
+      Class<?> thisClass = o.getClass();
+      Class<?>[] argTypes = new Class<?>[4];
       argTypes[0] = java.lang.Long.TYPE;
       argTypes[1] = String.class; 
       argTypes[2] = java.lang.Integer.TYPE; 
@@ -929,13 +929,13 @@ public class JDReflectionUtil {
     public static int callMethod_I(Object o, String methodName, Object parm1) throws Exception {
       java.lang.reflect.Method method = null;
 
-      Class thisClass = o.getClass();
-      Class[] argTypes = new Class[1];
+      Class<?> thisClass = o.getClass();
+      Class<?>[] argTypes = new Class<?>[1];
 
       if (parm1 == null) {
         throw new Exception("Unable to handle null parameter");
       }
-      Class checkClass = parm1.getClass();
+      Class<?> checkClass = parm1.getClass();
       String tryArgs = "";
       while (method == null && checkClass != null) {
         try {
@@ -965,7 +965,7 @@ public class JDReflectionUtil {
           try {
 
             // Find the implementes for the class
-            Class[] interfaces = checkClass.getInterfaces();
+            Class<?>[] interfaces = checkClass.getInterfaces();
             for (int j = 0; method == null && j < interfaces.length; j++) {
               tryArgs += "(" + interfaces[j].getName() + ") ";
               argTypes[0] = interfaces[j];
@@ -1017,10 +1017,10 @@ public class JDReflectionUtil {
     *
     *  int value = callMethod_I(ds, "getMaximumPrecision");
     */
-    public static int callMethod_I(Object o, String methodName, Class[] argTypes, Object[] args) throws Exception {
+    public static int callMethod_I(Object o, String methodName, Class<?>[] argTypes, Object[] args) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
+	Class<?> thisClass = o.getClass();
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	try {
@@ -1045,8 +1045,8 @@ public class JDReflectionUtil {
      public static long callMethod_L(Object o, String methodName) throws Exception {
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
-        Class[] argTypes = new Class[0];
+        Class<?> thisClass = o.getClass();
+        Class<?>[] argTypes = new Class<?>[0];
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
         Object[] args = new Object[0];
@@ -1071,8 +1071,8 @@ public class JDReflectionUtil {
      public static long callMethod_L(Object o, String methodName, String parm1) throws Exception {
        java.lang.reflect.Method method = null;
 
-       Class thisClass = o.getClass();
-       Class[] argTypes = new Class[1];
+       Class<?> thisClass = o.getClass();
+       Class<?>[] argTypes = new Class<?>[1];
        argTypes[0] = java.lang.String.class; 
        method = thisClass.getMethod(methodName, argTypes);
 
@@ -1106,8 +1106,8 @@ public class JDReflectionUtil {
      public static long callMethod_L(Object o, String methodName, String parm1, int parm2) throws Exception {
        java.lang.reflect.Method method = null;
 
-       Class thisClass = o.getClass();
-       Class[] argTypes = new Class[2];
+       Class<?> thisClass = o.getClass();
+       Class<?>[] argTypes = new Class<?>[2];
        argTypes[0] = java.lang.String.class;
        argTypes[1] = Integer.TYPE; 
        method = thisClass.getMethod(methodName, argTypes);
@@ -1134,8 +1134,8 @@ public class JDReflectionUtil {
          String parm1, long parm2) throws Exception {
        java.lang.reflect.Method method = null;
 
-       Class thisClass = o.getClass();
-       Class[] argTypes = new Class[2];
+       Class<?> thisClass = o.getClass();
+       Class<?>[] argTypes = new Class<?>[2];
        argTypes[0] = java.lang.String.class;
        argTypes[1] = Long.TYPE; 
        method = thisClass.getMethod(methodName, argTypes);
@@ -1171,8 +1171,8 @@ public class JDReflectionUtil {
      public static long callMethod_L(Object o, String methodName, String parm1, int[] parm2) throws Exception {
        java.lang.reflect.Method method = null;
 
-       Class thisClass = o.getClass();
-       Class[] argTypes = new Class[2];
+       Class<?> thisClass = o.getClass();
+       Class<?>[] argTypes = new Class<?>[2];
        argTypes[0] = java.lang.String.class;
        argTypes[1] = parm2.getClass(); 
        method = thisClass.getMethod(methodName, argTypes);
@@ -1208,8 +1208,8 @@ public class JDReflectionUtil {
      public static long callMethod_L(Object o, String methodName, String parm1, String[] parm2) throws Exception {
        java.lang.reflect.Method method = null;
 
-       Class thisClass = o.getClass();
-       Class[] argTypes = new Class[2];
+       Class<?> thisClass = o.getClass();
+       Class<?>[] argTypes = new Class<?>[2];
        argTypes[0] = java.lang.String.class;
        argTypes[1] = parm2.getClass(); 
        method = thisClass.getMethod(methodName, argTypes);
@@ -1233,10 +1233,10 @@ public class JDReflectionUtil {
      }
 
      
-     public static long callMethod_L(Object o, String methodName, Class[] argTypes, Object[] args) throws Exception {
+     public static long callMethod_L(Object o, String methodName, Class<?>[] argTypes, Object[] args) throws Exception {
        java.lang.reflect.Method method = null;
 
-       Class thisClass = o.getClass();
+       Class<?> thisClass = o.getClass();
        method = thisClass.getMethod(methodName, argTypes);
 
        if (method == null) {
@@ -1259,14 +1259,14 @@ public class JDReflectionUtil {
      public static long callMethod_L(Object o, String methodName, Object parm1, long parm2) throws Exception {
        java.lang.reflect.Method method = null;
 
-       Class thisClass = o.getClass();
-       Class[] argTypes = new Class[2];
+       Class<?> thisClass = o.getClass();
+       Class<?>[] argTypes = new Class<?>[2];
        argTypes[1] = Long.TYPE;
 
        if (parm1 == null) {
          throw new Exception("Unable to handle null parameter");
        }
-       Class[] check1Class = getParameterClasses(parm1); 
+       Class<?>[] check1Class = getParameterClasses(parm1); 
        String tryArgs = "";
        for (int i = 0; method == null && i < check1Class.length; i++) {
            try {
@@ -1309,8 +1309,8 @@ public class JDReflectionUtil {
     public static boolean callMethod_B(Object o, String methodName) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[0];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[0];
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	Object[] args = new Object[0];
@@ -1336,8 +1336,8 @@ public class JDReflectionUtil {
      public static boolean callMethod_B(Object o, String methodName, int i ) throws Exception {
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
-        Class[] argTypes = new Class[1];
+        Class<?> thisClass = o.getClass();
+        Class<?>[] argTypes = new Class<?>[1];
         argTypes[0] = Integer.TYPE;
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -1360,11 +1360,11 @@ public class JDReflectionUtil {
     *
     *  boolean value = callMethod_B(ds, "isWrapperFor", Class.forName("java.lang.String");
     */
-    public static boolean callMethod_B(Object o, String methodName, Class x ) throws Exception {
+    public static boolean callMethod_B(Object o, String methodName, Class<?> x ) throws Exception {
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[1];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[1];
 	argTypes[0] = Class.forName("java.lang.Class");
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -1382,13 +1382,13 @@ public class JDReflectionUtil {
     public static boolean callMethod_B(Object o, String methodName, Object parm1) throws Exception {
       java.lang.reflect.Method method = null;
 
-      Class thisClass = o.getClass();
-      Class[] argTypes = new Class[1];
+      Class<?> thisClass = o.getClass();
+      Class<?>[] argTypes = new Class<?>[1];
 
       if (parm1 == null) {
         throw new Exception("Unable to handle null parameter");
       }
-      Class checkClass = parm1.getClass();
+      Class<?> checkClass = parm1.getClass();
       String tryArgs = "";
       while (method == null && checkClass != null) {
         try {
@@ -1418,7 +1418,7 @@ public class JDReflectionUtil {
           try {
 
             // Find the implementes for the class
-            Class[] interfaces = checkClass.getInterfaces();
+            Class<?>[] interfaces = checkClass.getInterfaces();
             for (int j = 0; method == null && j < interfaces.length; j++) {
               tryArgs += "(" + interfaces[j].getName() + ") ";
               argTypes[0] = interfaces[j];
@@ -1473,9 +1473,9 @@ public class JDReflectionUtil {
     *  callMethod_V(ds, "setReturnExtendedMetaData", argTypes, args);
     */
 
-    public static void callMethod_V(Object o, String methodName, Class[] argTypes, Object[] args  ) throws Exception {
+    public static void callMethod_V(Object o, String methodName, Class<?>[] argTypes, Object[] args  ) throws Exception {
 	java.lang.reflect.Method method;
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
 
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -1500,9 +1500,9 @@ public class JDReflectionUtil {
     public static void callMethod_V(Object o, String methodName) throws Exception {
 
 	java.lang.reflect.Method method;
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
 
-	Class[] argTypes = new Class[0];
+	Class<?>[] argTypes = new Class<?>[0];
 	method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	Object[] args = new Object[0];
@@ -1528,8 +1528,8 @@ public class JDReflectionUtil {
 
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[1];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[1];
 	argTypes[0] = java.lang.Integer.TYPE;
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -1555,8 +1555,8 @@ public class JDReflectionUtil {
 
    java.lang.reflect.Method method;
 
-   Class thisClass = o.getClass();
-   Class[] argTypes = new Class[1];
+   Class<?> thisClass = o.getClass();
+   Class<?>[] argTypes = new Class<?>[1];
    argTypes[0] = java.lang.Long.TYPE;
    method = thisClass.getMethod(methodName, argTypes);
      method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -1585,8 +1585,8 @@ public class JDReflectionUtil {
 
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
-        Class[] argTypes = new Class[2];
+        Class<?> thisClass = o.getClass();
+        Class<?>[] argTypes = new Class<?>[2];
         argTypes[0] = java.lang.Integer.TYPE;
         argTypes[1] = String.class;
         method = thisClass.getMethod(methodName, argTypes);
@@ -1616,8 +1616,8 @@ public class JDReflectionUtil {
 
          java.lang.reflect.Method method;
 
-         Class thisClass = o.getClass();
-         Class[] argTypes = new Class[2];
+         Class<?> thisClass = o.getClass();
+         Class<?>[] argTypes = new Class<?>[2];
          argTypes[0] = java.lang.Integer.TYPE;
          argTypes[1] = java.lang.Integer.TYPE;
          method = thisClass.getMethod(methodName, argTypes);
@@ -1648,8 +1648,8 @@ public class JDReflectionUtil {
 
          java.lang.reflect.Method method;
 
-         Class thisClass = o.getClass();
-         Class[] argTypes = new Class[2];
+         Class<?> thisClass = o.getClass();
+         Class<?>[] argTypes = new Class<?>[2];
          argTypes[0] = String.class;
          argTypes[1] = String.class;
          method = thisClass.getMethod(methodName, argTypes);
@@ -1680,8 +1680,8 @@ public class JDReflectionUtil {
 
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[1];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[1];
 	argTypes[0] = java.lang.Boolean.TYPE;
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -1708,8 +1708,8 @@ public class JDReflectionUtil {
 
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[1];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[1];
 	if (parm1 == null) {
 	    byte[] dummy = new byte[0];
 	    argTypes[0] = dummy.getClass();
@@ -1741,14 +1741,14 @@ public class JDReflectionUtil {
   public static void callMethod_V(Object o, String methodName, int i, Object parm2) throws Exception {
     java.lang.reflect.Method method = null;
 
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[2];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[2];
     argTypes[0] = Integer.TYPE;
 
     if (parm2 == null) {
       throw new Exception("Unable to handle null parameter");
     }
-    Class checkClass = parm2.getClass();
+    Class<?> checkClass = parm2.getClass();
     String tryArgs = "";
     while (method == null && checkClass != null) {
       try {
@@ -1778,7 +1778,7 @@ public class JDReflectionUtil {
         try {
 
           // Find the implementes for the class
-          Class[] interfaces = checkClass.getInterfaces();
+          Class<?>[] interfaces = checkClass.getInterfaces();
           for (int j = 0; method == null && j < interfaces.length; j++) {
             tryArgs += "(int, " + interfaces[j].getName() + ") ";
 	    argTypes[1] = interfaces[j];
@@ -1827,8 +1827,8 @@ public class JDReflectionUtil {
   
   public static void callMethod_V(Object o, String methodName, String p1, char[] p2,
       char[] p3, String p4, InetAddress p5, int p6, InetAddress p7, int p8) throws Exception {
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[8];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[8];
     argTypes[0] = String.class;
     argTypes[1] = Class.forName("[C");;
     argTypes[2] = argTypes[1];
@@ -1839,12 +1839,10 @@ public class JDReflectionUtil {
     argTypes[7] = Integer.TYPE; 
     
     Method method = thisClass.getMethod(methodName, argTypes);
-    method.setAccessible(true); 
-
-
     if (method == null) {
       throw new Exception("Unable to find method ");
     }
+    method.setAccessible(true); 
     Object[] args = new Object[2];
     args[0] = p1;
     args[1] = p2;
@@ -1867,17 +1865,17 @@ public class JDReflectionUtil {
 
   /* Return the list of parameter classes to check for the specifed parameter */
   /* Use a cached list if possible */
-  static Hashtable classToParameterClassesHashtable = new Hashtable();
+  static Hashtable<Class<?>,Class<?>[]> classToParameterClassesHashtable = new Hashtable<Class<?>,Class<?>[]>();
 
-  public static Class[] getParameterClasses(Object parm) {
-    Hashtable existingInterfaceHashtable = new Hashtable(); 
-    Class[] parameterClasses = null;
-    Class currentClass = parm.getClass();
-    Class topClass = currentClass; 
-    parameterClasses = (Class[]) classToParameterClassesHashtable
+  public static Class<?>[] getParameterClasses(Object parm) {
+    Hashtable<Class<?>,Class<?>> existingInterfaceHashtable = new Hashtable<Class<?>,Class<?>> (); 
+    Class<?>[] parameterClasses = null;
+    Class<?> currentClass = parm.getClass();
+    Class<?> topClass = currentClass; 
+    parameterClasses = (Class<?>[]) classToParameterClassesHashtable
         .get(topClass);
     if (parameterClasses == null) {
-      ArrayList list = new ArrayList();
+      ArrayList<Class<?>> list = new ArrayList<Class<?>>();
       String currentClassName = currentClass.getName(); 
       if ("java.lang.Long".equals(currentClassName) ) {
         list.add(java.lang.Long.TYPE); 
@@ -1889,9 +1887,9 @@ public class JDReflectionUtil {
         list.add(currentClass);
 
         // Find the implements for the class
-        Class[] interfaces = currentClass.getInterfaces();
+        Class<?>[] interfaces = currentClass.getInterfaces();
         for (int j = 0;  j < interfaces.length; j++) {
-          Class thisInterface = interfaces[j]; 
+          Class<?> thisInterface = interfaces[j]; 
           Object found = existingInterfaceHashtable.get(thisInterface); 
           if (found == null) { 
             list.add(thisInterface); 
@@ -1907,9 +1905,9 @@ public class JDReflectionUtil {
       } /* while currentClass != null */ 
 
       // Convert the arraylist to an array
-      parameterClasses = new Class[list.size()]; 
+      parameterClasses = new Class<?>[list.size()]; 
       for (int i = 0; i < parameterClasses.length; i++) { 
-        parameterClasses[i] = (Class) list.get(i); 
+        parameterClasses[i] = (Class<?>) list.get(i); 
       }
       
       // Add to hash table
@@ -1931,8 +1929,8 @@ public class JDReflectionUtil {
 public static void callMethod_V(Object o, String methodName, int parm1, Object parm2, Object parm3) throws Exception {
   java.lang.reflect.Method method = null;
 
-  Class thisClass = o.getClass();
-  Class[] argTypes = new Class[3];
+  Class<?> thisClass = o.getClass();
+  Class<?>[] argTypes = new Class<?>[3];
   argTypes[0] = Integer.TYPE;
 
   if (parm2 == null) {
@@ -1941,8 +1939,8 @@ public static void callMethod_V(Object o, String methodName, int parm1, Object p
   if (parm3 == null) {
     throw new Exception("Unable to handle null parameter");
   }
-  Class[] check2Class = getParameterClasses(parm2); 
-  Class[] check3Class = getParameterClasses(parm3); 
+  Class<?>[] check2Class = getParameterClasses(parm2); 
+  Class<?>[] check3Class = getParameterClasses(parm3); 
   String tryArgs = "";
   for (int i = 0; method == null && i < check2Class.length; i++) {
     for (int j = 0; method == null && j < check3Class.length; j++) {
@@ -1994,8 +1992,8 @@ public static void callMethod_V(Object o, String methodName, int parm1, Object p
 public static void callMethod_V(Object o, String methodName, String parm1, Object parm2, Object parm3) throws Exception {
 java.lang.reflect.Method method = null;
 
-Class thisClass = o.getClass();
-Class[] argTypes = new Class[3];
+Class<?> thisClass = o.getClass();
+Class<?>[] argTypes = new Class<?>[3];
 argTypes[0] = String.class;
 
 if (parm2 == null) {
@@ -2004,8 +2002,8 @@ if (parm2 == null) {
 if (parm3 == null) {
   throw new Exception("Unable to handle null parameter");
 }
-Class[] check2Class = getParameterClasses(parm2); 
-Class[] check3Class = getParameterClasses(parm3); 
+Class<?>[] check2Class = getParameterClasses(parm2); 
+Class<?>[] check3Class = getParameterClasses(parm3); 
 String tryArgs = "";
 for (int i = 0; method == null && i < check2Class.length; i++) {
   for (int j = 0; method == null && j < check3Class.length; j++) {
@@ -2044,14 +2042,14 @@ try {
 public static void callMethod_V(Object o, String methodName, String parm1, Object parm2, long parm3) throws Exception {
 java.lang.reflect.Method method = null;
 
-Class thisClass = o.getClass();
-Class[] argTypes = new Class[3];
+Class<?> thisClass = o.getClass();
+Class<?>[] argTypes = new Class<?>[3];
 argTypes[0] = String.class;
 
 if (parm2 == null) {
   throw new Exception("Unable to handle null parameter");
 }
-Class[] check2Class = getParameterClasses(parm2); 
+Class<?>[] check2Class = getParameterClasses(parm2); 
 argTypes[2] = Long.TYPE; 
 String tryArgs = "";
 for (int i = 0; method == null && i < check2Class.length; i++) {
@@ -2100,8 +2098,8 @@ try {
 public static void callMethod_V(Object o, String methodName, String parm1, Object parm2, Object parm3, int parm4) throws Exception {
 java.lang.reflect.Method method = null;
 
-Class thisClass = o.getClass();
-Class[] argTypes = new Class[4];
+Class<?> thisClass = o.getClass();
+Class<?>[] argTypes = new Class<?>[4];
 argTypes[0] = String.class;
 argTypes[3] = Integer.TYPE; 
 if (parm2 == null) {
@@ -2110,8 +2108,8 @@ if (parm2 == null) {
 if (parm3 == null) {
   throw new Exception("Unable to handle null parameter");
 }
-Class[] check2Class = getParameterClasses(parm2); 
-Class[] check3Class = getParameterClasses(parm3); 
+Class<?>[] check2Class = getParameterClasses(parm2); 
+Class<?>[] check3Class = getParameterClasses(parm3); 
 String tryArgs = "";
 for (int i = 0; method == null && i < check2Class.length; i++) {
   for (int j = 0; method == null && j < check3Class.length; j++) {
@@ -2162,8 +2160,8 @@ try {
 public static void callMethod_V(Object o, String methodName, int parm1, Object parm2, int parm3) throws Exception {
 java.lang.reflect.Method method = null;
 
-Class thisClass = o.getClass();
-Class[] argTypes = new Class[3];
+Class<?> thisClass = o.getClass();
+Class<?>[] argTypes = new Class<?>[3];
 argTypes[0] = Integer.TYPE;
 
 if (parm2 == null) {
@@ -2171,7 +2169,7 @@ if (parm2 == null) {
 }
 argTypes[2] = Integer.TYPE;
 
-Class[] check2Class = getParameterClasses(parm2); 
+Class<?>[] check2Class = getParameterClasses(parm2); 
 String tryArgs = "";
 for (int i = 0; method == null && i < check2Class.length; i++) {
     try {
@@ -2206,8 +2204,8 @@ try {
 public static void callMethod_V(Object o, String methodName, int parm1, Object parm2, int parm3, int parm4) throws Exception {
 java.lang.reflect.Method method = null;
 
-Class thisClass = o.getClass();
-Class[] argTypes = new Class[4];
+Class<?> thisClass = o.getClass();
+Class<?>[] argTypes = new Class<?>[4];
 argTypes[0] = Integer.TYPE;
 if (parm2 == null) {
   throw new Exception("Unable to handle null parameter");
@@ -2215,7 +2213,7 @@ if (parm2 == null) {
 argTypes[2] = Integer.TYPE;
 argTypes[3] = Integer.TYPE; 
 
-Class[] check2Class = getParameterClasses(parm2); 
+Class<?>[] check2Class = getParameterClasses(parm2); 
 String tryArgs = "";
 for (int i = 0; method == null && i < check2Class.length; i++) {
     try {
@@ -2261,8 +2259,8 @@ try {
 public static void callMethod_V(Object o, String methodName, int parm1, Object parm2, long parm3) throws Exception {
 java.lang.reflect.Method method = null;
 
-Class thisClass = o.getClass();
-Class[] argTypes = new Class[3];
+Class<?> thisClass = o.getClass();
+Class<?>[] argTypes = new Class<?>[3];
 argTypes[0] = Integer.TYPE;
 
 if (parm2 == null) {
@@ -2270,7 +2268,7 @@ if (parm2 == null) {
 }
 argTypes[2] = Long.TYPE;
 
-Class[] check2Class = getParameterClasses(parm2); 
+Class<?>[] check2Class = getParameterClasses(parm2); 
 String tryArgs = "";
 for (int i = 0; method == null && i < check2Class.length; i++) {
     try {
@@ -2316,8 +2314,8 @@ try {
 public static void callMethod_V(Object o, String methodName, int parm1, Object parm2, Object parm3, int parm4) throws Exception {
 java.lang.reflect.Method method = null;
 
-Class thisClass = o.getClass();
-Class[] argTypes = new Class[4];
+Class<?> thisClass = o.getClass();
+Class<?>[] argTypes = new Class<?>[4];
 argTypes[0] = Integer.TYPE;
 argTypes[3] = Integer.TYPE;
 
@@ -2327,8 +2325,8 @@ if (parm2 == null) {
 if (parm3 == null) {
   throw new Exception("Unable to handle null parameter");
 }
-Class[] check2Class = getParameterClasses(parm2); 
-Class[] check3Class = getParameterClasses(parm3); 
+Class<?>[] check2Class = getParameterClasses(parm2); 
+Class<?>[] check3Class = getParameterClasses(parm3); 
 String tryArgs = "";
 for (int i = 0; method == null && i < check2Class.length; i++) {
   for (int j = 0; method == null && j < check3Class.length; j++) {
@@ -2370,14 +2368,14 @@ try {
   public static void callMethod_V(Object o, String methodName, Object parm1, int i) throws Exception {
     java.lang.reflect.Method method = null;
 
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[2];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[2];
     argTypes[1] = Integer.TYPE;
 
     if (parm1 == null) {
       throw new Exception("Unable to handle null parameter");
     }
-    Class checkClass = parm1.getClass();
+    Class<?> checkClass = parm1.getClass();
     String tryArgs = "";
     while (method == null && checkClass != null) {
       try {
@@ -2407,7 +2405,7 @@ try {
         try {
 
           // Find the implementes for the class
-          Class[] interfaces = checkClass.getInterfaces();
+          Class<?>[] interfaces = checkClass.getInterfaces();
           for (int j = 0; method == null && j < interfaces.length; j++) {
             tryArgs += "(" + interfaces[j].getName() + ",int) ";
             argTypes[0] = interfaces[j];
@@ -2454,14 +2452,14 @@ try {
   public static void callMethod_V(Object o, String methodName, Object parm1, boolean b) throws Exception {
     java.lang.reflect.Method method = null;
 
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[2];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[2];
     argTypes[1] = Boolean.TYPE;
 
     if (parm1 == null) {
       throw new Exception("Unable to handle null parameter");
     }
-    Class checkClass = parm1.getClass();
+    Class<?> checkClass = parm1.getClass();
     String tryArgs = "";
     while (method == null && checkClass != null) {
       try {
@@ -2491,7 +2489,7 @@ try {
         try {
 
           // Find the implementes for the class
-          Class[] interfaces = checkClass.getInterfaces();
+          Class<?>[] interfaces = checkClass.getInterfaces();
           for (int j = 0; method == null && j < interfaces.length; j++) {
             tryArgs += "(" + interfaces[j].getName() + ",int) ";
             argTypes[0] = interfaces[j];
@@ -2538,8 +2536,8 @@ try {
   public static void callMethod_V(Object o, String methodName, boolean a, boolean b) throws Exception {
     java.lang.reflect.Method method = null;
 
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[2];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[2];
     argTypes[0] = Boolean.TYPE;
     argTypes[1] = Boolean.TYPE;
 
@@ -2565,13 +2563,13 @@ try {
   public static void callMethod_V(Object o, String methodName, Object parm1) throws Exception {
     java.lang.reflect.Method method = null;
 
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[1];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[1];
 
     if (parm1 == null) {
       throw new Exception("Unable to handle null parameter");
     }
-    Class checkClass = parm1.getClass();
+    Class<?> checkClass = parm1.getClass();
     String tryArgs = "";
     while (method == null && checkClass != null) {
       try {
@@ -2601,7 +2599,7 @@ try {
         try {
 
           // Find the implements for the class
-          Class[] interfaces = checkClass.getInterfaces();
+          Class<?>[] interfaces = checkClass.getInterfaces();
           for (int j = 0; method == null && j < interfaces.length; j++) {
             tryArgs += "(" + interfaces[j].getName() + ",int) ";
             argTypes[0] = interfaces[j];
@@ -2645,11 +2643,11 @@ try {
   }
 
 
-  public static void addInterfacesToHashtable(Hashtable interfacesHashtable, Class checkClass) {
+  public static void addInterfacesToHashtable(Hashtable<Class<?>,Class<?>> interfacesHashtable, Class<?> checkClass) {
       if (checkClass.isInterface()) {
 	  interfacesHashtable.put(checkClass, checkClass);
       }
-      Class[] interfaces = checkClass.getInterfaces();
+      Class<?>[] interfaces = checkClass.getInterfaces();
       for (int j = 0;  j < interfaces.length; j++) {
 	  addInterfacesToHashtable(interfacesHashtable, interfaces[j]);
       }
@@ -2659,14 +2657,14 @@ try {
   public static void callMethod_V(Object o, String methodName, String parm1, Object parm2) throws Exception {
     java.lang.reflect.Method method = null;
 
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[2];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[2];
     argTypes[0] = String.class;
 
     if (parm2 == null) {
       throw new Exception("Unable to handle null parameter");
     }
-    Class checkClass = parm2.getClass();
+    Class<?> checkClass = parm2.getClass();
     String tryArgs = "";
     while (method == null && checkClass != null) {
 	try {
@@ -2696,14 +2694,14 @@ try {
         try {
 
           // Find the implementes for the class
-	  Hashtable interfacesHashtable = new Hashtable();
+	  Hashtable<Class<?>,Class<?>> interfacesHashtable = new Hashtable<Class<?>,Class<?>>();
 	  addInterfacesToHashtable(interfacesHashtable, checkClass);
 
-	  Enumeration keys = interfacesHashtable.keys();
+	  Enumeration<Class<?>> keys = interfacesHashtable.keys();
 
 
 	  while(method == null && keys.hasMoreElements()) {
-	      Class x = (Class) keys.nextElement();
+	      Class<?> x = (Class<?>) keys.nextElement();
 	      tryArgs += "(String, Interface:" + x.getName() + ") ";
 	      argTypes[1] = x;
 	      try {
@@ -2753,14 +2751,14 @@ try {
   public static void callMethod_V(Object o, String methodName, String parm1, Object parm2, int parm3) throws Exception {
     java.lang.reflect.Method method = null;
 
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[3];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[3];
     argTypes[0] = String.class;
     argTypes[2] = Integer.TYPE; 
     if (parm2 == null) {
       throw new Exception("Unable to handle null parameter");
     }
-    Class checkClass = parm2.getClass();
+    Class<?> checkClass = parm2.getClass();
     String tryArgs = "";
     while (method == null && checkClass != null) {
   try {
@@ -2790,14 +2788,14 @@ try {
         try {
 
           // Find the implementes for the class
-    Hashtable interfacesHashtable = new Hashtable();
+    Hashtable<Class<?>,Class<?>> interfacesHashtable = new Hashtable<Class<?>,Class<?>>();
     addInterfacesToHashtable(interfacesHashtable, checkClass);
 
-    Enumeration keys = interfacesHashtable.keys();
+    Enumeration<Class<?>> keys = interfacesHashtable.keys();
 
 
     while(method == null && keys.hasMoreElements()) {
-        Class x = (Class) keys.nextElement();
+        Class<?> x = (Class<?>) keys.nextElement();
         tryArgs += "(String, Interface:" + x.getName() + ") ";
         argTypes[1] = x;
         try {
@@ -2847,15 +2845,15 @@ try {
   public static void callMethod_V(Object o, String methodName, String parm1, Object parm2, int parm3, int parm4) throws Exception {
     java.lang.reflect.Method method = null;
 
-    Class thisClass = o.getClass();
-    Class[] argTypes = new Class[4];
+    Class<?> thisClass = o.getClass();
+    Class<?>[] argTypes = new Class<?>[4];
     argTypes[0] = String.class;
     argTypes[2] = Integer.TYPE; 
     argTypes[3] = Integer.TYPE; 
     if (parm2 == null) {
       throw new Exception("Unable to handle null parameter");
     }
-    Class checkClass = parm2.getClass();
+    Class<?> checkClass = parm2.getClass();
     String tryArgs = "";
     while (method == null && checkClass != null) {
   try {
@@ -2885,14 +2883,14 @@ try {
         try {
 
           // Find the implementes for the class
-    Hashtable interfacesHashtable = new Hashtable();
+    Hashtable<Class<?>,Class<?>> interfacesHashtable = new Hashtable<Class<?>,Class<?>>();
     addInterfacesToHashtable(interfacesHashtable, checkClass);
 
-    Enumeration keys = interfacesHashtable.keys();
+    Enumeration<Class<?>> keys = interfacesHashtable.keys();
 
 
     while(method == null && keys.hasMoreElements()) {
-        Class x = (Class) keys.nextElement();
+        Class<?> x = (Class<?>) keys.nextElement();
         tryArgs += "(String, Interface:" + x.getName() + ") ";
         argTypes[1] = x;
         try {
@@ -2955,14 +2953,14 @@ try {
 public static void callMethod_V(Object o, String methodName, long l, Object parm2) throws Exception {
   java.lang.reflect.Method method = null;
 
-  Class thisClass = o.getClass();
-  Class[] argTypes = new Class[2];
+  Class<?> thisClass = o.getClass();
+  Class<?>[] argTypes = new Class<?>[2];
   argTypes[0] = Long.TYPE;
 
   if (parm2 == null) {
     throw new Exception("Unable to handle null parameter");
   }
-  Class checkClass = parm2.getClass();
+  Class<?> checkClass = parm2.getClass();
   String tryArgs = "";
   while (method == null && checkClass != null) {
     try {
@@ -2992,7 +2990,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
       try {
 
         // Find the implements for the class
-        Class[] interfaces = checkClass.getInterfaces();
+        Class<?>[] interfaces = checkClass.getInterfaces();
         for (int j = 0; method == null && j < interfaces.length; j++) {
           tryArgs += "(int, " + interfaces[j].getName() + ") ";
           argTypes[1] = interfaces[j];
@@ -3049,8 +3047,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[3];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[3];
 	argTypes[0] = java.lang.Integer.TYPE;
 	argTypes[1] = Class.forName("java.io.InputStream");
 	argTypes[2] = java.lang.Long.TYPE;
@@ -3081,8 +3079,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
-        Class[] argTypes = new Class[3];
+        Class<?> thisClass = o.getClass();
+        Class<?>[] argTypes = new Class<?>[3];
         argTypes[0] = String.class;
         argTypes[1] = Class.forName("java.io.InputStream");
         argTypes[2] = java.lang.Long.TYPE;
@@ -3112,8 +3110,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
 	java.lang.reflect.Method method;
 
-	Class thisClass = o.getClass();
-	Class[] argTypes = new Class[3];
+	Class<?> thisClass = o.getClass();
+	Class<?>[] argTypes = new Class<?>[3];
 	argTypes[0] = java.lang.Integer.TYPE;
 	argTypes[1] = Class.forName("java.io.Reader");
 	argTypes[2] = java.lang.Long.TYPE;
@@ -3143,8 +3141,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
         java.lang.reflect.Method method;
 
-        Class thisClass = o.getClass();
-        Class[] argTypes = new Class[3];
+        Class<?> thisClass = o.getClass();
+        Class<?>[] argTypes = new Class<?>[3];
         argTypes[0] = String.class;
         argTypes[1] = Class.forName("java.io.Reader");
         argTypes[2] = java.lang.Long.TYPE;
@@ -3163,9 +3161,9 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      }
 
      
-     public static void callStaticMethod_V(String classname, String methodName, Class[] argTypes, Object[] args)
+     public static void callStaticMethod_V(String classname, String methodName, Class<?>[] argTypes, Object[] args)
          throws Exception {
-       Class thisClass = Class.forName(classname);
+       Class<?> thisClass = Class.forName(classname);
        java.lang.reflect.Method method;
        method = thisClass.getDeclaredMethod(methodName, argTypes);
        method.setAccessible(true);
@@ -3193,8 +3191,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
  			throws Exception {
 
         Object returnObject = null;
-	Class thisClass =  Class.forName(classname);
-    Class[] argTypes = new Class[2];
+	Class<?> thisClass =  Class.forName(classname);
+    Class<?>[] argTypes = new Class<?>[2];
     argTypes[0] = Class.forName("java.lang.String"); 
     argTypes[1] = Integer.class; 
     java.lang.reflect.Method method;
@@ -3222,8 +3220,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 		
 
         Object returnObject = null;
-	Class thisClass =  Class.forName(classname);
-    Class[] argTypes = new Class[5];
+	Class<?> thisClass =  Class.forName(classname);
+    Class<?>[] argTypes = new Class<?>[5];
     argTypes[0] = Integer.TYPE; 
     argTypes[1] = Integer.TYPE; 
     argTypes[2] = Integer.TYPE; 
@@ -3253,11 +3251,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName) throws Exception {
 
         Object returnObject = null;
-	Class thisClass =  Class.forName(classname);
+	Class<?> thisClass =  Class.forName(classname);
 
         java.lang.reflect.Method method;
 
-        Class[] argTypes = new Class[0];
+        Class<?>[] argTypes = new Class<?>[0];
 
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -3274,11 +3272,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, String parm1) throws Exception {
 
        Object returnObject = null;
- Class thisClass =  Class.forName(classname);
+ Class<?> thisClass =  Class.forName(classname);
 
        java.lang.reflect.Method method;
 
-       Class[] argTypes = new Class[1];
+       Class<?>[] argTypes = new Class<?>[1];
        argTypes[0] = Class.forName("java.lang.String"); 
 
        method = thisClass.getMethod(methodName, argTypes);
@@ -3299,13 +3297,13 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, Object parm1) throws Exception {
 
        Object returnObject = null;
- Class thisClass =  Class.forName(classname);
+ Class<?> thisClass =  Class.forName(classname);
 
        java.lang.reflect.Method method = null ;
 
-       Class[] argTypes = new Class[1];
+       Class<?>[] argTypes = new Class<?>[1];
 
-       Class[] check1Class = getParameterClasses(parm1); 
+       Class<?>[] check1Class = getParameterClasses(parm1); 
        String tryArgs = "";
        for (int i = 0; method == null && i < check1Class.length; i++) {
            try {
@@ -3342,11 +3340,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, int parm1) throws Exception {
 
        Object returnObject = null;
-       Class thisClass =  Class.forName(classname);
+       Class<?> thisClass =  Class.forName(classname);
 
        java.lang.reflect.Method method;
 
-       Class[] argTypes = new Class[1];
+       Class<?>[] argTypes = new Class<?>[1];
        argTypes[0] = Integer.TYPE; 
 
        method = thisClass.getMethod(methodName, argTypes);
@@ -3364,11 +3362,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, boolean parm1, String parm2) throws Exception {
 
        Object returnObject = null;
-       Class thisClass =  Class.forName(classname);
+       Class<?> thisClass =  Class.forName(classname);
 
        java.lang.reflect.Method method;
 
-       Class[] argTypes = new Class[2];
+       Class<?>[] argTypes = new Class<?>[2];
        argTypes[0] = Boolean.TYPE; 
        argTypes[1] = Class.forName("java.lang.String"); 
 
@@ -3390,11 +3388,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
           public static Object callStaticMethod_O(String classname, String methodName, int parm1, int parm2, int parm3) throws Exception {
 
        Object returnObject = null;
-       Class thisClass =  Class.forName(classname);
+       Class<?> thisClass =  Class.forName(classname);
 
        java.lang.reflect.Method method;
 
-       Class[] argTypes = new Class[3];
+       Class<?>[] argTypes = new Class<?>[3];
        argTypes[0] = Integer.TYPE; 
        argTypes[1] = Integer.TYPE; 
        argTypes[2] = Integer.TYPE; 
@@ -3417,11 +3415,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, int parm1, int parm2, int parm3, int parm4, int parm5, int parm6) throws Exception {
 
        Object returnObject = null;
-       Class thisClass =  Class.forName(classname);
+       Class<?> thisClass =  Class.forName(classname);
 
        java.lang.reflect.Method method;
 
-       Class[] argTypes = new Class[6];
+       Class<?>[] argTypes = new Class<?>[6];
        argTypes[0] = Integer.TYPE; 
        argTypes[1] = Integer.TYPE; 
        argTypes[2] = Integer.TYPE; 
@@ -3449,11 +3447,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, int parm1, int parm2, int parm3, int parm4, int parm5, int parm6, int parm7) throws Exception {
 
        Object returnObject = null;
-       Class thisClass =  Class.forName(classname);
+       Class<?> thisClass =  Class.forName(classname);
 
        java.lang.reflect.Method method;
 
-       Class[] argTypes = new Class[7];
+       Class<?>[] argTypes = new Class<?>[7];
        argTypes[0] = Integer.TYPE; 
        argTypes[1] = Integer.TYPE; 
        argTypes[2] = Integer.TYPE; 
@@ -3494,11 +3492,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static int callStaticMethod_I(String classname, String methodName) throws Exception {
 
         Object returnObject = null;
-	Class thisClass =  Class.forName(classname);
+	Class<?> thisClass =  Class.forName(classname);
 
         java.lang.reflect.Method method;
 
-        Class[] argTypes = new Class[0];
+        Class<?>[] argTypes = new Class<?>[0];
 
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -3527,11 +3525,11 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
       public static boolean callStaticMethod_B(String classname, String methodName, String arg) throws Exception {
 
          Object returnObject = null;
-         Class thisClass =  Class.forName(classname);
+         Class<?> thisClass =  Class.forName(classname);
 
          java.lang.reflect.Method method;
 
-         Class[] argTypes = new Class[1];
+         Class<?>[] argTypes = new Class<?>[1];
          argTypes[0] = Class.forName("java.lang.String"); 
          method = thisClass.getMethod(methodName, argTypes);
          method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -3565,12 +3563,12 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
     public static Object createObject(String classname) throws Exception {
 
-	Class objectClass1 = Class.forName(classname);
-	Class[] noArgTypes = new Class[0];
+	Class<?> objectClass1 = Class.forName(classname);
+	Class<?>[] noArgTypes = new Class<?>[0];
 	Object[] noArgs    = new Object[0];
 	Object newObject =null;
 	try {
-	    Constructor constructor = objectClass1.getConstructor(noArgTypes);
+	    Constructor<?> constructor = objectClass1.getConstructor(noArgTypes);
 
 	    newObject = constructor.newInstance(noArgs);
 	} catch (java.lang.reflect.InvocationTargetException ite) {
@@ -3591,14 +3589,14 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
      public static Object createObject(String classname, byte[] arg) throws Exception {
 
-        Class objectClass11 = Class.forName(classname);
-        Class[] oneArgTypes = new Class[1];
+        Class<?> objectClass11 = Class.forName(classname);
+        Class<?>[] oneArgTypes = new Class<?>[1];
         oneArgTypes[0] = Class.forName("[B");
         Object[] oneArgs    = new Object[1];
         oneArgs[0] = arg;
         Object newObject =null;
         try {
-            Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
+            Constructor<?> constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
 
             constructor.setAccessible(true);  //@PDA allo call of protected.
             newObject = constructor.newInstance(oneArgs);
@@ -3613,14 +3611,14 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
          long arg) throws Exception {
 
 
-       Class objectClass11 = Class.forName(classname);
-       Class[] oneArgTypes = new Class[1];
+       Class<?> objectClass11 = Class.forName(classname);
+       Class<?>[] oneArgTypes = new Class<?>[1];
        oneArgTypes[0] =  Long.TYPE;
        Object[] oneArgs    = new Object[1];
        oneArgs[0] = new Long(arg);
        Object newObject =null;
        try {
-           Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
+           Constructor<?> constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
 
            constructor.setAccessible(true);  //@PDA allo call of protected.
            newObject = constructor.newInstance(oneArgs);
@@ -3639,14 +3637,14 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
          String arg) throws Exception {
 
 
-       Class objectClass11 = Class.forName(classname);
-       Class[] oneArgTypes = new Class[1];
+       Class<?> objectClass11 = Class.forName(classname);
+       Class<?>[] oneArgTypes = new Class<?>[1];
        oneArgTypes[0] = arg.getClass();
        Object[] oneArgs    = new Object[1];
        oneArgs[0] = arg;
        Object newObject =null;
        try {
-           Constructor constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
+           Constructor<?> constructor = objectClass11.getDeclaredConstructor(oneArgTypes); // find protected constructor also
 
            constructor.setAccessible(true);  //@PDA allo call of protected.
            newObject = constructor.newInstance(oneArgs);
@@ -3661,8 +3659,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      }
 
  	public static Object createObject(String classname, int arg1, Object arg2) throws Exception  {
-        Class objectClass11 = Class.forName(classname);
-        Class[] twoArgTypes = new Class[2];
+        Class<?> objectClass11 = Class.forName(classname);
+        Class<?>[] twoArgTypes = new Class<?>[2];
         twoArgTypes[0] = Integer.TYPE;
         twoArgTypes[1] = arg2.getClass();
         Object[] twoArgs    = new Object[2];
@@ -3671,7 +3669,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
         
         Object newObject =null;
         try {
-            Constructor constructor = objectClass11.getDeclaredConstructor(twoArgTypes);
+            Constructor<?> constructor = objectClass11.getDeclaredConstructor(twoArgTypes);
 
             constructor.setAccessible(true);  
             newObject = constructor.newInstance(twoArgs);
@@ -3690,8 +3688,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
          long arg1, int arg2 ) throws Exception {
 
 
-       Class objectClass11 = Class.forName(classname);
-       Class[] twoArgsTypes = new Class[2];
+       Class<?> objectClass11 = Class.forName(classname);
+       Class<?>[] twoArgsTypes = new Class<?>[2];
        twoArgsTypes[0] =  Long.TYPE;
        twoArgsTypes[1] =  Integer.TYPE;
        Object[] twoArgs    = new Object[2];
@@ -3699,7 +3697,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
        twoArgs[1] = new Integer(arg2); 
        Object newObject =null;
        try {
-           Constructor constructor = objectClass11.getDeclaredConstructor(twoArgsTypes); // find protected constructor also
+           Constructor<?> constructor = objectClass11.getDeclaredConstructor(twoArgsTypes); // find protected constructor also
 
            constructor.setAccessible(true);  //@PDA allo call of protected.
            newObject = constructor.newInstance(twoArgs);
@@ -3723,14 +3721,14 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
       public static Object createObject(String classname, String parameterClass, Object arg) throws Exception {
 
-         Class objectClass1 = Class.forName(classname);
-         Class[] oneArgTypes = new Class[1];
+         Class<?> objectClass1 = Class.forName(classname);
+         Class<?>[] oneArgTypes = new Class<?>[1];
          oneArgTypes[0] = Class.forName(parameterClass);
          Object[] oneArgs    = new Object[1];
          oneArgs[0] = arg;
          Object newObject =null;
          try {
-             Constructor constructor = objectClass1.getDeclaredConstructor(oneArgTypes);
+             Constructor<?> constructor = objectClass1.getDeclaredConstructor(oneArgTypes);
 
              constructor.setAccessible(true);
              newObject = constructor.newInstance(oneArgs);
@@ -3743,7 +3741,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
   	public static Object  createObject(String classname, String p1, String p2, char[] p3,
 			char[] p4) throws Exception {
-  		Class[] argTypes = new Class[4]; 
+  		Class<?>[] argTypes = new Class<?>[4]; 
   		argTypes[0]= Class.forName("java.lang.String");	
   		argTypes[1]= Class.forName("java.lang.String");	
   		argTypes[2]= Class.forName("[C");	
@@ -3764,12 +3762,12 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
       *
       */
 
-      public static Object createObject(String classname, Class[] argTypes, Object[] args)  throws Exception {
+      public static Object createObject(String classname, Class<?>[] argTypes, Object[] args)  throws Exception {
 
-        Class objectClass1 = Class.forName(classname);
+        Class<?> objectClass1 = Class.forName(classname);
          Object newObject =null;
          try {
-             Constructor constructor = objectClass1.getDeclaredConstructor(argTypes);
+             Constructor<?> constructor = objectClass1.getDeclaredConstructor(argTypes);
 
              constructor.setAccessible(true);
              newObject = constructor.newInstance(args);
@@ -3779,7 +3777,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
          } catch (NoSuchMethodException nsme) {
            System.out.println("Caught "+nsme.toString());
            System.out.println("Declared constructors are the following");
-           Constructor[] constructors = objectClass1.getDeclaredConstructors();
+           Constructor<?>[] constructors = objectClass1.getDeclaredConstructors();
            for (int i = 0 ; i < constructors.length;i++) {
              System.out.println(constructors[i].toString());
            }
@@ -3799,7 +3797,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      */
      public static int getField_I(Object o, String fieldName) throws Exception {
         java.lang.reflect.Field field;
-        Class thisClass = o.getClass();
+        Class<?> thisClass = o.getClass();
         field = thisClass.getField(fieldName);
         return         field.getInt(o);
      }
@@ -3807,7 +3805,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
      public static Object getStaticField_O(String className, String fieldName) throws Exception {
       Object returnObject;
-      Class thisClass = Class.forName(className);
+      Class<?> thisClass = Class.forName(className);
       java.lang.reflect.Field field=thisClass.getField(fieldName);
       returnObject = field.get(null);
       return returnObject;
@@ -3815,7 +3813,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      
      public static int getStaticField_I(String className, String fieldName) throws Exception {
        Object returnObject;
-       Class thisClass = Class.forName(className);
+       Class<?> thisClass = Class.forName(className);
        java.lang.reflect.Field field=thisClass.getField(fieldName);
        returnObject = field.get(null);
        return ((Integer)returnObject).intValue();
@@ -3831,7 +3829,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      */
     public static boolean instanceOf(Object ts1,
         String classname) throws Exception {
-      Class c = null; 
+      Class<?> c = null; 
       try { 
        c = Class.forName(classname);
       } catch (ClassNotFoundException ex) { 

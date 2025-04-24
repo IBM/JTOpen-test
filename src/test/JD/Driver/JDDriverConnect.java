@@ -21,24 +21,23 @@
 
 package test.JD.Driver;
 
-import com.ibm.as400.access.AS400;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Properties;
 import java.util.Random;
 
+import com.ibm.as400.access.AS400;
 // Converted to use reflection to test
 import com.ibm.as400.access.AS400JDBCDriver; //@A1A
 import com.ibm.as400.access.IFSSystemView;
@@ -93,7 +92,7 @@ public class JDDriverConnect extends JDTestcase {
    * Constructor.
    **/
 
-  public JDDriverConnect(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+  public JDDriverConnect(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
       String password, String powerUserID, String powerPassword) {
     super(systemObject, "JDDriverMisc", namesAndVars, runMode, fileOutputStream, password, powerUserID, powerPassword);
 
@@ -116,7 +115,7 @@ public class JDDriverConnect extends JDTestcase {
     properties.put("user", testDriver_.pwrSysUserID_);
     properties.put("prompt", "false");
     char[] charPassword = PasswordVault.decryptPassword(testDriver_.pwrSysEncryptedPassword_);
-    Class[] argTypes = new Class[3];
+    Class<?>[] argTypes = new Class[3];
     argTypes[0] = baseURL_.getClass();
     argTypes[1] = properties.getClass();
     argTypes[2] = charPassword.getClass();
@@ -2774,7 +2773,7 @@ public class JDDriverConnect extends JDTestcase {
         Properties properties = new Properties();
         properties.put("user", userId_);
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        Class[] argTypes = new Class[3];
+        Class<?>[] argTypes = new Class[3];
         argTypes[0] = url.getClass();
         argTypes[1] = properties.getClass();
         argTypes[2] = charPassword.getClass();
@@ -2832,7 +2831,7 @@ public class JDDriverConnect extends JDTestcase {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
           char[] mfaPassword =    PasswordVault.decryptPassword(mfaEncryptedPassword_);
 
-          Class[] argTypes = new Class[4];
+          Class<?>[] argTypes = new Class[4];
           argTypes[0] = url.getClass();
           argTypes[1] = properties.getClass();
           argTypes[2] = mfaPassword.getClass();
@@ -2895,7 +2894,7 @@ public class JDDriverConnect extends JDTestcase {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
           char[] mfaPassword =    PasswordVault.decryptPassword(mfaEncryptedPassword_);
 
-          Class[] argTypes = new Class[3];
+          Class<?>[] argTypes = new Class[3];
           argTypes[0] = url.getClass();
           argTypes[1] = properties.getClass();
           argTypes[2] = mfaPassword.getClass();
@@ -3335,7 +3334,6 @@ public class JDDriverConnect extends JDTestcase {
         rs.next();
         String currentUser = rs.getString(1);
         System.out.println("current MFA user is " + currentUser);
-        String jobName = rs.getString(2).replace('/', '.');
         if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
           successful = false;
           sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_ + "\n");

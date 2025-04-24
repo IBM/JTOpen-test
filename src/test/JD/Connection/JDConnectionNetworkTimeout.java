@@ -35,7 +35,7 @@ import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -73,7 +73,7 @@ public class JDConnectionNetworkTimeout extends JDTestcase {
 Constructor.
 **/
     public JDConnectionNetworkTimeout (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -200,7 +200,7 @@ getNetworkTimeout -- Get on closed connection -- should throw exception.
     void callAbort(Connection connection, Object thisExecutor, StringBuffer sb1) throws Exception {
       sb1.append("Call abort \n"); 
       {
-        Class[] argTypes = new Class[1]; 
+        Class<?>[] argTypes = new Class[1]; 
         Object[] args = new Object[1]; 
         argTypes[0] = Class.forName("java.util.concurrent.Executor"); 
         args[0] = thisExecutor; 
@@ -212,7 +212,7 @@ getNetworkTimeout -- Get on closed connection -- should throw exception.
     void callSetNetworkTimeout(Connection connection, Object thisExecutor, int milliseconds, StringBuffer sb1) throws Exception {
       sb1.append("Call setNetworkTimeout("+milliseconds+" ms) \n"); 
       {
-        Class[] argTypes = new Class[2]; 
+        Class<?>[] argTypes = new Class[2]; 
         Object[] args = new Object[2]; 
         argTypes[0] = Class.forName("java.util.concurrent.Executor"); 
         argTypes[1] = Integer.TYPE; 

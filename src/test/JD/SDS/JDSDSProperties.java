@@ -11,25 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDSDSProperties.java
-//
-// Classes:      JDSDSProperties
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-// Release     Date        Userid    Comments
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.SDS;
 
@@ -44,7 +25,7 @@ import test.PasswordVault;
 
 import java.io.FileOutputStream;
 import javax.naming.*;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.sql.*;
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -132,7 +113,7 @@ extends JDTestcase {
    private DataSource dataSource_;
    private AS400JDBCDataSource dataSourceTB_;
    private Context ctx_;
-   private Hashtable env;
+   private Hashtable<String, String> env;
 
    protected static final String bindName_ = "JDSDSPropertiesTest";
 
@@ -140,7 +121,7 @@ extends JDTestcase {
 Constructor.
 **/
    public JDSDSProperties (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -164,7 +145,7 @@ Performs setup needed before running variations.
       if (isJdbc20StdExt ()) {
          dataSource_ = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DataSource");
          dataSourceTB_ = new AS400JDBCDataSource();
-         env = new Hashtable();
+         env = new Hashtable<String, String>();
          env.put(Context.INITIAL_CONTEXT_FACTORY, 
                  "com.sun.jndi.fscontext.RefFSContextFactory");
          env.put(Context.PROVIDER_URL, "file:/tmp/");

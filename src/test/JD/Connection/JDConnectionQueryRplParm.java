@@ -21,16 +21,20 @@
 
 package test.JD.Connection;
 
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLWarning;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDConnectionTest;
 import test.JDTestcase;
 import test.JD.JDSetupCollection;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.sql.*;
-import java.util.Hashtable;
 
 
 /**
@@ -59,7 +63,7 @@ extends JDTestcase {
 	Constructor.
 	**/
 	public JDConnectionQueryRplParm (AS400 systemObject,
-								  Hashtable namesAndVars,
+								  Hashtable<String,Vector<String>> namesAndVars,
 								  int runMode,
 								  FileOutputStream fileOutputStream,
 								  

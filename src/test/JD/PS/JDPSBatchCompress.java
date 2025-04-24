@@ -52,6 +52,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
+import java.util.Vector;
 
 
 
@@ -88,7 +89,7 @@ extends JDTestcase {
          e.printStackTrace(System.out); 
        } catch (Error e) {
 	   int jdk = JVMInfo.getJDK(); 
-	       System.out.println("Warning:  exception caught  ");
+	       System.out.println("Warning:  exception caught  jdk="+jdk);
 	       e.printStackTrace(System.out);
        }
      }
@@ -110,7 +111,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDPSBatchCompress (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -126,7 +127,7 @@ Constructor.
 
     public JDPSBatchCompress (AS400 systemObject,
 		      String testname, 
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -882,7 +883,7 @@ private String[][] batchDelete(String tablename, int[] dataTypes, int rows,
   } else {
     ps = connectionNoCompress_.prepareStatement(sql);
   }
-  ArrayList preservedValues = new ArrayList(); 
+  ArrayList<String[]> preservedValues = new ArrayList<String[]>(); 
   for (int i = 0; i < currentValues.length; i++) {
     if (showRow)  sb.append("Deleting row: "); 
     
@@ -1028,7 +1029,7 @@ private String[][] batchMerge(String tablename, int[] dataTypes, int rows,
   } else {
     ps = connectionNoCompress_.prepareStatement(sql);
   }
-  ArrayList newValuesArrayList = new ArrayList();
+  ArrayList<String[]> newValuesArrayList = new ArrayList<String[]>();
 
   for (int i = 0; i < currentValues.length; i++) {
  

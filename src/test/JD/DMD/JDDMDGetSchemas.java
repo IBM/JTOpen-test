@@ -51,7 +51,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -92,7 +92,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDDMDGetSchemas (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -271,7 +271,7 @@ is closed.
         {
             try
             {
-                Class[] ca = {String.class, String.class};
+                Class<?>[] ca = {String.class, String.class};
                 ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_O(dmd_, "getSchemas", ca, null, null);
 
                 boolean foundQGPL = false;
@@ -321,7 +321,7 @@ is closed.
     {
         if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V7R1M0) || checkJdbc40())
         {
-            Class[] ca = {String.class, String.class};
+            Class<?>[] ca = {String.class, String.class};
             StringBuffer sb = new StringBuffer();
             try
             {
@@ -374,7 +374,7 @@ is closed.
     {
         if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) || checkJdbc40())
         {
-            Class[] ca = {String.class, String.class};
+            Class<?>[] ca = {String.class, String.class};
             StringBuffer sb = new StringBuffer();
             try
             {
@@ -435,7 +435,7 @@ getSchemas() - Check the result set format for the JDBC 4.0 version
         if (checkJdbc40()) {
           message.setLength(0);
             try {
-                Class[] ca = {String.class, String.class};
+                Class<?>[] ca = {String.class, String.class};
                 ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_O(dmd_, "getSchemas", ca, "", "Q%");
 
                 ResultSetMetaData rsmd = rs.getMetaData ();
@@ -482,7 +482,7 @@ getSchemas() - Check the result set format for the JDBC 4.0 version
         {
             try
             {
-                Class[] ca = {String.class, String.class};
+                Class<?>[] ca = {String.class, String.class};
                 ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_O(dmd_, "getSchemas", ca, null, null);
 
                 boolean foundQGPL = false;
@@ -537,7 +537,7 @@ getSchemas() - Check the result set format for the JDBC 4.0 version
 
         if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V7R1M0) || checkJdbc40())
         {
-            Class[] ca = {String.class, String.class};
+            Class<?>[] ca = {String.class, String.class};
             StringBuffer sb = new StringBuffer();
             try
             {
@@ -597,7 +597,7 @@ getSchemas() - Check the result set format for the JDBC 4.0 version
 
         if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) || checkJdbc40())
         {
-            Class[] ca = {String.class, String.class};
+            Class<?>[] ca = {String.class, String.class};
             StringBuffer sb = new StringBuffer();
             try
             {
@@ -999,7 +999,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 							  + ";access=read only", userId_, encryptedPassword_);
 		DatabaseMetaData dmd = c.getMetaData(); 
 
-                Class[] ca = {String.class, String.class};
+                Class<?>[] ca = {String.class, String.class};
                 ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_O(dmd, "getSchemas", ca, null, null);
 
                 boolean foundQGPL = false;

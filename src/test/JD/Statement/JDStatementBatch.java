@@ -35,7 +35,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -77,7 +77,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDStatementBatch (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -181,8 +181,8 @@ Set a warning for the native driver
 	try {	
 	    SQLWarning warning = new SQLWarning("This is a warning");
 
-	    Class db2Statement = Class.forName("com.ibm.db2.jdbc.app.DB2Statement");
-	    Class[]  args  = new Class[1];
+	    Class<?> db2Statement = Class.forName("com.ibm.db2.jdbc.app.DB2Statement");
+	    Class<?>[]  args  = new Class[1];
 	    args[0] = Class.forName("java.sql.SQLWarning");
 	    java.lang.reflect.Method method = db2Statement.getMethod("addWarning", args);
 	    Object[] parms = new Object[1];

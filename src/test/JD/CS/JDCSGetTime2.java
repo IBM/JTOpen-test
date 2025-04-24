@@ -27,24 +27,22 @@
 
 package test.JD.CS;
 
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDLobTest;
 import test.JDTestcase;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Hashtable;
-import java.math.BigDecimal;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Date;
 
 
 /**
@@ -74,7 +72,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDCSGetTime2 (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -458,7 +456,7 @@ getTime() - getTime on a type registered as Time, INOUT TIME
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION, "RETURNTIME");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNTIME (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.TIME);
-	    cstmt.setTime(1,new Time (22, 33, 44));
+	    cstmt.setTime(1,Time.valueOf ("22:33:44"));
 	    cstmt.execute();
 
 	    Time check = cstmt.getTime(1);
@@ -480,7 +478,7 @@ getTime() - getTime on a type registered as Time, INOUT TIMESTAMP
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION, "RETURNTS");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNTS (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.TIME);
-	    cstmt.setTimestamp(1, new Timestamp (1913,23,45,11,11,11,0));
+	    cstmt.setTimestamp(1, Timestamp.valueOf ("1913-23-45 11:11:11.0"));
 	    cstmt.execute();
 
 	    Time check = cstmt.getTime(1);

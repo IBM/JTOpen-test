@@ -23,7 +23,7 @@ package test.JD.AS;
 
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.sql.*;
 
 import com.ibm.as400.access.AS400;
@@ -48,7 +48,7 @@ public class JDASSeamlessFailover1 extends JDASSeamlessFailover {
   /**
    * Constructor.
    **/
-  public JDASSeamlessFailover1(AS400 systemObject, Hashtable namesAndVars,
+  public JDASSeamlessFailover1(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String pwrSysUserID, String pwrSysPassword) {
     super(systemObject, "JDASSeamlessFailover1", namesAndVars, runMode,

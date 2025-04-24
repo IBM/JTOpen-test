@@ -27,20 +27,18 @@
 
 package test.JD.RSMD;
 
+import java.io.FileOutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDRSMDTest;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -78,7 +76,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDRSMDGetCatalogName (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -135,7 +133,7 @@ getCatalogName() - Check column -1.  Should throw an exception.
     {
         try {
             String s = rsmd_.getCatalogName (-1);
-            failed ("Didn't throw SQLException");
+            failed ("Didn't throw SQLException"+s);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -151,7 +149,7 @@ getCatalogName() - Check column 0.  Should throw an exception.
     {
         try {
             String s = rsmd_.getCatalogName (0);
-            failed ("Didn't throw SQLException");
+            failed ("Didn't throw SQLException"+s);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -168,7 +166,7 @@ Should throw an exception.
     {
         try {
             String s = rsmd_.getCatalogName (35);
-            failed ("Didn't throw SQLException");
+            failed ("Didn't throw SQLException"+s);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -204,7 +202,7 @@ getCatalogName() - Check when the result set is closed.
                 + JDRSMDTest.RSMDTEST_GET);
             ResultSetMetaData rsmd = rs.getMetaData ();
             rs.close ();
-            String v = rsmd_.getCatalogName (1);
+            String v = rsmd.getCatalogName (1);
             s.close ();
             assertCondition (v.equals (connection_.getCatalog()));
         }
@@ -225,7 +223,7 @@ getCatalogName() - Check when the meta data is from a prepared statement.
                 PreparedStatement ps = connection_.prepareStatement ("SELECT * FROM "
                     + JDRSMDTest.RSMDTEST_GET);
                 ResultSetMetaData rsmd = ps.getMetaData ();
-                String s = rsmd_.getCatalogName (1);
+                String s = rsmd.getCatalogName (1);
                 assertCondition (s.equals (connection_.getCatalog()));
             }
             catch(Exception e) {

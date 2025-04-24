@@ -55,7 +55,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -96,7 +96,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDDMDGetIndexInfo (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -1615,91 +1615,9 @@ getIndexInfo() - Check all the RSMD results when using JDBC 3.0.
     };
 
 
-    String[][] v5r3NativeDifferences = {
-        // Bugs in implementation
-        {  "getColumnTypeName","11","VARCHAR"},
-        {  "getColumnClassName","11","java.lang.String"},
-        {  "getColumnTypeName","13","INTEGER"},
-        {  "getColumnClassName","13","java.lang.Integer"},
+ 
 
-    };
-
-
-    String[][] v5r3NativeDifferencesExtended = {
-        // Bugs in implementation
-        {  "getColumnTypeName","11","VARCHAR"},
-        {  "getColumnClassName","11","java.lang.String"},
-        {  "getColumnTypeName","13","INTEGER"},
-        {  "getColumnClassName","13","java.lang.Integer"},
-        { "isSearchable", "1", "false" },
-        { "isSearchable", "2", "false" },
-        { "isSearchable", "3", "false" },
-        { "isSearchable", "4", "false" },
-        { "isSearchable", "5", "false" },
-        { "isSearchable", "6", "false" },
-        { "isSearchable", "7", "false" },
-        { "isSearchable", "8", "false" },
-        { "isSearchable", "9", "false" },
-        { "isSearchable", "10", "false" },
-        { "isSearchable", "11", "false" },
-        { "isSearchable", "12", "false" },
-    };
-
-
-    String[][] v5r4NativeDifferences = {
-        // Bugs in implementation
-        {  "getColumnTypeName","11","VARCHAR"},
-        {  "getColumnClassName","11","java.lang.String"},
-        {  "getColumnTypeName","13","INTEGER"},
-        {  "getColumnClassName","13","java.lang.Integer"},
-
-    };
-
-
-    String[][] v5r4NativeDifferencesExtended = {
-        // Bugs in implementation
-        {  "getColumnTypeName","11","VARCHAR"},
-        {  "getColumnClassName","11","java.lang.String"},
-        {  "getColumnTypeName","13","INTEGER"},
-        {  "getColumnClassName","13","java.lang.Integer"},
-        { "isSearchable", "1", "false" },
-        { "isSearchable", "2", "false" },
-        { "isSearchable", "3", "false" },
-        { "isSearchable", "4", "false" },
-        { "isSearchable", "5", "false" },
-        { "isSearchable", "6", "false" },
-        { "isSearchable", "7", "false" },
-        { "isSearchable", "8", "false" },
-        { "isSearchable", "9", "false" },
-        { "isSearchable", "10", "false" },
-        { "isSearchable", "11", "false" },
-        { "isSearchable", "12", "false" },
-    };
-
-    String[][] sysibmDifferences = {
-	{  "isNullable","1","0" },
-	{  "isNullable","2","0" },
-	{  "isCaseSensitive","4","false" },
-	{  "isNullable","4","1" },
-	{  "isSigned","4","true" },
-	{  "getPrecision","4","5" },
-	{  "getColumnClassName","4","java.lang.Integer" },
-	{  "getColumnClassName","7","java.lang.Integer" },
-	{  "isNullable","8","1" },
-	{  "getColumnClassName","8","java.lang.Integer" },
-	{  "isNullable","10","1" },
-	{  "getColumnType","10","1" },
-	{  "getColumnTypeName","10","CHAR" },
-	{  "isNullable","11","1" },
-	{  "getColumnTypeName","11","INTEGER" },
-	{  "getColumnClassName","11","java.lang.Integer" },
-	{  "isNullable","12","1" },
-	{  "getColumnTypeName","13","VARCHAR" },
-	{  "getColumnClassName","13","java.lang.String" },
-	{  "getColumnDisplaySize","13","2000"},  /* Changed Mar 2009 */
-	{  "getPrecision","13","2000" }          /* Changed Mar 2009 */
-    };
-
+   
 
 
     String[][] sysibmDifferences55 = {
@@ -1784,133 +1702,7 @@ getIndexInfo() - Check all the RSMD results when using JDBC 3.0.
 
     };
 
-    String[][] sysibmDifferences71 = {
-	{  "isNullable","1","0" },
-	{  "isNullable","2","0" },
-	{  "isCaseSensitive","4","false" },
-	{  "isNullable","4","1" },
-	{  "isSigned","4","true" },
-	{  "getPrecision","4","5" },
-	{  "getColumnClassName","4","java.lang.Integer" },
-	{  "getColumnClassName","7","java.lang.Integer" },
-	{  "isNullable","8","1" },
-	{  "getColumnClassName","8","java.lang.Integer" },
-	{ "getColumnDisplaySize","9","1048576" },
-	{ "getPrecision","9","2097152" },
-	{ "getColumnType","9","2005" },
-	{ "getColumnTypeName","9","NCLOB" },
-	{ "getColumnClassName","9","com.ibm.db2.jdbc.app.DB2Clob" },
-	{  "isNullable","10","1" },
-	{  "getColumnType","10","1" },
-	{  "getColumnTypeName","10","CHAR" },
-	{  "isNullable","11","1" },
-	{ "getColumnDisplaySize","11","20" },
-	{ "getPrecision","11","19" },
-	{ "getColumnType","11","-5" },
-	{ "getColumnTypeName","11","BIGINT" },
-	{ "getColumnClassName","11","java.lang.Long" },
-	{  "isNullable","12","1" },
-	{ "getColumnDisplaySize","12","20" },
-	{ "getPrecision","12","19" },
-	{ "getColumnType","12","-5" },
-	{ "getColumnTypeName","12","BIGINT" },
-	{ "getColumnClassName","12","java.lang.Long" },
-	{ "getColumnDisplaySize","13","2000" },            /* Changed Dec 2008 */
-	{ "getPrecision","13","2000" },                    /* Changed Dec 2008 */
-	{ "getColumnType","13","12" },                     /* Changed Dec 2008 */
-	{ "getColumnTypeName","13","NVARCHAR" },           /* Changed Dec 2008 */
-	{ "getColumnClassName","13","java.lang.String" },  /* Changed Dec 2008 */
-	{ "getColumnLabel","9","LONG                FIELD               NAME" }, /* Changed Sept 011 */
 
-
-    };
-
-
-    String[][] sysibmDifferences7140 = {
-	{  "isNullable","1","0" },
-	{  "isNullable","2","0" },
-	{  "isCaseSensitive","4","false" },
-	{  "isNullable","4","1" },
-	{  "isSigned","4","true" },
-	{  "getPrecision","4","5" },
-	{  "getColumnClassName","4","java.lang.Integer" },
-	{  "getColumnClassName","7","java.lang.Integer" },
-	{  "isNullable","8","1" },
-	{  "getColumnClassName","8","java.lang.Integer" },
-	{ "getPrecision","9","2097152" },
-	{ "getColumnDisplaySize","9","1048576"},            /* Nov 2016 */ 
-	{ "getColumnType","9","2011"},                      /* OCT 2016 */ 
-	{ "getColumnTypeName","9","NCLOB"},                 /* OCT 2016 */ 
-	{ "getColumnClassName","9","com.ibm.db2.jdbc.app.DB2Clob" },
-	{  "isNullable","10","1" },
-	{  "getColumnType","10","1" },
-	{  "getColumnTypeName","10","CHAR" },
-	{  "isNullable","11","1" },
-	{ "getColumnDisplaySize","11","20" },
-	{ "getPrecision","11","19" },
-	{ "getColumnType","11","-5" },
-	{ "getColumnTypeName","11","BIGINT" },
-	{ "getColumnClassName","11","java.lang.Long" },
-	{  "isNullable","12","1" },
-	{ "getColumnDisplaySize","12","20" },
-	{ "getPrecision","12","19" },
-	{ "getColumnType","12","-5" },
-	{ "getColumnTypeName","12","BIGINT" },
-	{ "getColumnClassName","12","java.lang.Long" },
-	{ "getColumnDisplaySize","13","2000" },            /* Changed Dec 2008 */
-	{ "getPrecision","13","2000" },                    /* Changed Dec 2008 */
-	{ "getColumnType","13","-9"},                      /* Changed OCT 2016 */ 
-	{ "getColumnTypeName","13","NVARCHAR" },           /* Changed Dec 2008 */
-	{ "getColumnClassName","13","java.lang.String" },  /* Changed Dec 2008 */
-	{ "getColumnLabel","9","LONG                FIELD               NAME" }, /* Changed Sept 011 */
-
-
-    };
-
-
-
-    String[][] sysibmDifferences72 = {
-	{  "isNullable","1","0" },
-	{  "isNullable","2","0" },
-	{  "isCaseSensitive","4","false" },
-	{  "isNullable","4","1" },
-	{  "isSigned","4","true" },
-	{  "getPrecision","4","5" },
-	{  "getColumnClassName","4","java.lang.Integer" },
-	{  "getColumnClassName","7","java.lang.Integer" },
-	{  "isNullable","8","1" },
-	{  "getColumnClassName","8","java.lang.Integer" },
-	{ "getColumnDisplaySize","9","1048576" },
-	{ "getPrecision","9","2097152" },
-	{ "getColumnType","9","2011" },
-	{ "getColumnTypeName","9","NCLOB" },
-	{ "getColumnClassName","9","com.ibm.db2.jdbc.app.DB2Clob" },
-	{  "isNullable","10","1" },
-	{  "getColumnType","10","1" },
-	{  "getColumnTypeName","10","CHAR" },
-	{  "isNullable","11","1" },
-	{ "getColumnDisplaySize","11","20" },
-	{ "getPrecision","11","19" },
-	{ "getColumnType","11","-5" },
-	{ "getColumnTypeName","11","BIGINT" },
-	{ "getColumnClassName","11","java.lang.Long" },
-	{  "isNullable","12","1" },
-	{ "getColumnDisplaySize","12","20" },
-	{ "getPrecision","12","19" },
-	{ "getColumnType","12","-5" },
-	{ "getColumnTypeName","12","BIGINT" },
-	{ "getColumnClassName","12","java.lang.Long" },
-	{ "getColumnDisplaySize","13","2000" },            /* Changed Dec 2008 */
-	{ "getPrecision","13","2000" },                    /* Changed Dec 2008 */
-	{ "getColumnType","13","-9" },                     /* Changed Dec 2008 */
-	{ "getColumnTypeName","13","NVARCHAR" },           /* Changed Dec 2008 */
-	{ "getColumnClassName","13","java.lang.String" },  /* Changed Dec 2008 */
-	/* Added Aug 2011 for V7R2 */
-	{ "getColumnLabel","9","LONG                FIELD               NAME"},
-        
-
-
-    };
 
 
 

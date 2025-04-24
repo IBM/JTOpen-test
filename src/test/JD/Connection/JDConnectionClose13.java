@@ -26,7 +26,7 @@ import com.ibm.as400.access.AS400;
 import test.JDJobName;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -61,7 +61,7 @@ extends JDConnectionClose {
 Constructor.
 **/
     public JDConnectionClose13 (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               

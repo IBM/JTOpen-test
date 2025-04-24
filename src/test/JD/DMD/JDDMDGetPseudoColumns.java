@@ -45,7 +45,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
@@ -115,7 +115,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDDMDGetPseudoColumns (AS400 systemObject,
-                            Hashtable namesAndVars,
+                            Hashtable<String,Vector<String>> namesAndVars,
                             int runMode,
                             FileOutputStream fileOutputStream,
                             
@@ -2010,32 +2010,6 @@ is closed.
 	};
 
 
-	String [][] nativeExtendedDifferences = {
-	    // {"getColumnLabel","5",""},
-            //  {"getColumnLabel","9",""},
-	    /* Added these changed 1/11/2012 */
-	    {"isSearchable","1","false"},
-	    {"isSearchable","2","false"},
-	    {"isSearchable","3","false"},
-	    {"isSearchable","4","false"},
-	    {"isSearchable","5","false"},
-	    {"isSearchable","6","false"},
-	    {"isSearchable","7","false"},
-	    {"isSearchable","8","false"},
-	    {"isSearchable","9","false"},
-	    {"isSearchable","10","false"},
-	    {"isSearchable","11","false"},
-	    {"isSearchable","12","false"},
-	    {"getColumnDisplaySize","5","6"},
-	    {"getPrecision","5","5"},
-	    {"getColumnType","5","5"},
-	    {"getColumnTypeName","5","SMALLINT"},
-	    {"getPrecision","10","2000"},
-	    {"getColumnType","10","12"},
-	    {"getColumnTypeName","10","NVARCHAR"},
-
-
-	};
 
 
 	String [][] nativeExtendedDifferences717N = {

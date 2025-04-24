@@ -36,7 +36,8 @@ public class ObjectListTestcase extends Testcase {
     {
         try {
             ObjectList objectList = new ObjectList(systemObject_);
-            succeeded();
+            assertCondition(true, "Object list created"+objectList); 
+            
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -51,7 +52,7 @@ public class ObjectListTestcase extends Testcase {
     {
         try {
             ObjectList objectList = new ObjectList(null);
-            failed("Exception didn't occur.");
+            failed("Exception didn't occur."+objectList);
         } catch (Exception e) {
             assertExceptionIs(e, "NullPointerException", "system");
         }
@@ -66,7 +67,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.ALL,ObjectList.ALL,ObjectList.ALL);
-            succeeded();
+            assertCondition(true, "Object list created"+objectList); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -81,7 +82,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,null,ObjectList.ALL,ObjectList.ALL);
-            failed("Exception didn't occur.");
+            failed("Exception didn't occur."+objectList);
         } catch (Exception e) {
             assertExceptionIs(e, "NullPointerException", "objectLibrary");
         }
@@ -96,7 +97,8 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
-            succeeded();
+            assertCondition(true, "Object list created"+objectList); 
+
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -112,7 +114,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.CURRENT_LIBRARY ,ObjectList.LIBRARY_LIST ,"*FILE");
-            succeeded();
+            assertCondition(true, "Object list created"+objectList); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -127,7 +129,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.LIBRARY_LIST ,"QSYS","*LIB");
-            succeeded();
+            assertCondition(true, "Object list created"+objectList); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -143,8 +145,8 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.LIBRARY_LIST ,ObjectList.IBM,"*LIB");
-            succeeded();
-        } catch (Exception e) {
+            assertCondition(true, "Object list created"+objectList); 
+       } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
 
@@ -158,7 +160,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.USER_LIBRARY_LIST ,ObjectList.LIBRARY_LIST,"*FILE");
-            succeeded();
+            assertCondition(true, "Object list created"+objectList); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -177,8 +179,8 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB",ObjectList.ASP_NAME_ALL );
-            succeeded();
-        } catch (Exception e) {
+            assertCondition(true, "Object list created"+objectList); 
+       } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
 
@@ -197,8 +199,8 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.CURRENT_LIBRARY ,ObjectList.LIBRARY_LIST ,"*FILE",ObjectList.ASP_NAME_ALLAVL);
-            succeeded();
-        } catch (Exception e) {
+            assertCondition(true, "Object list created"+objectList); 
+       } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
 
@@ -216,7 +218,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.LIBRARY_LIST ,"QSYS","*LIB",ObjectList.ASP_NAME_CURASPGRP);
-            succeeded();
+            assertCondition(true, "Object list created"+objectList); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -235,7 +237,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.LIBRARY_LIST ,ObjectList.IBM,"*LIB",ObjectList.ASP_NAME_SYSBAS );
-            succeeded();
+            assertCondition(true, "Object list created"+objectList); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -2867,8 +2869,9 @@ public class ObjectListTestcase extends Testcase {
             
 
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL,ObjectList.ALL,"*LIB");
-            Enumeration enumeration=objList.getObjects();
-            ArrayList objDecList=new ArrayList();
+            @SuppressWarnings("unchecked")
+            Enumeration<ObjectDescription> enumeration=objList.getObjects();
+            ArrayList<String> objDecList=new ArrayList<String>();
             while (enumeration.hasMoreElements()) {
                 ObjectDescription objDesc=(ObjectDescription)enumeration.nextElement();
                 objDecList.add(objDesc.getName());
@@ -2933,7 +2936,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             ObjectDescription[] objs = objList.getObjects(-2, 1);
-            failed("Didn't throw exception.");
+            failed("Didn't throw exception."+objs);
         }
         catch(Exception e){
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -2950,7 +2953,7 @@ public class ObjectListTestcase extends Testcase {
 		// ObjectList objList = new ObjectList(systemObject_);
 		ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL,ObjectList.ALL,"*LIB");
 		ObjectDescription[] objs = objList.getObjects(0,1);
-		succeeded(); // Should succeed for offSet==0            @A1A
+	        assertCondition(true, "Objects returned "+objs); 
 	    }
 	    catch(Exception e){
 		failed(e, "Unexpected exception.");                   //@A1A
@@ -2966,7 +2969,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             ObjectDescription[] objs = objList.getObjects(0,-1);
-            failed("Didn't throw exception.");
+            failed("Didn't throw exception."+objs);
         }
         catch(Exception e){
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -2981,7 +2984,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             ObjectDescription[] objs = objList.getObjects(0,-99);
-            failed("Didn't throw exception.");
+            failed("Didn't throw exception."+objs);
         }
         catch(Exception e){
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -3137,7 +3140,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             ObjectDescription[] objs = objList.getObjects(-2,1);
-            failed("Didn't throw exception.");
+            failed("Didn't throw exception."+objs);
         }
         catch(Exception e){
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -3177,7 +3180,7 @@ public class ObjectListTestcase extends Testcase {
 	{
 	    //System.out.println("myOL.len="+myOL.getLength());
 	    ObjectDescription[] myODs = myOL.getObjects(1, 1);
-            succeeded();
+            assertCondition(true, "Objects returned "+myODs); 
 	}
 	catch (Exception e)
 	{

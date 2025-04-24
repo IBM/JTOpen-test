@@ -11,36 +11,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetObject4SQLType.java
-//
-// Classes:      JDPSSetObject4SQLType
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
-
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDPSTest;
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestcase;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
@@ -57,6 +29,15 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDPSTest;
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestcase;
 
 /**
  * Testcase JDPSSetObject4SQLType. This tests the following method of the JDBC
@@ -66,6 +47,7 @@ import java.util.Hashtable;
  * <li>setObject(int,Object,SQLType,int)
  * </ul>
  **/
+@SuppressWarnings("deprecation")
 public class JDPSSetObject4SQLType extends JDTestcase {
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
@@ -86,7 +68,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetObject4SQLType(AS400 systemObject, Hashtable namesAndVars,
+  public JDPSSetObject4SQLType(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetObject4SQLType", namesAndVars, runMode,
@@ -243,7 +225,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_NUMERIC_105) VALUES (?)");
 
-        Class[] argClasses = new Class[4];
+        Class<?>[] argClasses = new Class[4];
         argClasses[0] = Integer.TYPE;
         argClasses[1] = Class.forName("java.lang.Object");
         argClasses[2] = Class.forName("java.sql.SQLType");
@@ -338,6 +320,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
    * setObject() - Should throw exception when the parameter is not anything
    * close to being a JDBC-style type.
    **/
+  @SuppressWarnings("rawtypes")
   public void Var010() {
     if (checkJdbc42()) {
       try {
@@ -1122,7 +1105,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         byte[] b2 = new byte[20];
         System.arraycopy(b, 0, b2, 0, b.length);
-        assertCondition(isEqual(check, b2));
+        assertCondition(areEqual(check, b2));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1153,7 +1136,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         byte[] b2 = new byte[20];
         System.arraycopy(b, 0, b2, 0, b.length);
-        assertCondition(isEqual(check, b2));
+        assertCondition(areEqual(check, b2));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1183,7 +1166,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
         byte[] check = rs.getBytes(1);
         rs.close();
 
-        assertCondition(isEqual(check, b));
+        assertCondition(areEqual(check, b));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1213,7 +1196,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
         byte[] check = rs.getBytes(1);
         rs.close();
 
-        assertCondition(isEqual(check, b));
+        assertCondition(areEqual(check, b));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1243,7 +1226,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
           Blob check = rs.getBlob(1);
           // rs.close (); // @F1D
 
-          assertCondition(isEqual(check.getBytes(1, (int) check.length()), b)); // @D1C
+          assertCondition(areEqual(check.getBytes(1, (int) check.length()), b)); // @D1C
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -1274,7 +1257,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
           Blob check = rs.getBlob(1);
           // rs.close (); // @F1D
 
-          assertCondition(isEqual(check.getBytes(1, (int) check.length()), b)); // @D1C
+          assertCondition(areEqual(check.getBytes(1, (int) check.length()), b)); // @D1C
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -1733,7 +1716,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
           byte[] check = rs.getBytes(1);
           rs.close();
 
-          assertCondition(isEqual(check, b));
+          assertCondition(areEqual(check, b));
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -1768,7 +1751,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
           byte[] check = rs.getBytes(1);
           rs.close();
 
-          assertCondition(isEqual(check, b));
+          assertCondition(areEqual(check, b));
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }

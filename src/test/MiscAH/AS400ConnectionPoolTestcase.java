@@ -1110,6 +1110,7 @@ extends Testcase
     /**
     getConnection(String, String) - Should complete successfully.
     **/
+    @SuppressWarnings("deprecation")
     public void Var040()
     {
         try
@@ -1160,6 +1161,7 @@ extends Testcase
     /**
     getConnection(String, String, int) - Should complete successfully.
     **/
+    @SuppressWarnings("deprecation")
     public void Var042()
     {
         try
@@ -1384,6 +1386,7 @@ extends Testcase
     /**
     getConnection(String, String, int) - Should throw an exception if system name is null.
     **/
+    @SuppressWarnings("deprecation")
     public void Var050()
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
@@ -1470,6 +1473,7 @@ char[] passwordChars = null;
     /**
     getConnection(String, String, int) - Should throw an exception if userId is null.
     **/
+    @SuppressWarnings("deprecation")
     public void Var054()
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
@@ -1582,6 +1586,7 @@ char[] passwordChars = null;
     /**
     getConnection(String, String, int) - Should throw an exception if service number < 0.
     **/
+    @SuppressWarnings("deprecation")
     public void Var059()
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
@@ -1627,6 +1632,7 @@ char[] passwordChars = null;
     /**
     getConnection(String, String, int) - Should throw an exception if service number > 7.
     **/
+    @SuppressWarnings("deprecation")
     public void Var061()
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
@@ -1691,6 +1697,7 @@ char[] passwordChars = null;
     /**
     getConnection(String, String, int) - Will fail with incorrect uid.
     **/
+    @SuppressWarnings("deprecation")
     public void Var064()
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
@@ -1799,6 +1806,7 @@ char[] passwordChars = null;
     /**
     getConnection(String, String, int) - Should fail because password has not been cached.
     **/
+    @SuppressWarnings("deprecation")
     public void Var068()
     {
         //@B2D // if on the 400, do not run
@@ -2181,10 +2189,12 @@ char[] passwordChars = null;
     **/
     public void Var097()
     {
+      AS400 system = null; 
+
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
-            AS400 system = new AS400();
+            system = new AS400();
             p.returnConnectionToPool(system);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 0 
                             && p.getActiveConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 0);
@@ -2193,6 +2203,9 @@ char[] passwordChars = null;
         catch (Exception e)
         {
             failed (e, "Unexpected Exception");
+        }
+        finally { 
+          if (system != null) system.close(); 
         }
     }
 
@@ -2203,12 +2216,14 @@ char[] passwordChars = null;
     **/
     public void Var098()
     {
+      AS400 system = null; 
+
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
               char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars); //@B2C
-            AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars);  //@B2C
+            system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars);  //@B2C
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
             CommandCall cmd = new CommandCall(system, "CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
@@ -2224,6 +2239,7 @@ char[] passwordChars = null;
         }
         finally {
           try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
+          if (system != null) system.close(); 
         }
     }
 
@@ -3384,6 +3400,7 @@ char[] passwordChars = null;
     /**
     getConnection("localhost", "*CURRENT", int)-Should complete successfully.
     **/
+    @SuppressWarnings("deprecation")
     public void Var146()
     {
         // if not on the 400, do not run
@@ -4370,7 +4387,7 @@ Check removeFromPool() does not affect connections in use--connection can still 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
-            Enumeration keys = p.getUsers();
+            Enumeration<String> keys = p.getUsers();
             assertCondition (!keys.hasMoreElements());
         }
         catch (Exception e)
@@ -4389,7 +4406,7 @@ Check removeFromPool() does not affect connections in use--connection can still 
             AS400ConnectionPool p = new AS400ConnectionPool();
              char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars);
-            Enumeration keys = p.getUsers();
+            Enumeration<String> keys = p.getUsers();
             assertCondition (keys.hasMoreElements() && 
                              (((String)keys.nextElement()).equals(systemObject_.getSystemName().toUpperCase() + "/" + systemObject_.getUserId().toUpperCase())));
          PasswordVault.clearPassword(passwordChars);
@@ -4862,11 +4879,12 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var198()
     {
+      AS400 system = null; 
        try
        { 
              AS400ConnectionPool p = new AS400ConnectionPool();
               char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
          PasswordVault.clearPassword(passwordChars);
 	     char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
              ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
@@ -4891,11 +4909,12 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var199()
     {
-        try
+      AS400 system = null; 
+      try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -4925,11 +4944,12 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var200()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
               char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-          AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -4961,11 +4981,12 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var201()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
             char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-            AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+            system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -4995,11 +5016,12 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var202()
     {
-        try
+      AS400 system = null; 
+       try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5105,9 +5127,10 @@ Check removeFromPool() does not affect connections in use--connection can still 
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+                AS400 system=null; 
        try
         {
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5123,6 +5146,9 @@ Check removeFromPool() does not affect connections in use--connection can still 
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ConnectionPoolException");    //@A2C
             p.close();
         }
+       finally {
+         if (system != null) system.close(); 
+       }
          PasswordVault.clearPassword(passwordChars);
 
     }
@@ -5135,10 +5161,11 @@ Check removeFromPool() does not affect connections in use--connection can still 
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
 	char[] passwordChars = null; 
+	AS400 system = null; 
         try
         {
                passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+             system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
         	ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 		PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5158,6 +5185,9 @@ Check removeFromPool() does not affect connections in use--connection can still 
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");  
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+        }
     }
 
     /**
@@ -5165,11 +5195,12 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var207()
     {  
+      AS400 system=null; 
         try
         { 
             AS400ConnectionPool p = new AS400ConnectionPool();
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5185,6 +5216,9 @@ Check removeFromPool() does not affect connections in use--connection can still 
         {
             failed(e, "Unexpected Exception");      
         }
+        finally {
+          if (system != null) system.close(); 
+        }
     }
 
     /**
@@ -5192,11 +5226,13 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var208()
     {
+      AS400 system=null; 
+
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-        AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
          	ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 		PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5217,6 +5253,9 @@ Check removeFromPool() does not affect connections in use--connection can still 
         {
             failed (e, "Unexpected Exception");
         }
+        finally {
+          if (system != null) system.close(); 
+        }
     }
 
     /**
@@ -5224,11 +5263,13 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var209()
     {
+      AS400 system=null; 
+
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-       AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+        system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5251,6 +5292,9 @@ Check removeFromPool() does not affect connections in use--connection can still 
         {
             failed (e, "Unexpected Exception");
         } 
+        finally {
+          if (system != null) system.close(); 
+        }
     }
 
     /**
@@ -5260,11 +5304,13 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var210()
     {
+      AS400 system=null; 
+
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-       AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+       system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5283,6 +5329,9 @@ Check removeFromPool() does not affect connections in use--connection can still 
         {
             failed (e, "Unexpected Exception");
         }
+        finally {
+          if (system != null) system.close(); 
+        }
     }
 
     /**
@@ -5290,11 +5339,12 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var211()
     {
+      AS400 system=null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-       AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+       system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
         	ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 		PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5317,6 +5367,9 @@ Check removeFromPool() does not affect connections in use--connection can still 
        {
             failed (e, "Unexpected Exception");
        }
+        finally {
+          if (system != null) system.close(); 
+        }
     }
 
     /**
@@ -5325,13 +5378,14 @@ Check removeFromPool() does not affect connections in use--connection can still 
     **/
     public void Var212()
     {
+AS400 system = null; 
         AS400ConnectionPool p = new AS400ConnectionPool();
 char[] passwordChars =null; 
         try
         {
             String systemName = "badSystemName";
                 passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-        AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
          	ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 		PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5351,6 +5405,9 @@ char[] passwordChars =null;
             succeeded();  
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+        }
     }
 
     /**
@@ -5361,9 +5418,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
               char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+              AS400 system = null; 
         try
         {
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5378,6 +5436,9 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+        }
         PasswordVault.clearPassword(passwordChars);
 
     }
@@ -5390,10 +5451,11 @@ char[] passwordChars =null;
     {
  char[] passwordChars =  null; 
         AS400ConnectionPool p = new AS400ConnectionPool();
+        AS400 system = null; 
         try
         {
               passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-          AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
         	ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);    
       PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5413,6 +5475,9 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ConnectionPoolException");    //@A2C
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+        }
     }
 
     /**
@@ -5424,9 +5489,10 @@ char[] passwordChars =null;
 	char[] passwordChars = null ;
                 passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
         AS400ConnectionPool p = new AS400ConnectionPool();
+        AS400 system = null; 
          try
         {
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5443,6 +5509,9 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
             p.close();
         }
+         finally {
+           if (system != null) system.close(); 
+         }
          PasswordVault.clearPassword(passwordChars);
    
     }
@@ -5453,11 +5522,11 @@ char[] passwordChars =null;
     public void Var216()
     {
     	AS400ConnectionPool p = new AS400ConnectionPool();
-  	
+  	AS400 system = null; 
         try
         {           
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
             int service = AS400.CENTRAL;
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
@@ -5474,6 +5543,7 @@ char[] passwordChars =null;
         finally
         {
         	p.close();
+        	if (system != null) system.close(); 
         } 
     }  
 
@@ -5484,11 +5554,11 @@ char[] passwordChars =null;
     public void Var217()
     {
     	AS400ConnectionPool p = new AS400ConnectionPool();
-   	 
+    	AS400 system = null; 
         try
         {       
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5508,6 +5578,8 @@ char[] passwordChars =null;
         {
          try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
         	p.close();
+                  if (system != null) system.close(); 
+
         }
     }  
 
@@ -5517,11 +5589,11 @@ char[] passwordChars =null;
     public void Var218()
     {
      	AS400ConnectionPool p = new AS400ConnectionPool();
-   	
+     	AS400 system = null; 
         try
         {   
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5539,6 +5611,7 @@ char[] passwordChars =null;
         finally
         {
         	p.close();
+                  if (system != null) system.close(); 
         }
     }
 
@@ -5548,10 +5621,11 @@ char[] passwordChars =null;
     public void Var219()
     {
     	AS400ConnectionPool p = new AS400ConnectionPool();
+    	AS400 system = null; 
         try
         {        
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5568,7 +5642,10 @@ char[] passwordChars =null;
         }
         finally
         {
-        	p.close();
+        	p.close();        
+                  if (system != null) system.close(); 
+               
+
         }
     }
 
@@ -5578,10 +5655,11 @@ char[] passwordChars =null;
     public void Var220()
     {
     	AS400ConnectionPool p = new AS400ConnectionPool();
+    	AS400 system = null; 
         try
         {        
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-        AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5600,6 +5678,8 @@ char[] passwordChars =null;
         finally
         {
         	p.close();
+                  if (system != null) system.close(); 
+
         }
     }
 
@@ -5610,11 +5690,11 @@ char[] passwordChars =null;
     public void Var221()
     {	
     	AS400ConnectionPool p = new AS400ConnectionPool();
-  	
+    	AS400 system = null; 
         try
         {
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5632,10 +5712,12 @@ char[] passwordChars =null;
         {
             failed(e, "Unexpected Exception");
         }
+        
       
         finally
         {
         	p.close();
+                if (system != null) system.close(); 
         }
     }
 
@@ -5646,9 +5728,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+                 AS400 system = null; 
        try
         {
-             AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+              system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5662,6 +5745,10 @@ char[] passwordChars =null;
            assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");  
             p.close();
         }
+       finally {
+         if (system != null) system.close(); 
+
+       }
     }
 
     /**
@@ -5671,9 +5758,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+                 AS400 system = null; 
       try
         {
-        	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+        	system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5684,7 +5772,11 @@ char[] passwordChars =null;
         {
                assertExceptionIsInstanceOf(e, "java.lang.NullPointerException"); 
             p.close();
-        }
+        } 
+      finally {
+        if (system != null) system.close(); 
+
+      }
         PasswordVault.clearPassword(passwordChars);
 
     }
@@ -5697,9 +5789,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+                 AS400 system = null; 
        try
         {
-         	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
             ProfileTokenCredential pt1 = null;
             p.getConnection(systemObject_.getSystemName(), systemObject_.getSystemName(), pt1);
             failed("Did not throw exception."+system);
@@ -5709,6 +5802,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException"); 
             p.close();
         }
+       finally {
+         if (system != null) system.close(); 
+
+       }
         PasswordVault.clearPassword(passwordChars);
 
     }
@@ -5720,9 +5817,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+                AS400 system = null; 
         try
         {
-           	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           	 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5737,6 +5835,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ConnectionPoolException");    
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
         PasswordVault.clearPassword(passwordChars);
 
     }  
@@ -5746,10 +5848,11 @@ char[] passwordChars =null;
     **/
     public void Var226()
     {
+      AS400 system = null; 
         try
         {
                   char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-       	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+       	 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5763,6 +5866,10 @@ char[] passwordChars =null;
         {
             failed (e, "Unexpected Exception");
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
     }  
     
     /**
@@ -5770,11 +5877,12 @@ char[] passwordChars =null;
     **/
     public void Var227()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-        	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+        	 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5794,6 +5902,8 @@ char[] passwordChars =null;
         }
         finally {
           try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
+            if (system != null) system.close(); 
+
         }
     }  
    
@@ -5802,11 +5912,12 @@ char[] passwordChars =null;
     **/
     public void Var228()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-          	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          	 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5824,6 +5935,10 @@ char[] passwordChars =null;
         {
             failed(e, "Unexpected Exception");
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
     }
    
     /** 
@@ -5832,11 +5947,12 @@ char[] passwordChars =null;
     **/
     public void Var229()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         	system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5857,18 +5973,23 @@ char[] passwordChars =null;
         {
             failed(e, "Unexpected Exception");
         }
-    }
+        finally {
+          if (system != null) system.close(); 
+
+        }
+   }
    
     /**
     getConnection(String systemName, String userID, ProfileTokenCredential profileToken, int service) - Should throw an exception if system name is null.
     **/
     public void Var230()
     {
+      AS400 system = null; 
         AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
        try
-        {
-        	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+       {
+        	 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5882,6 +6003,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");  
             p.close();
         }
+       finally {
+         if (system != null) system.close(); 
+
+       }
         PasswordVault.clearPassword(passwordChars);
 
     }
@@ -5894,9 +6019,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+                 AS400 system = null; 
        try
         {
-         	AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         	 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5910,6 +6036,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");  
             p.close();
         }
+       finally {
+         if (system != null) system.close(); 
+
+       }
         PasswordVault.clearPassword(passwordChars);
     }
     
@@ -5920,9 +6050,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+                AS400 system = null; 
        try
         {
-             AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+              system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
             ProfileTokenCredential pt1 = null;
             int service = AS400.COMMAND;
             
@@ -5934,6 +6065,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException"); 
             p.close();
         }
+       finally {
+         if (system != null) system.close(); 
+
+       }
         PasswordVault.clearPassword(passwordChars);
 
     }
@@ -5945,9 +6080,10 @@ char[] passwordChars =null;
     {
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
        AS400ConnectionPool p = new AS400ConnectionPool();
+       AS400 system = null; 
         try
         {
-             AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+              system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5961,6 +6097,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");  
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
          PasswordVault.clearPassword(passwordChars);
 
     }
@@ -5972,9 +6112,10 @@ char[] passwordChars =null;
     {
                   char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
       AS400ConnectionPool p = new AS400ConnectionPool();
+      AS400 system = null; 
         try
         {
-            AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+             system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -5988,6 +6129,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");  
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
                PasswordVault.clearPassword(passwordChars);
     }
    
@@ -5997,10 +6142,11 @@ char[] passwordChars =null;
      public void Var235()
      {
         AS400ConnectionPool p = new AS400ConnectionPool();
+        AS400 system = null; 
         try
         {
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6017,18 +6163,24 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ConnectionPoolException");     
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
     }  
      
     /**
      getConnection(String systemName, String userID, ProfileTokenCredential profileToken, Locale locale) - Should complete successfully.
     **/
     public void Var236()
+    
     {
-         try
+      AS400 system = null; 
+      try
          {
              AS400ConnectionPool p = new AS400ConnectionPool();
                   char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
              ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	     PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6047,6 +6199,10 @@ char[] passwordChars =null;
                failed(e, "Unexpected Exception");
               
            }  
+         finally {
+           if (system != null) system.close(); 
+
+         }
     }
     
     /**
@@ -6054,11 +6210,12 @@ char[] passwordChars =null;
     **/
     public void Var237()
     {
-        try
+      AS400 system = null; 
+       try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6077,6 +6234,8 @@ char[] passwordChars =null;
         }
         finally {
           try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
+            if (system != null) system.close(); 
+
         }
     }  
 
@@ -6086,11 +6245,12 @@ char[] passwordChars =null;
     **/
     public void Var238()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6112,6 +6272,10 @@ char[] passwordChars =null;
         {
             failed(e, "Unexpected Exception");
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
     }
 
     /**
@@ -6119,11 +6283,12 @@ char[] passwordChars =null;
     **/
     public void Var239()
     {
+      AS400 system = null; 
         AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
        try
         {
-             AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+             system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6136,7 +6301,11 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException"); 
             p.close();
         }
-        PasswordVault.clearPassword(passwordChars);
+       finally {
+         if (system != null) system.close(); 
+
+       }
+       PasswordVault.clearPassword(passwordChars);
     }
 
     /**
@@ -6144,11 +6313,12 @@ char[] passwordChars =null;
     **/
     public void Var240()
     {
+      AS400 system = null; 
         AS400ConnectionPool p = new AS400ConnectionPool();
 	char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
       try
         {
-             AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+             system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
             ProfileTokenCredential pt1 = null;  
             
             p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1, Locale.US);
@@ -6159,7 +6329,11 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");  
             p.close();
         }
-         PasswordVault.clearPassword(passwordChars);
+      finally {
+        if (system != null) system.close(); 
+
+      }
+        PasswordVault.clearPassword(passwordChars);
 
     }
     
@@ -6168,12 +6342,13 @@ char[] passwordChars =null;
     **/
     public void Var241()
     {
+      AS400 system = null; 
         AS400ConnectionPool p = new AS400ConnectionPool();
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
        try
         {
    
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6186,6 +6361,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");  
             p.close();
         }
+       finally {
+         if (system != null) system.close(); 
+
+       }
 	PasswordVault.clearPassword(passwordChars);
 
     }
@@ -6195,11 +6374,12 @@ char[] passwordChars =null;
     **/
     public void Var242()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6218,6 +6398,10 @@ char[] passwordChars =null;
         {
             failed(e, "Unexpected Exception");
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
     }
 
     /**
@@ -6226,11 +6410,12 @@ char[] passwordChars =null;
     **/
     public void Var243()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                   char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-          AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6250,6 +6435,10 @@ char[] passwordChars =null;
         {
             failed(e, "Unexpected Exception");
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
     }
    
     /**
@@ -6259,10 +6448,11 @@ char[] passwordChars =null;
     {
 	char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
         AS400ConnectionPool p = new AS400ConnectionPool();
+        AS400 system = null; 
         try
         {
                  
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6275,6 +6465,10 @@ char[] passwordChars =null;
         {
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");  
             p.close();
+        }
+        finally {
+          if (system != null) system.close(); 
+
         }
 	if (passwordChars != null) { 
          PasswordVault.clearPassword(passwordChars);
@@ -6289,9 +6483,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+                 AS400 system = null; 
         try
         {
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6305,6 +6500,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");  
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
          PasswordVault.clearPassword(passwordChars);
     }
     
@@ -6315,9 +6514,10 @@ char[] passwordChars =null;
     {
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
         AS400ConnectionPool p = new AS400ConnectionPool();
-        try
+        AS400 system = null; 
+      try
         {
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
             ProfileTokenCredential pt1 = null;
             int service = AS400.COMMAND;
             
@@ -6330,6 +6530,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");  
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
         PasswordVault.clearPassword(passwordChars);
     }
     
@@ -6339,10 +6543,11 @@ char[] passwordChars =null;
     public void Var247()
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
-        try
+        AS400 system = null; 
+       try
         {
                   char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-          AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+          system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6357,6 +6562,10 @@ char[] passwordChars =null;
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException"); 
             p.close();
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
     }
 
     /**
@@ -6366,9 +6575,10 @@ char[] passwordChars =null;
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-       try
+                AS400 system = null; 
+      try
         {
-             AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+             system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6382,6 +6592,10 @@ char[] passwordChars =null;
                assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException"); 
             p.close();
         }
+       finally {
+         if (system != null) system.close(); 
+
+       }
       PasswordVault.clearPassword(passwordChars);
 
     }
@@ -6395,10 +6609,11 @@ char[] passwordChars =null;
     public void Var249()
     {
         AS400ConnectionPool p = new AS400ConnectionPool();
+        AS400 system = null; 
         try
         {
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6414,6 +6629,10 @@ char[] passwordChars =null;
         {
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ConnectionPoolException");     
             p.close();
+        }
+        finally {
+          if (system != null) system.close(); 
+
         }
     }  
 
@@ -6524,11 +6743,12 @@ char[] passwordChars =null;
     **/
     public void Var261()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-            AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+            system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6551,6 +6771,9 @@ char[] passwordChars =null;
         }
         finally {
           try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
+            if (system != null) system.close(); 
+
+
         }
     }
      
@@ -6560,11 +6783,12 @@ char[] passwordChars =null;
     **/
     public void Var262()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6588,6 +6812,11 @@ char[] passwordChars =null;
         }
         finally {
           try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
+        
+            if (system != null) system.close(); 
+
+          
+
         }
     }
     
@@ -6597,11 +6826,12 @@ char[] passwordChars =null;
     **/
     public void Var263()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                    char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+         system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6624,6 +6854,11 @@ char[] passwordChars =null;
         }
         finally {
           try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
+          
+            if (system != null) system.close(); 
+
+          
+
         }
     }
 
@@ -6633,11 +6868,12 @@ char[] passwordChars =null;
     **/
     public void Var264()
     {
+      AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool(); 
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-           AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+           system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -6662,6 +6898,11 @@ char[] passwordChars =null;
         }
         finally {
           try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
+        
+            if (system != null) system.close(); 
+
+         
+
         }
     }
 
@@ -6673,6 +6914,7 @@ char[] passwordChars =null;
     **/
     public void Var265()
     {
+      AS400 system = null; 
         try
         {
             CommandCall cmd0 = new CommandCall(pwrSys_, "CHGJOB INQMSGRPY(*SYSRPYL)");
@@ -6682,7 +6924,7 @@ char[] passwordChars =null;
 
             AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-            AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars);  //@B2C
+            system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars);  //@B2C
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
             ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, 1200);
 	    PasswordVault.clearPassword(swapToPasswordChars); 
@@ -7173,11 +7415,12 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
         int REFRESH_SECONDS=1;
         int EXPIRATION_SECONDS = 6; 
         int connectionCount = 0; 
+        AS400 system = null; 
         try
         {
             AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
-            AS400 system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
+            system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId() , passwordChars);
              char[] swapToPasswordChars =  PasswordVault.decryptPassword(encryptedSwapToPassword_);
       	    ProfileTokenCredential pt1 = system.getProfileToken(swapToUserID_, swapToPasswordChars, 
       	    		ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE, EXPIRATION_SECONDS);
@@ -7224,6 +7467,11 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
         {
             failed (e, "Unexpected Exception connectionCount="+connectionCount+"  Note:  on 8/10/2011 we hit Profile token or identity token is not valid, which would not reproduce.");
         }
+        finally {
+          if (system != null) system.close(); 
+
+        }
+
     }
 
 

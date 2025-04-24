@@ -13,14 +13,9 @@
 
 package test.misc;
 
-import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.ProgramParameterBeanInfo;
 
 import test.Testcase;
-
-import java.beans.BeanInfo;
-import java.io.FileOutputStream;
-import java.util.Vector;
 
 /**
  The ProgramParameterBeanInfoTestcase class tests the methods of ProgramParameterBeanInfo.
@@ -45,7 +40,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        Class fred = null;
+        Class<?> fred = null;
         try { fred = Class.forName("netscape.security.PrivilegeManager"); }
         catch (Throwable e) {}
 
@@ -64,7 +59,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
     {
         try {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
-            succeeded();
+            assertCondition(true, "created "+f); 
         }
         catch (Exception e) {
             failed(e, "Unexpected Exception");
@@ -152,7 +147,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
             // Icons / GUI components no longer available in JTOpen 20.0.X
 
-            assertCondition(true);
+            assertCondition(true, "created "+f); 
         }
         catch (Error e)
         {
@@ -181,7 +176,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
             // Icons / GUI components no longer available in JTOpen 20.0.X
-            assertCondition(true);
+            assertCondition(true, "created "+f); 
         }
         catch (Error e)
         {
@@ -209,7 +204,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "created "+f); 
         }
         catch (Error e)
         {
@@ -237,7 +232,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "created "+f); 
         }
         catch (Error e)
         {

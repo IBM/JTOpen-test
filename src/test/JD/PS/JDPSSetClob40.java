@@ -54,7 +54,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.sql.Types; 
@@ -98,7 +98,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPSSetClob40 (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

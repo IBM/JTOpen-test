@@ -25,7 +25,7 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Random;
 
 /**
@@ -53,7 +53,7 @@ public class JDCSArrays extends JDTestcase {
   /**
    * Constructor.
    */
-  public JDCSArrays(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSArrays(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password) {
     super(systemObject, "JDCSArrays", namesAndVars, runMode, fileOutputStream,
  password);
@@ -262,11 +262,11 @@ public class JDCSArrays extends JDTestcase {
         int thisParameter = (int) (combination & 0x1F);
         boolean arrayType;
         boolean inNull;
-        boolean outNull;
+        // boolean outNull;
 
         arrayType = ((thisParameter & 0x4) == 0x4);
         inNull = ((thisParameter & 0x2) != 0x2);
-        outNull = ((thisParameter & 0x1) != 0x1);
+        // outNull = ((thisParameter & 0x1) != 0x1);
 
         /* Input */
         if ((thisParameter & 0x10) == 0x10) {
@@ -311,11 +311,11 @@ public class JDCSArrays extends JDTestcase {
       while (combination > 0) {
         int thisParameter = (int) (combination & 0x1F);
         boolean arrayType;
-        boolean inNull;
+        //boolean inNull;
         boolean outNull;
 
         arrayType = ((thisParameter & 0x4) == 0x4);
-        inNull = ((thisParameter & 0x2) != 0x2);
+        //inNull = ((thisParameter & 0x2) != 0x2);
         outNull = ((thisParameter & 0x1) != 0x1);
 
         /* Output */

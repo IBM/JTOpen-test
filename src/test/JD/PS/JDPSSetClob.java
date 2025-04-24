@@ -11,26 +11,19 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
- //
- // File Name:    JDPSSetClob.java
- //
- // Classes:      JDPSSetClob
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
+
+import java.io.FileOutputStream;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.DataTruncation;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -41,20 +34,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
-import test.JDLobTest.JDTestClob;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.DataTruncation;
- 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -95,7 +74,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPSSetClob (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

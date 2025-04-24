@@ -11,26 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetBigDecimal.java
-//
-// Classes:      JDPSSetBigDecimal
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -52,7 +32,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -64,6 +44,8 @@ of the JDBC PreparedStatement class:
 <li>setBigDecimal()
 </ul>
 **/
+@SuppressWarnings("deprecation")
+
 public class JDPSSetBigDecimal
 extends JDTestcase {
   public static void main(String args[]) throws Exception {
@@ -95,7 +77,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDPSSetBigDecimal (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               

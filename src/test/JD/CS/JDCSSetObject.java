@@ -32,17 +32,6 @@
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDCSTest;
-import test.JDLobTest;
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -56,6 +45,15 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDCSTest;
+import test.JDLobTest;
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
 
 /**
  * Testcase JDCSSetObject. This tests the following method of the JDBC
@@ -80,7 +78,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   /**
    * Constructor.
    **/
-  public JDCSSetObject(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSSetObject(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetObject", namesAndVars, runMode,

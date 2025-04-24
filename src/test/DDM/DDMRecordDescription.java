@@ -78,7 +78,7 @@ public class DDMRecordDescription extends Testcase
       CommandCall c = new CommandCall(systemObject_, "CHKOBJ OBJ(DDMTESTSAV) OBJTYPE(*LIB)");
       boolean ran = c.run();
       AS400Message[] msgs = c.getMessageList();
-      if (msgs.length != 0)
+      if (msgs.length != 0 || (ran == false))
       {
         for (int i = 0; i < msgs.length; ++i)
         {
@@ -90,6 +90,7 @@ public class DDMRecordDescription extends Testcase
         System.out.println("the test/ directory in git");
         System.out.println("to the AS/400 system to which you are running.");
         System.out.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
+        System.out.println("ran="+ran); 
         throw new Exception("");
       }
 
@@ -269,7 +270,6 @@ public class DDMRecordDescription extends Testcase
   **/
   public void Var003()
   {
-    setVariation(3);
     try
     {
       AS400FileRecordDescription rd = null;
@@ -279,7 +279,7 @@ public class DDMRecordDescription extends Testcase
       try
       {
         rd = new AS400FileRecordDescription(null, name);
-        failed("No exception specifying null for system");
+        failed("No exception specifying null for system "+rd);
         return;
       }
       catch(Exception e)
@@ -484,6 +484,7 @@ public class DDMRecordDescription extends Testcase
       rd2 = new AS400FileRecordDescription(systemObject_, simpleKey);
       rd2.createRecordFormatSource(null, null);
       RecordFormat[] rfs = rd2.retrieveRecordFormat();
+      
       rd3 = new AS400FileRecordDescription(systemObject_, complex);
       rd3.createRecordFormatSource(null, null);
       rd4 = new AS400FileRecordDescription(systemObject_, complexKey);
@@ -496,6 +497,7 @@ public class DDMRecordDescription extends Testcase
       System.out.println("  ALLFLDSFormat.java");
       System.out.println("  ALLFLDSKEYFormat.java\n");
       System.out.println("Do the files exist and compile (Y/N)?");
+      System.out.println(" rfs="+rfs); 
       String resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {
@@ -503,10 +505,10 @@ public class DDMRecordDescription extends Testcase
         return;
       }
 
-      Class simpleClass = Class.forName("SIMPLEFormat");
-      Class simpleKeyClass = Class.forName("SIMPLEKEYFormat");
-      Class complexClass = Class.forName("ALLFLDSFormat");
-      Class complexKeyClass = Class.forName("ALLFLDSKEYFormat");
+      Class<?> simpleClass = Class.forName("SIMPLEFormat");
+      Class<?> simpleKeyClass = Class.forName("SIMPLEKEYFormat");
+      Class<?> complexClass = Class.forName("ALLFLDSFormat");
+      Class<?> complexKeyClass = Class.forName("ALLFLDSKEYFormat");
       RecordFormat rf1 = (RecordFormat)simpleClass.newInstance();
       RecordFormat rf2 = (RecordFormat)simpleKeyClass.newInstance();
       RecordFormat rf3 = (RecordFormat)complexClass.newInstance();
@@ -616,6 +618,7 @@ public class DDMRecordDescription extends Testcase
   **/
   public void Var006()
   {
+    SequentialFile sf = null; 
     try
     {
       CommandCall cc = new CommandCall(pwrSys_);
@@ -625,7 +628,7 @@ public class DDMRecordDescription extends Testcase
       rf.addFieldDescription(new BinaryFieldDescription(new AS400Bin8(), "fld1"));
       rf.addFieldDescription(new CharacterFieldDescription(new AS400Text(10), "fld2"));
 
-      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/TESTBIN8.FILE/TESTBIN8.MBR");
+      sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/TESTBIN8.FILE/TESTBIN8.MBR");
       sf.create(rf, "Testing AS400Bin8");
 
       Record rec = rf.getNewRecord();
@@ -703,6 +706,12 @@ public class DDMRecordDescription extends Testcase
     }
     finally
     {
+      if (sf != null) {
+        try {
+          sf.close();
+        } catch (Exception e) {
+        } 
+      }
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
@@ -732,6 +741,7 @@ public class DDMRecordDescription extends Testcase
     }
     StringBuffer sb = new StringBuffer(); 
     boolean passed = true; 
+    SequentialFile sf = null; 
     try
     {
       
@@ -750,11 +760,14 @@ public class DDMRecordDescription extends Testcase
       
       c.close(); 
       
-      SequentialFile sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/"+testTable+".FILE");
+      sf = new SequentialFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/"+testTable+".FILE");
       sf.setRecordFormat();
       RecordFormat rf = sf.getRecordFormat();
       FieldDescription fd0 = rf.getFieldDescription(0); 
-
+      if (fd0 == null) { 
+        passed = false; 
+        sb.append("rf.getFieldDescription(0) returned null"); 
+      }
       
       Record[] recs = sf.readAll();
       Integer val00 = (Integer) recs[0].getField(0);
@@ -795,8 +808,10 @@ public class DDMRecordDescription extends Testcase
     {
       try
       {
+        if (sf != null) sf.close(); 
         CommandCall cc = new CommandCall(pwrSys_);
         cc.run("DLTF "+testLib_+"/"+testTable+"");
+        
       }
       catch(Exception e) {}
     }
@@ -837,6 +852,10 @@ public class DDMRecordDescription extends Testcase
       sf.setRecordFormat();
       RecordFormat rf = sf.getRecordFormat();
       FieldDescription fd0 = rf.getFieldDescription(0); 
+      if (fd0 == null) { 
+        passed = false; 
+        sb.append("rf.getFieldDescription(0) returned null"); 
+      }
 
       Record[] recs = sf.readAll();
       Integer val00 = (Integer) recs[0].getField(0);
@@ -917,6 +936,10 @@ public class DDMRecordDescription extends Testcase
       sf.setRecordFormat();
       RecordFormat rf = sf.getRecordFormat();
       FieldDescription fd0 = rf.getFieldDescription(0); 
+      if (fd0 == null) { 
+        passed = false; 
+        sb.append("rf.getFieldDescription(0) returned null"); 
+      }
 
       Record[] recs = sf.readAll();
       Integer val00 = (Integer) recs[0].getField(0);
@@ -930,23 +953,35 @@ public class DDMRecordDescription extends Testcase
         sb.append("\n for val00 got "+val00+" sb 0");
       }
 
-      String expected = "2024-04-01-11.22.33.123456000000";
+      String expected = "0.0";
       if (! expected.equals(val01)) {
         passed = false; 
         sb.append("\n for val01 got "+val01+" sb "+expected);
       }
-      
+
+      expected = "0.0";
+      if (! expected.equals(val02)) {
+        passed = false; 
+        sb.append("\n for val02 got "+val01+" sb "+expected);
+      }
+
       if (val10.intValue() != 1 ) {
         passed = false; 
         sb.append("\n for val10 got "+val10+" sb 1");
       }
 
-      expected="2024-04-01-11.22.33.123456123456";
+      expected="1.0";
       if (! expected.equals(val11)) {
         passed = false; 
         sb.append("\n for val11 got "+val11+" sb "+expected);
       }
-      sf.close(); 
+
+      expected="1.0";
+      if (! expected.equals(val12)) {
+        passed = false; 
+        sb.append("\n for val11 got "+val12+" sb "+expected);
+      }
+sf.close(); 
       
       assertCondition(passed, sb); 
     }
@@ -1001,6 +1036,10 @@ public class DDMRecordDescription extends Testcase
       sf.setRecordFormat();
       RecordFormat rf = sf.getRecordFormat();
       FieldDescription fd0 = rf.getFieldDescription(0); 
+      if (fd0 == null) { 
+        passed = false; 
+        sb.append("rf.getFieldDescription(0) returned null"); 
+      }
 
       Record[] recs = sf.readAll();
       Integer val00 = (Integer) recs[0].getField(0);
@@ -1093,6 +1132,10 @@ public class DDMRecordDescription extends Testcase
       sf.setRecordFormat();
       RecordFormat rf = sf.getRecordFormat();
       FieldDescription fd0 = rf.getFieldDescription(0); 
+      if (fd0 == null) { 
+        passed = false; 
+        sb.append("rf.getFieldDescription(0) returned null"); 
+      }
 
       Record[] recs = sf.readAll();
       Integer val00 = (Integer) recs[0].getField(0);

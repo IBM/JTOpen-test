@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
+import java.util.Vector;
 import java.util.Arrays;
 import java.lang.String;
 
@@ -48,7 +49,7 @@ public class FTPTestcase extends    Testcase
     private String testDirectory = "FTPTestDir";
     private String testDirectoryDeep = "FTPTestDir/rootDir/subdir2";
     private String initialToken_ = null;
-    private boolean notWorthTrying = false;
+    // private boolean notWorthTrying = false;
 
     private static final int DETAILED = 1;
     private static final int NAME_ONLY = 0;
@@ -66,7 +67,7 @@ public class FTPTestcase extends    Testcase
     private char[] clearPassword_;
 
     public FTPTestcase (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -87,7 +88,7 @@ public class FTPTestcase extends    Testcase
         if (initialToken_ == null)
         {
            System.out.println("-directory is invalid, no test will be run");
-           notWorthTrying = true;
+           // notWorthTrying = true;
            System.out.println();
         }
         else
@@ -472,7 +473,7 @@ public class FTPTestcase extends    Testcase
           try
           {
              FTP c = new FTP(null);
-             failed("The expected NullPointerException was not thrown");
+             failed("The expected NullPointerException was not thrown"+c);
              Continue = false;
           }
           catch (NullPointerException e) {}
@@ -2617,9 +2618,9 @@ public class FTPTestcase extends    Testcase
           try
           {
              String source   = targetDir;
-             String original = testDirectory + File.separator +
-                               "rootDir"     + File.separator +
-                               "subdir2"     + File.separator + "FSTOOL.EXE";
+             // String original = testDirectory + File.separator +
+             //                  "rootDir"     + File.separator +
+             //                  "subdir2"     + File.separator + "FSTOOL.EXE";
 
              FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
@@ -2977,7 +2978,7 @@ public class FTPTestcase extends    Testcase
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
              InputStream i = c.get(null);
-             failed("no exception (1)");
+             failed("no exception (1)"+i);
              Continue = false;
           }
           catch (Exception e)
@@ -3000,7 +3001,7 @@ public class FTPTestcase extends    Testcase
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
              InputStream i = c.get("");
-             failed("no exception (3)");
+             failed("no exception (3)"+i);
              Continue = false;
           }
           catch (Exception e)
@@ -3235,7 +3236,7 @@ public class FTPTestcase extends    Testcase
     {
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
+       // String  sourceDir      = "FTPTestDir";
        String  compareDir     = "targetDirTest21";
        String  compareDirFull = compareDir + File.separator;
        String  targetDirFull  = compareDir + File.separator;
@@ -3602,7 +3603,7 @@ public class FTPTestcase extends    Testcase
           {
              String target   = "PureJava.html";
              String original = testDirectory;
-             String compare  = compareDirFull + target;
+             // String compare  = compareDirFull + target;
 
              FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
@@ -3648,7 +3649,7 @@ public class FTPTestcase extends    Testcase
     {
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
+       // String  sourceDir      = "FTPTestDir";
        String  compareDir     = "targetDirTest21a";
        String  compareDirFull = compareDir + File.separator;
        String  targetDirFull  = compareDir + File.separator;
@@ -4001,10 +4002,10 @@ public class FTPTestcase extends    Testcase
     {
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
+       // String  sourceDir      = "FTPTestDir";
        String  compareDir     = "targetDirTest22";
        String  compareDirFull = compareDir + File.separator;
-       String  targetDirFull  = compareDir + File.separator;
+       // String  targetDirFull  = compareDir + File.separator;
 
        if (Continue)
        {
@@ -4056,7 +4057,7 @@ public class FTPTestcase extends    Testcase
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
              OutputStream o = c.put(null);
-             failed("no exception (1)");
+             failed("no exception (1)"+o);
              Continue = false;
           }
           catch (Exception e)
@@ -4079,7 +4080,7 @@ public class FTPTestcase extends    Testcase
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
              OutputStream o = c.put("");
-             failed("no exception (4)");
+             failed("no exception (4)"+o);
              Continue = false;
           }
           catch (Exception e)
@@ -4422,11 +4423,7 @@ public class FTPTestcase extends    Testcase
     {
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
-       String  compareDir     = "targetDirTest21";
-       String  compareDirFull = compareDir + File.separator;
-       String  targetDirFull  = compareDir + File.separator;
-
+ 
        if (Continue)
        {
           try
@@ -4488,7 +4485,7 @@ public class FTPTestcase extends    Testcase
     // ---------------------------------------------------------------------
     public void Var025()
     {
-      Class[] parmTypes = { String.class };
+      Class<?>[] parmTypes = { String.class };
       if (!checkMethodExists("append", parmTypes)) {
         notApplicable("No method named append(String)");
         return;
@@ -4496,7 +4493,6 @@ public class FTPTestcase extends    Testcase
 
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
        String  compareDir     = "targetDirTest25";
        String  compareDirFull = compareDir + File.separator;
        String  targetDirFull  = compareDir + File.separator;
@@ -4852,8 +4848,7 @@ public class FTPTestcase extends    Testcase
           {
              String target   = "PureJava.html";
              String original = testDirectory;
-             String compare  = compareDirFull + target;
-
+             
              FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
              c.cd(compareDir);
@@ -4985,7 +4980,7 @@ public class FTPTestcase extends    Testcase
     // ---------------------------------------------------------------------
     public void Var026()
     {
-      Class[] parmTypes = { java.io.File.class, String.class };
+      Class<?>[] parmTypes = { java.io.File.class, String.class };
       if (!checkMethodExists("append", parmTypes)) {
         notApplicable("No method named append(File,String)");
         return;
@@ -4993,7 +4988,6 @@ public class FTPTestcase extends    Testcase
 
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
        String  compareDir     = "targetDirTest26";
        String  compareDirFull = compareDir + File.separator;
        String  targetDirFull  = compareDir + File.separator;
@@ -5430,7 +5424,7 @@ public class FTPTestcase extends    Testcase
     // ---------------------------------------------------------------------
     public void Var027()
     {
-      Class[] parmTypes = { String.class };
+      Class<?>[] parmTypes = { String.class };
       if (!checkMethodExists("append", parmTypes)) {
         notApplicable("No method named append(File,String)");
         return;
@@ -5438,11 +5432,9 @@ public class FTPTestcase extends    Testcase
 
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
        String  compareDir     = "targetDirTest27";
        String  compareDirFull = compareDir + File.separator;
-       String  targetDirFull  = compareDir + File.separator;
-
+       
        if (Continue)
        {
           System.out.print("1 ");
@@ -5493,7 +5485,7 @@ public class FTPTestcase extends    Testcase
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
              OutputStream o = c.append(null);
-             failed("no exception (1)");
+             failed("no exception (1)"+o);
              Continue = false;
           }
           catch (Exception e)
@@ -5516,7 +5508,7 @@ public class FTPTestcase extends    Testcase
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
              OutputStream o = c.append("");
-             failed("no exception (4)");
+             failed("no exception (4)"+o);
              Continue = false;
           }
           catch (Exception e)
@@ -5696,7 +5688,6 @@ public class FTPTestcase extends    Testcase
              c.cd(compareDir);
              c.setDataTransferType(FTP.ASCII);
              OutputStream o = c.append(target);
-             FTPEvent localFTPEvent = ftpEvent;
              if (o != null)
              {
                 FTPUtilities.copy(original, o);
@@ -5851,7 +5842,7 @@ public class FTPTestcase extends    Testcase
     public void Var028()
     {
       StringBuffer sb = new StringBuffer(); 
-      Class[] parmTypes = { String.class, String.class };
+      Class<?>[] parmTypes = { String.class, String.class };
       if (!checkMethodExists("ren", parmTypes)) {
         notApplicable("No method named ren(String,String)");
         return;
@@ -6381,7 +6372,7 @@ public class FTPTestcase extends    Testcase
 
 
   // Verifies that a method exists in class IFSFile.  Returns false if not found.
-  static boolean checkMethodExists(String methodName, Class[] parmTypes)
+  static boolean checkMethodExists(String methodName, Class<?>[] parmTypes)
   {
     try {
       Class.forName("com.ibm.as400.access.FTP").getDeclaredMethod(methodName, parmTypes);
