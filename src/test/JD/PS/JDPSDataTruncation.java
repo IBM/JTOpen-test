@@ -142,7 +142,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.SQLWarning;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -175,7 +175,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDPSDataTruncation (AS400 systemObject,
-                               Hashtable namesAndVars,
+                               Hashtable<String,Vector<String>> namesAndVars,
                                int runMode,
                                FileOutputStream fileOutputStream,
                                
@@ -308,7 +308,7 @@ same as the value passed in for the column value.
 
             if (rs.next()) {
                 byte[] compare = rs.getBytes(1);
-                if (isEqual (value, compare))
+                if (areEqual (value, compare))
                     success = true;
             }
 
@@ -2501,7 +2501,7 @@ public void Var075() {
       ps.close();
 
       if (warnings == null ) { 
-        failed("No warnings returned "+added); 
+        failed("No warnings returned "+added+" rs="+rs); 
       }
       //
       // For JDK 1.6, the default java.sql.DataTrucation warning will return
@@ -2564,7 +2564,7 @@ public void Var075() {
       ps.close();
 
       if (warnings == null ) { 
-        failed("No warnings returned "+added); 
+        failed("No warnings returned "+added+" rs="+rs); 
       }
       //
       // For JDK 1.6, the default java.sql.DataTrucation warning will return

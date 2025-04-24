@@ -21,15 +21,6 @@
 
 package test.JD.Connection;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDConnectionTest;
-import test.JDLobTest;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JD.JDTestUtilities;
-import test.JDLobTest.JDTestClob;
-
 import java.io.FileOutputStream;
 import java.io.StringReader;
 import java.sql.Blob;
@@ -41,6 +32,15 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDConnectionTest;
+import test.JDLobTest;
+import test.JDTestDriver;
+import test.JDTestcase;
+import test.JD.JDTestUtilities;
 
 /**
  * Testcase JDConnectionCharacterTruncation. this tests the following of the JDBC
@@ -70,7 +70,7 @@ public class JDConnectionCharacterTruncation extends JDTestcase {
    * Constructor.
    **/
   public JDConnectionCharacterTruncation(AS400 systemObject,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, "JDConnectionCharacterTruncation", namesAndVars, runMode,
         fileOutputStream, password);

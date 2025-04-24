@@ -11,26 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetRef.java
-//
-// Classes:      JDPSSetRef
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -40,7 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Ref;
 import java.sql.SQLException;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -82,7 +62,7 @@ extends JDTestcase {
     Constructor.
     **/
     public JDPSSetRef (AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        
@@ -137,6 +117,7 @@ extends JDTestcase {
     private static class TestRef
     implements Ref {
         public String getBaseTypeName() throws SQLException     { return null;}
+        @SuppressWarnings("rawtypes")
         public java.lang.Object getObject(java.util.Map map) throws SQLException { return null;} //@C1A
         public java.lang.Object getObject() throws SQLException { return null;} //@C1A
         public void setObject(java.lang.Object value) throws SQLException {}    //@C1A

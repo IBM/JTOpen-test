@@ -34,7 +34,7 @@ import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -70,7 +70,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDSDSWrapper (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -187,6 +187,7 @@ isWrapperFor() -- Call with driver specific class, should return true.
 /**
 unwrap() -- Call with null, should throw exception
 **/
+    @SuppressWarnings("rawtypes")
     public void Var005() {
 	if (checkJdbc40()) {
 

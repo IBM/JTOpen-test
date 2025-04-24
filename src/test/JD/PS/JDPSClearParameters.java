@@ -11,40 +11,21 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
- //
- // File Name:    JDPSClearParameters.java
- //
- // Classes:      JDPSClearParameters
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
+
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
 import test.JDPSTest;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -81,7 +62,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPSClearParameters (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -244,8 +225,7 @@ to fail.  Reported for toolbox via CPS 8KLGCZ Aug 2011
       String added = " -- added Aug 2011 for toolbox CPS 8KLGCZ"; 
       try {
 	  String value = "JDPSClearP"; 
-	  Statement stmt = connection_.createStatement(); 
-          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
+	  PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
             + JDPSTest.PSTEST_SET + " (C_KEY) VALUES (?)");
           ps.setString (1, value);
 	  ps.addBatch();
@@ -280,8 +260,7 @@ rows
       String added = " -- added Aug 2011 for toolbox CPS 8KLGCZ"; 
       try {
 	  String value = "JDPSClearP"; 
-	  Statement stmt = connection_.createStatement(); 
-          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
+	  PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
             + JDPSTest.PSTEST_SET + " (C_KEY) VALUES (?)");
 	  for (int i = 0; i < 40000; i++) { 
 	      ps.setString (1, value);

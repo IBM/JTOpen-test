@@ -70,6 +70,7 @@ import test.JTA.JTACleanupTx;
 
 import java.sql.*;
 
+@SuppressWarnings("deprecation")
 public class JDRunit {
 
   public static final String TMP = "/tmp";
@@ -963,6 +964,7 @@ public class JDRunit {
         throw new Exception("Unable to find mail.jar in " + locations);
       }
 
+      @SuppressWarnings("resource")
       ClassLoader loader = new URLClassLoader(urls);
       sessionClass = loader.loadClass("javax.mail.Session");
       mimeMessageClass = loader.loadClass("javax.mail.internet.MimeMessage");
@@ -977,7 +979,7 @@ public class JDRunit {
 
     }
 
-    Class[] parameterTypes;
+    Class<?>[] parameterTypes;
     Object[] parms;
 
     addressArrayClass = Array.newInstance(addressClass, 0).getClass();
@@ -1019,7 +1021,7 @@ public class JDRunit {
      */
 
     Object[] setRecipientsArgs = new Object[2];
-    Class[] innerClasses = javaxMailMessageClass.getDeclaredClasses();
+    Class<?>[] innerClasses = javaxMailMessageClass.getDeclaredClasses();
     Class<?> innerClass = null;
     for (int i = 0; i < innerClasses.length && innerClass == null; i++) {
       if (innerClasses[i].getName().indexOf("RecipientType") > 0) {
@@ -1031,7 +1033,7 @@ public class JDRunit {
     Field field = innerClass.getDeclaredField("TO");
     setRecipientsArgs[0] = field.get(null);
 
-    Class[] parseParameterTypes = new Class[2];
+    Class<?>[] parseParameterTypes = new Class[2];
     parseParameterTypes[0] = toAddress.getClass();
     parseParameterTypes[1] = Boolean.TYPE;
     Method parseMethod = internetAddressClass.getMethod("parse",
@@ -1686,6 +1688,7 @@ public class JDRunit {
     return iniProperties;
   }
 
+  @SuppressWarnings("resource")
   public static String createProfile(String SYSTEM, String newUserid,
       String newPassword, String userid, char[] encryptedPassword, Vector<String> inputVector) {
     if (newPassword == null)
@@ -1778,7 +1781,10 @@ public class JDRunit {
       rdbToCreatedUserid.put(SYSTEM, newUserid);
       rdbToCreatedPassword.put(SYSTEM, newPassword);
 
+      
       System.out.println("Profile " + newUserid + " created");
+      
+      con.close();
       return newPassword;
     } catch (Exception e) {
       inputVector.addElement("echo Exception thrown creating profile "

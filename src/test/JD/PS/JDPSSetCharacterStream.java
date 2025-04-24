@@ -31,6 +31,21 @@
 
 package test.JD.PS;
 
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.sql.Connection;
+import java.sql.DataTruncation;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDPSTest;
@@ -40,23 +55,7 @@ import test.JDTestcase;
 import test.JTOpenTestEnvironment;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
-import test.JD.JDWeirdReader;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Hashtable;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.sql.Types; 
+import test.JD.JDWeirdReader; 
 
 
 /**
@@ -97,7 +96,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPSSetCharacterStream (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

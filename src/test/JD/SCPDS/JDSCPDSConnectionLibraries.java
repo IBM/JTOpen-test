@@ -42,7 +42,7 @@ import test.PasswordVault;
 import test.JD.JDSetupCollection;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.StringTokenizer;
 import java.sql.*;
 import javax.sql.DataSource;
@@ -80,7 +80,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDSCPDSConnectionLibraries (AS400 systemObject,
-                                      Hashtable namesAndVars,
+                                      Hashtable<String,Vector<String>> namesAndVars,
                                       int runMode,
                                       FileOutputStream fileOutputStream,
                                       

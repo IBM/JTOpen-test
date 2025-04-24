@@ -25,7 +25,7 @@ public class JDSecurityManager extends SecurityManager {
   public void checkListen(int c){}
   public void checkRead(java.io.FileDescriptor c){}
   public void checkWrite(java.io.FileDescriptor c){}
-  public void checkMemberAccess(java.lang.Class c ,int i ){}
+  public void checkMemberAccess(java.lang.Class<?> c ,int i ){}
   public void checkDelete(java.lang.String c){}
   public void checkExec(java.lang.String c ){}
   public void checkLink(java.lang.String c){}

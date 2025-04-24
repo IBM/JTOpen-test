@@ -1795,9 +1795,9 @@ public abstract class Testcase {
    *         false otherwise.
    * @deprecated As of Mod5, replaced by {@link #areEqual(byte[],byte[])}.
    **/
-  public static boolean isEqual(byte[] array1, byte[] array2) {
-    return areEqual(array1, array2);
-  }
+   public static boolean isEqual(byte[] array1, byte[] array2) {
+     return areEqual(array1, array2);
+   }
 
   /**
    * Indicates whether the contents of two arrays match.

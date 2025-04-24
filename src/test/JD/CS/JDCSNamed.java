@@ -27,12 +27,6 @@
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDCSTest;
-import test.JDTestcase;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -41,6 +35,12 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.Hashtable;
 import java.util.Random;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDCSTest;
+import test.JDTestcase;
 
 
 
@@ -372,13 +372,13 @@ public static final int D4 = D3 * D1;
   /**
    * Constructor.
    **/
-  public JDCSNamed(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSNamed(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password) {
     super(systemObject, "JDCSNamed", namesAndVars, runMode, fileOutputStream,
  password);
   }
 
-  public JDCSNamed(AS400 systemObject, String testname, Hashtable namesAndVars,
+  public JDCSNamed(AS400 systemObject, String testname, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
@@ -707,7 +707,7 @@ Test Jesse Gorzinski's error case
      int[] possibleParameters = new int[parameterCount+1-fixedCount];
      boolean processing = true; 
      processing = incrementInvalidPossibleParameters(possibleParameters, parametersLeft, thisDirection, fixedCount);
-     Hashtable processedParameterStrings = new Hashtable(); 
+     Hashtable<String,String> processedParameterStrings = new Hashtable<String,String>(); 
      while (processing) {
        // Create the parameter string based on the possible parameters
        String parameterString = ""; 
@@ -1219,7 +1219,7 @@ Test Jesse Gorzinski's error case
         boolean processing = true;
         processing = incrementInvalidPossibleParameters(possibleParameters,
             parametersLeft, thisDirection, fixedCount);
-        Hashtable processedParameterStrings = new Hashtable();
+        Hashtable<String,String> processedParameterStrings = new Hashtable<String,String>();
         while (processing) {
           // Create the parameter string based on the possible parameters
           String parameterString = "";

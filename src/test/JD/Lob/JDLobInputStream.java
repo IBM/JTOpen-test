@@ -13,22 +13,21 @@
 
 package test.JD.Lob;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDLobTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
-
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 
 
@@ -115,7 +114,7 @@ Static initializer.
 Constructor.
 **/
    public JDLobInputStream (AS400 systemObject,
-                            Hashtable namesAndVars,
+                            Hashtable<String,Vector<String>> namesAndVars,
                             int runMode,
                             FileOutputStream fileOutputStream,
                             String password)
@@ -939,7 +938,7 @@ read(byte[],int,int) - Passing null for the byte array.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(null, 3, 5);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
             }
@@ -963,7 +962,7 @@ read(byte[],int,int) - Passing -1 for offset.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(p, -1, 5);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } 
             catch (Exception e) 
             {
@@ -995,7 +994,7 @@ read(byte[],int,int) - Passing offset greater than length of the array.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(p, 12, 5);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } 
             catch (Exception e) 
             {
@@ -1027,7 +1026,7 @@ read(byte[],int,int) - Passing -1 for length.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(p, 3, -1);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } 
             catch (Exception e) 
             {
@@ -1059,7 +1058,7 @@ read(byte[],int,int) - Passing length that extends past the end of the array.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(p, 4, 7);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } 
             catch (Exception e) 
             {
@@ -1091,7 +1090,7 @@ read(byte[],int,int) - When the input stream is closed.
                v.close ();
                byte[] p = new byte[10];
                int count = v.read(p, 5, 5);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.io.IOException");
             }
@@ -1308,7 +1307,7 @@ read(byte[]) - Passing null for the byte array.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(null);
-               failed ("Didn't throw SQLException");
+               failed ("Didn't throw SQLException"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
             }
@@ -1332,7 +1331,7 @@ read(byte[]) - When the input stream is closed.
                v.close ();
                byte[] p = new byte[10];
                int count = v.read(p);
-               failed ("Didn't throw SQLException");
+               failed ("Didn't throw SQLException"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.io.IOException");
             }
@@ -1562,7 +1561,7 @@ lob.
                InputStream v = rs.getBinaryStream ("C_BLOB");
                byte[] p = new byte[MEDIUM_.length];
                long count = v.skip (MEDIUM_.length);
-               assertCondition ((count == MEDIUM_.length) && (v.read() == -1));
+               assertCondition ((count == MEDIUM_.length) && (v.read() == -1), "p.length="+p.length);
             } catch (Exception e) {
                failed (e, "Unexpected Exception");
             }
@@ -1616,7 +1615,7 @@ skip() - Passing -1 for the argument.
                byte[] p = new byte[10];
                v.read (p);
                long count = v.skip (-1);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
             }
@@ -1639,7 +1638,7 @@ skip() - When the input stream is closed.
                InputStream v = rs.getBinaryStream ("C_BLOB");
                v.close ();
                long count = v.skip (4);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.io.IOException");
             }
@@ -2463,7 +2462,7 @@ SQL400 - Clob variations.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(null, 3, 5);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
             }
@@ -2489,7 +2488,7 @@ SQL400 - Clob variations.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(p, -1, 5);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } 
             catch (Exception e) 
             {
@@ -2515,6 +2514,7 @@ SQL400 - Clob variations.
    {
       if (checkJdbc20 ()) {
          if (checkLobSupport ()) {
+           int count = 0; 
             try {
                ResultSet rs = statement_.executeQuery ("SELECT * FROM " + TABLE2_);
                rs.next ();
@@ -2522,7 +2522,7 @@ SQL400 - Clob variations.
                InputStream v = rs.getAsciiStream ("C_CLOB");
                byte[] p = new byte[10];
                v.read (p);
-               int count = v.read(p, 12, 5);
+               count = v.read(p, 12, 5);
              } 
              catch (Exception e) 
              {
@@ -2532,7 +2532,7 @@ SQL400 - Clob variations.
                       (exception.indexOf("IndexOutOfBoundsException") > 0))
                     succeeded();
                  else
-                    failed (e, "Unexpected Exception");                                         
+                    failed (e, "Unexpected Exception"+count);                                         
               }      
           }
       }
@@ -2556,7 +2556,7 @@ SQL400 - Clob variations.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(p, 3, -1);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } 
             catch (Exception e) 
             {
@@ -2590,7 +2590,7 @@ SQL400 - Clob variations.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(p, 4, 7);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } 
             catch (Exception e) 
             {
@@ -2624,7 +2624,7 @@ SQL400 - Clob variations.
                v.close ();
                byte[] p = new byte[10];
                int count = v.read(p, 5, 5);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.io.IOException");
             }
@@ -2859,7 +2859,7 @@ SQL400 - Clob variations.
                byte[] p = new byte[10];
                v.read (p);
                int count = v.read(null);
-               failed ("Didn't throw SQLException");
+               failed ("Didn't throw SQLException"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
             }
@@ -2885,7 +2885,7 @@ SQL400 - Clob variations.
                v.close ();
                byte[] p = new byte[10];
                int count = v.read(p);
-               failed ("Didn't throw SQLException");
+               failed ("Didn't throw SQLException"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.io.IOException");
             }
@@ -3095,7 +3095,6 @@ SQL400 - Clob variations.
                rs.next ();
                rs.next ();
                InputStream v = rs.getAsciiStream ("C_CLOB");
-               byte[] p = new byte[MEDIUM_.length];
                long count = v.skip (MEDIUM_.length);
                assertCondition ((count == MEDIUM_.length) && (v.read() == -1));
             } catch (Exception e) {
@@ -3156,7 +3155,7 @@ SQL400 - Clob variations.
                byte[] p = new byte[10];
                v.read (p);
                long count = v.skip (-1);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
             }
@@ -3181,7 +3180,7 @@ SQL400 - Clob variations.
                InputStream v = rs.getAsciiStream ("C_CLOB");
                v.close ();
                long count = v.skip (4);
-               failed ("Didn't throw Exception");
+               failed ("Didn't throw Exception"+count);
             } catch (Exception e) {
                assertExceptionIsInstanceOf (e, "java.io.IOException");
             }

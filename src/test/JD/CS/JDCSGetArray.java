@@ -38,7 +38,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDCSGetArray. This tests the following method of the JDBC
@@ -66,7 +66,7 @@ public class JDCSGetArray extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDCSGetArray(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSGetArray(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSGetArray", namesAndVars, runMode, fileOutputStream,

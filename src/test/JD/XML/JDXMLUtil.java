@@ -11,24 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDDMDPerformance.java
-//
-// Classes:      JDDMDPerformance
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
 package test.JD.XML;
 
 import java.io.StringBufferInputStream;
@@ -44,6 +26,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.*; 
 
+@SuppressWarnings("deprecation")
 public class JDXMLUtil {
 
   static DocumentBuilderFactory documentBuilderFactory = null; 
@@ -99,19 +82,6 @@ public class JDXMLUtil {
   public static void main(String[] args) {
     try { 
     System.out.println("UNIT TESTING THE test.JDXMLUtil class ");
-    String xml1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
-    "<catalog title=\"XML Zone\" publisher='IBM developerWorks'> "+
- "<journal date=\"Jan 2006\">"+ 
- " <article>"+
- "  <title>Managing XML data: Tag URIs</title>"+
- "  <author>Elliotte Harold</author>"+
- " </article>"+
- " <article> "+
- "  <title>Practical data binding: XPath as data binding tool, Part 2</title>"+
- "  <author>Brett McLaughlin</author>"+
- " </article>"+
- "</journal>"+
- "</catalog>"; 
 
     
     String xml2 = "<?xml version=\"1.0\"?>\n\n"+

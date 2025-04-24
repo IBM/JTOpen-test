@@ -21,6 +21,24 @@
 
 package test.JD.Connection;
 
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.sql.Array;
+import java.sql.Blob;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDConnectionTest;
@@ -29,15 +47,6 @@ import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDTestUtilities;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
-import java.io.*;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.util.Hashtable;
-import java.sql.*;
 
 /**
  * Testcase JDConnectionCreateArrayOf. This tests the following methods of the
@@ -120,12 +129,12 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
   public final static String BOOLEAN_PROCEDURE = "BOOLEAN";
   public final static String BOOLEAN_ARRAY_TYPE = "BOOLEAN";
 
-  private Hashtable createdProcedures = new Hashtable();
+  private Hashtable<String, String> createdProcedures = new Hashtable<String, String>();
 
   /**
    * Constructor.
    **/
-  public JDConnectionCreateArrayOf(AS400 systemObject, Hashtable namesAndVars,
+  public JDConnectionCreateArrayOf(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDConnectionCreateArrayOf", namesAndVars, runMode,
@@ -401,7 +410,7 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
 
   void verifyExistsInputOutputProcedure(String typeDefinition, String name)
       throws SQLException {
-    String existString = (String) createdProcedures.get(name);
+    String existString = createdProcedures.get(name);
     if (existString == null) {
       String sql = "";
       try {
@@ -470,7 +479,7 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
   boolean compareArrays(String[] expected, Object[] elements,
       String expectedArrayClass, String errorMessage, StringBuffer sb) {
     boolean passed = true;
-    Class arrayClass = elements.getClass().getComponentType();
+    Class<?> arrayClass = elements.getClass().getComponentType();
     String arrayTypeName = arrayClass.getName();
     if (!arrayTypeName.equals(expectedArrayClass)) {
       sb.append("\n " + errorMessage + ": Got array type " + arrayTypeName

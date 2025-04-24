@@ -21,16 +21,15 @@
 
 package test.JD.DS;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.util.Hashtable;
-import java.util.Vector;
-import java.sql.*;
 
 
 

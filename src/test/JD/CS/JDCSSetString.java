@@ -27,20 +27,20 @@
 
 package test.JD.CS;
 
+import java.io.FileOutputStream;
+import java.sql.CallableStatement;
+import java.sql.DataTruncation;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.sql.DataTruncation;
-import java.util.Hashtable;
 
 /**
  * Testcase JDCSSetString. This tests the following method of the JDBC
@@ -64,7 +64,7 @@ public class JDCSSetString extends JDCSSetTestcase {
   /**
    * Constructor.
    **/
-  public JDCSSetString(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSSetString(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetString", namesAndVars, runMode,

@@ -44,7 +44,7 @@ import java.sql.DataTruncation;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -85,7 +85,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDParmStringDecimal (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           

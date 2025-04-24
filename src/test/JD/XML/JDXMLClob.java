@@ -11,18 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDXMLClob.java
-//
-// Classes:      JDXMLClob
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.XML;
 
@@ -50,7 +38,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -379,7 +367,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDXMLClob (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -392,7 +380,7 @@ extends JDTestcase
 
     public JDXMLClob (AS400 systemObject,
         String testname, 
-        Hashtable namesAndVars,
+        Hashtable<String,Vector<String>> namesAndVars,
         int runMode,
         FileOutputStream fileOutputStream,
         
@@ -1374,7 +1362,7 @@ extends JDTestcase
         if (checkJdbc40 ()) {
           try {
           String classname = sourceClassName; 
-          Class sourceClass = null; 
+          Class<?> sourceClass = null; 
           if (classname != null) { 
             if (classname.indexOf("JAVAX") == 0) {
               classname = "javax"+sourceClassName.substring(5); 

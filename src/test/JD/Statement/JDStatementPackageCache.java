@@ -1628,10 +1628,10 @@ public class JDStatementPackageCache extends JDTestcase {
 		      }
 		      sb.append(""+"\n"); 
 
-		      String count=rs.getString(1);
-		      String qqrid=rs.getString(2);
-		      String statementOp=rs.getString(3);
-		      String statementType=rs.getString(4);
+		      //String count=rs.getString(1);
+		      //String qqrid=rs.getString(2);
+		      //String statementOp=rs.getString(3);
+		      //String statementType=rs.getString(4);
 		      String dynamicSqlType=rs.getString(5);
 		      String text = rs.getString(6);
 		      if (text == null) {
@@ -1817,10 +1817,10 @@ public class JDStatementPackageCache extends JDTestcase {
           }
           sb.append(""+"\n");
 
-          String count = rs.getString(1);
-          String qqrid = rs.getString(2);
-          String statementOp = rs.getString(3);
-          String statementType = rs.getString(4);
+          //String count = rs.getString(1);
+          //String qqrid = rs.getString(2);
+          //String statementOp = rs.getString(3);
+          //String statementType = rs.getString(4);
           String dynamicSqlType = rs.getString(5);
           String text = rs.getString(6);
           if (text == null) {

@@ -21,18 +21,17 @@
 
 package test.JD.CPDS;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import javax.naming.Reference;
+import javax.naming.spi.ObjectFactory;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDReflectionUtil;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import javax.naming.*;
-import javax.naming.spi.ObjectFactory;
-import javax.sql.DataSource;
-
-import java.util.Hashtable;
-import java.util.Vector;
 
 
 /**

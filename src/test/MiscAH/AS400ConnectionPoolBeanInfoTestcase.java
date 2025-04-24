@@ -13,9 +13,7 @@
 
 package test.MiscAH;
 
-import java.awt.Image;
 import java.beans.BeanDescriptor;
-import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
 import java.beans.FeatureDescriptor;
 import java.beans.MethodDescriptor;

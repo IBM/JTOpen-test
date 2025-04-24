@@ -28,22 +28,22 @@
 
 package test.JD.CS;
 
+import java.io.FileOutputStream;
+import java.sql.CallableStatement;
+import java.sql.Date;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCTimestamp;
 
 import test.JDReflectionUtil;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.util.Hashtable;
-import java.sql.CallableStatement;
-import java.sql.Date;
-import java.sql.Statement;
-import java.util.Calendar;
-import java.sql.Timestamp;
-import java.sql.Time;
 
 /**
 Testcase JDCSSetTimestamp.  This tests the following method
@@ -74,7 +74,7 @@ private Timestamp sampleTimestamp;
 Constructor.
 **/
     public JDCSSetTimestamp (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

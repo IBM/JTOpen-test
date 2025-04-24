@@ -11,39 +11,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetObject2.java
-//
-// Classes:      JDPSSetObject2
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
-
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDPSTest;
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
@@ -59,6 +28,16 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDPSTest;
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
+import test.JDTestcase;
 
 
 
@@ -97,7 +76,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDPSSetObject2 (AS400 systemObject,
-                           Hashtable namesAndVars,
+                           Hashtable<String,Vector<String>> namesAndVars,
                            int runMode,
                            FileOutputStream fileOutputStream,
                            
@@ -239,6 +218,7 @@ setObject() - Should throw exception when index is -1.
 setObject() - Should work with a valid parameter index
 greater than 1.
 **/
+    @SuppressWarnings("deprecation")
     public void Var005()
     {
         try {
@@ -269,6 +249,7 @@ greater than 1.
 /**
 setObject() - Should set to SQL NULL when the object is null.
 **/
+    @SuppressWarnings("deprecation")
     public void Var006()
     {
         try {
@@ -320,6 +301,7 @@ not an input parameter.
 setObject() - Should throw exception when the parameter is
 not anything close to being a JDBC-style type.
 **/
+    @SuppressWarnings("rawtypes")
     public void Var008()
     {
         try {
@@ -437,8 +419,8 @@ setObject() - Set a SMALLINT parameter, when the object is the wrong type.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_SMALLINT) VALUES (?)");
-            ps.setObject (1, new Time (4, 15, 33));
-	    ps.executeUpdate(); 
+            ps.setObject (1, Time.valueOf("04:15:33"));
+            ps.executeUpdate(); 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -718,6 +700,7 @@ setObject() - Set a DOUBLE parameter, when the object is the wrong type.
 /**
 setObject() - Set an DECIMAL parameter.
 **/
+    @SuppressWarnings("deprecation")
     public void Var023()
     {
         try {
@@ -781,6 +764,7 @@ setObject() - Set an DECIMAL parameter, when the data gets truncated.
 setObject() - Set an DECIMAL parameter, when the fraction gets truncated.  This
 does not cause a data truncation exception.
 **/
+    @SuppressWarnings("deprecation")
     public void Var025()
     {
         try {
@@ -833,6 +817,7 @@ setObject() - Set a DECIMAL parameter, when the object is the wrong type.
 /**
 setObject() - Set a NUMERIC parameter.
 **/
+    @SuppressWarnings("deprecation")
     public void Var027()
     {
         try {
@@ -896,6 +881,7 @@ setObject() - Set a NUMERIC parameter, when the data gets truncated.
 setObject() - Set an NUMERIC parameter, when the fraction gets truncated.  This
 does not cause a data truncation exception.
 **/
+    @SuppressWarnings("deprecation")
     public void Var029()
     {
         try {
@@ -1238,7 +1224,7 @@ setObject() - Set a BINARY parameter.
 
             byte[] b2 = new byte[20];
             System.arraycopy (b, 0, b2, 0, b.length);
-            assertCondition (isEqual (check, b2));
+            assertCondition (areEqual (check, b2));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1322,7 +1308,7 @@ setObject() - Set a VARBINARY parameter.
             byte[] check = rs.getBytes (1);
             rs.close ();
 
-            assertCondition (isEqual (check, b));
+            assertCondition (areEqual (check, b));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1408,7 +1394,7 @@ setObject() - Set a BLOB parameter.
                     Blob check = rs.getBlob (1);
                     // rs.close ();                                                           // @F1D
 
-                    assertCondition (isEqual (check.getBytes (1, (int) check.length ()), b)); // @D1C
+                    assertCondition (areEqual (check.getBytes (1, (int) check.length ()), b)); // @D1C
                 }
                 catch (Exception e) {
                     failed (e, "Unexpected Exception");
@@ -1649,7 +1635,8 @@ setObject() - Set a DATALINK parameter, when the object is the wrong type.
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_DATALINK) VALUES (?)");
-                ps.setObject (1, new Time (7, 42, 0));
+                ps.setObject (1, Time.valueOf("07:42:00")); 
+                
 	    ps.executeUpdate(); 
 
                 failed ("Didn't throw SQLException");
@@ -2252,6 +2239,7 @@ setObject() - Set a DECFLOAT(16) parameter, when the object is the wrong type.
 setObject() - Should work with a valid parameter index
 greater than 1 and decimal separator is a comma.
 **/
+    @SuppressWarnings("deprecation")
     public void Var088()
     {
 	String added = " -- added 12/17/2009 to test native driver for CPS 7YSU2X"; 
@@ -2282,6 +2270,7 @@ greater than 1 and decimal separator is a comma.
 /**
 setObject() - Set an DECIMAL parameter when decimal separator is a comma.
 **/
+    @SuppressWarnings("deprecation")
     public void Var089()
     {
 	String added = " -- added 12/17/2009 to test native driver for CPS 7YSU2X"; 
@@ -2312,6 +2301,7 @@ setObject() - Set an DECIMAL parameter when decimal separator is a comma.
 /**
 setObject() - Set a NUMERIC parameter when decimal separator is a comma.
 **/
+    @SuppressWarnings("deprecation")
     public void Var090()
     {
 	String added = " -- added 12/17/2009 to test native driver for CPS 7YSU2X"; 

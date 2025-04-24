@@ -43,7 +43,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDPSetInt. This tests the following method of the JDBC
@@ -72,7 +72,7 @@ public class JDPMDGetDB2ParameterName extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPMDGetDB2ParameterName(AS400 systemObject, Hashtable namesAndVars,
+  public JDPMDGetDB2ParameterName(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPMDGetDB2ParameterName", namesAndVars, runMode,

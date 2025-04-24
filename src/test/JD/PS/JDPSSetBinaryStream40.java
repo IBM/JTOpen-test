@@ -27,22 +27,10 @@
 
 package test.JD.PS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDPSTest;
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JVMInfo;
-import test.JD.JDSetupPackage;
-import test.JD.JDTestUtilities;
-import test.JD.JDWeirdInputStream;
-
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.ParameterMetaData;
@@ -51,6 +39,18 @@ import java.sql.ResultSet;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDPSTest;
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
+import test.JVMInfo;
+import test.JD.JDSetupPackage;
+import test.JD.JDTestUtilities;
+import test.JD.JDWeirdInputStream;
 
 /**
  * Testcase JDPSSetBinaryStream40. This tests the following method of the JDBC
@@ -75,7 +75,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   /**
    * Constructor.
    **/
-  public JDPSSetBinaryStream40(AS400 systemObject, Hashtable namesAndVars,
+  public JDPSSetBinaryStream40(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetBinaryStream40", namesAndVars, runMode,
@@ -196,7 +196,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
-        Class[] argTypes = new Class[2];
+        Class<?>[] argTypes = new Class[2];
         argTypes[0] = Integer.TYPE;
         argTypes[1] = Class.forName("java.io.InputStream");
         Object[] args = new Object[2];

@@ -43,32 +43,24 @@ public class AS400FTPBeans
    }
     private String user_     = null;
     private String system_   = null;
-    private String testDirectory = "FTPTestDir";
+    public  String testDirectory = "FTPTestDir";
     private String initialToken_ = null;
-    private boolean notWorthTrying = false;
+    public boolean notWorthTrying = false;
 
-    private static final int DETAILED = 1;
-    private static final int NAME_ONLY = 0;
-
-    private static final int ONE     =  1;
-    private static final int TWO     =  2;
-    private static final int FOUR    =  4;
-    private static final int EIGHT   =  8;
-    private static final int SIXTEEN = 16;
-    private static final int TOTAL   = ONE + TWO + FOUR + EIGHT + SIXTEEN;
-
-    private int connectCalled    = 0;
-    private int disconnectCalled = 0;
-    private int getCalled        = 0;
-    private int putCalled        = 0;
-    private int listCalled       = 0;
+  
+  
+    public  int connectCalled    = 0;
+    public int disconnectCalled = 0;
+    public int getCalled        = 0;
+    public int putCalled        = 0;
+    public  int listCalled       = 0;
     private FTPEvent ftpEvent;
     private PropertyChangeEvent propertyChangeEvent;
     private PropertyChangeEvent vetoChangeEvent;
     private boolean veto = false;
 
     public AS400FTPBeans (AS400 systemObject,
-                     Hashtable namesAndVars,
+                     Hashtable<String,Vector<String>> namesAndVars,
                      int runMode,
                      FileOutputStream fileOutputStream,
                      String password,

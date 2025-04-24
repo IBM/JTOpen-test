@@ -33,19 +33,18 @@
 
 package test.JD.DS;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import javax.naming.Reference;
+import javax.naming.spi.ObjectFactory;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import javax.naming.*;
-import java.io.File;
-import java.util.Hashtable;
-import java.util.Vector;
-import java.sql.*;
-import javax.naming.spi.ObjectFactory;
 
 
 /**

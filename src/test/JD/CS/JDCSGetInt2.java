@@ -21,23 +21,22 @@
 
 package test.JD.CS;
 
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDLobTest;
 import test.JDTestcase;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Hashtable;
-import java.math.BigDecimal;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Date;
 
 
 /**
@@ -67,7 +66,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDCSGetInt2 (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -459,6 +458,7 @@ getInt() - getInt on a type registered as INTEGER, INOUT DATE
 /**
 getInt() - getInt on a type registered as INTEGER, INOUT TIME
 **/
+    @SuppressWarnings("deprecation")
     public void Var016()
     {
 	

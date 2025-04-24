@@ -23,7 +23,7 @@ package test.JD.AS;
 
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.sql.*;
 
 import com.ibm.as400.access.AS400;
@@ -49,7 +49,7 @@ public class JDASPreparedStatement extends JDASTestcase {
   /**
    * Constructor.
    **/
-  public JDASPreparedStatement(AS400 systemObject, Hashtable namesAndVars,
+  public JDASPreparedStatement(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String pwrSysUserID, String pwrSysPassword) {
     super(systemObject, "JDASPreparedStatement", namesAndVars, runMode,
@@ -57,7 +57,7 @@ public class JDASPreparedStatement extends JDASTestcase {
     // originalPrintWriter_ = Trace.getPrintWriter();
   }
 
-  public JDASPreparedStatement(AS400 systemObject, String testname, Hashtable namesAndVars,
+  public JDASPreparedStatement(AS400 systemObject, String testname, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String pwrSysUserID, String pwrSysPassword) {
     super(systemObject, testname, namesAndVars, runMode,

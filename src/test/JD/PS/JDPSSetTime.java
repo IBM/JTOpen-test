@@ -11,25 +11,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
- //
- // File Name:    JDPSSetTime.java
- //
- // Classes:      JDPSSetTime
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
-
+ 
 package test.JD.PS;
 
 
@@ -40,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.Calendar;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -90,7 +72,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPSSetTime (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -668,7 +650,7 @@ setTime() - Set a DATE parameter.
             PreparedStatement ps = connection_.prepareStatement (
                 "INSERT INTO " + JDPSTest.PSTEST_SET
                 + " (C_DATE) VALUES (?)");
-            ps.setTime (1, new Time (22,33,54));
+            ps.setTime (1, Time.valueOf("22:33:54"));
             ps.executeUpdate ();
             ps.close ();
 
@@ -759,7 +741,7 @@ setTime() - Set a TIMESTAMP parameter.
             PreparedStatement ps = connection_.prepareStatement (
                 "INSERT INTO " + JDPSTest.PSTEST_SET
                 + " (C_TIMESTAMP) VALUES (?)");
-            ps.setTime (1, new Time (5,33,44));
+            ps.setTime (1, Time.valueOf("05:33:44"));
             ps.executeUpdate ();
             ps.close ();
 

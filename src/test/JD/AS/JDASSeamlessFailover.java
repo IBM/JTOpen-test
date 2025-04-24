@@ -22,18 +22,22 @@
 ////////////////////////////////////////////////////////////////////////////
 
 package test.JD.AS;
-import test.*; 
-
 import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.Hashtable;
-import java.sql.*;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 
 import test.JDASTest;
-import test.JD.AS.*;
-import test.socketProxy.*;
+import test.SocketProxy;
+import test.socketProxy.SocketProxyPair;
 
 /**
 * Testcase JDASSeamlessFailover
@@ -65,7 +69,7 @@ protected String table;
 /**
 * Constructor.
 **/
-public JDASSeamlessFailover(AS400 systemObject, Hashtable namesAndVars,
+public JDASSeamlessFailover(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
 int runMode, FileOutputStream fileOutputStream, 
 String password, String pwrSysUserID, String pwrSysPassword) {
 super(systemObject, "JDASSeamlessFailover", namesAndVars, runMode,
@@ -73,7 +77,7 @@ fileOutputStream, password, pwrSysUserID, pwrSysPassword);
 // originalPrintWriter_ = Trace.getPrintWriter();
 }
 
-public JDASSeamlessFailover(AS400 systemObject, String testname, Hashtable namesAndVars,
+public JDASSeamlessFailover(AS400 systemObject, String testname, Hashtable<String,Vector<String>> namesAndVars,
 int runMode, FileOutputStream fileOutputStream, 
 String password, String pwrSysUserID, String pwrSysPassword) {
 super(systemObject, testname, namesAndVars, runMode,

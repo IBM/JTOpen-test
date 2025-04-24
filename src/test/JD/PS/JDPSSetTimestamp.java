@@ -50,7 +50,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.TimeZone;
 
 /**
@@ -84,7 +84,7 @@ public class JDPSSetTimestamp extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetTimestamp(AS400 systemObject, Hashtable namesAndVars,
+  public JDPSSetTimestamp(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetTimestamp", namesAndVars, runMode,

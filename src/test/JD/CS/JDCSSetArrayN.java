@@ -14,16 +14,6 @@
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.Array;
@@ -40,6 +30,14 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
 /**
  * Testcase JDCSSetArray. This tests the following method of the JDBC
  * CallableStatement class:
@@ -61,14 +59,14 @@ public class JDCSSetArrayN extends JDCSSetTestcase
    }
 
     
-    Hashtable createdProceduresHashtable = new Hashtable();
+    Hashtable<String, String> createdProceduresHashtable = new Hashtable<String, String>();
 
     private CallableStatement cstmt;
 
     /**
      * Constructor.
      */
-    public JDCSSetArrayN(AS400 systemObject, Hashtable namesAndVars,
+    public JDCSSetArrayN(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
             int runMode, FileOutputStream fileOutputStream,
              String password)
     {
@@ -14589,10 +14587,12 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	public Object 	getArray(long index, int count) {
 	    return stuff_;
 	}
-	public  Object 	getArray(long index, int count, Map map) {
+	@SuppressWarnings("rawtypes")
+  public  Object 	getArray(long index, int count, Map map) {
 	    return stuff_;
 	}
-	public  Object 	getArray(Map map) {
+	@SuppressWarnings("rawtypes")
+  public  Object 	getArray(Map map) {
 	    return stuff_;
 	}
 
@@ -14613,12 +14613,14 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	}
 
 
-	  public ResultSet 	getResultSet(long index, int count, Map map)  throws SQLException  {
+	  @SuppressWarnings("rawtypes")
+    public ResultSet 	getResultSet(long index, int count, Map map)  throws SQLException  {
 	    throw new SQLException("not implemented");
 	}
 
 
-	  public ResultSet 	getResultSet(Map map)  throws SQLException  {
+	  @SuppressWarnings("rawtypes")
+    public ResultSet 	getResultSet(Map map)  throws SQLException  {
       throw new SQLException("not implemented");
 	}
 

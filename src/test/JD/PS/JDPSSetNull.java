@@ -11,26 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetNull.java
-//
-// Classes:      JDPSSetNull
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -48,7 +28,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -90,7 +70,7 @@ extends JDTestcase
 Constructor.
 **/
    public JDPSSetNull (AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        
@@ -219,7 +199,8 @@ setNull() - Should throw exception when index is -1.
 setNull() - Should work with a valid parameter index
 greater than 1.
 **/
-   public void Var005()
+   @SuppressWarnings("deprecation")
+  public void Var005()
    {
       try {
          statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
@@ -586,7 +567,8 @@ setNull() - Set a DOUBLE parameter, with the wrong type.
 /**
 setNull() - Set an DECIMAL parameter.
 **/
-   public void Var018()
+   @SuppressWarnings("deprecation")
+  public void Var018()
    {
       try {
          statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
@@ -636,7 +618,8 @@ setNull() - Set a DECIMAL parameter, with the wrong type.
 /**
 setNull() - Set an NUMERIC parameter.
 **/
-   public void Var020()
+   @SuppressWarnings("deprecation")
+  public void Var020()
    {
       try {
          statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
@@ -1582,7 +1565,8 @@ SQL400 - This test was added due to a customer bug.
 /**
 setNull() - Set an DECFLOAT(16) parameter.
 **/
-   public void Var052()
+   @SuppressWarnings("deprecation")
+  public void Var052()
    {
        if (checkDecFloatSupport()) { 
 	   try {
@@ -1612,7 +1596,8 @@ setNull() - Set an DECFLOAT(16) parameter.
 /**
 setNull() - Set an DECFLOAT(16) parameter.
 **/
-   public void Var053()
+   @SuppressWarnings("deprecation")
+  public void Var053()
    {
        if (checkDecFloatSupport()) { 
 	   try {
@@ -1643,7 +1628,8 @@ setNull() - Set an DECFLOAT(16) parameter.
 /**
 setNull() - Set an DECFLOAT(34) parameter.
 **/
-   public void Var054()
+   @SuppressWarnings("deprecation")
+  public void Var054()
    {
        if (checkDecFloatSupport()) { 
 	   try {
@@ -1673,7 +1659,8 @@ setNull() - Set an DECFLOAT(34) parameter.
 /**
 setNull() - Set an DECFLOAT(34) parameter.
 **/
-   public void Var055()
+   @SuppressWarnings("deprecation")
+  public void Var055()
    {
        if (checkDecFloatSupport()) { 
 	   try {

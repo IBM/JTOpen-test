@@ -28,13 +28,13 @@
 
 package test.JD.CS;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -61,13 +61,13 @@ public class JDCSSetTestcase extends JDTestcase {
   String sql;
   String callSql; 
   
-  Hashtable createdProceduresHashtable = new Hashtable();
+  Hashtable<String, String> createdProceduresHashtable = new Hashtable<String, String>();
   
   /**
    * Constructor.
    **/
   public JDCSSetTestcase(AS400 systemObject, String testname,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
  password);

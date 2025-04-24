@@ -24,12 +24,21 @@ package test.JD.AS;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ParameterMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
-import java.sql.*;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
@@ -2566,7 +2575,7 @@ public class JDASTestcase extends JDTestcase {
    * Constructor. This is called from the AS400JDBCEnableCALTest constructor.
    **/
   public JDASTestcase(AS400 systemObject, String testname,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password, String pwrSysUserID,
       String pwrSysPassword) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
@@ -2648,15 +2657,16 @@ public class JDASTestcase extends JDTestcase {
 
   }
 
+  @SuppressWarnings("deprecation")
   public Connection createDSConnectionFromURL(String url) throws Exception {
    
-   Hashtable h = getPropertiesFromUrl(url);
+   Hashtable<String, String> h = getPropertiesFromUrl(url);
    String system = (String) h.get("system"); 
    
    AS400JDBCDataSource ds = new AS400JDBCDataSource(system, systemObject_.getUserId(), 
        PasswordVault.decryptPassword(encryptedPassword_));
    
-   Enumeration e = h.keys(); 
+   Enumeration<String> e = h.keys(); 
    while (e.hasMoreElements()) { 
      String property = (String) e.nextElement(); 
      String value = (String) h.get(property); 
@@ -2689,8 +2699,8 @@ public class JDASTestcase extends JDTestcase {
 
   /* Create a hashtable of properties from the URL */ 
   /* This must return a "system" property */ 
-  private Hashtable getPropertiesFromUrl(String url) throws Exception {
-    Hashtable properties = new Hashtable(); 
+  private Hashtable<String,String> getPropertiesFromUrl(String url) throws Exception {
+    Hashtable<String,String> properties = new Hashtable<String,String>(); 
     int startIndex = url.indexOf("jdbc:as400:") ; 
     
     if (startIndex < 0) { 
@@ -2737,7 +2747,7 @@ public class JDASTestcase extends JDTestcase {
     return properties;
   }
 
-  private void addURLProperty(Hashtable properties, String url, int startIndex,
+  private void addURLProperty(Hashtable<String,String> properties, String url, int startIndex,
       int endIndex) throws Exception {
     if (endIndex < 0) {
       endIndex = url.length(); 

@@ -24,7 +24,7 @@ package test.JD.CS;
 import com.ibm.as400.access.AS400;
 import java.io.FileOutputStream;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -54,7 +54,7 @@ extends JDCSGetCharacterStream
 Constructor.
 **/
    public JDCSGetNCharacterStream (AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        

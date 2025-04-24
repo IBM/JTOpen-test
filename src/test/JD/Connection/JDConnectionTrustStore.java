@@ -13,18 +13,12 @@
 
 package test.JD.Connection;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDTestDriver;
-import test.JDTestcase;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -32,6 +26,11 @@ import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDTestDriver;
+import test.JDTestcase;
 
 /**
  * Testcase JDConnectionTruststore. This tests the following methods of the JDBC

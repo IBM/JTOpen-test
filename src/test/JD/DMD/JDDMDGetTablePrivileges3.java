@@ -11,46 +11,23 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
- //
- // File Name:    JDDMDGetTablePrivileges3.java
- //
- // Classes:      JDDMDGetTablePrivileges3
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
 
 package test.JD.DMD;
+
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
 import test.JDDMDTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-
-import java.sql.Statement;
-import java.sql.Types;
-import java.sql.SQLException;
-import java.util.Hashtable;
 
 
 
@@ -80,10 +57,6 @@ extends JDTestcase
     // Private data.
     private Connection          connection_;
     private Connection          closedConnection_;
-    private Connection          connectionNoSysibm_; //@128sch
-    private DatabaseMetaData    dmdNoSysibm_; //@128sch
-    private DatabaseMetaData    dmd_;
-    private DatabaseMetaData    dmd2_;
     StringBuffer message = new StringBuffer();
 
 
@@ -92,7 +65,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDDMDGetTablePrivileges3 (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -113,16 +86,7 @@ Performs setup needed before running variations.
     protected void setup ()
         throws Exception
     {
-        //@128sch toolbox metadata source ROI
-        String urlNoSysibm = baseURL_;
-        if (getDriver () == JDTestDriver.DRIVER_TOOLBOX) {
-            urlNoSysibm += ";metadata source=0"; //roi (nosysibm) - sysibm is default in v7r1
-        }
-        connectionNoSysibm_ = testDriver_.getConnection(urlNoSysibm, userId_, encryptedPassword_);
-        dmdNoSysibm_ = connectionNoSysibm_.getMetaData();
-
-        connection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
-        dmd_ = connection_.getMetaData ();
+         connection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
 
         Statement s = connection_.createStatement ();
 	String[] dropTables = {
@@ -181,7 +145,6 @@ Performs setup needed before running variations.
         }
 
         closedConnection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
-        dmd2_ = closedConnection_.getMetaData ();
         closedConnection_.close ();
 
     }

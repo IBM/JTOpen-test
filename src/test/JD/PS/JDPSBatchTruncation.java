@@ -31,28 +31,20 @@
 
 package test.JD.PS;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.BinaryConverter;
-import com.ibm.as400.access.Copyright;
-import com.ibm.as400.access.Trace;
-
-import test.JDPSTest;
-import test.JDTestDriver;
-import test.JDTestcase;
-
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Random;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDPSTest;
+import test.JDTestDriver;
+import test.JDTestcase;
 
 
 
@@ -88,7 +80,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDPSBatchTruncation (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -104,7 +96,7 @@ Constructor.
 
     public JDPSBatchTruncation (AS400 systemObject,
 		      String testname, 
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       

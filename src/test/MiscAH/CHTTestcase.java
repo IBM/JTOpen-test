@@ -14,15 +14,15 @@
 package test.MiscAH;
 
 
-import java.io.File;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileOutputStream;
 import java.util.Hashtable;
 import java.util.Vector;
-import java.util.Enumeration;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.ClusteredHashTable;
+import com.ibm.as400.access.ClusteredHashTableEntry;
 
 import test.CHTTest;
 import test.Testcase;
@@ -48,7 +48,7 @@ public class CHTTestcase extends Testcase
      Constructor.
      **/
     public CHTTestcase(AS400 systemObject, 
-		       Hashtable namesAndVars, 
+		       Hashtable<String, Vector<String>> namesAndVars, 
 		       int runMode, 
 		       FileOutputStream fileOutputStream)
     {
@@ -102,7 +102,7 @@ public class CHTTestcase extends Testcase
 	    AS400 sys = null;
 	    String name = CHTTest.chtSvrName_;
 	    ClusteredHashTable cht = new ClusteredHashTable(sys, name);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+cht);
         }
         catch (Exception e)
         {
@@ -120,7 +120,7 @@ public class CHTTestcase extends Testcase
 	    AS400 sys = CHTTest.pwrSys_;
 	    String name = null;
 	    ClusteredHashTable cht = new ClusteredHashTable(sys, name);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+cht);
         }
         catch (Exception e)
         {
@@ -138,7 +138,7 @@ public class CHTTestcase extends Testcase
 	    AS400 sys = CHTTest.pwrSys_;
 	    String name = "VERYLONGNAME";
 	    ClusteredHashTable cht = new ClusteredHashTable(sys, name);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+cht);
         }
         catch (Exception e)
         {
@@ -270,7 +270,7 @@ public class CHTTestcase extends Testcase
 	    byte[] key = null;
 	    boolean rc;
 	    rc = cht.containsKey(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+rc);
         }
         catch (Exception e)
         {
@@ -292,7 +292,7 @@ public class CHTTestcase extends Testcase
 		key[j] = 0x01;
 	    boolean rc;
 	    rc = cht.containsKey(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+rc);
         }
         catch (Exception e)
         {
@@ -314,7 +314,7 @@ public class CHTTestcase extends Testcase
 		key[j] = 0x01;
 	    boolean rc;
 	    rc = cht.containsKey(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+rc);
         }
         catch (Exception e)
         {
@@ -336,7 +336,7 @@ public class CHTTestcase extends Testcase
 		key[j] = 0x01;
 	    boolean rc;
 	    rc = cht.containsKey(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+rc);
         }
         catch (Exception e)
         {
@@ -380,7 +380,7 @@ public class CHTTestcase extends Testcase
 		key[j] = 0x01;
 	    boolean rc;
 	    rc = cht.containsKey(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+rc);
         }
         catch (Exception e)
         {
@@ -423,7 +423,7 @@ public class CHTTestcase extends Testcase
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setName(CHTTest.chtSvrName_);
 	    ClusteredHashTableEntry[] list = cht.elements();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+list);
         }
         catch (Exception e)
         {
@@ -460,7 +460,7 @@ public class CHTTestcase extends Testcase
 	    String lastMod = "LASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
 	    ClusteredHashTableEntry[] list = cht.elements(usrPrf, lastMod, sts);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+list);
         }
         catch (Exception e)
         {
@@ -480,7 +480,7 @@ public class CHTTestcase extends Testcase
 	    String lastMod = "TOOLONGLASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
 	    ClusteredHashTableEntry[] list = cht.elements(usrPrf, lastMod, sts);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+list);
         }
         catch (Exception e)
         {
@@ -500,7 +500,7 @@ public class CHTTestcase extends Testcase
 	    String lastMod = "LASTMOD";
 	    int sts = 5;
 	    ClusteredHashTableEntry[] list = cht.elements(usrPrf, lastMod, sts);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+list);
         }
         catch (Exception e)
         {
@@ -521,7 +521,7 @@ public class CHTTestcase extends Testcase
 	    String lastMod = "LASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
 	    ClusteredHashTableEntry[] list = cht.elements(usrPrf, lastMod, sts);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+list);
         }
         catch (Exception e)
         {
@@ -542,7 +542,7 @@ public class CHTTestcase extends Testcase
 	    String lastMod = "LASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
 	    ClusteredHashTableEntry[] list = cht.elements(usrPrf, lastMod, sts);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+list);
         }
         catch (Exception e)
         {
@@ -564,7 +564,7 @@ public class CHTTestcase extends Testcase
 	    String lastMod = "LASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
 	    ClusteredHashTableEntry[] list = cht.elements(usrPrf, lastMod, sts);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+list);
         }
         catch (Exception e)
         {
@@ -603,7 +603,7 @@ public class CHTTestcase extends Testcase
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setName(CHTTest.chtSvrName_);
 	    byte[] key = cht.generateKey();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+key);
         }
         catch (Exception e)
         {
@@ -621,7 +621,7 @@ public class CHTTestcase extends Testcase
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setSystem(CHTTest.pwrSys_);
 	    byte[] key = cht.generateKey();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+key);
         }
         catch (Exception e)
         {
@@ -639,7 +639,7 @@ public class CHTTestcase extends Testcase
 	    String name = "WRONG";
 	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, name);
 	    byte[] key = cht.generateKey();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+key);
         }
         catch (Exception e)
         {
@@ -658,7 +658,7 @@ public class CHTTestcase extends Testcase
 	    cht.open();
 	    CHTTest.endChtSvr();
 	    byte[] key = cht.generateKey();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+key);
         }
         catch (Exception e)
         {
@@ -695,7 +695,7 @@ public class CHTTestcase extends Testcase
 	    cht.open();
 	    byte[] key = null;
 	    ClusteredHashTableEntry results = cht.get(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -716,7 +716,7 @@ public class CHTTestcase extends Testcase
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
 	    ClusteredHashTableEntry results = cht.get(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -737,7 +737,7 @@ public class CHTTestcase extends Testcase
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
 	    ClusteredHashTableEntry results = cht.get(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -758,7 +758,7 @@ public class CHTTestcase extends Testcase
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
 	    ClusteredHashTableEntry results = cht.get(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -780,7 +780,7 @@ public class CHTTestcase extends Testcase
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
 	    ClusteredHashTableEntry results = cht.get(key);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -927,7 +927,7 @@ public class CHTTestcase extends Testcase
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setName(CHTTest.chtSvrName_);
 	    boolean results = cht.isEmpty();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -945,7 +945,7 @@ public class CHTTestcase extends Testcase
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setSystem(CHTTest.pwrSys_);
 	    boolean results = cht.isEmpty();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -964,7 +964,7 @@ public class CHTTestcase extends Testcase
 	    cht.open();
 	    CHTTest.endChtSvr();
 	    boolean results = cht.isEmpty();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -1398,7 +1398,7 @@ public class CHTTestcase extends Testcase
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setName(CHTTest.chtSvrName_);
 	    int results = cht.size();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -1416,7 +1416,7 @@ public class CHTTestcase extends Testcase
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setSystem(CHTTest.pwrSys_);
 	    int results = cht.size();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {
@@ -1435,7 +1435,7 @@ public class CHTTestcase extends Testcase
 	    cht.open();
 	    CHTTest.endChtSvr();
 	    int results = cht.size();
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+results);
         }
         catch (Exception e)
         {

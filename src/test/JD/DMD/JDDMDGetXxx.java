@@ -48,7 +48,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 
 import java.sql.ResultSet; //@D1A
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.StringTokenizer;
 
 /**
@@ -245,7 +245,7 @@ public class JDDMDGetXxx extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDDMDGetXxx(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDDMDGetXxx(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDDMDGetXxx", namesAndVars, runMode, fileOutputStream,

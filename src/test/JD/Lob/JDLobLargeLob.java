@@ -30,7 +30,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 /**
@@ -84,7 +84,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDLobLargeLob    (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              String password)
@@ -104,8 +104,7 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
-        String vmName = System.getProperty("java.vm.name");
-       
+        
         // This byte array will just contain a list of negative
         // even numbers.
 
@@ -277,7 +276,7 @@ and returns true if the arrays are equal
                 //first meg
                 System.arraycopy(b,0,m,0,mega);
                 i.read (m2, 0,mega);
-                if (!Testcase.isEqual (m, m2)) {
+                if (!Testcase.areEqual (m, m2)) {
                   message.append("First meg is not equal"); 
                   check = false; 
                 }
@@ -287,7 +286,7 @@ and returns true if the arrays are equal
                 i.skip((b.length-3*mega)/2);
                 System.arraycopy(b,(b.length-mega)/2,m,0,mega);
                 i.read(m2,0,mega);
-                if (!Testcase.isEqual (m, m2)) {
+                if (!Testcase.areEqual (m, m2)) {
                   message.append("Middle meg is not equal"); 
                   check = false; 
                 }
@@ -297,7 +296,7 @@ and returns true if the arrays are equal
                 i.skip((b.length-3*mega)/2);
                 System.arraycopy(b,(b.length-mega),m,0,mega);
                 i.read(m2,0,mega);
-                if (!Testcase.isEqual (m, m2)) {
+                if (!Testcase.areEqual (m, m2)) {
                   message.append("Last meg is not equal"); 
                   check = false; 
                 }
@@ -319,7 +318,7 @@ and returns true if the arrays are equal
                           message.append("l = "+l+" b.length = "+b.length); 
                           return false; 
                         }
-                        if ( ! Testcase.isEqual(b,b2)) {	// @K3
+                        if ( ! Testcase.areEqual(b,b2)) {	// @K3
                           message.append("Not equal "); 
                           return false; 
                         }
@@ -333,7 +332,7 @@ and returns true if the arrays are equal
                         message.append("i.available = "+i.available()); 
                         return false; 
                       }
-                      if ( ! Testcase.isEqual(b,b2)) {  // @K3
+                      if ( ! Testcase.areEqual(b,b2)) {  // @K3
                         message.append("Not equal "); 
                         return false; 
                       }

@@ -136,6 +136,7 @@ public class JDWeirdInputStream  extends InputStream {
           }
           count = is.read(b, 0, b.length); 
         }
+        is.close(); 
         if (out.equals(expected)) { 
           System.out.println("read passed "+pattern);
           return 1; 
@@ -180,6 +181,7 @@ public class JDWeirdInputStream  extends InputStream {
           if (readSize > b.length) readSize = b.length; 
           count = is.read(b, 0, readSize); 
         }
+        is.close(); 
         if (out.equals(expected)) { 
           System.out.println("read passed "+pattern);
           return 1; 
@@ -213,6 +215,7 @@ public class JDWeirdInputStream  extends InputStream {
           out += b1; 
           b = is.read();
         }
+        is.close(); 
         if (out.equals(expected)) { 
           System.out.println("simple passed "+pattern);
           return 1; 
@@ -252,6 +255,7 @@ public class JDWeirdInputStream  extends InputStream {
           }
           count = is.read(b, 0, b.length); 
         }
+        is.close();
         if (out.equals(expected)) { 
           System.out.println("read passed "+pattern);
           return 1; 
@@ -296,6 +300,7 @@ public class JDWeirdInputStream  extends InputStream {
           if (readSize > b.length) readSize = b.length; 
           count = is.read(b, 0, readSize); 
         }
+        is.close(); 
         if (out.equals(expected)) { 
           System.out.println("read passed "+pattern);
           return 1; 
@@ -329,6 +334,7 @@ public class JDWeirdInputStream  extends InputStream {
           out += b1; 
           b = is.read();
         }
+        is.close(); 
         if (out.equals(expected)) { 
           System.out.println("simple passed "+pattern);
           return 1; 

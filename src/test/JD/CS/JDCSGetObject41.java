@@ -38,6 +38,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 import java.io.*;
 
 
@@ -163,7 +164,7 @@ extends JDTestcase
     };
 
 
-    Hashtable skipHash = null;
+    Hashtable<String,String> skipHash = null;
 
     String[] skipListRelease = {};
     String[] skipListJDK = {};
@@ -198,13 +199,13 @@ extends JDTestcase
     }; 
 
 
-    private Hashtable foundExceptions_ = null; 
+    private Hashtable<String,String> foundExceptions_ = null; 
 
 /**
 Constructor.
 **/
     public JDCSGetObject41 (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -217,7 +218,7 @@ Constructor.
 
     
     public JDCSGetObject41(AS400 systemObject, String testname,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
  password);
@@ -247,7 +248,7 @@ Performs setup needed before running variations.
 		skipListJDK = skipListJDK15; 
 	} 
 
-	skipHash  = new Hashtable();
+	skipHash  = new Hashtable<String,String>();
 	for (int i = 0; i < skipListRelease.length; i++) {
 	    skipHash.put(skipListRelease[i], skipListRelease[i]); 
 	}
@@ -475,8 +476,8 @@ is -1.
 
 
 
-    Class xmlClass = null;
-  Class rowidClass = null;
+    Class<?> xmlClass = null;
+  Class<?> rowidClass = null;
 
   /*
    * get getObject using the following testSpec, where the elements of the array
@@ -521,7 +522,7 @@ is -1.
 
         }
 
-        Class lookupClass = Class.forName(className);
+        Class<?> lookupClass = Class.forName(className);
 
         if (xmlClass == null) {
           try {
@@ -583,7 +584,7 @@ is -1.
               }
               String objectString;
               String objectClassName;
-              Class objectClass = null;
+              Class<?> objectClass = null;
               if (o == null) {
                 objectString = "null";
                 objectClass = lookupClass;
@@ -679,7 +680,7 @@ is -1.
                 }
 
                 if (foundExceptions_ == null) {
-                  foundExceptions_ = new Hashtable();
+                  foundExceptions_ = new Hashtable<String,String>();
                 }
                 if (foundExceptions_.get(checkException) == null) {
                   foundExceptions_.put(checkException, checkException);

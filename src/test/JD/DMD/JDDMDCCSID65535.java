@@ -32,16 +32,20 @@
 
 package test.JD.DMD;
 
-import java.sql.*;
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDDMDTest;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
 /**
  * Testcase JDDMDCCSID65535. This tests the methods of the JDBC DatabaseMetaData
@@ -73,7 +77,7 @@ public class JDDMDCCSID65535 extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDDMDCCSID65535(AS400 systemObject, Hashtable namesAndVars,
+  public JDDMDCCSID65535(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDDMDCCSID65535", namesAndVars, runMode,

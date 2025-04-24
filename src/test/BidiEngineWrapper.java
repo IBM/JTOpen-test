@@ -145,12 +145,14 @@ public class BidiEngineWrapper {
    
 	public static String getProbe(String value_, AS400JDBCConnection connection, int source_ccsid_type, int target_ccsid_type, boolean use_packageCCSID) throws SQLException{
     	
-		JDProperties prop = connection.getProperties();        	       	        		
-    	int host_bidi_format, host_ccsid, package_bidi_format, package_ccsid;
-    	int bidi_format = source_ccsid_type;
+	//	JDProperties prop = connection.getProperties();        	       	        		
+    	// int host_bidi_format;
+    	// int host_ccsid; 
+    	int package_bidi_format, package_ccsid;
+    	// int bidi_format = source_ccsid_type;
 		
-    	host_ccsid = connection.getSystem().getCcsid();
-		host_bidi_format = AS400BidiTransform.getStringType(host_ccsid);				
+    	// host_ccsid = connection.getSystem().getCcsid();
+	//	host_bidi_format = AS400BidiTransform.getStringType(host_ccsid);				
 
 		package_ccsid = connection.getProperties().getInt(JDProperties.PACKAGE_CCSID);
 		package_bidi_format = AS400BidiTransform.getStringTypeX(package_ccsid, connection.getSystem());
@@ -176,7 +178,7 @@ public class BidiEngineWrapper {
 	}    
 
 	public static boolean checkRoundTrip(String value_, String probe, AS400JDBCConnection connection, int source_ccsid_type, int target_ccsid_type, boolean use_packageCCSID) throws SQLException{
-    	JDProperties prop = connection.getProperties();        	       	        		
+    	// JDProperties prop = connection.getProperties();        	       	        		
     	int host_bidi_format, host_ccsid, package_bidi_format, package_ccsid;
     	int bidi_format = source_ccsid_type;
 		

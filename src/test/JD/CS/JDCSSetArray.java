@@ -41,6 +41,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Vector;
 /**
  * Testcase JDCSSetArray. This tests the following method of the JDBC
  * CallableStatement class:
@@ -68,7 +69,7 @@ public class JDCSSetArray extends JDCSSetTestcase
     /**
      * Constructor.
      */
-    public JDCSSetArray(AS400 systemObject, Hashtable<?, ?> namesAndVars,
+    public JDCSSetArray(AS400 systemObject, Hashtable<String, Vector<String>> namesAndVars,
             int runMode, FileOutputStream fileOutputStream,
              String password)
     {
@@ -15013,10 +15014,12 @@ public class JDCSSetArray extends JDCSSetTestcase
 	public Object 	getArray(long index, int count) {
 	    return stuff_;
 	}
-	public  Object 	getArray(long index, int count, Map map) {
+	@SuppressWarnings("rawtypes")
+  public  Object 	getArray(long index, int count, Map map) {
 	    return stuff_;
 	}
-	public  Object 	getArray(Map map) {
+	@SuppressWarnings("rawtypes")
+  public  Object 	getArray(Map map) {
 	    return stuff_;
 	}
 
@@ -15037,12 +15040,14 @@ public class JDCSSetArray extends JDCSSetTestcase
 	}
 
 
-	  public ResultSet 	getResultSet(long index, int count, Map map)  throws SQLException  {
+	  @SuppressWarnings("rawtypes")
+    public ResultSet 	getResultSet(long index, int count, Map map)  throws SQLException  {
 	    throw new SQLException("not implemented");
 	}
 
 
-	  public ResultSet 	getResultSet(Map map)  throws SQLException  {
+	  @SuppressWarnings("rawtypes")
+    public ResultSet 	getResultSet(Map map)  throws SQLException  {
       throw new SQLException("not implemented");
 	}
 

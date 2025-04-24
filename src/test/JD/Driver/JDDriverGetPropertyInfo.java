@@ -37,7 +37,7 @@ import java.lang.reflect.Method;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Properties;
 
 /**
@@ -69,7 +69,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDDriverGetPropertyInfo(AS400 systemObject, Hashtable namesAndVars,
+  public JDDriverGetPropertyInfo(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDDriverGetPropertyInfo", namesAndVars, runMode,
@@ -396,9 +396,9 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
       DriverPropertyInfo[] propertyInfo = driver_.getPropertyInfo(baseURL_,
           null);
 
-      Hashtable as400JdbcDataSourceMethods = getMethods("com.ibm.as400.access.AS400JDBCDataSource");
-      Hashtable as400JdbcManagedDataSourceMethods = getMethods("com.ibm.as400.access.AS400JDBCManagedDataSource");
-      Hashtable as400JdbcDataSourceBeanMethods = getBeanMethods("com.ibm.as400.access.AS400JDBCDataSource");
+      Hashtable<String,String> as400JdbcDataSourceMethods = getMethods("com.ibm.as400.access.AS400JDBCDataSource");
+      Hashtable<String,String> as400JdbcManagedDataSourceMethods = getMethods("com.ibm.as400.access.AS400JDBCManagedDataSource");
+      Hashtable<String,String> as400JdbcDataSourceBeanMethods = getBeanMethods("com.ibm.as400.access.AS400JDBCDataSource");
 
       // Add methods we do not care about
       String[] ignoreMethods = { "getPassword", "getKeyRingName",
@@ -473,7 +473,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     }
   }
 
-  private boolean methodExists(String methodName, Hashtable hashtable) {
+  private boolean methodExists(String methodName, Hashtable<String,String> hashtable) {
 
     if (hashtable.get(methodName) != null) {
       return true;
@@ -482,10 +482,10 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     }
   }
 
-  private Hashtable getBeanMethods(String string)
+  private Hashtable<String,String> getBeanMethods(String string)
       throws ClassNotFoundException, IntrospectionException {
-    Class thisClass = Class.forName(string);
-    Hashtable returnMethods = new Hashtable();
+    Class<?> thisClass = Class.forName(string);
+    Hashtable<String,String> returnMethods = new Hashtable<String,String>();
 
     // Also check out the bean information
     BeanInfo beanInfo = java.beans.Introspector.getBeanInfo(thisClass);
@@ -515,10 +515,10 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     return returnMethods;
   }
 
-  private Hashtable getMethods(String string) throws ClassNotFoundException {
-    Class thisClass = Class.forName(string);
+  private Hashtable<String,String> getMethods(String string) throws ClassNotFoundException {
+    Class<?> thisClass = Class.forName(string);
     Method[] methods = thisClass.getMethods();
-    Hashtable returnMethods = new Hashtable();
+    Hashtable<String,String> returnMethods = new Hashtable<String,String>();
     for (int i = 0; i < methods.length; i++) {
       String name = methods[i].getName();
       returnMethods.put(name, name);

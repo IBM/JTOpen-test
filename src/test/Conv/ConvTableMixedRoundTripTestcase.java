@@ -74,7 +74,7 @@ public class ConvTableMixedRoundTripTestcase extends Testcase
                     setVariation(var);
                     try
                     {
-                        Class c = Class.forName("com.ibm.as400.access.ConvTable" + ConvTest.mixedCcsids_[i - 1]);
+                        Class<?> c = Class.forName("com.ibm.as400.access.ConvTable" + ConvTest.mixedCcsids_[i - 1]);
                         ConvTableMixedMap m = (ConvTableMixedMap)c.newInstance();
                         roundTripDB(m);
                     }
@@ -92,7 +92,7 @@ public class ConvTableMixedRoundTripTestcase extends Testcase
                     setVariation(var);
                     try
                     {
-                        Class c = Class.forName("com.ibm.as400.access.ConvTable" + ConvTest.mixedCcsids_[i - 1]);
+                        Class<?> c = Class.forName("com.ibm.as400.access.ConvTable" + ConvTest.mixedCcsids_[i - 1]);
                         ConvTableMixedMap m = (ConvTableMixedMap)c.newInstance();
                         roundTripMB(m);
                     }

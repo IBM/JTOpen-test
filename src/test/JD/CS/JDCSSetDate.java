@@ -27,7 +27,7 @@ import com.ibm.as400.access.AS400;
 import test.JDSetupProcedure;
 
 import java.io.FileOutputStream;
-  import java.util.Hashtable;
+  import java.util.Hashtable; import java.util.Vector;
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.util.Calendar;
@@ -55,7 +55,7 @@ public class JDCSSetDate extends JDCSSetTestcase {
   /**
    * Constructor.
    **/
-  public JDCSSetDate(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSSetDate(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDCSSetDate", namesAndVars, runMode, fileOutputStream,

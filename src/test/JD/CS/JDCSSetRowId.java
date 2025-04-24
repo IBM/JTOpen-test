@@ -11,22 +11,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDCSSetRowId.java
-//
-// Classes:      JDCSSetRowId
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
+
+import java.io.FileOutputStream;
+import java.sql.CallableStatement;
+import java.sql.DataTruncation;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -34,15 +29,6 @@ import test.JDCSTest;
 import test.JDReflectionUtil;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
-
-import java.awt.TextArea;
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.DataTruncation;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 /**
  Testcase JDCSSetRowId.  This tests the following
@@ -77,7 +63,7 @@ public class JDCSSetRowId extends JDCSSetTestcase {
   /**
    Constructor.
    **/
-  public JDCSSetRowId(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDCSSetRowId(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password) {
     super(systemObject, "JDCSSetRowId", namesAndVars, runMode,
         fileOutputStream, password);
@@ -763,7 +749,7 @@ public class JDCSSetRowId extends JDCSSetTestcase {
         JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT, supportedFeatures_
             , getDriver());
         
-        Class[] argTypes = new Class[2];
+        Class<?>[] argTypes = new Class[2];
         argTypes[0] = Integer.TYPE;
         try {
           argTypes[1] = Class.forName("java.sql.RowId"); 
@@ -1435,7 +1421,7 @@ public class JDCSSetRowId extends JDCSSetTestcase {
             , getDriver());
         
         
-        Class[] argTypes = new Class[2];
+        Class<?>[] argTypes = new Class[2];
         argTypes[0] = Class.forName("java.lang.String"); 
         try {
           argTypes[1] = Class.forName("java.sql.RowId"); 

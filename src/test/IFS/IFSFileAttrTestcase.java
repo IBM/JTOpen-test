@@ -14,11 +14,11 @@
 
 package test.IFS;
 
-import java.io.DataOutput;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import java.util.Hashtable;
+import java.util.Vector;
 import java.util.Date;
 import com.ibm.as400.access.*;
 
@@ -46,7 +46,7 @@ Constructor.
   public IFSFileAttrTestcase (AS400 systemObject,
         String userid, 
         String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)
@@ -969,6 +969,7 @@ Test creation and access date/times
 /**
 Ensure that IFSFile.getOwnerId() returns the owner of the file.
 **/
+  @SuppressWarnings("deprecation")
   public void Var024()
   {
     String fileName = ifsPathName_ + "a24";
@@ -1002,6 +1003,7 @@ Ensure that IFSFile.getOwnerId() returns the owner of the file.
 /**
 Ensure that IFSFile.getOwnerId() returns -1 when invoked for a directory.
 **/
+  @SuppressWarnings("deprecation")
   public void Var025()
   {
     String dirName  = ifsDirName_ + "IFSFileAttr25Dir";
@@ -1026,6 +1028,7 @@ Ensure that IFSFile.getOwnerId() returns -1 when invoked for a directory.
 /**
 Ensure that IFSFile.getOwnerId() returns -1 if file does not exist.
 **/
+  @SuppressWarnings("deprecation")
   public void Var026()
   {
     String fileName = ifsPathName_ + "a24";
@@ -1046,6 +1049,7 @@ Ensure that IFSFile.getOwnerId() returns -1 if file does not exist.
 /**
 Ensure that IFSFile.getOwnerUID() returns the owner of the file.
 **/
+  @SuppressWarnings("deprecation")
   public void Var027()
   {
     if (!checkMethodExists("getOwnerUID", null)) {
@@ -1801,7 +1805,7 @@ Ensure that IFSFile.getOwnerName() throws exception if file does not exist.
 
 
   // Verifies that a method exists in class IFSFile.  Returns false if not found.
-  static boolean checkMethodExists(String methodName, Class[] parmTypes)
+  static boolean checkMethodExists(String methodName, Class<?>[] parmTypes)
   {
     try {
       Class.forName("com.ibm.as400.access.IFSFile").getDeclaredMethod(methodName, parmTypes);

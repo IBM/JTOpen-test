@@ -27,15 +27,14 @@
 
 package test.JD.CS;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -78,7 +77,7 @@ extends JDCSSetTestcase
 Constructor.
 **/
     public JDCSSetBigDecimal (AS400 systemObject,
-                              Hashtable namesAndVacs,
+                              Hashtable<String,Vector<String>> namesAndVacs,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               

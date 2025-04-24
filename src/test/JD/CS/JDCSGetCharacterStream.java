@@ -36,7 +36,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.io.Reader; 
 
 
@@ -76,7 +76,7 @@ extends JDCSGetTestcase
 Constructor.
 **/
    public JDCSGetCharacterStream (AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        
@@ -90,7 +90,7 @@ Constructor.
 
    public JDCSGetCharacterStream (AS400 systemObject,
 		       String testcaseName, 
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        

@@ -11,24 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetNClob.java
-//
-// Classes:      JDPSSetNClob
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -50,7 +32,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; 
+import java.util.Vector;
 
 /**
  * Testcase JDPSSetNClob. This tests the following method of the JDBC
@@ -81,7 +64,7 @@ public class JDPSSetNClob extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetNClob(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDPSSetNClob(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetNClob", namesAndVars, runMode, fileOutputStream,
@@ -226,7 +209,7 @@ public class JDPSSetNClob extends JDTestcase {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
 
-        Class[] argClasses = new Class[2];
+        Class<?>[] argClasses = new Class[2];
         argClasses[0] = Integer.TYPE;
         // TODO.. This will need to change when really running JDBC40
         try {

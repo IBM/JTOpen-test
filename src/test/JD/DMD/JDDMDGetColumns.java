@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDMDGetColumns.java
@@ -35,13 +29,6 @@
 // 4.  LUW returns rows for empty string for catalog parameter Var006
 //
 
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.DMD;
 
@@ -54,7 +41,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCConnection;
@@ -109,7 +96,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDDMDGetColumns (AS400 systemObject,
-                            Hashtable namesAndVars,
+                            Hashtable<String,Vector<String>> namesAndVars,
                             int runMode,
                             FileOutputStream fileOutputStream,
                             
@@ -6699,49 +6686,6 @@ will attempt to recreate the error.
 
 
 
-	    String[][] fixupExtended715T = {
-		{"getColumnDisplaySize","1","128"},
-		{"getPrecision","1","128"},
-		{"getColumnDisplaySize","5","11"},
-		{"getPrecision","5","10"},
-		{"getColumnType","5","4"},
-		{"getColumnTypeName","5","INTEGER"},
-		{"getColumnClassName","5","java.lang.Integer"},
-		{"getColumnDisplaySize","6","261"},
-		{"getPrecision","6","261"},
-		{"isNullable","7","1"},  /* Updated 4/30/2014 lp01ut18 */ 
-		{"getColumnDisplaySize","9","6"},
-		{"getPrecision","9","5"},
-		{"getColumnType","9","5"},
-		{"getColumnTypeName","9","SMALLINT"},
-		{"getColumnDisplaySize","10","6"},
-		{"getPrecision","10","5"},
-		{"getColumnType","10","5"},
-		{"getColumnTypeName","10","SMALLINT"},
-		{"getColumnDisplaySize","11","6"},
-		{"getPrecision","11","5"},
-		{"getColumnType","11","5"},
-		{"getColumnTypeName","11","SMALLINT"},
-		{"getPrecision","12","2000"},
-		{"getColumnDisplaySize","12","2000"},
-		{"getPrecision","13","2000"},
-		{"getColumnTypeName","13","VARGRAPHIC"},
-		{"getColumnDisplaySize","13","2000"},
-		{"isNullable","14","0"},
-		{"getColumnDisplaySize","14","6"},
-		{"getPrecision","14","5"},
-		{"getColumnType","14","5"},
-		{"getColumnTypeName","14","SMALLINT"},
-		{"getColumnDisplaySize","15","6"},
-		{"getPrecision","15","5"},
-		{"getColumnType","15","5"},
-		{"getColumnTypeName","15","SMALLINT"},
-		{"getColumnDisplaySize","18","3"},
-		{"getPrecision","18","3"},
-		{"getColumnLabel","19","SCOPE_CATLOG"},
-		{"getColumnName","19","SCOPE_CATLOG"},
-		{"getColumnClassName","22","java.lang.Integer"},
-	    };
 
 	    String[][] nativeExtendedDifferences714N = {
 		{"isSearchable","1","false"},

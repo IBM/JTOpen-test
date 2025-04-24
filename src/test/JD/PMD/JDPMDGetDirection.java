@@ -44,7 +44,7 @@ import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 // remove when we get JDK 1.4
 //import com.ibm.db2.jdbc.app.*;
 
@@ -80,7 +80,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPMDGetDirection (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

@@ -29,19 +29,6 @@
 
 package test.JD.PS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDLobTest;
-import test.JDPSTest;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JTOpenTestEnvironment;
-import test.JVMInfo;
-import test.JD.JDTestUtilities;
-import test.JDLobTest.JDTestBlob;
-import test.JDLobTest.JDTestClob;
-
 import java.io.FileOutputStream;
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -52,6 +39,17 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.Hashtable;
 import java.util.Random;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDLobTest;
+import test.JDPSTest;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
+import test.JDTestcase;
+import test.JTOpenTestEnvironment;
+import test.JD.JDTestUtilities;
 
 
 
@@ -138,7 +136,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDPSBatch (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -152,7 +150,7 @@ Constructor.
 
     public JDPSBatch (AS400 systemObject,
 		      String testname, 
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -7999,7 +7997,7 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
         String answer = rs.getString(1);
         if (!values[rowNumber].equals(answer)) {
           sb.append("FAILED  Expected " + values[rowNumber] + " got " + answer
-              + "\n");
+              + " updateCounts.length="+updateCounts.length+"\n");
           passed = false;
         }
         rowNumber++;
@@ -8095,7 +8093,7 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
         String answer = rs.getString(1);
         if (!values[rowNumber][1].equals(answer)) {
           sb.append("FAILED  Expected " + JDTestUtilities.getMixedString(values[rowNumber][1]) + " got " + JDTestUtilities.getMixedString(answer)
-              + "\n");
+              + "updateCounts.length="+updateCounts.length+"\n");
           passed = false;
         }
         rowNumber++;

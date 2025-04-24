@@ -43,7 +43,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 /**
@@ -77,7 +77,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDPMDGetParameterClassName (AS400 systemObject,
-                                       Hashtable namesAndVars,
+                                       Hashtable<String,Vector<String>> namesAndVars,
                                        int runMode,
                                        FileOutputStream fileOutputStream,
                                        

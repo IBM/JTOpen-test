@@ -35,7 +35,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDConnectionNumericRangeError. this tests the following of the JDBC
@@ -64,7 +64,7 @@ public class JDConnectionNumericRangeError extends JDTestcase {
    * Constructor.
    **/
   public JDConnectionNumericRangeError(AS400 systemObject,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, "JDConnectionNumericRangeError", namesAndVars, runMode,
         fileOutputStream, password);

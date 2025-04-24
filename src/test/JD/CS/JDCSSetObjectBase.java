@@ -11,38 +11,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDCSSetObjectBase.java
-//
-// Tests the setObject method with 3 parameters.. 
-//
-// Classes:      JDCSSetObjectBase
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
 
 /**
  * Testcase JDCSSetObjectBase. Provide base function for JDCSSetObject3 and
@@ -59,14 +39,14 @@ public class JDCSSetObjectBase extends JDCSSetTestcase {
   protected Statement statement_;
 
   protected Connection connectionCommaSeparator_;
-  private Hashtable procedureDefinedHashtable = new Hashtable();
+  private Hashtable<String, String> procedureDefinedHashtable = new Hashtable<String, String>();
   private String distinctTypename_;
 
   /**
    * Constructor.
    **/
   public JDCSSetObjectBase(AS400 systemObject, String testcasename,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testcasename, namesAndVars, runMode, fileOutputStream,
  password);

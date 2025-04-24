@@ -11,29 +11,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDPSSetBlob.java
-//
-// Classes:      JDPSSetBlob
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//     - added Var033
-// 
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
+
+import java.io.FileOutputStream;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.DataTruncation;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -44,16 +33,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
-import test.JDLobTest.JDTestBlob;
-
-import java.io.FileOutputStream;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.DataTruncation;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Hashtable;
 
 /**
  * Testcase JDPSSetBlob. This tests the following method of the JDBC
@@ -91,7 +70,7 @@ public class JDPSSetBlob extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetBlob(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDPSSetBlob(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetBlob", namesAndVars, runMode, fileOutputStream,

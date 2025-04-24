@@ -30,7 +30,7 @@ import test.JD.JDTestStatementHelper;
 import java.sql.*;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
 Testcase JDStatementListener.  This tests the following methods
@@ -64,7 +64,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDStatementListener (AS400 systemObject,
-                                Hashtable namesAndVars,
+                                Hashtable<String,Vector<String>> namesAndVars,
                                 int runMode,
                                 FileOutputStream fileOutputStream,
                                 

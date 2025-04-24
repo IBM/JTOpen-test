@@ -188,7 +188,7 @@ public class IFSTests extends TestDriver
                                   namesAndVars_, runMode_,
                                   fileOutputStream_,  pwrSys_));
     try {
-      Class[] parmTypes = { String.class };
+      Class<?>[] parmTypes = { String.class };
       Class.forName("com.ibm.as400.access.IFSFile").getDeclaredMethod("copyTo", parmTypes);
       addTestcase (new IFSCopyTestcase (systemObject_, userId_, password_,
                                         namesAndVars_, runMode_,

@@ -14,15 +14,15 @@
 package test.MiscAH;
 
 
-import java.io.File;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileOutputStream;
 import java.util.Hashtable;
 import java.util.Vector;
-import java.util.Enumeration;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.ClusteredHashTable;
+import com.ibm.as400.access.ClusteredHashTableEntry;
 
 import test.CHTTest;
 import test.Testcase;
@@ -46,7 +46,7 @@ public class CHTEntryTestcase extends Testcase
      Constructor.
      **/
     public CHTEntryTestcase(AS400 systemObject, 
-			    Hashtable namesAndVars, 
+			    Hashtable<String, Vector<String>> namesAndVars, 
 			    int runMode, 
 			    FileOutputStream fileOutputStream)
     {
@@ -104,7 +104,7 @@ public class CHTEntryTestcase extends Testcase
 	    int auth = ClusteredHashTableEntry.ENTRY_AUTHORITY_ANY_USER;
 	    int upd = ClusteredHashTableEntry.DUPLICATE_KEY_FAIL;
 	    myEntry = new ClusteredHashTableEntry(key, myData.getBytes(), ttl, auth, upd);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+myEntry);
         }
         catch (Exception e)
         {
@@ -128,7 +128,7 @@ public class CHTEntryTestcase extends Testcase
 	    int auth = ClusteredHashTableEntry.ENTRY_AUTHORITY_ANY_USER;
 	    int upd = ClusteredHashTableEntry.DUPLICATE_KEY_FAIL;
 	    myEntry = new ClusteredHashTableEntry(key, myData, ttl, auth, upd);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+myEntry);
         }
         catch (Exception e)
         {
@@ -152,7 +152,7 @@ public class CHTEntryTestcase extends Testcase
 	    int auth = ClusteredHashTableEntry.ENTRY_AUTHORITY_ANY_USER;
 	    int upd = ClusteredHashTableEntry.DUPLICATE_KEY_FAIL;
 	    myEntry = new ClusteredHashTableEntry(key, myData.getBytes(), ttl, auth, upd);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+myEntry);
         }
         catch (Exception e)
         {
@@ -176,7 +176,7 @@ public class CHTEntryTestcase extends Testcase
 	    int auth = ClusteredHashTableEntry.ENTRY_AUTHORITY_ANY_USER;
 	    int upd = ClusteredHashTableEntry.DUPLICATE_KEY_FAIL;
 	    myEntry = new ClusteredHashTableEntry(key, myData.getBytes(), ttl, auth, upd);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+myEntry);
         }
         catch (Exception e)
         {
@@ -200,7 +200,7 @@ public class CHTEntryTestcase extends Testcase
 	    int auth = 2;
 	    int upd = ClusteredHashTableEntry.DUPLICATE_KEY_FAIL;
 	    myEntry = new ClusteredHashTableEntry(key, myData.getBytes(), ttl, auth, upd);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+myEntry);
         }
         catch (Exception e)
         {
@@ -224,7 +224,7 @@ public class CHTEntryTestcase extends Testcase
 	    int auth = ClusteredHashTableEntry.ENTRY_AUTHORITY_ANY_USER;
 	    int upd = 2;
 	    myEntry = new ClusteredHashTableEntry(key, myData.getBytes(), ttl, auth, upd);
-	    failed("Did not throw exception.");
+	    failed("Did not throw exception."+myEntry);
         }
         catch (Exception e)
         {

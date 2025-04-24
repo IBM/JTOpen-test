@@ -199,7 +199,7 @@ IFSFileInputStream.read(byte[], int, int).
         output_.println("Excecution time: " +
                         Long.toString((finish - start) / 1000) + " seconds");
         output_.println("Verifying ...");
-        assertCondition(bytesRead == dataOut.length && isEqual(dataIn, dataOut));
+        assertCondition(bytesRead == dataOut.length && areEqual(dataIn, dataOut));
         is.close();
       }
     }
@@ -241,7 +241,7 @@ IFSRandomAccessFile.read(byte[], int, int).
       output_.println("Excecution time: " +
                       Long.toString((finish - start) / 1000) + " seconds");
       output_.println("Verifying ...");
-      assertCondition(bytesRead == dataOut.length && isEqual(dataIn, dataOut));
+      assertCondition(bytesRead == dataOut.length && areEqual(dataIn, dataOut));
       raf.close();
     }
     catch(Exception e)

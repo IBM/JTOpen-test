@@ -11,21 +11,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
- //
- // File Name:    JDDriverAcceptsURL.java
- //
- // Classes:      JDDriverAcceptsURL
- //
- ////////////////////////////////////////////////////////////////////////
- //
- ////////////////////////////////////////////////////////////////////////
+
 
 package test.JD.Driver;
 
@@ -39,8 +25,7 @@ import test.PasswordVault;
 import java.io.FileOutputStream;
 import java.sql.Driver;
 import java.sql.DriverManager;
-import java.util.Hashtable;
-
+import java.util.Hashtable; 
 import java.util.Vector; 
 
 /**
@@ -77,7 +62,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDDriverAcceptsURL (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     String password)

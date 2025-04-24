@@ -44,7 +44,7 @@ import java.sql.DataTruncation;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -83,7 +83,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDParmStringMixed2 (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -399,10 +399,6 @@ Test:  char(20) - value is just right
 	 if (count == 1) {
 	     String expected = inValue;
 	    
-	     if (isNative && false ) {
-		 /* result is CHAR(20) which is translated as GRAPHIC(20) */ 
-		 expected = "A\uff21\uff21\uff21\uff21\uff21\uff21\uff21\uff21A          ";  
-	     } 
              
             assertCondition(JDParmHelper.verifyString("col2", expected, connection), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
 	 } else
@@ -450,10 +446,6 @@ Test:  char(20) - value is just right
 
 	 if (count == 1) {
 	     String expected = inValue;
-	     if (isNative && false ) {
-		 /* result is CHAR(20) which is translated as GRAPHIC(20) */ 
-		 expected = "\uff21AAAAAAAAAAAA\uff21      "; 
-	     } 
 
             assertCondition(JDParmHelper.verifyString("col2", expected, connection), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
 	 } else
@@ -495,10 +487,6 @@ Test:  char(20) - value is just right
 
 	 if (count == 1) {
 	     String expected = inValue;
-	     if (isNative && false ) {
-		 /* result is CHAR(20) which is translated as GRAPHIC(20) */ 
-		 expected = "\uff21A\uff21A\uff21A\uff21A            "; 
-	     } 
 
             assertCondition(JDParmHelper.verifyString("col2", expected, connection), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
 	 } else
@@ -539,10 +527,6 @@ Test:  char(20) - value is just right
          //	 inValue += " ";					// @A1
 
 	 if (count == 1) {	String expected = inValue; 
-	 if (isNative && false ) {
-		 /* result is CHAR(20) which is translated as GRAPHIC(20) */ 
-	     expected = "A\uff21A\uff21A\uff21A\uff21            "; 
-	 } 
 
 	 assertCondition(JDParmHelper.verifyString("col2", expected, connection), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
 	 } else
@@ -586,12 +570,8 @@ Test:  char(20) - value is shorter then the column
 	 // else{
 	 if (count == 1)  {
 	     String expected = inValue; 
-	     if (isNative && false) {
-		 /* result is CHAR(20) which is translated as GRAPHIC(20) */ 
-		 expected = inValue + "                 "; 
-	     }  else {
 		 expected = inValue + "            "; 
-	     } 
+	     
 
 		 assertCondition(JDParmHelper.verifyString("col2", expected , connection), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
 	 } else
@@ -640,12 +620,9 @@ Test:  char(20) - value is shorter then the column
 
 	 if (count == 1) {
 	     String expected = inValue;
-	     if (isNative && false) {
-		 /* result is CHAR(20) which is translated as GRAPHIC(20) */ 
-		 expected = "\uff21A\uff21A\uff21A              "; 
-	     } else {
+	    
 		 expected = inValue + "     "; 
-	     } 
+	     
 
 
 		 assertCondition(JDParmHelper.verifyString("col2", expected, connection), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);

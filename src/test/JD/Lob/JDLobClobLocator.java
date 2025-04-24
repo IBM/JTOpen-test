@@ -1467,7 +1467,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          Class[] argClasses = new Class[2];
+          Class<?>[] argClasses = new Class[2];
           argClasses[0] = Clob.class;
           argClasses[1] = Long.TYPE;
           Object[] args = new Object[2];
@@ -5190,7 +5190,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          Class[] argClasses = new Class[2];
+          Class<?>[] argClasses = new Class[2];
           argClasses[0] = Clob.class;
           argClasses[1] = Long.TYPE;
           Object[] args = new Object[2];

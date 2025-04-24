@@ -26,7 +26,6 @@
 
 package test.JD.Driver;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,6 +34,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -58,14 +58,14 @@ public class JDDriverPerformance extends JDTestcase {
   // Private data.
   private Connection connection_;
 
-  private static Hashtable insertSetupDone = new Hashtable();
+  private static Hashtable<String,String> insertSetupDone = new Hashtable<String,String>();
 
   private String driverName = "UNKNOWN";
 
   /**
    * Constructor.
    **/
-  public JDDriverPerformance(AS400 systemObject, Hashtable namesAndVars,
+  public JDDriverPerformance(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password, String powerUserID, String powerPassword) {
     super(systemObject, "JDDriverPerformance", namesAndVars, runMode,

@@ -42,7 +42,7 @@ import test.JDTestcase;
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 /**
@@ -79,7 +79,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDPMDWrapper (AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -205,7 +205,7 @@ unwrap() -- Call with null, should throw exception
 	if (checkJdbc40()) {
 
 	    try {
-		Object answer = JDReflectionUtil.callMethod_O(pmd_, "unwrap",  (Class) null);
+		Object answer = JDReflectionUtil.callMethod_O(pmd_, "unwrap",  (Class<?>) null);
 		assertCondition(false, "Exception should have been thrown unwrapping null "+answer); 
 	    } catch (Exception e) {
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");

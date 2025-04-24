@@ -481,7 +481,7 @@ output_.println(getName()+" loop "+i);
       }
 output_.println("dataToWrite = " + (new String(dataToWrite)) + " readData = " + (new String(readData)));
       // find the data this thread just wrote.
-      while( ! Testcase.isEqual(dataToWrite, readData) )
+      while( ! Testcase.areEqual(dataToWrite, readData) )
       {
         long  skipped = 0;
         // if we can't skip a full record length something is wrong.

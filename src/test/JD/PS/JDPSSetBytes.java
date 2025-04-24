@@ -52,7 +52,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDPSSetBytes. This tests the following method of the JDBC
@@ -84,7 +84,7 @@ public class JDPSSetBytes extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetBytes(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDPSSetBytes(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetBytes", namesAndVars, runMode, fileOutputStream,

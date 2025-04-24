@@ -128,8 +128,8 @@ public class JDStatementWarnings extends JDTestcase {
     try {
       SQLWarning warning = new SQLWarning("This is a warning");
 
-      Class db2Statement = Class.forName("com.ibm.db2.jdbc.app.DB2Statement");
-      Class[] args = new Class[1];
+      Class<?> db2Statement = Class.forName("com.ibm.db2.jdbc.app.DB2Statement");
+      Class<?>[] args = new Class[1];
       args[0] = Class.forName("java.sql.SQLWarning");
       java.lang.reflect.Method method = db2Statement.getMethod("addWarning",
           args);

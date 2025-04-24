@@ -24,7 +24,7 @@ package test.JD.Statement;
 import java.sql.*;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDStatementTest;
@@ -83,7 +83,7 @@ public class JDStatementDelimiters extends JDTestcase {
   /**
    Constructor.
    **/
-  public JDStatementDelimiters(AS400 systemObject, Hashtable namesAndVars,
+  public JDStatementDelimiters(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
       int runMode, FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDStatementDelimiters", namesAndVars, runMode,

@@ -350,9 +350,9 @@ output_.println(getName()+" after verification");
 
       // verify that inputData is one of the 3 valid values
       byte[] input = parmList[0].getInputData();
-      if (! Testcase.isEqual(data3, input) )
-        if (! Testcase.isEqual(data2, input) )
-          if (! Testcase.isEqual(data1, input) )
+      if (! Testcase.areEqual(data3, input) )
+        if (! Testcase.areEqual(data2, input) )
+          if (! Testcase.areEqual(data1, input) )
           {
             error("Input Data was corrupted");
             return;

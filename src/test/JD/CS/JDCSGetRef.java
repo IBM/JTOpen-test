@@ -11,24 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDCSGetRef.java
-//
-// Classes:      JDCSGetRef
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
@@ -36,7 +18,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDSetupProcedure;
 
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -45,7 +26,7 @@ import java.sql.Ref;
 import java.sql.SQLException;
 
 import java.sql.Types;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -79,7 +60,7 @@ extends JDCSGetTestcase
 Constructor.
 **/
     public JDCSGetRef (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

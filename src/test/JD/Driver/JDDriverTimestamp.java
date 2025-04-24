@@ -22,7 +22,7 @@ import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.TimeZone;
 
 
@@ -50,7 +50,6 @@ extends JDTestcase
   }
 
     private String timestampClassName;
-    private Class timestampClass;
     String localDateTimeClassName = "java.time.LocalDateTime"; 
     String instantClassName = "java.time.Instant"; 
 
@@ -59,7 +58,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDDriverTimestamp (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          String password,
@@ -89,15 +88,9 @@ extends JDTestcase
         timestampClassName = null;
       }
     } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-      timestampClass = com.ibm.as400.access.AS400JDBCTimestamp.class;
       timestampClassName = "com.ibm.as400.access.AS400JDBCTimestamp";
     } else {
       timestampClassName = "com.ibm.db2.jdbc.app.DB2JDBCTimestamp";
-    }
-    if (timestampClassName != null) {
-      timestampClass = Class.forName(timestampClassName);
-    } else {
-      timestampClass = null;
     }
   }
 

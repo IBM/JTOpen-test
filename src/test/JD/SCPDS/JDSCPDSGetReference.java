@@ -40,7 +40,7 @@ import test.JDTestcase;
 
 import java.io.FileOutputStream;
 import javax.naming.*;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import javax.sql.DataSource;
 
 
@@ -77,7 +77,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDSCPDSGetReference (AS400 systemObject,
-                               Hashtable namesAndVars,
+                               Hashtable<String,Vector<String>> namesAndVars,
                                int runMode,
                                FileOutputStream fileOutputStream,
                                

@@ -32,15 +32,6 @@
 
 package test.JD.XML;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDReflectionUtil;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JDXMLTest;
-import test.JVMInfo;
-import test.JD.JDTestUtilities;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -48,20 +39,19 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;                          //@C1A
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
-import java.io.PrintWriter;
-import java.io.OutputStream;                          //@C1A
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
- 
+import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.SQLException; 
 import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -73,6 +63,15 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.xml.sax.InputSource;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDReflectionUtil;
+import test.JDTestDriver;
+import test.JDTestcase;
+import test.JDXMLTest;
+import test.JVMInfo;
+import test.JD.JDTestUtilities;
 
 
 
@@ -321,7 +320,7 @@ extends JDTestcase
     Constructor.
     **/
     public JDXMLBlob (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -334,7 +333,7 @@ extends JDTestcase
 
     public JDXMLBlob (AS400 systemObject,
         String testname, 
-        Hashtable namesAndVars,
+        Hashtable<String,Vector<String>> namesAndVars,
         int runMode,
         FileOutputStream fileOutputStream,
         
@@ -1034,7 +1033,7 @@ extends JDTestcase
 	  Object source = null; 
 	  try {
             String classname = sourceClassName; 
-            Class sourceClass = null; 
+            Class<?> sourceClass = null; 
             if (classname != null) { 
               if (classname.indexOf("JAVAX") == 0) {
                 classname = "javax"+sourceClassName.substring(5); 

@@ -35,7 +35,7 @@ import java.sql.ResultSet;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
 Testcase JDConnectionTranslateHex. this tests the following 
@@ -67,7 +67,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDConnectionTranslateHex (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -125,7 +125,7 @@ Compares a Blob with a byte[].
     throws SQLException
     {
         byte[] iBytes = i.getBytes (1, (int) i.length());              
-        return isEqual (iBytes, b);
+        return areEqual (iBytes, b);
     }
 
 
@@ -208,7 +208,7 @@ Property translate hex = binary, should work when we try to insert a hex value i
 	    rs.close();
 	    stmt.execute("DROP TABLE "+table+ ".Var2");
 	    stmt.close();
-	    assertCondition (isEqual(b,expected));
+	    assertCondition (areEqual(b,expected));
 	}
 	catch(SQLException e)
 	{
@@ -240,7 +240,7 @@ Property translate hex = character, should pass when we try to insert a hex valu
 	    rs.close();
 	    stmt.execute("DROP TABLE "+ table+ ".Var3");
 	    stmt.close();
-	    assertCondition(isEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
+	    assertCondition(areEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
 	}
 	catch(SQLException e)
 	{
@@ -274,10 +274,10 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 	    stmt.execute("DROP TABLE "+table+ ".Var4");
 	    stmt.close();
 	    if (getDriver () == JDTestDriver.DRIVER_NATIVE)                                 //@B2
-		assertCondition(isEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
+		assertCondition(areEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
 	    else if (isToolboxDriver())      {
 		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		    assertCondition(isEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
+		    assertCondition(areEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
 		} else {
 		    failed("Toolbox pre v5r5 didn't throw SQLException");
 		}
@@ -317,7 +317,7 @@ Property translate hex = character,should pass when we try to insert a hex value
 	    rs.close();
 	    stmt.execute("DROP TABLE "+table+ ".Var5");
 	    stmt.close();
-	    assertCondition(isEqual(b,expected));
+	    assertCondition(areEqual(b,expected));
 	}
 	catch(SQLException e)
 	{
@@ -351,10 +351,10 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 	    stmt.execute("DROP TABLE "+table+ ".Var6");
 	    stmt.close();
 	    if (getDriver () == JDTestDriver.DRIVER_NATIVE)                                      //@B2
-		assertCondition(isEqual(b,expected));
+		assertCondition(areEqual(b,expected));
 	    else {
 		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		    assertCondition(isEqual(b,expected), "retrieved bytes != expected bytes");
+		    assertCondition(areEqual(b,expected), "retrieved bytes != expected bytes");
 		} else { 
 		    failed("Toolbox pre V5R5 didn't throw SQLException");
 		}
@@ -421,7 +421,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 	    rs.close();
 	    stmt.execute("DROP TABLE "+table+ ".Var8");
 	    stmt.close();
-	    assertCondition(isEqual(b, expected));
+	    assertCondition(areEqual(b, expected));
 	}
 	catch(SQLException e)
 	{
@@ -547,7 +547,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
 	     cstmt.execute();
 
              byte [] check = cstmt.getBytes(1);
-             assertCondition(isEqual(expected, check), "expected = " + JDTestUtilities.dumpBytes(expected)+ " check = " + JDTestUtilities.dumpBytes(check));
+             assertCondition(areEqual(expected, check), "expected = " + JDTestUtilities.dumpBytes(expected)+ " check = " + JDTestUtilities.dumpBytes(check));
          }
          catch (SQLException e){
              failed (e, "Unexpected Exception");
@@ -608,7 +608,7 @@ String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE4 (IN B_IN VARBINARY(20),OUT B
 	     byte [] expected = {0x23, 0x01, 0x45, 0x3D, 0x6F};
 	     cstmt.execute();
              byte [] check = cstmt.getBytes(1);
-             assertCondition(isEqual(expected, check), "expected = " + JDTestUtilities.dumpBytes(expected)+ " check = " + JDTestUtilities.dumpBytes(check));
+             assertCondition(areEqual(expected, check), "expected = " + JDTestUtilities.dumpBytes(expected)+ " check = " + JDTestUtilities.dumpBytes(check));
          }
          catch (SQLException e){
              failed (e, "Unexpected Exception");
@@ -642,7 +642,7 @@ String sql = "CREATE PROCEDURE "+proc+".TRANSLATE5 (IN B_IN CHAR(20) FOR BIT DAT
 	     cstmt.execute();
 	     byte[] b = cstmt.getBytes(1);
 	     cstmt.close();
-	     assertCondition(isEqual(b,expected));
+	     assertCondition(areEqual(b,expected));
 	}
          catch (SQLException e){
 	     failed(e, "UnexpectedException");
@@ -710,7 +710,7 @@ String sql = "CREATE PROCEDURE "+proc+".TRANSLATE7 (IN B_IN VARCHAR(20) FOR BIT 
 	     cstmt.execute();
 	     byte[] b = cstmt.getBytes(1);
 	     cstmt.close();
-	     assertCondition(isEqual(b, expected));
+	     assertCondition(areEqual(b, expected));
 	}
          catch (SQLException e){
 	     failed(e, "UnexpectedException");

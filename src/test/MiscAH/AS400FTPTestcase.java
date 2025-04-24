@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
+import java.util.Vector;
 import java.lang.String;
 
 
@@ -63,7 +64,7 @@ public class AS400FTPTestcase extends    Testcase
     private boolean cleanup = true;
 
     public AS400FTPTestcase (AS400 systemObject,
-                        Hashtable namesAndVars,
+                        Hashtable<String, Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         String password,
@@ -1299,7 +1300,7 @@ public class AS400FTPTestcase extends    Testcase
           try
           {
              AS400FTP c = new AS400FTP();
-             AS400 system2 = new AS400("badd", "baduid", "BADPWD");
+             AS400 system2 = new AS400("badd", "baduid", "BADPWD".toCharArray());
              c.setSystem(system2);
              c.cd(initialToken_);
              failed("no failure when uid bad (system name = badds8) ");
@@ -4304,7 +4305,7 @@ public class AS400FTPTestcase extends    Testcase
     // ---------------------------------------------------------------------
     public void Var025()
     {
-      Class[] parmTypes = { String.class, String.class };
+      Class<?>[] parmTypes = { String.class, String.class };
       if (!FTPTestcase.checkMethodExists("append", parmTypes)) {
         notApplicable("No method named append(String,String)");
         return;
@@ -4796,7 +4797,7 @@ public class AS400FTPTestcase extends    Testcase
     // ---------------------------------------------------------------------
     public void Var026()
     {
-      Class[] parmTypes = { java.io.File.class, String.class };
+      Class<?>[] parmTypes = { java.io.File.class, String.class };
       if (!FTPTestcase.checkMethodExists("append", parmTypes)) {
         notApplicable("No method named append(File,String)");
         return;
@@ -5238,7 +5239,7 @@ public class AS400FTPTestcase extends    Testcase
     // ---------------------------------------------------------------------
     public void Var027()
     {
-      Class[] parmTypes = { String.class };
+      Class<?>[] parmTypes = { String.class };
       if (!FTPTestcase.checkMethodExists("append", parmTypes)) {
         notApplicable("No method named append(File,String)");
         return;

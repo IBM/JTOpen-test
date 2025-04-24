@@ -112,6 +112,7 @@ public class JDWeirdReader  extends Reader {
           }
           count = is.read(b, 0, b.length); 
         }
+        is.close(); 
         if (out.equals(expected)) { 
           System.out.println("read passed "+pattern);
           return 1; 
@@ -156,6 +157,7 @@ public class JDWeirdReader  extends Reader {
           if (readSize > b.length) readSize = b.length; 
           count = is.read(b, 0, readSize); 
         }
+        is.close(); 
         if (out.equals(expected)) { 
           System.out.println("read passed "+pattern);
           return 1; 
@@ -189,6 +191,7 @@ public class JDWeirdReader  extends Reader {
           out += b1; 
           b = is.read();
         }
+        is.close(); 
         if (out.equals(expected)) { 
           System.out.println("simple passed "+pattern);
           return 1; 

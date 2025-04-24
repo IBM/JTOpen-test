@@ -28,23 +28,20 @@
 
 package test.JD.CS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDReflectionUtil;
-import test.JDSetupProcedure;
-import test.JDTestcase;
-
-import java.awt.TextArea;
 import java.io.FileOutputStream;
 import java.io.Reader;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
 import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDReflectionUtil;
+import test.JDSetupProcedure;
+import test.JDTestcase;
 
 public class JDCSGetTestcase extends JDTestcase {
 
@@ -60,7 +57,7 @@ public class JDCSGetTestcase extends JDTestcase {
    * Constructor.
    **/
   public JDCSGetTestcase(AS400 systemObject, String testname,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
  password);

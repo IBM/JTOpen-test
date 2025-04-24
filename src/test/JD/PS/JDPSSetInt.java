@@ -47,7 +47,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDPSetInt. This tests the following method of the JDBC
@@ -81,7 +81,7 @@ public class JDPSSetInt extends JDTestcase {
   /**
    * Constructor.
    **/
-  public JDPSSetInt(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JDPSSetInt(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream, 
       String password) {
     super(systemObject, "JDPSSetInt", namesAndVars, runMode, fileOutputStream,

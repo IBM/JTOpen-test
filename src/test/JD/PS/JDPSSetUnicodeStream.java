@@ -11,19 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
- //
- // File Name:    JDPSSetUnicodeStream.java
- //
- // Classes:      JDPSSetUnicodeStream
- //
- ////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -46,7 +33,7 @@ import java.sql.DataTruncation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -58,6 +45,7 @@ of the JDBC PreparedStatement class:
 <li>setUnicodeStream()
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class JDPSSetUnicodeStream
 extends JDTestcase
 {
@@ -87,7 +75,7 @@ extends JDTestcase
 Constructor.
 **/
     public JDPSSetUnicodeStream (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     

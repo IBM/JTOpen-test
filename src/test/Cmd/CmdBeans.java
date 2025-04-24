@@ -57,13 +57,14 @@ public class CmdBeans extends Testcase
         ObjectOutput out = new ObjectOutputStream(new FileOutputStream(serializeFileName));
         out.writeObject(cmd);
         out.flush();
-
+        out.close(); 
         // Deserialize.
         CommandCall cmd2 = null;
         try
         {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(serializeFileName));
             cmd2 = (CommandCall)in.readObject();
+            in.close(); 
         }
         finally
         {

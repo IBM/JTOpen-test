@@ -33,17 +33,8 @@
 
 package test.JD.PS;
 
-import com.ibm.as400.access.AS400;
-
-import test.JDPSTest;
-import test.JDSetupProcedure;
-import test.JDTestDriver;
-import test.JDTestcase;
-import test.JVMInfo;
-import test.JD.JDSetupPackage;
-import test.JD.JDTestUtilities;
-
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.PreparedStatement;
@@ -53,7 +44,16 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Random;
-import java.math.BigDecimal;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+
+import test.JDPSTest;
+import test.JDSetupProcedure;
+import test.JDTestDriver;
+import test.JDTestcase;
+import test.JD.JDSetupPackage;
+import test.JD.JDTestUtilities;
 
 
 /**
@@ -87,7 +87,7 @@ extends JDTestcase {
 Constructor.
 **/
     public JDPSSetString (AS400 systemObject,
-                          Hashtable namesAndVars,
+                          Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           

@@ -20,7 +20,6 @@
 
 package test.JD.Statement;
 
-import java.util.List;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -41,8 +40,8 @@ public class JDStatementTimeoutStress implements Runnable {
   int timeoutSeconds;
   private Connection connection;
   private Statement stmt;
-  Hashtable tableToColumns = new Hashtable();
-  Hashtable typeToTableColumns = new Hashtable();
+  Hashtable<String, ArrayList<String>> tableToColumns = new Hashtable<String, ArrayList<String>>();
+  Hashtable<String, ArrayList<String[]>> typeToTableColumns = new Hashtable<String, ArrayList<String[]>>();
   Random random = new Random();
   private Object[] tableArray;
   private int tableCount;
@@ -132,16 +131,16 @@ public class JDStatementTimeoutStress implements Runnable {
         unknownCount++;
       }
 
-      List columns = (List) tableToColumns.get(tableName);
+      ArrayList<String> columns = (ArrayList<String>) tableToColumns.get(tableName);
       if (columns == null) {
-        columns = new ArrayList();
+        columns = new ArrayList<String>();
         tableToColumns.put(tableName, columns);
       }
       columns.add(columnName);
 
-      List tableColumns = (List) typeToTableColumns.get(datatype);
+      ArrayList<String[]> tableColumns =  typeToTableColumns.get(datatype);
       if (tableColumns == null) {
-        tableColumns = new ArrayList();
+        tableColumns = new ArrayList<String[]>();
         typeToTableColumns.put(datatype, tableColumns);
       }
 
@@ -157,12 +156,12 @@ public class JDStatementTimeoutStress implements Runnable {
     }
     System.out.println("---------------------------------------");
 
-    Set keySet = tableToColumns.keySet();
+    Set<String> keySet = tableToColumns.keySet();
     tableArray = keySet.toArray();
     tableCount = tableArray.length;
     System.out.println("There were " + tableCount + " tables found");
     for (int i = 0; i < tableCount; i++) {
-      List columns = (List) tableToColumns.get(tableArray[i]);
+       ArrayList<String> columns = tableToColumns.get(tableArray[i]);
       System.out.println(
           "Table " + tableArray[i] + " has " + columns.size() + " columns");
     }
@@ -245,7 +244,7 @@ public class JDStatementTimeoutStress implements Runnable {
   }
 
   private String pickColumn(String table) {
-    List columns = (List) tableToColumns.get(table);
+     ArrayList<String> columns = tableToColumns.get(table);
     int size = columns.size();
 
     return (String) columns.get(random.nextInt(size));

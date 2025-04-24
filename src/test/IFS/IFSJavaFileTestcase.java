@@ -2753,10 +2753,10 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.listFi
          {
              listFilesNames.addElement(files1[j].getName());
          }
-         Vector<File> listFilesStarNames = new Vector<File>(files2.length);
+         Vector<String> listFilesStarNames = new Vector<String>(files2.length);
          for (int k = 0; k < files2.length; k++) 
          {
-             listFilesStarNames.addElement(files2[k]);
+             listFilesStarNames.addElement(files2[k].getName());
          }
          boolean print = true;
          for (Enumeration<String> e = listFilesNames.elements(); e.hasMoreElements(); ) 
@@ -2773,7 +2773,7 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.listFi
              }
          }
          print = true;
-         for (Enumeration<File> f = listFilesStarNames.elements(); f.hasMoreElements(); ) 
+         for (Enumeration<String> f = listFilesStarNames.elements(); f.hasMoreElements(); ) 
          {
              String name2 = f.nextElement().toString();
              if (!(listFilesNames.contains(name2)))
@@ -3231,10 +3231,10 @@ list() or listFiles() is called.
          {
              listNames.addElement(names1[j]);
          }
-         Vector<File> listFilesNames = new Vector<File>(list2.length);
+         Vector<String> listFilesNames = new Vector<String>(list2.length);
          for (int k = 0; k < list2.length; k++) 
          {
-             listFilesNames.addElement(list2[k]);
+             listFilesNames.addElement(list2[k].getName());
          }
          boolean print = true;
          for (Enumeration<String> e = listNames.elements(); e.hasMoreElements(); ) 
@@ -3251,7 +3251,7 @@ list() or listFiles() is called.
              }
          }
          print = true;
-         for (Enumeration<File> f = listFilesNames.elements(); f.hasMoreElements(); ) 
+         for (Enumeration<String> f = listFilesNames.elements(); f.hasMoreElements(); ) 
          {
              String name2 = f.nextElement().toString();
              if (!(listNames.contains(name2)))
@@ -3939,7 +3939,7 @@ list() or listFiles() is called.
 
 
 // Added for getCanonical() to compare IFSFile and Java.io.File strings @B2A
-private boolean compareIFSFilePathToJavaIOPath(String IFSFile1, String file2)
+boolean compareIFSFilePathToJavaIOPath(String IFSFile1, String file2)
 {
   // Prior to the compare... need to remove the Windows or AIX prefix of the file2
   // path.  For example, remove the "I:" from the Windows path, or the "/mnt/lp126ab"
@@ -4655,7 +4655,7 @@ public void Var140()
 
 
   // Verifies that a method exists in class IFSJavaFile.  Returns false if method not found.
-  static boolean checkMethodExists(String methodName, Class[] parmTypes)
+  static boolean checkMethodExists(String methodName, Class<?>[] parmTypes)
   {
     try {
       Class.forName("com.ibm.as400.access.IFSJavaFile").getDeclaredMethod(methodName, parmTypes);
