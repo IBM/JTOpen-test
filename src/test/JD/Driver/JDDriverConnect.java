@@ -86,7 +86,7 @@ public class JDDriverConnect extends JDTestcase {
   boolean exitProgramChecked_ = false;
   boolean exitProgramEnabled_ = false;
   Connection pwrConnection_ = null;
-  private boolean skipExitCleanup = false;
+  private boolean skipExitCleanup = true;
 
   /**
    * Constructor.
@@ -3162,6 +3162,9 @@ public class JDDriverConnect extends JDTestcase {
       if (checkAdditionalAuthenticationFactor(systemName)) {
         initMfaUser();
         AuthExit.assureExitProgramExists(pwrConnection_, mfaUserid_);
+        exitProgramChecked_ = true; 
+        exitProgramEnabled_ = true;
+        skipExitCleanup = false; 
       } else {
         exitProgramChecked_ = true;
         exitProgramEnabled_ = false;

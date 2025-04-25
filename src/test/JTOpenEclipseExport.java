@@ -144,21 +144,40 @@ public class JTOpenEclipseExport extends Thread  {
    bufferedReader.close(); 
   }
 
-  static void bufferCleanup(byte[] buffer, int length, boolean binary) { 
+  static int bufferCleanup(byte[] buffer, int length, boolean binary) { 
     if (!binary) { 
-      /* Replace any CR in the file */ 
+      /* Remove any CR in the file */ 
+      int toPosition = 0; 
       for (int i = 0; i < length; i++) { 
+        boolean skipCR = false; 
         if (buffer[i] < 0x20) { 
           switch (buffer[i]) { 
           case 0x0a:
           case 0x09:  
             break; 
+          case 0x0D:
+            skipCR = true; 
+            break; 
           default:
             buffer[i]=0x20;
             break;
           }
+        } /* if control */ 
+        if (skipCR) { 
+          // Do not write anything 
+        } else {
+          if (toPosition == i) { 
+            /* nothing to move */ 
+          } else {
+            buffer[toPosition] = buffer[i]; 
+          }
+          toPosition++; 
         }
       }
+      return toPosition; 
+    } else {
+      /* Binary */ 
+      return length; 
     }
   }
   static void transferFiles(AS400 as400, String testDirectory, Vector<String> fileList) throws IOException, AS400SecurityException {
@@ -180,8 +199,8 @@ public class JTOpenEclipseExport extends Thread  {
       byte[] buffer = new byte[65536];
       int bytesRead = fileInputStream.read(buffer );
       while (bytesRead >= 0) { 
-        bufferCleanup(buffer, bytesRead, binary); 
-        ifsFileOutputStream.write(buffer, 0, bytesRead);
+        int bytesToWrite = bufferCleanup(buffer, bytesRead, binary); 
+        ifsFileOutputStream.write(buffer, 0, bytesToWrite);
         bytesRead = fileInputStream.read(buffer );
       }
       fileInputStream.close(); 
