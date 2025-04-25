@@ -66,6 +66,8 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
   private Driver driver_;
   private Properties properties_;
 
+  private String leakedPassword_ = null; 
+
   /**
    * Constructor.
    **/
@@ -110,7 +112,8 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     }
     properties_ = new Properties();
     properties_.put("user", userId_);
-    properties_.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverGetPropertyInfo.s"));
+    leakedPassword_ = PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverGetPropertyInfo.s"); 
+    properties_.put("password", leakedPassword_);
   }
 
   /**
@@ -118,24 +121,61 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
    * correct.
    **/
   public void Var001() {
+    StringBuffer sb = new StringBuffer(); 
 
     try {
-      StringBuffer sb = new StringBuffer(); 
 
       DriverPropertyInfo[] propertyInfo = driver_.getPropertyInfo(baseURL_,
           properties_);
 
       boolean passed = true; 
+      sb.append("\nbaseURL_="+baseURL_); 
+      sb.append("\nDriver is "+driver_+" class="+driver_.getClass()) ;
       sb.append("\nProperty Count = " + propertyInfo.length);
 
       for (int i = 0; i < propertyInfo.length; i++) {
-        sb.append("\n[" + i + "]<" + propertyInfo[i].name + "><"
-            + propertyInfo[i].description + "><" + propertyInfo[i].value
-            + ">");
-        if (propertyInfo[i].description.indexOf("999") >= 0) {
-          if (!"REMOVED".equals(propertyInfo[i].name)) {
-            passed = false;
-            sb.append("\n **** Bad property description  found");
+        if (propertyInfo[i] == null) {
+          passed = false;
+          sb.append("\n *** propertyInfo[" + i + "] = null ");
+        } else {
+          sb.append("\n[" + i + "]<" + propertyInfo[i].name + "><" + propertyInfo[i].description + "><"
+            + propertyInfo[i].value + ">");
+          
+          // Check the expected values 
+          String expectedValue =  properties_.getProperty(propertyInfo[i].name); 
+          if (propertyInfo[i].name.equals("password") && (getDriver() == JDTestDriver.DRIVER_TOOLBOX)) {
+            expectedValue = "";          /* Toolbox does not return password */ 
+          }
+          if (expectedValue != null) { 
+             if (! expectedValue.equals(propertyInfo[i].value)) {
+               passed = false; 
+               sb.append("\n *** for property "+propertyInfo[i].name+" expected "+expectedValue+" but got "+propertyInfo[i].value) ;
+             }
+          } else {
+            // Check that password and userid do not show up elsewhere
+            if (userId_.equals(propertyInfo[i].value)) { 
+              passed = false; 
+              sb.append("\n *** found userId_="+userId_+" for property "+propertyInfo[i].name); 
+            }
+            if (leakedPassword_.equals(propertyInfo[i].value)) {
+              passed = false; 
+              sb.append("\n *** found leakedPassword_="+leakedPassword_+" for property "+propertyInfo[i].name); 
+              
+            }
+          }
+          
+          
+          
+          
+          if (propertyInfo[i].description == null) {
+            /* If not set, do not do check.  May not be set for native Driver */ 
+          } else {
+            if (propertyInfo[i].description.indexOf("999") >= 0) {
+              if (!"REMOVED".equals(propertyInfo[i].name)) {
+                passed = false;
+                sb.append("\n **** Bad property description  found");
+              }
+            }
           }
         }
       }
@@ -149,7 +189,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
       
       assertCondition(passed,sb);
     } catch (Exception e) {
-      failed(e, "Unexpected Exception");
+      failed(e, sb);
     }
   }
 

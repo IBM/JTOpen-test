@@ -111,15 +111,15 @@ extends JDTestcase
         //
         // Initialize the connection string2 for the CLI test
         //
-        String gDSN = System.getProperty("CLIWGDSN");
+        String gDSN = System.getProperty("CLIWHDSN");
         if (gDSN != null) {
           HCLIConnect_ = " SERVER=" + gDSN + " ";
         }
-        String gUID = System.getProperty("CLIWGUID");
+        String gUID = System.getProperty("CLIWHUID");
         if (gUID != null) {
           HCLIConnect_ = HCLIConnect_ + "USERID=" + gUID.toUpperCase() + " ";
         }
-        String gPWD = System.getProperty("CLIWGPWD");
+        String gPWD = System.getProperty("CLIWHPWD");
         if (gPWD != null) {
           char[] encryptedPassword = PasswordVault.getEncryptedPassword(gPWD);
           HCLIConnect_ = HCLIConnect_ + "PASSWORD=" + PasswordVault.decryptPasswordLeak(encryptedPassword) + " ";
@@ -134,15 +134,15 @@ extends JDTestcase
         //
         // Initialize the connection string2 for the CLI test
         //
-        String gDSN = System.getProperty("CLIWGDSN");
+        String gDSN = System.getProperty("CLIWZDSN");
         if (gDSN != null) {
           ZCLIConnect_ = " SERVER=" + gDSN + " ";
         }
-        String gUID = System.getProperty("CLIWGUID");
+        String gUID = System.getProperty("CLIWZUID");
         if (gUID != null) {
           ZCLIConnect_ = ZCLIConnect_ + "USERID=" + gUID.toUpperCase() + " ";
         }
-        String gPWD = System.getProperty("CLIWGPWD");
+        String gPWD = System.getProperty("CLIWZPWD");
         if (gPWD != null) {
           char[] encryptedPassword = PasswordVault.getEncryptedPassword(gPWD);
           ZCLIConnect_ = ZCLIConnect_ + "PASSWORD=" + PasswordVault.decryptPasswordLeak(encryptedPassword) + " ";
@@ -158,15 +158,15 @@ extends JDTestcase
         //
         // Initialize the connection string2 for the CLI test
         //
-        String gDSN = System.getProperty("CLIWGDSN");
+        String gDSN = System.getProperty("CLIWLDSN");
         if (gDSN != null) {
           LCLIConnect_ = " SERVER=" + gDSN + " ";
         }
-        String gUID = System.getProperty("CLIWGUID");
+        String gUID = System.getProperty("CLIWLUID");
         if (gUID != null) {
           LCLIConnect_ = LCLIConnect_ + "USERID=" + gUID.toUpperCase() + " ";
         }
-        String gPWD = System.getProperty("CLIWGPWD");
+        String gPWD = System.getProperty("CLIWLPWD");
         if (gPWD != null) {
           char[] encryptedPassword = PasswordVault.getEncryptedPassword(gPWD);
           LCLIConnect_ = LCLIConnect_ + "PASSWORD=" + PasswordVault.decryptPasswordLeak(encryptedPassword) + " ";
