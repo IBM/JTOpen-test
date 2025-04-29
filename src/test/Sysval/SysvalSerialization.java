@@ -17,17 +17,20 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.io.OutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
-
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.SystemValue;
+import com.ibm.as400.access.SystemValueEvent;
+import com.ibm.as400.access.SystemValueList;
+import com.ibm.as400.access.SystemValueListener;
 
 import test.Testcase;
 
@@ -308,7 +311,7 @@ Listens for property change events.
     implements PropertyChangeListener
     {
         private PropertyChangeEvent lastEvent_ = null;
-        private Vector events_ = new Vector ();
+        private Vector<PropertyChangeEvent> events_ = new Vector<PropertyChangeEvent> ();
 
         public void propertyChange (PropertyChangeEvent event)
         {
@@ -316,10 +319,12 @@ Listens for property change events.
           events_.addElement (event);
         }
 
+        @SuppressWarnings("unused")
+        public PropertyChangeEvent getLastEvent() { return lastEvent_; }
 
         public void clearEvents () { events_.removeAllElements (); }
 
-        public Vector getEvents () { return events_; }
+        public Vector<PropertyChangeEvent> getEvents () { return events_; }
     }
 
 /**
@@ -328,7 +333,7 @@ Listens for system value change events.
 
     private class SystemValueListener_ implements SystemValueListener
     {
-      private Vector changed_ = new Vector ();
+      private Vector<SystemValueEvent> changed_ = new Vector<SystemValueEvent> ();
 
       /**
        * Invoked when an AS/400 system value is changed by this object.
@@ -342,11 +347,12 @@ Listens for system value change events.
 
       public void clearEvents () { changed_.removeAllElements (); }
 
-      public Vector getEvents () { return changed_; }
+      public Vector<SystemValueEvent> getEvents () { return changed_; }
 
-      boolean listContainsEvent (Vector eventList, SystemValueEvent event)
+      @SuppressWarnings("unused")
+      boolean listContainsEvent (Vector<SystemValueEvent> eventList, SystemValueEvent event)
       {
-        Enumeration e = eventList.elements ();
+        Enumeration<SystemValueEvent> e = eventList.elements ();
         while (e.hasMoreElements ()) {
           SystemValueEvent listElement = (SystemValueEvent)e.nextElement ();
           if (listElement.getNewValue ().equals (event.getNewValue ()) &&
@@ -363,11 +369,12 @@ Listens for vetoable change events.
     private class VetoableChangeListener_
     implements VetoableChangeListener
     {
-        private PropertyChangeEvent lastEvent_ = null;
-        private Vector events_ = new Vector ();
+        // private PropertyChangeEvent lastEvent_ = null;
+        private Vector<PropertyChangeEvent> events_ = new Vector<PropertyChangeEvent> ();
         private boolean vetoAll_;  // whether or not to veto all changes
 
         public VetoableChangeListener_ () {}
+        @SuppressWarnings("unused")
         public VetoableChangeListener_ (boolean vetoAll)
         {
           vetoAll_ = vetoAll;
@@ -377,14 +384,14 @@ Listens for vetoable change events.
         {
           if (vetoAll_) throw new PropertyVetoException("I veto everything",
                                                         event);
-          lastEvent_ = event;
+          // lastEvent_ = event;
           events_.addElement (event);
         }
 
 
         public void clearEvents () { events_.removeAllElements (); }
 
-        public Vector getEvents () { return events_; }
+        public Vector<PropertyChangeEvent> getEvents () { return events_; }
     }
 
   /**

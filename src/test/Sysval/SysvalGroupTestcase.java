@@ -860,7 +860,7 @@ public class SysvalGroupTestcase extends Testcase
                 SystemValue sv = (SystemValue) sysvals.elementAt(i);
                 if (!svg.contains(sv.getName()))
                 {
-                    failed("Incorrect Names array.");
+                    failed("Incorrect Names array."+Names);
                     return;
                 }
             }
@@ -889,7 +889,7 @@ public class SysvalGroupTestcase extends Testcase
                 SystemValue sv = (SystemValue)sysvals.elementAt(i);
                 if (!svg.contains(sv.getName()))
                 {
-                    failed("Incorrect Names array.");
+                    failed("Incorrect Names array."+Names);
                     return;
                 }
             }
@@ -923,7 +923,7 @@ public class SysvalGroupTestcase extends Testcase
                 SystemValue sv = (SystemValue)sysvals.elementAt(i);
                 if (!svg.contains(sv.getName()))
                 {
-                    failed("Incorrect Names array.");
+                    failed("Incorrect Names array."+Names);
                     return;
                 }
             }
@@ -1648,13 +1648,14 @@ public class SysvalGroupTestcase extends Testcase
      Test invalid usage of SystemValueGroup::refresh().
      Try to call refresh() on a system value group that contains null objects.
      **/
+    @SuppressWarnings("unchecked")
     public void Var068()
     {
         try
         {
-            String[] str = new String[] { "QYEAR" };
-            SystemValueGroup svg = new SystemValueGroup(pwrSys_, "Name", "Desc", str);
-            Vector svgv = svg.getSystemValues();
+            // String[] str = new String[] { "QYEAR" };
+            // SystemValueGroup svg = new SystemValueGroup(pwrSys_, "Name", "Desc", str);
+            // Vector svgv = svg.getSystemValues();
             Vector newVector = new Vector();
             Object obj = null;
             newVector.addElement(obj);
@@ -1671,6 +1672,7 @@ public class SysvalGroupTestcase extends Testcase
      Test invalid usage of SystemValueGroup::refresh().
      Try to call refresh() on a system value group that contains non-SystemValue objects.
      **/
+    @SuppressWarnings("unchecked")
     public void Var069()
     {
         try
@@ -2342,7 +2344,7 @@ public class SysvalGroupTestcase extends Testcase
         {
             SystemValueGroup svg = new SystemValueGroup(pwrSys_, "My Name", "My Desc");
             String toStr = svg.toString();
-            succeeded();
+           assertCondition(true, "returned "+toStr);
         }
         catch (Exception e)
         {
@@ -2581,7 +2583,7 @@ public class SysvalGroupTestcase extends Testcase
             if (sv.getGroupName().equals(str))
                 succeeded();
             else
-                failed("Incorrect name.");
+                failed("Incorrect name."+svName);
         }
         catch (Exception e)
         {
@@ -2681,7 +2683,7 @@ public class SysvalGroupTestcase extends Testcase
             Vector svgv = svg.getSystemValues();
             SystemValue sv1 = (SystemValue) svgv.elementAt(1);
             if (sv.getGroupName() != null)
-                failed("Non null group name.");
+                failed("Non null group name."+sv1);
             else 
                 succeeded();
         }
@@ -2712,7 +2714,7 @@ public class SysvalGroupTestcase extends Testcase
             if (sv2Name.equals("newName") )
                 succeeded();
             else
-                failed("Incorrect description.");
+                failed("Incorrect description."+svName);
         }
         catch (Exception e)
         {
@@ -2952,7 +2954,7 @@ public class SysvalGroupTestcase extends Testcase
             if (sv.getGroupDescription().equals(str))
                 succeeded();
             else
-                failed("Incorrect description.");
+                failed("Incorrect description."+svDesc);
         }
         catch (Exception e)
         {
@@ -3052,7 +3054,7 @@ public class SysvalGroupTestcase extends Testcase
             Vector svgv = svg.getSystemValues();
             SystemValue sv1 = (SystemValue) svgv.elementAt(1);
             if (sv.getGroupDescription() != null)
-                failed("Non null group description.");
+                failed("Non null group description."+sv1);
             else 
                 succeeded();
         }
@@ -3083,7 +3085,7 @@ public class SysvalGroupTestcase extends Testcase
             if (sv2Name.equals("newDesc") )
                 succeeded();
             else
-                failed("Incorrect description.");
+                failed("Incorrect description."+svDesc);
         }
         catch (Exception e)
         {

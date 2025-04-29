@@ -13,20 +13,17 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.util.Vector;
 import java.math.BigDecimal;
-import com.ibm.as400.access.AS400FileRecordDescription;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Exception;
-import com.ibm.as400.access.AS400SecurityException;
-import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400File;
-import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ErrorCompletingRequestException;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
@@ -274,6 +271,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         System.out.println("Unable to create necessary dds source files.");
         e.printStackTrace();
+        f.close(); 
         throw e;
       }
       Record[] r = new Record[2];
@@ -491,6 +489,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).equals(""))
       {
         failed("Wrong text description when *BLANK specified");
+        file.close(); 
         return;
       }
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -757,6 +756,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).equals(""))
       {
         failed("Wrong text returned when *BLANK specified");
+        file.close(); 
         return;
       }
       file.setRecordFormat(new AS400FileRecordDescription(systemObject_, file.getPath()).retrieveRecordFormat()[0]);
@@ -1025,6 +1025,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).equals(""))
       {
         failed("Wrong text returned when *BLANK specified");
+        file.close(); 
         return;
       }
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -1247,6 +1248,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).equals(""))
       {
         failed("Wrong text returned when *BLANK specified");
+        file.close(); 
         return;
       }
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -1533,7 +1535,7 @@ public class DDMCreateAndAdd extends Testcase
     {
       file = new SequentialFile(systemObject_,
                                 "/QSYS.LIB/" + testLib_ + ".LIB/V22.FILE/MBR.MBR");
-      RecordFormat format = f1f0_;
+      // RecordFormat format = f1f0_;
       file.create(1, "*DATA", "*BLANK");
       // Issue a change physical file command to allow more than one member.
       CommandCall interpreter = new CommandCall(systemObject_);
@@ -1546,6 +1548,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).equals(""))
       {
         failed("Wrong text returned when *BLANK specified");
+        file.close(); 
         return;
       }
       file.addPhysicalFileMember("M2", null);
@@ -1554,6 +1557,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).equals(""))
       {
         failed("Wrong text returned when null specified");
+        file.close(); 
         return;
       }
       file.addPhysicalFileMember("M3", "");
@@ -1562,6 +1566,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).equals(""))
       {
         failed("Wrong text returned when empty string specified");
+        file.close(); 
         return;
       }
       file.addPhysicalFileMember("M4", "A");
@@ -1570,6 +1575,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).trim().equals("A"))
       {
         failed("Wrong text returned when A specified");
+        file.close(); 
         return;
       }
       file.addPhysicalFileMember("M5", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -1578,6 +1584,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).trim().equals("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
       {
         failed("Wrong text returned when ABCDEFGHIJKLMNOPQRSTUVWXYZ specified");
+        file.close(); 
         return;
       }
       file.addPhysicalFileMember("M6",
@@ -1587,6 +1594,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).trim().equals("A123456789B123456789C123456789D123456789E123456789"))
       {
         failed("Wrong text returned when A123456789B123456789C123456789D123456789E123456789 specified");
+        file.close(); 
         return;
       }
     }
@@ -1622,7 +1630,7 @@ public class DDMCreateAndAdd extends Testcase
     {
       file = new SequentialFile(systemObject_,
                                 "/QSYS.LIB/" + testLib_ + ".LIB/V23.FILE/MBR.MBR");
-      RecordFormat format = f1f0_;
+      // RecordFormat format = f1f0_;
       file.create(1, "*DATA", "*BLANK");
 
       // Issue a change physical file command to allow more than one member.
@@ -1933,6 +1941,7 @@ public class DDMCreateAndAdd extends Testcase
       if (!getTextDescription(od).trim().equals("FOOBAR"))
       {
         failed("Wrong text returned when FOOBAR specified");
+        file.close(); 
         return;
       }
       file.setRecordFormat(new AS400FileRecordDescription(systemObject_, file.getPath()).retrieveRecordFormat()[0]);
@@ -2166,7 +2175,7 @@ public class DDMCreateAndAdd extends Testcase
     try
     {
       String recordFormatName = new AS400FileRecordDescription(systemObject_, filePath).retrieveRecordFormat() [0].getName();
-      failed("Exception didn't occur.");
+      failed("Exception didn't occur."+recordFormatName);
     }
     catch (AS400Exception ex)
     {

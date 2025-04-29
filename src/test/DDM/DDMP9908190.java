@@ -13,12 +13,13 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.SequentialFile;
 
 import test.TestDriverStatic;
 import test.Testcase;
@@ -154,6 +155,7 @@ public class DDMP9908190 extends Testcase implements Runnable
        {
             SequentialFile f = new SequentialFile(systemObject_, "/QSYS.LIB/QIWS.LIB/QCUSTCDT.FILE");
             f.endCommitmentControl();
+            f.close(); 
        }
        catch(Exception e)
        {
@@ -200,6 +202,7 @@ public class DDMP9908190 extends Testcase implements Runnable
             started_ = true;
             SequentialFile f = new SequentialFile(sys_, "/QSYS.LIB/QIWS.LIB/QCUSTCDT.FILE");
             f.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_ALL);
+            f.close(); 
           }
         }
       }

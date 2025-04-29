@@ -58,7 +58,7 @@ public class DDMConnect extends Testcase {
       AS400 as400 = new AS400(systemObject_);
       as400.connectService(AS400.RECORDACCESS);
       as400.disconnectService(AS400.RECORDACCESS);
-
+      as400.close(); 
     } catch (Exception e) {
       failMsg.append("Unexpected exception");
       System.out.println(e.getMessage());
@@ -83,7 +83,7 @@ public class DDMConnect extends Testcase {
       AS400 as400 = new AS400(systemObject_);
       as400.connectService(AS400.RECORDACCESS);
       as400.disconnectService(AS400.RECORDACCESS);
-
+      as400.close(); 
     } catch (Exception e) {
       failMsg.append("Unexpected exception");
       System.out.println(e.getMessage());
@@ -109,7 +109,7 @@ public class DDMConnect extends Testcase {
       AS400 as400 = new AS400(systemObject_);
       as400.connectService(AS400.RECORDACCESS);
       as400.disconnectService(AS400.RECORDACCESS);
-
+      as400.close(); 
     } catch (Exception e) {
       failMsg.append("Unexpected exception");
       System.out.println(e.getMessage());

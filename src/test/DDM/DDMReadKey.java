@@ -13,17 +13,31 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.math.BigDecimal;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.ZonedDecimalFieldDescription;
 
 import test.Testcase;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  *Testcase DDMReadKey.  This test class verifies valid and invalid usage of
@@ -933,6 +947,9 @@ protected void cleanup()
     f2.delete();
     KeyedFile f3 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/READKEY3.FILE");
     f3.delete();
+    f1.close(); 
+    f2.close();
+    f3.close(); 
   }
   catch(Exception e)
   {
@@ -1675,7 +1692,7 @@ protected void cleanup()
       try
       {
         rec = file.read(key);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -1738,7 +1755,7 @@ protected void cleanup()
       try
       {
         rec = file.read(key, KeyedFile.KEY_LT);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -1801,7 +1818,7 @@ protected void cleanup()
       try
       {
         rec = file.readAfter(key);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -1864,7 +1881,7 @@ protected void cleanup()
       try
       {
         rec = file.readBefore(key);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -1930,7 +1947,7 @@ protected void cleanup()
       try
       {
         rec = file.read(null);
-        failMsg.append("Expected null pointer exception didn't occur.\n");
+        failMsg.append("Expected null pointer exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -2027,7 +2044,7 @@ protected void cleanup()
       try
       {
         rec = file.read((Object[])null, KeyedFile.KEY_LE);
-        failMsg.append("Expected null pointer exception didn't occur.\n");
+        failMsg.append("Expected null pointer exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -2124,7 +2141,7 @@ protected void cleanup()
       try
       {
         rec = file.readAfter(null);
-        failMsg.append("Expected null pointer exception didn't occur.\n");
+        failMsg.append("Expected null pointer exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -2221,7 +2238,7 @@ protected void cleanup()
       try
       {
         rec = file.readBefore(null);
-        failMsg.append("Expected null pointer exception didn't occur.\n");
+        failMsg.append("Expected null pointer exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -2319,7 +2336,7 @@ protected void cleanup()
       try
       {
         rec = file.read(key, -1);
-        failMsg.append("Expected searchtype too small exception didn't occur.\n");
+        failMsg.append("Expected searchtype too small exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -3334,7 +3351,7 @@ protected void cleanup()
       f  = new KeyedFile(systemObject_,                         "/QSYS.LIB/" + testLib_ + ".LIB/READKEY2.FILE");
       f.setRecordFormat(new DDMFormat3Field1Key(systemObject_));
       Record r = f.readNextEqual();
-      failed("No exception");
+      failed("No exception"+r);
       f.close();
       return;
     }
@@ -3386,7 +3403,7 @@ protected void cleanup()
       f  = new KeyedFile(systemObject_,                         "/QSYS.LIB/" + testLib_ + ".LIB/READKEY2.FILE");
       f.setRecordFormat(new DDMFormat3Field1Key(systemObject_));
       Record r = f.readPreviousEqual();
-      failed("No exception");
+      failed("No exception"+r);
       f.close();
       return;
     }
@@ -3515,6 +3532,7 @@ protected void cleanup()
       if (!r.toString().equals(dupKey3Recs_[7].toString()))
       {
         failed("read(key) record not correct: " + r.toString());
+        f.close(); 
         return;
       }
       r = f.readNextEqual();
@@ -4022,7 +4040,7 @@ protected void cleanup()
       f  = new KeyedFile(systemObject_,                         "/QSYS.LIB/" + testLib_ + ".LIB/READKEY3.FILE");
       f.setRecordFormat(new DDMFormatReadKey3(systemObject_));
       Record r = f.readNextEqual(new Object[] { "" });
-      failed("No exception");
+      failed("No exception"+r);
       f.close();
       return;
     }
@@ -4074,7 +4092,7 @@ protected void cleanup()
       f  = new KeyedFile(systemObject_,                         "/QSYS.LIB/" + testLib_ + ".LIB/READKEY3.FILE");
       f.setRecordFormat(new DDMFormatReadKey3(systemObject_));
       Record r = f.readPreviousEqual(new Object[] { "" });
-      failed("No exception");
+      failed("No exception"+r);
       f.close();
       return;
     }
@@ -5028,7 +5046,7 @@ protected void cleanup()
       try
       {
         rec = file.read(key, 1);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5097,7 +5115,7 @@ protected void cleanup()
       try
       {
         rec = file.read(key, KeyedFile.KEY_LT, 1);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5166,7 +5184,7 @@ protected void cleanup()
       try
       {
         rec = file.readAfter(key, 1);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5235,7 +5253,7 @@ protected void cleanup()
       try
       {
         rec = file.readBefore(key, 1);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5302,7 +5320,7 @@ protected void cleanup()
       try
       {
         rec = file.read(null);
-        failMsg.append("Expected null pointer exception didn't occur.\n");
+        failMsg.append("Expected null pointer exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5316,7 +5334,7 @@ protected void cleanup()
       try
       {
         rec = file.read(key, 1);
-        failMsg.append("Expected illegal argument exception didn't occur.\n");
+        failMsg.append("Expected illegal argument exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5383,7 +5401,7 @@ protected void cleanup()
       try
       {
         rec = file.read(null, KeyedFile.KEY_LE, 1);
-        failMsg.append("Expected null pointer exception didn't occur.\n");
+        failMsg.append("Expected null pointer exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5464,7 +5482,7 @@ protected void cleanup()
       try
       {
         rec = file.readAfter(null, 1);
-        failMsg.append("Expected null pointer exception didn't occur.\n");
+        failMsg.append("Expected null pointer exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5545,7 +5563,7 @@ protected void cleanup()
       try
       {
         rec = file.readBefore(null, 1);
-        failMsg.append("Expected null pointer exception didn't occur.\n");
+        failMsg.append("Expected null pointer exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5632,7 +5650,7 @@ protected void cleanup()
       try
       {
         rec = file.read(key, -1, 1);
-        failMsg.append("Expected searchtype too small exception didn't occur.\n");
+        failMsg.append("Expected searchtype too small exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -5647,7 +5665,7 @@ protected void cleanup()
       try
       {
         rec = file.read(key, 5, 1);
-        failMsg.append("Expected searchtype too big exception didn't occur.\n");
+        failMsg.append("Expected searchtype too big exception didn't occur.\n"+rec);
       }
       catch(Exception e)
       {
@@ -6859,7 +6877,7 @@ protected void cleanup()
       f.setRecordFormat(new DDMFormatReadKey3(systemObject_));
 //      Record r = f.readNextEqual(new Object[1]);
       Record r = f.readNextEqual(new byte[1], 1);
-      failed("No exception");
+      failed("No exception"+r);
       f.close();
       return;
     }
@@ -6912,7 +6930,7 @@ protected void cleanup()
       f.setRecordFormat(new DDMFormatReadKey3(systemObject_));
 //      Record r = f.readPreviousEqual(new Object[1]);
       Record r = f.readPreviousEqual(new byte[1], 1);
-      failed("No exception");
+      failed("No exception"+r);
       f.close();
       return;
     }
@@ -7087,6 +7105,8 @@ protected void cleanup()
 
 class DDMFormat3Field1Key extends RecordFormat
 {
+  private static final long serialVersionUID = 1L;
+
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
      newArgs[0] = "-tc";
@@ -7110,6 +7130,8 @@ class DDMFormat3Field1Key extends RecordFormat
 
 class DDMFormatReadKey3 extends RecordFormat
 {
+  private static final long serialVersionUID = 1L;
+
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
      newArgs[0] = "-tc";

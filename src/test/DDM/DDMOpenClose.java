@@ -14,21 +14,20 @@
 package test.DDM;
 
 import java.io.FileOutputStream;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400Exception;
-import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.AS400File;
 import com.ibm.as400.access.AS400FileRecordDescription;
-import com.ibm.as400.access.SequentialFile;
-
-import test.Testcase;
-
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.KeyedFile;
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
+
+import test.Testcase;
 
 
 /**
@@ -1245,6 +1244,7 @@ public void Var007()
   try
   {
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
+    file.close(); 
     failMsg.append("No exception for record format not specified.\n");
   }
   catch(Exception e)
@@ -1298,6 +1298,7 @@ public void Var008()
     try
     {
       file.open(AS400File.READ_ONLY - 1, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
+      file.close(); 
       failMsg.append("No exception for invalid openType: READ_ONLY - 1.\n");
     }
     catch(Exception e)
@@ -1368,6 +1369,7 @@ public void Var009()
   {
     file.setRecordFormat(new DDMChar10NoKeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, -1, AS400File.COMMIT_LOCK_LEVEL_NONE);
+    file.close(); 
     failMsg.append("No exception for negative blockingFactor.\n");
   }
   catch(Exception e)
@@ -1421,6 +1423,7 @@ public void Var010()
     try
     {
       file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_ALL - 1);
+      file.close(); 
       failMsg.append("No exception for invalid commitLockLevel: COMMIT_LOCK_LEVEL_ALL - 1.\n");
     }
     catch(Exception e)
@@ -1561,6 +1564,10 @@ public void Var012()
       failMsg.append("File is open after failed open.\n");
     }
   }
+  try {
+    file.close();
+  } catch (Exception e) {
+  } 
   if (failMsg.length() == 0)
   {
     succeeded();
@@ -1600,6 +1607,7 @@ public void Var013()
     try
     {
       file.open(AS400File.READ_ONLY - 1, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
+      file.close(); 
       failMsg.append("No exception for invalid openType: READ_ONLY - 1.\n");
     }
     catch(Exception e)
@@ -1670,6 +1678,7 @@ public void Var014()
   {
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, -1, AS400File.COMMIT_LOCK_LEVEL_NONE);
+    file.close(); 
     failMsg.append("No exception for negative blockingFactor.\n");
   }
   catch(Exception e)
@@ -1723,6 +1732,7 @@ public void Var015()
     try
     {
       file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_ALL - 1);
+      file.close(); 
       failMsg.append("No exception for invalid commitLockLevel: COMMIT_LOCK_LEVEL_ALL - 1.\n");
     }
     catch(Exception e)

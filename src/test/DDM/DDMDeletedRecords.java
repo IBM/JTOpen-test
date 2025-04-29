@@ -13,23 +13,16 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.AS400Exception;
-import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400File;
-import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.SequentialFile;
-import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.Trace;
+import com.ibm.as400.access.SequentialFile;
 
 import test.Testcase;
 
@@ -304,6 +297,7 @@ public class DDMDeletedRecords extends Testcase
    *array is returned.
    *</ul>
   **/
+  @SuppressWarnings("resource")
   public void Var003()
   {
     setVariation(3);
@@ -423,9 +417,10 @@ public class DDMDeletedRecords extends Testcase
       {
         failed("Array of length 0 not returned on readAll from empty file");
         file3.delete();
+        file3.close(); 
         return;
       }
-
+      file3.close(); 
       succeeded();
     }
     catch(Exception e)

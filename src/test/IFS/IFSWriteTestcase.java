@@ -125,6 +125,7 @@ IFSFileOutputStream.write(byte[]) is null.
     {
       os = new IFSFileOutputStream(systemObject_, ifsPathName_);
       os.write((byte[]) null);
+      os.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -165,6 +166,7 @@ Write every possible byte to a file using IFSFileOutputStream.write(byte[]).
   {
     try
     {
+      @SuppressWarnings("resource")
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, ifsPathName_);
       byte[] data = new byte[256];
@@ -200,6 +202,7 @@ IFSFileOutputStream.write(byte[], int, int) is null.
     {
       os = new IFSFileOutputStream(systemObject_, ifsPathName_);
       os.write((byte[]) null, 0, 1);
+      os.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -220,6 +223,7 @@ IFSFileOutputStream.write(byte[], int, int) is < 0.
     {
       os = new IFSFileOutputStream(systemObject_, ifsPathName_);
       os.write(new byte[20], -1, 1);
+      os.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -241,6 +245,7 @@ IFSFileOutputStream.write(byte[], int, int) is < 0.
     {
       os = new IFSFileOutputStream(systemObject_, ifsPathName_);
       os.write(new byte[20], 0, -1);
+      os.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -284,6 +289,7 @@ IFSFileOutputStream.write(byte[], int, int).
     createFile(ifsPathName_);
     try
     {
+      @SuppressWarnings("resource")
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, ifsPathName_);
       byte[] data = new byte[256];
@@ -1229,6 +1235,7 @@ Test IFSFileWriter.flush().
       char firstChar = (char)is.read();
       ///if (DEBUG) System.out.println("First char: " + firstChar);
       os.close(); 
+      is.close(); 
       assertCondition(firstChar == '1');
     }
     catch(Exception e)
@@ -1256,6 +1263,7 @@ Test IFSFileWriter.getCCSID() and getEncoding(), using system default settings.
       }
       assertCondition(os.getCCSID() == file.getCCSID() &&
                       os.getEncoding().equals(NLS.ccsidToEncoding(file.getCCSID())));
+      os.close(); 
     }
     catch(Exception e)
     {
@@ -1282,6 +1290,7 @@ Test IFSFileWriter.getCCSID() and getEncoding(), after specifying CCSID.
       }
       assertCondition(os.getCCSID() == 13488 &&
                       os.getEncoding().equals(NLS.ccsidToEncoding(13488)));
+      os.close(); 
     }
     catch(Exception e)
     {

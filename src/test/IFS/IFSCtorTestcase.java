@@ -14,12 +14,12 @@
 package test.IFS;
 
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ExtendedIOException;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.IFSFile;
@@ -31,14 +31,13 @@ import com.ibm.as400.access.IFSRandomAccessFile;
 import com.ibm.as400.access.IFSTextFileInputStream;
 import com.ibm.as400.access.IFSTextFileOutputStream;
 
-import test.JTOpenTestEnvironment;
-
-import com.ibm.as400.access.*; 
+import test.JTOpenTestEnvironment; 
 
 /**
 Test constructors for IFSFile, IFSFileInputStream, IFSFileOutputStream,
 and IFSRandomAccessFile.
 **/
+@SuppressWarnings("deprecation")
 public class IFSCtorTestcase extends IFSGenericTestcase
 {
   public static void main(String args[]) throws Exception {
@@ -427,6 +426,7 @@ Ensure that NullPointerException is thrown if argument #1 of IFSFileInputStream(
     {
       IFSFileInputStream is = new IFSFileInputStream((AS400) null,
                                                      ifsPathName_);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -444,6 +444,7 @@ Ensure that NullPointerException is thrown if argument #2 of IFSFileInputStream(
     {
       IFSFileInputStream is = new IFSFileInputStream(systemObject_,
                                                      (String) null);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -463,6 +464,7 @@ doesn't exist.
     {
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, "/NoDirectory/NoFile");
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -553,6 +555,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, ifsPathNameX,
                                IFSFileInputStream.SHARE_NONE - 1);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e1)
@@ -565,6 +568,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
           IFSFileInputStream is =
             new IFSFileInputStream(systemObject_, ifsPathNameX,
                                    IFSFileInputStream.SHARE_ALL + 1);
+          is.close(); 
           failed("Exception didn't occur.."+is);
         }
         catch(Exception e2)
@@ -591,6 +595,7 @@ Ensure that NullPointerException is thrown if argument #1 of IFSFileInputStream(
       IFSFileInputStream is =
         new IFSFileInputStream((AS400) null, ifsPathName_,
                                IFSFileInputStream.SHARE_NONE);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -609,6 +614,7 @@ Ensure that NullPointerException is thrown if argument #2 of IFSFileInputStream(
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, (IFSFile) null,
                                IFSFileInputStream.SHARE_NONE);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -629,7 +635,8 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
       IFSFileInputStream in =
         new IFSFileInputStream(systemObject_, ifsPathNameX,
                                IFSFileInputStream.SHARE_NONE - 1);
-      failed("Exception didn't occur."+in);
+      in.close(); 
+     failed("Exception didn't occur."+in);
     }
     catch(Exception e1)
     {
@@ -641,6 +648,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
           IFSFileInputStream in =
             new IFSFileInputStream(systemObject_, ifsPathNameX,
                                    IFSFileInputStream.SHARE_ALL + 1);
+          in.close(); 
           failed("Exception didn't occur.."+in);
         }
         catch(Exception e2)
@@ -672,6 +680,7 @@ doesn't exist.
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, file,
                                IFSFileInputStream.SHARE_ALL);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -970,6 +979,7 @@ Ensure that NullPointerException is thrown if argument #1 of IFSFileInputStream(
       IFSFileInputStream is =
         new IFSFileInputStream((AS400) null, file,
                                IFSFileInputStream.SHARE_NONE);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -988,6 +998,7 @@ Ensure that NullPointerException is thrown if argument #2 of IFSFileInputStream(
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, (IFSFile) null,
                                IFSFileInputStream.SHARE_NONE);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -1009,6 +1020,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
       IFSFileInputStream in =
         new IFSFileInputStream(systemObject_, file,
                                IFSFileInputStream.SHARE_NONE - 1);
+      in.close(); 
       failed("Exception didn't occur."+in);
     }
     catch(Exception e1)
@@ -1021,6 +1033,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
           IFSFileInputStream in =
             new IFSFileInputStream(systemObject_, file,
                                    IFSFileInputStream.SHARE_ALL + 1);
+          in.close(); 
           failed("Exception didn't occur.."+in);
         }
         catch(Exception e2)
@@ -1052,6 +1065,7 @@ doesn't exist.
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, file,
                                IFSFileInputStream.SHARE_ALL);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -1367,6 +1381,7 @@ Ensure that NullPointerException is thrown if argument #1 of IFSFileInputStream(
     {
       IFSFileInputStream is =
         new IFSFileInputStream((IFSFileDescriptor) null);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -1393,6 +1408,9 @@ Test IFSFileInputStream(IFSFileDescriptor).
       assertCondition(is1.read() == dataIn[0] &&
              is2.read() == dataIn[1] &&
              is1.read() == dataIn[2]);
+      is1.close(); 
+      is2.close(); 
+
     }
     catch(Exception e)
     {
@@ -1410,6 +1428,7 @@ Ensure that NullPointerException is thrown if argument #1 of IFSFileOutputStream
     {
       IFSFileOutputStream os = new IFSFileOutputStream((AS400) null,
                                                      ifsPathName_);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -1427,6 +1446,7 @@ Ensure that NullPointerException is thrown if argument #2 of IFSFileOutputStream
     {
       IFSFileOutputStream os = new IFSFileOutputStream(systemObject_,
                                                      (String) null);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -1541,6 +1561,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, ifsPathNameX,
                                IFSFileOutputStream.SHARE_NONE - 1, true);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e1)
@@ -1553,6 +1574,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
           IFSFileOutputStream os =
             new IFSFileOutputStream(systemObject_, ifsPathNameX,
                                    IFSFileOutputStream.SHARE_ALL + 1, true);
+          os.close(); 
           failed("Exception didn't occur.."+os);
         }
         catch(Exception e2)
@@ -1579,6 +1601,7 @@ Ensure that NullPointerException is thrown if argument #1 of IFSFileOutputStream
       IFSFileOutputStream os =
         new IFSFileOutputStream((AS400) null, ifsPathName_,
                                IFSFileOutputStream.SHARE_NONE, true);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -1597,6 +1620,7 @@ Ensure that NullPointerException is thrown if argument #2 of IFSFileOutputStream
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, (IFSFile) null,
                                IFSFileOutputStream.SHARE_NONE, true);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -1617,6 +1641,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, ifsPathNameX,
                                IFSFileOutputStream.SHARE_NONE - 1, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e1)
@@ -1628,6 +1653,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
           IFSFileOutputStream os =
             new IFSFileOutputStream(systemObject_, ifsPathNameX,
                                    IFSFileOutputStream.SHARE_ALL + 1, true);
+          os.close(); 
           failed("Exception didn't occur.."+os);
         }
         catch(Exception e2)
@@ -1899,6 +1925,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, file,
                                IFSFileOutputStream.SHARE_NONE - 1, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e1)
@@ -1912,6 +1939,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
           IFSFileOutputStream os =
             new IFSFileOutputStream(systemObject_, file,
                                    IFSFileOutputStream.SHARE_ALL + 1, false);
+          os.close(); 
           failed("Exception didn't occur.."+os);
         }
         catch(Exception e2)
@@ -1939,6 +1967,7 @@ Ensure that NullPointerException is thrown if argument #1 of IFSFileOutputStream
       IFSFileOutputStream os =
         new IFSFileOutputStream((AS400) null, file,
                                IFSFileOutputStream.SHARE_NONE, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -1957,6 +1986,7 @@ Ensure that NullPointerException is thrown if argument #2 of IFSFileOutputStream
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, (IFSFile) null,
                                IFSFileOutputStream.SHARE_NONE, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -1978,6 +2008,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, file,
                                IFSFileOutputStream.SHARE_NONE - 1, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e1)
@@ -1991,6 +2022,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument #3 of IFSFile
           IFSFileOutputStream os =
             new IFSFileOutputStream(systemObject_, file,
                                    IFSFileOutputStream.SHARE_ALL + 1, false);
+          os.close(); 
           failed("Exception didn't occur.."+os);
         }
         catch(Exception e2)
@@ -2261,6 +2293,7 @@ Ensure that NullPointerException is thrown if argument #1 of IFSFileOutputStream
     {
       IFSFileOutputStream os =
         new IFSFileOutputStream((IFSFileDescriptor) null);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -4107,6 +4140,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
     {
       IFSTextFileInputStream is = new IFSTextFileInputStream((AS400) null,
                                                      ifsPathName_);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4124,6 +4158,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
     {
       IFSTextFileInputStream is = new IFSTextFileInputStream(systemObject_,
                                                      (String) null);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4141,6 +4176,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
     {
       IFSTextFileInputStream is = new IFSTextFileInputStream(systemObject_,
                                                      (String) null);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4160,6 +4196,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
     {
       IFSTextFileInputStream is =
         new IFSTextFileInputStream(systemObject_, "/NoDirectory/NoFile");
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4247,6 +4284,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream is =
         new IFSTextFileInputStream(systemObject_, ifsPathNameX,
                                IFSTextFileInputStream.SHARE_NONE - 1);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e1)
@@ -4259,6 +4297,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
           IFSTextFileInputStream is =
             new IFSTextFileInputStream(systemObject_, ifsPathNameX,
                                    IFSTextFileInputStream.SHARE_ALL + 1);
+          is.close(); 
           failed("Exception didn't occur.."+is);
         }
         catch(Exception e2)
@@ -4285,6 +4324,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream is =
         new IFSTextFileInputStream((AS400) null, ifsPathName_,
                                IFSTextFileInputStream.SHARE_NONE);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4303,6 +4343,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream is =
         new IFSTextFileInputStream(systemObject_, (IFSFile) null,
                                IFSTextFileInputStream.SHARE_NONE);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4323,6 +4364,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream in =
         new IFSTextFileInputStream(systemObject_, ifsPathNameX,
                                IFSTextFileInputStream.SHARE_NONE - 1);
+      in.close(); 
       failed("Exception didn't occur."+in);
     }
     catch(Exception e1)
@@ -4335,6 +4377,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
           IFSTextFileInputStream in =
             new IFSTextFileInputStream(systemObject_, ifsPathNameX,
                                    IFSTextFileInputStream.SHARE_ALL + 1);
+          in.close(); 
           failed("Exception didn't occur.."+in);
         }
         catch(Exception e2)
@@ -4366,6 +4409,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream is =
         new IFSTextFileInputStream(systemObject_, file,
                                IFSTextFileInputStream.SHARE_ALL);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4664,6 +4708,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream is =
         new IFSTextFileInputStream((AS400) null, file,
                                IFSTextFileInputStream.SHARE_NONE);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4682,6 +4727,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream is =
         new IFSTextFileInputStream(systemObject_, (IFSFile) null,
                                IFSTextFileInputStream.SHARE_NONE);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -4703,6 +4749,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream in =
         new IFSTextFileInputStream(systemObject_, file,
                                IFSTextFileInputStream.SHARE_NONE - 1);
+      in.close(); 
       failed("Exception didn't occur."+in);
     }
     catch(Exception e1)
@@ -4715,6 +4762,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
           IFSTextFileInputStream in =
             new IFSTextFileInputStream(systemObject_, file,
                                    IFSTextFileInputStream.SHARE_ALL + 1);
+          in.close(); 
           failed("Exception didn't occur.."+in);
         }
         catch(Exception e2)
@@ -4746,6 +4794,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileInputStream is =
         new IFSTextFileInputStream(systemObject_, file,
                                IFSTextFileInputStream.SHARE_ALL);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -5059,6 +5108,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
     {
       IFSTextFileInputStream is =
         new IFSTextFileInputStream((IFSFileDescriptor) null);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -5085,6 +5135,9 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       assertCondition(is1.read() == dataIn[0] &&
              is2.read() == dataIn[1] &&
              is1.read() == dataIn[2]);
+      is1.close(); 
+      is2.close(); 
+
     }
     catch(Exception e)
     {
@@ -5102,6 +5155,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
     {
       IFSTextFileOutputStream os = new IFSTextFileOutputStream((AS400) null,
                                                        ifsPathName_);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -5119,6 +5173,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
     {
       IFSTextFileOutputStream os = new IFSTextFileOutputStream(systemObject_,
                                                        (String) null);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -5229,6 +5284,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream(systemObject_, ifsPathNameX,
                                 IFSTextFileOutputStream.SHARE_NONE - 1, true);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e1)
@@ -5241,6 +5297,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
           IFSTextFileOutputStream os =
             new IFSTextFileOutputStream(systemObject_, ifsPathNameX,
                                     IFSTextFileOutputStream.SHARE_ALL + 1, true);
+          os.close(); 
           failed("Exception didn't occur.."+os);
         }
         catch(Exception e2)
@@ -5267,6 +5324,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream((AS400) null, ifsPathName_,
                                 IFSTextFileOutputStream.SHARE_NONE, true);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -5285,6 +5343,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream(systemObject_, (IFSFile) null,
                                 IFSTextFileOutputStream.SHARE_NONE, true);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -5305,6 +5364,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream(systemObject_, ifsPathNameX,
                                 IFSTextFileOutputStream.SHARE_NONE - 1, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e1)
@@ -5316,6 +5376,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
           IFSTextFileOutputStream os =
             new IFSTextFileOutputStream(systemObject_, ifsPathNameX,
                                     IFSTextFileOutputStream.SHARE_ALL + 1, true);
+          os.close(); 
           failed("Exception didn't occur.."+os);
         }
         catch(Exception e2)
@@ -5582,6 +5643,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream(systemObject_, file,
                                 IFSTextFileOutputStream.SHARE_NONE - 1, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e1)
@@ -5595,6 +5657,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
           IFSTextFileOutputStream os =
             new IFSTextFileOutputStream(systemObject_, file,
                                     IFSTextFileOutputStream.SHARE_ALL + 1, false);
+          os.close(); 
           failed("Exception didn't occur.."+os);
         }
         catch(Exception e2)
@@ -5622,6 +5685,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream((AS400) null, file,
                                 IFSTextFileOutputStream.SHARE_NONE, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -5640,6 +5704,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream(systemObject_, (IFSFile) null,
                                 IFSTextFileOutputStream.SHARE_NONE, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -5661,6 +5726,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream(systemObject_, file,
                                 IFSTextFileOutputStream.SHARE_NONE - 1, false);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e1)
@@ -5674,6 +5740,7 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
           IFSTextFileOutputStream os =
             new IFSTextFileOutputStream(systemObject_, file,
                                     IFSTextFileOutputStream.SHARE_ALL + 1, false);
+          os.close(); 
           failed("Exception didn't occur.."+os);
         }
         catch(Exception e2)
@@ -5939,7 +6006,8 @@ Ensure that all valid values for argument #3 of IFSRandomAccessFile(AS400, IFSFi
     {
       IFSTextFileOutputStream os =
         new IFSTextFileOutputStream((IFSFileDescriptor) null);
-      failed("Exception didn't occur."+os);
+      os.close(); 
+     failed("Exception didn't occur."+os);
     }
     catch(Exception e)
     {
@@ -5988,6 +6056,7 @@ Ensure that NullPointerException is thrown if argument of IFSFileInputStream(IFS
     try
     {
       IFSFileInputStream is = new IFSFileInputStream((IFSFile) null);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -6010,6 +6079,7 @@ doesn't exist.
       IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
       IFSFileInputStream is =
         new IFSFileInputStream(file);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -6074,6 +6144,7 @@ Ensure that NullPointerException is thrown if argument of IFSFileInputStream(IFS
     try
     {
       IFSFileInputStream is = new IFSFileInputStream((IFSJavaFile) null);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -6095,6 +6166,7 @@ doesn't exist.
     {
       IFSJavaFile file = new IFSJavaFile(systemObject_, ifsPathNameX);
       IFSFileInputStream is = new IFSFileInputStream(file);
+      is.close(); 
       failed("Exception didn't occur."+is);
     }
     catch(Exception e)
@@ -6157,6 +6229,7 @@ Ensure that NullPointerException is thrown if argument of IFSFileOutputStream(IF
     try
     {
       IFSFileOutputStream os = new IFSFileOutputStream((IFSFile)null);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -6199,6 +6272,7 @@ Ensure that NullPointerException is thrown if argument of IFSFileOutputStream(IF
     try
     {
       IFSFileOutputStream os = new IFSFileOutputStream((IFSJavaFile)null);
+      os.close(); 
       failed("Exception didn't occur."+os);
     }
     catch(Exception e)
@@ -6263,8 +6337,8 @@ Updated 04/05/2022.  Does not throw NPE because code just does + string.
     {
       IFSFile dir = new IFSFile(systemObject_, "/Directory");
       IFSFile file = new IFSFile(dir, (String) null);
-
-      assertCondition(true); 
+      
+      assertCondition(true, "file is "+file); 
 
    }
     catch(Exception e)
@@ -6408,6 +6482,7 @@ This is to mimic CPS 8B5S2H and CPS 8KMAN8 where the problem
 could not easily be determined because the retrun code was missing.
 
 */ 
+  @SuppressWarnings("unused")
   public void Var220()
   {
     if (true) {

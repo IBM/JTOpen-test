@@ -16,9 +16,9 @@ package test.Setup;
 
 import java.io.FileOutputStream;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.FTP;
 
 
 
@@ -33,7 +33,7 @@ public class SetupNLS extends SetupLibraryTestcase
   Constructor.
   **/
   public SetupNLS(AS400            systemObject,
-                   Vector           variationsToRun,
+                   Vector<String>           variationsToRun,
                    int              runMode,
                    FileOutputStream fileOutputStream,
                    

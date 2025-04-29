@@ -18,7 +18,7 @@ public class SocketProxyMasterThread extends Thread {
   SocketProxy master_;
   boolean enabled_ = true;
   boolean running = true;
-  Vector threadList = null;
+  Vector<SocketProxyThread> threadList = null;
   PrintStream outputFailedAttempts = null;
   long startTime = 0;
   int localPort_ = 0;
@@ -66,7 +66,7 @@ public class SocketProxyMasterThread extends Thread {
 
   public void run() {
     int exceptionCount = 0;
-    threadList = new Vector();
+    threadList = new Vector<SocketProxyThread>();
     while (running) {
       // Pass the socket to a new thread so that it can be dealt with
       // while we can go and get ready to accept another connection.

@@ -19,15 +19,12 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.User;
 import com.ibm.as400.access.UserList;
+import com.ibm.as400.resource.RUser;
+import com.ibm.as400.resource.RUserList;
 import com.ibm.as400.resource.ResourceException;
 
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.PropertyChangeListener_;
-import test.UserTest.VetoableChangeListener_;
-
-import com.ibm.as400.resource.RUser;
-import com.ibm.as400.resource.RUserList;
 
 /**
  Testcase UserListBasicTestcase.  This tests the following methods of the UserList class:
@@ -49,6 +46,7 @@ import com.ibm.as400.resource.RUserList;
  <li>setSystem()
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserListBasicTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -106,10 +104,10 @@ public class UserListBasicTestcase extends Testcase
             return false;
         }
 
-        Enumeration enumeration = userList.getUsers();
+        Enumeration<User> enumeration = userList.getUsers();
 
         // Check the elements of the list.
-        Vector checkList = new Vector();
+        Vector<String> checkList = new Vector<String>();
         for (int i = 0; i < expectedContents.length; ++i)
         {
             checkList.addElement(expectedContents[i]);
@@ -169,7 +167,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -201,7 +199,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(null, UserList.ALL, UserList.NONE);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -217,7 +215,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(pwrSys_, null, UserList.NONE);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -233,7 +231,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(pwrSys_, UserList.ALL, null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -248,7 +246,7 @@ public class UserListBasicTestcase extends Testcase
     {
         try
         {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             UserList ul = new UserList(bogus, UserList.MEMBER, "AGroup");
             assertCondition(ul.getSystem() == bogus && ul.getUserInfo() == UserList.MEMBER && ul.getGroupInfo().equals("AGroup"));
         }
@@ -266,7 +264,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(pwrSys_, "JoeBlow", UserList.NONE);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -551,7 +549,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(null, UserList.ALL, UserList.NONE, UserList.ALL);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -567,7 +565,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(pwrSys_, null, UserList.NONE, UserList.ALL);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -583,7 +581,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(pwrSys_, UserList.ALL, null, UserList.ALL);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -599,7 +597,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(pwrSys_, UserList.ALL, UserList.NONE, null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -614,7 +612,7 @@ public class UserListBasicTestcase extends Testcase
     {
         try
         {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             UserList ul = new UserList(bogus, UserList.MEMBER, "AGroup", UserList.ALL);
             assertCondition(ul.getSystem() == bogus && ul.getUserInfo() == UserList.MEMBER && ul.getGroupInfo().equals("AGroup") && ul.getUserProfile() == UserList.ALL);
         }
@@ -632,7 +630,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(pwrSys_, "JoeBlow", UserList.NONE, UserList.ALL);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -917,7 +915,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             UserList ul = new UserList(pwrSys_, UserList.ALL, UserList.NONE, "ELEVENISBIG");
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {
@@ -1633,7 +1631,7 @@ public class UserListBasicTestcase extends Testcase
     {
         try
         {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             UserList u = new UserList(systemObject_);
             u.setSystem(bogus);
             assertCondition(u.getSystem().getSystemName().equals("bogus") && u.getSystem().getUserId().equalsIgnoreCase("bogus"));
@@ -1651,10 +1649,10 @@ public class UserListBasicTestcase extends Testcase
     {
         try
         {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             UserList u = new UserList(bogus);
             u.setSystem(pwrSys_);
-            Enumeration enumeration = u.getUsers();
+            Enumeration<User> enumeration = u.getUsers();
             User user = (User)enumeration.nextElement();
             assertCondition(u.getSystem().getSystemName().equals(pwrSys_.getSystemName()) && u.getSystem().getUserId().equals(pwrSys_.getUserId()) && user != null);
         }
@@ -1689,8 +1687,8 @@ public class UserListBasicTestcase extends Testcase
     {
         try
         {
-            AS400 temp1 = new AS400("temp1", "temp1", "temp1");
-            AS400 temp2 = new AS400("temp2", "temp2", "temp2");
+            AS400 temp1 = new AS400("temp1", "temp1", "temp1".toCharArray());
+            AS400 temp2 = new AS400("temp2", "temp2", "temp2".toCharArray());
             UserList u = new UserList(temp1);
             UserTest.PropertyChangeListener_ pcl = new UserTest.PropertyChangeListener_();
             u.addPropertyChangeListener(pcl);
@@ -1710,8 +1708,8 @@ public class UserListBasicTestcase extends Testcase
     {
         try
         {
-            AS400 temp1 = new AS400("temp1", "temp1", "temp1");
-            AS400 temp2 = new AS400("temp2", "temp2", "temp2");
+            AS400 temp1 = new AS400("temp1", "temp1", "temp1".toCharArray());
+            AS400 temp2 = new AS400("temp2", "temp2", "temp2".toCharArray());
             UserList u = new UserList(temp1);
             UserTest.VetoableChangeListener_ vcl = new UserTest.VetoableChangeListener_();
             u.addVetoableChangeListener(vcl);
@@ -1731,8 +1729,8 @@ public class UserListBasicTestcase extends Testcase
     {
         try
         {
-            AS400 temp1 = new AS400("temp1", "temp1", "temp1");
-            AS400 temp2 = new AS400("temp2", "temp2", "temp2");
+            AS400 temp1 = new AS400("temp1", "temp1", "temp1".toCharArray());
+            AS400 temp2 = new AS400("temp2", "temp2", "temp2".toCharArray());
             UserList u = new UserList(temp1);
             UserTest.VetoableChangeListener_ vcl = new UserTest.VetoableChangeListener_(true);
             u.addVetoableChangeListener(vcl);
@@ -1897,7 +1895,7 @@ public class UserListBasicTestcase extends Testcase
             int length = (int)userList.getListLength();
 
             // Check the elements of the list.
-            Vector checkList = new Vector(length);
+            Vector<String> checkList = new Vector<String>(length);
             for (int i = 0; i < expectedContents.length; ++i)
             {
                 checkList.addElement(expectedContents[i]);
@@ -1962,7 +1960,7 @@ public class UserListBasicTestcase extends Testcase
         try
         {
             RUserList ul = new RUserList(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+ul);
         }
         catch (Exception e)
         {

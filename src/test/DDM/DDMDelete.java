@@ -13,32 +13,24 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.AS400Text;
-import com.ibm.as400.access.AS400Bin4;
-import com.ibm.as400.access.Trace;
 
-import test.Testcase;
-
+import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400File;
 import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.BinaryFieldDescription;
-import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.KeyedFile;
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400File;
 import com.ibm.as400.access.SequentialFile;
-import com.ibm.as400.access.KeyedFile;
-import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
-import java.io.ByteArrayOutputStream;
+import test.Testcase;
 
 /**
   Testcase DDMDelete.  This test class verifies valid and invalid usage of
@@ -274,6 +266,8 @@ public class DDMDelete extends Testcase
       file.create(new DDMDeleteFormat(systemObject_), "DDMDelete");
       KeyedFile file2 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYFILE.FILE/MBR1.MBR");
       file2.create(new DDMDeleteKeyFormat(systemObject_), "DDMDelete");
+      file2.close(); 
+      file.close(); 
     }
     catch(Exception e)
     {
@@ -294,6 +288,8 @@ public class DDMDelete extends Testcase
     {
       file.delete();
       file2.delete();
+      file.close(); 
+      file2.close(); 
     }
     catch(Exception e)
     {

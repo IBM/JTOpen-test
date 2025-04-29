@@ -209,6 +209,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(3);
@@ -216,6 +217,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(8);
@@ -223,6 +225,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorAfterLast();
@@ -230,6 +233,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorBeforeFirst();
@@ -237,6 +241,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -244,6 +249,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -251,6 +257,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -258,6 +265,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -265,6 +273,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -273,6 +282,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -281,6 +291,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -289,6 +300,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -297,6 +309,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -305,6 +318,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -313,6 +327,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.close();
@@ -342,6 +357,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(3);
@@ -349,6 +365,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(8);
@@ -356,6 +373,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorAfterLast();
@@ -363,6 +381,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorBeforeFirst();
@@ -370,6 +389,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -377,6 +397,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -384,6 +405,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -391,6 +413,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -398,6 +421,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -406,6 +430,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -414,6 +439,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -422,6 +448,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -430,6 +457,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -438,6 +466,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -446,6 +475,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.close();
@@ -473,6 +503,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(3);
@@ -480,6 +511,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(8);
@@ -487,6 +519,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorAfterLast();
@@ -494,6 +527,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorBeforeFirst();
@@ -501,6 +535,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -508,6 +543,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -515,6 +551,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -522,6 +559,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -529,6 +567,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -537,6 +576,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -545,6 +585,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -553,6 +594,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -561,6 +603,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -569,6 +612,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -577,6 +621,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.close();
@@ -604,6 +649,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(3);
@@ -611,6 +657,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(8);
@@ -618,6 +665,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorAfterLast();
@@ -625,6 +673,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorBeforeFirst();
@@ -632,6 +681,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -639,6 +689,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -646,6 +697,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -653,6 +705,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -660,6 +713,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -668,6 +722,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -676,6 +731,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -684,6 +740,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -692,6 +749,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -700,6 +758,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -708,6 +767,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.close();
@@ -735,6 +795,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(3);
@@ -742,6 +803,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(8);
@@ -749,6 +811,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorAfterLast();
@@ -756,6 +819,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorBeforeFirst();
@@ -763,6 +827,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -770,6 +835,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -777,6 +843,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -784,6 +851,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -791,6 +859,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -799,6 +868,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -807,6 +877,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -815,6 +886,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -823,6 +895,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -831,6 +904,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -839,6 +913,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.close();
@@ -867,6 +942,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(3);
@@ -874,6 +950,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(8);
@@ -881,6 +958,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorAfterLast();
@@ -888,6 +966,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorBeforeFirst();
@@ -895,6 +974,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -902,6 +982,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -909,6 +990,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -916,6 +998,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -923,6 +1006,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -931,6 +1015,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -939,6 +1024,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -947,6 +1033,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -955,6 +1042,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -963,6 +1051,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -971,6 +1060,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.close();
@@ -998,6 +1088,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(3);
@@ -1005,6 +1096,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(8);
@@ -1012,6 +1104,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorAfterLast();
@@ -1019,6 +1112,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorBeforeFirst();
@@ -1026,6 +1120,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -1033,6 +1128,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -1040,6 +1136,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -1047,6 +1144,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -1054,6 +1152,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -1062,6 +1161,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -1070,6 +1170,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -1078,6 +1179,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -1086,6 +1188,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -1094,6 +1197,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -1102,6 +1206,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.close();
@@ -1130,6 +1235,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(3);
@@ -1137,6 +1243,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(8);
@@ -1144,6 +1251,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorAfterLast();
@@ -1151,6 +1259,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorBeforeFirst();
@@ -1158,6 +1267,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -1165,6 +1275,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -1172,6 +1283,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToFirst();
@@ -1179,6 +1291,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursorToLast();
@@ -1186,6 +1299,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -1194,6 +1308,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -1202,6 +1317,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -1210,6 +1326,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(2);
@@ -1218,6 +1335,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(6);
@@ -1226,6 +1344,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
+        sf.close(); 
         return;
       }
       sf.positionCursor(5);
@@ -1234,6 +1353,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
+        sf.close(); 
         return;
       }
       sf.close();
@@ -1262,63 +1382,63 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(3);
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(8);
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(2);
       sf.positionCursorToNext();
@@ -1326,7 +1446,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(6);
       sf.positionCursorToNext();
@@ -1334,7 +1454,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(5);
       sf.positionCursorToNext();
@@ -1342,7 +1462,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(2);
       sf.positionCursorToPrevious();
@@ -1350,7 +1470,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(6);
       sf.positionCursorToPrevious();
@@ -1358,7 +1478,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(5);
       sf.positionCursorToPrevious();
@@ -1366,7 +1486,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -1394,6 +1514,7 @@ public class DDMPositionExtended extends Testcase
     Record[] recs = sf.readAll();
     kf.write(recs);
     kf.close();
+    sf.close(); 
   }
 
   /**
@@ -1409,69 +1530,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      // Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -1479,7 +1600,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -1487,7 +1608,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -1495,7 +1616,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1503,7 +1624,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1511,7 +1632,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1519,7 +1640,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -1543,69 +1664,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, 2, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      //Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -1613,7 +1734,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -1621,7 +1742,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -1629,7 +1750,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1637,7 +1758,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1645,7 +1766,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1653,7 +1774,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -1677,69 +1798,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, 3, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      //Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -1747,7 +1868,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -1755,7 +1876,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -1763,7 +1884,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1771,7 +1892,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1779,7 +1900,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1787,7 +1908,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -1811,69 +1932,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, 10, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      //Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -1881,7 +2002,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -1889,7 +2010,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -1897,7 +2018,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1905,7 +2026,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1913,7 +2034,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -1921,7 +2042,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -1945,69 +2066,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, 100, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      //Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -2015,7 +2136,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -2023,7 +2144,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -2031,7 +2152,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2039,7 +2160,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2047,7 +2168,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2055,7 +2176,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -2079,69 +2200,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, recs.length, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      //Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -2149,7 +2270,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -2157,7 +2278,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -2165,7 +2286,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2173,7 +2294,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2181,7 +2302,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2189,7 +2310,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -2213,69 +2334,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      //Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -2283,7 +2404,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -2291,7 +2412,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -2299,7 +2420,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2307,7 +2428,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2315,7 +2436,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2323,7 +2444,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -2347,69 +2468,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, recs.length-1, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      ///Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -2417,7 +2538,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -2425,7 +2546,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -2433,7 +2554,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2441,7 +2562,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2449,7 +2570,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2457,7 +2578,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();
@@ -2481,69 +2602,69 @@ public class DDMPositionExtended extends Testcase
       sf.setRecordFormat();
       Record[] recs = sf.readAll();
       sf.open(AS400File.READ_ONLY, recs.length+1, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] arr = recs[4].getKeyFields();
+      //Object[] arr = recs[4].getKeyFields();
       sf.positionCursor(recs[4].getKeyFields());
       Record rec = sf.read();
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[2].getKeyFields());
       rec = sf.readNext();
       if (!rec.equals(recs[3]))
       {
         failed("Records not equal (4):\n'"+rec+"' !=\n'"+recs[3]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[7].getKeyFields());
       rec = sf.readPrevious();
       if (!rec.equals(recs[6]))
       {
         failed("Records not equal (7):\n'"+rec+"' !=\n'"+recs[6]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorAfterLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (after last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorBeforeFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (before first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.read();
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to first):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.read();
       if (!rec.equals(recs[recs.length-1]))
       {
         failed("Records not equal (to last):\n'"+rec+"' !=\n'"+recs[recs.length-1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToFirst();
       rec = sf.readNext();
       if (!rec.equals(recs[1]))
       {
         failed("Records not equal (2):\n'"+rec+"' !=\n'"+recs[1]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursorToLast();
       rec = sf.readPrevious();
       if (!rec.equals(recs[recs.length-2]))
       {
         failed("Records not equal (to last - 1):\n'"+rec+"' !=\n'"+recs[recs.length-2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToNext();
@@ -2551,7 +2672,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to next 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToNext();
@@ -2559,7 +2680,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[7]))
       {
         failed("Records not equal (to next 8):\n'"+rec+"' !=\n'"+recs[7]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToNext();
@@ -2567,7 +2688,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[4]))
       {
         failed("Records not equal (to next 5):\n'"+rec+"' !=\n'"+recs[4]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[1].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2575,7 +2696,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[0]))
       {
         failed("Records not equal (to previous 1):\n'"+rec+"' !=\n'"+recs[0]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[5].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2583,7 +2704,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[5]))
       {
         failed("Records not equal (to previous 6):\n'"+rec+"' !=\n'"+recs[5]+"'");
-        return;
+        sf.close(); return;
       }
       sf.positionCursor(recs[4].getKeyFields());
       sf.positionCursorToPrevious();
@@ -2591,7 +2712,7 @@ public class DDMPositionExtended extends Testcase
       if (!rec.equals(recs[2]))
       {
         failed("Records not equal (to previous 3):\n'"+rec+"' !=\n'"+recs[2]+"'");
-        return;
+        sf.close(); return;
       }
       sf.close();
       succeeded();

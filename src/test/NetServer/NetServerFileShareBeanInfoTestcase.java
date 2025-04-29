@@ -12,25 +12,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.NetServer;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.awt.Image;
-import java.util.Hashtable;
-import java.beans.BeanInfo;
-import java.beans.SimpleBeanInfo;
-import java.beans.FeatureDescriptor;
 import java.beans.BeanDescriptor;
 import java.beans.EventSetDescriptor;
-import java.beans.MethodDescriptor;
+import java.beans.FeatureDescriptor;
 import java.beans.PropertyDescriptor;
-
-import test.Testcase;
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.NetServerFileShare;
 import com.ibm.as400.access.NetServerFileShareBeanInfo;
+
+import test.Testcase;
 
 /**
 NetServerFileShareBeanInfoTestcase.  Verify the following public interfaces:
@@ -46,6 +39,7 @@ NetServerFileShareBeanInfoTestcase.  Verify the following public interfaces:
    </ul>
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class NetServerFileShareBeanInfoTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -62,7 +56,7 @@ public class NetServerFileShareBeanInfoTestcase extends Testcase
     Constructor.  This is called from the NetServerFileShareTest::createTestcases method.
    **/
    public NetServerFileShareBeanInfoTestcase(AS400 systemObject,
-                                          Hashtable variationsToRun,
+                                          Hashtable<String,Vector<String>> variationsToRun,
                                           int runMode,
                                           FileOutputStream fileOutputStream)
    {
@@ -121,13 +115,14 @@ public class NetServerFileShareBeanInfoTestcase extends Testcase
       try
       {
          NetServerFileShareBeanInfo bi = new NetServerFileShareBeanInfo();
+         assertCondition(true, "bi = "+bi); 
       }
       catch(Exception e)
       {
          failed(e, "Unexpected exception");
          return;
       }
-      succeeded();
+      
    }
 
    /**
@@ -345,16 +340,8 @@ public class NetServerFileShareBeanInfoTestcase extends Testcase
    **/
    public void Var007()
    {
-      try
-      {
-         NetServerFileShareBeanInfo bi = new NetServerFileShareBeanInfo();
+         // NetServerFileShareBeanInfo bi = new NetServerFileShareBeanInfo();
          // Icons / GUI components no longer available in JTOpen 20.0.X
-      }
-      catch(Exception e)
-      {
-         failed(e, "Unexpected exception");
-         return;
-      }
       succeeded();
    }
 

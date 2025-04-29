@@ -20,6 +20,8 @@ import com.ibm.as400.access.RecordFormat;
 
 public class DDMChar10NoKeyFormat extends RecordFormat
 {
+  private static final long serialVersionUID = 1L;
+
   public DDMChar10NoKeyFormat(AS400 sys)
   {
     super("FMT");

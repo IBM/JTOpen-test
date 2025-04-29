@@ -44,7 +44,7 @@ public class DDMMemberList extends Testcase
     private static final String LIBRARY = "W95LIB";
     private static final String FILENAME = "QCLSRC";
 
-    private boolean brief_;
+    // private boolean brief_;
 
 	/**
 	Constructor.  This is called from the DDMTest constructor.

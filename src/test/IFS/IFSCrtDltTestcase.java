@@ -14,11 +14,14 @@
 package test.IFS;
 
 import java.io.FileOutputStream;
-import java.io.File;
-
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
 import java.util.Random;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ExtendedIOException;
+import com.ibm.as400.access.IFSFile;
 
 import test.JDTestDriver;
 

@@ -72,6 +72,7 @@ Constructor.
 
       // Create a file to copy.
 
+      @SuppressWarnings("resource")
       IFSFileOutputStream os =
         new IFSFileOutputStream(systemObject_, ifsPathName_);
       byte[] data = new byte[SOURCE_FILE_LENGTH];
@@ -227,6 +228,7 @@ Copy a file to an existing file, verify that the file gets overwritten.
     try
     {
       // Write the second file.
+      @SuppressWarnings("resource")
       IFSFileOutputStream os = new IFSFileOutputStream(systemObject_, targetPath);
       byte[] data = new byte[256];
       int i = 255;

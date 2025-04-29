@@ -78,18 +78,18 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
      @param  expectedNonContents  A list of user names that must not appear in the user list.
      @return  true if the list is correct, false otherwise.
      **/
-    private boolean testEnumeration(Enumeration enumeration, String[] expectedContents, String[] expectedNonContents)
+    private boolean testEnumeration(Enumeration<User> enumeration, String[] expectedContents, String[] expectedNonContents)
     {
         // Build a Vector with all expected users.  Remove them as they are found.
         // They should all be gone when we are done!
-        Vector expectedUsersV = new Vector();
+        Vector<String> expectedUsersV = new Vector<String>();
         for (int i = 0; i < expectedContents.length; ++i)
         {
             expectedUsersV.addElement(expectedContents[i]);
         }
 
         // Build a Vector with all non-expected users.
-        Vector expectedNonContentsV = new Vector();
+        Vector<String> expectedNonContentsV = new Vector<String>();
         for (int i = 0; i < expectedNonContents.length; ++i)
         {
             expectedNonContentsV.addElement(expectedNonContents[i]);
@@ -143,7 +143,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
         {
             UserList u = new UserList();
             int length = u.getLength();
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+length);
         }
         catch (Exception e)
         {
@@ -194,7 +194,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
         try
         {
             UserList u = new UserList(pwrSys_);
-            Enumeration enumeration = u.getUsers();
+            Enumeration<User> enumeration = u.getUsers();
             enumeration.nextElement();
             enumeration.nextElement();
             enumeration.nextElement();
@@ -216,7 +216,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
         try
         {
             UserList u = new UserList(pwrSys_);
-            Enumeration enumeration = u.getUsers();
+            Enumeration<User> enumeration = u.getUsers();
             while (enumeration.hasMoreElements())
             {
                 enumeration.nextElement();
@@ -238,7 +238,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
         try
         {
             UserList u = new UserList(pwrSys_);
-            Enumeration enumeration = u.getUsers();
+            Enumeration<User> enumeration = u.getUsers();
             while (enumeration.hasMoreElements())
             {
                 enumeration.nextElement();
@@ -596,7 +596,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
             UserList ul = new UserList(pwrSys_);
             ul.setUserInfo(UserList.ALL);
             ul.setGroupInfo(UserList.NONE);
-            Enumeration enumeration = ul.getUsers();
+            Enumeration<User> enumeration = ul.getUsers();
             while (enumeration.hasMoreElements())
             {
                 enumeration.nextElement();
@@ -619,7 +619,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
             UserList ul = new UserList(pwrSys_);
             ul.setUserInfo(UserList.ALL);
             ul.setGroupInfo(UserList.NONE);
-            Enumeration enumeration = ul.getUsers();
+            Enumeration<User> enumeration = ul.getUsers();
             while (enumeration.hasMoreElements())
             {
                 enumeration.nextElement();

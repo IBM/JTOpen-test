@@ -15,14 +15,13 @@ package test.DDM;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Text;
-import com.ibm.as400.access.AS400Bin4;
-import com.ibm.as400.access.BinaryFieldDescription;
 import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
 
 public class DDMChar10KeyFormat extends RecordFormat
 {
+  private static final long serialVersionUID = 1L;
+
   public DDMChar10KeyFormat(AS400 sys)
   {
     super("KEYFMT");

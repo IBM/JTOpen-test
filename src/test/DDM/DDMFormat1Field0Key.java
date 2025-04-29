@@ -20,6 +20,8 @@ import com.ibm.as400.access.RecordFormat;
 
 public class DDMFormat1Field0Key extends RecordFormat
 {
+  private static final long serialVersionUID = 1L;
+
   public DDMFormat1Field0Key(AS400 sys)
   {
     super("Fld1Key0");

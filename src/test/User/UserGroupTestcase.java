@@ -61,11 +61,11 @@ public class UserGroupTestcase extends Testcase
         sandbox_.cleanup();
     }
 
-    private boolean testEnumeration(Enumeration enumeration, String[] expectedGroupAndUsers, int expected)
+    private boolean testEnumeration(Enumeration<User> enumeration, String[] expectedGroupAndUsers, int expected)
     {
         // Build a Vector with all expected users.  Remove them as they are found.
         // They should all be gone when we are done!
-        Vector expectedUsersV = new Vector();
+        Vector<String> expectedUsersV = new Vector<String>();
         for (int i = 1; i <= expected; ++i)
         {
             expectedUsersV.addElement(expectedGroupAndUsers[i]);
@@ -117,7 +117,7 @@ public class UserGroupTestcase extends Testcase
         try
         {
             UserGroup u = new UserGroup(null, systemObject_.getUserId());
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+u);
         }
         catch (Exception e)
         {
@@ -133,7 +133,7 @@ public class UserGroupTestcase extends Testcase
         try
         {
             UserGroup u = new UserGroup(systemObject_, null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+u);
         }
         catch (Exception e)
         {
@@ -148,7 +148,7 @@ public class UserGroupTestcase extends Testcase
     {
         try
         {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
+            AS400 bogus = new AS400("bogus", "bogus", "bogus".toCharArray());
             UserGroup u = new UserGroup(bogus, "BadUser");
             assertCondition(u.getSystem() == bogus && u.getName().equals("BADUSER"));
         }
@@ -183,11 +183,11 @@ public class UserGroupTestcase extends Testcase
     {
         try
         {
-            AS400 system = new AS400("dontnameyoursystemthis", "blah", "blah");
+            AS400 system = new AS400("dontnameyoursystemthis", "blah", "blah".toCharArray());
             system.setGuiAvailable(false);
             UserGroup u = new UserGroup(system, "joe");
-            Enumeration enumeration = u.getMembers();
-            failed("Didn't throw exception");
+            Enumeration<?> enumeration = u.getMembers();
+            failed("Didn't throw exception"+enumeration);
         }
         catch (Exception e)
         {
@@ -203,8 +203,8 @@ public class UserGroupTestcase extends Testcase
         try
         {
             UserGroup u = new UserGroup(pwrSys_, "DISCMAN");
-            Enumeration enumeration = u.getMembers();
-            failed("Didn't throw exception");
+            Enumeration<?> enumeration = u.getMembers();
+            failed("Didn't throw exception"+enumeration);
         }
         catch (Exception e)
         {
@@ -221,8 +221,8 @@ public class UserGroupTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             UserGroup u = new UserGroup(pwrSys_, userName);
-            Enumeration enumeration = u.getMembers();
-            failed("Didn't throw exception");
+            Enumeration<?> enumeration = u.getMembers();
+            failed("Didn't throw exception"+enumeration);
         }
         catch (Exception e)
         {
@@ -239,7 +239,8 @@ public class UserGroupTestcase extends Testcase
         {
             String[] userAndGroups = sandbox_.createGroupAndUsers(0);
             UserGroup u = new UserGroup(pwrSys_, userAndGroups[0]);
-            Enumeration enumeration = u.getMembers();
+            @SuppressWarnings("unchecked")
+            Enumeration<User> enumeration = u.getMembers();
             assertCondition(testEnumeration(enumeration, userAndGroups, 0));
         }
         catch (Exception e)
@@ -257,7 +258,8 @@ public class UserGroupTestcase extends Testcase
         {
             String[] userAndGroups = sandbox_.createGroupAndUsers(1);
             UserGroup u = new UserGroup(pwrSys_, userAndGroups[0]);
-            Enumeration enumeration = u.getMembers();
+            @SuppressWarnings("unchecked")
+            Enumeration<User> enumeration = u.getMembers();
             assertCondition(testEnumeration(enumeration, userAndGroups, 1));
         }
         catch (Exception e)
@@ -275,7 +277,8 @@ public class UserGroupTestcase extends Testcase
         {
             String[] userAndGroups = sandbox_.createGroupAndUsers(2);
             UserGroup u = new UserGroup(pwrSys_, userAndGroups[0]);
-            Enumeration enumeration = u.getMembers();
+            @SuppressWarnings("unchecked")
+            Enumeration<User> enumeration = u.getMembers();
             assertCondition(testEnumeration(enumeration, userAndGroups, 2));
         }
         catch (Exception e)
@@ -293,7 +296,8 @@ public class UserGroupTestcase extends Testcase
         {
             String[] userAndGroups = sandbox_.createGroupAndUsers(10);
             UserGroup u = new UserGroup(pwrSys_, userAndGroups[0]);
-            Enumeration enumeration = u.getMembers();
+            @SuppressWarnings("unchecked")
+            Enumeration<User> enumeration = u.getMembers();
             assertCondition(testEnumeration(enumeration, userAndGroups, 10));
         }
         catch (Exception e)

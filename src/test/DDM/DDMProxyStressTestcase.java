@@ -97,7 +97,8 @@ public class DDMProxyStressTestcase
 /**
    Runs the current thread_
  **/  
-   public void run() 
+   @SuppressWarnings("deprecation")
+  public void run() 
    {
       //String readString = null;
       KeyedFile file = null;
@@ -170,7 +171,8 @@ public class DDMProxyStressTestcase
                System.out.println("     Reading a record..." + "(t" + curntThread_ + ")");
 
                // Ensure that we can read a record.
-               Record r = file.readFirst();
+               @SuppressWarnings("unused")
+              Record r = file.readFirst();
                r = file.readLast();
                r = file.readPrevious();
             }
@@ -324,7 +326,8 @@ public class DDMProxyStressTestcase
 /**
    Stops the current thread_
  **/
-   public void stop() 
+   @SuppressWarnings("deprecation")
+  public void stop() 
    {
       if ((thread_ != null) && thread_.isAlive()) 
       {
@@ -341,6 +344,7 @@ public class DDMProxyStressTestcase
 // Record Format Class
 class DDMKeyFormat extends RecordFormat 
 {
+  private static final long serialVersionUID = 1L;
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
      newArgs[0] = "-tc";
