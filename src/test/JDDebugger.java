@@ -87,7 +87,8 @@ public class JDDebugger extends Thread {
 			}
 		}
 
-		Map<?, ?> map = socketAttachingConnector.defaultArguments();
+		@SuppressWarnings("rawtypes")
+    Map map = socketAttachingConnector.defaultArguments();
 		// out.println(map);
 
 		Connector.Argument hostname = (Connector.Argument) map.get("hostname");

@@ -87,7 +87,8 @@ public class JVMRunUtility extends Thread {
     public void startJVM() throws Exception {
       VirtualMachineManager virtualMachineManager = Bootstrap.virtualMachineManager(); 
       LaunchingConnector launchingConnector = virtualMachineManager.defaultConnector();
-      Map<?, ?> defaultArguments = launchingConnector.defaultArguments();
+      @SuppressWarnings("rawtypes")
+      Map defaultArguments = launchingConnector.defaultArguments();
       
       Connector.Argument mainArgument = (Connector.Argument) defaultArguments.get("main"); 
       mainArgument.setValue(mainClassname_+" "+args_); 
