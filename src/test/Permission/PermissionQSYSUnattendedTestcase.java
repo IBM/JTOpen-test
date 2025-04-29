@@ -32,7 +32,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Date;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Vector;
 import java.io.File;
 import java.net.URL;
@@ -102,7 +102,7 @@ extends Testcase
 Constructor.
 **/
     public PermissionQSYSUnattendedTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String,Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream)
     {

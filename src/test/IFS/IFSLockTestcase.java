@@ -15,7 +15,7 @@ package test.IFS;
 
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.ExtendedIOException;
@@ -46,7 +46,7 @@ Constructor.
   public IFSLockTestcase (AS400 systemObject,
         String userid,
         String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)

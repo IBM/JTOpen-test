@@ -46,7 +46,6 @@ import com.ibm.as400.access.IFSRandomAccessFile;
 import com.ibm.as400.access.IFSTextFileInputStream;
 import com.ibm.as400.access.IFSTextFileOutputStream;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
-import com.ibm.as400.security.auth.ProfileTokenProvider;
 import com.ibm.as400.util.BASE64Decoder;
 
 import test.JCIFSUtility;
@@ -3396,17 +3395,13 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
     * Ensure that IFSTextFileInputStream.read() can read a file in QSYS.LIB, when it is the 
     * first class loaded by the classloader. 
     **/
-   public void CommonVar107(AS400 as400) {
+   public void FixupCommonVar107(AS400 as400) {
 
      // 
      // Note:  This testcase still fails with "Data stream is not known"
      //        even after fixes were created. 
      // Keep code here in case we want to get this working. 
      // 
-     if (true) { 
-     assertCondition(true); 
-     return; 
-     }
      StringBuffer sb = new StringBuffer();
      boolean passed = true;
      // Restore the file to read to the current library.
@@ -3466,7 +3461,8 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
 
        File toolboxJar = TestDriver.getLoadSource("com.ibm.as400.access.AS400");
 
-       ClassLoader originalClassLoader = AS400.class.getClassLoader();
+       @SuppressWarnings("unused")
+      ClassLoader originalClassLoader = AS400.class.getClassLoader();
 
        String absolutePath = toolboxJar.getAbsolutePath(); 
        URL[] urls = new URL[1]; 
@@ -3477,7 +3473,8 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
        }
 
        sb.append("Classloader using URL="+urls[0]+"\n"); 
-       ClassLoader ifsReadClassLoader = new IFSURLClassLoader(urls);
+       @SuppressWarnings("resource")
+      ClassLoader ifsReadClassLoader = new IFSURLClassLoader(urls);
 
        Class<?> as400Class = ifsReadClassLoader.loadClass("com.ibm.as400.access.AS400"); 
        
@@ -3525,7 +3522,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
          sb.append("Expected :'" + expected + "'\n");
        }
        JDReflectionUtil.callMethod_V(is, "close");
-      
+        
        assertCondition(passed, sb);
      } catch (Exception e) {
        failed(e, sb);
@@ -3650,7 +3647,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
    public void Var104() {   CommonVar104(systemObject_); }
    public void Var105() {   CommonVar105(systemObject_); }
    public void Var106() {   CommonVar106(systemObject_); }
-   public void Var107() {   CommonVar107(systemObject_); }
+   public void Var107() {   notApplicable(); /* CommonVar107(systemObject_); */ }
    public void Var108() {   notApplicable(); }
    public void Var109() {   notApplicable(); }
    public void Var110() {   notApplicable(); }
@@ -3864,7 +3861,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
    public void Var304() {   CommonVar104(profileTokenSystemObject_); }
    public void Var305() {   CommonVar105(profileTokenSystemObject_); }
    public void Var306() {   CommonVar106(profileTokenSystemObject_); }
-   public void Var307() {   CommonVar107(profileTokenSystemObject_); }
+   public void Var307() {   notApplicable(); /* CommonVar107(profileTokenSystemObject_); */ }
    public void Var308() {   notApplicable(); }
    public void Var309() {   notApplicable(); }
    public void Var310() {   notApplicable(); }

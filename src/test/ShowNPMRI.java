@@ -15,7 +15,6 @@
 package test; 
 
 import java.util.ResourceBundle;
-import java.util.MissingResourceException;
 
 public class ShowNPMRI
 {

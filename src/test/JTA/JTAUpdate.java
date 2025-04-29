@@ -51,7 +51,7 @@ public class JTAUpdate extends JDTestcase {
 Constructor.
 **/
    public JTAUpdate (AS400 systemObject,
-                     Hashtable namesAndVars,
+                     Hashtable<String,Vector<String>> namesAndVars,
                      int runMode,
                      FileOutputStream fileOutputStream,
                      
@@ -525,6 +525,7 @@ Performs cleanup needed after running variations.
                   rc = insertStmt.executeUpdate();
                   if (rc != 1) {
                      failed("Expected 1 row inserted, got " + rc);
+                     conn.close(); 
                      return;
                   }
 
@@ -532,6 +533,7 @@ Performs cleanup needed after running variations.
                   rc = JDReflectionUtil.callMethod_I(xaRes,"prepare",newXid);
                   if (rc != javax.transaction.xa.XAResource.XA_OK) {
                      failed("Expected XA_OK (" + javax.transaction.xa.XAResource.XA_OK + "), got " + rc);
+                     conn.close(); 
                      return;
                   }
 
@@ -691,6 +693,7 @@ Performs cleanup needed after running variations.
                   rc = insertStmt.executeUpdate();
                   if (rc != 1) {
                      failed("Expected 1 row inserted, got " + rc);
+                     conn.close(); 
                      return;
                   }
 

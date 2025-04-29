@@ -13,13 +13,18 @@
 
 package test.MiscAH;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Vector;
 
 import test.FTPTest;
-
-import java.io.*;
 
 
 
@@ -34,7 +39,7 @@ public class FTPUtilities
     static final String PATH_SEPARATOR = System.getProperty ("path.separator");
 
     private static final int DETAILED = 1;
-    private static final int NAME_ONLY = 0;
+    // private static final int NAME_ONLY = 0;
 
     private static final int ONE     =  1;
     private static final int TWO     =  2;
@@ -330,7 +335,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
 
 
 
-    private static Vector<String> listFiles (Vector<?> fileOrDirList, String basePath)
+    static Vector<String> listFiles (Vector<?> fileOrDirList, String basePath)
     {
        Vector<String> result = new Vector<String> ();
        Enumeration<?> e = fileOrDirList.elements ();
@@ -455,10 +460,9 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
 
     public static boolean checkTestDir(String[] listOfStrings, int level, int TOTAL)
     {
-       boolean result = true;
+       // boolean result = true;
        int mask = 0;
-       int numberOfItems = listOfStrings.length;
-
+ 
        if (FTPTest.DEBUG) System.out.println("    Entering verify list");
 
        if (listOfStrings == null)
@@ -466,6 +470,8 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
           System.out.println("    list of strings is null");
           return false;
        }
+
+       int numberOfItems = listOfStrings.length;
 
        if (numberOfItems < 5)
        {
@@ -539,13 +545,13 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
     public static boolean checkForFile(String[] listOfStrings, String file)
     {
        boolean result = true;
-       int numberOfItems = listOfStrings.length;
-
+ 
        if (listOfStrings == null)
        {
           System.out.println("    list of strings is null");
           return false;
        }
+       int numberOfItems = listOfStrings.length;
 
        for (int i = 0; i < numberOfItems; i++)
        {

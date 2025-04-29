@@ -13,8 +13,6 @@
 
 package test.ServiceProgram;
 
-import java.beans.BeanInfo;
-
 import com.ibm.as400.access.ServiceProgramCallBeanInfo;
 
 import test.Testcase;
@@ -50,7 +48,7 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        Class fred = null;
+        Class<?> fred = null;
         try
         {
             fred = Class.forName("netscape.security.PrivilegeManager");
@@ -75,7 +73,7 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            succeeded();
+            assertCondition(true, "created "+f);
         }
         catch (Exception e)
         {
@@ -136,7 +134,7 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "created "+f);
         }
         catch (Error e)
         {
@@ -163,7 +161,7 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "created "+f);
         }
         catch (Error e)
         {
@@ -190,7 +188,7 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "created "+f);
         }
         catch (Error e)
         {
@@ -217,7 +215,7 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "created "+f);
         }
         catch (Error e)
         {

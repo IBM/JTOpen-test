@@ -15,22 +15,19 @@ package test.RM;
 
 
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.util.Hashtable;
 import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.data.RecordFormatDocument;
-
-import test.RMTest;
-import test.Testcase;
-
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.AS400ByteArray;
 import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.FieldDescription;
-import com.ibm.as400.access.AS400ByteArray;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.data.RecordFormatDocument;
 
-import java.math.BigDecimal;
+import test.Testcase;
 
 /**
  The RMtoRecordTestcase class tests the following methods of the RecordFormatDocument class:
@@ -41,9 +38,9 @@ public class RMtoRecordTestcase extends Testcase
     /**
      Constructor.
      **/
-    public RMtoRecordTestcase(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream)
+    public RMtoRecordTestcase(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream)
     {
-        super(systemObject, "RMtoRecordTestcase", (Vector)namesAndVars.get("RMtoRecordTestcase"), runMode, fileOutputStream);
+        super(systemObject, "RMtoRecordTestcase", namesAndVars.get("RMtoRecordTestcase"), runMode, fileOutputStream);
     }
 
     /**

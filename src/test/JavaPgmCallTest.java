@@ -136,7 +136,7 @@ Creates Testcase objects for all the testcases in this component.
 	  
 	  
 	  // Instantiate all testcases to be run.
-    boolean allTestcases = (namesAndVars_.size() == 0);
+    // boolean allTestcases = (namesAndVars_.size() == 0);
     try
     {
          systemObject_.connectService(AS400.COMMAND);

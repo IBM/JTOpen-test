@@ -16,7 +16,7 @@ package test.IFS;
 import java.io.FileOutputStream;
 import java.io.File;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Random;
 import com.ibm.as400.access.*;
 
@@ -45,7 +45,7 @@ Constructor.
   public IFSCrtDltTestcase (AS400 systemObject,
                    String userId, 
                    String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)

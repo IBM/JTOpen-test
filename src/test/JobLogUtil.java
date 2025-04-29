@@ -47,7 +47,7 @@ public class JobLogUtil {
   
   private static final int MAX_LINES = 10000;
 
-  public static String getSpooledJobLogToFile(String hostname, String userid, String password, String serverJob, String directory) throws Exception {
+  public static String getSpooledJobLogToFile(String hostname, String userid, char[] password, String serverJob, String directory) throws Exception {
   
     AS400 as400 = new AS400(hostname, userid, password ); 
     String joblog = getSpooledJobLogToFile(as400, serverJob, directory); 
@@ -84,7 +84,7 @@ public class JobLogUtil {
       SpooledFileOpenList list = new SpooledFileOpenList(as400);
       list.setFilterJobInformation(name, user, number);
       list.open();
-      Enumeration items = list.getItems();
+      Enumeration<?> items = list.getItems();
       int retry = 10; 
       while (items.hasMoreElements() && retry > 0)
       {
@@ -115,7 +115,7 @@ public class JobLogUtil {
   }
   
   public static String cpysplfToFile(AS400 as400, SpooledFileListItem item, String directory, String[] ignoreLines) throws AS400SecurityException, ErrorCompletingRequestException, IOException, InterruptedException, PropertyVetoException {
-    StringBuffer sb = new StringBuffer(); 
+    // StringBuffer sb = new StringBuffer(); 
     String name = item.getName(); 
     int number = item.getNumber(); 
     String jobName = item.getJobName(); 
@@ -139,7 +139,7 @@ public class JobLogUtil {
   }
 
   
-  public static String getJobLog(String hostname, String userid, String password, String serverJob) throws Exception {
+  public static String getJobLog(String hostname, String userid, char[] password, String serverJob) throws Exception {
     AS400 as400 = new AS400(hostname, userid, password ); 
     String joblog = getJobLog(as400, serverJob); 
     as400.disconnectAllServices();
@@ -203,7 +203,7 @@ public class JobLogUtil {
     joblog.addAttributeToRetrieve(JobLog.SENDING_USER_PROFILE);
     
     
-    Enumeration messages = joblog.getMessages(); 
+    Enumeration<QueuedMessage> messages = joblog.getMessages(); 
     int maxLines = MAX_LINES; 
     while (messages.hasMoreElements() && maxLines > 0 ) {
       maxLines --; 
@@ -458,6 +458,7 @@ public class JobLogUtil {
 	   } 
 	   line = reader.readLine();  
 	  }
+	  reader.close(); 
     if (sb.length() > 0) { 
       doInsert(pstmt, 
           currentSectionInfo[0],
@@ -716,7 +717,7 @@ public class JobLogUtil {
       } else { 
 
         String userid = args[1]; 
-        String password = args[2];
+        char[] password = args[2].toCharArray();
         String serverJob = args[3]; 
 
         
@@ -731,6 +732,7 @@ public class JobLogUtil {
         line = br.readLine(); 
       }
       System.out.println("---- End joblog --------------");
+      br.close(); 
       }
     } catch (Exception e) { 
       e.printStackTrace(); 

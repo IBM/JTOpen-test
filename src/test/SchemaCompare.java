@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
@@ -19,11 +18,11 @@ public class SchemaCompare {
 
   public static void main(String args[]) {
     
-    Vector errorList = new Vector(); 
+    Vector<String> errorList = new Vector<String>(); 
     long totalErrorCount = 0; 
     StringBuffer outputBuffer = new StringBuffer();
     StringBuffer successOutputBuffer = new StringBuffer();
-    long mismatchCount = 0;
+    // long mismatchCount = 0;
     if (args.length < 3) {
       usage();
     } else {
@@ -43,8 +42,8 @@ public class SchemaCompare {
         Statement s = connection.createStatement();
         s.execute("CALL QSYS2.QCMDEXC('CHGJOB DFTWAIT(2) ')");
         s.close();
-        Vector tableNames = new Vector();
-        Vector tableTypes = new Vector();
+        Vector<String> tableNames = new Vector<String>();
+        Vector<String> tableTypes = new Vector<String>();
         DatabaseMetaData dmd = connection.getMetaData();
         int rowCount = 0;
         {
@@ -121,7 +120,7 @@ public class SchemaCompare {
         double  elapsedSeconds = (currentTime - startTime) / 1000.0 ;
         System.out.println("The comparision took " +elapsedSeconds+" seconds"); 
         System.out.println("The following "+errorList.size()+" tables had errors "); 
-        Enumeration e = errorList.elements();
+        Enumeration<String> e = errorList.elements();
         while (e.hasMoreElements()) {
           String file = (String) e.nextElement();
           System.out.println(file); 

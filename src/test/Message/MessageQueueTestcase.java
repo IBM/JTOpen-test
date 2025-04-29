@@ -60,7 +60,7 @@ public class MessageQueueTestcase extends Testcase {
      }
      test.MessageTest.main(newArgs); 
    }
-  private static final boolean DEBUG = false;
+  static boolean DEBUG = false;
 
   private MessageSandbox sandbox_ = null;
   private MessageSandbox sandboxReply_ = null;
@@ -96,6 +96,7 @@ public class MessageQueueTestcase extends Testcase {
   /**
    * ctor - Empty ctor should have default properties.
    **/
+  @SuppressWarnings("deprecation")
   public void Var001() {
     try {
       MessageQueue f = new MessageQueue();
@@ -223,8 +224,8 @@ public class MessageQueueTestcase extends Testcase {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
 
-      Enumeration messages = f.getMessages();
-      assertCondition(f.getLength() == 3);
+      Enumeration<QueuedMessage> messages = f.getMessages();
+      assertCondition(f.getLength() == 3, "messages = "+messages);
     } catch (Exception e) {
       failed(e, "Unexpected Exception.");
     }
@@ -240,8 +241,8 @@ public class MessageQueueTestcase extends Testcase {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
 
-      Enumeration messages = f.getMessages();
-      assertCondition(f.getLength() == 100);
+      Enumeration<QueuedMessage> messages = f.getMessages();
+      assertCondition(f.getLength() == 100, "messages = "+messages );
     } catch (Exception e) {
       failed(e, "Unexpected Exception.");
     }
@@ -257,9 +258,9 @@ public class MessageQueueTestcase extends Testcase {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
 
-      Enumeration e = f.getMessages();
-      for (int count = 0; e.hasMoreElements(); ++count) {
-        QueuedMessage m = (QueuedMessage) e.nextElement();
+      Enumeration<QueuedMessage> e = f.getMessages();
+      while (e.hasMoreElements()) {
+         e.nextElement();
       }
 
       assertCondition(f.getLength() == 96);
@@ -305,9 +306,9 @@ public class MessageQueueTestcase extends Testcase {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
 
-      Enumeration e = f.getMessages();
-      for (int count = 0; e.hasMoreElements(); ++count) {
-        QueuedMessage m = (QueuedMessage) e.nextElement();
+      Enumeration<QueuedMessage> e = f.getMessages();
+      while ( e.hasMoreElements()) {
+         e.nextElement();
       }
 
       assertCondition(e.hasMoreElements() == false);
@@ -326,10 +327,10 @@ public class MessageQueueTestcase extends Testcase {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       int count;
       for (count = 0; e.hasMoreElements(); ++count) {
-        QueuedMessage m = (QueuedMessage) e.nextElement();
+         e.nextElement();
       }
 
       assertCondition(count == 3);
@@ -345,9 +346,9 @@ public class MessageQueueTestcase extends Testcase {
   public void Var017() {
     try {
       MessageQueue f = new MessageQueue(systemObject_);
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
 
-      succeeded();
+      assertCondition(true, "Got messages "+e); 
     } catch (Exception e) {
       failed(e, "Unexpected Exception.");
     }
@@ -370,25 +371,25 @@ public class MessageQueueTestcase extends Testcase {
       MessageQueue fReply = new MessageQueue(systemObject_, sandboxReply_
           .getQueue().getPath());
 
-      Enumeration e1 = f.getMessages();
-      Enumeration e2 = fReply.getMessages();
+      Enumeration<QueuedMessage> e1 = f.getMessages();
+      Enumeration<QueuedMessage> e2 = fReply.getMessages();
       boolean done1 = false;
       boolean done2 = false;
       int counter1 = 0;
       int counter2 = 0;
-
+      QueuedMessage message=null; 
       while (done1 == false || done2 == false) {
         if (e1.hasMoreElements() == false) {
           done1 = true;
         } else {
-          QueuedMessage message = (QueuedMessage) e1.nextElement();
+          message = (QueuedMessage) e1.nextElement();
           counter1++;
         }
 
         if (e2.hasMoreElements() == false) {
           done2 = true;
         } else {
-          QueuedMessage message = (QueuedMessage) e2.nextElement();
+          message = (QueuedMessage) e2.nextElement();
           counter2++;
         }
       }
@@ -398,7 +399,7 @@ public class MessageQueueTestcase extends Testcase {
         System.out.println("counter2: " + counter2 + " count2: " + count2);
       }
 
-      assertCondition(counter1 == count1 && counter2 == count2);
+      assertCondition(counter1 == count1 && counter2 == count2, "lastMessage="+message);
     } catch (Exception e) {
       failed(e, "Unexpected Exception.");
     }
@@ -435,6 +436,7 @@ public class MessageQueueTestcase extends Testcase {
    * getSelection() - Should return MessageQueue.ALL if the selection has not
    * been set.
    **/
+  @SuppressWarnings("deprecation")
   public void Var021() {
     try {
       MessageQueue f = new MessageQueue();
@@ -447,6 +449,7 @@ public class MessageQueueTestcase extends Testcase {
   /**
    * getSelection() - Should return the selection if it has been set.
    **/
+  @SuppressWarnings("deprecation")
   public void Var022() {
     try {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
@@ -559,11 +562,11 @@ public class MessageQueueTestcase extends Testcase {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
 
       byte[] key = null;
 
-      for (int count = 0; e.hasMoreElements(); ++count) {
+      while ( e.hasMoreElements()) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
         key = message.getKey();
 
@@ -583,7 +586,6 @@ public class MessageQueueTestcase extends Testcase {
    * queue.
    **/
   public void Var030() {
-    final int messageCount = 2;
     try {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
@@ -593,7 +595,7 @@ public class MessageQueueTestcase extends Testcase {
       f.sendInformational("CAE0009", "/QSYS.LIB/QCPFMSG.MSGF");
       f.sendInformational("This is test message 3.");
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int count = 0; e.hasMoreElements(); ++count) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -625,7 +627,7 @@ public class MessageQueueTestcase extends Testcase {
         }
       }
 
-      Enumeration e2 = f.getMessages();
+      Enumeration<QueuedMessage> e2 = f.getMessages();
 
       if (DEBUG) {
         System.out.println("List now contains:");
@@ -652,13 +654,13 @@ public class MessageQueueTestcase extends Testcase {
     try {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
-      String messageList[] = new String[messageCount];
+      // String messageList[] = new String[messageCount];
 
       sandbox_.setNumberOfMessages(messageCount);
 
       f.remove();
-      Enumeration e = f.getMessages();
-      assertCondition(f.getLength() == 0);
+      Enumeration<QueuedMessage> e = f.getMessages();
+      assertCondition(f.getLength() == 0, "Messages = "+e);
     } catch (Exception e) {
       failed(e, "Unexpected Exception.");
     }
@@ -684,7 +686,7 @@ public class MessageQueueTestcase extends Testcase {
         f.sendInformational(messageList[count]);
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
 
       byte[] removeKey = null;
       String removeText = null;
@@ -710,7 +712,7 @@ public class MessageQueueTestcase extends Testcase {
 
       f.remove(removeKey);
 
-      Enumeration e2 = f.getMessages();
+      Enumeration<QueuedMessage> e2 = f.getMessages();
 
       if (DEBUG) {
         while (e2.hasMoreElements()) {
@@ -793,7 +795,7 @@ public class MessageQueueTestcase extends Testcase {
         }
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
 
       if (DEBUG) {
         while (e.hasMoreElements()) {
@@ -806,7 +808,7 @@ public class MessageQueueTestcase extends Testcase {
 
       f.remove(MessageQueue.KEEP_UNANSWERED);
 
-      Enumeration e2 = f.getMessages();
+      Enumeration<QueuedMessage> e2 = f.getMessages();
 
       for (int count = tracker - 1; e2.hasMoreElements(); --count) {
         QueuedMessage message = (QueuedMessage) e2.nextElement();
@@ -818,7 +820,7 @@ public class MessageQueueTestcase extends Testcase {
         String t1 = message.getText();
         String t2 = messageList[tracker - 1 - count];
         if (!t1.equals(t2)) {
-          failed("Message text not equal: '" + t1 + "' != '" + t2 + "'");
+          failed("Message text not equal: '" + t1 + "' != '" + t2 + "'"+fReply);
           return;
         }
       }
@@ -917,7 +919,7 @@ public class MessageQueueTestcase extends Testcase {
       f.sendInquiry("This is the message.", sandboxReply_.getQueue().getPath());
 
       if (DEBUG) {
-        Enumeration e = f.getMessages();
+        Enumeration<QueuedMessage> e = f.getMessages();
         while (e.hasMoreElements()) {
           QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -927,7 +929,7 @@ public class MessageQueueTestcase extends Testcase {
         System.out.println("");
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       while (e.hasMoreElements()) {
         QueuedMessage message2 = (QueuedMessage) e.nextElement();
 
@@ -997,8 +999,8 @@ public class MessageQueueTestcase extends Testcase {
         }
       }
 
-      Enumeration e = f.getMessages();
-      for (int count = 0; e.hasMoreElements(); ++count) {
+      Enumeration<QueuedMessage> e = f.getMessages();
+      while ( e.hasMoreElements()) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
         if (DEBUG) {
@@ -1026,7 +1028,7 @@ public class MessageQueueTestcase extends Testcase {
         System.out.println("");
       }
 
-      Enumeration e2 = f.getMessages();
+      Enumeration<QueuedMessage> e2 = f.getMessages();
       for (int count = tracker - 1; e2.hasMoreElements(); count--) {
         QueuedMessage message = (QueuedMessage) e2.nextElement();
 
@@ -1049,7 +1051,7 @@ public class MessageQueueTestcase extends Testcase {
         System.out.println("");
       }
 
-      Enumeration eReply = fReply.getMessages();
+      Enumeration<QueuedMessage> eReply = fReply.getMessages();
       for (int count = 0; eReply.hasMoreElements(); ++count) {
         QueuedMessage message = (QueuedMessage) eReply.nextElement();
         if (DEBUG) {
@@ -1084,9 +1086,9 @@ public class MessageQueueTestcase extends Testcase {
       f.remove();
       f.sendInformational("message text");
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       while (e.hasMoreElements()) {
-        QueuedMessage message = (QueuedMessage) e.nextElement();
+        e.nextElement();
         count++;
       }
 
@@ -1113,7 +1115,7 @@ public class MessageQueueTestcase extends Testcase {
       f.sendInformational(message);
 
       QueuedMessage TheMessage = null;
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       while (e.hasMoreElements()) {
         TheMessage = (QueuedMessage) e.nextElement();
       }
@@ -1148,7 +1150,7 @@ public class MessageQueueTestcase extends Testcase {
         f.sendInformational(messageList[count]);
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       boolean succeeded = true;
       for (int counter = messageCount - 1; counter >= 0; --counter) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
@@ -1183,13 +1185,13 @@ public class MessageQueueTestcase extends Testcase {
       f.sendInformational("CAE0005", "/QSYS.LIB/QCPFMSG.MSGF");
       f.sendInformational("CAE0009", "/QSYS.LIB/QCPFMSG.MSGF");
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
 
       if (DEBUG) {
         System.out.println("length   (3): " + f.getLength());
       }
 
-      for (int count = 0; e.hasMoreElements(); ++count) {
+      while ( e.hasMoreElements()) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
         if (DEBUG) {
           System.out.println("text: " + message.getText());
@@ -1242,7 +1244,7 @@ public class MessageQueueTestcase extends Testcase {
             converter.toBytes(substitutionList[count]));
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int counter = messageCount - 1; e.hasMoreElements(); --counter) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -1290,7 +1292,7 @@ public class MessageQueueTestcase extends Testcase {
             converter.toBytes(substitutionList[count]));
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int counter = messageCount - 1; e.hasMoreElements(); --counter) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -1567,7 +1569,7 @@ public class MessageQueueTestcase extends Testcase {
             .getPath());
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int counter = messageCount - 1; e.hasMoreElements(); --counter) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -1623,7 +1625,7 @@ public class MessageQueueTestcase extends Testcase {
             .getPath());
       }
 
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int counter = messageCount - 1; e.hasMoreElements(); --counter) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
@@ -1696,12 +1698,13 @@ public class MessageQueueTestcase extends Testcase {
   /**
    * setSelection() - Verify that passing null causes an exception.
    **/
+  @SuppressWarnings("deprecation")
   public void Var066() {
     try {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
           .getPath());
       f.setSelection(null);
-      failed("No excpeption was thrown");
+      failed("No exception was thrown");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");
     }
@@ -1711,6 +1714,7 @@ public class MessageQueueTestcase extends Testcase {
    * setSelection() - When the selection was not previously set, this should set
    * the selection.
    **/
+  @SuppressWarnings("deprecation")
   public void Var067() {
     try {
       MessageQueue f = new MessageQueue();
@@ -1726,6 +1730,7 @@ public class MessageQueueTestcase extends Testcase {
    * setSelection() - When the selection was previously set, this should set the
    * selection to a new value.
    **/
+  @SuppressWarnings("deprecation")
   public void Var068() {
     try {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
@@ -1775,6 +1780,7 @@ public class MessageQueueTestcase extends Testcase {
    * setSelection() - When an invalid selection is set, this should throw an
    * exception.
    **/
+  @SuppressWarnings("deprecation")
   public void Var071() {
     try {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
@@ -1790,6 +1796,7 @@ public class MessageQueueTestcase extends Testcase {
    * setSelection() - When an invalid selection is set, this should throw an
    * exception.
    **/
+  @SuppressWarnings("deprecation")
   public void Var072() {
     try {
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
@@ -1891,7 +1898,7 @@ public class MessageQueueTestcase extends Testcase {
           .getPath());
 
       boolean succeeded = true;
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
       for (int count = 0; e.hasMoreElements(); ++count) {
         QueuedMessage m = (QueuedMessage) e.nextElement();
         if (m.getFromJobName() != null) {
@@ -1976,7 +1983,7 @@ public class MessageQueueTestcase extends Testcase {
       f.sendInformational("CAE0009", "/QSYS.LIB/QCPFMSG.MSGF");
 
       boolean succeeded = true;
-      Enumeration e = f.getMessages();
+      Enumeration<QueuedMessage> e = f.getMessages();
 
       if (DEBUG) {
         System.out.println("length   (3): " + f.getLength());

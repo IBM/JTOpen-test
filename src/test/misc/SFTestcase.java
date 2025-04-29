@@ -49,7 +49,7 @@ public class SFTestcase extends Testcase {
   /**
    * Constructor.
    **/
-  public SFTestcase(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public SFTestcase(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  AS400 pwrSys,
       boolean brief) {
     super(systemObject, "SFTestcase", namesAndVars, runMode, fileOutputStream);
@@ -523,11 +523,11 @@ public class SFTestcase extends Testcase {
       }
 
       // Put the file lists into vectors.
-      Vector vec1 = new Vector(list1.length);
+      Vector<String> vec1 = new Vector<String>(list1.length);
       for (int i = 0; i < list1.length; i++) {
         vec1.add(list1[i]);
       }
-      Vector vec2 = new Vector(list2.length);
+      Vector<String> vec2 = new Vector<String>(list2.length);
       for (int i = 0; i < list2.length; i++) {
         vec2.add(list2[i]);
       }

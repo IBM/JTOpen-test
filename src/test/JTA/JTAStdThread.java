@@ -605,7 +605,7 @@ public class JTAStdThread extends JTATestcase {
 Constructor.
 **/
    public JTAStdThread (AS400 systemObject,
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         
@@ -618,7 +618,7 @@ Constructor.
 
    public JTAStdThread (AS400 systemObject,
                         String testname, 
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         

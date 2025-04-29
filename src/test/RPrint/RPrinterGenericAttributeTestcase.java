@@ -12,22 +12,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable; import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.resource.RPrinter;
 import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.ResourceListener_;
-
-import com.ibm.as400.resource.RPrinter;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable;
 
 
 
@@ -47,6 +42,7 @@ of the RPrinter class, inherited from BufferedResource:
 <li>setAttributeValue() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterGenericAttributeTestcase
 extends Testcase {
 
@@ -65,7 +61,7 @@ extends Testcase {
 Constructor.
 **/
     public RPrinterGenericAttributeTestcase (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -92,7 +88,7 @@ Checks a particular attribute meta data.
 **/
     static boolean verifyAttributeMetaData(ResourceMetaData amd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -117,7 +113,7 @@ Checks a particular attribute meta data.
 **/
     static boolean verifyAttributeMetaData(ResourceMetaData[] amd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -196,7 +192,7 @@ Verify that the changes are canceled.
             u.setAttributeValue(RPrinter.CHANGES_TAKE_EFFECT, RPrinter.OPERATION_NO_FILES_READY);
             u.cancelAttributeChanges();
             String textDescription2 = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
-            String changes2 = (String)u.getAttributeValue(RPrinter.CHANGES_TAKE_EFFECT);
+            // String changes2 = (String)u.getAttributeValue(RPrinter.CHANGES_TAKE_EFFECT);
             assertCondition((textDescription2.equals(textDescription))
                    && (changes.equals(changes)));
         }
@@ -333,8 +329,8 @@ commitAttributeChanges() - Should commit the change when 2 changes have been mad
     {
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
-            String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
-            String changes = (String)u.getAttributeValue(RPrinter.CHANGES_TAKE_EFFECT);
+            // String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
+            //String changes = (String)u.getAttributeValue(RPrinter.CHANGES_TAKE_EFFECT);
             u.setAttributeValue(RPrinter.TEXT_DESCRIPTION, "This is only a test.");
             u.setAttributeValue(RPrinter.CHANGES_TAKE_EFFECT, RPrinter.OPERATION_FILE_END);
             u.commitAttributeChanges();
@@ -382,7 +378,7 @@ each attribute.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            boolean found = false;
+            // boolean found = false;
             // I did not hardcode an exact length...otherwise, we
             // have to change this every time we add a property.
             assertCondition((amd.length > 20) 
@@ -405,7 +401,7 @@ getAttributeMetaData() with 1 parameter - Pass null.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData amd = u.getAttributeMetaData(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+amd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -422,7 +418,7 @@ getAttributeMetaData() with 1 parameter - Pass an invalid attribute ID.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData amd = u.getAttributeMetaData(new Date());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+amd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -524,7 +520,7 @@ getAttributeUnchangedValue() - When there is no connection.
         try {
             RPrinter u = new RPrinter();
             Object value = u.getAttributeUnchangedValue(RPrinter.USER_NAME);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -541,7 +537,7 @@ getAttributeUnchangedValue() - Pass null.
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
             Object value = u.getAttributeUnchangedValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -558,7 +554,7 @@ getAttributeUnchangedValue() - Pass an invalid attribute ID.
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
             Object value = u.getAttributeUnchangedValue(new AS400());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -690,7 +686,7 @@ getAttributeValue() - When there is no connection.
         try {
             RPrinter u = new RPrinter();
             Object value = u.getAttributeValue(RPrinter.FORM_TYPE);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -709,7 +705,7 @@ getAttributeValue() - When the connection is bogus.
             system.setGuiAvailable(false);
             RPrinter u = new RPrinter(system, "Friend");
             Object value = u.getAttributeValue(RPrinter.FORM_TYPE);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             // Browsers don't like even attempting to connect to "This".
@@ -730,7 +726,7 @@ getAttributeValue() - When the user does not exist.
         try {
             RPrinter u = new RPrinter(pwrSys_, "NOTEXIST");
             Object value = u.getAttributeValue(RPrinter.FORM_TYPE);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -747,7 +743,7 @@ getAttributeValue() - Pass null.
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
             Object value = u.getAttributeValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -764,7 +760,7 @@ getAttributeValue() - Pass an invalid attribute ID.
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
             Object value = u.getAttributeValue("Yo");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -900,8 +896,8 @@ getAttributeValue() - Pass every attribute ID.
             for(int i = 0; i < amd.length; ++i) {
                 // System.out.println("Getting attribute " + amd[i] + ".");
                 Object value = u.getAttributeValue(amd[i].getID());
-                Class valueClass = value.getClass();
-                Class type = amd[i].getType();
+                Class<?> valueClass = value.getClass();
+                Class<?> type = amd[i].getType();
 
                 // Validate the type.
                 if (amd[i].areMultipleAllowed()) {
@@ -912,7 +908,7 @@ getAttributeValue() - Pass every attribute ID.
                         success = false;
                     }
                     else {
-                        Class componentType = valueClass.getComponentType();
+                        Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type)) {
                             System.out.println("Error getting attribute " + amd[i] + ".");
                             System.out.println("Type mismatch: " + componentType + " != " + type + ".");
@@ -1005,7 +1001,7 @@ hasUncommittedAttributeChanges() - Pass null.
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
             boolean pending = u.hasUncommittedAttributeChanges(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+pending);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -1022,7 +1018,7 @@ hasUncommittedAttributeChanges() - Pass an invalid attribute ID.
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
             boolean pending = u.hasUncommittedAttributeChanges("Go Toolbox");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+pending);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -1215,8 +1211,8 @@ RPrinter object.  Verify that the changes are reflected.
     {
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
-            String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
-            String formType = (String)u.getAttributeValue(RPrinter.FORM_TYPE);
+            // String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
+            // String formType = (String)u.getAttributeValue(RPrinter.FORM_TYPE);
 
             RPrinter u2 = new RPrinter(pwrSys_, printerName_);
             u2.setAttributeValue(RPrinter.TEXT_DESCRIPTION, "This is another in a long series of tests.");

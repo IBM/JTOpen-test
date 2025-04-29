@@ -356,6 +356,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
      Parse parameters.
      @exception  Exception  Incorrect arguments will cause an exception.
      **/
+    @SuppressWarnings("deprecation")
     public void parseParms(String args[]) throws Exception
     {
       // Reset values to defaults.  (Needed since several runs can be done using different parameters in applet testing.)
@@ -368,9 +369,9 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
       pwrSys_ = null;
       pwrSysUserID_ = null;
       pwrSysPassword_ = null;
-      namesAndVars_ = new Hashtable();
-      testcases_ = new Vector();
-      skipTestcases_ = new Vector();
+      namesAndVars_ = new Hashtable<String,Vector<String>>();
+      testcases_ = new Vector<Testcase>();
+      skipTestcases_ = new Vector<String>();
       outputFileName_ = null;
       fileOutputStream_ = null;
       noThreads_ = false;
@@ -813,7 +814,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
       createTestcases();
 
       // Report invalid testcase names.
-      for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+      for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
       {
         out_.println("TestDriver:  Testcase " + e.nextElement() + " not found.");
       }
@@ -879,9 +880,9 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
         // Run each testcase.
         try
         {
-          for (Enumeration e = testcases_.elements(); e.hasMoreElements();)
+          for (Enumeration<Testcase> e = testcases_.elements(); e.hasMoreElements();)
           {
-            Testcase tc = (Testcase) e.nextElement();
+            Testcase tc =  e.nextElement();
             start_ = System.currentTimeMillis();
             tc.run();
             time_ = System.currentTimeMillis() - start_;
@@ -923,9 +924,9 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
         }
 
         // Output status for each testcase.
-        for (Enumeration e = testcases_.elements(); e.hasMoreElements();)
+        for (Enumeration<Testcase> e = testcases_.elements(); e.hasMoreElements();)
         {
-            Testcase tc = (Testcase) e.nextElement();
+            Testcase tc =  e.nextElement();
             tc.outputResults();
             // Also add the number from each testcase (e.g JDConnectionClose) to the numbers for the bucket (e.g. JDConnectionTest).
             totalTime_  += tc.getTimeToRun();
@@ -1415,7 +1416,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
       return isExtendedDynamic_;
     }
 
-    public Vector getTestcaseResults() {
+    public Vector<String[]> getTestcaseResults() {
       return testcaseResults;
     }
 
@@ -1424,7 +1425,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
      * @return A vector containing the results.  Each result is a String[] with
      * 0-Name, 1-success, 2-failed, 3-notappli, 4-time.
      */
-    static public Vector getStaticTestcaseResults() {
+    static public Vector<String[]> getStaticTestcaseResults() {
       return staticTestcaseResults;
     }
 

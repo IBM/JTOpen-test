@@ -13,16 +13,24 @@
 
 package test.NP;
 
-import java.awt.FlowLayout;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectPageInputStream;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SCS3812Writer;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
-
-import javax.swing.*;
 
 /**
 This testcase requires an OS/400 V4R4 (or higher) system.
@@ -1491,7 +1499,7 @@ Tests the reset() method by calling it before a mark has been set.
                     try {
                         // reset the read pointer - should give us an IO Exception here
                         is.reset();
-                        failed("No IOException generated on reset() after close()");
+                        failed("No IOException generated on reset() after close() avail="+avail+" read="+read);
                     }
                     catch (IOException e) {
                         succeeded(); // " Got this expected IOException: " + e);
@@ -1549,7 +1557,7 @@ Tests the selectPage() method.
                         succeeded();
                     }
                     else {
-                        failed("Select Page did not get to Page 3 data!");
+                        failed("Select Page did not get to Page 3 data! readBuf="+readBuf);
                     }
 
                     // close the input stream
@@ -2091,6 +2099,7 @@ Tests 'finally' block of constructor when an exception is thrown.
                         // get a page input stream from the spooled file
                         PrintObjectPageInputStream is = splF.getPageInputStream(printParms);
                         failed("Constructor did not generate AS400Exception!");
+                        is.close(); 
                     }
                     catch (AS400Exception e) {
                         succeeded();
@@ -2237,7 +2246,6 @@ when number of pages are estimated.
              AS400SecurityException,
              ErrorCompletingRequestException
     {
-        int pagesRemaining = pages;
         byte[] buf = new byte[80];
 
         // create an output queue object using valid system name and output queue name
@@ -2246,7 +2254,6 @@ when number of pages are estimated.
         // create a spooled file output stream
         SpooledFileOutputStream outStream = new SpooledFileOutputStream(systemObject_, null, null, outQ);
 
-        if (outStream != null) {
             // create the SCS writer
             SCS3812Writer scsWtr = new SCS3812Writer(outStream, 37, systemObject_); // @B1C
 
@@ -2281,10 +2288,6 @@ when number of pages are estimated.
 
             // return the new SpooledFile
             return outStream.getSpooledFile();
-        }
-        else {
-            return (SpooledFile)null;
-        }
     }
 
 }

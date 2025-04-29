@@ -15,16 +15,37 @@ package test.RM;
 
 
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Hashtable;
 import java.util.TimeZone;
 import java.util.Vector;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
-import com.ibm.as400.access.*;
-import com.ibm.as400.data.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Bin2;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400Bin8;
+import com.ibm.as400.access.AS400ByteArray;
+import com.ibm.as400.access.AS400Date;
+import com.ibm.as400.access.AS400Float4;
+import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400Time;
+import com.ibm.as400.access.AS400Timestamp;
+import com.ibm.as400.access.AS400UnsignedBin8;
+import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.BinaryConverter;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharConverter;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.FloatFieldDescription;
+import com.ibm.as400.access.HexFieldDescription;
+import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.ZonedDecimalFieldDescription;
+import com.ibm.as400.data.RecordFormatDocument;
 
-import test.RMTest;
 import test.Testcase;
 
 /**
@@ -38,9 +59,9 @@ public class RMSetValuesTestcase extends Testcase
     /**
      Constructor.
      **/
-    public RMSetValuesTestcase(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream)
+    public RMSetValuesTestcase(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream)
     {
-        super(systemObject, "RMSetValuesTestcase", (Vector)namesAndVars.get("RMSetValuesTestcase"), runMode, fileOutputStream);
+        super(systemObject, "RMSetValuesTestcase", namesAndVars.get("RMSetValuesTestcase"), runMode, fileOutputStream);
     }
 
     /**

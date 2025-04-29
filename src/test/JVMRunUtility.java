@@ -87,7 +87,7 @@ public class JVMRunUtility extends Thread {
     public void startJVM() throws Exception {
       VirtualMachineManager virtualMachineManager = Bootstrap.virtualMachineManager(); 
       LaunchingConnector launchingConnector = virtualMachineManager.defaultConnector();
-      Map defaultArguments = launchingConnector.defaultArguments();
+      Map<?, ?> defaultArguments = launchingConnector.defaultArguments();
       
       Connector.Argument mainArgument = (Connector.Argument) defaultArguments.get("main"); 
       mainArgument.setValue(mainClassname_+" "+args_); 
@@ -96,8 +96,8 @@ public class JVMRunUtility extends Thread {
       optionsArgument.setValue("-Dcom.ibm.as400.access.AS400.guiAvailable=false -cp "+System.getProperty("java.class.path")); 
       
       
-      Set keySet = defaultArguments.keySet(); 
-      Iterator iterator = keySet.iterator();
+      Set<?> keySet = defaultArguments.keySet(); 
+      Iterator<?> iterator = keySet.iterator();
       while (iterator.hasNext()) {
         String key = (String) iterator.next();
         Connector.Argument argument = (Connector.Argument) defaultArguments.get(key);
@@ -189,7 +189,7 @@ public class JVMRunUtility extends Thread {
 	    topList_[j].className="NONE"; 
 	}
 	minCount = 0; 
-	List allClasses = virtualMachine_.allClasses();
+	List<?> allClasses = virtualMachine_.allClasses();
 	// Note:  instanceCounts() is only supported JDK 1.6 and later
 	// We must sure reflection to call it.
 	long[] instanceCounts;
@@ -203,7 +203,7 @@ public class JVMRunUtility extends Thread {
   }
 
 	int i = 0;
-	Iterator iterator = allClasses.listIterator();
+	Iterator<?> iterator = allClasses.listIterator();
 	
 	while(iterator.hasNext()) {
 	    ReferenceType referenceType = (ReferenceType) iterator.next();
@@ -254,7 +254,7 @@ public class JVMRunUtility extends Thread {
             // If breakpoint hit, dump the local vars and the
             // stack
             //
-            Iterator eventIterator = eventSet.iterator();
+            Iterator<?> eventIterator = eventSet.iterator();
             while (eventIterator.hasNext()) {
               Event event = (Event) eventIterator.next();
               if (event instanceof VMDeathEvent) {

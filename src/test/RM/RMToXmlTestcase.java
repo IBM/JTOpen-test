@@ -14,17 +14,43 @@
 package test.RM;
 
 
-import java.io.File;
-import java.io.RandomAccessFile;
-import java.io.FileOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 import java.util.Hashtable;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Array;
+import com.ibm.as400.access.AS400Bin2;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400ByteArray;
+import com.ibm.as400.access.AS400DataType;
+import com.ibm.as400.access.AS400Float4;
+import com.ibm.as400.access.AS400Float8;
+import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Structure;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.ArrayFieldDescription;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.DBCSGraphicFieldDescription;
+import com.ibm.as400.access.DBCSOnlyFieldDescription;
+import com.ibm.as400.access.DBCSOpenFieldDescription;
+import com.ibm.as400.access.DateFieldDescription;
+import com.ibm.as400.access.FloatFieldDescription;
+import com.ibm.as400.access.HexFieldDescription;
+import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.TimeFieldDescription;
+import com.ibm.as400.access.TimestampFieldDescription;
+import com.ibm.as400.access.ZonedDecimalFieldDescription;
 import com.ibm.as400.data.RecordFormatDocument;
 
-import test.RMTest;
 import test.Testcase;
 
 /**
@@ -42,7 +68,7 @@ public class RMToXmlTestcase extends Testcase
      Constructor.
      **/
     public RMToXmlTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String,Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream)
     {

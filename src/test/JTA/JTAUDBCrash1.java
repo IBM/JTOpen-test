@@ -44,7 +44,7 @@ public class JTAUDBCrash1 extends JTAStdCrash1 {
 Constructor.
 **/
    public JTAUDBCrash1 (AS400 systemObject,
-                    Hashtable namesAndVars,
+                    Hashtable<String,Vector<String>> namesAndVars,
                     int runMode,
                     FileOutputStream fileOutputStream,
                     

@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.Vector;
 import java.io.File;
 import java.net.URL;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.swing.Icon;
@@ -86,7 +86,7 @@ extends Testcase
 Constructor.
 **/
         public PermissionRootUnattendedTestcase(AS400 systemObject, 
-                                            Hashtable namesAndVars, 
+                                            Hashtable<String,Vector<String>> namesAndVars, 
                                             int runMode, 
                                             FileOutputStream fileOutputStream)
         {

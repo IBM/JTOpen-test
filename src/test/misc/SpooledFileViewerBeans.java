@@ -13,25 +13,26 @@
 
 package test.misc;
 
-import com.ibm.as400.access.*;
-import com.ibm.as400.vaccess.ErrorEvent;
-import com.ibm.as400.vaccess.ErrorListener;
-import com.ibm.as400.vaccess.SpooledFileViewer;
-import com.ibm.as400.vaccess.VIFSDirectory;
-import com.ibm.as400.vaccess.VIFSFile;
-import com.ibm.as400.vaccess.VObjectEvent;
-import com.ibm.as400.vaccess.VObjectListener;
-import com.ibm.as400.vaccess.WorkingEvent;
-import com.ibm.as400.vaccess.WorkingListener;
-
-import test.Testcase;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.SCS3812Writer;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileOutputStream;
+import com.ibm.as400.vaccess.ErrorEvent;
+import com.ibm.as400.vaccess.ErrorListener;
+import com.ibm.as400.vaccess.SpooledFileViewer;
+
+import test.Testcase;
 
 
 
@@ -52,6 +53,7 @@ Testcase SpooledFileViewerBeans.
 </ul>
 
 **/
+@SuppressWarnings("deprecation")
 
 public class SpooledFileViewerBeans
 extends Testcase
@@ -67,7 +69,7 @@ extends Testcase
 Constructor.
 **/
     public SpooledFileViewerBeans (AS400 systemObject,
-                          Vector variationsToRun,
+                          Vector<String> variationsToRun,
                           int runMode,
                           FileOutputStream fileOutputStream)
     {
@@ -82,7 +84,7 @@ Constructor.
 Constructor.
 **/
     public SpooledFileViewerBeans (AS400 systemObject,
-                          Vector variationsToRun,
+                          Vector<String> variationsToRun,
                           int runMode,
                           FileOutputStream fileOutputStream,
                           
@@ -787,13 +789,14 @@ longer received.
 /**
 Listens for working events.
 **/
-    private class WorkingListener_
-    implements WorkingListener
-    {
-        public WorkingEvent lastEvent_ = null;
-        public void startWorking (WorkingEvent event)   { lastEvent_ = event; }
-        public void stopWorking (WorkingEvent event)    { lastEvent_ = event; }
-    }
+//    private class WorkingListener_
+//    implements WorkingListener
+//    {
+//        public WorkingEvent lastEvent_ = null;
+//        public void startWorking (WorkingEvent event)   { lastEvent_ = event; }
+//        public void stopWorking (WorkingEvent event)    { lastEvent_ = event; }
+//        
+//    }
 
 
 
@@ -921,14 +924,14 @@ removeWorkingListener() - Test that working events are no longer received.
         // Write the contents of the spool file.
         scsWtr.setLeftMargin(1.0);
         scsWtr.absoluteVerticalPosition(6);
-        scsWtr.setFont(scsWtr.FONT_COURIER_BOLD_5);
+        scsWtr.setFont(SCS3812Writer.FONT_COURIER_BOLD_5);
         scsWtr.write("                     Java Printing");
         scsWtr.newLine();
         scsWtr.newLine();
         scsWtr.setCPI(10);
         scsWtr.write("This document was created using the AS/400 Java Toolbox.");
         scsWtr.newLine();
-        scsWtr.setFont(scsWtr.FONT_COURIER_BOLD_10);
+        scsWtr.setFont(SCS3812Writer.FONT_COURIER_BOLD_10);
         scsWtr.newLine();
         scsWtr.write("This is test page 1 (ONE)");
         scsWtr.endPage();

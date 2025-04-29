@@ -144,8 +144,23 @@ public class UserSpacePgmCallTestcase extends Testcase
     try
     {
 	deleteLibrary(authlib); 
-            cmdRun("CRTLIB LIB("+authlib+")");
+	String command = "CRTLIB LIB("+authlib+")";
+        boolean success =  cmdRun(command);
+        if (!success) { 
+            System.out.println("Command Failed "+command ); 
+        } else {
+          System.out.println("SetupUSAuthority(): Command worked "+command ); 
+        }
 
+        /* grant access to library to all */ 
+       command = "GRTOBJAUT OBJ("+authlib+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
+       success =  cmdRun(command);
+       if (!success) { 
+           System.out.println("Command Failed "+command ); 
+       } else {
+         System.out.println("SetupUSAuthority(): Command worked "+command ); 
+       }
+           
        UserSpace aUSpace = new UserSpace(pwrSys_, authorityUserSpace_);
        aUSpace.setMustUseProgramCall(true);
        aUSpace.create(11000, true, " ", (byte)0x00, "USWRITE test", "*ALL");

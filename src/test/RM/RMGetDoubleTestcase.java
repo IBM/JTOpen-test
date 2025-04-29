@@ -21,7 +21,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.data.RecordFormatDocument;
 
-import test.RMTest;
 import test.Testcase;
 
 /**
@@ -34,9 +33,9 @@ public class RMGetDoubleTestcase extends Testcase
     /**
      Constructor.
      **/
-    public RMGetDoubleTestcase(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream)
+    public RMGetDoubleTestcase(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream)
     {
-        super(systemObject, "RMGetDoubleTestcase", (Vector)namesAndVars.get("RMGetDoubleTestcase"), runMode, fileOutputStream);
+        super(systemObject, "RMGetDoubleTestcase", namesAndVars.get("RMGetDoubleTestcase"), runMode, fileOutputStream);
     }
 
     /**

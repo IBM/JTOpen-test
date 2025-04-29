@@ -12,26 +12,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RSoftware;
 
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceException;
+import com.ibm.as400.resource.RSoftwareResource;
 import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.RSoftwareTest;
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.ResourceListener_;
-
-import com.ibm.as400.resource.RSoftwareResource;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
 
 
@@ -51,6 +44,7 @@ of the RSoftwareResource class, inherited from BufferedResource:
 <li>setAttributeValue() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RSoftwareResourceGenericAttributeTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -71,15 +65,14 @@ extends Testcase {
 
     // Private data.
     private String          JC1ProductID_ = RSoftwareTest.JC1ProductID_;
-    private AS400           pwrSys_;
-
+ 
 
 
 /**
 Constructor.
 **/
     public RSoftwareResourceGenericAttributeTestcase (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -128,7 +121,7 @@ Checks a particular attribute meta data.
 **/
     static boolean verifyAttributeMetaData(ResourceMetaData amd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -152,7 +145,7 @@ Checks a particular attribute meta data.
 **/
     static boolean verifyAttributeMetaData(ResourceMetaData[] amd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -458,7 +451,7 @@ each attribute.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            boolean found = false;
+            // boolean found = false;
             // I did not hardcode an exact length...otherwise, we
             // have to change this every time we add a property.
             assertCondition((amd.length > 5) 
@@ -481,7 +474,7 @@ getAttributeMetaData() with 1 parameter - Pass null.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData amd = u.getAttributeMetaData(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+amd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -498,7 +491,7 @@ getAttributeMetaData() with 1 parameter - Pass an invalid attribute ID.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData amd = u.getAttributeMetaData(new Date());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+amd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -600,7 +593,7 @@ getAttributeUnchangedValue() - When there is no connection.
         try {
             RSoftwareResource u = new RSoftwareResource();
             Object value = u.getAttributeUnchangedValue(RSoftwareResource.LOAD_TYPE);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -617,7 +610,7 @@ getAttributeUnchangedValue() - Pass null.
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
             Object value = u.getAttributeUnchangedValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -634,7 +627,7 @@ getAttributeUnchangedValue() - Pass an invalid attribute ID.
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
             Object value = u.getAttributeUnchangedValue(new AS400());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -770,7 +763,7 @@ getAttributeValue() - When there is no connection.
         try {
             RSoftwareResource u = new RSoftwareResource();
             Object value = u.getAttributeValue(RSoftwareResource.LOAD_TYPE);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -789,7 +782,7 @@ getAttributeValue() - When the connection is bogus.
             system.setGuiAvailable(false);
             RSoftwareResource u = new RSoftwareResource(system, "Friend");
             Object value = u.getAttributeValue(RSoftwareResource.LOAD_TYPE);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -806,7 +799,7 @@ getAttributeValue() - When the path does not exist.
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, "NOTEXIST");
             Object value = u.getAttributeValue(RSoftwareResource.LOAD_TYPE);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -823,7 +816,7 @@ getAttributeValue() - When the software resource does not exist.
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, "BOGUS");
             Object value = u.getAttributeValue(RSoftwareResource.LOAD_TYPE);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -840,7 +833,7 @@ getAttributeValue() - Pass null.
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
             Object value = u.getAttributeValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -857,7 +850,7 @@ getAttributeValue() - Pass an invalid attribute ID.
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
             Object value = u.getAttributeValue("Yo");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -997,8 +990,8 @@ getAttributeValue() - Pass every attribute ID.
             for(int i = 0; i < amd.length; ++i) {
                 // System.out.println("Getting attribute " + amd[i] + ".");
                 Object value = u.getAttributeValue(amd[i].getID());
-                Class valueClass = value.getClass();
-                Class type = amd[i].getType();
+                Class<?> valueClass = value.getClass();
+                Class<?> type = amd[i].getType();
 
                 // Validate the type.
                 if (amd[i].areMultipleAllowed()) {
@@ -1009,7 +1002,7 @@ getAttributeValue() - Pass every attribute ID.
                         success = false;
                     }
                     else {
-                        Class componentType = valueClass.getComponentType();
+                        Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type)) {
                             System.out.println("Error getting attribute " + amd[i] + ".");
                             System.out.println("Type mismatch: " + componentType + " != " + type + ".");
@@ -1088,7 +1081,7 @@ hasUncommittedAttributeChanges() - Pass null.
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
             boolean pending = u.hasUncommittedAttributeChanges(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+pending);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -1105,7 +1098,7 @@ hasUncommittedAttributeChanges() - Pass an invalid attribute ID.
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
             boolean pending = u.hasUncommittedAttributeChanges("Go Toolbox");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+pending);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");

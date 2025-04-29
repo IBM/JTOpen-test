@@ -21,7 +21,7 @@ import java.beans.VetoableChangeListener;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.ExtendedIOException;
@@ -54,7 +54,7 @@ public class IFSSerializeTestcase extends IFSGenericTestcase
   public IFSSerializeTestcase (AS400 systemObject,
       String userid,
       String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)

@@ -15,7 +15,6 @@ package test;
 
 import java.beans.FeatureDescriptor;
 import java.io.IOException;
-import java.net.InetAddress;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
@@ -42,7 +41,7 @@ import test.Sec.SecUPPropertyTestcase;
  **/
 public class SecAuthTest extends TestDriver
 {
-  private static final long serialVersionUID = 1L;
+   static final long serialVersionUID = 1L;
     public static  String uid1 = "SECPTTEST1";
     public static  String pwd1 = "SECPT01PWD";
     public static  String uid2 = "SECPTTEST2";
@@ -174,9 +173,9 @@ public class SecAuthTest extends TestDriver
 	/* Use the client as part of the name so that */ 
         /* testcases running from differen clients do not conflict */
 	/* 60466175 is 36 ^ 5 */ 
-	int intKey1 = InetAddress.getLocalHost().hashCode() % 60466175; 
-	String stringKey1 = Integer.toString(intKey1,36);
-	String stringKey2 = Integer.toString(intKey1 + 1 ,36); 
+	// int intKey1 = InetAddress.getLocalHost().hashCode() % 60466175; 
+	// String stringKey1 = Integer.toString(intKey1,36);
+	// String stringKey2 = Integer.toString(intKey1 + 1 ,36); 
 
 	uid1 =  Testcase.generateClientUser("SECP1").toUpperCase(); 
 	uid2 =  Testcase.generateClientUser("SECP2").toUpperCase(); 

@@ -27,7 +27,7 @@ import test.JCIFSUtility;
 import test.PasswordVault;
 import test.Testcase;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  Testcase INetServerSessionTestcase.
@@ -55,7 +55,7 @@ public class INetServerSessionTestcase extends Testcase
      Constructor.
      **/
     public INetServerSessionTestcase(AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

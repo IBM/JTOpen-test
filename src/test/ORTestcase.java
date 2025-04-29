@@ -13,17 +13,13 @@
 
 package test;
 
-import java.util.Date;
-import java.lang.Long;
 import java.io.BufferedReader;
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.ObjectReferences;
-import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.IFSFileReader;
-import com.ibm.as400.access.IFSFileInputStream;
 
 //TEST
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.IFSFileInputStream;
+import com.ibm.as400.access.IFSFileReader;
+import com.ibm.as400.access.ObjectReferences;
 
 
 /**
@@ -88,6 +84,7 @@ public class ORTestcase extends Testcase
             // Create a buffed reader 
 	    reader = new BufferedReader(new IFSFileReader(file, CCSID, IFSFileInputStream.SHARE_ALL)); 
 	    // Read the first line 
+            @SuppressWarnings("unused")
             String line1 = reader.readLine();
             // Display the String that was read.
             //System.out.println(line1);
@@ -124,7 +121,7 @@ public class ORTestcase extends Testcase
         try
         {
             ObjectReferences or  = new ObjectReferences(systemObject_, "/path");
-            succeeded();
+            assertCondition(true,"or = "+or); 
         }
         catch (Exception e)
         {
@@ -141,7 +138,7 @@ public class ORTestcase extends Testcase
         try
         {
             ObjectReferences or = new ObjectReferences(null, "/path");
-            failed("No exception.");
+            failed("No exception."+or);
         }
         catch (Exception e)
         {
@@ -158,7 +155,7 @@ public class ORTestcase extends Testcase
         try
         {
             ObjectReferences or = new ObjectReferences(systemObject_, null);
-            failed("No exception.");
+            failed("No exception."+or);
         }
         catch (Exception e)
         {
@@ -175,7 +172,7 @@ public class ORTestcase extends Testcase
         try
         {
             ObjectReferences or = new ObjectReferences(systemObject_, PATH );
-	    succeeded();
+            assertCondition(true,"or = "+or); 
         }
         catch (Exception e)
         {
@@ -1928,6 +1925,7 @@ public class ORTestcase extends Testcase
    <p>Test:  Call ObjectReferences.SessionUsingObjectStructure :: new SessionUsingObjectStructure[]
    <p>Result:  Verify that we get a new object.
    **/
+  @SuppressWarnings("unused")
   public void Var094()
   {
       setupTestFile();

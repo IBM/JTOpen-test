@@ -13,11 +13,10 @@
 
 package test.MiscAH;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.Testcase;
@@ -177,7 +176,7 @@ public class ExampleTestcase extends Testcase
   public void Var006()
   {
     // Put your test variation code here.
-    assertCondition(true == true);  // Note: This variation will be successful.
+    assertCondition(true);  // Note: This variation will be successful.
   }
 
 /**

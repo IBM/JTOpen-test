@@ -43,7 +43,7 @@ public class JTAUDBThread extends JTAStdThread {
 Constructor.
 **/
    public JTAUDBThread (AS400 systemObject,
-                    Hashtable namesAndVars,
+                    Hashtable<String,Vector<String>> namesAndVars,
                     int runMode,
                     FileOutputStream fileOutputStream,
                     

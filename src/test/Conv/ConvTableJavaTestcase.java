@@ -47,7 +47,8 @@ public class ConvTableJavaTestcase extends Testcase
         if (runMode_ != ATTENDED)
         {
             int i = 1;
-            for (Enumeration keys = ConversionMaps.encodingCcsid_.keys(); keys.hasMoreElements(); ++i)
+            for (@SuppressWarnings("unchecked")
+            Enumeration<String> keys = ConversionMaps.encodingCcsid_.keys(); keys.hasMoreElements(); ++i)
             {
                 String encoding = (String)keys.nextElement();
                 if (allVariations || variationsToRun_.contains("" + i))

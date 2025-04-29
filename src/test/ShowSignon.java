@@ -19,10 +19,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 package test; 
 
-import java.io.*;
-import java.util.*;
-import java.net.*;
-import com.ibm.as400.access.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
 
 public class ShowSignon extends Object
 {

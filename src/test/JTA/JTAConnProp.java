@@ -43,7 +43,7 @@ public class JTAConnProp extends JDTestcase {
 Constructor.
 **/
    public JTAConnProp (AS400 systemObject,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        

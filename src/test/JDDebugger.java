@@ -77,8 +77,8 @@ public class JDDebugger extends Thread {
 
 		VirtualMachineManager virtualMachineManager = Bootstrap.virtualMachineManager();
 
-		List attachingConnectors = virtualMachineManager.attachingConnectors();
-		Iterator iterator = attachingConnectors.iterator();
+		List<?> attachingConnectors = virtualMachineManager.attachingConnectors();
+		Iterator<?> iterator = attachingConnectors.iterator();
 		AttachingConnector socketAttachingConnector = null;
 		while (iterator.hasNext() && (socketAttachingConnector == null)) {
 			AttachingConnector attachingConnector = (AttachingConnector) iterator.next();
@@ -87,7 +87,7 @@ public class JDDebugger extends Thread {
 			}
 		}
 
-		Map map = socketAttachingConnector.defaultArguments();
+		Map<?, ?> map = socketAttachingConnector.defaultArguments();
 		// out.println(map);
 
 		Connector.Argument hostname = (Connector.Argument) map.get("hostname");
@@ -157,8 +157,8 @@ public class JDDebugger extends Thread {
 
 	public synchronized void showThreads(int maxCount) {
 		// Show the threads associated with the JVM.
-		List threadList = virtualMachine.allThreads();
-		Iterator threadIterator = threadList.iterator();
+		List<?> threadList = virtualMachine.allThreads();
+		Iterator<?> threadIterator = threadList.iterator();
 		int count = 0;
 		while (threadIterator.hasNext()) {
 			ThreadReference threadReference = (ThreadReference) threadIterator.next();
@@ -184,14 +184,14 @@ public class JDDebugger extends Thread {
 		//
 		// Now find the class
 		//
-		List classList = virtualMachine.classesByName(className);
+		List<?> classList = virtualMachine.classesByName(className);
 		ClassType classType = null;
 		if (!classList.isEmpty()) {
 			classType = (ClassType) classList.get(0);
 			try {
-				List lineList = classType.allLineLocations();
+				List<?> lineList = classType.allLineLocations();
 				if (!lineList.isEmpty()) {
-					Iterator iterator = lineList.iterator();
+					Iterator<?> iterator = lineList.iterator();
 					while (iterator.hasNext()) {
 						Location l = (Location) iterator.next();
 						out.println("Location: " + l.sourceName() + ":" + l.lineNumber());
@@ -223,13 +223,13 @@ public class JDDebugger extends Thread {
 			//
 			// Now find the class
 			//
-			List classList = virtualMachine.classesByName(className);
+			List<?> classList = virtualMachine.classesByName(className);
 			ClassType classType = null;
 			if (!classList.isEmpty()) {
 				classType = (ClassType) classList.get(0);
-				List methodList = classType.methodsByName(methodName);
+				List<?> methodList = classType.methodsByName(methodName);
 				if (!methodList.isEmpty()) {
-					Iterator iterator = methodList.iterator();
+					Iterator<?> iterator = methodList.iterator();
 					while (iterator.hasNext()) {
 						Method method = (Method) iterator.next();
 						Location l = method.location();
@@ -256,10 +256,10 @@ public class JDDebugger extends Thread {
 			out.flush();
 		}
 		if (eventRequestManager != null) {
-			List breakpointRequests = eventRequestManager.breakpointRequests();
+			List<?> breakpointRequests = eventRequestManager.breakpointRequests();
 			out.println("DEBUGGER:  current breakpointRequests are ");
 			out.flush();
-			Iterator breakpointIterator = breakpointRequests.iterator();
+			Iterator<?> breakpointIterator = breakpointRequests.iterator();
 			while (breakpointIterator.hasNext()) {
 				out.println("   " + breakpointIterator.next().toString());
 				out.flush();
@@ -336,15 +336,15 @@ public class JDDebugger extends Thread {
 						// If breakpoint hit, dump the local vars and the
 						// stack
 						//
-						Iterator eventIterator = eventSet.iterator();
+						Iterator<?> eventIterator = eventSet.iterator();
 						while (eventIterator.hasNext()) {
 							Event event = (Event) eventIterator.next();
 							if (event instanceof BreakpointEvent) {
 								out.println("Hit breakpoint event " + event);
 								out.flush();
 								ThreadReference threadReference = ((BreakpointEvent) event).thread();
-								List framesList = threadReference.frames();
-								Iterator framesIterator = framesList.iterator();
+								List<?> framesList = threadReference.frames();
+								Iterator<?> framesIterator = framesList.iterator();
 								boolean first = true;
 								while (framesIterator.hasNext()) {
 									StackFrame stackFrame = (StackFrame) framesIterator.next();
@@ -353,8 +353,8 @@ public class JDDebugger extends Thread {
 										out.println("Stack vars");
 										out.flush();
 										try {
-											List variablesList = stackFrame.visibleVariables();
-											Iterator variablesIterator = variablesList.iterator();
+											List<?> variablesList = stackFrame.visibleVariables();
+											Iterator<?> variablesIterator = variablesList.iterator();
 											while (variablesIterator.hasNext()) {
 												LocalVariable localVariable = (LocalVariable) variablesIterator.next();
 												Value value = stackFrame.getValue(localVariable);
@@ -395,10 +395,10 @@ public class JDDebugger extends Thread {
 									if (eventName.indexOf("JITHelpers") > 0) {
 										// Do not dump the details for this events that are ignored
 									} else {
-										List argList = m.arguments();
+										List<?> argList = m.arguments();
 										ThreadReference threadReference = entryEvent.thread();
 										StackFrame stackFrame = threadReference.frame(0);
-										Iterator listIterator = argList.iterator();
+										Iterator<?> listIterator = argList.iterator();
 										while (listIterator.hasNext()) {
 											LocalVariable localVariable = (LocalVariable) listIterator.next();
 											Value value = stackFrame.getValue(localVariable);

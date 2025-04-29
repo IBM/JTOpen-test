@@ -176,7 +176,7 @@ public abstract class JDTestDriver extends TestDriver {
   private int db_ = DB_SYSTEMI;
   static Class<?> driverManager_ = null;
 
-  private static Hashtable nativeAttemptedHashtable = null ;
+  private static Hashtable<String,String> nativeAttemptedHashtable = null ;
   private boolean lobSupport_;
   private boolean datalinkSupport_;
   private boolean returnValueSupport_; 
@@ -1325,7 +1325,7 @@ public abstract class JDTestDriver extends TestDriver {
           attemptedPassword = "null"; 
       if ( !"BOGUSID".equals(uid)) {
         // Only print the warning once. 
-        if (nativeAttemptedHashtable  == null) nativeAttemptedHashtable = new Hashtable(); 
+        if (nativeAttemptedHashtable  == null) nativeAttemptedHashtable = new Hashtable<String, String>(); 
         if (nativeAttemptedHashtable.get(uid) == null) {
           nativeAttemptedHashtable.put(uid,uid); 
           System.out.println("JDTestDriver: Warning: unable to get native connection using secure password = "+attemptedPassword+" uid="+uid+" url="+url);

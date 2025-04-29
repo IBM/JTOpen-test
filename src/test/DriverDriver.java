@@ -63,10 +63,10 @@ public class DriverDriver
       String misc;  // local copy of misc_ that we can manipulate
       if (misc_ == null || misc_.trim().length() == 0) misc = new String(",");
       else misc = new String(misc_);
-      String no_clean = new String(misc + ",NOCLEAN");
+      // String no_clean = new String(misc + ",NOCLEAN");
       String no_drop  = new String(misc + ",NODROP");
       String coverage  = new String("COVERAGE");
-      String[] noclean_args  = setupArgs(common_args_, no_clean);  // for JD*Test
+      // String[] noclean_args  = setupArgs(common_args_, no_clean);  // for JD*Test
       String[] nodrop_args   = setupArgs(common_args_, no_drop);   // for DQTest
       String[] coverage_args = setupArgs(common_args_, coverage);  // for ConvTest
 
@@ -186,7 +186,7 @@ Parse parameters.
     throws Exception
   {
     // States used when parsing input parameters.
-    final int FINISH = 0;
+    // final int FINISH = 0;
     final int START = 1;
     final int PARSE_IFSDIR = 2;
     final int PARSE_INSTALLDIR = 3;

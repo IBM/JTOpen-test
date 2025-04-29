@@ -252,14 +252,14 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("ProgramCall"))
     {
-       Vector vars;
-       namesAndVars_.put("PgmConstructor", new Vector());
-       namesAndVars_.put("PgmParmTestcase", new Vector());
-       namesAndVars_.put("PgmRunTestcase", new Vector());
-       namesAndVars_.put("PgmOnThreadTestcase", new Vector());
-       namesAndVars_.put("PgmRLETestcase", new Vector());
-       namesAndVars_.put("ServiceProgramCallTestcase", new Vector());
-       namesAndVars_.put("ServiceProgramCallUnattendedTestcase", new Vector());
+       Vector<String> vars;
+       namesAndVars_.put("PgmConstructor", new Vector<String>());
+       namesAndVars_.put("PgmParmTestcase", new Vector<String>());
+       namesAndVars_.put("PgmRunTestcase", new Vector<String>());
+       namesAndVars_.put("PgmOnThreadTestcase", new Vector<String>());
+       namesAndVars_.put("PgmRLETestcase", new Vector<String>());
+       namesAndVars_.put("ServiceProgramCallTestcase", new Vector<String>());
+       namesAndVars_.put("ServiceProgramCallUnattendedTestcase", new Vector<String>());
 
        vars = makeVector( "1,2,4,7,113" );
        namesAndVars_.put("JavaAppTestcase", vars);
@@ -286,9 +286,9 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("CommandCall"))
     {
-       namesAndVars_.put("CmdConstructor", new Vector());
-       namesAndVars_.put("CmdRunTestcase", new Vector());
-       namesAndVars_.put("CmdOnThreadTestcase", new Vector());
+       namesAndVars_.put("CmdConstructor", new Vector<String>());
+       namesAndVars_.put("CmdRunTestcase", new Vector<String>());
+       namesAndVars_.put("CmdOnThreadTestcase", new Vector<String>());
        namesAndVars_.remove("CommandCall");
 
        testcases = new Testcase[]
@@ -309,9 +309,9 @@ Creates Testcase objects for all the testcases in this component.
     {
        setupUSExisting();  // create a test user space
 
-       Vector vars;
+       Vector<String> vars;
 
-       //namesAndVars_.put("UserSpaceRegressionTestcase", new Vector());
+       //namesAndVars_.put("UserSpaceRegressionTestcase", new Vector<String>());
 
        vars = makeVector( "1:18" );
        namesAndVars_.put("UserSpaceBeans", vars);
@@ -360,7 +360,7 @@ Creates Testcase objects for all the testcases in this component.
     // must exist on both client and server before running the test.
     //if (testAllComponents || namesAndVars_.containsKey("FTP"))
     //{
-    //   namesAndVars_.put("FTPQuickVerification", new Vector());
+    //   namesAndVars_.put("FTPQuickVerification", new Vector<String>());
     //   namesAndVars_.remove("FTP");
     //
     //    addTestcase(new FTPQuickVerification(systemObject_, namesAndVars_, runMode_, fileOutputStream_, password_, systemObject_.getUserId(), "/", pwrSys_));
@@ -371,7 +371,7 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("Message"))
     {
-       namesAndVars_.put("MessageFileTestcase", new Vector());
+       namesAndVars_.put("MessageFileTestcase", new Vector<String>());
        namesAndVars_.remove("Message");
 
        MessageFileTestcase mftc = new MessageFileTestcase();
@@ -384,10 +384,10 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("Trace"))
     {
-       namesAndVars_.put("TraceMiscTestcase", new Vector());
+       namesAndVars_.put("TraceMiscTestcase", new Vector<String>());
        namesAndVars_.remove("Trace");
 
-       addTestcase(new TraceMiscTestcase(systemObject_, (Vector) namesAndVars_.get("TraceMiscTestcase"), runMode_, fileOutputStream_));
+       addTestcase(new TraceMiscTestcase(systemObject_,  namesAndVars_.get("TraceMiscTestcase"), runMode_, fileOutputStream_));
     }
 
 
@@ -395,10 +395,10 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("QSYSObjectPathName"))
     {
-       namesAndVars_.put("PNAttributesTestcase", new Vector());
-       namesAndVars_.put("PNCtorTestcase", new Vector());
-       namesAndVars_.put("PNToPathTestcase", new Vector());
-       namesAndVars_.put("PNLocalizedObjectTypeTestcase", new Vector());
+       namesAndVars_.put("PNAttributesTestcase", new Vector<String>());
+       namesAndVars_.put("PNCtorTestcase", new Vector<String>());
+       namesAndVars_.put("PNToPathTestcase", new Vector<String>());
+       namesAndVars_.put("PNLocalizedObjectTypeTestcase", new Vector<String>());
        namesAndVars_.remove("QSYSObjectPathName");
 
        testcases = new Testcase[]
@@ -419,35 +419,35 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("FD"))
     {
-       namesAndVars_.put("FDConstructAndGet", new Vector());
-       namesAndVars_.put("FDInvUsage", new Vector());
-       namesAndVars_.put("FDSet", new Vector());
+       namesAndVars_.put("FDConstructAndGet", new Vector<String>());
+       namesAndVars_.put("FDInvUsage", new Vector<String>());
+       namesAndVars_.put("FDSet", new Vector<String>());
        namesAndVars_.remove("FD");
 
-       addTestcase(new FDConstructAndGet(systemObject_, (Vector) namesAndVars_.get("FDConstructAndGet"), runMode_, fileOutputStream_));
-       addTestcase(new FDInvUsage(systemObject_, (Vector) namesAndVars_.get("FDInvUsage"), runMode_, fileOutputStream_));
-       addTestcase(new FDSet(systemObject_, (Vector) namesAndVars_.get("FDSet"), runMode_, fileOutputStream_));
+       addTestcase(new FDConstructAndGet(systemObject_,  namesAndVars_.get("FDConstructAndGet"), runMode_, fileOutputStream_));
+       addTestcase(new FDInvUsage(systemObject_,  namesAndVars_.get("FDInvUsage"), runMode_, fileOutputStream_));
+       addTestcase(new FDSet(systemObject_,  namesAndVars_.get("FDSet"), runMode_, fileOutputStream_));
     }
 
 
 
     if (testAllComponents || namesAndVars_.containsKey("DT"))
     {
-       namesAndVars_.put("DTArrayTestcase", new Vector());
-       namesAndVars_.put("DTBin2Testcase", new Vector());
-       namesAndVars_.put("DTBin4Testcase", new Vector());
-       namesAndVars_.put("DTBin8Testcase", new Vector());
-       namesAndVars_.put("DTByteArrayTestcase", new Vector());
-       namesAndVars_.put("DTFloat4Testcase", new Vector());
-       namesAndVars_.put("DTFloat8Testcase", new Vector());
-       namesAndVars_.put("DTPackedTestcase", new Vector());
-       namesAndVars_.put("DTPackedDoubleTestcase", new Vector());
-       namesAndVars_.put("DTStructureTestcase", new Vector());
-       namesAndVars_.put("DTTextTestcase", new Vector());
-       namesAndVars_.put("DTUnsignedBin2Testcase", new Vector());
-       namesAndVars_.put("DTUnsignedBin4Testcase", new Vector());
-       namesAndVars_.put("DTZonedTestcase", new Vector());
-       namesAndVars_.put("DTZonedDoubleTestcase", new Vector());
+       namesAndVars_.put("DTArrayTestcase", new Vector<String>());
+       namesAndVars_.put("DTBin2Testcase", new Vector<String>());
+       namesAndVars_.put("DTBin4Testcase", new Vector<String>());
+       namesAndVars_.put("DTBin8Testcase", new Vector<String>());
+       namesAndVars_.put("DTByteArrayTestcase", new Vector<String>());
+       namesAndVars_.put("DTFloat4Testcase", new Vector<String>());
+       namesAndVars_.put("DTFloat8Testcase", new Vector<String>());
+       namesAndVars_.put("DTPackedTestcase", new Vector<String>());
+       namesAndVars_.put("DTPackedDoubleTestcase", new Vector<String>());
+       namesAndVars_.put("DTStructureTestcase", new Vector<String>());
+       namesAndVars_.put("DTTextTestcase", new Vector<String>());
+       namesAndVars_.put("DTUnsignedBin2Testcase", new Vector<String>());
+       namesAndVars_.put("DTUnsignedBin4Testcase", new Vector<String>());
+       namesAndVars_.put("DTZonedTestcase", new Vector<String>());
+       namesAndVars_.put("DTZonedDoubleTestcase", new Vector<String>());
        namesAndVars_.remove("DT");
 
        testcases = new Testcase[]
@@ -479,31 +479,31 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("RF"))
     {
-       namesAndVars_.put("RFMisc", new Vector());
-       namesAndVars_.put("RFNewRecord", new Vector());
-       namesAndVars_.put("RFRecord", new Vector());
-       namesAndVars_.put("RFRecordMisc", new Vector());
-       namesAndVars_.put("RFEvents", new Vector());
+       namesAndVars_.put("RFMisc", new Vector<String>());
+       namesAndVars_.put("RFNewRecord", new Vector<String>());
+       namesAndVars_.put("RFRecord", new Vector<String>());
+       namesAndVars_.put("RFRecordMisc", new Vector<String>());
+       namesAndVars_.put("RFEvents", new Vector<String>());
        namesAndVars_.remove("RF");
 
-       addTestcase(new RFMisc(systemObject_, (Vector) namesAndVars_.get("RFMisc"), runMode_, fileOutputStream_));
-       addTestcase(new RFNewRecord(systemObject_, (Vector) namesAndVars_.get("RFNewRecord"), runMode_, fileOutputStream_));
-       addTestcase(new RFRecord(systemObject_, (Vector) namesAndVars_.get("RFRecord"), runMode_, fileOutputStream_));
-       addTestcase(new RFRecordMisc(systemObject_, (Vector) namesAndVars_.get("RFRecordMisc"), runMode_, fileOutputStream_));
-       addTestcase(new RFEvents(systemObject_, (Vector) namesAndVars_.get("RFEvents"), runMode_, fileOutputStream_));
+       addTestcase(new RFMisc(systemObject_,  namesAndVars_.get("RFMisc"), runMode_, fileOutputStream_));
+       addTestcase(new RFNewRecord(systemObject_,  namesAndVars_.get("RFNewRecord"), runMode_, fileOutputStream_));
+       addTestcase(new RFRecord(systemObject_,  namesAndVars_.get("RFRecord"), runMode_, fileOutputStream_));
+       addTestcase(new RFRecordMisc(systemObject_,  namesAndVars_.get("RFRecordMisc"), runMode_, fileOutputStream_));
+       addTestcase(new RFEvents(systemObject_,  namesAndVars_.get("RFEvents"), runMode_, fileOutputStream_));
     }
 
 
 
     if (testAllComponents || namesAndVars_.containsKey("Conv"))
     {
-       namesAndVars_.put("ConvTableCtorTestcase", new Vector());
-       namesAndVars_.put("ConvExecutionTestcase", new Vector());
-       namesAndVars_.put("ConvConverterTestcase", new Vector());
-       namesAndVars_.put("ConversionMapTestcase", new Vector());
-       namesAndVars_.put("ConvPSA89229", new Vector());
-       namesAndVars_.put("ConvTableReaderTestcase", new Vector());
-       namesAndVars_.put("ConvTableWriterTestcase", new Vector());
+       namesAndVars_.put("ConvTableCtorTestcase", new Vector<String>());
+       namesAndVars_.put("ConvExecutionTestcase", new Vector<String>());
+       namesAndVars_.put("ConvConverterTestcase", new Vector<String>());
+       namesAndVars_.put("ConversionMapTestcase", new Vector<String>());
+       namesAndVars_.put("ConvPSA89229", new Vector<String>());
+       namesAndVars_.put("ConvTableReaderTestcase", new Vector<String>());
+       namesAndVars_.put("ConvTableWriterTestcase", new Vector<String>());
        namesAndVars_.remove("Conv");
 
        testcases = new Testcase[]
@@ -527,59 +527,59 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("DDM"))
     {
-       Vector vars;
+       Vector<String> vars;
 
-       namesAndVars_.put("DDMConstructors", new Vector());
+       namesAndVars_.put("DDMConstructors", new Vector<String>());
 
        vars = makeVector( "1:3,16:20,22:24" );
        namesAndVars_.put("DDMRegressionTestcase", vars);
 
-       namesAndVars_.put("DDMOpenClose", new Vector());
-       namesAndVars_.put("DDMCreateAndAdd", new Vector());
-       namesAndVars_.put("DDMDelete", new Vector());
-       namesAndVars_.put("DDMCommitmentControl", new Vector());
-       namesAndVars_.put("DDMReadSeq", new Vector());
-       namesAndVars_.put("DDMReadKey", new Vector());
-       namesAndVars_.put("DDMReadRN", new Vector());
-       namesAndVars_.put("DDMDeletedRecords", new Vector());
-       namesAndVars_.put("DDMWrite", new Vector());
-       namesAndVars_.put("DDMUpdate", new Vector());
-       namesAndVars_.put("DDMGetSet", new Vector());
-       namesAndVars_.put("DDMCaching", new Vector());
-       namesAndVars_.put("DDMMultipleFormat", new Vector());
-       namesAndVars_.put("DDMP3666842", new Vector());
-       namesAndVars_.put("DDMP3696575", new Vector());
-       namesAndVars_.put("DDMP9907036", new Vector());
+       namesAndVars_.put("DDMOpenClose", new Vector<String>());
+       namesAndVars_.put("DDMCreateAndAdd", new Vector<String>());
+       namesAndVars_.put("DDMDelete", new Vector<String>());
+       namesAndVars_.put("DDMCommitmentControl", new Vector<String>());
+       namesAndVars_.put("DDMReadSeq", new Vector<String>());
+       namesAndVars_.put("DDMReadKey", new Vector<String>());
+       namesAndVars_.put("DDMReadRN", new Vector<String>());
+       namesAndVars_.put("DDMDeletedRecords", new Vector<String>());
+       namesAndVars_.put("DDMWrite", new Vector<String>());
+       namesAndVars_.put("DDMUpdate", new Vector<String>());
+       namesAndVars_.put("DDMGetSet", new Vector<String>());
+       namesAndVars_.put("DDMCaching", new Vector<String>());
+       namesAndVars_.put("DDMMultipleFormat", new Vector<String>());
+       namesAndVars_.put("DDMP3666842", new Vector<String>());
+       namesAndVars_.put("DDMP3696575", new Vector<String>());
+       namesAndVars_.put("DDMP9907036", new Vector<String>());
        // DDMLocking, DDMRecordDescription, and DDMPassword variations are included in DDMRegressionTestcase.
        namesAndVars_.remove("DDM");
 
        String testLib = "DDMRTEST";
 
-       addTestcase(new DDMConstructors(systemObject_, (Vector) namesAndVars_.get("DDMConstructors"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMRegressionTestcase(systemObject_, (Vector) namesAndVars_.get("DDMRegressionTestcase"), runMode_, fileOutputStream_, testLib, pwrSys_));
-       addTestcase(new DDMOpenClose(systemObject_, (Vector) namesAndVars_.get("DDMOpenClose"), runMode_, fileOutputStream_, testLib, pwrSys_));
-       addTestcase(new DDMCreateAndAdd(systemObject_, (Vector) namesAndVars_.get("DDMCreateAndAdd"), runMode_, fileOutputStream_, testLib, pwrSys_));
-       addTestcase(new DDMDelete(systemObject_, (Vector) namesAndVars_.get("DDMDelete"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMCommitmentControl(systemObject_, (Vector) namesAndVars_.get("DDMCommitmentControl"), runMode_, fileOutputStream_, testLib, pwrSys_));
-       addTestcase(new DDMReadSeq(systemObject_, (Vector) namesAndVars_.get("DDMReadSeq"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMReadKey(systemObject_, (Vector) namesAndVars_.get("DDMReadKey"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMReadRN(systemObject_, (Vector) namesAndVars_.get("DDMReadRN"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMDeletedRecords(systemObject_, (Vector) namesAndVars_.get("DDMDeletedRecords"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMWrite(systemObject_, (Vector) namesAndVars_.get("DDMWrite"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMUpdate(systemObject_, (Vector) namesAndVars_.get("DDMUpdate"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMGetSet(systemObject_, (Vector) namesAndVars_.get("DDMGetSet"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMCaching(systemObject_, (Vector) namesAndVars_.get("DDMCaching"), runMode_, fileOutputStream_, testLib, pwrSys_));
-       addTestcase(new DDMMultipleFormat(systemObject_, (Vector) namesAndVars_.get("DDMMultipleFormat"), runMode_, fileOutputStream_, testLib, pwrSys_));
-       addTestcase(new DDMP3666842(systemObject_, (Vector) namesAndVars_.get("DDMP3666842"), runMode_, fileOutputStream_, testLib));
-       addTestcase(new DDMP3696575(systemObject_, (Vector) namesAndVars_.get("DDMP3696575"), runMode_, fileOutputStream_, testLib, pwrSys_));
-       addTestcase(new DDMP9907036(systemObject_, (Vector) namesAndVars_.get("DDMP9907036"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMConstructors(systemObject_,  namesAndVars_.get("DDMConstructors"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMRegressionTestcase(systemObject_,  namesAndVars_.get("DDMRegressionTestcase"), runMode_, fileOutputStream_, testLib, pwrSys_));
+       addTestcase(new DDMOpenClose(systemObject_,  namesAndVars_.get("DDMOpenClose"), runMode_, fileOutputStream_, testLib, pwrSys_));
+       addTestcase(new DDMCreateAndAdd(systemObject_,  namesAndVars_.get("DDMCreateAndAdd"), runMode_, fileOutputStream_, testLib, pwrSys_));
+       addTestcase(new DDMDelete(systemObject_,  namesAndVars_.get("DDMDelete"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMCommitmentControl(systemObject_,  namesAndVars_.get("DDMCommitmentControl"), runMode_, fileOutputStream_, testLib, pwrSys_));
+       addTestcase(new DDMReadSeq(systemObject_,  namesAndVars_.get("DDMReadSeq"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMReadKey(systemObject_,  namesAndVars_.get("DDMReadKey"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMReadRN(systemObject_,  namesAndVars_.get("DDMReadRN"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMDeletedRecords(systemObject_,  namesAndVars_.get("DDMDeletedRecords"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMWrite(systemObject_,  namesAndVars_.get("DDMWrite"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMUpdate(systemObject_,  namesAndVars_.get("DDMUpdate"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMGetSet(systemObject_,  namesAndVars_.get("DDMGetSet"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMCaching(systemObject_,  namesAndVars_.get("DDMCaching"), runMode_, fileOutputStream_, testLib, pwrSys_));
+       addTestcase(new DDMMultipleFormat(systemObject_,  namesAndVars_.get("DDMMultipleFormat"), runMode_, fileOutputStream_, testLib, pwrSys_));
+       addTestcase(new DDMP3666842(systemObject_,  namesAndVars_.get("DDMP3666842"), runMode_, fileOutputStream_, testLib));
+       addTestcase(new DDMP3696575(systemObject_,  namesAndVars_.get("DDMP3696575"), runMode_, fileOutputStream_, testLib, pwrSys_));
+       addTestcase(new DDMP9907036(systemObject_,  namesAndVars_.get("DDMP9907036"), runMode_, fileOutputStream_, testLib));
     }
 
 
 
       if (testAllComponents || namesAndVars_.containsKey("IFS"))
       {
-        Vector vars;
+        Vector<String> vars;
 
         vars = makeVector( "3,8,10,12" );
         namesAndVars_.put("IFSCrtDltTestcase", vars);
@@ -651,7 +651,7 @@ Creates Testcase objects for all the testcases in this component.
 
       if (testAllComponents || namesAndVars_.containsKey("DataArea"))
       {
-        Vector vars;
+        Vector<String> vars;
 
         vars = makeVector( "38,39,40,41,53,54" );
         namesAndVars_.put("DACreateTestcase", vars);
@@ -690,7 +690,7 @@ Creates Testcase objects for all the testcases in this component.
 
     if (testAllComponents || namesAndVars_.containsKey("JDBC"))
     {
-       namesAndVars_.put("JDRegressionTestcase", new Vector());
+       namesAndVars_.put("JDRegressionTestcase", new Vector<String>());
        namesAndVars_.remove("JDBC");
        addTestcase(new JDRegressionTestcase(systemObject_, namesAndVars_, runMode_, fileOutputStream_, password_, systemObject_.getUserId(), pwrSysUserID_, pwrSysPassword_));
     }
@@ -699,7 +699,7 @@ Creates Testcase objects for all the testcases in this component.
 
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }
@@ -713,9 +713,9 @@ Creates Testcase objects for all the testcases in this component.
 Convert a String of the form "1,2,3" to a Vector { "1", "2", "3" }.
 Also accepts range patterns such as "1:3,5", which it expands to { "1", "2", "3", "5" }.
 **/
-  static Vector makeVector(String list)
+  static Vector<String> makeVector(String list)
   {
-    Vector variations = new Vector();
+    Vector<String> variations = new Vector<String>();
     StringTokenizer vars = new StringTokenizer(list, ",");
     while (vars.hasMoreTokens())
     {

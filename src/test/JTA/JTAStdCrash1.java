@@ -26,7 +26,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
@@ -58,7 +58,7 @@ public class JTAStdCrash1 extends JTATestcase {
 Constructor.
 **/
    public JTAStdCrash1 (AS400 systemObject,
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         
@@ -71,7 +71,7 @@ Constructor.
 
    public JTAStdCrash1 (AS400 systemObject,
 			String testname,
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         
@@ -475,7 +475,7 @@ Performs cleanup needed after running variations.
 		passed = false;
 		message += "checkIns(table, insStr)";
 	    }
-            assertCondition(passed);
+            assertCondition(passed, message);
             JTATest.verboseOut("Done");
          }
          catch (Exception e) {

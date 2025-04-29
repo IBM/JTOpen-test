@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.User;
@@ -33,7 +34,7 @@ public class JDBIDITestcase extends JDTestcase {
 
   String[] Hebrew_CCSIDs = { "424", "62211", "62235", "62245" };
 
-  public JDBIDITestcase(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+  public JDBIDITestcase(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
 
       String password, String powerUserID, String powerPassword) {
 
@@ -93,7 +94,9 @@ public class JDBIDITestcase extends JDTestcase {
     }
     t.host = system_;
     t.username = "JD" + ccsid;
-    t.password = "PASS" + ccsid + "X";
+    String password = "PASS" + ccsid + "X";
+    t.encryptedPassword = PasswordVault.getEncryptedPassword(password);
+
     t.setTable("BIDIC" + ccsid);
     return t;
   }
@@ -107,7 +110,7 @@ public class JDBIDITestcase extends JDTestcase {
 
     t.host = system_;
     t.username = "JD" + ccsid;
-    t.password = "PASS" + ccsid + "X";
+    t.encryptedPassword = PasswordVault.getEncryptedPassword("PASS" + ccsid + "X");
     t.setTable("BIDIM" + ccsid);
 
     return t;

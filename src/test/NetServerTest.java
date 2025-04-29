@@ -134,13 +134,14 @@ Serializes and deserializes an object.
 	    ObjectOutput out = new ObjectOutputStream (new FileOutputStream (serializeFilename_));
 	    out.writeObject (object);
 	    out.flush ();
-
+	    out.close(); 
         // Deserialize.
         Object object2 = null;
         try 
         {
             ObjectInputStream in = new ObjectInputStream (new FileInputStream (serializeFilename_));
             object2 = in.readObject ();
+            in.close(); 
         }
         finally 
         {

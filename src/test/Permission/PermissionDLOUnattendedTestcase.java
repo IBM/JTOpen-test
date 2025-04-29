@@ -27,7 +27,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.io.File;
 
 
@@ -75,7 +75,7 @@ extends Testcase
 Constructor.
 **/
     public PermissionDLOUnattendedTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String,Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream, 
                              

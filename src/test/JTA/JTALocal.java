@@ -51,7 +51,7 @@ public class JTALocal extends JDTestcase {
 Constructor.
 **/
    public JTALocal (AS400 systemObject,
-                    Hashtable namesAndVars,
+                    Hashtable<String,Vector<String>> namesAndVars,
                     int runMode,
                     FileOutputStream fileOutputStream,
                     

@@ -63,7 +63,7 @@ public class UDFSTestcase extends Testcase
         try
         {
             UDFS obj = new UDFS(pwrSys_, "/dev/QASP01/tbxtest.udfs");
-            succeeded();
+            assertCondition(true,"able to create object "+obj); 
         }
         catch (Exception e)
         {
@@ -82,7 +82,7 @@ public class UDFSTestcase extends Testcase
         try
         {
             UDFS obj = new UDFS(null, "/dev/QASP01/tbxtest.udfs");
-            failed("No exception.");
+            failed("No exception."+obj);
         }
         catch (Exception e)
         {
@@ -101,7 +101,7 @@ public class UDFSTestcase extends Testcase
         try
         {
             UDFS obj = new UDFS(pwrSys_, null);
-            failed("No exception.");
+            failed("No exception."+obj);
         }
         catch (Exception e)
         {

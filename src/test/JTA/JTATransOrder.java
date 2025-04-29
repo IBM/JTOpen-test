@@ -47,7 +47,7 @@ public class JTATransOrder extends JDTestcase {
 Constructor.
 **/
    public JTATransOrder (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          

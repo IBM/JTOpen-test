@@ -58,6 +58,7 @@ public class PasswordLevel {
       }
     }
 
+    s.close(); 
       return passwordLevel; 
     }
 

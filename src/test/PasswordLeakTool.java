@@ -645,7 +645,7 @@ public class PasswordLeakTool {
           
           Arrays.fill(passwordArray, ' ');
           spec.clearPassword();
-          
+          secret.destroy();
           
           
        

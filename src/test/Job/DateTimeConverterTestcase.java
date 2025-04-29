@@ -14,15 +14,12 @@
 package test.Job;
 
 
-import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Vector;
 import java.util.TimeZone;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Text;
-import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.DateTimeConverter;
 
 import test.Testcase;
@@ -73,7 +70,7 @@ public class DateTimeConverterTestcase extends Testcase
         try
         {
             DateTimeConverter conv = new DateTimeConverter(systemObject_);
-            succeeded();
+            assertCondition(true, "Conv="+conv); 
         }
         catch (Exception e)
         {
@@ -90,7 +87,7 @@ public class DateTimeConverterTestcase extends Testcase
         try
         {
             DateTimeConverter conv = new DateTimeConverter(null);
-            failed("Expected exception didn't occur.");
+            failed("Expected exception didn't occur."+conv);
         }
         catch (Exception e)
         {
@@ -449,7 +446,7 @@ public class DateTimeConverterTestcase extends Testcase
         {
             byte[] test = text17_.toBytes("19980920080808111");
             conv_.convert(null, "*YYMD", "*YYMD");
-            failed("Expected exception didn't occur.");
+            failed("Expected exception didn't occur."+test);
         }
         catch (Exception e)
         {
@@ -553,7 +550,7 @@ public class DateTimeConverterTestcase extends Testcase
         {
             byte[] test = text17_.toBytes("19980920080808111");
             conv_.convert((byte[])null, "*YYMD");
-            failed("Expected exception didn't occur.");
+            failed("Expected exception didn't occur."+test);
         }
         catch (Exception e)
         {
@@ -589,7 +586,7 @@ public class DateTimeConverterTestcase extends Testcase
         {
             byte[] test = text17_.toBytes("19980920080808111");
             conv_.convert((Date)null, "*YYMD");
-            failed("Expected exception didn't occur.");
+            failed("Expected exception didn't occur."+test);
         }
         catch (Exception e)
         {

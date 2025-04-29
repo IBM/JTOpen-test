@@ -21,7 +21,7 @@ import test.Testcase;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 /**
@@ -49,7 +49,7 @@ public class DDMMemberList extends Testcase
 	/**
 	Constructor.  This is called from the DDMTest constructor.
 	 **/
-  public DDMMemberList(AS400 systemObject, Hashtable namesAndVars,
+  public DDMMemberList(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
 			int runMode, FileOutputStream fileOutputStream,
 			 String testLib, String password, AS400 pwrSys) {
 		// Replace the third parameter (3) with the total number of variations

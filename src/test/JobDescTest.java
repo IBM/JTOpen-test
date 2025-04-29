@@ -19,15 +19,6 @@
 ////////////////////////////////////////////////////////////////////////
 package test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Enumeration;
-import java.util.Vector;
-
 /**
 Test driver for the Job Description component.  
 **/
@@ -78,7 +69,7 @@ Creates the testcases.
 **/
     public void createTestcases ()
     {
-        boolean allTestcases = (namesAndVars_.size() == 0);
+        // boolean allTestcases = (namesAndVars_.size() == 0);
 
         // Test the Job Description classes.
 

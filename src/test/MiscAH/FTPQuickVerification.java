@@ -33,7 +33,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Vector;
 import java.lang.Integer;
 import java.lang.String;
@@ -79,7 +79,7 @@ public class FTPQuickVerification extends    Testcase
 
     public FTPQuickVerification (AS400 systemObject,
                               ///Vector<String> variationsToRun,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               

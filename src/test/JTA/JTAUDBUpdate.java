@@ -44,7 +44,7 @@ public class JTAUDBUpdate extends JTAStdUpdate {
 Constructor.
 **/
    public JTAUDBUpdate (AS400 systemObject,
-                    Hashtable namesAndVars,
+                    Hashtable<String,Vector<String>> namesAndVars,
                     int runMode,
                     FileOutputStream fileOutputStream,
                     

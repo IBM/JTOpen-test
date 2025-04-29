@@ -13,14 +13,6 @@
 
 package test.misc;
 
-import com.ibm.as400.access.AS400;
-//import javax.swing.JFrame;
-//import javax.swing.JOptionPane;
-//import java.awt.BorderLayout;
-//import java.awt.Component;
-//import java.awt.Frame;
-//import java.awt.event.WindowAdapter;
-//import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,10 +20,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Enumeration;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.SourceDataLine;
 
 
 
@@ -45,9 +33,9 @@ public class TestUtilities
 
 
     // MRI.
-    private static final String cancelException_        = "Attended variation cancelled.";
-    private static final String testInstructions_       = "Test instructions";
-    private static final String title_                  = "AS/400 Toolbox for Java";
+    // private static final String cancelException_        = "Attended variation cancelled.";
+    // private static final String testInstructions_       = "Test instructions";
+    // private static final String title_                  = "AS/400 Toolbox for Java";
 
 
 
@@ -163,7 +151,7 @@ Checks an enumeration against an array.
 @param  array   The array.
 @return         true if the enumeration is the same as the array.
 **/
-    public static boolean checkEnumeration (Enumeration e,
+    public static boolean checkEnumeration (Enumeration<Object> e,
                                             Object[] array)
     {
         for (int i = 0; i < array.length; ++i) {
@@ -214,7 +202,7 @@ Creates a frame with a component in it.
 Adds \n's at the right places so that strings don't get too long
 (and dialogs don't get too wide).
 **/
-    private static String formatInstructions (String input)
+    static String formatInstructions (String input)
     {
         StringBuffer output = new StringBuffer (input);
 
@@ -307,12 +295,14 @@ Serializes and deserializes an object.
 	    ObjectOutput out = new ObjectOutputStream (new FileOutputStream (serializeFilename_));
 	    out.writeObject (object);
 	    out.flush ();
+	    out.close(); 
 
         // Deserialize.
         Object object2 = null;
         try {
             ObjectInputStream in = new ObjectInputStream (new FileInputStream (serializeFilename_));
             object2 = in.readObject ();
+            in.close(); 
         }
    	    finally {
        		File f = new File (serializeFilename_);

@@ -22,7 +22,7 @@ import com.ibm.as400.access.*;
 
 import test.Testcase;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
  Testcase INetServerFileShareTestcase.
@@ -49,7 +49,7 @@ public class INetServerFileShareTestcase extends Testcase
      Constructor.
      **/
     public INetServerFileShareTestcase(AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

@@ -20,21 +20,13 @@
 ////////////////////////////////////////////////////////////////////////
 package test.JTA;
 
-import java.lang.*;
-import java.sql.*;
-import java.util.*;
-
 import java.io.FileOutputStream;
+import java.util.Hashtable; import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JTATest;
 import test.JTAUDBTest;
-
-import javax.sql.DataSource;
-import javax.sql.XADataSource;
-import javax.sql.XAConnection;
-import javax.transaction.xa.XAResource;
-import javax.transaction.xa.XAException;
 
 public class JTAUDBMisc extends JTAStdMisc {
   public static void main(String args[]) throws Exception {
@@ -51,7 +43,7 @@ public class JTAUDBMisc extends JTAStdMisc {
 Constructor.
 **/
    public JTAUDBMisc (AS400 systemObject,
-                    Hashtable namesAndVars,
+                    Hashtable<String,Vector<String>> namesAndVars,
                     int runMode,
                     FileOutputStream fileOutputStream,
                     

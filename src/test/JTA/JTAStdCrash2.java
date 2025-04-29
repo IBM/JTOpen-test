@@ -30,7 +30,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -81,7 +81,7 @@ public class JTAStdCrash2 extends JTATestcase {
 Constructor.
 **/
    public JTAStdCrash2 (AS400 systemObject,
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         
@@ -93,7 +93,7 @@ Constructor.
 
    public JTAStdCrash2 (AS400 systemObject,
 			String testname, 
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         

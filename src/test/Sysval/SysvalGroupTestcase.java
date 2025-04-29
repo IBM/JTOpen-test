@@ -44,6 +44,7 @@ import test.Testcase;
  <li>SystemValue::getGroupDescription()
  </ul>
  **/
+@SuppressWarnings("rawtypes")
 public class SysvalGroupTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -1343,7 +1344,7 @@ public class SysvalGroupTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup();
-            svg.refresh(svg.getSystemValues());
+            SystemValueGroup.refresh(svg.getSystemValues());
             failed("No exception.");
         }
         catch (Exception e)
@@ -1361,7 +1362,7 @@ public class SysvalGroupTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(pwrSys_, "Name", "Desc");
-            svg.refresh(svg.getSystemValues());
+            SystemValueGroup.refresh(svg.getSystemValues());
             succeeded();
         }
         catch (Exception e)
@@ -1379,7 +1380,7 @@ public class SysvalGroupTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(pwrSys_, "Name", "Desc", new String[] { "QDAY" });
-            svg.refresh(svg.getSystemValues());
+            SystemValueGroup.refresh(svg.getSystemValues());
             succeeded();
         }
         catch (Exception e)
@@ -1422,7 +1423,7 @@ public class SysvalGroupTestcase extends Testcase
                 else
                 {
                     // Now refresh the cache to see if we retrieve the reset value.
-                    svg.refresh(svgv);
+                    SystemValueGroup.refresh(svgv);
                     Object obj4 = sv.getValue();
                     if (!((String)obj4).trim().equals("07"))
                     {
@@ -1505,7 +1506,7 @@ public class SysvalGroupTestcase extends Testcase
                 else
                 {
                     // Now refresh the cache to see if we retrieve the reset value.
-                    svg.refresh(svgv);
+                    SystemValueGroup.refresh(svgv);
                     Object newtestobj = sv.getValue();
                     Object newtestobj1 = sv1.getValue();
                     Object newtestobj2 = sv2.getValue();
@@ -1599,7 +1600,7 @@ public class SysvalGroupTestcase extends Testcase
                 if (failMsg == "")
                 {
                     // Now refresh the cache to see if we retrieve the reset value.
-                    svg.refresh(svgv);
+                    SystemValueGroup.refresh(svgv);
                     Object[] newtestobjArray = new Object[15];
                     for (int i = 0; i < svgv.size(); ++i)
                     {
@@ -1657,7 +1658,7 @@ public class SysvalGroupTestcase extends Testcase
             Vector newVector = new Vector();
             Object obj = null;
             newVector.addElement(obj);
-            svg.refresh(newVector);
+            SystemValueGroup.refresh(newVector);
             failed("Exception not thrown.");
         }
         catch (Exception e)
@@ -1681,7 +1682,7 @@ public class SysvalGroupTestcase extends Testcase
             newVector.addElement(svgv.elementAt(0));
             newVector.addElement(str[0]);
             newVector.addElement(str[1]);
-            svg.refresh(newVector);
+            SystemValueGroup.refresh(newVector);
             failed("Exception not thrown.");
         }
         catch (Exception e)
@@ -1726,14 +1727,14 @@ public class SysvalGroupTestcase extends Testcase
                 else
                 {
                     // Now refresh the cache to see if we retrieve the reset value.
-                    svg.refresh(svgv);
+                    SystemValueGroup.refresh(svgv);
                     Object obj4 = sv.getValue();
                     if (!((String)obj4).trim().equals("06"))
                     {
                         failMsg += "Failed to retrieve reset value.";
                     }
                     sv2.setValue("02");
-                    svg.refresh(svgv);
+                    SystemValueGroup.refresh(svgv);
                     obj4 = sv.getValue();
                     if (! ((String)obj4).trim().equals("02"))
                     {
@@ -1772,7 +1773,7 @@ public class SysvalGroupTestcase extends Testcase
         {
             String[] str = new String[] { "QDAY", "QMONTH" };
             SystemValueGroup svg = new SystemValueGroup(pwrSys_, "Name", "Desc", str);
-            svg.refresh(svg.getSystemValues());
+            SystemValueGroup.refresh(svg.getSystemValues());
             succeeded();
         }
         catch (Exception e)
@@ -2704,7 +2705,7 @@ public class SysvalGroupTestcase extends Testcase
             SystemValue sv = (SystemValue) svgv.elementAt(1);
             String svName =  sv.getGroupName();
             svg.setGroupName("newName");
-            svg.refresh(svgv);
+            SystemValueGroup.refresh(svgv);
             Vector svgv2 = svg.getSystemValues();
             SystemValue sv2 = (SystemValue) svgv2.elementAt(1);
             String sv2Name =  sv2.getGroupName();
@@ -3075,7 +3076,7 @@ public class SysvalGroupTestcase extends Testcase
             SystemValue sv = (SystemValue) svgv.elementAt(1);
             String svDesc =  sv.getGroupDescription();
             svg.setGroupDescription("newDesc");
-            svg.refresh(svgv);
+            SystemValueGroup.refresh(svgv);
             Vector svgv2 = svg.getSystemValues();
             SystemValue sv2 = (SystemValue) svgv2.elementAt(1);
             String sv2Name =  sv2.getGroupDescription();

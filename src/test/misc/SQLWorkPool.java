@@ -38,7 +38,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import test.Testcase;
@@ -53,8 +52,8 @@ public class SQLWorkPool {
   
   Connection c = null; 
   Statement stmt = null; 
-  ConcurrentLinkedQueue waitingQueue = new ConcurrentLinkedQueue();   
-  HashSet currentWorkSet = new HashSet();
+  ConcurrentLinkedQueue<SQLWorkPoolEntry> waitingQueue = new ConcurrentLinkedQueue<SQLWorkPoolEntry>();   
+  HashSet<SQLWorkPoolEntry> currentWorkSet = new HashSet<SQLWorkPoolEntry>();
   private long minimumActiveId = 0; 
   SQLWorkThread[] threads;
   private boolean shuttingDown ; 
@@ -118,11 +117,11 @@ public class SQLWorkPool {
         return true; 
       }
     long newMinimumActiveId = Long.MAX_VALUE; 
-    Iterator [] iterators = new Iterator[2]; 
+    Iterator<?> [] iterators = new Iterator<?>[2]; 
     iterators[0] = waitingQueue.iterator(); 
     iterators[1] = currentWorkSet.iterator(); 
     for (int i = 0; i < iterators.length; i++) {
-      Iterator looking = iterators[i];
+      Iterator<?> looking = iterators[i];
       while (looking.hasNext()) {
         SQLWorkPoolEntry entry = (SQLWorkPoolEntry) looking.next();
         if (entry.id < newMinimumActiveId)

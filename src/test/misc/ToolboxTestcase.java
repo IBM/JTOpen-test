@@ -13,19 +13,13 @@
 
 package test.misc;
 
-import java.util.Date;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.lang.Long;
-import java.net.URL;
-
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.FileAttributes;
-import com.ibm.as400.access.Trace;
 
 import test.JDTestcase;
 import test.Testcase;
@@ -78,8 +72,8 @@ public class ToolboxTestcase extends Testcase
             ZipFile zipFile = new ZipFile(jarFile); 
             // "BeanInfo.class
             String slashPackage = packageName.replace('.', '/'); 
-            Enumeration entries = zipFile.entries(); 
-            LinkedList linkedList = new LinkedList();  
+            Enumeration<? extends ZipEntry> entries = zipFile.entries(); 
+            LinkedList<String> linkedList = new LinkedList<String>();  
             while (entries.hasMoreElements()) {
               ZipEntry entry = (ZipEntry) entries.nextElement();
               String name = entry.getName();
@@ -94,6 +88,7 @@ public class ToolboxTestcase extends Testcase
               }
             }
             list = (String[]) linkedList.toArray(new String[0]); 
+            zipFile.close(); 
           } else {
             System.out.println("Path of AS400 class:" + thisPath);
 
@@ -133,7 +128,7 @@ public class ToolboxTestcase extends Testcase
         int beanInfoIndex = beanInfoClass.indexOf("BeanInfo");
         String className = beanInfoClass.substring(0,beanInfoIndex); 
         try { 
-          Class beanClass = Class.forName(packageName+"."+className); 
+          Class<?> beanClass = Class.forName(packageName+"."+className); 
           java.beans.Introspector.getBeanInfo(beanClass); 
         } catch (Throwable e) { 
           passed = false; 

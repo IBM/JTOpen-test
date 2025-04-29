@@ -25,7 +25,7 @@ import java.io.FileOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Properties;
 import java.util.Arrays;
 import java.lang.String;
@@ -80,7 +80,7 @@ public class FTPModeTestcase extends    Testcase
     private boolean aix_;
 
     public FTPModeTestcase (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               

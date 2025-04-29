@@ -20,7 +20,7 @@ import com.ibm.as400.access.IFSFileOutputStream;
 import com.ibm.as400.access.IFSRandomAccessFile;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 /**
 Test methods not covered by other testcases.
@@ -48,7 +48,7 @@ Constructor.
   public IFSFileDescriptorTestcase (AS400 systemObject,
         String userid, 
           String password,
-                   Hashtable namesAndVars,
+                   Hashtable<String,Vector<String>> namesAndVars,
                    int runMode,
                    FileOutputStream fileOutputStream,
                    AS400    pwrSys)

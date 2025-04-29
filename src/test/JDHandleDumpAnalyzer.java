@@ -71,6 +71,7 @@ public class JDHandleDumpAnalyzer {
     rs_ = rs;
   }
 
+    @SuppressWarnings("resource")
     public JDHandleDumpAnalyzer(File f) throws Exception {
 
     // Check to see if file is unicode

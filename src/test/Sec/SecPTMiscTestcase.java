@@ -82,6 +82,7 @@ public class SecPTMiscTestcase extends Testcase
     /**
      Test serialization and restoration of an uninitialized profile token.
      **/
+    @SuppressWarnings({ "unlikely-arg-type", "deprecation" })
     public void Var001()
     {
        StringBuffer sb = new StringBuffer(); 
@@ -146,7 +147,7 @@ public class SecPTMiscTestcase extends Testcase
             
             // More coverage test -- including deprecated. 
             ProfileTokenCredential pt5 = new ProfileTokenCredential();
-            UserProfilePrincipal principal = new UserProfilePrincipal("TEST5"); 
+            // UserProfilePrincipal principal = new UserProfilePrincipal("TEST5"); 
             pt5.setSystem(systemObject_);
             
             UserProfilePrincipal upp = new UserProfilePrincipal(); 
@@ -309,7 +310,7 @@ public class SecPTMiscTestcase extends Testcase
           // Create a bogus token value.
             byte[] tBytes = new byte[ProfileTokenCredential.TOKEN_LENGTH];
             new Random().nextBytes(tBytes);
-            Class[] argTypes = new Class[4];
+            Class<?>[] argTypes = new Class<?>[4];
             Object[] args = new Object[4]; 
             args[0] = systemObject_; 
             argTypes[0] = args[0].getClass(); 
@@ -1074,7 +1075,7 @@ public class SecPTMiscTestcase extends Testcase
    public void initializeProfileToken(ProfileTokenCredential pt, String userid, char[] password, char[] factor, int authenticationIndicator,  
        String verificationId, String remoteIp, int remotePort, String localIp, int localPort, boolean isPrivate, boolean reusable, boolean renewable, int timeoutInterval ) throws Exception {
      UserProfilePrincipal principal = new UserProfilePrincipal(userid);
-     Class[] argTypes; 
+     Class<?>[] argTypes; 
      Object[] args; 
      Object info; 
 
@@ -1744,6 +1745,7 @@ public void Var059()
 /**
 Test failed initialization (null token).
 **/
+@SuppressWarnings("deprecation")
 public void Var060()
 {
    try
@@ -1754,7 +1756,7 @@ public void Var060()
        // Create and initialize the credential.
        ProfileTokenCredential pt = new ProfileTokenCredential();
       
-          ProfileTokenEnhancedInfo enhancedProfileInfo = new ProfileTokenEnhancedInfo(); 
+          // ProfileTokenEnhancedInfo enhancedProfileInfo = new ProfileTokenEnhancedInfo(); 
          
           pt.setSystem(pwrSys_);
           pt.setToken(upp,ProfileTokenCredential.PW_NOPWD ) ;

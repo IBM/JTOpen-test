@@ -13,37 +13,27 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400FileRecordDescription;
-import com.ibm.as400.access.AS400JDBCConnection;
-import com.ibm.as400.access.AS400JDBCDriver;
-import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.AS400Exception;
-import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400File;
-import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400JDBCDriver;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.QSYSObjectPathName;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
 import com.ibm.as400.access.SequentialFile;
 
 import test.Testcase;
-
-import com.ibm.as400.access.KeyedFile;
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalStateException;
 
 /**
  *Testcase DDMTranslation.  This test class verifies that CCSID
@@ -75,7 +65,7 @@ public class DDMTranslation extends Testcase
   Constructor.  This is called from the DDMTest constructor.
   **/
   public DDMTranslation(AS400            systemObject,
-                    Hashtable        variationsToRun,
+                    Hashtable<String,Vector<String>>        variationsToRun,
                     int              runMode,
                     FileOutputStream fileOutputStream,
                     String testLib)

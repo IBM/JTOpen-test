@@ -478,7 +478,7 @@ getTime() - getTime on a type registered as Time, INOUT TIMESTAMP
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION, "RETURNTS");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNTS (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.TIME);
-	    cstmt.setTimestamp(1, Timestamp.valueOf ("1913-23-45 11:11:11.0"));
+	    cstmt.setTimestamp(1, Timestamp.valueOf ("1913-12-23 11:11:11.0"));
 	    cstmt.execute();
 
 	    Time check = cstmt.getTime(1);

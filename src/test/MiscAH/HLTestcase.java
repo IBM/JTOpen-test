@@ -303,7 +303,7 @@ public class HLTestcase extends Testcase {
                     if(systemObject_.getVRM() >= 0x00060100){
 			HistoryLog hl = new HistoryLog(systemObject_);
 			hl.setStartingDate("08006", "062555");
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			failed("Did not throw exception."+messages);
                     }else{
                         notApplicable("V6R1 or later variation.");
@@ -327,7 +327,7 @@ public class HLTestcase extends Testcase {
                     if(systemObject_.getVRM() >= 0x00060100){
 			HistoryLog hl = new HistoryLog(systemObject_);
 			hl.setStartingDate("MYDATE", "062555");
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			failed("Did not throw exception."+messages);
                     }else{
                         notApplicable("V6R1 or later variation.");
@@ -351,7 +351,7 @@ public class HLTestcase extends Testcase {
                     if(systemObject_.getVRM() >= 0x00060100){
 			HistoryLog hl = new HistoryLog(systemObject_);
 			hl.setStartingDate("0800625", "2555");
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			failed("Did not throw exception."+messages);
                     }else{ 
                         notApplicable("V6R1 or later variation.");
@@ -375,7 +375,7 @@ public class HLTestcase extends Testcase {
                     if(systemObject_.getVRM() >= 0x00060100){
 			HistoryLog hl = new HistoryLog(systemObject_);
 			hl.setStartingDate("0800625", "MyTime");
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			failed("Did not throw exception."+messages);
                     }else{
                         notApplicable("V6R1 or later variation.");
@@ -607,7 +607,7 @@ public class HLTestcase extends Testcase {
                     if(systemObject_.getVRM() >= 0x00060100){
 			HistoryLog hl = new HistoryLog(systemObject_);
 			hl.setEndingDate("08006", "062555");
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			failed("Did not throw exception."+messages);
                     }else{
                         notApplicable("V6R1 or later variation.");
@@ -631,7 +631,7 @@ public class HLTestcase extends Testcase {
                     if(systemObject_.getVRM() >= 0x00060100){
 			HistoryLog hl = new HistoryLog(systemObject_);
 			hl.setEndingDate("MYDATE", "062555");
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			failed("Did not throw exception."+messages);
                     }else{
                         notApplicable("V6R1 or later variation.");
@@ -655,7 +655,7 @@ public class HLTestcase extends Testcase {
                     if(systemObject_.getVRM() >= 0x00060100){
 			HistoryLog hl = new HistoryLog(systemObject_);
 			hl.setEndingDate("0800625", "2555");
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			failed("Did not throw exception."+messages);
                     }else{
                         notApplicable("V6R1 or later variation.");
@@ -679,7 +679,7 @@ public class HLTestcase extends Testcase {
                     if(systemObject_.getVRM() >= 0x00060100){
 			HistoryLog hl = new HistoryLog(systemObject_);
 			hl.setEndingDate("0800625", "MyTime");
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			failed("Did not throw exception."+messages);
                     }else{
                         notApplicable("V6R1 or later variation.");
@@ -2130,7 +2130,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			Job[] jobs;
 
 					//Add attribute so there are elements returned for the JobList
@@ -2187,7 +2187,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2203,7 +2203,7 @@ public class HLTestcase extends Testcase {
 				hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 				hl.setEndingDate(new Date(System.currentTimeMillis())); 
 
-				Enumeration messages = hl.getMessages();
+				Enumeration<QueuedMessage> messages = hl.getMessages();
 	
 				boolean success = true;
 				while(messages.hasMoreElements())
@@ -2257,7 +2257,7 @@ public class HLTestcase extends Testcase {
 		list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 	        Job[] jobs;
-	        Enumeration jl = null ;
+	        Enumeration<Job> jl = null ;
             
 	        //Add attribute so there are elements returned for the JobList
 	        list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2276,7 +2276,7 @@ public class HLTestcase extends Testcase {
 	          // Just get message for the last hour
 	          hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 	          hl.setEndingDate(date, "*AVAIL");
-	          Enumeration messages = hl.getMessages();
+	          Enumeration<QueuedMessage> messages = hl.getMessages();
 	          boolean success = true;
 	          while(messages.hasMoreElements())
 	          {
@@ -2336,7 +2336,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2355,7 +2355,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageIDs(new String[] {"CPI000"});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2395,7 +2395,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 			
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2414,7 +2414,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageIDs(new String[] {"CPI000", "CPD1234"});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2455,7 +2455,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2474,7 +2474,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageIDs(new String[] {"CPIAD0B"});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2514,7 +2514,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2534,7 +2534,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageIDs(new String[] {"KIM8765"});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			assertCondition(hl.getLength() == 0, "Expected length=0, received length=" + hl.getLength()+ " "+messages);	// no messages should come back since this is invalid id
 			}
 			
@@ -2567,7 +2567,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2588,7 +2588,7 @@ public class HLTestcase extends Testcase {
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageIDs(new String[] {"CPI000"});
 			hl.setMessageIDsListIndicator(HistoryLog.OMIT);
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2628,7 +2628,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2648,7 +2648,7 @@ public class HLTestcase extends Testcase {
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageIDs(new String[] {"CPI000", "CPD1234"});
 			hl.setMessageIDsListIndicator(HistoryLog.OMIT);
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2689,7 +2689,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2710,7 +2710,7 @@ public class HLTestcase extends Testcase {
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageIDs(new String[] {"CPIAD0B"});
 			hl.setMessageIDsListIndicator(HistoryLog.OMIT);
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2750,7 +2750,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_INFORMATIONAL});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2788,7 +2788,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2808,7 +2808,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_INFORMATIONAL, HistoryLog.TYPE_COMPLETION});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2849,7 +2849,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration j = null ;
+			Enumeration<Job> j = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -2868,7 +2868,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_COMPLETION});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2909,7 +2909,7 @@ public class HLTestcase extends Testcase {
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_INFORMATIONAL});
 			hl.setMessageTypeListIndicator(HistoryLog.OMIT);
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2949,7 +2949,7 @@ public class HLTestcase extends Testcase {
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_COMPLETION, HistoryLog.TYPE_INFORMATIONAL});
 			hl.setMessageTypeListIndicator(HistoryLog.OMIT);
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -2987,7 +2987,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_COMPLETION});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -3025,7 +3025,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_COPY});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -3063,7 +3063,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_DIAGNOSTIC});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -3101,7 +3101,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_INQUIRY});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -3139,7 +3139,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_NOTIFY});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -3177,7 +3177,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageTypes(new String[] {HistoryLog.TYPE_ESCAPE});
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			while(messages.hasMoreElements())
 			{
@@ -3215,7 +3215,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageSeverity(3);
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			System.out.println(hl.getLength());
 			while(messages.hasMoreElements())
@@ -3254,7 +3254,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			hl.setMessageSeverity(1);
-			Enumeration messages = hl.getMessages();
+			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
 			System.out.println(hl.getLength());
 			while(messages.hasMoreElements())
@@ -3293,7 +3293,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration j = null ;
+			Enumeration<Job> j = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -3334,7 +3334,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration j = null ;
+			Enumeration<Job> j = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);
@@ -3375,7 +3375,7 @@ public class HLTestcase extends Testcase {
 			list.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			Job[] jobs;
-			Enumeration jl = null ;
+			Enumeration<Job> jl = null ;
 			
 			//Add attribute so there are elements returned for the JobList
 			list.addJobAttributeToRetrieve(Job.USER_NAME);

@@ -30,6 +30,7 @@ import com.ibm.as400.vaccess.VQueuedMessage;
  * The MessageSandbox class provides some common routines for testing messages
  * in the visual components.
  **/
+@SuppressWarnings("deprecation")
 public class MessageSandbox {
   /**
    * Setting this to false can make testing much quicker, but it eliminates
@@ -167,7 +168,7 @@ public class MessageSandbox {
     queue_.remove();
     queue_.sendInformational("CAE0002",
         QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF"));
-    Enumeration enumeration = queue_.getMessages();
+    Enumeration<QueuedMessage> enumeration = queue_.getMessages();
     if (enumeration.hasMoreElements())
       return (QueuedMessage) enumeration.nextElement();
     throw new Exception("Could not generate queued message.");

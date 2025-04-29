@@ -13,16 +13,17 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
-import java.util.Enumeration;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AFPResourceList;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.IllegalPathNameException;
 
 import test.Testcase;
 
@@ -317,6 +318,7 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getResourceFilter().trim().equals("/QSYS.LIB/NPJAVA.LIB/C0D0GB10.FNTRSC")) succeeded();
             else failed("Could not set/get AFPResourceList resourceFilter.");
+            list.close(); 
             }
 
         catch (Exception e)
@@ -345,6 +347,7 @@ $$$ TO DO $$$ - delete this line */
 
             // Set the resourceFilter, OUTQ is not valid
             list.setResourceFilter("/QSYS.LIB/NPJAVA.LIB/C0D0GB10.OUTQ");
+            list.close(); 
             failed("Could set an invalid AFP Resource Type");
             }
 
@@ -386,6 +389,7 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getResourceFilter().trim().equals("")) succeeded();
             else failed("Could not remove AFPResourceList resourceFilter.");
+            list.close(); 
             }
 
         catch (Exception e)
@@ -413,6 +417,7 @@ $$$ TO DO $$$ - delete this line */
             AFPResourceList list = new AFPResourceList();
 
             list.setResourceFilter(null);
+            list.close(); 
             failed("Could set the resourceFilter to null");
             }
 
@@ -454,6 +459,7 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("resourceFilter was not set, expecting empty string");
                 }
+            list.close(); 
             }
 
         catch (Exception e)
@@ -486,7 +492,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -566,7 +572,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
 
             // check to see if we got some resources
             // since there are 22 resources in NPJAVA library we should have gotten
@@ -619,7 +625,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
 
             // check to see if we got some resources
             // since there are 22 resources in NPJAVA library we should have gotten
@@ -627,7 +633,7 @@ $$$ TO DO $$$ - delete this line */
             if (resList.size() >= 22)
                 {
                 // indicate how many resources were listed
-                output_.println(resList.size() + " AFP Resources listed.");
+                output_.println(resList.size() + " AFP Resources listed. e="+e);
 
                 succeeded();
                 }
@@ -673,10 +679,10 @@ $$$ TO DO $$$ - delete this line */
         AFPResourceList resList1 = new AFPResourceList(systemObject_);
         resList1.setResourceFilter("/QSYS.LIB/NPJAVA.LIB/%ALL%.FNTRSC");
         resList1.openSynchronously();
-        Enumeration e1 = resList1.getObjects();
+        Enumeration<AFPResource> e1 = resList1.getObjects();
         if (resList1.size() > 0)
         {
-          AFPResource res1 = (AFPResource)e1.nextElement();
+          AFPResource res1 = e1.nextElement();
           sResourceName = res1.getName();
           
           try
@@ -692,6 +698,7 @@ $$$ TO DO $$$ - delete this line */
           catch( Exception ex )
           {
             failed(ex, "Unexpected exception");
+            resList1.close(); 
             return;
           }
         }
@@ -712,7 +719,7 @@ $$$ TO DO $$$ - delete this line */
         
         // check the first object returned and make sure that 
         // curlib points to QGPL
-        Enumeration e = resList.getObjects();
+        Enumeration<AFPResource> e = resList.getObjects();
         
         // check to see if we got some resources
         if (resList.size() > 0)
@@ -809,7 +816,7 @@ $$$ TO DO $$$ - delete this line */
         // now try to build resource list synchronously
         resList.openSynchronously();
         
-        Enumeration e = resList.getObjects();
+        Enumeration<AFPResource> e = resList.getObjects();
         
         // check to see if we got some resources
         // since there are 22 resources in NPJAVA library we should have gotten
@@ -817,7 +824,7 @@ $$$ TO DO $$$ - delete this line */
         if (resList.size() >= 22)
         {
           // indicate how many resources were listed
-          output_.println(resList.size() + " AFP Resources listed.");
+          output_.println(resList.size() + " AFP Resources listed."+e);
           
           succeeded();
         }
@@ -861,14 +868,14 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
 
             // there is no way to tell how many resources would be in the
             // %USRLBL% list on a normal system, so we will just print
             // the number we find.
 
             // indicate how many resources were listed
-            output_.println(resList.size() + " AFP Resources listed.");
+            output_.println(resList.size() + " AFP Resources listed."+e);
 
             succeeded();
 
@@ -959,7 +966,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -1037,7 +1044,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -1115,7 +1122,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -1193,7 +1200,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -1271,7 +1278,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -1349,7 +1356,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -1427,7 +1434,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -1505,7 +1512,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build resource list synchronously
             resList.openSynchronously();
 
-            Enumeration e = resList.getObjects();
+            Enumeration<AFPResource> e = resList.getObjects();
             String resPath = null;
 
             // check to see if we got some resources
@@ -1582,7 +1589,7 @@ $$$ TO DO $$$ - delete this line */
                 {
                 // filter by invalid type
                 resList.setResourceFilter("/QSYS.LIB/NPJAVA.LIB/%ALL%.OUTQ");
-
+                resList.close(); 
                 failed("Could filter by invalid type.");
                 }
             catch (Exception e)
@@ -1652,11 +1659,11 @@ $$$ TO DO $$$ - delete this line */
             }
         }
         PropertyListener propertyListener = new PropertyListener();
-
+        AFPResourceList list = null; 
         try
             {
             // create an AFP Resource List object using the default constructor
-            AFPResourceList list = new AFPResourceList();
+            list = new AFPResourceList();
 
             // reset our flag
             listenerInvoked = false;
@@ -1686,6 +1693,8 @@ $$$ TO DO $$$ - delete this line */
                 }
             else
                 failed(e, "Unexpected exception");
+            } finally { 
+              if (list != null) list.close(); 
             }
 
     } // end Var022
@@ -1737,10 +1746,11 @@ $$$ TO DO $$$ - delete this line */
         }
         VetoableListener vetoableListener = new VetoableListener();
 
+        AFPResourceList list  = null; 
         try
             {
             // create an AFP Resource List object using the default constructor
-            AFPResourceList list = new AFPResourceList();
+            list = new AFPResourceList();
 
             // reset our flag
             listenerInvoked = false;
@@ -1770,6 +1780,8 @@ $$$ TO DO $$$ - delete this line */
                 }
             else
                 failed(e, "Unexpected exception");
+            } finally { 
+              if (list != null) list.close(); 
             }
 
     } // end Var023
@@ -1805,11 +1817,11 @@ $$$ TO DO $$$ - delete this line */
             }
         }
         VetoableListener vetoableListener = new VetoableListener();
-
+        AFPResourceList list = null; 
         try
             {
             // create an AFP Resource List object using the default constructor
-            AFPResourceList list = new AFPResourceList();
+            list = new AFPResourceList();
 
             // reset our flag
             listenerInvoked = false;
@@ -1857,7 +1869,9 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed(e, "Unexpected exception" );
                 }
-            }
+    } finally { 
+      if (list != null) list.close(); 
+    }
 
     } // end Var024
 
@@ -1915,7 +1929,11 @@ $$$ TO DO $$$ - delete this line */
         finally
             {
             // remove the listener
+          if (list != null) { 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+          }
+           
             }
 
     } // end Var025
@@ -1994,6 +2012,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed(e, "Unexpected exception" );
                 }
+            } finally { 
+              if (list != null) list.close(); 
             }
 
     } // end Var026

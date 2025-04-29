@@ -18,7 +18,7 @@ import com.ibm.as400.access.*;
 
 import test.Testcase;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Vector;
 import java.util.Enumeration;
 
@@ -55,7 +55,7 @@ public class INetServerTestcase extends Testcase
      Constructor.
      **/
     public INetServerTestcase(AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              

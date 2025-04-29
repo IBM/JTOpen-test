@@ -61,6 +61,7 @@ public class JobListBeans extends Testcase
     /**
      Serialization - when no properties have been set.
      **/
+    @SuppressWarnings("deprecation")
     public void Var001()
     {
         try
@@ -270,6 +271,7 @@ public class JobListBeans extends Testcase
         {
             reject_ = true;
         }
+        @SuppressWarnings("unused")
         public void acceptChanges()
         {
             reject_ = false;

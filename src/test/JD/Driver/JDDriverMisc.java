@@ -1001,6 +1001,7 @@ extends JDTestcase
         notApplicable("Attempt to test login timeout"); 
         return; 
         } 
+        @SuppressWarnings("unused")
         boolean passed = true;
         int port = 1287; 
         ServerSocket serverSocket = null ;

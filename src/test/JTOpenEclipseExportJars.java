@@ -81,7 +81,7 @@ public class JTOpenEclipseExportJars  {
     };
     
     System.out.println("Transferring "+files.length+" jar files"); 
-    Hashtable hashtable = new Hashtable(); 
+    Hashtable<String,String> hashtable = new Hashtable<String,String>(); 
     for (int i = 0; i < files.length; i++ ) { 
       hashtable.put(files[i][0], files[i][1]); 
     }
@@ -130,11 +130,10 @@ public class JTOpenEclipseExportJars  {
       } /* firstDash */ 
     } /* for i */ 
     
-    for (int i = 0; i < files.length; i++ ) { 
-      String localFilename = files[i][0]; 
-      String remoteFilename = files[i][1];
-     
-    }
+    // for (int i = 0; i < files.length; i++ ) { 
+    //  String localFilename = files[i][0]; 
+    //  String remoteFilename = files[i][1];
+    //}
     
   }
 
@@ -146,11 +145,11 @@ public class JTOpenEclipseExportJars  {
     }
   }
 
-  private static String getRemoteFilename(String testDirectory, String localFilename) {
+  static String getRemoteFilename(String testDirectory, String localFilename) {
     return "/home/jdbctest/"+localFilename.replace(File.separatorChar,'/');
   }
 
-  private static Vector<String> buildFileList(File testDirectoryFile, String prefix, long lastModifiedTime) {
+  static Vector<String> buildFileList(File testDirectoryFile, String prefix, long lastModifiedTime) {
     Vector<String> returnList = new Vector<String>(); 
     File[] files = testDirectoryFile.listFiles(); 
     for (int i=0; i < files.length; i++) { 

@@ -13,27 +13,24 @@
 
 package test.NP;
 
-import java.awt.Canvas;
-import java.awt.Image;
-import java.awt.Frame;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.MediaTracker;
-
-import java.awt.Toolkit;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Enumeration;
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectTransformedInputStream;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SCS3812Writer;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
-
-import javax.swing.*;
 
 /**
 This testcase requires an OS/400 V4R4 (or higher) system.
@@ -746,7 +743,7 @@ Tests generation of blocks of transformed data.
                     avail = is.available();
 
                     if (avail != 1) {
-                       failed("Available returned " + avail + ": expecting 1.");
+                       failed("Available returned " + avail + ": expecting 1. read="+read);
                     }
                     else {
                         int onebyte = is.read();
@@ -931,7 +928,7 @@ after the inputstream has been closed.
 
                     try {
                         is.skip(3333);
-                        failed(" Did not generate IOException as expected on skip() after close()");
+                        failed(" Did not generate IOException as expected on skip() after close() avail="+avail);
                     }
                     catch (IOException e) {
                         succeeded();
@@ -976,6 +973,7 @@ Tests 'finally' block of constructor when an exception is thrown.
                         // get a page input stream from the spooled file
                         PrintObjectTransformedInputStream is = splF.getTransformedInputStream(printParms);
                         failed("Constructor did not generate AS400Exception!");
+                        is.close(); 
                     }
                     catch (AS400Exception e) {
                         succeeded();
@@ -1018,7 +1016,6 @@ Tests ability to read and transform a *USERASCII spooled file.
              AS400SecurityException,
              ErrorCompletingRequestException
     {
-        int pagesRemaining = pages;
         byte[] buf = new byte[80];
 
         // create an output queue object using valid system name and output queue name
@@ -1027,7 +1024,6 @@ Tests ability to read and transform a *USERASCII spooled file.
         // create a spooled file output stream
         SpooledFileOutputStream outStream = new SpooledFileOutputStream(systemObject_, null, null, outQ);
 
-        if (outStream != null) {
             // create the SCS writer
             SCS3812Writer scsWtr = new SCS3812Writer(outStream, 37, systemObject_); // @B1C
 
@@ -1061,15 +1057,12 @@ Tests ability to read and transform a *USERASCII spooled file.
 
             // return the new SpooledFile
             return outStream.getSpooledFile();
-        }
-        else {
-            return (SpooledFile)null;
-        }
+       
     }
 
 
 
-    private SpooledFile createASCIISpooledFile(int pages, byte data[])
+     SpooledFile createASCIISpooledFile(int pages, byte data[])
       throws InterruptedException,
              IOException,
              AS400Exception,
@@ -1077,15 +1070,11 @@ Tests ability to read and transform a *USERASCII spooled file.
              ErrorCompletingRequestException
     {
 
-        // create an output queue object using valid system name and output queue name
-        OutputQueue outQ = new OutputQueue(systemObject_, outQName_);
 
         // create a spooled file output stream
         SpooledFileOutputStream outStream = new SpooledFileOutputStream(systemObject_, null, null, null);
 
-        // check to see that we got a spooled file output stream reference
-        if (outStream != null) {
-
+  
             // write some data
             outStream.write(data);
 
@@ -1094,10 +1083,6 @@ Tests ability to read and transform a *USERASCII spooled file.
 
             // return the new SpooledFile
             return outStream.getSpooledFile();
-        }
-        else {
-            return (SpooledFile)null;
-        }
     }
 
 

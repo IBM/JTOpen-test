@@ -79,7 +79,7 @@ public class ProdLicTestcase extends Testcase
                                                        prodLicTestProductID_, 
                                                        prodLicTestFeatureID_, 
                                                        prodLicTestRelease_);
-            failed("No exception.");
+            failed("No exception."+licObj);
         }
         catch (Exception e)
         {
@@ -98,7 +98,7 @@ public class ProdLicTestcase extends Testcase
                                                        null, 
                                                        prodLicTestFeatureID_, 
                                                        prodLicTestRelease_);
-            failed("No exception.");
+            failed("No exception."+licObj);
         }
         catch (Exception e)
         {
@@ -117,7 +117,7 @@ public class ProdLicTestcase extends Testcase
                                                        prodLicTestProductID_, 
                                                        null, 
                                                        prodLicTestRelease_);
-            failed("No exception.");
+            failed("No exception."+licObj);
         }
         catch (Exception e)
         {

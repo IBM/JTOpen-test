@@ -14,6 +14,10 @@
 
 package test.misc;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CharConverter;
@@ -23,11 +27,6 @@ import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.IFSFileOutputStream;
 import com.ibm.as400.access.IFSTextFileInputStream;
 import com.ibm.as400.access.IFSTextFileOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Vector;
 
 
 
@@ -56,8 +55,8 @@ Debugging messages.
 
 
     // Private data.
-    private Vector              directories_        = new Vector ();
-    private Vector              files_              = new Vector ();
+    private Vector<IFSFile>     directories_        = new Vector<IFSFile> ();
+    private Vector<IFSFile>     files_              = new Vector<IFSFile> ();
     private AS400               system_             = null;
     private AS400               pwrSys_             = null;
     private static final String topName_            = "vaccess";
@@ -402,7 +401,6 @@ Deletes a directory.
 **/
     public void deleteDirectory (IFSFile directory)
     {
-        boolean success = true;
         try {
             if (debug)
                 System.out.println ("Deleting directory " + directory.getPath () + ".");
@@ -494,13 +492,13 @@ Reads a file.
             // Load the contents.
             char[] charArray = new char[512];
             int count = 0;
-            int position = 0;
+            // int position = 0;
 
             while (true) {
                 count = reader.read (charArray, 0, 512);
                 if (count > 0) {
                     text.append (new String (charArray, 0, count));
-                    position += count;
+                    // position += count;
                 }
                 else
                     break;

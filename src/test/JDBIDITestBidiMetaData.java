@@ -45,7 +45,8 @@ public class JDBIDITestBidiMetaData extends JDBIDITestBidiConnection {
 		} else {						
 			t.host = args[0];
 			t.username = args[1];
-			t.password = args[2];
+		             t.encryptedPassword = PasswordVault.getEncryptedPassword(args[2]);
+
 		}
 		t.setHostCCSID(424);
 		t.run();

@@ -38,7 +38,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.lang.String;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.io.File;
 import java.net.InetAddress;                                      //@A1A
 
@@ -96,7 +96,7 @@ extends Testcase
 Constructor.
 **/
     public PermissionUnattendedTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String,Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream, 
                              
@@ -218,7 +218,6 @@ protected void cleanup()
 {
       try
       {
-	  boolean result; 
 	  String firstCommands[] = {
 
 	      "DLTDLO DLO(*ALL) FLR(TESTFLR)",
@@ -679,7 +678,7 @@ can be added and its permission is created.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -694,7 +693,7 @@ can be added and its permission is created.
            
            Permission per1 = new Permission(file1);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
                i++;
@@ -702,7 +701,7 @@ can be added and its permission is created.
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR1");
            per1.commit();
-           Enumeration e2 =(Enumeration)per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            for(j=0; e2.hasMoreElements();e2.nextElement())
            {
                j++;
@@ -737,7 +736,7 @@ can be added and its permission is created.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR/TESTFLR2");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission sys = (DLOPermission)en.nextElement();
@@ -748,7 +747,7 @@ can be added and its permission is created.
             
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
                i++;
@@ -757,7 +756,7 @@ can be added and its permission is created.
            per1.addAuthorizedUser("TESTUSR1");
            per1.commit();
            
-           Enumeration e2 =(Enumeration)per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            for(j=0; e2.hasMoreElements();e2.nextElement())
            {
                j++;
@@ -790,7 +789,7 @@ can be added and removed.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR/TESTFLR2");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while (en.hasMoreElements()) 
            {
                DLOPermission sys = (DLOPermission)en.nextElement();
@@ -835,7 +834,7 @@ public void Var021()
             IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/TESTAUTL8.AUTL");
             Permission per = new Permission(file);
             // remove a user who is authorized.
-            Enumeration en =(Enumeration)per.getUserPermissions();
+            Enumeration<UserPermission> en =per.getUserPermissions();
            while(en.hasMoreElements())
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -847,7 +846,7 @@ public void Var021()
            }
             per.commit();
            
-            Enumeration ee =(Enumeration) per.getUserPermissions();
+            Enumeration<UserPermission> ee =per.getUserPermissions();
             int i = 0; 
            for(i=0; ee.hasMoreElements();ee.nextElement())
            {               
@@ -859,7 +858,7 @@ public void Var021()
             Permission per1 = new Permission(file);
             UserPermission permission = per1.getUserPermission(user[1]);
             permission.setAuthorizationListManagement(true);
-            Enumeration p1 = per1.getUserPermissions();
+            Enumeration<UserPermission> p1 =per1.getUserPermissions();
             int s=0;
            while(p1.hasMoreElements())
            {
@@ -871,7 +870,7 @@ public void Var021()
             per1.commit();
             per1.addAuthorizedUser(user[1]);
             per1.commit();
-            Enumeration p2 = per1.getUserPermissions();
+            Enumeration<UserPermission> p2 =per1.getUserPermissions();
             int k=0;
            while(p2.hasMoreElements())
            {
@@ -911,7 +910,7 @@ list management.
             IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/TESTAUTL8.AUTL");
             Permission per = new Permission(file);
             // remove a user who is authorized.
-            Enumeration en =(Enumeration)per.getUserPermissions();
+            Enumeration<UserPermission> en =per.getUserPermissions();
            while(en.hasMoreElements())
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -922,7 +921,7 @@ list management.
                }
            }
             per.commit();
-            Enumeration ee =(Enumeration) per.getUserPermissions();
+            Enumeration<UserPermission> ee =per.getUserPermissions();
            for(i=0; ee.hasMoreElements();ee.nextElement())
            {               
                i++;
@@ -933,7 +932,7 @@ list management.
             Permission per1 = new Permission(file);
             UserPermission permission = per1.getUserPermission(user[1]);
             permission.setAuthorizationListManagement(false);
-            Enumeration p1 = per1.getUserPermissions();
+            Enumeration<UserPermission> p1 =per1.getUserPermissions();
             int s=0;
            while(p1.hasMoreElements())
            {
@@ -945,7 +944,7 @@ list management.
             per.commit();
             per.addAuthorizedUser(user[1]);
             per.commit();
-            Enumeration p2 = per1.getUserPermissions();
+            Enumeration<UserPermission> p2 =per1.getUserPermissions();
             int k=0;
            while(p2.hasMoreElements())
            {
@@ -981,7 +980,7 @@ can be added and its permission is created.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -994,7 +993,7 @@ can be added and its permission is created.
             
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            { 
                i++;
@@ -1002,7 +1001,7 @@ can be added and its permission is created.
            // add a user who is not authorized before.
            per1.addAuthorizedUser(user[3]);
            per1.commit();
-           Enumeration e2 =(Enumeration)per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            for(j=0; e2.hasMoreElements();e2.nextElement())
            {
                j++;
@@ -1039,7 +1038,7 @@ and its permission is created.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements();j++)
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -1052,7 +1051,7 @@ and its permission is created.
             
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {
                i++;
@@ -1060,7 +1059,7 @@ and its permission is created.
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR3");
            per1.commit();
-           Enumeration e2 =(Enumeration)per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            for(j=0; e2.hasMoreElements();e2.nextElement())
            {
                j++;
@@ -1095,7 +1094,7 @@ is not changed after commit.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while(en.hasMoreElements())
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -1106,7 +1105,7 @@ is not changed after commit.
            
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            int i; 
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
@@ -1114,7 +1113,7 @@ is not changed after commit.
            }
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR1");
-           Enumeration p1 = per1.getUserPermissions();
+           Enumeration<UserPermission> p1 =per1.getUserPermissions();
            int s=0;
            while(p1.hasMoreElements())
            {
@@ -1125,7 +1124,7 @@ is not changed after commit.
            per1.removeAuthorizedUser("TESTUSR1");                       
            per1.addAuthorizedUser("TESTUSR1");
            
-           Enumeration p2 = per1.getUserPermissions();
+           Enumeration<UserPermission> p2 =per1.getUserPermissions();
            int k=0;
            while(p2.hasMoreElements())
            {
@@ -1159,7 +1158,7 @@ is not changed after commit.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -1170,7 +1169,7 @@ is not changed after commit.
              
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
                i++;
@@ -1178,7 +1177,7 @@ is not changed after commit.
          
            // add a user who is not authorized before.
            per1.addAuthorizedUser(user[3]);
-           Enumeration p1 = per1.getUserPermissions();
+           Enumeration<UserPermission> p1 =per1.getUserPermissions();
            int s=0;
            while(p1.hasMoreElements())
            {
@@ -1189,7 +1188,7 @@ is not changed after commit.
            per1.removeAuthorizedUser(user[3]);                       
            per1.addAuthorizedUser(user[3]);
            
-           Enumeration p2 = per1.getUserPermissions();
+           Enumeration<UserPermission> p2 =per1.getUserPermissions();
            int k=0;
            while(p2.hasMoreElements())
            {
@@ -1224,7 +1223,7 @@ is not changed after commit.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements();j++)
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -1236,14 +1235,14 @@ is not changed after commit.
            
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
                i++;
            }
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR3");
-           Enumeration p1 = per1.getUserPermissions();
+           Enumeration<UserPermission> p1 =per1.getUserPermissions();
            int s=0;
            while(p1.hasMoreElements())
            {
@@ -1254,7 +1253,7 @@ is not changed after commit.
            per1.removeAuthorizedUser("TESTUSR3");                       
            per1.addAuthorizedUser("TESTUSR3");
            
-           Enumeration p2 = per1.getUserPermissions();
+           Enumeration<UserPermission> p2 =per1.getUserPermissions();
            int k=0;
            while(p2.hasMoreElements())
            {
@@ -1290,7 +1289,7 @@ for document library objects (DLO) stored in QDLS.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -1337,7 +1336,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -1384,7 +1383,7 @@ for root directory structure.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements();j++)
            {
               RootPermission rot = (RootPermission)en.nextElement();
@@ -1615,7 +1614,7 @@ for document library objects (DLO) stored in QDLS.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -1625,7 +1624,7 @@ for document library objects (DLO) stored in QDLS.
            per.commit();
            boolean condition_ = false;
            Permission per1 = new Permission(file);
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements(); e1.nextElement()) 
            { 
                i++;
@@ -1634,7 +1633,7 @@ for document library objects (DLO) stored in QDLS.
            DLOPermission  dlo = new DLOPermission("TESTUSR1");
            per1.addUserPermission(dlo);
            per1.commit();
-           Enumeration e2 =(Enumeration)per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            while( e2.hasMoreElements())
            {
                DLOPermission dlop = (DLOPermission)e2.nextElement();
@@ -1644,7 +1643,7 @@ for document library objects (DLO) stored in QDLS.
                   break;
                }
            }
-           Enumeration e3 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e3 =per1.getUserPermissions();
            for(j=0; e3.hasMoreElements(); e3.nextElement()) 
            {
                j++;
@@ -1679,7 +1678,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -1691,7 +1690,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            boolean condition_ = false;
             
            Permission per1 = new Permission(file);
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements(); e1.nextElement()) 
               i++;
             
@@ -1699,7 +1698,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            QSYSPermission sys = new QSYSPermission(user[5]);
            per1.addUserPermission(sys);
            per1.commit();
-           Enumeration e2 =(Enumeration)per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            while( e2.hasMoreElements())
            {
                QSYSPermission sysp = (QSYSPermission)e2.nextElement();
@@ -1709,7 +1708,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
                    break;
                }
            }
-           Enumeration e3 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e3 =per1.getUserPermissions();
            for(j=0; e3.hasMoreElements(); e3.nextElement()) 
            {
                j++;
@@ -1743,7 +1742,7 @@ for root directory structure.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements();j++)
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -1755,7 +1754,7 @@ for root directory structure.
            boolean condition_ = false;
             
            Permission per1 = new Permission(file);
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements(); e1.nextElement()) 
            { i++;
            }
@@ -1763,7 +1762,7 @@ for root directory structure.
            RootPermission rot = new RootPermission("TESTUSR3");
            per1.addUserPermission(rot);
            per1.commit();
-           Enumeration e2 =(Enumeration)per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            while( e2.hasMoreElements())
            {
                RootPermission rotp = (RootPermission)e2.nextElement();
@@ -1773,7 +1772,7 @@ for root directory structure.
                    break;
                }
            }
-           Enumeration e3 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e3 =per1.getUserPermissions();
            for(j=0; e3.hasMoreElements(); e3.nextElement()) 
            {
                j++;
@@ -1807,7 +1806,7 @@ for document library objects (DLO) stored in QDLS.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -1857,7 +1856,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
            QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -1871,7 +1870,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            QSYSPermission sys = new QSYSPermission(user[1]);
            per1.addUserPermission(sys);
            per1.commit();
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
                
            QSYSPermission  sysp = new QSYSPermission(user[1]);
            String str2 = (String)sysp.getObjectAuthority();
@@ -1908,7 +1907,7 @@ for root directory structure.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements();j++)
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -1958,7 +1957,7 @@ is not changed after commit.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -1968,14 +1967,14 @@ is not changed after commit.
            per.commit();
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
                i++;
            }
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR1");
-           Enumeration p1 = per1.getUserPermissions();
+           Enumeration<UserPermission> p1 =per1.getUserPermissions();
            int s=0;
            while(p1.hasMoreElements())
            {
@@ -1988,7 +1987,7 @@ is not changed after commit.
             
            per1.addUserPermission(permission);
            
-           Enumeration p2 = per1.getUserPermissions();
+           Enumeration<UserPermission> p2 =per1.getUserPermissions();
            int k=0;
            while(p2.hasMoreElements())
            {
@@ -2023,7 +2022,7 @@ is not changed after commit.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -2034,13 +2033,13 @@ is not changed after commit.
         
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
             while (e1.hasMoreElements()) {
               e1.nextElement(); 
             }
            // add a user who is not authorized before.
            per1.addAuthorizedUser(user[5]);
-           Enumeration p1 = per1.getUserPermissions();
+           Enumeration<UserPermission> p1 =per1.getUserPermissions();
            int s=0;
            while(p1.hasMoreElements())
            {
@@ -2053,7 +2052,7 @@ is not changed after commit.
          
            per1.addUserPermission(permission);
            
-           Enumeration p2 = per1.getUserPermissions();
+           Enumeration<UserPermission> p2 =per1.getUserPermissions();
            int k=0;
            while(p2.hasMoreElements())
            {
@@ -2088,7 +2087,7 @@ is not changed after commit.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements();j++)
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -2099,14 +2098,14 @@ is not changed after commit.
        
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
                i++;
            }
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR3");
-           Enumeration p1 = per1.getUserPermissions();
+           Enumeration<UserPermission> p1 =per1.getUserPermissions();
            int s=0;
            while(p1.hasMoreElements())
            {
@@ -2119,7 +2118,7 @@ is not changed after commit.
             
            per1.addUserPermission(permission);
            
-           Enumeration p2 = per1.getUserPermissions();
+           Enumeration<UserPermission> p2 =per1.getUserPermissions();
            int k=0;
            while(p2.hasMoreElements())
            {
@@ -2152,7 +2151,7 @@ can be add.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/TESTAUTL8.AUTL");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -2163,14 +2162,14 @@ can be add.
        
            Permission per1 = new Permission(file);
            
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
                i++;
            }        
            // add a user who is not authorized before.
            per1.addAuthorizedUser(user[6]);
-           Enumeration p1 = per1.getUserPermissions();
+           Enumeration<UserPermission> p1 =per1.getUserPermissions();
            int s=0;
            while(p1.hasMoreElements())
            {
@@ -2180,7 +2179,7 @@ can be add.
            per1.commit();
            
            
-           Enumeration p2 = per1.getUserPermissions();
+           Enumeration<UserPermission> p2 =per1.getUserPermissions();
            int k=0;
            while(p2.hasMoreElements())
            {
@@ -2214,7 +2213,7 @@ is not changed after commit.
             IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB2.Lib/file8.file");
             Permission per = new Permission(file);
             // remove a user who is authorized.
-            Enumeration en =(Enumeration)per.getUserPermissions();
+            Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -2226,7 +2225,7 @@ is not changed after commit.
            }
             per.commit();
             Permission per1 = new Permission(file);
-            Enumeration e1 =(Enumeration) per1.getUserPermissions();
+            Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements();e1.nextElement())
            {               
                i++;
@@ -2234,7 +2233,7 @@ is not changed after commit.
        
             // add a user who is not authorized before.
             per1.addAuthorizedUser(user[1]);
-            Enumeration p1 = per1.getUserPermissions();
+            Enumeration<UserPermission> p1 =per1.getUserPermissions();
             int s=0;
            while(p1.hasMoreElements())
            {
@@ -2245,7 +2244,7 @@ is not changed after commit.
             per1.removeAuthorizedUser(user[1]); 
             per1.addAuthorizedUser(user[1]);
             per1.commit();
-            Enumeration p2 = per1.getUserPermissions();
+            Enumeration<UserPermission> p2 =per1.getUserPermissions();
             int k=0;
            while(p2.hasMoreElements())
            {
@@ -2269,7 +2268,7 @@ Method tested: commit()
     AS400 as400 = null;
     try
     {
-          as400 = new AS400(systemObject_.getSystemName(),"TESTUSR1","JTEST1");
+          as400 = new AS400(systemObject_.getSystemName(),"TESTUSR1","JTEST1".toCharArray());
           IFSFile file = new IFSFile(as400,"/QDLS/TESTFLR/TESTFLR2");
           Permission per = new Permission(file);
           per.setSensitivityLevel(2);     
@@ -2308,7 +2307,7 @@ public void Var049()
            Permission per = new Permission(file);
            DLOPermission userPermission=null;
                
-           Enumeration e1 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e1 =per.getUserPermissions();
            while(e1.hasMoreElements())
            {                 
                userPermission = (DLOPermission) e1.nextElement();
@@ -2362,7 +2361,7 @@ Method tested: commit()
            
            Permission per = new Permission(file);
            // remove the user permission.
-           Enumeration e1 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e1 =per.getUserPermissions();
            while(e1.hasMoreElements())
            {               
                userPermission = (UserPermission) e1.nextElement();
@@ -2378,7 +2377,7 @@ Method tested: commit()
                per.commit();
            }
 
-           Enumeration e2 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e2 =per.getUserPermissions();
            while(e2.hasMoreElements())
            {               
                userPermission = (UserPermission) e2.nextElement();
@@ -2420,7 +2419,7 @@ Method tested: commit()
            
            Permission per = new Permission(file);
            // remove the user permission.
-           Enumeration e1 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e1 =per.getUserPermissions();
            while(e1.hasMoreElements())
            {               
                userPermission = (UserPermission) e1.nextElement();
@@ -2468,7 +2467,7 @@ public void Var052()
            
            Permission per = new Permission(file);
            UserPermission userPermission = null;
-           Enumeration e1 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e1 =per.getUserPermissions();
            while(e1.hasMoreElements())
            {               
                userPermission = (UserPermission) e1.nextElement();
@@ -2520,7 +2519,7 @@ Method tested: commit()
            
            Permission per = new Permission(file);
            // remove the user permission.
-           Enumeration e1 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e1 =per.getUserPermissions();
            while(e1.hasMoreElements())
            {               
                userPermission = (UserPermission) e1.nextElement();
@@ -2534,7 +2533,7 @@ Method tested: commit()
            // add a user who is not authorized before.
            per.addAuthorizedUser("TESTUSR1");
            per.commit();
-           Enumeration e2 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e2 =per.getUserPermissions();
            while(e2.hasMoreElements())
            {               
                userPermission = (UserPermission) e2.nextElement();
@@ -2687,7 +2686,7 @@ stored in QDLS.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -2702,8 +2701,8 @@ stored in QDLS.
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR1");
            per1.commit();
-           Enumeration e1;
-           for( e1 = (Enumeration)per1.getAuthorizedUsers(); e1.hasMoreElements();)
+           Enumeration<String> e1;
+           for( e1 = per1.getAuthorizedUsers(); e1.hasMoreElements();)
            {
                String name = (String)e1.nextElement();
                if(name.equals("TESTUSR1")) 
@@ -2738,7 +2737,7 @@ stored in QSYS.LIB.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while (en.hasMoreElements())
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -2753,7 +2752,7 @@ stored in QSYS.LIB.
           // add a user who is not authorized before.
           per1.addAuthorizedUser(user[1]);
           per1.commit();
-          for( Enumeration e1 = (Enumeration)per1.getAuthorizedUsers(); e1.hasMoreElements();) 
+          for( Enumeration<String> e1 = per1.getAuthorizedUsers(); e1.hasMoreElements();) 
           {
                String name = (String)e1.nextElement();
                if(name.equals(user[1])) 
@@ -2787,7 +2786,7 @@ Method tested: getAuthorizedUsers()
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while(en.hasMoreElements())
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -2802,8 +2801,8 @@ Method tested: getAuthorizedUsers()
           // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR3");
            per1.commit();
-           Enumeration e1;
-           for(e1 = (Enumeration)per1.getAuthorizedUsers(); e1.hasMoreElements();)
+           Enumeration<String> e1;
+           for(e1 = per1.getAuthorizedUsers(); e1.hasMoreElements();)
            {
                String name = (String)e1.nextElement();
                if(name.equals("TESTUSR3")) 
@@ -3425,7 +3424,7 @@ for document library objects (DLO) stored in QDLS.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while(en.hasMoreElements())
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -3463,7 +3462,7 @@ Method tested: getUserPermission()
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while (en.hasMoreElements())           {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
                if(sys.getUserID().equals(user[1]))
@@ -3501,7 +3500,7 @@ for root directory structure.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while (en.hasMoreElements())
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -3808,7 +3807,7 @@ for document library objects (DLO) stored in QDLS.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -3823,21 +3822,21 @@ for document library objects (DLO) stored in QDLS.
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR1");
            per1.commit();
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements(); e1.nextElement())
            {  i++;
            }
            // remove a user who is authorized.
            per1.removeAuthorizedUser("TESTUSR1");
            per1.commit();
-           Enumeration e2 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            for(j=0; e2.hasMoreElements(); e2.nextElement())
            {
                j++;
            } 
            if(i == j+1)
                condition_ = true;
-           Enumeration e3 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e3 =per1.getUserPermissions();
            for(j=0; e3.hasMoreElements(); j++)
            {
                DLOPermission dlop1 = (DLOPermission)e3.nextElement();               
@@ -3874,7 +3873,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -3889,21 +3888,21 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            // add a user who is not authorized before.
            per1.addAuthorizedUser(user[1]);
            per1.commit();
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements(); e1.nextElement())
            {  i++;
            }
            // remove a user who is authorized.
            per1.removeAuthorizedUser(user[1]);
            per1.commit();
-           Enumeration e2 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            for(j=0; e2.hasMoreElements(); e2.nextElement())
            {
               j++;
            }
            if(i == j+1)
               condition_ = true;
-           Enumeration e3 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e3 =per1.getUserPermissions();
            for(j=0; e3.hasMoreElements();j++)
            {
                QSYSPermission sysp1 = (QSYSPermission)e3.nextElement();
@@ -3940,7 +3939,7 @@ for root directory structure.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements();j++)
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -3955,14 +3954,14 @@ for root directory structure.
            // add a user who is not authorized before.
            per1.addAuthorizedUser("TESTUSR3");
            per1.commit();
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            for(i=0; e1.hasMoreElements(); e1.nextElement())
            {  i++;
            }
            // remove a user who is authorized.
            per1.removeAuthorizedUser("TESTUSR3");
            per1.commit();
-           Enumeration e2 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e2 =per1.getUserPermissions();
            for(j=0; e2.hasMoreElements(); e2.nextElement())
            {
                j++;
@@ -3970,7 +3969,7 @@ for root directory structure.
            if(i == j+1)
               condition_ = true;
           
-           Enumeration e3 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e3 =per1.getUserPermissions();
            for(j=0; e3.hasMoreElements(); j++)
            {
                RootPermission rotp1 = (RootPermission)e3.nextElement();
@@ -4006,7 +4005,7 @@ for document library objects (DLO) stored in QDLS.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while( en.hasMoreElements())
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -4043,7 +4042,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            IFSFile file = new IFSFile(systemObject_,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while( en.hasMoreElements())
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -4085,7 +4084,7 @@ for root directory structure.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while( en.hasMoreElements())
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -4128,7 +4127,7 @@ can be removed when he/she is authorized.
            Permission per = new Permission(file);
            
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            while(en.hasMoreElements())
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -4139,7 +4138,7 @@ can be removed when he/she is authorized.
 
           
            Permission per1 = new Permission(file);
-           Enumeration e1 =(Enumeration) per1.getUserPermissions();
+           Enumeration<UserPermission> e1 =per1.getUserPermissions();
            while( e1.hasMoreElements()) { 
              e1.nextElement();
              
@@ -4147,7 +4146,7 @@ can be removed when he/she is authorized.
       
            // add a user who is not authorized before.
            per1.addAuthorizedUser(user[1]);
-           Enumeration p1 = per1.getUserPermissions();
+           Enumeration<UserPermission> p1 =per1.getUserPermissions();
            int s=0;
            while(p1.hasMoreElements())
            {
@@ -4157,7 +4156,7 @@ can be removed when he/she is authorized.
            per1.commit();
            per1.removeAuthorizedUser(user[1]);                       
           
-           Enumeration p2 = per1.getUserPermissions();
+           Enumeration<UserPermission> p2 =per1.getUserPermissions();
            int k=0;
            while(p2.hasMoreElements())
            {
@@ -4363,7 +4362,7 @@ if (PermissionTestDriver.PwrSys == null)
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -4380,7 +4379,7 @@ if (PermissionTestDriver.PwrSys == null)
           per1.addUserPermission(dlop);
           per1.commit();
 
-          Enumeration e1 =(Enumeration) per1.getUserPermissions();
+          Enumeration<UserPermission> e1 =per1.getUserPermissions();
           for(i=0; e1.hasMoreElements(); e1.nextElement())
            {
               i++;
@@ -4388,14 +4387,14 @@ if (PermissionTestDriver.PwrSys == null)
           // remove a userPermission after the user is already authorized.
           per1.removeUserPermission(dlop);
           per1.commit(); 
-          Enumeration e2 =(Enumeration) per1.getUserPermissions();
+          Enumeration<UserPermission> e2 =per1.getUserPermissions();
           for(j=0; e2.hasMoreElements(); e2.nextElement())
            {
               j++;
            } 
           if(i == j+1)
             condition_ = true;
-          Enumeration e3 =(Enumeration) per.getUserPermissions();
+          Enumeration<UserPermission> e3 =per.getUserPermissions();
           for(j=0; e3.hasMoreElements(); j++)
           {
               DLOPermission dlop1 = (DLOPermission)e3.nextElement();
@@ -4431,7 +4430,7 @@ if (PermissionTestDriver.PwrSys == null)
            
            Permission per = new Permission(file);
            // remove the user permission.
-           Enumeration e1 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e1 =per.getUserPermissions();
            while(e1.hasMoreElements())
            {               
                userPermission = (UserPermission) e1.nextElement();
@@ -4444,7 +4443,7 @@ if (PermissionTestDriver.PwrSys == null)
            // add a user who is not authorized before.
            per.addAuthorizedUser("TESTUSR1");
            per.commit();
-           Enumeration e2 =(Enumeration) per.getUserPermissions();
+           Enumeration<UserPermission> e2 =per.getUserPermissions();
            while(e2.hasMoreElements())
            {               
                userPermission = (UserPermission) e2.nextElement();
@@ -4481,7 +4480,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements(); j++)
            {
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -4498,7 +4497,7 @@ for traditional AS/400 library structure stored in QSYS.LIB.
           per1.addUserPermission(sysp);
           per1.commit();
 
-          Enumeration e1 =(Enumeration) per1.getUserPermissions();
+          Enumeration<UserPermission> e1 =per1.getUserPermissions();
           for(i=0; e1.hasMoreElements(); e1.nextElement())
           {
              i++;
@@ -4506,14 +4505,14 @@ for traditional AS/400 library structure stored in QSYS.LIB.
           // remove a userPermission after the user is already authorized.
           per1.removeUserPermission(sysp);
           per1.commit(); 
-          Enumeration e2 =(Enumeration) per1.getUserPermissions();
+          Enumeration<UserPermission> e2 =per1.getUserPermissions();
           for(j=0; e2.hasMoreElements(); e2.nextElement())
           {
               j++;
           }
           if(i == j+1)
              condition_ = true;
-          Enumeration e3 =(Enumeration) per1.getUserPermissions();
+          Enumeration<UserPermission> e3 =per1.getUserPermissions();
           for(j=0; e3.hasMoreElements();j++)
            {
                QSYSPermission sysp1 = (QSYSPermission)e3.nextElement();
@@ -4550,7 +4549,7 @@ for root directory structure.
            IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
            Permission per = new Permission(file);
            // remove a user who is authorized.
-           Enumeration en =(Enumeration)per.getUserPermissions();
+           Enumeration<UserPermission> en =per.getUserPermissions();
            for(j=0; en.hasMoreElements();j++)
            {
                RootPermission rot = (RootPermission)en.nextElement();
@@ -4567,14 +4566,14 @@ for root directory structure.
           per1.addUserPermission(rotp);
           per1.commit();
 
-          Enumeration e1 =(Enumeration) per1.getUserPermissions();
+          Enumeration<UserPermission> e1 =per1.getUserPermissions();
           for(i=0; e1.hasMoreElements(); e1.nextElement())
           { i++;
           }
           // remove a userPermission after the user is already authorized.
           per1.removeUserPermission(rotp);
           per1.commit(); 
-          Enumeration e2 =(Enumeration) per1.getUserPermissions();
+          Enumeration<UserPermission> e2 =per1.getUserPermissions();
           for(j=0; e2.hasMoreElements(); e2.nextElement())
            {
                j++;
@@ -4582,7 +4581,7 @@ for root directory structure.
           if(i == j+1)
               condition_ = true;
           
-          Enumeration e3 =(Enumeration) per1.getUserPermissions();
+          Enumeration<UserPermission> e3 =per1.getUserPermissions();
           for(j=0; e3.hasMoreElements(); j++)
            {
                RootPermission rotp1 = (RootPermission)e3.nextElement();
@@ -4618,7 +4617,7 @@ when the user is not authorized for document library objects (DLO) stored in QDL
             IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
             Permission per = new Permission(file);
             // remove a user who is authorized.
-            Enumeration en =(Enumeration)per.getUserPermissions();
+            Enumeration<UserPermission> en =per.getUserPermissions();
             while ( en.hasMoreElements())
             {
                 DLOPermission dlo = (DLOPermission)en.nextElement();
@@ -4662,7 +4661,7 @@ when the user is not authorized for traditional AS/400 library structure stored 
             IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB1.Lib");
             Permission per = new Permission(file);
             // remove a user who is authorized.
-            Enumeration en =(Enumeration)per.getUserPermissions();
+            Enumeration<UserPermission> en =per.getUserPermissions();
             for(j=0; en.hasMoreElements(); j++)
             {
                 QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -4706,7 +4705,7 @@ when the user is not authorized for root directory structure.
             IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/TestDir1");
             Permission per = new Permission(file);
             // remove a user who is authorized.
-            Enumeration en =(Enumeration)per.getUserPermissions();
+            Enumeration<UserPermission> en =per.getUserPermissions();
             for(j=0; en.hasMoreElements();j++)
             {
                 RootPermission rot = (RootPermission)en.nextElement();
@@ -4895,7 +4894,7 @@ public void Var122()
             IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.Lib/JTESTLIB2.Lib/file9.file/mbr1.mbr");
             Permission per = new Permission(file);
             // remove a user who is authorized.
-            Enumeration en =(Enumeration)per.getUserPermissions();
+            Enumeration<UserPermission> en =per.getUserPermissions();
             while(en.hasMoreElements())
             {   
                QSYSPermission sys = (QSYSPermission)en.nextElement();
@@ -5294,7 +5293,8 @@ Method tested: setSystem()
  - Ensure that nothing will be happened after setting the same system by this method
 for document library objects (DLO) stored in QDLS.
 **/
- public void Var136()
+ @SuppressWarnings("deprecation")
+public void Var136()
   {
   if (PermissionTestDriver.PwrSys == null)
        {
@@ -5321,7 +5321,8 @@ Method tested: setSystem()
  - Ensure that nothing will be happened after setting the same system by this method
 for traditional AS/400 library structure stored in QSYS.LIB.
 **/
- public void Var137()
+ @SuppressWarnings("deprecation")
+public void Var137()
   {
     try
     {
@@ -5344,7 +5345,8 @@ Method tested: setSystem()
  - Ensure that nothing will be happened after setting the same system by this method
 for root directory structure.
 **/
- public void Var138()
+ @SuppressWarnings("deprecation")
+public void Var138()
   {
   if (PermissionTestDriver.PwrSys == null)
        {
@@ -5371,7 +5373,8 @@ Method tested: setSystem()
  - Ensure that the NullPointerException will be thrown if null is set by setSystem()
 for document library objects (DLO) stored in QDLS.  
 **/
- public void Var139()
+ @SuppressWarnings("deprecation")
+public void Var139()
   {
   if (PermissionTestDriver.PwrSys == null)
        {
@@ -5399,7 +5402,8 @@ Method tested: setSystem()
  - Ensure that the NullPointerException will be thrown if null is set by setSystem()
 for traditional AS/400 library structure stored in QSYS.LIB.
 **/
- public void Var140()
+ @SuppressWarnings("deprecation")
+public void Var140()
   {
     try
     {
@@ -5422,7 +5426,8 @@ Method tested: setSystem()
  - Ensure that the NullPointerException will be thrown if null is set by setSystem()
 for root directory structure. 
 **/
- public void Var141()
+ @SuppressWarnings("deprecation")
+public void Var141()
   {
   if (PermissionTestDriver.PwrSys == null)
        {
@@ -5450,7 +5455,8 @@ Method tested: setSystem()
  - Ensure that the system cannot be reset and ExtendedIllegalStateException will be thrown
 after a connection for document library objects (DLO) stored in QDLS.  
 **/
- public void Var142()
+ @SuppressWarnings("deprecation")
+public void Var142()
   {
   if (PermissionTestDriver.PwrSys == null)
        {
@@ -5481,7 +5487,8 @@ Method tested: setSystem()
  - Ensure that the system cannot be reset and ExtendedIllegalStateException will be thrown
 after a connection for traditional AS/400 library structure stored in QSYS.LIB.
 **/
- public void Var143()
+ @SuppressWarnings("deprecation")
+public void Var143()
   {
     try
     {
@@ -5507,7 +5514,8 @@ Method tested: setSystem()
  - Ensure that the system cannot be reset and ExtendedIllegalStateException will be thrown
 after a connection for root directory structure. 
 **/
- public void Var144()
+ @SuppressWarnings("deprecation")
+public void Var144()
   {
   if (PermissionTestDriver.PwrSys == null)
        {
