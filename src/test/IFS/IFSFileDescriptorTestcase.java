@@ -164,6 +164,7 @@ object instantiated by IFSFileDescriptor(as400,name,mode,share,existOption).
 Ensure that the sync() method can be called from an IFSFileDescriptor
 object instantiated by IFSFileDescriptor(AS400,IFSFile,String,int,int).
 **/
+  @SuppressWarnings("deprecation")
   public void Var004()
   {
     ///setVariation(4);
@@ -253,6 +254,7 @@ object instantiated by IFSFileDescriptor(AS400,IFSFile,String,int,int).
  Ensure that the sync() method can be called from an IFSFileOutputStream
  object instantiated by IFSFileOutputStream constructor.
 **/
+  @SuppressWarnings("deprecation")
   public void Var007()
   {
     ///setVariation(7);

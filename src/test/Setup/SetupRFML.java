@@ -16,11 +16,8 @@ package test.Setup;
 
 import java.io.FileOutputStream;
 import java.util.Vector;
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.FTP;
 
-import test.Testcase;
+import com.ibm.as400.access.AS400;
 
 
 /**
@@ -34,7 +31,7 @@ public class SetupRFML extends SetupLibraryTestcase
   Constructor.
   **/
   public SetupRFML(AS400            systemObject,
-                   Vector           variationsToRun,
+                   Vector<String>           variationsToRun,
                    int              runMode,
                    FileOutputStream fileOutputStream,
                    
@@ -53,7 +50,7 @@ public class SetupRFML extends SetupLibraryTestcase
   **/
   public void Var001()
   {
-    CommandCall cmd = new CommandCall(pwrSys_);
+    // CommandCall cmd = new CommandCall(pwrSys_);
     try
     {
       restoreLibrary("rmlib.savf", "RMLIB"); 

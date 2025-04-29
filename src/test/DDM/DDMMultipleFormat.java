@@ -13,27 +13,24 @@
 
 package test.DDM;
 
-import java.io.*;
-
-import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Exception;
 import com.ibm.as400.access.AS400File;
 import com.ibm.as400.access.AS400FileRecordDescription;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.SequentialFile;
 import com.ibm.as400.access.KeyedFile;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.Trace;
-
-import test.Testcase;
-
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.SequentialFile;
+
+import test.Testcase;
 
 
 /**
@@ -197,7 +194,7 @@ public class DDMMultipleFormat extends Testcase
       fileName_ = "/qsys.lib/ddmtestsav.lib/mltfmt.file/%file%.mbr";
       // Verify the existence of library DDMTESTSAV on the system
       CommandCall c = new CommandCall(pwrSys_, "CHKOBJ OBJ(DDMTESTSAV) OBJTYPE(*LIB)");
-      boolean ran = c.run();
+      c.run();
       AS400Message[] msgs = c.getMessageList();
       if (msgs.length != 0)
       {
@@ -218,6 +215,7 @@ public class DDMMultipleFormat extends Testcase
       try
       {
         f.delete();
+        f.close(); 
       }
       catch(Exception e) {} // may not exist, so ignore faliures
       c.run("CRTLF FILE(DDMTESTSAV/MLTFMT) SRCFILE(DDMTESTSAV/QDDSSRC)");
@@ -429,6 +427,7 @@ public class DDMMultipleFormat extends Testcase
      try
      {
        file.releaseExplicitLocks();
+       file.close(); 
      }
      catch(Exception e)
      {
@@ -437,6 +436,10 @@ public class DDMMultipleFormat extends Testcase
      // Disconnect from the system for violator.  This is to prevent the subsystem
      // from filling up with jobs.
      violator.getSystem().disconnectService(AS400.RECORDACCESS);
+     try {
+      violator.close();
+    } catch (Exception e) {
+    } 
    }
 
   /**
@@ -552,6 +555,7 @@ public class DDMMultipleFormat extends Testcase
      try
      {
        file1.releaseExplicitLocks();
+       file1.close(); 
      }
      catch(Exception e) {e.printStackTrace();}
      // Disconnect from the other connections
@@ -657,6 +661,7 @@ public class DDMMultipleFormat extends Testcase
        file2.close();
        file2.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
        file2.close();
+       file1.close(); 
        succeeded();
      }
      catch(Exception e)
@@ -803,6 +808,7 @@ public class DDMMultipleFormat extends Testcase
      try
      {
        file.releaseExplicitLocks();
+       file.close(); 
      }
      catch(Exception e)
      {
@@ -987,6 +993,7 @@ public class DDMMultipleFormat extends Testcase
      try
      {
        file1.releaseExplicitLocks();
+       file1.close(); 
      }
      catch(Exception e) {e.printStackTrace();}
      // Disconnect from the other connections
@@ -1091,6 +1098,7 @@ public class DDMMultipleFormat extends Testcase
        file2.close();
        file2.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
        file2.close();
+       file1.close(); 
        succeeded();
      }
      catch(Exception e)

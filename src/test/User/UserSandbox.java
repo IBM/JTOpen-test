@@ -36,11 +36,11 @@ public class UserSandbox
 
     private static int count_ = 0;
     private static final String description_ = "-Dept 48T-JT400-User Testing";
-    private Vector directoryEntries_ = new Vector();
-    private Vector groups_ = new Vector();
+    private Vector<String> directoryEntries_ = new Vector<String>();
+    private Vector<String> groups_ = new Vector<String>();
     private String prefix_ = null;
     private AS400 system_ = null;
-    private Vector users_ = new Vector();
+    private Vector<String> users_ = new Vector<String>();
 
     /**
      Constructor.
@@ -61,17 +61,17 @@ public class UserSandbox
         {
             for (int i = directoryEntries_.size() - 1; i >= 0; --i)
             {
-                deleteDirectoryEntry((String)directoryEntries_.elementAt(i));
+                deleteDirectoryEntry(directoryEntries_.elementAt(i));
             }
 
             for (int i = users_.size() - 1; i >= 0; --i)
             {
-                deleteUser((String)users_.elementAt(i));
+                deleteUser(users_.elementAt(i));
             }
 
             for (int i = groups_.size() - 1; i >= 0; --i)
             {
-                deleteUser((String)groups_.elementAt(i));
+                deleteUser(groups_.elementAt(i));
             }
         }
         else

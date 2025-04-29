@@ -13,16 +13,21 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.beans.PropertyVetoException;
-import com.ibm.as400.access.*;
+import java.io.FileOutputStream;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
 
 import test.Testcase;
 
@@ -465,7 +470,7 @@ public class DDMEvents extends Testcase
     {
       // Verify the existence of library DDMTESTSAV on the system
       CommandCall c = new CommandCall(systemObject_, "CHKOBJ OBJ(DDMTESTSAV) OBJTYPE(*LIB)");
-      boolean ran = c.run();
+      c.run();
       AS400Message[] msgs = c.getMessageList();
       if (msgs.length != 0)
       {
@@ -499,8 +504,10 @@ public class DDMEvents extends Testcase
     {
       // Delete the files created during setup()
       SequentialFile f1 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/FILE1.FILE");
+      f1.close(); 
       f1.delete();
       KeyedFile f2 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/FILE2.FILE");
+      f2.close(); 
       f2.delete();
     }
     catch(Exception e)
@@ -1027,6 +1034,7 @@ public class DDMEvents extends Testcase
     {
       AS400File f = new SequentialFile();
       f.addFileListener(null);
+      f.close(); 
       failed("No exception");
       return;
     }
@@ -1057,6 +1065,7 @@ public class DDMEvents extends Testcase
     {
       AS400File f = new SequentialFile();
       f.addPropertyChangeListener(null);
+      f.close(); 
       failed("No exception");
       return;
     }
@@ -1087,6 +1096,7 @@ public class DDMEvents extends Testcase
     {
       AS400File f = new SequentialFile();
       f.addVetoableChangeListener(null);
+      f.close(); 
       failed("No exception");
       return;
     }
@@ -1363,6 +1373,7 @@ public class DDMEvents extends Testcase
     {
       AS400File f = new SequentialFile();
       f.removeFileListener(null);
+      f.close(); 
       failed("No exception");
       return;
     }
@@ -1393,6 +1404,7 @@ public class DDMEvents extends Testcase
     {
       AS400File f = new SequentialFile();
       f.removePropertyChangeListener(null);
+      f.close(); 
       failed("No exception");
       return;
     }
@@ -1423,6 +1435,7 @@ public class DDMEvents extends Testcase
     {
       AS400File f = new SequentialFile();
       f.removeVetoableChangeListener(null);
+      f.close(); 
       failed("No exception");
       return;
     }
@@ -2341,6 +2354,7 @@ public class DDMEvents extends Testcase
           !rl4.e_.getPropertyName().equals("path"))
       {
         failed("Error in notification of property change and vetoable change");
+        f.close(); 
         return;
       }
       // Reset the listeners
@@ -2368,14 +2382,18 @@ public class DDMEvents extends Testcase
             rl2.propertyChangeFired_)
         {
           failed("listeners with veto");
+          f.close(); 
           return;
         }
         else
         {
           succeeded();
+          f.close(); 
           return;
         }
       }
+      f.close(); 
+
       failed("No propertyVetoException");
       return;
     }
@@ -2445,6 +2463,7 @@ public class DDMEvents extends Testcase
           !rl4.e_.getPropertyName().equals("recordFormat"))
       {
         failed("Error in notification of property change and vetoable change");
+        f.close(); 
         return;
       }
       // Reset the listeners
@@ -2473,15 +2492,18 @@ public class DDMEvents extends Testcase
             rl2.propertyChangeFired_)
         {
           failed("listeners with veto");
+          f.close(); 
           return;
         }
         else
         {
           succeeded();
+          f.close(); 
           return;
         }
       }
       failed("No propertyVetoException");
+      f.close(); 
       return;
     }
     catch(Exception e)
@@ -2548,6 +2570,7 @@ public class DDMEvents extends Testcase
           !rl4.e_.getPropertyName().equals("system"))
       {
         failed("Error in notification of property change and vetoable change");
+        f.close(); 
         return;
       }
       // Reset the listeners
@@ -2575,14 +2598,17 @@ public class DDMEvents extends Testcase
             rl2.propertyChangeFired_)
         {
           failed("listeners with veto");
+          f.close(); 
           return;
         }
         else
         {
           succeeded();
+          f.close(); 
           return;
         }
       }
+      f.close(); 
       failed("No propertyVetoException");
       return;
     }
@@ -2898,6 +2924,7 @@ public class DDMEvents extends Testcase
           rl2.opened)
       {
         failed("Error in notification of fileCreated");
+        r.close(); 
         r.delete();
         return;
       }
@@ -2907,12 +2934,14 @@ public class DDMEvents extends Testcase
       failed(e, "Unexpected exception");
       try
       {
+        r.close(); 
         r.delete();
       } catch (Exception e1) {}
       return;
     }
     try
     {
+      r.close(); 
       r.delete();
     } catch (Exception e1) {}
     succeeded();
@@ -2962,6 +2991,7 @@ public class DDMEvents extends Testcase
           rl2.opened)
       {
         failed("Error in notification of fileCreated");
+        r.close(); 
         r.delete();
         return;
       }
@@ -2971,12 +3001,14 @@ public class DDMEvents extends Testcase
       failed(e, "Unexpected exception");
       try
       {
+        r.close(); 
         r.delete();
       } catch (Exception e1) {}
       return;
     }
     try
     {
+      r.close(); 
       r.delete();
     } catch (Exception e1) {}
     succeeded();
@@ -3026,6 +3058,7 @@ public class DDMEvents extends Testcase
           rl2.opened)
       {
         failed("Error in notification of fileCreated");
+        r.close(); 
         r.delete();
         return;
       }
@@ -3035,12 +3068,14 @@ public class DDMEvents extends Testcase
       failed(e, "Unexpected exception");
       try
       {
+        r.close(); 
         r.delete();
       } catch (Exception e1) {}
       return;
     }
     try
     {
+      r.close(); 
       r.delete();
     } catch (Exception e1) {}
     succeeded();
@@ -3091,6 +3126,7 @@ public class DDMEvents extends Testcase
           rl2.opened)
       {
         failed("Error in notification of fileCreated");
+        r.close(); 
         r.delete();
         return;
       }
@@ -3100,12 +3136,14 @@ public class DDMEvents extends Testcase
       failed(e, "Unexpected exception");
       try
       {
+        r.close(); 
         r.delete();
       } catch (Exception e1) {}
       return;
     }
     try
     {
+      r.close(); 
       r.delete();
     } catch (Exception e1) {}
     succeeded();
@@ -3159,14 +3197,18 @@ public class DDMEvents extends Testcase
           rl2.opened)
       {
         failed("Error in notification of fileDeleted");
+        r.close(); 
         return;
       }
+      r.close(); 
+
     }
     catch(Exception e)
     {
       failed(e, "Unexpected exception");
       try
       {
+        r.close(); 
         r.delete();
       } catch (Exception e1) {}
       return;

@@ -13,31 +13,24 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.AS400FileRecordDescription;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400File;
-import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400Text;
-import com.ibm.as400.access.SequentialFile;
-import com.ibm.as400.access.KeyedFile;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.Trace;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.SequentialFile;
 
 import test.Testcase;
-
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.CharacterFieldDescription;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  *Testcase DDMUpdate.  This test class verifies valid and invalid usage of

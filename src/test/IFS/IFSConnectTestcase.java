@@ -14,18 +14,17 @@
 package test.IFS;
 
 import java.io.FileOutputStream;
-import java.io.File;
+import java.util.Hashtable;
+import java.util.Vector;
 
-import java.util.Hashtable; import java.util.Vector;
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.ConnectionDroppedException;
 import com.ibm.as400.access.IFSFileInputStream;
 import com.ibm.as400.access.IFSFileOutputStream;
-import com.ibm.as400.access.IFSTextFileInputStream;
-import com.ibm.as400.access.IFSTextFileOutputStream;
 import com.ibm.as400.access.IFSKey;
 import com.ibm.as400.access.IFSRandomAccessFile;
-import com.ibm.as400.access.ConnectionDroppedException;
+import com.ibm.as400.access.IFSTextFileInputStream;
+import com.ibm.as400.access.IFSTextFileOutputStream;
 
 public class IFSConnectTestcase extends IFSGenericTestcase
 {
@@ -117,6 +116,7 @@ called after closed.
 /**
 Ensure that ConnectionDroppedException is thrown by IFSFileInputStream.lock() if called after closed.
 **/
+  @SuppressWarnings("deprecation")
   public void Var003()
   {
     createFile(ifsPathName_);
@@ -234,6 +234,7 @@ Ensure that ConnectionDroppedException is thrown by IFSFileInputStream.unlock(IF
     {
       IFSFileInputStream is =
         new IFSFileInputStream(systemObject_, ifsPathName_);
+      @SuppressWarnings("deprecation")
       IFSKey key = is.lock(1);
       is.close();
       is.unlock(key);
@@ -294,6 +295,7 @@ called after closed.
 /**
 Ensure that ConnectionDroppedException is thrown by IFSFileOutputStream.lock() if called after closed.
 **/
+  @SuppressWarnings("deprecation")
   public void Var011()
   {
     createFile(ifsPathName_);
@@ -316,6 +318,7 @@ Ensure that ConnectionDroppedException is thrown by IFSFileOutputStream.lock() i
 /**
 Ensure that ConnectionDroppedException is thrown by IFSFileOutputStream.unlock(IFSKey) if called after closed.
 **/
+  @SuppressWarnings("deprecation")
   public void Var012()
   {
     createFile(ifsPathName_);
@@ -493,6 +496,7 @@ Ensure that ConnectionDroppedException is thrown by IFSRandomAccessFile.length()
 /**
 Ensure that ConnectionDroppedException is thrown by IFSRandomAccessFile.lock(int, int) if called after closed.
 **/
+  @SuppressWarnings("deprecation")
   public void Var020()
   {
     createFile(ifsPathName_);
@@ -889,6 +893,7 @@ Ensure that ConnectionDroppedException is thrown by IFSRandomAccessFile.seek(lon
 /**
 Ensure that ConnectionDroppedException is thrown by IFSRandomAccessFile.skipBytes(int) if called after closed.
 **/
+  @SuppressWarnings("deprecation")
   public void Var038()
   {
     createFile(ifsPathName_);
@@ -911,6 +916,7 @@ Ensure that ConnectionDroppedException is thrown by IFSRandomAccessFile.skipByte
 /**
 Ensure that ConnectionDroppedException is thrown by IFSRandomAccessFile.unlock(IFSKey) if called after closed.
 **/
+  @SuppressWarnings("deprecation")
   public void Var039()
   {
     createFile(ifsPathName_);

@@ -13,17 +13,29 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.math.BigDecimal;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
+import com.ibm.as400.access.ZonedDecimalFieldDescription;
 
 import test.Testcase;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  *Testcase DDMCaching.  This test class verifies the results of reading and
@@ -726,8 +738,8 @@ protected void setup()
   {
     Record[] dupKeyRecs_;
     Record[] records_;
-    Record[] recordsByKey_;
-    Record[] recordsByKey2_;
+    //Record[] recordsByKey_;
+    // Record[] recordsByKey2_;
     // Delete and recreate test library
     CommandCall c = new CommandCall(pwrSys_);
     deleteLibrary(c, testLib_);
@@ -798,6 +810,7 @@ protected void cleanup()
     // Delete the files created during setup()
     SequentialFile f1 = new SequentialFile(pwrSys_, "/QSYS.LIB/" + testLib_ + ".LIB/CACHING.FILE");
     f1.delete();
+    f1.close(); 
   }
   catch(Exception e)
   {
@@ -5018,6 +5031,8 @@ protected void cleanup()
 
 class DDMFormatCaching extends RecordFormat
 {
+  private static final long serialVersionUID = -8744990032319910277L;
+
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
      newArgs[0] = "-tc";

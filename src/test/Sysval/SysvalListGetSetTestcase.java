@@ -14,18 +14,14 @@
 package test.Sysval;
 
 
-import java.io.FileOutputStream;
-import java.util.Vector;
 import java.util.ResourceBundle;
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.SystemValue;
-import com.ibm.as400.access.SystemValueList;
-
-import test.Testcase;
+import java.util.Vector;
 
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SystemValueList;
+
+import test.Testcase;
 
 /**
  * Testcase SysvalListGetSetTestcase.
@@ -263,7 +259,7 @@ public class SysvalListGetSetTestcase extends Testcase
       try
       {
         SystemValueList sv = new SystemValueList(pwrSys_);
-        Vector vec = sv.getGroup(SystemValueList.GROUP_ALL);
+        Vector<?> vec = sv.getGroup(SystemValueList.GROUP_ALL);
         if (vec == null)
 	{
           failed("getGroup() returned null.");
@@ -295,7 +291,7 @@ public class SysvalListGetSetTestcase extends Testcase
       {
         SystemValueList sv = new SystemValueList();
         sv.setSystem(pwrSys_);
-        Vector vec = sv.getGroup(SystemValueList.GROUP_ALL);
+        Vector<?> vec = sv.getGroup(SystemValueList.GROUP_ALL);
         if (vec == null)
 	{
           failed("getGroup() returned null.");

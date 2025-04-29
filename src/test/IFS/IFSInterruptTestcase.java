@@ -18,6 +18,7 @@ package test.IFS;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -33,7 +34,7 @@ Constructor.
   public IFSInterruptTestcase(AS400            systemObject,
       String userid, 
       String password,
-                         Hashtable        variationsToRun,
+                         Hashtable<String,Vector<String>>        variationsToRun,
                          int              runMode,
                          FileOutputStream fileOutputStream,
                          AS400 pwrSys

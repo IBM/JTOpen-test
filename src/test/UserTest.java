@@ -67,6 +67,7 @@ import java.util.Vector;
 /**
  Test driver for the User, UserGroup, and UserList classes.
  **/
+@SuppressWarnings("deprecation")
 public class UserTest extends TestDriver
 {
     private static final String serializeFilename_ = "UserTest.ser";
@@ -213,13 +214,14 @@ public class UserTest extends TestDriver
         ObjectOutput out = new ObjectOutputStream(new FileOutputStream(serializeFilename_));
         out.writeObject(object);
         out.flush();
-
+        out.close(); 
         // Deserialize.
         Object object2 = null;
         try
         {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(serializeFilename_));
             object2 = in.readObject();
+            in.close(); 
         }
         finally
         {
@@ -295,7 +297,7 @@ public class UserTest extends TestDriver
      **/
     public static class ResourceListListener_ implements ResourceListListener
     {
-        public Vector events_ = new Vector();
+        public Vector<ResourceListEvent> events_ = new Vector<ResourceListEvent>();
 
         public void lengthChanged(ResourceListEvent event)
         {
@@ -330,11 +332,11 @@ public class UserTest extends TestDriver
         public ResourceListEvent[] getEvents(int id)
         {
             // Weed out events of a given id.
-            Vector events2 = new Vector();
-            Enumeration enumeration = events_.elements();
+            Vector<ResourceListEvent> events2 = new Vector<ResourceListEvent>();
+            Enumeration<ResourceListEvent> enumeration = events_.elements();
             while(enumeration.hasMoreElements())
             {
-                ResourceListEvent event = (ResourceListEvent)enumeration.nextElement();
+                ResourceListEvent event = enumeration.nextElement();
                 if (event.getID() == id)
                 {
                     events2.addElement(event);

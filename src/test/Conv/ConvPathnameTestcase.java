@@ -207,18 +207,20 @@ Expected results:
         failed("Variation setup: Unable to create user profile.");
         return;
       }
-      user277 = new AS400(pwrSys_.getSystemName(), "CONVTST277", "CNVTST1");
+      user277 = new AS400(pwrSys_.getSystemName(), "CONVTST277", "CNVTST1".toCharArray());
       user277.setMustUseSockets(true);
       int originalCCSID = pwrSys_.getCcsid();
       int newCCSID = user277.getCcsid();
       if (originalCCSID == newCCSID)
       {
         failed("Variation setup: User profile CCSIDs are the same: " + originalCCSID);
+        user277.close(); 
         return;
       }
       if (newCCSID != 277)
       {
         failed("Variation setup: User profile CCSID not 277: " + newCCSID);
+        user277.close(); 
         return;
       }
 
@@ -233,6 +235,7 @@ Expected results:
           output_.println(msgs[i]);
         }
         failed("Variation setup: Unable to create library with variant characters: " + lib37);
+        user277.close(); 
         return;
       }
 
@@ -339,18 +342,21 @@ Expected results:
         failed("Variation setup: Unable to create user profile.");
         return;
       }
-      user277 = new AS400(pwrSys_.getSystemName(), "CONVTST277", "CNVTST1");
+      user277 = new AS400(pwrSys_.getSystemName(), "CONVTST277", "CNVTST1".toCharArray());
       user277.setMustUseSockets(true);
       int originalCCSID = pwrSys_.getCcsid();
       int newCCSID = user277.getCcsid();
       if (originalCCSID == newCCSID)
       {
         failed("Variation setup: User profile CCSIDs are the same: " + originalCCSID);
+        user277.close(); 
+
         return;
       }
       if (newCCSID != 277)
       {
         failed("Variation setup: User profile CCSID not 277: " + newCCSID);
+        user277.close(); 
         return;
       }
 

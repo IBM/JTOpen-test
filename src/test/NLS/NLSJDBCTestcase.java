@@ -13,16 +13,11 @@
 
 package test.NLS;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400JDBCDriver;
-
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
-
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -36,6 +31,9 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
 
 import test.JDLobTest;
 import test.JDSetupProcedure;
@@ -44,7 +42,6 @@ import test.JDTestcase;
 import test.NLSTest;
 import test.PasswordVault;
 import test.JD.JDSetupCollection;
-import test.JDLobTest.JDTestClob;
 
 
 
@@ -82,7 +79,7 @@ extends JDTestcase {
 Constructor.
 **/
     public NLSJDBCTestcase (AS400 systemObject,
-                                    Hashtable namesAndVars,
+                                    Hashtable<String,Vector<String>> namesAndVars,
                                     int runMode,
                                     FileOutputStream fileOutputStream,
                                     
@@ -1439,6 +1436,7 @@ PreparedStatement.setUnicodeString() and ResultSet.getUnicodeString() - Passes i
 SELECT statement when we create the PreparedStatement and then tries
 to execute it using executeUpdate().  No SQLException should be thrown.
 **/
+    @SuppressWarnings("deprecation")
     public void Var017()
     {
         try {
@@ -1733,13 +1731,13 @@ than 1 character in the name.
             properties.put("libraries", COLLECTION + " JAVANLS *LIBL");
             properties.put("errors","full");
             connection = DriverManager.getConnection(url, properties);
-            DatabaseMetaData dbMeta = connection.getMetaData();
+            //DatabaseMetaData dbMeta = connection.getMetaData();
 
             Statement stmt = connection.createStatement();
 
-            String catalog = null;
+            // String catalog = null;
             String fieldList = "";
-            String schema = "JAVANLS";
+            // String schema = "JAVANLS";
             String table = "SMPDBCS"+specificName;
 
             // Get the "real" strings from the property file.

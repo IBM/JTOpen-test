@@ -13,26 +13,19 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400File;
 import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.AS400Exception;
-import com.ibm.as400.access.AS400Text;
-import com.ibm.as400.access.SequentialFile;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.Trace;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.SequentialFile;
 
 import test.Testcase;
-
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 /**
  *Testcase DDMReadRN.  This test class verifies valid and invalid usage of
@@ -316,6 +309,7 @@ protected void cleanup()
     // Delete the files created during setup()
     SequentialFile f1 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/READRN.FILE/MBR1.MBR");
     f1.delete();
+    f1.close(); 
   }
   catch(Exception e)
   {
@@ -733,7 +727,7 @@ protected void cleanup()
       try
       {
         rec1 = file.read(2);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec1);
       }
       catch(Exception e)
       {
@@ -789,7 +783,7 @@ protected void cleanup()
       try
       {
         rec1 = file.readAfter(7);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec1);
       }
       catch(Exception e)
       {
@@ -845,7 +839,7 @@ protected void cleanup()
       try
       {
         rec1 = file.readBefore(8);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec1);
       }
       catch(Exception e)
       {
@@ -903,7 +897,7 @@ protected void cleanup()
       try
       {
         rec1 = file.read(0);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec1);
       }
       catch(Exception e)
       {
@@ -961,7 +955,7 @@ protected void cleanup()
       try
       {
         rec1 = file.readAfter(0);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec1);
       }
       catch(Exception e)
       {
@@ -1019,7 +1013,7 @@ protected void cleanup()
       try
       {
         rec1 = file.readBefore(0);
-        failMsg.append("Expected exception didn't occur.\n");
+        failMsg.append("Expected exception didn't occur.\n"+rec1);
       }
       catch(Exception e)
       {

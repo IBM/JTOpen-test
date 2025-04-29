@@ -3046,7 +3046,9 @@ String runCommand(String command, StringBuffer sb)
       AS400 sys = new AS400();
       try
       {
-        sys = file.getSystem();
+        AS400 sys2 = file.getSystem();
+        sys.close(); 
+        sys = sys2; 
       }
       catch(Exception e)
       {
@@ -3055,6 +3057,7 @@ String runCommand(String command, StringBuffer sb)
       }
       if (sys != null)
       {
+        sys.close(); 
         failMsg.append("getSystem() failed: "+sys.toString()+"\n");
       }
     }
@@ -3101,7 +3104,9 @@ String runCommand(String command, StringBuffer sb)
       try
       {
         AS400 sys = new AS400();
-        sys = file.getSystem();
+        AS400 sys2 = file.getSystem();
+        sys.close(); 
+        sys=sys2; 
         if (!sys.equals(systemObject_))
         {
           failMsg.append("getSystem() failed: "+sys.toString()+"\n");
@@ -3155,7 +3160,9 @@ String runCommand(String command, StringBuffer sb)
       file = new SequentialFile(systemObject_,
                                 "/QSYS.LIB/" + testLib_ + ".LIB/GETSYS.FILE/MBR1.MBR");
       AS400 newsys = new AS400();
-      newsys = systemObject_;
+      AS400 newsys2 = systemObject_;
+      newsys.close(); 
+      newsys=newsys2; 
       file.setSystem(newsys);
       try
       {
@@ -4820,8 +4827,7 @@ String runCommand(String command, StringBuffer sb)
     try
     {
       file = new SequentialFile();
-      AS400 sys = new AS400();
-      sys = systemObject_;
+      AS400 sys = systemObject_;
       try
       {
         file.setSystem(sys);
@@ -6749,7 +6755,9 @@ String runCommand(String command, StringBuffer sb)
       AS400 sys = new AS400();
       try
       {
-        sys = file.getSystem();
+        AS400 sys2 = file.getSystem();
+        sys.close(); 
+        sys=sys2; 
       }
       catch(Exception e)
       {
@@ -6804,7 +6812,9 @@ String runCommand(String command, StringBuffer sb)
       try
       {
         AS400 sys = new AS400();
-        sys = file.getSystem();
+        AS400 sys2 = file.getSystem();
+        sys.close(); 
+        sys=sys2; 
         if (!sys.equals(systemObject_))
         {
           failMsg.append("getSystem() failed: "+sys.toString()+"\n");
@@ -6858,7 +6868,9 @@ String runCommand(String command, StringBuffer sb)
       file = new KeyedFile(systemObject_,
                                 "/QSYS.LIB/" + testLib_ + ".LIB/GETSYS.FILE/MBR1.MBR");
       AS400 newsys = new AS400();
-      newsys = systemObject_;
+      AS400 newsys2 = systemObject_;
+      newsys.close(); 
+      newsys = newsys2; 
       file.setSystem(newsys);
       try
       {
@@ -8524,8 +8536,7 @@ String runCommand(String command, StringBuffer sb)
     try
     {
       file = new KeyedFile();
-      AS400 sys = new AS400();
-      sys = systemObject_;
+      AS400 sys = systemObject_;
       try
       {
         file.setSystem(sys);

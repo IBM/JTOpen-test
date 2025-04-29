@@ -259,7 +259,7 @@ public class DDMLocking extends Testcase
       fileName_ = "/QSYS.LIB/" + testLib_ + ".LIB/DDMLOCK.FILE/MBR1.MBR";
       SequentialFile f1 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMLOCK.FILE/MBR1.MBR");
       f1.create(new DDMLockFormat(systemObject_), "DDMLocking file");
-
+      f1.close(); 
       // Create journal receiver and journal if it does not already exist
       String msg = runCommand("CRTJRNRCV JRNRCV("+journalLib_+"/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
       if (msg != null && !msg.equals("CPF7010"))
@@ -401,6 +401,7 @@ public class DDMLocking extends Testcase
     {
       SequentialFile file = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMLOCK.FILE/MBR1.MBR");
       file.lock(AS400File.READ_ALLOW_SHARED_WRITE_LOCK - 1);
+      file.close(); 
       failed("Exception didn't occur when specifying READ_ALLOWED_SHARED_WRITE_LOCK - 1.");
     }
     catch (Exception e)
@@ -411,6 +412,7 @@ public class DDMLocking extends Testcase
         {
           SequentialFile file = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMLOCK.FILE/MBR1.MBR");
           file.lock(AS400File.WRITE_EXCLUSIVE_LOCK + 1);
+          file.close(); 
           failed("Exception didn't occur when specifying WRITE_EXCLUSIVE_LOCK + 1.");
         }
         catch (Exception e1)
@@ -980,6 +982,7 @@ public class DDMLocking extends Testcase
     try
     {
       file.releaseExplicitLocks();
+      file.close(); 
     }
     catch (Exception e)
     {
@@ -991,6 +994,7 @@ public class DDMLocking extends Testcase
     {
 	try { 
       violator.getSystem().disconnectService(AS400.RECORDACCESS);
+      violator.close(); 
 	} catch (Exception e) {
 	    e.printStackTrace(); 
 	} 
@@ -2057,6 +2061,7 @@ public class DDMLocking extends Testcase
       SequentialFile f = new SequentialFile(systemObject_, fileName_);
       try
       {
+        f.close(); 
         f.delete();
       }
       catch (Exception e)

@@ -998,6 +998,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setSystem(systemObject_);
       file.available();
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1019,6 +1020,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath(ifsPathName_);
       file.available();
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1039,6 +1041,8 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath("/Directory/Name");
       assertCondition(file.getPath().equals("/Directory/Name"));
+      file.close(); 
+
     }
     catch(Exception e)
     {
@@ -1057,6 +1061,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setSystem(systemObject_);
       assertCondition(file.getSystem() == systemObject_);
+      file.close(); 
     }
     catch(Exception e)
     {
@@ -1075,7 +1080,8 @@ Constructor.
     {
       IFSFileInputStream file = new IFSFileInputStream();
       file.setSystem(systemObject_);
-      file.lock(1);
+      file.lock(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1096,7 +1102,8 @@ Constructor.
     {
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath(ifsPathName_);
-      file.lock(1);
+      file.lock(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1118,6 +1125,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setSystem(systemObject_);
       file.read();
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1139,6 +1147,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath(ifsPathName_);
       file.read();
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1160,6 +1169,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setSystem(systemObject_);
       file.read(new byte[1]);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1181,6 +1191,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath(ifsPathName_);
       file.read(new byte[1]);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1202,6 +1213,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setSystem(systemObject_);
       file.read(new byte[1], 0, 1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1223,6 +1235,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath(ifsPathName_);
       file.read(new byte[1], 0, 1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1244,6 +1257,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setSystem(systemObject_);
       file.skip(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1265,6 +1279,7 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath(ifsPathName_);
       file.skip(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1292,6 +1307,8 @@ Constructor.
       IFSFileInputStream file1 = new IFSFileInputStream(systemObject_,
                                                         ifsPathName_);
       file.setFD(file1.getFD());
+      file.close(); 
+      file1.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1317,6 +1334,7 @@ Constructor.
                                                        ifsPathName_);
       file.available();
       file.setPath(file.getPath() + "1");
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1342,6 +1360,7 @@ Constructor.
                                                         ifsPathName_);
        file.available();
        file.setShareOption(IFSFileInputStream.SHARE_NONE);
+       file.close(); 
        failed("Exception didn't occur.");
      }
      catch(Exception e)
@@ -1368,6 +1387,7 @@ Constructor.
                                                         ifsPathName_);
        file.available();
        file.setSystem(new AS400());
+       file.close(); 
        failed("Exception didn't occur.");
      }
      catch(Exception e)
@@ -1442,6 +1462,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setSystem(systemObject_);
       file.flush();
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1463,6 +1484,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setPath(ifsPathName_);
       file.flush();
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1483,6 +1505,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setPath("/Directory/Name");
       assertCondition(file.getPath().equals("/Directory/Name"));
+      file.close(); 
     }
     catch(Exception e)
     {
@@ -1501,6 +1524,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setSystem(systemObject_);
       assertCondition(file.getSystem() == systemObject_);
+      file.close(); 
     }
     catch(Exception e)
     {
@@ -1519,7 +1543,8 @@ Constructor.
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setSystem(systemObject_);
-      file.lock(1);
+      file.lock(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1540,7 +1565,8 @@ Constructor.
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setPath(ifsPathName_);
-      file.lock(1);
+      file.lock(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1567,6 +1593,8 @@ Constructor.
       IFSFileOutputStream file1 = new IFSFileOutputStream(systemObject_,
                                                         ifsPathName_);
       file.setFD(file1.getFD());
+      file.close(); 
+      file1.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1592,6 +1620,7 @@ Constructor.
                                                        ifsPathName_);
       file.flush();
       file.setPath(file.getPath() + "1");
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1617,6 +1646,7 @@ Constructor.
                                                         ifsPathName_);
        file.flush();
        file.setShareOption(IFSFileInputStream.SHARE_NONE);
+       file.close(); 
        failed("Exception didn't occur.");
      }
      catch(Exception e)
@@ -1643,6 +1673,7 @@ Constructor.
                                                         ifsPathName_);
        file.flush();
        file.setSystem(new AS400());
+       file.close(); 
        failed("Exception didn't occur.");
      }
      catch(Exception e)
@@ -1666,6 +1697,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setSystem(systemObject_);
       file.write(1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1687,6 +1719,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setPath(ifsPathName_);
       file.write(1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1708,6 +1741,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setSystem(systemObject_);
       file.write(new byte[1]);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1729,6 +1763,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setPath(ifsPathName_);
       file.write(new byte[1]);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1750,6 +1785,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setSystem(systemObject_);
       file.write(new byte[1], 0, 1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -1771,6 +1807,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setPath(ifsPathName_);
       file.write(new byte[1], 0, 1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -2026,7 +2063,8 @@ Constructor.
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       file.setSystem(systemObject_);
       file.setMode("rw");
-      file.lock(0, 1);
+      file.lock(0L, 1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -2048,7 +2086,8 @@ Constructor.
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       file.setPath(ifsPathName_);
       file.setMode("rw");
-      file.lock(0, 1);
+      file.lock(0L, 1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -2070,7 +2109,8 @@ Constructor.
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       file.setPath(ifsPathName_);
       file.setSystem(systemObject_);
-      file.lock(0, 1);
+      file.lock(0L, 1);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -3407,7 +3447,8 @@ Constructor.
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       file.setSystem(systemObject_);
       file.setPath(ifsPathName_);
-      file.skipBytes(1);
+      file.skipBytes(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -3429,7 +3470,8 @@ Constructor.
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       file.setSystem(systemObject_);
       file.setMode("rw");
-      file.skipBytes(1);
+      file.skipBytes(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -3451,7 +3493,8 @@ Constructor.
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       file.setPath(ifsPathName_);
       file.setMode("rw");
-      file.skipBytes(1);
+      file.skipBytes(1L);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4394,6 +4437,7 @@ Constructor.
     {
       IFSFileInputStream file = new IFSFileInputStream();
       file.setFD((IFSFileDescriptor) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4411,6 +4455,7 @@ Constructor.
     {
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath((String) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4430,6 +4475,8 @@ Constructor.
       IFSFileInputStream file = new IFSFileInputStream();
       file.setPath("foobar");
       assertCondition(file.getPath().equals("/foobar"));
+      file.close(); 
+
     }
     catch(Exception e)
     {
@@ -4447,6 +4494,7 @@ Constructor.
     {
       IFSFileInputStream in = new IFSFileInputStream();
       in.setShareOption(IFSFileInputStream.SHARE_NONE - 1);
+      in.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e1)
@@ -4458,6 +4506,7 @@ Constructor.
         {
           IFSFileInputStream in = new IFSFileInputStream();
           in.setShareOption(IFSFileInputStream.SHARE_ALL + 1);
+          in.close(); 
           failed("Exception didn't occur.");
         }
         catch(Exception e2)
@@ -4483,6 +4532,7 @@ Constructor.
     {
       IFSFileInputStream file = new IFSFileInputStream();
       file.setSystem((AS400) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4500,6 +4550,7 @@ Constructor.
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setFD((IFSFileDescriptor) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4519,6 +4570,7 @@ Constructor.
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setPath("foobar");
       assertCondition(file.getPath().equals("/foobar"));
+      file.close(); 
     }
     catch(Exception e)
     {
@@ -4536,6 +4588,7 @@ Constructor.
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setPath((String) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4554,6 +4607,7 @@ Constructor.
     {
       IFSFileOutputStream in = new IFSFileOutputStream();
       in.setShareOption(IFSFileOutputStream.SHARE_NONE - 1);
+      in.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e1)
@@ -4565,6 +4619,7 @@ Constructor.
         {
           IFSFileOutputStream in = new IFSFileOutputStream();
           in.setShareOption(IFSFileOutputStream.SHARE_ALL + 1);
+          in.close(); 
           failed("Exception didn't occur.");
         }
         catch(Exception e2)
@@ -4589,6 +4644,7 @@ Constructor.
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.setSystem((AS400) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4755,6 +4811,7 @@ Constructor.
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
       file.setSystem(systemObject_);
       file.flush();
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4776,6 +4833,7 @@ Constructor.
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
       file.setPath(ifsPathName_);
       file.flush();
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -4796,6 +4854,7 @@ Constructor.
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
       file.setCCSID(1234);
       assertCondition(file.getCCSID() == 1234);
+      file.close(); 
     }
     catch(Exception e)
     {

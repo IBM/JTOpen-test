@@ -13,12 +13,24 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.DBCSEitherFieldDescription;
+import com.ibm.as400.access.DBCSGraphicFieldDescription;
+import com.ibm.as400.access.DBCSOnlyFieldDescription;
+import com.ibm.as400.access.DBCSOpenFieldDescription;
+import com.ibm.as400.access.DateFieldDescription;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
+import com.ibm.as400.access.TimeFieldDescription;
+import com.ibm.as400.access.TimestampFieldDescription;
 
 import test.Testcase;
 
@@ -166,7 +178,7 @@ public class DDMP3696575 extends Testcase
         RecordFormat rfs[] = frd.retrieveRecordFormat();
     
         // If we were able to retrieve the description, then it worked.
-        succeeded();
+        assertCondition(true, "Able to get description "+rfs); 
     }
     catch(Exception e)
     {

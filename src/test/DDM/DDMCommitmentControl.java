@@ -998,15 +998,19 @@ protected void cleanup()
     // Delete the files created during setup()
     SequentialFile f1 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMCC1.FILE/MBR1.MBR");
     f1.delete();
+    f1.close(); 
     SequentialFile f2 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMCC2.FILE/MBR1.MBR");
     f2.delete();
+    f2.close(); 
     KeyedFile f3 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMCCK1.FILE/MBR1.MBR");
     f3.delete();
+    f3.close(); 
     KeyedFile f4 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMCCK2.FILE/MBR1.MBR");
     f4.delete();
+    f4.close(); 
     SequentialFile f5 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/DDMCC3.FILE/MBR1.MBR");
     f5.delete();
-
+    f5.close(); 
     // Delete the DDMTest library and the journal file.  The journal
     // receive should be automatically deleted due to the way that the
     // journal and receiver were deleted.

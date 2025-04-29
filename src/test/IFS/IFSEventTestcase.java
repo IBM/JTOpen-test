@@ -1083,7 +1083,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       file.setPath(ifsPathName_);
       IFSFileListener listener = new IFSFileListener();
       file.addFileListener(listener);
-      file.lock(1);
+      file.lock(1L);
       assertCondition(!listener.closed && !listener.deleted && !listener.modified &&
              listener.opened);
       file.close();
@@ -1887,7 +1887,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       file.setPath(ifsPathName_);
       IFSFileListener listener = new IFSFileListener();
       file.addFileListener(listener);
-      file.lock(1);
+      file.lock(1L);
       assertCondition(!listener.closed && !listener.deleted && !listener.modified &&
              listener.opened);
       file.close();
@@ -2334,6 +2334,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.removeFileListener((FileListener) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -2353,6 +2354,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.removePropertyChangeListener((PropertyChangeListener) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -2372,6 +2374,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
       file.removeVetoableChangeListener((VetoableChangeListener) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -2764,7 +2767,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       file.setMode("rw");
       IFSFileListener listener = new IFSFileListener();
       file.addFileListener(listener);
-      file.lock(0, 1);
+      file.lock(0L, 1);
       assertCondition(!listener.closed && !listener.deleted && !listener.modified &&
              listener.opened);
       file.close();
@@ -3880,6 +3883,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
    Ensure that IFSRandomAccessFile.skipBytes(int) fires a FileEvent indicating
    FILE_OPENED.
    **/
+  @SuppressWarnings("deprecation")
   public void Var135()
   {
     createFile(ifsPathName_, "some data");
@@ -4456,7 +4460,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       file.setPath(ifsPathName_);
       IFSFileListener listener = new IFSFileListener();
       file.addFileListener(listener);
-      file.lock(1);
+      file.lock(1L);
       assertCondition(!listener.closed && !listener.deleted && !listener.modified &&
              listener.opened);
       file.close();
@@ -5254,7 +5258,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       file.setPath(ifsPathName_);
       IFSFileListener listener = new IFSFileListener();
       file.addFileListener(listener);
-      file.lock(1);
+      file.lock(1L);
       assertCondition(!listener.closed && !listener.deleted && !listener.modified &&
              listener.opened);
       file.close();
@@ -5702,6 +5706,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
       file.removeFileListener((FileListener) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -5721,6 +5726,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
       file.removePropertyChangeListener((PropertyChangeListener) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)
@@ -5740,6 +5746,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
       file.removeVetoableChangeListener((VetoableChangeListener) null);
+      file.close(); 
       failed("Exception didn't occur.");
     }
     catch(Exception e)

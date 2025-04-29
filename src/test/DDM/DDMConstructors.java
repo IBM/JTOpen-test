@@ -13,18 +13,14 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.KeyedFile;
 import com.ibm.as400.access.SequentialFile;
 
 import test.Testcase;
-
-import com.ibm.as400.access.KeyedFile;
 
 /**
  *Testcase DDMConstructors.  Verify valid and invalid usages of the constructors
@@ -207,6 +203,7 @@ public class DDMConstructors extends Testcase
       {
         failMsg.append("\nWrong AS400 object returned.\n");
       }
+      f1.close(); 
     }
     catch(Exception e)
     {
@@ -264,6 +261,7 @@ public class DDMConstructors extends Testcase
       {
         failMsg.append("\nWrong AS400 object returned.\n");
       }
+      f1.close(); 
     }
     catch(Exception e)
     {
@@ -298,6 +296,7 @@ public class DDMConstructors extends Testcase
     try
     {
       SequentialFile f1 = new SequentialFile(null, "/QSYS.LIB/FILE2.FILE/FILE2.MBR");
+      f1.close(); 
       failMsg.append("\nNo exception when null passed for AS400 parm.\n");
     }
     catch(Exception e)
@@ -336,7 +335,8 @@ public class DDMConstructors extends Testcase
     try
     {
       SequentialFile f1 = new SequentialFile(systemObject_, null);
-      failMsg.append("\nNo exception when null passed for name parm.\n");
+      f1.close(); 
+      failMsg.append("\nNo exception when null passed for name parm.\n"+f1);
     }
     catch(Exception e)
     {
@@ -377,6 +377,7 @@ public class DDMConstructors extends Testcase
     try
     {
       SequentialFile f1 = new SequentialFile(systemObject_, fileName);
+      f1.close(); 
       failMsg.append("\nNo exception when invalid IFS name passed for name parm.\n");
     }
     catch(Exception e)
@@ -418,6 +419,7 @@ public class DDMConstructors extends Testcase
     try
     {
       SequentialFile f1 = new SequentialFile(systemObject_, fileName);
+      f1.close(); 
       failMsg.append("\nNo exception when invalid IFS object type passed for name parm.\n");
     }
     catch(Exception e)
@@ -491,13 +493,13 @@ public class DDMConstructors extends Testcase
           e.printStackTrace();
         }
       }
+      f1.close(); 
     }
     catch(Exception e)
     {
         failMsg.append("\nUnexpected exception\n");
         e.printStackTrace();
     }
-
     if (failMsg.length() == 0)
     {
       succeeded();
@@ -547,6 +549,7 @@ public class DDMConstructors extends Testcase
       {
         failMsg.append("\nWrong AS400 object returned.\n");
       }
+      f1.close(); 
     }
     catch(Exception e)
     {
@@ -604,6 +607,7 @@ public class DDMConstructors extends Testcase
       {
         failMsg.append("\nWrong AS400 object returned.\n");
       }
+      f1.close(); 
     }
     catch(Exception e)
     {
@@ -638,6 +642,7 @@ public class DDMConstructors extends Testcase
     try
     {
       KeyedFile f1 = new KeyedFile(null, "/QSYS.LIB/FILE2.FILE/FILE2.MBR");
+      f1.close(); 
       failMsg.append("\nNo exception when null passed for AS400 parm.\n");
     }
     catch(Exception e)
@@ -676,6 +681,7 @@ public class DDMConstructors extends Testcase
     try
     {
       KeyedFile f1 = new KeyedFile(systemObject_, null);
+      f1.close(); 
       failMsg.append("\nNo exception when null passed for name parm.\n");
     }
     catch(Exception e)
@@ -717,6 +723,7 @@ public class DDMConstructors extends Testcase
     try
     {
       KeyedFile f1 = new KeyedFile(systemObject_, fileName);
+      f1.close(); 
       failMsg.append("\nNo exception when invalid IFS name passed for name parm.\n");
     }
     catch(Exception e)
@@ -757,6 +764,7 @@ public class DDMConstructors extends Testcase
     try
     {
       KeyedFile f1 = new KeyedFile(systemObject_, fileName);
+      f1.close();
       failMsg.append("\nNo exception when invalid IFS object type passed for name parm.\n");
     }
     catch(Exception e)
@@ -829,6 +837,7 @@ public class DDMConstructors extends Testcase
           e.printStackTrace();
         }
       }
+      f1.close(); 
     }
     catch(Exception e)
     {

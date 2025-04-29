@@ -13,26 +13,21 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.AS400Exception;
-import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400File;
-import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.SequentialFile;
-
-import test.Testcase;
-
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.KeyedFile;
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.SequentialFile;
+
+import test.Testcase;
 
 /**
  *Testcase DDMReadSeq.  This test class verifies valid and invalid usage of
@@ -3255,6 +3250,7 @@ public class DDMReadSeq extends Testcase
                                 "/QSYS.LIB/" + testLib_ + ".LIB/V42.FILE/MBR1.MBR");
       RecordFormat format = new DDMChar10NoKeyFormat(systemObject_);
       file.create(format, "DDMReqSeq.Var042()");
+      @SuppressWarnings("unused")
       Record record = new Record();
       file.open(AS400File.READ_WRITE, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
       try
@@ -3386,6 +3382,7 @@ public class DDMReadSeq extends Testcase
                            "/QSYS.LIB/" + testLib_ + ".LIB/V44.FILE/MBR1.MBR");
       RecordFormat format = new DDMReadSeqKeyFormat(systemObject_);
       file.create(format, "DDMReqSeq.Var044()");
+      @SuppressWarnings("unused")
       Record record = new Record();
       file.open(AS400File.READ_WRITE, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
       try
@@ -3517,6 +3514,7 @@ public class DDMReadSeq extends Testcase
                                 "/QSYS.LIB/" + testLib_ + ".LIB/V46.FILE/MBR1.MBR");
       RecordFormat format = new DDMChar10NoKeyFormat(systemObject_);
       file.create(format, "DDMReqSeq.Var046()");
+      @SuppressWarnings("unused")
       Record record = new Record();
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
       try
@@ -3648,6 +3646,7 @@ public class DDMReadSeq extends Testcase
                            "/QSYS.LIB/" + testLib_ + ".LIB/V48.FILE/MBR1.MBR");
       RecordFormat format = new DDMReadSeqKeyFormat(systemObject_);
       file.create(format, "DDMReqSeq.Var048()");
+      @SuppressWarnings("unused")
       Record record = new Record();
       file.open(AS400File.READ_WRITE, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
       try

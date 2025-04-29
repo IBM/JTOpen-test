@@ -13,21 +13,29 @@
 
 package test.DDM;
 
-import java.io.*;
-
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400JDBCDriver;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
+import com.ibm.as400.access.SystemValue;
 
 import test.JDJobName;
 import test.JTOpenTestEnvironment;
 import test.Testcase;
-
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.DriverManager;
-import java.text.SimpleDateFormat;
-import java.text.ParsePosition;
-import java.util.Date;
 
 /**
  *Testcase DDMSQLCompatibility.  This test class verifies DDM compatibility with SQL tables, primarily the field (column) default values.
@@ -462,12 +470,14 @@ public class DDMSQLCompatibility extends Testcase
       if (rfs.length != 1)
       {
         f.delete();
+        f.close(); 
         failed("Wrong number of record formats returned: "+rfs.length);
         return;
       }
       if (rfs[0].getNumberOfFields() != 18)
       {
         f.delete();
+        f.close(); 
         failed("Wrong number of fields in format: "+rfs[0].getNumberOfFields());
         return;
       }
@@ -545,12 +555,14 @@ public class DDMSQLCompatibility extends Testcase
       {
         f.delete();
         failed("Wrong number of record formats returned: "+rfs.length);
+        f.close(); 
         return;
       }
       if (rfs[0].getNumberOfFields() != 18)
       {
         f.delete();
         failed("Wrong number of fields in format: "+rfs[0].getNumberOfFields());
+        f.close(); 
         return;
       }
 
@@ -619,12 +631,14 @@ public class DDMSQLCompatibility extends Testcase
       {
         f.delete();
         failed("Wrong number of record formats returned: "+rfs.length);
+        f.close(); 
         return;
       }
       if (rfs[0].getNumberOfFields() != 18)
       {
         f.delete();
         failed("Wrong number of fields in format: "+rfs[0].getNumberOfFields());
+        f.close(); 
         return;
       }
 
@@ -697,12 +711,14 @@ public class DDMSQLCompatibility extends Testcase
       {
         f.delete();
         failed("Wrong number of record formats returned: "+rfs.length);
+        f.close(); 
         return;
       }
       if (rfs[0].getNumberOfFields() != 4)
       {
         f.delete();
         failed("Wrong number of fields in format: "+rfs[0].getNumberOfFields());
+        f.close(); 
         return;
       }
 

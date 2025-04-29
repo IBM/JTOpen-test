@@ -15,6 +15,7 @@ package test.NetServer;
 import java.io.FileOutputStream;
 
 import java.util.Hashtable;
+import java.util.Vector;
 import java.beans.FeatureDescriptor;
 import java.beans.BeanDescriptor;
 import java.beans.EventSetDescriptor;
@@ -39,6 +40,7 @@ NetServerBeanInfoTestcase.  Verify the following public interfaces:
    </ul>
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class NetServerBeanInfoTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -55,7 +57,7 @@ public class NetServerBeanInfoTestcase extends Testcase
     Constructor.  This is called from the NetServerTest::createTestcases method.
    **/
    public NetServerBeanInfoTestcase(AS400 systemObject,
-                                          Hashtable variationsToRun,
+                                          Hashtable<String,Vector<String>> variationsToRun,
                                           int runMode,
                                           FileOutputStream fileOutputStream)
    {
@@ -107,18 +109,18 @@ public class NetServerBeanInfoTestcase extends Testcase
    <li>The bean info object will be constructed..
    </ul>
    **/
-   public void Var001()
+  public void Var001()
    {
       try
       {
          NetServerBeanInfo bi = new NetServerBeanInfo();
+         assertCondition(true, "bi created ="+bi); 
       }
       catch(Exception e)
       {
          failed(e, "Unexpected exception");
          return;
       }
-      succeeded();
    }
 
    /**
@@ -365,7 +367,7 @@ public class NetServerBeanInfoTestcase extends Testcase
    {
       try
       {
-         NetServerBeanInfo bi = new NetServerBeanInfo();
+         // NetServerBeanInfo bi = new NetServerBeanInfo();
          // Icons / GUI components no longer available in JTOpen 20.0.X
       }
       catch(Exception e)

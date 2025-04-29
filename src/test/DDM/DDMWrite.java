@@ -13,36 +13,29 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.AS400FileRecordDescription;
+
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Date;
 import com.ibm.as400.access.AS400File;
 import com.ibm.as400.access.AS400Message;
-import com.ibm.as400.access.AS400Exception;
 import com.ibm.as400.access.AS400Text;
-import com.ibm.as400.access.SequentialFile;
-import com.ibm.as400.access.KeyedFile;
-import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.Trace;
-
-import test.Testcase;
-
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.CharacterFieldDescription;
-
-import com.ibm.as400.access.AS400Date;
 import com.ibm.as400.access.AS400Time;
 import com.ibm.as400.access.AS400Timestamp;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.DateFieldDescription;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
 import com.ibm.as400.access.TimeFieldDescription;
 import com.ibm.as400.access.TimestampFieldDescription;
+
+import test.Testcase;
 
 /**
  *Testcase DDMWrite.  This test class verifies valid and invalid usage of
@@ -2856,7 +2849,9 @@ public class DDMWrite extends Testcase
 
   class DDMFormatDateAndTime extends RecordFormat
   {
-     DDMFormatDateAndTime(AS400 sys)
+     private static final long serialVersionUID = 1L;
+
+    DDMFormatDateAndTime(AS400 sys)
     {
       super("DateAndTime");
       AS400Date date0 = new AS400Date(AS400.getDefaultTimeZone(sys));

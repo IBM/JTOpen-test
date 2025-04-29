@@ -3,7 +3,7 @@ package test.Setup;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
 import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
@@ -41,32 +41,32 @@ public abstract class SetupLibraryTestcase extends Testcase {
     super(system, name, namesAndVars, runMode, fileOutputStream, pwrSys);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, Vector variationsToRun, int runMode,
+  public SetupLibraryTestcase(AS400 system, String name, Vector<String> variationsToRun, int runMode,
       FileOutputStream fileOutputStream) {
     super(system, name, variationsToRun, runMode, fileOutputStream);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, Vector variationsToRun, int runMode, FileOutputStream fileOutputStream,
+  public SetupLibraryTestcase(AS400 system, String name, Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream,
       String password) {
     super(system, name, variationsToRun, runMode, fileOutputStream, password);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, int totalVariations, Vector variationsToRun, int runMode,
+  public SetupLibraryTestcase(AS400 system, String name, int totalVariations, Vector<String> variationsToRun, int runMode,
       FileOutputStream fileOutputStream) {
     super(system, name, totalVariations, variationsToRun, runMode, fileOutputStream);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, int totalVariations, Vector variationsToRun, int runMode,
+  public SetupLibraryTestcase(AS400 system, String name, int totalVariations, Vector<String> variationsToRun, int runMode,
       FileOutputStream fileOutputStream, String password) {
     super(system, name, totalVariations, variationsToRun, runMode, fileOutputStream, password);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, int totalVariations, Vector variationsToRun, int runMode,
+  public SetupLibraryTestcase(AS400 system, String name, int totalVariations, Vector<String> variationsToRun, int runMode,
       FileOutputStream fileOutputStream, String password, AS400 pwrSys) {
     super(system, name, totalVariations, variationsToRun, runMode, fileOutputStream, password, pwrSys);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, int totalVariations, Vector variationsToRun, int runMode,
+  public SetupLibraryTestcase(AS400 system, String name, int totalVariations, Vector<String> variationsToRun, int runMode,
       FileOutputStream fileOutputStream, String password, String pwrSysUid, String pwrSysPwd) {
     super(system, name, totalVariations, variationsToRun, runMode, fileOutputStream, password, pwrSysUid, pwrSysPwd);
   }

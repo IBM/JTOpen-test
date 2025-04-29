@@ -13,16 +13,18 @@
 
 package test.DDM;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
 
 import test.Testcase;
-
-import java.sql.*;
 
 /**
  *Testcase DDMP9946152. Verify the fix in P9946152. This is to make sure that:

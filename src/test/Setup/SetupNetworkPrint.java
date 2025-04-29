@@ -16,13 +16,10 @@ package test.Setup;
 
 import java.io.FileOutputStream;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ObjectDescription;
-
-import test.Testcase;
-
-import com.ibm.as400.access.FTP;
 
 
 /**
@@ -36,7 +33,7 @@ public class SetupNetworkPrint extends SetupLibraryTestcase
   Constructor.
   **/
   public SetupNetworkPrint(AS400            systemObject,
-                   Vector           variationsToRun,
+                   Vector<String>           variationsToRun,
                    int              runMode,
                    FileOutputStream fileOutputStream,
                    

@@ -15,8 +15,8 @@ package test.Setup;
 
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 /**
@@ -30,7 +30,7 @@ public class SetupJobLog extends SetupLibraryTestcase
   Constructor.
   **/
   public SetupJobLog(AS400            systemObject,
-                   Vector           variationsToRun,
+                   Vector<String>           variationsToRun,
                    int              runMode,
                    FileOutputStream fileOutputStream,
                    

@@ -15,9 +15,9 @@
 package test.IFS;
 
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.IFSFile;
@@ -344,7 +344,7 @@ IFSFileInputStream.lock(int).
       IFSKey[] key = new IFSKey[data.length];
       for (int i = 0; i < data.length; i++)
       {
-        key[i] = is.lock(1);
+        key[i] = is.lock(1L);
         is.skip(1);
       }
       output_.println("Unlocking every byte ...");
@@ -378,7 +378,7 @@ IFSFileOutputStream.lock(int).
       IFSKey[] key = new IFSKey[data.length];
       for (int i = 0; i < data.length; i++)
       {
-        key[i] = os.lock(1);
+        key[i] = os.lock(1L);
         os.write(1);
       }
       output_.println("Unlocking every byte ...");
