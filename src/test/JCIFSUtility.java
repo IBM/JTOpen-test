@@ -100,6 +100,7 @@ private static Blob blob;
     createFile(system, userId, encryptedPassword, filename, data.getBytes());
   }
 
+  @SuppressWarnings("resource")
   public static void createFile(String system, String userId, char[] encryptedPassword,
       String filename, byte[] data) throws Exception {
 	  

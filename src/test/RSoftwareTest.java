@@ -12,8 +12,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400Message;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+
 import com.ibm.as400.resource.ResourceEvent;
 import com.ibm.as400.resource.ResourceListener;
 
@@ -23,28 +30,12 @@ import test.RSoftware.RSoftwareResourceBufferedResourceTestcase;
 import test.RSoftware.RSoftwareResourceGenericAttributeTestcase;
 import test.RSoftware.RSoftwareResourceSpecificAttributeTestcase;
 
-import com.ibm.as400.resource.ResourceListEvent;
-import com.ibm.as400.resource.ResourceListListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
 
 
 /**
 Test driver for the RSoftwareResource classes.
 **/
+@SuppressWarnings("deprecation")
 public class RSoftwareTest
 extends TestDriver
 {
@@ -103,7 +94,6 @@ Creates the testcases.
 **/
     public void createTestcases ()
     {
-        boolean allTestcases = (namesAndVars_.size() == 0);
 
         // Test the RSoftwareResource class.
         addTestcase(new RSoftwareResourceBasicTestcase(systemObject_, namesAndVars_, runMode_, 
@@ -144,14 +134,16 @@ Serializes and deserializes an object.
 	    ObjectOutput out = new ObjectOutputStream (new FileOutputStream (serializeFilename_));
 	    out.writeObject (object);
 	    out.flush ();
-
+	    out.close(); 
         // Deserialize.
         Object object2 = null;
+        ObjectInputStream in = null; 
         try {
-            ObjectInputStream in = new ObjectInputStream (new FileInputStream (serializeFilename_));
+            in = new ObjectInputStream (new FileInputStream (serializeFilename_));
             object2 = in.readObject ();
         }
    	    finally {
+   	      if (in != null) in.close(); 
        		File f = new File (serializeFilename_);
         	f.delete();
    	    }

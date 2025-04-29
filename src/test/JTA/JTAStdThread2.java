@@ -144,7 +144,7 @@ public class JTAStdThread2 extends JTATestcase {
 	     setupStatement.execute(command);
 	 } catch (SQLException e) {
 	     System.out.println("Exception on -- "+command);
-	     Thread.currentThread().sleep(60000); 
+	     Thread.sleep(60000); 
 	     throw e; 
 	 } 
 
@@ -275,7 +275,7 @@ public class JTAStdThread2 extends JTATestcase {
 Constructor.
 **/
    public JTAStdThread2 (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          
@@ -288,7 +288,7 @@ Constructor.
 
    public JTAStdThread2 (AS400 systemObject,
 			 String testname, 
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          

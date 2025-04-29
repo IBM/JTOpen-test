@@ -27,7 +27,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
@@ -99,7 +99,7 @@ Constructor.
      
    }
    public JTAStdMisc (AS400 systemObject,
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -113,7 +113,7 @@ Constructor.
 
    public JTAStdMisc (AS400 systemObject,
 		      String testname, 
-                      Hashtable namesAndVars,
+                      Hashtable<String,Vector<String>> namesAndVars,
                       int runMode,
                       FileOutputStream fileOutputStream,
                       
@@ -863,7 +863,7 @@ Performs cleanup needed after running variations.
                }
 
                JTATest.verboseOut(Thread.currentThread().getName() + ": " +
-                                  "Calling XAResource.recover(XAResource.TMNOFLAGS)");
+                                  "Calling XAResource.recover(XAResource.TMNOFLAGS) processedThisTime="+processedThisTime);
 
 	       //
 	       // End of scan...

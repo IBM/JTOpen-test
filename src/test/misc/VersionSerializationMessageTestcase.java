@@ -2260,7 +2260,7 @@ public class VersionSerializationMessageTestcase extends Testcase {
       // Note: must dynamically resolve to copyright information because
       // Copyright is an interface and the version becomes a "final"
       // version of the value.
-      Class copyrightInterface = java.lang.Class
+      Class<?> copyrightInterface = java.lang.Class
           .forName("com.ibm.as400.access.Copyright");
       Field f = copyrightInterface.getField("version");
       String versionInfo = (String) f.get(null);

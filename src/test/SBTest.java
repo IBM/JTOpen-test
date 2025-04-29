@@ -12,15 +12,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Enumeration;
-import java.util.Vector;
-
 import test.misc.SBTestcase;
 
 /**
@@ -73,8 +64,7 @@ Creates the testcases.
 **/
     public void createTestcases ()
     {
-        boolean allTestcases = (namesAndVars_.size() == 0);
-
+        
         // Test the Subsystem classes.
 
         addTestcase(new SBTestcase(systemObject_, namesAndVars_, runMode_, 

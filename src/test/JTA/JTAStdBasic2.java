@@ -57,7 +57,7 @@ public class JTAStdBasic2 extends JTATestcase {
 Constructor.
 **/
    public JTAStdBasic2 (AS400 systemObject,
-                     Hashtable namesAndVars,
+                     Hashtable<String,Vector<String>> namesAndVars,
                      int runMode,
                      FileOutputStream fileOutputStream,
                      
@@ -69,7 +69,7 @@ Constructor.
 
    public JTAStdBasic2 (AS400 systemObject,
 			String testname, 
-                     Hashtable namesAndVars,
+                     Hashtable<String,Vector<String>> namesAndVars,
                      int runMode,
                      FileOutputStream fileOutputStream,
                      

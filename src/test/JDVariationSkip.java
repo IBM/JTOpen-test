@@ -259,6 +259,7 @@ public class JDVariationSkip {
 
   }
   
+  @SuppressWarnings("unchecked")
   private  static void loadDriverTestcases() {
     driverTestcases = new Hashtable[ JDTestDriver.DRIVER_COUNT+JDTestDriver.SUB_DRIVER_COUNT];
     driverName      = new String[ JDTestDriver.DRIVER_COUNT+JDTestDriver.SUB_DRIVER_COUNT ];
@@ -501,12 +502,12 @@ public class JDVariationSkip {
     loadDriverTestcases();
     for (int k = 0; k < driverTestcases.length; k++) {
       Hashtable<String, String> reasonHashtable = new Hashtable<String, String>();
-      Hashtable h = driverTestcases[k];
+      Hashtable<?, ?> h = driverTestcases[k];
       if (h != null) {
         System.out.println("Skipped reasons for driver " + driverName[k]);
 
         /* The keys are the test names */
-        Enumeration keys = h.keys();
+        Enumeration<?> keys = h.keys();
         while (keys.hasMoreElements()) {
 
           String[][] releaseInformation = (String[][]) h

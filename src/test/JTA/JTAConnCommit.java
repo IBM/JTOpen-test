@@ -42,7 +42,7 @@ public class JTAConnCommit extends JDTestcase {
 Constructor.
 **/
    public JTAConnCommit (AS400 systemObject,
-                         Hashtable namesAndVars,
+                         Hashtable<String,Vector<String>> namesAndVars,
                          int runMode,
                          FileOutputStream fileOutputStream,
                          

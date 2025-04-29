@@ -23,7 +23,6 @@ import com.ibm.as400.access.SocketProperties;
 
 import test.EVTest;
 import test.Testcase;
-import test.EVTest.PropertyChangeListener_;
 
 /**
  Testcase EVBasicTestcase.  This tests the EnvironmentVariable class.
@@ -441,7 +440,7 @@ public class EVBasicTestcase extends Testcase
             // Get it from a list.
             EnvironmentVariableList evList = new EnvironmentVariableList(pwrSys_);
             EnvironmentVariable ev2 = null;
-            Enumeration enumeration = evList.getEnvironmentVariables();
+            Enumeration<EnvironmentVariable> enumeration = evList.getEnvironmentVariables();
             while(enumeration.hasMoreElements()) 
             {
                 EnvironmentVariable temp = (EnvironmentVariable)enumeration.nextElement();
@@ -759,7 +758,7 @@ public class EVBasicTestcase extends Testcase
             // Get it from a list.
             EnvironmentVariableList evList = new EnvironmentVariableList(pwrSys_);
             EnvironmentVariable ev2 = null;
-            Enumeration enumeration = evList.getEnvironmentVariables();
+            Enumeration<EnvironmentVariable> enumeration = evList.getEnvironmentVariables();
             while(enumeration.hasMoreElements()) 
             {
                 EnvironmentVariable temp = (EnvironmentVariable)enumeration.nextElement();
@@ -856,7 +855,7 @@ public class EVBasicTestcase extends Testcase
             // Get it from a list.
             EnvironmentVariableList evList = new EnvironmentVariableList(pwrSys_);
             EnvironmentVariable ev2 = null;
-            Enumeration enumeration = evList.getEnvironmentVariables();
+            Enumeration<EnvironmentVariable> enumeration = evList.getEnvironmentVariables();
             while(enumeration.hasMoreElements()) 
             {
                 EnvironmentVariable temp = (EnvironmentVariable)enumeration.nextElement();
@@ -954,7 +953,7 @@ public class EVBasicTestcase extends Testcase
             // Get it from a list.
             EnvironmentVariableList evList = new EnvironmentVariableList(pwrSys_);
             EnvironmentVariable ev2 = null;
-            Enumeration enumeration = evList.getEnvironmentVariables();
+            Enumeration<EnvironmentVariable> enumeration = evList.getEnvironmentVariables();
             while(enumeration.hasMoreElements()) 
             {
                 EnvironmentVariable temp = (EnvironmentVariable)enumeration.nextElement();
@@ -1309,7 +1308,7 @@ public class EVBasicTestcase extends Testcase
             // Get it from a list.
             EnvironmentVariableList evList = new EnvironmentVariableList(pwrSys_);
             EnvironmentVariable ev2 = null;
-            Enumeration enumeration = evList.getEnvironmentVariables();
+            Enumeration<EnvironmentVariable> enumeration = evList.getEnvironmentVariables();
             while(enumeration.hasMoreElements()) 
             {
                 EnvironmentVariable temp = (EnvironmentVariable)enumeration.nextElement();
@@ -2259,7 +2258,7 @@ public class EVBasicTestcase extends Testcase
             // Get it from a list.
             EnvironmentVariableList evList = new EnvironmentVariableList(pwrSys_);
             EnvironmentVariable ev2 = null;
-            Enumeration enumeration = evList.getEnvironmentVariables();
+            Enumeration<EnvironmentVariable> enumeration = evList.getEnvironmentVariables();
             while(enumeration.hasMoreElements()) 
             {
                 EnvironmentVariable temp = (EnvironmentVariable)enumeration.nextElement();
@@ -2625,7 +2624,7 @@ public class EVBasicTestcase extends Testcase
             // Get it from a list.
             EnvironmentVariableList evList = new EnvironmentVariableList(pwrSys_);
             EnvironmentVariable ev2 = null;
-            Enumeration enumeration = evList.getEnvironmentVariables();
+            Enumeration<EnvironmentVariable> enumeration = evList.getEnvironmentVariables();
             while(enumeration.hasMoreElements()) 
             {
                 EnvironmentVariable temp = (EnvironmentVariable)enumeration.nextElement();

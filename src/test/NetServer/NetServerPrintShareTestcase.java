@@ -20,7 +20,7 @@ import com.ibm.as400.resource.*;
 
 import java.util.Vector;
 import java.util.Properties;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import test.NetServerTest;
 import test.Testcase;
@@ -47,7 +47,7 @@ public class NetServerPrintShareTestcase extends Testcase
     Constructor.
     **/
    public NetServerPrintShareTestcase(AS400 systemObject, 
-                                      Hashtable namesAndVars, 
+                                      Hashtable<String,Vector<String>> namesAndVars, 
                                       int runMode, 
                                       FileOutputStream fileOutputStream, 
                                       

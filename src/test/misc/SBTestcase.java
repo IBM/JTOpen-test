@@ -13,16 +13,22 @@
 package test.misc;
 
 
-import java.io.*;
-import com.ibm.as400.access.*;
-import com.ibm.as400.access.ObjectDescription;
-
-import test.Testcase;
-
+import java.io.FileOutputStream;
 import java.util.Hashtable;
 import java.util.Vector;
-import java.util.Enumeration;
-import java.util.Arrays;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.Job;
+import com.ibm.as400.access.ObjectDescription;
+import com.ibm.as400.access.ObjectDoesNotExistException;
+import com.ibm.as400.access.QSYSObjectPathName;
+import com.ibm.as400.access.Subsystem;
+import com.ibm.as400.access.SystemPool;
+
+import test.Testcase;
 
 
 /**
@@ -41,13 +47,12 @@ public class SBTestcase extends Testcase
     private static String subsystemLib_ = "SBSLIB";
 
     private static CommandCall pwrCmd_;
-    private boolean brief_;
-
+   
     /**
      Constructor.
      **/
     public SBTestcase(AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -60,7 +65,7 @@ public class SBTestcase extends Testcase
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
 
         pwrSys_ = pwrSys;
-        brief_ = brief;
+      
     }
 
     /**
@@ -122,7 +127,7 @@ public class SBTestcase extends Testcase
       }
     }
 
-    private static void delete(Subsystem sbs)
+    static void delete(Subsystem sbs)
     {
       if (sbs == null) return;
       if (DEBUG) System.out.println("DEBUG: Deleting subsystem: " + sbs.getPath());
@@ -133,7 +138,7 @@ public class SBTestcase extends Testcase
       catch (Exception e) { e.printStackTrace(); }
     }
 
-    private static void delete(String libName, String fileName)
+    static void delete(String libName, String fileName)
     {
       try {
         if (!pwrCmd_.run("QSYS/DLTF FILE(" + libName+"/"+fileName + ")")) {
@@ -371,9 +376,9 @@ public class SBTestcase extends Testcase
         Job monitorJob1 = sbs1.getMonitorJob();
         String desc1 = sbs1.getDescriptionText();
         String dspFilePath1 = sbs1.getDisplayFilePath();
-        String langLib1 = sbs1.getLanguageLibrary();
+        // String langLib1 = sbs1.getLanguageLibrary();
         ObjectDescription objDesc1 = sbs1.getObjectDescription();
-        String sbsAsString1 = sbs1.toString();
+        // String sbsAsString1 = sbs1.toString();
         boolean exists1 = sbs1.exists();
 
         AS400 system2 = sbs2.getSystem();
@@ -386,9 +391,9 @@ public class SBTestcase extends Testcase
         Job monitorJob2 = sbs2.getMonitorJob();
         String desc2 = sbs2.getDescriptionText();
         String dspFilePath2 = sbs2.getDisplayFilePath();
-        String langLib2 = sbs2.getLanguageLibrary();
+        // String langLib2 = sbs2.getLanguageLibrary();
         ObjectDescription objDesc2 = sbs2.getObjectDescription();
-        String sbsAsString2 = sbs2.toString();
+        // String sbsAsString2 = sbs2.toString();
         boolean exists2 = sbs2.exists();
 
         if (!system1.getSystemName().equals(system2.getSystemName())) {
@@ -529,6 +534,7 @@ public class SBTestcase extends Testcase
         System.out.println("   exists: " + exists);
         System.out.println("   dspFilePath: " + dspFilePath);
         System.out.println("   langLib: " + langLib);
+        System.out.println("   ObjectDescription: "+objDesc);
         System.out.println("   Pools: ");
         if (pools == null) System.out.println("      null list");
         else for (int i=0; i<pools.length; i++) {
@@ -559,6 +565,7 @@ public class SBTestcase extends Testcase
     }
 
 
+    @SuppressWarnings("deprecation")
     static void display(SystemPool pool)
     {
       if (pool == null) {
@@ -593,6 +600,7 @@ public class SBTestcase extends Testcase
     }
 
 
+    @SuppressWarnings("deprecation")
     static void display(StringBuffer sb, SystemPool pool)
     {
       if (pool == null) {
@@ -773,7 +781,7 @@ public class SBTestcase extends Testcase
       try
       {
         Subsystem sbs = new Subsystem(null, subsystemLib_, subsystemName1_);
-        failed("No exception");
+        failed("No exception"+sbs);
       }
       catch (Exception e) {
         assertExceptionIs (e, "NullPointerException", "system");
@@ -789,7 +797,7 @@ public class SBTestcase extends Testcase
       try
       {
         Subsystem sbs = new Subsystem(systemObject_, null, subsystemName1_);
-        failed("No exception");
+        failed("No exception"+sbs);
       }
       catch (Exception e) {
         assertExceptionIs (e, "NullPointerException", "library");
@@ -805,7 +813,7 @@ public class SBTestcase extends Testcase
       try
       {
         Subsystem sbs = new Subsystem(systemObject_, subsystemLib_, null);
-        failed("No exception");
+        failed("No exception"+sbs);
       }
       catch (Exception e) {
         assertExceptionIs (e, "NullPointerException", "name");
@@ -846,7 +854,6 @@ public class SBTestcase extends Testcase
      **/
     public void Var008()
     {
-      boolean ok = true;
       try
       {
         Subsystem sbs1 = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);

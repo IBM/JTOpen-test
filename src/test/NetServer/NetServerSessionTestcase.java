@@ -18,7 +18,7 @@ import java.io.*;
 import com.ibm.as400.access.*;
 import com.ibm.as400.resource.*;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import test.JCIFSUtility;
 import test.PasswordVault;
@@ -46,7 +46,7 @@ public class NetServerSessionTestcase extends Testcase
      Constructor.
      **/
     public NetServerSessionTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String,Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream, 
                              

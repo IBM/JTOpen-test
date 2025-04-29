@@ -272,6 +272,7 @@ public class JobLogBeans extends Testcase
         {
             reject_ = true;
         }
+        @SuppressWarnings("unused")
         public void acceptChanges()
         {
             reject_ = false;

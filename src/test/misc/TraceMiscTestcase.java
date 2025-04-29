@@ -81,7 +81,7 @@ public class TraceMiscTestcase extends Testcase
 Constructor.
 **/
   public TraceMiscTestcase(AS400            systemObject,
-                           Vector           variationsToRun,
+                           Vector<String>          variationsToRun,
                            int              runMode,
                            FileOutputStream fileOutputStream)
                            
@@ -7648,6 +7648,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
          }
 
@@ -7712,6 +7713,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -7763,6 +7765,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -8129,6 +8132,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
          }
 
@@ -8187,6 +8191,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -8238,6 +8243,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -8604,6 +8610,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
          }
 
@@ -8662,6 +8669,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -8713,6 +8721,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -9083,6 +9092,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
          }
 
@@ -9142,6 +9152,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -9193,6 +9204,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -9565,6 +9577,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
          }
 
@@ -9624,6 +9637,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -9675,6 +9689,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -10040,6 +10055,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
          }
 
@@ -10097,6 +10113,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -10148,6 +10165,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -10417,6 +10435,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
          }
 
@@ -10474,6 +10493,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 
@@ -10525,6 +10545,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
           break;
         default:
           failed("testcase error");
+          file.close(); 
           return;
       }
 

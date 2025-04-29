@@ -272,7 +272,7 @@ public class JobUnattendedTestcase extends Testcase
         // Get the interactive job.
         JobList jobList = new JobList(pwrSys_);
         jobList.setUser(interactiveUser_);
-        Enumeration enumeration = jobList.getJobs();
+        Enumeration<Job> enumeration = jobList.getJobs();
         boolean foundInteractiveJob = false;
 
 
@@ -654,6 +654,7 @@ public class JobUnattendedTestcase extends Testcase
      Method tested:Job(AS400 as400, String internalJobID)
      - Ensure that the ExtendedIllegalArgumentException will be thrown if specifying invalid internalJobID in constructor with arguments.
      **/
+    @SuppressWarnings("deprecation")
     public void Var014()
     {
         try
@@ -671,6 +672,7 @@ public class JobUnattendedTestcase extends Testcase
      Method tested:Job(AS400 as400, String internalJobID)
      - Ensure that the NullPointerException will be thrown if the as400 is null in constructor with arguments.
      **/
+    @SuppressWarnings("deprecation")
     public void Var015()
     {
         try
@@ -688,6 +690,7 @@ public class JobUnattendedTestcase extends Testcase
      Method tested:Job(AS400 as400, String internalJobID)
      - Ensure that the NullPointerException will be thrown if the internalJobID is null in constructor with arguments.
      **/
+    @SuppressWarnings("deprecation")
     public void Var016()
     {
         try

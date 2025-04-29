@@ -12,12 +12,9 @@
 package test; 
 
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ShowHTMLMRI extends Object
 {
@@ -37,7 +34,7 @@ public class ShowHTMLMRI extends Object
        ResourceBundle countryResourceBundle =
                   ResourceBundle.getBundle("com.ibm.as400.util.html.HMRI");
 
-       Enumeration keys = englishResourceBundle.getKeys();
+       Enumeration<?> keys = englishResourceBundle.getKeys();
 
        while (keys.hasMoreElements())
        {

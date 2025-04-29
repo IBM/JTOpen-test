@@ -65,6 +65,7 @@ public class Renumber
     }
   }
 
+  @SuppressWarnings("resource")
   public static int renum(String filename)
   {
     totalVars = -1;
@@ -105,7 +106,7 @@ public class Renumber
       StringBuffer varLine = null;
       varNumStr = null;
       varNumPadStr = null;
-      int index = 0;
+      // int index = 0;
       boolean inMethodSection = false;
       boolean inClass = false;
       validFile = false;
@@ -228,6 +229,10 @@ public class Renumber
       System.out.println("Exception occurred:");
       e.printStackTrace();
       System.out.println("Input file not overwritten. Output in 'renum.tmp'");
+      try { 
+      in.close(); 
+      out.close(); 
+      } catch (Exception e2) { }
       return -4;
     }
     try
@@ -371,7 +376,7 @@ public class Renumber
 
   public static int check(String line, String startPattern, String endPattern, boolean begin)
   {
-    StringBuffer newLine = null;
+    // StringBuffer newLine = null;
     // startPattern is at beginning of line, ignoring leading spaces
     // startIndex is the point at whith startPattern is found in line
     int startIndex = -1;

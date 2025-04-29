@@ -145,7 +145,7 @@ Creates the testcases.
     	     	 catch (Exception exc) {};   	   
     	} 
     	  
-        boolean allTestcases = (namesAndVars_.size() == 0);
+        // boolean allTestcases = (namesAndVars_.size() == 0);
 
         // Test the JavaProgram class.
         addTestcase(new JavaProgramBasicTestcase(systemObject_, namesAndVars_, runMode_, 

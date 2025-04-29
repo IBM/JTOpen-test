@@ -52,7 +52,7 @@ public abstract class ThreadedTestcase
   protected ThreadedTestcase(AS400            systemObject,
                              String           name,
                              int              totalVariations,
-                             Vector           variationsToRun,
+                             Vector<String>          variationsToRun,
                              int              runMode,
                              FileOutputStream fileOutputStream)
   {
@@ -75,7 +75,7 @@ public abstract class ThreadedTestcase
   protected ThreadedTestcase(AS400            systemObject,
                              String           name,
                              int              totalVariations,
-                             Vector           variationsToRun,
+                             Vector<String>           variationsToRun,
                              int              runMode,
                              FileOutputStream fileOutputStream,
                              String           password)

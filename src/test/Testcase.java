@@ -870,7 +870,11 @@ public abstract class Testcase {
     if (exceptionStartsWith(exception, className, detail, rc)) {
       succeeded();
     } else {
-      failed(exception, "Incorrect exception information.");
+        String returnCode="notSet"; 
+        if (exception instanceof ReturnCodeException) {
+           returnCode = ""+((ReturnCodeException) exception).getReturnCode();
+        }
+      failed(exception, "Incorrect exception information. got rc="+returnCode+" . Expected className="+className+" detail="+detail+" rc="+rc);
     }
   }
 

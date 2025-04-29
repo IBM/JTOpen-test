@@ -141,6 +141,7 @@ Serializes and deserializes an object.
 	    ObjectOutput out = new ObjectOutputStream (new FileOutputStream (serializeFilename_));
 	    out.writeObject (object);
 	    out.flush ();
+	    out.close(); 
 
         // Deserialize.
         Object object2 = null;
@@ -148,6 +149,7 @@ Serializes and deserializes an object.
         {
             ObjectInputStream in = new ObjectInputStream (new FileInputStream (serializeFilename_));
             object2 = in.readObject ();
+            in.close(); 
         }
         finally 
         {
@@ -215,8 +217,8 @@ Determines whether two Descriptor objects are equal.
       }
 
       // Match the children.
-      Enumeration children1 = desc1.getChildren();
-      Enumeration children2 = desc2.getChildren();
+      Enumeration<?> children1 = desc1.getChildren();
+      Enumeration<?> children2 = desc2.getChildren();
       if (children1==null && children2==null) return true;
       if (!children1.hasMoreElements() && !children2.hasMoreElements()) return true;
       while (children1.hasMoreElements()) {
@@ -255,7 +257,7 @@ Determines whether two Descriptor objects are equal.
         System.out.println(indentation + "            " + attList[i] + "=" + root.getAttributeValue(attList[i])); 
       }
 
-      Enumeration enumeration = root.getChildren();
+      Enumeration<?> enumeration = root.getChildren();
       // Vector children = new Vector();
       while (enumeration.hasMoreElements()) {
         Descriptor child = (Descriptor)(enumeration.nextElement());

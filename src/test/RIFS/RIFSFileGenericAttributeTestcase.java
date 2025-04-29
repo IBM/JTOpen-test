@@ -123,7 +123,7 @@ Checks a particular attribute meta data.
 **/
     static boolean verifyAttributeMetaData(ResourceMetaData amd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -147,7 +147,7 @@ Checks a particular attribute meta data.
 **/
     static boolean verifyAttributeMetaData(ResourceMetaData[] amd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -370,8 +370,8 @@ commitAttributeChanges() - Should commit the change when 2 changes have been mad
         try {
             IFSFile f = sandbox_.createFile("Jim");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
-            Date lastModified = (Date)u.getAttributeValue(RIFSFile.LAST_MODIFIED);
-            Boolean isHidden = (Boolean)u.getAttributeValue(RIFSFile.IS_HIDDEN);
+            // Date lastModified = (Date)u.getAttributeValue(RIFSFile.LAST_MODIFIED);
+            // Boolean isHidden = (Boolean)u.getAttributeValue(RIFSFile.IS_HIDDEN);
             Date date1 = new Date();
             u.setAttributeValue(RIFSFile.LAST_MODIFIED, date1);
             u.setAttributeValue(RIFSFile.IS_HIDDEN, Boolean.TRUE);
@@ -968,8 +968,8 @@ getAttributeValue() - Pass every attribute ID.
             boolean success = true;
             for(int i = 0; i < amd.length; ++i) {
                 Object value = u.getAttributeValue(amd[i].getID());
-                Class valueClass = value.getClass();
-                Class type = amd[i].getType();
+                Class<?> valueClass = value.getClass();
+                Class<?> type = amd[i].getType();
 
                 // Validate the type.
                 if (amd[i].areMultipleAllowed()) {
@@ -980,7 +980,7 @@ getAttributeValue() - Pass every attribute ID.
                         success = false;
                     }
                     else {
-                        Class componentType = valueClass.getComponentType();
+                        Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type)) {
                             System.out.println("Error getting attribute " + amd[i] + ".");
                             System.out.println("Type mismatch: " + componentType + " != " + type + ".");
@@ -1291,8 +1291,8 @@ RIFSFile object.  Verify that the changes are reflected.
         try {
             IFSFile f = sandbox_.createFile("Bill");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
-            Date lastModified = (Date)u.getAttributeValue(RIFSFile.LAST_MODIFIED);
-            Boolean isHidden = (Boolean)u.getAttributeValue(RIFSFile.IS_HIDDEN);
+            // Date lastModified = (Date)u.getAttributeValue(RIFSFile.LAST_MODIFIED);
+            // Boolean isHidden = (Boolean)u.getAttributeValue(RIFSFile.IS_HIDDEN);
 
             RIFSFile u2 = new RIFSFile(systemObject_, f.getPath());
             Thread.sleep(1000);

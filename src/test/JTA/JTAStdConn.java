@@ -58,7 +58,7 @@ public class JTAStdConn extends JTATestcase {
   /**
    * Constructor.
    **/
-  public JTAStdConn(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JTAStdConn(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password,
       String pwrSysUid, String pwrSysPwd) {
     super(systemObject, "JTAStdConn", namesAndVars, runMode, fileOutputStream,
@@ -66,14 +66,14 @@ public class JTAStdConn extends JTATestcase {
   }
 
   public JTAStdConn(AS400 systemObject, String testname,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
          password);
   }
 
   public JTAStdConn(AS400 systemObject, String testname,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password, String pwrSysUid, String pwrSysPwd) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
          password, pwrSysUid, pwrSysPwd);

@@ -115,7 +115,7 @@ public class IFSStressTests extends TestDriver
                                       namesAndVars_, runMode_,
                                       fileOutputStream_,  pwrSys_));//@A1C
 
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + "unknown.");
     }

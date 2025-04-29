@@ -12,21 +12,22 @@
 
 package test.JTA;
 
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import javax.sql.XADataSource;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDReflectionUtil;
 import test.JDTestcase;
 import test.JTATest;
 import test.JD.JDTestUtilities;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.sql.*;
-import java.util.Hashtable;
 
 
 public class JTAConnTransIso
@@ -50,7 +51,7 @@ public class JTAConnTransIso
 Constructor.
 **/
    public JTAConnTransIso (AS400 systemObject,
-                           Hashtable namesAndVars,
+                           Hashtable<String,Vector<String>> namesAndVars,
                            int runMode,
                            FileOutputStream fileOutputStream,
                            

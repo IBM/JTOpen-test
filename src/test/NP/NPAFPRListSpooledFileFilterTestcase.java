@@ -13,7 +13,6 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -203,6 +202,7 @@ $$$ TO DO $$$ - delete this line */
 
             // clean up on AS/400
             splF.delete();
+            list.close(); 
             }
 
         catch (Exception e)
@@ -242,6 +242,7 @@ $$$ TO DO $$$ - delete this line */
 
             // clean up on AS/400
             splF.delete();
+            list.close(); 
             }
 
         catch (Exception e)
@@ -270,6 +271,7 @@ $$$ TO DO $$$ - delete this line */
             AFPResourceList list = new AFPResourceList();
 
             list.setSpooledFileFilter(null);
+            list.close();
             succeeded();
             }
 
@@ -289,7 +291,7 @@ $$$ TO DO $$$ - delete this line */
                 }
             else failed(e, "Unexpected exception");
             }
-
+        ; 
     } // end Var003
 
     /**
@@ -311,6 +313,7 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("spooledFileFilter was not set, expecting null");
                 }
+            list.close(); 
             }
 
         catch (Exception e)
@@ -351,7 +354,7 @@ $$$ TO DO $$$ - delete this line */
 	    SpooledFileList splFileList = new SpooledFileList(systemObject_);
             splFileList.openSynchronously();
 
-	    Enumeration enumeration = splFileList.getObjects();
+	    Enumeration<SpooledFile> enumeration = splFileList.getObjects();
             splF = null;
 
 	    while( enumeration.hasMoreElements() )
@@ -378,12 +381,12 @@ $$$ TO DO $$$ - delete this line */
                 // now try to build resource list synchronously
                 resList.openSynchronously();
 
-                enumeration =resList.getObjects();
+                Enumeration<AFPResource> enumeration2 = resList.getObjects();
                 AFPResource res = null;
 
-                while( enumeration.hasMoreElements() )
+                while( enumeration2.hasMoreElements() )
                     {
-                    res = (AFPResource)enumeration.nextElement();
+                    res = (AFPResource)enumeration2.nextElement();
                     if (res.getPath().trim().equals("/QSYS.LIB/NPJAVA.LIB/QOOD2L.OVL"))
                         {
                         // indicate how many resources were listed
@@ -495,6 +498,8 @@ $$$ TO DO $$$ - delete this line */
 
             // remove the listener
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -584,6 +589,8 @@ $$$ TO DO $$$ - delete this line */
 
             // remove the listener 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -671,6 +678,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -735,6 +744,8 @@ $$$ TO DO $$$ - delete this line */
 
             // clean up on AS/400
             splF.delete();
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -812,6 +823,8 @@ $$$ TO DO $$$ - delete this line */
 
             // clean up on AS/400
             splF.delete();
+            list.close(); 
+
             }
 
         catch (Exception e)

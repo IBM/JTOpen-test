@@ -44,7 +44,7 @@ public class JTAUDBResource2 extends JTAResource2 {
 Constructor.
 **/
    public JTAUDBResource2 (AS400 systemObject,
-                    Hashtable namesAndVars,
+                    Hashtable<String,Vector<String>> namesAndVars,
                     int runMode,
                     FileOutputStream fileOutputStream,
                     

@@ -31,7 +31,7 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -76,7 +76,7 @@ extends Testcase {
 Constructor.
 **/
     public RIFSFileSpecificAttributeLtoPTestcase (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               

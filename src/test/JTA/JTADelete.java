@@ -16,7 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -49,7 +49,7 @@ public class JTADelete extends JDTestcase {
 Constructor.
 **/
    public JTADelete (AS400 systemObject,
-                     Hashtable namesAndVars,
+                     Hashtable<String,Vector<String>> namesAndVars,
                      int runMode,
                      FileOutputStream fileOutputStream,
                      
@@ -569,6 +569,7 @@ Performs cleanup needed after running variations.
                   rc = insertStmt.executeUpdate();
                   if (rc != 1) {
                      failed("Expected 1 row inserted, got " + rc);
+                     conn.close(); 
                      return;
                   }
 
@@ -576,6 +577,7 @@ Performs cleanup needed after running variations.
                   rc = JDReflectionUtil.callMethod_I(xaRes,"prepare",newXid);
                   if (rc != javax.transaction.xa.XAResource.XA_OK) {
                      failed("Expected XA_OK (" + javax.transaction.xa.XAResource.XA_OK + "), got " + rc);
+                     conn.close(); 
                      return;
                   }
 
@@ -733,6 +735,7 @@ Performs cleanup needed after running variations.
                   rc = insertStmt.executeUpdate();
                   if (rc != 1) {
                      failed("Expected 1 row inserted, got " + rc);
+                     conn.close(); 
                      return;
                   }
                   JDReflectionUtil.callMethod_V(xaRes,"end",newXid, javax.transaction.xa.XAResource.TMNOFLAGS);

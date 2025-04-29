@@ -13,27 +13,10 @@
 
 package test;
 
-import java.io.PrintWriter;
-import java.io.OutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
-import java.util.Vector;
-
-import com.ibm.as400.access.ReturnCodeException;
-import com.ibm.as400.access.AS400;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import java.util.Date;
-import java.util.Hashtable;
-
-// For NLS testing
-import java.util.Properties;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.io.PrintWriter;
 
 
 final class TestOutput extends FilterOutputStream

@@ -32,7 +32,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import javax.sql.DataSource;
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
 import javax.transaction.xa.XAException;

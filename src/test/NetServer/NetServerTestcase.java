@@ -23,7 +23,7 @@ import test.NetServerTest;
 import test.PasswordVault;
 import test.Testcase;
 
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.StringTokenizer;            //@A2A
 
 
@@ -50,7 +50,7 @@ public class NetServerTestcase extends Testcase
      Constructor.
      **/
     public NetServerTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String,Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream, 
                              

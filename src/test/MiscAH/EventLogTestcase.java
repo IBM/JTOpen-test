@@ -13,20 +13,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.MiscAH;
 
-import java.awt.TextArea;
-import java.io.*;
-import java.util.*;
-import com.ibm.as400.access.Log;
-import com.ibm.as400.access.EventLog;
-import com.ibm.as400.access.Trace;
-
-import test.Testcase;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.EventLog;
 import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.IFSFileOutputStream;
 import com.ibm.as400.access.IFSFileInputStream;
+import com.ibm.as400.access.IFSFileOutputStream;
+
+import test.Testcase;
 
 
 /**
@@ -126,7 +129,7 @@ Construct a default EventLog.
     try
     {
        EventLog log = new EventLog();
-       succeeded();
+       assertCondition(true,"log created "+log);
     }
     catch(Exception e)
     {
@@ -147,7 +150,7 @@ Construct an EventLog with an OutputStream.
     {
        FileOutputStream stream = new FileOutputStream("logFile");
        EventLog log = new EventLog(stream);
-       succeeded();
+       assertCondition(true,"log created "+log);
        
        stream.close();
        deleteFile("logFile");
@@ -171,7 +174,7 @@ Construct an EventLog with a PrintWriter.
        FileOutputStream stream = new FileOutputStream("logFile2");
        PrintWriter pw = new PrintWriter(stream);
        EventLog log = new EventLog(pw);
-       succeeded();
+       assertCondition(true,"log created "+log);
        
        pw.close();
        deleteFile("logFile2");
@@ -193,7 +196,7 @@ Construct an EventLog with a String.
     try
     {
        EventLog log = new EventLog("logFile3");
-       succeeded();
+       assertCondition(true,"log created "+log);
        
        // need to do some garbage collection so that the log file can be delete.
        log = null;
@@ -309,7 +312,7 @@ Ensure that using a null string throws a NullPointerException.
     {
       String path = null;
       EventLog log = new EventLog(path);
-      failed("No Exception.");
+      failed("No Exception."+log);
 
     }
     catch (Exception e)
@@ -336,7 +339,7 @@ Ensure that using a Null OutputStream throws a NullPointerException.
       FileOutputStream stream = null;
 
       EventLog log = new EventLog(stream);
-      failed("No Exception.");
+      failed("No Exception."+log);
 
     }
     catch (Exception e)
@@ -364,7 +367,7 @@ throws a NullPointerException.
       PrintWriter pw = null;
 
       EventLog log = new EventLog(pw);
-      failed("No Exception.");
+      failed("No Exception."+log);
 
     }
     catch (Exception e)
@@ -388,7 +391,7 @@ Ensure that log(String) logs a message to an IFSFileOutputStream.
     setVariation(11);
     try
     {
-      AS400Message[] msglist_;
+      // AS400Message[] msglist_;
       String msg = "variation11";
       
       IFSFile dir = new IFSFile(systemObject_, "/LOGTEST");

@@ -21,13 +21,17 @@
 package test;
 
 
-import java.io.*;
-import com.ibm.as400.access.*;
-import com.ibm.as400.access.ObjectDescription;
+import java.io.FileOutputStream;
 import java.util.Hashtable;
 import java.util.Vector;
-import java.util.Enumeration;
-import java.util.Arrays;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.JobDescription;
+import com.ibm.as400.access.ObjectDescription;
+import com.ibm.as400.access.ObjectList;
 
 
 /**
@@ -43,7 +47,7 @@ public class JobDescTestcase extends Testcase
     private static String jobQName1_    = "JOBQ1";
 
     private static CommandCall pwrCmd_;
-    private boolean brief_;
+    // private boolean brief_;
 
     private static final int VRM520 = AS400.generateVRM(5, 2, 0);
     private static final int VRM530 = AS400.generateVRM(5, 3, 0);
@@ -93,7 +97,7 @@ public class JobDescTestcase extends Testcase
      Constructor.
      **/
     public JobDescTestcase(AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -106,7 +110,7 @@ public class JobDescTestcase extends Testcase
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
 
         pwrSys_ = pwrSys;
-        brief_ = brief;
+        // brief_ = brief;
     }
 
     /**
@@ -172,7 +176,7 @@ public class JobDescTestcase extends Testcase
       }
     }
 
-    private static void delete(String libName, String fileName)
+    static void delete(String libName, String fileName)
     {
       try {
         if (!pwrCmd_.run("QSYS/DLTF FILE(" + libName+"/"+fileName + ")")) {
@@ -561,7 +565,7 @@ public class JobDescTestcase extends Testcase
       try
       {
         JobDescription jbd = new JobDescription(null, jobDescLib_, jobDescName1_);
-        failed("No exception");
+        failed("No exception"+jbd);
       }
       catch (Exception e) {
         assertExceptionIs (e, "NullPointerException", "system");
@@ -577,7 +581,7 @@ public class JobDescTestcase extends Testcase
       try
       {
         JobDescription jbd = new JobDescription(systemObject_, null, jobDescName1_);
-        failed("No exception");
+        failed("No exception"+jbd);
       }
       catch (Exception e) {
         assertExceptionIs (e, "NullPointerException", "library");
@@ -593,7 +597,7 @@ public class JobDescTestcase extends Testcase
       try
       {
         JobDescription jbd = new JobDescription(systemObject_, jobDescLib_, null);
-        failed("No exception");
+        failed("No exception"+jbd);
       }
       catch (Exception e) {
         assertExceptionIs (e, "NullPointerException", "name");

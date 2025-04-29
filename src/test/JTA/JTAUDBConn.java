@@ -42,7 +42,7 @@ public class JTAUDBConn extends JTAStdConn {
 Constructor.
 **/
    public JTAUDBConn (AS400 systemObject,
-                    Hashtable namesAndVars,
+                    Hashtable<String,Vector<String>> namesAndVars,
                     int runMode,
                     FileOutputStream fileOutputStream,
                     

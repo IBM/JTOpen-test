@@ -318,6 +318,7 @@ setAdditionalFiles(Vector,File) - Verify the setter by using the getter.
         inList.add (JMTest.ADDITIONAL_FILE_1);
         inList.add (new File ("BogusFile"));
         jm.setAdditionalFiles (inList);
+        @SuppressWarnings("unchecked")
         Vector<File> outList = jm.getAdditionalFiles ();
         if (!JMTest.compareFileLists (outList, inList))
           failed ("Lists don't match.");
@@ -396,6 +397,7 @@ setAdditionalFiles(Vector,File) - Verify the setter by using the getter.
         inList.add (JMTest.ADDITIONAL_FILE_1);
         inList.add (JMTest.ADDITIONAL_FILE_1);
         jm.setAdditionalFiles (inList);
+        @SuppressWarnings("unchecked")
         Vector<File> outList = jm.getAdditionalFiles ();
         Vector<File> expected1 = new Vector<File> (1);
         expected1.add (JMTest.ADDITIONAL_FILE_1);
@@ -426,7 +428,7 @@ setAdditionalFiles(Vector,File) - Verify the setter by using the getter.
  setAdditionalFiles(Vector) - Subsequent invocation with different list of files.
  Second list augments first list.  Verify using getters.
  **/
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "unchecked" })
     public void Var013 ()
     {
       JarMaker jm = new JarMaker ();

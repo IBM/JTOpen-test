@@ -216,7 +216,8 @@ public class JDBCProxyStressTestcase
    Runs the current thread_
  **/
 
-   public void run() 
+   @SuppressWarnings("deprecation")
+  public void run() 
    {
       int i;
       
@@ -327,7 +328,8 @@ public class JDBCProxyStressTestcase
 /**
    Stops the current thread_
  **/
-   public void stop() 
+   @SuppressWarnings("deprecation")
+  public void stop() 
    {
       if ((thread_ != null) && thread_.isAlive()) 
       {

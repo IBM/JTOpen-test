@@ -114,6 +114,14 @@ public class UserSpaceChgAttrTestcase extends Testcase
 	deleteLibrary(""+authlib_+""); 
         cmdRun("CRTLIB LIB("+authlib_+")");
 
+        String command = "GRTOBJAUT OBJ("+authlib_+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
+        boolean success =  cmdRun(command);
+        if (!success) { 
+            System.out.println("Command Failed "+command ); 
+        } else {
+          System.out.println("SetupUSAuthority(): Command worked "+command ); 
+        }
+
         // create user spaces needed for misc variations
         cmdCreateUS("CRTUSRSPC USRSPC("+authlib_+"/USCHG1) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG1.USRSPC");
         cmdCreateUS("CRTUSRSPC USRSPC("+authlib_+"/USCHG2) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG2.USRSPC");

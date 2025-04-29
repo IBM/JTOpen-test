@@ -42,13 +42,14 @@ public class ConversionMapTestcase extends Testcase
      Verifies all of the ccsid entries in the ccsidEncoding table.
      Result: Variation should be successful.
      **/
+    @SuppressWarnings("unchecked")
     public void Var001()
     {
         int ccsid = -1;
         try
         {
-            Hashtable table = ConversionMaps.ccsidEncoding_;
-            Enumeration enumeration = table.keys();
+            Hashtable<String,String> table = ConversionMaps.ccsidEncoding_;
+            Enumeration<String> enumeration = table.keys();
             while (enumeration.hasMoreElements())
             {
                 String ccsidStr = (String)enumeration.nextElement();
@@ -84,8 +85,9 @@ public class ConversionMapTestcase extends Testcase
         String encoding = "";
         try
         {
-            Hashtable table = ConversionMaps.ccsidEncoding_;
-            Enumeration enumeration = table.keys();
+            @SuppressWarnings("unchecked")
+            Hashtable<String,String> table = ConversionMaps.ccsidEncoding_;
+            Enumeration<String> enumeration = table.keys();
             while (enumeration.hasMoreElements())
             {
                 String key = (String)enumeration.nextElement();
@@ -129,8 +131,9 @@ public class ConversionMapTestcase extends Testcase
         int ccsid = -1;
         try
         {
-            Hashtable table = ConversionMaps.encodingCcsid_;
-            Enumeration enumeration = table.keys();
+            @SuppressWarnings("unchecked")
+            Hashtable<String,String> table = ConversionMaps.encodingCcsid_;
+            Enumeration<String> enumeration = table.keys();
             while (enumeration.hasMoreElements())
             {
                 String key = (String)enumeration.nextElement();
@@ -219,8 +222,9 @@ public class ConversionMapTestcase extends Testcase
         String encoding = "";
         try
         {
-            Hashtable table = ConversionMaps.encodingCcsid_;
-            Enumeration enumeration = table.keys();
+            @SuppressWarnings("unchecked")
+            Hashtable<String,String> table = ConversionMaps.encodingCcsid_;
+            Enumeration<String> enumeration = table.keys();
             while (enumeration.hasMoreElements())
             {
                 encoding = (String)enumeration.nextElement();
@@ -262,8 +266,9 @@ public class ConversionMapTestcase extends Testcase
         String localeStr = "";
         try
         {
-            Hashtable table = ConversionMaps.localeCcsidMap_;
-            Enumeration enumeration = table.keys();
+            @SuppressWarnings("unchecked")
+            Hashtable<String,String> table = ConversionMaps.localeCcsidMap_;
+            Enumeration<String> enumeration = table.keys();
             while (enumeration.hasMoreElements())
             {
                 localeStr = (String)enumeration.nextElement();
@@ -306,6 +311,7 @@ public class ConversionMapTestcase extends Testcase
      Verifies all of the entries in the localeNlv table.
      Result: Variation should be successful.
      **/
+    @SuppressWarnings("unchecked")
     public void Var006()
     {
         if (isApplet_)
@@ -317,8 +323,8 @@ public class ConversionMapTestcase extends Testcase
         String localeStr = "";
         try
         {
-            Hashtable table = ConversionMaps.localeNlvMap_;
-            Enumeration enumeration = table.keys();
+            Hashtable<String,String> table = ConversionMaps.localeNlvMap_;
+            Enumeration<String> enumeration = table.keys();
             while (enumeration.hasMoreElements())
             {
                 localeStr = (String)enumeration.nextElement();
@@ -337,7 +343,7 @@ public class ConversionMapTestcase extends Testcase
                         break;
                 }
                 Locale.setDefault(loc);
-                Converter c = new Converter();
+                // Converter c = new Converter();
                 int nlv = Integer.parseInt((String)table.get(localeStr));
                 int ee = Integer.parseInt(ExecutionEnvironment.getNlv(Locale.getDefault()));
                 if (ee != nlv)

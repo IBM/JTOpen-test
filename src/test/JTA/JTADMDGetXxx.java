@@ -152,7 +152,7 @@ public class JTADMDGetXxx extends JTATestcase
 /**
 Constructor.
 **/
-   public JTADMDGetXxx (AS400 systemObject, Hashtable namesAndVars,
+   public JTADMDGetXxx (AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars,
                        int runMode, FileOutputStream fileOutputStream,
                         String password) {
       super (systemObject, "JTADMDGetXxx", namesAndVars,

@@ -14,50 +14,48 @@
 package test.RM;
 
 
-import java.io.FileOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
+import java.math.BigDecimal;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
-import java.util.Enumeration;
-
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.data.*;
-
-import test.RMTest;
-import test.Testcase;
-
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.BinaryFieldDescription;
-import com.ibm.as400.access.ZonedDecimalFieldDescription;
-import com.ibm.as400.access.PackedDecimalFieldDescription;
-import com.ibm.as400.access.DBCSGraphicFieldDescription;
-import com.ibm.as400.access.DateFieldDescription;
-import com.ibm.as400.access.TimeFieldDescription;
-import com.ibm.as400.access.DBCSOnlyFieldDescription;
-import com.ibm.as400.access.ArrayFieldDescription;
-import com.ibm.as400.access.FloatFieldDescription;
 import com.ibm.as400.access.AS400Array;
-import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400Bin2;
 import com.ibm.as400.access.AS400Bin4;
-import com.ibm.as400.access.AS400UnsignedBin2;
 import com.ibm.as400.access.AS400Bin8;
-import com.ibm.as400.access.AS400Float8;
 import com.ibm.as400.access.AS400Float4;
+import com.ibm.as400.access.AS400Float8;
+import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400UnsignedBin2;
 import com.ibm.as400.access.AS400UnsignedBin4;
 import com.ibm.as400.access.AS400ZonedDecimal;
-import com.ibm.as400.access.AS400PackedDecimal;
-import com.ibm.as400.access.SequentialFile;
-import com.ibm.as400.access.QSYSObjectPathName;
+import com.ibm.as400.access.ArrayFieldDescription;
+import com.ibm.as400.access.BinaryConverter;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.DBCSGraphicFieldDescription;
+import com.ibm.as400.access.DBCSOnlyFieldDescription;
 import com.ibm.as400.access.DataQueue;
 import com.ibm.as400.access.DataQueueEntry;
-import com.ibm.as400.access.CommandCall;
-import java.math.BigDecimal;
-import com.ibm.as400.access.BinaryConverter;
+import com.ibm.as400.access.DateFieldDescription;
+import com.ibm.as400.access.FloatFieldDescription;
+import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.QSYSObjectPathName;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
+import com.ibm.as400.access.TimeFieldDescription;
+import com.ibm.as400.access.ZonedDecimalFieldDescription;
+import com.ibm.as400.data.Descriptor;
+import com.ibm.as400.data.RecordFormatDocument;
+
+import test.Testcase;
 
 
 
@@ -73,9 +71,9 @@ public class RMRecordConstructorTestcase extends Testcase
     /**
      Constructor.
      **/
-    public RMRecordConstructorTestcase(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream)
+    public RMRecordConstructorTestcase(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream)
     {
-        super(systemObject, "RMRecordConstructorTestcase", (Vector)namesAndVars.get("RMRecordConstructorTestcase"), runMode, fileOutputStream);
+        super(systemObject, "RMRecordConstructorTestcase", namesAndVars.get("RMRecordConstructorTestcase"), runMode, fileOutputStream);
     }
 
 
@@ -104,11 +102,12 @@ public class RMRecordConstructorTestcase extends Testcase
      Test RecordFormatDocument constructor with Record parameter.  Pass an empty Record, i.e., a record
      with a valid format but whose fields all are blank.
      **/
+    @SuppressWarnings("unchecked")
     public void Var002()
     {
         File file1 = null;
         RandomAccessFile raFile1 = null;
-
+        StringBuffer sb = new StringBuffer(); 
         try
         {
 
@@ -155,16 +154,18 @@ public class RMRecordConstructorTestcase extends Testcase
              String attrVal = root.getAttributeValue(rootAttList[i]);
              if (attrVal != null) rootNumAttrs++;
            }
-           Enumeration enumeration = root.getChildren();
-           Vector children = new Vector();
+           sb.append("\nrootNumAttrs="+rootNumAttrs); 
+           Enumeration<Descriptor> enumeration = root.getChildren();
+           Vector<Descriptor> children = new Vector<Descriptor>();
            int numChildren = 0;
            while (enumeration.hasMoreElements()) {
-              Descriptor child = (Descriptor)(enumeration.nextElement());
+              Descriptor child = (enumeration.nextElement());
               children.addElement(child);
               ++numChildren;
            }
+           sb.append("\nnumChildren="+numChildren); 
 
-           Descriptor child1 = (Descriptor)(children.elementAt(0));
+           Descriptor child1 = (children.elementAt(0));
            String[] child1AttList = child1.getAttributeList();
 
            int child1NumAttrs = 0;  // number of non-null attributes
@@ -175,17 +176,18 @@ public class RMRecordConstructorTestcase extends Testcase
                child1NumAttrs++;
              }
            }
+           sb.append("\nchild1NumAttrs="+child1NumAttrs); 
 
            enumeration =child1.getChildren();
-           Vector grandChildren = new Vector();
+           Vector<Descriptor> grandChildren = new Vector<Descriptor>();
            numChildren = 0;
            while (enumeration.hasMoreElements()) {
-             Descriptor child = (Descriptor)(enumeration.nextElement());
+             Descriptor child = (enumeration.nextElement());
              grandChildren.addElement(child);
              ++numChildren;
            }
 
-           Descriptor grandChild1 = (Descriptor)(grandChildren.elementAt(0));
+           Descriptor grandChild1 = (grandChildren.elementAt(0));
 
            String[] grandChild1AttList = grandChild1.getAttributeList();
            int grandChild1NumAttrs = 0;  // number of non-null attributes
@@ -218,8 +220,10 @@ public class RMRecordConstructorTestcase extends Testcase
 
                grandChild1NumAttrs++;
              }
-           }           
-            Descriptor grandChild2 = (Descriptor)(grandChildren.elementAt(1));
+           } 
+           sb.append("\ngrandChild1NumAttrs="+grandChild1NumAttrs); 
+
+            Descriptor grandChild2 = (grandChildren.elementAt(1));
 
             String[] grandChild2AttList = grandChild2.getAttributeList();
             int grandChild2NumAttrs = 0;  // number of non-null attributes
@@ -261,8 +265,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild2NumAttrs++;
               }
             }
+            sb.append("\ngrandChild2NumAttrs="+grandChild2NumAttrs); 
 
-            Descriptor grandChild3 = (Descriptor)(grandChildren.elementAt(2));
+            Descriptor grandChild3 = (grandChildren.elementAt(2));
 
             String[] grandChild3AttList = grandChild3.getAttributeList();
             int grandChild3NumAttrs = 0;  // number of non-null attributes
@@ -303,8 +308,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild3NumAttrs++;
               }
             }
+            sb.append("\ngrandChild3NumAttrs="+grandChild3NumAttrs); 
 
-            Descriptor grandChild4 = (Descriptor)(grandChildren.elementAt(3));
+            Descriptor grandChild4 = (grandChildren.elementAt(3));
 
             String[] grandChild4AttList = grandChild4.getAttributeList();
             int grandChild4NumAttrs = 0;  // number of non-null attributes
@@ -345,8 +351,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild4NumAttrs++;
               }
             }
+            sb.append("\ngrandChild4NumAttrs="+grandChild4NumAttrs); 
 
-            Descriptor grandChild5 = (Descriptor)(grandChildren.elementAt(4));
+            Descriptor grandChild5 = (grandChildren.elementAt(4));
 
             String[] grandChild5AttList = grandChild5.getAttributeList();
             int grandChild5NumAttrs = 0;  // number of non-null attributes
@@ -387,8 +394,11 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild5NumAttrs++;
               }
             }
+            sb.append("\ngrandChild5NumAttrs="+grandChild5NumAttrs); 
 
-            Descriptor grandChild6= (Descriptor)(grandChildren.elementAt(5));
+           
+
+            Descriptor grandChild6= (grandChildren.elementAt(5));
 
             String[] grandChild6AttList = grandChild6.getAttributeList();
             int grandChild6NumAttrs = 0;  // number of non-null attributes
@@ -429,9 +439,11 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild6NumAttrs++;
               }
             }
+            
+            sb.append("\ngrandChild6NumAttrs="+grandChild6NumAttrs); 
 
 
-            Descriptor grandChild7= (Descriptor)(grandChildren.elementAt(6));
+            Descriptor grandChild7= (grandChildren.elementAt(6));
 
             String[] grandChild7AttList = grandChild7.getAttributeList();
             int grandChild7NumAttrs = 0;  // number of non-null attributes
@@ -472,8 +484,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild7NumAttrs++;
               }
             }
+            sb.append("\ngrandChild7NumAttrs="+grandChild7NumAttrs); 
 
-            Descriptor grandChild8= (Descriptor)(grandChildren.elementAt(7));
+            Descriptor grandChild8= (grandChildren.elementAt(7));
 
             String[] grandChild8AttList = grandChild8.getAttributeList();
             int grandChild8NumAttrs = 0;  // number of non-null attributes
@@ -513,6 +526,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild8NumAttrs++;
               }
             }
+            sb.append("\ngrandChild8NumAttrs="+grandChild8NumAttrs); 
+
+           
 
 //            Descriptor grandChild9= (Descriptor)(grandChildren.elementAt(8));
 
@@ -556,7 +572,7 @@ public class RMRecordConstructorTestcase extends Testcase
 //              }
 //            }
 
-            Descriptor grandChild9= (Descriptor)(grandChildren.elementAt(8));
+            Descriptor grandChild9= (grandChildren.elementAt(8));
 
             String[] grandChild9AttList = grandChild9.getAttributeList();
             int grandChild9NumAttrs = 0;  // number of non-null attributes
@@ -596,7 +612,11 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild9NumAttrs++;
               }
             }
-            Descriptor grandChild10= (Descriptor)(grandChildren.elementAt(9));
+            
+            sb.append("\ngrandChild9NumAttrs="+grandChild9NumAttrs); 
+
+
+            Descriptor grandChild10= (grandChildren.elementAt(9));
 
             String[] grandChild10AttList = grandChild10.getAttributeList();
             int grandChild10NumAttrs = 0;  // number of non-null attributes
@@ -637,6 +657,7 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild10NumAttrs++;
               }
             }
+           sb.append("\ngrandChild10NumAttrs="+grandChild10NumAttrs); 
 
           file1 = new File("RFFile");
           file1.createNewFile();  // Note: This method is new in Java2.
@@ -720,13 +741,15 @@ public class RMRecordConstructorTestcase extends Testcase
      THAT HAVE BEEN INITIALIZED TO DEFAULT VALUES.  PROBLEM SIMILAR TO PROBLEM LOADING PACKED
      VALUES AFTER INT 4 VALUES ALTHOUGH THE PACKED FIELD FOLLOWS AN INT 2 IN THIS FILE/
      **/
+    @SuppressWarnings("unchecked")
     public void Var003()
     {
-	
+      StringBuffer sb = new StringBuffer(); 
+      
 
         File file1 = null;
         RandomAccessFile raFile1 = null;
-
+        SequentialFile file = null; 
         try
         {
            RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtAllTypesNoInit");
@@ -741,7 +764,7 @@ public class RMRecordConstructorTestcase extends Testcase
 
            QSYSObjectPathName fileName = new QSYSObjectPathName("RMLIB", "ALLTYPESF", "FILE");
 
-           SequentialFile file = new SequentialFile(as400, fileName.getPath());
+           file = new SequentialFile(as400, fileName.getPath());
 
            // Let the file object know the format of the records.
            file.setRecordFormat(recFmt);
@@ -773,16 +796,19 @@ public class RMRecordConstructorTestcase extends Testcase
              String attrVal = root.getAttributeValue(rootAttList[i]);
              if (attrVal != null) rootNumAttrs++;
            }
-           Enumeration enumeration = root.getChildren();
-           Vector children = new Vector();
+           sb.append("\nrootNumAttrs="+rootNumAttrs); 
+
+           Enumeration<Descriptor> enumeration = root.getChildren();
+           Vector<Descriptor> children = new Vector<Descriptor>();
            int numChildren = 0;
            while (enumeration.hasMoreElements()) {
-              Descriptor child = (Descriptor)(enumeration.nextElement());
+              Descriptor child = (enumeration.nextElement());
               children.addElement(child);
               ++numChildren;
            }
+           sb.append("\nnumChildren="+numChildren); 
 
-           Descriptor child1 = (Descriptor)(children.elementAt(0));
+           Descriptor child1 = (children.elementAt(0));
            String[] child1AttList = child1.getAttributeList();
 
            int child1NumAttrs = 0;  // number of non-null attributes
@@ -799,17 +825,18 @@ public class RMRecordConstructorTestcase extends Testcase
                child1NumAttrs++;
              }
            }
+           sb.append("\nchild1NumAttrs="+child1NumAttrs); 
 
            enumeration =child1.getChildren();
-           Vector grandChildren = new Vector();
+           Vector<Descriptor> grandChildren = new Vector<Descriptor>();
            numChildren = 0;
            while (enumeration.hasMoreElements()) {
-             Descriptor child = (Descriptor)(enumeration.nextElement());
+             Descriptor child = (enumeration.nextElement());
              grandChildren.addElement(child);
              ++numChildren;
            }
 
-           Descriptor grandChild1 = (Descriptor)(grandChildren.elementAt(0));
+           Descriptor grandChild1 = (grandChildren.elementAt(0));
 
            String[] grandChild1AttList = grandChild1.getAttributeList();
            int grandChild1NumAttrs = 0;  // number of non-null attributes
@@ -842,8 +869,9 @@ public class RMRecordConstructorTestcase extends Testcase
                grandChild1NumAttrs++;
              }
            }
+           sb.append("\ngrandChild1NumAttrs="+grandChild1NumAttrs); 
 
-            Descriptor grandChild2 = (Descriptor)(grandChildren.elementAt(1));
+            Descriptor grandChild2 = (grandChildren.elementAt(1));
 
             String[] grandChild2AttList = grandChild2.getAttributeList();
             int grandChild2NumAttrs = 0;  // number of non-null attributes
@@ -876,8 +904,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild2NumAttrs++;
               }
             }
+            sb.append("\ngrandChild2NumAttrs="+grandChild2NumAttrs); 
 
-            Descriptor grandChild3 = (Descriptor)(grandChildren.elementAt(2));
+            Descriptor grandChild3 = (grandChildren.elementAt(2));
 
             String[] grandChild3AttList = grandChild3.getAttributeList();
             int grandChild3NumAttrs = 0;  // number of non-null attributes
@@ -912,8 +941,9 @@ public class RMRecordConstructorTestcase extends Testcase
               }
             }
 
+            sb.append("\ngrandChild3NumAttrs="+grandChild3NumAttrs); 
 
-            Descriptor grandChild4 = (Descriptor)(grandChildren.elementAt(3));
+            Descriptor grandChild4 = (grandChildren.elementAt(3));
 
             String[] grandChild4AttList = grandChild4.getAttributeList();
             int grandChild4NumAttrs = 0;  // number of non-null attributes
@@ -947,8 +977,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild4NumAttrs++;
               }
             }
+            sb.append("\ngrandChild4NumAttrs="+grandChild4NumAttrs); 
 
-            Descriptor grandChild5 = (Descriptor)(grandChildren.elementAt(4));
+            Descriptor grandChild5 = (grandChildren.elementAt(4));
 
             String[] grandChild5AttList = grandChild5.getAttributeList();
             int grandChild5NumAttrs = 0;  // number of non-null attributes
@@ -981,8 +1012,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild5NumAttrs++;
               }
             }
+            sb.append("\ngrandChild5NumAttrs="+grandChild5NumAttrs); 
 
-            Descriptor grandChild6= (Descriptor)(grandChildren.elementAt(5));
+            Descriptor grandChild6= (grandChildren.elementAt(5));
 
             String[] grandChild6AttList = grandChild6.getAttributeList();
             int grandChild6NumAttrs = 0;  // number of non-null attributes
@@ -1015,8 +1047,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild6NumAttrs++;
               }
             }
+            sb.append("\ngrandChild6NumAttrs="+grandChild6NumAttrs); 
 
-            Descriptor grandChild7= (Descriptor)(grandChildren.elementAt(6));
+            Descriptor grandChild7= (grandChildren.elementAt(6));
 
             String[] grandChild7AttList = grandChild7.getAttributeList();
             int grandChild7NumAttrs = 0;  // number of non-null attributes
@@ -1057,8 +1090,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild7NumAttrs++;
               }
             }
+            sb.append("\ngrandChild7NumAttrs="+grandChild7NumAttrs); 
 
-            Descriptor grandChild8= (Descriptor)(grandChildren.elementAt(7));
+            Descriptor grandChild8= (grandChildren.elementAt(7));
 
             String[] grandChild8AttList = grandChild8.getAttributeList();
             int grandChild8NumAttrs = 0;  // number of non-null attributes
@@ -1099,8 +1133,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild8NumAttrs++;
               }
             }
+            sb.append("\ngrandChild8NumAttrs="+grandChild8NumAttrs); 
 
-            Descriptor grandChild9= (Descriptor)(grandChildren.elementAt(8));
+            Descriptor grandChild9= (grandChildren.elementAt(8));
 
             String[] grandChild9AttList = grandChild9.getAttributeList();
             int grandChild9NumAttrs = 0;  // number of non-null attributes
@@ -1133,6 +1168,7 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild9NumAttrs++;
               }
             }
+            sb.append("\ngrandChild9NumAttrs="+grandChild9NumAttrs); 
 
            Record newRec2 = rfmlDoc2.toRecord("FORMAT1");
            if (newRec2.getNumberOfFields() != 9) 
@@ -1265,14 +1301,23 @@ public class RMRecordConstructorTestcase extends Testcase
              failed("Bad value returned for zoned  field.");
              return;
            }
-
+           
+           
            succeeded();
         }
         catch (Exception e)
         {
             failed(e, "Unexpected exception");
         }
-    }
+        finally {
+          if (file != null) {
+            try {
+              file.close();
+            } catch (Exception e) {
+            }
+          }
+        }
+      }
 
 
     /**
@@ -1280,8 +1325,12 @@ public class RMRecordConstructorTestcase extends Testcase
      representing QCUSTCDT format with valid data. Ensure parsed correctly and ensure correct
      rfml values set.
      **/
+    @SuppressWarnings("unchecked")
     public void Var004()
     {
+      SequentialFile file= null;
+      StringBuffer sb = new StringBuffer(); 
+      
         try
         {
 //           RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.qcustcdts");
@@ -1295,7 +1344,7 @@ public class RMRecordConstructorTestcase extends Testcase
            // to get the name of the file into the correct format.
            QSYSObjectPathName fileName = new QSYSObjectPathName("QIWS", "QCUSTCDT", "FILE");
 
-           SequentialFile file = new SequentialFile(as400, fileName.getPath());
+           file = new SequentialFile(as400, fileName.getPath());
 
            // Let the file object know the format of the records.
            file.setRecordFormat();
@@ -1322,16 +1371,19 @@ public class RMRecordConstructorTestcase extends Testcase
              String attrVal = root.getAttributeValue(rootAttList[i]);
              if (attrVal != null) rootNumAttrs++;
            }
-           Enumeration enumeration = root.getChildren();
-           Vector children = new Vector();
+           sb.append("\nrootNumAttrs="+rootNumAttrs); 
+
+           Enumeration<Descriptor> enumeration = root.getChildren();
+           Vector<Descriptor> children = new Vector<Descriptor>();
            int numChildren = 0;
            while (enumeration.hasMoreElements()) {
-              Descriptor child = (Descriptor)(enumeration.nextElement());
+              Descriptor child = (enumeration.nextElement());
               children.addElement(child);
               ++numChildren;
            }
+           sb.append("\nnumChildren="+numChildren); 
 
-           Descriptor child1 = (Descriptor)(children.elementAt(0));
+           Descriptor child1 = (children.elementAt(0));
            String[] child1AttList = child1.getAttributeList();
 
            int child1NumAttrs = 0;  // number of non-null attributes
@@ -1348,17 +1400,18 @@ public class RMRecordConstructorTestcase extends Testcase
                child1NumAttrs++;
              }
            }
+           sb.append("\nchild1NumAttrs="+child1NumAttrs); 
 
            enumeration =child1.getChildren();
-           Vector grandChildren = new Vector();
+           Vector<Descriptor> grandChildren = new Vector<Descriptor>();
            numChildren = 0;
            while (enumeration.hasMoreElements()) {
-             Descriptor child = (Descriptor)(enumeration.nextElement());
+             Descriptor child = (enumeration.nextElement());
              grandChildren.addElement(child);
              ++numChildren;
            }
 
-           Descriptor grandChild1 = (Descriptor)(grandChildren.elementAt(0));
+           Descriptor grandChild1 = (grandChildren.elementAt(0));
 
            String[] grandChild1AttList = grandChild1.getAttributeList();
            int grandChild1NumAttrs = 0;  // number of non-null attributes
@@ -1398,8 +1451,10 @@ public class RMRecordConstructorTestcase extends Testcase
 
                grandChild1NumAttrs++;
              }
-           }           
-            Descriptor grandChild2 = (Descriptor)(grandChildren.elementAt(1));
+           }          
+           sb.append("\ngrandChild1NumAttrs="+grandChild1NumAttrs); 
+
+            Descriptor grandChild2 = (grandChildren.elementAt(1));
 
             String[] grandChild2AttList = grandChild2.getAttributeList();
             int grandChild2NumAttrs = 0;  // number of non-null attributes
@@ -1433,8 +1488,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild2NumAttrs++;
               }
             }
+            sb.append("\ngrandChild2NumAttrs="+grandChild2NumAttrs); 
 
-            Descriptor grandChild3 = (Descriptor)(grandChildren.elementAt(2));
+            Descriptor grandChild3 = (grandChildren.elementAt(2));
 
             String[] grandChild3AttList = grandChild3.getAttributeList();
             int grandChild3NumAttrs = 0;  // number of non-null attributes
@@ -1467,8 +1523,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild3NumAttrs++;
               }
             }
+            sb.append("\ngrandChild3NumAttrs="+grandChild3NumAttrs); 
 
-            Descriptor grandChild4 = (Descriptor)(grandChildren.elementAt(3));
+            Descriptor grandChild4 = (grandChildren.elementAt(3));
 
             String[] grandChild4AttList = grandChild4.getAttributeList();
             int grandChild4NumAttrs = 0;  // number of non-null attributes
@@ -1501,8 +1558,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild4NumAttrs++;
               }
             }
+            sb.append("\ngrandChild4NumAttrs="+grandChild4NumAttrs); 
 
-            Descriptor grandChild5 = (Descriptor)(grandChildren.elementAt(4));
+            Descriptor grandChild5 = (grandChildren.elementAt(4));
 
             String[] grandChild5AttList = grandChild5.getAttributeList();
             int grandChild5NumAttrs = 0;  // number of non-null attributes
@@ -1535,8 +1593,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild5NumAttrs++;
               }
             }
+            sb.append("\ngrandChild5NumAttrs="+grandChild5NumAttrs); 
 
-            Descriptor grandChild6= (Descriptor)(grandChildren.elementAt(5));
+            Descriptor grandChild6= (grandChildren.elementAt(5));
 
             String[] grandChild6AttList = grandChild6.getAttributeList();
             int grandChild6NumAttrs = 0;  // number of non-null attributes
@@ -1569,9 +1628,10 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild6NumAttrs++;
               }
             }
+            sb.append("\ngrandChild6NumAttrs="+grandChild6NumAttrs); 
 
 
-            Descriptor grandChild7= (Descriptor)(grandChildren.elementAt(6));
+            Descriptor grandChild7= (grandChildren.elementAt(6));
 
             String[] grandChild7AttList = grandChild7.getAttributeList();
             int grandChild7NumAttrs = 0;  // number of non-null attributes
@@ -1613,7 +1673,9 @@ public class RMRecordConstructorTestcase extends Testcase
               }
             }
 
-            Descriptor grandChild8= (Descriptor)(grandChildren.elementAt(7));
+            sb.append("\ngrandChild7NumAttrs="+grandChild7NumAttrs); 
+
+            Descriptor grandChild8= (grandChildren.elementAt(7));
 
             String[] grandChild8AttList = grandChild8.getAttributeList();
             int grandChild8NumAttrs = 0;  // number of non-null attributes
@@ -1653,8 +1715,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild8NumAttrs++;
               }
             }
+            sb.append("\ngrandChild8NumAttrs="+grandChild8NumAttrs); 
 
-            Descriptor grandChild9= (Descriptor)(grandChildren.elementAt(8));
+            Descriptor grandChild9= (grandChildren.elementAt(8));
 
             String[] grandChild9AttList = grandChild9.getAttributeList();
             int grandChild9NumAttrs = 0;  // number of non-null attributes
@@ -1695,8 +1758,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild9NumAttrs++;
               }
             }
+            sb.append("\ngrandChild9NumAttrs="+grandChild9NumAttrs); 
 
-            Descriptor grandChild10= (Descriptor)(grandChildren.elementAt(9));
+            Descriptor grandChild10= (grandChildren.elementAt(9));
 
             String[] grandChild10AttList = grandChild10.getAttributeList();
             int grandChild10NumAttrs = 0;  // number of non-null attributes
@@ -1736,7 +1800,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild10NumAttrs++;
               }
             }
-            Descriptor grandChild11= (Descriptor)(grandChildren.elementAt(10));
+            sb.append("\ngrandChild10NumAttrs="+grandChild10NumAttrs); 
+
+            Descriptor grandChild11= (grandChildren.elementAt(10));
 
             String[] grandChild11AttList = grandChild11.getAttributeList();
             int grandChild11NumAttrs = 0;  // number of non-null attributes
@@ -1776,6 +1842,7 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild11NumAttrs++;
               }
             }
+            sb.append("\ngrandChild11NumAttrs="+grandChild11NumAttrs); 
 
            Record newRec2 = rfmlDoc2.toRecord("CUSREC");
            if (newRec2.getNumberOfFields() != 11) 
@@ -1844,6 +1911,14 @@ public class RMRecordConstructorTestcase extends Testcase
         {
             failed(e, "Unexpected exception");
         }
+        finally {
+          if (file != null) {
+            try {
+              file.close();
+            } catch (Exception e) {
+            }
+          }
+        }
     }
 
 
@@ -1852,11 +1927,13 @@ public class RMRecordConstructorTestcase extends Testcase
      from a record format that consists of two fields, a DateFieldDescription and a DBCSGraphicFieldDescription.
      Ensure character fields are generated.
      **/
+    @SuppressWarnings("unchecked")
     public void Var005()
     {
         File file1 = null;
         RandomAccessFile raFile1 = null;
-
+        StringBuffer sb = new StringBuffer(); 
+        
         try
         {
 
@@ -1883,16 +1960,19 @@ public class RMRecordConstructorTestcase extends Testcase
              String attrVal = root.getAttributeValue(rootAttList[i]);
              if (attrVal != null) rootNumAttrs++;
            }
-           Enumeration enumeration = root.getChildren();
-           Vector children = new Vector();
+           sb.append("\nrootNumAttrs="+rootNumAttrs); 
+
+           Enumeration<Descriptor> enumeration = root.getChildren();
+           Vector<Descriptor> children = new Vector<Descriptor>();
            int numChildren = 0;
            while (enumeration.hasMoreElements()) {
-              Descriptor child = (Descriptor)(enumeration.nextElement());
+              Descriptor child = (enumeration.nextElement());
               children.addElement(child);
               ++numChildren;
            }
+           sb.append("\nnumChildren="+numChildren); 
 
-           Descriptor child1 = (Descriptor)(children.elementAt(0));
+           Descriptor child1 = (children.elementAt(0));
            String[] child1AttList = child1.getAttributeList();
 
            int child1NumAttrs = 0;  // number of non-null attributes
@@ -1903,17 +1983,18 @@ public class RMRecordConstructorTestcase extends Testcase
                child1NumAttrs++;
              }
            }
+           sb.append("\nchild1NumAttrs="+child1NumAttrs); 
 
            enumeration =child1.getChildren();
-           Vector grandChildren = new Vector();
+           Vector<Descriptor> grandChildren = new Vector<Descriptor>();
            numChildren = 0;
            while (enumeration.hasMoreElements()) {
-             Descriptor child = (Descriptor)(enumeration.nextElement());
+             Descriptor child = (enumeration.nextElement());
              grandChildren.addElement(child);
              ++numChildren;
            }
 
-           Descriptor grandChild1 = (Descriptor)(grandChildren.elementAt(0));
+           Descriptor grandChild1 = (grandChildren.elementAt(0));
 
            String[] grandChild1AttList = grandChild1.getAttributeList();
            int grandChild1NumAttrs = 0;  // number of non-null attributes
@@ -1947,9 +2028,10 @@ public class RMRecordConstructorTestcase extends Testcase
                grandChild1NumAttrs++;
              }
            }           
+           sb.append("\ngrandChild1NumAttrs="+grandChild1NumAttrs); 
 
 
-           Descriptor grandChild2 = (Descriptor)(grandChildren.elementAt(1));
+           Descriptor grandChild2 = (grandChildren.elementAt(1));
 
            String[] grandChild2AttList = grandChild1.getAttributeList();
            int grandChild2NumAttrs = 0;  // number of non-null attributes
@@ -1983,6 +2065,7 @@ public class RMRecordConstructorTestcase extends Testcase
                grandChild2NumAttrs++;
              }
            }           
+           sb.append("\ngrandChild2NumAttrs="+grandChild2NumAttrs); 
 
 
 
@@ -2051,11 +2134,14 @@ public class RMRecordConstructorTestcase extends Testcase
      Note: This variation requires that library RMLIB exist and be populated on the server.  FTP the file "rmlib.savf" from the testcase source directory to the server, and then do a RSTLIB.
      **/
 
+    @SuppressWarnings("unchecked")
     public void Var007()
     {
         File file1 = null;
         RandomAccessFile raFile1 = null;
-
+        SequentialFile file = null; 
+        StringBuffer sb = new StringBuffer(); 
+        
         try
         {
            // RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtAllTypes");
@@ -2069,7 +2155,7 @@ public class RMRecordConstructorTestcase extends Testcase
            // to get the name of the file into the correct format.
            QSYSObjectPathName fileName = new QSYSObjectPathName("RMLIB", "ALLTYPESF", "FILE");
 
-           SequentialFile file = new SequentialFile(as400, fileName.getPath());
+           file = new SequentialFile(as400, fileName.getPath());
 
            // Let the file object know the format of the records.
            file.setRecordFormat();
@@ -2101,16 +2187,19 @@ public class RMRecordConstructorTestcase extends Testcase
              String attrVal = root.getAttributeValue(rootAttList[i]);
              if (attrVal != null) rootNumAttrs++;
            }
-           Enumeration enumeration = root.getChildren();
-           Vector children = new Vector();
+           sb.append("\nrootNumAttrs="+rootNumAttrs); 
+
+           Enumeration<Descriptor> enumeration = root.getChildren();
+           Vector<Descriptor> children = new Vector<Descriptor>();
            int numChildren = 0;
            while (enumeration.hasMoreElements()) {
-              Descriptor child = (Descriptor)(enumeration.nextElement());
+              Descriptor child = (enumeration.nextElement());
               children.addElement(child);
               ++numChildren;
            }
+           sb.append("\nnumChildren="+numChildren); 
 
-           Descriptor child1 = (Descriptor)(children.elementAt(0));
+           Descriptor child1 = (children.elementAt(0));
            String[] child1AttList = child1.getAttributeList();
 
            int child1NumAttrs = 0;  // number of non-null attributes
@@ -2127,17 +2216,18 @@ public class RMRecordConstructorTestcase extends Testcase
                child1NumAttrs++;
              }
            }
+           sb.append("\nchild1NumAttrs="+child1NumAttrs); 
 
            enumeration =child1.getChildren();
-           Vector grandChildren = new Vector();
+           Vector<Descriptor> grandChildren = new Vector<Descriptor>();
            numChildren = 0;
            while (enumeration.hasMoreElements()) {
-             Descriptor child = (Descriptor)(enumeration.nextElement());
+             Descriptor child = (enumeration.nextElement());
              grandChildren.addElement(child);
              ++numChildren;
            }
 
-           Descriptor grandChild1 = (Descriptor)(grandChildren.elementAt(0));
+           Descriptor grandChild1 = (grandChildren.elementAt(0));
 
            String[] grandChild1AttList = grandChild1.getAttributeList();
            int grandChild1NumAttrs = 0;  // number of non-null attributes
@@ -2171,8 +2261,9 @@ public class RMRecordConstructorTestcase extends Testcase
                grandChild1NumAttrs++;
              }
            }
+           sb.append("\ngrandChild1NumAttrs="+grandChild1NumAttrs); 
 
-            Descriptor grandChild2 = (Descriptor)(grandChildren.elementAt(1));
+            Descriptor grandChild2 = (grandChildren.elementAt(1));
 
             String[] grandChild2AttList = grandChild2.getAttributeList();
             int grandChild2NumAttrs = 0;  // number of non-null attributes
@@ -2205,8 +2296,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild2NumAttrs++;
               }
             }
+            sb.append("\ngrandChild2NumAttrs="+grandChild2NumAttrs); 
 
-            Descriptor grandChild3 = (Descriptor)(grandChildren.elementAt(2));
+            Descriptor grandChild3 = (grandChildren.elementAt(2));
 
             String[] grandChild3AttList = grandChild3.getAttributeList();
             int grandChild3NumAttrs = 0;  // number of non-null attributes
@@ -2248,9 +2340,10 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild3NumAttrs++;
               }
             }
+            sb.append("\ngrandChild3NumAttrs="+grandChild3NumAttrs); 
 
 
-            Descriptor grandChild4 = (Descriptor)(grandChildren.elementAt(3));
+            Descriptor grandChild4 = (grandChildren.elementAt(3));
 
             String[] grandChild4AttList = grandChild4.getAttributeList();
             int grandChild4NumAttrs = 0;  // number of non-null attributes
@@ -2292,8 +2385,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild4NumAttrs++;
               }
             }
+            sb.append("\ngrandChild4NumAttrs="+grandChild4NumAttrs); 
 
-            Descriptor grandChild5 = (Descriptor)(grandChildren.elementAt(4));
+            Descriptor grandChild5 = (grandChildren.elementAt(4));
 
             String[] grandChild5AttList = grandChild5.getAttributeList();
             int grandChild5NumAttrs = 0;  // number of non-null attributes
@@ -2334,8 +2428,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild5NumAttrs++;
               }
             }
+            sb.append("\ngrandChild5NumAttrs="+grandChild5NumAttrs); 
 
-            Descriptor grandChild6= (Descriptor)(grandChildren.elementAt(5));
+            Descriptor grandChild6= (grandChildren.elementAt(5));
 
             String[] grandChild6AttList = grandChild6.getAttributeList();
             int grandChild6NumAttrs = 0;  // number of non-null attributes
@@ -2376,8 +2471,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild6NumAttrs++;
               }
             }
+            sb.append("\ngrandChild6NumAttrs="+grandChild6NumAttrs); 
 
-            Descriptor grandChild7= (Descriptor)(grandChildren.elementAt(6));
+            Descriptor grandChild7= (grandChildren.elementAt(6));
 
             String[] grandChild7AttList = grandChild7.getAttributeList();
             int grandChild7NumAttrs = 0;  // number of non-null attributes
@@ -2426,8 +2522,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild7NumAttrs++;
               }
             }
+            sb.append("\ngrandChild7NumAttrs="+grandChild7NumAttrs); 
 
-            Descriptor grandChild8= (Descriptor)(grandChildren.elementAt(7));
+            Descriptor grandChild8= (grandChildren.elementAt(7));
 
             String[] grandChild8AttList = grandChild8.getAttributeList();
             int grandChild8NumAttrs = 0;  // number of non-null attributes
@@ -2477,7 +2574,9 @@ public class RMRecordConstructorTestcase extends Testcase
               }
             }
 
-            Descriptor grandChild9= (Descriptor)(grandChildren.elementAt(8));
+            sb.append("\ngrandChild8NumAttrs="+grandChild8NumAttrs); 
+
+            Descriptor grandChild9= (grandChildren.elementAt(8));
 
             String[] grandChild9AttList = grandChild9.getAttributeList();
             int grandChild9NumAttrs = 0;  // number of non-null attributes
@@ -2510,6 +2609,7 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild9NumAttrs++;
               }
             }
+            sb.append("\ngrandChild9NumAttrs="+grandChild9NumAttrs); 
 
         succeeded();
         }
@@ -2517,6 +2617,15 @@ public class RMRecordConstructorTestcase extends Testcase
         {
             failed(e, "Unexpected exception");
         }
+        finally {
+          if (file != null) {
+            try {
+              file.close();
+            } catch (Exception e) {
+            }
+          }
+        }
+
     }
 
     /**
@@ -2531,7 +2640,7 @@ public class RMRecordConstructorTestcase extends Testcase
     {
         File file1 = null;
         RandomAccessFile raFile1 = null;
-
+        SequentialFile file = null; 
         try
         {
            // Create an AS400 object for the AS/400 system that has the file.
@@ -2542,7 +2651,7 @@ public class RMRecordConstructorTestcase extends Testcase
            // to get the name of the file into the correct format.
            QSYSObjectPathName fileName = new QSYSObjectPathName("RMLIB", "TESTFILEB", "FILE");
 
-           SequentialFile file = new SequentialFile(as400, fileName.getPath());
+           file = new SequentialFile(as400, fileName.getPath());
 
            // Let the file object know the format of the records.
            file.setRecordFormat();
@@ -2591,6 +2700,14 @@ public class RMRecordConstructorTestcase extends Testcase
         {
             failed(e, "Unexpected exception");
         }
+        finally {
+          if (file != null) {
+            try {
+              file.close();
+            } catch (Exception e) {
+            }
+          }
+        }
     }
 
     /**
@@ -2598,11 +2715,13 @@ public class RMRecordConstructorTestcase extends Testcase
      that contains a number a date field.  Ensure this is converted to a char field
      and that value is preserved.  
      **/
+    @SuppressWarnings("unchecked")
     public void Var009()
     {
         File file1 = null;
         RandomAccessFile raFile1 = null;
-
+        StringBuffer sb = new StringBuffer(); 
+        
         try
         {
            RecordFormat recFmt =  new RecordFormat("format1");
@@ -2631,16 +2750,19 @@ public class RMRecordConstructorTestcase extends Testcase
              String attrVal = root.getAttributeValue(rootAttList[i]);
              if (attrVal != null) rootNumAttrs++;
            }
-           Enumeration enumeration = root.getChildren();
-           Vector children = new Vector();
+           sb.append("\nrootNumAttrs="+rootNumAttrs); 
+
+           Enumeration<Descriptor> enumeration = root.getChildren();
+           Vector<Descriptor> children = new Vector<Descriptor>();
            int numChildren = 0;
            while (enumeration.hasMoreElements()) {
-              Descriptor child = (Descriptor)(enumeration.nextElement());
+              Descriptor child = (enumeration.nextElement());
               children.addElement(child);
               ++numChildren;
            }
+           sb.append("\nnumChildren="+numChildren); 
 
-           Descriptor child1 = (Descriptor)(children.elementAt(0));
+           Descriptor child1 = (children.elementAt(0));
            String[] child1AttList = child1.getAttributeList();
 
            int child1NumAttrs = 0;  // number of non-null attributes
@@ -2657,17 +2779,18 @@ public class RMRecordConstructorTestcase extends Testcase
                child1NumAttrs++;
              }
            }
+           sb.append("\nchild1NumAttrs="+child1NumAttrs); 
 
            enumeration =child1.getChildren();
-           Vector grandChildren = new Vector();
+           Vector<Descriptor> grandChildren = new Vector<Descriptor>();
            numChildren = 0;
            while (enumeration.hasMoreElements()) {
-             Descriptor child = (Descriptor)(enumeration.nextElement());
+             Descriptor child = (enumeration.nextElement());
              grandChildren.addElement(child);
              ++numChildren;
            }
 
-           Descriptor grandChild1 = (Descriptor)(grandChildren.elementAt(0));
+           Descriptor grandChild1 = (grandChildren.elementAt(0));
 
            String[] grandChild1AttList = grandChild1.getAttributeList();
            int grandChild1NumAttrs = 0;  // number of non-null attributes
@@ -2709,8 +2832,9 @@ public class RMRecordConstructorTestcase extends Testcase
                grandChild1NumAttrs++;
              }
            }
+           sb.append("\ngrandChild1NumAttrs="+grandChild1NumAttrs); 
 
-            Descriptor grandChild2 = (Descriptor)(grandChildren.elementAt(1));
+            Descriptor grandChild2 = (grandChildren.elementAt(1));
 
             String[] grandChild2AttList = grandChild2.getAttributeList();
             int grandChild2NumAttrs = 0;  // number of non-null attributes
@@ -2751,8 +2875,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild2NumAttrs++;
               }
             }
+            sb.append("\ngrandChild2NumAttrs="+grandChild2NumAttrs); 
 
-            Descriptor grandChild3 = (Descriptor)(grandChildren.elementAt(2));
+            Descriptor grandChild3 = (grandChildren.elementAt(2));
 
             String[] grandChild3AttList = grandChild3.getAttributeList();
             int grandChild3NumAttrs = 0;  // number of non-null attributes
@@ -2787,6 +2912,8 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild3NumAttrs++;
               }
             }
+            sb.append("\ngrandChild3NumAttrs="+grandChild3NumAttrs); 
+
            if (!rfmlDoc.getValue("FORMAT1.field1").equals("2001-08-20")) // or ""?
            {
              failed("Bad value returned for date field. Value =" + rfmlDoc.getValue("FORMAT1.field1"));
@@ -2809,6 +2936,15 @@ public class RMRecordConstructorTestcase extends Testcase
         System.out.println("Exception = " + e);
 	    failed(e); 
         }
+        finally {
+          if (raFile1 != null) {
+            try {
+              raFile1.close();
+            } catch (Exception e) {
+            }
+          }
+        }
+
    }
 
     /**
@@ -2934,11 +3070,12 @@ public class RMRecordConstructorTestcase extends Testcase
      Test count attribute by ensuring ArrayFieldDescriptions are accurately converted to the proper
      count values
     **/
+    @SuppressWarnings("unchecked")
     public void Var012()
     {
         File file1 = null;
         RandomAccessFile raFile1 = null;
-
+        StringBuffer sb = new StringBuffer(); 
         try
         {
          // Create an AS400 object for the AS/400 system that has the file.
@@ -2978,16 +3115,19 @@ public class RMRecordConstructorTestcase extends Testcase
              String attrVal = root.getAttributeValue(rootAttList[i]);
              if (attrVal != null) rootNumAttrs++;
            }
-           Enumeration enumeration = root.getChildren();
-           Vector children = new Vector();
+           sb.append("\nrootNumAttrs="+rootNumAttrs); 
+
+           Enumeration<Descriptor> enumeration = root.getChildren();
+           Vector<Descriptor> children = new Vector<Descriptor>();
            int numChildren = 0;
            while (enumeration.hasMoreElements()) {
-              Descriptor child = (Descriptor)(enumeration.nextElement());
+              Descriptor child = (enumeration.nextElement());
               children.addElement(child);
               ++numChildren;
            }
+           sb.append("\nnumChildren="+numChildren); 
 
-           Descriptor child1 = (Descriptor)(children.elementAt(0));
+           Descriptor child1 = (children.elementAt(0));
            String[] child1AttList = child1.getAttributeList();
 
            int child1NumAttrs = 0;  // number of non-null attributes
@@ -3004,17 +3144,18 @@ public class RMRecordConstructorTestcase extends Testcase
                child1NumAttrs++;
              }
            }
+           sb.append("\nchild1NumAttrs="+child1NumAttrs); 
 
            enumeration =child1.getChildren();
-           Vector grandChildren = new Vector();
+           Vector<Descriptor> grandChildren = new Vector<Descriptor>();
            numChildren = 0;
            while (enumeration.hasMoreElements()) {
-             Descriptor child = (Descriptor)(enumeration.nextElement());
+             Descriptor child = (enumeration.nextElement());
              grandChildren.addElement(child);
              ++numChildren;
            }
 
-           Descriptor grandChild1 = (Descriptor)(grandChildren.elementAt(0));
+           Descriptor grandChild1 = (grandChildren.elementAt(0));
 
            String[] grandChild1AttList = grandChild1.getAttributeList();
            int grandChild1NumAttrs = 0;  // number of non-null attributes
@@ -3062,8 +3203,9 @@ public class RMRecordConstructorTestcase extends Testcase
               grandChild1NumAttrs++;
              }
            }
+           sb.append("\ngrandChild1NumAttrs="+grandChild1NumAttrs); 
 
-            Descriptor grandChild2 = (Descriptor)(grandChildren.elementAt(1));
+            Descriptor grandChild2 = (grandChildren.elementAt(1));
 
             String[] grandChild2AttList = grandChild2.getAttributeList();
             int grandChild2NumAttrs = 0;  // number of non-null attributes
@@ -3104,8 +3246,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild2NumAttrs++;
               }
             }
+            sb.append("\ngrandChild2NumAttrs="+grandChild2NumAttrs); 
 
-            Descriptor grandChild3 = (Descriptor)(grandChildren.elementAt(2));
+            Descriptor grandChild3 = (grandChildren.elementAt(2));
 
             String[] grandChild3AttList = grandChild3.getAttributeList();
             int grandChild3NumAttrs = 0;  // number of non-null attributes
@@ -3152,8 +3295,9 @@ public class RMRecordConstructorTestcase extends Testcase
                 grandChild3NumAttrs++;
               }
             }
+            sb.append("\ngrandChild3NumAttrs="+grandChild3NumAttrs); 
 
-            Descriptor grandChild4 = (Descriptor)(grandChildren.elementAt(3));
+            Descriptor grandChild4 = (grandChildren.elementAt(3));
 
             String[] grandChild4AttList = grandChild4.getAttributeList();
             // int grandChild4NumAttrs = 0;  // number of non-null attributes

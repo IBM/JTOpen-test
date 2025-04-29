@@ -49,7 +49,7 @@ public class ServiceProgramCallBeanInfoUnattendedTestcase extends Testcase
     /**
      Constructor.
      **/
-    public ServiceProgramCallBeanInfoUnattendedTestcase(AS400 systemObject, Vector variationsToRun, int runMode, FileOutputStream fileOutputStream,  String password)
+    public ServiceProgramCallBeanInfoUnattendedTestcase(AS400 systemObject, Vector<String> variationsToRun, int runMode, FileOutputStream fileOutputStream,  String password)
     {
         super(systemObject, "ServiceProgramCallBeanInfoUnattendedTestcase", variationsToRun, runMode, fileOutputStream, password);
     }

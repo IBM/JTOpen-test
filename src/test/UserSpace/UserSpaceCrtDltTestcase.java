@@ -106,6 +106,14 @@ public class UserSpaceCrtDltTestcase extends Testcase
         {
 	    deleteLibrary("USAUTHLIB"); 
             cmdRun("CRTLIB LIB(USAUTHLIB)");
+            /* grant access to library to all */ 
+            String command = "GRTOBJAUT OBJ(USAUTHLIB) OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
+            boolean success =  cmdRun(command);
+            if (!success) { 
+                System.out.println("Command Failed "+command ); 
+            } else {
+              System.out.println("SetupUSAuthority(): Command worked "+command ); 
+            }
 
             UserSpace aUSpace = new UserSpace(pwrSys_, "/QSYS.LIB/USAUTHLIB.LIB/USCRTDLT1.USRSPC");
             aUSpace.create(10240, true, " ", (byte)0x00, "USCRTDLT test", "*ALL");

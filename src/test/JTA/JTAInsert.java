@@ -16,7 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -49,7 +49,7 @@ public class JTAInsert extends JDTestcase {
 Constructor.
 **/
    public JTAInsert (AS400 systemObject,
-                     Hashtable namesAndVars,
+                     Hashtable<String,Vector<String>> namesAndVars,
                      int runMode,
                      FileOutputStream fileOutputStream,
                      

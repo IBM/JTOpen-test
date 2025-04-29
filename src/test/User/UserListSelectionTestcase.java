@@ -32,6 +32,7 @@ import com.ibm.as400.resource.RUserList;
  <li>setSelectionValue()
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserListSelectionTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -66,7 +67,7 @@ public class UserListSelectionTestcase extends Testcase
     /**
      Checks a particular selection meta data.
      **/
-    static boolean verifySelectionMetaData(ResourceMetaData smd, Object attributeID, Class attributeType, boolean readOnly,  int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
+    static boolean verifySelectionMetaData(ResourceMetaData smd, Object attributeID, Class<?> attributeType, boolean readOnly,  int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
     {
         return smd.areMultipleAllowed() == multipleAllowed && smd.getDefaultValue() == (defaultValue) && smd.getPossibleValues().length == possibleValueCount && smd.getPresentation() != null && smd.getType() == attributeType && smd.isReadOnly() == readOnly && smd.isValueLimited() == valueLimited && smd.toString().equals(attributeID);
     }
@@ -74,7 +75,7 @@ public class UserListSelectionTestcase extends Testcase
     /**
      Checks a particular selection meta data.
      **/
-    static boolean verifySelectionMetaData(ResourceMetaData[] smd, Object attributeID, Class attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
+    static boolean verifySelectionMetaData(ResourceMetaData[] smd, Object attributeID, Class<?> attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
     {
         int found = -1;
         for (int i = 0; (i < smd.length) && (found < 0); ++i)
@@ -125,7 +126,7 @@ public class UserListSelectionTestcase extends Testcase
         {
             RUserList u = new RUserList();
             ResourceMetaData smd = u.getSelectionMetaData(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+smd);
         }
         catch (Exception e)
         {
@@ -142,7 +143,7 @@ public class UserListSelectionTestcase extends Testcase
         {
             RUserList u = new RUserList();
             ResourceMetaData smd = u.getSelectionMetaData(new Date());
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+smd);
         }
         catch (Exception e)
         {
@@ -258,7 +259,7 @@ public class UserListSelectionTestcase extends Testcase
         {
             RUserList u = new RUserList(pwrSys_);
             Object value = u.getSelectionValue(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -275,7 +276,7 @@ public class UserListSelectionTestcase extends Testcase
         {
             RUserList u = new RUserList(pwrSys_);
             Object value = u.getSelectionValue("Yo");
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -374,8 +375,8 @@ public class UserListSelectionTestcase extends Testcase
             {
                 // System.out.println("Getting selection " + smd[i] + ".");
                 Object value = u.getSelectionValue(smd[i].getID());
-                Class valueClass = value.getClass();
-                Class type = smd[i].getType();
+                Class<?> valueClass = value.getClass();
+                Class<?> type = smd[i].getType();
 
                 // Validate the type.
                 if (smd[i].areMultipleAllowed())
@@ -388,7 +389,7 @@ public class UserListSelectionTestcase extends Testcase
                     }
                     else
                     {
-                        Class componentType = valueClass.getComponentType();
+                        Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type))
                         {
                             System.out.println("Error getting selection " + smd[i] + ".");

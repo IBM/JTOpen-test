@@ -13,13 +13,12 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.Printer;
 
 import test.Testcase;
 
@@ -267,7 +266,6 @@ public class NPPrtDNameTestcase extends Testcase
             // create a printer device object using default constructor
             Printer prtD = new Printer();
 
-            if (prtD != null)
                 {  
                 if( prtD.getSystem() == null )
                     {
@@ -277,10 +275,6 @@ public class NPPrtDNameTestcase extends Testcase
                     {
                     failed("System name was not set, expecting null");  
                     }
-                }
-            else
-                {
-                failed("Could not create a Printer reference");
                 }
 
 	} // end try block
@@ -302,7 +296,6 @@ public class NPPrtDNameTestcase extends Testcase
             // create a printer device object using default constructor
             Printer prtD = new Printer();
 
-            if (prtD != null)
                 {    
                 if( prtD.getName().length() == 0 )
                     {
@@ -312,10 +305,6 @@ public class NPPrtDNameTestcase extends Testcase
                     {
                     failed("Printer name was not set, expecting empty string");
                     }
-                }
-            else
-                {
-                failed("Could not create a Printer Reference");
                 }
 
 	} // end try block

@@ -12,6 +12,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400SecurityException;
@@ -28,29 +41,12 @@ import test.RJava.RJavaProgramBufferedResourceTestcase;
 import test.RJava.RJavaProgramGenericAttributeTestcase;
 import test.RJava.RJavaProgramSpecificAttributeTestcase;
 
-import com.ibm.as400.resource.ResourceListEvent;
-import com.ibm.as400.resource.ResourceListListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.util.Enumeration;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
 
 
 /**
 Test driver for the RJavaProgram classes.
 **/
+@SuppressWarnings("deprecation")
 public class RJavaTest
 extends TestDriver
 {
@@ -152,7 +148,7 @@ Creates the testcases.
       	     	 catch (Exception exc) {};   	   
     	}  
     	
-        boolean allTestcases = (namesAndVars_.size() == 0);
+        // boolean allTestcases = (namesAndVars_.size() == 0);
 
         // Test the RJavaProgram class.
         addTestcase(new RJavaProgramBasicTestcase(systemObject_, namesAndVars_, runMode_, 
@@ -182,12 +178,13 @@ Serializes and deserializes an object.
 	    ObjectOutput out = new ObjectOutputStream (new FileOutputStream (serializeFilename_));
 	    out.writeObject (object);
 	    out.flush ();
-
+	    out.close(); 
         // Deserialize.
         Object object2 = null;
         try {
             ObjectInputStream in = new ObjectInputStream (new FileInputStream (serializeFilename_));
             object2 = in.readObject ();
+            in.close(); 
         }
    	    finally {
        		File f = new File (serializeFilename_);

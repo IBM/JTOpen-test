@@ -14,36 +14,34 @@
 package test.RM;
 
 
-import java.io.FileOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
 import java.util.Hashtable;
 import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.data.RecordFormatDocument;
-
-import test.RMTest;
-import test.Testcase;
-
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.AS400Text;
-import com.ibm.as400.access.AS400PackedDecimal;
-import com.ibm.as400.access.AS400ZonedDecimal;
-import com.ibm.as400.access.AS400ByteArray;
 import com.ibm.as400.access.AS400Bin2;
-import com.ibm.as400.access.AS400UnsignedBin2;
 import com.ibm.as400.access.AS400Bin4;
-import com.ibm.as400.access.AS400UnsignedBin4;
+import com.ibm.as400.access.AS400ByteArray;
 import com.ibm.as400.access.AS400Float4;
 import com.ibm.as400.access.AS400Float8;
+import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400UnsignedBin2;
+import com.ibm.as400.access.AS400UnsignedBin4;
+import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.BinaryFieldDescription;
 import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.PackedDecimalFieldDescription;
-import com.ibm.as400.access.ZonedDecimalFieldDescription;
 import com.ibm.as400.access.FieldDescription;
 import com.ibm.as400.access.FloatFieldDescription;
-import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.ZonedDecimalFieldDescription;
+import com.ibm.as400.data.RecordFormatDocument;
+
+import test.Testcase;
 
 /**
  The RMtoRecordFormatTestcase class tests the following methods of the RecordFormatDocument class:
@@ -54,9 +52,9 @@ public class RMtoRecordFormatTestcase extends Testcase
     /**
      Constructor.
      **/
-    public RMtoRecordFormatTestcase(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream)
+    public RMtoRecordFormatTestcase(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream)
     {
-        super(systemObject, "RMtoRecordFormatTestcase", (Vector)namesAndVars.get("RMtoRecordFormatTestcase"), runMode, fileOutputStream);
+        super(systemObject, "RMtoRecordFormatTestcase", namesAndVars.get("RMtoRecordFormatTestcase"), runMode, fileOutputStream);
     }
 
     /**

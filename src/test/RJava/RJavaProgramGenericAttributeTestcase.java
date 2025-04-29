@@ -12,27 +12,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RJava;
 
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceException;
+import com.ibm.as400.resource.RJavaProgram;
 import com.ibm.as400.resource.ResourceEvent;
+import com.ibm.as400.resource.ResourceException;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.JDTestDriver;
 import test.RJavaTest;
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.ResourceListener_;
-
-import com.ibm.as400.resource.RJavaProgram;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Vector;
 
 
 
@@ -54,17 +48,14 @@ of the RJavaProgram class, inherited from BufferedResource:
 <li>setAttributeValue() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RJavaProgramGenericAttributeTestcase
 extends Testcase {
 
 
 
-    // Constants.
 
 
-
-    // Private data.
-    private AS400           pwrSys_;
 
 
 
@@ -72,7 +63,7 @@ extends Testcase {
 Constructor.
 **/
     public RJavaProgramGenericAttributeTestcase (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -135,7 +126,7 @@ Checks a particular attribute meta data.
 **/
     static boolean verifyAttributeMetaData(ResourceMetaData amd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -159,7 +150,7 @@ Checks a particular attribute meta data.
 **/
     static boolean verifyAttributeMetaData(ResourceMetaData[] amd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -440,8 +431,8 @@ commitAttributeChanges() - Should commit the change when 2 changes have been mad
 	} 
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
-            Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
-            String epc = (String)u.getAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION);
+            //Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
+            //String epc = (String)u.getAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION);
             u.setAttributeValue(RJavaProgram.OPTIMIZATION, RJavaProgram.OPTIMIZATION_20);
             u.setAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION, RJavaProgram.ENABLE_PERFORMANCE_COLLECTION_ENTRY_EXIT);
             u.commitAttributeChanges();
@@ -567,7 +558,7 @@ each attribute.
         try {
             RJavaProgram u = new RJavaProgram();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            boolean found = false;
+            // boolean found = false;
             // I did not hardcode an exact length...otherwise, we
             // have to change this every time we add a property.
             assertCondition((amd.length > 5) 
@@ -594,7 +585,7 @@ getAttributeMetaData() with 1 parameter - Pass null.
         try {
             RJavaProgram u = new RJavaProgram();
             ResourceMetaData amd = u.getAttributeMetaData(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+amd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -615,7 +606,7 @@ getAttributeMetaData() with 1 parameter - Pass an invalid attribute ID.
         try {
             RJavaProgram u = new RJavaProgram();
             ResourceMetaData amd = u.getAttributeMetaData(new Date());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+amd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -737,7 +728,7 @@ getAttributeUnchangedValue() - When there is no connection.
         try {
             RJavaProgram u = new RJavaProgram();
             Object value = u.getAttributeUnchangedValue(RJavaProgram.JAVA_PROGRAM_CREATION);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -758,7 +749,7 @@ getAttributeUnchangedValue() - Pass null.
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
             Object value = u.getAttributeUnchangedValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -779,7 +770,7 @@ getAttributeUnchangedValue() - Pass an invalid attribute ID.
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
             Object value = u.getAttributeUnchangedValue(new AS400());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -935,7 +926,7 @@ getAttributeValue() - When there is no connection.
         try {
             RJavaProgram u = new RJavaProgram();
             Object value = u.getAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -958,7 +949,7 @@ getAttributeValue() - When the connection is bogus.
             system.setGuiAvailable(false);
             RJavaProgram u = new RJavaProgram(system, "Friend");
             Object value = u.getAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -979,7 +970,7 @@ getAttributeValue() - When the path does not exist.
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, "NOTEXIST");
             Object value = u.getAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -1000,7 +991,7 @@ getAttributeValue() - When the java program does not exist.
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.classFilePathNoJvapgm_);
             Object value = u.getAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -1021,7 +1012,7 @@ getAttributeValue() - Pass null.
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
             Object value = u.getAttributeValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -1042,7 +1033,7 @@ getAttributeValue() - Pass an invalid attribute ID.
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
             Object value = u.getAttributeValue("Yo");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -1202,8 +1193,8 @@ getAttributeValue() - Pass every attribute ID.
             for(int i = 0; i < amd.length; ++i) {
                 // System.out.println("Getting attribute " + amd[i] + ".");
                 Object value = u.getAttributeValue(amd[i].getID());
-                Class valueClass = value.getClass();
-                Class type = amd[i].getType();
+                Class<?> valueClass = value.getClass();
+                Class<?> type = amd[i].getType();
 
                 // Validate the type.
                 if (amd[i].areMultipleAllowed()) {
@@ -1214,7 +1205,7 @@ getAttributeValue() - Pass every attribute ID.
                         success = false;
                     }
                     else {
-                        Class componentType = valueClass.getComponentType();
+                        Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type)) {
                             System.out.println("Error getting attribute " + amd[i] + ".");
                             System.out.println("Type mismatch: " + componentType + " != " + type + ".");
@@ -1301,7 +1292,7 @@ hasUncommittedAttributeChanges() - Pass null.
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
             boolean pending = u.hasUncommittedAttributeChanges(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+pending);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -1322,7 +1313,7 @@ hasUncommittedAttributeChanges() - Pass an invalid attribute ID.
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
             boolean pending = u.hasUncommittedAttributeChanges("Go Toolbox");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+pending);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -1551,8 +1542,8 @@ RJavaProgram object.  Verify that the changes are reflected.
 	} 
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
-            Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
-            String epc = (String)u.getAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION);
+            // Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
+            // String epc = (String)u.getAttributeValue(RJavaProgram.ENABLE_PERFORMANCE_COLLECTION);
 
             RJavaProgram u2 = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
             u2.setAttributeValue(RJavaProgram.OPTIMIZATION, RJavaProgram.OPTIMIZATION_40);

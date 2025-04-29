@@ -16,14 +16,14 @@ package test.RM;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.util.Hashtable;
 import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.BidiStringType;
 import com.ibm.as400.data.RecordFormatDocument;
 
-import test.RMTest;
 import test.Testcase;
 
 /**
@@ -39,7 +39,7 @@ public class RMGetSetValueTestcase extends Testcase
      Constructor.
      **/
     public RMGetSetValueTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String,Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream)
     {
@@ -3683,6 +3683,7 @@ public class RMGetSetValueTestcase extends Testcase
      converted to a Long (say a Date object or something) and ensure an error
      is thrown.
      **/
+    @SuppressWarnings("rawtypes")
     public void Var111()
     {
 	

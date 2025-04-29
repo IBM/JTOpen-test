@@ -674,11 +674,6 @@ Ensure that IFSFile.listFiles() returns the same files as File.list().
       return;
     }
 
-    if (false /*isApplet_*/)
-    {
-      notApplicable();
-      return;
-    }
 
     // boolean success = true;
     try
@@ -820,13 +815,7 @@ listFiles().  Change should be reflected.
 **/
   public void Var013()
   {
-    ///setVariation(13); 
-    if (false /*isApplet_*/)
-    {
-      notApplicable();
-      return;
-    }
-
+ 
     try
     {
       var13Setup();

@@ -21,7 +21,7 @@ import test.RPrintTest.PropertyChangeListener_;
 import test.RPrintTest.VetoableChangeListener_;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -54,7 +54,7 @@ extends Testcase {
 Constructor.
 **/
     public RPrinterBasicTestcase (AS400 systemObject,
-                                  Hashtable namesAndVars,
+                                  Hashtable<String,Vector<String>> namesAndVars,
                                    int runMode,
                               FileOutputStream fileOutputStream,
                               

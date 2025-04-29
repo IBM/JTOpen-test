@@ -37,7 +37,6 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400File;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.ErrorCompletingRequestException;
 import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.access.JobList;
@@ -87,8 +86,8 @@ public class JobListTestcase extends Testcase
      test.JobTest.main(newArgs); 
    }
     private CommandCall c = null;
-    private Hashtable sysJobs_ = null;  // Contains jobs retrieved via WRKSBSJOB.
-    private Hashtable jobs_ = null;  // Contains jobs retrieved via getJobs().
+    private Hashtable<String,String> sysJobs_ = null;  // Contains jobs retrieved via WRKSBSJOB.
+    private Hashtable<String,String> jobs_ = null;  // Contains jobs retrieved via getJobs().
 
     private String getKeyForHashtable(String data)
     {
@@ -140,6 +139,7 @@ public class JobListTestcase extends Testcase
             }
             SequentialFile f = new SequentialFile(systemObject_, "/QSYS.LIB/JOBLTEST.LIB/WRKSBSJOB.FILE/%FILE%.MBR");
             f.create(132, "*DATA", null);
+            f.close(); 
             if (!c.run("CHGPF FILE(JOBLTEST/WRKSBSJOB) SIZE(*NOMAX)"))
             {
                 outputErrors();
@@ -147,6 +147,7 @@ public class JobListTestcase extends Testcase
             }
             SequentialFile f2 = new SequentialFile(systemObject_, "/QSYS.LIB/JOBLTEST.LIB/WRKACTJOB.FILE/%FILE%.MBR");
             f2.create(132, "*DATA", null);
+            f2.close(); 
             if (!c.run("CHGPF FILE(JOBLTEST/WRKACTJOB) SIZE(*NOMAX)"))
             {
                 outputErrors();
@@ -183,7 +184,7 @@ public class JobListTestcase extends Testcase
             f.deleteCurrentRecord();
             f.close();
             f.open(AS400File.READ_ONLY, 100, 1);
-            sysJobs_ = new Hashtable();
+            sysJobs_ = new Hashtable<String, String>();
             Record r = f.readNext();
             String key= null;
             String line = null;
@@ -241,14 +242,14 @@ public class JobListTestcase extends Testcase
     {
         try
         {
-            jobs_ = new Hashtable();
-            Enumeration jobs = j.getJobs();
+            jobs_ = new Hashtable<String, String>();
+            Enumeration<Job> jobs = j.getJobs();
             while (jobs.hasMoreElements())
             {
                 Job jb = (Job)jobs.nextElement();
                 jobs_.put(jb.toString(), jb.toString());
             }
-            Enumeration e = jobs_.keys();
+            Enumeration<String> e = jobs_.keys();
             while (e.hasMoreElements())
             {
                 String key = (String)e.nextElement();
@@ -270,8 +271,8 @@ public class JobListTestcase extends Testcase
 
     private void outputLists()
     {
-        Enumeration jkeys = jobs_.keys();
-        Enumeration sjkeys = sysJobs_.keys();
+        Enumeration<String> jkeys = jobs_.keys();
+        Enumeration<String> sjkeys = sysJobs_.keys();
         output_.println();
         output_.println("   WRKSBSJOB jobs                JobList jobs:");
         String jlJob = null;
@@ -645,7 +646,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration e = j.getJobs();
+            Enumeration<Job> e = j.getJobs();
             assertCondition(e.hasMoreElements());
             /*
              if (!retrieveJobs())
@@ -675,12 +676,12 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
             if (jobs.hasMoreElements())
             {
                 String name = ((Job)jobs.nextElement()).getName();
                 j2.setName(name);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
                 while (jobs2.hasMoreElements())
                 {
                     if (!((Job)jobs2.nextElement()).getName().equals(name))
@@ -715,12 +716,12 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
             if (jobs.hasMoreElements())
             {
                 String num = ((Job)jobs.nextElement()).getNumber();
                 j2.setNumber(num);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
                 if (jobs2.hasMoreElements())
                 {
                     if (((Job)jobs2.nextElement()).getNumber().equals(num))
@@ -761,12 +762,12 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
             if (jobs.hasMoreElements())
             {
                 String user = ((Job)jobs.nextElement()).getUser();
                 j2.setUser(user);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
                 while (jobs2.hasMoreElements())
                 {
                     if (!((Job)jobs2.nextElement()).getUser().equals(user))
@@ -801,7 +802,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
             if (jobs.hasMoreElements())
             {
                 Job aJob = (Job)jobs.nextElement();
@@ -809,7 +810,7 @@ public class JobListTestcase extends Testcase
                 String name = aJob.getName();
                 j2.setUser(user);
                 j2.setName(name);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
                 if (jobs2.hasMoreElements())
                 {
                     Job jb = (Job)jobs2.nextElement();
@@ -853,7 +854,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
             if (jobs.hasMoreElements())
             {
                 Job aJob = (Job)jobs.nextElement();
@@ -861,7 +862,7 @@ public class JobListTestcase extends Testcase
                 String name = aJob.getName();
                 j2.setNumber(num);
                 j2.setName(name);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
                 if (jobs2.hasMoreElements())
                 {
                     Job jb = (Job)jobs2.nextElement();
@@ -905,7 +906,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
             if (jobs.hasMoreElements())
             {
                 Job aJob = (Job)jobs.nextElement();
@@ -913,7 +914,7 @@ public class JobListTestcase extends Testcase
                 String user = aJob.getUser();
                 j2.setNumber(num);
                 j2.setUser(user);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
                 if (jobs2.hasMoreElements())
                 {
                     Job jb = (Job)jobs2.nextElement();
@@ -955,7 +956,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
             if (jobs.hasMoreElements())
             {
                 Job aJob = (Job)jobs.nextElement();
@@ -965,7 +966,7 @@ public class JobListTestcase extends Testcase
                 j2.setNumber(num);
                 j2.setUser(user);
                 j2.setName(name);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
                 if (jobs2.hasMoreElements())
                 {
                     Job jb = (Job)jobs2.nextElement();
@@ -1003,7 +1004,7 @@ public class JobListTestcase extends Testcase
         {
             JobList j = new JobList(systemObject_);
             j.setUser("NOEXIST");
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
             assertCondition(!jobs.hasMoreElements(), "Unexpected Jobs Returned");
         }
         catch (Exception e)
@@ -1019,7 +1020,7 @@ public class JobListTestcase extends Testcase
     {
         try
         {
-            AS400 system = new AS400("NOEXIST", "BLAH", "BLAH");
+            AS400 system = new AS400("NOEXIST", "BLAH", "BLAH".toCharArray());
             system.setGuiAvailable(false);
             JobList j = new JobList(system);
             j.getJobs();
@@ -1180,13 +1181,13 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
 
             if (jobs.hasMoreElements())
             {
                 String name = ((Job)jobs.nextElement()).getName().toLowerCase();
                 j2.setName(name);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
 
                 if (! jobs2.hasMoreElements())
                 {
@@ -1234,7 +1235,7 @@ public class JobListTestcase extends Testcase
 	    j2.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 
-            Enumeration jobs = j.getJobs();
+            Enumeration<Job> jobs = j.getJobs();
 
             if (jobs.hasMoreElements())
             {
@@ -1246,7 +1247,7 @@ public class JobListTestcase extends Testcase
                 }
 
                 j2.setUser(user);
-                Enumeration jobs2 = j2.getJobs();
+                Enumeration<Job> jobs2 = j2.getJobs();
 
                 if (! jobs2.hasMoreElements())
                 {
@@ -5328,7 +5329,7 @@ public class JobListTestcase extends Testcase
 	   setupTestProfile("JAVAPASS","GOODPASS", sb);
 
 	  
-           AS400 system = new AS400(systemObject_.getSystemName(),"JAVAPASS", "WRONGPASS");
+           AS400 system = new AS400(systemObject_.getSystemName(),"JAVAPASS", "WRONGPASS".toCharArray());
            JobList j = new JobList(system);	
 
            system.setGuiAvailable(false);
@@ -5433,7 +5434,7 @@ public class JobListTestcase extends Testcase
          {
 
 	   setupTestProfile("JAVAPASS","GOODPASS", sb);
-           AS400 system = new AS400(systemObject_.getSystemName(),"JAVAPASS", "WRONGPASS");
+           AS400 system = new AS400(systemObject_.getSystemName(),"JAVAPASS", "WRONGPASS".toCharArray());
            JobList j = new JobList(system);	
 	   j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_JOBQ, Boolean.FALSE);
 	   j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);

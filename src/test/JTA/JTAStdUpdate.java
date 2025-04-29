@@ -54,7 +54,7 @@ public class JTAStdUpdate extends JTATestcase {
 Constructor.
 **/
    public JTAStdUpdate (AS400 systemObject,
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         
@@ -66,7 +66,7 @@ Constructor.
 
    public JTAStdUpdate (AS400 systemObject,
 			String testname, 
-                        Hashtable namesAndVars,
+                        Hashtable<String,Vector<String>> namesAndVars,
                         int runMode,
                         FileOutputStream fileOutputStream,
                         

@@ -13,7 +13,6 @@
 
 package test;
 
-import java.awt.event.ActionEvent;
 import java.util.Vector;
 
 /**
@@ -185,7 +184,7 @@ public interface TestDriverI
     public boolean cmdRun(String command);
     public boolean cmdRun(String command, String expectedMessage);
     boolean isExtendedDynamic() ;
-    public Vector getTestcaseResults() ;
+    public Vector<String[]> getTestcaseResults() ;
 
     /** @C1A
     Returns the AS/400 library which is set as the default for the testcase run.

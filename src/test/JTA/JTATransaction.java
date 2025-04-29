@@ -64,11 +64,11 @@ public class JTATransaction extends JTATestcase {
     /**
      Constructor.
      **/
-    public JTATransaction(AS400 systemObject, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,  String password) {
+    public JTATransaction(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,  String password) {
         super(systemObject, "JTATransaction", namesAndVars, runMode, fileOutputStream, password);
     }
 
-    public JTATransaction(AS400 systemObject, String testname, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,  String password) {
+    public JTATransaction(AS400 systemObject, String testname, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,  String password) {
         super(systemObject, testname, namesAndVars, runMode, fileOutputStream, password);
     }
 

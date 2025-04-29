@@ -46,7 +46,7 @@ public class JTACrash1 extends JDTestcase {
 Constructor.
 **/
    public JTACrash1 (AS400 systemObject,
-                     Hashtable namesAndVars,
+                     Hashtable<String,Vector<String>> namesAndVars,
                      int runMode,
                      FileOutputStream fileOutputStream,
                      

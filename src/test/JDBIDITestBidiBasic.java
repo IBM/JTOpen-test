@@ -18,6 +18,7 @@ package test;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Arrays;
 
 import com.ibm.as400.access.*;
 
@@ -53,7 +54,7 @@ public class JDBIDITestBidiBasic{
 	 
 	 protected  String host;
 	 protected  String username; 
-	 protected  String password;	 
+	 protected  char[] encryptedPassword;	 
 	 protected  String package_ccsid = "system";//"13488";
 	 protected  int user_profile_ccsid = 424;
 	 
@@ -235,6 +236,7 @@ public class JDBIDITestBidiBasic{
     public Connection getConnection(String url_parameters){
 		Connection db2Conn;
 		try {
+		    String password = PasswordVault.decryptPasswordLeak(encryptedPassword, "JDBIBITestBidiBasic.getConnection");
 			db2Conn = DriverManager.getConnection(driverUrlBase+host+url_parameters,username, password);
 			//errorLog_.append("\nConnect to "+host);
 		} catch (SQLException e) {
@@ -644,8 +646,11 @@ public class JDBIDITestBidiBasic{
 
     public int getHostCCSID(){    		
     	try {
+    	  char[] password = PasswordVault.decryptPassword(encryptedPassword);
     		AS400 as400 = new AS400(host, username, password);    		 
     		user_profile_ccsid = as400.getCcsid();	
+    		as400.close(); 
+    		Arrays.fill(password,' '); 
     		return user_profile_ccsid;
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -655,10 +660,13 @@ public class JDBIDITestBidiBasic{
 
     public boolean setHostCCSID(int ccsid){
     	try {
+          char[] password = PasswordVault.decryptPassword(encryptedPassword);
     		AS400 as400 = new AS400(host, username, password);
     		User u = new User(as400, username);
     		u.setCCSID(ccsid);	
     		user_profile_ccsid = ccsid;
+    		as400.close(); 
+                Arrays.fill(password,' '); 
     		return true;
     	}		
     	catch (Exception e) {
@@ -669,7 +677,9 @@ public class JDBIDITestBidiBasic{
     }
     
     public void printHostInfo(){
-		AS400 as400 = new AS400(host, username, password);
+      char[] password = PasswordVault.decryptPassword(encryptedPassword);
+      	AS400 as400 = new AS400(host, username, password);
+        Arrays.fill(password,' '); 
 		errorLog_.append("Host: " + host + " ");
 		try {
 			errorLog_.append("Version " + as400.getVersion() +" Release " + as400.getRelease() + " VRM " + as400.getVRM());
@@ -681,6 +691,6 @@ public class JDBIDITestBidiBasic{
 		} catch (InterruptedException e) {
 			System.out.println(e);
 		}    	
-		
+		as400.close(); 
     }
 }

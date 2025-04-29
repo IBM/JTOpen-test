@@ -12,12 +12,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.Enumeration;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400SecurityException;
-import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.resource.ResourceEvent;
+import com.ibm.as400.resource.ResourceListEvent;
+import com.ibm.as400.resource.ResourceListListener;
 import com.ibm.as400.resource.ResourceListener;
 
 import test.RPrint.RPrinterBasicTestcase;
@@ -34,22 +48,6 @@ import test.RPrint.RPrinterSpecificAttributeEtoMTestcase;
 import test.RPrint.RPrinterSpecificAttributeNtoSTestcase;
 import test.RPrint.RPrinterSpecificAttributeTtoZTestcase;
 
-import com.ibm.as400.resource.ResourceListEvent;
-import com.ibm.as400.resource.ResourceListListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Enumeration;
-import java.util.Vector;
-
 
 
 /**
@@ -57,6 +55,7 @@ Test driver for the RPrint* classes.  These are in a different
 test driver than the com.ibm.as400.access print classes, since
 there is really not much in common.
 **/
+@SuppressWarnings("deprecation")
 public class RPrintTest
 extends TestDriver
 {
@@ -153,8 +152,7 @@ Creates the testcases.
     	} 
     	
     	
-        boolean allTestcases = (namesAndVars_.size() == 0);
-
+       
         // Test the RPrinter and RPrinterBeanInfo classes.
         addTestcase(new RPrinterBasicTestcase(systemObject_, namesAndVars_, runMode_, 
                                           fileOutputStream_, password_, pwrSys_, printer_));
@@ -226,12 +224,13 @@ Serializes and deserializes an object.
 	    ObjectOutput out = new ObjectOutputStream (new FileOutputStream (serializeFilename_));
 	    out.writeObject (object);
 	    out.flush ();
-
+	    out.close(); 
         // Deserialize.
         Object object2 = null;
         try {
             ObjectInputStream in = new ObjectInputStream (new FileInputStream (serializeFilename_));
             object2 = in.readObject ();
+            in.close(); 
         }
    	    finally {
        		File f = new File (serializeFilename_);
@@ -315,7 +314,7 @@ Sample resource list listener.
     public static class ResourceListListener_
     implements ResourceListListener
     {
-        public Vector               events_ = new Vector();
+        public Vector<ResourceListEvent>               events_ = new Vector<ResourceListEvent> ();
 
         public void lengthChanged(ResourceListEvent event)
         {
@@ -350,8 +349,8 @@ Sample resource list listener.
         public ResourceListEvent[] getEvents(int id)
         {
             // Weed out events of a given id.
-            Vector events2 = new Vector();
-            Enumeration enumeration = events_.elements();
+            Vector<ResourceListEvent> events2 = new Vector<ResourceListEvent>();
+            Enumeration<ResourceListEvent> enumeration = events_.elements();
             while(enumeration.hasMoreElements()) {
                 ResourceListEvent event = (ResourceListEvent)enumeration.nextElement();
                 if (event.getID() == id)

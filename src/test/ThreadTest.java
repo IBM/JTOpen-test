@@ -13,15 +13,13 @@
 
 package test;
 
-import java.util.Vector;
+import java.util.Enumeration;
 
 import test.Thread.CmdCallThreadTestcase;
 import test.Thread.DDMThreadTestcase;
 import test.Thread.DQThreadTestcase;
 import test.Thread.IFSThreadTestcase;
 import test.Thread.PgmCallThreadTestcase;
-
-import java.util.Enumeration;
 
 /**
   Test driver for the AS400 component thread testing.
@@ -86,7 +84,7 @@ public class ThreadTest extends TestDriver
     {
       IFSThreadTestcase tc =
         new IFSThreadTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("IFSThreadTestcase"), runMode_,
+                      namesAndVars_.get("IFSThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
       testcases_.addElement(tc);
       namesAndVars_.remove("IFSThreadTestcase");
@@ -95,7 +93,7 @@ public class ThreadTest extends TestDriver
     {
       DQThreadTestcase tc =
         new DQThreadTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("DQThreadTestcase"), runMode_,
+                     namesAndVars_.get("DQThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DQThreadTestcase");
@@ -104,7 +102,7 @@ public class ThreadTest extends TestDriver
     {
       CmdCallThreadTestcase tc =
         new CmdCallThreadTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("CmdCallThreadTestcase"), runMode_,
+                    namesAndVars_.get("CmdCallThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
       testcases_.addElement(tc);
       namesAndVars_.remove("CmdCallThreadTestcase");
@@ -122,7 +120,7 @@ public class ThreadTest extends TestDriver
     {
       PgmCallThreadTestcase tc =
         new PgmCallThreadTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("PgmCallThreadTestcase"), runMode_,
+                     namesAndVars_.get("PgmCallThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
       testcases_.addElement(tc);
       namesAndVars_.remove("PgmCallThreadTestcase");
@@ -131,14 +129,14 @@ public class ThreadTest extends TestDriver
     {
       DDMThreadTestcase tc =
         new DDMThreadTestcase(systemObject_,
-                     (Vector) namesAndVars_.get("DDMThreadTestcase"), runMode_,
+                     namesAndVars_.get("DDMThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
       testcases_.addElement(tc);
       namesAndVars_.remove("DDMThreadTestcase");
     }
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

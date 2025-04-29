@@ -373,6 +373,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
    * @exception Exception
    *              Incorrect arguments will cause an exception.
    **/
+  @SuppressWarnings("deprecation")
   public void parseParms(String args[]) throws Exception {
     // Reset values to defaults. (Needed since several runs can be done using
     // different parameters in applet testing.)

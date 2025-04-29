@@ -33,6 +33,7 @@ import com.ibm.as400.resource.RUserListBeanInfo;
 /**
  Testcase UserListBeanInfoTestcase.  This tests the methods of the UserListBeanInfo and RUserListBeanInfo classes:
  **/
+@SuppressWarnings("deprecation")
 public class UserListBeanInfoTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -136,7 +137,7 @@ public class UserListBeanInfoTestcase extends Testcase
         {
             UserListBeanInfo ubi = new UserListBeanInfo();
             Image icon = ubi.getIcon(-546);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+icon);
         }
         catch (Exception e)
         {
@@ -154,7 +155,7 @@ public class UserListBeanInfoTestcase extends Testcase
             UserListBeanInfo ubi = new UserListBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ubi);
             }
             else
             {
@@ -177,7 +178,7 @@ public class UserListBeanInfoTestcase extends Testcase
             UserListBeanInfo ubi = new UserListBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ubi);
             }
             else
             {
@@ -200,7 +201,7 @@ public class UserListBeanInfoTestcase extends Testcase
             UserListBeanInfo ubi = new UserListBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ubi);
             }
             else
             {
@@ -223,7 +224,7 @@ public class UserListBeanInfoTestcase extends Testcase
             UserListBeanInfo ubi = new UserListBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ubi);
             }
             else
             {
@@ -364,7 +365,7 @@ public class UserListBeanInfoTestcase extends Testcase
         {
             RUserListBeanInfo ubi = new RUserListBeanInfo();
             Image icon = ubi.getIcon(-546);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+icon);
         }
         catch (Exception e)
         {
@@ -386,7 +387,7 @@ public class UserListBeanInfoTestcase extends Testcase
             RUserListBeanInfo ubi = new RUserListBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ubi);
             }
             else
             {
@@ -409,7 +410,7 @@ public class UserListBeanInfoTestcase extends Testcase
             RUserListBeanInfo ubi = new RUserListBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ubi);
             }
             else
             {
@@ -432,7 +433,7 @@ public class UserListBeanInfoTestcase extends Testcase
             RUserListBeanInfo ubi = new RUserListBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ubi);
             }
             else
             {
@@ -455,7 +456,7 @@ public class UserListBeanInfoTestcase extends Testcase
             RUserListBeanInfo ubi = new RUserListBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ubi);
             }
             else
             {

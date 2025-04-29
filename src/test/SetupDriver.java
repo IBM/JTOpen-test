@@ -13,7 +13,7 @@
 
 package test;
 
-import java.util.Vector;
+import java.util.Enumeration;
 
 import test.Setup.SetupJobLog;
 import test.Setup.SetupLibraryTestcase;
@@ -22,8 +22,6 @@ import test.Setup.SetupNetworkPrint;
 import test.Setup.SetupPgmCall;
 import test.Setup.SetupRFML;
 import test.Setup.SetupRLA;
-
-import java.util.Enumeration;
 
 /**
 Test driver for the NLS component.
@@ -104,7 +102,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       SetupNLS tc =
         new SetupNLS(systemObject_,
-                     (Vector) namesAndVars_.get("SetupNLS"), runMode_,
+                      namesAndVars_.get("SetupNLS"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
       testcases_.addElement(tc);
@@ -115,7 +113,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       SetupLibraryTestcase tc =
         new SetupJobLog(systemObject_,
-                     (Vector) namesAndVars_.get("SetupJobLog"), runMode_,
+                     namesAndVars_.get("SetupJobLog"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
       testcases_.addElement(tc);
@@ -126,7 +124,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       SetupRLA tc =
         new SetupRLA(systemObject_,
-                     (Vector) namesAndVars_.get("SetupRLA"), runMode_,
+                     namesAndVars_.get("SetupRLA"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
       testcases_.addElement(tc);
@@ -137,7 +135,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       SetupNetworkPrint tc =
         new SetupNetworkPrint(systemObject_,
-                     (Vector) namesAndVars_.get("SetupNetworkPrint"), runMode_,
+                    namesAndVars_.get("SetupNetworkPrint"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
       testcases_.addElement(tc);
@@ -148,7 +146,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       SetupPgmCall tc =
         new SetupPgmCall(systemObject_,
-                     (Vector) namesAndVars_.get("SetupPgmCall"), runMode_,
+                      namesAndVars_.get("SetupPgmCall"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
       testcases_.addElement(tc);
@@ -159,7 +157,7 @@ Creates Testcase objects for all the testcases in this component.
     {
       SetupRFML tc =
         new SetupRFML(systemObject_,
-                     (Vector) namesAndVars_.get("SetupRFML"), runMode_,
+                      namesAndVars_.get("SetupRFML"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
       testcases_.addElement(tc);
@@ -167,7 +165,7 @@ Creates Testcase objects for all the testcases in this component.
     }
 
     // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

@@ -40,9 +40,9 @@ extends JDTestcase
    String URLWithSYSBAS_ = null;
 
    String userid_ = null;
-   String password_1 = null;   
+   char[] encryptedPassword_1 = null; 
    String puserid_ = null;
-   String ppassword_ = null;   
+   char[] pEncryptedPassword_ = null;   
 
    AS400  system_1 = null;
 
@@ -71,20 +71,18 @@ Constructor.
                
         iasp_ = iasp;
         userid_ = systemObject.getUserId();  
-        char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
-        password = PasswordVault.decryptPasswordLeak(encryptedPassword); 
-        password_1 = password;
+        encryptedPassword_1 = PasswordVault.getEncryptedPassword(password);
         system_1 = systemObject;
         
         if (powerUID != null)
         {
            puserid_   = powerUID;
-           ppassword_ = powerPWD;
+           pEncryptedPassword_ = PasswordVault.getEncryptedPassword(powerPWD);
         }
         else
         {
            puserid_   = userid_;
-           ppassword_ = password_1;
+           pEncryptedPassword_ = encryptedPassword_1; 
         }   
     }
 
@@ -116,6 +114,7 @@ Performs setup needed before running variations.
 
 	// Verify that IASP's are available.
 	try { 
+	    String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.setup");
 	    Connection c  = DriverManager.getConnection(baseURL_, userid_, password_1);
 	    Statement s = c.createStatement();
 	    iaspAvailable=false;
@@ -241,6 +240,7 @@ Performs cleanup needed after running variations.
        ResultSet  rs = null;
        try
        {
+         String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.Var001");
           c  = DriverManager.getConnection(URLWithIASP_, userid_, password_1);
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
@@ -274,6 +274,7 @@ Performs cleanup needed after running variations.
        {
           AS400JDBCDataSource ds = new AS400JDBCDataSource();
           ds.setUser(userid_);
+          char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
           ds.setPassword(password_1);
           ds.setServerName(system_1.getSystemName());
           ds.setDatabaseName(iasp_);
@@ -281,6 +282,8 @@ Performs cleanup needed after running variations.
           c  = ds.getConnection();
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+          Arrays.fill(password_1, ' ');
+          
           if (rs.next())
              succeeded();
           else
@@ -309,6 +312,8 @@ Performs cleanup needed after running variations.
        ResultSet  rs = null;
        try
        {
+         String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.Var003");
+
           c  = DriverManager.getConnection(URLWithSYSBAS_, userid_, password_1);
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
@@ -342,6 +347,7 @@ Performs cleanup needed after running variations.
        {
           AS400JDBCDataSource ds = new AS400JDBCDataSource();
           ds.setUser(userid_);
+          char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
           ds.setPassword(password_1);
           ds.setServerName(system_1.getSystemName());
           ds.setDatabaseName("*SYSBAS");
@@ -349,6 +355,7 @@ Performs cleanup needed after running variations.
           c  = ds.getConnection();
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+          Arrays.fill(password_1, ' ');
           if (rs.next())
              succeeded();
           else
@@ -376,16 +383,20 @@ Performs cleanup needed after running variations.
        try
        {
           try
-          {                  
-             AS400 sys = new AS400(systemObject_.getSystemName(), puserid_, ppassword_);                                                                            
+          {          
+            char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
+
+             AS400 sys = new AS400(systemObject_.getSystemName(), puserid_, password_1);                                                                            
              CommandCall cmd = new CommandCall(sys, "ADDRPYLE SEQNBR(7025) MSGID(CPA7025) RPY(I)");
-             cmd.run();       
+             cmd.run();   
+             Arrays.fill(password_1,' ');
              //AS400Message[] messageList = cmd.getMessageList();
              //for(int i = 0; i < messageList.length; ++i)
              //  System.out.println(messageList[i]);
           }
           catch (Exception e) { e.printStackTrace(); }
 
+          String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.Var005");
           c  = DriverManager.getConnection(URLWithIASP_, userid_, password_1);
           s  = c.createStatement();
                                                                                                           
@@ -430,6 +441,8 @@ Performs cleanup needed after running variations.
        ResultSet  rs = null;
        try
        {
+         String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.Var006");
+
           c  = DriverManager.getConnection(URLWithIASP_, userid_, password_1);
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM " + name_1);
@@ -463,6 +476,7 @@ Performs cleanup needed after running variations.
        {
           AS400JDBCDataSource ds = new AS400JDBCDataSource();
           ds.setUser(userid_);
+          char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
           ds.setPassword(password_1);
           ds.setServerName(system_1.getSystemName());
           ds.setDatabaseName(iasp_);
@@ -470,6 +484,7 @@ Performs cleanup needed after running variations.
           c  = ds.getConnection();
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM " + name_1);
+          Arrays.fill(password_1, ' ');
           if (rs.next())
              succeeded();
           else 
@@ -504,6 +519,8 @@ Performs cleanup needed after running variations.
        ResultSet  rs = null;
        try
        {
+         String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.Var008");
+
           c  = DriverManager.getConnection(baseURL_, userid_, password_1);
           s  = c.createStatement();
 	  String sql = "SELECT * FROM " + name_1; 
@@ -550,11 +567,13 @@ Performs cleanup needed after running variations.
        {
           AS400JDBCDataSource ds = new AS400JDBCDataSource();
           ds.setUser(userid_);
+          char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
           ds.setPassword(password_1);
           ds.setServerName(system_1.getSystemName());
           
           c  = ds.getConnection();
           s  = c.createStatement();
+          Arrays.fill(password_1, ' ');
           rs = s.executeQuery("SELECT * FROM " + name_1);
           failed("Should not find database.  Likely because asp " + iasp_ + " is not setup");
                                                                                                           
@@ -595,6 +614,8 @@ Performs cleanup needed after running variations.
        ResultSet  rs = null;
        try
        {
+         String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.Var010");
+
           c  = DriverManager.getConnection(URLWithSYSBAS_, userid_, password_1);
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM " + name_1);
@@ -638,11 +659,13 @@ Performs cleanup needed after running variations.
        {
           AS400JDBCDataSource ds = new AS400JDBCDataSource();
           ds.setUser(userid_);
+          char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
           ds.setPassword(password_1);
           ds.setServerName(system_1.getSystemName());
           ds.setDatabaseName("*SYSBAS");
           
           c  = ds.getConnection();
+          Arrays.fill(password_1, ' ');
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM " + name_1);
           failed("Should not find database.  Likely because asp " + iasp_ + " is not setup");
@@ -694,6 +717,8 @@ Performs cleanup needed after running variations.
 	      badURL  = baseURL_.replace(replaceString, "JDBC_ASP_XYZ" );
 	  }
 
+	         String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.Var012");
+
           c  = DriverManager.getConnection(badURL, userid_, password_1);
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
@@ -737,11 +762,14 @@ Performs cleanup needed after running variations.
        {
           AS400JDBCDataSource ds = new AS400JDBCDataSource();
           ds.setUser(userid_);
+          char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
+
           ds.setPassword(password_1);
           ds.setServerName(system_1.getSystemName());
           ds.setDatabaseName("Nov_1_testcase");
           
           c  = ds.getConnection();
+          Arrays.fill(password_1, ' ' ); 
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
           failed("Should not find database.  Likely because asp " + iasp_ + " is not setup");
@@ -793,6 +821,8 @@ Performs cleanup needed after running variations.
 	      badURL  = baseURL_.replace(replaceString, "JDBC_ASP_XYZ" );
 	  }
 
+	         String password_1 = PasswordVault.decryptPasswordLeak(encryptedPassword_1, "JDASPTestcase.Var014");
+
           c  = DriverManager.getConnection(badURL, userid_, password_1);
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
@@ -840,11 +870,14 @@ Performs cleanup needed after running variations.
        {
           AS400JDBCDataSource ds = new AS400JDBCDataSource();
           ds.setUser(userid_);
+          char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
+
           ds.setPassword(password_1);
           ds.setServerName(system_1.getSystemName());
           ds.setDatabaseName("ASP01234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
           
           c  = ds.getConnection();
+          Arrays.fill(password_1, ' '); 
           s  = c.createStatement();
           rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
           failed("Should not find database.  Likely because asp " + iasp_ + " is not setup");
@@ -890,11 +923,13 @@ Performs cleanup needed after running variations.
        {
           AS400JDBCDataSource ds = new AS400JDBCDataSource();
           ds.setUser(userid_);
+          char[]  password_1 = PasswordVault.decryptPassword(encryptedPassword_1);
           ds.setPassword(password_1);
           ds.setServerName(system_1.getSystemName());
           ds.setDatabaseName(iasp_);
           
-          c    = ds.getConnection();    
+          c    = ds.getConnection();  
+          Arrays.fill(password_1,' ');
           dbmd = c.getMetaData();
           rs   = dbmd.getCatalogs();
           

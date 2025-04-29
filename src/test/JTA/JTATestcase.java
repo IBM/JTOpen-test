@@ -23,7 +23,7 @@ import test.JDTestcase;
 import test.PasswordVault;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
 
@@ -40,7 +40,7 @@ extends JDTestcase
 
    public JTATestcase (AS400 systemObject,
                        String testcaseName,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        
@@ -83,7 +83,7 @@ extends JDTestcase
 
    public JTATestcase (AS400 systemObject,
                        String testcaseName,
-                       Hashtable namesAndVars,
+                       Hashtable<String,Vector<String>> namesAndVars,
                        int runMode,
                        FileOutputStream fileOutputStream,
                        

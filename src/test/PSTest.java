@@ -13,7 +13,13 @@
 
 package test;
 
-import com.ibm.as400.access.ProxyServer;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 
 import test.PS.PSBalanceThreshold;
 import test.PS.PSConfiguration;
@@ -23,17 +29,6 @@ import test.PS.PSMisc;
 import test.PS.PSPeers;
 import test.PS.PSPort;
 import test.PS.PSStart;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
-import java.net.InetAddress;
-import java.net.Socket;
 
 
 

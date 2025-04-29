@@ -19,7 +19,7 @@ import com.ibm.as400.access.*;
 import test.Testcase;
 
 import java.util.Date;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 /**
@@ -30,13 +30,12 @@ public class PTFGroupTestcase extends Testcase
 
     static final boolean DEBUG = false;
 
-    private boolean brief_;
 
     /**
      Constructor.
      **/
     public PTFGroupTestcase(AS400 systemObject,
-                             Hashtable namesAndVars,
+                             Hashtable<String,Vector<String>> namesAndVars,
                              int runMode,
                              FileOutputStream fileOutputStream,
                              
@@ -51,7 +50,6 @@ public class PTFGroupTestcase extends Testcase
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
 
         pwrSys_ = pwrSys;
-        brief_ = brief;
         isNative_ = isNative;
         isLocal_ = isLocal;
     }

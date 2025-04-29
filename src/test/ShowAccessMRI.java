@@ -16,12 +16,9 @@
 
 package test; 
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ShowAccessMRI extends Object
 {
@@ -41,7 +38,7 @@ public class ShowAccessMRI extends Object
        ResourceBundle countryResourceBundle =
                   ResourceBundle.getBundle("com.ibm.as400.access.MRI");
 
-       Enumeration keys = englishResourceBundle.getKeys();
+       Enumeration<String> keys = englishResourceBundle.getKeys();
 
        while (keys.hasMoreElements())
        {
@@ -71,7 +68,7 @@ public class ShowAccessMRI extends Object
        ResourceBundle countryResourceBundle =
                   ResourceBundle.getBundle("com.ibm.as400.access.JDMRI");
 
-       Enumeration keys = englishResourceBundle.getKeys();
+       Enumeration<String> keys = englishResourceBundle.getKeys();
 
        while (keys.hasMoreElements())
        {
@@ -101,7 +98,7 @@ public class ShowAccessMRI extends Object
        ResourceBundle countryResourceBundle =
                   ResourceBundle.getBundle("com.ibm.as400.access.MRI2");
 
-       Enumeration keys = englishResourceBundle.getKeys();
+       Enumeration<String> keys = englishResourceBundle.getKeys();
 
        while (keys.hasMoreElements())
        {
@@ -131,7 +128,7 @@ public class ShowAccessMRI extends Object
        ResourceBundle countryResourceBundle =
                   ResourceBundle.getBundle("com.ibm.as400.access.JDMRI2");
 
-       Enumeration keys = englishResourceBundle.getKeys();
+       Enumeration<String> keys = englishResourceBundle.getKeys();
 
        while (keys.hasMoreElements())
        {
@@ -161,7 +158,7 @@ public class ShowAccessMRI extends Object
        ResourceBundle countryResourceBundle =
                   ResourceBundle.getBundle("com.ibm.as400.access.CoreMRI");
 
-       Enumeration keys = englishResourceBundle.getKeys();
+       Enumeration<String> keys = englishResourceBundle.getKeys();
 
        while (keys.hasMoreElements())
        {

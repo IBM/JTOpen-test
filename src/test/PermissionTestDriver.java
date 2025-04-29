@@ -16,13 +16,15 @@ package test;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
-import test.TestDriver;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.Job;
+
 import test.Permission.PermissionDLOUnattendedTestcase;
 import test.Permission.PermissionQSYSUnattendedTestcase;
 import test.Permission.PermissionRootUnattendedTestcase;
 import test.Permission.PermissionUnattendedTestcase;
-
-import com.ibm.as400.access.*;
 
 /**
 The PermissionTestDriver class provides test driver for the testcase files.
@@ -40,7 +42,7 @@ To run the ATTENDED testcases for the Permission component, use PermissionAttend
 public class PermissionTestDriver extends  TestDriver
 {
       public static AS400 PwrSys = null;
-      private CommandCall cmd= null;
+      // private CommandCall cmd= null;
 /**
 Main for running standalone application tests.
 **/
@@ -170,7 +172,7 @@ Creates Testcase objects for all the testcases in this component.
 	   
 	   
     // Instantiate all testcases to be run.
-    boolean allTestcases = (namesAndVars_.size() == 0);
+    // boolean allTestcases = (namesAndVars_.size() == 0);
 
     // $$$ TO DO $$$
 
@@ -184,7 +186,7 @@ Creates Testcase objects for all the testcases in this component.
 
 
      // Put out error message for each invalid testcase name.
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + " not found.");
     }

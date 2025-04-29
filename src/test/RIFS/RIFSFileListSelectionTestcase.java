@@ -12,23 +12,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.IFSFileFilter;
+import com.ibm.as400.resource.RIFSFile;
+import com.ibm.as400.resource.RIFSFileList;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
 import test.misc.VIFSSandbox;
-
-import com.ibm.as400.resource.RIFSFile;
-import com.ibm.as400.resource.RIFSFileList;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable;
 
 
 
@@ -43,6 +40,7 @@ of the RIFSFileList class, some inherited from ResourceList:
 <li>setSelectionValue() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileListSelectionTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -74,7 +72,7 @@ extends Testcase {
 Constructor.
 **/
     public RIFSFileListSelectionTestcase (AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               
@@ -152,7 +150,7 @@ Checks a particular selection meta data.
 **/
     static boolean verifySelectionMetaData(ResourceMetaData smd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -176,7 +174,7 @@ Checks a particular selection meta data.
 **/
     static boolean verifySelectionMetaData(ResourceMetaData[] smd, 
                                             Object attributeID, 
-                                            Class attributeType,
+                                            Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
@@ -234,7 +232,7 @@ getSelectionMetaData() with 1 parameter - Pass null.
         try {
             RIFSFileList u = new RIFSFileList();
             ResourceMetaData smd = u.getSelectionMetaData(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+smd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -251,7 +249,7 @@ getSelectionMetaData() with 1 parameter - Pass an invalid attribute ID.
         try {
             RIFSFileList u = new RIFSFileList();
             ResourceMetaData smd = u.getSelectionMetaData(new Date());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+smd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -374,7 +372,7 @@ getSelectionValue() - Pass null.
         try {
             RIFSFileList u = new RIFSFileList(systemObject_, path_);
             Object value = u.getSelectionValue(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -391,7 +389,7 @@ getSelectionValue() - Pass an invalid selection ID.
         try {
             RIFSFileList u = new RIFSFileList(systemObject_, path_);
             Object value = u.getSelectionValue("Yo");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+value);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -454,8 +452,8 @@ getSelectionValue() - Pass every selection ID.
             for(int i = 0; i < smd.length; ++i) {
                 // System.out.println("Getting selection " + smd[i] + ".");
                 Object value = u.getSelectionValue(smd[i].getID());
-                Class valueClass = value.getClass();
-                Class type = smd[i].getType();
+                Class<?> valueClass = value.getClass();
+                Class<?> type = smd[i].getType();
 
                 // Validate the type.
                 if (smd[i].areMultipleAllowed()) {
@@ -466,7 +464,7 @@ getSelectionValue() - Pass every selection ID.
                         success = false;
                     }
                     else {
-                        Class componentType = valueClass.getComponentType();
+                        Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type)) {
                             System.out.println("Error getting selection " + smd[i] + ".");
                             System.out.println("Type mismatch: " + componentType + " != " + type + ".");

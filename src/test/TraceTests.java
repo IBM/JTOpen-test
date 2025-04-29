@@ -14,12 +14,8 @@
 package test;
 
 
-import java.io.*;
-import java.util.Vector;
-
-import test.misc.TraceMiscTestcase;
-
 import java.util.Enumeration;
+import test.misc.TraceMiscTestcase;
 
 
 public class TraceTests extends TestDriver
@@ -63,7 +59,7 @@ public class TraceTests extends TestDriver
       {
         TraceMiscTestcase test =
           new TraceMiscTestcase(systemObject_,
-                              (Vector) namesAndVars_.get("TraceMiscTestcase"),
+                               namesAndVars_.get("TraceMiscTestcase"),
                               runMode_, fileOutputStream_);
         testcases_.addElement(test);
       }
@@ -75,7 +71,7 @@ public class TraceTests extends TestDriver
     }
 
 
-    for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements();)
+    for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
       System.out.println("Testcase " + e.nextElement() + "unknown.");
     }

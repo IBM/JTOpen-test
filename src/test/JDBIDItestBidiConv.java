@@ -2,17 +2,14 @@
 package test;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
-import java.util.Arrays;
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400ByteArray;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.BidiConversionProperties;
 import com.ibm.as400.access.CharConverter;
 import com.ibm.as400.access.CharacterFieldDescription;
 import com.ibm.as400.access.ErrorCompletingRequestException;
-import com.ibm.as400.access.FieldDescription;
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
 
@@ -22,7 +19,7 @@ import com.ibm.as400.access.RecordFormat;
  */
 public class JDBIDItestBidiConv extends Object {
 	public static void main(String[] args) throws AS400SecurityException, ErrorCompletingRequestException, IOException, InterruptedException, PropertyVetoException {
-		AS400 system = new AS400("torasi5c","masri424","webface1");
+		AS400 system = new AS400("torasi5c","masri424","webface1".toCharArray());
 		int ccsid = 424;
 
 		// testing upload

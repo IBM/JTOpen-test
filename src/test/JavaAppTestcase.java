@@ -1300,6 +1300,7 @@ public class  JavaAppTestcase extends Testcase
     Method tested:getStandardOutString()
     - Ensure the method runs well.
     **/
+    @SuppressWarnings("deprecation")
     public void Var059()
     {
         try

@@ -16,7 +16,7 @@ package test.RM;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.data.*;
@@ -44,7 +44,7 @@ public class RMDescriptorTestcase extends Testcase
      Constructor.
      **/
     public RMDescriptorTestcase(AS400 systemObject, 
-                             Hashtable namesAndVars, 
+                             Hashtable<String,Vector<String>> namesAndVars, 
                              int runMode, 
                              FileOutputStream fileOutputStream)
     {

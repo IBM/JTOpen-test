@@ -24,7 +24,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
 import javax.transaction.xa.XAException;
@@ -71,14 +71,14 @@ public class JTAResource extends JTATestcase {
   /**
    * Constructor.
    **/
-  public JTAResource(AS400 systemObject, Hashtable namesAndVars, int runMode,
+  public JTAResource(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream,  String password) {
     super(systemObject, "JTAResource", namesAndVars, runMode, fileOutputStream,
          password);
   }
 
   public JTAResource(AS400 systemObject, String testname,
-      Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
        String password) {
     super(systemObject, testname, namesAndVars, runMode, fileOutputStream,
          password);

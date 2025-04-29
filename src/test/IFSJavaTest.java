@@ -154,7 +154,7 @@ Creates Testcase objects for all the testcases in this component.
 
 
         // Put out error message for each invalid testcase name.
-        for (Enumeration e = namesAndVars_.keys(); e.hasMoreElements(); ) {
+        for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements(); ) {
             System.out.println ("Testcase " + e.nextElement() + " not found.");
         }
     }

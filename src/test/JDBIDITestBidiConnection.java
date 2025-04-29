@@ -18,6 +18,7 @@
 package test;
 
 import java.sql.*;
+import java.util.Arrays;
 
 import com.ibm.as400.access.*;
 
@@ -73,7 +74,7 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 		metadata_reordering = false;  
 		this.host = host;
 		this.username = username;
-		this.password = password;
+		this.encryptedPassword = PasswordVault.getEncryptedPassword(password);
 		this.driverUrlBase = driverUrlBase; 
 	}
 	
@@ -121,13 +122,15 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 
 	public boolean Testcase_DataSource(){
 		try{
-			AS400JDBCDataSource ds = new AS400JDBCDataSource(this.host,this.username,this.password);
+		  char[] password = PasswordVault.decryptPassword(encryptedPassword); 
+			AS400JDBCDataSource ds = new AS400JDBCDataSource(this.host,this.username,password);
 			ds.setBidiStringType(5);
 			ds.setPackageCcsid(424);
 			
-			AS400JDBCManagedDataSource ds1 = new AS400JDBCManagedDataSource(this.host,this.username,this.password);
+			AS400JDBCManagedDataSource ds1 = new AS400JDBCManagedDataSource(this.host,this.username,password);
 			ds1.setBidiStringType(5);
 			ds1.setPackageCcsid(424);
+		        Arrays.fill(password, ' '); 
 			
 		} catch (Exception e){
 			e.printStackTrace();
@@ -601,7 +604,8 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 		//url_parameters = url_parameters;
 		try {
 			String conURL = driverUrlBase+host+url_parameters;
-//			System.out.println("connection url = " + conURL + ", username = " + username + ", password = " + password);
+//			System.out.println("connection url = " + conURL + ", username = " + username ;+ ", password = " + password);
+			String password = PasswordVault.decryptPasswordLeak(encryptedPassword,"JDiDITestBidiConnection.getConnection"); 
 			db2Conn1 = DriverManager.getConnection(conURL,username, password);
 			//errorLog_.append("\nConnect to "+host);
 		} catch (SQLException e) {

@@ -28,7 +28,7 @@ public class GenerateJtopenliteConverterTable
 
     try
     {
-      sys = new AS400(args[0], args[1], args[2]);
+      sys = new AS400(args[0], args[1], args[2].toCharArray());
       sys.connectService(AS400.CENTRAL);
     }
     catch (Exception e)
@@ -235,44 +235,11 @@ public class GenerateJtopenliteConverterTable
       f.write("\n");
       f.write("\n");
 
-      if (true) {
 	  f.write("  private static byte[]  fromUnicode_ = null;  \n");
 	  f.write("  /* dynamically generate the inverse table */\n");
 	  f.write("  static { \n");
 	  f.write("      fromUnicode_ = SingleByteConversionTable.generateFromUnicode(toUnicode_);\n");
 	  f.write("  }\n"); 
-      } else { 
-	  f.write("  private static final byte[]  fromUnicode_ = new byte[] { \n");
-	  System.out.print("Writing table for conversion from 13488 to "+ccsid+"... to "+fName+"\n");
-	  int table2Length = table2.length;
-	  System.out.println("table2[table2Length-1]="+Integer.toHexString(table2[table2Length-1])); 
-	  while (table2[table2Length-1] == (char) 0x3f3f) {
-	      table2Length--; 
-	  };
-	  for (int i=0; i<table2Length; i=i+8)     {
-	      if (showOffsets_) {
-		  f.write("/* "+Integer.toHexString(2*i)+" */ "); 
-	      } else { 
-		  f.write("    ");
-	      }
-	      for (int j=0; j<8 && (i+j)<table2Length; ++j)         {
-		  int num = (int)table2[i+j]; // these each contain 2 single byte chars
-		  int first  = (0xFF00 & num) >> 8;
-		  int second = 0xFf & num;
-		  if (first >= 0x80) {
-		      f.write("(byte)");
-		  }
-		  f.write("0x"+Integer.toHexString(first)+",");
-		  if (second >= 0x80) {
-		      f.write("(byte)");
-		  }
-		  f.write("0x"+Integer.toHexString(second)+",");
-
-	      }
-	      if (i+8 < table2Length) f.write("\n");
-	      else f.write("};\n");
-	  } /* for i */
-      }
       f.write("\n");
 
 

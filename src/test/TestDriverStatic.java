@@ -36,7 +36,7 @@ public class TestDriverStatic
 
   static TestDriverTimeoutThread timeoutThread = null;
 
-  static Vector staticTestcaseResults = new Vector();
+  static Vector<String[]> staticTestcaseResults = new Vector<String[]>();
     protected static String proxy_;
     static {
       String propVal = System.getProperty("com.ibm.as400.access.AS400.proxyServer");
@@ -367,7 +367,7 @@ public class TestDriverStatic
      * @return A vector containing the results.  Each result is a String[] with
      * 0-Name, 1-success, 2-failed, 3-notappli, 4-time.
      */
-    static public Vector getStaticTestcaseResults() {
+    static public Vector<String[]> getStaticTestcaseResults() {
       return staticTestcaseResults;
     }
 

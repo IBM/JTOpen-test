@@ -22,7 +22,6 @@ public class TableCompare {
       
     StringBuffer outputBuffer = new StringBuffer(); 
     StringBuffer successOutputBuffer = new StringBuffer(); 
-    long mismatchCount = 0;
     if (args.length < 3) {
       usage();
     } else {
@@ -391,7 +390,7 @@ public class TableCompare {
         + table + orderByClause;
   }
 
-  static Hashtable orderByHashtable = null; 
+  static Hashtable<String,String> orderByHashtable = null; 
   private static String getOrderByClause(String table) {
     String[][] orderByClauses = {
         
@@ -418,7 +417,7 @@ public class TableCompare {
     };
     
     if (orderByHashtable == null) {
-      orderByHashtable = new Hashtable(); 
+      orderByHashtable = new Hashtable<String,String>(); 
       for (int i = 0; i < orderByClauses.length; i++) {
         orderByHashtable.put(orderByClauses[i][0],orderByClauses[i][1]);  
       }

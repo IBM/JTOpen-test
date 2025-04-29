@@ -17,15 +17,13 @@ import java.util.Date;
 import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceException;
+import com.ibm.as400.resource.RUser;
 import com.ibm.as400.resource.ResourceEvent;
+import com.ibm.as400.resource.ResourceException;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.ResourceListener_;
-
-import com.ibm.as400.resource.RUser;
 
 /**
  Testcase UserGenericAttributeTestcase.  This tests the following methods of the RUser class, inherited from BufferedResource:
@@ -43,6 +41,7 @@ import com.ibm.as400.resource.RUser;
  <li>setAttributeValue()
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserGenericAttributeTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -57,7 +56,7 @@ public class UserGenericAttributeTestcase extends Testcase
     private static final String PREFIX2 = "UGAT2";
 
     private int count_ = 0;
-    private Vector toDelete_ = new Vector();
+    private Vector<String> toDelete_ = new Vector<String>();
     private UserSandbox sandbox_;
 
     /**
@@ -95,7 +94,7 @@ public class UserGenericAttributeTestcase extends Testcase
     /**
      Checks a particular attribute meta data.
      **/
-    public static boolean verifyAttributeMetaData(ResourceMetaData amd, Object attributeID, Class attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
+    public static boolean verifyAttributeMetaData(ResourceMetaData amd, Object attributeID, Class<?> attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
     {
         return amd.areMultipleAllowed() == multipleAllowed && amd.getDefaultValue() == defaultValue && amd.getPossibleValues().length == possibleValueCount && amd.getPresentation() != null && amd.getType() == attributeType && amd.isReadOnly() == readOnly && amd.isValueLimited() == valueLimited && amd.toString().equals(attributeID);
     }
@@ -103,7 +102,7 @@ public class UserGenericAttributeTestcase extends Testcase
     /**
      Checks a particular attribute meta data.
      **/
-    public static boolean verifyAttributeMetaData(ResourceMetaData[] amd, Object attributeID, Class attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
+    public static boolean verifyAttributeMetaData(ResourceMetaData[] amd, Object attributeID, Class<?> attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
     {
         int found = -1;
         for (int i = 0; i < amd.length && found < 0; ++i)
@@ -120,7 +119,7 @@ public class UserGenericAttributeTestcase extends Testcase
         return verifyAttributeMetaData(amd[found], attributeID, attributeType, readOnly, possibleValueCount, defaultValue, valueLimited, multipleAllowed);
     }
 
-    private String newUserName()
+    String newUserName()
     {
         String userName = PREFIX2 + Integer.toString(++count_);
         toDelete_.addElement(userName);
@@ -319,8 +318,8 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser(true);
             RUser u = new RUser(pwrSys_, userName);
-            String textDescription = (String)u.getAttributeValue(RUser.TEXT_DESCRIPTION);
-            String company = (String)u.getAttributeValue(RUser.COMPANY);
+            // String textDescription = (String)u.getAttributeValue(RUser.TEXT_DESCRIPTION);
+            // String company = (String)u.getAttributeValue(RUser.COMPANY);
             u.setAttributeValue(RUser.TEXT_DESCRIPTION, "This is only a test.");
             u.setAttributeValue(RUser.COMPANY, "Oracle");
             u.commitAttributeChanges();
@@ -437,7 +436,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            boolean found = false;
+            //boolean found = false;
             // I did not hardcode an exact length...otherwise, we have to change this every time we add a property.
             assertCondition(amd.length > 50 && verifyAttributeMetaData(amd, RUser.ACCOUNTING_CODE, String.class, false, 0, null, false, false) && verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE_DELIVERY_METHOD, String.class, false, 4, null, true, false) && verifyAttributeMetaData(amd, RUser.USER_PROFILE_NAME, String.class, true, 0, null, false, false));
         }
@@ -456,7 +455,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData amd = u.getAttributeMetaData(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+amd);
         }
         catch (Exception e)
         {
@@ -473,7 +472,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData amd = u.getAttributeMetaData(new Date());
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+amd);
         }
         catch (Exception e)
         {
@@ -568,7 +567,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             RUser u = new RUser();
             Object value = u.getAttributeUnchangedValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -586,7 +585,7 @@ public class UserGenericAttributeTestcase extends Testcase
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
             Object value = u.getAttributeUnchangedValue(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -604,7 +603,7 @@ public class UserGenericAttributeTestcase extends Testcase
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
             Object value = u.getAttributeUnchangedValue(new AS400());
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -737,7 +736,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             RUser u = new RUser();
             Object value = u.getAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -756,7 +755,7 @@ public class UserGenericAttributeTestcase extends Testcase
             system.setGuiAvailable(false);
             RUser u = new RUser(system, "Friend");
             Object value = u.getAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -773,7 +772,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             RUser u = new RUser(pwrSys_, "NOTEXIST");
             Object value = u.getAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -791,7 +790,7 @@ public class UserGenericAttributeTestcase extends Testcase
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
             Object value = u.getAttributeValue(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -809,7 +808,7 @@ public class UserGenericAttributeTestcase extends Testcase
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
             Object value = u.getAttributeValue("Yo");
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+value);
         }
         catch (Exception e)
         {
@@ -947,8 +946,8 @@ public class UserGenericAttributeTestcase extends Testcase
             for (int i = 0; i < amd.length; ++i)
             {
                 Object value = u.getAttributeValue(amd[i].getID());
-                Class valueClass = value.getClass();
-                Class type = amd[i].getType();
+                Class<?> valueClass = value.getClass();
+                Class<?> type = amd[i].getType();
 
                 // Validate the type.
                 if (amd[i].areMultipleAllowed())
@@ -961,7 +960,7 @@ public class UserGenericAttributeTestcase extends Testcase
                     }
                     else
                     {
-                        Class componentType = valueClass.getComponentType();
+                        Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type))
                         {
                             System.out.println("Error getting attribute " + amd[i] + ".");
@@ -1050,7 +1049,7 @@ public class UserGenericAttributeTestcase extends Testcase
             String userName = sandbox_.createUser(false);
             RUser u = new RUser(pwrSys_, userName);
             String company = (String)u.getAttributeValue(RUser.COMPANY);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+company);
         }
         catch (Exception e)
         {
@@ -1085,7 +1084,7 @@ public class UserGenericAttributeTestcase extends Testcase
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
             boolean pending = u.hasUncommittedAttributeChanges(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+pending);
         }
         catch (Exception e)
         {
@@ -1103,7 +1102,7 @@ public class UserGenericAttributeTestcase extends Testcase
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
             boolean pending = u.hasUncommittedAttributeChanges("Go Toolbox");
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+pending);
         }
         catch (Exception e)
         {
@@ -1299,8 +1298,8 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser(true);
             RUser u = new RUser(pwrSys_, userName);
-            String textDescription = (String)u.getAttributeValue(RUser.TEXT_DESCRIPTION);
-            String company = (String)u.getAttributeValue(RUser.COMPANY);
+            // String textDescription = (String)u.getAttributeValue(RUser.TEXT_DESCRIPTION);
+            // String company = (String)u.getAttributeValue(RUser.COMPANY);
 
             RUser u2 = new RUser(pwrSys_, userName);
             u2.setAttributeValue(RUser.TEXT_DESCRIPTION, "This is another in a long series of tests.");

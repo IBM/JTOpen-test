@@ -21,7 +21,7 @@ import test.UserTest;
 import test.RSoftwareTest.PropertyChangeListener_;
 
 import java.io.FileOutputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -73,7 +73,7 @@ extends Testcase {
 Constructor.
 **/
     public RSoftwareResourceBasicTestcase(AS400 systemObject,
-                              Hashtable namesAndVars,
+                              Hashtable<String,Vector<String>> namesAndVars,
                               int runMode,
                               FileOutputStream fileOutputStream,
                               

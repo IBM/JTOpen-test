@@ -13,17 +13,16 @@
 
 package test.MiscAH;
 
+import java.beans.BeanDescriptor;
+import java.beans.EventSetDescriptor;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyDescriptor;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.EnvironmentVariable;
 import com.ibm.as400.access.EnvironmentVariableBeanInfo;
 
 import test.Testcase;
-
-import java.beans.BeanDescriptor;
-import java.beans.BeanInfo;
-import java.beans.EventSetDescriptor;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyDescriptor;
 
 /**
  Testcase EVBeanInfoTestcase.  This tests the EnvironmentVariableBeanInfo class.
@@ -123,7 +122,7 @@ public class EVBeanInfoTestcase extends Testcase
     {
         try {
             EnvironmentVariableBeanInfo ev = new EnvironmentVariableBeanInfo();
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ev);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -137,7 +136,7 @@ public class EVBeanInfoTestcase extends Testcase
     {
         try {
             EnvironmentVariableBeanInfo ev = new EnvironmentVariableBeanInfo();
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+ev);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -150,7 +149,6 @@ public class EVBeanInfoTestcase extends Testcase
     public void Var008()
     {
         try {
-            EnvironmentVariableBeanInfo ev = new EnvironmentVariableBeanInfo();
             // Icons / GUI components no longer available in JTOpen 20.0.X
                 notApplicable("No GUI for icon test.");
         }
@@ -165,7 +163,6 @@ public class EVBeanInfoTestcase extends Testcase
     public void Var009()
     {
         try {
-            EnvironmentVariableBeanInfo ev = new EnvironmentVariableBeanInfo();
             // Icons / GUI components no longer available in JTOpen 20.0.X
                 notApplicable("No GUI for icon test.");
         }

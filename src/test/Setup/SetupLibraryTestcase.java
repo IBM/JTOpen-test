@@ -3,7 +3,7 @@ package test.Setup;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.Hashtable;
+import java.util.Hashtable; import java.util.Vector;
 import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
@@ -21,22 +21,22 @@ public abstract class SetupLibraryTestcase extends Testcase {
     super();
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, Hashtable namesAndVars, int runMode,
+  public SetupLibraryTestcase(AS400 system, String name, Hashtable<String,Vector<String>> namesAndVars, int runMode,
       FileOutputStream fileOutputStream) {
     super(system, name, namesAndVars, runMode, fileOutputStream);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+  public SetupLibraryTestcase(AS400 system, String name, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
       String password) {
     super(system, name, namesAndVars, runMode, fileOutputStream, password);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+  public SetupLibraryTestcase(AS400 system, String name, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
       String password, AS400 pwrSys, String pwrSysPwd) {
     super(system, name, namesAndVars, runMode, fileOutputStream, password, pwrSys, pwrSysPwd);
   }
 
-  public SetupLibraryTestcase(AS400 system, String name, Hashtable namesAndVars, int runMode, FileOutputStream fileOutputStream,
+  public SetupLibraryTestcase(AS400 system, String name, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
       AS400 pwrSys) {
     super(system, name, namesAndVars, runMode, fileOutputStream, pwrSys);
   }
