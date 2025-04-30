@@ -124,7 +124,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(123.45d);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -149,7 +149,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(123.4567d);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -174,7 +174,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(12343432432432432432423.4567d);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -457,7 +457,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(12.345d, new byte[2]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -482,7 +482,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(123.45d, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -507,7 +507,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(123.4567d, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -532,7 +532,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(12.345d, null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -660,7 +660,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(12.345d, new byte[2], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -685,7 +685,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(12.345d, new byte[7], 6);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -710,7 +710,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(12.345d, new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -735,7 +735,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(123.45d, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -760,7 +760,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(123.4567d, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -785,7 +785,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(12.345d, null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -945,7 +945,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             double obj = conv.toDouble(new byte[3]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -970,7 +970,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             double obj = conv.toDouble(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -1048,7 +1048,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             double obj = conv.toDouble(new byte[3], 0);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1073,7 +1073,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             double obj = conv.toDouble(new byte[15], 10);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
@@ -1098,7 +1098,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             double obj = conv.toDouble(new byte[15], -10);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
@@ -1123,7 +1123,7 @@ public class DTPackedDoubleTestcase extends Testcase
         try
         {
             double obj = conv.toDouble(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {

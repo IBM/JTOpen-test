@@ -101,7 +101,10 @@ public class UserSpaceTest extends TestDriver
 	}
 
         deleteObjects();
-        cmdRun("RUNSQL SQL('CREATE COLLECTION "+COLLECTION+"') ");
+        
+        cmdRun("RUNSQL  COMMIT(*NONE)    SQL('CREATE   COLLECTION "+COLLECTION+"') ");
+        cmdRun("RUNSQL  COMMIT(*NONE)    SQL('GRANT ALL ON SCHEMA "+COLLECTION+" TO USER "+userId_+"')"); 
+        
     }
 
     // Cleanup some of the objects created during the test.

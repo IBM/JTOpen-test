@@ -855,7 +855,9 @@ public class DQClearTestcase extends Testcase
             cmdRun("CRTDTAQ DQSECTEST/SECLIBTST MAXLEN(80)");
             try
             {
-                cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ )");
+                cmdRun("GRTOBJAUT DQSECTEST/SECLIBTST *DTAQ " + user + " AUT(*USE )");
+                
                 dq.refreshAttributes();
                 cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
                 try
@@ -893,6 +895,8 @@ public class DQClearTestcase extends Testcase
             try
             {
                 cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("GRTOBJAUT DQSECTEST/SECLIBTST *DTAQ " + user + " AUT(*USE )");
+
                 dq.refreshAttributes();
                 cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
                 try
@@ -929,6 +933,7 @@ public class DQClearTestcase extends Testcase
             cmdRun("CRTDTAQ DQSECTEST/SECLIBTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
             try
             {
+                cmdRun("GRTOBJAUT DQSECTEST/SECLIBTST *DTAQ " + user + " AUT(*USE )");
                 cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
                 dq.refreshAttributes();
                 cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");

@@ -371,12 +371,15 @@ public class DQDeleteTestcase extends Testcase
             String user = systemObject_.getUserId();
             KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
             cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+            cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*USE )");
+
             try
             {
                 cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
                 cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
                 cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*OBJEXIST)");
                 dq.getDescription();
+                
                 try
                 {
                     dq.delete();
@@ -408,10 +411,13 @@ public class DQDeleteTestcase extends Testcase
         {
             String user = systemObject_.getUserId();
             DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+            cmdRun("CRTDTAQ   DQSECTEST/SECTST MAXLEN(80)");
+            cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*USE )");
+
             try
             {
                 cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+                
                 dq.getDescription();
                 cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
                 try
@@ -445,7 +451,8 @@ public class DQDeleteTestcase extends Testcase
         {
             String user = systemObject_.getUserId();
             KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+            cmdRun("CRTDTAQ   DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+            cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*USE )");
             try
             {
                 cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");

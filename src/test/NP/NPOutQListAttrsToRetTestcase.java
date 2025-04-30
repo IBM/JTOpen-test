@@ -13,13 +13,15 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.OutputQueueList;
+import com.ibm.as400.access.PrintObject;
 
 import test.Testcase;
 
@@ -189,7 +191,7 @@ $$$ TO DO $$$ - delete this line */
             // list the output queue
             outQList.openSynchronously();
 
-            Enumeration e = outQList.getObjects();
+            Enumeration<OutputQueue> e = outQList.getObjects();
 
             // check to see if we got our output queue
             if (outQList.size() == 1)
@@ -366,7 +368,7 @@ $$$ TO DO $$$ - delete this line */
             // list the output queue
             outQList.openSynchronously();
 
-            Enumeration e = outQList.getObjects();
+            Enumeration<OutputQueue> e = outQList.getObjects();
 
             // check to see if we got some output queue
             if (outQList.size() == 1)

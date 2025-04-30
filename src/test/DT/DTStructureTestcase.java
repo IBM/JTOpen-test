@@ -53,7 +53,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             AS400Structure conv = new AS400Structure();
-            succeeded();
+            assertCondition(true, "conv created "+conv); 
         }
         catch (Exception e)
         {
@@ -77,7 +77,7 @@ public class DTStructureTestcase extends Testcase
                 new AS400Text(40, 1383, systemObject_)
             };
             AS400Structure conv = new AS400Structure(struct);
-            succeeded();
+            assertCondition(true, "conv created "+conv); 
         }
         catch (Exception e)
         {
@@ -94,7 +94,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             AS400Structure conv = new AS400Structure(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -126,7 +126,7 @@ public class DTStructureTestcase extends Testcase
                 new AS400Text(40, 1381, systemObject_)
             };
             AS400Structure conv = new AS400Structure(struct);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -243,7 +243,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.getByteLength();
-            failed("no exception thrown");
+            failed("no exception thrown"+ret);
         }
         catch (Exception e)
         {
@@ -277,7 +277,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.getByteLength();
-            failed("no exception thrown");
+            failed("no exception thrown"+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -520,7 +520,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             AS400DataType ret = conv.getMembers(-1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -553,7 +553,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             AS400DataType ret = conv.getMembers(4);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -786,13 +786,6 @@ public class DTStructureTestcase extends Testcase
             new AS400Float4(),
             new AS400Text(4, 37, systemObject_)
         };
-        Object[] value =
-        {
-            new Integer(88),
-            new byte[0],
-            new Float(-1.5f),
-            "1234"
-        };
         AS400Structure conv = new AS400Structure();
         conv.setMembers(struct);
         conv.toObject(new byte[16]);
@@ -827,13 +820,6 @@ public class DTStructureTestcase extends Testcase
             new AS400Float4(),
             new AS400Text(4, 37, systemObject_)
         };
-        Object[] value =
-        {
-            new Integer(88),
-            new byte[0],
-            new Float(-1.5f),
-            "1234"
-        };
         AS400Structure conv = new AS400Structure();
         conv.setMembers(struct);
         conv.toObject(new byte[16], 0);
@@ -865,7 +851,7 @@ public class DTStructureTestcase extends Testcase
         {
             AS400Structure conv = new AS400Structure();
             conv.setMembers(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -898,7 +884,7 @@ public class DTStructureTestcase extends Testcase
             };
             AS400Structure conv = new AS400Structure();
             conv.setMembers(struct);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -961,7 +947,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             conv.setMembers(-1, struct[0]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -995,7 +981,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             conv.setMembers(4, struct[0]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -1276,7 +1262,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             conv.setMembers(2, null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -1365,7 +1351,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Vector<Object>());
-            failed("No exception thrown."+ret);
+            failed("Did not throw exception. ret="+ret+ret);
         }
         catch (Exception e)
         {
@@ -1404,7 +1390,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(value);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1442,7 +1428,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(value);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1481,7 +1467,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(value);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1502,13 +1488,6 @@ public class DTStructureTestcase extends Testcase
      **/
     public void Var044()
     {
-        AS400DataType[] struct =
-        {
-            new AS400Bin4(),
-            new AS400ByteArray(4),
-            new AS400Float8(),
-            new AS400Text(4, 37, systemObject_)
-        };
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
@@ -1520,7 +1499,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(value);
-            failed("no exception thrown");
+            failed("no exception thrown"+ret);
         }
         catch (Exception e)
         {
@@ -1559,7 +1538,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             byte[] data = conv.toBytes(value);
-            failed("no exception thrown");
+            failed("no exception thrown"+data);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -1616,7 +1595,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(value);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1648,7 +1627,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1748,7 +1727,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[15]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1781,7 +1760,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Vector<Object>(), new byte[16]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1820,7 +1799,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[20]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1858,7 +1837,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[16]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1897,7 +1876,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[16]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1918,13 +1897,6 @@ public class DTStructureTestcase extends Testcase
      **/
     public void Var054()
     {
-        AS400DataType[] struct =
-        {
-            new AS400Bin4(),
-            new AS400ByteArray(4),
-            new AS400Float4(),
-            new AS400Text(4, 37, systemObject_)
-        };
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
@@ -1936,7 +1908,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[16]);
-            failed("no exception thrown");
+            failed("no exception thrown"+ret);
         }
         catch (Exception e)
         {
@@ -1985,7 +1957,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, data);
-            failed("no exception thrown");
+            failed("no exception thrown"+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -2032,7 +2004,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[16]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2065,7 +2037,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[16]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2106,7 +2078,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2404,7 +2376,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[15]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2445,7 +2417,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[25], 15);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2486,7 +2458,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[25], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2519,7 +2491,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Vector<Object>(), new byte[16], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2558,7 +2530,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[20], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2596,7 +2568,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[16], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2635,7 +2607,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[16], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2656,13 +2628,6 @@ public class DTStructureTestcase extends Testcase
      **/
     public void Var069()
     {
-        AS400DataType[] struct =
-        {
-            new AS400Bin4(),
-            new AS400ByteArray(4),
-            new AS400Float8(),
-            new AS400Text(4, 37, systemObject_)
-        };
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
@@ -2674,7 +2639,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[16], 0);
-            failed("no exception thrown");
+            failed("no exception thrown"+ret);
         }
         catch (Exception e)
         {
@@ -2723,7 +2688,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, data, 0);
-            failed("no exception thrown");
+            failed("no exception thrown"+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -2770,7 +2735,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, new byte[16], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2803,7 +2768,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[16], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2844,7 +2809,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(value, null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2985,7 +2950,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[8]);
-            failed("no exception thrown for to small Structure");
+            failed("no exception thrown for to small Structure"+obj);
         }
         catch (Exception e)
         {
@@ -3006,18 +2971,11 @@ public class DTStructureTestcase extends Testcase
      **/
     public void Var076()
     {
-        AS400DataType[] struct =
-        {
-            new AS400Bin4(),
-            new AS400ByteArray(4),
-            new AS400Float8(),
-            new AS400Text(40, 1383, systemObject_)
-        };
         AS400Structure conv = new AS400Structure();
         try
         {
             Object obj = conv.toObject(new byte[18]);
-            failed("no exception thrown");
+            failed("no exception thrown"+obj);
         }
         catch (Exception e)
         {
@@ -3059,7 +3017,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(data);
-            failed("no exception thrown");
+            failed("no exception thrown"+obj);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -3159,7 +3117,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -3365,7 +3323,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[8], 0);
-            failed("no exception thrown for to small Structure");
+            failed("no exception thrown for to small Structure"+obj);
         }
         catch (Exception e)
         {
@@ -3398,7 +3356,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[20], 1);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
@@ -3431,7 +3389,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[25], -10);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
@@ -3452,18 +3410,11 @@ public class DTStructureTestcase extends Testcase
      **/
     public void Var083()
     {
-        AS400DataType[] struct =
-        {
-            new AS400Bin4(),
-            new AS400ByteArray(4),
-            new AS400Float4(),
-            new AS400Text(4, 37, systemObject_)
-        };
         AS400Structure conv = new AS400Structure();
         try
         {
             Object obj = conv.toObject(new byte[25], 0);
-            failed("no exception thrown");
+            failed("no exception thrown"+obj);
         }
         catch (Exception e)
         {
@@ -3505,7 +3456,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(data, 0);
-            failed("no exception thrown");
+            failed("no exception thrown"+obj);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -3605,7 +3556,7 @@ public class DTStructureTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {

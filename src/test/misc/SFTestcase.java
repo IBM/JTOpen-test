@@ -22,6 +22,7 @@ import test.Testcase;
 import java.util.Hashtable;
 import java.util.Vector;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Testcase SFTestcase.
@@ -45,6 +46,17 @@ public class SFTestcase extends Testcase {
       DEBUG = true;
     }
   }
+  
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "SFTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.SFTest.main(newArgs); 
+   }
+
 
   /**
    * Constructor.
@@ -476,7 +488,7 @@ public class SFTestcase extends Testcase {
   }
 
   // Verify that the contents of two libraries match.
-  private boolean librariesMatch(String libName1, String libName2) {
+  private boolean librariesMatch(String libName1, String libName2, StringBuffer sb) {
     boolean ok = true;
 
     try {
@@ -486,39 +498,35 @@ public class SFTestcase extends Testcase {
       IFSFile dir1 = new IFSFile(systemObject_, libPath1);
       IFSFile dir2 = new IFSFile(systemObject_, libPath2);
 
-      if (DEBUG) {
+     
         if (dir1.exists())
-          System.out.println("DEBUG: " + dir1.getPath() + " exists.");
+          sb.append("\n " + dir1.getPath() + " exists.");
         else
-          System.out.println("DEBUG: " + dir1.getPath() + " not found.");
+          sb.append("\n " + dir1.getPath() + " not found.");
         if (dir2.exists())
-          System.out.println("DEBUG: " + dir2.getPath() + " exists.");
+          sb.append("\n " + dir2.getPath() + " exists.");
         else
-          System.out.println("DEBUG: " + dir2.getPath() + " not found.");
-      }
-
+          sb.append("\n " + dir2.getPath() + " not found.");
+      
       // Get list of files in the two libraries.
       String[] list1 = dir1.list();
       String[] list2 = dir2.list();
 
       if (list1 == null) {
-        System.out.println(libName1 + ".list() returned null.");
+        sb.append("\n"+libName1 + ".list() returned null.");
         return false;
       }
 
       if (list2 == null) {
-        System.out.println(libName2 + ".list() returned null.");
+        sb.append("\n "+libName2 + ".list() returned null.");
         return false;
       }
 
-      if (DEBUG) {
-        System.out.println(
-            "DEBUG: " + libName1 + " contains " + list1.length + " files");
-        System.out.println(
-            "DEBUG: " + libName2 + " contains " + list2.length + " files");
-      }
+      sb.append("\n " + libName1 + " contains " + list1.length + " files");
+      sb.append("\n " + libName2 + " contains " + list2.length + " files");
+      
       if (list1.length != list2.length) {
-        System.out.println("List lengths mismatch");
+        sb.append("\nList lengths mismatch");
         ok = false;
       }
 
@@ -531,20 +539,46 @@ public class SFTestcase extends Testcase {
       for (int i = 0; i < list2.length; i++) {
         vec2.add(list2[i]);
       }
+      
+      Collections.sort(vec1);
+      Collections.sort(vec2);
 
       if (!vec1.containsAll(vec2)) {
-        System.out
-            .println(libName1 + " does not contain all files in " + libName2);
+        sb.append("\n"+ libName1 + " does not contain all files in " + libName2);
         ok = false;
       }
 
       if (!vec2.containsAll(vec1)) {
-        System.out
-            .println(libName2 + " does not contain all files in " + libName1);
+        sb.append("\n"+libName2 + " does not contain all files in " + libName1);
         ok = false;
       }
+      if (!ok) {
+        int entryCount = list1.length; 
+        if (list2.length > entryCount) {
+          entryCount = list2.length; 
+        }
+        sb.append("\n "+libName1+","+libName2);
+        for (int i = 0; i < entryCount; i++) { 
+          sb.append("\n");
+          if (i < list1.length) { 
+            sb.append(vec1.elementAt(i));
+          } else { 
+            sb.append(" ------ ");
+          }
+          sb.append(","); 
+          if (i < list2.length) { 
+            sb.append(vec2.elementAt(i));
+          } else { 
+            sb.append(" ------ ");
+          }
+        }
+      }
+      
+      
+      
     } catch (Exception e) {
-      e.printStackTrace();
+      printStackTraceToStringBuffer(e, sb); 
+      
       ok = false;
     }
 
@@ -1081,6 +1115,7 @@ public class SFTestcase extends Testcase {
    * save(String libraryName)
    **/
   public void Var016() {
+    StringBuffer sb = new StringBuffer(); 
     SaveFile sf2 = null;
     String libName = "LIB016";
     String sfName = libName;
@@ -1096,6 +1131,8 @@ public class SFTestcase extends Testcase {
         return;
       }
 
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")       AUT(*CHANGE)    OBJTYPE(*LIB) USER("+userId_+") ");
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL)  AUT(*CHANGE)    OBJTYPE(*ALL) USER("+userId_+")"); 
       // Save the new library into a savefile, delete the library, then restore
       // the savefile.
 
@@ -1125,7 +1162,13 @@ public class SFTestcase extends Testcase {
       if (DEBUG)
         System.out.println("DEBUG: Restoring library " + libName);
       sf2.restore(libName);
-      assertCondition(librariesMatch("W95LIB", libName));
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")       AUT(*CHANGE)    OBJTYPE(*LIB) USER("+userId_+") ");
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL)  AUT(*CHANGE)    OBJTYPE(*ALL) USER("+userId_+")"); 
+      /* Make sure the user has access to the W95Lib */ 
+      cmdRun("QSYS/GRTOBJAUT OBJ(W95LIB)       AUT(*CHANGE)    OBJTYPE(*LIB) USER("+userId_+") ");
+      cmdRun("QSYS/GRTOBJAUT OBJ(W95LIB/*ALL)  AUT(*CHANGE)    OBJTYPE(*ALL) USER("+userId_+")"); 
+      
+      assertCondition(librariesMatch("W95LIB", libName,sb),sb);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     } finally {
@@ -1356,6 +1399,7 @@ public class SFTestcase extends Testcase {
    * restore(String libraryName)
    **/
   public void Var021() {
+    StringBuffer sb = new StringBuffer(); 
     SaveFile sf2 = null;
     String libName = "LIB021";
     String sfName = libName;
@@ -1370,6 +1414,9 @@ public class SFTestcase extends Testcase {
         failed("Variation setup failed: CPYLIB to " + libName + " failed");
         return;
       }
+
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")      OBJTYPE(*LIB) USER("+userId_+") ");
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL) OBJTYPE(*ALL) USER("+userId_+")"); 
 
       // Save the new library into a savefile, delete the library, then restore
       // the savefile.
@@ -1404,7 +1451,9 @@ public class SFTestcase extends Testcase {
       if (DEBUG)
         System.out.println("DEBUG: Restoring library " + libName);
       sf2.restore(libName);
-      assertCondition(librariesMatch("W95LIB", libName));
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")       AUT(*CHANGE)    OBJTYPE(*LIB) USER("+userId_+") ");
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL)  AUT(*CHANGE)    OBJTYPE(*ALL) USER("+userId_+")"); 
+      assertCondition(librariesMatch("W95LIB", libName, sb), sb);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     } finally {
@@ -1439,6 +1488,9 @@ public class SFTestcase extends Testcase {
         return;
       }
 
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")      OBJTYPE(*LIB) USER("+userId_+") ");
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL) OBJTYPE(*ALL) USER("+userId_+")"); 
+
       // Save the new library into a savefile, delete the library, then restore
       // the savefile.
 
@@ -1472,6 +1524,10 @@ public class SFTestcase extends Testcase {
         sb.append("\nDEBUG: Restoring library " + libName);
       String[] objectList = { "IRCTST02", "PROGS" };
       sf2.restore(libName, objectList, null);
+      
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")       AUT(*CHANGE)    OBJTYPE(*LIB) USER("+userId_+") ");
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL)  AUT(*CHANGE)    OBJTYPE(*ALL) USER("+userId_+")"); 
+
       String libPath1 = QSYSObjectPathName.toPath("QSYS", libName, "LIB");
       IFSFile dir1 = new IFSFile(systemObject_, libPath1);
         if (dir1.exists())
@@ -1516,6 +1572,9 @@ public class SFTestcase extends Testcase {
       sf = new SaveFile(pwrSys_, savefileLib_, savefileName2_);
       String[] objectList = { "IRCTST02", "PROGS" };
       sf.restore("W95LIB", objectList, libName);
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")       AUT(*CHANGE)    OBJTYPE(*LIB) USER("+userId_+") ");
+      cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL)  AUT(*CHANGE)    OBJTYPE(*ALL) USER("+userId_+")"); 
+
       String libPath1 = QSYSObjectPathName.toPath("QSYS", libName, "LIB");
       IFSFile dir1 = new IFSFile(systemObject_, libPath1);
       if (DEBUG) {

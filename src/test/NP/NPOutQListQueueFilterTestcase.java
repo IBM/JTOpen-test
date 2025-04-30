@@ -13,16 +13,17 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
-import java.util.Enumeration;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.IllegalPathNameException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.OutputQueueList;
 
 import test.Testcase;
 
@@ -266,24 +267,24 @@ $$$ TO DO $$$ - delete this line */
     /**
      * Tests setting the OutputQueueList queueFilter
      **/
-    public void Var001()
-    {
-        try
-            {
-            // create an OutputQueueList object using default constructor
-            OutputQueueList list = new OutputQueueList();
+    public void Var001() {
+      try {
+        // create an OutputQueueList object using default constructor
+        OutputQueueList list = new OutputQueueList();
 
-            // Set the queueFilter
-            list.setQueueFilter("/QSYS.LIB/NPJAVA.LIB/LISTQTST.OUTQ");
+        // Set the queueFilter
+        list.setQueueFilter("/QSYS.LIB/NPJAVA.LIB/LISTQTST.OUTQ");
 
-            if (list.getQueueFilter().trim().equals("/QSYS.LIB/NPJAVA.LIB/LISTQTST.OUTQ")) succeeded();
-            else failed("Could not set/get OutputQueueList queueFilter");
-            } 
+        if (list.getQueueFilter().trim().equals("/QSYS.LIB/NPJAVA.LIB/LISTQTST.OUTQ"))
+          succeeded();
+        else
+          failed("Could not set/get OutputQueueList queueFilter");
+        list.close();
+      }
 
-        catch (Exception e)
-            {
-            failed(e, "Unexpected exception");
-            }
+      catch (Exception e) {
+        failed(e, "Unexpected exception");
+      }
 
     } // end Var001
 
@@ -301,6 +302,7 @@ $$$ TO DO $$$ - delete this line */
             // Set the queueFilter, FNTRSC is not valid, should be OUTQ.
             list.setQueueFilter("/QSYS.LIB/NPJAVA.LIB/LISTQTST.FNTRSC");
             failed("Was able to set invalid type in filter");
+            list.close(); 
             }
 
         catch (IllegalPathNameException e)
@@ -334,6 +336,7 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getQueueFilter().trim().equals("")) succeeded();
             else failed("Could not remove OutputQueueList queueFilter");
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -354,6 +357,7 @@ $$$ TO DO $$$ - delete this line */
             OutputQueueList list = new OutputQueueList();
 
             list.setQueueFilter(null);
+            list.close(); 
             failed("Could set the queueFilter to null");
             }
 
@@ -382,10 +386,12 @@ $$$ TO DO $$$ - delete this line */
 
             if( list.getQueueFilter().length() == 0 )
                 {
+                list.close(); 
                 succeeded();
                 }
             else
                 {
+                list.close(); 
                 failed("queueFilter was not set, expecting empty string");
                 }
             } 
@@ -410,7 +416,6 @@ $$$ TO DO $$$ - delete this line */
 	    outQList.setQueueFilter("/QSYS.LIB/%ALL%.LIB/%ALL%.OUTQ");
 	    outQList.openSynchronously();
 
-            Enumeration e = outQList.getObjects();
 
             // check to see if we got some output queues
             // since there is at least 1 output queue on the system we should have gotten
@@ -497,7 +502,7 @@ $$$ TO DO $$$ - delete this line */
 
 	    outQList.openSynchronously();
 
-            Enumeration e = outQList.getObjects();
+            Enumeration<OutputQueue> e = outQList.getObjects();
             String outQPath = null;
 
             // check to see if we got some output queues
@@ -564,7 +569,7 @@ $$$ TO DO $$$ - delete this line */
 
 	    outQList.openSynchronously();
 
-            Enumeration e = outQList.getObjects();
+            Enumeration<OutputQueue> e = outQList.getObjects();
 
             // check to see if we got some output queues
             // since there is at least 1 output queue on the system we should have gotten
@@ -579,7 +584,7 @@ $$$ TO DO $$$ - delete this line */
             else
                 {
                 failed("Could not list output queues by %ALLUSR% library name. Only "
-                       +outQList.size() + " queues listed.");
+                       +outQList.size() + " queues listed."+e);
                 }
 
 	    outQList.close();
@@ -613,7 +618,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build list synchrously
 	    outQList.openSynchronously();
 
-            Enumeration e = outQList.getObjects();
+            Enumeration<OutputQueue> e = outQList.getObjects();
             String outQPath = null;
 
             // check to see if we got some output queues
@@ -680,7 +685,7 @@ $$$ TO DO $$$ - delete this line */
 
 	    outQList.openSynchronously();
 
-	    Enumeration e = outQList.getObjects();
+	    Enumeration<OutputQueue> e = outQList.getObjects();
 
             // check to see if we got some output queues
             // since there is at least 1 output queue on the system we should have gotten
@@ -695,7 +700,7 @@ $$$ TO DO $$$ - delete this line */
             else
                 {
                 failed("Could not list output queues by %LIBL% library name. Only "
-                       +outQList.size() + " queues listed.");
+                       +outQList.size() + " queues listed."+e);
                 }
 
 	    outQList.close();
@@ -724,7 +729,7 @@ $$$ TO DO $$$ - delete this line */
 
 	    outQList.openSynchronously();
 
-	    Enumeration e = outQList.getObjects();
+	    Enumeration<OutputQueue> e = outQList.getObjects();
 
             // check to see if we got some output queues
             // since there is at least 1 output queue on the system we should have gotten
@@ -739,7 +744,7 @@ $$$ TO DO $$$ - delete this line */
             else
                 {
                 failed("Could not list output queues by %USRLIBL% library name. Only "
-                       +outQList.size() + " queues listed.");
+                       +outQList.size() + " queues listed."+e);
                 }
 
 	    outQList.close();
@@ -820,6 +825,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -896,6 +902,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -973,6 +980,7 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -1029,6 +1037,7 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             }
 
     } // end Var016
@@ -1092,6 +1101,7 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)

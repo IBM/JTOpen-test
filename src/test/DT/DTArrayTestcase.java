@@ -53,7 +53,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             AS400Array conv = new AS400Array();
-            succeeded();
+            assertCondition(true,  "created conv="+conv); 
         }
         catch (Exception e)
         {
@@ -69,7 +69,7 @@ public class DTArrayTestcase extends Testcase
     {
         try
         {
-            AS400Array conv;
+            AS400Array conv = null;
             for (int i=0; i<100; ++i)
             {
                 conv = new AS400Array(new AS400Bin2(), i);
@@ -84,7 +84,8 @@ public class DTArrayTestcase extends Testcase
                 conv = new AS400Array(new AS400ZonedDecimal(7, 7), i);
                 conv = new AS400Array(new AS400Structure(), 5);
             }
-            succeeded();
+            assertCondition(true, "Created conv="+conv); 
+            
         }
         catch (Exception e)
         {
@@ -101,7 +102,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             AS400Array conv = new AS400Array(new AS400Bin4(), -1);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+conv);
         }
         catch (Exception e)
         {
@@ -125,7 +126,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             AS400Array conv = new AS400Array(null, 10);
-            failed("No exception thrown.");
+            failed("Exception not thrown. conv="+conv);
         }
         catch (Exception e)
         {
@@ -241,6 +242,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.getByteLength();
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (Exception e)
         {
@@ -266,6 +268,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.getByteLength();
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (Exception e)
         {
@@ -291,6 +294,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.getByteLength();
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -318,6 +322,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.getByteLength();
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -1016,7 +1021,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             conv.setType(null);
-            failed("No exception thrown.");
+            failed("Exception not thrown.");
         }
         catch (Exception e)
         {
@@ -1081,7 +1086,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Object());
-            failed("No exception thrown.");
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (Exception e)
         {
@@ -1112,7 +1117,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(testValue);
-            failed("No exception thrown.");
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (Exception e)
         {
@@ -1142,7 +1147,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(testValue);
-            failed("No exception thrown.");
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (Exception e)
         {
@@ -1173,7 +1178,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(testValue);
-            failed("No exception thrown.");
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (Exception e)
         {
@@ -1205,7 +1210,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(testValue);
-            failed("No exception thrown.");
+            assertCondition(false,"Expected exception but got "+ret); 
         }
         catch (Exception e)
         {
@@ -1238,7 +1243,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(testValue);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -1280,7 +1285,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(testValue);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1313,7 +1318,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(testValue);
-            failed("No exception thrown.");
+            failed("No exception thrown."+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -1354,7 +1359,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(testValue);
-            failed("No exception thrown.");
+            failed("No exception thrown."+ret);
         }
         catch (Exception e)
         {
@@ -1379,7 +1384,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(null);
-            failed("No exception thrown.");
+            failed("No exception thrown."+ret);
         }
         catch (Exception e)
         {
@@ -1460,7 +1465,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[4]);
-            failed("No exception thrown.");
+            failed("No exception thrown."+ret);
         }
         catch (Exception e)
         {
@@ -1482,16 +1487,10 @@ public class DTArrayTestcase extends Testcase
     public void Var046()
     {
         AS400Array conv = new AS400Array(new AS400Text(2, 500, systemObject_), 4);
-        Object[] testValue = {
-            new String("as"),
-            new String("df"),
-            new String("jk"),
-            new String("l;")
-        };
         try
         {
             int ret = conv.toBytes(new Object(), new byte[10]);
-            failed("No exception thrown.");
+            failed("No exception thrown."+ret);
         }
         catch (Exception e)
         {
@@ -1522,7 +1521,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10]);
-            failed("No exception thrown.");
+            failed("No exception thrown."+ret);
         }
         catch (Exception e)
         {
@@ -1552,7 +1551,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1583,7 +1582,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1615,7 +1614,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1659,7 +1658,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -1699,7 +1698,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1744,7 +1743,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -1783,7 +1782,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1805,17 +1804,11 @@ public class DTArrayTestcase extends Testcase
     public void Var055()
     {
         AS400Array conv = new AS400Array(new AS400Text(2, 37, systemObject_), 4);
-        Object[] testValue = {
-            new String("as"),
-            new String("df"),
-            new String("jk"),
-            new String("l;")
-        };
 
         try
         {
             int ret = conv.toBytes(null, new byte[8]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1846,7 +1839,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, null);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2106,7 +2099,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[4], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2137,7 +2130,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10], 4);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2168,7 +2161,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2190,16 +2183,10 @@ public class DTArrayTestcase extends Testcase
     public void Var063()
     {
         AS400Array conv = new AS400Array(new AS400Text(2, 500, systemObject_), 4);
-        Object[] testValue = {
-            new String("as"),
-            new String("df"),
-            new String("jk"),
-            new String("l;")
-        };
         try
         {
             int ret = conv.toBytes(new Object(), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2230,7 +2217,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2260,7 +2247,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2291,7 +2278,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2323,7 +2310,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2367,7 +2354,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, data, 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -2407,7 +2394,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2452,7 +2439,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, data, 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -2491,7 +2478,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2513,17 +2500,11 @@ public class DTArrayTestcase extends Testcase
     public void Var072()
     {
         AS400Array conv = new AS400Array(new AS400Text(2, 37, systemObject_), 4);
-        Object[] testValue = {
-            new String("as"),
-            new String("df"),
-            new String("jk"),
-            new String("l;")
-        };
 
         try
         {
             int ret = conv.toBytes(null, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2554,7 +2535,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(testValue, null, 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2642,7 +2623,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[8]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -2668,7 +2649,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object ret = conv.toObject(new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2707,7 +2688,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object ret = conv.toObject(data);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -2761,7 +2742,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object ret = conv.toObject(new byte[10]);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -2800,7 +2781,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object ret = conv.toObject(data);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -2853,7 +2834,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -3111,7 +3092,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[8], 0);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -3136,7 +3117,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[20], 15);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
@@ -3161,7 +3142,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[15], -10);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
@@ -3187,7 +3168,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object ret = conv.toObject(new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -3226,7 +3207,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object ret = conv.toObject(data, 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -3280,7 +3261,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object ret = conv.toObject(new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (Exception e)
         {
@@ -3319,7 +3300,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object ret = conv.toObject(data, 0);
-            failed("No exception thrown.");
+            failed("Exception not thrown. ret="+ret);
         }
         catch (ExtendedIllegalStateException e)
         {
@@ -3372,7 +3353,7 @@ public class DTArrayTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {

@@ -3014,6 +3014,14 @@ public class AS400JDBCMDSTestcase extends Testcase
             catch (SQLException cc)
             { /* ignore */
             }
+            try {
+              s.executeUpdate("GRANT ALL ON SCHEMA " + collection + " TO USER " + userId_);
+            } catch (SQLException e) {
+              System.out.println("Warning: error on GRANT");
+              e.printStackTrace(System.out);
+            }
+
+
             try
             {
                 s.executeUpdate("CREATE TABLE " + collection + "/" + table + " (ACCOUNT INTEGER, NAME VARCHAR(25), BALANCE DOUBLE)");

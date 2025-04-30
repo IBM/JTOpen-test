@@ -38,7 +38,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            succeeded();
+            assertCondition(true,"Able to create converted "+converter); 
         }
         catch (Exception e) {
             failed(e, "Unexpected exception.");
@@ -131,7 +131,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = converter.toBytes(new Integer(0));
-            failed("No exception thrown.");
+            failed("No exception thrown."+data);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ClassCastException");
@@ -148,7 +148,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = converter.toBytes(null);
-            failed("No exception thrown.");
+            failed("No exception thrown."+data);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -502,7 +502,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
             int length = converter.toBytes(null, data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -520,7 +520,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
             int length = converter.toBytes("Hi Mom!", data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ClassCastException");
@@ -538,7 +538,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
             int length = converter.toBytes(new Long(543), data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -556,7 +556,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
             int length = converter.toBytes(new Long(-45), data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -574,7 +574,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
             int length = converter.toBytes(new Long(30), data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -646,7 +646,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
             int length = converter.toBytes(5432, data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -664,7 +664,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
             int length = converter.toBytes(-876, data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -682,7 +682,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
             int length = converter.toBytes(2389, data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -754,7 +754,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
             int length = converter.toBytes(null, data, 0);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -772,7 +772,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
             int length = converter.toBytes(new Short((short)43), data, 0);     
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ClassCastException");
@@ -790,7 +790,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
             int length = converter.toBytes(new Long(43243), data, 0);   
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -808,7 +808,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
             int length = converter.toBytes(new Long(-45543999), data, 0);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -826,7 +826,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
             int length = converter.toBytes(new Long(30), data, 0);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -846,7 +846,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
             int length = converter.toBytes(new Long(2), data, -1);   
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -865,7 +865,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
             int length = converter.toBytes(new Long(-656444334112L), data, 1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -910,7 +910,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[9];
             int length = converter.toBytes(new Long(-4543), data, -1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -929,7 +929,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[9];
             int length = converter.toBytes(new Long(-4543), data, 2);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1003,7 +1003,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
             int length = converter.toBytes(1234567, data, 0);   
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -1021,7 +1021,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
             int length = converter.toBytes(-9876543, data, 0);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1039,7 +1039,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
             int length = converter.toBytes(433456, data, 0);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1059,7 +1059,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
             int length = converter.toBytes(3445354455645L, data, -1);   
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1078,7 +1078,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
             int length = converter.toBytes(-3457258294375984L, data, 1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1123,7 +1123,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[10];
             int length = converter.toBytes(-456893, data, -1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1142,7 +1142,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[10];
             int length = converter.toBytes(8965, data, 3);
-            failed("No exception thrown.");
+            failed("No exception thrown."+length);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1220,7 +1220,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
             long value = converter.toLong(data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -1238,7 +1238,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
             long value = converter.toLong(data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1256,7 +1256,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
             long value = converter.toLong(data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1425,7 +1425,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
             long value = converter.toLong(data, 0);     
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -1443,7 +1443,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
             long value = converter.toLong(data, 0);   
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1461,7 +1461,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
             long value = converter.toLong(data, 0);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1487,7 +1487,7 @@ public class DTBin8Testcase extends Testcase
             (byte)0x67, 
             (byte)0x88 };
             long value = converter.toLong(data, -1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1513,7 +1513,7 @@ public class DTBin8Testcase extends Testcase
             (byte)0x67, 
             (byte)0x88 };
             long value = converter.toLong(data, 1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1666,7 +1666,7 @@ public class DTBin8Testcase extends Testcase
             (byte)0x25, 
             (byte)0x6F };
             long value = converter.toLong(data, -1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1694,7 +1694,7 @@ public class DTBin8Testcase extends Testcase
             (byte)0x25, 
             (byte)0x6F };
             long value = converter.toLong(data, 3);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1768,7 +1768,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
             Long value = (Long)converter.toObject(data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -1786,7 +1786,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
             Long value = (Long)converter.toObject(data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1804,7 +1804,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
             Long value = (Long)converter.toObject(data);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -1973,7 +1973,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
             Long value = (Long)converter.toObject(data, 0);     
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "NullPointerException");
@@ -1991,7 +1991,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
             Long value = (Long)converter.toObject(data, 0);   
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -2009,7 +2009,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
             Long value = (Long)converter.toObject(data, 0);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -2035,7 +2035,7 @@ public class DTBin8Testcase extends Testcase
             (byte)0x67, 
             (byte)0x00 };
             Long value = (Long)converter.toObject(data, -1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -2061,7 +2061,7 @@ public class DTBin8Testcase extends Testcase
             (byte)0x67, 
             (byte)0x00 };
             Long value = (Long)converter.toObject(data, 1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -2224,7 +2224,7 @@ public class DTBin8Testcase extends Testcase
             (byte)0x25, 
             (byte)0x6F };
             Long value = (Long)converter.toObject(data, -1);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");
@@ -2262,7 +2262,7 @@ public class DTBin8Testcase extends Testcase
             (byte)0x25, 
             (byte)0x6F };
             Long value = (Long)converter.toObject(data, 13);       
-            failed("No exception thrown.");
+            failed("No exception thrown."+value);
         }
         catch (Exception e) {
             assertExceptionIs(e, "ArrayIndexOutOfBoundsException");

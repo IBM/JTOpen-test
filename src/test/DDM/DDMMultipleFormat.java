@@ -210,6 +210,19 @@ public class DDMMultipleFormat extends Testcase
         System.out.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
         throw new Exception("");
       }
+      // Make sure the user has access 
+      String command = " GRTOBJAUT OBJ(DDMTESTSAV) OBJTYPE(*LIB) USER("+userId_+") ";
+      boolean result = c.run(command); 
+      if (!result) {
+        System.out.println("Warning:  Command failed : "+command); 
+      }
+      
+      command = "GRTOBJAUT OBJ(DDMTESTSAV/*ALL) OBJTYPE(*ALL) USER("+userId_+")    ";
+      result = c.run(command); 
+      if (!result) {
+        System.out.println("Warning:  Command failed : "+command); 
+      }
+      
       // Delete and re-create the file
       SequentialFile f = new SequentialFile(pwrSys_, fileName_);
       try
@@ -218,7 +231,10 @@ public class DDMMultipleFormat extends Testcase
         f.close(); 
       }
       catch(Exception e) {} // may not exist, so ignore faliures
-      c.run("CRTLF FILE(DDMTESTSAV/MLTFMT) SRCFILE(DDMTESTSAV/QDDSSRC)");
+      
+      c.run("CRTLF     FILE(DDMTESTSAV/MLTFMT) SRCFILE(DDMTESTSAV/QDDSSRC)");
+      c.run("GRTOBJAUT  OBJ(DDMTESTSAV/MLTFMT) OBJTYPE(*ALL) USER("+userId_+")"); 
+      
       // Populate file simpleseq - this is the file over which mltfmt is built
       // Clear the file first
       c.run("CLRPFM FILE(DDMTESTSAV/SIMPLESEQ)");

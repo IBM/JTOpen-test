@@ -40,7 +40,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             AS400Float8 conv = new AS400Float8();
-            succeeded();
+            assertCondition(true, "conv="+conv); 
         }
         catch (Exception e)
         {
@@ -184,7 +184,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Long(0));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -209,7 +209,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -328,7 +328,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Double(0.0), new byte[7]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -353,7 +353,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Long(0), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -378,7 +378,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -403,7 +403,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Double(0.0), null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -489,7 +489,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(0.0, new byte[7]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -514,7 +514,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(0.0, null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -629,7 +629,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Double(0.0), new byte[7], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -654,7 +654,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Double(0.0), new byte[10], 4);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -679,7 +679,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Double(0.0), new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -704,7 +704,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Long(0), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -729,7 +729,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -754,7 +754,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Double(0.0), null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -869,7 +869,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(0.0, new byte[6], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -894,7 +894,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(0.0, new byte[9], 3);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -919,7 +919,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(0.0, new byte[10], -2);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -944,7 +944,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(0.0, null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1027,7 +1027,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[5]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1052,7 +1052,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -1129,7 +1129,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[7], 0);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1154,7 +1154,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[12], 5);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
@@ -1179,7 +1179,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[12], -10);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
@@ -1204,7 +1204,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -1277,7 +1277,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             double d = conv.toDouble(new byte[7]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+d);
         }
         catch (Exception e)
         {
@@ -1302,7 +1302,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             double d = conv.toDouble(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+d);
         }
         catch (Exception e)
         {
@@ -1370,7 +1370,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             double d = conv.toDouble(new byte[7], 0);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+d);
         }
         catch (Exception e)
         {
@@ -1395,7 +1395,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             double d = conv.toDouble(new byte[12], 5);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+d);
         }
         catch (Exception e)
         {
@@ -1420,7 +1420,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             double d = conv.toDouble(new byte[12], -10);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+d);
         }
         catch (Exception e)
         {
@@ -1445,7 +1445,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             double d = conv.toDouble(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+d);
         }
         catch (Exception e)
         {

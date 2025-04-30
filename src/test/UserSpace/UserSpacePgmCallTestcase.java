@@ -53,6 +53,8 @@ public class UserSpacePgmCallTestcase extends Testcase
 
   private String collectorMessage_ = "";
 
+  int numBytes = 0; 
+
   public void setRegressionTest(boolean regression)
   {
       regression_ = regression;
@@ -212,7 +214,8 @@ public class UserSpacePgmCallTestcase extends Testcase
       else {
          // Get output
          AS400Text textConverter = new AS400Text(10, pwrSys_.getCcsid(), pwrSys_);
-         String resourceName = (String)textConverter.toObject(resourceBytes);
+         @SuppressWarnings("unused")
+        String resourceName = (String)textConverter.toObject(resourceBytes);
 
          collectorWrite = true;         // Write successful.
        }
@@ -242,7 +245,7 @@ catch (Exception ex)
       collectorParmList[1] = new ProgramParameter(setName("*COMM", 10) );
 
       // input parm - time between collections (bin4)
-      byte[] size = new byte[4];
+      // byte[] size = new byte[4];
       AS400Bin4  bin4Converter = new AS400Bin4();
       collectorParmList[2] = new ProgramParameter(bin4Converter.toBytes(240) );
 
@@ -481,7 +484,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if dataBuffer has length 
         int lengthBefore = aUserSpace.getLength();
         aUserSpace.write(new byte[0], 0);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+lengthBefore);
      }
      catch (Exception e)
      {
@@ -510,7 +513,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if dataBuffer has length 
         int lengthBefore = aUserSpace.getLength();
         aUserSpace.write(new byte[0], 0, 0, 0);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+lengthBefore);
      }
      catch (Exception e)
      {
@@ -539,7 +542,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if dataBuffer has length 
         int lengthBefore = aUserSpace.getLength();
         aUserSpace.write(new byte[0], 0, 0, 0, 0);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+lengthBefore);
      }
      catch (Exception e)
      {
@@ -570,7 +573,7 @@ dataBuffer + userSpaceOffset is greater than maxUserSpaceSize.
         byte[] dataBuffer = { 0, 1, 2, 3 };
         aUserSpace.write(dataBuffer, 16776702);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+lengthBefore);
      }
      catch (Exception e)
      {
@@ -907,7 +910,7 @@ the length of the dataBuffer.
         int usLength = aUserSpace.getLength();
         aUserSpace.write(writeBuffer, 0, writeBuffer.length, 0);
 
-        failed("No Exception occurred.");
+        failed("No Exception occurred."+usLength);
      }
      catch (Exception e)
      {
@@ -938,7 +941,7 @@ the length of the data buffer.
         int usLength = aUserSpace.getLength();
         aUserSpace.write(writeBuffer, 0, writeBuffer.length + 1, writeBuffer.length, 0);
 
-        failed("No Exception occurred.");
+        failed("No Exception occurred."+usLength);
      }
      catch (Exception e)
      {
@@ -1054,7 +1057,7 @@ the length of the data buffer.
         int usLength = aUserSpace.getLength();
         aUserSpace.write(writeBuffer, 0, 0, writeBuffer.length + 1);
 
-        failed("No Exception occurred.");
+        failed("No Exception occurred."+usLength);
      }
      catch (Exception e)
      {
@@ -1087,7 +1090,7 @@ the length of the User Space.
 
         aUserSpace.write("WRITE_TEST", usLength + 1);
 
-        succeeded();
+        assertCondition(true, "writeBuffer="+writeBuffer); 
      }
      catch (Exception e)
      {
@@ -1115,7 +1118,7 @@ the length of the data buffer.
         int usLength = aUserSpace.getLength();
         aUserSpace.write(writeBuffer, 0, writeBuffer.length + 1, writeBuffer.length, 0);
 
-        failed("No Exception occurred.");
+        failed("No Exception occurred."+usLength);
      }
      catch (Exception e)
      {
@@ -1146,7 +1149,7 @@ the length of the data buffer.
         int usLength = aUserSpace.getLength();
         aUserSpace.write(writeBuffer, 0, 0, writeBuffer.length + 1, 0);
 
-        failed("No Exception occurred.");
+        failed("No Exception occurred."+usLength);
      }
      catch (Exception e)
      {
@@ -1239,17 +1242,16 @@ Ensure that changed are not forced.
         int i = 0;
         int j = 0;
         byte[] inByte = new byte[1];
-
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           numBytes = aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != data.length);
 
         if (i == data.length)
            succeeded();
         else
-           failed("Byte mismatch during write.");
+           failed("Byte mismatch during write."+numBytes);
      }
      catch (Exception e)
      {
@@ -1283,16 +1285,17 @@ Ensure that changed are forced asynchronously.
         int j = 0;
         byte[] inByte = new byte[1];
 
+        int numBytes;
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           numBytes = aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != data.length);
 
         if (i == data.length)
            succeeded();
         else
-           failed("Byte mismatch during write.");
+           failed("Byte mismatch during write."+numBytes);
      }
      catch (Exception e)
      {
@@ -1328,7 +1331,7 @@ Ensure that changed are forced synchronously.
 
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           numBytes = aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != data.length);
 
@@ -1370,7 +1373,7 @@ Write every possible byte to a User Space.
 
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           numBytes = aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != 256);
 
@@ -1412,7 +1415,7 @@ Write every possible byte to a User Space.
 
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           numBytes = aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != 256);
 
@@ -1455,7 +1458,7 @@ Write every possible byte to a User Space.
 
         do
         {
-           int numBytes = aUserSpace.read(inByte, i++);
+           numBytes = aUserSpace.read(inByte, i++);
         }
         while(inByte[0] == data[j++] && j != 256);
 
@@ -1525,7 +1528,7 @@ to write past the maximum length of a user space.
   public void Var038()
   {
     setVariation(38);
-    byte[] data = { 1, 2, 3, 4, 5};
+    // byte[] data = { 1, 2, 3, 4, 5};
     UserSpace aUserSpace = null;
 
     try
@@ -1723,7 +1726,7 @@ Ensure that ExtededIOException is thrown if dataBuffer + userSpaceOffset is grea
         byte[] dataBuffer = { 0, 1, 2, 3 };
         aUserSpace.write(dataBuffer, 16776702, 0, dataBuffer.length);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+lengthBefore);
      }
      catch (Exception e)
      {
@@ -1753,7 +1756,7 @@ Ensure that ExtendedIOException is thrown if dataBuffer + userSpaceOffset is gre
         byte[] dataBuffer = { 0, 1, 2, 3 };
         aUserSpace.write(dataBuffer, 16776702, 0, dataBuffer.length, 0);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+lengthBefore);
      }
      catch (Exception e)
      {
@@ -1940,7 +1943,7 @@ the length of the dataBuffer.
         int usLength = aUserSpace.getLength();
         aUserSpace.write(writeBuffer, 0, writeBuffer.length, 0, 0);
 
-        failed("No Exception occurred.");
+        failed("No Exception occurred."+usLength);
      }
      catch (Exception e)
      {
@@ -1971,7 +1974,7 @@ the length of the data buffer.
         int usLength = aUserSpace.getLength();
         aUserSpace.write(writeBuffer, 0, writeBuffer.length + 1, writeBuffer.length);
 
-        failed("No Exception occurred.");
+        failed("No Exception occurred."+usLength);
      }
      catch (Exception e)
      {
@@ -2268,7 +2271,7 @@ Ensure that NullPointerException is thrown if dataBuffer is null.
       UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
       aUserSpace.setMustUseProgramCall(true);
       byte[] inBuffer = null;
-      int bytesReturned = aUserSpace.read(inBuffer, 0);
+      numBytes = aUserSpace.read(inBuffer, 0);
 
       failed("Expected exception did not occur");
     }
@@ -2292,7 +2295,7 @@ Ensure the NullPointerException is thrown if dataBuffer is null.
         UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
         aUserSpace.setMustUseProgramCall(true);
         byte[] inBuffer = null;
-        int bytesReturned = aUserSpace.read(inBuffer, 0, 0, 0);
+        numBytes = aUserSpace.read(inBuffer, 0, 0, 0);
 
         failed("Expected exception did not occur.");
      }
@@ -2316,7 +2319,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if the length of dataBuff
     {
       UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
       aUserSpace.setMustUseProgramCall(true);
-      int bytesReturned = aUserSpace.read(new byte[0], 0);
+      numBytes = aUserSpace.read(new byte[0], 0);
 
       failed("Expected exception did not occur.");
     }
@@ -2342,7 +2345,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if userSpaceOffset is out
         byte[] inBuffer = new byte[20];
         UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
         aUserSpace.setMustUseProgramCall(true);
-        int byteCount = aUserSpace.read(inBuffer, -1);
+        numBytes = aUserSpace.read(inBuffer, -1);
      }
      catch (Exception e)
      {
@@ -2365,7 +2368,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument two is < 0.
     {
       UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
       aUserSpace.setMustUseProgramCall(true);
-      int bytesReturned = aUserSpace.read(new byte[1], -1, 1, 1);
+      numBytes = aUserSpace.read(new byte[1], -1, 1, 1);
 
       failed("Expected exception did not occur.");
     }
@@ -2394,7 +2397,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if userSpaceOffset is les
         // Attempt to set offset to null
         String inString = aUserSpace.read(-1, 20);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+inString);
      }
      catch (Exception e)
      {
@@ -2506,7 +2509,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if argument three is < 0.
     {
       UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
       aUserSpace.setMustUseProgramCall(true);
-      int bytesReturned = aUserSpace.read(new byte[1], 0, -1, 1);
+      numBytes = aUserSpace.read(new byte[1], 0, -1, 1);
       failed("Expected exception did not occur.");
     }
     catch (Exception e)
@@ -2558,7 +2561,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if length is 0.
         aUserSpace.setMustUseProgramCall(true);
         String readString = aUserSpace.read(0, 0);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+readString);
      }
      catch (Exception e)
      {
@@ -2583,7 +2586,7 @@ the length of the dataBuffer.
         aUserSpace.setMustUseProgramCall(true);
         byte[] readBuffer = new byte[20];
         readBuffer[19] = 19;
-        int bytesReturned = aUserSpace.read(readBuffer, 0, readBuffer.length, 0);
+        numBytes = aUserSpace.read(readBuffer, 0, readBuffer.length, 0);
 
         failed("Expected exception did not occur.");
      }
@@ -2609,7 +2612,7 @@ the length of the data buffer.
         UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
         aUserSpace.setMustUseProgramCall(true);
         byte[] readBuffer = new byte[20];
-        int bytesReturned = aUserSpace.read(readBuffer, 0, readBuffer.length + 1, readBuffer.length);
+        numBytes = aUserSpace.read(readBuffer, 0, readBuffer.length + 1, readBuffer.length);
 
         failed("Expected exception did not occur.");
      }
@@ -2635,7 +2638,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if length is < 0.
         aUserSpace.setMustUseProgramCall(true);
         String readString = aUserSpace.read(0, -1);
 
-        failed("Expected exception did not occur.");
+        failed("Expected exception did not occur."+readString);
      }
      catch (Exception e)
      {
@@ -2657,7 +2660,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if length is < 0.
      {
         UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
         aUserSpace.setMustUseProgramCall(true);
-        int bytesReturned = aUserSpace.read(new byte[10], 0, 0, -1);
+        numBytes = aUserSpace.read(new byte[10], 0, 0, -1);
 
         failed("Expected exception did not occur.");
      }
@@ -2683,7 +2686,7 @@ the length of the data buffer.
         UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
         aUserSpace.setMustUseProgramCall(true);
         byte[] readBuffer = new byte[20];
-        int bytesReturned = aUserSpace.read(readBuffer, 0, 0, readBuffer.length + 1);
+        numBytes = aUserSpace.read(readBuffer, 0, 0, readBuffer.length + 1);
 
         failed("Expected exception did not occur.");
      }
@@ -2776,7 +2779,7 @@ Read and verify every byte of a user space containing all possible byte values.
           if(i == data.length)
              succeeded();
           else
-             failed("Unexpected results occurred.");
+             failed("Unexpected results occurred."+i1);
 
        }
        else
@@ -2784,8 +2787,7 @@ Read and verify every byte of a user space containing all possible byte values.
           int i1;
           int i = 0;
           byte[] inByte1 = new byte[1];
-          byte[] inByte2 = new byte[1];
-          do
+           do
           {
              i1 = aUserSpace.read(inByte1, i);
           }
@@ -2794,7 +2796,7 @@ Read and verify every byte of a user space containing all possible byte values.
           if (i == data.length)
              succeeded();
           else
-             failed("Unexpected results occurred.");
+             failed("Unexpected results occurred."+i1);
        }
     }
     catch (Exception e)
@@ -2840,7 +2842,7 @@ Read and verify every byte of a user space containing all possible byte values.
           if(i == data.length)
              succeeded();
           else
-             failed("Unexpected results occurred.");
+             failed("Unexpected results occurred."+i1);
 
        }
        else
@@ -2848,7 +2850,6 @@ Read and verify every byte of a user space containing all possible byte values.
           int i1;
           int i = 0;
           byte[] inByte1 = new byte[1];
-          byte[] inByte2 = new byte[1];
           do
           {
              i1 = aUserSpace.read(inByte1, i);
@@ -2858,7 +2859,7 @@ Read and verify every byte of a user space containing all possible byte values.
           if (i == data.length)
              succeeded();
           else
-             failed("Unexpected results occurred.");
+             failed("Unexpected results occurred."+i1);
        }
     }
     catch (Exception e)
@@ -2990,7 +2991,7 @@ Ensure AS400SecurityException is thrown if the user does not have authority to t
         aUserSpace.setMustUseProgramCall(true);
 
         byte[] data = new byte[20];
-        int bytesReturned = aUserSpace.read(data, 0);
+        numBytes = aUserSpace.read(data, 0);
 
         failed("Expected exception did not occur (make sure -uid on command line does not have authority to "+testauth+".LIB/usread2.usrspc).");
      }
@@ -3027,14 +3028,14 @@ Ensure AS400SecurityException is thrown if the user does not have authority to t
            byte[] data = new byte[20];
            UserSpace aUserSpace = new UserSpace(systemObject_, authorityUserSpace_);
            aUserSpace.setMustUseProgramCall(true);
-           int bytes = aUserSpace.read(data, 0);
+           numBytes = aUserSpace.read(data, 0);
         }
         else
         {
            byte[] data = new byte[20];
            UserSpace aUserSpace = new UserSpace(usSystem_, authorityUserSpace_);
            aUserSpace.setMustUseProgramCall(true);
-           int bytes = aUserSpace.read(data, 0);
+           numBytes = aUserSpace.read(data, 0);
         }
 
         failed("Expected exception did not occur (make sure -uid on command line does not have authority to "+authlib+".LIB/usread1.usrspc).");
@@ -3079,7 +3080,7 @@ Ensure that ExtendedIllegalArgumentException is thrown with CPF2105 if the User 
         aUserSpace.setMustUseProgramCall(true);
 
         byte[] dataBuffer = new byte[20];
-        int bytesReturned = aUserSpace.read(dataBuffer, 0);
+        numBytes = aUserSpace.read(dataBuffer, 0);
 
         failed("Exception did not occur.");
     }
@@ -3143,7 +3144,7 @@ Ensure that ExtendedIllegalArgumentException is thrown if the length of dataBuff
     {
       UserSpace aUserSpace = new UserSpace(systemObject_, pre_existingUserSpace_);
       aUserSpace.setMustUseProgramCall(true);
-      int bytesReturned = aUserSpace.read(new byte[0], 0, 0, 0);
+      numBytes = aUserSpace.read(new byte[0], 0, 0, 0);
 
       failed("Expected exception did not occur.");
     }
@@ -3251,7 +3252,7 @@ Ensure that a second UserSpace object can read from a open user space.(same AS40
         secondUS.setMustUseProgramCall(true);
 
         byte[] dataBuffer = new byte[16];
-        int bytes = secondUS.read(dataBuffer, 0);
+        numBytes = secondUS.read(dataBuffer, 0);
 
         succeeded();
     }
@@ -3288,7 +3289,7 @@ Ensure that a second UserSpace object can read from a user space after it is clo
         secondUS.setMustUseProgramCall(true);
 
         byte[] dataBuffer = new byte[16];
-        int bytes = secondUS.read(dataBuffer, 0);
+        numBytes = secondUS.read(dataBuffer, 0);
 
         succeeded();
     }
@@ -3326,10 +3327,10 @@ Verify that an Exception is thrown if a second user space object trys to read fr
         secondUS.setMustUseProgramCall(true);
 
         byte[] dataBuffer = new byte[16];
-        int bytes = aUserSpace.read(dataBuffer, 0);
+        numBytes = aUserSpace.read(dataBuffer, 0);
 
         byte[] dataBuffer2 = new byte[16];
-        int bytes2 = secondUS.read(dataBuffer2, 0);
+        numBytes = secondUS.read(dataBuffer2, 0);
 
 
         succeeded();
@@ -3360,7 +3361,7 @@ Ensure that UserSpace.read is successful after the user space is closed (same AS
         aUserSpace.close();             // Close the user space.
 
         byte[] dataBuffer = new byte[16];
-        int bytes = aUserSpace.read(dataBuffer, 0);
+        numBytes = aUserSpace.read(dataBuffer, 0);
 
         succeeded();
     }
@@ -3379,7 +3380,7 @@ Verify that the size of the User Space matches the length parameter used during 
   {
     int initialSize = 12000;
     int tempSize;
-    int predictedSize;
+    int predictedSize = 0;
     int a = 1;
     UserSpace aUserSpace = null;
 
@@ -3418,7 +3419,7 @@ Verify that the size of the User Space matches the length parameter used during 
     }
     catch (Exception e)
     {
-       failed(e, "Unexpected exception occurred.");
+       failed(e, "Unexpected exception occurred."+predictedSize);
     }
 
     // delete the user space
@@ -3673,7 +3674,7 @@ Ensure that the System cannot be reset after a connection.
         aUserSpace.create(11000, true, " ", (byte)0x00, "USSET test", "*ALL");
 
         aUserSpace.setMustUseProgramCall(true);
-
+        as400.close(); 
         failed("Exception did not occur.");
     }
     catch (Exception e)
@@ -3799,6 +3800,7 @@ JVM.
 
            try {
               aUserSpace.write(inputBuffer, 3584);
+              assertCondition(false, "show throw exception "+initialSize);
            }
            catch (Exception e)
            {
@@ -3934,6 +3936,7 @@ Ensure that an IOException is thrown if the length parameter is greater than MAX
        // Attempt to reset the system
        AS400 newAS400 = new AS400();
        aUserSpace.setLength(16776705);
+       newAS400.close(); 
      }
      catch (Exception e)
      {
@@ -4183,7 +4186,7 @@ Verify that getInitialValue() can be called after a User Space write.
 
         byte testByte = aUserSpace.getInitialValue();
 
-        succeeded();
+        assertCondition(true,"read byte" + testByte);
      }
      catch (Exception e)
      {
@@ -4205,7 +4208,7 @@ Verify that IOException is thrown if the library does not exist.
      aUserSpace.setMustUseProgramCall(true);
 
      try {
-        int testLength = aUserSpace.getLength();
+        numBytes = aUserSpace.getLength();
 
         failed("No exception occurred.");
      }

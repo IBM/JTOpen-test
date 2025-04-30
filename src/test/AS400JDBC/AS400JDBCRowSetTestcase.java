@@ -648,9 +648,9 @@ public class AS400JDBCRowSetTestcase extends Testcase {
         AS400 authoritySys = new AS400(systemObject_.getSystemName(), // @A7A
             authorityUsr_, authorityPwd_.toCharArray()); // @A7A
         CommandCall cmd = new CommandCall(authoritySys); // @A7A
-        cmd.run("GRTOBJAUT OBJ(QSYS/" + collName_ + ") OBJTYPE(*LIB) " // @A7A
+        cmd.run("QSYS/GRTOBJAUT OBJ(QSYS/" + collName_ + ") OBJTYPE(*LIB) " // @A7A
             + "USER(*PUBLIC) AUT(*ALL)"); // @A7A
-        cmd.run("GRTOBJAUT OBJ(" + collName_ + "/QSQJRN) OBJTYPE(*JRN) " // @A7A
+        cmd.run("QSYS/GRTOBJAUT OBJ(" + collName_ + "/QSQJRN) OBJTYPE(*JRN) " // @A7A
             + "USER(*PUBLIC) AUT(*ALL)"); // @A7A
       } // @A7A
 

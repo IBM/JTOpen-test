@@ -33,19 +33,6 @@ public class DTInterfaceTestcase extends Testcase
      }
      test.DTTest.main(newArgs); 
    }
-  // New method was added in JTOpen 6.3: AS400DataType.getJavaType()
-  private static boolean isGetJavaTypeMethodDefined_ = true;
-  static {
-    try {
-      isGetJavaTypeMethodDefined_ = TOOLBOX_PACKAGE.isCompatibleWith("6.1.0.6");
-      // V6R1M0 PTF 6 (JTOpen 6.3)
-    }
-    catch (NumberFormatException e) {
-      System.out.println("DTInterfaceTestcase is unable to determine version of Toolbox package.  Error message is: " + e.getMessage());
-      System.out.println("Suggestion: Remove local Toolbox .class files from classpath.");
-      isGetJavaTypeMethodDefined_ = true; // assume we're using a current Toolbox jar
-    }
-  }
 
 
     public void Var001()

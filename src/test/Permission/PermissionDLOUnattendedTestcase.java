@@ -196,8 +196,8 @@ public void Var001()
     try {
         IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QDLS/TESTFLR1");
         Permission pers = new Permission(file);
-                DLOPermission  f = new DLOPermission("TESTUSER41");
-        succeeded();
+        DLOPermission  f = new DLOPermission("TESTUSER41");
+        assertCondition(true, "Able to create permissions "+pers+" "+f); 
         
     }
     catch (Exception e) {
@@ -216,7 +216,7 @@ in constructor.
   {
     try {
         DLOPermission f = new DLOPermission(null);
-        failed("Exception didn't occur.");
+        failed("Exception didn't occur."+f);
         dumpSetupStringBuffer(); 
     }
     catch(Exception e)
@@ -581,7 +581,7 @@ public void Var013()
          p.writeObject(f);           
          p.flush();
          ostream.close();
-         succeeded();
+         assertCondition(true, "Able to create permission "+per); 
     }
     catch(Exception e)
     {
@@ -620,7 +620,7 @@ Method tested: writeObject() and readObject()
          RootPermission permission = (RootPermission)p1.readObject();
           
          istream.close();
-         assertCondition(permission.getUserID().equals("TESTUSER41"));
+         assertCondition(permission.getUserID().equals("TESTUSER41"), "Permissions not correct "+pers);
           
     }
     catch(Exception e)
