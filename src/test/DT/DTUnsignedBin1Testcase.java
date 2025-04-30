@@ -40,7 +40,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             AS400UnsignedBin1 conv = new AS400UnsignedBin1();
-            succeeded();
+            assertCondition(true, "conv="+conv); 
         }
         catch (Exception e)
         {
@@ -168,7 +168,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new String());
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -193,7 +193,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Short((short)-1));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -218,7 +218,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Short((short)0x1000));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -243,7 +243,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -293,7 +293,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes((short)-1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -318,7 +318,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes((short)0x0100);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -382,7 +382,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), new byte[0]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -407,7 +407,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new String(), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -432,7 +432,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)-1), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -457,7 +457,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0x0100), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -482,7 +482,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -507,7 +507,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -571,7 +571,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, new byte[0]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -596,7 +596,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)-1, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -621,7 +621,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0x0100, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -646,7 +646,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -761,7 +761,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), new byte[0], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -786,7 +786,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), new byte[11], 11);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -811,7 +811,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -836,7 +836,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new String(), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -861,7 +861,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)-1), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -886,7 +886,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0x0100), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -911,7 +911,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -936,7 +936,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1051,7 +1051,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, new byte[0], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1076,7 +1076,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, new byte[11], 11);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1101,7 +1101,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1126,7 +1126,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)-1, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1151,7 +1151,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0x0100, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1176,7 +1176,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1247,7 +1247,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[0]);
-            failed("no exception thrown for too small array");
+            failed("no exception thrown for too small array"+obj);
         }
         catch (Exception e)
         {
@@ -1272,7 +1272,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -1350,7 +1350,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[0], 0);
-            failed("no exception thrown for too small array");
+            failed("no exception thrown for too small array"+obj);
         }
         catch (Exception e)
         {
@@ -1375,7 +1375,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[2], 2);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
@@ -1400,7 +1400,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[3], -67);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
@@ -1425,7 +1425,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -1487,7 +1487,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int i = conv.toShort(new byte[0]);
-            failed("no exception thrown for too small array");
+            failed("no exception thrown for too small array"+i);
         }
         catch (Exception e)
         {
@@ -1512,7 +1512,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int i = conv.toShort(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+i);
         }
         catch (Exception e)
         {
@@ -1581,7 +1581,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int i = conv.toShort(new byte[0], 0);
-            failed("no exception thrown for too small array");
+            failed("no exception thrown for too small array"+i);
         }
         catch (Exception e)
         {
@@ -1606,7 +1606,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int i = conv.toShort(new byte[2], 2);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+i);
         }
         catch (Exception e)
         {
@@ -1631,7 +1631,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int i = conv.toShort(new byte[3], -67);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+i);
         }
         catch (Exception e)
         {
@@ -1656,7 +1656,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             int i = conv.toShort(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+i);
         }
         catch (Exception e)
         {

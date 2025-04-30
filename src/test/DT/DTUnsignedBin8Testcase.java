@@ -61,7 +61,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    AS400UnsignedBin8 conv = new AS400UnsignedBin8();
-	    succeeded();
+	    assertCondition(true,"conv="+conv); 
 	}
 	catch (Exception e)
 	{
@@ -205,7 +205,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    byte[] ret = conv.toBytes(new Object());
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -230,7 +230,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    byte[] ret = conv.toBytes(toBigInteger(-10));
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -255,7 +255,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    byte[] ret = conv.toBytes(TOO_LARGE_BIG_INTEGER);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -280,7 +280,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    byte[] ret = conv.toBytes(null);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -340,7 +340,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    byte[] ret = conv.toBytes(-10);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -365,7 +365,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    byte[] ret = conv.toBytes(TOO_LARGE_BIG_INTEGER);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -461,7 +461,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(toBigInteger(0), new byte[2]);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -486,7 +486,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(new Object(), new byte[10]);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -511,7 +511,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(toBigInteger(-10), new byte[10]);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -536,7 +536,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(TOO_LARGE_BIG_INTEGER, new byte[10]);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -561,7 +561,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(null, new byte[10]);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -586,7 +586,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(toBigInteger(0), null);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -682,7 +682,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(0, new byte[2]);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -707,7 +707,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(-10, new byte[10]);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -732,7 +732,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(TOO_LARGE_BIG_INTEGER, new byte[10]);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -757,7 +757,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(0, null);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -894,7 +894,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(toBigInteger(0), new byte[3], 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -919,7 +919,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(toBigInteger(0), new byte[5], 2);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -944,7 +944,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(toBigInteger(0), new byte[10], -7);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -969,7 +969,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(new Object(), new byte[10], 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -994,7 +994,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(toBigInteger(-10), new byte[10], 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1019,7 +1019,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(TOO_LARGE_BIG_INTEGER, new byte[10], 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1044,7 +1044,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(null, new byte[10], 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1069,7 +1069,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(toBigInteger(0), null, 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1206,7 +1206,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(0, new byte[2], 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1231,7 +1231,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(0, new byte[5], 2);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1256,7 +1256,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(0, new byte[10], -7);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1281,7 +1281,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(-10, new byte[10], 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1306,7 +1306,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(TOO_LARGE_BIG_INTEGER, new byte[10], 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1331,7 +1331,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    int ret = conv.toBytes(0, null, 0);
-	    failed("No exception thrown.");
+	    failed("Did not throw exception. ret="+ret);
 	}
 	catch (Exception e)
 	{
@@ -1432,7 +1432,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    Object obj = conv.toObject(new byte[2]);
-	    failed("no exception thrown for too small array");
+	    failed("no exception thrown for too small array"+obj);
 	}
 	catch (Exception e)
 	{
@@ -1457,7 +1457,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    Object obj = conv.toObject(null);
-	    failed("no exception thrown for null pointer");
+	    failed("no exception thrown for null pointer"+obj);
 	}
 	catch (Exception e)
 	{
@@ -1549,7 +1549,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    Object obj = conv.toObject(new byte[2], 0);
-	    failed("no exception thrown for too small array");
+	    failed("no exception thrown for too small array"+obj);
 	}
 	catch (Exception e)
 	{
@@ -1574,7 +1574,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    Object obj = conv.toObject(new byte[7], 4);
-	    failed("no exception thrown for not enough space");
+	    failed("no exception thrown for not enough space"+obj);
 	}
 	catch (Exception e)
 	{
@@ -1599,7 +1599,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    Object obj = conv.toObject(new byte[4], -5);
-	    failed("no exception thrown for negative value");
+	    failed("no exception thrown for negative value"+obj);
 	}
 	catch (Exception e)
 	{
@@ -1624,7 +1624,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    Object obj = conv.toObject(null, 0);
-	    failed("no exception thrown for null pointer");
+	    failed("no exception thrown for null pointer"+obj);
 	}
 	catch (Exception e)
 	{
@@ -1714,7 +1714,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    BigInteger l = conv.toBigInteger(new byte[4]);
-	    failed("no exception thrown for too small array");
+	    failed("no exception thrown for too small array"+l);
 	}
 	catch (Exception e)
 	{
@@ -1739,7 +1739,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    BigInteger l = conv.toBigInteger(null);
-	    failed("no exception thrown for null pointer");
+	    failed("no exception thrown for null pointer"+l);
 	}
 	catch (Exception e)
 	{
@@ -1831,7 +1831,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    BigInteger l = conv.toBigInteger(new byte[2], 0);
-	    failed("no exception thrown for too small array");
+	    failed("no exception thrown for too small array"+l);
 	}
 	catch (Exception e)
 	{
@@ -1856,7 +1856,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    BigInteger l = conv.toBigInteger(new byte[7], 4);
-	    failed("no exception thrown for not enough space");
+	    failed("no exception thrown for not enough space"+l);
 	}
 	catch (Exception e)
 	{
@@ -1881,7 +1881,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    BigInteger l = conv.toBigInteger(new byte[4], -5);
-	    failed("no exception thrown for negative value");
+	    failed("no exception thrown for negative value"+l);
 	}
 	catch (Exception e)
 	{
@@ -1906,7 +1906,7 @@ public class DTUnsignedBin8Testcase extends Testcase
 	try
 	{
 	    BigInteger l = conv.toBigInteger(null, 0);
-	    failed("no exception thrown for null pointer");
+	    failed("no exception thrown for null pointer"+l);
 	}
 	catch (Exception e)
 	{

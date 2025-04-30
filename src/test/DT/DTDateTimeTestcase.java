@@ -13,7 +13,13 @@
 
 package test.DT;
 
-import com.ibm.as400.access.AS400;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import com.ibm.as400.access.AS400AbstractTime;
 import com.ibm.as400.access.AS400Date;
 import com.ibm.as400.access.AS400Time;
@@ -21,14 +27,6 @@ import com.ibm.as400.access.AS400Timestamp;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 import test.Testcase;
-
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
-import java.util.Locale;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  Testcase DTDateTimeTestcase.
@@ -387,7 +385,7 @@ public class DTDateTimeTestcase extends Testcase
     try
     {
       AS400Date converter = new AS400Date(99);
-      failed("No exception thrown.");
+      failed("No exception thrown."+converter);
     }
     catch (Exception e)
     {
@@ -405,7 +403,7 @@ public class DTDateTimeTestcase extends Testcase
     try
     {
       AS400Time converter = new AS400Time(0);
-      failed("No exception thrown.");
+      failed("No exception thrown."+converter);
     }
     catch (Exception e)
     {
@@ -533,14 +531,15 @@ public class DTDateTimeTestcase extends Testcase
       for (int fmt=minFormat; fmt<= maxFormat; fmt++)
       {
         AS400Date conv = new AS400Date(fmt);
-        String string = conv.toXsdString(defaultVal);
-        Object newObj = conv.parseXsdString(string);
+        String string = AS400Date.toXsdString(defaultVal);
+        Object newObj = AS400Date.parseXsdString(string);
         if (!(newObj instanceof java.sql.Date) ||
              !defaultVal.equals(newObj))
         {
           ok = false;
           System.out.println("Format " + fmt + " failed to round-trip correctly.");
           System.out.println("newObj is of type " + newObj.getClass().getName());
+          System.out.println("conv = "+conv);
         }
       }
       assertCondition(ok);
@@ -567,14 +566,14 @@ public class DTDateTimeTestcase extends Testcase
       for (int fmt=minFormat; fmt<= maxFormat; fmt++)
       {
         AS400Time conv = new AS400Time(fmt);
-        String string = conv.toXsdString(defaultVal);
-        Object newObj = conv.parseXsdString(string);
+        String string = AS400Time.toXsdString(defaultVal);
+        Object newObj = AS400Time.parseXsdString(string);
         if (!(newObj instanceof java.sql.Time) ||
              !defaultVal.equals(newObj))
         {
           ok = false;
           System.out.println("Format " + fmt + " failed to round-trip correctly.");
-          System.out.println("newObj is of type " + newObj.getClass().getName());
+          System.out.println("newObj is of type " + newObj.getClass().getName()+" conv="+conv);
         }
       }
       assertCondition(ok);
@@ -602,15 +601,15 @@ public class DTDateTimeTestcase extends Testcase
       //{
         //AS400Timestamp conv = new AS400Timestamp(fmt);
         AS400Timestamp conv = new AS400Timestamp();
-        String string = conv.toXsdString(defaultVal);
-        Object newObj = conv.parseXsdString(string);
+        String string = AS400Timestamp.toXsdString(defaultVal);
+        Object newObj = AS400Timestamp.parseXsdString(string);
         if (!(newObj instanceof java.sql.Timestamp) ||
              !defaultVal.equals(newObj))
         {
           ok = false;
           //System.out.println("Format " + fmt + " failed to round-trip correctly.");
           System.out.println("Timestamp object failed to round-trip correctly.");
-          System.out.println("newObj is of type " + newObj.getClass().getName());
+          System.out.println("newObj is of type " + newObj.getClass().getName()+" conv="+conv);
         }
       //}
       assertCondition(ok);

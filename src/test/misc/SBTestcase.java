@@ -48,6 +48,17 @@ public class SBTestcase extends Testcase
 
     private static CommandCall pwrCmd_;
    
+    
+    public static void main(String args[]) throws Exception {
+      String[] newArgs = new String[args.length+2];
+       newArgs[0] = "-tc";
+       newArgs[1] = "SBTestcase";
+       for (int i = 0; i < args.length; i++) {
+         newArgs[2+i]=args[i];
+       }
+       test.SBTest.main(newArgs); 
+     }
+
     /**
      Constructor.
      **/
@@ -90,9 +101,11 @@ public class SBTestcase extends Testcase
 
           sbs1.create();
           sbs1.changeDescriptionText("Test subsystem 1 for Toolbox Subsystem component");
-
+          
           sbs2.create();
           sbs2.changeDescriptionText("Test subsystem 2 for Toolbox Subsystem component");
+          
+          cmdRun("GRTOBJAUT OBJ("+subsystemLib_+"/*ALL) OBJTYPE(*ALL) USER("+userId_+")"); 
         }
       }
       catch(AS400Exception e) {
@@ -147,10 +160,16 @@ public class SBTestcase extends Testcase
       catch (Exception e) { e.printStackTrace(); }
     }
 
-    private static boolean createLibrary(String libName)
+    private  boolean createLibrary(String libName)
     {
       try { if (!pwrCmd_.run("QSYS/CRTLIB LIB("+libName+")")) return false; }
       catch (Exception e) { e.printStackTrace(); return false; }
+      
+     try { pwrCmd_.run("QSYS/GRTOBJAUT OBJ("+libName+")      OBJTYPE(*LIB) USER("+userId_ +") ");
+     }
+     catch (Exception e) { e.printStackTrace(); return false; }
+     
+
       return true;
     }
 

@@ -15,19 +15,16 @@ package test.DA;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Properties;
 
-import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400Exception;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CharacterDataArea;
-import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.DecimalDataArea;
 import com.ibm.as400.access.ErrorCompletingRequestException;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.LogicalDataArea;
-import com.ibm.as400.access.ObjectDescription;
 import com.ibm.as400.access.ObjectAlreadyExistsException;
+import com.ibm.as400.access.ObjectDescription;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 import com.ibm.as400.access.SystemProperties;
 
@@ -60,6 +57,7 @@ public class DACreateTestcase extends Testcase
   // We don't want static, since we want to pick up any dynamic changes.
   private final String COMMANDCALL_THREADSAFE_OLD = SystemProperties.getProperty(SystemProperties.COMMANDCALL_THREADSAFE);
   private final String PROGRAMCALL_THREADSAFE_OLD = SystemProperties.getProperty(SystemProperties.PROGRAMCALL_THREADSAFE);
+  String daTestLib_ = "DASEC";
 
     /**
      Performs setup needed before running variations.
@@ -67,10 +65,18 @@ public class DACreateTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        cmdRun("DLTDTAARA QGPL/CRTTEST", "CPF2105");
- 	deleteLibrary("DASEC"); 
-	// cmdRun("DLTxLIB DASEC", "CPF2110");
-        cmdRun("CRTLIB DASEC");
+        cmdRun("QSYS/DLTDTAARA QGPL/CRTTEST", "CPF2105");
+
+        if (testLib_ != null ) { 
+ 	  int len = testLib_.length(); 
+ 	  if (len >= 5) { 
+ 	    daTestLib_ = "DASEC"+testLib_.substring(len-5); 
+ 	  }
+ 	}
+        deleteLibrary(""+daTestLib_+""); 
+        cmdRun("QSYS/CRTLIB "+daTestLib_);
+        cmdRun("QsYS/GRTOBJAUT OBJ("+daTestLib_+")      OBJTYPE(*LIB) USER("+userId_+") ");
+        cmdRun("QSYS/GRTOBJAUT OBJ("+daTestLib_+"/*ALL) OBJTYPE(*ALL) USER("+userId_+")"); 
     }
 
     /**
@@ -79,8 +85,8 @@ public class DACreateTestcase extends Testcase
      **/
     protected void cleanup() throws Exception
     {
-        cmdRun("DLTDTAARA QGPL/CRTTEST", "CPF2105");
-	deleteLibrary("DASEC"); 
+        cmdRun("QSYS/DLTDTAARA QGPL/CRTTEST", "CPF2105");
+	deleteLibrary(""+daTestLib_+""); 
     }	
 
     private static String getTextDescription(ObjectDescription objDesc)
@@ -1239,11 +1245,11 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH"); 
             // Create library.
-            cmdRun("CRTLIB LIB(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH)");
             // Grant library authority for current user
-            cmdRun("GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmdRun("QSYS/GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
             // Revoke library authority for current user
-            cmdRun("RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
+            cmdRun("QSYS/RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
 
             CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
 
@@ -1280,11 +1286,11 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Create library.
-            cmdRun("CRTLIB LIB(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH)");
             // Grant library authority for current user.
-            cmdRun("GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmdRun("QSYS/GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
             // Revoke library authority for current user.
-            cmdRun("RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
+            cmdRun("QSYS/RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
 
             CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
 
@@ -1365,11 +1371,11 @@ public class DACreateTestcase extends Testcase
 	    deleteLibrary("DAAUTH");
 
             // Create library.
-            cmdRun("CRTLIB LIB(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH)");
             // Grant library authority for current user.
-            cmdRun("GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmdRun("QSYS/GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
             // Revoke library authority for current user.
-            cmdRun("RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
+            cmdRun("QSYS/RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
 
             DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
 
@@ -1406,11 +1412,11 @@ public class DACreateTestcase extends Testcase
 	    deleteLibrary("DAAUTH");
 
             // Create library.
-            cmdRun("CRTLIB LIB(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH)");
             // Grant library authority for current user.
-            cmdRun("GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmdRun("QSYS/GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
             // Revoke library authority for current user.
-            cmdRun("RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
+            cmdRun("QSYS/RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
 
             DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
 
@@ -1495,11 +1501,11 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Create library.
-            cmdRun("CRTLIB LIB(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH)");
             // Grant library authority for current user.
-            cmdRun("GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmdRun("QSYS/GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
             // Revoke library authority for current user.
-            cmdRun("RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
+            cmdRun("QSYS/RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
 
             LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
 
@@ -1534,11 +1540,11 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Create library.
-            cmdRun("CRTLIB LIB(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH)");
             // Grant library authority for current user.
-            cmdRun("GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmdRun("QSYS/GRTOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE *READ)");
             // Revoke library authority for current user.
-            cmdRun("RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
+            cmdRun("QSYS/RVKOBJAUT DAAUTH *LIB " + user + " AUT(*EXECUTE)");
 
             LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
 
@@ -1755,8 +1761,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(10, "Initial", " ", "*EXCLUDE");
             try
@@ -1785,8 +1791,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(10, "Initial", " ", "*ALL");
 
@@ -1807,8 +1813,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(10, "Initial", " ", "*CHANGE");
             try
@@ -1838,8 +1844,8 @@ public class DACreateTestcase extends Testcase
 	boolean errorReported = false; 
         try
         {
-            CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(10, "Initial", " ", "*USE");
             try
@@ -1871,12 +1877,12 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)", "CPF2105");
 
             // Create the authorization list.
-            cmdRun("CRTAUTL AUTL(DAAUTH) AUT(*USE)");
+            cmdRun("QSYS/CRTAUTL AUTL(DAAUTH) AUT(*USE)");
             // Create the library using the authorization list.
-            cmdRun("CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
 
             // Create the data area with the same authority as the library.
             CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
@@ -1890,7 +1896,7 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 failed("Expected exception did not occur.");
             }
             catch (Exception e)
@@ -1899,7 +1905,7 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
             }
 
@@ -1923,12 +1929,12 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)", "CPF2105");
 
             // Create the authorization list.
-            cmdRun("CRTAUTL AUTL(DAAUTH) AUT(*USE)");
+            cmdRun("QSYS/CRTAUTL AUTL(DAAUTH) AUT(*USE)");
             // Create the library using the authorization list.
-            cmdRun("CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
 
             // Create the data area with the same authority as the library
             CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
@@ -1942,7 +1948,7 @@ public class DACreateTestcase extends Testcase
 	    // Delete library.
 	    deleteLibrary("DAAUTH");
 	    // Delete the authorization list.
-		cmdRun("DLTAUTL AUTL(DAAUTH)");
+		cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 failed("Expected exception did not occur.");
             }
             catch (Exception e)
@@ -1951,7 +1957,7 @@ public class DACreateTestcase extends Testcase
 	    // Delete library.
 	    deleteLibrary("DAAUTH");
 	    // Delete the authorization list.
-		cmdRun("DLTAUTL AUTL(DAAUTH)");
+		cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
             }
 
@@ -1970,8 +1976,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(10, 2, new BigDecimal("1.1"), " ", "*EXCLUDE");
             try
@@ -2000,8 +2006,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(10, 2, new BigDecimal("1.1"), " ", "*ALL");
 
@@ -2022,8 +2028,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(10, 2, new BigDecimal("1.1"), " ", "*CHANGE");
             try
@@ -2052,8 +2058,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(10, 2, new BigDecimal("1.1"), " ", "*USE");
             try
@@ -2086,12 +2092,12 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)", "CPF2105");
 
             // Create the authorization list.
-            cmdRun("CRTAUTL AUTL(DAAUTH) AUT(*USE)");
+            cmdRun("QSYS/CRTAUTL AUTL(DAAUTH) AUT(*USE)");
             // Create the library using the authorization list.
-            cmdRun("CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
 
             // Create the data area with the same authority as the library.
             DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
@@ -2106,7 +2112,7 @@ public class DACreateTestcase extends Testcase
 	    // Delete library.
 	    deleteLibrary("DAAUTH");
 	    // Delete the authorization list.
-		cmdRun("DLTAUTL AUTL(DAAUTH)");
+		cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 failed("Expected exception did not occur.");
             }
             catch (Exception e)
@@ -2116,7 +2122,7 @@ public class DACreateTestcase extends Testcase
 	    // Delete library.
 	    deleteLibrary("DAAUTH");
 	    // Delete the authorization list.
-		cmdRun("DLTAUTL AUTL(DAAUTH)");
+		cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
             }
 
@@ -2139,12 +2145,12 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)", "CPF2105");
 
             // Create the authorization list.
-            cmdRun("CRTAUTL AUTL(DAAUTH) AUT(*USE)");
+            cmdRun("QSYS/CRTAUTL AUTL(DAAUTH) AUT(*USE)");
             // Create the library using the authorization list.
-            cmdRun("CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
 
             // Create the data area with the same authority as the library.
             DecimalDataArea da = new DecimalDataArea(pwrSys_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
@@ -2158,7 +2164,7 @@ public class DACreateTestcase extends Testcase
 	    // Delete library.
 	    deleteLibrary("DAAUTH");
 	    // Delete the authorization list.
-		cmdRun("DLTAUTL AUTL(DAAUTH)");
+		cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 failed("Expected exception did not occur.");
             }
             catch (Exception e)
@@ -2167,7 +2173,7 @@ public class DACreateTestcase extends Testcase
 	    // Delete library.
 	    deleteLibrary("DAAUTH");
 	    // Delete the authorization list.
-		cmdRun("DLTAUTL AUTL(DAAUTH)");
+		cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
             }
 
@@ -2186,8 +2192,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(true, " ", "*EXCLUDE");
             try
@@ -2216,8 +2222,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(true, " ", "*ALL");
 
@@ -2238,8 +2244,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(true, " ", "*CHANGE");
             try
@@ -2268,8 +2274,8 @@ public class DACreateTestcase extends Testcase
     {
         try
         {
-            LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
-            LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/DASEC.LIB/CRTTEST.DTAARA");
+            LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
+            LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
 
             da.create(true, " ", "*USE");
             try
@@ -2302,12 +2308,12 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)", "CPF2105");
 
             // Create the authorization list.
-            cmdRun("CRTAUTL AUTL(DAAUTH) AUT(*USE)");
+            cmdRun("QSYS/CRTAUTL AUTL(DAAUTH) AUT(*USE)");
             // Create the library using the authorization list.
-            cmdRun("CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
 
             // Create the data area with the same authority as the library.
             LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
@@ -2321,7 +2327,7 @@ public class DACreateTestcase extends Testcase
 	    // Delete library.
 	    deleteLibrary("DAAUTH");
 	    // Delete the authorization list.
-		cmdRun("DLTAUTL AUTL(DAAUTH)");
+		cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 failed("Expected exception did not occur.");
             }
             catch (Exception e)
@@ -2330,7 +2336,7 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
             }
 
@@ -2353,12 +2359,12 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)", "CPF2105");
 
             // Create the authorization list.
-            cmdRun("CRTAUTL AUTL(DAAUTH) AUT(*USE)");
+            cmdRun("QSYS/CRTAUTL AUTL(DAAUTH) AUT(*USE)");
             // Create the library using the authorization list.
-            cmdRun("CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
+            cmdRun("QSYS/CRTLIB LIB(DAAUTH) AUT(DAAUTH)");
 
             // Create the data area with the same authority as the library.
             LogicalDataArea da = new LogicalDataArea(pwrSys_, "/QSYS.LIB/DAAUTH.LIB/CRTTEST.DTAARA");
@@ -2372,7 +2378,7 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 failed("Expected exception did not occur.");
             }
             catch (Exception e)
@@ -2381,7 +2387,7 @@ public class DACreateTestcase extends Testcase
             // Delete library.
 	    deleteLibrary("DAAUTH");
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(DAAUTH)");
+            cmdRun("QSYS/DLTAUTL AUTL(DAAUTH)");
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
             }
 

@@ -13,27 +13,19 @@
 
 package test.Sysval;
 
-import com.ibm.as400.access.AS400;
+import java.math.BigDecimal;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Calendar;
+import java.util.Date;
+
+import com.ibm.as400.access.AS400Exception;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.SystemValue;
 import com.ibm.as400.access.SystemValueList;
 
 import test.Testcase;
-
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.AS400Exception;
-
-import java.io.FileOutputStream;
-import java.math.BigDecimal;
-import java.lang.Integer;
-import java.lang.String;
-import java.sql.Time;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.Vector;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 // For V4R2, there are 125 system values and 35 network attributes.
 // For V4R3, there are an additional 5 system values.
@@ -2764,7 +2756,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -3010,7 +3002,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -3108,7 +3100,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -3167,7 +3159,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -3231,7 +3223,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -3413,7 +3405,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -3647,7 +3639,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -3721,7 +3713,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -3779,7 +3771,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4060,7 +4052,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4118,7 +4110,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4224,7 +4216,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4408,7 +4400,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4574,7 +4566,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4649,7 +4641,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4723,7 +4715,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4859,7 +4851,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -4941,7 +4933,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -5087,7 +5079,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -5145,7 +5137,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -5341,7 +5333,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -5520,7 +5512,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -5634,7 +5626,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -5732,7 +5724,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -5846,7 +5838,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -5905,7 +5897,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6122,7 +6114,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6180,7 +6172,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6238,7 +6230,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6350,7 +6342,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6408,7 +6400,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6482,7 +6474,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6540,7 +6532,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6700,7 +6692,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6822,7 +6814,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6880,7 +6872,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6939,7 +6931,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -6997,7 +6989,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -7071,7 +7063,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -7337,7 +7329,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -7586,7 +7578,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -7673,7 +7665,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -7759,7 +7751,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -7842,7 +7834,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -7908,7 +7900,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -7971,7 +7963,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -8034,7 +8026,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           obj = "QSYS/QSYSOPR";
@@ -8170,7 +8162,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           obj = "(*LCLNETID *ANY)";
@@ -8316,7 +8308,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -8460,7 +8452,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           obj = "QSYS/QSYSOPR";
@@ -8604,7 +8596,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -8667,7 +8659,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -8730,7 +8722,7 @@ public class SysvalExtendedTestcase extends Testcase
         type = s.getType();
         obj = s.getValue();
         s.setValue(toSet);
-        failMsg += "Exception didn't occur.";
+        failMsg += "Exception didn't occur."+type;
         try
         {
           s.setValue(obj);
@@ -8877,7 +8869,7 @@ public class SysvalExtendedTestcase extends Testcase
       Object obj = null;
       Object toSet = "NOSUCHUSER";
       String failMsg = "";
-      int type;
+      // int type;
       SystemValue s = null;
       try
       {
@@ -8975,7 +8967,7 @@ public class SysvalExtendedTestcase extends Testcase
       Object obj = null;
       Object toSet = "AZ"; // not a valid country code
       String failMsg = "";
-      int type;
+      //int type;
       SystemValue s = null;
       try
       {

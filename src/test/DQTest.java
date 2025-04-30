@@ -196,6 +196,10 @@ public class DQTest extends TestDriver
 	if (!cmdRun("GRTOBJAUT OBJ(DQTEST) OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
 	    out_.println("CRTOBJAUT failed");
 	} 
+	
+	if (!cmdRun("GRTOBJAUT OBJ(DQTEST) OBJTYPE(*LIB) USER("+userId_+") AUT(*CHANGE)")) {
+	  out_.println("CRTOBJAUT failed");
+	} 
 
     }
 

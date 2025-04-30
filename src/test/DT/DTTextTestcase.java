@@ -102,7 +102,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             AS400Text converter = new AS400Text(-1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+converter);
         }
         catch (Exception e)
         {
@@ -194,7 +194,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             AS400Text converter = new AS400Text(-1000, 37);
-            failed("No exception thrown.");
+            failed("Did not throw exception. converted="+converter);
         }
         catch (Exception e)
         {
@@ -217,7 +217,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             AS400Text converter = new AS400Text(100, -37);
-            failed("No exception thrown.");
+            failed("Did not throw exception. converter="+converter);
         }
         catch (Exception e)
         {
@@ -296,7 +296,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             AS400Text converter = new AS400Text(-1000, 37, systemObject_);
-            failed("No exception thrown.");
+            failed("Did not throw exception. converter="+converter);
         }
         catch (Exception e)
         {
@@ -314,7 +314,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             AS400Text converter = new AS400Text(100, -37, systemObject_);
-            failed("No exception thrown.");
+            failed("Did not throw exception. converter="+converter);
         }
         catch (Exception e)
         {
@@ -339,7 +339,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             AS400Text converter = new AS400Text(100, 37, (AS400)null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. converter="+converter);
         }
         catch (Exception e)
         {
@@ -400,7 +400,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             AS400Text converter = new AS400Text(Integer.MIN_VALUE, "Cp037");
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+converter);
         }
         catch (Exception e)
         {
@@ -424,7 +424,7 @@ public class DTTextTestcase extends Testcase
         {
             AS400Text converter = new AS400Text(100, "NoSuchThing");
             converter.toBytes("hello"); // This will validate the encoding for this AS400Text object; it doesn't happen on the ctor anymore.
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+converter);
         }
         catch (Exception e)
         {
@@ -454,7 +454,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             AS400Text converter = new AS400Text(100, (String)null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+converter);
         }
         catch (Exception e)
         {
@@ -752,7 +752,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Character('a'));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -778,7 +778,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes("1234567890");
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -804,7 +804,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -938,7 +938,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes("abcde", new byte[3]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -964,7 +964,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Character('a'), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -990,7 +990,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes("1234567890", new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1016,7 +1016,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1042,7 +1042,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes("abcde", null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1172,7 +1172,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes("abcde", new byte[3], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1198,7 +1198,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes("abcde", new byte[7], 4);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1224,7 +1224,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new String("abcde"), new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1250,7 +1250,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Character('a'), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1276,7 +1276,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes("1234567890", new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1302,7 +1302,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1328,7 +1328,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             int ret = conv.toBytes("abcde", null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1462,7 +1462,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[3]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1488,7 +1488,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -1567,7 +1567,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[3], 0);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1593,7 +1593,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[15], 13);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
@@ -1619,7 +1619,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[15], -10);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
@@ -1645,7 +1645,7 @@ public class DTTextTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {

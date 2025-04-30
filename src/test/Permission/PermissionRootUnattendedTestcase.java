@@ -13,33 +13,23 @@
 
 package test.Permission;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.Permission;
 import com.ibm.as400.access.RootPermission;
 
 import test.PermissionTestDriver;
 import test.Testcase;
-
-import com.ibm.as400.access.CommandCall;
-import javax.swing.table.TableColumnModel;
-import java.awt.Frame;
-import java.awt.Point;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Date;
-import java.util.Vector;
-import java.io.File;
-import java.net.URL;
-import java.util.Hashtable; import java.util.Vector;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 
 /**
@@ -174,8 +164,9 @@ runs well.
     {
         IFSFile file = new IFSFile(PwrSys_,"/testdir2");
         Permission pers = new Permission(file);
-                RootPermission  f = new RootPermission("TESTUSER43");
-        succeeded();
+        RootPermission  f = new RootPermission("TESTUSER43");
+        assertCondition(true, "permission is" +pers+" "+f); 
+
     }
     catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -192,7 +183,7 @@ in constructor.
   {
     try {
         RootPermission f = new RootPermission(null);
-        failed("Exception didn't occur.");
+        failed("Exception didn't occur."+f);
     }
     catch(Exception e)
     {
@@ -934,7 +925,7 @@ Method tested: writeObject()
          p.writeObject(f);           
          p.flush();
          ostream.close();
-         succeeded();
+         assertCondition(true, "permission is" +per+" "+f); 
     }
     catch(Exception e)
     {
@@ -968,7 +959,7 @@ Method tested: writeObject() and readObject()
          RootPermission permission = (RootPermission)p1.readObject();
           
          istream.close();
-          assertCondition(permission.getUserID().equals("TESTUSER43"));
+          assertCondition(permission.getUserID().equals("TESTUSER43"), "User not correct pers="+pers);
           
     }
     catch(Exception e)

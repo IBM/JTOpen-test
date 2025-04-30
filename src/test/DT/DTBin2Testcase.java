@@ -40,7 +40,7 @@ public class DTBin2Testcase extends Testcase
         try
         {
             AS400Bin2 conv = new AS400Bin2();
-            succeeded();
+            assertCondition(true,""+conv);
         }
         catch (Exception e)
         {
@@ -60,7 +60,7 @@ public class DTBin2Testcase extends Testcase
             AS400Bin2 clone = (AS400Bin2)conv.clone();
             if (clone != null && clone != conv)
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -114,7 +114,7 @@ public class DTBin2Testcase extends Testcase
                     byte[] data = conv.toBytes(ret);
                     if (data.length == 2 && data[0] == 0 && data[1] == 0)
                     {
-                        succeeded();
+                        assertCondition(true,"");
                     }
                     else
                     {
@@ -145,7 +145,7 @@ public class DTBin2Testcase extends Testcase
             byte[] data = conv.toBytes(new Short((short)4343));
             if (data.length == 2 && data[0] == (byte)0x10 && data[1] == (byte)0xF7)
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -168,13 +168,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Double(0));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ClassCastException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -193,13 +193,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -220,7 +220,7 @@ public class DTBin2Testcase extends Testcase
             byte[] data = conv.toBytes((short)4343);
             if (data.length == 2 && data[0] == (byte)0x10 && data[1] == (byte)0xF7)
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -246,7 +246,7 @@ public class DTBin2Testcase extends Testcase
             int ret = conv.toBytes(new Short((short)4343), data);
             if (ret == 2 && data[0] == (byte)0x10 && data[1] == (byte)0xF7)
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -270,13 +270,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), new byte[0]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -295,13 +295,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Integer(0xFFFF), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ClassCastException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -320,13 +320,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -346,13 +346,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -427,13 +427,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, new byte[1]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -452,13 +452,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)5, null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -561,13 +561,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), new byte[1], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -587,13 +587,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), new byte[5], 4);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -613,13 +613,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -638,13 +638,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Integer(0xFFFF), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ClassCastException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -663,13 +663,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -689,13 +689,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Short((short)0), null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -798,13 +798,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, new byte[1], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -824,13 +824,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, new byte[5], 4);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -850,13 +850,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -876,13 +876,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             int ret = conv.toBytes((short)0, null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -975,13 +975,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[0]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1000,13 +1000,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1078,13 +1078,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[1], 0);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1103,13 +1103,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[10], 9);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1128,13 +1128,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[5], -100);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1153,13 +1153,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1232,13 +1232,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             short sh = conv.toShort(new byte[0]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+sh);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1257,13 +1257,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             short sh = conv.toShort(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+sh);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1325,13 +1325,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             short sh = conv.toShort(new byte[0]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+sh);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1350,13 +1350,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             short sh = conv.toShort(new byte[10], 9);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+sh);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1375,13 +1375,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             short sh = conv.toShort(new byte[5], -100);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+sh);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "ArrayIndexOutOfBoundsException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {
@@ -1400,13 +1400,13 @@ public class DTBin2Testcase extends Testcase
         try
         {
             short sh = conv.toShort(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+sh);
         }
         catch (Exception e)
         {
             if (exceptionIs(e, "NullPointerException"))
             {
-                succeeded();
+                assertCondition(true,"");
             }
             else
             {

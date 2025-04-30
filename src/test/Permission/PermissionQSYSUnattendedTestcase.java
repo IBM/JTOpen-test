@@ -13,33 +13,22 @@
 
 package test.Permission;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.Permission;
-import com.ibm.as400.access.UserPermission;
-
-import test.PermissionTestDriver;
-import test.Testcase;
-
-import com.ibm.as400.access.QSYSPermission;
-import com.ibm.as400.access.CommandCall;
-import javax.swing.table.TableColumnModel;
-import java.awt.Frame;
-import java.awt.Point;
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
 import java.util.Vector;
-import java.io.File;
-import java.net.URL;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.Permission;
+import com.ibm.as400.access.QSYSPermission;
+
+import test.PermissionTestDriver;
+import test.Testcase;
 
 
 /**
@@ -185,7 +174,7 @@ runs well.
         IFSFile file = new IFSFile(PermissionTestDriver.PwrSys,"/QSYS.LIB/testlib2.lib");
         Permission pers = new Permission(file);
                 QSYSPermission  f = new QSYSPermission("testuser42");
-        succeeded();
+        assertCondition(true, "permission is" +pers+" "+f); 
     }
     catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -202,7 +191,7 @@ in constructor.
   {
     try {
         QSYSPermission f = new QSYSPermission(null);
-        failed("Exception didn't occur.");
+        failed("Exception didn't occur."+f);
     }
     catch(Exception e)
     {
@@ -1543,7 +1532,8 @@ Method tested: writeObject()
          p.writeObject(f);           
          p.flush();
          ostream.close();
-         succeeded();
+         assertCondition(true, "permission is" +per+" "+f); 
+
     }
     catch(Exception e)
     {
@@ -1582,7 +1572,7 @@ Method tested: writeObject() and readObject()
          QSYSPermission permission = (QSYSPermission)p1.readObject();
           
          istream.close();
-         assertCondition(permission.getUserID().equals("TESTUSER42"));
+         assertCondition(permission.getUserID().equals("TESTUSER42"), "User not correct "+pers);
           
     }
     catch(Exception e)
@@ -1674,7 +1664,7 @@ Method tested: writeObject() and readObject()
 
      boolean result;
      result = QSYSPermission.hasObjectAuthorities(PermissionTestDriver.PwrSys, "TESTUSER42", path, new String[] {});
-     failed ("Did not throw exception.");
+     failed ("Did not throw exception."+result);
    }
    catch (Exception e) {
      assertExceptionIsInstanceOf (e, "com.ibm.as400.access.ExtendedIllegalArgumentException");

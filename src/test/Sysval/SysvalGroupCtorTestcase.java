@@ -49,7 +49,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup();
-            succeeded();
+            assertCondition(true, "created "+svg); 
         }
         catch (Exception e)
         {
@@ -66,7 +66,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description");
-            succeeded();
+            assertCondition(true, "created "+svg); 
         }
         catch (Exception e)
         {
@@ -84,7 +84,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(null, "NAME", "DESC");
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -102,7 +102,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, null, "DESC");
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -120,7 +120,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "NAME", null);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -138,7 +138,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "","DESC");
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -156,7 +156,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "NAME","");
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -173,7 +173,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_ALL);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -191,7 +191,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(null, "NAME", "DESC", SystemValueList.GROUP_ALL);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -209,7 +209,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, null, "DESC", SystemValueList.GROUP_ALL);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -227,7 +227,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "NAME", null, SystemValueList.GROUP_ALL);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -245,7 +245,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "","DESC", SystemValueList.GROUP_ALL);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -263,7 +263,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "NAME","", SystemValueList.GROUP_ALL);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -280,7 +280,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_ALC);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -297,7 +297,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_DATTIM);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -314,7 +314,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_EDT);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -331,7 +331,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_LIBL);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -348,7 +348,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_MSG);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -365,7 +365,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_NET);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -382,7 +382,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_SEC);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -399,7 +399,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_STG);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -416,7 +416,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", SystemValueList.GROUP_SYSCTL);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -434,7 +434,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Desc", 98766);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -452,7 +452,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Desc", -1);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -470,7 +470,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         {
             String[] str = new String[] { "QDATE", "QTIME" };
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", str);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -488,7 +488,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         {
             String[] str  = new String[] {"QDATE"};
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", str);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -506,7 +506,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         {
             String[] str = new String[] { "QDATE", "QTIME", "QMONTH" };
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name", "Description", str);
-            succeeded();
+            assertCondition(true,"svg="+svg);
         }
         catch (Exception e)
         {
@@ -525,7 +525,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         {
             String[] str = new String[] { "QDATE", "QTIME" };
             SystemValueGroup svg = new SystemValueGroup(null, "NAME", "Desc", str);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -542,9 +542,8 @@ public class SysvalGroupCtorTestcase extends Testcase
     {
         try
         {
-            String[] str = new String[] { "QDATE", "QTIME" };
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "NAME", "Desc", null);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -563,7 +562,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         {
             String[] str = new String[] {""};
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "NAME","Desc", str);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -582,7 +581,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         {
             String[] str = new String[] { "TRASH" };
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name","Desc", str);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -601,7 +600,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name","Desc", str);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {
@@ -620,7 +619,7 @@ public class SysvalGroupCtorTestcase extends Testcase
         try
         {
             SystemValueGroup svg = new SystemValueGroup(systemObject_, "Name","Desc", str);
-            failed("No exception.");
+            failed("No exception."+svg);
         }
         catch (Exception e)
         {

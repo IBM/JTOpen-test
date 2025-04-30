@@ -688,6 +688,7 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
                   sb.append("\ncanUseNativeOptimizations");
                   AS400 originalConnection = new AS400(); 
                   originalID = originalConnection.getUserId();
+                  originalConnection.close();
                   // Swap.
                   AS400Credential cr = pt.swap(true);
                   swappedConnection = new AS400();
@@ -827,7 +828,9 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
                 if (isNative_ && profileHandleImplNativeAvailable) ph.setHandle();
                 // Swap.
                 pt.swap();
-                String swapUid = new AS400().getUserId();
+                AS400 as400 = new AS400(); 
+                String swapUid = as400.getUserId();
+                as400.close(); 
                 int swapEvt = latestEvent_ == null ? 0 : latestEvent_.getID();
                 // Swap back.
                 if (isNative_ && profileHandleImplNativeAvailable)
@@ -875,7 +878,9 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
 
             // Perform test.
             String originalID = null;
-            if (profileHandleImplNativeAvailable || (System.getProperty("os.name").indexOf("400") > 0)) originalID = new AS400().getUserId();
+            AS400 as400 = new AS400(); 
+            if (profileHandleImplNativeAvailable || (System.getProperty("os.name").indexOf("400") > 0)) originalID = as400.getUserId();
+            as400.close(); 
             SecAuthTest.removeToken(pt.getSystem(), pt.getToken());
             try
             {
@@ -890,14 +895,17 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
                 }
                 else
                 {
-                    assertCondition((originalID != null) && originalID.equals(new AS400().getUserId()) && latestEvent_ == null && sfe.getAS400Message() != null && sfe.getAS400Message().getID().equals("CPF2274"), 
+                  AS400 as400_2 = new AS400(); 
+
+                    assertCondition((originalID != null) && originalID.equals(as400_2.getUserId()) && latestEvent_ == null && sfe.getAS400Message() != null && sfe.getAS400Message().getID().equals("CPF2274"), 
                         "Expected message not returned."+
                         "\nprofileHandleImplNativeAvailable="+profileHandleImplNativeAvailable+
                         "\noriginalID="+originalID+
-                        "\nexpectedUser="+ (new AS400().getUserId())+
+                        "\nexpectedUser="+ as400_2.getUserId()+
                         "\nlatestEvent_="+latestEvent_ +
                         "\nsfe.getAS400message="+sfe.getAS400Message()+
                         "\nexpected CPF2274"); 
+                    as400_2.close(); 
                 }
             }
         }
@@ -934,7 +942,10 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
 
             // Perform test.
             String originalID = null;
-            if (isNative_ && profileHandleImplNativeAvailable) originalID = new AS400().getUserId();
+            AS400 as400 = new AS400(); 
+
+            if (isNative_ && profileHandleImplNativeAvailable) originalID = as400.getUserId();
+            as400.close(); 
             SecAuthTest.removeToken(pt.getSystem(), pt.getToken());
             try
             {
@@ -942,7 +953,10 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
             }
             catch (SwapFailedException sfe)
             {
-                assertCondition((!isNative_ || !profileHandleImplNativeAvailable || ((originalID != null) && originalID.equals(new AS400().getUserId()))) && latestEvent_ == null, "Unexpected swap exception.");
+              AS400 as4002 = new AS400(); 
+
+                assertCondition((!isNative_ || !profileHandleImplNativeAvailable || ((originalID != null) && originalID.equals(as4002.getUserId()))) && latestEvent_ == null, "Unexpected swap exception.");
+                as4002.close(); 
             }
         }
         catch (Exception e)
@@ -984,7 +998,9 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
             {
                 // Swap.
                 AS400Credential cr = pt.swap(false);
-                String swap1uid = new AS400().getUserId();
+                AS400 as400 = new AS400(); 
+                String swap1uid = as400.getUserId();
+                as400.close(); 
                 int swap1evt = latestEvent_ == null ? 0 : latestEvent_.getID();
                 // Swap back.
                 ph.swap();

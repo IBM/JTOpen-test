@@ -13,20 +13,27 @@
 
 package test.NP;
 
-import java.io.OutputStream;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AFPResourceList;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectListEvent;
+import com.ibm.as400.access.PrintObjectListListener;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -188,11 +195,13 @@ $$$ TO DO $$$ - delete this line */
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(resList1);
             oos.flush();
-
+            oos.close(); 
+            
             // de-serialize the AFPResourceList object
             FileInputStream fis = new FileInputStream("AFPResourceList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResourceList resList2 = (AFPResourceList)ois.readObject();
+            ois.close(); 
 
             // add/remove listeners
             resList2.addPropertyChangeListener(propertyListener);
@@ -246,11 +255,13 @@ $$$ TO DO $$$ - delete this line */
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(resList1);
             oos.flush();
+            oos.close(); 
 
             // de-serialize the AFPResourceList object
             FileInputStream fis = new FileInputStream("AFPResourceList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResourceList resList2 = (AFPResourceList)ois.readObject();
+            ois.close(); 
 
             String system1 = resList1.getSystem().getSystemName();
             String system2 = resList2.getSystem().getSystemName();
@@ -303,11 +314,13 @@ $$$ TO DO $$$ - delete this line */
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(resList1);
             oos.flush();
+            oos.close(); 
 
             // de-serialize the AFPResourceList object
             FileInputStream fis = new FileInputStream("AFPResourceList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResourceList resList2 = (AFPResourceList)ois.readObject();
+            ois.close(); 
 
             if( resList1.getResourceFilter().equals(resList2.getResourceFilter()) )
                 {
@@ -356,11 +369,13 @@ $$$ TO DO $$$ - delete this line */
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(resList1);
             oos.flush();
+            oos.close(); 
 
             // de-serialize the AFPResourceList object
             FileInputStream fis = new FileInputStream("AFPResourceList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResourceList resList2 = (AFPResourceList)ois.readObject();
+            ois.close(); 
 
             String jobNumber1 = resList1.getSpooledFileFilter().getJobNumber();
             String jobNumber2 = resList2.getSpooledFileFilter().getJobNumber();
@@ -420,11 +435,13 @@ $$$ TO DO $$$ - delete this line */
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(resList1);
             oos.flush();
+            oos.close(); 
 
             // de-serialize the AFPResourceList object
             FileInputStream fis = new FileInputStream("AFPResourceList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResourceList resList2 = (AFPResourceList)ois.readObject();
+            ois.close(); 
 
             // now build resource list synchronously, we have
             // to set the password because that is not serialized.
@@ -524,12 +541,12 @@ $$$ TO DO $$$ - delete this line */
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(resList1);
             oos.flush();
-
+            oos.close(); 
             // de-serialize the AFPResourceList object
             FileInputStream fis = new FileInputStream("AFPResourceList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResourceList resList2 = (AFPResourceList)ois.readObject();
-
+            ois.close(); 
             // now try to build resource list synchronously, we have
             // to set the password because that is not serialized.
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
@@ -537,7 +554,7 @@ $$$ TO DO $$$ - delete this line */
    PasswordVault.clearPassword(charPassword);
             resList2.openSynchronously();
 
-            Enumeration e = resList2.getObjects();
+            Enumeration<AFPResource> e = resList2.getObjects();
             String resPath = null;
 
             // check to see if we got some resources

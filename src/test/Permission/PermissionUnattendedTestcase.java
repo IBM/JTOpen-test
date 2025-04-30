@@ -143,48 +143,52 @@ protected void setup () throws Exception
             }
         String commandString;
         if (userName.length() > 8) {
-          commandString = "ADDDIRE USRID(" + userName.substring(0, 8) + " "
+          commandString = "QSYS/ADDDIRE USRID(" + userName.substring(0, 8) + " "
               + sysName + ") USRD('Test') USER(" + userName + ")";
         } else {
-          commandString = "ADDDIRE USRID(" + userName + " " + sysName
+          commandString = "QSYS/ADDDIRE USRID(" + userName + " " + sysName
               + ") USRD('Test') USER(" + userName + ")";
         }
         System.out.println("Setup: " + commandString);
         runCommand(ccallPow_, commandString);
-        commandString = "ADDDIRE USRID(" + pwrUserName + " " + sysName
+        commandString = "QSYS/ADDDIRE USRID(" + pwrUserName + " " + sysName
             + ") USRD('Test') USER(" + pwrUserName + ")";
         System.out.println("Setup: " + commandString);
         runCommand(ccallPow_, commandString);
 
-        commandString = "CRTFLR FLR(TESTFLR1)";
+        commandString = "QSYS/CRTFLR FLR(TESTFLR1)";
         System.out.println("Setup: " + commandString);
         runCommand(ccall_, commandString);
-        runCommand(ccall_, "CRTFLR FLR(TESTFLR)");
-        runCommand(ccall_, "CRTFLR FLR(TESTFLR2) INFLR('TESTFLR')");
-        runCommand(ccall_, "CRTFLR FLR(TESTFLR3) INFLR('TESTFLR')");
-        runCommand(ccall_, "CRTLIB LIB(JTESTLIB1)");
-        runCommand(ccall_, "CRTLIB LIB(JTESTLIB2)");
-        runCommand(ccall_, "CRTSRCPF FILE(JTESTLIB2/FILE8) MBR(*NONE)");
-        runCommand(ccall_, "CRTDIR DIR(TestDir1)");
-        runCommand(ccallPow_, "CRTUSRPRF USRPRF(TESTUSR1) PASSWORD(JTEST1)");
-        runCommand(ccallPow_, "CRTUSRPRF USRPRF(TESTUSR2) PASSWORD(JTEST2)");
-        runCommand(ccallPow_, "CRTUSRPRF USRPRF(TESTUSR3) PASSWORD(JTEST3)");
-        runCommand(ccallPow_, "CRTUSRPRF USRPRF(TESTUSR4) PASSWORD(JTEST4)");
+        runCommand(ccall_, "QSYS/CRTFLR FLR(TESTFLR)");
+        runCommand(ccall_, "QSYS/CRTFLR FLR(TESTFLR2) INFLR('TESTFLR')");
+        runCommand(ccall_, "QSYS/CRTFLR FLR(TESTFLR3) INFLR('TESTFLR')");
+        runCommand(ccall_, "QSYS/CRTLIB LIB(JTESTLIB1)");
+        runCommand(ccall_, "QSYS/GRTOBJAUT OBJ(JTESTLIB1)  OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ");
+       
+
+        runCommand(ccall_, "QSYS/CRTLIB LIB(JTESTLIB2)");
+        runCommand(ccall_, "QSYS/GRTOBJAUT OBJ(JTESTLIB2)  OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ");
+        runCommand(ccall_, "QSYS/CRTSRCPF FILE(JTESTLIB2/FILE8) MBR(*NONE)");
+        runCommand(ccall_, "QSYS/CRTDIR DIR(TestDir1)");
+        runCommand(ccallPow_, "QSYS/CRTUSRPRF USRPRF(TESTUSR1) PASSWORD(JTEST1)");
+        runCommand(ccallPow_, "QSYS/CRTUSRPRF USRPRF(TESTUSR2) PASSWORD(JTEST2)");
+        runCommand(ccallPow_, "QSYS/CRTUSRPRF USRPRF(TESTUSR3) PASSWORD(JTEST3)");
+        runCommand(ccallPow_, "QSYS/CRTUSRPRF USRPRF(TESTUSR4) PASSWORD(JTEST4)");
 
         // This is needed in order for setOwner() to work:
-        runCommand(ccallPow_, "ADDDIRE USRID(TESTUSR1 " + sysName
+        runCommand(ccallPow_, "QSYS/ADDDIRE USRID(TESTUSR1 " + sysName
             + ") USRD('Test') USER(TESTUSR1)");
-        runCommand(ccallPow_, "ADDDIRE USRID(TESTUSR2 " + sysName
+        runCommand(ccallPow_, "QSYS/ADDDIRE USRID(TESTUSR2 " + sysName
             + ") USRD('Test') USER(TESTUSR2)");
 
         for (int i = 0; i <= 6; i++) {
           runCommand(ccallPow_,
-              "CRTUSRPRF USRPRF(" + user[i] + ") PASSWORD(JTEAM1)");
+              "QSYS/CRTUSRPRF USRPRF(" + user[i] + ") PASSWORD(JTEAM1)");
         }
-        runCommand(ccallPow_, "CRTSRCPF FILE(jtestlib2/file9) MBR(mbr1)");
-        runCommand(ccallPow_, "CRTAUTL AUTL(TESTAUTL2)");
-        runCommand(ccallPow_, "CRTAUTL AUTL(TESTAUTL1)");
-        runCommand(ccallPow_, "CRTAUTL AUTL(TESTAUTL8)");
+        runCommand(ccallPow_, "QSYS/CRTSRCPF FILE(jtestlib2/file9) MBR(mbr1)");
+        runCommand(ccallPow_, "QSYS/CRTAUTL AUTL(TESTAUTL2)");
+        runCommand(ccallPow_, "QSYS/CRTAUTL AUTL(TESTAUTL1)");
+        runCommand(ccallPow_, "QSYS/CRTAUTL AUTL(TESTAUTL8)");
       } catch (Exception ex) {
         System.out.println(ex);
         ex.printStackTrace(System.out);

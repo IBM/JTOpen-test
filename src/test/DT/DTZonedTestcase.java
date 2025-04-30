@@ -40,14 +40,15 @@ public class DTZonedTestcase extends Testcase
     {
         try
         {
+          AS400ZonedDecimal conv = null; 
             for (int x = 1; x <= 31; ++x)
             {
                 for (int y = 0; y <= x; ++y)
                 {
-                    AS400ZonedDecimal conv = new AS400ZonedDecimal(x, y);
+                    conv = new AS400ZonedDecimal(x, y);
                 }
             }
-            succeeded();
+            assertCondition(true, "conv="+conv); 
         }
         catch (Exception e)
         {
@@ -64,7 +65,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             AS400ZonedDecimal conv = new AS400ZonedDecimal(0, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+conv);
         }
         catch (Exception e)
         {
@@ -89,7 +90,7 @@ public class DTZonedTestcase extends Testcase
         {
             //	    AS400ZonedDecimal conv = new AS400ZonedDecimal(32, 0);
             AS400ZonedDecimal conv = new AS400ZonedDecimal(64, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+conv);
         }
         catch (Exception e)
         {
@@ -113,7 +114,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             AS400ZonedDecimal conv = new AS400ZonedDecimal(16, -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+conv);
         }
         catch (Exception e)
         {
@@ -137,7 +138,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             AS400ZonedDecimal conv = new AS400ZonedDecimal(16, 17);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+conv);
         }
         catch (Exception e)
         {
@@ -356,7 +357,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Float(0));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -381,7 +382,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new BigDecimal("12.3456"));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -406,7 +407,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new BigDecimal("123.45"));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -431,7 +432,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new BigDecimal("123.4567"));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -456,7 +457,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -744,7 +745,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), new byte[3]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -769,7 +770,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Float(0), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -794,7 +795,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.3456"), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -819,7 +820,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("123.45"), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -844,7 +845,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("123.4567"), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -869,7 +870,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -894,7 +895,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1022,7 +1023,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), new byte[3], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1047,7 +1048,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), new byte[7], 4);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1072,7 +1073,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1097,7 +1098,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Float(0), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1122,7 +1123,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.3456"), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1147,7 +1148,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("123.45"), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1172,7 +1173,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("123.4567"), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1197,7 +1198,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1222,7 +1223,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1390,7 +1391,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[3]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1415,7 +1416,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -1498,7 +1499,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[3], 0);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1523,7 +1524,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[15], 10);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
@@ -1548,7 +1549,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[15], -10);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
@@ -1573,7 +1574,7 @@ public class DTZonedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {

@@ -65,14 +65,15 @@ public class DTPackedTestcase extends Testcase
     {
         try
         {
+          AS400PackedDecimal conv = null;
             for (int x = 1; x <= 31; ++x)
             {
                 for (int y = 0; y <= x; ++y)
                 {
-                    AS400PackedDecimal conv = new AS400PackedDecimal(x, y);
+                     conv = new AS400PackedDecimal(x, y);
                 }
             }
-            succeeded();
+           assertCondition(true, "create conv="+conv); 
         }
         catch (Exception e)
         {
@@ -89,7 +90,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             AS400PackedDecimal conv = new AS400PackedDecimal(0, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -114,7 +115,7 @@ public class DTPackedTestcase extends Testcase
         {
             //	    AS400PackedDecimal conv = new AS400PackedDecimal(32, 0);
             AS400PackedDecimal conv = new AS400PackedDecimal(64, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -138,7 +139,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             AS400PackedDecimal conv = new AS400PackedDecimal(16, -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -162,7 +163,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             AS400PackedDecimal conv = new AS400PackedDecimal(16, 17);
-            failed("No exception thrown.");
+            failed("Did not throw exception. conv="+conv);
         }
         catch (Exception e)
         {
@@ -383,7 +384,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new Float(0.0f));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -408,7 +409,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new BigDecimal("12.3456"));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -433,7 +434,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new BigDecimal("123.45"));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -458,7 +459,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(new BigDecimal("123.4567"));
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -483,7 +484,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             byte[] ret = conv.toBytes(null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -781,7 +782,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), new byte[2]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -806,7 +807,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Float(0.0f), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -831,7 +832,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.3456"), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -856,7 +857,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("123.45"), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -881,7 +882,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("123.4567"), new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -906,7 +907,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10]);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -931,7 +932,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), null);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1059,7 +1060,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), new byte[2], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1084,7 +1085,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), new byte[7], 5);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1109,7 +1110,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), new byte[10], -1);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1134,7 +1135,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new Float(0.0f), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1159,7 +1160,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.3456"), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1184,7 +1185,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("123.45"), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1209,7 +1210,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("123.4567"), new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1234,7 +1235,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(null, new byte[10], 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1259,7 +1260,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             int ret = conv.toBytes(new BigDecimal("12.345"), null, 0);
-            failed("No exception thrown.");
+            failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
         {
@@ -1426,7 +1427,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[3]);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1451,7 +1452,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
@@ -1537,7 +1538,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[3], 0);
-            failed("no exception thrown for to small array");
+            failed("no exception thrown for to small array"+obj);
         }
         catch (Exception e)
         {
@@ -1562,7 +1563,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[15], 10);
-            failed("no exception thrown for not enough space");
+            failed("no exception thrown for not enough space"+obj);
         }
         catch (Exception e)
         {
@@ -1587,7 +1588,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(new byte[15], -3);
-            failed("no exception thrown for negative value");
+            failed("no exception thrown for negative value"+obj);
         }
         catch (Exception e)
         {
@@ -1612,7 +1613,7 @@ public class DTPackedTestcase extends Testcase
         try
         {
             Object obj = conv.toObject(null, 0);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+obj);
         }
         catch (Exception e)
         {
