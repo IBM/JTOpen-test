@@ -17,8 +17,6 @@ import com.ibm.as400.access.SystemStatusBeanInfo;
 
 import test.Testcase;
 
-import java.beans.BeanInfo;
-
 /**
  The SystemStatusBeanInfoUnattendedTestcase class tests the methods of SystemStatusBeanInfo.
  <p>This tests the following SystemStatusBeanInfo methods:
@@ -42,7 +40,7 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
-            succeeded();
+            succeeded("f="+f);
         }
         catch (Exception e)
         {
@@ -129,7 +127,7 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+f);
             }
             else
             {
@@ -153,7 +151,7 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+f);
             }
             else
             {
@@ -177,7 +175,7 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+f);
             }
             else
             {
@@ -201,7 +199,7 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+f);
             }
             else
             {

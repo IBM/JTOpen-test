@@ -27,6 +27,8 @@ import test.Testcase;
 /** 
  Testcase NetServerConnectionTestcase.
 **/
+@SuppressWarnings("deprecation")
+
 public class NetServerConnectionTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -68,7 +70,7 @@ public class NetServerConnectionTestcase extends Testcase
 
     @exception Exception If an exception occurs.
     **/
-    protected void setup ()
+     protected void setup ()
     throws Exception
     {
 	// Establish a connection using jcifs

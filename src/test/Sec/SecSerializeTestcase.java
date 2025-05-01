@@ -52,10 +52,12 @@ public class SecSerializeTestcase extends Testcase
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(sys);
             s.flush();
+            s.close(); 
 
             FileInputStream in = new FileInputStream("tAS400");
             ObjectInputStream s2 = new ObjectInputStream(in);
             AS400 sys2 = (AS400)s2.readObject();
+            s2.close(); 
             sys2.setPassword(charPassword);
              PasswordVault.clearPassword(charPassword);
             sys2.connectService(AS400.FILE);

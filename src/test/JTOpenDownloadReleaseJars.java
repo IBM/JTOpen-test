@@ -83,7 +83,6 @@ public class JTOpenDownloadReleaseJars {
 	    String jdk14Path = jdk14newPath;
 	    String jdk14nativePath = jdk14newPath;
 	    System.out.println("osVersioname is '" + JTOpenTestEnvironment.osVersion+"'");
-	    String osVersion = System.getProperty("os.version");
 	    if (JTOpenTestEnvironment.isWindows||
 	        JTOpenTestEnvironment.isLinux ||
 	        JTOpenTestEnvironment.isAIX)  {

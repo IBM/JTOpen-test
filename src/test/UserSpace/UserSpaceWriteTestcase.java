@@ -21,7 +21,6 @@ import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.ErrorCompletingRequestException;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.IllegalPathNameException;
 import com.ibm.as400.access.ObjectDoesNotExistException;
@@ -190,6 +189,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       } else {
         // Get output
         AS400Text textConverter = new AS400Text(10, pwrSys_.getCcsid(), pwrSys_);
+        @SuppressWarnings("unused")
         String resourceName = (String) textConverter.toObject(resourceBytes);
 
         collectorWrite = true; // Write successful.
@@ -217,7 +217,6 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
     collectorParmList[1] = new ProgramParameter(setName("*COMM", 10));
 
     // input parm - time between collections (bin4)
-    byte[] size = new byte[4];
     AS400Bin4 bin4Converter = new AS400Bin4();
     collectorParmList[2] = new ProgramParameter(bin4Converter.toBytes(240));
 
@@ -439,7 +438,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int lengthBefore = aUserSpace.getLength();
       aUserSpace.write(new byte[0], 0);
 
-      failed("Expected exception did not occur.");
+      failed("Expected exception did not occur."+lengthBefore);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "dataBuffer", ExtendedIllegalArgumentException.LENGTH_NOT_VALID))
@@ -465,7 +464,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int lengthBefore = aUserSpace.getLength();
       aUserSpace.write(new byte[0], 0, 0, 0);
 
-      failed("Expected exception did not occur.");
+      failed("Expected exception did not occur."+lengthBefore);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "dataBuffer", ExtendedIllegalArgumentException.LENGTH_NOT_VALID))
@@ -491,7 +490,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int lengthBefore = aUserSpace.getLength();
       aUserSpace.write(new byte[0], 0, 0, 0, 0);
 
-      failed("Expected exception did not occur.");
+      failed("Expected exception did not occur."+lengthBefore);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "dataBuffer", ExtendedIllegalArgumentException.LENGTH_NOT_VALID))
@@ -519,7 +518,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       byte[] dataBuffer = { 0, 1, 2, 3 };
       aUserSpace.write(dataBuffer, 16776702);
 
-      failed("Expected exception did not occur.");
+      failed("Expected exception did not occur."+lengthBefore);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "userSpaceOffset + length",
@@ -864,7 +863,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int usLength = aUserSpace.getLength();
       aUserSpace.write(writeBuffer, 0, writeBuffer.length, 0);
 
-      failed("No Exception occurred.");
+      failed("No Exception occurred."+usLength);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "dataOffset", ExtendedIllegalArgumentException.RANGE_NOT_VALID))
@@ -893,7 +892,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       aUserSpace.write(writeBuffer, 0, writeBuffer.length + 1,
           writeBuffer.length, 0);
 
-      failed("No Exception occurred.");
+      failed("No Exception occurred."+usLength);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "dataOffset", ExtendedIllegalArgumentException.RANGE_NOT_VALID))
@@ -997,7 +996,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int usLength = aUserSpace.getLength();
       aUserSpace.write(writeBuffer, 0, 0, writeBuffer.length + 1);
 
-      failed("No Exception occurred.");
+      failed("No Exception occurred."+usLength);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException", "length",
           ExtendedIllegalArgumentException.RANGE_NOT_VALID))
@@ -1021,7 +1020,6 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
           "*ALL");
       aUserSpace.setAutoExtendible(true);
 
-      byte[] writeBuffer = new byte[20];
       int usLength = aUserSpace.getLength();
 
       aUserSpace.write("WRITE_TEST", usLength + 1);
@@ -1053,7 +1051,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       aUserSpace.write(writeBuffer, 0, writeBuffer.length + 1,
           writeBuffer.length, 0);
 
-      failed("No Exception occurred.");
+      failed("No Exception occurred."+usLength);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "dataOffset", ExtendedIllegalArgumentException.RANGE_NOT_VALID))
@@ -1081,7 +1079,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int usLength = aUserSpace.getLength();
       aUserSpace.write(writeBuffer, 0, 0, writeBuffer.length + 1, 0);
 
-      failed("No Exception occurred.");
+      failed("No Exception occurred."+usLength);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException", "length",
           ExtendedIllegalArgumentException.RANGE_NOT_VALID))
@@ -1167,15 +1165,15 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int i = 0;
       int j = 0;
       byte[] inByte = new byte[1];
-
+      int numBytes = 0;
       do {
-        int numBytes = aUserSpace.read(inByte, i++);
+        numBytes = aUserSpace.read(inByte, i++);
       } while (inByte[0] == data[j++] && j != data.length);
 
       if (i == data.length)
         succeeded();
       else
-        failed("Byte mismatch during write.");
+        failed("Byte mismatch during write."+numBytes);
     } catch (Exception e) {
       failed(e, "Exception occured.");
     } finally {
@@ -1205,15 +1203,15 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int i = 0;
       int j = 0;
       byte[] inByte = new byte[1];
-
+      int numBytes = 0; 
       do {
-        int numBytes = aUserSpace.read(inByte, i++);
+        numBytes = aUserSpace.read(inByte, i++);
       } while (inByte[0] == data[j++] && j != data.length);
 
       if (i == data.length)
         succeeded();
       else
-        failed("Byte mismatch during write.");
+        failed("Byte mismatch during write."+numBytes);
     } catch (Exception e) {
       failed(e, "Exception occured.");
     } finally {
@@ -1243,15 +1241,15 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int i = 0;
       int j = 0;
       byte[] inByte = new byte[1];
-
+      int numBytes;
       do {
-        int numBytes = aUserSpace.read(inByte, i++);
+        numBytes = aUserSpace.read(inByte, i++);
       } while (inByte[0] == data[j++] && j != data.length);
 
       if (i == data.length)
         succeeded();
       else
-        failed("Byte mismatch during write.");
+        failed("Byte mismatch during write."+numBytes);
     } catch (Exception e) {
       failed(e, "Exception occured.");
     } finally {
@@ -1280,15 +1278,15 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int i = 0;
       int j = 0;
       byte[] inByte = new byte[1];
-
+      int numBytes = 0; 
       do {
-        int numBytes = aUserSpace.read(inByte, i++);
+        numBytes = aUserSpace.read(inByte, i++);
       } while (inByte[0] == data[j++] && j != 256);
 
       if (i == data.length)
         succeeded();
       else
-        failed("Byte mismatch during write.");
+        failed("Byte mismatch during write."+numBytes);
     } catch (Exception e) {
       failed(e);
     } finally {
@@ -1317,15 +1315,15 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int i = 0;
       int j = 0;
       byte[] inByte = new byte[1];
-
+      int numBytes = 0; 
       do {
-        int numBytes = aUserSpace.read(inByte, i++);
+        numBytes += aUserSpace.read(inByte, i++);
       } while (inByte[0] == data[j++] && j != 256);
 
       if (i == data.length)
         succeeded();
       else
-        failed("Byte mismatch during write.");
+        failed("Byte mismatch during write."+numBytes);
 
     } catch (Exception e) {
       failed(e);
@@ -1355,15 +1353,15 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int i = 0;
       int j = 0;
       byte[] inByte = new byte[1];
-
+      int numBytes = 0; 
       do {
-        int numBytes = aUserSpace.read(inByte, i++);
+        numBytes += aUserSpace.read(inByte, i++);
       } while (inByte[0] == data[j++] && j != 256);
 
       if (i == data.length)
         succeeded();
       else
-        failed("Byte mismatch during write.");
+        failed("Byte mismatch during write."+numBytes);
     } catch (Exception e) {
       failed(e);
     } finally {
@@ -1420,7 +1418,6 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
    * thrown if write attempts to write past the maximum length of a user space.
    **/
   public void Var038() {
-    byte[] data = { 1, 2, 3, 4, 5 };
     UserSpace aUserSpace = null;
 
     try {
@@ -1623,7 +1620,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       byte[] dataBuffer = { 0, 1, 2, 3 };
       aUserSpace.write(dataBuffer, 16776702, 0, dataBuffer.length);
 
-      failed("Expected exception did not occur.");
+      failed("Expected exception did not occur."+lengthBefore);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "userSpaceOffset + length",
@@ -1651,7 +1648,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       byte[] dataBuffer = { 0, 1, 2, 3 };
       aUserSpace.write(dataBuffer, 16776702, 0, dataBuffer.length, 0);
 
-      failed("Expected exception did not occur.");
+      failed("Expected exception did not occur."+lengthBefore);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "userSpaceOffset + length",
@@ -1894,7 +1891,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       int usLength = aUserSpace.getLength();
       aUserSpace.write(writeBuffer, 0, writeBuffer.length, 0, 0);
 
-      failed("No Exception occurred.");
+      failed("No Exception occurred."+usLength);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "dataOffset", ExtendedIllegalArgumentException.RANGE_NOT_VALID))
@@ -1923,7 +1920,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
       aUserSpace.write(writeBuffer, 0, writeBuffer.length + 1,
           writeBuffer.length);
 
-      failed("No Exception occurred.");
+      failed("No Exception occurred."+usLength);
     } catch (Exception e) {
       if (exceptionStartsWith(e, "ExtendedIllegalArgumentException",
           "dataOffset", ExtendedIllegalArgumentException.RANGE_NOT_VALID))

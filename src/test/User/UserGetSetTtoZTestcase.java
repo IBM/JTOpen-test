@@ -1301,7 +1301,7 @@ public class UserGetSetTtoZTestcase extends Testcase
         try
         {
             User u = new User(pwrSys_, sandbox_.createUser());
-            int returnValue = u.getUserIDNumber();
+            long returnValue = u.getUserID();
             assertCondition(returnValue != 0 && returnValue != -1);
         }
         catch (Exception e)
@@ -1364,7 +1364,7 @@ public class UserGetSetTtoZTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getUserIDNumber();
+            long returnValue = u.getUserID();
             assertCondition(returnValue == testValue);
             sandbox_.deleteUser(u.getName(), 1);
         }
@@ -1427,7 +1427,7 @@ public class UserGetSetTtoZTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getUserIDNumber();
+            long returnValue = u.getUserID();
             assertCondition(returnValue == testValue);
         }
         catch (Exception e)
@@ -1490,7 +1490,7 @@ public class UserGetSetTtoZTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getUserIDNumber();
+            long returnValue = u.getUserID();
             assertCondition(returnValue == testValue);
             sandbox_.deleteUser(u.getName(), 1);
         }
@@ -1555,7 +1555,7 @@ public class UserGetSetTtoZTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getUserIDNumber();
+            long returnValue = u.getUserID();
             assertCondition(returnValue == expectedValue);
             sandbox_.deleteUser(u.getName(), 1);
         }
@@ -2834,7 +2834,7 @@ public class UserGetSetTtoZTestcase extends Testcase
 				a = dfm.parse("2007-01-28 00:00:00");
 		     	System.out.println(a);
 
-	        	AS400 system = new AS400(systemObject_.getSystemName(), "JAVAX12345", "password");
+	        	AS400 system = new AS400(systemObject_.getSystemName(), "JAVAX12345", "password".toCharArray());
 	        	system.setGuiAvailable(false);
 
 	    		if (systemObject_.getVersion() >= 7)
@@ -3126,7 +3126,7 @@ public class UserGetSetTtoZTestcase extends Testcase
     {
 	    try {
 
-			AS400 system = new AS400(systemObject_.getSystemName(), "JAVAX12345", "password");
+			AS400 system = new AS400(systemObject_.getSystemName(), "JAVAX12345", "password".toCharArray());
 			system.setGuiAvailable(false);
 
 			if (systemObject_.getVersion() >= 7)

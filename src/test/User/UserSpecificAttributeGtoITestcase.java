@@ -35,6 +35,7 @@ import com.ibm.as400.resource.RUser;
  <li>INITIAL_PROGRAM
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserSpecificAttributeGtoITestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -654,7 +655,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
             RUser u = new RUser(pwrSys_, group_);
             u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(anotherGid));
             u.commitAttributeChanges();
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+anotherGroup);
         }
         catch (Exception e)
         {

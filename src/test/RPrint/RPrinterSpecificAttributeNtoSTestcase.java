@@ -12,22 +12,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.QSYSObjectPathName;
-import com.ibm.as400.resource.ResourceEvent;
+import com.ibm.as400.resource.RPrinter;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
 import test.User.UserGenericAttributeTestcase;
-
-import com.ibm.as400.resource.RPrinter;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -53,6 +48,7 @@ of the RPrinter class:
 <li>STARTED_BY_USER
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterSpecificAttributeNtoSTestcase
 extends Testcase {
 
@@ -190,7 +186,7 @@ NEXT_FORM_TYPE - Get the attribute value.
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
             String value = (String)u.getAttributeValue(RPrinter.NEXT_FORM_TYPE);
-            succeeded();
+            assertCondition(true,"value="+value); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -873,7 +869,7 @@ PUBLISHED_STATUS - Get the attribute value.
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
             Boolean value = (Boolean)u.getAttributeValue(RPrinter.PUBLISHED_STATUS);
-            succeeded();
+            assertCondition(true,"value="+value); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

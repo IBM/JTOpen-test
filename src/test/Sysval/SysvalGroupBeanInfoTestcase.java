@@ -18,26 +18,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.SystemValue;
-import com.ibm.as400.access.SystemValueList;
 import com.ibm.as400.access.SystemValueGroup;
-import com.ibm.as400.access.SystemValueEvent;
-import com.ibm.as400.access.SystemValueListener;
 
 import test.JTOpenTestEnvironment;
 import test.Testcase;
-
-import com.ibm.as400.access.ObjectEvent;
-import com.ibm.as400.access.ObjectListener;
-import com.ibm.as400.access.ExtendedIllegalStateException;
 
 /**
  * Testcase SysvalGroupBeanInfoTestcase.
@@ -66,13 +52,9 @@ public class SysvalGroupBeanInfoTestcase extends Testcase implements PropertyCha
     Object src;
     Object asource;
 
-    private String datestUserID = " USER(DATEST) ";
     private String operatingSystem_;
     private boolean DOS_ = false;
-    private static String dirName_;
-    private boolean OS400_ = false;
-    private boolean usingNativeImpl = false;
-
+ 
     PropertyChangeEvent propChange;
     PropertyChangeEvent vetoChange;
     PropertyChangeEvent vetoRefire;
@@ -94,16 +76,6 @@ public class SysvalGroupBeanInfoTestcase extends Testcase implements PropertyCha
       }
 
 
-      // Are we running on the AS/400?
-      else if (operatingSystem_.indexOf("OS/400") >= 0)
-      {
-        OS400_ = true;
-//        if (!SysvalTest.usingSockets)
-//        {
-//           usingNativeImpl = true;
-//           output_.println("Will use native implementation");
-//        }
-      }
 
       output_.println("Running under: " + operatingSystem_);
       output_.println("DOS-based file structure: " + DOS_);
@@ -125,8 +97,6 @@ public class SysvalGroupBeanInfoTestcase extends Testcase implements PropertyCha
           return;
         }
 
-        if (usingNativeImpl)
-           datestUserID = " USER(" + systemObject_.getUserId() + ") ";
 
         boolean allVariations = (variationsToRun_.size() == 0);
 

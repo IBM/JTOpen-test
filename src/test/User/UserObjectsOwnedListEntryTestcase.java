@@ -14,10 +14,9 @@
 package test.User;
 
 
-import java.io.IOException;
-import java.util.Random;
-
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.UserObjectsOwnedList;
+import com.ibm.as400.access.UserObjectsOwnedListEntry;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -142,7 +141,6 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
         notApplicable("No objects returned from UserObjectsOwnedList.getObjectList().");
         return;
       }
-      boolean isQsys = entries1[0].isQSYSObjectEntry();	
       String pool = entries1[0].getAspDeviceNameOfLibrary();
 
       if(pool == null)

@@ -12,26 +12,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RSoftware;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceListener;
-
-import test.Testcase;
-
-import com.ibm.as400.resource.RSoftwareResource;
-import com.ibm.as400.resource.RSoftwareResourceBeanInfo;
 import java.awt.Image;
-
 import java.beans.BeanDescriptor;
 import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.beans.VetoableChangeListener;
-import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.resource.RSoftwareResource;
+import com.ibm.as400.resource.RSoftwareResourceBeanInfo;
+import com.ibm.as400.resource.ResourceListener;
+
+import test.Testcase;
 
 
 
@@ -39,6 +36,7 @@ import java.util.Hashtable; import java.util.Vector;
 Testcase RSoftwareResourceBeanInfoTestcase.  This tests the methods
 of the RSoftwareResourceBeanInfo class:
 **/
+@SuppressWarnings("deprecation")
 public class RSoftwareResourceBeanInfoTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -193,7 +191,7 @@ getIcon().  Pass ICON_COLOR_16x16.
     {
         try {
             RSoftwareResourceBeanInfo ubi = new RSoftwareResourceBeanInfo();
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -209,7 +207,7 @@ getIcon().  Pass ICON_COLOR_32x32.
     {
         try {
             RSoftwareResourceBeanInfo ubi = new RSoftwareResourceBeanInfo();
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -225,7 +223,7 @@ getIcon().  Pass ICON_MONO_16x16.
     {
         try {
             RSoftwareResourceBeanInfo ubi = new RSoftwareResourceBeanInfo();
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -241,7 +239,7 @@ getIcon().  Pass ICON_MONO_32x32.
     {
         try {
             RSoftwareResourceBeanInfo ubi = new RSoftwareResourceBeanInfo();
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

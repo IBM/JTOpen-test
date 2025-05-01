@@ -13,7 +13,6 @@
 
 package test.SSL;
 
-import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.SecureAS400;
 
@@ -46,7 +45,7 @@ public class SSLChangePasswordTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             try
             {
-                sys.changePassword("oldpasswor", "newpasswor");
+                sys.changePassword("oldpasswor".toCharArray(), "newpasswor".toCharArray());
                 failed("exception not generated");
             }
             catch (Exception e)
@@ -60,6 +59,7 @@ public class SSLChangePasswordTestcase extends Testcase
                     assertExceptionIs(e, "ExtendedIllegalStateException");
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -79,7 +79,7 @@ public class SSLChangePasswordTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             try
             {
-                sys.changePassword("oldpasswor", "newpasswor");
+                sys.changePassword("oldpasswor".toCharArray(), "newpasswor".toCharArray());
                 failed("exception not generated");
             }
             catch (Exception e)
@@ -93,6 +93,7 @@ public class SSLChangePasswordTestcase extends Testcase
                     assertExceptionIs(e, "ExtendedIllegalStateException");
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -114,13 +115,14 @@ public class SSLChangePasswordTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             try
             {
-                sys.changePassword(null, "newpassword");
+                sys.changePassword(null, "newpassword".toCharArray());
                 failed("exception not generated");
             }
             catch (Exception e)
             {
                 assertExceptionIs(e, "NullPointerException");
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -150,6 +152,7 @@ public class SSLChangePasswordTestcase extends Testcase
                 assertExceptionIs(e, "NullPointerException");
             }
             PasswordVault.clearPassword(charPassword);
+            sys.close(); 
         }
         catch (Exception e)
         {

@@ -12,20 +12,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.resource.RPrinterList;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
-
-import com.ibm.as400.resource.RPrinter;
-import com.ibm.as400.resource.RPrinterList;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -42,6 +38,7 @@ of the RPrinterList class, some inherited from BufferedResourceList:
 <li>setSortValue() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterListSortTestcase
 extends Testcase {
 
@@ -50,9 +47,6 @@ extends Testcase {
     // Constants.
 
 
-
-    // Private data.
-    private String printerName_;
 
 
 
@@ -72,8 +66,7 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
         pwrSys_ = pwrSys;
-        printerName_ = misc;
-
+ 
         if (pwrSys == null)
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
         if (misc == null)
@@ -107,7 +100,7 @@ getSortMetaData() with 1 parameter - Pass null.
         try {
             RPrinterList u = new RPrinterList();
             ResourceMetaData smd = u.getSortMetaData(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+smd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -124,7 +117,7 @@ getSortMetaData() with 1 parameter - Pass an invalid attribute ID.
         try {
             RPrinterList u = new RPrinterList();
             ResourceMetaData smd = u.getSortMetaData(new Date());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+smd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");

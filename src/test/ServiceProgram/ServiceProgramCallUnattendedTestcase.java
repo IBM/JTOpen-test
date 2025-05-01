@@ -60,7 +60,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
             ProgramParameter[] paramList = new ProgramParameter[1];
             paramList[0] = new ProgramParameter(4);
             ServiceProgramCall s = new ServiceProgramCall(systemObject_, serviceProgramName_, null, ServiceProgramCall.RETURN_INTEGER, paramList);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+s);
         }
         catch (Exception e)
         {
@@ -77,7 +77,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
         try
         {
             ServiceProgramCall s = new ServiceProgramCall(systemObject_, serviceProgramName_, "i_i", ServiceProgramCall.RETURN_INTEGER, null);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+s);
         }
         catch (Exception e)
         {
@@ -96,7 +96,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
             ProgramParameter[] paramList = new ProgramParameter[1];
             paramList[0] = new ProgramParameter(4);
             ServiceProgramCall s = new ServiceProgramCall(systemObject_, serviceProgramName_, "i_i", -1, paramList);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+s);
         }
         catch (Exception e)
         {
@@ -115,7 +115,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
             ProgramParameter[] paramList = new ProgramParameter[1];
             paramList[0] = new ProgramParameter(4);
             ServiceProgramCall s = new ServiceProgramCall(systemObject_, serviceProgramName_, "i_i", 3, paramList);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+s);
         }
         catch (Exception e)
         {
@@ -134,7 +134,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
             ProgramParameter[] paramList = new ProgramParameter[1];
             paramList[0] = new ProgramParameter(4);
             ServiceProgramCall s = new ServiceProgramCall(systemObject_, serviceProgramName_, "i_i", ServiceProgramCall.RETURN_INTEGER, paramList);
-            succeeded();
+            assertCondition(true, "s="+s); 
         }
         catch (Exception e)
         {
@@ -452,7 +452,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
     {
         try
         {
-            AS400 fred = new AS400("BADSYS", "HI", "MOM");
+            AS400 fred = new AS400("BADSYS", "HI", "MOM".toCharArray());
             fred.setGuiAvailable(false);
 
             ProgramParameter[] paramList = new ProgramParameter[1];

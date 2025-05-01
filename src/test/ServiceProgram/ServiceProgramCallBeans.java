@@ -14,8 +14,8 @@
 package test.ServiceProgram;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +23,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Bin4;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.ActionCompletedEvent;

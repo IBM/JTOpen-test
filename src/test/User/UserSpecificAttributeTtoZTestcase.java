@@ -36,6 +36,7 @@ import com.ibm.as400.resource.RUser;
  <li>USER_PROFILE_NAME
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserSpecificAttributeTtoZTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -69,14 +70,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
         sandbox_.cleanup();
     }
 
-    private static void dump(String[] asArray)
-    {
-        for (int i = 0; i < asArray.length; ++i)
-        {
-            System.out.println("Array[" + i + "]=" + asArray[i] + ".");
-        }
-    }
-
+ 
     /**
      TELEPHONE_NUMBER_1 - Check the attribute meta data in the entire list.
      **/

@@ -18,7 +18,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 
-import com.ibm.as400.access.AS400Exception;
 import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.User;
 import com.ibm.as400.security.auth.UserProfilePrincipal;

@@ -16,13 +16,18 @@ package test.Thread;
 
 
 import java.io.FileOutputStream;
-import java.io.PipedInputStream;
 import java.io.ObjectInputStream;
-import java.io.IOException;
-import com.ibm.as400.access.*;
-
+import java.io.PipedInputStream;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
 
 import test.DDM.DDMChar10KeyFormat;
 import test.DDM.DDMChar10NoKeyFormat;

@@ -91,7 +91,7 @@ public class SecUPMiscTestcase extends Testcase
     {
 	StringBuffer sb = new StringBuffer();
 	boolean passed = true; 
-        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1);
+        AS400 sys = new AS400(systemObject_.getSystemName(), SecAuthTest.uid1, SecAuthTest.pwd1.toCharArray());
         try
         {
             UserProfilePrincipal upp1 = null;
@@ -115,7 +115,7 @@ public class SecUPMiscTestcase extends Testcase
 
             // Reset the system user and password (not serialized).
             upp2.getSystem().setUserId(SecAuthTest.uid1);
-            upp2.getSystem().setPassword(SecAuthTest.pwd1);
+            upp2.getSystem().setPassword(SecAuthTest.pwd1.toCharArray());
 
 	    if ( !(upp2.equals(upp1))) {
 		sb.append("upp2("+upp2+") != upp1("+upp1+")\n");

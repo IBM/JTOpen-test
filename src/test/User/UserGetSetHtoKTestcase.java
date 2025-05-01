@@ -13,8 +13,6 @@
 
 package test.User;
 
-import com.ibm.as400.access.AS400Exception;
-import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ErrorCompletingRequestException;
 import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.IllegalPathNameException;

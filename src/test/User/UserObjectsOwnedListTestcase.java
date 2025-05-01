@@ -57,13 +57,17 @@ public class UserObjectsOwnedListTestcase extends Testcase
        to the profile */
 
       CommandCall cmd = new CommandCall(pwrSys_);
-      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts");
+      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts".toCharArray());
       cmd.run("CRTUSRPRF USRPRF(USRTEST)  PASSWORD(user23ts)  USRCLS(*USER)");
       cmd.run("CHGAUT OBJ('/') USER(USRTEST) DTAAUT(*RWX) OBJAUT(*ALL)   "); 
       IFSRandomAccessFile raf1 = new IFSRandomAccessFile(system, "/usertest1.txt", "rw");
       IFSRandomAccessFile raf2 = new IFSRandomAccessFile(system, "/usertest2.txt", "rw");
       IFSRandomAccessFile raf3 = new IFSRandomAccessFile(system, "/usertest3.txt", "rw");
 
+      raf1.close(); 
+      raf2.close(); 
+      raf3.close(); 
+      
       CommandCall cmd1 = new CommandCall(system);
 
       Random rand = new Random();
@@ -197,7 +201,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     {
 
       UserObjectsOwnedList list1 = new UserObjectsOwnedList(null, "JAVA");
-      failed("Exception didn't occur.");
+      failed("Exception didn't occur."+list1);
 
     }
     catch (Exception e)
@@ -223,7 +227,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
  PasswordVault.clearPassword(charPassword); 
       UserObjectsOwnedList list1 = new UserObjectsOwnedList(system, null);
 
-      failed("Exception didn't occur.");
+      failed("Exception didn't occur."+list1);
 
     }
     catch (Exception e)
@@ -251,7 +255,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     {
 
       UserObjectsOwnedList list1 = new UserObjectsOwnedList(null, "JAVA", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
-      failed("Exception didn't occur.");
+      failed("Exception didn't occur."+list1);
 
     }
     catch (Exception e)
@@ -278,7 +282,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
 
       system = new AS400(systemObject_.getSystemName(), pwrSysUserID_ , charPassword );
       UserObjectsOwnedList list1 = new UserObjectsOwnedList(system, null, UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
-      failed("Exception didn't occur.");
+      failed("Exception didn't occur."+list1);
 
     }
     catch (Exception e)
@@ -313,7 +317,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
       system = new AS400(systemObject_.getSystemName(), pwrSysUserID_ , charPassword );
   PasswordVault.clearPassword(charPassword); 
      UserObjectsOwnedList list1 = new UserObjectsOwnedList(system, "JAVA", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_AUTHORIZED);
-      succeeded();
+      succeeded("list1="+list1);
 
     }
     catch (Exception e)
@@ -348,7 +352,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
       system = new AS400(systemObject_.getSystemName(), pwrSysUserID_ ,charPassword );
    PasswordVault.clearPassword(charPassword); 
     UserObjectsOwnedList list1 = new UserObjectsOwnedList(system, "JAVA", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED);
-      succeeded();
+      succeeded("list1="+list1);
 
     }
     catch (Exception e)
@@ -383,7 +387,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
       system = new AS400(systemObject_.getSystemName(), pwrSysUserID_ , charPassword );
    PasswordVault.clearPassword(charPassword); 
     UserObjectsOwnedList list1 = new UserObjectsOwnedList(system, "JAVA", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY , UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
-      succeeded();
+      succeeded("list1="+list1);
     }
     catch (Exception e)
     {
@@ -417,7 +421,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
 
       system = new AS400(systemObject_.getSystemName(), pwrSysUserID_ ,charPassword );
       UserObjectsOwnedList list1 = new UserObjectsOwnedList(system, "JAVA", 23, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
-      failed("Exception didn't occur.");
+      failed("Exception didn't occur."+list1);
 
     }
     catch (Exception e)
@@ -451,7 +455,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     {
       system = new AS400(systemObject_.getSystemName(), pwrSysUserID_ , charPassword );
       UserObjectsOwnedList list1 = new UserObjectsOwnedList(system, "JAVA", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY, 23);
-      failed("Exception didn't occur.");
+      failed("Exception didn't occur."+list1);
 
     }
     catch (Exception e)
@@ -487,7 +491,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     AS400 system = null;
     try
     {
-      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts");
+      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts".toCharArray());
  
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
       UserObjectsOwnedListEntry[] entries1 = list.getObjectList();
@@ -553,7 +557,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     AS400 system = null;
     try
     {
-      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts");
+      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts".toCharArray());
  
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
       UserObjectsOwnedList list2 = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
@@ -595,7 +599,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     AS400 system = null;
     try
     {
-      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts");
+      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts".toCharArray());
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
       UserObjectsOwnedList list2 = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED );
       UserObjectsOwnedList list3 = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_AUTHORIZED);
@@ -638,7 +642,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     AS400 system = null;
     try
     {
-      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts");
+      system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts".toCharArray());
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
 
       if ((list.getSelectionObjectRelation() != UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED) &
@@ -927,7 +931,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
    PasswordVault.clearPassword(charPassword);
-      AS400 fake = new AS400 ("fakesystem","fakeuser","fakepassword");
+      AS400 fake = new AS400 ("fakesystem","fakeuser","fakepassword".toCharArray());
       UserObjectsOwnedList list = new UserObjectsOwnedList(fake, systemObject_.getUserId());
 
       //Set the system with the one sent in the parameters.
@@ -1152,7 +1156,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     try
     {
 
-      system = new AS400(systemObject_.getSystemName(),"USRTEST" ,"user23ts");
+      system = new AS400(systemObject_.getSystemName(),"USRTEST" ,"user23ts".toCharArray());
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED);
       UserObjectsOwnedListEntry[] entries1 = list.getObjectList();
       System.out.println(list);
@@ -1203,10 +1207,10 @@ public class UserObjectsOwnedListTestcase extends Testcase
     try
     {
 
-      system = new AS400(systemObject_.getSystemName(), "USRTEST" ,"user23ts");
+      system = new AS400(systemObject_.getSystemName(), "USRTEST" ,"user23ts".toCharArray());
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, "JAVACTL", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED);
       UserObjectsOwnedListEntry[] entries1 = list.getObjectList();
-      failed("Exception didn't occur.");
+      failed("Exception didn't occur."+entries1);
 
     }
     catch (Exception e)

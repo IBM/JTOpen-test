@@ -57,6 +57,7 @@ public class ServicePgmCallStressTestcase extends ProxyStressTest implements Run
     /**
      Runs the current thread_
      **/
+    @SuppressWarnings("deprecation")
     public void run()
     {
         int i;
@@ -143,6 +144,7 @@ public class ServicePgmCallStressTestcase extends ProxyStressTest implements Run
     /**
      Stops the current thread_
      **/
+    @SuppressWarnings("deprecation")
     public void stop()
     {
         if ((thread_ != null) && thread_.isAlive())

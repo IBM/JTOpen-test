@@ -462,6 +462,7 @@ public class SSLEventTestcase extends Testcase implements ConnectionListener
             finally
             {
                 sys.removeConnectionListener(this);
+                sys.close(); 
             }
         }
         catch (Exception e)

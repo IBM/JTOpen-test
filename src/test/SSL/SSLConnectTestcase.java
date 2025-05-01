@@ -14,7 +14,7 @@
 package test.SSL;
 
 import java.net.InetAddress;
-import java.util.Date;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.SecureAS400;
@@ -56,6 +56,7 @@ public class SSLConnectTestcase extends Testcase
             {
                 assertExceptionIs(e, "ExtendedIllegalArgumentException");
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -84,6 +85,7 @@ public class SSLConnectTestcase extends Testcase
             finally
             {
                 sys.disconnectAllServices();
+                sys.close(); 
             }
         }
         catch (Exception e)
@@ -114,6 +116,7 @@ public class SSLConnectTestcase extends Testcase
                 finally
                 {
                     sys.disconnectAllServices();
+                    sys.close(); 
                 }
             }
             else
@@ -148,7 +151,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices(); sys.close();
                 }
             }
             else
@@ -183,7 +186,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices(); sys.close();
                 }
             }
             else
@@ -217,7 +220,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices(); sys.close();
             }
         }
         catch (Exception e)
@@ -246,7 +249,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices(); sys.close();
                 }
             }
             else
@@ -280,7 +283,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices(); sys.close();
                 }
             }
             else
@@ -314,7 +317,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices(); sys.close();
                 }
             }
             else
@@ -348,7 +351,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices(); sys.close();
             }
         }
         catch (Exception e)
@@ -377,7 +380,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices(); sys.close();
                 }
             }
             else
@@ -411,7 +414,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices(); sys.close();
                 }
             }
             else
@@ -445,7 +448,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices(); sys.close();
                 }
             }
             else
@@ -479,7 +482,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices(); sys.close();
             }
         }
         catch (Exception e)
@@ -508,7 +511,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -542,7 +545,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -576,7 +579,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -610,7 +613,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices();  sys.close();
             }
         }
         catch (Exception e)
@@ -639,7 +642,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -673,7 +676,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -707,7 +710,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -741,7 +744,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices();  sys.close();
             }
         }
         catch (Exception e)
@@ -771,7 +774,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -806,7 +809,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -841,7 +844,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -875,7 +878,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices();  sys.close();
             }
         }
         catch (Exception e)
@@ -904,7 +907,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -938,7 +941,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -972,7 +975,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -1006,7 +1009,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices();  sys.close();
             }
         }
         catch (Exception e)
@@ -1035,7 +1038,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -1069,7 +1072,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -1103,7 +1106,7 @@ public class SSLConnectTestcase extends Testcase
                 }
                 finally
                 {
-                    sys.disconnectAllServices();
+                    sys.disconnectAllServices();  sys.close();
                 }
             }
             else
@@ -1142,7 +1145,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices();  sys.close();
             }
         }
         catch (Exception e)
@@ -1159,7 +1162,7 @@ public class SSLConnectTestcase extends Testcase
     {
         try
         {
-            SecureAS400 sys = new SecureAS400("BADSYS", "aaa", "bbb");
+            SecureAS400 sys = new SecureAS400("BADSYS", "aaa", "bbb".toCharArray());
             sys.setGuiAvailable(false);
             sys.setMustUseSockets(mustUseSockets_);
 
@@ -1172,6 +1175,7 @@ public class SSLConnectTestcase extends Testcase
             {
                 assertExceptionIs(e, "UnknownHostException");
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -1214,6 +1218,7 @@ public class SSLConnectTestcase extends Testcase
                     assertExceptionIs(e, "ConnectException");
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -1236,6 +1241,7 @@ public class SSLConnectTestcase extends Testcase
 
             sys.connectService(serv);
             sys.disconnectService(serv);
+            sys.close(); 
             try
             {
                 sys.setSystemName("wontwork");
@@ -1267,6 +1273,7 @@ public class SSLConnectTestcase extends Testcase
 
             sys.connectService(serv);
             sys.disconnectService(serv);
+            
             try
             {
                 sys.setUserId("wontwork");
@@ -1276,6 +1283,7 @@ public class SSLConnectTestcase extends Testcase
             {
                 assertExceptionIs(e, "ExtendedIllegalStateException");
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -1299,13 +1307,14 @@ public class SSLConnectTestcase extends Testcase
             sys.connectService(serv);
             try
             {
-                sys.setPassword("wontwork");
+                sys.setPassword("wontwork".toCharArray());
                 succeeded();
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices();  sys.close();
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -1334,7 +1343,7 @@ public class SSLConnectTestcase extends Testcase
             }
             finally
             {
-                sys.disconnectAllServices();
+                sys.disconnectAllServices();  sys.close();
             }
         }
         catch (Exception e)

@@ -53,9 +53,11 @@ public class SSLSerializeTestcase extends Testcase
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(sys);
             s.flush();
+            s.close(); 
 
             FileInputStream in = new FileInputStream("tSecureAS400");
             ObjectInputStream s2 = new ObjectInputStream(in);
+            s2.close(); 
             SecureAS400 sys2 = (SecureAS400)s2.readObject();
 
             sys2.setPassword(charPassword);
@@ -63,7 +65,7 @@ public class SSLSerializeTestcase extends Testcase
             
             sys2.connectService(AS400.DATAQUEUE);
             sys2.disconnectService(AS400.DATAQUEUE);
-
+            sys2.close(); 
             File fd = new File("tSecureAS400");
             fd.delete();
 

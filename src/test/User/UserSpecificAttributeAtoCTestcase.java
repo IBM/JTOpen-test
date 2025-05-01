@@ -37,6 +37,7 @@ import com.ibm.as400.resource.RUser;
  <li>CURRENT_LIBRARY_NAME
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserSpecificAttributeAtoCTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -243,7 +244,6 @@ public class UserSpecificAttributeAtoCTestcase extends Testcase
     {
         try
         {
-            String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, user_);
             Object value = u.getAttributeValue(RUser.ALLOW_SYNCHRONIZATION);
             assertCondition(((Boolean)value).booleanValue() == true);

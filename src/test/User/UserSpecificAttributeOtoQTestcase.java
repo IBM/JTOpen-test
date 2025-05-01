@@ -41,6 +41,7 @@ import com.ibm.as400.resource.RUser;
  <li>PRIORITY_MAIL_NOTIFICATION
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserSpecificAttributeOtoQTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -1338,6 +1339,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
             long now = System.currentTimeMillis();
             long then = ((Date)value).getTime();
             long difference = now - then;
+            system.close(); 
             assertCondition(Math.abs(difference) < 10800000);
         }
         catch (Exception e)
@@ -1368,6 +1370,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
             long now = System.currentTimeMillis();
             long then = value.getTime();
             long difference = now - then;
+            system.close();
             assertCondition(Math.abs(difference) < 10800000, "Time difference is too large.");
         }
         catch (Exception e)

@@ -12,25 +12,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.awt.Image;
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.Presentation;
+import com.ibm.as400.resource.RPrinter;
 import com.ibm.as400.resource.ResourceEvent;
 
 import test.RPrintTest;
 import test.Testcase;
-import test.RPrintTest.PropertyChangeListener_;
-import test.RPrintTest.ResourceListener_;
-import test.RPrintTest.VetoableChangeListener_;
-
-import com.ibm.as400.resource.RPrinter;
-import java.awt.Image;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -51,6 +45,7 @@ of the RPrinter class, inherited from BufferedResource:
 <li>toString() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterBufferedResourceTestcase
 extends Testcase {
 
@@ -231,6 +226,7 @@ equals() - Verify that a RPrinter is not equal to null.
 /**
 equals() - Verify that a RPrinter is not equal to something that is not a RPrinter.
 **/
+    @SuppressWarnings("unlikely-arg-type")
     public void Var008()
     {
         try {
@@ -368,7 +364,7 @@ for a RPrinter whose properties have been set and used.
                    && (helpText == null)
                    && ((isApplet_) || (iconColor16 != null))    // Applets don't always load gifs.
                    && ((isApplet_) || (iconColor32 != null))    // Applets don't always load gifs.
-                   && (asString.equals(printerName_)));
+                   && (asString.equals(printerName_)), "textDescription="+textDescription);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -451,7 +447,7 @@ the resource key should be set.
             buffer.append(printerName_);
             String expected = buffer.toString();
 
-            assertCondition(u.getResourceKey().equals(expected));
+            assertCondition(u.getResourceKey().equals(expected), "textDescription="+textDescription);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -664,7 +660,7 @@ this should return the user name.
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
             String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
-            assertCondition(u.toString().equals(printerName_));
+            assertCondition(u.toString().equals(printerName_), "textDescription="+textDescription);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

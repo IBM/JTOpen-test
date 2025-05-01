@@ -14,16 +14,11 @@
 package test.Sysval;
 
 
-import java.io.FileOutputStream;
-import java.util.Vector;
-import com.ibm.as400.access.AS400;
+import java.math.BigDecimal;
+
 import com.ibm.as400.access.SystemValue;
-import com.ibm.as400.access.SystemValueList;
 
 import test.Testcase;
-
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import java.math.BigDecimal;
 
 
 /**

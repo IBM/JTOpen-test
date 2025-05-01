@@ -92,7 +92,8 @@ public class UserSpaceStressTestcase
    Runs the current thread_
  **/
 
-   public void run() {
+   @SuppressWarnings("deprecation")
+  public void run() {
 
       String readString = null;
       
@@ -240,7 +241,8 @@ public class UserSpaceStressTestcase
 /**
    Stops the current thread_
  **/
-   public void stop() {
+   @SuppressWarnings("deprecation")
+  public void stop() {
 
       if ((thread_ != null) && thread_.isAlive()) {
          thread_.stop();

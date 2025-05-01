@@ -13,15 +13,11 @@
 
 package test.Sec;
 
-import java.util.Properties;
-
 import com.ibm.as400.access.AS400;
 
 import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
-
-import java.io.FileInputStream;
 
 /**
  * Testcase SecVrmTestcase.
@@ -158,6 +154,7 @@ public class SecVrmTestcase extends Testcase {
         assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + VNEXT_SYSTEM_NAME);
       } finally {
         system.disconnectService(AS400.FILE);
+        system.close(); 
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + VNEXT_SYSTEM_NAME);
@@ -180,6 +177,8 @@ public class SecVrmTestcase extends Testcase {
         assertCondition(release == 6, "Incorrect release =" + release + " - test runs to " + VNEXT_SYSTEM_NAME);
       } finally {
         system.disconnectService(AS400.PRINT);
+        system.close(); 
+        
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + VNEXT_SYSTEM_NAME);
@@ -201,6 +200,8 @@ public class SecVrmTestcase extends Testcase {
         assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + V7R3_SYSTEM_NAME);
       } finally {
         system.disconnectService(AS400.FILE);
+        system.close(); 
+        
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + V7R3_SYSTEM_NAME + " using " + userId_);
@@ -222,6 +223,8 @@ public class SecVrmTestcase extends Testcase {
         assertCondition(system.getRelease() == 3, "Incorrect release - test runs to " + V7R3_SYSTEM_NAME);
       } finally {
         system.disconnectService(AS400.PRINT);
+        system.close(); 
+        
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + V7R3_SYSTEM_NAME);
@@ -239,6 +242,8 @@ public class SecVrmTestcase extends Testcase {
       system.setGuiAvailable(false);
       system.setMustUseSockets(mustUseSockets_);
       assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + V7R3_SYSTEM_NAME);
+      system.close(); 
+      
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + V7R3_SYSTEM_NAME);
     }
@@ -255,6 +260,8 @@ public class SecVrmTestcase extends Testcase {
       system.setGuiAvailable(false);
       system.setMustUseSockets(mustUseSockets_);
       assertCondition(system.getRelease() == 3, "Incorrect release - test runs to " + V7R3_SYSTEM_NAME);
+      system.close(); 
+      
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + V7R3_SYSTEM_NAME);
     }
@@ -271,6 +278,8 @@ public class SecVrmTestcase extends Testcase {
       system.setGuiAvailable(false);
       system.setMustUseSockets(mustUseSockets_);
       assertCondition(system.getModification() == 0, "Incorrect modification - test runs to " + V7R3_SYSTEM_NAME);
+      system.close(); 
+      
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + V7R3_SYSTEM_NAME);
     }
@@ -287,6 +296,8 @@ public class SecVrmTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       system.setMustUseSockets(mustUseSockets_);
       assertCondition(system.getVRM() == 0x00070300, "VRM not correct - test runs to " + V7R3_SYSTEM_NAME);
+      system.close(); 
+      
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + V7R3_SYSTEM_NAME);
     }
@@ -307,6 +318,8 @@ public class SecVrmTestcase extends Testcase {
         assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + V7R4_SYSTEM_NAME);
       } finally {
         system.disconnectService(AS400.FILE);
+        system.close(); 
+        
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME + " using " + userId_);
@@ -329,6 +342,8 @@ public class SecVrmTestcase extends Testcase {
           assertCondition(system.getRelease() == 4, "Incorrect release - test runs to " + V7R4_SYSTEM_NAME);
         } finally {
           system.disconnectService(AS400.PRINT);
+          system.close(); 
+          
         }
       } catch (Exception e) {
         failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME);
@@ -347,6 +362,8 @@ public class SecVrmTestcase extends Testcase {
         system.setMustUseSockets(mustUseSockets_);
         system.setGuiAvailable(false);
         assertCondition(system.getVersion() == 7, "Incorrect version - test runs to " + V7R4_SYSTEM_NAME);
+        system.close(); 
+        
       } catch (Exception e) {
         failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME);
       }
@@ -364,6 +381,8 @@ public class SecVrmTestcase extends Testcase {
         system.setMustUseSockets(mustUseSockets_);
         system.setGuiAvailable(false);
         assertCondition(system.getRelease() == 4, "Incorrect release - test runs to " + V7R4_SYSTEM_NAME);
+        system.close(); 
+        
       } catch (Exception e) {
         failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME);
       }
@@ -381,6 +400,9 @@ public class SecVrmTestcase extends Testcase {
         system.setMustUseSockets(mustUseSockets_);
         system.setGuiAvailable(false);
         assertCondition(system.getModification() == 0, "Incorrect modification - test runs to " + V7R4_SYSTEM_NAME);
+        system.close(); 
+        
+        
       } catch (Exception e) {
         failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME);
       }
@@ -399,6 +421,8 @@ public class SecVrmTestcase extends Testcase {
         system.setGuiAvailable(false);
         assertCondition(system.getVRM() == 0x00070400,
             "VRM " + Integer.toHexString(system.getVRM()) + " not correct - test runs to " + V7R4_SYSTEM_NAME);
+        system.close(); 
+        
       } catch (Exception e) {
         failed(e, "Unexpected exception - test runs to " + V7R4_SYSTEM_NAME);
       }

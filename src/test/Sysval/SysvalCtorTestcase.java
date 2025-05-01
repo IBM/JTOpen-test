@@ -14,15 +14,10 @@
 package test.Sysval;
 
 
-import java.io.FileOutputStream;
-import java.util.Vector;
-import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.SystemValue;
-import com.ibm.as400.access.SystemValueList;
 
 import test.Testcase;
-
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 /**
  * Testcase SysvalCtorTestcase.
@@ -99,7 +94,7 @@ public class SysvalCtorTestcase extends Testcase
       try
       {
         SystemValue sv = new SystemValue(null, "QDAY");
-        failed("No exception.");
+        failed("No exception."+sv);
       }
       catch(Exception e)
       {
@@ -120,7 +115,7 @@ public class SysvalCtorTestcase extends Testcase
       try
       {
         SystemValue sv = new SystemValue(systemObject_, null);
-        failed("No exception.");
+        failed("No exception."+sv);
       }
       catch(Exception e)
       {
@@ -141,7 +136,7 @@ public class SysvalCtorTestcase extends Testcase
       try
       {
         SystemValue sv = new SystemValue(systemObject_, "");
-        failed("No exception.");
+        failed("No exception."+sv);
       }
       catch(Exception e)
       {
@@ -163,7 +158,7 @@ public class SysvalCtorTestcase extends Testcase
       try
       {
         SystemValue sv = new SystemValue(systemObject_, "TRASH");
-        failed("No exception.");
+        failed("No exception."+sv);
       }
       catch(Exception e)
       {
@@ -184,7 +179,7 @@ public class SysvalCtorTestcase extends Testcase
       try
       {
         SystemValue sv = new SystemValue(systemObject_, "QDAY");
-        succeeded();
+        succeeded("sv="+sv);
       }
       catch(Exception e)
       {
@@ -201,7 +196,7 @@ public class SysvalCtorTestcase extends Testcase
       try
       {
         SystemValue sv = new SystemValue();
-        succeeded();
+        succeeded("sv="+sv);
       }
       catch(Exception e)
       {

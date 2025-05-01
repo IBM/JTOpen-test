@@ -24,15 +24,12 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SystemValueList;
 
 import test.JTOpenTestEnvironment;
 import test.Testcase;
-
-import com.ibm.as400.access.ObjectEvent;
-import com.ibm.as400.access.ObjectListener;
 
 /**
  * Testcase SysvalListSerialization.
@@ -60,12 +57,8 @@ public class SysvalListSerialization extends Testcase implements PropertyChangeL
     Object src;
     Object asource;
 
-    private String datestUserID = " USER(DATEST) ";
     private String operatingSystem_;
     private boolean DOS_ = false;
-    private static String dirName_;
-    private boolean OS400_ = false;
-    private boolean usingNativeImpl = false;
 
     PropertyChangeEvent propChange;
     PropertyChangeEvent vetoChange;
@@ -85,18 +78,6 @@ public class SysvalListSerialization extends Testcase implements PropertyChangeL
       if (JTOpenTestEnvironment.isWindows)
       {
         DOS_ = true;
-      }
-
-
-      // Are we running on the AS/400?
-      else if (operatingSystem_.indexOf("OS/400") >= 0)
-      {
-        OS400_ = true;
-//        if (!DATest.usingSockets)
-//        {
-//           usingNativeImpl = true;
-//           output_.println("Will use native implementation");
-//        }
       }
 
       output_.println("Running under: " + operatingSystem_);
@@ -119,8 +100,6 @@ public class SysvalListSerialization extends Testcase implements PropertyChangeL
           return;
         }
 
-        if (usingNativeImpl)
-           datestUserID = " USER(" + systemObject_.getUserId() + ") ";
 
         boolean allVariations = (variationsToRun_.size() == 0);
 
@@ -354,13 +333,14 @@ public class SysvalListSerialization extends Testcase implements PropertyChangeL
         ObjectOutput s =  new ObjectOutputStream(f);
         s.writeObject(sv);
         s.flush();
+        s.close(); 
         try
         {
           // Deserialize sv from a file.
           FileInputStream in = new FileInputStream("svl.ser");
           ObjectInputStream s2 = new ObjectInputStream(in);
           SystemValueList sv2 = (SystemValueList)s2.readObject();
-
+          s2.close(); 
           if (false == sv2.getSystem().getSystemName().equals(sv.getSystem().getSystemName()))
           {
             failed("System changed to " + sv2.getSystem().getSystemName());

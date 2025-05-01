@@ -14,18 +14,15 @@
 package test.Sysval;
 
 
-import java.io.FileOutputStream;
-import java.util.Vector;
 import java.util.ResourceBundle;
+
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.RequestNotSupportedException;
 import com.ibm.as400.access.SystemValue;
 import com.ibm.as400.access.SystemValueList;
 
 import test.Testcase;
-
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.RequestNotSupportedException;
 
 /**
  * Testcase SysvalGetSetTestcase.

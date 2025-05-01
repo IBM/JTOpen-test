@@ -335,7 +335,7 @@ public class UserSpaceReadTestcase extends Testcase
             aUserSpace = new UserSpace(systemObject_, userSpaceLibraryPath_+pre_existingUserSpaceObjectPath_);
             int bytesReturned = aUserSpace.read(new byte[1], -1, 1, 1);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -367,7 +367,7 @@ public class UserSpaceReadTestcase extends Testcase
             // Attempt to set offset to null
             String inString = aUserSpace.read(-1, 20);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+inString);
         }
         catch (Exception e)
         {
@@ -493,7 +493,7 @@ public class UserSpaceReadTestcase extends Testcase
         {
             aUserSpace = new UserSpace(systemObject_, userSpaceLibraryPath_+pre_existingUserSpaceObjectPath_);
             int bytesReturned = aUserSpace.read(new byte[1], 0, -1, 1);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -546,7 +546,7 @@ public class UserSpaceReadTestcase extends Testcase
             aUserSpace = new UserSpace(systemObject_, userSpaceLibraryPath_+pre_existingUserSpaceObjectPath_);
             String readString = aUserSpace.read(0, 0);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+readString);
         }
         catch (Exception e)
         {
@@ -577,7 +577,7 @@ public class UserSpaceReadTestcase extends Testcase
             readBuffer[19] = 19;
             int bytesReturned = aUserSpace.read(readBuffer, 0, readBuffer.length, 0);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -607,7 +607,7 @@ public class UserSpaceReadTestcase extends Testcase
             byte[] readBuffer = new byte[20];
             int bytesReturned = aUserSpace.read(readBuffer, 0, readBuffer.length + 1, readBuffer.length);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -635,7 +635,7 @@ public class UserSpaceReadTestcase extends Testcase
             aUserSpace = new UserSpace(systemObject_, userSpaceLibraryPath_+pre_existingUserSpaceObjectPath_);
             String readString = aUserSpace.read(0, -1);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+readString);
         }
         catch (Exception e)
         {
@@ -663,7 +663,7 @@ public class UserSpaceReadTestcase extends Testcase
             aUserSpace = new UserSpace(systemObject_, userSpaceLibraryPath_+pre_existingUserSpaceObjectPath_);
             int bytesReturned = aUserSpace.read(new byte[10], 0, 0, -1);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -693,7 +693,7 @@ public class UserSpaceReadTestcase extends Testcase
             byte[] readBuffer = new byte[20];
             int bytesReturned = aUserSpace.read(readBuffer, 0, 0, readBuffer.length + 1);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -785,7 +785,7 @@ public class UserSpaceReadTestcase extends Testcase
                 if(i == data.length)
                     succeeded();
                 else
-                    failed("Unexpected results occurred.");
+                    failed("Unexpected results occurred."+i1);
 
             }
             else
@@ -793,7 +793,6 @@ public class UserSpaceReadTestcase extends Testcase
                 int i1;
                 int i = 0;
                 byte[] inByte1 = new byte[1];
-                byte[] inByte2 = new byte[1];
                 do
                 {
                     i1 = aUserSpace.read(inByte1, i);
@@ -803,7 +802,7 @@ public class UserSpaceReadTestcase extends Testcase
                 if (i == data.length)
                     succeeded();
                 else
-                    failed("Unexpected results occurred.");
+                    failed("Unexpected results occurred."+i1);
             }
         }
         catch (Exception e)
@@ -847,7 +846,7 @@ public class UserSpaceReadTestcase extends Testcase
                 if(i == data.length)
                     succeeded();
                 else
-                    failed("Unexpected results occurred.");
+                    failed("Unexpected results occurred."+i1);
 
             }
             else
@@ -855,7 +854,6 @@ public class UserSpaceReadTestcase extends Testcase
                 int i1;
                 int i = 0;
                 byte[] inByte1 = new byte[1];
-                byte[] inByte2 = new byte[1];
                 do
                 {
                     i1 = aUserSpace.read(inByte1, i);
@@ -865,7 +863,7 @@ public class UserSpaceReadTestcase extends Testcase
                 if (i == data.length)
                     succeeded();
                 else
-                    failed("Unexpected results occurred.");
+                    failed("Unexpected results occurred."+i1);
             }
         }
         catch (Exception e)
@@ -999,7 +997,7 @@ public class UserSpaceReadTestcase extends Testcase
             byte[] data = new byte[20];
             int bytesReturned = aUserSpace.read(data, 0);
 
-            failed("Expected exception did not occur (make sure -uid on command line does not have authority to "+unauthorizedLibrary_+".lib/usread2.usrspc).");
+            failed("Expected exception did not occur (make sure -uid on command line does not have authority to "+unauthorizedLibrary_+".lib/usread2.usrspc)."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -1041,21 +1039,21 @@ public class UserSpaceReadTestcase extends Testcase
                 AS400Message[] messageList = cmd.getMessageList();
                 throw new IOException(messageList[0].toString());
             }
-
+            int bytes = 0; 
             if (isNative_)
             {
                 byte[] data = new byte[20];
                 aUserSpace = new UserSpace(systemObject_, authorityUserSpaceLibraryPath_+authorityUserSpaceObjectPath_);
-                int bytes = aUserSpace.read(data, 0);
+                bytes = aUserSpace.read(data, 0);
             }
             else
             {
                 byte[] data = new byte[20];
                 aUserSpace = new UserSpace(usSystem_, authorityUserSpaceLibraryPath_+authorityUserSpaceObjectPath_);
-                int bytes = aUserSpace.read(data, 0);
+                bytes = aUserSpace.read(data, 0);
             }
 
-            failed("Expected exception did not occur (make sure -uid on command line does not have authority to "+authorityLibrary_+".lib/usread1.usrspc).");
+            failed("Expected exception did not occur (make sure -uid on command line does not have authority to "+authorityLibrary_+".lib/usread1.usrspc)."+bytes);
         }
         catch (Exception e)
         {
@@ -1114,7 +1112,7 @@ public class UserSpaceReadTestcase extends Testcase
             byte[] dataBuffer = new byte[20];
             int bytesReturned = aUserSpace.read(dataBuffer, 0);
 
-            failed("Exception did not occur.");
+            failed("Exception did not occur."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -1180,7 +1178,7 @@ public class UserSpaceReadTestcase extends Testcase
             aUserSpace = new UserSpace(systemObject_, userSpaceLibraryPath_+pre_existingUserSpaceObjectPath_);
             int bytesReturned = aUserSpace.read(new byte[0], 0, 0, 0);
 
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+bytesReturned);
         }
         catch (Exception e)
         {
@@ -1293,7 +1291,7 @@ public class UserSpaceReadTestcase extends Testcase
             byte[] dataBuffer = new byte[16];
             int bytes = secondUS.read(dataBuffer, 0);
 
-            succeeded();
+            succeeded("bytes="+bytes);
         }
         catch (Exception e)
         {
@@ -1331,7 +1329,7 @@ public class UserSpaceReadTestcase extends Testcase
             byte[] dataBuffer = new byte[16];
             int bytes = secondUS.read(dataBuffer, 0);
 
-            succeeded();
+            succeeded("bytes="+bytes);
         }
         catch (Exception e)
         {
@@ -1368,7 +1366,7 @@ public class UserSpaceReadTestcase extends Testcase
             int bytes = secondUS.read(dataBuffer, 0);
 
             if (isNative_)
-                succeeded();
+                succeeded("bytes="+bytes);
             else
                 failed("No Exception occurred.");
         }
@@ -1410,7 +1408,7 @@ public class UserSpaceReadTestcase extends Testcase
             byte[] dataBuffer = new byte[16];
             int bytes = aUserSpace.read(dataBuffer, 0);
 
-            succeeded();
+            succeeded("bytes="+bytes);
         }
         catch (Exception e)
         {

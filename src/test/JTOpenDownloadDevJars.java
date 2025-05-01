@@ -85,7 +85,6 @@ public class JTOpenDownloadDevJars {
 
 	try {
 	    setupEnv(); 
-	    boolean sendShipped = true ; 
 	    System.out.println("Usage:  java test.JTOpenDownloadDevJars  ");
 	    System.out.println("   Downloads the latest artifact from github");
 	    System.out.println("   setenv DISABLESSL to disable SSL");
@@ -279,7 +278,7 @@ public class JTOpenDownloadDevJars {
     }
 
 
-  private static void removeDirectory(File dir) {
+   static void removeDirectory(File dir) {
       System.out.println("Removing directory "+dir.getAbsolutePath()); 
       File[] files = dir.listFiles(); 
       for (int i = 0; i < files.length; i++) {
