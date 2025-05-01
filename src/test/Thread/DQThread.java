@@ -103,13 +103,15 @@ class DQThread extends ComponentThread
 
 	    switch (function_)
 	    {
-		case KEYED_RD_WR:LOCAL_KEYED_RD_WR:
+		case KEYED_RD_WR:
+		case LOCAL_KEYED_RD_WR:
 		    performKeyedRdWr();
 		    break;
 		case KEYED_WR_CLEAR:
 		    performKeyedWrClear();
 		    break;
-		case UNKEYED_RD_WR:LOCAL_UNKEYED_RD_WR:
+		case UNKEYED_RD_WR:
+		case LOCAL_UNKEYED_RD_WR:
 		    performUnKeyedRdWr();
 		    break;
 	    }

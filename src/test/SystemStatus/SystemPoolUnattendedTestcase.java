@@ -13,15 +13,14 @@
 
 package test.SystemStatus;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.SystemPool;
-
-import test.Testcase;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.SystemPool;
+
+import test.Testcase;
 
 /**
  The SystemPoolUnattendedTestcase class tests the methods of SystemPool.
@@ -105,7 +104,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool();
-            succeeded();
+            succeeded("s="+s);
         }
         catch (Exception e)
         {
@@ -123,7 +122,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            succeeded();
+            succeeded("s="+s);
         }
         catch (Exception e)
         {
@@ -164,7 +163,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_, (String) null);
-            failed("Exception didn't occur.");
+            failed("Exception didn't occur."+s);
         }
         catch (Exception e)
         {
@@ -185,7 +184,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(null,"*SHRPOOL6");
-            failed("Exception didn't occur.");
+            failed("Exception didn't occur."+s);
         }
         catch (Exception e)
         {
@@ -396,7 +395,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            assertCondition (s.getMaximumActiveThreads() >= 0);
+            assertCondition (s.getActivityLevel() >= 0);
         }
         catch (Exception e)
         {
@@ -495,7 +494,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            assertCondition(s.getPoolIdentifier()>=0);
+            assertCondition(s.getIdentifier()>=0);
         }
         catch (Exception e)
         {
@@ -513,7 +512,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            assertCondition(s.getPoolName().trim().equals("*SHRPOOL6"));
+            assertCondition(s.getName().trim().equals("*SHRPOOL6"));
         }
         catch (Exception e)
         {
@@ -530,7 +529,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            assertCondition (s.getPoolSize() >= 0);
+            assertCondition (s.getSize() >= 0);
         }
         catch (Exception e)
         {
@@ -550,15 +549,15 @@ public class SystemPoolUnattendedTestcase extends Testcase
             // First, make sure the system doesn't auto-adjust the value for us.
             String opt = s.getPagingOption();
             s.setPagingOption("*FIXED");
-            int oldSize = s.getPoolSize();
+            int oldSize = s.getSize();
             int newSize = oldSize - 16;
-            s.setPoolSize(newSize);
-            int ret = s.getPoolSize();
+            s.setSize(newSize);
+            int ret = s.getSize();
             if (ret == newSize)
                 succeeded();
             else
                 failed("Pool sizes not equal: "+ret+" != "+newSize);
-            s.setPoolSize(oldSize);
+            s.setSize(oldSize);
             s.setPagingOption(opt);
         }
         catch (Exception e)
@@ -873,6 +872,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
      Method tested: setMaximumPoolSize()
      - Ensure that the maximum pool size can be set.
      **/
+    @SuppressWarnings("deprecation")
     public void Var040()
     {
         try
@@ -1152,7 +1152,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            s.setPoolActivityLevel(3);
+            s.setActivityLevel(3);
             succeeded();
         }
         catch (Exception e)
@@ -1170,7 +1170,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            s.setPoolActivityLevel(0);
+            s.setActivityLevel(0);
             failed("Exception didn't occur.");
         }
         catch (Exception e)
@@ -1191,9 +1191,9 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            s.setPoolName("*SHRPOOL7");
+            s.setName("*SHRPOOL7");
             s.loadInformation();
-            assertCondition (s.getPoolName().trim().equals("*SHRPOOL7"));
+            assertCondition (s.getName().trim().equals("*SHRPOOL7"));
         }
         catch (Exception e)
         {
@@ -1210,7 +1210,7 @@ public class SystemPoolUnattendedTestcase extends Testcase
         try
         {
             SystemPool s = new SystemPool(systemObject_,"*SHRPOOL6");
-            s.setPoolSize(1);
+            s.setSize(1);
             failed("Exception didn't occur.");
         }
         catch (Exception e)

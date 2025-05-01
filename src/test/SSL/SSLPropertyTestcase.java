@@ -18,7 +18,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 
-import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SecureAS400;
 
 import test.Testcase;
@@ -1673,6 +1672,7 @@ public class SSLPropertyTestcase extends Testcase implements PropertyChangeListe
             finally
             {
                 sys.removePropertyChangeListener(this);
+                sys.close(); 
             }
         }
         catch (Exception e)

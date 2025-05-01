@@ -72,7 +72,7 @@ public class SecPortMapperTestcase extends Testcase {
 
     File toolboxJar = TestDriver.getLoadSource("com.ibm.as400.access.AS400");
 
-    ClassLoader originalClassLoader = AS400.class.getClassLoader();
+   //  ClassLoader originalClassLoader = AS400.class.getClassLoader();
 
     String absolutePath = toolboxJar.getAbsolutePath(); 
     URL[] urls = new URL[1]; 

@@ -40,7 +40,7 @@ public class SecValidatePasswordTestcase extends Testcase
      (validateSignon(String, String))
      **/
     public void Var001()
-    {
+    {  char[] charPassword = null; 
         try
         {
             AS400 sys = new AS400();
@@ -48,9 +48,10 @@ public class SecValidatePasswordTestcase extends Testcase
 
             try
             {
-   char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+  charPassword = PasswordVault.decryptPassword(encryptedPassword_);
                 sys.validateSignon(userId_, charPassword);
-   PasswordVault.clearPassword(charPassword);
+   
+     
                 if (onAS400_)
                 {
                     succeeded();
@@ -71,11 +72,13 @@ public class SecValidatePasswordTestcase extends Testcase
                     assertExceptionIs(e, "ExtendedIllegalStateException");
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
             failed(e, "Unexpected exception");
         }
+        if (charPassword != null) PasswordVault.clearPassword(charPassword);
     }
 
     /**
@@ -101,6 +104,7 @@ public class SecValidatePasswordTestcase extends Testcase
             {
                 assertExceptionIs(e, "NullPointerException");
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -129,6 +133,7 @@ public class SecValidatePasswordTestcase extends Testcase
             {
                 assertExceptionIs(e, "NullPointerException");
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -164,6 +169,7 @@ public class SecValidatePasswordTestcase extends Testcase
 		    assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.USERID_UNKNOWN);
 		}
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -192,6 +198,7 @@ public class SecValidatePasswordTestcase extends Testcase
             {
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_INCORRECT);
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -212,6 +219,7 @@ public class SecValidatePasswordTestcase extends Testcase
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
             sys.validateSignon(userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
+   sys.close(); 
             succeeded();
         }
         catch (Exception e)
@@ -243,6 +251,7 @@ public class SecValidatePasswordTestcase extends Testcase
 		      charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
 		    } else {
 			failed("Current user must be same as -uid or -pwrSys");
+			sys.close(); 
 			return; 
 		    } 
 		}
@@ -268,6 +277,7 @@ public class SecValidatePasswordTestcase extends Testcase
                     assertExceptionIs(e, "ExtendedIllegalStateException");
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -297,6 +307,7 @@ public class SecValidatePasswordTestcase extends Testcase
 			  charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
 		    } else {
 			failed("Current user must be same as -uid or -pwrSys");
+			sys.close(); 
 			return; 
 		    } 
 		}
@@ -323,6 +334,7 @@ public class SecValidatePasswordTestcase extends Testcase
                     assertExceptionIs(e, "ExtendedIllegalStateException");
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -351,6 +363,7 @@ public class SecValidatePasswordTestcase extends Testcase
             {
                 assertExceptionIs(e, "NullPointerException");
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -388,6 +401,7 @@ public class SecValidatePasswordTestcase extends Testcase
 		    assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.USERID_UNKNOWN);
 		}
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -416,6 +430,7 @@ public class SecValidatePasswordTestcase extends Testcase
             {
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_INCORRECT);
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -446,6 +461,7 @@ public class SecValidatePasswordTestcase extends Testcase
             {
                 failed(e, "Unexpected exception");
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -488,6 +504,7 @@ public class SecValidatePasswordTestcase extends Testcase
                     assertExceptionIs(e, "ExtendedIllegalStateException");
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -530,6 +547,7 @@ public class SecValidatePasswordTestcase extends Testcase
                     assertExceptionIs(e, "ExtendedIllegalStateException");
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -577,6 +595,7 @@ public class SecValidatePasswordTestcase extends Testcase
                     assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
                 }
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -613,6 +632,7 @@ public class SecValidatePasswordTestcase extends Testcase
 		    assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.USERID_UNKNOWN);
 		}
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -641,6 +661,7 @@ public class SecValidatePasswordTestcase extends Testcase
             {
                 assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_INCORRECT);
             }
+            sys.close(); 
         }
         catch (Exception e)
         {
@@ -662,6 +683,7 @@ public class SecValidatePasswordTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
             sys.setMustUseSockets(mustUseSockets_);
             sys.validateSignon();
+            sys.close(); 
             succeeded();
         }
         catch (Exception e)

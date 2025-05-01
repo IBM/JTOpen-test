@@ -60,8 +60,6 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
     Object src;
     Object asource;
 
-    private String ustestUserID = " USER(USTEST) ";
-    private boolean usingNativeImpl = false;
 
     PropertyChangeEvent propChange;
     PropertyChangeEvent vetoChange;
@@ -74,7 +72,6 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
      **/
     protected void setup() throws Exception
     {
-        if (usingNativeImpl) ustestUserID = " USER(" + systemObject_.getUserId() + ") ";
         goodUSName = "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USBEAN.USRSPC";
         abcPath = "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/ABC.USRSPC";
         newusPath = "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/NEWUS.USRSPC"; 
@@ -293,7 +290,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
                 // Verify event
                 if (usEvent == null)
                 {
-                    failed("event not fired on read");
+                    failed("event not fired on read"+bytesRead);
                 }
                 else if (usN != 2)
                 {
@@ -684,6 +681,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
                 FileInputStream in = new FileInputStream("us.ser");
                 ObjectInputStream s2 = new ObjectInputStream(in);
                 UserSpace us2 = (UserSpace)s2.readObject();
+                s2.close(); 
 
                 if (false == us2.getPath().equals(us.getPath()))
                 {
@@ -757,7 +755,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
             AS400 as400 = new AS400();
             UserSpace aUserSpace = new UserSpace(as400, goodUSName);
             resetValues();
-            AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+            AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
             aUserSpace.setSystem(oldAS400);
             aUserSpace.addPropertyChangeListener(this);
             AS400 newAS400 = systemObject_;
@@ -812,7 +810,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
             AS400 as400 = new AS400();
             UserSpace aUserSpace = new UserSpace(as400, goodUSName);
             resetValues();
-            AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+            AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
             aUserSpace.setSystem(oldAS400);
             aUserSpace.addVetoableChangeListener(this);
             AS400 newAS400 = systemObject_;
@@ -875,7 +873,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
             AS400 as400 = new AS400();
             UserSpace aUserSpace = new UserSpace(as400, goodUSName);
             resetValues();
-            AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1");
+            AS400 oldAS400 = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
             aUserSpace.setSystem(oldAS400);
             veto_ = true;
             aUserSpace.addVetoableChangeListener(this);
@@ -907,7 +905,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
     {
         try
         {
-            AS400 badSystem = new AS400("rchasxxx", "JAVA", "JTEAM1");
+            AS400 badSystem = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
             UserSpace aUserSpace = new UserSpace(badSystem, goodUSName);
             String newUSName = newusPath;
             aUserSpace.setPath(newUSName);
@@ -926,7 +924,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
                 FileInputStream in = new FileInputStream("uspace.ser");
                 ObjectInputStream s2 = new ObjectInputStream(in);
                 UserSpace aUserSpace2 = (UserSpace)s2.readObject();
-
+                s2.close(); 
                 if (false == aUserSpace2.getPath().equals(aUserSpace.getPath()))
                 {
                     failed("Path changed to " + aUserSpace2.getPath());

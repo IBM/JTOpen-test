@@ -58,6 +58,7 @@ public class SSLPortMapperTestcase extends Testcase
             int service = AS400.FILE;
 
             int port = system.getServicePort(service);
+            system.close(); 
             assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
         }
         catch (Exception e)
@@ -83,6 +84,7 @@ public class SSLPortMapperTestcase extends Testcase
             int service = AS400.PRINT;
 
             int port = system.getServicePort(service);
+            system.close(); 
             assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
         }
         catch (Exception e)
@@ -108,6 +110,7 @@ public class SSLPortMapperTestcase extends Testcase
             int service = AS400.COMMAND;
 
             int port = system.getServicePort(service);
+            system.close(); 
             assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
         }
         catch (Exception e)
@@ -133,6 +136,7 @@ public class SSLPortMapperTestcase extends Testcase
             int service = AS400.DATAQUEUE;
 
             int port = system.getServicePort(service);
+            system.close(); 
             assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
         }
         catch (Exception e)
@@ -158,6 +162,7 @@ public class SSLPortMapperTestcase extends Testcase
             int service = AS400.DATABASE;
 
             int port = system.getServicePort(service);
+            system.close(); 
             assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
         }
         catch (Exception e)
@@ -183,6 +188,7 @@ public class SSLPortMapperTestcase extends Testcase
             int service = AS400.RECORDACCESS;
 
             int port = system.getServicePort(service);
+            system.close(); 
             assertCondition(port == 448, "Port incorrect: " + port);
         }
         catch (Exception e)
@@ -208,6 +214,7 @@ public class SSLPortMapperTestcase extends Testcase
             int service = AS400.CENTRAL;
 
             int port = system.getServicePort(service);
+            system.close(); 
             assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
         }
         catch (Exception e)
@@ -233,6 +240,7 @@ public class SSLPortMapperTestcase extends Testcase
             int service = AS400.SIGNON;
 
             int port = system.getServicePort(service);
+            system.close(); 
             assertCondition(port == AS400.USE_PORT_MAPPER, "Port incorrect: " + port);
         }
         catch (Exception e)
@@ -256,7 +264,8 @@ public class SSLPortMapperTestcase extends Testcase
             try
             {
                 int port = system.getServicePort(AS400.COMMAND);
-                assertCondition(onAS400_, "No exception.");
+                system.close(); 
+                assertCondition(onAS400_, "No exception."+port);
             }
             catch (Exception e)
             {
@@ -269,6 +278,7 @@ public class SSLPortMapperTestcase extends Testcase
                     failed(e, "Unexpected exception.");
                 }
             }
+            system.close(); 
         }
         catch (Exception e)
         {
@@ -293,7 +303,8 @@ public class SSLPortMapperTestcase extends Testcase
             try
             {
                 int port = system.getServicePort(-1);
-                failed("No exception.");
+                system.close(); 
+                failed("No exception."+port);
             }
             catch (Exception e)
             {
@@ -323,7 +334,8 @@ public class SSLPortMapperTestcase extends Testcase
             try
             {
                 int port = system.getServicePort(8);
-                failed("No exception.");
+                system.close(); 
+                failed("No exception."+port);
             }
             catch (Exception e)
             {
@@ -366,6 +378,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -404,6 +417,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -442,6 +456,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -480,6 +495,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -518,6 +534,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -556,6 +573,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -594,6 +612,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -632,6 +651,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -668,6 +688,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.setServicePort(service, 9473);
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -704,6 +725,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.setServicePort(service, 9474);
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -740,6 +762,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.setServicePort(service, 9475);
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -776,6 +799,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.setServicePort(service, 9472);
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -812,6 +836,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.setServicePort(service, 9471);
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -848,6 +873,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.setServicePort(service, 448);
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -884,6 +910,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.setServicePort(service, 9470);
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -920,6 +947,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.setServicePort(service, 9476);
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -943,6 +971,7 @@ public class SSLPortMapperTestcase extends Testcase
             try
             {
                 system.setServicePort(AS400.COMMAND, 9475);
+                system.close(); 
                 assertCondition(onAS400_, "No exception.");
             }
             catch (Exception e)
@@ -986,6 +1015,7 @@ public class SSLPortMapperTestcase extends Testcase
             {
                 assertExceptionStartsWith(e, "ExtendedIllegalArgumentException", "service (-1): ", ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID);
             }
+            system.close(); 
         }
         catch (Exception e)
         {
@@ -1016,6 +1046,7 @@ public class SSLPortMapperTestcase extends Testcase
             {
                 assertExceptionStartsWith(e, "ExtendedIllegalArgumentException", "service (8): ", ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID);
             }
+            system.close(); 
         }
         catch (Exception e)
         {
@@ -1046,6 +1077,7 @@ public class SSLPortMapperTestcase extends Testcase
             {
                 assertExceptionStartsWith(e, "ExtendedIllegalArgumentException", "port (-2): ", ExtendedIllegalArgumentException.PARAMETER_VALUE_NOT_VALID);
             }
+            system.close(); 
         }
         catch (Exception e)
         {
@@ -1084,6 +1116,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -1123,6 +1156,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -1162,6 +1196,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -1201,6 +1236,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -1240,6 +1276,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -1279,6 +1316,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -1318,6 +1356,7 @@ public class SSLPortMapperTestcase extends Testcase
             finally
             {
                 system.disconnectAllServices();
+                system.close(); 
             }
         }
         catch (Exception e)
@@ -1354,6 +1393,7 @@ public class SSLPortMapperTestcase extends Testcase
                     failed(e, "Unexpected exception.");
                 }
             }
+            system.close(); 
         }
         catch (Exception e)
         {

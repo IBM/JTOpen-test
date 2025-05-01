@@ -14,14 +14,11 @@
 package test.Sysval;
 
 
-import java.io.FileOutputStream;
-import java.util.Vector;
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.RequestNotSupportedException;
 import com.ibm.as400.access.SystemValue;
 
 import test.Testcase;
-
-import com.ibm.as400.access.RequestNotSupportedException;
 
 /**
  * Testcase SysvalReleaseTestcase.

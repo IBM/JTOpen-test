@@ -32,6 +32,7 @@ import com.ibm.as400.resource.RUserList;
  <li>setSortValue()
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserListSortTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -89,7 +90,7 @@ public class UserListSortTestcase extends Testcase
         {
             RUserList u = new RUserList();
             ResourceMetaData smd = u.getSortMetaData(null);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+smd);
         }
         catch (Exception e)
         {
@@ -106,7 +107,7 @@ public class UserListSortTestcase extends Testcase
         {
             RUserList u = new RUserList();
             ResourceMetaData smd = u.getSortMetaData(new Date());
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+smd);
         }
         catch (Exception e)
         {

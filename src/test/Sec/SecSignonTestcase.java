@@ -175,6 +175,7 @@ public class SecSignonTestcase extends Testcase {
           }
         } finally {
           sys.disconnectService(AS400.COMMAND);
+          sys.close(); 
           AS400.clearPasswordCache();
           AS400.removeDefaultUser(systemName_);
         }
@@ -213,6 +214,7 @@ public class SecSignonTestcase extends Testcase {
           }
         } finally {
           sys.disconnectService(AS400.COMMAND);
+          sys.close(); 
           AS400.clearPasswordCache();
           AS400.removeDefaultUser(systemName_);
         }
@@ -244,7 +246,7 @@ public class SecSignonTestcase extends Testcase {
           try {
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close();
             String uid = AS400.getDefaultUser(systemName_);
             assertCondition(uid.equals(userId_.toUpperCase()));
           } finally {
@@ -278,7 +280,7 @@ public class SecSignonTestcase extends Testcase {
           try {
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close(); 
             sys = new AS400();
             output_.println(" ");
             output_.println(" ");
@@ -291,7 +293,7 @@ public class SecSignonTestcase extends Testcase {
 
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close(); 
             succeeded();
           } finally {
             AS400.clearPasswordCache();
@@ -328,7 +330,7 @@ public class SecSignonTestcase extends Testcase {
           try {
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close(); 
             String uid = AS400.getDefaultUser(systemName_);
             if (uid.equals(userId_.toUpperCase())) {
               AS400 sys2 = new AS400(systemName_);
@@ -344,6 +346,7 @@ public class SecSignonTestcase extends Testcase {
 
               sys2.connectService(AS400.COMMAND);
               sys2.disconnectService(AS400.COMMAND);
+              sys2.close(); 
 
               succeeded();
             } else {
@@ -378,7 +381,7 @@ public class SecSignonTestcase extends Testcase {
           try {
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close();
             sys2 = new AS400(systemName_);
             sys2.setMustUseSockets(mustUseSockets_);
 
@@ -395,7 +398,7 @@ public class SecSignonTestcase extends Testcase {
 
             sys2.connectService(AS400.COMMAND);
             sys2.disconnectService(AS400.COMMAND);
-
+            sys2.close(); 
             succeeded();
           } finally {
             AS400.clearPasswordCache();
@@ -472,13 +475,13 @@ public class SecSignonTestcase extends Testcase {
           try {
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close(); 
             AS400 sys2 = new AS400(systemName_);
             sys2.setMustUseSockets(mustUseSockets_);
 
             sys2.connectService(AS400.COMMAND);
             sys2.disconnectService(AS400.COMMAND);
-
+            sys2.close(); 
             String uid = sys2.getUserId();
             assertCondition(uid.equals(sys.getUserId()), "user id does not match");
           } finally {
@@ -517,7 +520,7 @@ public class SecSignonTestcase extends Testcase {
           try {
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close(); 
             AS400.removePasswordCacheEntry(systemName_, userId_);
 
             AS400 sys2 = new AS400(systemName_, userId_);
@@ -532,7 +535,7 @@ public class SecSignonTestcase extends Testcase {
 
             sys2.connectService(AS400.COMMAND);
             sys2.disconnectService(AS400.COMMAND);
-
+            sys2.close();
             succeeded();
           } finally {
             AS400.clearPasswordCache();
@@ -570,7 +573,7 @@ public class SecSignonTestcase extends Testcase {
           try {
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close();
             AS400.clearPasswordCache(systemName_);
 
             AS400 sys2 = new AS400(systemName_, userId_);
@@ -585,7 +588,7 @@ public class SecSignonTestcase extends Testcase {
 
             sys2.connectService(AS400.COMMAND);
             sys2.disconnectService(AS400.COMMAND);
-
+            sys2.close();
             succeeded();
           } finally {
             AS400.clearPasswordCache();
@@ -621,7 +624,7 @@ public class SecSignonTestcase extends Testcase {
           try {
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close();
             AS400.clearPasswordCache();
 
             AS400 sys2 = new AS400(systemName_, userId_);
@@ -635,7 +638,7 @@ public class SecSignonTestcase extends Testcase {
 
             sys2.connectService(AS400.COMMAND);
             sys2.disconnectService(AS400.COMMAND);
-
+            sys2.close();
             succeeded();
           } finally {
             AS400.clearPasswordCache();
@@ -666,6 +669,7 @@ public class SecSignonTestcase extends Testcase {
           assertCondition(sys.isConnected(AS400.COMMAND), "Connect failed");
         } finally {
           sys.disconnectService(AS400.COMMAND);
+          sys.close();
         }
       } finally {
         AS400.clearPasswordCache();
@@ -705,7 +709,7 @@ public class SecSignonTestcase extends Testcase {
 
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close();
             succeeded();
           } finally {
             AS400.clearPasswordCache();
@@ -748,7 +752,7 @@ public class SecSignonTestcase extends Testcase {
 
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close();
             succeeded();
           } finally {
             AS400.clearPasswordCache();
@@ -790,7 +794,7 @@ public class SecSignonTestcase extends Testcase {
 
             sys.connectService(AS400.COMMAND);
             sys.disconnectService(AS400.COMMAND);
-
+            sys.close();
             succeeded();
           } finally {
             AS400.clearPasswordCache();
@@ -843,6 +847,7 @@ public class SecSignonTestcase extends Testcase {
             assertCondition(sys.isConnected(AS400.COMMAND), "Connect failed");
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -877,6 +882,7 @@ public class SecSignonTestcase extends Testcase {
             assertCondition(sys.isConnected(AS400.COMMAND), "Connect failed");
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -912,6 +918,7 @@ public class SecSignonTestcase extends Testcase {
             assertCondition(sys.isConnected(AS400.COMMAND), "Connect failed");
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -976,6 +983,7 @@ public class SecSignonTestcase extends Testcase {
             assertCondition(sys.isConnected(AS400.COMMAND), "Connect failed");
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1019,6 +1027,7 @@ public class SecSignonTestcase extends Testcase {
             assertCondition(sys.isConnected(AS400.COMMAND), "Connect failed");
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1068,6 +1077,7 @@ public class SecSignonTestcase extends Testcase {
             assertCondition(sys.isConnected(AS400.COMMAND), "Connect failed");
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1100,6 +1110,7 @@ public class SecSignonTestcase extends Testcase {
             assertCondition(sys.isConnected(AS400.COMMAND), "Connect failed");
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1168,6 +1179,7 @@ public class SecSignonTestcase extends Testcase {
             assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1218,6 +1230,7 @@ public class SecSignonTestcase extends Testcase {
             assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1270,6 +1283,7 @@ public class SecSignonTestcase extends Testcase {
             assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1338,6 +1352,7 @@ public class SecSignonTestcase extends Testcase {
             assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1389,6 +1404,7 @@ public class SecSignonTestcase extends Testcase {
             assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1437,6 +1453,7 @@ public class SecSignonTestcase extends Testcase {
             assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
           } finally {
             sys.disconnectService(AS400.COMMAND);
+            sys.close();
           }
         } finally {
           AS400.clearPasswordCache();
@@ -1488,6 +1505,7 @@ public class SecSignonTestcase extends Testcase {
           sys.connectService(AS400.COMMAND);
           succeeded();
           sys.disconnectService(AS400.COMMAND);
+          sys.close();
         } finally {
           AS400.clearPasswordCache();
           AS400.removeDefaultUser(systemName_);
@@ -1521,6 +1539,7 @@ public class SecSignonTestcase extends Testcase {
           sys.connectService(AS400.COMMAND);
           succeeded();
           sys.disconnectService(AS400.COMMAND);
+          sys.close();
         } finally {
           AS400.clearPasswordCache();
           AS400.removeDefaultUser(systemName_);

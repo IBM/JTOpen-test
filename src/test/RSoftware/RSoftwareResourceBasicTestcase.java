@@ -12,16 +12,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RSoftware;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.RSoftwareResource;
 
 import test.RSoftwareTest;
 import test.Testcase;
 import test.UserTest;
-import test.RSoftwareTest.PropertyChangeListener_;
-
-import java.io.FileOutputStream;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -44,6 +44,7 @@ of the RSoftwareResource class:
 <li>setSystem()
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RSoftwareResourceBasicTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {

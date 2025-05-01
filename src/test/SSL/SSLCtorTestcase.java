@@ -201,7 +201,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            SecureAS400 system = new SecureAS400("testSystem", "testUid", "testPwd");
+            SecureAS400 system = new SecureAS400("testSystem", "testUid", "testPwd".toCharArray());
 
             String systemName = system.getSystemName();
             String userId = system.getUserId();
@@ -440,7 +440,7 @@ public class SSLCtorTestcase extends Testcase
         try
         {
             String testSystemName = InetAddress.getLocalHost().getHostName();
-            SecureAS400 system = new SecureAS400(testSystemName, "testUid", "testPwd");
+            SecureAS400 system = new SecureAS400(testSystemName, "testUid", "testPwd".toCharArray());
 
             String systemName = system.getSystemName();
             String userId = system.getUserId();
@@ -559,7 +559,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            SecureAS400 system = new SecureAS400("localhost", "testUid", "testPwd");
+            SecureAS400 system = new SecureAS400("localhost", "testUid", "testPwd".toCharArray());
 
             String systemName = system.getSystemName();
             String userId = system.getUserId();
@@ -679,7 +679,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            SecureAS400 system = new SecureAS400("", "testUid", "testPwd");
+            SecureAS400 system = new SecureAS400("", "testUid", "testPwd".toCharArray());
 
             String systemName = system.getSystemName();
             String userId = system.getUserId();
@@ -791,7 +791,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            SecureAS400 system = new SecureAS400("testSystem", "*current", "testPwd");
+            SecureAS400 system = new SecureAS400("testSystem", "*current", "testPwd".toCharArray());
 
             String systemName = system.getSystemName();
             String userId = system.getUserId();
@@ -828,7 +828,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            SecureAS400 system = new SecureAS400("testSystem", "", "testPwd");
+            SecureAS400 system = new SecureAS400("testSystem", "", "testPwd".toCharArray());
 
             String systemName = system.getSystemName();
             String userId = system.getUserId();
@@ -865,7 +865,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            SecureAS400 system = new SecureAS400("testSystem", "testUid", "*current");
+            SecureAS400 system = new SecureAS400("testSystem", "testUid", "*current".toCharArray());
 
             String systemName = system.getSystemName();
             String userId = system.getUserId();
@@ -895,7 +895,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            SecureAS400 system = new SecureAS400("testSystem", "testUid", "");
+            SecureAS400 system = new SecureAS400("testSystem", "testUid", "".toCharArray());
 
             String systemName = system.getSystemName();
             String userId = system.getUserId();
@@ -925,7 +925,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            SecureAS400 testSystem = new SecureAS400("testSystem", "testUid", "testPwd");
+            SecureAS400 testSystem = new SecureAS400("testSystem", "testUid", "testPwd".toCharArray());
             SecureAS400 system = new SecureAS400(testSystem);
 
             String systemName = system.getSystemName();
@@ -958,6 +958,7 @@ public class SSLCtorTestcase extends Testcase
         {
             String systemName = null;
             SecureAS400 system = new SecureAS400(systemName);
+            system.close(); 
             failed("No exception.");
         }
         catch (Exception e)
@@ -978,6 +979,7 @@ public class SSLCtorTestcase extends Testcase
         {
             String systemName = null;
             SecureAS400 system = new SecureAS400(systemName, "testUid");
+            system.close(); 
             failed("No exception.");
         }
         catch (Exception e)
@@ -998,6 +1000,7 @@ public class SSLCtorTestcase extends Testcase
         {
             String userId = null;
             SecureAS400 system = new SecureAS400("testSystem", userId);
+            system.close(); 
             failed("No exception.");
         }
         catch (Exception e)
@@ -1017,7 +1020,8 @@ public class SSLCtorTestcase extends Testcase
         try
         {
             String systemName = null;
-            SecureAS400 system = new SecureAS400(systemName, "testUid", "testPwd");
+            SecureAS400 system = new SecureAS400(systemName, "testUid", "testPwd".toCharArray());
+            system.close(); 
             failed("No exception.");
         }
         catch (Exception e)
@@ -1037,7 +1041,8 @@ public class SSLCtorTestcase extends Testcase
         try
         {
             String userId = null;
-            SecureAS400 system = new SecureAS400("testSystem", userId, "testPwd");
+            SecureAS400 system = new SecureAS400("testSystem", userId, "testPwd".toCharArray());
+            system.close(); 
             failed("No exception.");
         }
         catch (Exception e)
@@ -1056,8 +1061,9 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            String password = null;
+            char[] password = null;
             SecureAS400 system = new SecureAS400("testSystem", "testUid", password);
+            system.close(); 
             failed("No exception.");
         }
         catch (Exception e)
@@ -1078,6 +1084,7 @@ public class SSLCtorTestcase extends Testcase
         {
             SecureAS400 testSystem = null;
             SecureAS400 system = new SecureAS400(testSystem);
+            system.close(); 
             failed("No exception.");
         }
         catch (Exception e)
@@ -1098,6 +1105,7 @@ public class SSLCtorTestcase extends Testcase
         {
             AS400 testSystem = null;
             SecureAS400 system = new SecureAS400(testSystem);
+            system.close(); 
             failed("No exception.");
         }
         catch (Exception e)
@@ -1123,7 +1131,7 @@ public class SSLCtorTestcase extends Testcase
     {
         try
         {
-            AS400 testSystem = new AS400("testSystem", "testUid", "testPwd");
+            AS400 testSystem = new AS400("testSystem", "testUid", "testPwd".toCharArray());
             SecureAS400 system = new SecureAS400(testSystem);
 
             String systemName = system.getSystemName();

@@ -37,6 +37,7 @@ import com.ibm.as400.resource.RUser;
  <li>SUPPLEMENTAL_GROUPS
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserSpecificAttributeRtoSTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -88,14 +89,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         sandbox_.cleanup();
     }
 
-    private static void dump(String[] asArray)
-    {
-        for (int i = 0; i < asArray.length; ++i)
-        {
-            System.out.println("Array[" + i + "]=" + asArray[i] + ".");
-        }
-    }
-
+ 
     /**
      SET_PASSWORD_TO_EXPIRE - Check the attribute meta data in the entire list.
      **/
@@ -281,6 +275,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
 
             RUser u = new RUser(pwrSys_, user_);
             Object value = u.getAttributeValue(RUser.SIGN_ON_ATTEMPTS_NOT_VALID);
+            system.close();
             assertCondition(((Integer)value).intValue() == 0);
         }
         catch (Exception e)
@@ -313,6 +308,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
 
             RUser u = new RUser(pwrSys_, user);
             Object value = u.getAttributeValue(RUser.SIGN_ON_ATTEMPTS_NOT_VALID);
+            system.close();
             assertCondition(((Integer)value).intValue() == 1);
         }
         catch (Exception e)
@@ -344,6 +340,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
                 {
                     // Good.  This means that the sign on failed.
                 }
+                system.close();
             }
 
             RUser u = new RUser(pwrSys_, user);
@@ -377,12 +374,12 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
             {
                 // Good.  This means that the sign on failed.
             }
-
+            system.close();
             // A valid sign on attempt.
             AS400 system2 = new AS400(pwrSys_.getSystemName(), user, "JTEAM1");
             system2.connectService(AS400.COMMAND);
             system2.disconnectAllServices();
-
+            system2.close();
             RUser u = new RUser(pwrSys_, user);
             Object value = u.getAttributeValue(RUser.SIGN_ON_ATTEMPTS_NOT_VALID);
             assertCondition(((Integer)value).intValue() == 0);
@@ -417,6 +414,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
 
             User u = new User(pwrSys_, user);
             int value = u.getSignedOnAttemptsNotValid();
+            system.close();
             assertCondition(value == 1);
         }
         catch (Exception e)

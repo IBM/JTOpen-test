@@ -22,8 +22,6 @@ import com.ibm.as400.resource.RUser;
 
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.PropertyChangeListener_;
-import test.UserTest.VetoableChangeListener_;
 
 /**
  Testcase UserBasicTestcase.  This tests the following methods of the User class:
@@ -46,6 +44,7 @@ import test.UserTest.VetoableChangeListener_;
  <li>setSystem()
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserBasicTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {

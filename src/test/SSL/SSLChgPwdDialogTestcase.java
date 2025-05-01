@@ -81,6 +81,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
             e.printStackTrace(output_);
         }
         pwrSys_.disconnectService(AS400.COMMAND);
+        pwrSys_.close(); 
     }
 
     /**
@@ -97,7 +98,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                 setupUserID();
                 try
                 {
-                    SecureAS400 sys = new SecureAS400(systemName_, "JAVAEXPIR", "MY1PWD");
+                    SecureAS400 sys = new SecureAS400(systemName_, "JAVAEXPIR", "MY1PWD".toCharArray());
                     sys.setMustUseSockets(mustUseSockets_);
 
                     if (onAS400_ == false)
@@ -114,6 +115,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                     try
                     {
                         sys.connectService(AS400.COMMAND);
+                        sys.close(); 
                         // Didn't get an exception when one was expected.
                         failed("Failed.  No exception.");
                     }
@@ -131,6 +133,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -163,7 +166,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                 setupUserID();
                 try
                 {
-                    SecureAS400 sys = new SecureAS400(systemName_, "JAVAEXPIR", "MY1PWD");
+                    SecureAS400 sys = new SecureAS400(systemName_, "JAVAEXPIR", "MY1PWD".toCharArray());
                     sys.setMustUseSockets(mustUseSockets_);
 
                     if (onAS400_ == false)
@@ -189,6 +192,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                     try
                     {
                         sys.connectService(AS400.COMMAND);
+                        sys.close(); 
                         // Didn't get an exception when one was expected.
                         failed("Failed.  No exception.");
                     }
@@ -206,6 +210,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -236,7 +241,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                 setupUserID();
                 try
                 {
-                    SecureAS400 sys = new SecureAS400(systemName_, "JAVAEXPIR", "MY1PWD");
+                    SecureAS400 sys = new SecureAS400(systemName_, "JAVAEXPIR", "MY1PWD".toCharArray());
                     sys.setMustUseSockets(mustUseSockets_);
 
                     if (onAS400_ == false)
@@ -276,6 +281,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -300,11 +306,11 @@ public class SSLChgPwdDialogTestcase extends Testcase
             setupUserID();
             try
             {
-                SecureAS400 sys = new SecureAS400(systemName_, "javaexpir", "MY1PWD");
+                SecureAS400 sys = new SecureAS400(systemName_, "javaexpir", "MY1PWD".toCharArray());
                 sys.setMustUseSockets(mustUseSockets_);
 
-                sys.changePassword("MY1PWD", "JTEAM1J");
-                if (sys.validateSignon("JTEAM1J"))
+                sys.changePassword("MY1PWD".toCharArray(), "JTEAM1J".toCharArray());
+                if (sys.validateSignon("JTEAM1J".toCharArray()))
                 {
                     succeeded();
                 }
@@ -312,6 +318,7 @@ public class SSLChgPwdDialogTestcase extends Testcase
                 {
                     failed("password validation failed");
                 }
+                sys.close(); 
             }
             finally
             {

@@ -36,6 +36,7 @@ import java.util.Hashtable; import java.util.Vector;
 Testcase RPrinterListBeanInfoTestcase.  This tests the methods
 of the RPrinterListBeanInfo class:
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterListBeanInfoTestcase
 extends Testcase {
 
@@ -44,9 +45,6 @@ extends Testcase {
     // Constants.
 
 
-
-    // Private data.
-    private String printerName_;
 
 
 
@@ -66,8 +64,7 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
         pwrSys_ = pwrSys;
-        printerName_ = misc;
-
+ 
         if (pwrSys == null)
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
         if (misc == null)
@@ -175,7 +172,7 @@ getIcon().  Pass an invalid value.
         try {
             RPrinterListBeanInfo ubi = new RPrinterListBeanInfo();
             Image icon = ubi.getIcon(-546);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+icon);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -191,7 +188,7 @@ getIcon().  Pass ICON_COLOR_16x16.
     {
         try {
             RPrinterListBeanInfo ubi = new RPrinterListBeanInfo();
-            assertCondition (true);
+            assertCondition (true,"ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -207,7 +204,7 @@ getIcon().  Pass ICON_COLOR_32x32.
     {
         try {
             RPrinterListBeanInfo ubi = new RPrinterListBeanInfo();
-            assertCondition (true);
+            assertCondition (true,"ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -223,7 +220,7 @@ getIcon().  Pass ICON_MONO_16x16.
     {
         try {
             RPrinterListBeanInfo ubi = new RPrinterListBeanInfo();
-            assertCondition (true);
+            assertCondition (true,"ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -239,7 +236,7 @@ getIcon().  Pass ICON_MONO_32x32.
     {
         try {
             RPrinterListBeanInfo ubi = new RPrinterListBeanInfo();
-            assertCondition (true);
+            assertCondition (true,"ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

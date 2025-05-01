@@ -27,6 +27,8 @@ import test.Testcase;
 /** 
  Testcase NetServerSessionTestcase.
 **/
+@SuppressWarnings("deprecation")
+
 public class NetServerSessionTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {

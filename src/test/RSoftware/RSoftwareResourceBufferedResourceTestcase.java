@@ -12,26 +12,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RSoftware;
 
+import java.awt.Image;
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.Presentation;
+import com.ibm.as400.resource.RSoftwareResource;
 import com.ibm.as400.resource.ResourceEvent;
 
 import test.RSoftwareTest;
 import test.Testcase;
 import test.UserTest;
-import test.RSoftwareTest.PropertyChangeListener_;
-import test.RSoftwareTest.ResourceListener_;
-import test.UserTest.VetoableChangeListener_;
-
-import com.ibm.as400.resource.RSoftwareResource;
-import java.awt.Image;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -52,6 +46,7 @@ of the RSoftwareResource class, inherited from ChangeableResource:
 <li>toString() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RSoftwareResourceBufferedResourceTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -259,6 +254,7 @@ equals() - Verify that a RSoftwareResource is not equal to null.
 /**
 equals() - Verify that a RSoftwareResource is not equal to something that is not a RSoftwareResource.
 **/
+    @SuppressWarnings("unlikely-arg-type")
     public void Var008()
     {
         try {
@@ -381,6 +377,7 @@ for a RSoftwareResource whose properties have been set and used.
     {
         try {
             RSoftwareResource u = new RSoftwareResource(pwrSys_, RSoftwareResource.PRODUCT_ID_OPERATING_SYSTEM);
+            @SuppressWarnings("unused")
             String loadType = (String)u.getAttributeValue(RSoftwareResource.LOAD_TYPE);
             Presentation p = u.getPresentation();
             String name = p.getName();

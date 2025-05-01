@@ -83,6 +83,7 @@ public class SSLSignonTestcase extends Testcase
                 finally
                 {
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
                     SecureAS400.clearPasswordCache();
                     SecureAS400.removeDefaultUser(systemName_);
                 }
@@ -143,6 +144,7 @@ public class SSLSignonTestcase extends Testcase
                 finally
                 {
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
                     SecureAS400.clearPasswordCache();
                     SecureAS400.removeDefaultUser(systemName_);
                 }
@@ -203,6 +205,7 @@ public class SSLSignonTestcase extends Testcase
                 finally
                 {
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
                     SecureAS400.clearPasswordCache();
                     SecureAS400.removeDefaultUser(systemName_);
                 }
@@ -255,6 +258,9 @@ public class SSLSignonTestcase extends Testcase
                 finally
                 {
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
+                   
+                    
                     AS400.clearPasswordCache();
                     AS400.removeDefaultUser(systemName_);
                 }
@@ -296,6 +302,7 @@ public class SSLSignonTestcase extends Testcase
                     {
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
 
                         String uid = AS400.getDefaultUser(systemName_);
                         assertCondition(uid.equals(userId_.toUpperCase()));
@@ -341,7 +348,7 @@ public class SSLSignonTestcase extends Testcase
                     {
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         sys = new SecureAS400();
                         output_.println(" ");
                         output_.println(" ");
@@ -354,7 +361,7 @@ public class SSLSignonTestcase extends Testcase
 
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         succeeded();
                     }
                     finally
@@ -402,7 +409,7 @@ public class SSLSignonTestcase extends Testcase
                     {
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         String uid = AS400.getDefaultUser(systemName_);
                         if (uid.equals(userId_.toUpperCase()))
                         {
@@ -419,7 +426,7 @@ public class SSLSignonTestcase extends Testcase
 
                             sys2.connectService(AS400.COMMAND);
                             sys2.disconnectService(AS400.COMMAND);
-
+                            sys2.close(); 
                             succeeded();
                         }
                         else
@@ -466,7 +473,7 @@ public class SSLSignonTestcase extends Testcase
                     {
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         SecureAS400 sys2 = new SecureAS400(systemName_);
                         sys2.setMustUseSockets(mustUseSockets_);
 
@@ -483,7 +490,7 @@ public class SSLSignonTestcase extends Testcase
 
                         sys2.connectService(AS400.COMMAND);
                         sys2.disconnectService(AS400.COMMAND);
-
+                        sys2.close(); 
                         succeeded();
                     }
                     finally
@@ -578,13 +585,13 @@ public class SSLSignonTestcase extends Testcase
                     {
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         SecureAS400 sys2 = new SecureAS400(systemName_);
                         sys2.setMustUseSockets(mustUseSockets_);
 
                         sys2.connectService(AS400.COMMAND);
                         sys2.disconnectService(AS400.COMMAND);
-
+                        sys2.close(); 
                         String uid = sys2.getUserId();
                         assertCondition(uid.equals(sys.getUserId()), "user id does not match");
                     }
@@ -632,7 +639,7 @@ public class SSLSignonTestcase extends Testcase
                     {
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         SecureAS400.removePasswordCacheEntry(systemName_, userId_);
 
                         SecureAS400 sys2 = new SecureAS400(systemName_, userId_);
@@ -647,7 +654,7 @@ public class SSLSignonTestcase extends Testcase
 
                         sys2.connectService(AS400.COMMAND);
                         sys2.disconnectService(AS400.COMMAND);
-
+                        sys2.close(); 
                         succeeded();
                     }
                     finally
@@ -694,7 +701,7 @@ public class SSLSignonTestcase extends Testcase
                     {
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         SecureAS400.clearPasswordCache(systemName_);
 
                         SecureAS400 sys2 = new SecureAS400(systemName_, userId_);
@@ -709,7 +716,7 @@ public class SSLSignonTestcase extends Testcase
 
                         sys2.connectService(AS400.COMMAND);
                         sys2.disconnectService(AS400.COMMAND);
-
+                        sys2.close(); 
                         succeeded();
                     }
                     finally
@@ -754,7 +761,7 @@ public class SSLSignonTestcase extends Testcase
                     {
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         SecureAS400.clearPasswordCache();
 
                         SecureAS400 sys2 = new SecureAS400(systemName_, userId_);
@@ -768,7 +775,7 @@ public class SSLSignonTestcase extends Testcase
 
                         sys2.connectService(AS400.COMMAND);
                         sys2.disconnectService(AS400.COMMAND);
-
+                        sys2.close(); 
                         succeeded();
                     }
                     finally
@@ -809,6 +816,7 @@ public class SSLSignonTestcase extends Testcase
                 finally
                 {
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
                 }
             }
             finally
@@ -858,7 +866,7 @@ public class SSLSignonTestcase extends Testcase
 
                         sys.connectService(AS400.COMMAND);
                         sys.disconnectService(AS400.COMMAND);
-
+                        sys.close(); 
                         succeeded();
                     }
                     finally
@@ -911,7 +919,7 @@ public class SSLSignonTestcase extends Testcase
 
                         sys.connectService(SecureAS400.COMMAND);
                         sys.disconnectService(SecureAS400.COMMAND);
-
+                        sys.close(); 
                         succeeded();
                     }
                     finally
@@ -962,7 +970,7 @@ public class SSLSignonTestcase extends Testcase
 
                         sys.connectService(SecureAS400.COMMAND);
                         sys.disconnectService(SecureAS400.COMMAND);
-
+                        sys.close(); 
                         succeeded();
                     }
                     finally
@@ -1032,6 +1040,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(SecureAS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1077,6 +1086,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(SecureAS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1122,6 +1132,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1194,6 +1205,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1239,6 +1251,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1305,6 +1318,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1347,6 +1361,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1423,6 +1438,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1474,6 +1490,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1525,6 +1542,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1600,6 +1618,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1651,6 +1670,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1702,6 +1722,7 @@ public class SSLSignonTestcase extends Testcase
                     finally
                     {
                         sys.disconnectService(AS400.COMMAND);
+                        sys.close(); 
                     }
                 }
                 finally
@@ -1768,6 +1789,7 @@ public class SSLSignonTestcase extends Testcase
                     sys.connectService(AS400.COMMAND);
                     succeeded();
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
                 }
                 finally
                 {
@@ -1811,6 +1833,7 @@ public class SSLSignonTestcase extends Testcase
                     sys.connectService(AS400.COMMAND);
                     succeeded();
                     sys.disconnectService(AS400.COMMAND);
+                    sys.close(); 
                 }
                 finally
                 {

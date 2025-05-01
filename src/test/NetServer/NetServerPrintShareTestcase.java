@@ -13,14 +13,13 @@
 package test.NetServer;
 
 
-import java.io.*;
-
-import com.ibm.as400.access.*;
-import com.ibm.as400.resource.*;
-
+import java.io.FileOutputStream;
+import java.util.Hashtable;
 import java.util.Vector;
-import java.util.Properties;
-import java.util.Hashtable; import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.NetServerPrintShare;
+import com.ibm.as400.resource.ResourceException;
 
 import test.NetServerTest;
 import test.Testcase;
@@ -28,6 +27,7 @@ import test.Testcase;
 /** 
  Testcase NetServerPrintShareTestcase.
 **/
+@SuppressWarnings("deprecation")
 public class NetServerPrintShareTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -112,7 +112,7 @@ public class NetServerPrintShareTestcase extends Testcase
       try
       {
          NetServerPrintShare nsfs = new NetServerPrintShare();
-         succeeded();
+         succeeded("nsfs="+nsfs);
       }
       catch (Exception e)
       {
@@ -130,7 +130,7 @@ public class NetServerPrintShareTestcase extends Testcase
       try
       {
          NetServerPrintShare nsfs = new NetServerPrintShare(systemObject_, "Toolbox");
-         succeeded();
+         succeeded("nsfs="+nsfs);
       }
       catch (Exception e)
       {
@@ -149,7 +149,7 @@ public class NetServerPrintShareTestcase extends Testcase
       try
       {
          NetServerPrintShare nsfs = new NetServerPrintShare(null, "Toolbox");
-         failed("No exception");
+         failed("No exception"+nsfs);
       }
       catch (Exception e)
       {
@@ -168,7 +168,7 @@ public class NetServerPrintShareTestcase extends Testcase
       try
       {
          NetServerPrintShare nsfs = new NetServerPrintShare(systemObject_, null);
-         failed("No exception");
+         failed("No exception"+nsfs);
       }
       catch (Exception e)
       {

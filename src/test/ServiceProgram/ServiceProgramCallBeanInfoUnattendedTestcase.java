@@ -14,7 +14,6 @@
 package test.ServiceProgram;
 
 
-import java.beans.BeanInfo;
 import java.io.FileOutputStream;
 import java.util.Vector;
 
@@ -63,7 +62,7 @@ public class ServiceProgramCallBeanInfoUnattendedTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            succeeded();
+            assertCondition(true, "f="+f); 
         }
         catch (Exception e)
         {
@@ -148,7 +147,7 @@ public class ServiceProgramCallBeanInfoUnattendedTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "f="+f); 
         }
         catch (Exception e)
         {
@@ -165,7 +164,7 @@ public class ServiceProgramCallBeanInfoUnattendedTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "f="+f); 
         }
         catch (Exception e)
         {
@@ -182,7 +181,7 @@ public class ServiceProgramCallBeanInfoUnattendedTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "f="+f); 
         }
         catch (Exception e)
         {
@@ -199,7 +198,7 @@ public class ServiceProgramCallBeanInfoUnattendedTestcase extends Testcase
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
-            assertCondition(true);
+            assertCondition(true, "f="+f); 
         }
         catch (Exception e)
         {

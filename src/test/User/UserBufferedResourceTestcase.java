@@ -18,15 +18,11 @@ import java.util.Date;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.Presentation;
+import com.ibm.as400.resource.RUser;
 import com.ibm.as400.resource.ResourceEvent;
 
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.PropertyChangeListener_;
-import test.UserTest.ResourceListener_;
-import test.UserTest.VetoableChangeListener_;
-
-import com.ibm.as400.resource.RUser;
 
 /**
  Testcase UserBufferedResourceTestcase.  This tests the following methods of the RUser class, inherited from BufferedResource:
@@ -43,6 +39,7 @@ import com.ibm.as400.resource.RUser;
  <li>toString()
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserBufferedResourceTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -339,7 +336,8 @@ public class UserBufferedResourceTestcase extends Testcase
             if (onAS400_)
             {
                 String asString = p.toString();
-                assertCondition(name.equals(userName) && fullName.equals(userName) && descriptionText != null && helpText == null && asString.equals(userName));
+                assertCondition(name.equals(userName) && fullName.equals(userName) && descriptionText != null && helpText == null && asString.equals(userName), 
+                    "textDescription="+textDescription);
             }
             else
             {
@@ -427,7 +425,8 @@ public class UserBufferedResourceTestcase extends Testcase
             buffer.append(userName);
             String expected = buffer.toString();
 
-            assertCondition(u.getResourceKey().equals(expected));
+            assertCondition(u.getResourceKey().equals(expected), 
+                "textDescription="+textDescription);
         }
         catch (Exception e)
         {
@@ -642,7 +641,8 @@ public class UserBufferedResourceTestcase extends Testcase
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
             String textDescription = (String)u.getAttributeValue(RUser.TEXT_DESCRIPTION);
-            assertCondition(u.toString().equals(userName));
+            assertCondition(u.toString().equals(userName), 
+                "textDescription="+textDescription);
         }
         catch (Exception e)
         {

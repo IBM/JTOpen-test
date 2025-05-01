@@ -35,6 +35,7 @@ import com.ibm.as400.resource.RUser;
  <li>FULL_NAME
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserSpecificAttributeDtoFTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {

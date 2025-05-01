@@ -41,6 +41,7 @@ import com.ibm.as400.resource.RUser;
  <li>NO_PASSWORD_INDICATOR
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserSpecificAttributeMtoNTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {

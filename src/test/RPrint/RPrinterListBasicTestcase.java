@@ -12,24 +12,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceException;
-
-import test.RPrintTest;
-import test.Testcase;
-import test.RPrintTest.PropertyChangeListener_;
-import test.RPrintTest.VetoableChangeListener_;
-
 import com.ibm.as400.resource.RPrinter;
 import com.ibm.as400.resource.RPrinterList;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Hashtable; import java.util.Vector;
-import java.util.Vector;
+import test.RPrintTest;
+import test.Testcase;
 
 
 
@@ -44,6 +36,7 @@ of the RPrinter class:
 <li>setSystem()
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterListBasicTestcase
 extends Testcase {
 
@@ -107,7 +100,7 @@ constructor() with 1 parm - Pass null for system.
     {
         try {
             RPrinterList ul = new RPrinterList(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+ul);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");

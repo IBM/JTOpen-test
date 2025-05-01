@@ -12,21 +12,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.QSYSObjectPathName;
-import com.ibm.as400.resource.ResourceEvent;
+import com.ibm.as400.resource.RPrinter;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
-
-import com.ibm.as400.resource.RPrinter;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -50,6 +44,7 @@ of the RPrinter class:
 <li>WRITING_STATUS
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterSpecificAttributeTtoZTestcase
 extends Testcase {
 
@@ -331,7 +326,7 @@ USER_NAME - Get the attribute value.
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
             String value = (String)u.getAttributeValue(RPrinter.USER_NAME);
-            assertCondition(true);
+            assertCondition(true, "value="+value);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -383,7 +378,7 @@ WAITING_FOR_DATA_STATUS - Get the attribute value.
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
             Boolean value = (Boolean)u.getAttributeValue(RPrinter.WAITING_FOR_DATA_STATUS);
-            assertCondition(true);
+            assertCondition(true, "value="+value);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -435,7 +430,7 @@ WAITING_FOR_DEVICE_STATUS - Get the attribute value.
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
             Boolean value = (Boolean)u.getAttributeValue(RPrinter.WAITING_FOR_DEVICE_STATUS);
-            assertCondition(true);
+            assertCondition(true, "value="+value);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -487,7 +482,7 @@ WAITING_FOR_MESSAGE_STATUS - Get the attribute value.
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
             Boolean value = (Boolean)u.getAttributeValue(RPrinter.WAITING_FOR_MESSAGE_STATUS);
-            assertCondition(true);
+            assertCondition(true, "value="+value);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -692,7 +687,7 @@ WRITER_STARTED - Get the attribute value.
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
             Boolean value = (Boolean)u.getAttributeValue(RPrinter.WRITER_STARTED);
-            assertCondition(true);
+            assertCondition(true, "value="+value);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

@@ -46,6 +46,7 @@ public class SSLSignonInfoTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
             sys.setMustUseSockets(mustUseSockets_);
             GregorianCalendar date = sys.getPasswordExpirationDate();
+            sys.close(); 
             assertCondition(date != null, "Date is null");
         }
         catch (Exception e)
@@ -66,6 +67,7 @@ public class SSLSignonInfoTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
             sys.setMustUseSockets(mustUseSockets_);
             GregorianCalendar date = sys.getPreviousSignonDate();
+            sys.close(); 
             assertCondition(date != null, "Date is null");
         }
         catch (Exception e)
@@ -86,6 +88,7 @@ public class SSLSignonInfoTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
             sys.setMustUseSockets(mustUseSockets_);
             GregorianCalendar date = sys.getSignonDate();
+            sys.close(); 
             assertCondition(date != null, "Date is null");
         }
         catch (Exception e)
@@ -109,6 +112,7 @@ public class SSLSignonInfoTestcase extends Testcase
             try
             {
                 GregorianCalendar date = sys.getPasswordExpirationDate();
+                sys.close(); 
 
                 if (date != null)
                 {
@@ -146,6 +150,8 @@ public class SSLSignonInfoTestcase extends Testcase
 
             AS400 newsys = new AS400(sys);
             GregorianCalendar prevDate = newsys.getPreviousSignonDate();
+            newsys.close(); 
+            sys.close(); 
             assertCondition(prevDate.equals(lastDate), "Previous signon date not the same");
         }
         catch (Exception e)
@@ -174,6 +180,7 @@ public class SSLSignonInfoTestcase extends Testcase
             finally
             {
                 sys.disconnectService(AS400.DATAQUEUE);
+                sys.close(); 
             }
         }
         catch (Exception e)
@@ -207,7 +214,7 @@ public class SSLSignonInfoTestcase extends Testcase
                     SecureAS400.setPasswordExpirationWarningDays(500);
                     sys.connectService(AS400.COMMAND);
                     sys.disconnectService(AS400.COMMAND);
-
+                    sys.close(); 
                     succeeded();
                 }
                 finally

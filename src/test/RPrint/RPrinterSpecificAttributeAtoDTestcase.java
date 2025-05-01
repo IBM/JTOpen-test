@@ -12,20 +12,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceEvent;
+import com.ibm.as400.resource.RPrinter;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
-
-import com.ibm.as400.resource.RPrinter;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -47,6 +42,7 @@ of the RPrinter class:
 <li>DEVICE_TYPE
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterSpecificAttributeAtoDTestcase
 extends Testcase {
 

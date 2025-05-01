@@ -13,8 +13,6 @@
 
 package test.SystemStatus;
 
-import java.beans.BeanInfo;
-
 import com.ibm.as400.access.SystemPoolBeanInfo;
 
 import test.Testcase;
@@ -42,7 +40,7 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
-            succeeded();
+            succeeded("f="+f);
         }
         catch (Exception e)
         {
@@ -129,7 +127,7 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+f);
             }
             else
             {
@@ -155,7 +153,7 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+f);
             }
             else
             {
@@ -179,7 +177,7 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+f);
             }
             else
             {
@@ -203,7 +201,7 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
             if (onAS400_)
             {
-                notApplicable("No GUI for icon test.");
+                notApplicable("No GUI for icon test."+f);
             }
             else
             {

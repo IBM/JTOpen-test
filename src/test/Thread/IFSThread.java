@@ -15,14 +15,17 @@ package test.Thread;
 
 import java.io.PipedInputStream;
 import java.io.PrintWriter;
-import com.ibm.as400.access.*;
+import java.util.Date;
+import java.util.StringTokenizer;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.ExtendedIOException;
+import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.IFSKey;
+import com.ibm.as400.access.IFSRandomAccessFile;
 
 import test.ComponentThread;
-import test.Testcase;
 import test.misc.ThreadedTestcase;
-
-import java.util.*;
-import java.io.*;
 
 
 class IFSThread
@@ -251,7 +254,7 @@ class IFSThread
         int offset = (int) java.lang.Math.random() * 128;
         raf.seek(offset);
         // lock the file for lengthInBytes bytes starting at offset.
-        IFSKey key = raf.lock(offset, data.length);
+        IFSKey key = raf.lock((long) offset, data.length);
         raf.write(data);
         // pause to increase chance that another thread
         // attempts to access our location in the file.

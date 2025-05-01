@@ -1731,6 +1731,7 @@ public class SecPropertyTestcase extends Testcase implements PropertyChangeListe
             finally
             {
                 sys.removePropertyChangeListener(this);
+                sys.close(); 
             }
         }
         catch (Exception e)

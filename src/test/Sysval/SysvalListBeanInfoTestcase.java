@@ -18,22 +18,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SystemValueList;
 
 import test.JTOpenTestEnvironment;
 import test.Testcase;
-
-import com.ibm.as400.access.ObjectEvent;
-import com.ibm.as400.access.ObjectListener;
-import com.ibm.as400.access.ExtendedIllegalStateException;
 
 /**
  * Testcase SysvalListBeanInfoTestcase.
@@ -62,13 +52,9 @@ public class SysvalListBeanInfoTestcase extends Testcase implements PropertyChan
     Object src;
     Object asource;
 
-    private String datestUserID = " USER(DATEST) ";
     private String operatingSystem_;
     private boolean DOS_ = false;
-    private static String dirName_;
-    private boolean OS400_ = false;
-    private boolean usingNativeImpl = false;
-
+ 
     PropertyChangeEvent propChange;
     PropertyChangeEvent vetoChange;
     PropertyChangeEvent vetoRefire;
@@ -88,17 +74,6 @@ public class SysvalListBeanInfoTestcase extends Testcase implements PropertyChan
         DOS_ = true;
       }
 
-
-      // Are we running on the AS/400?
-      else if (operatingSystem_.indexOf("OS/400") >= 0)
-      {
-        OS400_ = true;
-//        if (!SysvalTest.usingSockets)
-//        {
-//           usingNativeImpl = true;
-//           output_.println("Will use native implementation");
-//        }
-      }
 
       output_.println("Running under: " + operatingSystem_);
       output_.println("DOS-based file structure: " + DOS_);
@@ -120,9 +95,7 @@ public class SysvalListBeanInfoTestcase extends Testcase implements PropertyChan
           return;
         }
 
-        if (usingNativeImpl)
-           datestUserID = " USER(" + systemObject_.getUserId() + ") ";
-
+ 
         boolean allVariations = (variationsToRun_.size() == 0);
 
 	if ((allVariations || variationsToRun_.contains("1")) && runMode_ != ATTENDED) // Note: This is an unattended variation.

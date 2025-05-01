@@ -499,6 +499,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
 
             // Attempt to reset the system
             AS400 newAS400 = new AS400();
+            newAS400.close(); 
             aUserSpace.setLength(0);
         }
         catch (Exception e)
@@ -529,6 +530,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
 
             // Attempt to reset the system
             AS400 newAS400 = new AS400();
+            newAS400.close(); 
             aUserSpace.setLength(16776705);
         }
         catch (Exception e)

@@ -12,21 +12,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RSoftware;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceEvent;
+import com.ibm.as400.resource.RSoftwareResource;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.RSoftwareTest;
 import test.Testcase;
-
-import com.ibm.as400.resource.RSoftwareResource;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -53,6 +48,7 @@ of the RSoftwareResource class:
 <li>SYMBOLIC_LOAD_STATE 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RSoftwareResourceSpecificAttributeTestcase
 extends Testcase 
 {
@@ -73,7 +69,6 @@ extends Testcase
 
 
     // Private data.
-    private AS400           pwrSys_;
     private String          JC1ProductID_ = RSoftwareTest.JC1ProductID_;
 
 

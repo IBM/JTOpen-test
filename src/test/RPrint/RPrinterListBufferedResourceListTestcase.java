@@ -12,29 +12,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.awt.Image;
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.Presentation;
+import com.ibm.as400.resource.RPrinter;
+import com.ibm.as400.resource.RPrinterList;
 import com.ibm.as400.resource.Resource;
 import com.ibm.as400.resource.ResourceListEvent;
-import com.ibm.as400.resource.ResourceListListener;
 
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.PropertyChangeListener_;
-import test.UserTest.ResourceListListener_;
-import test.UserTest.VetoableChangeListener_;
-
-import com.ibm.as400.resource.RPrinter;
-import com.ibm.as400.resource.RPrinterList;
-import java.awt.Image;
-
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -69,6 +60,7 @@ of the RPrinterList class which are inherited from BufferedResource:
 <li>waitForResource(long) 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterListBufferedResourceListTestcase
 extends Testcase {
 
@@ -78,9 +70,7 @@ extends Testcase {
 
 
 
-    // Private data.
-    private String printerName_;
-
+ 
 
 
 /**
@@ -100,8 +90,6 @@ Constructor.
                password);
         
         pwrSys_ = pwrSys;
-        printerName_ = misc;
-
         if (pwrSys == null)
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
         if (misc == null)
@@ -360,7 +348,7 @@ is not enough information to open it implicitly.
         try {
             RPrinterList ul =  new RPrinterList();
             long length = ul.getListLength();
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+length);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -656,7 +644,8 @@ isComplete() - Call immediately after opening the list, before the list is compl
             // Note:  We don't normally have big printer lists, so this list usually
             // always completes immediately...
             // assertCondition(complete == false);
-            succeeded(); 
+            assertCondition(true, "complete="+complete);
+           
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -840,7 +829,7 @@ information is available to open it.
         try {
             RPrinterList ul =  new RPrinterList();
             boolean open = ul.isOpen();
-            assertCondition(ul.isOpen() == false);
+            assertCondition(open == false);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -857,7 +846,7 @@ isOpen() - Call when the list has never been opened.
         try {
             RPrinterList ul =  new RPrinterList(pwrSys_);
             boolean open = ul.isOpen();
-            assertCondition(ul.isOpen() == false);
+            assertCondition(open == false);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -930,7 +919,7 @@ Pass -1.
             RPrinterList ul =  new RPrinterList(pwrSys_);
             ul.open();
             boolean available = ul.isResourceAvailable(-1);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+available);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -1026,7 +1015,7 @@ Pass 50, which should not have been loaded immediately.
             */
             ul.close();
             // assertCondition(available == false);
-            succeeded();
+            assertCondition(true,"available="+available);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -2650,7 +2639,7 @@ Pass (length - 1), which should have been loaded immediately.
             RPrinter u = (RPrinter)ul.resourceAt(length-1);
             boolean open = ul.isOpen();
             ul.close();
-            assertCondition((open == true) && (u.getName().length() > 0));
+            assertCondition((open == true) && (u.getName().length() > 0), "available="+available);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

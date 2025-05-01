@@ -1857,7 +1857,7 @@ public class UserGetSetDtoGTestcase extends Testcase
 
     /**
      <dl>
-     <dt>Test:</dt><dd>Call User::getGroupIDNumber() before setting.</dd>
+     <dt>Test:</dt><dd>Call User::getGroupID() before setting.</dd>
      <dt>Result:</dt><dd>Verify correct initial value is returned.</dd>
      </dl>
      **/
@@ -1867,7 +1867,7 @@ public class UserGetSetDtoGTestcase extends Testcase
         {
             User u = new User(pwrSys_, sandbox_.createUser());
             int expectedValue = 0;
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == expectedValue);
         }
         catch (Exception e)
@@ -1901,7 +1901,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(long) with a valid parameter of 0.</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns 0.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns 0.</dd>
      </dl>
      **/
     public void Var075()
@@ -1911,7 +1911,7 @@ public class UserGetSetDtoGTestcase extends Testcase
             User u = new User(pwrSys_, sandbox_.createUser());
             int testValue = 0;
             u.setGroupID(testValue);
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == testValue);
         }
         catch (Exception e)
@@ -1946,7 +1946,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(String) with a valid parameter of *NONE.</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns 0.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns 0.</dd>
      </dl>
      **/
     public void Var077()
@@ -1957,7 +1957,7 @@ public class UserGetSetDtoGTestcase extends Testcase
             String testValue = "*NONE";
             int expectedValue = 0;
             u.setGroupID(testValue);
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == expectedValue);
         }
         catch (Exception e)
@@ -2023,7 +2023,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(long) with a valid parameter of 147824.</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns 147824.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns 147824.</dd>
      </dl>
      **/
     public void Var080()
@@ -2042,7 +2042,7 @@ public class UserGetSetDtoGTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == testValue);
             u.setGroupID("*NONE");
         }
@@ -2088,7 +2088,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(String) with a valid parameter of "147826".</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns 147826.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns 147826.</dd>
      </dl>
      **/
     public void Var082()
@@ -2108,7 +2108,7 @@ public class UserGetSetDtoGTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == expectedValue);
             u.setGroupID("*NONE");
         }
@@ -2153,7 +2153,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(long) with a valid parameter of 147828 on a group profile.</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns 147828.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns 147828.</dd>
      </dl>
      **/
     public void Var084()
@@ -2172,7 +2172,7 @@ public class UserGetSetDtoGTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == testValue);
             u.setGroupID("*NONE");
         }
@@ -2218,7 +2218,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(String) with a valid parameter of "147830" on a group profile.</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns 147830.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns 147830.</dd>
      </dl>
      **/
     public void Var086()
@@ -2238,7 +2238,7 @@ public class UserGetSetDtoGTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == expectedValue);
             u.setGroupID("*NONE");
         }
@@ -2283,7 +2283,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(long) with a valid parameter of 1.</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns 1.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns 1.</dd>
      </dl>
      **/
     public void Var088()
@@ -2302,7 +2302,7 @@ public class UserGetSetDtoGTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == testValue);
             u.setGroupID("*NONE");
         }
@@ -2348,7 +2348,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(String) with a valid parameter of "1".</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns 1.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns 1.</dd>
      </dl>
      **/
     public void Var090()
@@ -2368,7 +2368,7 @@ public class UserGetSetDtoGTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == expectedValue);
             u.setGroupID("*NONE");
         }
@@ -2413,7 +2413,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(long) with a valid parameter of 4294967294.</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns -2.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns -2.</dd>
      </dl>
      **/
     public void Var092()
@@ -2433,7 +2433,7 @@ public class UserGetSetDtoGTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == expectedValue);
             u.setGroupID("*NONE");
         }
@@ -2479,7 +2479,7 @@ public class UserGetSetDtoGTestcase extends Testcase
     /**
      <dl>
      <dt>Test:</dt><dd>Call User::setGroupID(String) with a valid parameter of "4294967294".</dd>
-     <dt>Result:</dt><dd>Verify User::getGroupIDNumber() returns -2.</dd>
+     <dt>Result:</dt><dd>Verify User::getGroupID() returns -2.</dd>
      </dl>
      **/
     public void Var094()
@@ -2499,7 +2499,7 @@ public class UserGetSetDtoGTestcase extends Testcase
                 assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
                 return;
             }
-            int returnValue = u.getGroupIDNumber();
+            long returnValue = u.getGroupID();
             assertCondition(returnValue == expectedValue);
             u.setGroupID("*NONE");
         }

@@ -30,6 +30,7 @@ import java.util.StringTokenizer;            //@A2A
 /** 
   Testcase NetServerTestcase.
 **/
+@SuppressWarnings("deprecation")
 public class NetServerTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {

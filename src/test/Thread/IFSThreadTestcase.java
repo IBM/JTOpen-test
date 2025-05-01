@@ -456,8 +456,6 @@ public class IFSThreadTestcase
       pipeInput_    = new PipedInputStream();
       // generate unique dir names
       String     d1 = "/IFS8D1.LIB";
-      String     d2 = "/D2.LIB";
-      String     d3 = "/D3.LIB";
       IFSThread  t1 = new IFSThread(pipeInput_, output_, this,
                                     IFSThread.DIR_MANIP, d1, systemObject_);
       objectInput_  = new ObjectInputStream(pipeInput_);

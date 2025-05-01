@@ -25,6 +25,8 @@ import test.Testcase;
 /** 
  Testcase NetServerFileShareTestcase.
 **/
+@SuppressWarnings("deprecation")
+
 public class NetServerFileShareTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -76,7 +78,7 @@ public class NetServerFileShareTestcase extends Testcase
         try
         {
             NetServerFileShare nsfs = new NetServerFileShare();
-            succeeded();
+            succeeded("nsfs="+nsfs);
         }
         catch (Exception e)
         {
@@ -94,7 +96,7 @@ public class NetServerFileShareTestcase extends Testcase
         try
         {
             NetServerFileShare nsfs = new NetServerFileShare(systemObject_, "Sam");
-            succeeded();
+            succeeded("nsfs="+nsfs);
         }
         catch (Exception e)
         {
@@ -113,7 +115,7 @@ public class NetServerFileShareTestcase extends Testcase
         try
         {
            NetServerFileShare nsfs = new NetServerFileShare(null, "Sam");
-           failed("No exception");
+           failed("No exception"+nsfs);
         }
         catch (Exception e)
         {
@@ -132,7 +134,7 @@ public class NetServerFileShareTestcase extends Testcase
         try
         {
            NetServerFileShare nsfs = new NetServerFileShare(systemObject_, null);
-           failed("No exception");
+           failed("No exception"+nsfs);
         }
         catch (Exception e)
         {

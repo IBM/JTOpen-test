@@ -14,11 +14,6 @@
 package test.socketProxy; 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.ServerSocket;
 
 import test.SocketProxy;
 
@@ -40,6 +35,7 @@ public class SocketProxyPair  {
       String serverName = args[2];
       int serverPort = Integer.parseInt(args[3]);
 
+      @SuppressWarnings("unused")
       SocketProxyPair proxyPair = new SocketProxyPair(proxyPort1, proxyPort2,
           serverName, serverPort);
       
