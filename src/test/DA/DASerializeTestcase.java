@@ -23,17 +23,15 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.DataArea;
+
 import com.ibm.as400.access.CharacterDataArea;
+import com.ibm.as400.access.DataAreaEvent;
+import com.ibm.as400.access.DataAreaListener;
 import com.ibm.as400.access.DecimalDataArea;
 import com.ibm.as400.access.LocalDataArea;
 import com.ibm.as400.access.LogicalDataArea;
 
 import test.Testcase;
-
-import com.ibm.as400.access.DataAreaEvent;
-import com.ibm.as400.access.DataAreaListener;
 
 /**
  Testcase DASerializeTestcase.
@@ -61,8 +59,8 @@ public class DASerializeTestcase extends Testcase implements PropertyChangeListe
     Object src;
     Object asource;
 
-    private String datestUserID = " USER(DATEST) ";
-    private static String dirName_;
+    //private String datestUserID = " USER(DATEST) ";
+    // private static String dirName_;
 
     PropertyChangeEvent propChange;
     PropertyChangeEvent vetoChange;
@@ -342,12 +340,14 @@ public class DASerializeTestcase extends Testcase implements PropertyChangeListe
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(da);
             s.flush();
+            s.close(); 
             try
             {
                 // Deserialize da from a file.
                 FileInputStream in = new FileInputStream("da.ser");
                 ObjectInputStream s2 = new ObjectInputStream(in);
                 CharacterDataArea da2 = (CharacterDataArea)s2.readObject();
+                s2.close(); 
 
                 if (false == da2.getPath().equals(da.getPath()))
                 {
@@ -396,12 +396,14 @@ public class DASerializeTestcase extends Testcase implements PropertyChangeListe
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(da);
             s.flush();
+            s.close(); 
             try
             {
                 // Deserialize da from a file.
                 FileInputStream in = new FileInputStream("da.ser");
                 ObjectInputStream s2 = new ObjectInputStream(in);
                 DecimalDataArea da2 = (DecimalDataArea)s2.readObject();
+                s2.close();
 
                 if (false == da2.getPath().equals(da.getPath()))
                 {
@@ -450,13 +452,14 @@ public class DASerializeTestcase extends Testcase implements PropertyChangeListe
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(da);
             s.flush();
+            s.close();
             try
             {
                 // Deserialize da from a file.
                 FileInputStream in = new FileInputStream("da.ser");
                 ObjectInputStream s2 = new ObjectInputStream(in);
                 LocalDataArea da2 = (LocalDataArea)s2.readObject();
-
+                s2.close();
                 if (false == da2.getSystem().getSystemName().equals(da.getSystem().getSystemName()))
                 {
                     failed("System changed to " + da2.getSystem().getSystemName());
@@ -499,13 +502,14 @@ public class DASerializeTestcase extends Testcase implements PropertyChangeListe
             ObjectOutput s =  new ObjectOutputStream(f);
             s.writeObject(da);
             s.flush();
+            s.close(); 
             try
             {
                 // Deserialize da from a file.
                 FileInputStream in = new FileInputStream("da.ser");
                 ObjectInputStream s2 = new ObjectInputStream(in);
                 LogicalDataArea da2 = (LogicalDataArea)s2.readObject();
-
+                s2.close(); 
                 if (false == da2.getPath().equals(da.getPath()))
                 {
                     failed("Path changed to " + da2.getPath());

@@ -13,13 +13,12 @@
 
 package test.Pgm;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Hashtable;
-import java.util.Vector;
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.IllegalPathNameException;
+import com.ibm.as400.access.ProgramCall;
+import com.ibm.as400.access.ProgramParameter;
 
 import test.Testcase;
 
@@ -154,7 +153,7 @@ public class PgmConstructor extends Testcase
         try
         {
             ProgramCall pgm = new ProgramCall(null);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+pgm);
         }
         catch (Exception e)
         {
@@ -178,7 +177,7 @@ public class PgmConstructor extends Testcase
         try
         {
             ProgramCall pgm = new ProgramCall(null, goodPgm_, new ProgramParameter[3]);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+pgm);
         }
         catch (Exception e)
         {
@@ -202,7 +201,7 @@ public class PgmConstructor extends Testcase
         try
         {
             ProgramCall pgm = new ProgramCall(systemObject_, null, new ProgramParameter[0]);
-            failed("no exception thrown for null pointer");
+            failed("no exception thrown for null pointer"+pgm);
         }
         catch (Exception e)
         {
@@ -222,10 +221,10 @@ public class PgmConstructor extends Testcase
      Parameter list should be 0 length.
      **/
     public void Var008()
-    {
+    {ProgramCall pgm =null; 
         try
         {
-            ProgramCall pgm = new ProgramCall(systemObject_, "/QSYS.LIB/LIB.LIB/PROG.PGM", null);
+            pgm = new ProgramCall(systemObject_, "/QSYS.LIB/LIB.LIB/PROG.PGM", null);
 
         }
         catch (Exception e)
@@ -236,7 +235,7 @@ public class PgmConstructor extends Testcase
             }
             else
             {
-                failed(e, "Incorrect exception");
+                failed(e, "Incorrect exception"+pgm);
             }
 
         }

@@ -369,7 +369,7 @@ public class DQConnectTestcase extends Testcase
     {
         try
         {
-            AS400 system = new AS400("BADSYS", "uid", "pw");
+            AS400 system = new AS400("BADSYS", "uid", "pw".toCharArray());
             system.setGuiAvailable(false);
             DataQueue dq = new DataQueue(system, "/QSYS.LIB/QTEMP.LIB/CONNECT.DTAQ");
             try
@@ -403,7 +403,7 @@ public class DQConnectTestcase extends Testcase
     {
         try
         {
-            AS400 system = new AS400("BADSYS", "uid", "pw");
+            AS400 system = new AS400("BADSYS", "uid", "pw".toCharArray());
             system.setGuiAvailable(false);
             KeyedDataQueue dq = new KeyedDataQueue(system, "/QSYS.LIB/QTEMP.LIB/CONNECT.DTAQ");
             try
@@ -437,7 +437,7 @@ public class DQConnectTestcase extends Testcase
     {
         try
         {
-            AS400 sys = new AS400(systemObject_.getSystemName(), "Press", "cancel");
+            AS400 sys = new AS400(systemObject_.getSystemName(), "Press", "cancel".toCharArray());
             sys.setGuiAvailable(false);
             DataQueue dq = new DataQueue(sys, "/QSYS.LIB/QTEMP.LIB/CONNECT.DTAQ");
             try
@@ -470,7 +470,7 @@ public class DQConnectTestcase extends Testcase
     {
         try
         {
-            AS400 sys = new AS400(systemObject_.getSystemName(), "Press", "cancel");
+            AS400 sys = new AS400(systemObject_.getSystemName(), "Press", "cancel".toCharArray());
             sys.setGuiAvailable(false);
             KeyedDataQueue dq = new KeyedDataQueue(sys, "/QSYS.LIB/QTEMP.LIB/CONNECT.DTAQ");
             try

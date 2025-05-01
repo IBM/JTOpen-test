@@ -12,27 +12,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
+import java.awt.Image;
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.resource.Presentation;
+import com.ibm.as400.resource.RIFSFile;
 import com.ibm.as400.resource.ResourceEvent;
 
 import test.RIFSTest;
 import test.Testcase;
-import test.RIFSTest.PropertyChangeListener_;
-import test.RIFSTest.ResourceListener_;
-import test.RIFSTest.VetoableChangeListener_;
 import test.misc.VIFSSandbox;
-
-import com.ibm.as400.resource.RIFSFile;
-import java.awt.Image;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -53,6 +47,7 @@ of the RIFSFile class, inherited from BufferedResource:
 <li>toString() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileBufferedResourceTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -72,7 +67,6 @@ extends Testcase {
 
 
     // Private data.
-    private AS400           pwrSys_;
     private VIFSSandbox     sandbox_;
 
 
@@ -417,7 +411,7 @@ for a RIFSFile whose properties have been set and used.
                    && (helpText == null)
                    && (iconColor16 != null)
                    && (iconColor32 != null)
-                   && (asString.equals(f.getName())));
+                   && (asString.equals(f.getName())), "descriptionText="+descriptionText);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -509,7 +503,7 @@ the resource key should be set.
             buffer.append(f.getPath());
             String expected = buffer.toString();
 
-            assertCondition(u.getResourceKey().equals(expected));
+            assertCondition(u.getResourceKey().equals(expected), "length="+length);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -723,7 +717,7 @@ this should return the path name.
             IFSFile f = sandbox_.createFile("Dave");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
             Long length = (Long)u.getAttributeValue(RIFSFile.LENGTH);
-            assertCondition(u.toString().equals(f.getPath()));
+            assertCondition(u.toString().equals(f.getPath()), "length="+length);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

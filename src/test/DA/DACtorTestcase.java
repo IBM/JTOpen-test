@@ -14,17 +14,13 @@
 package test.DA;
 
 
-import java.io.FileOutputStream;
-import java.util.Vector;
-import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CharacterDataArea;
 import com.ibm.as400.access.DecimalDataArea;
+import com.ibm.as400.access.IllegalPathNameException;
 import com.ibm.as400.access.LocalDataArea;
 import com.ibm.as400.access.LogicalDataArea;
 
 import test.Testcase;
-
-import com.ibm.as400.access.IllegalPathNameException;
 
 /**
  Testcase DACtorTestcase.  Test variations for the methods:
@@ -55,7 +51,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             CharacterDataArea da = new CharacterDataArea(null, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTAARA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -76,7 +72,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             DecimalDataArea da = new DecimalDataArea(null, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTAARA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -97,7 +93,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             LocalDataArea da = new LocalDataArea(null);
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -118,7 +114,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             LogicalDataArea da = new LogicalDataArea(null, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTAARA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -139,7 +135,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             CharacterDataArea da = new CharacterDataArea(systemObject_, null);
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -160,7 +156,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             DecimalDataArea da = new DecimalDataArea(systemObject_, null);
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -181,7 +177,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             LogicalDataArea da = new LogicalDataArea(systemObject_, null);
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -202,7 +198,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/QSYS.LIB/TESTAREA.DTAARA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -223,7 +219,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/QSYS.LIB/TESTAREA.DTAARA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -244,7 +240,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/QSYS.LIB/TESTAREA.DTAARA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -265,7 +261,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -286,7 +282,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -307,7 +303,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTA");
-            failed("No exception.");
+            failed("No exception."+da);
         }
         catch (Exception e)
         {
@@ -327,7 +323,8 @@ public class DACtorTestcase extends Testcase
         try
         {
             CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTAARA");
-            succeeded();
+            assertCondition(true, "da="+da); 
+
         }
         catch (Exception e)
         {
@@ -344,7 +341,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTAARA");
-            succeeded();
+            assertCondition(true, "da="+da); 
         }
         catch (Exception e)
         {
@@ -361,7 +358,7 @@ public class DACtorTestcase extends Testcase
         try
         {
             LocalDataArea da = new LocalDataArea(systemObject_);
-            succeeded();
+            assertCondition(true, "da="+da); 
         }
         catch (Exception e)
         {
@@ -378,7 +375,8 @@ public class DACtorTestcase extends Testcase
         try
         {
             LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/DATEST.LIB/TESTAREA.DTAARA");
-            succeeded();
+            assertCondition(true, "da="+da); 
+
         }
         catch (Exception e)
         {
@@ -395,7 +393,8 @@ public class DACtorTestcase extends Testcase
         try
         {
             CharacterDataArea da = new CharacterDataArea();
-            succeeded();
+            assertCondition(true, "da="+da); 
+
         }
         catch (Exception e)
         {
@@ -412,7 +411,8 @@ public class DACtorTestcase extends Testcase
         try
         {
             DecimalDataArea da = new DecimalDataArea();
-            succeeded();
+            assertCondition(true, "da="+da); 
+
         }
         catch (Exception e)
         {
@@ -429,7 +429,8 @@ public class DACtorTestcase extends Testcase
         try
         {
             LocalDataArea da = new LocalDataArea();
-            succeeded();
+            assertCondition(true, "da="+da); 
+
         }
         catch (Exception e)
         {
@@ -446,7 +447,8 @@ public class DACtorTestcase extends Testcase
         try
         {
             LogicalDataArea da = new LogicalDataArea();
-            succeeded();
+            assertCondition(true, "da="+da); 
+
         }
         catch (Exception e)
         {

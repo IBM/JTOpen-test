@@ -13,42 +13,22 @@
 
 package test.RF;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.math.BigDecimal;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400DataType;
 import com.ibm.as400.access.AS400Bin2;
 import com.ibm.as400.access.AS400Bin4;
-import com.ibm.as400.access.AS400ByteArray;
-import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400Float8;
-import com.ibm.as400.access.AS400Float4;
-import com.ibm.as400.access.AS400PackedDecimal;
-import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.BinaryFieldDescription;
 import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.DateFieldDescription;
-import com.ibm.as400.access.DBCSEitherFieldDescription;
-import com.ibm.as400.access.DBCSGraphicFieldDescription;
-import com.ibm.as400.access.DBCSOnlyFieldDescription;
-import com.ibm.as400.access.DBCSOpenFieldDescription;
-import com.ibm.as400.access.FieldDescription;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.FloatFieldDescription;
-import com.ibm.as400.access.HexFieldDescription;
-import com.ibm.as400.access.PackedDecimalFieldDescription;
-import com.ibm.as400.access.TimeFieldDescription;
-import com.ibm.as400.access.TimestampFieldDescription;
-import com.ibm.as400.access.ZonedDecimalFieldDescription;
-
-import test.Testcase;
-
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
+
+import test.Testcase;
 
 /**
   Testcase RFRecord. This test class verifed valid and invalid usage of
@@ -409,7 +389,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(null);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -440,7 +420,7 @@ public class RFRecord extends Testcase
     {
       RecordFormat r = new RecordFormat();
       Record rec = new Record(r);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -505,7 +485,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(null, "myRecord");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -536,7 +516,7 @@ public class RFRecord extends Testcase
     {
       RecordFormat r = new RecordFormat();
       Record rec = new Record(r, "myRecord");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -567,7 +547,7 @@ public class RFRecord extends Testcase
       RecordFormat r = new RecordFormat();
       r.addFieldDescription(new BinaryFieldDescription(new AS400Bin4(), "b"));
       Record rec = new Record(r, (String)null);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -670,7 +650,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(null, new byte[22]);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -700,7 +680,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(new RecordFormat(), new byte[22]);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -732,7 +712,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(rf, (byte[])null);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -766,7 +746,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(rf, bytes);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -799,7 +779,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(rf, bytes);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(ArrayIndexOutOfBoundsException e)
@@ -902,7 +882,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(null, new byte[22], "myrec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -932,7 +912,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(new RecordFormat(), new byte[22], "myrec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -964,7 +944,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(rf, (byte[])null, "myrec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -998,7 +978,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(rf, bytes, "myrec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1031,7 +1011,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(rf, bytes, "myrec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(ArrayIndexOutOfBoundsException e)
@@ -1064,7 +1044,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(rf, bytes, null);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1155,7 +1135,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(null, new byte[22], 0);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1186,7 +1166,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(new RecordFormat(), new byte[22], 0);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1219,7 +1199,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, null, 0);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1253,7 +1233,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, bytes, 0);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1288,7 +1268,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, new byte[22], -1);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1322,7 +1302,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, new byte[22], 21);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1425,7 +1405,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(null, new byte[22], 0, "myRec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1456,7 +1436,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(new RecordFormat(), new byte[22], 0, "myRec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1489,7 +1469,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, null, 0, "myRec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1523,7 +1503,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, bytes, 0, "myRec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1558,7 +1538,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, new byte[22], -1, "myRec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1592,7 +1572,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, new byte[22], 21, "myRec");
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)
@@ -1625,7 +1605,7 @@ public class RFRecord extends Testcase
     try
     {
       Record rec = new Record(r, new byte[22], 20, null);
-      failed("No exception");
+      failed("No exception"+rec);
       return;
     }
     catch(Exception e)

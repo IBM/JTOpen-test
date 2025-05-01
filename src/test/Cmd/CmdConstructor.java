@@ -60,7 +60,7 @@ public class CmdConstructor extends Testcase
         try
         {
             CommandCall cmd = new CommandCall(null);
-            failed("Did not throw exception.");
+            failed("Did not throw exception."+cmd);
         }
         catch (Exception e)
         {
@@ -92,7 +92,7 @@ public class CmdConstructor extends Testcase
         try
         {
             CommandCall cmd = new CommandCall(null, "CRTLIB FRED");
-            failed("Did not throw exception.");
+            failed("Did not throw exception."+cmd);
         }
         catch (Exception e)
         {
@@ -108,7 +108,7 @@ public class CmdConstructor extends Testcase
         try
         {
             CommandCall cmd = new CommandCall(systemObject_, null);
-            failed("Did not throw exception.");
+            failed("Did not throw exception."+cmd);
         }
         catch (Exception e)
         {

@@ -52,6 +52,9 @@ of the RJavaProgram class, inherited from ChangeableResource:
 <li>toString() 
 </ul>
 **/
+
+@SuppressWarnings({ "unused", "deprecation" })
+
 public class RJavaProgramBufferedResourceTestcase
 extends Testcase {
 

@@ -12,31 +12,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
+import java.awt.Image;
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.resource.Presentation;
+import com.ibm.as400.resource.RIFSFile;
+import com.ibm.as400.resource.RIFSFileList;
 import com.ibm.as400.resource.Resource;
 import com.ibm.as400.resource.ResourceListEvent;
-import com.ibm.as400.resource.ResourceListListener;
 
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.PropertyChangeListener_;
-import test.UserTest.ResourceListListener_;
-import test.UserTest.VetoableChangeListener_;
 import test.misc.VIFSSandbox;
-
-import com.ibm.as400.resource.RIFSFile;
-import com.ibm.as400.resource.RIFSFileList;
-import java.awt.Image;
-
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -67,6 +58,7 @@ of the RIFSFileList class which are inherited from ResourceList:
 <li>waitForResource(long) 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileListResourceListTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -409,7 +401,7 @@ is not enough information to open it implicitly.
         try {
             RIFSFileList u = new RIFSFileList();
             long length = u.getListLength();
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+length);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -827,7 +819,7 @@ information is available to open it.
         try {
             RIFSFileList u = new RIFSFileList();
             boolean open = u.isOpen();
-            assertCondition(u.isOpen() == false);
+            assertCondition(open == false);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -844,7 +836,7 @@ isOpen() - Call when the list has never been opened.
         try {
             RIFSFileList u = new RIFSFileList(systemObject_, dir25_);
             boolean open = u.isOpen();
-            assertCondition(u.isOpen() == false);
+            assertCondition(open == false);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -917,7 +909,7 @@ Pass -1.
             RIFSFileList u = new RIFSFileList(systemObject_, dir25_);
             u.open();
             boolean available = u.isResourceAvailable(-1);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+available);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");

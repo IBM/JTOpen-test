@@ -781,7 +781,7 @@ public class DQAttributesTestcase extends Testcase
     {
         try
         {
-            AS400 dummy = new AS400("Badsys", "xxx", "yyy");
+            AS400 dummy = new AS400("Badsys", "xxx", "yyy".toCharArray());
             DataQueue dq = new DataQueue(dummy, "/QSYS.LIB/QTEMP.LIB/ATTRTEST.DTAQ");
             dq.setSystem(systemObject_);
             dq.create(80); // verify with create
@@ -809,7 +809,7 @@ public class DQAttributesTestcase extends Testcase
     {
         try
         {
-            AS400 dummy = new AS400("Badsys", "xxx", "yyy");
+            AS400 dummy = new AS400("Badsys", "xxx", "yyy".toCharArray());
             KeyedDataQueue dq = new KeyedDataQueue(dummy, "/QSYS.LIB/QTEMP.LIB/ATTRTEST.DTAQ");
             dq.setSystem(systemObject_);
             dq.create(10, 80); // verify with create

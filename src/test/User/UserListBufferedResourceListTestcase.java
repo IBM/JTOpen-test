@@ -17,18 +17,13 @@ import java.awt.Image;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.Presentation;
+import com.ibm.as400.resource.RUser;
+import com.ibm.as400.resource.RUserList;
 import com.ibm.as400.resource.Resource;
 import com.ibm.as400.resource.ResourceListEvent;
-import com.ibm.as400.resource.ResourceListListener;
 
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.PropertyChangeListener_;
-import test.UserTest.ResourceListListener_;
-import test.UserTest.VetoableChangeListener_;
-
-import com.ibm.as400.resource.RUser;
-import com.ibm.as400.resource.RUserList;
 
 /**
  Testcase UserListBufferedResourceListTestcase.  This tests the methods of the RUserList class which are inherited from BufferedResource:
@@ -59,6 +54,7 @@ import com.ibm.as400.resource.RUserList;
  <li>waitForResource(long)
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class UserListBufferedResourceListTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -342,7 +338,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
         {
             RUserList u = new RUserList();
             long length = u.getListLength();
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+length);
         }
         catch (Exception e)
         {
@@ -811,7 +807,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
         {
             RUserList u = new RUserList();
             boolean open = u.isOpen();
-            assertCondition(u.isOpen() == false);
+            assertCondition(open == false);
         }
         catch (Exception e)
         {
@@ -828,7 +824,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
         {
             RUserList u = newRUserList(pwrSys_, RUserList.MEMBER, groupAndUsers_[0]);
             boolean open = u.isOpen();
-            assertCondition(u.isOpen() == false);
+            assertCondition(open == false);
         }
         catch (Exception e)
         {
@@ -900,7 +896,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             RUserList u = new RUserList(pwrSys_);
             u.open();
             boolean available = u.isResourceAvailable(-1);
-            failed("Didn't throw exception");
+            failed("Didn't throw exception"+available);
         }
         catch (Exception e)
         {
@@ -969,6 +965,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
     /**
      isResourceAvailable() - Call immediately after opening the list, before the list is complete.  Pass 50, which should not have been loaded immediately.
      **/
+    @SuppressWarnings("unused")
     public void Var045()
     {
         try
@@ -1397,7 +1394,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             long after = ul.getListLength();
 
             ul.close();
-            assertCondition(open == true && before + 1 == after);
+            assertCondition(open == true && before + 1 == after, "newUser="+newUser);
         }
         catch (Exception e)
         {
@@ -1554,7 +1551,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             long after = ul.getListLength();
 
             ul.close();
-            assertCondition(open == true && before == after);
+            assertCondition(open == true && before == after,"newUser="+newUser);
         }
         catch (Exception e)
         {

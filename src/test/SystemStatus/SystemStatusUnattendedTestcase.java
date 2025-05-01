@@ -13,23 +13,16 @@
 
 package test.SystemStatus;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.SystemStatus;
-
-import test.Testcase;
-
-import com.ibm.as400.access.SystemPool;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
-
-import java.io.FileOutputStream;
-import java.util.Date;
 import java.util.Enumeration;
-import java.util.Vector;
-import java.lang.Integer;
-import java.lang.String;
-import java.text.SimpleDateFormat;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.SystemPool;
+import com.ibm.as400.access.SystemStatus;
+
+import test.Testcase;
 
 /**
  The SystemStatusUnattendedTestcase class tests the methods of SystemStatus.
@@ -83,7 +76,7 @@ public class SystemStatusUnattendedTestcase extends Testcase
         try
         {
             SystemStatus s = new SystemStatus();
-            succeeded();
+            assertCondition(true,"s="+s);
         }
         catch (Exception e) 
         {
@@ -100,7 +93,7 @@ public class SystemStatusUnattendedTestcase extends Testcase
         try
         {
             SystemStatus s = new SystemStatus(systemObject_);
-            succeeded();
+            assertCondition(true,"s="+s);
         }
         catch (Exception e)
         {
@@ -118,7 +111,7 @@ public class SystemStatusUnattendedTestcase extends Testcase
         try
         {
             SystemStatus s = new SystemStatus(null);
-            failed("Exception didn't occur.");
+            failed("Exception didn't occur."+s);
         }
         catch (Exception e)
         {
@@ -642,13 +635,14 @@ public class SystemStatusUnattendedTestcase extends Testcase
      Method tested: getSystemPools()
      - Ensure that getSystemPools() returns correct system.
      **/
+    @SuppressWarnings("deprecation")
     public void Var031()
     {
         try
         {
             int j;                            
             SystemStatus s = new SystemStatus(systemObject_);                         
-            Enumeration en = (Enumeration)s.getSystemPools();            
+            Enumeration<SystemPool> en = s.getSystemPools();            
             for(j=0; en.hasMoreElements(); j++)
             {           
                 SystemPool element = (SystemPool) en.nextElement();

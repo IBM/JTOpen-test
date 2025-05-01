@@ -148,7 +148,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
         try
         {
             UserSpace aUserSpace = new UserSpace(systemObject_, null);
-            failed("Exception didn't occur.");
+            failed("Exception didn't occur."+aUserSpace);
         }
         catch (Exception e)
         {
@@ -166,7 +166,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
         {
 
             UserSpace aUserSpace = new UserSpace(null, "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USCREATE.USRSPC");
-            failed("Exception didn't occur.");
+            failed("Exception didn't occur."+aUserSpace);
         }
         catch (Exception e)
         {
@@ -276,7 +276,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
             else
                 predictedSize = 4096 - 512;
 
-            assertCondition(12288 == aUserSpace.getLength(), "Length value not expected.");
+            assertCondition(12288 == aUserSpace.getLength(), "Length value not expected."+predictedSize);
         }
         catch (Exception e)
         {
@@ -1004,7 +1004,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
 
             aUserSpace.delete();
 
-            succeeded();
+            assertCondition(true, "aLength="+aLength);
         }
         catch (Exception e)
         {
@@ -1098,7 +1098,6 @@ public class UserSpaceCrtDltTestcase extends Testcase
                 }
             }
 
-            byte[] data = new byte[20];
             AS400 usSystem_ = new AS400(systemObject_);
             UserSpace aUserSpace = new UserSpace(usSystem_, "/QSYS.LIB/USAUTHLIB.LIB/USCRTDLT1.USRSPC");
             aUserSpace.delete();
@@ -1276,7 +1275,8 @@ public class UserSpaceCrtDltTestcase extends Testcase
             // Reset system to a different object.
             AS400 newAS400 = new AS400();
             aUserSpace.setSystem(newAS400);
-
+            newAS400.close(); 
+            as400.close(); 
             succeeded();
         }
         catch (Exception e)
@@ -1329,6 +1329,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
                 assertExceptionStartsWith(e, "ExtendedIllegalStateException", "system", ExtendedIllegalStateException.PROPERTY_NOT_CHANGED);
             }
             deleteUserSpace(aUserSpace);
+            as400.close();
         }
         catch (Exception e)
         {
@@ -1375,7 +1376,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
         {
 
             UserSpace aUserSpace = new UserSpace(systemObject_, "USOBJECT.USRSPC");
-            failed("Exception did not occur.");
+            failed("Exception did not occur."+aUserSpace);
         }
         catch (Exception e)
         {

@@ -14,27 +14,21 @@
 package test.DA;
 
 
-import java.io.FileOutputStream;
-import java.util.Vector;
-import com.ibm.as400.access.AS400;
+import java.math.BigDecimal;
+
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.BidiStringType;
-import com.ibm.as400.access.BinaryConverter;
 import com.ibm.as400.access.CharConverter;
+import com.ibm.as400.access.CharacterDataArea;
 import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.DecimalDataArea;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.LocalDataArea;
+import com.ibm.as400.access.LogicalDataArea;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.Testcase;
-
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.DataArea;
-import com.ibm.as400.access.CharacterDataArea;
-import com.ibm.as400.access.DecimalDataArea;
-import com.ibm.as400.access.LocalDataArea;
-import com.ibm.as400.access.LogicalDataArea;
-import java.beans.PropertyVetoException;
-import java.math.BigDecimal;
 
 /**
  Testcase DAReadTestcase.
@@ -1026,7 +1020,7 @@ public class DAReadTestcase extends Testcase
                 }
                 else
                 {
-                    failed("Incorrect data read:\n  Expected: '"+expected.toString()+"'\n  Returned: '"+data.toString()+"'");
+                    failed("Incorrect data read:\n  Expected: '"+expected.toString()+"'\n  Returned: '"+data.toString()+"' da2="+da2);
                 }
             }
             catch (Exception e)

@@ -55,7 +55,6 @@ public class ConvTableThreadTestcase extends Testcase
         {
             try
             {
-                Thread thr = Thread.currentThread();
                 while (keepRunning_)
                 {
                     ConvTable t = ConvTable.getTable(ccsid_, null);

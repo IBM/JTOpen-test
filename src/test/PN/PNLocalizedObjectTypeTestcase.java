@@ -56,7 +56,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
     {
         try {
             String loc = QSYSObjectTypeTable.getLocalizedObjectType(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+loc);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -73,7 +73,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
     {
         try {
             String loc = QSYSObjectTypeTable.getLocalizedObjectType("");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+loc);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -89,7 +89,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
     {
         try {
             String loc = QSYSObjectTypeTable.getLocalizedObjectType("*");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+loc);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -212,7 +212,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
     {
         try {
             String loc = QSYSObjectTypeTable.getLocalizedObjectType(null, "SOMETHING");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+loc);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -228,7 +228,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
     {
         try {
             String loc = QSYSObjectTypeTable.getLocalizedObjectType(null, null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+loc);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -452,7 +452,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
     {
         try {
             String[] supportedEAs = QSYSObjectTypeTable.getSupportedAttributes(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+supportedEAs);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -486,7 +486,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
     {
         try {
             String[] supportedEAs = QSYSObjectTypeTable.getSupportedAttributes("YOGURT");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+supportedEAs);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");

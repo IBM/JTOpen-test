@@ -13,24 +13,22 @@
 
 package test.DA;
 
-import com.ibm.as400.access.AS400;
+import java.math.BigDecimal;
+
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.BidiStringType;
 import com.ibm.as400.access.CharConverter;
+import com.ibm.as400.access.CharacterDataArea;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.ObjectDoesNotExistException;
-
-import test.Testcase;
-
+import com.ibm.as400.access.DecimalDataArea;
 import com.ibm.as400.access.ErrorCompletingRequestException;      //@A2A
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.DataArea;
-import com.ibm.as400.access.CharacterDataArea;
-import com.ibm.as400.access.DecimalDataArea;
 import com.ibm.as400.access.LocalDataArea;
 import com.ibm.as400.access.LogicalDataArea;
-import java.math.BigDecimal;
+import com.ibm.as400.access.ObjectDoesNotExistException;
+
+import test.Testcase;
 
 /**
  Testcase DAWriteTestcase.
@@ -563,7 +561,7 @@ public class DAWriteTestcase extends Testcase
             try
             {
                 da.write("123456789012345678901234567890123",1);
-                failed("Expected exception did not occur.");
+                failed("Expected exception did not occur."+length);
             }
             catch (Exception e)
             {
@@ -604,7 +602,7 @@ public class DAWriteTestcase extends Testcase
             try
             {
                 da.write("123456789012345678901234567890123");
-                failed("Expected exception did not occur.");
+                failed("Expected exception did not occur."+length);
             }
             catch (Exception e)
             {
@@ -695,7 +693,7 @@ public class DAWriteTestcase extends Testcase
                 }
                 else
                 {
-                    failed("Incorrect data write:\n  Expected: '"+expected+"'\n  Returned: '"+data+"'");
+                    failed("Incorrect data write:\n  Expected: '"+expected+"'\n  Returned: '"+data+"'"+length);
                 }
             }
             catch (Exception e)
@@ -2037,7 +2035,7 @@ public class DAWriteTestcase extends Testcase
                 }
                 else
                 {
-                    failed(e, "Wrong exception info.");
+                    failed(e, "Wrong exception info."+length);
                 }
             }
         }
@@ -2075,7 +2073,7 @@ public class DAWriteTestcase extends Testcase
                 }
                 else
                 {
-                    failed(e, "Wrong exception info.");
+                    failed(e, "Wrong exception info."+length);
                 }
             }
         }

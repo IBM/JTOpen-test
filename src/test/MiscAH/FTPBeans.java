@@ -45,33 +45,33 @@ public class FTPBeans
     private String user_     = null;
     private String clearPasswordString_ = null;
     private String system_   = null;
-    private String testDirectory = "FTPTestDir";
+    //private String testDirectory = "FTPTestDir";
     private String initialToken_ = null;
-    private boolean notWorthTrying = false;
+    //private boolean notWorthTrying = false;
 
-    private static final int DETAILED = 1;
-    private static final int NAME_ONLY = 0;
+    // private static final int DETAILED = 1;
+    // private static final int NAME_ONLY = 0;
 
-    private static final int ONE     =  1;
-    private static final int TWO     =  2;
-    private static final int FOUR    =  4;
-    private static final int EIGHT   =  8;
-    private static final int SIXTEEN = 16;
-    private static final int TOTAL   = ONE + TWO + FOUR + EIGHT + SIXTEEN;
+    //private static final int ONE     =  1;
+    //private static final int TWO     =  2;
+    //private static final int FOUR    =  4;
+    //private static final int EIGHT   =  8;
+    //private static final int SIXTEEN = 16;
+   // private static final int TOTAL   = ONE + TWO + FOUR + EIGHT + SIXTEEN;
 
-    private int connectCalled    = 0;
-    private int disconnectCalled = 0;
-    private int getCalled        = 0;
-    private int putCalled        = 0;
-    private int listCalled       = 0;
+    int connectCalled    = 0;
+    int disconnectCalled = 0;
+    int getCalled        = 0;
+    int putCalled        = 0;
+    int listCalled       = 0;
     private FTPEvent ftpEvent;
     private PropertyChangeEvent propertyChangeEvent;
     private PropertyChangeEvent vetoChangeEvent;
     private boolean veto = false;
-    private String operatingSystem_;
-    private boolean windows_;
-    private boolean linux_;
-    private boolean aix_;
+    //private String operatingSystem_;
+    //private boolean windows_;
+    //private boolean linux_;
+    // private boolean aix_;
     private char[] clearPassword_;
 
     public FTPBeans (AS400 systemObject,
@@ -96,7 +96,7 @@ public class FTPBeans
         if (initialToken_ == null)
         {
            System.out.println("-directory is invalid, no test will be run");
-           notWorthTrying = true;
+           // notWorthTrying = true;
            System.out.println();
         }
         else
@@ -854,11 +854,11 @@ public class FTPBeans
           ObjectOutput s = new ObjectOutputStream(f);
           s.writeObject(c);
           s.flush();
-
+          s.close(); 
           FileInputStream in = new FileInputStream("FtpClient.ser");
           ObjectInputStream s2 = new ObjectInputStream(in);
           FTP c2 = (FTP) s2.readObject();
-
+          s2.close(); 
           if (c.getServer().equals(c2.getServer()))
              if (c.getUser().equals(c2.getUser()))
                 if (c.getPort() == 100)
@@ -907,13 +907,14 @@ public class FTPBeans
           ObjectOutput s = new ObjectOutputStream(f);
           s.writeObject(c);
           s.flush();
-
+          s.close(); 
           FileInputStream in = new FileInputStream("FtpClient2.ser");
           ObjectInputStream s2 = new ObjectInputStream(in);
           FTP c2 = (FTP) s2.readObject();
           c2.setPassword(clearPasswordString_);
 
           c2.ls();
+          s2.close(); 
           succeeded();
        }
        catch(Exception e)

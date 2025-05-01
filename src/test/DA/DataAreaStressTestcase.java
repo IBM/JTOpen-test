@@ -101,7 +101,8 @@ public class DataAreaStressTestcase
    Runs the current thread_
  **/
 
-   public void run() 
+   @SuppressWarnings("deprecation")
+  public void run() 
    {
 
       DecimalDataArea da2 = new DecimalDataArea( sys3_, "/QSYS.LIB/DATEST" + curntThread_ + ".LIB" +
@@ -236,7 +237,8 @@ public class DataAreaStressTestcase
 /**
    Stops the current thread_
  **/
-   public void stop() 
+   @SuppressWarnings("deprecation")
+  public void stop() 
    {
 
       if ((thread_ != null) && thread_.isAlive()) 

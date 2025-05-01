@@ -12,6 +12,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
+import java.awt.Image;
+import java.beans.BeanDescriptor;
+import java.beans.BeanInfo;
+import java.beans.EventSetDescriptor;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyDescriptor;
+import java.beans.VetoableChangeListener;
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.RIFSFile;
 import com.ibm.as400.resource.RIFSFileBeanInfo;
@@ -19,26 +30,13 @@ import com.ibm.as400.resource.ResourceListener;
 
 import test.Testcase;
 
-import java.awt.Image;
-
-import java.beans.BeanDescriptor;
-import java.beans.BeanInfo;
-import java.beans.EventSetDescriptor;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyDescriptor;
-import java.beans.VetoableChangeListener;
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
 Testcase RIFSFileBeanInfoTestcase.  This tests the methods
 of the RIFSFileBeanInfo class:
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileBeanInfoTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -181,7 +179,7 @@ getIcon().  Pass an invalid value.
         try {
             RIFSFileBeanInfo ubi = new RIFSFileBeanInfo();
             Image icon = ubi.getIcon(-546);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+icon);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -201,7 +199,7 @@ getIcon().  Pass ICON_COLOR_16x16.
         }
         try {
             RIFSFileBeanInfo ubi = new RIFSFileBeanInfo();
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -221,7 +219,7 @@ getIcon().  Pass ICON_COLOR_32x32.
         }
         try {
             RIFSFileBeanInfo ubi = new RIFSFileBeanInfo();
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -241,7 +239,7 @@ getIcon().  Pass ICON_MONO_16x16.
         }
         try {
             RIFSFileBeanInfo ubi = new RIFSFileBeanInfo();
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -261,7 +259,7 @@ getIcon().  Pass ICON_MONO_32x32.
         }
         try {
             RIFSFileBeanInfo ubi = new RIFSFileBeanInfo();
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

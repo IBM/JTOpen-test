@@ -17,10 +17,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.BidiStringType;
+import com.ibm.as400.access.CharConverter;
+import com.ibm.as400.access.ConvTableReader;
+import com.ibm.as400.access.ConvTableWriter;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 import test.JTOpenTestEnvironment;
-import test.JVMInfo;
 import test.Testcase;
 
 /**
@@ -112,6 +116,7 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         try
         {
             ConvTableWriter ctw = new ConvTableWriter(null);
+            ctw.close();
             failed("Expected exception did not occur.");
         }
         catch (Exception e)
@@ -137,6 +142,8 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos);
+            ctw.close();
+
             succeeded();
         }
         catch (Exception e)
@@ -158,7 +165,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         try
         {
             ConvTableWriter ctw = new ConvTableWriter(null, "Unicode");
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -183,7 +192,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, null);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -208,6 +219,8 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, "Unicode");
+            ctw.close();
+
             succeeded();
         }
         catch (Exception e)
@@ -230,7 +243,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, "blahblah");
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -254,7 +269,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         try
         {
             ConvTableWriter ctw = new ConvTableWriter(null, 13488);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -279,7 +296,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, -1);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -308,7 +327,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 65536);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -337,6 +358,8 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 13488);
+            ctw.close();
+
             succeeded();
         }
         catch (Exception e)
@@ -359,7 +382,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 0);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -383,7 +408,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         try
         {
             ConvTableWriter ctw = new ConvTableWriter(null, 13488, BidiStringType.DEFAULT);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -408,7 +435,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, -1, BidiStringType.DEFAULT);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -437,7 +466,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 65536, BidiStringType.DEFAULT);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -466,6 +497,8 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 13488, BidiStringType.DEFAULT);
+            ctw.close();
+
             succeeded();
         }
         catch (Exception e)
@@ -488,7 +521,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 0, BidiStringType.DEFAULT);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -513,7 +548,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 13488, -2);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -542,7 +579,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 13488, 12);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -571,6 +610,8 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 13488, BidiStringType.ST4);
+            ctw.close();
+
             succeeded();
         }
         catch (Exception e)
@@ -1347,7 +1388,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos);
             ctw.write((char[])null);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -1493,7 +1536,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos);
             ctw.write((char[])null, 0, 2000);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -1524,7 +1569,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             ConvTableWriter ctw = new ConvTableWriter(fos);
             char[] buf = new char[2000];
             ctw.write(buf, -1, 2000);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -1555,7 +1602,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             ConvTableWriter ctw = new ConvTableWriter(fos);
             char[] buf = new char[2000];
             ctw.write(buf, 0, -1);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -1700,7 +1749,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos);
             ctw.write((String)null);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -1858,8 +1909,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
         {
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos);
-            ctw.write((String)null, 0, 2000);
-            failed("Expected exception did not occur.");
+            ctw.write((String)null, 0, 2000);            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -1889,7 +1941,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos);
             ctw.write("fred", -1, 2000);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {
@@ -1919,7 +1973,9 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos);
             ctw.write("fred", 0, -1);
-            failed("Expected exception did not occur.");
+            ctw.close();
+
+            failed("Expected exception did not occur."+ctw);
         }
         catch (Exception e)
         {

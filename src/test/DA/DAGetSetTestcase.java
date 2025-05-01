@@ -13,20 +13,19 @@
 
 package test.DA;
 
+import java.math.BigDecimal;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CharacterDataArea;
 import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.DecimalDataArea;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.LocalDataArea;
+import com.ibm.as400.access.LogicalDataArea;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.Testcase;
-
-import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.DataArea;
-import com.ibm.as400.access.CharacterDataArea;
-import com.ibm.as400.access.DecimalDataArea;
-import com.ibm.as400.access.LocalDataArea;
-import com.ibm.as400.access.LogicalDataArea;
-import java.math.BigDecimal;
 
 /**
  Testcase DAGetSetTestcase.
@@ -856,7 +855,7 @@ public class DAGetSetTestcase extends Testcase
         {
             String path = "/QSYS.LIB/QTEMP.LIB/attrtest.DTAARA";
             CharacterDataArea da = new CharacterDataArea(systemObject_, path);
-            AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS");
+            AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS".toCharArray());
             da.setSystem(newSys);
             if (da.getSystem() == newSys)
             {
@@ -888,7 +887,7 @@ public class DAGetSetTestcase extends Testcase
             da.create();
             try
             {
-                AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS");
+                AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS".toCharArray());
                 da.setSystem(newSys);
                 failed("Expected exception did not occur.");
             }
@@ -2037,7 +2036,7 @@ public class DAGetSetTestcase extends Testcase
         {
             String path = "/QSYS.LIB/QTEMP.LIB/attrtest.DTAARA";
             DecimalDataArea da = new DecimalDataArea(systemObject_, path);
-            AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS");
+            AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS".toCharArray());
             da.setSystem(newSys);
             if (da.getSystem() == newSys)
             {
@@ -2069,7 +2068,7 @@ public class DAGetSetTestcase extends Testcase
             da.create();
             try
             {
-                AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS");
+                AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS".toCharArray());
                 da.setSystem(newSys);
                 failed("Expected exception did not occur.");
             }
@@ -2306,7 +2305,7 @@ public class DAGetSetTestcase extends Testcase
         try
         {
             LocalDataArea da = new LocalDataArea(systemObject_);
-            AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS");
+            AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS".toCharArray());
             da.setSystem(newSys);
             if (da.getSystem() == newSys)
             {
@@ -2337,7 +2336,7 @@ public class DAGetSetTestcase extends Testcase
             da.read();
             try
             {
-                AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS");
+                AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS".toCharArray());
                 da.setSystem(newSys);
                 failed("Expected exception did not occur.");
             }
@@ -3139,7 +3138,7 @@ public class DAGetSetTestcase extends Testcase
         {
             String path = "/QSYS.LIB/QTEMP.LIB/attrtest.DTAARA";
             LogicalDataArea da = new LogicalDataArea(systemObject_, path);
-            AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS");
+            AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS".toCharArray());
             da.setSystem(newSys);
             if (da.getSystem() == newSys)
             {
@@ -3171,7 +3170,7 @@ public class DAGetSetTestcase extends Testcase
             da.create();
             try
             {
-                AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS");
+                AS400 newSys = new AS400("TEST400", "TESTID", "TESTPASS".toCharArray());
                 da.setSystem(newSys);
                 failed("Expected exception did not occur.");
             }

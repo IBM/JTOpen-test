@@ -77,6 +77,7 @@ public class CmdStressTestcase extends ProxyStressTest implements Runnable
     /**
      Runs the current thread_
      **/
+    @SuppressWarnings("deprecation")
     public void run()
     {
         int i;
@@ -162,6 +163,7 @@ public class CmdStressTestcase extends ProxyStressTest implements Runnable
     /**
      Stops the current thread_
      **/
+    @SuppressWarnings("deprecation")
     public void stop()
     {
         if ((thread_ != null) && thread_.isAlive())

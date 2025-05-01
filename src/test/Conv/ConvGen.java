@@ -13,12 +13,10 @@
 
 package test.Conv;
 
-import java.io.CharConversionException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 
 import com.ibm.as400.access.Converter;
 
@@ -81,6 +79,7 @@ public class ConvGen
 		String outString = converter.byteArrayToString(byteData, 0, lengthIn);
 		disOut.writeChars(outString);
 	    }
+            disOut.close(); 
 	}
 	catch (Exception e)
 	{

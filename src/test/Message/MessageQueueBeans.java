@@ -36,6 +36,7 @@ import java.beans.VetoableChangeListener;
  <li>removeVetoableChangeListener()
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class MessageQueueBeans extends Testcase
 {
   public static void main(String args[]) throws Exception {
@@ -77,10 +78,6 @@ public class MessageQueueBeans extends Testcase
         public void rejectChanges()
         {
             reject_ = true;
-        }
-        public void acceptChanges()
-        {
-            reject_ = false;
         }
     }
 

@@ -15,13 +15,10 @@ package test.PC;
 
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
@@ -34,11 +31,6 @@ import test.JDTestcase;
 import test.PCTest;
 import test.PasswordVault;
 import test.Testcase;
-
-import java.io.ByteArrayOutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.Hashtable;
 
 /**
  Testcase PCUsageTestcase.

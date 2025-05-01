@@ -17,18 +17,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.math.BigDecimal;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.DataArea;
 import com.ibm.as400.access.CharacterDataArea;
+import com.ibm.as400.access.DataAreaEvent;
+import com.ibm.as400.access.DataAreaListener;
 import com.ibm.as400.access.DecimalDataArea;
 import com.ibm.as400.access.LocalDataArea;
 import com.ibm.as400.access.LogicalDataArea;
 
 import test.Testcase;
-
-import com.ibm.as400.access.DataAreaEvent;
-import com.ibm.as400.access.DataAreaListener;
-import java.math.BigDecimal;
 
 /**
  Testcase DABeansTestcase.
@@ -56,8 +55,8 @@ public class DABeansTestcase extends Testcase implements PropertyChangeListener,
     Object src;
     Object asource;
 
-    private String datestUserID = " USER(DATEST) ";
-    private static String dirName_;
+    // private String datestUserID = " USER(DATEST) ";
+    // private static String dirName_;
 
     PropertyChangeEvent propChange;
     PropertyChangeEvent vetoChange;

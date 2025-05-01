@@ -13,48 +13,43 @@
 
 package test.RF;
 
-import java.io.OutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.math.BigDecimal;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.Trace;
-import com.ibm.as400.access.AS400DataType;
 import com.ibm.as400.access.AS400Bin2;
 import com.ibm.as400.access.AS400Bin4;
 import com.ibm.as400.access.AS400ByteArray;
-import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400DataType;
 import com.ibm.as400.access.AS400Float8;
-import com.ibm.as400.access.AS400Float4;
 import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400ZonedDecimal;
 import com.ibm.as400.access.BinaryFieldDescription;
 import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.DateFieldDescription;
 import com.ibm.as400.access.DBCSEitherFieldDescription;
 import com.ibm.as400.access.DBCSGraphicFieldDescription;
 import com.ibm.as400.access.DBCSOnlyFieldDescription;
 import com.ibm.as400.access.DBCSOpenFieldDescription;
+import com.ibm.as400.access.DateFieldDescription;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.FieldDescription;
 import com.ibm.as400.access.FloatFieldDescription;
 import com.ibm.as400.access.HexFieldDescription;
 import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
 import com.ibm.as400.access.TimeFieldDescription;
 import com.ibm.as400.access.TimestampFieldDescription;
 import com.ibm.as400.access.VariableLengthFieldDescription;
 import com.ibm.as400.access.ZonedDecimalFieldDescription;
 
 import test.Testcase;
-
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
-import com.ibm.as400.access.ExtendedIllegalStateException;
 
 /**
   Testcase RFRecordMisc. This test class verifed valid and invalid usage of
@@ -1383,7 +1378,7 @@ public class RFRecordMisc extends Testcase
     {
       Record rc = new Record();
       byte[] b = rc.getContents();
-      failed("No exception calling with no record format");
+      failed("No exception calling with no record format"+b);
       return;
     }
     catch(Exception e)
@@ -1653,7 +1648,7 @@ public class RFRecordMisc extends Testcase
       // Create record based on our RecordFormat and contents
       rec = r.getNewRecord(contents);
       Object obj = rec.getField(-1);
-      failed("No exception passing invalid index");
+      failed("No exception passing invalid index"+obj);
       return;
     }
     catch(Exception e)
@@ -1684,7 +1679,7 @@ public class RFRecordMisc extends Testcase
       // Create record based on our RecordFormat and contents
       rec = r.getNewRecord(contents);
       Object obj = rec.getField(r.getNumberOfFields());
-      failed("No exception passing invalid index");
+      failed("No exception passing invalid index"+obj);
       return;
     }
     catch(Exception e)
@@ -1714,7 +1709,7 @@ public class RFRecordMisc extends Testcase
     {
       Record rc = new Record();
       Object obj = rc.getField(2);
-      failed("No exception calling without a record format");
+      failed("No exception calling without a record format"+obj);
       return;
     }
     catch(Exception e)
@@ -1878,7 +1873,7 @@ public class RFRecordMisc extends Testcase
       rec = r.getNewRecord(contents);
       // Verify exception when passing null for field name
       Object obj = rec.getField(null);
-      failed("No exception passing invalid index");
+      failed("No exception passing invalid index"+obj);
       return;
     }
     catch(Exception e)
@@ -1909,7 +1904,7 @@ public class RFRecordMisc extends Testcase
       // Create record based on our RecordFormat and contents
       rec = r.getNewRecord(contents);
       Object obj = rec.getField("non-existent");
-      failed("No exception passing invalid index");
+      failed("No exception passing invalid index"+obj);
       return;
     }
     catch(Exception e)
@@ -1940,7 +1935,7 @@ public class RFRecordMisc extends Testcase
     {
       Record rc = new Record();
       Object obj = rc.getField("field2");
-      failed("No exception calling without a record format");
+      failed("No exception calling without a record format"+obj);
       return;
     }
     catch(Exception e)
@@ -2013,7 +2008,7 @@ public class RFRecordMisc extends Testcase
         {
           output_.println(fields1[i].toString() + ".");
         }
-        failed("Record 1 does not contain correct values.");
+        failed("Record 1 does not contain correct values. c1="+c1+"c2="+c2);
       }
       else if (((Integer)fields2[0]).intValue() != 0 ||
           !((String)fields2[1]).equals("") ||
@@ -2642,8 +2637,8 @@ public class RFRecordMisc extends Testcase
       AS400Text txt10 = new AS400Text(10,37, systemObject_);
       AS400Bin2 bin2 = new AS400Bin2();
       AS400Text txt50 = new AS400Text(50,37, systemObject_);
-      int expectedLength1 = bin4.getByteLength() + 10 + bin2.getByteLength() + 50;
-      int expectedLength2 = bin4.getByteLength() + 10 + bin2.getByteLength() + 50 + 2;
+      // int expectedLength1 = bin4.getByteLength() + 10 + bin2.getByteLength() + 50;
+      // int expectedLength2 = bin4.getByteLength() + 10 + bin2.getByteLength() + 50 + 2;
       RecordFormat rf1 = new RecordFormat();
       rf1.addFieldDescription(new BinaryFieldDescription(bin4, "TOTLEN"));
       rf1.addFieldDescription(new CharacterFieldDescription(txt10, "NAME"));
@@ -3316,8 +3311,7 @@ public class RFRecordMisc extends Testcase
   **/
   public void Var051()
   {
-    String failMsg = "";
-
+ 
     // Create Record object containing default values
     rec = r.getNewRecord();
     // Verify exception passing null byte[]

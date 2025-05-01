@@ -12,12 +12,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.Cmd;
 
-import com.ibm.as400.access.*;
-import com.ibm.as400.security.auth.*;
-import com.ibm.as400.resource.*;
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ProgramCall;
+import com.ibm.as400.access.ProgramParameter;
 
 // Note: This class is used by CmdOnThreadTestcase and PgmOnThreadTestcase.
 public class CmdMultiThread extends Object implements Runnable

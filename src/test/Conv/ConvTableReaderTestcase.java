@@ -17,10 +17,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400BidiTransform;
+import com.ibm.as400.access.BidiConversionProperties;
+import com.ibm.as400.access.BidiStringType;
+import com.ibm.as400.access.CharConverter;
+import com.ibm.as400.access.ConvTableReader;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 import test.JTOpenTestEnvironment;
-import test.JVMInfo;
 import test.Testcase;
 
 /** 
@@ -76,6 +81,7 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             ConvTableReader ctr = new ConvTableReader(null);
             failed("Expected exception did not occur."+ctr);
+            ctr.close(); 
         }
         catch (Exception e)
         {
@@ -100,7 +106,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis);
-            assertCondition(true,"ctr="+ctr); 
+            ctr.close(); 
+          assertCondition(true,"ctr="+ctr); 
         }
         catch (Exception e)
         {
@@ -121,7 +128,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         try
         {
             ConvTableReader ctr = new ConvTableReader(null, "Unicode");
-            failed("Expected exception did not occur."+ctr);
+            ctr.close(); 
+           failed("Expected exception did not occur."+ctr);
         }
         catch (Exception e)
         {
@@ -146,7 +154,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, null);
-            failed("Expected exception did not occur."+ctr);
+            ctr.close(); 
+           failed("Expected exception did not occur."+ctr);
         }
         catch (Exception e)
         {
@@ -171,7 +180,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, "Unicode");
-            succeeded();
+            ctr.close(); 
+           succeeded();
         }
         catch (Exception e)
         {
@@ -193,7 +203,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, "blahblah");
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+           failed("Expected exception did not occur.");
         }
         catch (Exception e)
         {
@@ -217,7 +228,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         try
         {
             ConvTableReader ctr = new ConvTableReader(null, 13488);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+          failed("Expected exception did not occur.");
         }
         catch (Exception e)
         {
@@ -242,6 +254,7 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, -1);
+            ctr.close(); 
             failed("Expected exception did not occur.");
         }
         catch (Exception e)
@@ -271,6 +284,7 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 65536);
+            ctr.close(); 
             failed("Expected exception did not occur.");
         }
         catch (Exception e)
@@ -300,6 +314,7 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 13488);
+            ctr.close(); 
             succeeded();
         }
         catch (Exception e)
@@ -322,7 +337,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 0);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+           failed("Expected exception did not occur.");
         }
         catch (Exception e)
         {
@@ -346,7 +362,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         try
         {
             ConvTableReader ctr = new ConvTableReader(null, 13488, BidiStringType.DEFAULT);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+           failed("Expected exception did not occur.");
         }
         catch (Exception e)
         {
@@ -371,7 +388,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, -1, BidiStringType.DEFAULT);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+          failed("Expected exception did not occur.");
         }
         catch (Exception e)
         {
@@ -400,7 +418,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 65536, BidiStringType.DEFAULT);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+          failed("Expected exception did not occur.");
         }
         catch (Exception e)
         {
@@ -429,7 +448,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 13488, BidiStringType.DEFAULT);
-            succeeded();
+            ctr.close(); 
+           succeeded();
         }
         catch (Exception e)
         {
@@ -451,7 +471,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 0, BidiStringType.DEFAULT);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+          failed("Expected exception did not occur.");
         }
         catch (Exception e)
         {
@@ -476,7 +497,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 13488, -2);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+          failed("Expected exception did not occur.");
         }
         catch (Exception e)
         {
@@ -505,7 +527,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 13488, 12);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+ctr);
+            ctr.close(); 
         }
         catch (Exception e)
         {
@@ -534,7 +557,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
         {
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 13488, BidiStringType.ST4);
-            succeeded();
+            ctr.close(); 
+           succeeded();
         }
         catch (Exception e)
         {
@@ -1050,7 +1074,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis);
             int c = ctr.read((char[])null);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+            failed("Expected exception did not occur."+c);
         }
         catch (Exception e)
         {
@@ -1262,7 +1287,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis);
             int c = ctr.read(null, 0, 2000);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+           failed("Expected exception did not occur."+c);
         }
         catch (Exception e)
         {
@@ -1293,7 +1319,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             ConvTableReader ctr = new ConvTableReader(fis);
             char[] buf = new char[2000];
             int c = ctr.read(buf, -1, 2000);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+           failed("Expected exception did not occur."+c);
         }
         catch (Exception e)
         {
@@ -1324,7 +1351,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             ConvTableReader ctr = new ConvTableReader(fis);
             char[] buf = new char[2000];
             int c = ctr.read(buf, 0, -1);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+           failed("Expected exception did not occur."+c);
         }
         catch (Exception e)
         {
@@ -1504,7 +1532,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis);
             String s = ctr.read(-1);
-            failed("Expected exception did not occur.");
+            ctr.close(); 
+            failed("Expected exception did not occur."+s);
         }
         catch (Exception e)
         {
@@ -1534,6 +1563,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis);
             String s = ctr.read(0);
+            ctr.close(); 
+
             if (s != null && s.length() == 0)
             {
                 succeeded();
@@ -1564,6 +1595,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis);
             String s = ctr.read(10);
+            ctr.close(); 
+
             if (s != null && s.length() == 10 && s.equals(testdata_.substring(0,10)))
             {
                 succeeded();
@@ -1594,6 +1627,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis);
             String s = ctr.read(100);
+            ctr.close(); 
+
             if (s != null && s.equals(testdata_))
             {
                 succeeded();
@@ -1625,6 +1660,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             ConvTableReader ctr = new ConvTableReader(fis);
             String s = ctr.read(2);
             s = s + ctr.read(100);
+            ctr.close(); 
+
             if (s != null && s.equals(testdata_))
             {
                 succeeded();
@@ -1656,6 +1693,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             ConvTableReader ctr = new ConvTableReader(fis);
             String s = ctr.read(100);
             s = ctr.read(10);
+            ctr.close(); 
+
             if (s == null)
             {
                 succeeded();
@@ -1688,7 +1727,7 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             String s = ctr.read(100);
             ctr.close();
             s = ctr.read(10);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+s);
         }
         catch (Exception e)
         {
@@ -1862,6 +1901,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             {
                 succeeded();
             }
+            ctr.close(); 
+
         }
         catch (Exception e)
         {
@@ -1892,6 +1933,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             {
                 succeeded();
             }
+            ctr.close(); 
+
         }
         catch (Exception e)
         {
@@ -1977,6 +2020,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis);
             ctr.skip(-1);
+            ctr.close(); 
+
             failed("Expected exception did not occur.");
         }
         catch (Exception e)
@@ -2015,6 +2060,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             {
                 succeeded();
             }
+            ctr.close(); 
+
         }
         catch (Exception e)
         {
@@ -2045,6 +2092,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             {
                 succeeded();
             }
+            ctr.close(); 
+
         }
         catch (Exception e)
         {
@@ -2075,6 +2124,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             {
                 succeeded();
             }
+            ctr.close(); 
+
         }
         catch (Exception e)
         {
@@ -2098,6 +2149,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             ConvTableReader ctr = new ConvTableReader(fis);
             ctr.skip(5);
             String s = ctr.read(100);
+            ctr.close(); 
+
             if (s.equals(testdata_.substring(5)))
             {
                 succeeded();
@@ -2106,6 +2159,7 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             {
                 failed("Skip failed: '"+s+"' != '"+testdata_.substring(5)+"'");
             }
+            
         }
         catch (Exception e)
         {
@@ -2130,6 +2184,8 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
             String s = ctr.read(2);
             long l = ctr.skip(100);
             s = ctr.read(100);
+            ctr.close(); 
+
             if (s != null || l != testdata_.length()-2)
             {
                 failed("Skip failed: '"+s+"'; "+l);

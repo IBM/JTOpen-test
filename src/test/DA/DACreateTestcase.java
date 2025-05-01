@@ -1841,8 +1841,7 @@ public class DACreateTestcase extends Testcase
      **/
     public void Var060()
     {
-	boolean errorReported = false; 
-        try
+	 try
         {
             CharacterDataArea da = new CharacterDataArea(pwrSys_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");
             CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/"+daTestLib_+".LIB/CRTTEST.DTAARA");

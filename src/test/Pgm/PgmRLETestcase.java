@@ -13,11 +13,11 @@
 
 package test.Pgm;
 
-import java.io.FileOutputStream;
-
-import java.util.Hashtable;
-import java.util.Vector;
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400Bin2;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.ProgramCall;
+import com.ibm.as400.access.ProgramParameter;
 
 import test.Testcase;
 

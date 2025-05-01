@@ -13,19 +13,17 @@
 
 package test.DA;
 
-import com.ibm.as400.access.AS400;
+import java.math.BigDecimal;
+
 import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CharacterDataArea;
 import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.DecimalDataArea;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.LogicalDataArea;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.Testcase;
-
-import com.ibm.as400.access.ExtendedIllegalStateException;
-import com.ibm.as400.access.DataArea;
-import com.ibm.as400.access.CharacterDataArea;
-import com.ibm.as400.access.DecimalDataArea;
-import com.ibm.as400.access.LogicalDataArea;
-import java.math.BigDecimal;
 
 /**
  Testcase DADeleteTestcase.

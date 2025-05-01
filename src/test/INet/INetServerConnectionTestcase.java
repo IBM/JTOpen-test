@@ -46,7 +46,7 @@ public class INetServerConnectionTestcase extends Testcase
     
     // Private data.
     ///private VIFSSandbox     sandbox_;
-    private ISeriesNetServer netserver_;
+    ISeriesNetServer netserver_;
     private ISeriesNetServer pwrNetserver_;
     private ISeriesNetServerSession[] sessionList_;
 

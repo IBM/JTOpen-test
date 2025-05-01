@@ -166,7 +166,7 @@ public class ConvPSA89229 extends Testcase implements Runnable
                 String s3 = cc.byteArrayToString(expectedMixedByteEbcdic);
                 // Rather than fail with exception, we now use a replacement character 
                 
-                assertCondition(s2.equals(s3), "Testcase updated 9/11/2108 for expected equality s2="+s2+" s3="+s3);
+                assertCondition(s2.equals(s3), "Testcase updated 9/11/2108 for expected equality s2="+s2+" s3="+s3+" s1="+s1);
             }
             catch (ArrayIndexOutOfBoundsException e)
             {

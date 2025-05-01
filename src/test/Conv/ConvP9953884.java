@@ -78,7 +78,7 @@ public class ConvP9953884 extends Testcase implements Runnable
             }
             else
             {
-                failed("Strings not converted:\n '" + t1 + "' and '" + t2 + "' != '" + expected + "'");
+                failed("Strings not converted:\n '" + t1 + "' and '" + t2 + "' != '" + expected + "' bad data = "+s);
             }
         }
         catch (Throwable t)

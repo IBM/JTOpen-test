@@ -13,42 +13,21 @@
 
 package test.RF;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.math.BigDecimal;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400DataType;
-import com.ibm.as400.access.AS400Bin2;
 import com.ibm.as400.access.AS400Bin4;
-import com.ibm.as400.access.AS400ByteArray;
-import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400Float8;
-import com.ibm.as400.access.AS400Float4;
-import com.ibm.as400.access.AS400PackedDecimal;
-import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.BinaryFieldDescription;
 import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.DateFieldDescription;
-import com.ibm.as400.access.DBCSEitherFieldDescription;
-import com.ibm.as400.access.DBCSGraphicFieldDescription;
-import com.ibm.as400.access.DBCSOnlyFieldDescription;
-import com.ibm.as400.access.DBCSOpenFieldDescription;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.FieldDescription;
 import com.ibm.as400.access.FloatFieldDescription;
-import com.ibm.as400.access.HexFieldDescription;
-import com.ibm.as400.access.PackedDecimalFieldDescription;
-import com.ibm.as400.access.TimeFieldDescription;
-import com.ibm.as400.access.TimestampFieldDescription;
-import com.ibm.as400.access.ZonedDecimalFieldDescription;
+import com.ibm.as400.access.RecordFormat;
 
 import test.Testcase;
-
-import com.ibm.as400.access.Record;
-import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
 
 /**
   Testcase RFMisc.  This test class verifes valid and invalid usage of
@@ -794,7 +773,7 @@ public class RFMisc extends Testcase
     try
     {
       RecordFormat r = new RecordFormat(null);
-      failed("Able to construct object with null parameter.");
+      failed("Able to construct object with null parameter."+r);
       return;
     }
     catch(Exception e)
@@ -3940,17 +3919,17 @@ public class RFMisc extends Testcase
   {
     RecordFormat r = new RecordFormat();
    
-    r.setRecordFormatType(r.FIXED_LAYOUT_LENGTH);
+    r.setRecordFormatType(RecordFormat.FIXED_LAYOUT_LENGTH);
     
     int rftype = r.getRecordFormatType();
-    if (rftype != r.FIXED_LAYOUT_LENGTH) {
+    if (rftype != RecordFormat.FIXED_LAYOUT_LENGTH) {
         failed("Failed to set record type to FIXED_LAYOUT_LENGTH");
     }
     else {
-        r.setRecordFormatType(r.VARIABLE_LAYOUT_LENGTH);
+        r.setRecordFormatType(RecordFormat.VARIABLE_LAYOUT_LENGTH);
     
         rftype = r.getRecordFormatType();
-        if (rftype != r.VARIABLE_LAYOUT_LENGTH) {
+        if (rftype != RecordFormat.VARIABLE_LAYOUT_LENGTH) {
             failed("Failed to set record type to VARIABLE_LAYOUT_LENGTH");
         }
         else {

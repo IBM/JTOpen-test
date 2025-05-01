@@ -19,20 +19,14 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.Enumeration;
 import java.util.Vector;
-import java.util.Properties;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.Command;
 import com.ibm.as400.access.CommandList;
-
 
 import test.Testcase;
 
@@ -50,7 +44,7 @@ public class CommandListTestcase extends Testcase
      }
      test.CommandHelpTest.main(newArgs); 
    }
-   private boolean rejectChange = false;
+   // private boolean rejectChange = false;
    
    /**
      Constructor.  This is called from the HTMLTest constructor.
@@ -95,7 +89,7 @@ public class CommandListTestcase extends Testcase
       try
       {
          CommandList cmdList = new CommandList();
-         succeeded();
+         assertCondition(true, "cmdList="+cmdList); 
       }
       catch(Exception e)
       {
@@ -113,7 +107,7 @@ public class CommandListTestcase extends Testcase
       try
       {
          CommandList cmdList = new CommandList(systemObject_, "qsys", "crtlib");
-         succeeded();
+         assertCondition(true, "cmdList="+cmdList); 
       }
       catch(Exception e)
       {
@@ -161,7 +155,7 @@ public class CommandListTestcase extends Testcase
       try
       {
          CommandList cmdList = new CommandList();
-         cmdList.setSystem(new AS400("test", "uid", "pwd"));
+         cmdList.setSystem(new AS400("test", "uid", "pwd".toCharArray()));
          if (cmdList.getSystem().getSystemName().equals("test"))
          {
             succeeded();
@@ -380,7 +374,7 @@ public class CommandListTestcase extends Testcase
          CommandList cmdList = new CommandList();
          cmdList.setCommand("crtlib");
          cmdList.setLibrary("qsys");
-         cmdList.setSystem(new AS400("blah", "blah", "blah"));
+         cmdList.setSystem(new AS400("blah", "blah", "blah".toCharArray()));
          CommandList cmdList2 = (CommandList) serialize (cmdList);
          assertCondition ((cmdList2.getCommand().equals("crtlib"))
                  && (cmdList2.getLibrary().equals("qsys"))
@@ -474,7 +468,7 @@ public class CommandListTestcase extends Testcase
          PropertyChangeListener_ l = new PropertyChangeListener_ ();
          cmdList.addPropertyChangeListener (l);
          PropertyChangeEvent before = l.getLastEvent ();
-         AS400 sys = new AS400("blah", "blah", "blah");
+         AS400 sys = new AS400("blah", "blah", "blah".toCharArray());
          cmdList.setSystem(sys);
          PropertyChangeEvent after = l.getLastEvent ();
          assertCondition ((before == null) && (after.getSource () == cmdList)
@@ -560,7 +554,7 @@ public class CommandListTestcase extends Testcase
          cmdList.addPropertyChangeListener (l);
          cmdList.removePropertyChangeListener (l);
          PropertyChangeEvent before = l.getLastEvent ();
-         cmdList.setSystem(new AS400("blah", "blah", "blah"));
+         cmdList.setSystem(new AS400("blah", "blah", "blah".toCharArray()));
          PropertyChangeEvent after = l.getLastEvent ();
          assertCondition ((before == null) && (after == null));
       }
@@ -752,12 +746,13 @@ public class CommandListTestcase extends Testcase
       ObjectOutput out = new ObjectOutputStream (new FileOutputStream (serializeFileName));
       out.writeObject (cmdList);
       out.flush ();
-      
+      out.close(); 
       // Deserialize.
       CommandList head2 = null;
       try {
          ObjectInputStream in = new ObjectInputStream (new FileInputStream (serializeFileName));
          head2 = (CommandList) in.readObject ();
+         in.close(); 
       }
       finally {
          File f = new File (serializeFileName);

@@ -48,7 +48,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(null);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -69,7 +69,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(null, "MYOBJ", "OBJ");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -90,7 +90,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", null, "OBJ");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -111,7 +111,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", null);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -132,7 +132,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(null, "MYOBJ", "MYMBR", "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -153,7 +153,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", null, "MYMBR", "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -174,7 +174,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", "MYMBR", null);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -195,7 +195,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", null, "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -221,7 +221,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -245,7 +245,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -269,7 +269,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -293,7 +293,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -317,7 +317,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -341,7 +341,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -366,7 +366,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -390,7 +390,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -414,7 +414,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -438,7 +438,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("LONGLIBRARY", "MYOBJ", "OBJ");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -463,7 +463,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "2LONGOBJECT", "OBJ");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -488,7 +488,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", "TOOLONG");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -513,7 +513,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("LONGLIBRARY", "MYOBJ", "MYMBR", "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -538,7 +538,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "2LONGOBJECT", "MYMBR", "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -563,7 +563,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", "MYMBR", "TOOLONG");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -588,7 +588,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", "2LONGMEMBER", "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -613,7 +613,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("", "MYOBJ", "OBJ");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -638,7 +638,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "", "OBJ");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -663,7 +663,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", "");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -688,7 +688,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("", "MYOBJ", "MYMBR", "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -713,7 +713,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "", "MYMBR", "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -738,7 +738,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", "MYMBR", "");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -763,7 +763,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", "", "MBR");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -788,7 +788,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName("MYLIB", "MYOBJ", "MYMBR", "OBJ");
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -2390,7 +2390,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
@@ -2414,7 +2414,7 @@ public class PNCtorTestcase extends Testcase
         try
         {
             QSYSObjectPathName pn = new QSYSObjectPathName(s);
-            failed("Expected exception did not occur.");
+            failed("Expected exception did not occur."+pn);
         }
         catch (Exception e)
         {
