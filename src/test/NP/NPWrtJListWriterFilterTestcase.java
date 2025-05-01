@@ -13,15 +13,23 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.WriterJob;
+import com.ibm.as400.access.WriterJobList;
 
 import test.Testcase;
 
@@ -260,6 +268,7 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getWriterFilter().trim().equals("JAVAPRINT")) succeeded();
             else failed("Could not set/get WriterJobList writerFilter.");
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -282,6 +291,7 @@ $$$ TO DO $$$ - delete this line */
 
             // Set the writerFilter, > 10 characters is not valid
             list.setWriterFilter("01234567890");
+            list.close(); 
             failed("Could set an invalid writerFilter");
             } 
 
@@ -316,6 +326,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getWriterFilter().trim().equals("")) succeeded();
             else failed("Could not remove WriterJobList writerFilter.");
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -336,6 +348,8 @@ $$$ TO DO $$$ - delete this line */
             WriterJobList list = new WriterJobList();
 
             list.setWriterFilter(null);
+            list.close(); 
+
             failed("Could set the writerFilter to null");
             } 
 
@@ -370,6 +384,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("writerFilter was not set, expecting empty string");
                 }
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -577,9 +593,9 @@ $$$ TO DO $$$ - delete this line */
 
             int listed = 0, size;
             size = wrtJList.size();
-            String wrtJName = null;
+            // String wrtJName = null;
 
-            WriterJob wrtJob = null;
+            // WriterJob wrtJob = null;
 
             // check to see if we got at least 1 writer job(s)
             if (size >= 1)
@@ -677,6 +693,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -752,6 +770,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -829,6 +849,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -885,6 +907,8 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             }
 
     } // end Var012
@@ -948,6 +972,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)

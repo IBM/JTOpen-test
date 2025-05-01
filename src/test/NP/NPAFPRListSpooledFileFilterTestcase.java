@@ -333,6 +333,7 @@ $$$ TO DO $$$ - delete this line */
     /**
      * Lists AFP Resource(s) filtering by spooled file.
      **/
+    @SuppressWarnings("unused")
     public void Var005()
     {
         try

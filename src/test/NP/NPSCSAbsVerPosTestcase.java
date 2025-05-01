@@ -13,12 +13,10 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
+import java.io.FileOutputStream;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SCS5219Writer;
 
@@ -152,6 +150,7 @@ public class NPSCSAbsVerPosTestcase extends Testcase
     {
         SCS5219Writer writer = new SCS5219Writer(out, systemObject_.getCcsid(), systemObject_);
         writer.absoluteVerticalPosition(256);
+        writer.close(); 
         failed("Exception not thrown");
     }
     catch (Exception e)

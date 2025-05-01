@@ -13,12 +13,17 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.PrinterFile;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -244,7 +249,7 @@ $$$ TO DO $$$ - delete this line */
 
             // create a spooled file output stream
             SpooledFileOutputStream outStream = new SpooledFileOutputStream(null, null, null, null);
-
+            outStream.close(); 
             failed("Could use null system parameter.");
             }
         catch (Exception e)

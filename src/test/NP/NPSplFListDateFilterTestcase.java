@@ -13,21 +13,31 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Vector;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Date;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileList;
+import com.ibm.as400.access.SpooledFileOutputStream;
+import com.ibm.as400.access.SystemValue;
 
 import test.Testcase;
 
@@ -249,8 +259,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getEndDateFilter().trim().equals("*LAST")) succeeded();
             else failed("Could not set/get SpooledFileList userEndDateFilter.");
+            list.close(); 
             } 
-
         catch (Exception e)
             {
             failed(e, "Unexpected exception");
@@ -271,6 +281,7 @@ $$$ TO DO $$$ - delete this line */
 
             // Set the endDateFilter, > 7 characters is invalid.
             list.setEndDateFilter("101010101");
+            list.close(); 
             failed("Could set an invalid SpooledFileList endDateFilter");
             }
 
@@ -305,6 +316,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getEndDateFilter().trim().equals("")) succeeded();
             else failed("Could not remove SpooledFileList endDateFilter.");
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -325,6 +338,8 @@ $$$ TO DO $$$ - delete this line */
             SpooledFileList list = new SpooledFileList();
 
             list.setEndDateFilter(null);
+            list.close(); 
+
             failed("Could set the endDateFilter to null");
             }
 
@@ -361,6 +376,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("dateFilter and jobSystemFilter was not set, expecting empty string");
                 }
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -513,7 +530,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build list synchrously
             splFList.openSynchronously();
 
-            int listed = 0, size;
+            int  size;
             size = splFList.size();
 
             // check to see tbat we got at 10 spooled files
@@ -528,6 +545,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("Not enough spooled files found.");
                 }
+            splFList.close(); 
+
 
             // close the list
             splFList.close();
@@ -621,6 +640,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -696,7 +717,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
-            } 
+            list.close(); 
+          } 
 
         catch (Exception e)
             {
@@ -773,6 +795,7 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -829,6 +852,7 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             }
 
     } // end Var011
@@ -892,7 +916,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
-            } 
+            list.close(); 
+           } 
 
         catch (Exception e)
             {

@@ -13,16 +13,17 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
-import java.util.Enumeration;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.IllegalPathNameException;
+import com.ibm.as400.access.PrinterFile;
+import com.ibm.as400.access.PrinterFileList;
 
 import test.Testcase;
 
@@ -270,8 +271,9 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getPrinterFileFilter().trim().equals("/QSYS.LIB/NPJAVA.LIB/JAVAPRINT.FILE")) succeeded();
             else failed("Could not set/retrive PrinterFileList printerFileFilter.");
+            list.close(); 
             } 
-
+        
         catch (Exception e)
             {
             failed(e, "Unexpected exception");
@@ -292,6 +294,7 @@ $$$ TO DO $$$ - delete this line */
 
             // Set the printerFileFilter, OUTQ is not valid
             list.setPrinterFileFilter("/QSYS.LIB/NPJAVA.LIB/JAVAPRINT.OUTQ");
+            list.close();
             failed("Could set an invalid Printer File Type");
             }
 
@@ -326,6 +329,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getPrinterFileFilter().trim().equals("")) succeeded();
             else failed("Could not remove PrinterFileList printerFileFilter.");
+            list.close();
+
             }
 
         catch (Exception e)
@@ -346,6 +351,8 @@ $$$ TO DO $$$ - delete this line */
             PrinterFileList list = new PrinterFileList();
 
             list.setPrinterFileFilter(null);
+            list.close();
+
             failed("Could set the printerFileFilter to null");
             }
 
@@ -380,6 +387,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("printerFileFilter was not set, expecting empty string");
                 }
+            list.close();
+
             }
 
         catch (Exception e)
@@ -657,7 +666,7 @@ $$$ TO DO $$$ - delete this line */
 
             prtFList.openSynchronously();
 
-            Enumeration e = prtFList.getObjects();
+            Enumeration<PrinterFile> e = prtFList.getObjects();
             String prtFName = null;
 
             // check to see if we got some printer files
@@ -818,6 +827,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close();
+
             } 
 
         catch (Exception e)
@@ -894,6 +905,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close();
+
             } 
 
         catch (Exception e)
@@ -971,6 +984,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close();
+
             } 
 
         catch (Exception e)
@@ -1009,6 +1024,7 @@ $$$ TO DO $$$ - delete this line */
 
             // set the system, a PropertyVetoException should be thrown
             list.setPrinterFileFilter("/QSYS.LIB/NPJAVA.LIB/JAVAPRINT.FILE");
+            list.close();
 
             failed("Expecting PropertyVetoException");
             }
@@ -1090,6 +1106,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close();
+
             } 
 
         catch (Exception e)

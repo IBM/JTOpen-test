@@ -13,20 +13,18 @@
 
 package test.NP;
 
-import java.io.OutputStream;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrinterFile;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -195,12 +193,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFile.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtF1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the printer file object
             FileInputStream fis = new FileInputStream("PrinterFile.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFile prtF2 = (PrinterFile)ois.readObject();
+            ois.close(); 
+
 
             // add/remove listeners
             prtF2.addPropertyChangeListener(propertyListener);
@@ -245,12 +245,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFile.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtF1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the printer file
             FileInputStream fis = new FileInputStream("PrinterFile.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFile prtF2 = (PrinterFile)ois.readObject();
+            ois.close(); 
+
 
             String system1 = prtF1.getSystem().getSystemName();
             String system2 = prtF2.getSystem().getSystemName();
@@ -299,12 +301,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFile.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtF1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the printer file
             FileInputStream fis = new FileInputStream("PrinterFile.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFile prtF2 = (PrinterFile)ois.readObject();
+            ois.close(); 
+
 
             if( prtF1.getName().equals(prtF2.getName()) )
                 {
@@ -348,12 +352,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFile.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtF1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the printer file
             FileInputStream fis = new FileInputStream("PrinterFile.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFile prtF2 = (PrinterFile)ois.readObject();
+            ois.close(); 
+
 
             if( prtF1.getPath().equals(prtF2.getPath()) )
                 {
@@ -401,12 +407,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFile.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtF1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the printer file
             FileInputStream fis = new FileInputStream("PrinterFile.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFile prtF2 = (PrinterFile)ois.readObject();
+            ois.close(); 
+
 
             // get the printer name from both printer files.
             String s1 = prtF1.getStringAttribute(PrintObject.ATTR_PRINTER);
@@ -457,12 +465,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFile.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtF1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the printer file
             FileInputStream fis = new FileInputStream("PrinterFile.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFile prtF2 = (PrinterFile)ois.readObject();
+            ois.close(); 
+
 
             // Connect to AS/400 get attributes. We have to set the
             // password because that is not serialized.

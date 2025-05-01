@@ -13,7 +13,6 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -245,6 +244,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getFormTypeFilter().trim().equals("JAVAPRINT")) succeeded();
             else failed("Could not set/retrive SpooledFileList formTypeFilter.");
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -267,6 +268,8 @@ $$$ TO DO $$$ - delete this line */
 
             // Set the formTypeFilter, > 10 characters not valid.
             list.setFormTypeFilter("01234567890");
+            list.close(); 
+
             failed("Could set an invalid formTypeFilter");
             } 
 
@@ -301,6 +304,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getFormTypeFilter().trim().equals("")) succeeded();
             else failed("Could not remove SpooledFileList formTypeFilter.");
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -321,6 +326,8 @@ $$$ TO DO $$$ - delete this line */
             SpooledFileList list = new SpooledFileList();
 
             list.setFormTypeFilter(null);
+            list.close(); 
+
             failed("Could set the formTypeFilter to null");
             }
 
@@ -355,6 +362,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("formTypeFilter was not set, expecting empty string");
                 }
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -720,6 +729,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -795,6 +805,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -872,6 +883,7 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -928,6 +940,7 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             }
 
     } // end Var012
@@ -991,6 +1004,7 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)

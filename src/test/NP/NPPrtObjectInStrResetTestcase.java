@@ -13,13 +13,22 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AFPResourceList;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectInputStream;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -228,7 +237,7 @@ $$$ TO DO $$$ - delete this line */
                         {
                            // reset the read pointer - should give us an IO Exception here
                            is.reset();
-                           failed(" No IOException generated on reset() after close()");
+                           failed(" No IOException generated on reset() after close() read="+read);
                         }
                         catch (IOException e)
                         {
@@ -366,7 +375,7 @@ $$$ TO DO $$$ - delete this line */
                         {
                            // reset the read pointer - should give us an IO Exception here
                            is.reset();
-                           failed(" No IOException generated on reset() after close()");
+                           failed(" No IOException generated on reset() after close() read="+read+" avail="+avail);
                         }
                         catch (IOException e)
                         {
@@ -451,10 +460,7 @@ $$$ TO DO $$$ - delete this line */
         // create a spooled file output stream
         SpooledFileOutputStream outStream = new SpooledFileOutputStream(systemObject_, pList, null, null);
 
-        // check to see that we got a spooled file output stream reference
-        if (outStream != null)
-            {
-
+ 
             // write some data
             outStream.write(buf);
 
@@ -463,12 +469,7 @@ $$$ TO DO $$$ - delete this line */
 
             // return the new SpooledFile
             return outStream.getSpooledFile();
-            }
-        else
-            {
-            return (SpooledFile)null;
-            }
-
+ 
     } // end createSpooledFile
 
     // This method gets an AFP resource object

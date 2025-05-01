@@ -13,12 +13,12 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.OutputQueue;
 
 import test.Testcase;
 
@@ -193,7 +193,7 @@ $$$ TO DO $$$ - delete this line */
          // create an output queue object using null system name
          OutputQueue outQ = new OutputQueue(null, "/QSYS.LIB/NPJAVA.LIB/CTORTST.OUTQ");
 
-         failed("Could use null system name.");
+         failed("Could use null system name."+outQ);
      }
 
      catch(Exception e)
@@ -215,7 +215,7 @@ $$$ TO DO $$$ - delete this line */
          // create an output queue object using null output queue name
          OutputQueue outQ = new OutputQueue(systemObject_, null);
 
-         failed("Could use null output queue name.");
+         failed("Could use null output queue name."+outQ);
      }
 
      catch (Exception e)
@@ -238,7 +238,7 @@ $$$ TO DO $$$ - delete this line */
          // create an output queue object using an invalid output queue name
          OutputQueue outQ = new OutputQueue(systemObject_, "/QSYS.LIB/NPJAVA.LIB/CTORTST.XXX");
 
-         failed("Could use invalid output queue name.");
+         failed("Could use invalid output queue name."+outQ);
      }
 
      catch (Exception e)
@@ -263,7 +263,7 @@ $$$ TO DO $$$ - delete this line */
          OutputQueue outQ = new OutputQueue();
 
          // Note: This variation will be successful.
-         succeeded(); 
+         assertCondition(true, "outQ="+outQ);  
 
          } // end try block
 

@@ -13,19 +13,28 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
-import com.ibm.as400.access.*;
-
-import test.Testcase;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Vector;
 
-import java.beans.PropertyVetoException;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.IllegalPathNameException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileList;
+import com.ibm.as400.access.SpooledFileOutputStream;
+
+import test.Testcase;
 
 /**
  Testcase NPSplFListQueueFilterTestcase.
@@ -271,6 +280,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getQueueFilter().trim().equals("/QSYS.LIB/NPJAVA.LIB/QUETST.OUTQ")) succeeded();
             else failed("Could not set/retrive SpooledFileList queueFilter.");
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -293,6 +304,8 @@ $$$ TO DO $$$ - delete this line */
 
             // Set the queueFilter, FILE is not valid
             list.setQueueFilter("/QSYS.LIB/NPJAVA.LIB/QUETST.FILE");
+            list.close(); 
+
             failed("Could set an invalid type in the queueFilter");
             } 
 
@@ -327,6 +340,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getQueueFilter().trim().equals("")) succeeded();
             else failed("Could not remove SpooledFileList queueFilter.");
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -347,6 +362,8 @@ $$$ TO DO $$$ - delete this line */
             SpooledFileList list = new SpooledFileList();
 
             list.setQueueFilter(null);
+            list.close(); 
+
             failed("Could set the queueFilter to null");
             }
 
@@ -381,6 +398,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("queueFilter was not set, expecting empty string");
                 }
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -698,7 +717,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build list synchrously
             splFList.openSynchronously();
 
-            int listed = 0, size;
+            int size;
             size = splFList.size();
             
             // indicate how many file(s) were listed
@@ -905,6 +924,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -981,6 +1002,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -1058,7 +1081,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
-            } 
+            list.close(); 
+           } 
 
         catch (Exception e)
             {
@@ -1114,6 +1138,7 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             }
 
     } // end Var015
@@ -1177,7 +1202,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
-            } 
+            list.close(); 
+           } 
 
         catch (Exception e)
             {

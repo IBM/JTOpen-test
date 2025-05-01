@@ -13,13 +13,22 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.WriterJob;
+import com.ibm.as400.access.WriterJobList;
 
 import test.Testcase;
 
@@ -242,7 +251,7 @@ $$$ TO DO $$$ - delete this line */
             // list the writer jobs
             wrtJList.openSynchronously();
 
-            Enumeration e = wrtJList.getObjects();
+            Enumeration<WriterJob> e = wrtJList.getObjects();
 
             // check to see if we got our writer job
             if (wrtJList.size() == 1)
@@ -428,7 +437,7 @@ $$$ TO DO $$$ - delete this line */
             // list the jobs
             wrtJList.openSynchronously();
 
-            Enumeration e = wrtJList.getObjects();
+            Enumeration<WriterJob> e = wrtJList.getObjects();
 
             // check to see if we got a writer job
             if (wrtJList.size() == 1)

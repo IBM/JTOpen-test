@@ -13,19 +13,17 @@
 
 package test.NP;
 
-import java.io.OutputStream;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.PrintObject;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -176,12 +174,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("AFPResource.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(res1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the AFPResource object
             FileInputStream fis = new FileInputStream("AFPResource.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResource res2 = (AFPResource)ois.readObject();
+            ois.close(); 
 
             // add/remove listeners
             res2.addPropertyChangeListener(propertyListener);
@@ -232,12 +231,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("AFPResource.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(res1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the AFP Resource
             FileInputStream fis = new FileInputStream("AFPResource.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResource res2 = (AFPResource)ois.readObject();
+            ois.close(); 
 
             String system1 = res1.getSystem().getSystemName();
             String system2 = res2.getSystem().getSystemName();
@@ -286,12 +286,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("AFPResource.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(res1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the AFP Resource
             FileInputStream fis = new FileInputStream("AFPResource.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResource res2 = (AFPResource)ois.readObject();
+            ois.close(); 
 
             if( res1.getName().equals(res2.getName()) )
                 {
@@ -335,12 +336,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("AFPResource.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(res1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the AFP Resource
             FileInputStream fis = new FileInputStream("AFPResource.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResource res2 = (AFPResource)ois.readObject();
+            ois.close(); 
 
             if( res1.getPath().equals(res2.getPath()) )
                 {
@@ -388,12 +390,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("AFPResource.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(res1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the AFP Resource
             FileInputStream fis = new FileInputStream("AFPResource.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResource res2 = (AFPResource)ois.readObject();
+            ois.close(); 
 
             // get the date from both AFP resource objects.
             String s1 = res1.getStringAttribute(PrintObject.ATTR_DATE);
@@ -454,12 +457,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("AFPResource.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(res1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the AFP resource
             FileInputStream fis = new FileInputStream("AFPResource.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             AFPResource res2 = (AFPResource)ois.readObject();
+            ois.close(); 
 
             // Connect to AS/400 get attributes. We have to set the
             // password because that is not serialized.

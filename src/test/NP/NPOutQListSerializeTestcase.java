@@ -13,19 +13,21 @@
 
 package test.NP;
 
-import java.io.OutputStream;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.OutputQueueList;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectListEvent;
+import com.ibm.as400.access.PrintObjectListListener;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -212,13 +214,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueueList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the OutputQueueList object
             FileInputStream fis = new FileInputStream("OutputQueueList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueueList outQList2 = (OutputQueueList)ois.readObject();
-
+            ois.close();
             // add/remove listeners
             outQList2.addPropertyChangeListener(propertyListener);
             outQList2.removePropertyChangeListener(propertyListener);
@@ -263,12 +265,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueueList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the OutputQueueList object
             FileInputStream fis = new FileInputStream("OutputQueueList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueueList outQList2 = (OutputQueueList)ois.readObject();
+            ois.close();
 
             String system1 = outQList1.getSystem().getSystemName();
             String system2 = outQList2.getSystem().getSystemName();
@@ -320,12 +323,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueueList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the OutputQueueList object
             FileInputStream fis = new FileInputStream("OutputQueueList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueueList outQList2 = (OutputQueueList)ois.readObject();
+            ois.close();
 
             if( outQList1.getQueueFilter().equals(outQList2.getQueueFilter()) )
                 {
@@ -377,12 +381,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueueList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the OutputQueueList object
             FileInputStream fis = new FileInputStream("OutputQueueList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueueList outQList2 = (OutputQueueList)ois.readObject();
+            ois.close();
 
             // now build output queue list synchronously, we have
             // to set the password because that is not serialized.
@@ -466,12 +471,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueueList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the OutputQueueList object
             FileInputStream fis = new FileInputStream("OutputQueueList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueueList outQList2 = (OutputQueueList)ois.readObject();
+            ois.close();
 
             // after de-serializing set the password
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);

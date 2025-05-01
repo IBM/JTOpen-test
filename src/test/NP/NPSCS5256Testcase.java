@@ -13,13 +13,20 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.SCS5256Writer;
+import com.ibm.as400.access.SpooledFileOutputStream;
+import com.ibm.as400.access.WriterJob;
 
 import test.Testcase;
 

@@ -13,15 +13,13 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.OutputQueueList;
 
 import test.Testcase;
 
@@ -168,6 +166,7 @@ $$$ TO DO $$$ - delete this line */
             OutputQueueList list = new OutputQueueList();
 
             list.setSystem(null);
+            list.close(); 
             failed("Could set system name to null");
             }
 
@@ -195,6 +194,8 @@ $$$ TO DO $$$ - delete this line */
 
             if( list.getSystem() == null )
                 {
+              list.close(); 
+
                 succeeded();
                 }
             else
@@ -220,7 +221,10 @@ $$$ TO DO $$$ - delete this line */
             // create a output queue list object
             OutputQueueList outQList = new OutputQueueList(systemObject_);
 
-            if (outQList.getSystem().equals(systemObject_)) succeeded();
+            if (outQList.getSystem().equals(systemObject_)) {
+              outQList.close();
+              succeeded();
+            }
             else failed("Could not retrive Output Queue List system name.");
 
             } // end try block
@@ -298,6 +302,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -374,6 +380,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -448,6 +456,8 @@ $$$ TO DO $$$ - delete this line */
 
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -504,6 +514,8 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             }
 
     } // end Var007
@@ -567,6 +579,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)

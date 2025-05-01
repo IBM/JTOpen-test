@@ -13,13 +13,12 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.SCS5553Writer;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -119,10 +118,10 @@ $$$ TO DO $$$ - delete this line */
           wtr.write("can be done with the SCS5553Writer class.");
           wtr.newLine();
           wtr.newLine();
-          wtr.setFontScaling(wtr.SCALE_DOUBLE_HORIZONTAL); 
+          wtr.setFontScaling(SCS5553Writer.SCALE_DOUBLE_HORIZONTAL); 
           wtr.write("This line should be in double horizontal scale.");
           wtr.newLine();
-          wtr.setFontScaling(wtr.SCALE_REGULAR ); 
+          wtr.setFontScaling(SCS5553Writer.SCALE_REGULAR ); 
           wtr.write("This line should be in regular scale.");
           wtr.newLine();
           wtr.newLine();
@@ -138,11 +137,11 @@ $$$ TO DO $$$ - delete this line */
           wtr.printHorizontalGridLine(2.0, 3.0);
           wtr.stopVerticalGridLines();
           wtr.endPage();
-          wtr.setCharacterRotation(wtr.CHARACTER_ROTATED); 
+          wtr.setCharacterRotation(SCS5553Writer.CHARACTER_ROTATED); 
           wtr.write("This page should be rotated."); 
           wtr.newLine();
           wtr.endPage();
-          wtr.setCharacterRotation(wtr.CHARACTER_NORMAL);
+          wtr.setCharacterRotation(SCS5553Writer.CHARACTER_NORMAL);
           wtr.write("The page should be normal rotation.");
           wtr.endPage();
           wtr.close();

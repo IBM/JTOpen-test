@@ -13,13 +13,12 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.SCS3812Writer;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -111,7 +110,7 @@ $$$ TO DO $$$ - delete this line */
           // Write the contents of the spool file.
           wtr.setLeftMargin(1.0);
           wtr.absoluteVerticalPosition(6);
-          wtr.setFont(wtr.FONT_COURIER_BOLD_5);
+          wtr.setFont(SCS3812Writer.FONT_COURIER_BOLD_5);
           wtr.write("          Java Printing");
           wtr.newLine();
           wtr.newLine();
@@ -125,9 +124,9 @@ $$$ TO DO $$$ - delete this line */
           wtr.newLine();
           wtr.setUnderline(true); wtr.write("Setting fonts:"); wtr.setUnderline(false);
           wtr.newLine();
-          wtr.setFont(wtr.FONT_COURIER_10); wtr.write("Courier font ");
-          wtr.setFont(wtr.FONT_COURIER_BOLD_10); wtr.write(" Courier bold font ");
-          wtr.setFont(wtr.FONT_COURIER_ITALIC_10); wtr.write(" Courier italic font ");
+          wtr.setFont(SCS3812Writer.FONT_COURIER_10); wtr.write("Courier font ");
+          wtr.setFont(SCS3812Writer.FONT_COURIER_BOLD_10); wtr.write(" Courier bold font ");
+          wtr.setFont(SCS3812Writer.FONT_COURIER_ITALIC_10); wtr.write(" Courier italic font ");
           wtr.newLine();
           wtr.setBold(true); wtr.write("Courier bold italic font ");
           wtr.setBold(false);

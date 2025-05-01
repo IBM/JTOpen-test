@@ -13,42 +13,21 @@
 
 package test.RF;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.math.BigDecimal;
+
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400DataType;
-import com.ibm.as400.access.AS400Bin2;
 import com.ibm.as400.access.AS400Bin4;
-import com.ibm.as400.access.AS400ByteArray;
-import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.AS400Float8;
-import com.ibm.as400.access.AS400Float4;
-import com.ibm.as400.access.AS400PackedDecimal;
-import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.BinaryFieldDescription;
 import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.DateFieldDescription;
-import com.ibm.as400.access.DBCSEitherFieldDescription;
-import com.ibm.as400.access.DBCSGraphicFieldDescription;
-import com.ibm.as400.access.DBCSOnlyFieldDescription;
-import com.ibm.as400.access.DBCSOpenFieldDescription;
-import com.ibm.as400.access.FieldDescription;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.FloatFieldDescription;
-import com.ibm.as400.access.HexFieldDescription;
-import com.ibm.as400.access.PackedDecimalFieldDescription;
-import com.ibm.as400.access.TimeFieldDescription;
-import com.ibm.as400.access.TimestampFieldDescription;
-import com.ibm.as400.access.ZonedDecimalFieldDescription;
-
-import test.Testcase;
-
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.RecordFormat;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;
+
+import test.Testcase;
 
 /**
   Testcase RFNewRecord.  This test class verifies the valid and invalid usage
@@ -496,7 +475,7 @@ public void Var005()
   try
   {
     Record rec = r.getNewRecord((String)null);
-    failed("No exception when passing null for record name");
+    failed("No exception when passing null for record name"+rec);
     return;
   }
   catch(Exception e)
@@ -737,7 +716,7 @@ public void Var009()
   try
   {
     rec = r.getNewRecord((byte[])null);
-    failed("No exception passing null");
+    failed("No exception passing null"+rec);
     return;
   }
   catch(Exception e)
@@ -773,7 +752,7 @@ public void Var010()
   {
     byte[] bytes = new byte[0];
     Record rec = r.getNewRecord(bytes);
-    failed("No exception passing 0 length byte array");
+    failed("No exception passing 0 length byte array"+rec);
     return;
   }
   catch(Exception e)
@@ -809,7 +788,7 @@ public void Var011()
   {
     byte[] bytes = new byte[2];
     rec = r.getNewRecord(bytes);
-    failed("No exception passing too short byte array");
+    failed("No exception passing too short byte array"+rec);
     return;
   }
   catch(ArrayIndexOutOfBoundsException e)
@@ -1050,7 +1029,7 @@ public void Var015()
   try
   {
     rec = r.getNewRecord((byte[])null, "myRecord");
-    failed("No exception passing null");
+    failed("No exception passing null"+rec);
     return;
   }
   catch(Exception e)
@@ -1086,7 +1065,7 @@ public void Var016()
   {
     byte[] bytes = new byte[0];
     Record rec = r.getNewRecord(bytes, "myRecord");
-    failed("No exception passing 0 length byte array");
+    failed("No exception passing 0 length byte array"+rec);
     return;
   }
   catch(Exception e)
@@ -1122,7 +1101,7 @@ public void Var017()
   {
     byte[] bytes = new byte[2];
     rec = r.getNewRecord(bytes, "MyRec");
-    failed("No exception passing too short byte array");
+    failed("No exception passing too short byte array"+rec);
     return;
   }
   catch(ArrayIndexOutOfBoundsException e)
@@ -1158,7 +1137,7 @@ public void Var018()
   try
   {
     rec = r.getNewRecord(bytes, null);
-    failed("No exception when passing null for record name");
+    failed("No exception when passing null for record name"+rec);
     return;
   }
   catch(Exception e)
@@ -1403,7 +1382,7 @@ public void Var022()
   try
   {
     rec = r.getNewRecord((byte[])null, 0);
-    failed("No exception passing null");
+    failed("No exception passing null"+rec);
     return;
   }
   catch(Exception e)
@@ -1439,7 +1418,7 @@ public void Var023()
   {
     byte[] bytes = new byte[0];
     Record rec = r.getNewRecord(bytes, 0);
-    failed("No exception passing 0 length byte array");
+    failed("No exception passing 0 length byte array"+rec);
     return;
   }
   catch(Exception e)
@@ -1475,7 +1454,7 @@ public void Var024()
   {
     byte[] bytes = new byte[2];
     rec = r.getNewRecord(bytes, 0);
-    failed("No exception passing too short byte array");
+    failed("No exception passing too short byte array"+rec);
     return;
   }
   catch(ArrayIndexOutOfBoundsException e)
@@ -1512,7 +1491,7 @@ public void Var025()
   {
     byte[] bytes = new byte[2];
     rec = r.getNewRecord(bytes, -1);
-    failed("No exception offset = -1");
+    failed("No exception offset = -1"+rec);
     return;
   }
   catch(Exception e)
@@ -1548,7 +1527,7 @@ public void Var026()
   {
     byte[] bytes = new byte[8];
     rec = r.getNewRecord(bytes, 6);
-    failed("No exception passing too large offset");
+    failed("No exception passing too large offset"+rec);
     return;
   }
   catch(ArrayIndexOutOfBoundsException e)
@@ -1794,7 +1773,7 @@ public void Var030()
   try
   {
     rec = r.getNewRecord((byte[])null, 0, "myRec");
-    failed("No exception passing null");
+    failed("No exception passing null"+rec);
     return;
   }
   catch(Exception e)
@@ -1830,7 +1809,7 @@ public void Var031()
   {
     byte[] bytes = new byte[0];
     Record rec = r.getNewRecord(bytes, 0, "theRec");
-    failed("No exception passing 0 length byte array");
+    failed("No exception passing 0 length byte array"+rec);
     return;
   }
   catch(Exception e)
@@ -1866,7 +1845,7 @@ public void Var032()
   {
     byte[] bytes = new byte[2];
     rec = r.getNewRecord(bytes, 0, "Arecord");
-    failed("No exception passing too short byte array");
+    failed("No exception passing too short byte array"+rec);
     return;
   }
   catch(ArrayIndexOutOfBoundsException e)
@@ -1903,7 +1882,7 @@ public void Var033()
   {
     byte[] bytes = new byte[2];
     rec = r.getNewRecord(bytes, -1, "MyRec");
-    failed("No exception offset = -1");
+    failed("No exception offset = -1"+rec);
     return;
   }
   catch(Exception e)
@@ -1939,7 +1918,7 @@ public void Var034()
   {
     byte[] bytes = new byte[8];
     rec = r.getNewRecord(bytes, 6, "Blah");
-    failed("No exception passing too large offset");
+    failed("No exception passing too large offset"+rec);
     return;
   }
   catch(ArrayIndexOutOfBoundsException e)
@@ -1975,7 +1954,7 @@ public void Var035()
   try
   {
     rec = r.getNewRecord(bytes, 0, null);
-    failed("No exception when passing null for record name");
+    failed("No exception when passing null for record name"+rec);
     return;
   }
   catch(Exception e)

@@ -13,14 +13,26 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import java.beans.PropertyVetoException;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SCS5256Writer;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileOutputStream;
+import com.ibm.as400.access.WriterJob;
+import com.ibm.as400.access.WriterJobList;
 
 import test.Testcase;
 
@@ -98,13 +110,16 @@ public class NPSplFAnsMsgTestcase extends Testcase
               String wtrStatus = wtrJob.getStringAttribute(PrintObject.ATTR_WTRJOBSTS);
               if (!wtrStatus.equals("*ACTIVE"))
               {
+                wtrJobList.close(); 
                 throw new IOException("The -printer flag must be set to an active printer device name.");
               }
             }
             else
             {
+              wtrJobList.close(); 
               throw new IOException("The -printer flag must be set to an active printer device name.");
             }
+            wtrJobList.close(); 
           } 
           
           catch( Exception e )
@@ -399,7 +414,7 @@ $$$ TO DO $$$ - delete this line */
             if (!splF.getStringAttribute(PrintObject.ATTR_SPLFSTATUS).trim().equals("*MESSAGE"))
                 {
                 int i = 0;
-                output_.println("Waiting for a message.");
+                output_.println("Waiting for a message for "+wrtJ);
                 while ((!splF.getStringAttribute(PrintObject.ATTR_SPLFSTATUS).trim().equals("*MESSAGE")) &&
                        (i<2000))
                     {

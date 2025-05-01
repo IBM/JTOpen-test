@@ -13,13 +13,18 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileList;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -127,7 +132,7 @@ $$$ TO DO $$$ - delete this line */
             // init a temp variable
             int prevNum1 = -1;
 
-            Enumeration e = splFileList.getObjects();
+            Enumeration<SpooledFile> e = splFileList.getObjects();
             while(e.hasMoreElements() )
                 {
                 // get the object in the list
