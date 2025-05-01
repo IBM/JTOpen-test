@@ -319,7 +319,7 @@ ActionCompletedListener
             if (System.getProperty("os.name").equals("OS/400"))
             {
                 as400 = new AS400(systemObject_.getSystemName(), "dummyUser",
-                                  "dummyPass");
+                                  "dummyPass".toCharArray());
             }
             else // not native AS/400 JVM
             {
@@ -632,12 +632,12 @@ ActionCompletedListener
                 ObjectOutput  s  =  new  ObjectOutputStream(f);
                 s.writeObject( pgm );
                 s.flush();
-
+                s.close(); 
                 // Deserialize a string and date from a file.
                 FileInputStream in = new FileInputStream("pgm.ser");
                 ObjectInputStream s2 = new ObjectInputStream(in);
                 ProgramCall pgm2 = (ProgramCall)s2.readObject();
-
+                s2.close(); 
                 if (false==pgm2.getProgram().equals( pgm.getProgram() ) )
                 {
                     failed( "Program changed to " + pgm2.getProgram() );

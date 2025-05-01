@@ -367,7 +367,7 @@ public class ConvTableDoubleRoundTripTestcase extends Testcase
                 passed = false; 
               }
               String unicode1 = originalSurrogateString.substring(i,i+2);  
-              byte[] surrogatesBytes3 = c.stringToByteArray(unicode1); 
+              // byte[] surrogatesBytes3 = c.stringToByteArray(unicode1); 
               String unicode2 = c.byteArrayToString(b1, i, 2);  
               
               sb.append(i+" "+hex(short1)+ " -> " +hex(short2)+" " + showStringAsHex(unicode1)+" " + showStringAsHex(unicode2)+ "\n"); 

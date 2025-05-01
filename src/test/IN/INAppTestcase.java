@@ -13,16 +13,12 @@
 
 package test.IN;
 
-import java.io.OutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-
-import java.util.Vector;
 import java.util.ResourceBundle;
-import java.security.Security;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.InstallTest;
@@ -53,7 +49,7 @@ public class INAppTestcase extends Testcase
     private static ResourceBundle resources_;
     static final String CLASSPATH = System.getProperty ("java.class.path");
     private String infoOutput_;
-    private String errorOutput_;
+    String errorOutput_;
 
 /**
 Constructor.
@@ -277,7 +273,8 @@ This simulates a command-line invocation.
           }
           catch (IllegalThreadStateException e) {
             // Sleep a little to save on CPU cycles
-            try {Thread.currentThread().sleep(500);} catch (Exception e1){}
+            try {
+            Thread.sleep(500);} catch (Exception e1){}
           }
         }
       ///}
@@ -555,7 +552,7 @@ public void Var001 ()
         int len2 = targetDir.list().length;
 
         if(len1 != 0)
-            failed(" The target directory was not empty before the test!");
+            failed(" The target directory was not empty before the test!"+exitVal);
 
         else if(len2 ==0)
             failed(" The package is not installed into the specified source directory!");
@@ -950,7 +947,7 @@ Verify that the package is not installed successfully when the parameters are
 public void Var007 ()
 {
    String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
+   // String target = InstallTest.targetPath + targetPath + File.separator;
    String source1 = InstallTest.targetPath + sourcePath ;
    String target1 = InstallTest.targetPath + targetPath ;
    String message = getMRIResource().getString("ERR_INVALID_ARGUMENT");
@@ -1066,7 +1063,7 @@ public void Var008 ()
         String m2 =infoOutput_;
 
         if(len1 == 0)
-            failed(" Error in running AS400ToolboxInstaller application!");
+            failed(" Error in running AS400ToolboxInstaller application!"+exitVal1+" "+exitVal2+" "+m2);
         else if(!m1.toUpperCase().startsWith(message3.toUpperCase()))
             failed(" Prompting message is not correct!");
         else
@@ -1210,10 +1207,7 @@ Verify that the help information is displayed when parameter is " -? "  or "-hel
 public void Var010 ()
 {
    String source  = InstallTest.targetPath + sourcePath + File.separator;
-   String target  = InstallTest.targetPath + targetPath + File.separator;
-   String source1 = InstallTest.targetPath + sourcePath ;
-   String target1 = InstallTest.targetPath + targetPath ;
-
+   
    try
    {
 
@@ -1262,10 +1256,7 @@ Verify that the help information display when there is no parameter.
 public void Var011 ()
 {
    String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
-   String source1 = InstallTest.targetPath + sourcePath ;
-   String target1 = InstallTest.targetPath + targetPath ;
-   try
+    try
    {
 
         // Setup source to install from.
@@ -1310,7 +1301,6 @@ Verify that the help information is displayed on Dos windwo when the parameters 
 public void Var012 ()
 {
    String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
    String source1 = InstallTest.targetPath + sourcePath ;
    String target1 = InstallTest.targetPath + targetPath ;
    try
@@ -1361,7 +1351,6 @@ Verify that the package is uninstalled.
 public void Var013 ()
 {
    String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
    String source1 = InstallTest.targetPath + sourcePath ;
    String target1 = InstallTest.targetPath + targetPath ;
 
@@ -1422,7 +1411,6 @@ Verify that all packages are uninstalled.
 public void Var014 ()
 {
    String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
    String source1 = InstallTest.targetPath + sourcePath ;
    String target1 = InstallTest.targetPath + targetPath ;
 
@@ -1483,8 +1471,6 @@ Verify that the help information is displayed when the parameters are not enough
 public void Var015 ()
 {
    String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
-   String source1 = InstallTest.targetPath + sourcePath ;
    String target1 = InstallTest.targetPath + targetPath ;
    String message  = getMRIResource().getString("ERR_MISSING_OPTION");
    try
@@ -1532,7 +1518,6 @@ Verify that the help information is displayed when the parameters are not enough
 public void Var016 ()
 {
    String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
    String source1 = InstallTest.targetPath + sourcePath ;
    String target1 = InstallTest.targetPath + targetPath ;
    String message  = getMRIResource().getString("ERR_MISSING_OPTION_VALUE");
@@ -1579,9 +1564,7 @@ Verify that the help information is displayed when the parameters are not enough
 public void Var017 ()
 {
    String source  = InstallTest.targetPath + sourcePath + File.separator;
-   String target  = InstallTest.targetPath + targetPath + File.separator;
    String source1 = InstallTest.targetPath + sourcePath ;
-   String target1 = InstallTest.targetPath + targetPath ;
    String message  = getMRIResource().getString("ERR_MISSING_OPTION");
    try
    {
@@ -1705,7 +1688,7 @@ public void Var018 ()
         com = " -p ACCESS -s " + prefix + newSource1+ " -t "+target1+ " -i ";
         exitVal = executeCommand (com);
 
-        succeeded();
+        assertCondition(true, "exitVal="+exitVal);
     }
     catch (Exception e)
     {
@@ -1755,8 +1738,6 @@ Verify that the package is not installed successfully when the parameters are
 public void Var019 ()
 {
    String source  = InstallTest.targetPath + sourcePath + File.separator;
-   String target  = InstallTest.targetPath + targetPath + File.separator;
-   String source1 = InstallTest.targetPath + sourcePath ;
    String target1 = InstallTest.targetPath + targetPath ;
    String message = getMRIResource().getString("ERR_MISSING_OPTION_VALUE");
 
@@ -1806,9 +1787,7 @@ Verify that the package is not installed successfully when the parameters are
 public void Var020 ()
 {
    String source  = InstallTest.targetPath + sourcePath + File.separator;
-   String target  = InstallTest.targetPath + targetPath + File.separator;
    String source1 = InstallTest.targetPath + sourcePath ;
-   String target1 = InstallTest.targetPath + targetPath ;
    String message  = getMRIResource().getString("ERR_MISSING_OPTION_VALUE");
    try
    {
@@ -1941,7 +1920,7 @@ public void Var021 ()
             boolean b3 =  infoOutput_.toUpperCase().startsWith(message3.toUpperCase());
 
             if(!b1)
-                failed(" Error in comparring the source packages with target packages!");
+                failed(" Error in comparring the source packages with target packages!"+exitVal1+" "+exitVal2+" "+exitVal3);
             else if(!b2)
                failed(" Error in comparring the source packages with target packages!");
             else if (!b3)
@@ -2081,7 +2060,7 @@ public void Var022 ()
             boolean b3 =  infoOutput_.toUpperCase().startsWith(message3.toUpperCase());
      
             if(!b1)
-                failed(" Error in comparring the source packages with target packages!");
+                failed(" Error in comparring the source packages with target packages!"+exitVal1+" "+exitVal2+" "+exitVal3);
             else if(!b2)
                failed(" Error in comparring the source packages with target packages!");
             else if (!b3)
@@ -2138,7 +2117,6 @@ invalid.
 public void Var023 ()
 {
    String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
    String source1 = InstallTest.targetPath + sourcePath ;
    String target1 = InstallTest.targetPath + targetPath ;
    String message1 = getMRIResource().getString("ERR_NOT_VALID_URL");
@@ -2290,7 +2268,7 @@ public void Var023 ()
         boolean b24 = infoOutput_.indexOf("Usage")<3;
 
         if(!b1)
-            failed(" The prompting message is not matched the value of message1!");
+            failed(" The prompting message is not matched the value of message1!"+exitVal);
         else if(!b2)
             failed(" The prompting message is not matched the value of message2!");
         else if(!b3)
@@ -2520,10 +2498,6 @@ Verify that the message display when the version is changed.
 
 public void Var025 ()
 {
-   String source = InstallTest.targetPath + sourcePath + File.separator;
-   String target = InstallTest.targetPath + targetPath + File.separator;
-   String source1 = InstallTest.targetPath + sourcePath ;
-   String target1 = InstallTest.targetPath + targetPath ;
    // Make sure classpath set as required by this test.
    try {
        if (!checkClasspath())
@@ -2689,7 +2663,7 @@ public void Var026 ()
         int exitVal1 = executeCommand (com);
         if(exitVal1 !=0)
         {
-            failed(" Error in running AS400ToolboxInstaller application!");
+            failed(" Error in running AS400ToolboxInstaller application!"+len1);
         }
         else if(infoOutput_.startsWith(message1))
             failed(" system name is not correct : "+InstallTest.systemName);

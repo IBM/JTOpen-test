@@ -14,24 +14,21 @@
 package test.PC;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringBufferInputStream;
 
-import com.ibm.as400.access.AS400;
 import com.ibm.as400.data.ProgramCallDocument;
 
 import test.JVMInfo;
 import test.Testcase;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Hashtable;
-
 /**
  Testcase PCTransformTestcase.
  **/
+@SuppressWarnings("deprecation")
 public class PCTransformTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {

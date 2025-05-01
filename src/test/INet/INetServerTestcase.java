@@ -13,14 +13,27 @@
 package test.INet;
 
 
-import java.io.*;
-import com.ibm.as400.access.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ISeriesNetServer;
+import com.ibm.as400.access.ISeriesNetServerFileShare;
+import com.ibm.as400.access.ISeriesNetServerPrintShare;
+import com.ibm.as400.access.ISeriesNetServerSession;
+import com.ibm.as400.access.ISeriesNetServerShare;
 
 import test.Testcase;
-
-import java.util.Hashtable; import java.util.Vector;
-import java.util.Vector;
-import java.util.Enumeration;
 
 
 /**
@@ -47,7 +60,7 @@ public class INetServerTestcase extends Testcase
     private boolean useKerberos_ = false;
 
     private boolean okToStopNetServer_ = false;
-    private boolean askedIfOkToStopNetServer_ = false;
+    boolean askedIfOkToStopNetServer_ = false;
 
     static final boolean DEBUG = false;
 
@@ -164,7 +177,7 @@ public class INetServerTestcase extends Testcase
       AS400 system = ns.getSystem();
       boolean allowSysName = ns.isAllowSystemName();
       int authMethod = ns.getAuthenticationMethod();
-      boolean autostart;
+      boolean autostart = false;
       try { autostart = ns.isAutoStart(); }
       catch (Exception e) {
         try { autostart = netserverPwr_.isAutoStart(); }
@@ -185,7 +198,7 @@ public class INetServerTestcase extends Testcase
 
       if (system.getSystemName().length() == 0) {
         ok = false;
-        System.out.println("System has zero-length name");
+        System.out.println("System has zero-length name"+allowSysName+" "+autostart+" "+logonServer+" "+winsServer);
       }
 
       if (system.getUserId().length() == 0) {

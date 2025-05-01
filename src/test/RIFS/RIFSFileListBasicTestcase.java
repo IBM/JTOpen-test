@@ -12,28 +12,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.resource.ResourceException;
+import com.ibm.as400.resource.RIFSFile;
+import com.ibm.as400.resource.RIFSFileList;
 
 import test.PasswordVault;
 import test.RIFSTest;
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.PropertyChangeListener_;
-import test.UserTest.VetoableChangeListener_;
 import test.misc.VIFSSandbox;
-
-import com.ibm.as400.resource.RIFSFile;
-import com.ibm.as400.resource.RIFSFileList;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Hashtable; import java.util.Vector;
-import java.util.Vector;
 
 
 
@@ -50,6 +42,7 @@ of the RIFSFileList class:
 <li>setSystem()
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileListBasicTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -145,7 +138,7 @@ constructor() with 1 parm - Pass null for file.
     {
         try {
             RIFSFileList ul = new RIFSFileList(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+ul);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -183,7 +176,7 @@ constructor() with 2 parms - Pass null for system.
     {
         try {
             RIFSFileList ul = new RIFSFileList(null, "aPath");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+ul);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -199,7 +192,7 @@ constructor() with 2 parms - Pass null for path.
     {
         try {
             RIFSFileList ul = new RIFSFileList(systemObject_, null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+ul);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");

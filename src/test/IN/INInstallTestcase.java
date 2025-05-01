@@ -13,13 +13,12 @@
 
 package test.IN;
 
-import java.io.OutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.InstallTest;
@@ -33,6 +32,7 @@ Tests the following methods:
 <li>AS400ToolboxInstaller.install
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class INInstallTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {

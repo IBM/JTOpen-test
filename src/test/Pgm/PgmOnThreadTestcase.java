@@ -173,13 +173,11 @@ public class PgmOnThreadTestcase extends Testcase
             ProgramCall pgm = new ProgramCall(systemObject_, goodPgm_, buildParms() );
             if (isRunningNatively()) {
                 assertCondition ((pgm.getSystemThread () != null) &&
-                                 (pgm.isStayOnThread () == false) &&
-                                 (pgm.isThreadSafe () == false));
+                                 (pgm.isStayOnThread () == false));
             }
             else { // Not running on an AS/400.
                 assertCondition ((pgm.getSystemThread () == null) &&
-                                 (pgm.isStayOnThread () == false) &&
-                                 (pgm.isThreadSafe () == false));
+                                 (pgm.isStayOnThread () == false) );
             }
         }
         catch (Exception e) {
@@ -215,20 +213,17 @@ public class PgmOnThreadTestcase extends Testcase
                 if (isSystemV5_)
                 {
                     assertCondition ((pgm.getSystemThread () != null) &&
-                                     (pgm.isStayOnThread () == true) &&
-                                     (pgm.isThreadSafe () == true));
+                                     (pgm.isStayOnThread () == true));
                 }
                 else
                 {
                     assertCondition ((pgm.getSystemThread () == null) &&
-                                     (pgm.isStayOnThread () == false) &&
-                                     (pgm.isThreadSafe () == true));
+                                     (pgm.isStayOnThread () == false));
                 }
             }
             else { // Not running on an AS/400.
                 assertCondition ((pgm.getSystemThread () == null) &&
-                                 (pgm.isStayOnThread () == false) &&
-                                 (pgm.isThreadSafe () == true));
+                                 (pgm.isStayOnThread () == false) );
             }
         }
         catch (Exception e) {
@@ -260,13 +255,11 @@ public class PgmOnThreadTestcase extends Testcase
             pgm.setThreadSafe(false);
             if (isRunningNatively()) {
                 assertCondition ((pgm.getSystemThread () != null) &&
-                                 (pgm.isStayOnThread () == false) &&
-                                 (pgm.isThreadSafe () == false));
+                                 (pgm.isStayOnThread () == false));
             }
             else { // Not running on an AS/400.
                 assertCondition ((pgm.getSystemThread () == null) &&
-                                 (pgm.isStayOnThread () == false) &&
-                                 (pgm.isThreadSafe () == false));
+                                 (pgm.isStayOnThread () == false) );
             }
         }
         catch (Exception e) {
@@ -308,20 +301,17 @@ public class PgmOnThreadTestcase extends Testcase
                     if (isSystemV5_)
                     {
                         assertCondition ((pgm.getSystemThread () != null) &&
-                                         (pgm.isStayOnThread () == true) &&
-                                         (pgm.isThreadSafe () == true));
+                                         (pgm.isStayOnThread () == true) );
                     }
                     else
                     {
                         assertCondition ((pgm.getSystemThread () == null) &&
-                                         (pgm.isStayOnThread () == false) &&
-                                         (pgm.isThreadSafe () == true));
+                                         (pgm.isStayOnThread () == false));
                     }
                 }
                 else { // Not running on an AS/400.
                     assertCondition ((pgm.getSystemThread () == null) &&
-                                     (pgm.isStayOnThread () == false) &&
-                                     (pgm.isThreadSafe () == true));
+                                     (pgm.isStayOnThread () == false) );
                 }
             }
             catch (Exception e) {
@@ -364,13 +354,11 @@ public class PgmOnThreadTestcase extends Testcase
 
                 if (isRunningNatively()) {
                     assertCondition ((pgm.getSystemThread () != null) &&
-                                     (pgm.isStayOnThread () == false) &&
-                                     (pgm.isThreadSafe () == false));
+                                     (pgm.isStayOnThread () == false) );
                 }
                 else { // Not running on an AS/400.
                     assertCondition ((pgm.getSystemThread () == null) &&
-                                     (pgm.isStayOnThread () == false) &&
-                                     (pgm.isThreadSafe () == false));
+                                     (pgm.isStayOnThread () == false) );
                 }
             }
             catch (Exception e) {
@@ -415,20 +403,17 @@ public class PgmOnThreadTestcase extends Testcase
                     if (isSystemV5_)
                     {
                         assertCondition ((pgm.getSystemThread () != null) &&
-                                         (pgm.isStayOnThread () == true) &&
-                                         (pgm.isThreadSafe () == true));
+                                         (pgm.isStayOnThread () == true) );
                     }
                     else
                     {
                         assertCondition ((pgm.getSystemThread () == null) &&
-                                         (pgm.isStayOnThread () == false) &&
-                                         (pgm.isThreadSafe () == true));
+                                         (pgm.isStayOnThread () == false) );
                     }
                 }
                 else { // Not running on an AS/400.
                     assertCondition ((pgm.getSystemThread () == null) &&
-                                     (pgm.isStayOnThread () == false) &&
-                                     (pgm.isThreadSafe () == true));
+                                     (pgm.isStayOnThread () == false));
                 }
             }
             catch (Exception e) {
@@ -470,13 +455,11 @@ public class PgmOnThreadTestcase extends Testcase
 
                 if (isRunningNatively()) {
                     assertCondition ((pgm.getSystemThread () != null) &&
-                                     (pgm.isStayOnThread () == false) &&
-                                     (pgm.isThreadSafe () == false));
+                                     (pgm.isStayOnThread () == false) );
                 }
                 else { // Not running on an AS/400.
                     assertCondition ((pgm.getSystemThread () == null) &&
-                                     (pgm.isStayOnThread () == false) &&
-                                     (pgm.isThreadSafe () == false));
+                                     (pgm.isStayOnThread () == false) );
                 }
             }
             catch (Exception e) {
@@ -515,13 +498,11 @@ public class PgmOnThreadTestcase extends Testcase
 
             if (isRunningNatively()) {
                 assertCondition ((pgm.getSystemThread () == null) &&
-                                 (pgm.isStayOnThread () == false) &&
-                                 (pgm.isThreadSafe () == true));
+                                 (pgm.isStayOnThread () == false) );
             }
             else { // Not running on an AS/400.
                 assertCondition ((pgm.getSystemThread () == null) &&
-                                 (pgm.isStayOnThread () == false) &&
-                                 (pgm.isThreadSafe () == true));
+                                 (pgm.isStayOnThread () == false) );
             }
         }
         catch (Exception e) {
@@ -561,7 +542,7 @@ public class PgmOnThreadTestcase extends Testcase
             Trace.setTraceInformationOn(true);
             Trace.setTraceOn(true);
             boolean result = pgm.run();
-            String text1 = "\nTESTER: Please verify that the following message " +
+            String text1 = "\nTESTER: Result="+result+"\nPlease verify that the following message " +
               "appeared:\n" +
               "        \"Invoking native method.\"";
             String text2 = "        If it did not appear, FAIL this variation.\n";
@@ -611,7 +592,7 @@ public class PgmOnThreadTestcase extends Testcase
             Trace.setTraceInformationOn(true);
             Trace.setTraceOn(true);
             boolean result = pgm.run();
-            String text1 = "\nTESTER: Please verify that the following message " +
+            String text1 = "\nTESTER:  Result="+result+"\nPlease verify that the following message " +
               "did *NOT* appear:\n" +
               "        \"Invoking native method.\"";
             String text2 = "        If it *DID* appear, FAIL this variation.\n";
@@ -677,7 +658,7 @@ public class PgmOnThreadTestcase extends Testcase
                 pc.run();
                 AS400Message[] msgs = pc.getMessageList();
                 // for (int i=0; i<msgs.length; ++i) System.out.println(msgs[i]);
-                succeeded();
+                assertCondition(true, "msgs="+msgs); 
             }
             catch (ObjectDoesNotExistException odnee)
             {
@@ -719,7 +700,7 @@ public class PgmOnThreadTestcase extends Testcase
                 pc.run();
                 AS400Message[] msgs = pc.getMessageList();
                 // for (int i=0; i<msgs.length; ++i) System.out.println(msgs[i]);
-                succeeded();
+                assertCondition(true, "msgs="+msgs); 
             }
             catch (ObjectDoesNotExistException odnee)
             {

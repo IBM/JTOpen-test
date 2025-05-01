@@ -39,7 +39,7 @@ public class INetServerPrintShareTestcase extends Testcase
      }
      test.INetServerTest.main(newArgs); 
    }
-  private ISeriesNetServer netserver_;
+  ISeriesNetServer netserver_;
   private ISeriesNetServer netserverPwr_;
   private ISeriesNetServerPrintShare[] shareList_;
 

@@ -13,20 +13,44 @@
 
 package test.MiscAH;
 
-import java.io.OutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.FileOutputStream;
+//@B0A
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
 import java.util.Vector;
-import java.math.*;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Array;
+import com.ibm.as400.access.AS400Bin2;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400ByteArray;
+import com.ibm.as400.access.AS400DataType;
+import com.ibm.as400.access.AS400Float4;
+import com.ibm.as400.access.AS400Float8;
+import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.ArrayFieldDescription;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.DBCSEitherFieldDescription;
+import com.ibm.as400.access.DBCSGraphicFieldDescription;
+import com.ibm.as400.access.DBCSOnlyFieldDescription;
+import com.ibm.as400.access.DBCSOpenFieldDescription;
+import com.ibm.as400.access.DateFieldDescription;
+import com.ibm.as400.access.FieldDescription;
+import com.ibm.as400.access.FloatFieldDescription;
+import com.ibm.as400.access.HexFieldDescription;
+import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.TimeFieldDescription;
+import com.ibm.as400.access.TimestampFieldDescription;
+import com.ibm.as400.access.ZonedDecimalFieldDescription;
 
 import test.Testcase;
-
-import java.io.*; //@B0A
 
 /**
  *Testcase FDSerialization.  This test class verifies the abillity to
@@ -301,7 +325,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -379,7 +403,7 @@ public class FDSerialization extends Testcase
           ((AS400Array)dt).getNumberOfElements() != 10 ||
           ((AS400Array)dt).getByteLength() != 20)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -442,7 +466,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -520,7 +544,7 @@ public class FDSerialization extends Testcase
       AS400DataType dt = f.getDataType();
       if (!(dt instanceof AS400Bin2))
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -593,7 +617,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -689,7 +713,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400Text) ||
           ((AS400Text)dt).getByteLength() != 15)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -772,7 +796,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -868,7 +892,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400Text) ||
           ((AS400Text)dt).getByteLength() != 15)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -951,7 +975,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -1047,7 +1071,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400Text) ||
           ((AS400Text)dt).getByteLength() != 15)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -1130,7 +1154,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -1226,7 +1250,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400Text) ||
           ((AS400Text)dt).getByteLength() != 15)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -1309,7 +1333,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -1405,7 +1429,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400Text) ||
           ((AS400Text)dt).getByteLength() != 15)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -1488,7 +1512,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -1579,7 +1603,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400Text) ||
           ((AS400Text)dt).getByteLength() != 10)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -1657,7 +1681,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -1747,7 +1771,7 @@ public class FDSerialization extends Testcase
       AS400DataType dt = f.getDataType();
       if (!(dt instanceof AS400Float8))
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -1832,7 +1856,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -1922,7 +1946,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400ByteArray) ||
           ((AS400ByteArray)dt).getByteLength() != 15)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -2003,7 +2027,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -2085,7 +2109,7 @@ public class FDSerialization extends Testcase
       AS400DataType dt = f.getDataType();
       if (!(dt instanceof AS400PackedDecimal))
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -2163,7 +2187,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -2254,7 +2278,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400Text) ||
           ((AS400Text)dt).getByteLength() != 8)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -2332,7 +2356,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -2410,7 +2434,7 @@ public class FDSerialization extends Testcase
       if (!(dt instanceof AS400Text) ||
           ((AS400Text)dt).getByteLength() != 26)
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))
@@ -2479,7 +2503,7 @@ public class FDSerialization extends Testcase
       // Verify state
       if (f.getDataType() != null)
       {
-        failed("getDataType not returning null");
+        failed("getDataType not returning null"+deserf);
         return;
       }
       if (!f.getFieldName().equals(""))
@@ -2561,7 +2585,7 @@ public class FDSerialization extends Testcase
       AS400DataType dt = f.getDataType();
       if (!(dt instanceof AS400ZonedDecimal))
       {
-        failed("data type in error");
+        failed("data type in error"+deserf);
         return;
       }
       if (!f.getFieldName().equals("field1"))

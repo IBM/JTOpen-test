@@ -13,15 +13,13 @@
 
 package test.DA;
 
-import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CharacterDataArea;
 import com.ibm.as400.access.DecimalDataArea;
+import com.ibm.as400.access.IllegalObjectTypeException;
 import com.ibm.as400.access.LocalDataArea;
 import com.ibm.as400.access.LogicalDataArea;
 
 import test.Testcase;
-
-import com.ibm.as400.access.IllegalObjectTypeException;
 
 /**
  Testcase DATypeTestcase.
@@ -231,7 +229,7 @@ public class DATypeTestcase extends Testcase
             LocalDataArea da1 = new LocalDataArea(systemObject_);
             DecimalDataArea da2 = new DecimalDataArea(systemObject_, "/QSYS.LIB/          .LIB/*LDA.DTAARA");
             da2.read();
-            failed("No exception.");
+            failed("No exception."+da1);
         }
         catch (Exception e)
         {
@@ -253,7 +251,7 @@ public class DATypeTestcase extends Testcase
             LocalDataArea da1 = new LocalDataArea(systemObject_);
             LogicalDataArea da2 = new LogicalDataArea(systemObject_, "/QSYS.LIB/          .LIB/*LDA.DTAARA");
             da2.read();
-            failed("No exception.");
+            failed("No exception."+da1);
         }
         catch (Exception e)
         {
@@ -275,7 +273,7 @@ public class DATypeTestcase extends Testcase
             LocalDataArea da1 = new LocalDataArea(systemObject_);
             CharacterDataArea da2 = new CharacterDataArea(systemObject_, "/QSYS.LIB/          .LIB/*LDA.DTAARA");
             da2.read();
-            succeeded();
+            assertCondition(true, "da1="+da1); 
         }
         catch (Exception e)
         {

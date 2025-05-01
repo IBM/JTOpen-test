@@ -50,6 +50,7 @@ of the RJavaProgram class:
 <li>USER_PROFILE 
 </ul>
 **/
+@SuppressWarnings({ "unused", "deprecation" })
 public class RJavaProgramSpecificAttributeTestcase
 extends Testcase 
 {

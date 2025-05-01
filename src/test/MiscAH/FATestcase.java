@@ -14,7 +14,7 @@
 package test.MiscAH;
 
 import java.util.Date;
-import java.lang.Long;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.FileAttributes;
 
@@ -125,7 +125,7 @@ public class FATestcase extends Testcase
         {
             FileAttributes fa = new FileAttributes(systemObject_, "/path", true);
             fa = new FileAttributes(new AS400(), "/some/path", false);
-            succeeded();
+            assertCondition(true, "fa="+fa); 
         }
         catch (Exception e)
         {
@@ -142,7 +142,7 @@ public class FATestcase extends Testcase
         try
         {
             FileAttributes fa = new FileAttributes(null, "/path", true);
-            failed("No exception.");
+            failed("No exception."+fa);
         }
         catch (Exception e)
         {
@@ -159,7 +159,7 @@ public class FATestcase extends Testcase
         try
         {
             FileAttributes fa = new FileAttributes(systemObject_, null, true);
-            failed("No exception.");
+            failed("No exception."+fa);
         }
         catch (Exception e)
         {
@@ -2075,7 +2075,7 @@ public class FATestcase extends Testcase
     
     /** 
      <dl>
-     <dt>Test:</dt><dd>Call FileAttributes:: getJounalingStartTime() .</dd>
+     <dt>Test:</dt><dd>Call FileAttributes:: getJournalingStartTime() .</dd>
      <dt>Result:</dt><dd>Verify return value is null</dd>
      </dl>
      **/
@@ -2085,7 +2085,7 @@ public class FATestcase extends Testcase
         {
             FileAttributes fa = new FileAttributes(pwrSys_, FILE_PATH_PERSISTENT, true);
     
-            Date startTime= fa.getJounalingStartTime();
+            Date startTime= fa.getJournalingStartTime();
 	    if ( startTime == null )
 	        succeeded();
 	    else 

@@ -29,7 +29,6 @@ import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.Trace;
 import com.ibm.as400.data.ProgramCallDocument;
 
-import test.JVMInfo;
 import test.Testcase;
 
 /**
@@ -47,7 +46,7 @@ public class PCMiscTestcase extends Testcase
      test.PCTest.main(newArgs); 
    }
 
-    static final boolean DEBUG = false;
+    static boolean DEBUG = false;
 
     static TimeZone timezoneLocal_ = TimeZone.getDefault();
     static TimeZone timezoneGMT_ = TimeZone.getTimeZone("GMT-0");

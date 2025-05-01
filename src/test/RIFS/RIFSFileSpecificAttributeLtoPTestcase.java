@@ -12,26 +12,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.IFSFileInputStream;
 import com.ibm.as400.access.IFSFileOutputStream;
 import com.ibm.as400.access.User;
-import com.ibm.as400.resource.ResourceEvent;
+import com.ibm.as400.resource.RIFSFile;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
 import test.misc.VIFSSandbox;
-
-import com.ibm.as400.resource.RIFSFile;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -48,6 +45,7 @@ of the RIFSFile class:
 <li>PATH 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileSpecificAttributeLtoPTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -67,7 +65,6 @@ extends Testcase {
 
 
     // Private data.
-    private AS400           pwrSys_;
     private VIFSSandbox     sandbox_;
 
 
@@ -473,7 +470,7 @@ LAST_MODIFIED - Set the attribute value to date earlier than 1900.
             f1.commitAttributeChanges();
             RIFSFile f2 = new RIFSFile(systemObject_, f.getPath());
             Date now2 = (Date)f2.getAttributeValue(RIFSFile.LAST_MODIFIED);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+now2);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
@@ -497,7 +494,7 @@ LAST_MODIFIED - Set the attribute value to date earlier than 1970.
             f1.commitAttributeChanges();
             RIFSFile f2 = new RIFSFile(systemObject_, f.getPath());
             Date now2 = (Date)f2.getAttributeValue(RIFSFile.LAST_MODIFIED);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+now2);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");

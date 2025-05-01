@@ -266,6 +266,7 @@ public class MessageFileTestcase extends Testcase
             aMessageFile.setSystem(newAS400);
 
             failed("Exception did not occur." +as400+" "+m);
+            as400.close(); 
         }
         catch (Exception e)
         {

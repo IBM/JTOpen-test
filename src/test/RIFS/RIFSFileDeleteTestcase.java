@@ -12,18 +12,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.resource.RIFSFile;
 
 import test.Testcase;
 import test.misc.VIFSSandbox;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -35,6 +33,7 @@ of the RIFSFile class:
 <li>delete
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileDeleteTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -211,7 +210,7 @@ delete() - when an existing non-empty directory is specified.
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
             boolean before = ((Boolean)u.getAttributeValue(RIFSFile.EXISTS)).booleanValue();
             u.delete();
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+before);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");

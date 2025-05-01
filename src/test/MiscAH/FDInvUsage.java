@@ -13,30 +13,29 @@
 
 package test.MiscAH;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.math.BigDecimal;
+
+//@B0A
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400DataType;
 import com.ibm.as400.access.AS400Bin2;
 import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400Bin8;
 import com.ibm.as400.access.AS400ByteArray;
-import com.ibm.as400.access.AS400Text;
-import com.ibm.as400.access.AS400Float8;
 import com.ibm.as400.access.AS400Float4;
+import com.ibm.as400.access.AS400Float8;
 import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400UnsignedBin2;
+import com.ibm.as400.access.AS400UnsignedBin4;
 import com.ibm.as400.access.AS400ZonedDecimal;
 import com.ibm.as400.access.BinaryFieldDescription;
 import com.ibm.as400.access.CharacterFieldDescription;
-import com.ibm.as400.access.DateFieldDescription;
 import com.ibm.as400.access.DBCSEitherFieldDescription;
 import com.ibm.as400.access.DBCSGraphicFieldDescription;
 import com.ibm.as400.access.DBCSOnlyFieldDescription;
 import com.ibm.as400.access.DBCSOpenFieldDescription;
-import com.ibm.as400.access.FieldDescription;
+import com.ibm.as400.access.DateFieldDescription;
 import com.ibm.as400.access.FloatFieldDescription;
 import com.ibm.as400.access.HexFieldDescription;
 import com.ibm.as400.access.PackedDecimalFieldDescription;
@@ -45,8 +44,6 @@ import com.ibm.as400.access.TimestampFieldDescription;
 import com.ibm.as400.access.ZonedDecimalFieldDescription;
 
 import test.Testcase;
-
-import com.ibm.as400.access.*; //@B0A
 
 /**
   Testcase FDInvUsage.  This class verifies invalid usage of the
@@ -231,7 +228,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400Bin4)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -245,7 +242,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin4(), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -259,7 +256,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400Bin4)null, "name", "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -273,7 +270,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin4(), null, "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -287,7 +284,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin4(), "name", null, 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -301,7 +298,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400Bin2)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -315,7 +312,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin2(), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -329,7 +326,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400Bin2)null, "name", "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -343,7 +340,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin2(), null, "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -357,7 +354,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin2(), "name", null, 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -373,7 +370,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400Bin8)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -387,7 +384,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin8(), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -401,7 +398,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400Bin8)null, "name", "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -415,7 +412,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin8(), null, "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -429,7 +426,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin8(), "name", null, 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -443,7 +440,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400UnsignedBin2)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -457,7 +454,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400UnsignedBin2(), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -471,7 +468,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400UnsignedBin2)null, "name", "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n";
     }
     catch(Exception e)
     {
@@ -485,7 +482,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400UnsignedBin2(), null, "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -499,7 +496,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400UnsignedBin2(), "name", null, 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -513,7 +510,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400UnsignedBin4)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -527,7 +524,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400UnsignedBin4(), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -541,7 +538,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription((AS400UnsignedBin4)null, "name", "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -555,7 +552,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400UnsignedBin4(), null, "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -569,7 +566,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400UnsignedBin4(), "name", null, 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -618,7 +615,7 @@ public class FDInvUsage extends Testcase
     try
     {
       CharacterFieldDescription b = new CharacterFieldDescription((AS400Text)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -632,7 +629,7 @@ public class FDInvUsage extends Testcase
     try
     {
       CharacterFieldDescription b = new CharacterFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -646,7 +643,7 @@ public class FDInvUsage extends Testcase
     try
     {
       CharacterFieldDescription b = new CharacterFieldDescription((AS400Text)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -660,7 +657,7 @@ public class FDInvUsage extends Testcase
     try
     {
       CharacterFieldDescription b = new CharacterFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -674,7 +671,7 @@ public class FDInvUsage extends Testcase
     try
     {
       CharacterFieldDescription b = new CharacterFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -718,7 +715,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DateFieldDescription b = new DateFieldDescription((AS400Text)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -732,7 +729,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DateFieldDescription b = new DateFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -746,7 +743,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DateFieldDescription b = new DateFieldDescription((AS400Text)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -760,7 +757,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DateFieldDescription b = new DateFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -774,7 +771,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DateFieldDescription b = new DateFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -818,7 +815,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSEitherFieldDescription b = new DBCSEitherFieldDescription((AS400Text)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -832,7 +829,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSEitherFieldDescription b = new DBCSEitherFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -846,7 +843,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSEitherFieldDescription b = new DBCSEitherFieldDescription((AS400Text)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -860,7 +857,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSEitherFieldDescription b = new DBCSEitherFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -874,7 +871,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSEitherFieldDescription b = new DBCSEitherFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -918,7 +915,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSGraphicFieldDescription b = new DBCSGraphicFieldDescription((AS400Text)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -932,7 +929,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSGraphicFieldDescription b = new DBCSGraphicFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -946,7 +943,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSGraphicFieldDescription b = new DBCSGraphicFieldDescription((AS400Text)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -960,7 +957,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSGraphicFieldDescription b = new DBCSGraphicFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -974,7 +971,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSGraphicFieldDescription b = new DBCSGraphicFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1018,7 +1015,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOnlyFieldDescription b = new DBCSOnlyFieldDescription((AS400Text)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1032,7 +1029,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOnlyFieldDescription b = new DBCSOnlyFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1046,7 +1043,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOnlyFieldDescription b = new DBCSOnlyFieldDescription((AS400Text)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1060,7 +1057,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOnlyFieldDescription b = new DBCSOnlyFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1074,7 +1071,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOnlyFieldDescription b = new DBCSOnlyFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1118,7 +1115,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOpenFieldDescription b = new DBCSOpenFieldDescription((AS400Text)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1132,7 +1129,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOpenFieldDescription b = new DBCSOpenFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1146,7 +1143,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOpenFieldDescription b = new DBCSOpenFieldDescription((AS400Text)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1160,7 +1157,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOpenFieldDescription b = new DBCSOpenFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1174,7 +1171,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOpenFieldDescription b = new DBCSOpenFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1235,7 +1232,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription((AS400Float8)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1249,7 +1246,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float8(), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1263,7 +1260,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription((AS400Float8)null, "name", "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1277,7 +1274,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float8(), null, "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1291,7 +1288,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float8(), "name", null, 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1305,7 +1302,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription((AS400Float4)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1319,7 +1316,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float4(), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1333,7 +1330,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription((AS400Float4)null, "name", "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1347,7 +1344,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float4(), null, "ddsName", 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1361,7 +1358,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float4(), "name", null, 3);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1375,7 +1372,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription((AS400Float8)null, "name", "ddsName", 3, 1);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1389,7 +1386,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float8(), null, "ddsName", 3, 1);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1403,7 +1400,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float8(), "name", null, 3, 1);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1417,7 +1414,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription((AS400Float4)null, "name", "ddsName", 3, 1);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1431,7 +1428,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float4(), null, "ddsName", 3, 1);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1445,7 +1442,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float4(), "name", null, 3, 1);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1489,7 +1486,7 @@ public class FDInvUsage extends Testcase
     try
     {
       HexFieldDescription b = new HexFieldDescription((AS400ByteArray)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1503,7 +1500,7 @@ public class FDInvUsage extends Testcase
     try
     {
       HexFieldDescription b = new HexFieldDescription(new AS400ByteArray(10), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1517,7 +1514,7 @@ public class FDInvUsage extends Testcase
     try
     {
       HexFieldDescription b = new HexFieldDescription((AS400ByteArray)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1531,7 +1528,7 @@ public class FDInvUsage extends Testcase
     try
     {
       HexFieldDescription b = new HexFieldDescription(new AS400ByteArray(10), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1545,7 +1542,7 @@ public class FDInvUsage extends Testcase
     try
     {
       HexFieldDescription b = new HexFieldDescription(new AS400ByteArray(10), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1589,7 +1586,7 @@ public class FDInvUsage extends Testcase
     try
     {
       PackedDecimalFieldDescription b = new PackedDecimalFieldDescription((AS400PackedDecimal)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1603,7 +1600,7 @@ public class FDInvUsage extends Testcase
     try
     {
       PackedDecimalFieldDescription b = new PackedDecimalFieldDescription(new AS400PackedDecimal(27, 3), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1617,7 +1614,7 @@ public class FDInvUsage extends Testcase
     try
     {
       PackedDecimalFieldDescription b = new PackedDecimalFieldDescription((AS400PackedDecimal)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1631,7 +1628,7 @@ public class FDInvUsage extends Testcase
     try
     {
       PackedDecimalFieldDescription b = new PackedDecimalFieldDescription(new AS400PackedDecimal(27, 3), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1645,7 +1642,7 @@ public class FDInvUsage extends Testcase
     try
     {
       PackedDecimalFieldDescription b = new PackedDecimalFieldDescription(new AS400PackedDecimal(27, 3), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1689,7 +1686,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimeFieldDescription b = new TimeFieldDescription((AS400Text)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1703,7 +1700,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimeFieldDescription b = new TimeFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1717,7 +1714,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimeFieldDescription b = new TimeFieldDescription((AS400Text)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1731,7 +1728,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimeFieldDescription b = new TimeFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1745,7 +1742,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimeFieldDescription b = new TimeFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1789,7 +1786,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimestampFieldDescription b = new TimestampFieldDescription((AS400Text)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1803,7 +1800,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimestampFieldDescription b = new TimestampFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1817,7 +1814,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimestampFieldDescription b = new TimestampFieldDescription((AS400Text)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1831,7 +1828,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimestampFieldDescription b = new TimestampFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1845,7 +1842,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimestampFieldDescription b = new TimestampFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1889,7 +1886,7 @@ public class FDInvUsage extends Testcase
     try
     {
       ZonedDecimalFieldDescription b = new ZonedDecimalFieldDescription((AS400ZonedDecimal)null, "name");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1903,7 +1900,7 @@ public class FDInvUsage extends Testcase
     try
     {
       ZonedDecimalFieldDescription b = new ZonedDecimalFieldDescription(new AS400ZonedDecimal(27, 3), null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1917,7 +1914,7 @@ public class FDInvUsage extends Testcase
     try
     {
       ZonedDecimalFieldDescription b = new ZonedDecimalFieldDescription((AS400ZonedDecimal)null, "name", "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1931,7 +1928,7 @@ public class FDInvUsage extends Testcase
     try
     {
       ZonedDecimalFieldDescription b = new ZonedDecimalFieldDescription(new AS400ZonedDecimal(27, 3), null, "ddsName");
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -1945,7 +1942,7 @@ public class FDInvUsage extends Testcase
     try
     {
       ZonedDecimalFieldDescription b = new ZonedDecimalFieldDescription(new AS400ZonedDecimal(27, 3), "name", null);
-      failMsg += "Able to pass null on constructor\n";
+      failMsg += "Able to pass null on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2035,7 +2032,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin4(), "name" , ddsName, 9);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2048,7 +2045,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin2(), "name" , ddsName, 9);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2063,7 +2060,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin8(), "name" , ddsName, 9);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2076,7 +2073,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400UnsignedBin2(), "name" , ddsName, 2);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2089,7 +2086,7 @@ public class FDInvUsage extends Testcase
     try
     {
       BinaryFieldDescription b = new BinaryFieldDescription(new AS400UnsignedBin4(), "name" , ddsName, 9);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2103,7 +2100,7 @@ public class FDInvUsage extends Testcase
     try
     {
       CharacterFieldDescription b = new CharacterFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2117,7 +2114,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DateFieldDescription b = new DateFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2131,7 +2128,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSEitherFieldDescription b = new DBCSEitherFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2145,7 +2142,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSGraphicFieldDescription b = new DBCSGraphicFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2159,7 +2156,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOnlyFieldDescription b = new DBCSOnlyFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2173,7 +2170,7 @@ public class FDInvUsage extends Testcase
     try
     {
       DBCSOpenFieldDescription b = new DBCSOpenFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2187,7 +2184,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float8(), "name" , ddsName, 9);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2200,7 +2197,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float8(), "name" , ddsName, 9, 5);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2213,7 +2210,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float4(), "name" , ddsName, 9);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2226,7 +2223,7 @@ public class FDInvUsage extends Testcase
     try
     {
       FloatFieldDescription b = new FloatFieldDescription(new AS400Float4(), "name" , ddsName, 9, 5);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2240,7 +2237,7 @@ public class FDInvUsage extends Testcase
     try
     {
       HexFieldDescription b = new HexFieldDescription(new AS400ByteArray(10), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2254,7 +2251,7 @@ public class FDInvUsage extends Testcase
     try
     {
       PackedDecimalFieldDescription b = new PackedDecimalFieldDescription(new AS400PackedDecimal(27, 3), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2268,7 +2265,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimeFieldDescription b = new TimeFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2282,7 +2279,7 @@ public class FDInvUsage extends Testcase
     try
     {
       TimestampFieldDescription b = new TimestampFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {
@@ -2296,7 +2293,7 @@ public class FDInvUsage extends Testcase
     try
     {
       ZonedDecimalFieldDescription b = new ZonedDecimalFieldDescription(new AS400ZonedDecimal(27, 3), "name" , ddsName);
-      failMsg += "Able to pass long ddsName on constructor\n";
+      failMsg += "Able to pass long ddsName on constructor\n"+b+"\n"; 
     }
     catch(Exception e)
     {

@@ -26,7 +26,6 @@ public class VersionSerializationTest extends TestDriver
   /**
    * 
    */
-  private static final long serialVersionUID = 1L;
   static final boolean runningOnThread_;
   static {
     boolean onThread = false;

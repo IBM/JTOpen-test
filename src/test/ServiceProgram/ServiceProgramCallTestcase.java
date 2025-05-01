@@ -1749,6 +1749,7 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
         list.addObjectAttributeToRetrieve(attribute1);
         list.addObjectAttributeToRetrieve(attribute2);
 
+        @SuppressWarnings("rawtypes")
         Enumeration journals = list.getObjects();
         ObjectDescription jrn = null;
         int count = 0;
@@ -1792,6 +1793,7 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
     AS400Bin4 bin4 = new AS400Bin4();
     AS400Text text8 = new AS400Text(8,system);
     AS400Text text10 = new AS400Text(10,system);
+    @SuppressWarnings("unused")
     AS400ZonedDecimal zoned20 = new AS400ZonedDecimal(20,0);
     AS400Text text20 = new AS400Text(20,system); 
     // test : read sequence >= 1
@@ -1863,6 +1865,7 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
       int bytesReturned = BinaryConverter.byteArrayToInt(out, offset+0);
       int offsetToFirst = BinaryConverter.byteArrayToInt(out, offset+4);
       int numEntries = BinaryConverter.byteArrayToInt(out, offset+8);
+      @SuppressWarnings("deprecation")
       String contHandle = BinaryConverter.bytesToString(out, offset+12, 1);
       if (DEBUG) { System.out.println(bytesReturned+","+offsetToFirst+","+numEntries+","+contHandle);
       }

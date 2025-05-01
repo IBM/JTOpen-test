@@ -495,7 +495,7 @@ public class PgmParmTestcase extends Testcase implements PropertyChangeListener,
         try
         {
             ProgramParameter parm = new ProgramParameter(-1);
-            failed("ExtendedIllegalArgumentException not thrown");
+            failed("ExtendedIllegalArgumentException not thrown"+parm);
         }
         catch (Exception e)
         {

@@ -62,6 +62,7 @@ import java.util.Date;
  * <li>toString()
  * </ul>
  **/
+@SuppressWarnings("deprecation")
 public class QueuedMessageRFTestcase extends Testcase {
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length+2];
@@ -441,16 +442,15 @@ public class QueuedMessageRFTestcase extends Testcase {
    * senders copy message that has been received
    **/
   public void Var011() {
-    RQueuedMessage qmsg, qmsgrcv, qmsgrcv1, qmsg1;
-    byte msgKey0[], msgKey1[];
+    RQueuedMessage qmsg, qmsgrcv, qmsg1;
+    byte msgKey0[];
     String value, value1;
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       String replyPath = QSYSObjectPathName
           .toPath(testLib_, "MQTREPLY", "MSGQ");
-      String msgfPath = QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF");
-
+      
       RMessageQueue f = new RMessageQueue(systemObject_, path);
       RMessageQueue g = new RMessageQueue(systemObject_, replyPath);
       g.remove();
@@ -462,7 +462,7 @@ public class QueuedMessageRFTestcase extends Testcase {
       qmsg1 = (RQueuedMessage) f.resourceAt(0);
       value1 = (String) qmsg.getAttributeValue(RQueuedMessage.MESSAGE_QUEUE);
       if (!value1.equals("/QSYS.LIB/" + testLib_ + ".LIB/MQTREPLY.MSGQ")) {
-        failed("Bad getQueue() value returned. Value = " + value1);
+        failed("Bad getQueue() value returned. Value = " + value1+" qsmg1="+qmsg1);
         return;
       }
       msgKey0 = (byte[]) qmsg.getAttributeValue(RQueuedMessage.MESSAGE_KEY);
@@ -488,9 +488,9 @@ public class QueuedMessageRFTestcase extends Testcase {
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
-      String replyPath = QSYSObjectPathName
-          .toPath(testLib_, "MQTREPLY", "MSGQ");
-      String msgfPath = QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF");
+      // String replyPath = QSYSObjectPathName
+      //     .toPath(testLib_, "MQTREPLY", "MSGQ");
+      // String msgfPath = QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF");
 
       RMessageQueue f = new RMessageQueue(systemObject_, path);
       f.remove();
@@ -698,9 +698,9 @@ public class QueuedMessageRFTestcase extends Testcase {
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
-      String replyPath = QSYSObjectPathName
-          .toPath(testLib_, "MQTREPLY", "MSGQ");
-      String msgfPath = QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF");
+      // String replyPath = QSYSObjectPathName
+      //     .toPath(testLib_, "MQTREPLY", "MSGQ");
+      // String msgfPath = QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF");
 
       RMessageQueue f = new RMessageQueue(systemObject_, path);
       f.remove();
@@ -1243,8 +1243,8 @@ public class QueuedMessageRFTestcase extends Testcase {
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
-      String replyPath = QSYSObjectPathName
-          .toPath(testLib_, "MQTREPLY", "MSGQ");
+      // String replyPath = QSYSObjectPathName
+      //     .toPath(testLib_, "MQTREPLY", "MSGQ");
       String msgfPath = QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF");
 
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -2128,7 +2128,6 @@ public class QueuedMessageRFTestcase extends Testcase {
         return;
       }
       possibleValues = metaData.getPossibleValues();
-      int i;
       if (possibleValues.length != 3) {
         failed("Possible values length bad for attribute REPLY_STATUS.");
         return;
@@ -2485,6 +2484,7 @@ public class QueuedMessageRFTestcase extends Testcase {
       qmsg = (RQueuedMessage) f.resourceAt(0);
       metaData = qmsg.getAttributeMetaData(null);
       f.close();
+      failed("expected excpetion "+metaData); 
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.lang.NullPointerException");
     }
@@ -2506,6 +2506,7 @@ public class QueuedMessageRFTestcase extends Testcase {
       qmsg = (RQueuedMessage) f.resourceAt(0);
       metaData = qmsg.getAttributeMetaData(RQueuedMessage.ALERT_OPTION_DEFER);
       f.close();
+      failed("expected excpetion "+metaData); 
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e,
           "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -3789,11 +3790,8 @@ public class QueuedMessageRFTestcase extends Testcase {
    * make sure each is unique.
    **/
   public void Var063() {
-    Object resKey;
     RQueuedMessage qmsg;
-    int i;
-    Integer intResKey;
-    try {
+     try {
       String path = QSYSObjectPathName.toPath("QSYS", "QSYSOPR", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
       f.open();
@@ -3810,9 +3808,8 @@ public class QueuedMessageRFTestcase extends Testcase {
    * corresponding INQUIRY message
    **/
   public void Var064() {
-    RQueuedMessage qmsg, qmsg2, qmsgrcv, qmsgrcv2;
-    byte msgKey0[], msgKey1[];
-    String value, value1, value2, value3;
+    RQueuedMessage qmsg,  qmsgrcv;
+    byte msgKey0[];
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -3831,7 +3828,7 @@ public class QueuedMessageRFTestcase extends Testcase {
       qmsg = (RQueuedMessage) g.resourceAt(0);
       msgKey0 = (byte[]) qmsg.getAttributeValue(RQueuedMessage.MESSAGE_KEY);
       qmsgrcv = g.receive(msgKey0);
-      succeeded();
+      assertCondition(true,"qmsgrcv="+qmsgrcv); 
     } catch (Exception e) {
       failed(e, "Unexpected exception.");
     }
@@ -4065,7 +4062,7 @@ public class QueuedMessageRFTestcase extends Testcase {
     byte msgKey[];
     String tempStr;
     Integer sev, msgType;
-    Presentation presObj;
+    // Presentation presObj;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       String msgfPath = QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF");
@@ -4143,11 +4140,9 @@ public class QueuedMessageRFTestcase extends Testcase {
    * in a file
    **/
   public void Var069() {
-    RQueuedMessage qmsg, qmsgrcv;
-    byte msgKey[];
+    RQueuedMessage qmsg;
     String tempStr;
     Integer sev, msgType;
-    Presentation presObj;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       String msgfPath = QSYSObjectPathName.toPath("QSYS", "QCPFMSG", "MSGF");

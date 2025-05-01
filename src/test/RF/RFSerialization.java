@@ -17,10 +17,11 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
-
+import java.util.Arrays;
 import java.util.Vector;
 import com.ibm.as400.access.*;
 
+import test.PasswordVault;
 import test.Testcase;
 import test.DDM.DDMChar10NoKeyFormat;
 import test.DDM.DDMPropertyChangeListener;
@@ -55,8 +56,12 @@ public class RFSerialization extends Testcase
           variationsToRun, runMode, fileOutputStream);
     // Add cache entry to prevent deserialization routine from opening
     // a prompt window when trying to get the CCSID. 
+    encryptedPassword_ = PasswordVault.getEncryptedPassword(password);
+    
     try { 
-    AS400.addPasswordCacheEntry(systemObject.getSystemName(), systemObject.getUserId(), password);
+      char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
+      AS400.addPasswordCacheEntry(systemObject.getSystemName(), systemObject.getUserId(), passwordChars);
+      Arrays.fill(passwordChars, ' '); 
     } catch (Exception e) {
       e.printStackTrace(); 
     }
@@ -139,6 +144,7 @@ public class RFSerialization extends Testcase
       FileInputStream ris = new FileInputStream("rfser.ser");
       ObjectInputStream rin = new ObjectInputStream(ris);
       RecordFormat deserrf = (RecordFormat)rin.readObject();
+      rin.close(); 
       // Verify state
       if (deserrf.getFieldDescriptions().length != 0)
       {
@@ -293,7 +299,8 @@ public class RFSerialization extends Testcase
       FileInputStream ris = new FileInputStream("rfser.ser");
       ObjectInputStream rin = new ObjectInputStream(ris);
       RecordFormat deserrf = (RecordFormat)rin.readObject();
-      // Verify state
+      rin.close(); 
+     // Verify state
       if (deserrf.getFieldDescriptions().length != 5)
       {
         failed("getFieldDescriptions");
@@ -471,6 +478,7 @@ public class RFSerialization extends Testcase
       FileInputStream ris = new FileInputStream("rfser.ser");
       ObjectInputStream rin = new ObjectInputStream(ris);
       RecordFormat deserrf = (RecordFormat)rin.readObject();
+      rin.close(); 
       // Verify state
       if (deserrf.getFieldDescriptions().length != 0)
       {
@@ -623,7 +631,8 @@ public class RFSerialization extends Testcase
       FileInputStream ris = new FileInputStream("rfser.ser");
       ObjectInputStream rin = new ObjectInputStream(ris);
       RecordFormat deserrf = (RecordFormat)rin.readObject();
-      // Verify state
+      rin.close(); 
+     // Verify state
       if (deserrf.getFieldDescriptions().length != 5)
       {
         failed("getFieldDescriptions");
@@ -797,7 +806,8 @@ public class RFSerialization extends Testcase
       FileInputStream ris = new FileInputStream("rfser.ser");
       ObjectInputStream rin = new ObjectInputStream(ris);
       Record deserr = (Record)rin.readObject();
-      // Verify state
+      rin.close(); 
+     // Verify state
       if (deserr.getFields().length != 0)
       {
         failed("getFields");
@@ -940,6 +950,7 @@ public class RFSerialization extends Testcase
       FileInputStream ris = new FileInputStream("rfser.ser");
       ObjectInputStream rin = new ObjectInputStream(ris);
       Record deserr = (Record)rin.readObject();
+      rin.close(); 
       // Verify state
       if (deserr.getFields().length != testRec.getFields().length)
       {

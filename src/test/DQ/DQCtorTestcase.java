@@ -137,7 +137,7 @@ public class DQCtorTestcase extends Testcase
         try
         {
             DataQueue dq = new DataQueue(null, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTAQ");
-            failed("No exception.");
+            failed("No exception."+dq);
         }
         catch (Exception e)
         {
@@ -154,7 +154,7 @@ public class DQCtorTestcase extends Testcase
         try
         {
             KeyedDataQueue dq = new KeyedDataQueue(null, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTAQ");
-            failed("No exception.");
+            failed("No exception."+dq);
         }
         catch (Exception e)
         {
@@ -171,7 +171,7 @@ public class DQCtorTestcase extends Testcase
         try
         {
             DataQueue dq = new DataQueue(systemObject_, null);
-            failed("No exception.");
+            failed("No exception."+dq);
         }
         catch (Exception e)
         {
@@ -188,7 +188,7 @@ public class DQCtorTestcase extends Testcase
         try
         {
             KeyedDataQueue dq = new KeyedDataQueue(systemObject_, null);
-            failed("No exception.");
+            failed("No exception."+dq);
         }
         catch (Exception e)
         {
@@ -205,7 +205,7 @@ public class DQCtorTestcase extends Testcase
         try
         {
             DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/QSYS.LIB/TESTQUEUE.DTAQ");
-            failed("No exception.");
+            failed("No exception."+dq);
         }
         catch (Exception e)
         {
@@ -222,7 +222,7 @@ public class DQCtorTestcase extends Testcase
         try
         {
             KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/QSYS.LIB/TESTQUEUE.DTAQ");
-            failed("No exception.");
+            failed("No exception."+dq);
         }
         catch (Exception e)
         {
@@ -239,7 +239,7 @@ public class DQCtorTestcase extends Testcase
         try
         {
             DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTA");
-            failed("No exception.");
+            failed("No exception."+dq);
         }
         catch (Exception e)
         {
@@ -256,7 +256,7 @@ public class DQCtorTestcase extends Testcase
         try
         {
             KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTA");
-            failed("No exception.");
+            failed("No exception."+dq);
         }
         catch (Exception e)
         {

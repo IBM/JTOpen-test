@@ -31,6 +31,7 @@ import test.Testcase;
  <li>getSystemThread()
  </ul>
  **/
+@SuppressWarnings("deprecation")
 public class CmdOnThreadTestcase extends Testcase
 {
   public static void main(String args[]) throws Exception {

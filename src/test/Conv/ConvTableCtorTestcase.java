@@ -68,7 +68,7 @@ public class ConvTableCtorTestcase extends Testcase
                             // ConvTable m = (ConvTable)c.newInstance();
                             ConvTable m = ConvTable.getTable(
                                 ConvTest.allCcsids_[i - 1], (AS400ImplRemote) systemObject_.getImpl()); 
-                            succeeded();
+                            assertCondition(true, "m="+m); 
                         }
                         catch (Exception e)
                         {

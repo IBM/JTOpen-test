@@ -19,21 +19,13 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.Enumeration;
 import java.util.Vector;
-import java.util.Properties;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.Command;
-import com.ibm.as400.access.Command;
-import com.ibm.as400.access.MessageFile;
-
 
 import test.Testcase;
 
@@ -112,7 +104,7 @@ public class CommandTestcase extends Testcase
         try
         {
             Command cmd = new Command();
-            succeeded();
+            assertCondition(true, "cmd="+cmd); 
         }
         catch (Exception e)
         {
@@ -130,7 +122,7 @@ public class CommandTestcase extends Testcase
         try
         {
             Command cmd = new Command(systemObject_, "/QSYS.LIB/CRTUSRPRF.CMD");
-            succeeded();
+            assertCondition(true, "cmd="+cmd); 
         }
         catch (Exception e)
         {
@@ -178,7 +170,7 @@ public class CommandTestcase extends Testcase
         try
         {
             Command cmd = new Command();
-            cmd.setSystem(new AS400("test", "uid", "pwd"));
+            cmd.setSystem(new AS400("test", "uid", "pwd".toCharArray()));
             if (cmd.getSystem().getSystemName().equals("test"))
             {
                 succeeded();
@@ -286,7 +278,7 @@ public class CommandTestcase extends Testcase
         {
             Command cmd = new Command();
             cmd.setPath("/QSYS.LIB/CRTUSRPRF.CMD");
-            cmd.setSystem(new AS400("blah", "blah", "blah"));
+            cmd.setSystem(new AS400("blah", "blah", "blah".toCharArray()));
             Command cmd2 = (Command) serialize (cmd);
             assertCondition ((cmd2.getPath().equals("/QSYS.LIB/CRTUSRPRF.CMD"))
                              && (cmd2.getSystem().getSystemName().equals("blah"))  );
@@ -357,7 +349,7 @@ public class CommandTestcase extends Testcase
             PropertyChangeListener_ l = new PropertyChangeListener_ ();
             cmd.addPropertyChangeListener (l);
             PropertyChangeEvent before = l.getLastEvent ();
-            AS400 sys = new AS400("blah", "blah", "blah");
+            AS400 sys = new AS400("blah", "blah", "blah".toCharArray());
             cmd.setSystem(sys);
             PropertyChangeEvent after = l.getLastEvent ();
             assertCondition ((before == null) && (after.getSource () == cmd)
@@ -428,7 +420,7 @@ public class CommandTestcase extends Testcase
             cmd.addPropertyChangeListener (l);
             cmd.removePropertyChangeListener (l);
             PropertyChangeEvent before = l.getLastEvent ();
-            cmd.setSystem(new AS400("blah", "blah", "blah"));
+            cmd.setSystem(new AS400("blah", "blah", "blah".toCharArray()));
             PropertyChangeEvent after = l.getLastEvent ();
             assertCondition ((before == null) && (after == null));
         }
@@ -1574,13 +1566,14 @@ public class CommandTestcase extends Testcase
         ObjectOutput out = new ObjectOutputStream (new FileOutputStream (serializeFileName));
         out.writeObject (cmd);
         out.flush ();
-
+        out.close(); 
         // Deserialize.
         Command head2 = null;
         try
         {
             ObjectInputStream in = new ObjectInputStream (new FileInputStream (serializeFileName));
             head2 = (Command) in.readObject ();
+            in.close();
         }
         finally
         {

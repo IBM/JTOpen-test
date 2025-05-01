@@ -13,7 +13,6 @@
 
 package test.Pgm;
 
-import java.beans.PropertyVetoException;
 import java.io.IOException;
 
 import com.ibm.as400.access.AS400;
@@ -26,16 +25,12 @@ import com.ibm.as400.access.BinaryConverter;
 import com.ibm.as400.access.CharConverter;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ErrorCodeParameter;
-import com.ibm.as400.access.ErrorCompletingRequestException;
 import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.Job;
 import com.ibm.as400.access.MessageFile;
-import com.ibm.as400.access.ObjectDoesNotExistException;
 import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
-import com.ibm.as400.access.QSYSObjectPathName;
-import com.ibm.as400.resource.RJob;
 
 import test.JDReflectionUtil;
 import test.Testcase;
@@ -167,7 +162,7 @@ public class PgmRunTestcase extends Testcase
       else return false;
     }
 
-    private final boolean isRunningNativelyAndThreadsafe()
+     boolean isRunningNativelyAndThreadsafe()
     {
       if (!isRunningNatively()) return false;
       String prop = getProgramCallThreadSafetyProperty(); // we only care about ProgramCall, not CommandCall
@@ -1207,7 +1202,9 @@ public class PgmRunTestcase extends Testcase
             String msgId, msgText;
 
             AS400Bin4 bin4   = new AS400Bin4();
+            @SuppressWarnings("unused")
             AS400Text char6  = new AS400Text(6,  systemObject_);
+            @SuppressWarnings("unused")
             AS400Text char7  = new AS400Text(7,  systemObject_);
             AS400Text char8  = new AS400Text(8,  systemObject_);
             AS400Text char10 = new AS400Text(10, systemObject_);
@@ -1299,7 +1296,7 @@ public class PgmRunTestcase extends Testcase
         {
             ProgramCall pgm = new ProgramCall();
             Job job = pgm.getServerJob();
-            failed("Did not throw exception.");
+            failed("Did not throw exception."+job);
         }
         catch (Exception e)
         {
@@ -1628,7 +1625,7 @@ public class PgmRunTestcase extends Testcase
 		
 		AS400 system = null;
 		try {
-			system = new AS400(systemObject_.getSystemName(), userHang, pwdHang);
+			system = new AS400(systemObject_.getSystemName(), userHang, pwdHang.toCharArray());
 			ProgramCall pgmCall = new ProgramCall(system, pgmHang, new ProgramParameter[]{new ProgramParameter()});
 			JDReflectionUtil.callMethod_V(pgmCall, "setTimeOut", 10);
 			pgmCall.run();
@@ -1652,7 +1649,7 @@ public class PgmRunTestcase extends Testcase
 
       AS400 system = null;
       try {
-        system = new AS400(systemObject_.getSystemName(), userHang, pwdHang);
+        system = new AS400(systemObject_.getSystemName(), userHang, pwdHang.toCharArray());
         ProgramCall pgmCall = new ProgramCall(system, pgmHang, new ProgramParameter[] { new ProgramParameter() });
         JDReflectionUtil.callMethod_V(pgmCall, "setTimeOut", 15);
         succeeded = pgmCall.run();
@@ -1850,11 +1847,8 @@ public class PgmRunTestcase extends Testcase
 			if (!isSuccess) {
 				// we except error, and we only check the first error message and verify its date is empty or not. 
 				AS400Message[] msgs = pgm.getMessageList();
-				for (int i = 0; i < msgs.length; i++) {
-					AS400Message msg = msgs[i];
+					AS400Message msg = msgs[0];
 					assertCondition(msg.getDate()!=null);
-					break;
-				}
 			}
 			
 		} catch (Exception e) {

@@ -12,26 +12,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceListListener;
-
-import test.Testcase;
-
-import com.ibm.as400.resource.RIFSFileList;
-import com.ibm.as400.resource.RIFSFileListBeanInfo;
 import java.awt.Image;
-
 import java.beans.BeanDescriptor;
 import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.beans.VetoableChangeListener;
-import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.resource.RIFSFileList;
+import com.ibm.as400.resource.RIFSFileListBeanInfo;
+import com.ibm.as400.resource.ResourceListListener;
+
+import test.Testcase;
 
 
 
@@ -39,6 +36,7 @@ import java.util.Hashtable; import java.util.Vector;
 Testcase RIFSFileListBeanInfoTestcase.  This tests the methods
 of the RIFSFileListBeanInfo class:
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileListBeanInfoTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -57,9 +55,7 @@ extends Testcase {
 
 
 
-    // Private data.
-    private boolean         runningOnOS400_;
-
+ 
 
 
 /**
@@ -88,11 +84,7 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
-        // See if we're running on OS/400.
-        if (System.getProperty("os.name").indexOf("OS/400") >= 0) {
-          runningOnOS400_ = true;
-        }
-
+ 
     }
 
 
@@ -199,7 +191,7 @@ getIcon().  Pass an invalid value.
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
             Image icon = ubi.getIcon(-546);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+icon);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -220,7 +212,7 @@ getIcon().  Pass ICON_COLOR_16x16.
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
              // Note: jt400Native jar file has fewer gif's.
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -241,7 +233,7 @@ getIcon().  Pass ICON_COLOR_32x32.
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
             // Note: jt400Native jar file has fewer gif's.
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -262,7 +254,7 @@ getIcon().  Pass ICON_MONO_16x16.
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
             // Note: jt400Native jar file has fewer gif's.
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -283,7 +275,7 @@ getIcon().  Pass ICON_MONO_32x32.
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
             // Note: jt400Native jar file has fewer gif's.
-            assertCondition (true);
+            assertCondition (true, "ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

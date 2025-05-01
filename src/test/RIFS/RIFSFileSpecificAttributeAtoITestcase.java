@@ -47,6 +47,7 @@ of the RIFSFile class:
 <li>IS_READ_ONLY
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileSpecificAttributeAtoITestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {

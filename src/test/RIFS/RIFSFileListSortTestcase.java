@@ -12,20 +12,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RIFS;
 
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.resource.RIFSFileList;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
-
-import com.ibm.as400.resource.RIFSFile;
-import com.ibm.as400.resource.RIFSFileList;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -42,6 +38,7 @@ of the RIFSFileList class, some inherited from BufferedResourceList:
 <li>setSortValue() 
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RIFSFileListSortTestcase
 extends Testcase {
   public static void main(String args[]) throws Exception {
@@ -111,7 +108,7 @@ getSortMetaData() with 1 parameter - Pass null.
         try {
             RIFSFileList u = new RIFSFileList();
             ResourceMetaData smd = u.getSortMetaData(null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+smd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -128,7 +125,7 @@ getSortMetaData() with 1 parameter - Pass an invalid attribute ID.
         try {
             RIFSFileList u = new RIFSFileList();
             ResourceMetaData smd = u.getSortMetaData(new Date());
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+smd);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");

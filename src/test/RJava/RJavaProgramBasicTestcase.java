@@ -12,6 +12,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RJava;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.RJavaProgram;
 
@@ -19,13 +23,6 @@ import test.JDTestDriver;
 import test.RJavaTest;
 import test.Testcase;
 import test.UserTest;
-import test.UserTest.PropertyChangeListener_;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -42,6 +39,7 @@ of the RJavaProgram class:
 <li>setSystem()
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RJavaProgramBasicTestcase
 extends Testcase {
 
@@ -51,9 +49,7 @@ extends Testcase {
 
 
 
-    // Private data.
-    private AS400           pwrSys_;
-
+ 
 
 
 /**
@@ -124,7 +120,7 @@ constructor() with 2 parms - Pass null for system.
     {
         try {
             RJavaProgram u = new RJavaProgram(null, RJavaTest.classFilePath_);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+u);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -140,7 +136,7 @@ constructor() with 2 parms - Pass null for name.
     {
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+u);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -356,7 +352,7 @@ setPath() - Set to a valid name after the RJavaProgram has made a connection.
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.classFilePath_);
             Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
             u.setPath("alabama");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+optimization);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
@@ -465,7 +461,7 @@ setSystem() - Set to a valid name after the RJavaProgram object has made a conne
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
             Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
             u.setSystem(systemObject_);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+optimization);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");

@@ -12,26 +12,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RJava;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.resource.ResourceListener;
-
-import test.Testcase;
-
-import com.ibm.as400.resource.RJavaProgram;
-import com.ibm.as400.resource.RJavaProgramBeanInfo;
 import java.awt.Image;
-
 import java.beans.BeanDescriptor;
 import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.beans.VetoableChangeListener;
-import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.resource.RJavaProgram;
+import com.ibm.as400.resource.RJavaProgramBeanInfo;
+import com.ibm.as400.resource.ResourceListener;
+
+import test.Testcase;
 
 
 
@@ -39,6 +36,7 @@ import java.util.Hashtable; import java.util.Vector;
 Testcase RJavaProgramBeanInfoTestcase.  This tests the methods
 of the RJavaProgramBeanInfo class:
 **/
+@SuppressWarnings("deprecation")
 public class RJavaProgramBeanInfoTestcase
 extends Testcase {
 
@@ -168,7 +166,7 @@ getIcon().  Pass an invalid value.
         try {
             RJavaProgramBeanInfo ubi = new RJavaProgramBeanInfo();
             Image icon = ubi.getIcon(-546);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+icon);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
@@ -184,7 +182,7 @@ getIcon().  Pass ICON_COLOR_16x16.
     {
         try {
             RJavaProgramBeanInfo ubi = new RJavaProgramBeanInfo();
-            assertCondition (true);
+            assertCondition (true,"ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -200,7 +198,7 @@ getIcon().  Pass ICON_COLOR_32x32.
     {
         try {
             RJavaProgramBeanInfo ubi = new RJavaProgramBeanInfo();
-            assertCondition (true);
+            assertCondition (true,"ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -216,7 +214,7 @@ getIcon().  Pass ICON_MONO_16x16.
     {
         try {
             RJavaProgramBeanInfo ubi = new RJavaProgramBeanInfo();
-            assertCondition (true);
+            assertCondition (true,"ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -232,7 +230,7 @@ getIcon().  Pass ICON_MONO_32x32.
     {
         try {
             RJavaProgramBeanInfo ubi = new RJavaProgramBeanInfo();
-            assertCondition (true);
+            assertCondition (true,"ubi="+ubi);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

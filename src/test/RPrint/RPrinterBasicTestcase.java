@@ -12,16 +12,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.RPrint;
 
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.RPrinter;
 
 import test.RPrintTest;
 import test.Testcase;
-import test.RPrintTest.PropertyChangeListener_;
-import test.RPrintTest.VetoableChangeListener_;
-
-import java.io.FileOutputStream;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -36,6 +35,7 @@ of the RPrinter class:
 <li>setName()
 </ul>
 **/
+@SuppressWarnings("deprecation")
 public class RPrinterBasicTestcase
 extends Testcase {
 
@@ -101,7 +101,7 @@ constructor() with 2 parms - Pass null for system.
     {
         try {
             RPrinter u = new RPrinter(null, "TESTPrt");
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+u);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -117,7 +117,7 @@ constructor() with 2 parms - Pass null for name.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, null);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+u);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
@@ -171,6 +171,7 @@ constructor() with 2 parms - Pass a lowercase printer name.  Verify that it is u
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_.toLowerCase());
+            @SuppressWarnings("unused")
             String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
             assertCondition ((u.getSystem() == systemObject_) 
                     && (u.getName().equalsIgnoreCase(printerName_)));
@@ -332,6 +333,7 @@ verify that it is used.
         try {
             RPrinter u = new RPrinter(systemObject_, "xerox");
             u.setName(printerName_.toLowerCase());
+            @SuppressWarnings("unused")
             String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
             assertCondition (u.getName().equalsIgnoreCase(printerName_));
         }
@@ -349,6 +351,7 @@ setName() - Set to a valid name after the RPrinter has made a connection.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
+            @SuppressWarnings("unused")
             String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
             u.setName("gateway");
             failed ("Didn't throw exception");
@@ -491,7 +494,7 @@ setSystem() - Set to a valid name after the RPrinter object has made a connectio
             RPrinter u = new RPrinter(systemObject_, printerName_);
             String textDescription = (String)u.getAttributeValue(RPrinter.TEXT_DESCRIPTION);
             u.setSystem(systemObject_);
-            failed ("Didn't throw exception");
+            failed ("Didn't throw exception"+textDescription);
         }
         catch(Exception e) {
             assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");

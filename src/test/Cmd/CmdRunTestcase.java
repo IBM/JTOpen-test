@@ -49,7 +49,7 @@ public class CmdRunTestcase extends Testcase
     // Private data.
     private static final String LIBRARY_ = "JT400CC";
     private static final String CRTLIB_ = "CRTLIB " + LIBRARY_;
-    private static final String DLTLIB_ = "DLTLIB " + LIBRARY_;
+    // private static final String DLTLIB_ = "DLTLIB " + LIBRARY_;
     private boolean reportedMissingJobClass_ = false;
 
     /**
@@ -278,7 +278,7 @@ public class CmdRunTestcase extends Testcase
     {
         try
         {
-            AS400 system = new AS400("rchas000", "bob", "nelson");
+            AS400 system = new AS400("rchas000", "bob", "nelson".toCharArray());
             system.setGuiAvailable(false);
             CommandCall cmd = new CommandCall(system, "PING " + systemObject_.getSystemName());
             cmd.run();
@@ -592,7 +592,7 @@ public class CmdRunTestcase extends Testcase
     {
         try
         {
-            AS400 system = new AS400("rchas000", "bob", "nelson");
+            AS400 system = new AS400("rchas000", "bob", "nelson".toCharArray());
             system.setGuiAvailable(false);
             CommandCall cmd = new CommandCall(system);
             cmd.run("PING " + systemObject_.getSystemName());

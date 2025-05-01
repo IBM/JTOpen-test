@@ -13,31 +13,22 @@
 
 package test.MiscAH;
 
-import com.ibm.as400.access.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400FTP;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.FTP;
+import com.ibm.as400.access.FTPEvent;
+import com.ibm.as400.access.FTPListener;
 
 import test.FTPTest;
 import test.PasswordVault;
 import test.Testcase;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
-
-import java.io.RandomAccessFile;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Hashtable; import java.util.Vector;
-import java.util.Vector;
-import java.lang.Integer;
-import java.lang.String;
-import java.text.SimpleDateFormat;
 
 
 public class FTPQuickVerification extends    Testcase
@@ -58,7 +49,7 @@ public class FTPQuickVerification extends    Testcase
     private String testDirectory = "FTPTestDir";
     private String testDirectoryDeep = "FTPTestDir/rootDir/subdir2";
     private String initialToken_ = null;
-    private boolean notWorthTrying = false;
+    boolean notWorthTrying = false;
 
     private static final int DETAILED = 1;
     private static final int NAME_ONLY = 0;
@@ -70,7 +61,7 @@ public class FTPQuickVerification extends    Testcase
     private static final int SIXTEEN = 16;
     private static final int TOTAL   = ONE + TWO + FOUR + EIGHT + SIXTEEN;
 
-    private FTPEvent ftpEvent = null;
+     FTPEvent ftpEvent = null;
 
     private boolean cleanup = true;
 
@@ -1622,9 +1613,6 @@ public class FTPQuickVerification extends    Testcase
           try
           {
              String source   = targetDir;
-             String original = testDirectory + File.separator +
-                               "rootDir"     + File.separator +
-                               "subdir2"     + File.separator + "FSTOOL.EXE";
 
              FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
@@ -1664,7 +1652,6 @@ public class FTPQuickVerification extends    Testcase
     {
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
        String  compareDir     = "targetDirTest21";
        String  compareDirFull = compareDir + File.separator;
        String  targetDirFull  = compareDir + File.separator;
@@ -1927,7 +1914,6 @@ public class FTPQuickVerification extends    Testcase
           {
              String target   = "PureJava.html";
              String original = testDirectory;
-             String compare  = compareDirFull + target;
 
              FTP c = new FTP(system_, user_, clearPasswordString_);
              c.cd(initialToken_);
@@ -1967,11 +1953,7 @@ public class FTPQuickVerification extends    Testcase
     {
        boolean Continue = true;
 
-       String  sourceDir      = "FTPTestDir";
-       String  compareDir     = "targetDirTest21";
-       String  compareDirFull = compareDir + File.separator;
-       String  targetDirFull  = compareDir + File.separator;
-
+  
        if (Continue)
        {
           try
