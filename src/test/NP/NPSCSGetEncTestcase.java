@@ -13,12 +13,10 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
+import java.io.FileOutputStream;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SCS5256Writer;
 
@@ -100,7 +98,8 @@ public class NPSCSGetEncTestcase extends Testcase
         SCS5256Writer writer = new SCS5256Writer(out, systemObject_.getCcsid(), systemObject_);
         enc = writer.getEncoding();
         writer.close();
-        succeeded();
+        assertCondition(true, "enc="+enc); 
+       
     }
     catch (Exception e)
     {

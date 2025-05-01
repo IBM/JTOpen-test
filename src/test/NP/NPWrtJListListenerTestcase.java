@@ -13,13 +13,24 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectListEvent;
+import com.ibm.as400.access.PrintObjectListListener;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.WriterJob;
+import com.ibm.as400.access.WriterJobList;
 
 import test.Testcase;
 
@@ -51,7 +62,7 @@ public class NPWrtJListListenerTestcase extends Testcase
     
     private boolean fListError = false;
     private boolean fListClosed = false;
-    private boolean fListCompleted = false;
+    // private boolean fListCompleted = false;
     private Exception listException = null;
     private int listObjectCount = 0;
     // the printer device name
@@ -633,6 +644,7 @@ $$$ TO DO $$$ - delete this line */
 
             // remove the listener
             wrtJList.removePrintObjectListListener(listListener);
+            wrtJList.close();
             } 
 
 	catch (Exception e)
@@ -996,6 +1008,7 @@ $$$ TO DO $$$ - delete this line */
 
             // remove the listener
             wrtJList.removePrintObjectListListener(listListener);
+            wrtJList.close();
             } 
 
         catch (Exception e)
@@ -1177,21 +1190,6 @@ $$$ TO DO $$$ - delete this line */
 $$$ TO DO $$$ - delete this line */
 
 
-///////////////////
-// Private methods
-///////////////////
-
-    // This is where the foreground thread waits for to be awaken by the
-    // the background thread when the list is updated or it ends.
-    private synchronized void waitForWakeUp()
-      throws InterruptedException
-    {
-        // don''t go back to sleep if the listener says the list is done
-        if (!fListCompleted)
-	{
-	    wait();
-	}
-    }
 
 ///////////////////////////////////////////////////////////////////////
 // Methods needed to implement the PrintObjectListListener interface
@@ -1205,7 +1203,7 @@ $$$ TO DO $$$ - delete this line */
         {
             // Set flag to indicate that the list has
             // completed and wake up foreground thread.
-            fListCompleted = true;
+            //fListCompleted = true;
             notifyAll();
         }
     }
@@ -1217,7 +1215,7 @@ $$$ TO DO $$$ - delete this line */
         {
             // Set flag to indicate that the list has
             // completed and wake up foreground thread.
-            fListCompleted = true;
+            //fListCompleted = true;
             notifyAll();
         }
     }
@@ -1232,7 +1230,7 @@ $$$ TO DO $$$ - delete this line */
         {
             // Set flag to indicate that the list has
             // completed and wake up foreground thread.
-            fListCompleted = true;
+            // fListCompleted = true;
             notifyAll();
         }
     }

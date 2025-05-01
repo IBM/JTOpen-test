@@ -54,9 +54,11 @@ public class MessageFileTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        cmdRun("CRTLIB MFTEST");
-        cmdRun("CRTMSGF MFTEST/MFTEST AUT(*EXCLUDE)");
-        cmdRun("MRGMSGF QSYS/QTCPMSG MFTEST/MFTEST");
+        cmdRun("QSYS/CRTLIB MFTEST");
+        cmdRun("QSYS/GRTOBJAUT OBJ(MFTEST)      OBJTYPE(*LIB) USER("+userId_ +") ");
+
+        cmdRun("QSYS/CRTMSGF MFTEST/MFTEST AUT(*EXCLUDE)");
+        cmdRun("QSYS/MRGMSGF QSYS/QTCPMSG MFTEST/MFTEST");
     }
 
     /**

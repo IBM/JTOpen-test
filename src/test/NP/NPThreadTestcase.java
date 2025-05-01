@@ -16,13 +16,18 @@ package test.NP;
 
 
 import java.io.FileOutputStream;
-import java.io.PipedInputStream;
 import java.io.ObjectInputStream;
-import java.io.IOException;
-import com.ibm.as400.access.*;
-
+import java.io.PipedInputStream;
 import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.PrinterList;
+import com.ibm.as400.access.SpooledFileList;
+import com.ibm.as400.access.SpooledFileOutputStream;
+import com.ibm.as400.access.Trace;
 
 import test.misc.ThreadedTestcase;
 
@@ -275,6 +280,7 @@ output_.println("end of cleanup");
       {
         output_.println("PrintObject contained no items");
         notApplicable();
+        prtDList.close();
         return;
       }
 
@@ -363,6 +369,7 @@ output_.println("end of cleanup");
     {
 output_.println("in var 5");
       pipeInput_        = new PipedInputStream();
+      @SuppressWarnings("resource")
       SpooledFileOutputStream splfOS  = new SpooledFileOutputStream(systemObject_, null, null, null);
 
       // write one record to the file to open it.
@@ -387,8 +394,8 @@ output_.println("in var 5");
       go();
       handleError();
       stopThreads();
-      splfOS.close();
       splfOS.getSpooledFile().delete();
+      splfOS.close();
     }
     catch(Exception e)
     {

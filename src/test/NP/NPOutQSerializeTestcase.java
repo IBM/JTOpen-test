@@ -13,20 +13,18 @@
 
 package test.NP;
 
-import java.io.OutputStream;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -211,12 +209,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueue.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQ1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the output queue
             FileInputStream fis = new FileInputStream("OutputQueue.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueue outQ2 = (OutputQueue)ois.readObject();
+            ois.close(); 
 
             // add/remove listeners
             outQ2.addPropertyChangeListener(propertyListener);
@@ -260,12 +259,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueue.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQ1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the output queue
             FileInputStream fis = new FileInputStream("OutputQueue.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueue outQ2 = (OutputQueue)ois.readObject();
+            ois.close(); 
 
             String system1 = outQ1.getSystem().getSystemName();
             String system2 = outQ2.getSystem().getSystemName();
@@ -314,12 +314,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueue.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQ1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the output queue
             FileInputStream fis = new FileInputStream("OutputQueue.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueue outQ2 = (OutputQueue)ois.readObject();
+            ois.close(); 
 
             if( outQ1.getName().equals(outQ2.getName()) )
                 {
@@ -363,12 +364,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueue.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQ1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the output queue
             FileInputStream fis = new FileInputStream("OutputQueue.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueue outQ2 = (OutputQueue)ois.readObject();
+            ois.close(); 
 
             if( outQ1.getPath().equals(outQ2.getPath()) )
                 {
@@ -416,12 +418,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueue.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQ1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the output queue
             FileInputStream fis = new FileInputStream("OutputQueue.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueue outQ2 = (OutputQueue)ois.readObject();
+            ois.close(); 
 
             // get the output queue status from both output queues.                                                    
             String s1 = outQ1.getStringAttribute(PrintObject.ATTR_OUTQSTS);
@@ -472,12 +475,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("OutputQueue.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(outQ1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the output queue
             FileInputStream fis = new FileInputStream("OutputQueue.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             OutputQueue outQ2 = (OutputQueue)ois.readObject();
+            ois.close(); 
 
             // Connect to AS/400 get attributes. We have to set the
             // password because that is not serialized.

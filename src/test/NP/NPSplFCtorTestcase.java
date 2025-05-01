@@ -13,13 +13,16 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -194,7 +197,7 @@ $$$ TO DO $$$ - delete this line */
                                                "A Job Name",
                                                "A Job User",
                                                "A Job Number");
-            failed("Could use null system name.");
+            failed("Could use null system name."+splF);
             }
         catch (Exception e)
             {
@@ -220,7 +223,7 @@ $$$ TO DO $$$ - delete this line */
                                            "A Job Name",
                                            "A Job User",
                                            "A Job Number");
-            failed("Could use null name.");
+            failed("Could use null name."+splF);
             }
         catch (Exception e)
             {
@@ -246,7 +249,8 @@ $$$ TO DO $$$ - delete this line */
                                            "A Job Name",
                                            "A Job User",
                                            "A Job Number");
-            succeeded();    // @A1C - changed from fail
+            assertCondition(true, "Created "+splF); 
+            
             
             }
         catch (Exception e)
@@ -273,7 +277,7 @@ $$$ TO DO $$$ - delete this line */
                                            null,
                                            "A Job User",
                                            "A Job Number");
-            failed("Could use null job name.");
+            failed("Could use null job name."+splF);
             }
         catch (Exception e)
             {
@@ -299,7 +303,7 @@ $$$ TO DO $$$ - delete this line */
                                            "A Job Name",
                                            null,
                                            "A Job Number");
-            failed("Could use null job user.");
+            failed("Could use null job user."+splF);
             }
         catch (Exception e)
             {
@@ -325,7 +329,7 @@ $$$ TO DO $$$ - delete this line */
                                            "A Job Name",
                                            "A Job User",
                                            null);
-            failed("Could use null job number.");
+            failed("Could use null job number."+splF);
             }
         catch (Exception e)
             {

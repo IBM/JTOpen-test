@@ -13,13 +13,22 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileList;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -193,7 +202,7 @@ $$$ TO DO $$$ - delete this line */
             // list the spooled files
             splFList.openSynchronously();
 
-            Enumeration e = splFList.getObjects();
+            Enumeration<SpooledFile> e = splFList.getObjects();
 
             // check to see if we got our spooled file
             if (splFList.size() == 1)
@@ -373,7 +382,7 @@ $$$ TO DO $$$ - delete this line */
             // list the spooled files
             splFList.openSynchronously();
 
-            Enumeration e = splFList.getObjects();
+            Enumeration<SpooledFile> e = splFList.getObjects();
 
             // check to see if we got some spooled files
             if (splFList.size() == 1)

@@ -13,16 +13,17 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
-import java.util.Enumeration;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.PrinterList;
 
 import test.Testcase;
 
@@ -238,8 +239,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getPrinterFilter().trim().equals("JAVAPRINT")) succeeded();
             else failed("Could not set/retrive PrinterList printerFilter.");
+            list.close(); 
             } 
-
         catch (Exception e)
             {
             failed(e, "Unexpected exception");
@@ -261,6 +262,7 @@ $$$ TO DO $$$ - delete this line */
             // Set the printerFilter.
             // Greater than 10 characters is invalid.
             list.setPrinterFilter("01234567890");
+            list.close(); 
             failed("Could set an invalid printerFilter");
             }
 
@@ -295,6 +297,7 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getPrinterFilter().trim().equals("")) succeeded();
             else failed("Could not remove PrinterList printerFilter.");
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -315,6 +318,7 @@ $$$ TO DO $$$ - delete this line */
             PrinterList list = new PrinterList();
 
             list.setPrinterFilter(null);
+            list.close(); 
             failed("Could set the printerFilter to null");
             }
 
@@ -343,6 +347,7 @@ $$$ TO DO $$$ - delete this line */
 
             if( list.getPrinterFilter().length() == 0 )
                 {
+              list.close(); 
                 succeeded();
                 }
             else
@@ -416,7 +421,7 @@ $$$ TO DO $$$ - delete this line */
 
             prtDList.openSynchronously();
 
-            Enumeration e = prtDList.getObjects();
+            Enumeration<Printer> e = prtDList.getObjects();
             String prtDName = null;
 
             // check to see if we got some printers
@@ -522,7 +527,7 @@ $$$ TO DO $$$ - delete this line */
             PrinterList prtDList = new PrinterList(systemObject_);
 
             prtDList.setPrinterFilter("ThisIsAnInvalidFilter");
-
+            prtDList.close();
             failed("Could set invalid printerFilter.");
 
             } // end try block
@@ -600,6 +605,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -674,7 +681,9 @@ $$$ TO DO $$$ - delete this line */
                 failed("VetoableChange Listener was not invoked");
                 }
 
-            list.removeVetoableChangeListener(vetoableListener);
+            list.removeVetoableChangeListener(vetoableListener);  
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -752,6 +761,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -808,6 +819,8 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             }
 
     } // end Var013
@@ -871,6 +884,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)

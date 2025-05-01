@@ -13,15 +13,13 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AFPResourceList;
+import com.ibm.as400.access.AS400;
 
 import test.Testcase;
 
@@ -168,6 +166,7 @@ $$$ TO DO $$$ - delete this line */
             AFPResourceList list = new AFPResourceList();
 
             list.setSystem(null);
+            list.close(); 
             failed("Could set system to null");
             } 
 
@@ -202,6 +201,8 @@ $$$ TO DO $$$ - delete this line */
 
             if( list.getSystem() == null )
                 {
+              list.close(); 
+
                 succeeded();
                 }
             else
@@ -236,6 +237,7 @@ $$$ TO DO $$$ - delete this line */
 
             if (resList.getSystem().equals(systemObject_)) succeeded();
             else failed("Could not retrive AFP Resource List system.");
+            resList.close(); 
 
             } // end try block
 
@@ -320,6 +322,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -405,6 +409,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -487,6 +493,8 @@ $$$ TO DO $$$ - delete this line */
 
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -546,6 +554,8 @@ $$$ TO DO $$$ - delete this line */
 
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             }
 
 
@@ -622,6 +632,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)

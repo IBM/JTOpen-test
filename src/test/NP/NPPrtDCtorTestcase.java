@@ -13,12 +13,14 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.Printer;
 
 import test.Testcase;
 
@@ -197,7 +199,7 @@ public class NPPrtDCtorTestcase extends Testcase
             // create a printer device object using null system name and valid printer name
             Printer prtD = new Printer(null, "JAVAPRINT");
 
-            failed("Could use null system name.");
+            failed("Could use null system name."+prtD);
 
             } // end try block
 
@@ -221,7 +223,7 @@ public class NPPrtDCtorTestcase extends Testcase
             // create a printer device object using valid system name and null printer name
             Printer prtD = new Printer(systemObject_, null);
 
-            failed("Could use null printer name.");
+            failed("Could use null printer name."+prtD);
 
             } // end try block
 
@@ -245,7 +247,7 @@ public class NPPrtDCtorTestcase extends Testcase
             // create a printer device object using valid system name and invalid printer name
             Printer prtD = new Printer(systemObject_, "ThisIsAnInvalidName");
 
-            failed("Could use invalid printer name.");
+            failed("Could use invalid printer name."+prtD);
 
             } // end try block
 
@@ -269,7 +271,7 @@ public class NPPrtDCtorTestcase extends Testcase
             // create a printer device object with no parameters. 
             Printer prtD = new Printer();
 
-            succeeded();  // Note: This variation will be successful.
+            assertCondition(true,"prtD="+prtD);   // Note: This variation will be successful.
             } // end try block
 
         catch (Exception e)
@@ -291,7 +293,7 @@ public class NPPrtDCtorTestcase extends Testcase
             // create a printer device object using valid system name and invalid printer name
             Printer prtD = new Printer(systemObject_, "");
 
-            failed("Could use invalid printer name.");
+            failed("Could use invalid printer name."+prtD);
 
             } // end try block
 

@@ -13,17 +13,26 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.math.BigDecimal;
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.AS400ZonedDecimal;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.FieldDescription;
+import com.ibm.as400.access.LineDataRecordWriter;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SpooledFileOutputStream;
+import com.ibm.as400.access.ZonedDecimalFieldDescription;
 
 import test.Testcase;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 /**
  Testcase NPLDRWTestcase.
@@ -73,8 +82,7 @@ public class NPLDRWTestcase extends Testcase
     {
         output_.println("NPPrintTest::NPLDRWTestcase");
    	    boolean allVariations = (variationsToRun_.size() == 0);
-        boolean fWriterEnded = false;
-
+        
         try
         {
             // run variation 1
@@ -1996,7 +2004,7 @@ $$$ TO DO $$$ - delete this line */
       
         // assign constants from FieldDescription class
         int justLeft = FieldDescription.ALIGN_LEFT;
-        int justRight = FieldDescription.ALIGN_RIGHT;
+        // int justRight = FieldDescription.ALIGN_RIGHT;
        
         // set the length and alignment attributes for writing the fields
         // The length indicates how many characters the field is, and
@@ -2084,7 +2092,7 @@ $$$ TO DO $$$ - delete this line */
                           new CharacterFieldDescription(new AS400Text(11, ccsid_, system_), "FIELD11");
       
         // assign constants from FieldDescription class
-        int justLeft = FieldDescription.ALIGN_LEFT;
+        // int justLeft = FieldDescription.ALIGN_LEFT;
         int justRight = FieldDescription.ALIGN_RIGHT;
        
         // set the length and alignment attributes for writing the fields
@@ -2173,7 +2181,7 @@ $$$ TO DO $$$ - delete this line */
                           new CharacterFieldDescription(new AS400Text(100, ccsid_, system_), "FIELD11");
       
         // assign constants from FieldDescription class
-        int justLeft = FieldDescription.ALIGN_LEFT;
+        // int justLeft = FieldDescription.ALIGN_LEFT;
         int justRight = FieldDescription.ALIGN_RIGHT;
        
         // set the length and alignment attributes for writing the fields
@@ -2262,7 +2270,7 @@ $$$ TO DO $$$ - delete this line */
                           new CharacterFieldDescription(new AS400Text(100, ccsid_, system_), "FIELD11");
       
         // assign constants from FieldDescription class
-        int justLeft = FieldDescription.ALIGN_LEFT;
+        // int justLeft = FieldDescription.ALIGN_LEFT;
         int justRight = FieldDescription.ALIGN_RIGHT;
        
         // set the length and alignment attributes for writing the fields

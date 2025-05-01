@@ -13,13 +13,15 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.PrinterFile;
+import com.ibm.as400.access.PrinterFileList;
 
 import test.Testcase;
 
@@ -137,7 +139,8 @@ $$$ TO DO $$$ - delete this line */
 
             prtFList.openSynchronously();
 
-            Enumeration e = prtFList.getObjects();
+            @SuppressWarnings("unused")
+            Enumeration<PrinterFile> e = prtFList.getObjects();
             String prtFName = null;
             int listed = 0, size;
             size = prtFList.size();
@@ -207,6 +210,7 @@ $$$ TO DO $$$ - delete this line */
             prtFList.setPrinterFileFilter("/QSYS.LIB/NPJAVA.LIB/JAVAPRINT.FILE");
 
             prtFList.openSynchronously();
+            prtFList.close(); 
             failed("Should have gotten ExtendedIllegalStateException");
             } // end try block
 

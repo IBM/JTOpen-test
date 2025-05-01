@@ -13,19 +13,21 @@
 
 package test.NP;
 
-import java.io.OutputStream;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectListEvent;
+import com.ibm.as400.access.PrintObjectListListener;
+import com.ibm.as400.access.PrinterFile;
+import com.ibm.as400.access.PrinterFileList;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -196,13 +198,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the PrinterFileList object
             FileInputStream fis = new FileInputStream("PrinterFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFileList prtFList2 = (PrinterFileList)ois.readObject();
-
+            ois.close(); 
+            
             // add/remove listeners
             prtFList2.addPropertyChangeListener(propertyListener);
             prtFList2.removePropertyChangeListener(propertyListener);
@@ -247,12 +250,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the PrinterFileList object
             FileInputStream fis = new FileInputStream("PrinterFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFileList prtFList2 = (PrinterFileList)ois.readObject();
+            ois.close(); 
 
             String system1 = prtFList1.getSystem().getSystemName();
             String system2 = prtFList2.getSystem().getSystemName();
@@ -304,12 +308,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the PrinterFileList object
             FileInputStream fis = new FileInputStream("PrinterFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFileList prtFList2 = (PrinterFileList)ois.readObject();
+            ois.close(); 
 
             if( prtFList1.getPrinterFileFilter().equals(prtFList2.getPrinterFileFilter()) )
                 {
@@ -361,12 +366,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the PrinterFileList object
             FileInputStream fis = new FileInputStream("PrinterFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFileList prtFList2 = (PrinterFileList)ois.readObject();
+            ois.close(); 
 
             // now build printer file list synchronously, we have
             // to set the password because that is not serialized.
@@ -450,12 +456,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("PrinterFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(prtFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the PrinterFileList object
             FileInputStream fis = new FileInputStream("PrinterFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             PrinterFileList prtFList2 = (PrinterFileList)ois.readObject();
+            ois.close(); 
 
             // after de-serializing set the password
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);

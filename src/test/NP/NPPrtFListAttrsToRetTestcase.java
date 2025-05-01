@@ -13,13 +13,16 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrinterFile;
+import com.ibm.as400.access.PrinterFileList;
+import com.ibm.as400.access.PrinterList;
 
 import test.Testcase;
 
@@ -174,7 +177,7 @@ $$$ TO DO $$$ - delete this line */
             // list the printer files
             prtFList.openSynchronously();
 
-            Enumeration e = prtFList.getObjects();
+            Enumeration<PrinterFile> e = prtFList.getObjects();
 
             // check to see if we got our printer file
             if (prtFList.size() == 1)
@@ -348,7 +351,7 @@ $$$ TO DO $$$ - delete this line */
             // list the printer files
             prtFList.openSynchronously();
 
-            Enumeration e = prtFList.getObjects();
+            Enumeration<PrinterFile> e = prtFList.getObjects();
 
             // check to see if we got some printer files
             if (prtFList.size() == 1)

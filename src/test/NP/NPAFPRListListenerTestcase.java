@@ -13,13 +13,15 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AFPResource;
+import com.ibm.as400.access.AFPResourceList;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.PrintObjectListEvent;
+import com.ibm.as400.access.PrintObjectListListener;
 
 import test.Testcase;
 
@@ -516,6 +518,7 @@ $$$ TO DO $$$ - delete this line */
             try
                 {
                 resList.openSynchronously();
+                resList.close(); 
                 }
             catch( ExtendedIllegalStateException e )
                 {
@@ -861,6 +864,7 @@ $$$ TO DO $$$ - delete this line */
                 {
                 resList.openAsynchronously();
                 resList.waitForListToComplete();
+                resList.close(); 
                 }
             catch( ExtendedIllegalStateException e )
                 {
@@ -1064,7 +1068,7 @@ $$$ TO DO $$$ - delete this line */
 
     // This is where the foreground thread waits for to be awaken by the
     // the background thread when the list is updated or it ends.
-    private synchronized void waitForWakeUp()
+     synchronized void waitForWakeUp()
       throws InterruptedException
     {
         // don''t go back to sleep if the listener says the list is done

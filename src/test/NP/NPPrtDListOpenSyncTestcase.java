@@ -13,13 +13,15 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.util.Enumeration;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.PrinterList;
 
 import test.Testcase;
 
@@ -136,7 +138,8 @@ public class NPPrtDListOpenSyncTestcase extends Testcase
 
 	    prtDList.openSynchronously();
 
-	    Enumeration e = prtDList.getObjects();
+	    @SuppressWarnings("unused")
+      Enumeration<Printer> e = prtDList.getObjects();
             String prtDName = null;
             int listed = 0, size;
             size = prtDList.size();
@@ -206,6 +209,7 @@ public class NPPrtDListOpenSyncTestcase extends Testcase
 
 	    prtDList.openSynchronously();
 
+	    prtDList.close(); 
             failed("Should have gotten ExtendedIllegalStateException");
             } // end try block
 

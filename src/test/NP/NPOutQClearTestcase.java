@@ -13,13 +13,23 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.OutputQueueEvent;
+import com.ibm.as400.access.OutputQueueListener;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -1052,7 +1062,7 @@ $$$ TO DO $$$ - delete this line */
 	}
 
 	// create the five spooled files under different userid
-	AS400 sys = new AS400(systemObject_.getSystemName(), "javateam", "jteam1");
+	AS400 sys = new AS400(systemObject_.getSystemName(), "javateam", "jteam1".toCharArray());
 
 	// create another output queue object with the new system			// @A1A
 	OutputQueue outQ2 = new OutputQueue(sys, "/QSYS.LIB/NPJAVA.LIB/CLEARTST.OUTQ");	// @A1A

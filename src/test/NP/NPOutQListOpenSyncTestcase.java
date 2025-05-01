@@ -13,13 +13,14 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ExtendedIllegalStateException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.OutputQueueList;
 
 import test.Testcase;
 
@@ -220,7 +221,7 @@ $$$ TO DO $$$ - delete this line */
 
 	    outQList.setQueueFilter("/QSYS.LIB/NPJAVA.LIB/%ALL%.OUTQ");
 	    outQList.openSynchronously();
-
+	    outQList.close();
             failed("Should have gotten ExtendedIllegalStateException");
             }
 

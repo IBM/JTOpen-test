@@ -13,15 +13,24 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.IllegalPathNameException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.WriterJob;
+import com.ibm.as400.access.WriterJobList;
 
 import test.Testcase;
 
@@ -276,6 +285,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getQueueFilter().trim().equals("/QSYS.LIB/NPJAVA.LIB/QUETST.OUTQ")) succeeded();
             else failed("Could not set/get WriterJobList queueFilter.");
+            list.close(); 
+            
             } 
 
         catch (Exception e)
@@ -298,6 +309,7 @@ $$$ TO DO $$$ - delete this line */
 
             // Set the queueFilter, FILE is not valid
             list.setQueueFilter("/QSYS.LIB/NPJAVA.LIB/QUETST.FILE");
+            list.close(); 
 
             failed("Could set an invalid WriterJobList queueFilter Type");
             } 
@@ -333,6 +345,7 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getQueueFilter().trim().equals("")) succeeded();
             else failed("Could not remove WriterJobList queueFilter.");
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -353,6 +366,7 @@ $$$ TO DO $$$ - delete this line */
             WriterJobList list = new WriterJobList();
 
             list.setQueueFilter(null);
+            list.close(); 
             failed("Could set the queueFilter to null");
             } 
 
@@ -387,6 +401,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("queueFilter was not set, expecting empty string");
                 }
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -549,6 +565,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -625,6 +642,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -702,6 +720,7 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)
@@ -758,6 +777,7 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             }
 
     } // end Var010
@@ -821,6 +841,7 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             } 
 
         catch (Exception e)

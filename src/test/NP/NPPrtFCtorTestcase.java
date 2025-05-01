@@ -13,13 +13,12 @@
 
 package test.NP;
 
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.util.Enumeration;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.PrinterFile;
 
 import test.Testcase;
 
@@ -181,7 +180,7 @@ $$$ TO DO $$$ - delete this line */
             // create a printer file object using null system name and valid printer file name
             PrinterFile prtF = new PrinterFile(null, "/QSYS.LIB/NPJAVA.LIB/JAVAPRINT.FILE");
 
-            failed("Could use null system name.");
+            failed("Could use null system name."+prtF);
 
             } // end try block
 
@@ -204,7 +203,7 @@ $$$ TO DO $$$ - delete this line */
             // create a printer file object using valid system name and null printer file name
             PrinterFile prtF = new PrinterFile(systemObject_, null);
 
-            failed("Could use null printer name.");
+            failed("Could use null printer name."+prtF);
 
             } // end try block
 
@@ -227,7 +226,7 @@ $$$ TO DO $$$ - delete this line */
             // create a printer file object using valid system name and invalid printer file name
             PrinterFile prtF = new PrinterFile(systemObject_, "ThisIsAnInvalidName");
 
-            failed("Could use invalid printer name.");
+            failed("Could use invalid printer name."+prtF);
 
             } // end try block
 
@@ -252,7 +251,7 @@ $$$ TO DO $$$ - delete this line */
             // create a printer file object using no parameters.
             PrinterFile prtF = new PrinterFile();
 
-            succeeded();  // Note: This variation will be successful.
+            assertCondition(true, "prtF="+prtF);   // Note: This variation will be successful.
             } // end try block
 
         catch (Exception e)

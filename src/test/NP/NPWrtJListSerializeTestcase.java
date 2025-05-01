@@ -13,19 +13,28 @@
 
 package test.NP;
 
-import java.io.OutputStream;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectListEvent;
+import com.ibm.as400.access.PrintObjectListListener;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.Printer;
+import com.ibm.as400.access.WriterJob;
+import com.ibm.as400.access.WriterJobList;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -266,13 +275,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("WriterJobList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(wrtJList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the WriterJobList object
             FileInputStream fis = new FileInputStream("WriterJobList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             WriterJobList wrtJList2 = (WriterJobList)ois.readObject();
-
+            ois.close(); 
+            
             // add/remove listeners
             wrtJList2.addPropertyChangeListener(propertyListener);
             wrtJList2.removePropertyChangeListener(propertyListener);
@@ -317,12 +327,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("WriterJobList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(wrtJList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the WriterJobList object
             FileInputStream fis = new FileInputStream("WriterJobList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             WriterJobList wrtJList2 = (WriterJobList)ois.readObject();
+            ois.close(); 
 
             String system1 = wrtJList1.getSystem().getSystemName();
             String system2 = wrtJList2.getSystem().getSystemName();
@@ -374,12 +385,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("WriterJobList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(wrtJList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the WriterJobList object
             FileInputStream fis = new FileInputStream("WriterJobList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             WriterJobList wrtJList2 = (WriterJobList)ois.readObject();
+            ois.close(); 
 
             if( wrtJList1.getQueueFilter().equals(wrtJList2.getQueueFilter()) )
                 {
@@ -426,12 +438,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("WriterJobList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(wrtJList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the WriterJobList object
             FileInputStream fis = new FileInputStream("WriterJobList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             WriterJobList wrtJList2 = (WriterJobList)ois.readObject();
+            ois.close(); 
 
             if( wrtJList1.getWriterFilter().equals(wrtJList2.getWriterFilter()) )
                 {
@@ -489,12 +502,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("WriterJobList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(wrtJList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the WriterJobList object
             FileInputStream fis = new FileInputStream("WriterJobList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             WriterJobList wrtJList2 = (WriterJobList)ois.readObject();
+            ois.close(); 
 
             // now build writer job list synchronously, we have
             // to set the password because that is not serialized.
@@ -590,12 +604,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("WriterJobList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(wrtJList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the WriterJobList object
             FileInputStream fis = new FileInputStream("WriterJobList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             WriterJobList wrtJList2 = (WriterJobList)ois.readObject();
+            ois.close(); 
 
             // after de-serializing set the password
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);

@@ -13,16 +13,24 @@
 
 package test.NP;
 
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.Vector;
-import java.util.Calendar;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileList;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.Testcase;
 
@@ -239,6 +247,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getJobSystemFilter().trim().equals("TESTSYS")) succeeded();
             else failed("Could not set/get SpooledFileList JobSystemFilter.");
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -268,6 +278,8 @@ $$$ TO DO $$$ - delete this line */
 
             if (list.getJobSystemFilter().trim().equals("")) succeeded();
             else failed("Could not remove SpooledFileList JobSystemFilter.");
+            list.close(); 
+
             }
 
         catch (Exception e)
@@ -288,6 +300,8 @@ $$$ TO DO $$$ - delete this line */
             SpooledFileList list = new SpooledFileList();
 
             list.setJobSystemFilter(null);
+            list.close(); 
+
             failed("Could set the jobSystemFilter to null");
             }
 
@@ -322,6 +336,8 @@ $$$ TO DO $$$ - delete this line */
                 {
                 failed("JobSystemFilter was not set, expecting empty string");
                 }
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -534,7 +550,7 @@ $$$ TO DO $$$ - delete this line */
             // now try to build list synchrously
             splFList.openSynchronously();
 
-            int listed = 0, size;
+            int  size;
             size = splFList.size();
 
             // check to see tbat we got at 10 spooled files
@@ -634,6 +650,8 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             list.removePropertyChangeListener(propertyListener);
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -708,7 +726,9 @@ $$$ TO DO $$$ - delete this line */
                 failed("VetoableChange Listener was not invoked");
                 }
 
-            list.removeVetoableChangeListener(vetoableListener);
+            list.removeVetoableChangeListener(vetoableListener);  
+            list.close(); 
+
             } 
 
         catch (Exception e)
@@ -786,7 +806,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
-            } 
+            list.close(); 
+           } 
 
         catch (Exception e)
             {
@@ -842,6 +863,7 @@ $$$ TO DO $$$ - delete this line */
             {
             // remove the listener
             list.removeVetoableChangeListener(vetoableListener);
+            list.close(); 
             }
 
     } // end Var011
@@ -905,7 +927,8 @@ $$$ TO DO $$$ - delete this line */
             // remove the listeners again, this should be OK.
             list.removePropertyChangeListener(propertyListener);
             list.removeVetoableChangeListener(vetoableListener);
-            } 
+            list.close(); 
+           } 
 
         catch (Exception e)
             {

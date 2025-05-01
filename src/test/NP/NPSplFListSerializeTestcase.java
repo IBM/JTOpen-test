@@ -13,19 +13,29 @@
 
 package test.NP;
 
-import java.io.OutputStream;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
-
 import java.util.Vector;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.OutputQueue;
+import com.ibm.as400.access.PrintObject;
+import com.ibm.as400.access.PrintObjectListEvent;
+import com.ibm.as400.access.PrintObjectListListener;
+import com.ibm.as400.access.PrintParameterList;
+import com.ibm.as400.access.RequestNotSupportedException;
+import com.ibm.as400.access.SpooledFile;
+import com.ibm.as400.access.SpooledFileList;
+import com.ibm.as400.access.SpooledFileOutputStream;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -239,12 +249,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("SpooledFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(splFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the SpooledFileList object
             FileInputStream fis = new FileInputStream("SpooledFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             SpooledFileList splFList2 = (SpooledFileList)ois.readObject();
+            ois.close(); 
 
             // add/remove listeners
             splFList2.addPropertyChangeListener(propertyListener);
@@ -290,12 +301,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("SpooledFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(splFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the SpooledFileList object
             FileInputStream fis = new FileInputStream("SpooledFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             SpooledFileList splFList2 = (SpooledFileList)ois.readObject();
+            ois.close(); 
 
             String system1 = splFList1.getSystem().getSystemName();
             String system2 = splFList2.getSystem().getSystemName();
@@ -347,12 +359,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("SpooledFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(splFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the SpooledFileList object
             FileInputStream fis = new FileInputStream("SpooledFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             SpooledFileList splFList2 = (SpooledFileList)ois.readObject();
+            ois.close(); 
 
             if( splFList1.getFormTypeFilter().equals(splFList2.getFormTypeFilter()) )
                 {
@@ -399,12 +412,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("SpooledFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(splFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the SpooledFileList object
             FileInputStream fis = new FileInputStream("SpooledFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             SpooledFileList splFList2 = (SpooledFileList)ois.readObject();
+            ois.close(); 
 
             if( splFList1.getQueueFilter().equals(splFList2.getQueueFilter()) )
                 {
@@ -451,12 +465,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("SpooledFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(splFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the SpooledFileList object
             FileInputStream fis = new FileInputStream("SpooledFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             SpooledFileList splFList2 = (SpooledFileList)ois.readObject();
+            ois.close(); 
 
             if( splFList1.getUserFilter().equals(splFList2.getUserFilter()) )
                 {
@@ -503,12 +518,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("SpooledFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(splFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the SpooledFileList object
             FileInputStream fis = new FileInputStream("SpooledFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             SpooledFileList splFList2 = (SpooledFileList)ois.readObject();
+            ois.close(); 
 
             if( splFList1.getUserDataFilter().equals(splFList2.getUserDataFilter()) )
                 {
@@ -560,12 +576,13 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("SpooledFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(splFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the SpooledFileList object
             FileInputStream fis = new FileInputStream("SpooledFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             SpooledFileList splFList2 = (SpooledFileList)ois.readObject();
+            ois.close(); 
 
             // now build spooled file list synchronously, we have
             // to set the password because that is not serialized.
@@ -649,13 +666,14 @@ $$$ TO DO $$$ - delete this line */
             FileOutputStream fos = new FileOutputStream("SpooledFileList.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(splFList1);
-            oos.flush();
+            oos.flush(); oos.close(); 
 
             // de-serialize the SpooledFileList object
             FileInputStream fis = new FileInputStream("SpooledFileList.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             SpooledFileList splFList2 = (SpooledFileList)ois.readObject();
-
+            ois.close(); 
+            
             // after de-serializing set the password
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
             splFList2.getSystem().setPassword(charPassword);

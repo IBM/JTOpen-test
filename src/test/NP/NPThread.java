@@ -427,12 +427,6 @@ output_.println(getName()+" loop "+i);
       // create a spooled file output stream
       SpooledFileOutputStream outStream = new SpooledFileOutputStream(system, null, printerFile, outputq);
 
-      // check to see that we got a spooled file output stream reference
-      if (outStream == null)
-      {
-        error(getName()+" unable to create a SpooledFileOutputStream object");
-        return;
-      }
 
       // write buf 20 times to spooled file
       for (int i=0; i<20; i++)
