@@ -504,7 +504,7 @@ public class SecEventTestcase extends Testcase implements ConnectionListener
             {
                 resetState();
                 CommandCall cmd = new CommandCall(sys);
-                cmd.run("crtlib fred");
+                cmd.run("QSYS/crtlib fred");
                 if (onAS400_ && isNative_ && isLocal_ && !mustUseSockets_ &&
                     isRunningNativelyAndThreadsafe())
                 {

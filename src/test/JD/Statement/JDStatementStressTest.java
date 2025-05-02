@@ -2779,14 +2779,14 @@ public class JDStatementStressTest extends JDTestcase {
           }
           pexStmt = connection_
               .prepareStatement("CALL " + collection_ + ".QCMDEXC(?,?)");
-          executeCommand(pexStmt, "RMVPEXDFN DFN(" + pexKey + ")", sb);
-          executeCommand(pexStmt, "ADDPEXDFN DFN(" + pexKey
+          executeCommand(pexStmt, "QSYS/RMVPEXDFN DFN(" + pexKey + ")", sb);
+          executeCommand(pexStmt, "QSYS/ADDPEXDFN DFN(" + pexKey
               + ") TYPE(*TRACE) JOB((" + jobName
               + ")) MAXSTG(100000) INTERVAL(1) TRCTYPE(*SLTEVT) SLTEVT(*YES) MCHINST(*NONE) BASEVT((*PMCO *NONE *FORMAT2)) ",
               sb);
           executeCommand(pexStmt,
-              "STRPEX SSNID(" + pexKey + ") DFN(" + pexKey + ")", sb);
-          executeCommand(pexStmt, "CRTLIB " + pexKey, sb);
+              "QSYS/STRPEX SSNID(" + pexKey + ") DFN(" + pexKey + ")", sb);
+          executeCommand(pexStmt, "QSYS/CRTLIB " + pexKey, sb);
         }
 
         sb.append("Opening toolbox connection\n");
@@ -2875,10 +2875,10 @@ public class JDStatementStressTest extends JDTestcase {
               + pexKey + ")  RPLDTA(*YES) ", sb);
 
           executeCommand(pexStmt,
-              "PRTPEXRPT MBR(" + pexKey + ") LIB(" + pexKey
+              "QSYS/PRTPEXRPT MBR(" + pexKey + ") LIB(" + pexKey
                   + ") TYPE(*PROFILE) PROFILEOPT(*SAMPLECOUNT *PROCEDURE) ",
               sb);
-          executeCommand(pexStmt, "RMVPEXDFN DFN(" + pexKey + ")", sb);
+          executeCommand(pexStmt, "QSYS/RMVPEXDFN DFN(" + pexKey + ")", sb);
           String sql = "select count(*) from " + pexKey + ".qaypebase";
           sb.append("Executing " + sql + "\n");
           Statement s = connection_.createStatement();

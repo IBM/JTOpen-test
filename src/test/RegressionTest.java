@@ -750,7 +750,7 @@ Also accepts range patterns such as "1:3,5", which it expands to { "1", "2", "3"
     try
     {
        CommandCall cmd = new CommandCall(systemObject_);
-       if (cmd.run("CRTLIB LIB(USTEST)") != true)
+       if (cmd.run("QSYS/CRTLIB LIB(USTEST)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());

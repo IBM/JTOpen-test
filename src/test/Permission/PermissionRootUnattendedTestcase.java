@@ -96,13 +96,13 @@ protected void setup () //throws Exception
         try
         {
             
-            ccallPow_.setCommand("CRTUSRPRF USRPRF(TESTUSER43) PASSWORD(JTEAM1)");
+            ccallPow_.setCommand("QSYS/CRTUSRPRF USRPRF(TESTUSER43) PASSWORD(JTEAM1)");
             ccallPow_.run();
-            ccall_.setCommand("CRTDIR DIR(TESTDIR2)");
+            ccall_.setCommand("QSYS/CRTDIR DIR(TESTDIR2)");
             ccall_.run();
-            ccall_.setCommand("CRTDIR DIR('\"TEST\"\"DIR2\"')");
+            ccall_.setCommand("QSYS/CRTDIR DIR('\"TEST\"\"DIR2\"')");
             ccall_.run();
-            ccall_.setCommand("CRTDIR DIR('\"TEST''DIR2\"')");
+            ccall_.setCommand("QSYS/CRTDIR DIR('\"TEST''DIR2\"')");
             ccall_.run();
         }    
         catch(Exception ex) 
@@ -122,15 +122,15 @@ protected void cleanup()
 {               
       try
       {            
-          ccallPow_.setCommand("DLTUSRPRF USRPRF(TESTUSER43)");
+          ccallPow_.setCommand("QSYS/DLTUSRPRF USRPRF(TESTUSER43)");
           ccallPow_.run();
-          ccallPow_.setCommand("RMVDIR DIR(TESTDIR2)");
+          ccallPow_.setCommand("QSYS/RMVDIR DIR(TESTDIR2)");
           ccallPow_.run();
-          ccallPow_.setCommand("RMVLNK OBJLNK('/testdir2.symlink')");
+          ccallPow_.setCommand("QSYS/RMVLNK OBJLNK('/testdir2.symlink')");
           ccallPow_.run();
-          ccallPow_.setCommand("RMVDIR DIR('\"TEST\"\"DIR2\"')");
+          ccallPow_.setCommand("QSYS/RMVDIR DIR('\"TEST\"\"DIR2\"')");
           ccallPow_.run();
-          ccallPow_.setCommand("RMVDIR DIR('\"TEST''DIR2\"')");
+          ccallPow_.setCommand("QSYS/RMVDIR DIR('\"TEST''DIR2\"')");
           ccallPow_.run();
       }    
       catch(Exception ex) 

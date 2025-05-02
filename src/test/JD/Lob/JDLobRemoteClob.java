@@ -219,18 +219,18 @@ Performs setup needed before running variations.
 							      ResultSet.CONCUR_UPDATABLE);
 
 
-		    String command = "CRTUSRPRF "+userid5035+" CCSID(5035) PASSWORD(GARBAGE)"; 
+		    String command = "QSYS/CRTUSRPRF "+userid5035+" CCSID(5035) PASSWORD(GARBAGE)"; 
 		    executeSetupCommand(command);
-		    command = "CHGUSRPRF "+userid5035+" CCSID(5035)  STATUS(*ENABLED) PASSWORD("+password5035+")";
+		    command = "QSYS/CHGUSRPRF "+userid5035+" CCSID(5035)  STATUS(*ENABLED) PASSWORD("+password5035+")";
 		    executeSetupCommand(command);
-		    command = "GRTOBJAUT OBJ("+collection+") OBJTYPE(*LIB) USER("+userid5035+") AUT(*ALL)"; 
+		    command = "QSYS/GRTOBJAUT OBJ("+collection+") OBJTYPE(*LIB) USER("+userid5035+") AUT(*ALL)"; 
 		    executeSetupCommand(command);
-		    command = "GRTOBJAUT OBJ("+userid5035+") OBJTYPE(*USRPRF) USER("+userid5035+") AUT(*ALL) ";
+		    command = "QSYS/GRTOBJAUT OBJ("+userid5035+") OBJTYPE(*USRPRF) USER("+userid5035+") AUT(*ALL) ";
 		    executeSetupCommand(command); 
-		    command = "system GRTOBJAUT OBJ("+collection+") OBJTYPE(*LIB) USER("+userid5035+") AUT(*ALL) "; 
+		    command = "QSYS/GRTOBJAUT OBJ("+collection+") OBJTYPE(*LIB) USER("+userid5035+") AUT(*ALL) "; 
 		    executeSetupCommand(command); 
 
-		    command = "system GRTOBJAUT OBJ("+userid5035+") OBJTYPE(*USRPRF) USER("+System.getProperty("user.name")+") AUT(*ALL) "; 
+		    command = "QSYS/GRTOBJAUT OBJ("+userid5035+") OBJTYPE(*USRPRF) USER("+System.getProperty("user.name")+") AUT(*ALL) "; 
 		      executeSetupCommand(command); 
 
 

@@ -349,8 +349,8 @@ Ensure that IFSFile.canWrite returns false if called for a read-only file.
   public void Var011()
   {
     String library="JTIFSMISC"; 
-    String cmdStr1 = "CRTLIB "+library; 
-    String cmdStr2 = "CRTPF FILE("+library+"/FILE) RCDLEN(132) ALWUPD(*NO)";
+    String cmdStr1 = "QSYS/CRTLIB "+library; 
+    String cmdStr2 = "QSYS/CRTPF FILE("+library+"/FILE) RCDLEN(132) ALWUPD(*NO)";
     CommandCall cmd = new CommandCall(systemObject_);
     try
     {
@@ -377,11 +377,11 @@ Ensure that IFSFile.canWrite returns false if called for a read-only file.
       failed(e);
     }
 
-    cmdStr1 = "DLTF FILE("+library+"/FILE)";
-    cmdStr2 = "DLTLIB "+library;
+    cmdStr1 = "QSYS/DLTF FILE("+library+"/FILE)";
+    cmdStr2 = "QSYS/DLTLIB "+library;
     try
     {
-	cmd.setCommand("CHGJOB INQMSGRPY(*SYSRPYL)");
+	cmd.setCommand("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 	cmd.run(); 
       cmd.setCommand(cmdStr1);
       cmd.run();
@@ -851,7 +851,7 @@ Test IFSFile.setLastModified(long).
     try
     {
       CommandCall cmd =
-        new CommandCall(systemObject_, "CRTPF FILE(FILE032) RCDLEN(132)");
+        new CommandCall(systemObject_, "QSYS/CRTPF FILE(FILE032) RCDLEN(132)");
       if (cmd.run())
       {
         IFSRandomAccessFile file =
@@ -877,7 +877,7 @@ Test IFSFile.setLastModified(long).
     try
     {
       CommandCall cmd =
-        new CommandCall(systemObject_, "DLTF FILE(FILE032)");
+        new CommandCall(systemObject_, "QSYS/DLTF FILE(FILE032)");
       cmd.run();
     }
     catch(Exception e) {}
@@ -1187,7 +1187,7 @@ Ensure that IFSFile.getSubtype() returns the correct subtype of the file.
 **/
   public void Var042()
   {
-      String createCommand = "CRTPF FILE(QGPL/FILE042) RCDLEN(132)"; 
+      String createCommand = "QSYS/CRTPF FILE(QGPL/FILE042) RCDLEN(132)"; 
     IFSRandomAccessFile raFile = null;
     try
     {
@@ -1219,7 +1219,7 @@ Ensure that IFSFile.getSubtype() returns the correct subtype of the file.
       try
       {
         CommandCall cmd =
-          new CommandCall(systemObject_, "DLTF FILE(QGPL/FILE042)");
+          new CommandCall(systemObject_, "QSYS/DLTF FILE(QGPL/FILE042)");
         cmd.run();
       }
       catch(Exception e) {}
@@ -1706,14 +1706,14 @@ Note to tester: This can be a long-running variation.
       // NOTE: If we receive invalid counts here, add a DLTLIB prior to CRTLIB
       //       to verify the LIB is empty at the start.
 	try { 
-	    commandCallPwrSys_.run("DLTLIB LIB(" + libName + ")");
+	    commandCallPwrSys_.run("QSYS/DLTLIB LIB(" + libName + ")");
 	} catch (Exception e) {
 
 	    e.printStackTrace();
 
 	}
 
-	commandCall_.run("CRTLIB LIB(" + libName + ")");
+	commandCall_.run("QSYS/CRTLIB LIB(" + libName + ")");
 
 	dir1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB");
       int fileCount = 0;
@@ -1794,7 +1794,7 @@ Note to tester: This can be a long-running variation.
     try
     {
       // Set up a folder.
-      String cmdString = "CRTFLR FLR(" + folderName + ")";
+      String cmdString = "QSYS/CRTFLR FLR(" + folderName + ")";
       if (!commandCallPwrSys_.run(cmdString)) {
         System.out.println("Setup failed: " + cmdString);
         System.out.println("You may need to do a ADDDIRE for user profile " + commandCallPwrSys_.getSystem().getUserId());
@@ -1804,8 +1804,8 @@ Note to tester: This can be a long-running variation.
         }
         ok = false;
       }
-      //commandCallPwrSys_.run("CHGDLOAUT DLO("+folderName+") USRAUT((*PUBLIC *ALL))");   // This doesn't help.
-      //commandCallPwrSys_.run("ADDDLOAUT DLO("+folderName+") USRAUT(("+systemObject_.getUserId()+" *ALL))");   // This doesn't help either.
+      //commandCallPwrSys_.run("QSYS/CHGDLOAUT DLO("+folderName+") USRAUT((*PUBLIC *ALL))");   // This doesn't help.
+      //commandCallPwrSys_.run("QSYS/ADDDLOAUT DLO("+folderName+") USRAUT(("+systemObject_.getUserId()+" *ALL))");   // This doesn't help either.
 
       //dir1 = new IFSFile(systemObject_, "/QDLS/"+folderName);
       dir1 = new IFSFile(pwrSys_, "/QDLS/"+folderName);
@@ -1859,7 +1859,7 @@ Note to tester: This can be a long-running variation.
       try {
         try { Thread.sleep(500); }  // let the dust settle, just in case
         catch (Exception e) {}
-        commandCallPwrSys_.run("DLTDLO DLO(*ALL) FLR("+folderName+")");  // This deletes the folder's contents and then the folder.
+        commandCallPwrSys_.run("QSYS/DLTDLO DLO(*ALL) FLR("+folderName+")");  // This deletes the folder's contents and then the folder.
       }
       catch (Exception e) { e.printStackTrace(); }
     }
@@ -2397,7 +2397,7 @@ Test getParentFile().
     int endIndex = startIndex+numFiles;  // non-inclusive
     for (int i=startIndex; i<endIndex; ++i)
     {
-      String command = "CPYF FROMFILE(QIWS/QCUSTCDT) TOFILE("+libName+"/TEST"+i+") CRTFILE(*YES)"; 
+      String command = "QSYS/CPYF FROMFILE(QIWS/QCUSTCDT) TOFILE("+libName+"/TEST"+i+") CRTFILE(*YES)"; 
       boolean b = commandCall_.run(command);
       if (DEBUG) System.out.println(i+": "+b+" "+command);
       counter++;

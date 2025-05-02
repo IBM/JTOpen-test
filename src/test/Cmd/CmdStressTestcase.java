@@ -47,7 +47,7 @@ public class CmdStressTestcase extends ProxyStressTest implements Runnable
     {
         curntThread_ = n;
         thread_ = null;
-        crt_ = new CommandCall(sys_, "crtlib fred" + n);
+        crt_ = new CommandCall(sys_, "QSYS/crtlib fred" + n);
         dlt_ = new CommandCall(sys_);
     }
 

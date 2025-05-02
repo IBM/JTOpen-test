@@ -101,7 +101,7 @@ public class CmdCallThreadTestcase extends ThreadedTestcase
         {
             CommandCall cmd = new CommandCall(systemObject_);
 	    deleteLibrary(cmd, lib);
-            if (cmd.run("CRTLIB " + lib) == false)
+            if (cmd.run("QSYS/CRTLIB " + lib) == false)
             {
                 output_.println("Unable to create library " + cmd.getMessageList()[0].getID() + " " + cmd.getMessageList()[0].getText());
             }
@@ -139,7 +139,7 @@ public class CmdCallThreadTestcase extends ThreadedTestcase
             pipeInput_ = new PipedInputStream();
             CommandCall c  = new CommandCall(systemObject_);
             // Run a command to get a AS400Message object.
-	    c.run("DLTLIB XHB8BOGUS");
+	    c.run("QSYS/DLTLIB XHB8BOGUS");
             // Use one resulting AS400Message for comparison purposes.
             AS400Message m  = c.getMessageList()[0];
             CmdCallThread t1 = new CmdCallThread(pipeInput_, output_, this, CmdCallThread.GET_ALL, m, m.getFileName(), m.getHelp(), m.getID(), m.getLibraryName(), m.getSeverity(), m.getSubstitutionData(), m.getText(), m.getType());
@@ -267,7 +267,7 @@ public class CmdCallThreadTestcase extends ThreadedTestcase
             handleError();
             stopThreads();
             c = new CommandCall(systemObject_);
-            c.run("DLTLIB T1LIB");
+            c.run("QSYS/DLTLIB T1LIB");
 	    
         }
         catch(Exception e)

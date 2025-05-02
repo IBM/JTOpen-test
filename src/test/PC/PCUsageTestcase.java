@@ -123,7 +123,7 @@ public class PCUsageTestcase extends Testcase
       
       String currentDirectory=System.getProperty("user.dir"); 
       
-      command = "crtrpgmod module("+COLLECTION+"/"+testname+") srcfile("+COLLECTION+"/"+testname+")"+
+      command = "QSYS/crtrpgmod module("+COLLECTION+"/"+testname+") srcfile("+COLLECTION+"/"+testname+")"+
                        " dbgview(*list)  PGMINFO(*PCML) INFOSTMF('/tmp/"+testname+".pcml') ";
       boolean rc = cmd_.run(command);
       if (rc) {
@@ -134,7 +134,7 @@ public class PCUsageTestcase extends Testcase
           copyLocalFile("test/rpg/"+testname+".pcml",  currentDirectory+"/"+testname+".pcml");
           
           // Try to create without PCML
-          command = "crtrpgmod module("+COLLECTION+"/"+testname+") srcfile("+COLLECTION+"/"+testname+")"+
+          command = "QSYS/crtrpgmod module("+COLLECTION+"/"+testname+") srcfile("+COLLECTION+"/"+testname+")"+
           " dbgview(*list) ";
           rc = cmd_.run(command);
           if (!rc) { 
@@ -143,7 +143,7 @@ public class PCUsageTestcase extends Testcase
       }
 
       
-      command = "crtsrvpgm "+COLLECTION+"/"+testname+" module("+COLLECTION+"/"+testname+") export(*all)"; 
+      command = "QSYS/crtsrvpgm "+COLLECTION+"/"+testname+" module("+COLLECTION+"/"+testname+") export(*all)"; 
       rc = cmd_.run(command);
       if (!rc) System.out.println("Warning: Failure of "+command); 
 

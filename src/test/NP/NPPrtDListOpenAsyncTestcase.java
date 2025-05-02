@@ -66,7 +66,7 @@ public class NPPrtDListOpenAsyncTestcase extends Testcase
 	{
             // make sure JAVAPRINT printer device description exists
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CRTDEVPRT DEVD(JAVAPRINT) DEVCLS(*LCL) TYPE(*IPDS) MODEL(0) PORT(5) SWTSET(0) ONLINE(*NO) FONT(011)") == false)
+            if (cmd.run("QSYS/CRTDEVPRT DEVD(JAVAPRINT) DEVCLS(*LCL) TYPE(*IPDS) MODEL(0) PORT(5) SWTSET(0) ONLINE(*NO) FONT(011)") == false)
                 {
                 failed("Could not create a printer device description. "
                        + cmd.getMessageList()[0].getID()
@@ -124,7 +124,7 @@ public class NPPrtDListOpenAsyncTestcase extends Testcase
 	     $$$ TO DO $$$ - delete this line */
 
             // delete the printer device description that we created
-            if (cmd.run("DLTDEVD JAVAPRINT") == false)
+            if (cmd.run("QSYS/DLTDEVD JAVAPRINT") == false)
                 {
                 output_.println("Could not delete the printer device description we created. "
                                 + cmd.getMessageList()[0].getID()

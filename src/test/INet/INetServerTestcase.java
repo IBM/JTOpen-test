@@ -137,7 +137,7 @@ public class INetServerTestcase extends Testcase
         server.commitChanges();
       }
       CommandCall cmd = new CommandCall(pwrSys_);
-      cmd.run("DLTUSRPRF USRPRF(NETSRVTEST)");
+      cmd.run("QSYS/DLTUSRPRF USRPRF(NETSRVTEST)");
       if (okToStopNetServer_) {
         stopAndStart(true);
       }
@@ -1917,7 +1917,7 @@ public class INetServerTestcase extends Testcase
             ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 
             CommandCall cmd = new CommandCall(pwrSys_);
-            if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile ')")) {
+            if (!cmd.run("QSYS/CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile ')")) {
               failed("Setup for this variation failed.");
               AS400Message[] messagelist = cmd.getMessageList();
               for (int i = 0; i < messagelist.length; ++i)
@@ -1949,8 +1949,8 @@ public class INetServerTestcase extends Testcase
             ns.commitChanges();
             stopAndStart(true);
 
-            if (!cmd.run("DLTUSRPRF USRPRF(NETSRVTEST)"))
-               System.out.println("DLTUSRPRF USRPRF(NETSRVTEST) - failed.  Manually delete profile on AS/400");
+            if (!cmd.run("QSYS/DLTUSRPRF USRPRF(NETSRVTEST)"))
+               System.out.println("QSYS/DLTUSRPRF USRPRF(NETSRVTEST) - failed.  Manually delete profile on AS/400");
         }
         catch (Exception e)
         {
@@ -2757,7 +2757,7 @@ public class INetServerTestcase extends Testcase
       try
       {
         CommandCall cmd = new CommandCall(pwrSys_);
-        if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile ')")) {
+        if (!cmd.run("QSYS/CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile ')")) {
           System.out.println("Setup for this variation failed.");
           AS400Message[] messagelist = cmd.getMessageList();
           for (int i = 0; i < messagelist.length; ++i)
@@ -3078,8 +3078,8 @@ public class INetServerTestcase extends Testcase
         if (ns.getMinimumMessageSeverity() != minimumMessageSeverity_orig) results[6][16] = false;
         if (ns.getLANManagerAuthentication() != lanManagerAuthentication_orig) results[6][17] = false;
 
-        if (!cmd.run("DLTUSRPRF USRPRF(NETSRVTEST)"))
-          System.out.println("DLTUSRPRF USRPRF(NETSRVTEST) - failed.  Manually delete profile on AS/400");
+        if (!cmd.run("QSYS/DLTUSRPRF USRPRF(NETSRVTEST)"))
+          System.out.println("QSYS/DLTUSRPRF USRPRF(NETSRVTEST) - failed.  Manually delete profile on AS/400");
 
         boolean ok=true;
         for (int i=0; i<NUM_BLOCKS; i++) {

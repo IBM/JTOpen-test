@@ -9,7 +9,6 @@
 // CHANGE ACTIVITY:
 //
 // $A0=PTR/DCR  Release  Date        Userid      Comments
-//              v5r3     06/24/2003  jlee        Created
 //
 // END CHANGE ACTIVITY
 //

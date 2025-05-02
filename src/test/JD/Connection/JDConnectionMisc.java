@@ -1392,13 +1392,13 @@ getConnection -- test a bogus subsystem property
     for (int i = 0; i < profiles.length; i++) {
       profiles[i] = "JDCM" + i;
       try {
-        String command = "CRTUSRPRF USRPRF(" + profiles[i] + ") PASSWORD(DUMMY)"; 
+        String command = "QSYS/CRTUSRPRF USRPRF(" + profiles[i] + ") PASSWORD(DUMMY)"; 
         pwrStatement_.executeUpdate("CALL QSYS2.QCMDEXC('"
             + command+ "')");
       } catch (Exception e) {
 
       }
-      String command = "CHGUSRPRF USRPRF("+ profiles[i] + ") PASSWORD(" + getPassword(profiles[i])+")"; 
+      String command = "QSYS/CHGUSRPRF USRPRF("+ profiles[i] + ") PASSWORD(" + getPassword(profiles[i])+")"; 
       pwrStatement_.executeUpdate("CALL QSYS2.QCMDEXC('"+command  + "') ");
 
     }
@@ -1409,7 +1409,7 @@ getConnection -- test a bogus subsystem property
       profiles[i] = "JDCM" + i;
       try {
         pwrStatement_.executeUpdate("CALL QSYS2.QCMDEXC('"
-            + "DLTUSRPRF USRPRF(" + profiles[i] + ") ')");
+            + "QSYS/DLTUSRPRF USRPRF(" + profiles[i] + ") ')");
       } catch (Exception e) {
         e.printStackTrace();
       }

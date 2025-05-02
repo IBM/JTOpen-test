@@ -75,19 +75,19 @@ public class JDCleanUsrSpc {
     CommandCall commandCall = new CommandCall(as400);
 
  
-    String deleteRwCommand = "DLTUSRSPC QUSRSYS/QRW*";
+    String deleteRwCommand = "QSYS/DLTUSRSPC QUSRSYS/QRW*";
 
     System.out.println("Runnning :"+deleteRwCommand);
 
     commandCall.run(deleteRwCommand); 
 
-    String deleteP0ZCommand = "DLTUSRSPC QUSRSYS/QP0Z*";
+    String deleteP0ZCommand = "QSYS/DLTUSRSPC QUSRSYS/QP0Z*";
 
     System.out.println("Runnning :"+deleteP0ZCommand);
 
     commandCall.run(deleteP0ZCommand); 
 
-    String deleteJTCommand = "DLTUSRSPC QUSRSYS/QJT*";
+    String deleteJTCommand = "QSYS/DLTUSRSPC QUSRSYS/QJT*";
 
     System.out.println("Runnning :"+deleteJTCommand);
 

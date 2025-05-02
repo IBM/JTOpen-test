@@ -1409,7 +1409,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
 
             // It turns out that this creates the NOTEXIST message queue, so delete that!
             CommandCall commandCall = new CommandCall(pwrSys_);
-            boolean success = commandCall.run("DLTMSGQ QSYS/NOTEXIST");
+            boolean success = commandCall.run("QSYS/DLTMSGQ QSYS/NOTEXIST");
             if (!success)
             {
                 AS400Message[] messageList = commandCall.getMessageList();
@@ -2027,13 +2027,13 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             // Remove the password.
             CommandCall command = new CommandCall(pwrSys_);
-            command.run("CHGUSRPRF USRPRF(" + user_ + ") PASSWORD(*NONE)");
+            command.run("QSYS/CHGUSRPRF USRPRF(" + user_ + ") PASSWORD(*NONE)");
 
             RUser u = new RUser(pwrSys_, user_);
             Object value = u.getAttributeValue(RUser.NO_PASSWORD_INDICATOR);
 
             // Stick the password back in.
-            command.run("CHGUSRPRF USRPRF(" + user_ + ") PASSWORD(JTEAM1)");
+            command.run("QSYS/CHGUSRPRF USRPRF(" + user_ + ") PASSWORD(JTEAM1)");
 
             assertCondition(((Boolean)value).booleanValue() == true);
         }

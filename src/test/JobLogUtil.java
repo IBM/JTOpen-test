@@ -124,15 +124,15 @@ public class JobLogUtil {
     String filename = directory+"/"+name+"."+number+"."+jobName+"."+jobUser+"."+jobNumber+".txt"; 
     String commandString; 
     CommandCall commandCall = new CommandCall(as400); 
-    commandString = "QSH CMD('rm -f "+filename+"2; rm -f "+filename+"; touch -C 819 "+filename+"')";
+    commandString = "QSYS/QSH CMD('rm -f "+filename+"2; rm -f "+filename+"; touch -C 819 "+filename+"')";
     commandCall.run(commandString); 
     
     
-    commandString = "CPYSPLF FILE("+name+") TOFILE(*TOSTMF) JOB("+jobNumber+"/"+jobUser+"/"+jobName+") SPLNBR("+number+") TOSTMF('"+filename+"2')  STMFOPT(*REPLACE)   ";    
+    commandString = "QSYS/CPYSPLF FILE("+name+") TOFILE(*TOSTMF) JOB("+jobNumber+"/"+jobUser+"/"+jobName+") SPLNBR("+number+") TOSTMF('"+filename+"2')  STMFOPT(*REPLACE)   ";    
     commandCall.run(commandString);
     
     // TODO:  Remove the ignore messages   
-    commandString = "QSH CMD('cat "+filename+"2 > "+filename+"')";
+    commandString = "QSYS/QSH CMD('cat "+filename+"2 > "+filename+"')";
     commandCall.run(commandString); 
 
     return filename; 

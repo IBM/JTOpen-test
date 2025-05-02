@@ -97,20 +97,20 @@ Performs setup needed before running variations.
          // may very well have been done already.
          CommandCall cmd = new CommandCall (systemObject_);
          try {
-            cmd.run ("ADDRDBDIRE RDB(" + remoteSystem_ + ") RMTLOCNAME("
+            cmd.run ("QSYS/ADDRDBDIRE RDB(" + remoteSystem_ + ") RMTLOCNAME("
                      + remoteSystem_ + " *IP)");
          } catch (Exception e) {
             // Ignore.
          }
 
          try {
-            cmd.run ("CHGSYSVAL SYSVAL(QRETSVRSEC) VALUE('1')");
+            cmd.run ("QSYS/CHGSYSVAL SYSVAL(QRETSVRSEC) VALUE('1')");
          } catch (Exception e) {
             // Ignore.
          }
 
          try {
-            cmd.run ("ADDSVRAUTE USRPRF(" + userId_ 
+            cmd.run ("QSYS/ADDSVRAUTE USRPRF(" + userId_ 
                      + ") SERVER(" + remoteSystem_ + ") USRID(" + userId_
                      + ") PASSWORD(" + PasswordVault.decryptPasswordLeak(encryptedPassword_) + ")");
          } catch (Exception e) {

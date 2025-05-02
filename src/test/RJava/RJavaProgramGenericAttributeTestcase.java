@@ -536,10 +536,6 @@ delete() - A java program.
         catch (Exception e) {
             failed (e, "Unexpected Exception");
         }
-        finally {
-            // Recreate it so others can use it.
-            RJavaTest.createJavaProgram(systemObject_, RJavaTest.jarFilePath_);
-        }
     }
 
 

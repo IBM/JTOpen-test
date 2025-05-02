@@ -694,7 +694,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		    execStatement(cmdStatement, "create schema "+envLibrary, true);
 
 		    execStatement(cmdStatement, "CALL QSYS.QCMDEXC('"+
-				  "GRTOBJAUT OBJ("+envLibrary+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*ALL)                            ',0000000080.00000)", true); 
+				  "QSYS/GRTOBJAUT OBJ("+envLibrary+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*ALL)                            ',0000000080.00000)", true); 
 
 		    execStatement(cmdStatement, "create procedure "+
 				  envLibrary+".CMD(IN CMDSTR VARCHAR(1024),IN CMDLEN DECIMAL(15,5)) "+
@@ -765,7 +765,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	       String command; 
 
 
-	       serverCommand("GRTOBJAUT OBJ("+envLibrary+"/"+library+") OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true);
+	       serverCommand("QSYS/GRTOBJAUT OBJ("+envLibrary+"/"+library+") OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true);
 
 
 	        //
@@ -969,8 +969,8 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			//
 			String sourceFile = nativeBaseDir + "/" + filename;
 			String destFile = funcpath + "/" + filename;
-			String command = "copy OBJ('" + sourceFile + "') TODIR('" + funcpath + "') ";
-			serverCommand("rmvlnk OBJLNK('" + destFile + "')", true /* ignore error */);
+			String command = "QSYS/copy OBJ('" + sourceFile + "') TODIR('" + funcpath + "') ";
+			serverCommand("QSYS/rmvlnk OBJLNK('" + destFile + "')", true /* ignore error */);
 			serverCommand(command, false);
 			serverShellCommand("chmod +rx " + destFile, false);
 
@@ -1166,10 +1166,10 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
 
 		public static void showFile(String file) throws Exception {
-			serverCommand("CRTSRCPF FILE(QGPL/JDJSTPSHOW) RCDLEN(300)", true);
-			serverCommand("GRTOBJAUT OBJ(QGPL/JDJSTPSHOW) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true);
+			serverCommand("QSYS/CRTSRCPF FILE(QGPL/JDJSTPSHOW) RCDLEN(300)", true);
+			serverCommand("QSYS/GRTOBJAUT OBJ(QGPL/JDJSTPSHOW) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true);
 
-			serverCommand("CPYFRMSTMF FROMSTMF('" + file + "') "
+			serverCommand("QSYS/CPYFRMSTMF FROMSTMF('" + file + "') "
 					+ "TOMBR('/QSYS.LIB/QGPL.LIB/JDJSTPSHOW.FILE/JDJSTPSHOW.MBR') MBROPT(*REPLACE)", true);
 			ResultSet rs = cmdStatement.executeQuery("select SRCDTA from QGPL.JDJSTPSHOW");
 
@@ -1184,10 +1184,10 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
 		public static String getFile(String file) throws Exception {
 			StringBuffer sb = new StringBuffer();
-			serverCommand("CRTSRCPF FILE(QGPL/JDJSTPSHOW) RCDLEN(300)", true);
-			serverCommand("GRTOBJAUT OBJ(QGPL/JDJSTPSHOW) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true);
+			serverCommand("QSYS/CRTSRCPF FILE(QGPL/JDJSTPSHOW) RCDLEN(300)", true);
+			serverCommand("QSYS/GRTOBJAUT OBJ(QGPL/JDJSTPSHOW) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true);
 
-			serverCommand("CPYFRMSTMF FROMSTMF('" + file + "') "
+			serverCommand("QSYS/CPYFRMSTMF FROMSTMF('" + file + "') "
 					+ "TOMBR('/QSYS.LIB/QGPL.LIB/JDJSTPSHOW.FILE/JDJSTPSHOW.MBR') MBROPT(*REPLACE)", true);
 			ResultSet rs = cmdStatement.executeQuery("select SRCDTA from QGPL.JDJSTPSHOW");
 
@@ -1296,7 +1296,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			}
 
 			serverShellCommand("cd " + nativeBaseDir + ";chmod a+rx " + destClasses, false);
-			String command = "cpy OBJ('" + destClasses + "') TODIR('" + funcpath + "')  REPLACE(*YES) ";
+			String command = "QSYS/CPY OBJ('" + destClasses + "') TODIR('" + funcpath + "')  REPLACE(*YES) ";
 			try {
 				serverCommand(command, false);
 			} catch (Exception e) {
@@ -1349,9 +1349,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      //
 	      // Make sure things exist
 	      // 
-		  serverCommand("CRTLIB "+library, true);
-		  serverCommand("CRTSRCPF FILE("+library+"/H) RCDLEN(192)", true);
-                  serverCommand("GRTOBJAUT OBJ("+library+"/H) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)  ", true);
+		  serverCommand("QSYS/CRTLIB "+library, true);
+		  serverCommand("QSYS/CRTSRCPF FILE("+library+"/H) RCDLEN(192)", true);
+                  serverCommand("QSYS/GRTOBJAUT OBJ("+library+"/H) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)  ", true);
 
 		  String command; 
 	     //
@@ -1430,12 +1430,12 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      //
 	      // Make sure things exist and authority is granted
 	      //
-		  serverCommand("CRTLIB "+library, true);
-		  serverCommand("GRTOBJAUT OBJ("+library+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*ALL)  ", true); 
-		  serverCommand("CRTSRCPF FILE("+library+"/QCSRC) RCDLEN(192)", true);
-		  serverCommand("GRTOBJAUT OBJ("+library+"/QCSRC) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)  ", true); 
-		  serverCommand("CRTSRCPF FILE("+library+"/QSQLTEMP) RCDLEN(192)", true);
-		  serverCommand("GRTOBJAUT OBJ("+library+"/QSQLTEMP) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)  ", true); 		  
+		  serverCommand("QSYS/CRTLIB "+library, true);
+		  serverCommand("QSYS/GRTOBJAUT OBJ("+library+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*ALL)  ", true); 
+		  serverCommand("QSYS/CRTSRCPF FILE("+library+"/QCSRC) RCDLEN(192)", true);
+		  serverCommand("QSYS/GRTOBJAUT OBJ("+library+"/QCSRC) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)  ", true); 
+		  serverCommand("QSYS/CRTSRCPF FILE("+library+"/QSQLTEMP) RCDLEN(192)", true);
+		  serverCommand("QSYS/GRTOBJAUT OBJ("+library+"/QSQLTEMP) OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)  ", true); 		  
 
 	     //
 	     // Delete all the files that we are going to be using.
@@ -1480,13 +1480,13 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	     // Create the program
 	     //
 		  if (useNewActivationGroup) {
-		      command = "CRTPGM "+library+"/"+upperBase+" MODULE("+library+"/"+upperBase+") ACTGRP(*NEW)";
+		      command = "QSYS/CRTPGM "+library+"/"+upperBase+" MODULE("+library+"/"+upperBase+") ACTGRP(*NEW)";
 		  } else {
-		      command = "CRTPGM "+library+"/"+upperBase+" MODULE("+library+"/"+upperBase+") ACTGRP(*CALLER)";
+		      command = "QSYS/CRTPGM "+library+"/"+upperBase+" MODULE("+library+"/"+upperBase+") ACTGRP(*CALLER)";
 		  }
 		  serverCommand(command, false);
 
-		  command = "GRTOBJAUT OBJ("+library+"/"+upperBase+") OBJTYPE(*PGM) USER(*PUBLIC) AUT(*ALL)  ";
+		  command = "QSYS/GRTOBJAUT OBJ("+library+"/"+upperBase+") OBJTYPE(*PGM) USER(*PUBLIC) AUT(*ALL)  ";
 		  serverCommand(command, false);
 
 	     //
@@ -1499,11 +1499,11 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	     // Create the srvpgm if CLI
 	     //
 		  if (upperBase.startsWith("CLI")) {
-		      command = "CRTSRVPGM "+library+"/"+upperBase+" MODULE("+library+"/"+upperBase+")  EXPORT(*ALL)";
+		      command = "QSYS/CRTSRVPGM "+library+"/"+upperBase+" MODULE("+library+"/"+upperBase+")  EXPORT(*ALL)";
 		      serverCommand(command, false);
 		  }
 
-		  command = "GRTOBJAUT OBJ("+library+"/"+upperBase+") OBJTYPE(*ALL) USER(*PUBLIC) AUT(*USE)";
+		  command = "QSYS/GRTOBJAUT OBJ("+library+"/"+upperBase+") OBJTYPE(*ALL) USER(*PUBLIC) AUT(*USE)";
 		  serverCommand(command, false);
 
 	      } else {
@@ -1569,16 +1569,16 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      //
               // Make sure things exist
               // 
-	      serverCommand("CRTLIB "+library, true);
-	      serverCommand("GRTOBJAUT OBJ("+library+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*ALL)  ", true); 
+	      serverCommand("QSYS/CRTLIB "+library, true);
+	      serverCommand("QSYS/GRTOBJAUT OBJ("+library+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*ALL)  ", true); 
 
 
-	      command =  " system \"CRTBNDRPG PGM("+library+"/"+upperBase+") SRCSTMF('"+destFile+"')\"";
-	      command =  " system \"CRTSQLRPGI OBJ("+library+"/"+upperBase+") SRCSTMF('"+destFile+"')\"";
+	      command =  " system \"QSYS/CRTBNDRPG PGM("+library+"/"+upperBase+") SRCSTMF('"+destFile+"')\"";
+	      command =  " system \"QSYS/CRTSQLRPGI OBJ("+library+"/"+upperBase+") SRCSTMF('"+destFile+"')\"";
 	      createModCommand=command;
 	      serverShellCommand(command, false);
 
-	      command = "GRTOBJAUT OBJ("+library+"/"+upperBase+") OBJTYPE(*PGM) USER(*PUBLIC) AUT(*ALL)  ";
+	      command = "QSYS/GRTOBJAUT OBJ("+library+"/"+upperBase+") OBJTYPE(*PGM) USER(*PUBLIC) AUT(*ALL)  ";
 	      serverShellCommand(command, false);
 
              //
@@ -1657,13 +1657,13 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			}
 
 			// compile
-			serverCommand("CRTCMOD MODULE(" + library1 + "/" + srvpgm + ") SRCSTMF('" + destFile + "') ", false);
-			serverCommand("GRTOBJAUT OBJ(" + library1 + "/" + srvpgm + " ) OBJTYPE(*module ) USER(*PUBLIC) AUT(*ALL)",
+			serverCommand("QSYS/CRTCMOD MODULE(" + library1 + "/" + srvpgm + ") SRCSTMF('" + destFile + "') ", false);
+			serverCommand("QSYS/GRTOBJAUT OBJ(" + library1 + "/" + srvpgm + " ) OBJTYPE(*module ) USER(*PUBLIC) AUT(*ALL)",
 					false);
 
 			// build srvpgm
-			serverCommand("CRTSRVPGM SRVPGM(" + library1 + "/" + srvpgm + ") EXPORT(*ALL)", false);
-			serverCommand("GRTOBJAUT OBJ(" + library1 + "/" + srvpgm + ") OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*ALL)  ",
+			serverCommand("QSYS/CRTSRVPGM SRVPGM(" + library1 + "/" + srvpgm + ") EXPORT(*ALL)", false);
+			serverCommand("QSYS/GRTOBJAUT OBJ(" + library1 + "/" + srvpgm + ") OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*ALL)  ",
 					false);
 		}
 
@@ -1686,12 +1686,12 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			}
 
 			// compile
-			serverCommand("CRTCPPMOD MODULE(" + library1 + "/" + srvpgm + ") SRCSTMF('" + destFile + "') ", false);
-			serverCommand("GRTOBJAUT OBJ(" + library1 + "/" + srvpgm + " ) OBJTYPE(*module ) USER(*PUBLIC) AUT(*ALL)",
+			serverCommand("QSYS/CRTCPPMOD MODULE(" + library1 + "/" + srvpgm + ") SRCSTMF('" + destFile + "') ", false);
+			serverCommand("QSYS/GRTOBJAUT OBJ(" + library1 + "/" + srvpgm + " ) OBJTYPE(*module ) USER(*PUBLIC) AUT(*ALL)",
 					false);
 			// build srvpgm
-			serverCommand("CRTSRVPGM SRVPGM(" + library1 + "/" + srvpgm + ") EXPORT(*ALL)", false);
-			serverCommand("GRTOBJAUT OBJ(" + library1 + "/" + srvpgm + ") OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*ALL)  ",
+			serverCommand("QSYS/CRTSRVPGM SRVPGM(" + library1 + "/" + srvpgm + ") EXPORT(*ALL)", false);
+			serverCommand("QSYS/GRTOBJAUT OBJ(" + library1 + "/" + srvpgm + ") OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*ALL)  ",
 					false);
 
 		}
@@ -2078,10 +2078,10 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
                  "  javac -J-Dremoved.java.version=1.3 "+  javaFile+" 2>&1", false);
 	     serverShellCommand("cd "+nativeBaseDir+"; chmod a+rx "+destFile, false);
 	     serverShellCommand("cd "+nativeBaseDir+"; chmod a+rx "+destClasses, false);
-	     serverCommand("cpy OBJ('"+destFile+"') TODIR('"+funcpath+"')  REPLACE(*YES) ", false);
-	     serverCommand("cpy OBJ('"+destClasses+"') TODIR('"+funcpath+"')  REPLACE(*YES) ", false);
+	     serverCommand("QSYS/CPY OBJ('"+destFile+"') TODIR('"+funcpath+"')  REPLACE(*YES) ", false);
+	     serverCommand("QSYS/CPY OBJ('"+destClasses+"') TODIR('"+funcpath+"')  REPLACE(*YES) ", false);
              System.out.println("Copying from "+destSer); 
-	     serverCommand("cpy OBJ('"+destSer+"') TODIR('"+funcpath+"')  REPLACE(*YES) ", false);
+	     serverCommand("QSYS/CPY OBJ('"+destSer+"') TODIR('"+funcpath+"')  REPLACE(*YES) ", false);
 
 	     //
              // No exceptions taken, we're done
@@ -2472,7 +2472,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
          //
          // Clean up
          // 
-	 serverCommand("DLTF "+envLibrary+"/"+serverPf, true);
+	 serverCommand("QSYS/DLTF "+envLibrary+"/"+serverPf, true);
 
      } /* getFileFromServer */ 
 
@@ -2710,13 +2710,13 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
       */
      public static void serverShellCommand(String command, boolean ignoreError) throws Exception {
 	 command = fixQuotes(command); 
-	 command = "QSH CMD('"+command+"')";
+	 command = "QSYS/QSH CMD('"+command+"')";
 	 serverCommand(command, ignoreError); 
      } 
 
      public static void serverShellCommandForUser(String command, boolean ignoreError, String userid, String password) throws Exception {
          command = fixQuotes(command); 
-         command = "QSH CMD('"+command+"')";
+         command = "QSYS/QSH CMD('"+command+"')";
          serverCommandForUser(command, ignoreError, userid, password); 
    } 
 
@@ -3510,10 +3510,10 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    serverCommand("CRTCMOD MODULE("+envLibrary+"/BLOBTOCLOB) SRCFILE("+envLibrary+"/BLOBTOCLOB) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/BLOBTOCLOB) OBJTYPE(*MODULE) USER(*PUBLIC) AUT(*ALL) ", false); 
-	    serverCommand("CRTSRVPGM  SRVPGM(   "+envLibrary+"/BLOBTOCLOB) MODULE( "+envLibrary+"/BLOBTOCLOB) EXPORT(*ALL)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/BLOBTOCLOB) OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTCMOD MODULE("+envLibrary+"/BLOBTOCLOB) SRCFILE("+envLibrary+"/BLOBTOCLOB) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/BLOBTOCLOB) OBJTYPE(*MODULE) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/BLOBTOCLOB) MODULE( "+envLibrary+"/BLOBTOCLOB) EXPORT(*ALL)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/BLOBTOCLOB) OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -3586,10 +3586,10 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    serverCommand("CRTCMOD MODULE("+envLibrary+"/GETJOBMEM) SRCFILE("+envLibrary+"/GETJOBMEM) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/GETJOBMEM) OBJTYPE(*MODULE) USER(*PUBLIC) AUT(*ALL) ", false); 
-	    serverCommand("CRTSRVPGM  SRVPGM(   "+envLibrary+"/GETJOBMEM) MODULE( "+envLibrary+"/GETJOBMEM) EXPORT(*ALL)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/GETJOBMEM) OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTCMOD MODULE("+envLibrary+"/GETJOBMEM) SRCFILE("+envLibrary+"/GETJOBMEM) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/GETJOBMEM) OBJTYPE(*MODULE) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/GETJOBMEM) MODULE( "+envLibrary+"/GETJOBMEM) EXPORT(*ALL)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/GETJOBMEM) OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -3690,9 +3690,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    serverCommand("CRTCMOD MODULE("+envLibrary+"/GETJOBNAME) SRCFILE("+envLibrary+"/GETJOBNAME) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
-	    serverCommand("CRTSRVPGM  SRVPGM(   "+envLibrary+"/GETJOBNAME) MODULE( "+envLibrary+"/GETJOBNAME) EXPORT(*ALL)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/GETJOBNAME) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTCMOD MODULE("+envLibrary+"/GETJOBNAME) SRCFILE("+envLibrary+"/GETJOBNAME) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
+	    serverCommand("QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/GETJOBNAME) MODULE( "+envLibrary+"/GETJOBNAME) EXPORT(*ALL)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/GETJOBNAME) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -3849,14 +3849,14 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    String command =  "CRTCMOD MODULE("+envLibrary+"/RETCA) SRCFILE("+envLibrary+"/RETCA) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)"; 
+	    String command =  "QSYS/CRTCMOD MODULE("+envLibrary+"/RETCA) SRCFILE("+envLibrary+"/RETCA) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)"; 
 	    try {
 		serverCommand(command, false);
 	    } catch (Exception e) {
 		System.out.println("Command failed "+command); 
 		throw e; 
 	    }
-	    command = "CRTSRVPGM  SRVPGM(   "+envLibrary+"/RETCA) MODULE( "+envLibrary+"/RETCA) EXPORT(*ALL)";
+	    command = "QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/RETCA) MODULE( "+envLibrary+"/RETCA) EXPORT(*ALL)";
 	    try { 
 		serverCommand(command, false);
 	    } catch (Exception e) {
@@ -3864,7 +3864,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		throw e; 
 	    }
 
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/RETCA) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/RETCA) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -3973,9 +3973,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    serverCommand("CRTCMOD MODULE("+envLibrary+"/GETSUBSYS) SRCFILE("+envLibrary+"/GETSUBSYS) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
-	    serverCommand("CRTSRVPGM  SRVPGM(   "+envLibrary+"/GETSUBSYS) MODULE( "+envLibrary+"/GETSUBSYS) EXPORT(*ALL)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/GETSUBSYS) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTCMOD MODULE("+envLibrary+"/GETSUBSYS) SRCFILE("+envLibrary+"/GETSUBSYS) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
+	    serverCommand("QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/GETSUBSYS) MODULE( "+envLibrary+"/GETSUBSYS) EXPORT(*ALL)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/GETSUBSYS) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 	  /* register the function  */
 	    Statement s = null; 
 	    try {
@@ -4049,21 +4049,21 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    String command = "CRTCMOD MODULE("+envLibrary+"/ALLCHARS) SRCFILE("+envLibrary+"/ALLCHARS) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)";
+	    String command = "QSYS/CRTCMOD MODULE("+envLibrary+"/ALLCHARS) SRCFILE("+envLibrary+"/ALLCHARS) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)";
 	    try { 
 	    serverCommand(command, false);
 	    } catch (Exception e) {
 		System.out.println("Exception on "+command); 
 		throw e; 
 	    }
-	    command = "CRTSRVPGM  SRVPGM(   "+envLibrary+"/ALLCHARS) MODULE( "+envLibrary+"/ALLCHARS) EXPORT(*ALL)";
+	    command = "QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/ALLCHARS) MODULE( "+envLibrary+"/ALLCHARS) EXPORT(*ALL)";
 	    try { 
 	    serverCommand(command, false);
 	    } catch (Exception e) {
 		System.out.println("Exception on "+command); 
 		throw e; 
 	    }
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/ALLCHARS) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/ALLCHARS) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -4141,21 +4141,21 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    String command = "CRTCMOD MODULE("+envLibrary+"/ALLCHARS2) SRCFILE("+envLibrary+"/ALLCHARS2) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)";
+	    String command = "QSYS/CRTCMOD MODULE("+envLibrary+"/ALLCHARS2) SRCFILE("+envLibrary+"/ALLCHARS2) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)";
 	    try { 
 	    serverCommand(command, false);
 	    } catch (Exception e) {
 		System.out.println("Exception on "+command); 
 		throw e; 
 	    }
-	    command = "CRTSRVPGM  SRVPGM(   "+envLibrary+"/ALLCHARS2) MODULE( "+envLibrary+"/ALLCHARS2) EXPORT(*ALL)";
+	    command = "QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/ALLCHARS2) MODULE( "+envLibrary+"/ALLCHARS2) EXPORT(*ALL)";
 	    try { 
 	    serverCommand(command, false);
 	    } catch (Exception e) {
 		System.out.println("Exception on "+command); 
 		throw e; 
 	    }
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/ALLCHARS2) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/ALLCHARS2) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -4240,14 +4240,14 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    String command = "CRTCMOD MODULE("+envLibrary+"/CHARRANGE) SRCFILE("+envLibrary+"/CHARRANGE) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)";
+	    String command = "QSYS/CRTCMOD MODULE("+envLibrary+"/CHARRANGE) SRCFILE("+envLibrary+"/CHARRANGE) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)";
 	    try { 
 	    serverCommand(command, false);
 	    } catch (Exception e) {
 		System.out.println("Exception on "+command); 
 		throw e; 
 	    }
-	    command = "CRTSRVPGM  SRVPGM(   "+envLibrary+"/CHARRANGE) MODULE( "+envLibrary+"/CHARRANGE) EXPORT(*ALL)";
+	    command = "QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/CHARRANGE) MODULE( "+envLibrary+"/CHARRANGE) EXPORT(*ALL)";
 	    try { 
 	    serverCommand(command, false);
 	    } catch (Exception e) {
@@ -4255,7 +4255,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		throw e; 
 	    }
 	    try { 
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/CHARRANGE) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/CHARRANGE) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false);
 	    } catch (Exception e) {
 		System.out.println("Exception on "+command); 
 		System.out.println("Continuing "); 
@@ -4376,14 +4376,14 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    String command = "CRTCMOD MODULE("+envLibrary+"/CHARRANGEH) SRCFILE("+envLibrary+"/CHARRANGEH) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)";
+	    String command = "QSYS/CRTCMOD MODULE("+envLibrary+"/CHARRANGEH) SRCFILE("+envLibrary+"/CHARRANGEH) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)";
 	    try { 
 	    serverCommand(command, false);
 	    } catch (Exception e) {
 		System.out.println("Exception on "+command); 
 		throw e; 
 	    }
-	    command = "CRTSRVPGM  SRVPGM(   "+envLibrary+"/CHARRANGEH) MODULE( "+envLibrary+"/CHARRANGEH) EXPORT(*ALL)";
+	    command = "QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/CHARRANGEH) MODULE( "+envLibrary+"/CHARRANGEH) EXPORT(*ALL)";
 	    try { 
 	    serverCommand(command, false);
 	    } catch (Exception e) {
@@ -4391,7 +4391,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		throw e; 
 	    }
 	    try { 
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/CHARRANGEH) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/CHARRANGEH) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false);
 	    } catch (Exception e) {
 		System.out.println("Exception on "+command); 
 		System.out.println("Continuing "); 
@@ -4457,9 +4457,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    serverCommand("CRTCMOD MODULE("+envLibrary+"/CURTIME) SRCFILE("+envLibrary+"/CURTIME) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
-	    serverCommand("CRTSRVPGM  SRVPGM(   "+envLibrary+"/CURTIME) MODULE( "+envLibrary+"/CURTIME) EXPORT(*ALL)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/CURTIME) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTCMOD MODULE("+envLibrary+"/CURTIME) SRCFILE("+envLibrary+"/CURTIME) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
+	    serverCommand("QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/CURTIME) MODULE( "+envLibrary+"/CURTIME) EXPORT(*ALL)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/CURTIME) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -4504,17 +4504,17 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     }; 
 
     public static void createSourceFile(String library1, String filename) throws Exception { 
-	serverCommand("DLTF     "+library1+"/"+filename, true);
-	serverCommand("CRTSRCPF "+library1+"/"+filename +" RCDLEN(192)", true);
-	serverCommand("GRTOBJAUT OBJ("+library1+"/"+filename+") OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true); 
-	serverCommand("ADDPFM   "+library1+"/"+filename+" "+filename, true);
+	serverCommand("QSYS/DLTF     "+library1+"/"+filename, true);
+	serverCommand("QSYS/CRTSRCPF "+library1+"/"+filename +" RCDLEN(192)", true);
+	serverCommand("QSYS/GRTOBJAUT OBJ("+library1+"/"+filename+") OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true); 
+	serverCommand("QSYS/ADDPFM   "+library1+"/"+filename+" "+filename, true);
     }
 
     public static void createSourceFile(Connection c, String library1, String filename) throws Exception { 
-	serverCommand(c,"DLTF     "+library1+"/"+filename, true);
-	serverCommand(c,"CRTSRCPF "+library1+"/"+filename +" RCDLEN(192)", true);
-	serverCommand(c,"GRTOBJAUT OBJ("+library1+"/"+filename+") OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true); 
-	serverCommand(c,"ADDPFM   "+library1+"/"+filename+" "+filename, true);
+	serverCommand(c,"QSYS/DLTF     "+library1+"/"+filename, true);
+	serverCommand(c,"QSYS/CRTSRCPF "+library1+"/"+filename +" RCDLEN(192)", true);
+	serverCommand(c,"QSYS/GRTOBJAUT OBJ("+library1+"/"+filename+") OBJTYPE(*file) USER(*PUBLIC) AUT(*ALL)", true); 
+	serverCommand(c,"QSYS/ADDPFM   "+library1+"/"+filename+" "+filename, true);
     }
 
 
@@ -4537,9 +4537,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    serverCommand("CRTCMOD MODULE("+envLibrary+"/FILETIME) SRCFILE("+envLibrary+"/FILETIME) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
-	    serverCommand("CRTSRVPGM  SRVPGM(   "+envLibrary+"/FILETIME) MODULE( "+envLibrary+"/FILETIME) EXPORT(*ALL)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/FILETIME) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTCMOD MODULE("+envLibrary+"/FILETIME) SRCFILE("+envLibrary+"/FILETIME) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
+	    serverCommand("QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/FILETIME) MODULE( "+envLibrary+"/FILETIME) EXPORT(*ALL)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/FILETIME) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -4602,9 +4602,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		ps.executeUpdate();
 	    }
 	    /* Compile the program */
-	    serverCommand("CRTCMOD MODULE("+envLibrary+"/FILEEXISTS) SRCFILE("+envLibrary+"/FILEEXISTS) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
-	    serverCommand("CRTSRVPGM  SRVPGM(   "+envLibrary+"/FILEEXISTS) MODULE( "+envLibrary+"/FILEEXISTS) EXPORT(*ALL)", false);
-	    serverCommand("GRTOBJAUT OBJ("+       envLibrary+"/FILEEXISTS) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	    serverCommand("QSYS/CRTCMOD MODULE("+envLibrary+"/FILEEXISTS) SRCFILE("+envLibrary+"/FILEEXISTS) OUTPUT(*print) DBGVIEW(*ALL) OPTION(*SYSINCPATH *LOGMSG) SYSIFCOPT(*IFSIO)", false);
+	    serverCommand("QSYS/CRTSRVPGM  SRVPGM(   "+envLibrary+"/FILEEXISTS) MODULE( "+envLibrary+"/FILEEXISTS) EXPORT(*ALL)", false);
+	    serverCommand("QSYS/GRTOBJAUT OBJ("+       envLibrary+"/FILEEXISTS) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 
 	  /* register the function  */
 	    Statement s = null; 
@@ -4758,27 +4758,27 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
      "    ccsid = jobi400.Coded_Char_Set_ID; ",
      "    if (ccsid == 290 || ccsid == 5026 ) {                              ",
      "        savedCcsid=ccsid;                                             ",
-     "    sprintf(buffer, \"CHGJOB JOB(%s) CCSID(37)\",  jobId);           ", 
+     "    sprintf(buffer, \"QSYS/CHGJOB JOB(%s) CCSID(37)\",  jobId);           ", 
      "    if (interactive) {                                                  ", 
      "	printf(\"%s\\n\", buffer);                                               ", 
      "    }                                                                   ", 
      "    rc=Qp0zSystem(buffer);                                              ", 
      "    }                                                                ", 
      "                                                                        ", 
-     "    sprintf(buffer, \"QSH CMD('RM %s')\",  filename);                     ", 
+     "    sprintf(buffer, \"QSYS/QSH CMD('RM %s')\",  filename);                     ", 
      "    if (interactive) {                                                  ", 
      "	printf(\"%s\\n\", buffer);                                            ", 
      "    }                                                                   ", 
      "    rc = Qp0zSystem(buffer);                                            ", 
      "                                                                        ", 
-     "    sprintf(buffer, \"QSH CMD('TOUCH -C 819 %s')\",  filename);           ", 
+     "    sprintf(buffer, \"QSYS/QSH CMD('TOUCH -C 819 %s')\",  filename);           ", 
      "    if (interactive) {                                                  ", 
      "	printf(\"%s\\n\", buffer);                                               ", 
      "    }                                                                   ", 
      "    rc=Qp0zSystem(buffer);                                              ", 
      "                                                                        ", 
      "                                                                        ", 
-     "    sprintf(buffer, \"QSH CMD('SYSTEM DSPJOBLOG %s >> %s')\",             ", 
+     "    sprintf(buffer, \"QSYS/QSH CMD('SYSTEM DSPJOBLOG %s >> %s')\",             ", 
      "                    jobId, filename);                                   ", 
      "    if (interactive) {                                                  ", 
      "	printf(\"%s\\n\", buffer);                                               ", 
@@ -4797,7 +4797,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
      "                                                                        ",        
      "                                                                        ",        
      "    if (interactive) {                                                  ",        
-     "	sprintf(buffer, \"QSH CMD('echo argc is %d >> %s')\", argc, filename);  ",        
+     "	sprintf(buffer, \"QSYS/QSH CMD('echo argc is %d >> %s')\", argc, filename);  ",        
      "	if (interactive) {                                                    ",        
      "	    printf(\"%s\\n\", buffer);                                           ",        
      "	}                                                                     ",        
@@ -4828,7 +4828,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
      "                                                                        ",        
      "                                                                        ",
      "    if (savedCcsid > 0 ) {                                              ",
-     "      sprintf(buffer, \"CHGJOB JOB(%s) CCSID(%d)\",jobId,savedCcsid);   ",
+     "      sprintf(buffer, \"QSYS/CHGJOB JOB(%s) CCSID(%d)\",jobId,savedCcsid);   ",
      "      if (interactive) {                                                ", 
      "	      printf(\"%s\\n\", buffer);                                      ", 
      "      }                                                                 ", 
@@ -4868,9 +4868,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      ps.executeUpdate();
 	  }
             /* Compile the program */
-	  serverCommand("CRTCMOD MODULE(QGPL/stpjoblog) SRCFILE(QGPL/STPJOBLOG) OUTPUT(*print) OPTION(*SYSINCPATH *LOGMSG)  DBGVIEW(*ALL)  SYSIFCOPT(*IFSIO)", false);
-          serverCommand("CRTPGM  PGM(   QGPL/stpjoblog) MODULE( QGPL/stpjoblog)", false);
-	  serverCommand("GRTOBJAUT OBJ(QGPL/STPJOBLOG) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
+	  serverCommand("QSYS/CRTCMOD MODULE(QGPL/stpjoblog) SRCFILE(QGPL/STPJOBLOG) OUTPUT(*print) OPTION(*SYSINCPATH *LOGMSG)  DBGVIEW(*ALL)  SYSIFCOPT(*IFSIO)", false);
+          serverCommand("QSYS/CRTPGM  PGM(   QGPL/stpjoblog) MODULE( QGPL/stpjoblog)", false);
+	  serverCommand("QSYS/GRTOBJAUT OBJ(QGPL/STPJOBLOG) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ", false); 
 	  /* register the stored procedure */
 	  Statement s = null; 
 	  try {
@@ -4958,20 +4958,20 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
      "                                                                        ",
      "                                                                        ", 
      "                                                                        ", 
-     "    sprintf(buffer, \"QSH CMD('RM %s')\",  filename);                     ", 
+     "    sprintf(buffer, \"QSYS/QSH CMD('RM %s')\",  filename);                     ", 
      "    if (interactive) {                                                  ", 
      "	printf(\"%s\\n\", buffer);                                            ", 
      "    }                                                                   ", 
      "    rc = Qp0zSystem(buffer);                                            ", 
      "                                                                        ", 
-     "    sprintf(buffer, \"QSH CMD('TOUCH -C 819 %s')\",  filename);           ", 
+     "    sprintf(buffer, \"QSYS/QSH CMD('TOUCH -C 819 %s')\",  filename);           ", 
      "    if (interactive) {                                                  ", 
      "	printf(\"%s\\n\", buffer);                                               ", 
      "    }                                                                   ", 
      "    rc=Qp0zSystem(buffer);                                              ", 
      "                                                                        ", 
      "                                                                        ", 
-     "    sprintf(buffer, \"QSH CMD('SYSTEM DSPJOBLOG %s >> %s')\",             ", 
+     "    sprintf(buffer, \"QSYS/QSH CMD('SYSTEM DSPJOBLOG %s >> %s')\",             ", 
      "                    jobId, filename);                                   ", 
      "    if (interactive) {                                                  ", 
      "	    printf(\"%s\\n\", buffer);                                        ", 
@@ -4982,7 +4982,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
      "                                                                        ",        
      "                                                                        ",        
      "    if (interactive) {                                                  ",        
-     "	sprintf(buffer, \"QSH CMD('echo argc is %d >> %s')\", argc, filename);  ",        
+     "	sprintf(buffer, \"QSYS/QSH CMD('echo argc is %d >> %s')\", argc, filename);  ",        
      "	    printf(\"%s\\n\", buffer);                                           ",        
      "	rc=Qp0zSystem(buffer);                                                ",        
      "                                                                        ",        
@@ -5048,11 +5048,11 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      ps.executeUpdate();
 	  }
             /* Compile the program */
-	  sql="CRTCMOD MODULE(QGPL/stpjoblogx) SRCFILE(QGPL/STPJOBLOGX) OUTPUT(*print) OPTION(*SYSINCPATH *LOGMSG)  DBGVIEW(*ALL)  SYSIFCOPT(*IFSIO)";
+	  sql="QSYS/CRTCMOD MODULE(QGPL/stpjoblogx) SRCFILE(QGPL/STPJOBLOGX) OUTPUT(*print) OPTION(*SYSINCPATH *LOGMSG)  DBGVIEW(*ALL)  SYSIFCOPT(*IFSIO)";
 	  serverCommand(connection, sql, false);
-	  sql="CRTPGM  PGM(   QGPL/stpjoblogx) MODULE( QGPL/stpjoblogx)";
+	  sql="QSYS/CRTPGM  PGM(   QGPL/stpjoblogx) MODULE( QGPL/stpjoblogx)";
           serverCommand(connection, sql, false);
-	  sql = "GRTOBJAUT OBJ(QGPL/STPJOBLOGX) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ";
+	  sql = "QSYS/GRTOBJAUT OBJ(QGPL/STPJOBLOGX) OBJTYPE(*ALL) USER(*PUBLIC) AUT(*ALL) ";
 	  serverCommand(connection, sql, false); 
 	  /* register the stored procedure */
 	  Statement s = null; 
@@ -6885,51 +6885,51 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	 String command = ""; 
 
 	 try {
-	     command = "CRTUSRPRF USRPRF("+testUser+") PASSWORD("+testPass+") TEXT('Java stored procedures test')  ACGCDE(514648897)  CCSID(37)"; 
+	     command = "QSYS/CRTUSRPRF USRPRF("+testUser+") PASSWORD("+testPass+") TEXT('Java stored procedures test')  ACGCDE(514648897)  CCSID(37)"; 
 	     mirrorServerCommand(command, IGNORE_ERROR);
 
-	     command = "GRTOBJAUT OBJ(QSYS/"+testUser+") OBJTYPE(*USRPRF) USER("+testUser+") AUT(*ALL)"; 
+	     command = "QSYS/GRTOBJAUT OBJ(QSYS/"+testUser+") OBJTYPE(*USRPRF) USER("+testUser+") AUT(*ALL)"; 
 	     mirrorServerCommand(command, THROW_ERROR);
-	     command = "CHGUSRPRF USRPRF("+testUser+") PASSWORD(AB12DE34)"; 
+	     command = "QSYS/CHGUSRPRF USRPRF("+testUser+") PASSWORD(AB12DE34)"; 
 	     mirrorServerCommand(command,IGNORE_REMOTE_ERROR );
-	     command = "CHGUSRPRF USRPRF("+testUser+")  STATUS(*ENABLED)  PASSWORD("+testPass+")"; 
+	     command = "QSYS/CHGUSRPRF USRPRF("+testUser+")  STATUS(*ENABLED)  PASSWORD("+testPass+")"; 
 	     mirrorServerCommand(command,THROW_ERROR);
-	     command = "GRTOBJAUT OBJ(QSYS/RSTLIB) OBJTYPE(*CMD) USER("+testUser+") AUT(*USE)"; 
+	     command = "QSYS/GRTOBJAUT OBJ(QSYS/RSTLIB) OBJTYPE(*CMD) USER("+testUser+") AUT(*USE)"; 
 	     mirrorServerCommand(command, THROW_ERROR);
-	     command = "GRTOBJAUT OBJ(QSYS/QDFTOWN) OBJTYPE(*USRPRF) USER("+testUser+") AUT(*ADD)";
+	     command = "QSYS/GRTOBJAUT OBJ(QSYS/QDFTOWN) OBJTYPE(*USRPRF) USER("+testUser+") AUT(*ADD)";
 	     mirrorServerCommand(command, THROW_ERROR);
-	     command = "GRTOBJAUT OBJ(QSYS/RSTLIB) OBJTYPE(*CMD) USER("+testUser+") AUT(*USE)"; 
+	     command = "QSYS/GRTOBJAUT OBJ(QSYS/RSTLIB) OBJTYPE(*CMD) USER("+testUser+") AUT(*USE)"; 
 	     mirrorServerCommand(command, THROW_ERROR);
-	     command = "GRTOBJAUT OBJ(QSYS/STRDBG) OBJTYPE(*CMD) USER("+testUser+") AUT(*USE)"; 
+	     command = "QSYS/GRTOBJAUT OBJ(QSYS/STRDBG) OBJTYPE(*CMD) USER("+testUser+") AUT(*USE)"; 
 	     mirrorServerCommand(command, THROW_ERROR);
 
-	     command = "GRTOBJAUT OBJ(QSYS/QSQJSON2) OBJTYPE(*SRVPGM) USER("+testUser+") AUT(*ALL)"; 
+	     command = "QSYS/GRTOBJAUT OBJ(QSYS/QSQJSON2) OBJTYPE(*SRVPGM) USER("+testUser+") AUT(*ALL)"; 
 	     mirrorServerCommand(command, IGNORE_ERROR);
 
 
-	     command = "GRTOBJAUT OBJ(QSYS/QSQJSON) OBJTYPE(*SRVPGM) USER("+testUser+") AUT(*ALL)"; 
+	     command = "QSYS/GRTOBJAUT OBJ(QSYS/QSQJSON) OBJTYPE(*SRVPGM) USER("+testUser+") AUT(*ALL)"; 
 	     mirrorServerCommand(command, IGNORE_ERROR);
 
-	     command = "GRTOBJAUT OBJ(QSYS/QSQSILE) OBJTYPE(*SRVPGM) USER("+testUser+") AUT(*ALL)"; 
+	     command = "QSYS/GRTOBJAUT OBJ(QSYS/QSQSILE) OBJTYPE(*SRVPGM) USER("+testUser+") AUT(*ALL)"; 
 	     mirrorServerCommand(command, IGNORE_ERROR);
 
-	     command = "CHGFCNUSG FCNID(QIBM_DB_SQLADM) USER("+testUser+") USAGE(*ALLOWED)"; 
+	     command = "QSYS/CHGFCNUSG FCNID(QIBM_DB_SQLADM) USER("+testUser+") USAGE(*ALLOWED)"; 
 	     mirrorServerCommand(command, IGNORE_ERROR);
 
 	     // Make sure the user has access to /qibm/userdata/os400/sqllib/function/jar 
-	     command = "CHGAUT OBJ('/') USER("+testUser+") DTAAUT(*RWX)";
+	     command = "QSYS/CHGAUT OBJ('/') USER("+testUser+") DTAAUT(*RWX)";
 	     mirrorServerCommand(command, IGNORE_ERROR);
-	     command = "CHGAUT OBJ('/QIBM') USER("+testUser+") DTAAUT(*RWX)";
+	     command = "QSYS/CHGAUT OBJ('/QIBM') USER("+testUser+") DTAAUT(*RWX)";
 	     mirrorServerCommand(command, IGNORE_ERROR);
-	     command = "CHGAUT OBJ('/QIBM/UserData') USER("+testUser+") DTAAUT(*RWX)";
+	     command = "QSYS/CHGAUT OBJ('/QIBM/UserData') USER("+testUser+") DTAAUT(*RWX)";
 	     mirrorServerCommand(command, IGNORE_ERROR);
-	     command = "CHGAUT OBJ('/QIBM/UserData/OS400') USER("+testUser+") DTAAUT(*RWX)";
+	     command = "QSYS/CHGAUT OBJ('/QIBM/UserData/OS400') USER("+testUser+") DTAAUT(*RWX)";
 	     mirrorServerCommand(command, IGNORE_ERROR);
-	     command = "CHGAUT OBJ('/QIBM/UserData/OS400/SQLLib') USER("+testUser+") DTAAUT(*RWX)";
+	     command = "QSYS/CHGAUT OBJ('/QIBM/UserData/OS400/SQLLib') USER("+testUser+") DTAAUT(*RWX)";
 	     mirrorServerCommand(command, IGNORE_ERROR);
-	     command = "CHGAUT OBJ('/QIBM/UserData/OS400/SQLLib/Function') USER("+testUser+") DTAAUT(*RWX)";
+	     command = "QSYS/CHGAUT OBJ('/QIBM/UserData/OS400/SQLLib/Function') USER("+testUser+") DTAAUT(*RWX)";
 	     mirrorServerCommand(command, IGNORE_ERROR);
-	     command = "CHGAUT OBJ('/QIBM/UserData/OS400/SQLLib/Function/jar') USER("+testUser+") DTAAUT(*RWX)";
+	     command = "QSYS/CHGAUT OBJ('/QIBM/UserData/OS400/SQLLib/Function/jar') USER("+testUser+") DTAAUT(*RWX)";
 	     mirrorServerCommand(command, IGNORE_ERROR);
 
 	 } catch (Exception e) {
@@ -6944,12 +6944,12 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
 
      public static void setupUserProfileWithCCSID(String testUser, String testPass, int ccsid) throws Exception {
-	 serverCommand("CRTUSRPRF USRPRF("+testUser+") PASSWORD("+testPass+") TEXT('Java stored procedures test')  ACGCDE(514648897)  CCSID("+ccsid+")", true);
+	 serverCommand("QSYS/CRTUSRPRF USRPRF("+testUser+") PASSWORD("+testPass+") TEXT('Java stored procedures test')  ACGCDE(514648897)  CCSID("+ccsid+")", true);
 
 	 try {
-	     serverCommand("GRTOBJAUT OBJ(QSYS/"+testUser+") OBJTYPE(*USRPRF) USER("+testUser+") AUT(*ALL)", false);
-	     serverCommand("CHGUSRPRF USRPRF("+testUser+") PASSWORD(AB12DE34)",false );
-	     serverCommand("CHGUSRPRF USRPRF("+testUser+")  STATUS(*ENABLED)  PASSWORD("+testPass+") CCSID("+ccsid+")", false);
+	     serverCommand("QSYS/GRTOBJAUT OBJ(QSYS/"+testUser+") OBJTYPE(*USRPRF) USER("+testUser+") AUT(*ALL)", false);
+	     serverCommand("QSYS/CHGUSRPRF USRPRF("+testUser+") PASSWORD(AB12DE34)",false );
+	     serverCommand("QSYS/CHGUSRPRF USRPRF("+testUser+")  STATUS(*ENABLED)  PASSWORD("+testPass+") CCSID("+ccsid+")", false);
 
 	 } catch (Exception e) {
 	     System.out.println("Possible setup problem.. Make sure "+testUser+" has been created");

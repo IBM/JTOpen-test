@@ -62,7 +62,7 @@ public class DDMMemberList extends Testcase
 		// Make sure QCLSRC exists 
 		try {
 		    CommandCall cmd = new CommandCall(pwrSys_);
-		    String command = "CRTSRCPF "+LIBRARY+"/"+FILENAME;
+		    String command = "QSYS/CRTSRCPF "+LIBRARY+"/"+FILENAME;
 		    try { 
 			cmd.run(command);
 		    } catch (Exception e) {

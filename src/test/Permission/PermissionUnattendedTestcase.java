@@ -224,12 +224,12 @@ protected void cleanup()
       {
 	  String firstCommands[] = {
 
-	      "DLTDLO DLO(*ALL) FLR(TESTFLR)",
-        "DLTDLO DLO(*ALL)",
-	      "DLTDLO DLO(TESTFLR1)",
-	      "DLTDLO DLO(TESTFLR)",
-	      "DLTF FILE(JTESTLIB2/file8)",
-	      "DLTF FILE(JTESTLIB2/file9)",	    
+	      "QSYS/DLTDLT DLO(*ALL) FLR(TESTFLR)",
+        "QSYS/DLTDLT DLO(*ALL)",
+	      "QSYS/DLTDLT DLO(TESTFLR1)",
+	      "QSYS/DLTDLT DLO(TESTFLR)",
+	      "QSYS/DLTF FILE(JTESTLIB2/file8)",
+	      "QSYS/DLTF FILE(JTESTLIB2/file9)",	    
 
 	  };
 
@@ -239,18 +239,18 @@ protected void cleanup()
 
 	  deleteLibrary(ccallPow_,"JTESTLIB1");
 	  deleteLibrary(ccallPow_,"JTESTLIB2");
-          runCommand(ccallPow_,"RMVDIR DIR(TestDir1)");
-          runCommand(ccallPow_,"DLTUSRPRF USRPRF(TESTUSR1) OWNOBJOPT(*DLT)");
-          runCommand(ccallPow_,"DLTUSRPRF USRPRF(TESTUSR2) OWNOBJOPT(*DLT)");
-          runCommand(ccallPow_,"DLTUSRPRF USRPRF(TESTUSR3) OWNOBJOPT(*DLT)");
-          runCommand(ccallPow_,"DLTUSRPRF USRPRF(TESTUSR4) OWNOBJOPT(*DLT)");
-          runCommand(ccallPow_,"DLTAUTL AUTL(TESTAUTL1)");
-          runCommand(ccallPow_,"DLTAUTL AUTL(TESTAUTL8)");
+          runCommand(ccallPow_,"QSYS/RMVDIR DIR(TestDir1)");
+          runCommand(ccallPow_,"QSYS/DLTUSRPRF USRPRF(TESTUSR1) OWNOBJOPT(*DLT)");
+          runCommand(ccallPow_,"QSYS/DLTUSRPRF USRPRF(TESTUSR2) OWNOBJOPT(*DLT)");
+          runCommand(ccallPow_,"QSYS/DLTUSRPRF USRPRF(TESTUSR3) OWNOBJOPT(*DLT)");
+          runCommand(ccallPow_,"QSYS/DLTUSRPRF USRPRF(TESTUSR4) OWNOBJOPT(*DLT)");
+          runCommand(ccallPow_,"QSYS/DLTAUTL AUTL(TESTAUTL1)");
+          runCommand(ccallPow_,"QSYS/DLTAUTL AUTL(TESTAUTL8)");
           for(int i=0;i<=6;i++)
             {
-                runCommand(ccallPow_,"DLTUSRPRF USRPRF("+user[i]+") OWNOBJOPT(*DLT)");
+                runCommand(ccallPow_,"QSYS/DLTUSRPRF USRPRF("+user[i]+") OWNOBJOPT(*DLT)");
             } 
-          runCommand(ccallPow_,"DLTAUTL AUTL(TESTAUTL2)");
+          runCommand(ccallPow_,"QSYS/DLTAUTL AUTL(TESTAUTL2)");
           
           unlockSystem(); 
       }    

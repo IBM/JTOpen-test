@@ -669,7 +669,7 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
 
     try
     {
-       if (cmd.run("CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") SPCAUT(*SECADM)") != true)
+       if (cmd.run("QSYS/CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") SPCAUT(*SECADM)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());
@@ -727,7 +727,7 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
      try {
 
        //remove secadm from usr class profile
-       if (cmd.run("CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") USRCLS(*USER) SPCAUT(*JOBCTL *IOSYSCFG)") != true)
+       if (cmd.run("QSYS/CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") USRCLS(*USER) SPCAUT(*JOBCTL *IOSYSCFG)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());
@@ -753,7 +753,7 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
 
     try
     {
-     clcmd = "CRTUSRPRF USRPRF(" + aUserPrf + ")  PASSWORD(JTEAM1)  TEXT('dennis  schroepfer 3-3073')";
+     clcmd = "QSYS/CRTUSRPRF USRPRF(" + aUserPrf + ")  PASSWORD(JTEAM1)  TEXT('dennis  schroepfer 3-3073')";
 
      if(cmd.run(clcmd) == false)
      {
@@ -761,7 +761,7 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
            throw new IOException(messageList[0].toString());
      }
 
-     clcmd = "GRTOBJAUT OBJ(" + aUserPrf + ") OBJTYPE(*USRPRF) USER(" +  systemObject_.getUserId()   + ") AUT(*ALL)";
+     clcmd = "QSYS/GRTOBJAUT OBJ(" + aUserPrf + ") OBJTYPE(*USRPRF) USER(" +  systemObject_.getUserId()   + ") AUT(*ALL)";
 
      if(cmd.run(clcmd) == false)
      {
@@ -783,7 +783,7 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
 
       String clcmd;
 
-      clcmd = "DLTUSRPRF USRPRF(" + aUserPrf + ") OWNOBJOPT(*DLT)";
+      clcmd = "QSYS/DLTUSRPRF USRPRF(" + aUserPrf + ") OWNOBJOPT(*DLT)";
 
       AS400Message[] messageList = null;
 

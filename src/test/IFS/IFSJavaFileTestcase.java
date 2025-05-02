@@ -178,12 +178,12 @@ Constructor.
 
   void setPrivate(AS400 as400, String dirName)
   {
-    String cmdString = "CHGAUT OBJ('"
+    String cmdString = "QSYS/CHGAUT OBJ('"
                      + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
       sb.append("Command: " + cmdString+"\n"); 
  
-    String cmdString2 = "CHGAUT OBJ('"
+    String cmdString2 = "QSYS/CHGAUT OBJ('"
                      + dirName
                      + "') USER("
                      + systemObject_.getUserId()
@@ -207,12 +207,12 @@ Constructor.
 
   void setPublic(AS400 as400, String dirName)
   {
-    String cmdString = "CHGAUT OBJ('"
+    String cmdString = "QSYS/CHGAUT OBJ('"
                      + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
     sb.append("Command: " + cmdString+"\n");
 
-    String cmdString2 = "CHGAUT OBJ('"
+    String cmdString2 = "QSYS/CHGAUT OBJ('"
                      + dirName
                      + "') USER("
                      + systemObject_.getUserId()
@@ -807,8 +807,8 @@ canWrite() - Should return false if called for a read-only file.
 **/
   public void Var029()
   {
-    String cmdStr1 = "CRTLIB JFILETST";
-    String cmdStr2 = "CRTPF FILE(JFILETST/FILE) RCDLEN(132) ALWUPD(*NO)";
+    String cmdStr1 = "QSYS/CRTLIB JFILETST";
+    String cmdStr2 = "QSYS/CRTPF FILE(JFILETST/FILE) RCDLEN(132) ALWUPD(*NO)";
     CommandCall cmd = new CommandCall(systemObject_);
     try
     {
@@ -849,11 +849,11 @@ canWrite() - Should return false if called for a read-only file.
       failed(e, "Unexpected Exception");
     }
 
-    cmdStr1 = "DLTF FILE(JFILETST/FILE)";
-    cmdStr2 = "DLTLIB JFILETST";
+    cmdStr1 = "QSYS/DLTF FILE(JFILETST/FILE)";
+    cmdStr2 = "QSYS/DLTLIB JFILETST";
     try
     {
-	cmd.setCommand("CHGJOB INQMSGRPY(*SYSRPYL)");
+	cmd.setCommand("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
       cmd.run();
 
       cmd.setCommand(cmdStr1);

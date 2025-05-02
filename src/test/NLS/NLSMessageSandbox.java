@@ -57,7 +57,7 @@ class NLSMessageSandbox extends MessageSandbox {
     super(system, library, queueName, userId);
     // Create the library if necessary.
     String libraryName = library;
-    CommandCall cmd = new CommandCall(system, "CRTLIB LIB(" + libraryName
+    CommandCall cmd = new CommandCall(system, "QSYS/CRTLIB LIB(" + libraryName
         + ") TEXT(\'" + dbcs_string50 + "\')");
     try {
       cmd.run();
@@ -75,7 +75,7 @@ class NLSMessageSandbox extends MessageSandbox {
     String path = QSYSObjectPathName.toPath(libraryName, queueName, "MSGQ");
 
     // Create the message queue if necessary.
-    cmd = new CommandCall(system, "CRTMSGQ MSGQ(" + libraryName + "/"
+    cmd = new CommandCall(system, "QSYS/CRTMSGQ MSGQ(" + libraryName + "/"
         + queueName + ") " + "TEXT(\'" + dbcs_string50 + "\')");
     try {
       cmd.run();

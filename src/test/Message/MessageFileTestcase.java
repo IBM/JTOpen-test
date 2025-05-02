@@ -1003,7 +1003,7 @@ public class MessageFileTestcase extends Testcase
             }
 
             CommandCall c = new CommandCall(systemObject_);
-            c.run("CRTDTAQ DTAQ(LIB/DQ) MAXLEN(1234567)");
+            c.run("QSYS/CRTDTAQ DTAQ(LIB/DQ) MAXLEN(1234567)");
             AS400Message msg = c.getMessageList()[0];
             AS400Message m2  = aMessageFile.getMessage(msg.getID(), msg.getSubstitutionData());
             String realMsg = m2.getHelp();
@@ -1017,7 +1017,7 @@ public class MessageFileTestcase extends Testcase
             }
 
             c = new CommandCall(pwrSys_);
-            c.run("CLROUTQ QEZJOBLOG");
+            c.run("QSYS/CLROUTQ QEZJOBLOG");
             msg = c.getMessageList()[0];
             m2  = aMessageFile.getMessage(msg.getID(), msg.getSubstitutionData());
             realMsg = m2.getHelp();
@@ -1160,7 +1160,7 @@ public class MessageFileTestcase extends Testcase
             }
 
             CommandCall c = new CommandCall(systemObject_);
-            c.run("CRTDTAQ DTAQ(LIB/DQ) MAXLEN(1234567)");
+            c.run("QSYS/CRTDTAQ DTAQ(LIB/DQ) MAXLEN(1234567)");
             AS400Message msg = c.getMessageList()[0];
             AS400Message m2  = aMessageFile.getMessage(msg.getID(), msg.getSubstitutionData(), LEFT_TO_RIGHT);
             String realMsg = m2.getHelp();
@@ -1174,7 +1174,7 @@ public class MessageFileTestcase extends Testcase
             }
 
             c = new CommandCall(pwrSys_);
-            c.run("CLROUTQ QEZJOBLOG");
+            c.run("QSYS/CLROUTQ QEZJOBLOG");
             msg = c.getMessageList()[0];
             m2  = aMessageFile.getMessage(msg.getID(), msg.getSubstitutionData(), LEFT_TO_RIGHT);
             realMsg = m2.getHelp();
@@ -1291,7 +1291,7 @@ public class MessageFileTestcase extends Testcase
 
 
             CommandCall c = new CommandCall(systemObject_);
-            c.run("CRTDTAQ DTAQ(LIB/DQ) MAXLEN(1234567)");
+            c.run("QSYS/CRTDTAQ DTAQ(LIB/DQ) MAXLEN(1234567)");
             AS400Message msg = c.getMessageList()[0];
             AS400Message m2  = aMessageFile.getMessage(msg.getID(), msg.getSubstitutionData(), LEFT_TO_RIGHT, ccsid, CCSID_OF_JOB);
             String realMsg = m2.getHelp();
@@ -1304,7 +1304,7 @@ public class MessageFileTestcase extends Testcase
             }
 
             c = new CommandCall(pwrSys_);
-            c.run("CLROUTQ QEZJOBLOG");
+            c.run("QSYS/CLROUTQ QEZJOBLOG");
             msg = c.getMessageList()[0];
             m2  = aMessageFile.getMessage(msg.getID(), msg.getSubstitutionData(), LEFT_TO_RIGHT, ccsid, ccsid);
             realMsg = m2.getHelp();
@@ -1401,7 +1401,7 @@ public class MessageFileTestcase extends Testcase
             }
 
             CommandCall c = new CommandCall(systemObject_);
-            c.run("CRTDTAQ DTAQ(LIB/DQ) MAXLEN(1234567)");
+            c.run("QSYS/CRTDTAQ DTAQ(LIB/DQ) MAXLEN(1234567)");
             AS400Message msg = c.getMessageList()[0];
             AS400Message m2  = aMessageFile.getMessage(msg.getID(), msg.getSubstitutionData(), LEFT_TO_RIGHT, ccsid, ccsid);
             String realMsg = m2.getHelp();
@@ -1414,7 +1414,7 @@ public class MessageFileTestcase extends Testcase
             }
 
             c = new CommandCall(pwrSys_);
-            c.run("CLROUTQ QEZJOBLOG");
+            c.run("QSYS/CLROUTQ QEZJOBLOG");
             msg = c.getMessageList()[0];
             m2  = aMessageFile.getMessage(msg.getID(), msg.getSubstitutionData(), LEFT_TO_RIGHT, ccsid, CCSID_EBCDIC);
             realMsg = m2.getHelp();
@@ -1568,7 +1568,7 @@ public class MessageFileTestcase extends Testcase
     String added = " -- added 2/11/2011 to test message CreateDate/Modification date"; 
       try
       {
-        cmdRun("CHGMSGD MSGID(TCP1AA0) MSGF(MFTEST/MFTEST) SECLVL(DUH)"); 
+        cmdRun("QSYS/CHGMSGD MSGID(TCP1AA0) MSGF(MFTEST/MFTEST) SECLVL(DUH)"); 
           
           MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
 

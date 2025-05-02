@@ -121,11 +121,11 @@ public class JobListTestcase extends Testcase
     {
         try
         {
-            if (!c.run("CRTLIB JOBLTEST"))
+            if (!c.run("QSYS/CRTLIB JOBLTEST"))
             {
                 if (c.getMessageList()[0].getID().equals("CPF2111"))
                 {
-                    if (!c.run("CLRLIB JOBLTEST"))
+                    if (!c.run("QSYS/CLRLIB JOBLTEST"))
                     {
                         outputErrors();
                         return false;
@@ -140,7 +140,7 @@ public class JobListTestcase extends Testcase
             SequentialFile f = new SequentialFile(systemObject_, "/QSYS.LIB/JOBLTEST.LIB/WRKSBSJOB.FILE/%FILE%.MBR");
             f.create(132, "*DATA", null);
             f.close(); 
-            if (!c.run("CHGPF FILE(JOBLTEST/WRKSBSJOB) SIZE(*NOMAX)"))
+            if (!c.run("QSYS/CHGPF FILE(JOBLTEST/WRKSBSJOB) SIZE(*NOMAX)"))
             {
                 outputErrors();
                 return false;
@@ -148,27 +148,27 @@ public class JobListTestcase extends Testcase
             SequentialFile f2 = new SequentialFile(systemObject_, "/QSYS.LIB/JOBLTEST.LIB/WRKACTJOB.FILE/%FILE%.MBR");
             f2.create(132, "*DATA", null);
             f2.close(); 
-            if (!c.run("CHGPF FILE(JOBLTEST/WRKACTJOB) SIZE(*NOMAX)"))
+            if (!c.run("QSYS/CHGPF FILE(JOBLTEST/WRKACTJOB) SIZE(*NOMAX)"))
             {
                 outputErrors();
                 return false;
             }
-            if (!c.run("WRKSBSJOB OUTPUT(*PRINT)"))
+            if (!c.run("QSYS/WRKSBSJOB OUTPUT(*PRINT)"))
             {
                 outputErrors();
                 return false;
             }
-            if (!c.run("CPYSPLF FILE(QPDSPSBJ) TOFILE(JOBLTEST/WRKSBSJOB) JOB(" + systemObject_.getUserId().trim() + "/QPRTJOB) SPLNBR(*LAST) MBROPT(*REPLACE)"))
+            if (!c.run("QSYS/CPYSPLF FILE(QPDSPSBJ) TOFILE(JOBLTEST/WRKSBSJOB) JOB(" + systemObject_.getUserId().trim() + "/QPRTJOB) SPLNBR(*LAST) MBROPT(*REPLACE)"))
             {
                 outputErrors();
                 return false;
             }
-            if (!c.run("WRKACTJOB OUTPUT(*PRINT)"))
+            if (!c.run("QSYS/WRKACTJOB OUTPUT(*PRINT)"))
             {
                 outputErrors();
                 return false;
             }
-            if (!c.run("CPYSPLF FILE(QPDSPAJB) TOFILE(JOBLTEST/WRKACTJOB) JOB(" + systemObject_.getUserId().trim() + "/QPRTJOB) SPLNBR(*LAST) MBROPT(*REPLACE)"))
+            if (!c.run("QSYS/CPYSPLF FILE(QPDSPAJB) TOFILE(JOBLTEST/WRKACTJOB) JOB(" + systemObject_.getUserId().trim() + "/QPRTJOB) SPLNBR(*LAST) MBROPT(*REPLACE)"))
             {
                 outputErrors();
                 return false;
@@ -5497,13 +5497,13 @@ public class JobListTestcase extends Testcase
 
     // Create a profile for this test.
     CommandCall cmdCall = new CommandCall(pwrSystem);
-    String command = "CRTUSRPRF " + userid + " PASSWORD(" + password + ")";
+    String command = "QSYS/CRTUSRPRF " + userid + " PASSWORD(" + password + ")";
     sb.append("Running " + command + "\n");
     boolean results = cmdCall.run(command);
     if (!results) {
       dumpFailingCommand(sb, cmdCall);
       sb.append(" Trying CHGUSRPF because failed ");
-      command = "CHGUSRPRF " + userid + " PASSWORD(" + password + ")";
+      command = "QSYS/CHGUSRPRF " + userid + " PASSWORD(" + password + ")";
       sb.append("Running " + command + "\n");
       results = cmdCall.run(command);
     }
@@ -5537,7 +5537,7 @@ public class JobListTestcase extends Testcase
 
     CommandCall cmdCall = new CommandCall(pwrSystem);
 
-    String command = "DLTUSRPRF " + userid;
+    String command = "QSYS/DLTUSRPRF " + userid;
     boolean results = cmdCall.run(command);
     if (!results) {
       System.out.println("Warning : " + command + " failed");

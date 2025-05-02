@@ -149,7 +149,7 @@ public class JDJobName {
 	"", 
 	"jint Java_test_JDJobName_setJobLogOptionNative(JNIEnv * env)",
 	"{",
-	"    system(\"CHGJOB LOG(4 00 *SECLVL)\");",
+	"    system(\"QSYS/CHGJOB LOG(4 00 *SECLVL)\");",
 	"    return (jint) 0; ",
 	"}",
 	"", 
@@ -302,13 +302,13 @@ public class JDJobName {
 	"       *ppex = 0; ",
 	"",
         "       sprintf(buffer, ",
-        "               \"ADDPEXDFN DFN(%s) TYPE(*PROFILE)  PRFTYPE(*JOB)  JOB((%s))  MAXSTG(100000) INTERVAL(0.1)\",",
+        "               \"QSYS/ADDPEXDFN DFN(%s) TYPE(*PROFILE)  PRFTYPE(*JOB)  JOB((%s))  MAXSTG(100000) INTERVAL(0.1)\",",
         "               pex,",
         "               jobname);",
 	"       printf(\"%s\\n\", buffer);", 
 	"       system(buffer);",
         "       sprintf(buffer, ",
-	"              \"STRPEX SSNID(%s) DFN(%s)\", ",
+	"              \"QSYS/STRPEX SSNID(%s) DFN(%s)\", ",
         "              pex, pex);",
   	"       system(buffer);",
         "       /* Create java string */ ",
@@ -323,7 +323,7 @@ public class JDJobName {
         "{",
         "    char buffer[200]; ",
         "       sprintf(buffer, ",
-	"              \"ENDPEX SSNID(%s) \", ",
+	"              \"QSYS/ENDPEX SSNID(%s) \", ",
         "              pex);",
   	"       system(buffer);",
         "       /* Create java string */ ",
@@ -1054,7 +1054,7 @@ public class JDJobName {
 
 	    System.out.println("LoggingText is '"+JDJobName.getLoggingText()+"'");
 	    try { 
-	     String command = " CHGJOB LOG(4 00 *SECLVL)  ";
+	     String command = "QSYS/CHGJOB LOG(4 00 *SECLVL)  ";
 	     System.out.println("Running command "+command); 
 	     JDJobName.system(command);   
              	    } catch (Exception e) {

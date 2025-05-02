@@ -403,7 +403,7 @@ cache.
 	  stringArrayToSourceFile(connection_, clProgram, ""+collection_+"", "JDCSCLPGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTCLPGM PGM("+collection_+"/JDCSCLPGM) SRCFILE("+collection_+"/JDCSCLPGM)";
+	  String command = "QSYS/CRTCLPGM PGM("+collection_+"/JDCSCLPGM) SRCFILE("+collection_+"/JDCSCLPGM)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -526,7 +526,7 @@ cache.
 	  stringArrayToSourceFile(connection_,cobolProgram, ""+collection_+"", "JDCSCBLPGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCBLI "+collection_+"/JDCSCBLPGM "+collection_+"/JDCSCBLPGM COMMIT(*NONE)";
+	  String command = "QSYS/CRTSQLCBLI "+collection_+"/JDCSCBLPGM "+collection_+"/JDCSCBLPGM COMMIT(*NONE)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -642,12 +642,12 @@ cache.
 	  stringArrayToSourceFile(connection_,cppProgram, ""+collection_+"", "JDCSCPPPGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  command = "CRTSQLCPPI OBJ("+collection_+"/JDCSCPPPGM) SRCFILE("+collection_+"/JDCSCPPPGM) COMMIT(*NONE) " +
+	  command = "QSYS/CRTSQLCPPI OBJ("+collection_+"/JDCSCPPPGM) SRCFILE("+collection_+"/JDCSCPPPGM) COMMIT(*NONE) " +
 	                   " TOSRCFILE("+collection_+"/JDCSC2PGM) ";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
-	  command = "CRTBNDCPP PGM("+collection_+"/JDCSCPPPGM) SRCFILE("+collection_+"/JDCSC2PGM)";
+	  command = "QSYS/CRTBNDCPP PGM("+collection_+"/JDCSCPPPGM) SRCFILE("+collection_+"/JDCSC2PGM)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -780,12 +780,12 @@ cache.
 	  stringArrayToSourceFile(connection_,cProgram, ""+collection_+"", "JDCSCPGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCI "+collection_+"/JDCSCPGM "+collection_+"/JDCSCPGM COMMIT(*NONE)";
+	  String command = "QSYS/CRTSQLCI "+collection_+"/JDCSCPGM "+collection_+"/JDCSCPGM COMMIT(*NONE)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
 
-	  command = "CRTPGM "+collection_+"/JDCSCPGM ";
+	  command = "QSYS/CRTPGM "+collection_+"/JDCSCPGM ";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -903,7 +903,7 @@ cache.
 	      stringArrayToSourceFile(connection_,rpmProgram, ""+collection_+"", "JDCSRPGPGM");
 
 	      CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	      String command = "CRTSQLRPGI "+collection_+"/JDCSRPGPGM "+collection_+"/JDCSRPGPGM COMMIT(*NONE)";
+	      String command = "QSYS/CRTSQLRPGI "+collection_+"/JDCSRPGPGM "+collection_+"/JDCSRPGPGM COMMIT(*NONE)";
 	      sql=command;
 	      cmd.setString(1, command );
 	      cmd.execute();
@@ -1036,16 +1036,16 @@ cache.
 	  stringArrayToSourceFile(connection_,cppProgram, ""+collection_+"", "JDCSCP2PGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCPPI OBJ("+collection_+"/JDCSCP2PGM) SRCFILE("+collection_+"/JDCSCP2PGM) COMMIT(*NONE) " +
+	  String command = "QSYS/CRTSQLCPPI OBJ("+collection_+"/JDCSCP2PGM) SRCFILE("+collection_+"/JDCSCP2PGM) COMMIT(*NONE) " +
 	                   " TOSRCFILE("+collection_+"/JDCSC10PGM) ";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
-	  command = "CRTCPPMOD MODULE(JDCSCP2PGM) SRCFILE("+collection_+"/JDCSC10PGM)";
+	  command = "QSYS/CRTCPPMOD MODULE(JDCSCP2PGM) SRCFILE("+collection_+"/JDCSC10PGM)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
-	  command = "CRTPGM PGM("+collection_+"/JDCSCP2PGM) MODULE("+collection_+"/JDCSCP2PGM) ACTGRP(*CALLER)";
+	  command = "QSYS/CRTPGM PGM("+collection_+"/JDCSCP2PGM) MODULE("+collection_+"/JDCSCP2PGM) ACTGRP(*CALLER)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -1176,12 +1176,12 @@ cache.
 	  stringArrayToSourceFile(connection_,cProgram, ""+collection_+"", "JDCSC11PGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCI "+collection_+"/JDCSC11PGM "+collection_+"/JDCSC11PGM COMMIT(*NONE)";
+	  String command = "QSYS/CRTSQLCI "+collection_+"/JDCSC11PGM "+collection_+"/JDCSC11PGM COMMIT(*NONE)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
 
-	  command = "CRTPGM "+collection_+"/JDCSC11PGM ACTGRP(*CALLER)";
+	  command = "QSYS/CRTPGM "+collection_+"/JDCSC11PGM ACTGRP(*CALLER)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -1294,7 +1294,7 @@ cache.
 	      stringArrayToSourceFile(connection_,rpmProgram, ""+collection_+"", "JDCSRPGDAT");
 
 	      CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	      String command = "CRTSQLRPGI "+collection_+"/JDCSRPGDAT "+collection_+"/JDCSRPGDAT  DATFMT(*ISO) COMMIT(*NONE)";
+	      String command = "QSYS/CRTSQLRPGI "+collection_+"/JDCSRPGDAT "+collection_+"/JDCSRPGDAT  DATFMT(*ISO) COMMIT(*NONE)";
 	      sql = command;
 
 	      cmd.setString(1, command );
@@ -1588,7 +1588,7 @@ cache.
               //        This parameter applies only when *HMS is
               //        specified for the Time format (TIMFMT) parameter.
               //
-	      String command = "CRTSQLRPGI "+collection_+"/JDCSRPGTIM "+collection_+"/JDCSRPGTIM  TIMFMT(*ISO) TIMSEP(':') COMMIT(*NONE)";
+	      String command = "QSYS/CRTSQLRPGI "+collection_+"/JDCSRPGTIM "+collection_+"/JDCSRPGTIM  TIMFMT(*ISO) TIMSEP(':') COMMIT(*NONE)";
 	      sql = command;
 
 	      cmd.setString(1, command );
@@ -1895,13 +1895,13 @@ cache.
 	      stringArrayToSourceFile(connection_,rpmProgram, lib, "JDCSRPGPG2");
 
 	      CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	      String command = "CRTSQLRPGI "+lib+"/JDCSRPGPG2 "+lib+"/JDCSRPGPG2 OBJTYPE(*MODULE) DBGVIEW(*SOURCE) ";
+	      String command = "QSYS/CRTSQLRPGI "+lib+"/JDCSRPGPG2 "+lib+"/JDCSRPGPG2 OBJTYPE(*MODULE) DBGVIEW(*SOURCE) ";
 
 	      sql=command;
 	      cmd.setString(1, command );
 	      cmd.execute();
 
-	      sql = " CRTSRVPGM SRVPGM("+lib+"/JDCSRPGPG2)              MODULE("+lib+"/JDCSRPGPG2) EXPORT(*ALL)  ACTGRP(*CALLER) ";
+	      sql = "QSYS/CRTSRVPGM SRVPGM("+lib+"/JDCSRPGPG2)              MODULE("+lib+"/JDCSRPGPG2) EXPORT(*ALL)  ACTGRP(*CALLER) ";
 
 	      cmd.setString(1, sql );
 	      cmd.execute();
@@ -2045,12 +2045,12 @@ cache.
 	  stringArrayToSourceFile(connection_,cProgram, lib, "JDCSC26PGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCI "+lib+"/JDCSC26PGM  "+lib+"/JDCSC26PGM COMMIT(*NONE)";
+	  String command = "QSYS/CRTSQLCI "+lib+"/JDCSC26PGM  "+lib+"/JDCSC26PGM COMMIT(*NONE)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
 
-	  command = "CRTPGM "+lib+"/JDCSC26PGM ";
+	  command = "QSYS/CRTPGM "+lib+"/JDCSC26PGM ";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -2137,12 +2137,12 @@ cache.
 	  stringArrayToSourceFile(connection_,cProgram, lib, "JDCSC27PGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCI "+lib+"/JDCSC27PGM "+lib+"/JDCSC27PGM COMMIT(*NONE)";
+	  String command = "QSYS/CRTSQLCI "+lib+"/JDCSC27PGM "+lib+"/JDCSC27PGM COMMIT(*NONE)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
 
-	  command = "CRTPGM "+lib+"/JDCSC27PGM ";
+	  command = "QSYS/CRTPGM "+lib+"/JDCSC27PGM ";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -2227,12 +2227,12 @@ cache.
 	  stringArrayToSourceFile(connection_,cProgram, lib, "JDCSC28PGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCI "+lib+"/JDCSC28PGM "+lib+"/JDCSC28PGM COMMIT(*NONE)";
+	  String command = "QSYS/CRTSQLCI "+lib+"/JDCSC28PGM "+lib+"/JDCSC28PGM COMMIT(*NONE)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
 
-	  command = "CRTPGM "+lib+"/JDCSC28PGM ";
+	  command = "QSYS/CRTPGM "+lib+"/JDCSC28PGM ";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -2343,12 +2343,12 @@ cache.
 	  stringArrayToSourceFile(connection_,cProgram, lib, "JDCSC29PGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCI "+lib+"/JDCSC29PGM "+lib+"/JDCSC29PGM COMMIT(*NONE)";
+	  String command = "QSYS/CRTSQLCI "+lib+"/JDCSC29PGM "+lib+"/JDCSC29PGM COMMIT(*NONE)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
 
-	  command = "CRTPGM "+lib+"/JDCSC29PGM ";
+	  command = "QSYS/CRTPGM "+lib+"/JDCSC29PGM ";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -2630,12 +2630,12 @@ cache.
 	  stringArrayToSourceFile(connection_,cProgram, lib, "JDCSC31PGM");
 
 	  CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	  String command = "CRTSQLCI "+lib+"/JDCSC31PGM "+lib+"/JDCSC31PGM COMMIT(*NONE)";
+	  String command = "QSYS/CRTSQLCI "+lib+"/JDCSC31PGM "+lib+"/JDCSC31PGM COMMIT(*NONE)";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
 
-	  command = "CRTPGM "+lib+"/JDCSC31PGM ";
+	  command = "QSYS/CRTPGM "+lib+"/JDCSC31PGM ";
 	  cmd.setString(1, command );
 	  cmd.execute();
 
@@ -2795,13 +2795,13 @@ cache.
 	      stringArrayToSourceFile(connection_,rpmProgram, lib, "JDCSRPGPG2");
 
 	      CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	      String command = "CRTSQLRPGI "+lib+"/JDCSRPGPG2 "+lib+"/JDCSRPGPG2 OBJTYPE(*MODULE) DBGVIEW(*SOURCE) ";
+	      String command = "QSYS/CRTSQLRPGI "+lib+"/JDCSRPGPG2 "+lib+"/JDCSRPGPG2 OBJTYPE(*MODULE) DBGVIEW(*SOURCE) ";
 
 	      sql=command;
 	      cmd.setString(1, command );
 	      cmd.execute();
 
-	      sql = " CRTSRVPGM SRVPGM("+lib+"/JDCSRPGPG2)              MODULE("+lib+"/JDCSRPGPG2) EXPORT(*ALL)  ACTGRP(*CALLER) ";
+	      sql = "QSYS/CRTSRVPGM SRVPGM("+lib+"/JDCSRPGPG2)              MODULE("+lib+"/JDCSRPGPG2) EXPORT(*ALL)  ACTGRP(*CALLER) ";
 
 	      cmd.setString(1, sql );
 	      cmd.execute();
@@ -3007,13 +3007,13 @@ cache.
 	      stringArrayToSourceFile(connection_,rpmProgram, lib, "JDCSRPGPG3");
 
 	      CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	      String command = "CRTSQLRPGI "+lib+"/JDCSRPGPG3 "+lib+"/JDCSRPGPG3 OBJTYPE(*MODULE) DBGVIEW(*SOURCE) ";
+	      String command = "QSYS/CRTSQLRPGI "+lib+"/JDCSRPGPG3 "+lib+"/JDCSRPGPG3 OBJTYPE(*MODULE) DBGVIEW(*SOURCE) ";
 
 	      sql=command;
 	      cmd.setString(1, command );
 	      cmd.execute();
 
-	      sql = " CRTSRVPGM SRVPGM("+lib+"/JDCSRPGPG3)              MODULE("+lib+"/JDCSRPGPG3) EXPORT(*ALL)  ACTGRP(*CALLER) ";
+	      sql = "QSYS/CRTSRVPGM SRVPGM("+lib+"/JDCSRPGPG3)              MODULE("+lib+"/JDCSRPGPG3) EXPORT(*ALL)  ACTGRP(*CALLER) ";
 
 	      cmd.setString(1, sql );
 	      cmd.execute();
@@ -3220,13 +3220,13 @@ cache.
 	      stringArrayToSourceFile(connection_,rpmProgram, lib, "JDCSRPGPG4");
 
 	      CallableStatement cmd = connection2_.prepareCall("call QSYS2.QCMDEXC(?)");
-	      String command = "CRTSQLRPGI "+lib+"/JDCSRPGPG4 "+lib+"/JDCSRPGPG4 OBJTYPE(*MODULE) DBGVIEW(*SOURCE) ";
+	      String command = "QSYS/CRTSQLRPGI "+lib+"/JDCSRPGPG4 "+lib+"/JDCSRPGPG4 OBJTYPE(*MODULE) DBGVIEW(*SOURCE) ";
 
 	      sql=command;
 	      cmd.setString(1, command );
 	      cmd.execute();
 
-	      sql = " CRTSRVPGM SRVPGM("+lib+"/JDCSRPGPG4)              MODULE("+lib+"/JDCSRPGPG4) EXPORT(*ALL)  ACTGRP(*CALLER) ";
+	      sql = "QSYS/CRTSRVPGM SRVPGM("+lib+"/JDCSRPGPG4)              MODULE("+lib+"/JDCSRPGPG4) EXPORT(*ALL)  ACTGRP(*CALLER) ";
 
 	      cmd.setString(1, sql );
 	      cmd.execute();

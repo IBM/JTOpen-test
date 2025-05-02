@@ -374,12 +374,12 @@ public class DQRefreshAttributesTestcase extends Testcase
 	{
 	    String user = systemObject_.getUserId();
 	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
-		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *READ");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *READ");
 		try
 		{
 		    dq.refreshAttributes();
@@ -392,7 +392,7 @@ public class DQRefreshAttributesTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -411,11 +411,11 @@ public class DQRefreshAttributesTestcase extends Testcase
 	{
 	    String user = systemObject_.getUserId();
 	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *READ");
 		try
 		{
@@ -429,7 +429,7 @@ public class DQRefreshAttributesTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -448,10 +448,10 @@ public class DQRefreshAttributesTestcase extends Testcase
 	{
 	    String user = systemObject_.getUserId();
 	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
 		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
 		try
 		{
@@ -465,7 +465,7 @@ public class DQRefreshAttributesTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -484,10 +484,10 @@ public class DQRefreshAttributesTestcase extends Testcase
 	{
 	    String user = systemObject_.getUserId();
 	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
 		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
 		try
 		{
@@ -501,7 +501,7 @@ public class DQRefreshAttributesTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)

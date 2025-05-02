@@ -151,7 +151,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
        usSystem_ = new AS400(systemObject_);
 
        CommandCall cmd = new CommandCall(usSystem_);
-       if (cmd.run("CRTLIB LIB(USTEST)") != true)
+       if (cmd.run("QSYS/CRTLIB LIB(USTEST)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());
@@ -187,7 +187,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
     {
        // Delete any existing setup objects.
 	deleteLibrary(cmd,""+testAuth+"");
-       cmd.run("DLTAUTL AUTL(USAUTHLIST)");
+       cmd.run("QSYS/DLTAUTL AUTL(USAUTHLIST)");
 
        if (cmd.run("QSYS/CRTAUTL AUTL(USAUTHLIST) AUT(*EXCLUDE)") != true)
        {
@@ -195,7 +195,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
            System.out.println(messageList[0].toString());
        }
 
-       if (cmd.run("CRTLIB LIB("+testAuth+") AUT(USAUTHLIST)") != true)
+       if (cmd.run("QSYS/CRTLIB LIB("+testAuth+") AUT(USAUTHLIST)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());
@@ -230,7 +230,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
     {
 	deleteLibrary(cmd,""+authLib+"");
 
-       if (cmd.run("CRTLIB LIB("+authLib+")") != true)
+       if (cmd.run("QSYS/CRTLIB LIB("+authLib+")") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println("Setup warning - " + messageList[0].toString());
@@ -2038,7 +2038,7 @@ Ensure AS400SecurityException is thrown if the user does not have authority to t
 
      try
      {
-        if(cmd.run("GRTOBJAUT OBJ("+authLib+"/USWRITE2) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
+        if(cmd.run("QSYS/GRTOBJAUT OBJ("+authLib+"/USWRITE2) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
         {
            AS400Message[] messageList = cmd.getMessageList();
            throw new IOException(messageList[0].toString());
@@ -3487,7 +3487,7 @@ Ensure AS400SecurityException is thrown if the user does not have authority to t
      {
         CommandCall cmd = new CommandCall(pwrSys_);
 
-        if(cmd.run("GRTOBJAUT OBJ("+authLib+"/USWRITE2) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
+        if(cmd.run("QSYS/GRTOBJAUT OBJ("+authLib+"/USWRITE2) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
         {
            AS400Message[] messageList = cmd.getMessageList();
            throw new IOException(messageList[0].toString());

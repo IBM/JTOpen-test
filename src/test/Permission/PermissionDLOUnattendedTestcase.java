@@ -104,27 +104,27 @@ protected void setup () //throws Exception
           String sysName = systemObject_.getSystemName();
           if (sysName.equalsIgnoreCase("localhost")) sysName = systemName_;
           
-          String command="ADDDIRE USRID("+userName +" "+ sysName+") USRD('Test') USER("+userName+")"; 
+          String command="QSYS/ADDDIRE USRID("+userName +" "+ sysName+") USRD('Test') USER("+userName+")"; 
           ccallPow_.setCommand(command);
           result = ccallPow_.run();
           setupStringBuffer.append("ccalPow_("+command+") returned "+result+"\n"); 
           
-          command = "ADDDIRE USRID("+pwrUserName +" "+ sysName+") USRD('Test') USER("+pwrUserName+")";
+          command = "QSYS/ADDDIRE USRID("+pwrUserName +" "+ sysName+") USRD('Test') USER("+pwrUserName+")";
           ccallPow_.setCommand(command);
           result = ccallPow_.run();
           setupStringBuffer.append("ccalPow_("+command+") returned "+result+"\n"); 
 
-          command="CRTUSRPRF USRPRF(TESTUSER41) PASSWORD(JTEAM1)";
+          command="QSYS/CRTUSRPRF USRPRF(TESTUSER41) PASSWORD(JTEAM1)";
           ccallPow_.setCommand(command);
           result = ccallPow_.run();
           setupStringBuffer.append("ccalPow_("+command+") returned "+result+"\n"); 
           
-          command="CRTFLR FLR(TESTFLR1)"; 
+          command="QSYS/CRTFLR FLR(TESTFLR1)"; 
           ccall_.setCommand(command);
           result = ccall_.run();
           setupStringBuffer.append("ccall_("+command+") returned "+result+"\n"); 
 
-          command="ADDDIRE USRID(TESTUSER41 "+sysName+") USRD('Test') USER(TESTUSER41)"; 
+          command="QSYS/ADDDIRE USRID(TESTUSER41 "+sysName+") USRD('Test') USER(TESTUSER41)"; 
           ccallPow_.setCommand(command);
           setupStringBuffer.append("ccall_("+command+") returned "+result+"\n"); 
           result = ccallPow_.run();
@@ -146,9 +146,9 @@ protected void cleanup()
 {               
       try
       {            
-          ccallPow_.setCommand("DLTUSRPRF USRPRF(TESTUSER41)");
+          ccallPow_.setCommand("QSYS/DLTUSRPRF USRPRF(TESTUSER41)");
           ccallPow_.run();
-          ccallPow_.setCommand("DLTDLO DLO(TESTFLR1)");
+          ccallPow_.setCommand("QSYS/DLTDLO DLO(TESTFLR1)");
           ccallPow_.run();
       }    
       catch(Exception ex) 

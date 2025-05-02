@@ -206,11 +206,11 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
       int count = -1;
       Vector<JTATransInfo> v = new Vector<JTATransInfo>();
 
-      String cmd = "system \"WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)\"";
+      String cmd = "system \"QSYS/WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)\"";
 
       String[] cmdA = new String[2];
       cmdA[0] = "system";
-      cmdA[1] = "WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)";
+      cmdA[1] = "QSYS/WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)";
 
       verboseOut(cmd);
       boolean end = false;

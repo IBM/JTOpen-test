@@ -50,7 +50,7 @@ public class SecChgPwdDialogTestcase extends Testcase {
   private void setupUserID() {
     try {
       if (cmd.run(
-          "CRTUSRPRF USRPRF(JAVAEXPIR) PASSWORD(MY1PWD) PWDEXP(*YES) TEXT('IBM Toolbox for Java testing (DX8X)')") == false) {
+          "QSYS/CRTUSRPRF USRPRF(JAVAEXPIR) PASSWORD(MY1PWD) PWDEXP(*YES) TEXT('IBM Toolbox for Java testing (DX8X)')") == false) {
         output_.println("Setup failed: " + cmd.getMessageList()[0].getID() + " " + cmd.getMessageList()[0].getText());
       }
     } catch (Exception e) {
@@ -64,7 +64,7 @@ public class SecChgPwdDialogTestcase extends Testcase {
    **/
   private void cleanupUserID() {
     try {
-      if (cmd.run("DLTUSRPRF USRPRF(JAVAEXPIR) OWNOBJOPT(*DLT)") == false) {
+      if (cmd.run("QSYS/DLTUSRPRF USRPRF(JAVAEXPIR) OWNOBJOPT(*DLT)") == false) {
         output_.println("Cleanup failed: " + cmd.getMessageList()[0].getID() + " " + cmd.getMessageList()[0].getText());
       }
     } catch (Exception e) {

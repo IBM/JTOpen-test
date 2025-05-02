@@ -103,7 +103,7 @@ public class DDMP9946152 extends Testcase implements Runnable
       }
       CommandCall cc = new CommandCall(pwrSys_);
       deleteLibrary(cc, testLib_); 
-      cc.run("CRTLIB "+testLib_);
+      cc.run("QSYS/CRTLIB "+testLib_);
 
       // First make sure we can create a file normally.
       RecordFormat rf = new RecordFormat("MYRF");
@@ -122,7 +122,7 @@ public class DDMP9946152 extends Testcase implements Runnable
       sf.delete();
 
       // Now change the default (we change it back in the finally block).
-      boolean res = cc.run("CHGCMDDFT CMD(CRTSRCPF) NEWDFT('RCDLEN(112)')");
+      boolean res = cc.run("QSYS/CHGCMDDFT CMD(CRTSRCPF) NEWDFT('RCDLEN(112)')");
       if (!res)
       {
         AS400Message[] msgs = cc.getMessageList();
@@ -153,7 +153,7 @@ public class DDMP9946152 extends Testcase implements Runnable
       {
         if (pwrSys_ == null) return;
         CommandCall cc = new CommandCall(pwrSys_);
-        boolean res = cc.run("CHGCMDDFT CMD(CRTSRCPF) NEWDFT('RCDLEN(92)')");
+        boolean res = cc.run("QSYS/CHGCMDDFT CMD(CRTSRCPF) NEWDFT('RCDLEN(92)')");
         if (!res)
         {
           AS400Message[] msgs = cc.getMessageList();

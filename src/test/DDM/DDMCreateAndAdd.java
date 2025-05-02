@@ -239,7 +239,7 @@ public class DDMCreateAndAdd extends Testcase
 
       // Create libs DDMTEST and "DDMTest"
       c = new CommandCall(systemObject_);
-      c.run("CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
+      c.run("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals("CPC2102")))
       {
@@ -249,7 +249,7 @@ public class DDMCreateAndAdd extends Testcase
         }
         throw new Exception("");
       }
-      c.run("CRTLIB LIB(\"" + testLib_ + "\") AUT(*ALL)");
+      c.run("QSYS/CRTLIB LIB(\"" + testLib_ + "\") AUT(*ALL)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals("CPC2102")))
       {
@@ -284,7 +284,7 @@ public class DDMCreateAndAdd extends Testcase
       f.open(AS400File.WRITE_ONLY, 2, AS400File.COMMIT_LOCK_LEVEL_NONE);
       f.write(r);
       f.close();
-      c.run("CHGPF FILE(" + testLib_ + "/QDDSSRC) MAXMBRS(*NOMAX)");
+      c.run("QSYS/CHGPF FILE(" + testLib_ + "/QDDSSRC) MAXMBRS(*NOMAX)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPC7303")))
       {
@@ -294,7 +294,7 @@ public class DDMCreateAndAdd extends Testcase
         }
         throw new Exception("");
       }
-      c.run("CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(" + testLib_ + "/QDDSSRC) TOMBR(SRC1) MBROPT(*REPLACE)");
+      c.run("QSYS/CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(" + testLib_ + "/QDDSSRC) TOMBR(SRC1) MBROPT(*REPLACE)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2889")))
       {
@@ -304,7 +304,7 @@ public class DDMCreateAndAdd extends Testcase
         }
         throw new Exception("");
       }
-      c.run("CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(" + testLib_ + "/QDDSSRC) TOMBR(\"qddssrc\") MBROPT(*REPLACE)");
+      c.run("QSYS/CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(" + testLib_ + "/QDDSSRC) TOMBR(\"qddssrc\") MBROPT(*REPLACE)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2889")))
       {
@@ -314,7 +314,7 @@ public class DDMCreateAndAdd extends Testcase
         }
         //throw new Exception("");   // Tolerate this failure - it will always fail for Turkish
       }
-      c.run("CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(\"" + testLib_ + "\"/\"qddssrc\") FROMMBR(*ALL) TOMBR(*FROMMBR) MBROPT(*REPLACE) CRTFILE(*YES)");
+      c.run("QSYS/CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(\"" + testLib_ + "\"/\"qddssrc\") FROMMBR(*ALL) TOMBR(*FROMMBR) MBROPT(*REPLACE) CRTFILE(*YES)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2880")))
       {
@@ -324,7 +324,7 @@ public class DDMCreateAndAdd extends Testcase
         }
         //throw new Exception("");   // Tolerate this failure - it will always fail for Turkish
       }
-      c.run("CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(\"" + testLib_ + "\"/\"qddssrc\") FROMMBR(SRC1) TOMBR(\"src1\") MBROPT(*REPLACE)");
+      c.run("QSYS/CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(\"" + testLib_ + "\"/\"qddssrc\") FROMMBR(SRC1) TOMBR(\"src1\") MBROPT(*REPLACE)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2889")))
       {
@@ -1478,7 +1478,7 @@ public class DDMCreateAndAdd extends Testcase
 
       // Issue a change physical file command to allow more than one member.
       CommandCall interpreter = new CommandCall(systemObject_);
-      interpreter.run("CHGPF FILE(" + testLib_ + "/V21) MAXMBRS(*NOMAX)");
+      interpreter.run("QSYS/CHGPF FILE(" + testLib_ + "/V21) MAXMBRS(*NOMAX)");
 
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
       file.addPhysicalFileMember("M", "Length of 1");
@@ -1539,7 +1539,7 @@ public class DDMCreateAndAdd extends Testcase
       file.create(1, "*DATA", "*BLANK");
       // Issue a change physical file command to allow more than one member.
       CommandCall interpreter = new CommandCall(systemObject_);
-      interpreter.run("CHGPF FILE(" + testLib_ + "/" + file.getFileName() +
+      interpreter.run("QSYS/CHGPF FILE(" + testLib_ + "/" + file.getFileName() +
                       ") MAXMBRS(*NOMAX)");
 
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -1635,7 +1635,7 @@ public class DDMCreateAndAdd extends Testcase
 
       // Issue a change physical file command to allow more than one member.
       CommandCall interpreter = new CommandCall(systemObject_);
-      interpreter.run("CHGPF FILE(" + testLib_ + "/" + file.getFileName() +
+      interpreter.run("QSYS/CHGPF FILE(" + testLib_ + "/" + file.getFileName() +
                       ") MAXMBRS(*NOMAX)");
 
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -1931,7 +1931,7 @@ public class DDMCreateAndAdd extends Testcase
     {
       // Create the DDS file.
       CommandCall interpreter = new CommandCall(systemObject_);
-      interpreter.run("CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(QGPL/FOOBAR) " +
+      interpreter.run("QSYS/CPYF FROMFILE(" + testLib_ + "/QDDSSRC) TOFILE(QGPL/FOOBAR) " +
                       "MBROPT(*REPLACE) CRTFILE(*YES)");
 
       file = new SequentialFile(systemObject_,
@@ -1969,7 +1969,7 @@ public class DDMCreateAndAdd extends Testcase
     {
       // Delete the DDS file.
       CommandCall interpreter = new CommandCall(systemObject_);
-      interpreter.run("DLTF FILE(QGPL/FOOBAR)");
+      interpreter.run("QSYS/DLTF FILE(QGPL/FOOBAR)");
 
       file.close();
       file.delete();

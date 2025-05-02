@@ -249,7 +249,7 @@ public class CmdMultiThread extends Object implements Runnable
          CommandCall cc = new CommandCall(system);
          // cc.run("QDEVELOP/DSPDRVLVL");
          cc.setThreadSafe(true);
-         cc.run("CRTLIB FRED");
+         cc.run("QSYS/CRTLIB FRED");
          if (DEBUG)
          {
            AS400Message[] ml = cc.getMessageList();

@@ -110,7 +110,7 @@ public class UserSandbox
         }
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append("CRTUSRPRF USRPRF(");
+        buffer.append("QSYS/CRTUSRPRF USRPRF(");
         buffer.append(name);
         buffer.append(") PASSWORD(JTEAM1) TEXT('");
         buffer.append(name);  // Several variations depend on the description starting with the name.
@@ -224,7 +224,7 @@ public class UserSandbox
         }
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append("CRTUSRPRF USRPRF(");
+        buffer.append("QSYS/CRTUSRPRF USRPRF(");
         buffer.append(name);
         buffer.append(") PASSWORD(JTEAM1) TEXT('");
         buffer.append(name);  // Several variations depend on the description starting with the name.
@@ -255,7 +255,7 @@ public class UserSandbox
             {
                 System.out.println(messageList[i]);
             }
-            System.out.println("CRTUSRPRF failed to create user " + name + ".");
+            System.out.println("QSYS/CRTUSRPRF failed to create user " + name + ".");
         }
 
         if (cleanupNeeded)
@@ -333,7 +333,7 @@ public class UserSandbox
         }
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append("RMVDIRE USRID(");
+        buffer.append("QSYS/RMVDIRE USRID(");
         buffer.append(name);
         buffer.append(' ');
 
@@ -368,7 +368,7 @@ public class UserSandbox
             {
                 System.out.println(messageList[i]);
             }
-            System.out.println("RMVDIRE failed to delete directory entry " + name + ".");
+            System.out.println("QSYS/RMVDIRE failed to delete directory entry " + name + ".");
         }
     }
 
@@ -397,7 +397,7 @@ public class UserSandbox
         }
 
         StringBuffer buffer = new StringBuffer();
-        buffer.append("DLTUSRPRF USRPRF(");
+        buffer.append("QSYS/DLTUSRPRF USRPRF(");
         buffer.append(name);
         buffer.append(") OWNOBJOPT(*DLT)");
 
@@ -419,7 +419,7 @@ public class UserSandbox
             {
                 System.out.println(messageList[i]);
             }
-            System.out.println("DLTUSRPRF failed to delete user " + name + ".");
+            System.out.println("QSYS/DLTUSRPRF failed to delete user " + name + ".");
         }
 
         switch (deleteStatus)

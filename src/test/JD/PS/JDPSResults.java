@@ -433,7 +433,7 @@ public class JDPSResults extends JDTestcase {
   public void Var016() {
     try {
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + table_ + " (NAME) VALUES ('Wiedrich')");
+          "INSERT INTO " + table_ + " (NAME) VALUES ('Wiedrch')");
       int updateCount = ps.getUpdateCount();
       ps.close();
       assertCondition(updateCount == -1);

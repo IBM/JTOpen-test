@@ -105,7 +105,7 @@ public class SBTestcase extends Testcase
           sbs2.create();
           sbs2.changeDescriptionText("Test subsystem 2 for Toolbox Subsystem component");
           
-          cmdRun("GRTOBJAUT OBJ("+subsystemLib_+"/*ALL) OBJTYPE(*ALL) USER("+userId_+")"); 
+          cmdRun("QSYS/GRTOBJAUT OBJ("+subsystemLib_+"/*ALL) OBJTYPE(*ALL) USER("+userId_+")"); 
         }
       }
       catch(AS400Exception e) {

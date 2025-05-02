@@ -252,7 +252,7 @@ public class DDMDelete extends Testcase
       CommandCall c = new CommandCall(systemObject_);
       deleteLibrary(c, testLib_);
 
-      c.run("CRTLIB LIB(" + testLib_ +") AUT(*ALL)");
+      c.run("QSYS/CRTLIB LIB(" + testLib_ +") AUT(*ALL)");
       AS400Message[] msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals("CPC2102")))
       {
@@ -422,7 +422,7 @@ public class DDMDelete extends Testcase
       file2 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/FILE.FILE/MBR2.MBR");
       // Issue a change physical file command to allow more than one member.
       CommandCall interpreter = new CommandCall(systemObject_);
-      interpreter.run("CHGPF FILE(" + testLib_ + "/FILE) MAXMBRS(*NOMAX)");
+      interpreter.run("QSYS/CHGPF FILE(" + testLib_ + "/FILE) MAXMBRS(*NOMAX)");
 
       file.addPhysicalFileMember("MBR2", "Member 2");
       file2.deleteMember();
@@ -603,7 +603,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -729,7 +729,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -793,7 +793,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -860,7 +860,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -926,7 +926,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -999,7 +999,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/FILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -1065,7 +1065,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -1132,7 +1132,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -1206,7 +1206,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -1279,7 +1279,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -1347,7 +1347,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -1415,7 +1415,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)
@@ -1494,7 +1494,7 @@ public class DDMDelete extends Testcase
     // Clear the file
     try
     {
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM FILE(" + testLib_ + "/KEYFILE) MBR(MBR1)");
       c.run();
     }
     catch(Exception e)

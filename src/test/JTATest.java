@@ -229,7 +229,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
       Vector<JTATransInfo> v = new Vector<JTATransInfo>();
       String [] cmdA = new String[2];
       cmdA[0] = "system";
-      cmdA[1] = "WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)";
+      cmdA[1] = "QSYS/WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)";
 
       verboseOut(cmdA[0]+" "+cmdA[1]);
       boolean end = false;

@@ -175,7 +175,7 @@ public class RMToXmlTestcase extends Testcase
         }
     }
 
-/// TBD - I don't know how to make an "uninitialized file".  - jlee
+/// TBD - I don't know how to make an "uninitialized file". 
 ///    /**
 ///     Test ToXml(File).  Pass a file that has not been initialized yet. This should cause an error.
 ///     **/
@@ -210,7 +210,7 @@ public class RMToXmlTestcase extends Testcase
 ///    }
 
 
-/// Note: I don't know how to make an uninitialized output stream.  - jlee
+/// Note: I don't know how to make an uninitialized output stream.
 ///    /**
 ///     Test ToXml(OutputStream). Pass an output stream that hasn't been initialized yet. This
 ///     should cause an error.

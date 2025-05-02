@@ -1241,12 +1241,12 @@ even though it is declared to be. @D2A
 		    //
 		    // Compile it 
 		    //
-		    command = "crtsqlrpgi obj("+collection+"/arrayrs) srcfile("+collection+"/arrayrs) commit(*none) objtype(*module) option(*Xref *sql)";
+		    command = "QSYS/crtsqlrpgi obj("+collection+"/arrayrs) srcfile("+collection+"/arrayrs) commit(*none) objtype(*module) option(*Xref *sql)";
 		    command = "call QSYS.QCMDEXC('"+
 		      command+"',0000000"+command.length()+".00000)";
 		    stmt.executeUpdate(command);
 
-		    command = "crtpgm "+collection+"/arrayrs";
+		    command = "QSYS/crtpgm "+collection+"/arrayrs";
 		    command = "call QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
 		    stmt.executeUpdate(command);
 
@@ -1391,12 +1391,12 @@ call JDTESTSTP.JDRSMISC43
 		    //
 		    // Compile it 
 		    //
-		    command = "crtsqlrpgi obj("+collection+"/arrayrs) srcfile("+collection+"/arrayrs) commit(*none) objtype(*module) option(*Xref *sql)";
+		    command = "QSYS/crtsqlrpgi obj("+collection+"/arrayrs) srcfile("+collection+"/arrayrs) commit(*none) objtype(*module) option(*Xref *sql)";
 		    command = "call QSYS.QCMDEXC('"+
 		      command+"',0000000"+command.length()+".00000)";
 		    stmt.executeUpdate(command);
 
-		    command = "crtpgm "+collection+"/arrayrs";
+		    command = "QSYS/crtpgm "+collection+"/arrayrs";
 		    command = "call QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
 		    stmt.executeUpdate(command);
 

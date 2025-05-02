@@ -356,7 +356,6 @@ public class MessageQueueRFTestcase extends Testcase {
       f.open();
       SelectionData = f.getSelectionMetaData(RMessageQueue.SELECTION_CRITERIA);
       f.close();
-      succeeded();
       assertCondition(true,"SelectionData is "+SelectionData);
     } catch (Exception e) {
       failed(e, "Unexpected exception.");

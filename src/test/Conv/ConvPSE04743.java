@@ -61,7 +61,7 @@ public class ConvPSE04743 extends Testcase implements Runnable
             Statement s = c.createStatement();
             CommandCall cc = new CommandCall(pwrSys_);
 	    deleteLibrary(cc,"TEST04743");
-            if (!cc.run("CRTLIB TEST04743"))
+            if (!cc.run("QSYS/CRTLIB TEST04743"))
             {
                 failed("Can't create TEST04743 library: " + cc.getMessageList()[0]);
                 return;

@@ -52,13 +52,13 @@ public class FATestcase extends Testcase
     protected void setup() throws Exception
     {
       // Delete the test file.
-      cmdRun("DEL OBJLNK('"+FILE_PATH_PERSISTENT+"')", "CPFA0A9");
+      cmdRun("QSYS/DEL OBJLNK('"+FILE_PATH_PERSISTENT+"')", "CPFA0A9");
       // Delete the test directory.
-      cmdRun("RMDIR DIR('"+DIR_PATH_PERSISTENT+"')", "CPFA0A9");
+      cmdRun("QSYS/RMDIR DIR('"+DIR_PATH_PERSISTENT+"')", "CPFA0A9");
       // Create the test directory.
-      cmdRun("CRTDIR DIR('"+DIR_PATH_PERSISTENT+"')");
+      cmdRun("QSYS/CRTDIR DIR('"+DIR_PATH_PERSISTENT+"')");
       // Create the test file.
-      cmdRun("QSH CMD('touch "+FILE_PATH_PERSISTENT+"')");
+      cmdRun("QSYS/QSH CMD('touch "+FILE_PATH_PERSISTENT+"')");
 
       super.setup();
     }
@@ -73,9 +73,9 @@ public class FATestcase extends Testcase
 	    System.out.println("Skipping cleanup\n"); 
 	} else { 
       // Delete the test file.
-	    cmdRun("DEL OBJLNK('"+FILE_PATH_PERSISTENT+"')");
+	    cmdRun("QSYS/DEL OBJLNK('"+FILE_PATH_PERSISTENT+"')");
       // Delete the test directory.
-	    cmdRun("RMDIR DIR('"+DIR_PATH_PERSISTENT+"')");
+	    cmdRun("QSYS/RMDIR DIR('"+DIR_PATH_PERSISTENT+"')");
 	}
       super.cleanup();
     }
@@ -83,22 +83,22 @@ public class FATestcase extends Testcase
     private void setupTestFile()
     {
         // Delete the test file.
-	String command= "DEL OBJLNK('"+DIR_PATH+"')"; 
+	String command= "QSYS/DEL OBJLNK('"+DIR_PATH+"')"; 
         cmdRun(command, "CPFA0A9");
         // Delete the test directory.
-	command="RMDIR DIR('"+DIR_PATH+"')";
+	command="QSYS/RMDIR DIR('"+DIR_PATH+"')";
         cmdRun(command, "CPFA0A9");
         // Create the test directory.
-	command="CRTDIR DIR('"+DIR_PATH+"')"; 
+	command="QSYS/CRTDIR DIR('"+DIR_PATH+"')"; 
         cmdRun(command);
 
-	command = "QSH CMD('chmod a+rwx "+DIR_PATH+"')";
+	command = "QSYS/QSH CMD('chmod a+rwx "+DIR_PATH+"')";
         cmdRun(command);
         // Create the test file.
-	command = "QSH CMD('touch "+FILE_PATH+"')";
+	command = "QSYS/QSH CMD('touch "+FILE_PATH+"')";
         cmdRun(command);
 
-	command = "QSH CMD('chmod a+rwx "+FILE_PATH+"')";
+	command = "QSYS/QSH CMD('chmod a+rwx "+FILE_PATH+"')";
         cmdRun(command);
 
     }

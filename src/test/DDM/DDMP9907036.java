@@ -104,8 +104,8 @@ public class DDMP9907036 extends Testcase
     {
       CommandCall cc = new CommandCall(systemObject_);
       deleteLibrary(cc, testLib_); 
-      cc.run("CRTLIB "+testLib_);
-      cc.run("DLTF "+testLib_+"/TEST7036");
+      cc.run("QSYS/CRTLIB "+testLib_);
+      cc.run("QSYS/DLTF "+testLib_+"/TEST7036");
 
       int ccsid = 835;
       AS400Text t = new AS400Text(10, ccsid, systemObject_);
@@ -151,8 +151,8 @@ public class DDMP9907036 extends Testcase
     try
     {
       CommandCall cc = new CommandCall(systemObject_);
-      cc.run("CRTLIB "+testLib_);
-      cc.run("DLTF "+testLib_+"/TEST7036");
+      cc.run("QSYS/CRTLIB "+testLib_);
+      cc.run("QSYS/DLTF "+testLib_+"/TEST7036");
       KeyedFile f = new KeyedFile(systemObject_, "/QSYS.LIB/"+testLib_+".LIB/TEST7036.FILE/TEST7036.MBR");
       RecordFormat rf = new RecordFormat("MYRF");
       AS400Text t;

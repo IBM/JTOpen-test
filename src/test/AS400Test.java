@@ -150,14 +150,14 @@ Creates Testcase objects for all the testcases in this component.
               System.out.println( "To delete "+testLib_+", signon to the system and use the WRKOBJLCK command to end the jobs holding the locks." );
             }
           }
-          if (!cmd.run("CRTLIB "+testLib_))
+          if (!cmd.run("QSYS/CRTLIB "+testLib_))
 	  {
             System.out.println("Setup could not create library "+testLib_+": "+
                                 cmd.getMessageList()[0].toString());
 	  }
 
-	  if (!cmdRun("GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
-	      out_.println("CRTOBJAUT failed");
+	  if (!cmdRun("QSYS/GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
+	      out_.println("GRTOBJAUT failed");
 	  } 
 
         }

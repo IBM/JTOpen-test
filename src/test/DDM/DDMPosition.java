@@ -350,7 +350,7 @@ public class DDMPosition extends Testcase {
       CommandCall c = new CommandCall(pwrSys_);
       deleteLibrary(c, testLib_);
 
-      c.run("CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
+      c.run("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
       AS400Message[] msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals(
           "CPC2102"))) {
@@ -360,7 +360,7 @@ public class DDMPosition extends Testcase {
         throw new Exception("");
       }
       // Added following several lines for a file used in var108 @A1A
-      c.run("CLRPFM FILE(DDMTESTSAV/FIELDS3) MBR(FIELDS3)"); // @A1A
+      c.run("QSYS/CLRPFM FILE(DDMTESTSAV/FIELDS3) MBR(FIELDS3)"); // @A1A
       msgs = c.getMessageList();
       // CPC3101 - Member &2 file &1 in &3 cleared. (Success msg)
       if (!(msgs[0].getID().equals("CPC3101"))) {
@@ -370,7 +370,7 @@ public class DDMPosition extends Testcase {
         throw new Exception("");
       }
       // Added following several lines for a file used in var109 @A2A
-      c.run("CLRPFM FILE(DDMTESTSAV/FIELDS2) MBR(FIELDS2)"); // @A2A
+      c.run("QSYS/CLRPFM FILE(DDMTESTSAV/FIELDS2) MBR(FIELDS2)"); // @A2A
       msgs = c.getMessageList();
       // CPC3101 - Member &2 file &1 in &3 cleared. (Success msg)
       if (!(msgs[0].getID().equals("CPC3101"))) {

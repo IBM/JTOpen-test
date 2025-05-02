@@ -161,9 +161,9 @@ extends Testcase
         //@B2D systemObject_.addPasswordCacheEntry(systemObject_.getSystemName(),          //@A6A
         //@B2D                                    systemObject_.getUserId(), passwordChars);  //@A6A
 	CommandCall cc = new CommandCall(pwrSys_);
-	cc.run("CHGJOB INQMSGRPY(*SYSRPYL)");
+	cc.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 
-        DLTLIB_FRED = new CommandCall(pwrSys_, "DLTLIB FRED");
+        DLTLIB_FRED = new CommandCall(pwrSys_, "QSYS/DLTLIB FRED");
         try { DLTLIB_FRED.run(); } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -297,7 +297,7 @@ extends Testcase
             char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
             AS400 o = p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars); //@A5C
              //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
              PasswordVault.clearPassword(passwordChars);
            p.close();
@@ -1143,7 +1143,7 @@ extends Testcase
            p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars); //@B2C
             AS400 o = p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars); //@B2C
             CommandCall cmd = new CommandCall(o);
-            cmd.run("CRTLIB FRED");
+            cmd.run("QSYS/CRTLIB FRED");
             succeeded();
             p.close();
          PasswordVault.clearPassword(passwordChars);
@@ -2130,7 +2130,7 @@ char[] passwordChars = null;
            AS400 newItem = p.getConnection(systemObject_.getSystemName(), 
                                             systemObject_.getUserId(), passwordChars);
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(newItem, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(newItem, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(newItem);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 1 
@@ -2165,7 +2165,7 @@ char[] passwordChars = null;
                    numOfConnections);
             AS400 system = p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars); //@B2C
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(system, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(system, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(system);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == numOfConnections 
@@ -2225,7 +2225,7 @@ char[] passwordChars = null;
           p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars); //@B2C
             system = new AS400(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars);  //@B2C
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(system, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(system, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(system);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 0 
@@ -2259,7 +2259,7 @@ char[] passwordChars = null;
             AS400 newItem = p.getConnection(systemObject_.getSystemName(), 
                                             systemObject_.getUserId(), passwordChars);
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(newItem, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(newItem, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             newItem.resetAllServices();
             newItem.setSystemName("diffSys");
@@ -2292,15 +2292,15 @@ char[] passwordChars = null;
          AS400 conn1 = p.getConnection(systemObject_.getSystemName(), 
                                           systemObject_.getUserId(), passwordChars);
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(conn1, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(conn1, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(conn1);
             AS400 conn2 = p.getConnection(systemObject_.getSystemName(), 
                                           systemObject_.getUserId(), passwordChars);
             p.returnConnectionToPool(conn1); // return it again
-            cmd = new CommandCall(conn2, "CHGJOB INQMSGRPY(*SYSRPYL)");
+            cmd = new CommandCall(conn2, "QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 	    cmd.run(); 
-            cmd = new CommandCall(conn2, "DLTLIB FRED");
+            cmd = new CommandCall(conn2, "QSYS/DLTLIB FRED");
             check = cmd.run();
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 1 
                             && p.getActiveConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 0, "check="+check);
@@ -2330,13 +2330,13 @@ char[] passwordChars = null;
          AS400 newItem = p.getConnection(systemObject_.getSystemName(), 
                                             systemObject_.getUserId(), passwordChars);
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(newItem, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(newItem, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(newItem);
             AS400 newItem2 = p.getConnection(systemObject_.getSystemName(), 
                                              systemObject_.getUserId(), passwordChars);
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd2 = new CommandCall(newItem2, "CRTLIB FRED");  //@A5A
+            CommandCall cmd2 = new CommandCall(newItem2, "QSYS/CRTLIB FRED");  //@A5A
             boolean check2 = cmd2.run();  //@A5A
             p.returnConnectionToPool(newItem2);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) == 1 
@@ -3505,7 +3505,7 @@ char[] passwordChars = null;
             int service = AS400.COMMAND;
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
         AS400 o = p.getConnection(systemName_, userId_, passwordChars, service);
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.returnConnectionToPool(o);
             assertCondition(p.getActiveConnectionCount(systemName_, userId_) == 0 &&
@@ -3535,7 +3535,7 @@ char[] passwordChars = null;
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
         p.fill(systemName_, userId_, passwordChars, service, 4); 
             AS400 o = p.getConnection(systemName_, userId_, passwordChars, service);
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.returnConnectionToPool(o);
             assertCondition(p.getActiveConnectionCount(systemName_, userId_) == 0 &&
@@ -3574,7 +3574,7 @@ char[] passwordChars = null;
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
        p.fill(systemName_, userId_, passwordChars, service, 4); 
             AS400 o = p.getConnection(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars); //@B2C
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.returnConnectionToPool(o);
             assertCondition(p.getActiveConnectionCount(systemName_, userId_) == 0 &&
@@ -3667,7 +3667,7 @@ removeFromPool(String, String)-should complete successfully with one active conn
             AS400ConnectionPool p = new AS400ConnectionPool();
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
          AS400 o = p.getConnection(systemName_, userId_, passwordChars);   //@B2C
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.removeFromPool(systemName_, userId_);
             assertCondition(p.getActiveConnectionCount(systemName_, userId_) == 0 &&
@@ -3695,7 +3695,7 @@ removeFromPool(String, String)-should complete successfully with one active conn
             AS400ConnectionPool p = new AS400ConnectionPool();
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
          AS400 o = p.getConnection(systemName_, userId_, passwordChars);  //@B2C
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.returnConnectionToPool(o);
             p.removeFromPool(systemName_, userId_);
@@ -3725,7 +3725,7 @@ removeFromPool(String, String)-should complete successfully with one active conn
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
          p.fill(systemName_, userId_, passwordChars, service, 4); 
             AS400 o = p.getConnection(systemName_, userId_, passwordChars);   //@B2C
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.returnConnectionToPool(o);
             p.removeFromPool(systemName_, userId_);
@@ -3756,7 +3756,7 @@ removeFromPool(String, String)-should complete successfully with one active conn
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
         p.fill(systemName_, userId_, passwordChars, service, 4); 
             AS400 o = p.getConnection(systemName_, userId_, passwordChars);  //@B2C
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.removeFromPool("myAS400", "myUserID");
 	    PasswordVault.clearPassword(passwordChars);
@@ -3785,7 +3785,7 @@ removeFromPool(String, String)-should complete successfully with one active conn
             int service = AS400.COMMAND;
                  char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
        AS400 o = p.getConnection(systemName_, userId_, passwordChars);
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.setCleanupInterval(100);
             p.setRunMaintenance(true);
@@ -5565,7 +5565,7 @@ char[] passwordChars =null;
             p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1);
             AS400 o = p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1);            
             CommandCall cmd = new CommandCall(o);
-            cmd.run("CRTLIB FRED");
+            cmd.run("QSYS/CRTLIB FRED");
             succeeded(); 
          PasswordVault.clearPassword(passwordChars);
         }
@@ -5891,7 +5891,7 @@ char[] passwordChars =null;
             p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1, service); 
             AS400 o = p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1, service); 
             CommandCall cmd = new CommandCall(o);
-            cmd.run("CRTLIB FRED");
+            cmd.run("QSYS/CRTLIB FRED");
             succeeded();
             p.close();
          PasswordVault.clearPassword(passwordChars);
@@ -6223,7 +6223,7 @@ char[] passwordChars =null;
             p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1, Locale.US);
             AS400 o = p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1);
             CommandCall cmd = new CommandCall(o);
-            cmd.run("CRTLIB FRED");
+            cmd.run("QSYS/CRTLIB FRED");
             succeeded();
             p.close();
          PasswordVault.clearPassword(passwordChars);
@@ -6756,7 +6756,7 @@ char[] passwordChars =null;
                                             swapToUserID_, pt1);
             
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(newItem, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(newItem, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(newItem);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == 1 
@@ -6797,7 +6797,7 @@ char[] passwordChars =null;
                                             swapToUserID_, pt1, service);
             
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(newItem, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(newItem, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(newItem);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == 1 
@@ -6840,7 +6840,7 @@ char[] passwordChars =null;
                                             swapToUserID_, pt1, service, Locale.US);
             
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(newItem, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(newItem, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(newItem);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == 1 
@@ -6884,7 +6884,7 @@ char[] passwordChars =null;
             		numOfConnections);
             AS400 system2 = p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1); //@B2C
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(system2, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(system2, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(system2);
             assertCondition(p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == numOfConnections 
@@ -6917,9 +6917,9 @@ char[] passwordChars =null;
       AS400 system = null; 
         try
         {
-            CommandCall cmd0 = new CommandCall(pwrSys_, "CHGJOB INQMSGRPY(*SYSRPYL)");
+            CommandCall cmd0 = new CommandCall(pwrSys_, "QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 	    cmd0.run(); 
-	    cmd0 = new CommandCall(pwrSys_, "DLTLIB FRED");
+	    cmd0 = new CommandCall(pwrSys_, "QSYS/DLTLIB FRED");
             cmd0.run();
 
             AS400ConnectionPool p = new AS400ConnectionPool();
@@ -6930,7 +6930,7 @@ char[] passwordChars =null;
 	    PasswordVault.clearPassword(swapToPasswordChars); 
             p.getConnection(systemObject_.getSystemName(), swapToUserID_, pt1); 
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(system, "CRTLIB FRED");  //@A5A
+            CommandCall cmd = new CommandCall(system, "QSYS/CRTLIB FRED");  //@A5A
             boolean check = cmd.run();  //@A5A
             p.returnConnectionToPool(system);
             assertCondition(check &&
@@ -7075,7 +7075,7 @@ char[] passwordChars =null;
             AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
             AS400 o = new AS400(systemName_, userId_, passwordChars);
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             cmd.run();
             p.removeFromPool(o);
             assertCondition(p.getActiveConnectionCount(systemName_, userId_) == 0 &&
@@ -7102,7 +7102,7 @@ removeFromPool(AS400)-should complete successfully with one active connection in
             AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
             AS400 o = p.getConnection(systemName_, userId_, passwordChars);
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             boolean check = cmd.run();
             p.removeFromPool(o);
             assertCondition(check &&
@@ -7131,13 +7131,13 @@ removeFromPool(AS400)-should complete successfully with one active connection in
             AS400ConnectionPool p = new AS400ConnectionPool();
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
             AS400 o = p.getConnection(systemName_, userId_, passwordChars);
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             boolean check1 = cmd.run();
             p.returnConnectionToPool(o);
             o = p.getConnection(systemName_, userId_, passwordChars);
-            cmd = new CommandCall(o, "CHGJOB INQMSGRPY(*SYSRPYL)");
+            cmd = new CommandCall(o, "QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 	    cmd.run(); 
-            cmd = new CommandCall(o, "DLTLIB FRED");
+            cmd = new CommandCall(o, "QSYS/DLTLIB FRED");
             boolean check2 = cmd.run();
             p.removeFromPool(o);
             assertCondition(check1 && check2 &&
@@ -7167,7 +7167,7 @@ removeFromPool(AS400)-should complete successfully with one active connection in
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
             p.fill(systemName_, userId_, passwordChars, service, 4); 
             AS400 o = p.getConnection(systemName_, userId_, passwordChars);   //@B2C
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             boolean check = cmd.run();
             p.removeFromPool(o);
             assertCondition(check &&
@@ -7198,7 +7198,7 @@ removeFromPool(AS400)-should complete successfully with one active connection in
                char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
            p.fill(systemName_, userId_, passwordChars, service, 4); 
               AS400 o = new AS400(systemName_, userId_, passwordChars);
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             boolean check = cmd.run();
             p.removeFromPool(o);
             assertCondition(check &&
@@ -7232,7 +7232,7 @@ removeFromPool(AS400)-should complete successfully with one active connection in
             // int service = AS400.COMMAND;
                 char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
             AS400 o = p.getConnection(systemName_, userId_, passwordChars);
-            CommandCall cmd = new CommandCall(o, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(o, "QSYS/CRTLIB FRED");
             boolean check = cmd.run();
             p.setCleanupInterval(100);
             p.setRunMaintenance(true);
@@ -7380,16 +7380,16 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
             AS400 conn1 = p.getConnection(systemObject_.getSystemName(), 
                                           systemObject_.getUserId(), passwordChars);
             //@A5A Make sure connection gets used and system name resolved to localhost when running on 400. 
-            CommandCall cmd = new CommandCall(conn1, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(conn1, "QSYS/CRTLIB FRED");
             boolean check1 = cmd.run();  //@A5A
             p.returnConnectionToPool(conn1);
             AS400 conn2 = p.getConnection(systemObject_.getSystemName(), 
                                           systemObject_.getUserId(), passwordChars);
             p.removeFromPool(conn1);
             Thread.sleep(500);  // give it a chance to get disconnected
-            cmd = new CommandCall(conn2, "CHGJOB INQMSGRPY(*SYSRPYL)");
+            cmd = new CommandCall(conn2, "QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 	    cmd.run(); 
-            cmd = new CommandCall(conn2, "DLTLIB FRED");
+            cmd = new CommandCall(conn2, "QSYS/DLTLIB FRED");
             boolean check2 = cmd.run(); // this should work, since the AS400 object will automatically reconnect services
             p.returnConnectionToPool(conn2);
             assertCondition(check1 && check2 &&
@@ -7497,8 +7497,8 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
 	tokenProvider.setPassword(passwordChars);
 
 	AS400 i5 = new AS400(systemObject_.getSystemName(), tokenProvider);
-	String c1 = "CRTLIB PIGM123";
-        String c2 = "DLTLIB PIGM123";
+	String c1 = "QSYS/CRTLIB PIGM123";
+        String c2 = "QSYS/DLTLIB PIGM123";
 	CommandCall cmd = new CommandCall(i5);
 
 
@@ -7512,7 +7512,7 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
 
 	boolean result2 = false; 
 	try {
-	  cmd.run("CHGJOB INQMSGRPY(*SYSRPYL)"); 
+	  cmd.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)"); 
 	    result2 = cmd.run(c2);
 	} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -7560,8 +7560,8 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
 	    tokenProvider.setUserId(systemObject_.getUserId());
 	    tokenProvider.setPasswordSpecialValue(ProfileTokenCredential.PW_NOPWDCHK);
 	    AS400 i5 = new AS400(systemObject_.getSystemName(), tokenProvider);
-	    String c1 = "CRTLIB PIGM123";
-	    String c2 = "DLTLIB PIGM123";
+	    String c1 = "QSYS/CRTLIB PIGM123";
+	    String c2 = "QSYS/DLTLIB PIGM123";
 	    CommandCall cmd = new CommandCall(i5);
 	    boolean result = false;
 	    try {
@@ -7572,7 +7572,7 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
 	    }
 	    boolean result2 = false; 
 	    try {
-		cmd.run("CHGJOB INQMSGRPY(*SYSRPYL)"); 
+		cmd.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)"); 
 		result2 = cmd.run(c2);
 	    } catch (Exception e) {
 			// TODO Auto-generated catch block

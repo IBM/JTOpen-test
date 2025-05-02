@@ -583,7 +583,7 @@ public class SecPTMiscTestcase extends Testcase
       sys.setGuiAvailable(false);
       user =  generateClientUser("TBX14");
       cmd = new CommandCall(sys);
-      cmd.run("CRTUSRPRF "+user+" PASSWORD(ASDF23ASD)");
+      cmd.run("QSYS/CRTUSRPRF "+user+" PASSWORD(ASDF23ASD)");
 
       sys.authenticate(user, "*NOPWD".toCharArray());
       failed("Authentication did not fail as expected.");
@@ -600,7 +600,7 @@ public class SecPTMiscTestcase extends Testcase
     } finally {
       if (cmd != null) {
         try {
-          cmd.run("DLTUSRPRF "+user);
+          cmd.run("QSYS/DLTUSRPRF "+user);
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -624,7 +624,7 @@ public class SecPTMiscTestcase extends Testcase
       sys.setGuiAvailable(false);
       user = generateClientUser("TBX15"); 
       cmd = new CommandCall(sys);
-      cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
+      cmd.run("QSYS/CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
       sys.authenticate(user, "*NOPWDCHK".toCharArray());
       failed("Authentication did not fail as expected.");
     } catch (AS400SecurityException iae) {
@@ -640,7 +640,7 @@ public class SecPTMiscTestcase extends Testcase
     } finally {
       if (cmd != null) {
         try {
-          cmd.run("DLTUSRPRF "+user);
+          cmd.run("QSYS/DLTUSRPRF "+user);
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -922,7 +922,7 @@ public class SecPTMiscTestcase extends Testcase
         sys.setGuiAvailable(false);
         user = generateClientUser("TBX25"); 
         cmd = new CommandCall(sys);
-        cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
+        cmd.run("QSYS/CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
 
         sys.authenticate(user, "*NOPWD\u00c0".toCharArray());
         failed("Authentication did not fail as expected.");
@@ -938,7 +938,7 @@ public class SecPTMiscTestcase extends Testcase
       } finally {
         if (cmd != null) {
           try {
-            cmd.run("DLTUSRPRF "+user+" ");
+            cmd.run("QSYS/DLTUSRPRF "+user+" ");
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -961,7 +961,7 @@ public class SecPTMiscTestcase extends Testcase
         sys.setGuiAvailable(false);
         user = generateClientUser("TBX26"); 
         cmd = new CommandCall(sys);
-        cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
+        cmd.run("QSYS/CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
         sys.authenticate(user, "*NOPWDCHK\u00c0".toCharArray());
         failed("Authentication did not fail as expected.");
       } catch (AS400SecurityException iae) {
@@ -976,7 +976,7 @@ public class SecPTMiscTestcase extends Testcase
       } finally {
         if (cmd != null) {
           try {
-            cmd.run("DLTUSRPRF "+user+" ");
+            cmd.run("QSYS/DLTUSRPRF "+user+" ");
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -1578,7 +1578,7 @@ public class SecPTMiscTestcase extends Testcase
        sys.setGuiAvailable(false);
        user = generateClientUser("TBX25"); 
        cmd = new CommandCall(sys);
-       cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
+       cmd.run("QSYS/CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
 
        sys.authenticate(user, "*NOPWD\u00c0".toCharArray());
        failed("Authentication did not fail as expected.");
@@ -1594,7 +1594,7 @@ public class SecPTMiscTestcase extends Testcase
      } finally {
        if (cmd != null) {
          try {
-           cmd.run("DLTUSRPRF "+user+" ");
+           cmd.run("QSYS/DLTUSRPRF "+user+" ");
          } catch (Exception e) {
            e.printStackTrace();
          }
@@ -1618,7 +1618,7 @@ public class SecPTMiscTestcase extends Testcase
        sys.setGuiAvailable(false);
        user = generateClientUser("TBX26"); 
        cmd = new CommandCall(sys);
-       cmd.run("CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
+       cmd.run("QSYS/CRTUSRPRF "+user+" PASSWORD(TBXSPTM783)");
        sys.authenticate(user, "*NOPWDCHK\u00c0".toCharArray());
        failed("Authentication did not fail as expected.");
      } catch (AS400SecurityException iae) {
@@ -1633,7 +1633,7 @@ public class SecPTMiscTestcase extends Testcase
      } finally {
        if (cmd != null) {
          try {
-           cmd.run("DLTUSRPRF "+user+" ");
+           cmd.run("QSYS/DLTUSRPRF "+user+" ");
          } catch (Exception e) {
            e.printStackTrace();
          }

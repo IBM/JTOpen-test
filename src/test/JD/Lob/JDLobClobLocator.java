@@ -463,7 +463,7 @@ public class JDLobClobLocator extends JDTestcase {
 
         sql = "call QGPL.JDCMDEXEC(?,?)";
         CallableStatement cmd = connection_.prepareCall(sql);
-        String command = "CRTCMOD MODULE(" + JDLobTest.COLLECTION + "/CLOBLOCINF) " + " SRCFILE(" + JDLobTest.COLLECTION
+        String command = "QSYS/CRTCMOD MODULE(" + JDLobTest.COLLECTION + "/CLOBLOCINF) " + " SRCFILE(" + JDLobTest.COLLECTION
             + "/CLOBLOCINF)   ";
 
         sql = sql + " command=" + command;
@@ -476,7 +476,7 @@ public class JDLobClobLocator extends JDTestcase {
           e.printStackTrace();
         }
 
-        command = "CRTSRVPGM SRVPGM(" + JDLobTest.COLLECTION + "/CLOBLOCINF) MODULE(" + JDLobTest.COLLECTION
+        command = "QSYS/CRTSRVPGM SRVPGM(" + JDLobTest.COLLECTION + "/CLOBLOCINF) MODULE(" + JDLobTest.COLLECTION
             + "/CLOBLOCINF) EXPORT(*ALL)  ";
         cmd.setString(1, command);
         cmd.setInt(2, command.length());

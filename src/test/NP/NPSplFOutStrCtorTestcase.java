@@ -68,7 +68,7 @@ public class NPSplFOutStrCtorTestcase extends Testcase
             {
             // create CTORTST output queue
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CRTOUTQ OUTQ(NPJAVA/CTORTST) AUTCHK(*DTAAUT)") == false)
+            if (cmd.run("QSYS/CRTOUTQ OUTQ(NPJAVA/CTORTST) AUTCHK(*DTAAUT)") == false)
                 {
                 failed("Could not create an output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -76,7 +76,7 @@ public class NPSplFOutStrCtorTestcase extends Testcase
                 return;
                 }
 
-            if (cmd.run("GRTOBJAUT OBJ(NPJAVA/CTORTST) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ(NPJAVA/CTORTST) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
                 {
                 failed("Could not grant *public authority to output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -85,7 +85,7 @@ public class NPSplFOutStrCtorTestcase extends Testcase
                 }
 
             // make sure JAVAPRINT printer file exists
-            if (cmd.run("CRTPRTF FILE(NPJAVA/JAVAPRINT)") == false)
+            if (cmd.run("QSYS/CRTPRTF FILE(NPJAVA/JAVAPRINT)") == false)
                 {
                 failed("Could not create a printer file. "
                        + cmd.getMessageList()[0].getID()
@@ -159,7 +159,7 @@ public class NPSplFOutStrCtorTestcase extends Testcase
 $$$ TO DO $$$ - delete this line */
 
             // clear the output queue we created.
-            if (cmd.run("CLROUTQ OUTQ(NPJAVA/CTORTST)") != true)
+            if (cmd.run("QSYS/CLROUTQ OUTQ(NPJAVA/CTORTST)") != true)
                 {
                 failed("Could not clear the output queue we created."
                        + cmd.getMessageList()[0].getID()
@@ -168,7 +168,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             // delete the output queue we created.
-            if (cmd.run("DLTOUTQ OUTQ(NPJAVA/CTORTST)") != true)
+            if (cmd.run("QSYS/DLTOUTQ OUTQ(NPJAVA/CTORTST)") != true)
                 {
                 failed("Could not delete the output queue we created."
                        + cmd.getMessageList()[0].getID()
@@ -177,7 +177,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             // delete the printer file that we created
-            if (cmd.run("DLTF FILE(NPJAVA/JAVAPRINT)") != true)
+            if (cmd.run("QSYS/DLTF FILE(NPJAVA/JAVAPRINT)") != true)
                 {
                 failed("Could not delete the printer file that we created."
                        + cmd.getMessageList()[0].getID()
@@ -322,7 +322,7 @@ $$$ TO DO $$$ - delete this line */
 
             // create another output queue
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CRTOUTQ OUTQ(NPJAVA/PRTJAVA) AUTCHK(*DTAAUT)") == false)
+            if (cmd.run("QSYS/CRTOUTQ OUTQ(NPJAVA/PRTJAVA) AUTCHK(*DTAAUT)") == false)
                 {
                 failed("Could not create an output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -330,7 +330,7 @@ $$$ TO DO $$$ - delete this line */
                 return;
                 }
 
-            if (cmd.run("GRTOBJAUT OBJ(NPJAVA/PRTJAVA) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ(NPJAVA/PRTJAVA) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
                 {
                 failed("Could not grant *public authority to output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -379,7 +379,7 @@ $$$ TO DO $$$ - delete this line */
             else failed("Output queue in parms list did not prevail.");
 
             // clear the output queue we created.
-            if (cmd.run("CLROUTQ OUTQ(NPJAVA/PRTJAVA)") != true)
+            if (cmd.run("QSYS/CLROUTQ OUTQ(NPJAVA/PRTJAVA)") != true)
                 {
                 output_.println("Could not clear the output queue we created."
                                 + cmd.getMessageList()[0].getID()
@@ -387,7 +387,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             // delete the output queue we created.
-            if (cmd.run("DLTOUTQ OUTQ(NPJAVA/PRTJAVA)") != true)
+            if (cmd.run("QSYS/DLTOUTQ OUTQ(NPJAVA/PRTJAVA)") != true)
                 {
                 output_.println("Could not delete the output queue we created."
                                 + cmd.getMessageList()[0].getID()

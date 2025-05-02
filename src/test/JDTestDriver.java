@@ -91,6 +91,7 @@ public abstract class JDTestDriver extends TestDriver {
   public static final int RELEASE_V7R4M0 = 740;
   public static final int RELEASE_V7R5M0 = 750;
   public static final int RELEASE_V7R6M0 = 760;
+  public static final int RELEASE_V7R6M0_PLUS   = 770;
   
  
   public static final String CLIENT_windows = "windows";
@@ -1493,7 +1494,7 @@ public abstract class JDTestDriver extends TestDriver {
 	  stmt.close();
       }
       if (dbmon != null) {
-	  String command = "STRDBMON OUTFILE(" + dbmon + ") OUTMBR(*FIRST *ADD)  ";
+	  String command = "QSYS/STRDBMON OUTFILE(" + dbmon + ") OUTMBR(*FIRST *ADD)  ";
 	  try {
 	      runCommand(connection, command, true);
 	  } catch (Exception e) {

@@ -1937,7 +1937,7 @@ extends JDTestcase
 		// Determine our job name
 		    String jobname = JDJobName.getJobName();
 		// Change the CCSID 
-		    String command = "chgjob "+jobname+" CCSID(5035)";
+		    String command = "QSYS/chgjob "+jobname+" CCSID(5035)";
 		    String sql = "CALL QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
 		    // System.out.println("executing "+sql);
 		    Statement stmt = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -2001,7 +2001,7 @@ extends JDTestcase
 		    // Determine our job name
 		    String jobname = JDJobName.getJobName();
 		    // Change the CCSID 
-		    String command = "chgjob "+jobname+" CCSID(5035)";
+		    String command = "QSYS/chgjob "+jobname+" CCSID(5035)";
 		    String sql = "CALL QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
 		    // System.out.println("executing "+sql);
 		    Statement stmt = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,

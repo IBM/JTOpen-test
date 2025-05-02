@@ -214,7 +214,7 @@ public class RMDescriptorTestcase extends Testcase
     }
 
 
-/// Note: I don't know how to get an invalid class loader.  - jlee
+/// Note: I don't know how to get an invalid class loader. 
 ///    /**
 ///     Test getDescriptor(docName,classLoader) passing an invalid classLoader.
 ///    Expect an exception.

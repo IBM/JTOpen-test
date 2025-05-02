@@ -294,9 +294,9 @@ public class JDBCProxyStressTestcase
       try                                                                        //$B1A
       {
          CommandCall cmd = new CommandCall (pwrSys_);
-         cmd.run ("GRTOBJAUT OBJ(QSYS/" + collectionName_ + ") OBJTYPE(*LIB) "
+         cmd.run ("QSYS/GRTOBJAUT OBJ(QSYS/" + collectionName_ + ") OBJTYPE(*LIB) "
                   + "USER(*PUBLIC) AUT(*ALL)");
-         cmd.run ("GRTOBJAUT OBJ(" + collectionName_ + "/QSQJRN) OBJTYPE(*JRN) "
+         cmd.run ("QSYS/GRTOBJAUT OBJ(" + collectionName_ + "/QSQJRN) OBJTYPE(*JRN) "
                   + "USER(*PUBLIC) AUT(*ALL)");
       }
       catch(PropertyVetoException pv)

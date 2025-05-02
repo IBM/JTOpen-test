@@ -858,7 +858,7 @@ Performs cleanup needed after running variations.
 
         sb.append("\nCreating profile "+testProfile);
         boolean results = pwrCommand
-            .run("CRTUSRPRF "+testProfile+" PASSWORD("+testPassword+")");
+            .run("QSYS/CRTUSRPRF "+testProfile+" PASSWORD("+testPassword+")");
         sb.append("\n CRTUSRPRF returned " + results);
 
         sb.append("\nGetting connection"); 
@@ -892,10 +892,10 @@ Performs cleanup needed after running variations.
         spooledFileList.close(); 
         sb.append("\nDeleting spool files"); 
         results = pwrCommand
-            .run("DLTSPLF FILE(*SELECT) SELECT("+testProfile+")");
+            .run("QSYS/DLTSPLF FILE(*SELECT) SELECT("+testProfile+")");
 
         sb.append("\nDropping profile  "+testProfile);
-        results = pwrCommand.run("DLTUSRPRF USRPRF("+testProfile+") OWNOBJOPT(*DLT)");
+        results = pwrCommand.run("QSYS/DLTUSRPRF USRPRF("+testProfile+") OWNOBJOPT(*DLT)");
         sb.append("\n DLTUSRPRF returned " + results);
         assertCondition(passed, sb);
       } catch (Exception e) {
@@ -925,7 +925,7 @@ Performs cleanup needed after running variations.
 
         sb.append("\nCreating profile "+testProfile);
         boolean results = pwrCommand
-            .run("CRTUSRPRF "+testProfile+" PASSWORD("+testPassword+")");
+            .run("QSYS/CRTUSRPRF "+testProfile+" PASSWORD("+testPassword+")");
         sb.append("\n CRTUSRPRF returned " + results);
 
         sb.append("\nGetting connection"); 
@@ -961,10 +961,10 @@ Performs cleanup needed after running variations.
         
         sb.append("\nDeleting spool files"); 
         results = pwrCommand
-            .run("DLTSPLF FILE(*SELECT) SELECT("+testProfile+")");
+            .run("QSYS/DLTSPLF FILE(*SELECT) SELECT("+testProfile+")");
 
         sb.append("\nDropping profile  "+testProfile);
-        results = pwrCommand.run("DLTUSRPRF USRPRF("+testProfile+") OWNOBJOPT(*DLT)");
+        results = pwrCommand.run("QSYS/DLTUSRPRF USRPRF("+testProfile+") OWNOBJOPT(*DLT)");
         sb.append("\n DLTUSRPRF returned " + results);
         assertCondition(passed, sb);
       } catch (Exception e) {

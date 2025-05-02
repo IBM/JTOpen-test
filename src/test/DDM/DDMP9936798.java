@@ -116,12 +116,12 @@ public class DDMP9936798 extends Testcase implements Runnable
     {
       CommandCall cc = new CommandCall(pwrSys_);
       deleteLibrary(cc, testLib_); 
-      if (!cc.run("CRTLIB "+testLib_))
+      if (!cc.run("QSYS/CRTLIB "+testLib_))
       {
         output_.println("Warning: Unable to create library "+testLib_+": "+cc.getMessageList()[0].toString());
       }
 
-      if (! cc.run("GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER(JAVA) AUT(*ALL)")) {
+      if (! cc.run("QSYS/GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER(JAVA) AUT(*ALL)")) {
 	  output_.println("Unable to grant permission to library "+testLib_+": "+cc.getMessageList()[0].toString());
 
       } 

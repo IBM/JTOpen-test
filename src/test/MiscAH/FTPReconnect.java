@@ -158,7 +158,7 @@ public class FTPReconnect extends    Testcase
         // Drop the timeout down to 10 seconds .. will only apply to newest
         // connections
 	  CommandCall cc = new CommandCall(pwrSys_);
-	  String command = "CHGFTPA INACTTIMO(10)";
+	  String command = "QSYS/CHGFTPA INACTTIMO(10)";
 	  if (!cc.run(command)) {
 	      System.out.println("Warning:  '" + command + "' failed");
 	  } else {
@@ -185,7 +185,7 @@ public class FTPReconnect extends    Testcase
 	// Restore the old timeout
 	// CHGFTPA INACTTIMO(3600)
 	   CommandCall cc = new CommandCall(pwrSys_);
-	String command = "CHGFTPA INACTTIMO("+oldTimeout+")"; 
+	String command = "QSYS/CHGFTPA INACTTIMO("+oldTimeout+")"; 
 	if (!cc.run(command)) {
 	    System.out.println("Warning:  '"+command+"' failed"); 
 	} else {

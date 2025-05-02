@@ -85,7 +85,7 @@ public class NPOutQListListenerTestcase extends Testcase
 	{
             // create LISTLTST output queue
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CRTOUTQ OUTQ(NPJAVA/LISTLTST) AUTCHK(*DTAAUT)") == false)
+            if (cmd.run("QSYS/CRTOUTQ OUTQ(NPJAVA/LISTLTST) AUTCHK(*DTAAUT)") == false)
                 {
                 failed("Could not create an output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -93,7 +93,7 @@ public class NPOutQListListenerTestcase extends Testcase
                 return;
                 }
 
-            if (cmd.run("GRTOBJAUT OBJ(NPJAVA/LISTLTST) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ(NPJAVA/LISTLTST) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
                 {
                 failed("Could not grant *public authority to output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -208,7 +208,7 @@ public class NPOutQListListenerTestcase extends Testcase
 $$$ TO DO $$$ - delete this line */
 
             // clear the output queue we created.
-            if (cmd.run("CLROUTQ OUTQ(NPJAVA/LISTLTST)") == false)
+            if (cmd.run("QSYS/CLROUTQ OUTQ(NPJAVA/LISTLTST)") == false)
                 {
                 output_.println(" Could not clear output queue we created. "
                                 + cmd.getMessageList()[0].getID()
@@ -216,7 +216,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             // delete the output queue we created.
-            if (cmd.run("DLTOUTQ OUTQ(NPJAVA/LISTLTST)") == false)
+            if (cmd.run("QSYS/DLTOUTQ OUTQ(NPJAVA/LISTLTST)") == false)
                 {
                 output_.println(" Could not delete output queue we created. "
                                 + cmd.getMessageList()[0].getID()

@@ -371,7 +371,7 @@ public class JDPerformanceUtil {
       //
       // Make sure the source file exists 
       //
-      String command = "CRTSRCPF "+library+"/"+file;
+      String command = "QSYS/CRTSRCPF "+library+"/"+file;
       cmd.setString(1, command );
       cmd.setInt(2, command.length());
       try {
@@ -383,7 +383,7 @@ public class JDPerformanceUtil {
       //
       // Make sure the member exists 
       //
-      command = "ADDPFM  "+library+"/"+file+" "+file;
+      command = "QSYS/ADDPFM  "+library+"/"+file+" "+file;
       cmd.setString(1, command );
       cmd.setInt(2, command.length());
 
@@ -437,13 +437,13 @@ public class JDPerformanceUtil {
 
           // compile
           CallableStatement cmd = connection.prepareCall("call QGPL.JDCMDEXEC(?,?)");
-          String command = "CRTSQLCI OBJ(QGPL/cpuuse) SRCFILE(QGPL/cpuuse)";
+          String command = "QSYS/CRTSQLCI OBJ(QGPL/cpuuse) SRCFILE(QGPL/cpuuse)";
           cmd.setString(1, command );
           cmd.setInt(2, command.length());
           cmd.execute();
 
 
-          command = "CRTPGM PGM(QGPL/cpuuse) MODULE(QGPL/cpuuse) ACTGRP(*CALLER)";
+          command = "QSYS/CRTPGM PGM(QGPL/cpuuse) MODULE(QGPL/cpuuse) ACTGRP(*CALLER)";
           cmd.setString(1, command );
           cmd.setInt(2, command.length());
           cmd.execute();

@@ -217,7 +217,7 @@ public class DDMMultipleFormat extends Testcase
         System.out.println("Warning:  Command failed : "+command); 
       }
       
-      command = "GRTOBJAUT OBJ(DDMTESTSAV/*ALL) OBJTYPE(*ALL) USER("+userId_+")    ";
+      command = "QSYS/GRTOBJAUT OBJ(DDMTESTSAV/*ALL) OBJTYPE(*ALL) USER("+userId_+")    ";
       result = c.run(command); 
       if (!result) {
         System.out.println("Warning:  Command failed : "+command); 
@@ -232,12 +232,12 @@ public class DDMMultipleFormat extends Testcase
       }
       catch(Exception e) {} // may not exist, so ignore faliures
       
-      c.run("CRTLF     FILE(DDMTESTSAV/MLTFMT) SRCFILE(DDMTESTSAV/QDDSSRC)");
-      c.run("GRTOBJAUT  OBJ(DDMTESTSAV/MLTFMT) OBJTYPE(*ALL) USER("+userId_+")"); 
+      c.run("QSYS/CRTLF     FILE(DDMTESTSAV/MLTFMT) SRCFILE(DDMTESTSAV/QDDSSRC)");
+      c.run("QSYS/GRTOBJAUT  OBJ(DDMTESTSAV/MLTFMT) OBJTYPE(*ALL) USER("+userId_+")"); 
       
       // Populate file simpleseq - this is the file over which mltfmt is built
       // Clear the file first
-      c.run("CLRPFM FILE(DDMTESTSAV/SIMPLESEQ)");
+      c.run("QSYS/CLRPFM FILE(DDMTESTSAV/SIMPLESEQ)");
       AS400FileRecordDescription rd = new AS400FileRecordDescription(systemObject_, "/qsys.lib/ddmtestsav.lib/simpleseq.file");
       SequentialFile f2 = new SequentialFile(pwrSys_, "/qsys.lib/ddmtestsav.lib/simpleseq.file");
       f2.setRecordFormat(rd.retrieveRecordFormat()[0]);

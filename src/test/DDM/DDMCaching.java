@@ -743,7 +743,7 @@ protected void setup()
     // Delete and recreate test library
     CommandCall c = new CommandCall(pwrSys_);
     deleteLibrary(c, testLib_);
-    c.run("CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
+    c.run("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
     AS400Message[] msgs = c.getMessageList();
     if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals("CPC2102")))
     {

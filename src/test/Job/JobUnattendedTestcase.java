@@ -240,16 +240,16 @@ public class JobUnattendedTestcase extends Testcase
 	// Make sure that the user exists and the password is set
 	//
 	String newPassword="ABC212CB";
-	ccallPow_.setCommand("CRTUSRPRF USRPRF("+interactiveUser_+") PASSWORD("+newPassword+") TEXT('Toolbox testing profile') ACGCDE(514648897) CCSID(37)");
+	ccallPow_.setCommand("CQSYS/RTUSRPRF USRPRF("+interactiveUser_+") PASSWORD("+newPassword+") TEXT('Toolbox testing profile') ACGCDE(514648897) CCSID(37)");
 	ccallPow_.run();
 	// Change the password to keep it from expiring
-	ccallPow_.setCommand("CHGUSRPRF USRPRF("+interactiveUser_+") PASSWORD(BOGUS7)");
+	ccallPow_.setCommand("QSYS/CHGUSRPRF USRPRF("+interactiveUser_+") PASSWORD(BOGUS7)");
 	ccallPow_.run();
-	ccallPow_.setCommand("CHGUSRPRF USRPRF("+interactiveUser_+") PASSWORD("+newPassword+")  STATUS(*ENABLED) "); 
+	ccallPow_.setCommand("QSYS/CHGUSRPRF USRPRF("+interactiveUser_+") PASSWORD("+newPassword+")  STATUS(*ENABLED) "); 
 	if (ccallPow_.run() != true) {
 	    System.out.println("SEVERE ERROR:  Unable to change password for "+interactiveUser_); 
 	}
-	ccallPow_.setCommand("GRTOBJAUT OBJ(QSYS/"+interactiveUser_+") OBJTYPE(*USRPRF) USER("+interactiveUser_+") AUT(*USE)");
+	ccallPow_.setCommand("QSYS/GRTOBJAUT OBJ(QSYS/"+interactiveUser_+") OBJTYPE(*USRPRF) USER("+interactiveUser_+") AUT(*USE)");
 	ccallPow_.run();
 
 	// 
@@ -322,7 +322,7 @@ public class JobUnattendedTestcase extends Testcase
             throw new Exception("Please bring up an emulator session to " + pwrSys_.getSystemName() + ", and\nsign-on as " + interactiveUser_ + ".  Run this testcase while that\nsession is active. jobName_="+jobName_+" uesrName_="+userName_+"jobNumber_="+jobNumber_);
         }
 
-        ccallPow_.setCommand("CRTJOBQ JOBQ("+testJobQueue_+")");
+        ccallPow_.setCommand("QSYS/CRTJOBQ JOBQ("+testJobQueue_+")");
         if (ccallPow_.run() != true)
         {
             AS400Message[] messages = ccallPow_.getMessageList();
@@ -346,16 +346,16 @@ public class JobUnattendedTestcase extends Testcase
         userName4_ = jobInfo[1];
         jobNumber4_ = jobInfo[2];
 
-        ccallPow_.run("CRTLIB LIB(TLIB6)");
-        ccallPow_.run("CHGCURLIB CURLIB(TLIB6)");
+        ccallPow_.run("QSYS/CRTLIB LIB(TLIB6)");
+        ccallPow_.run("QSYS/CHGCURLIB CURLIB(TLIB6)");
         // These 2 are for the sort sequence table
-        ccallPow_.run("CRTSRCPF FILE(TLIB6/TABLESRC) MBR(TESTSEQ)");
-        ccallPow_.run("CRTTBL TBL(TLIB6/TESTSEQ) SRCFILE(TLIB6/TABLESRC) TBLTYPE(*SRTSEQ) CCSID(*HEX)");
-        ccallPow_.run("CLRJOBQ QGPL/TESTJOBQ6");
-        ccallPow_.run("DLTJOBQ QGPL/TESTJOBQ6");
+        ccallPow_.run("QSYS/CRTSRCPF FILE(TLIB6/TABLESRC) MBR(TESTSEQ)");
+        ccallPow_.run("QSYS/CRTTBL TBL(TLIB6/TESTSEQ) SRCFILE(TLIB6/TABLESRC) TBLTYPE(*SRTSEQ) CCSID(*HEX)");
+        ccallPow_.run("QSYS/CLRJOBQ QGPL/TESTJOBQ6");
+        ccallPow_.run("QSYS/DLTJOBQ QGPL/TESTJOBQ6");
 
         CommandCall norm = new CommandCall(systemObject_);
-        norm.run("CRTJOBQ QGPL/TESTJOBQ6");
+        norm.run("QSYS/CRTJOBQ QGPL/TESTJOBQ6");
     }
 
     private String[] createJob(AS400 system, String jobName, String jobQueue, String scheduleDate) throws Exception
@@ -365,11 +365,11 @@ public class JobUnattendedTestcase extends Testcase
         CommandCall command = new CommandCall(system);
         if (!scheduleDate.equals("*CURRENT"))
         {
-            command.setCommand("SBMJOB CMD(WRKSYSVAL) JOB(" + jobName + ") JOBQ(" + jobQueue + ") SCDDATE(" + scheduleDate + ")");
+            command.setCommand("QSYS/SBMJOB CMD(WRKSYSVAL) JOB(" + jobName + ") JOBQ(" + jobQueue + ") SCDDATE(" + scheduleDate + ")");
         }
         else
         {
-            command.setCommand("SBMJOB CMD(WRKSYSVAL) JOB(" + jobName + ") JOBQ(" + jobQueue + ")");
+            command.setCommand("QSYS/SBMJOB CMD(WRKSYSVAL) JOB(" + jobName + ") JOBQ(" + jobQueue + ")");
         }
         if (command.run() == true)
         {
@@ -400,7 +400,7 @@ public class JobUnattendedTestcase extends Testcase
     protected void cleanup() throws Exception
     {
         CommandCall ccallPow_ = new CommandCall(pwrSys_);
-        if (ccallPow_.run("ENDJOB JOB("+jobNumber1_+"/"+userName1_+"/"+jobName1_+") OPTION(*IMMED)") != true)
+        if (ccallPow_.run("QSYS/ENDJOB JOB("+jobNumber1_+"/"+userName1_+"/"+jobName1_+") OPTION(*IMMED)") != true)
         {
             AS400Message[] messages = ccallPow_.getMessageList();
             output_.println("Error in delete job: ");
@@ -408,13 +408,13 @@ public class JobUnattendedTestcase extends Testcase
         }
         // Don't need to delete jobName4_ because it has already completed by now.
 
-        ccallPow_.run("DLTTBL TBL(TLIB6/TESTSEQ)");
-        ccallPow_.run("DLTF FILE(TLIB6/TABLESRC)");
+        ccallPow_.run("QSYS/DLTTBL TBL(TLIB6/TESTSEQ)");
+        ccallPow_.run("QSYS/DLTF FILE(TLIB6/TABLESRC)");
 	deleteLibrary(ccallPow_,"TLIB6");
         // Have to clear it before you can delete it.
-        ccallPow_.run("CLRJOBQ JOBQ("+testJobQueue_+")");
+        ccallPow_.run("QSYS/CLRJOBQ JOBQ("+testJobQueue_+")");
 
-        if (ccallPow_.run("DLTJOBQ JOBQ("+testJobQueue_+")") != true)
+        if (ccallPow_.run("QSYS/DLTJOBQ JOBQ("+testJobQueue_+")") != true)
         {
             AS400Message[] messages = ccallPow_.getMessageList();
             output_.println("Error in delete Job queue: ");

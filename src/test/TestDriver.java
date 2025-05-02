@@ -941,11 +941,13 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       String thisClass = this.getClass().getName();
       String argString = obfuscatePasswords(argsToSave_);
       Date d = new Date();
+      Thread thisThread = Thread.currentThread(); 
+      thisThread.setName(thisClass);
       JDJobName.sendProgramMessage(d.toString() + " Running " + thisClass + " "
           + argString);
       loggingText = JDJobName.getLoggingText();
       if (!"*SECLVL".equals(loggingText)) {
-        String command = " CHGJOB LOG(4 00 *SECLVL)  ";
+        String command = "QSYS/CHGJOB LOG(4 00 *SECLVL)  ";
         try {
           JDJobName.system(command);
         } catch (Exception e) {
@@ -1159,7 +1161,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     // If on a 400, change the logging level back
     if (onAS400_) {
       if (!"*SECLVL".equals(loggingText)) {
-        String command = " CHGJOB LOG(4 00 " + loggingText + ")  ";
+        String command = "QSYS/CHGJOB LOG(4 00 " + loggingText + ")  ";
         try {
           JDJobName.system(command);
         } catch (Exception e) {
@@ -1256,7 +1258,10 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     } finally {
 
       if (timeoutThread != null) {
+        System.out.println("Marking timeout thead done"); 
         timeoutThread.markDone();
+      } else {
+        System.out.println("Timeout thead done not present"); 
       }
 
     }
@@ -1551,8 +1556,8 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   public static String deleteLibrary(CommandCall cmd, String library) {
     // Make sure the sysrpyl is used.
     try {
-      cmd.run("CHGJOB INQMSGRPY(*SYSRPYL)");
-      boolean result = cmd.run("DLTLIB " + library);
+      cmd.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
+      boolean result = cmd.run("QSYS/DLTLIB " + library);
       if (result == false) {
         return cmd.getMessageList()[0].getID();
       } else {

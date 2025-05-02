@@ -111,9 +111,9 @@ protected void setup () //throws Exception
         try
         {
             
-            ccallPow_.setCommand("CRTUSRPRF USRPRF(TESTUSER42) PASSWORD(JTEAM1)");
+            ccallPow_.setCommand("QSYS/CRTUSRPRF USRPRF(TESTUSER42) PASSWORD(JTEAM1)");
             ccallPow_.run();
-            ccall_.setCommand("CRTLIB LIB(testlib2)");
+            ccall_.setCommand("QSYS/CRTLIB LIB(testlib2)");
             ccall_.run();
         }    
         catch(Exception ex) 
@@ -133,7 +133,7 @@ protected void cleanup()
 {               
       try
       {            
-          ccallPow_.setCommand("DLTUSRPRF USRPRF(TESTUSER42)");
+          ccallPow_.setCommand("QSYS/DLTUSRPRF USRPRF(TESTUSER42)");
           ccallPow_.run();
           deleteLibrary(ccallPow_,"testLIB2");
       }    

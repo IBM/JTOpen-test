@@ -994,7 +994,7 @@ public class AS400FTPTestcase extends    Testcase
                    Continue = false;
                 }
 
-             if (! cc.run("CRTLIB FTPTEST2"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST2"))
              {
                 message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -1057,7 +1057,7 @@ public class AS400FTPTestcase extends    Testcase
                    Continue = false;
                 }
 
-             if (! cc.run("CRTLIB FTPTEST3"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST3"))
              {
                 message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -1119,7 +1119,7 @@ public class AS400FTPTestcase extends    Testcase
                    Continue = false;
                 }
 
-             if (! cc.run("CRTLIB FTPTEST4"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST4"))
              {
                 message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -1188,7 +1188,7 @@ public class AS400FTPTestcase extends    Testcase
                 }
 
 
-             if (! cc.run("CRTLIB FTPTEST5"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST5"))
              {
                 message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -4255,7 +4255,7 @@ public class AS400FTPTestcase extends    Testcase
                 }
 
 
-             if (! cc.run("CRTLIB FTPTEST2"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST2"))
              {
                 message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))

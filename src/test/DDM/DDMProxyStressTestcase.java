@@ -257,7 +257,7 @@ public class DDMProxyStressTestcase
 
    private void setup() 
    {
-      ddmlib_ = new CommandCall( sys2_, "crtlib (DDMPXY" + curntThread_ + ") AUT(*ALL)");
+      ddmlib_ = new CommandCall( sys2_, "QSYS/crtlib (DDMPXY" + curntThread_ + ") AUT(*ALL)");
       try 
       {
          System.out.println("     Creating DDM libraries..." + "(t" + curntThread_ + ")");

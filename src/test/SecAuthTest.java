@@ -151,17 +151,17 @@ public class SecAuthTest extends TestDriver
     public static void createProfiles(AS400 pwrSys) throws Exception {
 
         CommandCall cmd = new CommandCall(pwrSys);
-        String command = "CRTUSRPRF USRPRF(" + uid1 + ") PASSWORD(" + pwd1 + ") USRCLS(*USER) TEXT('JTOpen Test profile')";
+        String command = "QSYS/CRTUSRPRF USRPRF(" + uid1 + ") PASSWORD(" + pwd1 + ") USRCLS(*USER) TEXT('JTOpen Test profile')";
         cmd.run(command);
-        command = "CRTUSRPRF USRPRF(" + uid2 + ") PASSWORD(" + pwd2 + ") USRCLS(*USER) TEXT('JTOPEN Test profile')";
+        command = "QSYS/CRTUSRPRF USRPRF(" + uid2 + ") PASSWORD(" + pwd2 + ") USRCLS(*USER) TEXT('JTOPEN Test profile')";
         cmd.run(command);
 
     }
 
     public static void deleteProfiles(AS400 pwrSys) throws Exception {
         CommandCall cmd = new CommandCall(pwrSys);
-        cmd.run("DLTUSRPRF USRPRF(" + uid1 + ") OWNOBJOPT(*DLT)");
-        cmd.run("DLTUSRPRF USRPRF(" + uid2 + ") OWNOBJOPT(*DLT)");
+        cmd.run("QSYS/DLTUSRPRF USRPRF(" + uid1 + ") OWNOBJOPT(*DLT)");
+        cmd.run("QSYS/DLTUSRPRF USRPRF(" + uid2 + ") OWNOBJOPT(*DLT)");
     }
 
     /**

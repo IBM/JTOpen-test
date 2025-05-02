@@ -674,14 +674,14 @@ Creates Testcase objects for all the testcases in this component.
               System.out.println( "To delete DDMTEST/DDMLOCK, signon to the system and use the WRKOBJLCK command to end the jobs holding the locks." );
             }
           }
-          if (!cmd.run("CRTLIB "+testLib_))
+          if (!cmd.run("QSYS/CRTLIB "+testLib_))
 	  {
             System.out.println("Setup could not create library "+testLib_+": "+
                                 cmd.getMessageList()[0].toString());
 	  }
 
-	  if (!cmdRun("GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
-	      out_.println("CRTOBJAUT failed");
+	  if (!cmdRun("QSYS/GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
+	      out_.println("GRTOBJAUT failed");
 	  } 
 
         }
@@ -714,21 +714,21 @@ Creates Testcase objects for all the testcases in this component.
         if (allTestcases)
         {
           CommandCall cmd = new CommandCall( PwrSys );
-          if ((cmd.run( "DLTxLIB " + testLib_ ) == false) &&
+          if ((cmd.run( "QSYS/DLTxLIB " + testLib_ ) == false) &&
               !cmd.getMessageList()[0].getID().equals("CPF2110"))
           {
             System.out.println( "Setup could not delete library " + testLib_ + ": "
                                 + cmd.getMessageList()[0].getID() + " "
                                 + cmd.getMessageList()[0].getText() );
           }
-          if ((cmd.run( "DLTxLIB \"" + testLib_ + "\"" ) == false) &&
+          if ((cmd.run( "QSYS/DLTxLIB \"" + testLib_ + "\"" ) == false) &&
               !cmd.getMessageList()[0].getID().equals("CPF2110"))
           {
             System.out.println( "Setup could not delete library " + testLib_ + ": "
                                 + cmd.getMessageList()[0].getID() + " "
                                 + cmd.getMessageList()[0].getText() );
           }
-          if (!cmd.run("CRTLIB "+testLib_))
+          if (!cmd.run("QSYS/CRTLIB "+testLib_))
 	  {
             System.out.println("Setup could not create library "+testLib_+": "+
                                 cmd.getMessageList()[0].toString());

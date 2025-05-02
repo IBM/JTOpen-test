@@ -209,7 +209,7 @@ public class DDMSerialization extends Testcase
       // Create library DDMTEST
       deleteLibrary(cmd_, testLib_);
       
-      String msg = runCommand("CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
+      String msg = runCommand("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
       if (msg != null && !msg.equals("CPF2111"))
       {
         output_.println("Failure executing 'CRTLIB LIB(" + testLib_ + ") AUT(*ALL)'");
@@ -234,14 +234,14 @@ public class DDMSerialization extends Testcase
       f1.close();
 
       // Create journal receiver and journal if it does not already exist
-      msg = runCommand("CRTJRNRCV JRNRCV("+testLib_+"/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
+      msg = runCommand("QSYS/CRTJRNRCV JRNRCV("+testLib_+"/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
       if (msg != null && !msg.equals("CPF7010"))
       {
         output_.println("Failure executing 'CRTJRNRCV JRNRCV("+testLib_+"/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
         output_.println(msg);
         throw new Exception("");
       }
-      msg = runCommand("CRTJRN JRN(" + testLib_ + "/JT4DDMJRN) JRNRCV(" + testLib_ + "/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')");
+      msg = runCommand("QSYS/CRTJRN JRN(" + testLib_ + "/JT4DDMJRN) JRNRCV(" + testLib_ + "/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')");
       if (msg != null && !msg.equals("CPF7010"))
       {
         output_.println("Failure executing 'CRTJRN JRN(" + testLib_ + "/JT4DDMJRN) JRNRCV(" + testLib_ + "/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')'");
@@ -250,7 +250,7 @@ public class DDMSerialization extends Testcase
       }
 
       // Start journaling
-      msg = runCommand("STRJRNPF FILE(" + testLib_ + "/DDMSER) JRN(" + testLib_ + "/JT4DDMJRN)");
+      msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/DDMSER) JRN(" + testLib_ + "/JT4DDMJRN)");
       if (msg != null)
       {
         output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/DDMSER) JRN(" + testLib_ + "/JT4DDMJRN)'");
@@ -295,7 +295,7 @@ public class DDMSerialization extends Testcase
 
       // Delete files created
       output_.println("  Deleting file...");
-      msg = runCommand("DLTF FILE("+testLib_+"/DDMSER)");
+      msg = runCommand("QSYS/DLTF FILE("+testLib_+"/DDMSER)");
       if (msg != null && msg.startsWith("CPF3202"))
       {
         output_.println("Error: File DDMSER in library "+testLib_+" is still locked by a DDM server job.");
@@ -321,7 +321,7 @@ public class DDMSerialization extends Testcase
       // receive should be automatically deleted due to the way that the
       // journal and receiver were deleted.
       output_.println("  Deleting journal...");
-      msg = runCommand("DLTJRN " + testLib_ + "/JT4DDMJRN");
+      msg = runCommand("QSYS/DLTJRN " + testLib_ + "/JT4DDMJRN");
       if (msg != null && !msg.startsWith("CPF2105"))
       {
         output_.println("Failure executing 'DLTJRN " + testLib_ + "/JT4DDMJRN'");
@@ -329,7 +329,7 @@ public class DDMSerialization extends Testcase
         success = false;
       }
       output_.println("  Deleting receiver...");
-      msg = runCommand("DLTJRNRCV JRNRCV(" + testLib_ + "/JT4DDMRCV) DLTOPT(*IGNINQMSG)");
+      msg = runCommand("QSYS/DLTJRNRCV JRNRCV(" + testLib_ + "/JT4DDMRCV) DLTOPT(*IGNINQMSG)");
       if (msg != null && !msg.startsWith("CPF2105"))
       {
         output_.println("Failure executing 'DLTJRNRCV JRNRCV(" + testLib_ + "/JT4DDMRCV) DLTOPT(*IGNINQMSG)'");

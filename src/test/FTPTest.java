@@ -402,7 +402,7 @@ Creates Testcase objects for all the testcases in this component.
          // Following was suggested by TCP Developers to prevent
          // "425 Not able to open data connection." errors
 	   // changed from 2 to 16 to prevent hang in V7R3
-         boolean cmdRc = cmd.run("CHGTCPA TCPCLOTIMO(16)");         
+         boolean cmdRc = cmd.run("QSYS/CHGTCPA TCPCLOTIMO(16)");         
          if (cmdRc != true)
          {
            // Show the messages
@@ -437,7 +437,7 @@ Creates Testcase objects for all the testcases in this component.
       {
       // Following was suggested by TCP Developers to prevent
       // "425 Not able to open data connection." errors
-      boolean cmdRc = cmd.run("CHGTCPA TCPCLOTIMO(16)");         // @A2A
+      boolean cmdRc = cmd.run("QSYS/CHGTCPA TCPCLOTIMO(16)");         // @A2A
       if (cmdRc != true)
       {
       // Show the messages

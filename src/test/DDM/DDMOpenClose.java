@@ -271,7 +271,7 @@ protected void setup()
     c.run();
 
     // Create library DDMTEST
-    String msg = runCommand("CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
+    String msg = runCommand("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
     if (msg != null && !msg.equals("CPF2111"))
     {
       output_.println("Failure executing 'CRTLIB LIB(" + testLib_ + ") AUT(*ALL)'");
@@ -326,20 +326,20 @@ protected void setup()
 
 
     // Create journal receiver and journal if it does not already exist
-    msg = runCommand("CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
+    msg = runCommand("QSYS/CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
     if (msg != null && !msg.equals("CPF7010")) /* CPF7011 means already exists */ 
     {
-      output_.println("Failure executing 'CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
+      output_.println("Failure executing 'QSYS/CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
       output_.println(msg);
       throw new Exception("");
     }
     if (msg != null && msg.equals("CPF7010")) /* CPF7011 means already exists */
     {
-	runCommand("ENDJRNPF FILE(*ALL) JRN(QGPL/JT4DDMJRN)"); 
-        runCommand("DLTJRN QGPL/JT4DDMJRN");
-	runCommand("DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV) DLTOPT(*IGNINQMSG)"); 
+	runCommand("QSYS/ENDJRNPF FILE(*ALL) JRN(QGPL/JT4DDMJRN)"); 
+        runCommand("QSYS/DLTJRN QGPL/JT4DDMJRN");
+	runCommand("QSYS/DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV) DLTOPT(*IGNINQMSG)"); 
 	// Try again.... 
-	msg = runCommand("CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
+	msg = runCommand("QSYS/CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
 	if (msg != null && !msg.equals("CPF7010")) /* CPF7011 means already exists */ 
 	{
 	    output_.println("Failure executing 'CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
@@ -349,7 +349,7 @@ protected void setup()
 
     }
 
-    msg = runCommand("CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')");
+    msg = runCommand("QSYS/CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')");
     if (msg != null && !msg.equals("CPF7010"))
     {
       output_.println("Failure executing 'CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')'");
@@ -358,28 +358,28 @@ protected void setup()
     }
 
     // Start journaling
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/F1M1RW) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/F1M1RW) JRN(QGPL/JT4DDMJRN)");
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/F1M1RW) JRN(QGPL/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/F2M1RW) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/F2M1RW) JRN(QGPL/JT4DDMJRN)");
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/F2M1RW) JRN(QGPL/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN(QGPL/JT4DDMJRN)");
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN(QGPL/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN(QGPL/JT4DDMJRN)");
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN(QGPL/JT4DDMJRN)'");
@@ -449,7 +449,7 @@ protected void cleanup()
     output_.println("  Deleting files...");
     for (int i=0; i<filesToDelete.length; ++i)
     {
-      msg = runCommand("DLTF FILE("+filesToDelete[i]+")");
+      msg = runCommand("QSYS/DLTF FILE("+filesToDelete[i]+")");
       if (msg != null && !msg.startsWith("CPF3202") && !msg.startsWith("CPF2110") && !msg.startsWith("CPF2105"))
       {
         output_.println("Error: File "+filesToDelete[i]+" is still locked by a DDM server job.");
@@ -489,7 +489,7 @@ protected void cleanup()
       success = false;
     }
     output_.println("  Deleting journal...");
-    msg = runCommand("DLTJRN QGPL/JT4DDMJRN");
+    msg = runCommand("QSYS/DLTJRN QGPL/JT4DDMJRN");
     if (msg != null && !msg.startsWith("CPF2105"))
     {
       output_.println("Failure executing 'DLTJRN QGPL/JT4DDMJRN'");
@@ -497,7 +497,7 @@ protected void cleanup()
       success = false;
     }
     output_.println("  Deleting receiver...");
-    msg = runCommand("DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV) DLTOPT(*IGNINQMSG)");
+    msg = runCommand("QSYS/DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV) DLTOPT(*IGNINQMSG)");
     if (msg != null && !msg.startsWith("CPF2105"))
     {
       output_.println("Failure executing 'DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV) DLTOPT(*IGNINQMSG)'");

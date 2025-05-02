@@ -91,7 +91,7 @@ public class CmdConstructor extends Testcase
     {
         try
         {
-            CommandCall cmd = new CommandCall(null, "CRTLIB FRED");
+            CommandCall cmd = new CommandCall(null, "QSYS/CRTLIB FRED");
             failed("Did not throw exception."+cmd);
         }
         catch (Exception e)
@@ -123,8 +123,8 @@ public class CmdConstructor extends Testcase
     {
         try
         {
-            CommandCall cmd = new CommandCall(systemObject_, "CRTLIB FRED");
-            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("CRTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: CRTLIB FRED):") != -1));
+            CommandCall cmd = new CommandCall(systemObject_, "QSYS/CRTLIB FRED");
+            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("QSYS/CRTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: CRTLIB FRED):") != -1));
         }
         catch (Exception e)
         {
@@ -157,8 +157,8 @@ public class CmdConstructor extends Testcase
         try
         {
             CommandCall cmd = new CommandCall(systemObject_);
-	    cmd.setCommand("DLTLIB FRED");
-            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("DLTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: DLTLIB FRED):") != -1));
+	    cmd.setCommand("QSYS/DLTLIB FRED");
+            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("QSYS/DLTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: DLTLIB FRED):") != -1));
         }
         catch (Exception e)
         {
@@ -175,8 +175,8 @@ public class CmdConstructor extends Testcase
         {
             CommandCall cmd = new CommandCall(systemObject_, "PING " + systemObject_.getSystemName());
             cmd.run();
-            cmd.setCommand("DLTLIB FRED");
-            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("DLTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: DLTLIB FRED):") != -1));
+            cmd.setCommand("QSYS/DLTLIB FRED");
+            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("QSYS/DLTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: DLTLIB FRED):") != -1));
         }
         catch (Exception e)
         {

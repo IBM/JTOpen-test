@@ -50,7 +50,7 @@ public class NLSCmdTestcase extends Testcase
   String cmd_library_desc = getResource("CMD_LIBRARY_DESC");
 
   String cmd_lib_name = "NLCMDJTST";
-  String cmd_crt_lib = "CRTLIB LIB(" + cmd_lib_name + ") AUT(*ALL) TEXT('" + cmd_library_desc + "')";
+  String cmd_crt_lib = "QSYS/CRTLIB LIB(" + cmd_lib_name + ") AUT(*ALL) TEXT('" + cmd_library_desc + "')";
   String cmd_path_name = "/QSYS.LIB/"+cmd_lib_name+".LIB";
 
 

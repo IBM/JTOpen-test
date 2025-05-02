@@ -182,7 +182,7 @@ public class DataAreaStressTestcase
 
    private void setup() 
    {
-      dalib_ = new CommandCall( sys3_, "crtlib DATEST" + curntThread_);
+      dalib_ = new CommandCall( sys3_, "QSYS/crtlib DATEST" + curntThread_);
 
       try 
       {

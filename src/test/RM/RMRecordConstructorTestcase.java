@@ -2969,8 +2969,8 @@ public class RMRecordConstructorTestcase extends Testcase
             // Create the data queue
             CommandCall cmd = new CommandCall(as400);
             try {
-               cmd.run("DLTDTAQ DTAQ(RMLIB/TESTDQ)");
-               cmd.run("CRTDTAQ DTAQ(RMLIB/TESTDQ) MAXLEN(100)");
+               cmd.run("QSYS/DLTDTAQ DTAQ(RMLIB/TESTDQ)");
+               cmd.run("QSYS/CRTDTAQ DTAQ(RMLIB/TESTDQ) MAXLEN(100)");
             }
             catch (Exception e)
             {
@@ -3017,8 +3017,8 @@ public class RMRecordConstructorTestcase extends Testcase
             // Create the data queue
             CommandCall cmd = new CommandCall(as400);
             try {
-               cmd.run("DLTDTAQ DTAQ(RMLIB/TESTDQ)");
-               cmd.run("CRTDTAQ DTAQ(RMLIB/TESTDQ) MAXLEN(100)");
+               cmd.run("QSYS/DLTDTAQ DTAQ(RMLIB/TESTDQ)");
+               cmd.run("QSYS/CRTDTAQ DTAQ(RMLIB/TESTDQ) MAXLEN(100)");
             }
             catch (Exception e)
             {

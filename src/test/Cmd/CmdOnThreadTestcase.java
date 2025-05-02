@@ -54,8 +54,8 @@ public class CmdOnThreadTestcase extends Testcase
     private static final String THREADSAFE_CMD  = CRTLIB_CMD;
     private static final String QUALIFIED_THREADSAFE_CMD  = "QSYS/"+CRTLIB_CMD;
 
-    private static final String NONTHREADSAFE_CMD  = "CPYLIB FROMLIB(" + LIBRARY + ") TOLIB(TEMPLIBQ) CRTLIB(*NO)";
-    private static final String NONEXISTENT_CMD  = "CPYLIBX FROMLIB(" + LIBRARY + ") TOLIB(TEMPLIBQ) CRTLIB(*NO)";
+    private static final String NONTHREADSAFE_CMD  = "QSYS/CPYLIB FROMLIB(" + LIBRARY + ") TOLIB(TEMPLIBQ) CRTLIB(*NO)";
+    private static final String NONEXISTENT_CMD  = "QSYS/CPYLIBX FROMLIB(" + LIBRARY + ") TOLIB(TEMPLIBQ) CRTLIB(*NO)";
 
     private static boolean TRACE_INFORMATION_SETTING = Trace.isTraceInformationOn();
     private static boolean TRACE_SETTING = Trace.isTraceOn();

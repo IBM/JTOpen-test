@@ -71,7 +71,7 @@ Constructor.
     // Make sure the user has access to '/QOpenSys/tmp' 
     
     CommandCall cc = new CommandCall(pwrSys_); 
-    String command = "CHGAUT OBJ('/QOpenSys/tmp') USER("+systemObject_.getUserId()+") DTAAUT(*RWX)"; 
+    String command = "QSYS/CHGAUT OBJ('/QOpenSys/tmp') USER("+systemObject_.getUserId()+") DTAAUT(*RWX)"; 
     cc.run(command); 
     
    
@@ -110,11 +110,11 @@ Constructor.
 
   void setPrivate(AS400 as400, String dirName)
   {
-    String cmdString = "CHGAUT OBJ('" 
+    String cmdString = "QSYS/CHGAUT OBJ('" 
                      + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
 
-    String cmdString2 = "CHGAUT OBJ('" 
+    String cmdString2 = "QSYS/CHGAUT OBJ('" 
                      + dirName
                      + "') USER("
                      + systemObject_.getUserId()
@@ -137,11 +137,11 @@ Constructor.
 
   void setPublic(AS400 as400, String dirName)
   {
-    String cmdString = "CHGAUT OBJ('" 
+    String cmdString = "QSYS/CHGAUT OBJ('" 
                      + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
 
-    String cmdString2 = "CHGAUT OBJ('" 
+    String cmdString2 = "QSYS/CHGAUT OBJ('" 
                      + dirName
                      + "') USER("
                      + systemObject_.getUserId()
@@ -660,18 +660,18 @@ the old name no longer exists.
         String libName = "IFSCDv21";
         String objName = "IFSCDv21";
 	CommandCall c = new CommandCall(systemObject_);
-	c.run("CHGJOB INQMSGRPY(*SYSRPYL)");
+	c.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 
-        c = new CommandCall(systemObject_, "DLTLIB "+libName);
+        c = new CommandCall(systemObject_, "QSYS/DLTLIB "+libName);
         c.run();
-        c.run("CRTLIB "+libName);
+        c.run("QSYS/CRTLIB "+libName);
 
         IFSFile lib1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB");
         sb.append("lib1 AbsPath: " + lib1.getAbsolutePath()+"\n");
         sb.append("lib1 Exists: "+lib1.exists()+"\n");
         sb.append("lib1 IsDirectory/IsFile = " + lib1.isDirectory()+"/"+ lib1.isFile()+"\n");
 
-        c.run("CRTOUTQ "+libName+"/"+objName);
+        c.run("QSYS/CRTOUTQ "+libName+"/"+objName);
         IFSFile file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".OUTQ");
         sb.append("file1 AbsPath: " + file1.getAbsolutePath()+"\n");
         sb.append("file1 Exists: "+file1.exists()+"\n");
@@ -679,17 +679,17 @@ the old name no longer exists.
         boolean deleted2 = file1.delete();
         sb.append("file1: deleted2 = " + deleted2+"\n");
 
-        c.run("CRTSAVF "+libName+"/"+objName);
+        c.run("QSYS/CRTSAVF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted3 = file1.delete();
         sb.append("file1: deleted3 = " + deleted3+"\n");
 
-        c.run("CRTDSPF "+libName+"/"+objName);
+        c.run("QSYS/CRTDSPF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted4 = file1.delete();
         sb.append("file1: deleted4 = " + deleted4+"\n");
 
-        c.run("CRTSRCPF FILE("+libName+"/"+objName+")");
+        c.run("QSYS/CRTSRCPF FILE("+libName+"/"+objName+")");
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted5 = file1.delete();
         sb.append("file1: deleted5 = " + deleted5+"\n");
@@ -697,7 +697,7 @@ the old name no longer exists.
         boolean deleted6 = true;
         /* After 7.5, IOSYSCFG special authority is need to create this file */ 
         if (getRelease() <= JDTestDriver.RELEASE_V7R5M0) {
-          String command = "CRTTAPF FILE(" + libName + "/" + objName + ")";
+          String command = "QSYS/CRTTAPF FILE(" + libName + "/" + objName + ")";
           c.run(command);
           sb.append(".. ran " + command);
           file1 = new IFSFile(systemObject_, "/QSYS.LIB/" + libName + ".LIB/" + objName + ".FILE");
@@ -705,7 +705,7 @@ the old name no longer exists.
           sb.append("file1: deleted6 = " + deleted6 + "\n");
         }
 
-        c.run("CRTPRTF "+libName+"/"+objName);
+        c.run("QSYS/CRTPRTF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted7 = file1.delete();
         sb.append("file1: deleted7 = " + deleted7+"\n");
@@ -739,18 +739,18 @@ the old name no longer exists.
         String libName = "IFSCDv22";
         String objName = "IFSCDv22";
         CommandCall c = new CommandCall(pwrSys_);
-        c.run("CHGJOB INQMSGRPY(*SYSRPYL)");
+        c.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 
-        c = new CommandCall(systemObject_, "DLTLIB "+libName);
+        c = new CommandCall(systemObject_, "QSYS/DLTLIB "+libName);
         c.run();
-        c.run("CRTLIB "+libName);
+        c.run("QSYS/CRTLIB "+libName);
 
         IFSFile lib1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB");
         sb.append("lib1 AbsPath: " + lib1.getAbsolutePath()+"\n");
         sb.append("lib1 Exists: "+lib1.exists()+"\n");
         sb.append("lib1 IsDirectory/IsFile = " + lib1.isDirectory()+"/"+ lib1.isFile()+"\n");
 
-        c.run("CRTOUTQ "+libName+"/"+objName);
+        c.run("QSYS/CRTOUTQ "+libName+"/"+objName);
         IFSFile file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".OUTQ");
         sb.append("file1 AbsPath: " + file1.getAbsolutePath()+"\n");
         sb.append("file1 Exists: "+file1.exists()+"\n");
@@ -758,30 +758,30 @@ the old name no longer exists.
         boolean deleted2 = file1.delete();
         sb.append("file1: deleted2 = " + deleted2+"\n");
 
-        c.run("CRTSAVF "+libName+"/"+objName);
+        c.run("QSYS/CRTSAVF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted3 = file1.delete();
         sb.append("file1: deleted3 = " + deleted3+"\n");
 
-        c.run("CRTDSPF "+libName+"/"+objName);
+        c.run("QSYS/CRTDSPF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted4 = file1.delete();
         sb.append("file1: deleted4 = " + deleted4+"\n");
 
-        c.run("CRTSRCPF FILE("+libName+"/"+objName+")");
+        c.run("QSYS/CRTSRCPF FILE("+libName+"/"+objName+")");
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted5 = file1.delete();
         sb.append("file1: deleted5 = " + deleted5+"\n");
 
         /* After 7.5, IOSYSCFG special authority is need to create this file */ 
-        String command = "CRTTAPF FILE("+libName+"/"+objName+")";
+        String command = "QSYS/CRTTAPF FILE("+libName+"/"+objName+")";
         c.run(command);
         sb.append(".. ran "+command);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted6 = file1.delete();
         sb.append("file1: deleted6 = " + deleted6+"\n");
 
-        c.run("CRTPRTF "+libName+"/"+objName);
+        c.run("QSYS/CRTPRTF "+libName+"/"+objName);
         file1 = new IFSFile(systemObject_, "/QSYS.LIB/"+libName+".LIB/"+objName+".FILE");
         boolean deleted7 = file1.delete();
         sb.append("file1: deleted7 = " + deleted7+"\n");

@@ -113,7 +113,7 @@ public class UserSpaceTest extends TestDriver
     {
         // The collection is not the COLLECTION used by all tests.  Do not delete it. 
 	      // deleteLibrary(""+COLLECTION+"");
-        // cmdRun("DLTUSRPRF USRPRF("+COLLECTION+") OWNOBJOPT(*DLT)", "CPF2204");
+        // cmdRun("QSYS/DLTUSRPRF USRPRF("+COLLECTION+") OWNOBJOPT(*DLT)", "CPF2204");
     }
 
     /**

@@ -2974,7 +2974,7 @@ public abstract class Testcase {
 
     if (!dataAreaFileExists) {
       /* need to create collection */
-      String command = "CRTDTAARA JDTESTINFO/" + lockDtaaraName_
+      String command = "QSYS/CRTDTAARA JDTESTINFO/" + lockDtaaraName_
           + "  TYPE(*CHAR) LEN(400)  ";
       boolean success = commandCall.run(command);
       if (!success) {
@@ -2988,7 +2988,7 @@ public abstract class Testcase {
         }
       } else {
     	  /* Need to grant authority */ 
-    	  command = "GRTOBJAUT OBJ(JDTESTINFO/" + lockDtaaraName_
+    	  command = "QSYS/GRTOBJAUT OBJ(JDTESTINFO/" + lockDtaaraName_
     	  		+  ") OBJTYPE(*DTAARA) USER(*PUBLIC) AUT(*ALL)"; 
     	  success = commandCall.run(command);
     	  AS400Message[] messageList = commandCall.getMessageList();
@@ -3007,7 +3007,7 @@ public abstract class Testcase {
     String command = ""; 
     while (!success && System.currentTimeMillis() < lockEndTime) { 
        /* Lock the user space */
-       command = " ALCOBJ OBJ((JDTESTINFO/" + lockDtaaraName_
+       command = " QSYS/ALCOBJ OBJ((JDTESTINFO/" + lockDtaaraName_
           + " *DTAARA *EXCLRD)) WAIT(1)";
     
        success = commandCall.run(command);
@@ -3089,7 +3089,7 @@ public abstract class Testcase {
       }
       try {
 
-        command = "CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+        command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
             + " (1 50)) VALUE('" + command + "')";
         // System.out.println("Attempting "+command);
         commandCall.run(command);
@@ -3098,7 +3098,7 @@ public abstract class Testcase {
       }
       try {
 
-        command = "CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+        command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
             + " (51 100)) VALUE('" + testLib_ + "')";
         // System.out.println("Attempting "+command);
         commandCall.run(command);
@@ -3113,7 +3113,7 @@ public abstract class Testcase {
         // ignore
       }
       try {
-        command = "CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+        command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
             + " (101 150)) VALUE('" + command + "')";
         // System.out.println("Attempting "+command);
         commandCall.run(command);
@@ -3124,7 +3124,7 @@ public abstract class Testcase {
       try {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
-        command = "CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+        command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
             + " (151 200)) VALUE('AT_" + currentTimestamp + "')";
         // System.out.println("Attempting "+command);
         commandCall.run(command);
@@ -3151,13 +3151,13 @@ public abstract class Testcase {
     String command;
 
     try {
-      command = "CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+      command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
           + " (1 200)) VALUE('UNUSED')";
       commandCall.run(command);
     } catch (Exception e) {
       // ignore
     }
-    command = " DLCOBJ OBJ((JDTESTINFO/" + lockDtaaraName_
+    command = "QSYS/DLCOBJ OBJ((JDTESTINFO/" + lockDtaaraName_
         + " *DTAARA *EXCL)) ";
     boolean success = commandCall.run(command);
     if (!success) {
@@ -3270,9 +3270,9 @@ public abstract class Testcase {
 	  }
 	  AS400 authAs400 = new AS400(systemName_,pwrSysUserID_, PasswordVault.decryptPassword(pwrSysEncryptedPassword_)); 
 	  CommandCall cc = new CommandCall(authAs400); 
-	  String command = "CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(*NONE)   ";
+	  String command = "QSYS/CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(*NONE)   ";
 	  cc.run(command); 
-	  command = "CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(1)   ";
+	  command = "QSYS/CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(1)   ";
 	  mfaIntervalSeconds_ = 60; 
 	  cc.run(command); 
 	  String mfaFactorString = ""+JDReflectionUtil.callMethod_I(googleAuthenticator_,  "getTotpPassword", mfaSecret_);

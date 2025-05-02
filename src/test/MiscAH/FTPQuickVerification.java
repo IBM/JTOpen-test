@@ -2027,8 +2027,8 @@ public class FTPQuickVerification extends    Testcase
           try
           {
              CommandCall cc = new CommandCall(pwrSys_);
-	     cc.run("CHGJOB INQMSGRPY(*SYSRPYL)"); 
-             if (! cc.run("DLTLIB FTPTEST") )
+	     cc.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)"); 
+             if (! cc.run("QSYS/DLTLIB FTPTEST") )
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2040,7 +2040,7 @@ public class FTPQuickVerification extends    Testcase
                 }
              }
 
-             if (! cc.run("DLTLIB FTPTEST2"))
+             if (! cc.run("QSYS/DLTLIB FTPTEST2"))
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2052,7 +2052,7 @@ public class FTPQuickVerification extends    Testcase
                 }
              }
 
-             if (! cc.run("CRTLIB FTPTEST2"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST2"))
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2096,8 +2096,8 @@ public class FTPQuickVerification extends    Testcase
           try
           {
              CommandCall cc = new CommandCall(pwrSys_);
-	     cc.run("CHGJOB INQMSGRPY(*SYSRPYL)"); 
-             if (! cc.run("DLTLIB FTPTEST3") )
+	     cc.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)"); 
+             if (! cc.run("QSYS/DLTLIB FTPTEST3") )
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2109,7 +2109,7 @@ public class FTPQuickVerification extends    Testcase
                 }
              }
 
-             if (! cc.run("DLTLIB FTPTEST"))
+             if (! cc.run("QSYS/DLTLIB FTPTEST"))
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2121,7 +2121,7 @@ public class FTPQuickVerification extends    Testcase
                 }
              }
 
-             if (! cc.run("CRTLIB FTPTEST3"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST3"))
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2166,8 +2166,8 @@ public class FTPQuickVerification extends    Testcase
           try
           {
              CommandCall cc = new CommandCall(pwrSys_);
-	     cc.run("CHGJOB INQMSGRPY(*SYSRPYL)"); 
-             if (! cc.run("DLTLIB FTPTEST") )
+	     cc.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)"); 
+             if (! cc.run("QSYS/DLTLIB FTPTEST") )
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2179,7 +2179,7 @@ public class FTPQuickVerification extends    Testcase
                 }
              }
 
-             if (! cc.run("DLTLIB FTPTEST4"))
+             if (! cc.run("QSYS/DLTLIB FTPTEST4"))
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2191,7 +2191,7 @@ public class FTPQuickVerification extends    Testcase
                 }
              }
 
-             if (! cc.run("CRTLIB FTPTEST4"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST4"))
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2237,8 +2237,8 @@ public class FTPQuickVerification extends    Testcase
           try
           {
              CommandCall cc = new CommandCall(pwrSys_);
-	     cc.run("CHGJOB INQMSGRPY(*SYSRPYL)"); 
-             if (! cc.run("DLTLIB FTPTEST") )
+	     cc.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)"); 
+             if (! cc.run("QSYS/DLTLIB FTPTEST") )
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2250,7 +2250,7 @@ public class FTPQuickVerification extends    Testcase
                 }
              }
 
-             if (! cc.run("DLTLIB FTPTEST5"))
+             if (! cc.run("QSYS/DLTLIB FTPTEST5"))
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))
@@ -2262,7 +2262,7 @@ public class FTPQuickVerification extends    Testcase
                 }
              }
 
-             if (! cc.run("CRTLIB FTPTEST5"))
+             if (! cc.run("QSYS/CRTLIB FTPTEST5"))
              {
                 String message = getFirstMessage(cc);
                 if (message.startsWith("CPF2110"))

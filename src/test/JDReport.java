@@ -519,6 +519,8 @@ public class JDReport {
       description = "V7R5 ";
     } else if (c0 == '7' && c1 == '6') {
       description = "V7R6 ";
+    } else if (c0 == '7' && c1 == '7') {
+      description = "V7R6+ ";
     } else {
       description = "V?R? ";
     }
@@ -551,6 +553,9 @@ public class JDReport {
       break;
     case 'C':
       description += "JDK 17 ";
+      break;
+    case 'D':
+      description += "JDK 21 ";
       break;
     case 'P':
       description += "PITT";

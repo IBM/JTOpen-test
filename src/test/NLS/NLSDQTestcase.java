@@ -270,7 +270,7 @@ public class NLSDQTestcase extends Testcase
         throw new Exception("");
       }
       // Create lib NLSDQTST
-      c.run("CRTLIB LIB(NLSDQTEST) AUT(*ALL)");
+      c.run("QSYS/CRTLIB LIB(NLSDQTEST) AUT(*ALL)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals("CPC2102")))
       {

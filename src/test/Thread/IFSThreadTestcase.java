@@ -173,7 +173,7 @@ public class IFSThreadTestcase
     {
       CommandCall cmd = new CommandCall(systemObject_);
       deleteLibrary(cmd, lib); 
-      if (cmd.run("CRTLIB " + lib) == false)
+      if (cmd.run("QSYS/CRTLIB " + lib) == false)
         output_.println( "Unable to create library "
                          + cmd.getMessageList()[0].getID()
                          + cmd.getMessageList()[0].getText());

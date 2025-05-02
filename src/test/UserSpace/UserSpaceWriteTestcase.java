@@ -116,9 +116,9 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
   private void setupUSUnauthorized() {
     try {
       deleteLibrary(""+testAuth+"");
-      cmdRun("DLTAUTL AUTL(USAUTHLIST)", "CPF2105");
+      cmdRun("QSYS/DLTAUTL AUTL(USAUTHLIST)", "CPF2105");
       cmdRun("QSYS/CRTAUTL AUTL(USAUTHLIST) AUT(*EXCLUDE)");
-      cmdRun("CRTLIB LIB("+testAuth+") AUT(USAUTHLIST)");
+      cmdRun("QSYS/CRTLIB LIB("+testAuth+") AUT(USAUTHLIST)");
 
       UserSpace bUserSpace = new UserSpace(pwrSys_, unauthorizedUserSpace_);
       bUserSpace.create(pre_existingLengthValue_, true, " ",
@@ -141,7 +141,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
   private void setupUSAuthority() {
     try {
       deleteLibrary(""+authLib+"");
-      cmdRun("CRTLIB LIB("+authLib+")");
+      cmdRun("QSYS/CRTLIB LIB("+authLib+")");
 
       UserSpace aUSpace = new UserSpace(pwrSys_, authorityUserSpace_);
       aUSpace.create(11000, true, " ", (byte) 0x00, "USWRITE test", "*ALL");
@@ -1514,7 +1514,7 @@ authorityUserSpace_ = "/QSYS.LIB/"+authLib+".LIB/USWRITE2.USRSPC";
     CommandCall cmd = new CommandCall(pwrSys_);
 
     try {
-      if (cmd.run("GRTOBJAUT OBJ("+authLib+"/USWRITE2) OBJTYPE(*USRSPC) USER("
+      if (cmd.run("QSYS/GRTOBJAUT OBJ("+authLib+"/USWRITE2) OBJTYPE(*USRSPC) USER("
           + systemObject_.getUserId() + ") AUT(*EXCLUDE)") != true) {
         AS400Message[] messageList = cmd.getMessageList();
         throw new IOException(messageList[0].toString());

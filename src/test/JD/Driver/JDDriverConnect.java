@@ -322,8 +322,6 @@ public class JDDriverConnect extends JDTestcase {
         p.put("user", userId_);
         p.put("password", PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverConnect.7"));
 
-        /// failed ("This variation is deactivated until the AS400 class is
-        /// serializable. -jlee 04/20/99");
         Connection c = driver_.connect(url, p);
 
         failed("Did not throw exception. " + c);
@@ -2523,7 +2521,7 @@ public class JDDriverConnect extends JDTestcase {
       Statement s2 = c3[0][0].createStatement();
       /*
        * s2.executeUpdate("CALL QSYS.QCMDEXC('"+
-       * "DLTUSRPRF "+badUser+"                               ',"+
+       * "QSYS/DLTUSRPRF "+badUser+"                               ',"+
        * "0000000040.00000 ) ");
        */
 
@@ -2993,7 +2991,7 @@ public class JDDriverConnect extends JDTestcase {
         s1 = c1.createStatement();
 
         try {
-          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "DLTUSRPRF " + badUser + "  OWNOBJOPT(*CHGOWN JAVA) '  ) ");
+          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "QSYS/DLTUSRPRF " + badUser + "  OWNOBJOPT(*CHGOWN JAVA) '  ) ");
         } catch (Exception e) {
           if (e.toString().indexOf("not found") >= 0) {
             // Just ignore */
@@ -3003,15 +3001,15 @@ public class JDDriverConnect extends JDTestcase {
           }
         }
 
-        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "CRTUSRPRF USRPRF(" + badUser + ") PASSWORD(" + badPasswd
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + badUser + ") PASSWORD(" + badPasswd
             + ")                               '," + "0000000070.00000 ) ");
 
-        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "GRTOBJAUT OBJ(QGPL/QDFTJOBD) OBJTYPE(*JOBD) USER(" + badUser
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/GRTOBJAUT OBJ(QGPL/QDFTJOBD) OBJTYPE(*JOBD) USER(" + badUser
             + ") AUT(*EXCLUDE)                                        '," + "0000000080.00000 ) ");
 
         try {
 
-          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "DLTUSRPRF " + goodUser + "     OWNOBJOPT(*CHGOWN JAVA) ') ");
+          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "QSYS/DLTUSRPRF " + goodUser + "     OWNOBJOPT(*CHGOWN JAVA) ') ");
         } catch (Exception e) {
           if (e.toString().indexOf("not found") >= 0) {
             // Just ignore */
@@ -3021,7 +3019,7 @@ public class JDDriverConnect extends JDTestcase {
           }
         }
 
-        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD(" + goodPasswd
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD(" + goodPasswd
             + ")                               '," + "0000000070.00000 ) ");
       } catch (Exception e) {
         failed(e, "Error during testcase setup " + added);

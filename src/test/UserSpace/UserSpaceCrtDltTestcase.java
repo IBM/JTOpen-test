@@ -81,9 +81,9 @@ public class UserSpaceCrtDltTestcase extends Testcase
         try
         {
 	    deleteLibrary(""+testAuth+""); 
-            cmdRun("DLTAUTL AUTL(USAUTHLIST)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(USAUTHLIST)", "CPF2105");
             cmdRun("QSYS/CRTAUTL AUTL(USAUTHLIST) AUT(*EXCLUDE)");
-            cmdRun("CRTLIB LIB("+testAuth+") AUT(USAUTHLIST)");
+            cmdRun("QSYS/CRTLIB LIB("+testAuth+") AUT(USAUTHLIST)");
 
             // Create a user space in the unauthorized library.
             UserSpace us = new UserSpace(pwrSys_, "/QSYS.LIB/"+testAuth+".LIB/USCREATE.USRSPC");
@@ -105,9 +105,9 @@ public class UserSpaceCrtDltTestcase extends Testcase
         try
         {
 	    deleteLibrary("USAUTHLIB"); 
-            cmdRun("CRTLIB LIB(USAUTHLIB)");
+            cmdRun("QSYS/CRTLIB LIB(USAUTHLIB)");
             /* grant access to library to all */ 
-            String command = "GRTOBJAUT OBJ(USAUTHLIB) OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
+            String command = "QSYS/GRTOBJAUT OBJ(USAUTHLIB) OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
             boolean success =  cmdRun(command);
             if (!success) { 
                 System.out.println("Command Failed "+command ); 
@@ -645,7 +645,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
                     output_.println("  " + messageList[i].getID() + " " + messageList[i].getText());
                 }
             }
-            if (!cmd.run("CRTLIB LIB(USAUTH) AUT(USAUTH)"))
+            if (!cmd.run("QSYS/CRTLIB LIB(USAUTH) AUT(USAUTH)"))
             {
                 output_.println("Setup failed:");
                 AS400Message[] messageList = cmd.getMessageList();
@@ -1088,7 +1088,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
         CommandCall cmd = new CommandCall(pwrSys_);
         try
         {
-            if(!cmd.run("GRTOBJAUT OBJ(USAUTHLIB/USCRTDLT1) OBJTYPE(*USRSPC) USER(" + systemObject_.getUserId() + ") AUT(*EXCLUDE)"))
+            if(!cmd.run("QSYS/GRTOBJAUT OBJ(USAUTHLIB/USCRTDLT1) OBJTYPE(*USRSPC) USER(" + systemObject_.getUserId() + ") AUT(*EXCLUDE)"))
             {
                 output_.println("Setup failed:");
                 AS400Message[] messageList = cmd.getMessageList();

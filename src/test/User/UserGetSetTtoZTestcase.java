@@ -2504,8 +2504,8 @@ public class UserGetSetTtoZTestcase extends Testcase
     		{
 
     			CommandCall cmd = new CommandCall(pwrSys_);
-    			cmd.run("CRTUSRPRF USRPRF(JTEST) PASSWORD(a1s2d3f4)");
-    			cmd.run("CHGEXPSCDE USRPRF(JTEST) EXPDATE('07/01/"+twoYears+"') ACTION(*DELETE)");
+    			cmd.run("QSYS/CRTUSRPRF USRPRF(JTEST) PASSWORD(a1s2d3f4)");
+    			cmd.run("QSYS/CHGEXPSCDE USRPRF(JTEST) EXPDATE('07/01/"+twoYears+"') ACTION(*DELETE)");
 
     			User u = new User(pwrSys_, "JTEST");
 
@@ -2527,7 +2527,7 @@ public class UserGetSetTtoZTestcase extends Testcase
 
     				try
     				{
-    					cmd.run("DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
+    					cmd.run("QSYS/DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
     				}
     				catch(Exception e)
     				{
@@ -2560,8 +2560,8 @@ public class UserGetSetTtoZTestcase extends Testcase
     		{
 
     			CommandCall cmd = new CommandCall(pwrSys_);
-    			cmd.run("CRTUSRPRF USRPRF(JTEST)  PASSWORD(a1s2d3f4)");
-    			cmd.run("CHGEXPSCDE USRPRF(JTEST) EXPDATE('07/01/"+twoYears+"') ACTION(*DISABLE)");
+    			cmd.run("QSYS/CRTUSRPRF USRPRF(JTEST)  PASSWORD(a1s2d3f4)");
+    			cmd.run("QSYS/CHGEXPSCDE USRPRF(JTEST) EXPDATE('07/01/"+twoYears+"') ACTION(*DISABLE)");
 
     			User u = new User(pwrSys_, "JTEST");
 
@@ -2583,7 +2583,7 @@ public class UserGetSetTtoZTestcase extends Testcase
 
     				try
     				{
-    					cmd.run("DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
+    					cmd.run("QSYS/DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
     				}
     				catch(Exception e)
     				{
@@ -2616,8 +2616,8 @@ public class UserGetSetTtoZTestcase extends Testcase
     		{
 
     			CommandCall cmd = new CommandCall(pwrSys_);
-    			cmd.run("CRTUSRPRF USRPRF(JTEST)  PASSWORD(a1s2d3f4)");
-    			cmd.run("CHGEXPSCDE USRPRF(JTEST) EXPDATE('07/01/"+twoYears+"') ACTION(*NONE)");
+    			cmd.run("QSYS/CRTUSRPRF USRPRF(JTEST)  PASSWORD(a1s2d3f4)");
+    			cmd.run("QSYS/CHGEXPSCDE USRPRF(JTEST) EXPDATE('07/01/"+twoYears+"') ACTION(*NONE)");
 
     			User u = new User(pwrSys_, "JTEST");
 
@@ -2638,7 +2638,7 @@ public class UserGetSetTtoZTestcase extends Testcase
 
     				try
     				{
-    					cmd.run("DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
+    					cmd.run("QSYS/DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
     				}
     				catch(Exception e)
     				{

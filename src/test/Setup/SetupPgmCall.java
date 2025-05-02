@@ -61,7 +61,7 @@ public class SetupPgmCall extends SetupLibraryTestcase
      
 
       // Make sure there is enough authority to the PROGS file (needed by SFTestcase Var 22 ) 
-      cmd.setCommand("GRTOBJAUT OBJ(W95LIB/PROGS) OBJTYPE(*FILE) USER(*PUBLIC) AUT(*USE)");
+      cmd.setCommand("QSYS/GRTOBJAUT OBJ(W95LIB/PROGS) OBJTYPE(*FILE) USER(*PUBLIC) AUT(*USE)");
       cmd.run(); 
       output_.println("Setup of CmdCall on "+pwrSys_.getSystemName()+" is complete.");
       succeeded();

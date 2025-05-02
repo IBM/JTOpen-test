@@ -35,21 +35,21 @@ public class ORTestcase extends Testcase
     private void createFile()
     {
         // Delete the test file.
-        cmdRun("DEL OBJLNK('"+PATH+"')", "CPFA0A9");
+        cmdRun("QSYS/DEL OBJLNK('"+PATH+"')", "CPFA0A9");
         // Delete the test directory.
-        cmdRun("RMDIR DIR('"+DIR_PATH+"')", "CPFA0A9");
+        cmdRun("QSYS/RMDIR DIR('"+DIR_PATH+"')", "CPFA0A9");
         // Create the test directory.
-        cmdRun("CRTDIR DIR('"+DIR_PATH+"')");
+        cmdRun("QSYS/CRTDIR DIR('"+DIR_PATH+"')");
         // Create the test file.
-        cmdRun("QSH CMD('touch "+PATH+"')");
+        cmdRun("QSYS/QSH CMD('touch "+PATH+"')");
     }
 
     private void deleteFile()
     {
         // Delete the test file.
-        cmdRun("DEL OBJLNK('"+PATH+"')");
+        cmdRun("QSYS/DEL OBJLNK('"+PATH+"')");
         // Delete the test directory.
-        cmdRun("RMDIR DIR('"+DIR_PATH+"')");
+        cmdRun("QSYS/RMDIR DIR('"+DIR_PATH+"')");
     }
 
     private void checkOutTestFile()
@@ -57,13 +57,13 @@ public class ORTestcase extends Testcase
         // Create the file
         createFile(); 
         // Check out the test file
-        cmdRun("CHKOUT OBJ('"+PATH+"')");
+        cmdRun("QSYS/CHKOUT OBJ('"+PATH+"')");
     }
 
     private void checkInTestFile()
     {
         // Check in the test file
-	cmdRun("CHKIN OBJ('"+PATH+"')");
+	cmdRun("QSYS/CHKIN OBJ('"+PATH+"')");
 
 	//Remove the file 
 	deleteFile();

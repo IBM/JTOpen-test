@@ -88,13 +88,13 @@ Does a STRCHTSVR command.
     public static void strChtSvr()
       throws Exception
     {
-	String STRCHTSVR_CMD = "STRCHTSVR SERVER(" + chtSvrName_ + ")";
+	String STRCHTSVR_CMD = "QSYS/STRCHTSVR SERVER(" + chtSvrName_ + ")";
 	CommandCall cmd = new CommandCall(pwrSys_);
         // Create the clustered hash table
 	if (cmd.run(STRCHTSVR_CMD) != true)
 	{
             // Note that there was an error.
-	    System.out.println("STRCHTSVR command failed!");
+	    System.out.println("QSYS/STRCHTSVR command failed!");
 	}
         // Show the messages (returned whether or not there was an error.)
 	AS400Message[] messagelist = cmd.getMessageList();
@@ -113,13 +113,13 @@ Does an ENDCHTSVR command.
     public static void endChtSvr()
       throws Exception
     {
-	String ENDCHTSVR_CMD = "ENDCHTSVR SERVER(" + chtSvrName_ + ")";
+	String ENDCHTSVR_CMD = "QSYS/ENDCHTSVR SERVER(" + chtSvrName_ + ")";
 	CommandCall cmd = new CommandCall(pwrSys_);
         // Create the clustered hash table
 	if (cmd.run(ENDCHTSVR_CMD) != true)
 	{
             // Note that there was an error.
-	    System.out.println("ENDCHTSVR command failed!");
+	    System.out.println("QSYS/ENDCHTSVR command failed!");
 	}
         // Show the messages (returned whether or not there was an error.)
 	AS400Message[] messagelist = cmd.getMessageList();
@@ -160,8 +160,8 @@ Performs setup needed before running testcases.
          }
        } catch (Exception e) { System.out.println(e.getMessage()); }
      }
-	String CRTCLU_CMD = "CRTCLU CLUSTER(" + clusterName + ") NODE((" + sysName + " ('" + ipAddress + "')))";
-	String STRCHTSVR_CMD = "STRCHTSVR SERVER(" + chtSvrName_ + ")";
+	String CRTCLU_CMD = "QSYS/CRTCLU CLUSTER(" + clusterName + ") NODE((" + sysName + " ('" + ipAddress + "')))";
+	String STRCHTSVR_CMD = "QSYS/STRCHTSVR SERVER(" + chtSvrName_ + ")";
 
         // Create a cluster
 	pwrSys_.setCcsid(37);
@@ -169,7 +169,7 @@ Performs setup needed before running testcases.
 	if (cmd.run(CRTCLU_CMD) != true)
 	{
             // Note that there was an error.
-	    System.out.println("CRTCLU command failed!");
+	    System.out.println("QSYS/CRTCLU command failed!");
 	}
         // Show the messages (returned whether or not there was an error.)
 	AS400Message[] messagelist = cmd.getMessageList();
@@ -183,7 +183,7 @@ Performs setup needed before running testcases.
 	if (cmd.run(STRCHTSVR_CMD) != true)
 	{
             // Note that there was an error.
-	    System.out.println("STRCHTSVR command failed!");
+	    System.out.println("QSYS/STRCHTSVR command failed!");
 	}
         // Show the messages (returned whether or not there was an error.)
 	messagelist = cmd.getMessageList();
@@ -202,15 +202,15 @@ Performs cleanup needed after running testcases.
     public void cleanup ()
         throws Exception
     {
-	String ENDCHTSVR_CMD = "ENDCHTSVR SERVER(" + chtSvrName_ + ")";
-	String DLTCLU_CMD = "DLTCLU CLUSTER(" + clusterName + ")";
+	String ENDCHTSVR_CMD = "QSYS/ENDCHTSVR SERVER(" + chtSvrName_ + ")";
+	String DLTCLU_CMD = "QSYS/DLTCLU CLUSTER(" + clusterName + ")";
 
         // End the clustered hash table
 	CommandCall cmd = new CommandCall(pwrSys_);
 	if (cmd.run(ENDCHTSVR_CMD) != true)
 	{
             // Note that there was an error.
-	    System.out.println("ENDCHTSVR command failed!");
+	    System.out.println("QSYS/ENDCHTSVR command failed!");
 	}
         // Show the messages (returned whether or not there was an error.)
 	AS400Message[] messagelist = cmd.getMessageList();
@@ -224,7 +224,7 @@ Performs cleanup needed after running testcases.
 	if (cmd.run(DLTCLU_CMD) != true)
 	{
             // Note that there was an error.
-	    System.out.println("DLTCLU command failed!");
+	    System.out.println("QSYS/DLTCLU command failed!");
 	}
         // Show the messages (returned whether or not there was an error.)
 	messagelist = cmd.getMessageList();

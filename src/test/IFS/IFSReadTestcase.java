@@ -119,9 +119,9 @@ Constructor.
    
     // Make sure the user has access to the RSTOBJ command
     CommandCall cc = new CommandCall(pwrSys_); 
-    String command = "GRTOBJAUT OBJ(QSYS/RSTOBJ) OBJTYPE(*CMD) USER("+systemObject_.getUserId()+") AUT(*USE)"; 
+    String command = "QSYS/GRTOBJAUT OBJ(QSYS/RSTOBJ) OBJTYPE(*CMD) USER("+systemObject_.getUserId()+") AUT(*USE)"; 
     cc.run(command); 
-    command = "GRTOBJAUT OBJ(QDFTOWN) OBJTYPE(*USRPRF) ASPDEV(*) USER("+systemObject_.getUserId()+") AUT(*ADD)   "; 
+    command = "QSYS/GRTOBJAUT OBJ(QDFTOWN) OBJTYPE(*USRPRF) ASPDEV(*) USER("+systemObject_.getUserId()+") AUT(*ADD)   "; 
     cc.run(command); 
     
      
@@ -3314,23 +3314,23 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
      try {
        sb.append("Creating command call object\n");
        CommandCall c = new CommandCall(as400);
-       String command = "CHGJOB INQMSGRPY(*SYSRPYL)";
+       String command = "QSYS/CHGJOB INQMSGRPY(*SYSRPYL)";
        boolean commandResult = c.run(command);
        if (!commandResult) {
          sb.append("WARNING:  " + command + " failed");
        }
-       command = "CRTLIB " + testLib_;
+       command = "QSYS/CRTLIB " + testLib_;
        commandResult = c.run(command);
        if (!commandResult) {
          sb.append("WARNING:  " + command + " failed\n");
        }
-       command = "DLTF " + testLib_ + "/IFSDATA";
+       command = "QSYS/DLTF " + testLib_ + "/IFSDATA";
        commandResult = c.run(command);
        if (!commandResult) {
          sb.append("WARNING:  " + command + " failed\n");
        }
 
-       command = "CRTSAVF " + testLib_ + "/IFSDATA";
+       command = "QSYS/CRTSAVF " + testLib_ + "/IFSDATA";
        commandResult = c.run(command);
        if (!commandResult) {
          sb.append("WARNING:  " + command + " failed\n");
@@ -3408,23 +3408,23 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
      try {
        sb.append("Creating command call object\n");
        CommandCall c = new CommandCall(as400);
-       String command = "CHGJOB INQMSGRPY(*SYSRPYL)";
+       String command = "QSYS/CHGJOB INQMSGRPY(*SYSRPYL)";
        boolean commandResult = c.run(command);
        if (!commandResult) {
          sb.append("WARNING:  " + command + " failed");
        }
-       command = "CRTLIB " + testLib_;
+       command = "QSYS/CRTLIB " + testLib_;
        commandResult = c.run(command);
        if (!commandResult) {
          sb.append("WARNING:  " + command + " failed\n");
        }
-       command = "DLTF " + testLib_ + "/IFSDATA";
+       command = "QSYS/DLTF " + testLib_ + "/IFSDATA";
        commandResult = c.run(command);
        if (!commandResult) {
          sb.append("WARNING:  " + command + " failed\n");
        }
 
-       command = "CRTSAVF " + testLib_ + "/IFSDATA";
+       command = "QSYS/CRTSAVF " + testLib_ + "/IFSDATA";
        commandResult = c.run(command);
        if (!commandResult) {
          sb.append("WARNING:  " + command + " failed\n");

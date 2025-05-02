@@ -92,7 +92,7 @@ public class NLSUserSpaceTestcase extends Testcase
     try
     {
         CommandCall cmd = new CommandCall(systemObject_);
-        if(cmd.run("CRTLIB LIB(USTEST)") == false)
+        if(cmd.run("QSYS/CRTLIB LIB(USTEST)") == false)
         {
           AS400Message[] messageList = cmd.getMessageList();
           throw new Exception("Setup - CRTLIB USTEST - failed.  " + messageList[0].toString());

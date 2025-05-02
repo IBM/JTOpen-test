@@ -71,28 +71,28 @@ public class SystemPoolUnattendedTestcase extends Testcase
 
     protected void setup() throws Exception
     {
-        //cmdRun("ENDSBS SBS(" + subsystemName + ") OPTION(*IMMED)");
-        //cmdRun("DLTSBSD SBSD(QGPL/" + subsystemName + ")");
+        //cmdRun("QSYS/ENDSBS SBS(" + subsystemName + ") OPTION(*IMMED)");
+        //cmdRun("QSYS/DLTSBSD SBSD(QGPL/" + subsystemName + ")");
 
-        //cmdRun("ENDSBS SBS(zwxsbs2) OPTION(*IMMED)");
-        //cmdRun("DLTSBSD SBSD(QGPL/zwxsbs2)");
+        //cmdRun("QSYS/ENDSBS SBS(zwxsbs2) OPTION(*IMMED)");
+        //cmdRun("QSYS/DLTSBSD SBSD(QGPL/zwxsbs2)");
 
-        cmdRun("CHGSHRPOOL POOL(*SHRPOOL6) SIZE(300) ACTLVL(6)");
-        cmdRun("CRTSBSD SBSD(QGPL/" + subsystemName + ") POOLS((7 *SHRPOOL6))");
-        cmdRun("STRSBS SBSD(QGPL/" + subsystemName + ")");
+        cmdRun("QSYS/CHGSHRPOOL POOL(*SHRPOOL6) SIZE(300) ACTLVL(6)");
+        cmdRun("QSYS/CRTSBSD SBSD(QGPL/" + subsystemName + ") POOLS((7 *SHRPOOL6))");
+        cmdRun("QSYS/STRSBS SBSD(QGPL/" + subsystemName + ")");
 
-        cmdRun("CHGSHRPOOL POOL(*SHRPOOL7) SIZE(300) ACTLVL(6)");
-        cmdRun("CRTSBSD SBSD(QGPL/zwxsbs2) POOLS((7 *SHRPOOL7))");
-        cmdRun("STRSBS SBSD(QGPL/zwxsbs2)");
+        cmdRun("QSYS/CHGSHRPOOL POOL(*SHRPOOL7) SIZE(300) ACTLVL(6)");
+        cmdRun("QSYS/CRTSBSD SBSD(QGPL/zwxsbs2) POOLS((7 *SHRPOOL7))");
+        cmdRun("QSYS/STRSBS SBSD(QGPL/zwxsbs2)");
     }
 
     protected void cleanup() throws Exception
     {
-        cmdRun("ENDSBS SBS(" + subsystemName + ") OPTION(*IMMED)");
-        cmdRun("DLTSBSD SBSD(QGPL/" + subsystemName + ")");
+        cmdRun("QSYS/ENDSBS SBS(" + subsystemName + ") OPTION(*IMMED)");
+        cmdRun("QSYS/DLTSBSD SBSD(QGPL/" + subsystemName + ")");
 
-        cmdRun("ENDSBS SBS(zwxsbs2) OPTION(*IMMED)");
-        cmdRun("DLTSBSD SBSD(QGPL/zwxsbs2)");
+        cmdRun("QSYS/ENDSBS SBS(zwxsbs2) OPTION(*IMMED)");
+        cmdRun("QSYS/DLTSBSD SBSD(QGPL/zwxsbs2)");
     }
 
     /**
