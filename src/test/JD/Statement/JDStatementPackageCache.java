@@ -149,7 +149,7 @@ public class JDStatementPackageCache extends JDTestcase {
     collection = JDStatementTest.COLLECTION;
 
     CommandCall cc = new CommandCall(system);
-    cc.run("DLTF "+collection+"/QAQQINI"); 
+    cc.run("QSYS/DLTF "+collection+"/QAQQINI"); 
 
     
   }
@@ -223,7 +223,7 @@ public class JDStatementPackageCache extends JDTestcase {
       // first, clean up the old package
       try {
         CommandCall cc = new CommandCall(system);
-        cc.run("DLTSQLPKG SQLPKG(" + collection + "/DAWPKG9899)"); // is current
+        cc.run("QSYS/DLTSQLPKG SQLPKG(" + collection + "/DAWPKG9899)"); // is current
                                                                    // package
                                                                    // ending
         AS400Message[] ml = cc.getMessageList();
@@ -1913,8 +1913,8 @@ public class JDStatementPackageCache extends JDTestcase {
         String drop4 = "DELETE FROM "+collection+"."+qcustFile+"";
 
 	CommandCall cc = new CommandCall(system);
-	cc.run("DLTF "+collection+"/QAQQINI"); 
-        cc.run("CHGAUT OBJ('/qsys.lib/qaqqini.file') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*OBJEXIST *OBJREF *OBJMGT) "); 
+	cc.run("QSYS/DLTF "+collection+"/QAQQINI"); 
+        cc.run("QSYS/CHGAUT OBJ('/qsys.lib/qaqqini.file') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*OBJEXIST *OBJREF *OBJMGT) "); 
 
         Connection c = testDriver_.getConnection(dbUrl,systemObject_.getUserId(), encryptedPassword_);
 

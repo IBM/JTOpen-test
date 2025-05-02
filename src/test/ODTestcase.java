@@ -72,7 +72,7 @@ public class ODTestcase extends Testcase
      {
        try
        {
-         CommandCall cmd = new CommandCall(systemObject_, "CRTLIB LIB("+libName+") TEXT('"+description+"')");
+         CommandCall cmd = new CommandCall(systemObject_, "QSYS/CRTLIB LIB("+libName+") TEXT('"+description+"')");
          cmd.run();
        }
        catch(Exception e){			
@@ -1614,7 +1614,7 @@ public class ODTestcase extends Testcase
 		try 
 		{		      
 		      CommandCall cmd = new CommandCall(systemObject_);
-		      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have Zero locks
+		      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have Zero locks
 		      cmd.run();
 		      
 		      ObjectList objList1 = new ObjectList(systemObject_, "ODLOCKLIB", ObjectList.ALL, ObjectList.ALL);
@@ -1637,7 +1637,7 @@ public class ODTestcase extends Testcase
 		        	passed = false; 
 		        }		       
 		      }    
-		      cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+		      cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
 		      cmd.run();
                       assertCondition(passed, "Object should not have locks");
 		} 
@@ -1667,9 +1667,9 @@ public class ODTestcase extends Testcase
 			  ObjectLockListEntry[] lockEntry = null;
      	      CommandCall cmd = new CommandCall(systemObject_);
 		     
-		      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have One lock
+		      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have One lock
 		      cmd.run();
-		      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have Zero locks
+		      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have Zero locks
 		      cmd.run();
 		      
 		      //ALCOBJ so DDA1 has one lock
@@ -1703,9 +1703,9 @@ public class ODTestcase extends Testcase
 		      cmd.run();
 		      
 		      //delete objects
-		      cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+		      cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
 		      cmd.run();
-		      cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
+		      cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
 		      cmd.run();
                       //One lock was applied to DDA1 so this should return 1 but no locks were applied for DDA2.
                       if(DDA1locks  == 1 && DDA2locks == 0)
@@ -1739,7 +1739,7 @@ public class ODTestcase extends Testcase
 			  ObjectLockListEntry[] lockEntry = null;
      	      CommandCall cmd = new CommandCall(systemObject_);
  
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
      	      cmd.run();
 		      
 		      //ALCOBJ so DDA1 has two locks
@@ -1772,7 +1772,7 @@ public class ODTestcase extends Testcase
                       cmd.run();
                       
                      //Delete objects 
-                  cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+                  cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
                   cmd.run();
 		      
 		        //Two locks were applied to DDA1 so this should return 1.
@@ -1809,10 +1809,10 @@ public class ODTestcase extends Testcase
 			  ObjectLockListEntry[] lockEntry = null;
      	      CommandCall cmd = new CommandCall(systemObject_);
  
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
      	      cmd.run();
      	      
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
      	      cmd.run();
 		      
 		      //ALCOBJ so DDA1 has two locks
@@ -1873,9 +1873,9 @@ public class ODTestcase extends Testcase
 		        cmd.run();
 		        
 		       //Delete objects 
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();
 		} 
 		catch (Exception e) 
@@ -1901,7 +1901,7 @@ public class ODTestcase extends Testcase
 			  ObjectLockListEntry[] lockEntry = null;
      	      CommandCall cmd = new CommandCall(systemObject_);
  
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have one lock.
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have one lock.
      	      cmd.run();	      
 		      
 		      //ALCOBJ so DDA1 has two locks
@@ -1947,7 +1947,7 @@ public class ODTestcase extends Testcase
 		        cmd.setCommand("DLCOBJ OBJ((ODLOCKLIB/DDA1 *DTAARA *SHRRD)) SCOPE(*JOB)");
 		        cmd.run();        
 		       //Delete objects 
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();
 			
 		}
@@ -1976,9 +1976,9 @@ public class ODTestcase extends Testcase
      	      CommandCall cmd = new CommandCall(systemObject_);
  
 
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have one lock
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have one lock
      	      cmd.run();    	      
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have one lock
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have one lock
      	      cmd.run();
 		      
 		      //ALCOBJ so DDA1 has one lock
@@ -2045,9 +2045,9 @@ public class ODTestcase extends Testcase
 		        cmd.run();
 		        
 		      //Delete objects 
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();
 			
 		}
@@ -2075,9 +2075,9 @@ public class ODTestcase extends Testcase
 			  ObjectLockListEntry[] lockEntry = null;
      	      CommandCall cmd = new CommandCall(systemObject_);
  
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
      	      cmd.run();   	      
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
      	      cmd.run();
 		      
 		      //ALCOBJ so DDA1 has two locks
@@ -2151,9 +2151,9 @@ public class ODTestcase extends Testcase
 		        cmd.run();
 		        
 		       //Delete objects 
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();
 			
 		}
@@ -2183,9 +2183,9 @@ public class ODTestcase extends Testcase
      	      CommandCall cmd = new CommandCall(systemObject_);
  
 
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have zero locks
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  // Will have zero locks
      	      cmd.run();   	      
-     	      cmd.setCommand("CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
+     	      cmd.setCommand("QSYS/CRTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  // Will have Two locks
      	      cmd.run();
 		      
      	      
@@ -2248,9 +2248,9 @@ public class ODTestcase extends Testcase
 		        cmd.run();
 		        
 		       //Delete objects 
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA1) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();
-	     	    cmd.setCommand("DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
+	     	    cmd.setCommand("QSYS/DLTDTAARA DTAARA(ODLOCKLIB/DDA2) TYPE(*CHAR) TEXT(A) ");  
 	     	    cmd.run();		
 		}
  

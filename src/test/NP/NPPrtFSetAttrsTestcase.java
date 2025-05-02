@@ -67,7 +67,7 @@ public class NPPrtFSetAttrsTestcase extends Testcase
             {
             // create JAVAPRINT printer file
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CRTPRTF FILE(NPJAVA/JAVAPRINT)") == false)
+            if (cmd.run("QSYS/CRTPRTF FILE(NPJAVA/JAVAPRINT)") == false)
                 {
                 failed("Could not create a printer file. "
                        + cmd.getMessageList()[0].getID()
@@ -141,7 +141,7 @@ public class NPPrtFSetAttrsTestcase extends Testcase
              $$$ TO DO $$$ - delete this line */
 
             // delete the printer file that we created
-            if (cmd.run("DLTF FILE(NPJAVA/JAVAPRINT)") == false)
+            if (cmd.run("QSYS/DLTF FILE(NPJAVA/JAVAPRINT)") == false)
                 {
                 output_.println("Could not delete the printer file we created. "
                                 + cmd.getMessageList()[0].getID()

@@ -192,14 +192,14 @@ Creates the testcases.
     {
         CommandCall cc = new CommandCall();
         cc.setSystem(system);
-        boolean success = cc.run("CRTDEVPRT DEVD(" + printerName + ") DEVCLS(*LCL) TYPE(*IPDS) MODEL(0) PORT(5) SWTSET(0) ONLINE(*NO) FONT(011) TEXT('" + textDescription + "')");
+        boolean success = cc.run("QSYS/CRTDEVPRT DEVD(" + printerName + ") DEVCLS(*LCL) TYPE(*IPDS) MODEL(0) PORT(5) SWTSET(0) ONLINE(*NO) FONT(011) TEXT('" + textDescription + "')");
         AS400Message[] messageList = cc.getMessageList();
         if (messageList != null) {
             for(int i = 0; i < messageList.length; ++i)
                 System.out.println(messageList[i]);
         }
 
-        success = cc.run("STRPRTWTR DEV(" + printerName + ")");
+        success = cc.run("QSYS/STRPRTWTR DEV(" + printerName + ")");
         messageList = cc.getMessageList();
         if (messageList != null) {
             for(int i = 0; i < messageList.length; ++i)

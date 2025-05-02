@@ -266,11 +266,11 @@ other test userids can use it.
 
 	    try { 
 		CommandCall cmd = new CommandCall (pwrSys);
-		cmd.run ("GRTOBJAUT OBJ(QSYS/" + collection + ") OBJTYPE(*LIB) "
+		cmd.run ("QSYS/GRTOBJAUT OBJ(QSYS/" + collection + ") OBJTYPE(*LIB) "
 			 + "USER(*PUBLIC) AUT(*ALL)");
-		cmd.run ("GRTOBJAUT OBJ(" + collection + "/QSQJRN) OBJTYPE(*JRN) "
+		cmd.run ("QSYS/GRTOBJAUT OBJ(" + collection + "/QSQJRN) OBJTYPE(*JRN) "
 			 + "USER(*PUBLIC) AUT(*ALL)");
-		cmd.run("CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM) DLTRCV(*YES)");  
+		cmd.run("QSYS/CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM) DLTRCV(*YES)");  
 	    } catch (Throwable t) {
 		System.err.println("Warning:  Exception occurred");
 		t.printStackTrace();
@@ -278,12 +278,12 @@ other test userids can use it.
 		// If the server isn't up then an exception may occur.
 		// If so, run the commands using the connection
 		Statement stmt = conn.createStatement ();
-		stmt.executeUpdate("CALL QSYS.QCMDEXC('GRTOBJAUT OBJ(QSYS/" + collection + ") OBJTYPE(*LIB) "
+		stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/GRTOBJAUT OBJ(QSYS/" + collection + ") OBJTYPE(*LIB) "
 			 + "USER(*PUBLIC) AUT(*ALL)                                   ',0000000070.00000)");
-		stmt.executeUpdate("CALL QSYS.QCMDEXC('GRTOBJAUT OBJ(" + collection + "/QSQJRN) OBJTYPE(*JRN) "
+		stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/GRTOBJAUT OBJ(" + collection + "/QSQJRN) OBJTYPE(*JRN) "
 				+ "USER(*PUBLIC) AUT(*ALL)                                   ',0000000070.00000)"); 
 
-		stmt.executeUpdate("CALL QSYS.QCMDEXC('CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM)      "
+		stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM)      "
 			        + "DLTRCV(*YES)                                              ',0000000070.00000)");               
 		stmt.close(); 
 		System.err.println("Warning:  retry successful");
@@ -334,7 +334,7 @@ other test userids can use it.
             System.out.println(
                 "Warning... Attempted to authorize *PUBLIC to table atom");
             try {
-              cmd.run("GRTOBJAUT OBJ(" + collection
+              cmd.run("QSYS/GRTOBJAUT OBJ(" + collection
                   + "/ATOM) OBJTYPE(*FILE) USER(*PUBLIC) AUT(*ALL)");
             } catch (Exception e) {
               System.out

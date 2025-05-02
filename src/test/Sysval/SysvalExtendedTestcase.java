@@ -6264,7 +6264,7 @@ public class SysvalExtendedTestcase extends Testcase
     public void Var249()
     {
       CommandCall cmd = new CommandCall(pwrSys_);
-      try { cmd.run("CRTLIB SVT249"); } catch(Exception e) {}
+      try { cmd.run("QSYS/CRTLIB SVT249"); } catch(Exception e) {}
       testGetSet("QUSRLIBL", new String[] { "SVT249", "QTEMP" });
       try { deleteLibrary(cmd, "SVT249"); } catch(Exception e) {}
     }

@@ -188,11 +188,11 @@ String runCommand(String command)
   protected void setup()
     throws Exception
   {
-/* TBD - jlee
+/* TBD - 
     try
     {
     // Create library DDMTEST
-    String msg = runCommand("CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
+    String msg = runCommand("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
     if (msg != null && !msg.equals("CPF2111"))
     {
       output_.println("Failure executing 'CRTLIB LIB(" + testLib_ + ") AUT(*ALL)'");
@@ -217,14 +217,14 @@ String runCommand(String command)
       f1.close();
 
     // Create journal receiver and journal if it does not already exist
-    msg = runCommand("CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
+    msg = runCommand("QSYS/CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
     if (msg != null)
     {
       output_.println("Failure executing 'CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')");
+    msg = runCommand("QSYS/CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')");
     if (msg != null)
     {
       output_.println("Failure executing 'CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')'");
@@ -233,7 +233,7 @@ String runCommand(String command)
     }
 
     // Start journaling
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/DDMSER) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/DDMSER) JRN(QGPL/JT4DDMJRN)");
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/DDMSER) JRN(QGPL/JT4DDMJRN)'");
@@ -256,7 +256,7 @@ String runCommand(String command)
     throws Exception
   {
     boolean success = true;
-/* TBD  - jlee
+/* TBD  
     try
     {
       // Stop journaling
@@ -275,14 +275,14 @@ String runCommand(String command)
       // Delete the DDMTest library and the journal file.  The journal
       // receive should be automatically deleted due to the way that the
       // journal and receiver were deleted.
-      msg = runCommand("DLTxLIB " + testLib_ + "");
+      msg = runCommand("QSYS/DLTxLIB " + testLib_ + "");
       if (msg != null)
       {
         output_.println("Failure executing 'DLxTLIB " + testLib_ + "'");
         output_.println(msg);
         success = false;
       }
-      msg = runCommand("DLTJRN QGPL/JT4DDMJRN");
+      msg = runCommand("QSYS/DLTJRN QGPL/JT4DDMJRN");
       if (msg != null)
       {
         output_.println("Failure executing 'DLTJRN QGPL/JT4DDMJRN'");
@@ -774,7 +774,7 @@ Listens for vetoable change events.
       // Add some listeners
       PropertyChangeListener_ pcListener1 = new PropertyChangeListener_();
       VetoableChangeListener_ vcListener1 = new VetoableChangeListener_();
-      // The 'try's are temporary - jlee
+      // The 'try's are temporary -
       try { sv1.addPropertyChangeListener(pcListener1); }
       catch (NullPointerException e) { e.printStackTrace (); success = false; }
       try { sv1.addVetoableChangeListener(vcListener1); }
@@ -802,7 +802,7 @@ Listens for vetoable change events.
       // Add some listeners to the new object.
       PropertyChangeListener_ pcListener2 = new PropertyChangeListener_();
       VetoableChangeListener_ vcListener2 = new VetoableChangeListener_();
-      // The 'try's are temporary - jlee
+      // The 'try's are temporary -
       try { sv2.addPropertyChangeListener(pcListener2); }
       catch (NullPointerException e) { e.printStackTrace (); success = false; }
       try { sv2.addVetoableChangeListener(vcListener2); }
@@ -918,7 +918,7 @@ Listens for vetoable change events.
       // Add some listeners
       PropertyChangeListener_ pcListener1 = new PropertyChangeListener_();
       VetoableChangeListener_ vcListener1 = new VetoableChangeListener_();
-      // The 'try's are temporary - jlee
+      // The 'try's are temporary -
       try { sv1.addPropertyChangeListener(pcListener1); }
       catch (NullPointerException e) { e.printStackTrace (); success = false; }
       try { sv1.addVetoableChangeListener(vcListener1); }
@@ -946,7 +946,7 @@ Listens for vetoable change events.
       // Add some listeners to the new object.
       PropertyChangeListener_ pcListener2 = new PropertyChangeListener_();
       VetoableChangeListener_ vcListener2 = new VetoableChangeListener_();
-      // The 'try's are temporary - jlee
+      // The 'try's are temporary -
       try { sv2.addPropertyChangeListener(pcListener2); }
       catch (NullPointerException e) { e.printStackTrace (); success = false; }
       try { sv2.addVetoableChangeListener(vcListener2); }
@@ -1068,7 +1068,7 @@ Listens for vetoable change events.
       // Add some listeners
       PropertyChangeListener_ pcListener1 = new PropertyChangeListener_();
       VetoableChangeListener_ vcListener1 = new VetoableChangeListener_();
-      // The 'try's are temporary - jlee
+      // The 'try's are temporary -
       try { sv1.addPropertyChangeListener(pcListener1); }
       catch (NullPointerException e) { e.printStackTrace (); success = false; }
       try { sv1.addVetoableChangeListener(vcListener1); }

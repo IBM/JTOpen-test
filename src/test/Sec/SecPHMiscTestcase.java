@@ -82,7 +82,7 @@ public class SecPHMiscTestcase extends Testcase
 	  pwrCall  = new CommandCall(pwrSys_);
 	  Random random = new Random(); 
 	  String password = "PASS"+random.nextInt(1000000); 
-	  String command = "CRTUSRPRF USRPRF("+testUser+") PASSWORD("+password+") TEXT('"+description+"')   ";
+	  String command = "QSYS/CRTUSRPRF USRPRF("+testUser+") PASSWORD("+password+") TEXT('"+description+"')   ";
           boolean ran;
           try {
             ran = pwrCall.run(command);
@@ -99,7 +99,7 @@ public class SecPHMiscTestcase extends Testcase
 
       public void cleanup() {
         if (isNative_) {
-          String command = "DLTUSRPRF USRPRF(" + testUser + ")   ";
+          String command = "QSYS/DLTUSRPRF USRPRF(" + testUser + ")   ";
           try {
             boolean ran = pwrCall.run(command);
             if (!ran) {

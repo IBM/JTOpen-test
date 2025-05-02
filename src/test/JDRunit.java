@@ -1751,7 +1751,7 @@ public class JDRunit {
       try {
         /* Note CCSID must be 65535 for DDDMSQLCompatibility to pass */
         sql="CALL QSYS.QCMDEXC('"
-            + "CRTUSRPRF USRPRF("
+            + "QSYS/CRTUSRPRF USRPRF("
             + newUserid
             + ") PASSWORD("
             + rawPassword
@@ -1762,14 +1762,14 @@ public class JDRunit {
         // ignore an error from the create
       }
       sql = "CALL QSYS.QCMDEXC('"
-          + "CHGUSRPRF USRPRF("
+          + "QSYS/CHGUSRPRF USRPRF("
           + newUserid
           + ") PASSWORD(BOGUS7)                                                                        ',   0000000060.00000)";
       if (passwordDebug) System.out.println("passwordDebug: SQL="+sql); 
       stmt.executeUpdate(sql);
 
       sql = "CALL QSYS.QCMDEXC('"
-          + "CHGUSRPRF USRPRF("
+          + "QSYS/CHGUSRPRF USRPRF("
           + newUserid
           + ") PASSWORD("
           + rawPassword
@@ -2857,7 +2857,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
               || (hangMessage.indexOf("connection to \":9.0\"") > 0)) {
             /* Something went wrong with the VNC server */
             /* kill it */
-            String command = "SBMJOB CMD(QSH CMD('system wrkactjob | grep vnc | " + "grep -i "
+            String command = "QSYS/SBMJOB CMD(QSH CMD('system wrkactjob | grep vnc | " + "grep -i "
                 + System.getProperty("user.name") + " | "
                 + " sed ''s%^ *\\([^ ][^ ]*\\) *\\([^ ][^ ]*\\) *\\([^ ][^ ]*\\) .*%system endjob \"job(\\3/\\2/\\1)\"%'' |"
                 + " sh'))";

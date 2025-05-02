@@ -241,7 +241,7 @@ public class DDMP9949891 extends Testcase implements Runnable
       CommandCall cc = new CommandCall(pwrSys_);
       deleteLibrary(cc, testLib_);
       cc = new CommandCall(systemObject_);
-      cc.run("CRTLIB "+testLib_);
+      cc.run("QSYS/CRTLIB "+testLib_);
 
       // Test using 8 threads (yes, I just picked a number)
       RepeatDDMOperation[] objects = new RepeatDDMOperation[numThreads_];

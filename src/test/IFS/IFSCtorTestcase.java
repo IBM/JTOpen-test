@@ -6441,7 +6441,7 @@ Test IFSTextFileOutputStream with an IFS file to verify that it can create a new
 	// Delete the member to make sure it does not exist.
 	CommandCall cmd = new CommandCall(pwrSys_);
 	boolean rc; 
-	rc = cmd.run("RMVM FILE(QUSRSYS/QATMHINSTC) MBR(IFSCTORTST)"); 
+	rc = cmd.run("QSYS/RMVM FILE(QUSRSYS/QATMHINSTC) MBR(IFSCTORTST)"); 
 
 	IFSTextFileOutputStream ifsStream =
 	  new IFSTextFileOutputStream(
@@ -6456,7 +6456,7 @@ Test IFSTextFileOutputStream with an IFS file to verify that it can create a new
 	try { 
 	ifsStream.close(); 
 	} catch (Exception e) {} 
-	rc = 	cmd.run("RMVM FILE(QUSRSYS/QATMHINSTC) MBR(IFSCTORTST)"); 
+	rc = 	cmd.run("QSYS/RMVM FILE(QUSRSYS/QATMHINSTC) MBR(IFSCTORTST)"); 
 	assertCondition(rc, "Unable to delete file that should have been created rc="+rc+added);	
     }
     catch(Exception e)
@@ -6500,12 +6500,12 @@ could not easily be determined because the retrun code was missing.
 	CommandCall cmd = new CommandCall(pwrSys_);
 	boolean rc;
 
-	command = "crtsrcpf qgpl/qclsrc";
+	command = "QSYS/crtsrcpf qgpl/qclsrc";
 	sb.append("RUNNING "+command+"\n"); 
 	rc = cmd.run(command);
 	sb.append("Returned "+rc+"\n");
 
-	command = "ADDPFM FILE(QGPL/QCLSRC) MBR(PWFSEXIT)";
+	command = "QSYS/ADDPFM FILE(QGPL/QCLSRC) MBR(PWFSEXIT)";
 	sb.append("RUNNING "+command+"\n"); 
 	rc = cmd.run(command);
 	sb.append("Returned "+rc+"\n");
@@ -6564,21 +6564,21 @@ could not easily be determined because the retrun code was missing.
 	ifsStream.close();
 
 
-	command = "CRTBNDCL PGM(QGPL/PWFSEXIT) SRCFILE(QGPL/QCLSRC) DBGVIEW(*SOURCE) "; 
+	command = "QSYS/CRTBNDCL PGM(QGPL/PWFSEXIT) SRCFILE(QGPL/QCLSRC) DBGVIEW(*SOURCE) "; 
 
 	sb.append("RUNNING "+command+"\n"); 
 	rc = cmd.run(command);
 	sb.append("Returned "+rc+"\n");
 
 
-	command = "ADDEXITPGM EXITPNT(QIBM_QPWFS_FILE_SERV) FORMAT(PWFS0100)   PGMNBR(1) PGM(QGPL/PWFSEXIT)";
+	command = "QSYS/ADDEXITPGM EXITPNT(QIBM_QPWFS_FILE_SERV) FORMAT(PWFS0100)   PGMNBR(1) PGM(QGPL/PWFSEXIT)";
 	sb.append("RUNNING "+command+"\n"); 
 	rc = cmd.run(command);
 	sb.append("Returned "+rc+"\n");
 
 
 	// After changing the exit program the QSERVER subsystem must be restarted. 
-	command = "endsbs qserver option(*immed)"; 
+	command = "QSYS/endsbs qserver option(*immed)"; 
         sb.append("RUNNING "+command+"\n"); 
         rc = cmd.run(command);
         sb.append("Returned "+rc+"\n");
@@ -6589,7 +6589,7 @@ could not easily be determined because the retrun code was missing.
           
         }
 
-        command = "strsbs qserver"; 
+        command = "QSYS/strsbs qserver"; 
         sb.append("RUNNING "+command+"\n"); 
         rc = cmd.run(command);
         sb.append("Returned "+rc+"\n");
@@ -6621,13 +6621,13 @@ could not easily be determined because the retrun code was missing.
 
 
 	// Remove exit program
-	command = "RMVEXITPGM EXITPNT(QIBM_QPWFS_FILE_SERV) FORMAT(PWFS0100) PGMNBR(1)";
+	command = "QSYS/RMVEXITPGM EXITPNT(QIBM_QPWFS_FILE_SERV) FORMAT(PWFS0100) PGMNBR(1)";
 	sb.append("RUNNING "+command+"\n"); 
 	rc = cmd.run(command);
         sb.append("Returned "+rc+"\n");
 
         // After changing the exit program the QSERVER subsystem must be restarted. 
-        command = "endsbs qserver option(*immed)"; 
+        command = "QSYS/endsbs qserver option(*immed)"; 
         sb.append("RUNNING "+command+"\n"); 
         rc = cmd.run(command);
         sb.append("Returned "+rc+"\n");
@@ -6638,7 +6638,7 @@ could not easily be determined because the retrun code was missing.
           
         }
 
-        command = "strsbs qserver"; 
+        command = "QSYS/strsbs qserver"; 
         sb.append("RUNNING "+command+"\n"); 
         rc = cmd.run(command);
         sb.append("Returned "+rc+"\n");

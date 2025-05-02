@@ -51,7 +51,7 @@ public class MessageSandbox {
   public MessageSandbox(AS400 system, String libraryName, String queueName, String userId) {
     // Create the library if necessary.
 
-    CommandCall cmd = new CommandCall(system, "CRTLIB LIB(" + libraryName
+    CommandCall cmd = new CommandCall(system, "QSYS/CRTLIB LIB(" + libraryName
         + ") TEXT(\'AS/400 Toolbox for Java Testing\')");
     try {
       cmd.run();
@@ -63,7 +63,7 @@ public class MessageSandbox {
         }
       }
 
-      cmd = new CommandCall(system, "GRTOBJAUT OBJ(" + libraryName
+      cmd = new CommandCall(system, "QSYS/GRTOBJAUT OBJ(" + libraryName
 					+ ") OBJTYPE(*LIB) USER("+userId+") AUT(*ALL)");
 
       cmd.run(); 
@@ -78,7 +78,7 @@ public class MessageSandbox {
     String path = QSYSObjectPathName.toPath(libraryName, queueName, "MSGQ");
 
     // Create the message queue if necessary.
-    cmd = new CommandCall(system, "CRTMSGQ MSGQ(" + libraryName + "/"
+    cmd = new CommandCall(system, "QSYS/CRTMSGQ MSGQ(" + libraryName + "/"
         + queueName + ") TEXT(\'AS/400 Toolbox for Java Testing\')");
     try {
       cmd.run();
@@ -106,7 +106,7 @@ public class MessageSandbox {
       try {
         queue_.remove();
 
-        CommandCall cmd = new CommandCall(queue_.getSystem(), "DLTMSGQ MSGQ("
+        CommandCall cmd = new CommandCall(queue_.getSystem(), "QSYS/DLTMSGQ MSGQ("
             + pathName.getLibraryName() + "/" + pathName.getObjectName() + ")");
         cmd.run();
 
@@ -134,7 +134,7 @@ public class MessageSandbox {
    *          The system object.
    **/
   public static AS400Message generateMessage(AS400 system) throws Exception {
-    CommandCall cmd = new CommandCall(system, "DLTLIB XXXXXXXXXX");
+    CommandCall cmd = new CommandCall(system, "QSYS/DLTLIB XXXXXXXXXX");
     cmd.run();
     AS400Message[] messageList = cmd.getMessageList();
     return messageList[0];
@@ -150,7 +150,7 @@ public class MessageSandbox {
    **/
   public static AS400Message[] generateMessageList(AS400 system, int length)
       throws Exception {
-    CommandCall cmd = new CommandCall(system, "DLTLIB YYYYYYYY");
+    CommandCall cmd = new CommandCall(system, "QSYS/DLTLIB YYYYYYYY");
     cmd.run();
     AS400Message[] messageList = cmd.getMessageList();
 
@@ -181,7 +181,7 @@ public class MessageSandbox {
    *          The system object.
    **/
   public static VMessage generateVMessage(AS400 system) throws Exception {
-    CommandCall cmd = new CommandCall(system, "DLTLIB XXXXXXXXXX");
+    CommandCall cmd = new CommandCall(system, "QSYS/DLTLIB XXXXXXXXXX");
     cmd.run();
     AS400Message[] messageList = cmd.getMessageList();
     VMessageList vml = new VMessageList(messageList);

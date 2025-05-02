@@ -86,7 +86,7 @@ public abstract class SetupLibraryTestcase extends Testcase {
 
      // Create the necessary save files in preparation
      // for object restoration.
-     String command = "DLTF QGPL/"+remoteName; 
+     String command = "QSYS/DLTF QGPL/"+remoteName; 
      cmd.setCommand(command);
      boolean success = cmd.run();
      if (!success) { 
@@ -94,7 +94,7 @@ public abstract class SetupLibraryTestcase extends Testcase {
      }
     
      output_.println("Creating master save file...");
-     command = "CRTSAVF QGPL/"+remoteName;
+     command = "QSYS/CRTSAVF QGPL/"+remoteName;
      cmd.setCommand(command);
      success = cmd.run();
      if (!success) { 
@@ -161,7 +161,7 @@ public abstract class SetupLibraryTestcase extends Testcase {
      } else { 
      // Delete the necessary save files.
      output_.println("Deleting master save file...");
-     cmd.setCommand("DLTF QGPL/"+remoteName);
+     cmd.setCommand("QSYS/DLTF QGPL/"+remoteName);
      cmd.run();
   
      output_.println("Restore of "+library+" on "+pwrSys_.getSystemName()+" is complete.");

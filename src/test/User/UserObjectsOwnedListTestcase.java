@@ -58,8 +58,8 @@ public class UserObjectsOwnedListTestcase extends Testcase
 
       CommandCall cmd = new CommandCall(pwrSys_);
       system = new AS400(systemObject_.getSystemName(), "USRTEST" , "user23ts".toCharArray());
-      cmd.run("CRTUSRPRF USRPRF(USRTEST)  PASSWORD(user23ts)  USRCLS(*USER)");
-      cmd.run("CHGAUT OBJ('/') USER(USRTEST) DTAAUT(*RWX) OBJAUT(*ALL)   "); 
+      cmd.run("QSYS/CRTUSRPRF USRPRF(USRTEST)  PASSWORD(user23ts)  USRCLS(*USER)");
+      cmd.run("QSYS/CHGAUT OBJ('/') USER(USRTEST) DTAAUT(*RWX) OBJAUT(*ALL)   "); 
       IFSRandomAccessFile raf1 = new IFSRandomAccessFile(system, "/usertest1.txt", "rw");
       IFSRandomAccessFile raf2 = new IFSRandomAccessFile(system, "/usertest2.txt", "rw");
       IFSRandomAccessFile raf3 = new IFSRandomAccessFile(system, "/usertest3.txt", "rw");
@@ -76,7 +76,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
       int i = 0;
       for(i=0 ; i<numObjectsCreated_ ;i++)
       {
-        cmd1.run("CRTLIB LIB(USRLBTS" + Integer.toString(i)+ ") TEXT('UserObjectsOwnedListTestcase lib')");
+        cmd1.run("QSYS/CRTLIB LIB(USRLBTS" + Integer.toString(i)+ ") TEXT('UserObjectsOwnedListTestcase lib')");
       }
 
     }
@@ -114,7 +114,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
       IFSFile file3 = new IFSFile(pwrSys_, "/usertest3.txt");
       file3.delete();
 
-      if (!cmd.run("DLTUSRPRF USRPRF(USRTEST) OWNOBJOPT(*DLT)"))
+      if (!cmd.run("QSYS/DLTUSRPRF USRPRF(USRTEST) OWNOBJOPT(*DLT)"))
       {
         AS400Message[] msgs = cmd.getMessageList();
         for (int i=0; i<msgs.length; i++)

@@ -144,15 +144,15 @@ class CmdCallThread extends ComponentThread
     {
         try
         {
-            if (cmdCall.run("CRTLIB " + lib) == false)
+            if (cmdCall.run("QSYS/CRTLIB " + lib) == false)
             {
-                error("CRTLIB failed");
+                error("QSYS/CRTLIB failed");
             }
-	    cmdCall.run("CHGJOB INQMSGRPY(*SYSRPYL)");
+	    cmdCall.run("QSYS/CHGJOB INQMSGRPY(*SYSRPYL)");
 
-            if (cmdCall.run("DLTLIB " + lib) == false)
+            if (cmdCall.run("QSYS/DLTLIB " + lib) == false)
             {
-                error("DLTLIB failed");
+                error("QSYS/DLTLIB failed");
             }
         }
         catch (Exception e)

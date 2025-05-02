@@ -1950,11 +1950,11 @@ public class DQWriteTestcase extends Testcase
 	    String user = systemObject_.getUserId();
 	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
 	    byte[] data = new String("data").getBytes("UnicodeBigUnmarked");
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*ADD)");
 		dq.getDescription();
 		try
@@ -1969,7 +1969,7 @@ public class DQWriteTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -1990,11 +1990,11 @@ public class DQWriteTestcase extends Testcase
 	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
 	    byte[] key = new String("key  ").getBytes("UnicodeBigUnmarked");
 	    byte[] data = new String("data").getBytes("UnicodeBigUnmarked");
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*ADD)");
 		dq.getDescription();
 		try
@@ -2009,7 +2009,7 @@ public class DQWriteTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2029,11 +2029,11 @@ public class DQWriteTestcase extends Testcase
 	    String user = systemObject_.getUserId();
 	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
 	    String data = "data";
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*ADD)");
 		dq.getDescription();
 		try
@@ -2048,7 +2048,7 @@ public class DQWriteTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2069,11 +2069,11 @@ public class DQWriteTestcase extends Testcase
 	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
 	    String key = "key  ";
 	    String data = "data";
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*ADD)");
 		dq.getDescription();
 		try
@@ -2088,7 +2088,7 @@ public class DQWriteTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2108,10 +2108,10 @@ public class DQWriteTestcase extends Testcase
 	    String user = systemObject_.getUserId();
 	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
 	    byte[] data = new String("data").getBytes("UnicodeBigUnmarked");
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
 		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
 		try
 		{
@@ -2125,7 +2125,7 @@ public class DQWriteTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2146,10 +2146,10 @@ public class DQWriteTestcase extends Testcase
 	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
 	    byte[] key = new String("key  ").getBytes("UnicodeBigUnmarked");
 	    byte[] data = new String("data").getBytes("UnicodeBigUnmarked");
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
 		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE" );
 		try
 		{
@@ -2163,7 +2163,7 @@ public class DQWriteTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2183,10 +2183,10 @@ public class DQWriteTestcase extends Testcase
 	    String user = systemObject_.getUserId();
 	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
 	    String data = "data";
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
 		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
 		try
 		{
@@ -2200,7 +2200,7 @@ public class DQWriteTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2221,10 +2221,10 @@ public class DQWriteTestcase extends Testcase
 	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
 	    String key = "key  ";
 	    String data = "data";
-	    cmdRun("CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
-		cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
 		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE" );
 		try
 		{
@@ -2238,7 +2238,7 @@ public class DQWriteTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
 	    }
 	}
 	catch (Exception e)

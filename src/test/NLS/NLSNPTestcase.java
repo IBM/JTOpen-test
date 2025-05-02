@@ -205,7 +205,7 @@ public class NLSNPTestcase extends Testcase
     
     try
     {
-      CommandCall cmd = new CommandCall(NLSTest.PwrSys, "DLTDEVD DEVD("+np_printer+")");
+      CommandCall cmd = new CommandCall(NLSTest.PwrSys, "QSYS/DLTDEVD DEVD("+np_printer+")");
       if (cmd.run()==false)
       {
         output_.println("Setup error: Could not delete device "+np_printer+".");
@@ -220,7 +220,7 @@ public class NLSNPTestcase extends Testcase
 
     try
     {
-      CommandCall cmd = new CommandCall(NLSTest.PwrSys, "CRTLIB LIB("+np_lib+") AUT(*ALL)");
+      CommandCall cmd = new CommandCall(NLSTest.PwrSys, "QSYS/CRTLIB LIB("+np_lib+") AUT(*ALL)");
       if (cmd.run()==false)
       {
         output_.println("Setup failed: Could not create library.");
@@ -232,7 +232,7 @@ public class NLSNPTestcase extends Testcase
         output_.println("Setup successfully created library "+np_lib+".\n");
         try
         {
-          cmd.setCommand("CRTDUPOBJ OBJ(F1A00010) FROMLIB(NPJAVA) OBJTYPE(*FORMDF) TOLIB("+np_lib+") NEWOBJ("+np_form+")");
+          cmd.setCommand("QSYS/CRTDUPOBJ OBJ(F1A00010) FROMLIB(NPJAVA) OBJTYPE(*FORMDF) TOLIB("+np_lib+") NEWOBJ("+np_form+")");
           if (cmd.run()==false)
           {
             output_.println("Setup failed: Could not copy form definition into "+np_lib+".");
@@ -244,7 +244,7 @@ public class NLSNPTestcase extends Testcase
             output_.println("Setup successfully copied form definition into library "+np_lib+".\n");
             try
             {
-              cmd.setCommand("GRTOBJAUT OBJ("+np_lib+"/"+np_form+") OBJTYPE(*FORMDF) USER(*PUBLIC) AUT(*ALL)");
+              cmd.setCommand("QSYS/GRTOBJAUT OBJ("+np_lib+"/"+np_form+") OBJTYPE(*FORMDF) USER(*PUBLIC) AUT(*ALL)");
               if (cmd.run()==false)
               {
                 output_.println("Setup failed: Could not set authorities on form definition "+np_form+" in "+np_lib+".\n");
@@ -309,7 +309,7 @@ public class NLSNPTestcase extends Testcase
   public void Var001()
   {
     StringBuffer failMsg = new StringBuffer();
-    String cmdString = "CRTOUTQ OUTQ("+np_lib+"/"+np_queue;
+    String cmdString = "QSYS/CRTOUTQ OUTQ("+np_lib+"/"+np_queue;
     cmdString += ") AUT(*ALL) TEXT('"+np_dbcs_text+"')";
     String qname = "/QSYS.LIB/"+np_lib+".LIB/"+np_queue+".OUTQ";
     CommandCall cmd = new CommandCall(systemObject_, cmdString);
@@ -348,7 +348,7 @@ public class NLSNPTestcase extends Testcase
     // cleanup
     try
     {
-      cmdString = "DLTOUTQ OUTQ("+np_lib+"/"+np_queue+")";
+      cmdString = "QSYS/DLTOUTQ OUTQ("+np_lib+"/"+np_queue+")";
       cmd.setCommand(cmdString);
       if (cmd.run()==false)
       {
@@ -374,7 +374,7 @@ public class NLSNPTestcase extends Testcase
   {
     StringBuffer failMsg = new StringBuffer();
     String np_queue = "NLSQ2";
-    String cmdString = "CRTOUTQ OUTQ("+np_lib+"/"+np_queue;
+    String cmdString = "QSYS/CRTOUTQ OUTQ("+np_lib+"/"+np_queue;
     cmdString += ") AUT(*ALL) TEXT('"+np_dbcs_text+"')";
     String qname = "/QSYS.LIB/"+np_lib+".LIB/"+np_queue+".OUTQ";
     CommandCall cmd = new CommandCall(systemObject_, cmdString);
@@ -396,7 +396,7 @@ public class NLSNPTestcase extends Testcase
         String objDesc = getTextDescription(npObj);
 
         // change queue's description
-        cmdString = "CHGOBJD OBJ("+np_lib+"/"+np_queue+") OBJTYPE(*OUTQ) ";
+        cmdString = "QSYS/CHGOBJD OBJ("+np_lib+"/"+np_queue+") OBJTYPE(*OUTQ) ";
         cmdString += "TEXT('"+np_dbcs_textb+"')";
         cmd.setCommand(cmdString);
         if (cmd.run()==false)
@@ -434,7 +434,7 @@ public class NLSNPTestcase extends Testcase
     // cleanup
     try
     {
-      cmdString = "DLTOUTQ OUTQ("+np_lib+"/"+np_queue+")";
+      cmdString = "QSYS/DLTOUTQ OUTQ("+np_lib+"/"+np_queue+")";
       cmd.setCommand(cmdString);
       if (cmd.run()==false)
       {
@@ -463,7 +463,7 @@ public class NLSNPTestcase extends Testcase
     // Delete the printer if it exists.
     try
     {
-      CommandCall cmd = new CommandCall(NLSTest.PwrSys, "DLTDEVD "+np_printer);
+      CommandCall cmd = new CommandCall(NLSTest.PwrSys, "QSYS/DLTDEVD "+np_printer);
       if (cmd.run()==false)
       {
         output_.println("Setup: Could not delete the printer device description.\n");
@@ -472,7 +472,7 @@ public class NLSNPTestcase extends Testcase
     }
     catch(Exception e) {}
 
-    String cmdString = "CRTDEVPRT DEVD("+np_printer+") DEVCLS(*LCL) TYPE(*IPDS) ";
+    String cmdString = "QSYS/CRTDEVPRT DEVD("+np_printer+") DEVCLS(*LCL) TYPE(*IPDS) ";
     cmdString += "MODEL(0) PORT(5) SWTSET(0) ONLINE(*NO) FONT(011) ";
     cmdString += "AUT(*ALL) TEXT('"+np_dbcs_text+"')";
     CommandCall cmd = new CommandCall(systemObject_, cmdString);
@@ -547,7 +547,7 @@ public class NLSNPTestcase extends Testcase
     // cleanup
     try
     {
-      cmdString = "DLTDEVD "+np_printer;
+      cmdString = "QSYS/DLTDEVD "+np_printer;
       cmd.setCommand(cmdString);
 
 // Need special authority in order to delete the printer object.
@@ -580,7 +580,7 @@ public class NLSNPTestcase extends Testcase
     // Delete the printer if it exists.
     try
     {
-      CommandCall cmd = new CommandCall(NLSTest.PwrSys, "DLTDEVD "+np_printer);
+      CommandCall cmd = new CommandCall(NLSTest.PwrSys, "QSYS/DLTDEVD "+np_printer);
       if (cmd.run()==false)
       {
         output_.println("Setup: Could not delete the printer device description.\n");
@@ -589,7 +589,7 @@ public class NLSNPTestcase extends Testcase
     }
     catch(Exception e) {}
 
-    String cmdString = "CRTDEVPRT DEVD("+np_printer+") DEVCLS(*LCL) TYPE(*IPDS) ";
+    String cmdString = "QSYS/CRTDEVPRT DEVD("+np_printer+") DEVCLS(*LCL) TYPE(*IPDS) ";
     cmdString += "MODEL(0) PORT(5) SWTSET(0) ONLINE(*NO) FONT(011) ";
     cmdString += "AUT(*ALL) TEXT('"+np_dbcs_text+"')";
     CommandCall cmd = new CommandCall(systemObject_, cmdString);
@@ -648,7 +648,7 @@ public class NLSNPTestcase extends Testcase
       String objDesc = getTextDescription(npObj);
 
       // change printer's description
-      cmdString = "CHGDEVPRT DEVD("+np_printer+") ";
+      cmdString = "QSYS/CHGDEVPRT DEVD("+np_printer+") ";
       cmdString += "TEXT('"+np_dbcs_textb+"')";
       cmd.setCommand(cmdString);
       if (cmd.run()==false)
@@ -685,7 +685,7 @@ public class NLSNPTestcase extends Testcase
     // cleanup
     try
     {
-      cmdString = "DLTDEVD "+np_printer;
+      cmdString = "QSYS/DLTDEVD "+np_printer;
       cmd.setCommand(cmdString);
 
 // Need special authority in order to delete the printer object.
@@ -716,7 +716,7 @@ public class NLSNPTestcase extends Testcase
           {
           // set the text description of the AFP resource 
           CommandCall cmd = new CommandCall(systemObject_);
-          if (cmd.run("CHGOBJD OBJ("+np_lib+"/"+np_form+") OBJTYPE(*FORMDF) TEXT('"+np_dbcs_text+"')") == false)
+          if (cmd.run("QSYS/CHGOBJD OBJ("+np_lib+"/"+np_form+") OBJTYPE(*FORMDF) TEXT('"+np_dbcs_text+"')") == false)
               {
               failMsg.append("Could not set an AFP resource description to an NLS string. \n");
               failMsg.append(cmd.getMessageList()[0].getID()+".\n");
@@ -762,7 +762,7 @@ public class NLSNPTestcase extends Testcase
     StringBuffer failMsg = new StringBuffer();
 
     String printerStr = "/QSYS.LIB/"+np_lib+".LIB/"+np_file+".FILE";
-    String cmdString = "CRTPRTF FILE("+np_lib+"/"+np_file+") ";
+    String cmdString = "QSYS/CRTPRTF FILE("+np_lib+"/"+np_file+") ";
     cmdString += "AUT(*ALL) TEXT('"+np_dbcs_text+"')";
     CommandCall cmd = new CommandCall(systemObject_, cmdString);
 
@@ -806,7 +806,7 @@ public class NLSNPTestcase extends Testcase
     // cleanup
     try
     {
-      cmdString = "DLTF FILE("+np_lib+"/"+np_file+")";
+      cmdString = "QSYS/DLTF FILE("+np_lib+"/"+np_file+")";
       cmd.setCommand(cmdString);
 
       if (cmd.run()==false)
@@ -834,7 +834,7 @@ public class NLSNPTestcase extends Testcase
     StringBuffer failMsg = new StringBuffer();
 
     String printerStr = "/QSYS.LIB/"+np_lib+".LIB/"+np_file+".FILE";
-    String cmdString = "CRTPRTF FILE("+np_lib+"/"+np_file+") ";
+    String cmdString = "QSYS/CRTPRTF FILE("+np_lib+"/"+np_file+") ";
     cmdString += "AUT(*ALL) TEXT('"+np_dbcs_text+"')";
     CommandCall cmd = new CommandCall(systemObject_, cmdString);
 
@@ -863,7 +863,7 @@ public class NLSNPTestcase extends Testcase
       attrText = pf.getStringAttribute(PrintObject.ATTR_DESCRIPTION);
 
       // change printer's description
-      cmdString = "CHGPRTF FILE("+np_lib+"/"+np_file+") ";
+      cmdString = "QSYS/CHGPRTF FILE("+np_lib+"/"+np_file+") ";
       cmdString += "TEXT('"+np_dbcs_textb+"')";
       cmd.setCommand(cmdString);
       if (cmd.run()==false)
@@ -888,7 +888,7 @@ public class NLSNPTestcase extends Testcase
     // cleanup
     try
     {
-      cmdString = "DLTF FILE("+np_lib+"/"+np_file+")";
+      cmdString = "QSYS/DLTF FILE("+np_lib+"/"+np_file+")";
       cmd.setCommand(cmdString);
 
       if (cmd.run()==false)
@@ -921,7 +921,7 @@ public class NLSNPTestcase extends Testcase
           // create an output queue
           CommandCall cmd = new CommandCall(systemObject_);
           
-          if (cmd.run("crtoutq OUTQ("+np_lib+"/"+np_queue+") AUT(*ALL)") == false)
+          if (cmd.run("QSYS/crtoutq OUTQ("+np_lib+"/"+np_queue+") AUT(*ALL)") == false)
               {
               failMsg.append("Could not create an output queue.\n");
               failMsg.append(cmd.getMessageList()[0].getID()+"\n");
@@ -981,7 +981,7 @@ public class NLSNPTestcase extends Testcase
           Thread.sleep(12000,0);
           
           // clearing the output queue so we can delete it
-          if (cmd.run("CLROUTQ OUTQ("+np_lib+"/"+np_queue+")") == false)
+          if (cmd.run("QSYS/CLROUTQ OUTQ("+np_lib+"/"+np_queue+")") == false)
              {
              failMsg.append("Could not clear the output queue.\n");
              failMsg.append(cmd.getMessageList()[0].getID()+": "+cmd.getMessageList()[0].getText()+"\n");
@@ -991,7 +991,7 @@ public class NLSNPTestcase extends Testcase
           Thread.sleep(12000,0);
           
           // delete the output queue we created
-          if (cmd.run("DLTOUTQ OUTQ("+np_lib+"/"+np_queue+")") == false)
+          if (cmd.run("QSYS/DLTOUTQ OUTQ("+np_lib+"/"+np_queue+")") == false)
               {
               failMsg.append("Could not delete the output queue.\n");
               failMsg.append(cmd.getMessageList()[0].getID()+": "+cmd.getMessageList()[0].getText()+"\n");

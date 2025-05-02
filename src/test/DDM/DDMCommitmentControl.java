@@ -809,12 +809,12 @@ String runCommand(String command, StringBuffer sb)
 
       deleteLibrary(cc, testLib_); 
 
-      command = "DLTJRN QGPL/JT4*"; 
+      command = "QSYS/DLTJRN QGPL/JT4*"; 
       rc = cc.run(command);
       sb.append("COMMAND:"+command+" rc="+rc+"\n");
 
     // Create library DDMTEST
-    String msg = runCommand("CRTLIB LIB(" + testLib_ + ") AUT(*ALL)", sb);
+    String msg = runCommand("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)", sb);
     if (msg != null && !msg.equals("CPF2111"))
     {
       output_.println("Failure executing 'CRTLIB LIB(" + testLib_ + ") AUT(*ALL)'");
@@ -873,14 +873,14 @@ String runCommand(String command, StringBuffer sb)
 
 
     // Cleanup the old journal.
-    msg = runCommand("ENDJRNPF FILE(*ALL) JRN(QGPL/JT4DDMJRN) ", sb); 
-    msg = runCommand("dltjrn JRN(QGPL/JT4DDMJRN) ", sb); 
-    msg = runCommand("DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV)  DLTOPT(*IGNINQMSG) ", sb);
+    msg = runCommand("QSYS/ENDJRNPF FILE(*ALL) JRN(QGPL/JT4DDMJRN) ", sb); 
+    msg = runCommand("QSYS/DLTjrn JRN(QGPL/JT4DDMJRN) ", sb); 
+    msg = runCommand("QSYS/DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV)  DLTOPT(*IGNINQMSG) ", sb);
 
 
     // Create journal receiver and journal if it does not already exist
 
-    msg = runCommand("CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')", sb);
+    msg = runCommand("QSYS/CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')", sb);
     if (msg != null && !msg.equals("CPF7010"))
     {
       output_.println("Failure executing 'CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
@@ -888,7 +888,7 @@ String runCommand(String command, StringBuffer sb)
       output_.println(sb.toString()); 
       throw new Exception("");
     }
-    msg = runCommand("CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')", sb);
+    msg = runCommand("QSYS/CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')", sb);
     if (msg != null && !msg.equals("CPF7010"))
     {
       output_.println("Failure executing 'CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')'");
@@ -899,7 +899,7 @@ String runCommand(String command, StringBuffer sb)
     }
 
     // Start journaling
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/DDMCC1) JRN(QGPL/JT4DDMJRN)", sb);
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/DDMCC1) JRN(QGPL/JT4DDMJRN)", sb);
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/DDMCC1) JRN(QGPL/JT4DDMJRN)'");
@@ -907,7 +907,7 @@ String runCommand(String command, StringBuffer sb)
       output_.println(sb.toString()); 
       throw new Exception("");
     }
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/DDMCC2) JRN(QGPL/JT4DDMJRN)", sb);
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/DDMCC2) JRN(QGPL/JT4DDMJRN)", sb);
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/DDMCC2) JRN(QGPL/JT4DDMJRN)'");
@@ -915,7 +915,7 @@ String runCommand(String command, StringBuffer sb)
       output_.println(sb.toString()); 
       throw new Exception("");
     }
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/DDMCCK1) JRN(QGPL/JT4DDMJRN)", sb);
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/DDMCCK1) JRN(QGPL/JT4DDMJRN)", sb);
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/DDMCCK1) JRN(QGPL/JT4DDMJRN)'");
@@ -923,7 +923,7 @@ String runCommand(String command, StringBuffer sb)
       output_.println(sb.toString()); 
       throw new Exception("");
     }
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/DDMCCK2) JRN(QGPL/JT4DDMJRN)", sb);
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/DDMCCK2) JRN(QGPL/JT4DDMJRN)", sb);
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/DDMCCK2) JRN(QGPL/JT4DDMJRN)'");
@@ -931,7 +931,7 @@ String runCommand(String command, StringBuffer sb)
       output_.println(sb.toString()); 
       throw new Exception("");
     }
-    msg = runCommand("STRJRNPF FILE(" + testLib_ + "/DDMCC3) JRN(QGPL/JT4DDMJRN)", sb);
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/DDMCC3) JRN(QGPL/JT4DDMJRN)", sb);
     if (msg != null)
     {
       output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/DDMCC3) JRN(QGPL/JT4DDMJRN)'");
@@ -1022,7 +1022,7 @@ protected void cleanup()
       output_.println(sb.toString()); 
       success = false;
     }
-    msg = runCommand("DLTJRN QGPL/JT4DDMJRN", sb);
+    msg = runCommand("QSYS/DLTJRN QGPL/JT4DDMJRN", sb);
     if (msg != null)
     {
       output_.println("Failure executing 'DLTJRN QGPL/JT4DDMJRN'");

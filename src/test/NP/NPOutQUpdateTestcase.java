@@ -116,7 +116,7 @@ $$$ TO DO $$$ - delete this line */
             {
             // create UPDATTST output queue
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CRTOUTQ OUTQ(NPJAVA/UPDATTST) AUTCHK(*DTAAUT)") == false)
+            if (cmd.run("QSYS/CRTOUTQ OUTQ(NPJAVA/UPDATTST) AUTCHK(*DTAAUT)") == false)
                 {
                 failed("Could not create an output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -124,7 +124,7 @@ $$$ TO DO $$$ - delete this line */
                 return;
                 }
 
-            if (cmd.run("GRTOBJAUT OBJ(NPJAVA/UPDATTST) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ(NPJAVA/UPDATTST) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
                 {
                 failed("Could not grant *public authority to output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -167,7 +167,7 @@ $$$ TO DO $$$ - delete this line */
                 else succeeded();
 
 	    // clear the output queue we created.
-	    if (cmd.run("CLROUTQ OUTQ(NPJAVA/UPDATTST)") == false)
+	    if (cmd.run("QSYS/CLROUTQ OUTQ(NPJAVA/UPDATTST)") == false)
                 {
                 output_.println("Could not clear output queue we created. "
                                 + cmd.getMessageList()[0].getID()
@@ -175,7 +175,7 @@ $$$ TO DO $$$ - delete this line */
                }
 
 	    // delete the output queue we created.
-            if (cmd.run("DLTOUTQ OUTQ(NPJAVA/UPDATTST)") == false)
+            if (cmd.run("QSYS/DLTOUTQ OUTQ(NPJAVA/UPDATTST)") == false)
                 {
                 output_.println("Could not delete output queue we created. "
                                 + cmd.getMessageList()[0].getID()

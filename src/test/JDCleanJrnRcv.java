@@ -139,7 +139,7 @@ public class JDCleanJrnRcv {
           long deletedSize = ((Long) jrnRcvDesc[i]
               .getValue(ObjectDescription.OBJECT_SIZE)).longValue();
 
-          String command = "DLTJRNRCV JRNRCV(" + library + "/" + name
+          String command = "QSYS/DLTJRNRCV JRNRCV(" + library + "/" + name
               + ") DLTOPT(*IGNINQMSG)   ";
           if (commandCall.run(command)) {
             deletedBytes += deletedSize;
@@ -192,14 +192,14 @@ public class JDCleanJrnRcv {
 
             // Create the journal
             boolean commandFailed = false;
-            command = "CRTJRNRCV JRNRCV(" + library + "/" + newJrnRcv
+            command = "QSYS/CRTJRNRCV JRNRCV(" + library + "/" + newJrnRcv
                 + ") THRESHOLD(200000)";
             if (commandCall.run(command)) {
-              command = "CHGJRN JRN(" + library + "/QSQJRN) JRNRCV(" + library
+              command = "QSYS/CHGJRN JRN(" + library + "/QSQJRN) JRNRCV(" + library
                   + "/" + newJrnRcv + ")";
               if (commandCall.run(command)) {
                 String name = remainingName;
-                command = "DLTJRNRCV JRNRCV(" + library + "/" + name
+                command = "QSYS/DLTJRNRCV JRNRCV(" + library + "/" + name
                     + ") DLTOPT(*IGNINQMSG)   ";
                 // Try to delete the receiver.
                 // Sometimes the system deletes the received.

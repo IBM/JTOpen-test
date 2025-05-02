@@ -56,7 +56,7 @@ public class ShowSignon extends Object
       try
       {
          CommandCall crtlib = new CommandCall(as400);
-         crtlib.run("CRTLIB JAVADEMO");
+         crtlib.run("QSYS/CRTLIB JAVADEMO");
       }
       catch (Exception e)
       {

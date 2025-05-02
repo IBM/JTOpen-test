@@ -131,7 +131,7 @@ public class JTOpenEclipseExport extends Thread  {
    String prefix=as400+":";  
    System.out.println(prefix+"Running compile "); 
    CommandCall cc = new CommandCall(as400);
-   String compileCommand = "QSH CMD('cd /home/jdbctest; test/AllQshCompileScript > /tmp/JTOpenCompile.out 2>&1') "; 
+   String compileCommand = "QSYS/QSH CMD('cd /home/jdbctest; test/AllQshCompileScript > /tmp/JTOpenCompile.out 2>&1') "; 
    cc.run(compileCommand);
    IFSFile ifsFile = new IFSFile(as400,"/tmp/JTOpenCompile.out"); 
    IFSFileReader reader = new IFSFileReader(ifsFile); 

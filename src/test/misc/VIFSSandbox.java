@@ -525,7 +525,7 @@ Sets the access for a file.
         AS400 system = file.getSystem ();
 
         StringBuffer buffer = new StringBuffer ();
-        buffer.append ("CHGAUT OBJ('");
+        buffer.append ("QSYS/CHGAUT OBJ('");
         buffer.append (file.getPath ());
         buffer.append ("') USER(");
         buffer.append (system.getUserId ());

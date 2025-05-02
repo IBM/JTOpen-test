@@ -169,7 +169,7 @@ public class JDCleanSplfJdbc {
       }
 
       System.out.println("Submitting RCLSPLSTG");
-      String command = "SBMJOB CMD(RCLSPLSTG DAYS(*NONE))";
+      String command = "QSYS/SBMJOB CMD(RCLSPLSTG DAYS(*NONE))";
       Statement stmt = conn.createStatement();
       stmt.execute("CALL QSYS2.QCMDEXC('" + command + "')");
       stmt.close();

@@ -158,7 +158,7 @@ public class DATest extends TestDriver
 
         try
         {
-            if (cmd.run("CRTLIB DATEST") == false)
+            if (cmd.run("QSYS/CRTLIB DATEST") == false)
             {
                 System.out.println("Setup failed " + cmd.getMessageList()[0].getID() + " " + cmd.getMessageList()[0].getText());
             }

@@ -120,7 +120,7 @@ Constructor.
 
       String clcmd;
 
-      clcmd = "DLTVLDL VLDL(" + aVldl + ") ";
+      clcmd = "QSYS/DLTVLDL VLDL(" + aVldl + ") ";
 
     try
     {
@@ -148,7 +148,7 @@ Constructor.
     try
     {
 
-     clcmd = "CRTVLDL VLDL(" + aVldl + ")";
+     clcmd = "QSYS/CRTVLDL VLDL(" + aVldl + ")";
 
      if(cmd.run(clcmd) == false)
      {
@@ -157,7 +157,7 @@ Constructor.
      }
 
 
-     clcmd = "GRTOBJAUT OBJ(" + aVldl + ") OBJTYPE(*VLDL) USER(" +  systemObject_.getUserId()   + ") AUT(*ALL)";
+     clcmd = "QSYS/GRTOBJAUT OBJ(" + aVldl + ") OBJTYPE(*VLDL) USER(" +  systemObject_.getUserId()   + ") AUT(*ALL)";
 
      if(cmd.run(clcmd) == false)
      {
@@ -180,7 +180,7 @@ Constructor.
 
      String clcmd;
 
-     clcmd = "CRTVLDL VLDL(" + aVldl + ") AUT(*EXCLUDE) ";
+     clcmd = "QSYS/CRTVLDL VLDL(" + aVldl + ") AUT(*EXCLUDE) ";
 
    try
     {
@@ -574,7 +574,7 @@ Constructor.
     try
     {
 
-     if (cmd.run("CRTUSRPRF USRPRF(CERTAUTH) PASSWORD(JTEAM2) TEXT('dennis  schroepfer 3-3073')") != true)
+     if (cmd.run("QSYS/CRTUSRPRF USRPRF(CERTAUTH) PASSWORD(JTEAM2) TEXT('dennis  schroepfer 3-3073')") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());
@@ -586,13 +586,13 @@ Constructor.
            System.out.println(messageList[0].toString());
        }
 
-       if (cmd.run("CRTLIB LIB(CERTAUTHUS) AUT(CERTLISTUS)") != true)
+       if (cmd.run("QSYS/CRTLIB LIB(CERTAUTHUS) AUT(CERTLISTUS)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());
        }
 
-      if (cmd.run("CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") SPCAUT(*SECADM)") != true)
+      if (cmd.run("QSYS/CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") SPCAUT(*SECADM)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());
@@ -622,7 +622,7 @@ Constructor.
 
        deleteLibrary(cmd, "CERTLIBUS");
 
-       if (cmd.run("CRTLIB LIB(CERTLIBUS)") != true)
+       if (cmd.run("QSYS/CRTLIB LIB(CERTLIBUS)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
            throw new IOException(messageList[0].toString());
@@ -696,14 +696,14 @@ Constructor.
 	      throw new IOException(messageList[0].toString());
 	  }
 
-	  if (cmd.run("DLTUSRPRF USRPRF(CERTAUTH) OWNOBJOPT(*DLT)") != true)
+	  if (cmd.run("QSYS/DLTUSRPRF USRPRF(CERTAUTH) OWNOBJOPT(*DLT)") != true)
 	  {
 	      AS400Message[] messageList = cmd.getMessageList();
 	      throw new IOException(messageList[0].toString());
 	  }
 
        //remove secadm from usr class profile
-       if (cmd.run("CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") USRCLS(*USER) SPCAUT(*JOBCTL *IOSYSCFG)") != true)
+       if (cmd.run("QSYS/CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") USRCLS(*USER) SPCAUT(*JOBCTL *IOSYSCFG)") != true)
 	  {
 	      AS400Message[] messageList = cmd.getMessageList();
 	      System.out.println(messageList[0].toString());
@@ -2640,7 +2640,7 @@ verify correct exception was thrown
 
      try
      {
-        if(cmd.run("GRTOBJAUT OBJ(CERTLIBUS/USWRITE2) OBJTYPE(*USRSPC) USER(" + systemObject_.getUserId() + ") AUT(*EXCLUDE)") != true)
+        if(cmd.run("QSYS/GRTOBJAUT OBJ(CERTLIBUS/USWRITE2) OBJTYPE(*USRSPC) USER(" + systemObject_.getUserId() + ") AUT(*EXCLUDE)") != true)
         {
            AS400Message[] messageList = cmd.getMessageList();
            throw new IOException(messageList[0].toString());

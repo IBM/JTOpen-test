@@ -64,7 +64,7 @@ public class DQThreadTestcase extends ThreadedTestcase
 	{
 	    CommandCall cmd = new CommandCall(systemObject_);
 	    deleteLibrary(cmd, lib);
-	    if (cmd.run("CRTLIB " + lib) == false)
+	    if (cmd.run("QSYS/CRTLIB " + lib) == false)
 	    {
 		if (cmd.getMessageList()[0].getText().indexOf("already exists") == -1)
 		{

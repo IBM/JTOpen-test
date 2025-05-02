@@ -733,7 +733,7 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
 
       String clcmd;
 
-      clcmd = "DLTVLDL VLDL(" + aVldl + ") ";
+      clcmd = "QSYS/DLTVLDL VLDL(" + aVldl + ") ";
 
     try
     {
@@ -762,7 +762,7 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
     try
     {
 
-     clcmd = "CRTVLDL VLDL(" + aVldl + ")";
+     clcmd = "QSYS/CRTVLDL VLDL(" + aVldl + ")";
 
      if(cmd.run(clcmd) == false)
      {
@@ -771,7 +771,7 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
      }
      
 
-     clcmd = "GRTOBJAUT OBJ(" + aVldl + ") OBJTYPE(*VLDL) USER(" +  systemObject_.getUserId()   + ") AUT(*ALL)";	
+     clcmd = "QSYS/GRTOBJAUT OBJ(" + aVldl + ") OBJTYPE(*VLDL) USER(" +  systemObject_.getUserId()   + ") AUT(*ALL)";	
 
      if(cmd.run(clcmd) == false)
      {

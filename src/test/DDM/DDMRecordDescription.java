@@ -97,11 +97,11 @@ public class DDMRecordDescription extends Testcase
       CommandCall cc = new CommandCall(pwrSys_);
       deleteLibrary(cc, testLib_);
 
-      if (!cc.run("CRTLIB "+testLib_))
+      if (!cc.run("QSYS/CRTLIB "+testLib_))
       {
         output_.println("Unable to create library "+testLib_+": "+cc.getMessageList()[0].toString());
       }
-      if (! cc.run("GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER(JAVA) AUT(*ALL)")) {
+      if (! cc.run("QSYS/GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER(JAVA) AUT(*ALL)")) {
 	  output_.println("Unable to grant permission to library "+testLib_+": "+cc.getMessageList()[0].toString());
 
       } 
@@ -123,11 +123,11 @@ public class DDMRecordDescription extends Testcase
     try
     {
       // Verify the existence of library DDMTESTSAV on the system
-      CommandCall c = new CommandCall(systemObject_, "CLRPFM DDMTESTSAV/SIMPLESEQ");
+      CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM DDMTESTSAV/SIMPLESEQ");
       c.run();
-      c.run("CLRPFM DDMTESTSAV/SIMPLEKEY");
-      c.run("CLRPFM DDMTESTSAV/ALLFLDS");
-      c.run("CLRPFM DDMTESTSAV/ALLFLDSKEY");
+      c.run("QSYS/CLRPFM DDMTESTSAV/SIMPLEKEY");
+      c.run("QSYS/CLRPFM DDMTESTSAV/ALLFLDS");
+      c.run("QSYS/CLRPFM DDMTESTSAV/ALLFLDSKEY");
       
       
       super.cleanup();
@@ -622,7 +622,7 @@ public class DDMRecordDescription extends Testcase
     try
     {
       CommandCall cc = new CommandCall(pwrSys_);
-      cc.run("DLTF "+testLib_+"/TESTBIN8");
+      cc.run("QSYS/DLTF "+testLib_+"/TESTBIN8");
 
       RecordFormat rf = new RecordFormat("MYRF");
       rf.addFieldDescription(new BinaryFieldDescription(new AS400Bin8(), "fld1"));
@@ -715,7 +715,7 @@ public class DDMRecordDescription extends Testcase
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTF "+testLib_+"/TESTBIN8");
+        cc.run("QSYS/DLTF "+testLib_+"/TESTBIN8");
       }
       catch(Exception e) {}
       try
@@ -810,7 +810,7 @@ public class DDMRecordDescription extends Testcase
       {
         if (sf != null) sf.close(); 
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTF "+testLib_+"/"+testTable+"");
+        cc.run("QSYS/DLTF "+testLib_+"/"+testTable+"");
         
       }
       catch(Exception e) {}
@@ -895,7 +895,7 @@ public class DDMRecordDescription extends Testcase
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTF "+testLib_+"/"+testTable);
+        cc.run("QSYS/DLTF "+testLib_+"/"+testTable);
       }
       catch(Exception e) {}
     }
@@ -994,7 +994,7 @@ sf.close();
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTF "+testLib_+"/"+testTable+"");
+        cc.run("QSYS/DLTF "+testLib_+"/"+testTable+"");
       }
       catch(Exception e) {}
     }
@@ -1091,7 +1091,7 @@ sf.close();
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTF "+testLib_+"/"+testTable+"");
+        cc.run("QSYS/DLTF "+testLib_+"/"+testTable+"");
       }
       catch(Exception e) {}
     }
@@ -1177,7 +1177,7 @@ sf.close();
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTF "+testLib_+"/"+testTable+"");
+        cc.run("QSYS/DLTF "+testLib_+"/"+testTable+"");
       }
       catch(Exception e) {}
     }

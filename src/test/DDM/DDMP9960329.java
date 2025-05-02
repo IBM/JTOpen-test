@@ -109,7 +109,7 @@ public class DDMP9960329 extends Testcase implements Runnable
       CommandCall cc = new CommandCall(pwrSys_);
       deleteLibrary(cc, testLib_);
 
-      cc.run("CRTLIB "+testLib_);
+      cc.run("QSYS/CRTLIB "+testLib_);
 
       // Don't know of a way to retrieve the current DDM TCP attributes,
       // but it is unlikely that our test systems will ever be set to 
@@ -130,14 +130,14 @@ public class DDMP9960329 extends Testcase implements Runnable
       }
       c.close();
 
-      if (!cc.run("CHGDDMTCPA AUTOSTART(*SAME) PWDRQD(*KERBEROS)"))
+      if (!cc.run("QSYS/CHGDDMTCPA AUTOSTART(*SAME) PWDRQD(*KERBEROS)"))
       {
         AS400Message[] msgs = cc.getMessageList();
         for (int i=0; i<msgs.length; ++i)
         {
           output_.println(msgs[i]);
         }
-        failed("CHGDDMTCPA command failed.");
+        failed("QSYS/CHGDDMTCPA command failed.");
         return;
       }
       try
@@ -159,7 +159,7 @@ public class DDMP9960329 extends Testcase implements Runnable
       }
       finally
       {
-        try { cc.run("CHGDDMTCPA AUTOSTART(*SAME) PWDRQD("+oldDdmSetting+")"); } catch(Exception x) {}
+        try { cc.run("QSYS/CHGDDMTCPA AUTOSTART(*SAME) PWDRQD("+oldDdmSetting+")"); } catch(Exception x) {}
       }
     }
     catch(Exception e)

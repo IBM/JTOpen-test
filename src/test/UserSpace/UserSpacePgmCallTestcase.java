@@ -119,9 +119,9 @@ public class UserSpacePgmCallTestcase extends Testcase
         try
         {
 	    deleteLibrary(""+testauth+""); 
-            cmdRun("DLTAUTL AUTL(USAUTHLIST)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(USAUTHLIST)", "CPF2105");
             cmdRun("QSYS/CRTAUTL AUTL(USAUTHLIST) AUT(*EXCLUDE)");
-            cmdRun("CRTLIB LIB("+testauth+") AUT(USAUTHLIST)");
+            cmdRun("QSYS/CRTLIB LIB("+testauth+") AUT(USAUTHLIST)");
 
        UserSpace bUserSpace = new UserSpace(pwrSys_, unauthorizedUserSpace_);
        bUserSpace.setMustUseProgramCall(true);
@@ -146,7 +146,7 @@ public class UserSpacePgmCallTestcase extends Testcase
     try
     {
 	deleteLibrary(authlib); 
-	String command = "CRTLIB LIB("+authlib+")";
+	String command = "QSYS/CRTLIB LIB("+authlib+")";
         boolean success =  cmdRun(command);
         if (!success) { 
             System.out.println("Command Failed "+command ); 
@@ -155,7 +155,7 @@ public class UserSpacePgmCallTestcase extends Testcase
         }
 
         /* grant access to library to all */ 
-       command = "GRTOBJAUT OBJ("+authlib+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
+       command = "QSYS/GRTOBJAUT OBJ("+authlib+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
        success =  cmdRun(command);
        if (!success) { 
            System.out.println("Command Failed "+command ); 
@@ -1620,7 +1620,7 @@ Ensure AS400SecurityException is thrown if the user does not have authority to t
 
      try
      {
-        if(cmd.run("GRTOBJAUT OBJ("+authlib+"/USWRITE2) OBJTYPE(*USRSPC) USER(" + systemObject_.getUserId() + ") AUT(*EXCLUDE)") != true)
+        if(cmd.run("QSYS/GRTOBJAUT OBJ("+authlib+"/USWRITE2) OBJTYPE(*USRSPC) USER(" + systemObject_.getUserId() + ") AUT(*EXCLUDE)") != true)
         {
            AS400Message[] messageList = cmd.getMessageList();
            throw new IOException(messageList[0].toString());
@@ -3017,7 +3017,7 @@ Ensure AS400SecurityException is thrown if the user does not have authority to t
      {
         CommandCall cmd = new CommandCall(pwrSys_);
 
-        if(cmd.run("GRTOBJAUT OBJ("+authlib+"/USWRITE2) OBJTYPE(*USRSPC) USER(" + systemObject_.getUserId() + ") AUT(*EXCLUDE)") != true)
+        if(cmd.run("QSYS/GRTOBJAUT OBJ("+authlib+"/USWRITE2) OBJTYPE(*USRSPC) USER(" + systemObject_.getUserId() + ") AUT(*EXCLUDE)") != true)
         {
            AS400Message[] messageList = cmd.getMessageList();
            throw new IOException(messageList[0].toString());

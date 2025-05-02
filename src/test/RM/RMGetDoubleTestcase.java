@@ -237,7 +237,7 @@ public class RMGetDoubleTestcase extends Testcase
 
 
 
-/// TBD - I don't know how to do this.  - jlee
+/// TBD - I don't know how to do this. 
 ////**
 /// Test getDoubleValue(name). Pass in a valid name that maps to a &lt;data&gt;
 /// element that contains a valid initial number value as a String. Ensure proper double returned.

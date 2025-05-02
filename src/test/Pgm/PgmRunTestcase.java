@@ -96,7 +96,7 @@ public class PgmRunTestcase extends Testcase
     protected void setup ()  throws Exception {
 
 	String command = ""; 
-	String cmdCrtUsr = "CRTUSRPRF USRPRF("+userHang+") PASSWORD("+pwdHang+") USRCLS(*SECADM) SPCAUT(*ALLOBJ)  TEXT('Toolbox testing profile')";
+	String cmdCrtUsr = "QSYS/CRTUSRPRF USRPRF("+userHang+") PASSWORD("+pwdHang+") USRCLS(*SECADM) SPCAUT(*ALLOBJ)  TEXT('Toolbox testing profile')";
 	System.out.println("command = " + cmdCrtUsr);
 	CommandCall cc = new CommandCall(pwrSys_);
 	try {
@@ -107,10 +107,10 @@ public class PgmRunTestcase extends Testcase
 	    else{
 		System.out.println("Create failed, adjusting existing profile"); 
                // Profile not created.. Assume it is already there and adjust it 
-		 command = "CHGUSRPRF USRPRF("+userHang+") PASSWORD(GARBAGE)";
+		 command = "QSYS/CHGUSRPRF USRPRF("+userHang+") PASSWORD(GARBAGE)";
 		 result = cc.run(command);
 		 if (result) { 
-		     command = "CHGUSRPRF USRPRF("+userHang+") PASSWORD("+pwdHang+")  STATUS(*ENABLED)   ";
+		     command = "QSYS/CHGUSRPRF USRPRF("+userHang+") PASSWORD("+pwdHang+")  STATUS(*ENABLED)   ";
 		     result = cc.run(command);
 		     if (!result) {
 			 System.out.println("Command failed: "+command); 
@@ -136,7 +136,7 @@ public class PgmRunTestcase extends Testcase
     protected void cleanup ()
       throws Exception
     {
-	String cmdDltUsr = "DLTUSRPRF USRPRF("+userHang+")";
+	String cmdDltUsr = "QSYS/DLTUSRPRF USRPRF("+userHang+")";
 	try {
 
 	    CommandCall cc = new CommandCall(pwrSys_);

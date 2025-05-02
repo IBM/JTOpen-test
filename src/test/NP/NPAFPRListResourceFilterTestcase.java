@@ -689,7 +689,7 @@ $$$ TO DO $$$ - delete this line */
           {
             // use CRTDUPOBJ to copy the font resource object to QGPL
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CRTDUPOBJ OBJ("+ sResourceName +") FROMLIB(NPJAVA) OBJTYPE(*FNTRSC) TOLIB(QGPL) NEWOBJ(*SAME)") == false)
+            if (cmd.run("QSYS/CRTDUPOBJ OBJ("+ sResourceName +") FROMLIB(NPJAVA) OBJTYPE(*FNTRSC) TOLIB(QGPL) NEWOBJ(*SAME)") == false)
             {
               output_.println("Could not copy a font resource object to QGPL");
             }
@@ -783,7 +783,7 @@ $$$ TO DO $$$ - delete this line */
         {
           // use DLTFNTRSC to delete the font resource object we put in QGPL
           CommandCall cmd = new CommandCall(systemObject_);
-          if (cmd.run("DLTFNTRSC FNTRSC(QGPL/" + sResourceName +")") == false)
+          if (cmd.run("QSYS/DLTFNTRSC FNTRSC(QGPL/" + sResourceName +")") == false)
           {
             output_.println("We could not delete the font resource we put in QGPL");
           }

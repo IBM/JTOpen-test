@@ -59,21 +59,21 @@ public class SetupNLS extends SetupLibraryTestcase
       output_.println("Deleting library JAVANLS...");
       deleteLibrary(cmd, "JAVANLS");
       output_.println("Re-creating library JAVANLS...");
-      cmd.setCommand("CRTLIB LIB(JAVANLS) AUT(*ALL)");
+      cmd.setCommand("QSYS/CRTLIB LIB(JAVANLS) AUT(*ALL)");
       cmd.run();
 
       output_.println("Deleting library JAVAPRIME...");
       deleteLibrary(cmd,"JAVAPRIME");
 
       output_.println("Re-creating library JAVAPRIME...");
-      cmd.setCommand("CRTLIB LIB(JAVANLS) AUT(*ALL)");
+      cmd.setCommand("QSYS/CRTLIB LIB(JAVANLS) AUT(*ALL)");
       cmd.run();
 
       
       restoreLibrary("javaprime.savf", "JAVAPRIME"); 
 
       output_.println("Copying objects to respective libraries...");
-      String str1 = "CRTDUPOBJ OBJ(SMPDBCS*) FROMLIB(JAVAPRIME) OBJTYPE(*ALL) ";
+      String str1 = "QSYS/CRTDUPOBJ OBJ(SMPDBCS*) FROMLIB(JAVAPRIME) OBJTYPE(*ALL) ";
       str1 += "TOLIB(JAVANLS) NEWOBJ(*SAME) DATA(*YES)";
       cmd.setCommand(str1);
       cmd.run();

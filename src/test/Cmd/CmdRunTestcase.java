@@ -48,8 +48,7 @@ public class CmdRunTestcase extends Testcase
 
     // Private data.
     private static final String LIBRARY_ = "JT400CC";
-    private static final String CRTLIB_ = "CRTLIB " + LIBRARY_;
-    // private static final String DLTLIB_ = "DLTLIB " + LIBRARY_;
+    private static final String CRTLIB_ = "QSYS/CRTLIB " + LIBRARY_;
     private boolean reportedMissingJobClass_ = false;
 
     /**
@@ -309,7 +308,7 @@ public class CmdRunTestcase extends Testcase
     {
         try
         {
-            CommandCall cmd = new CommandCall(systemObject_, "CRTWLDPCE");
+            CommandCall cmd = new CommandCall(systemObject_, "QSYS/CRTWLDPCE");
             cmd.setThreadSafe(true);
             boolean check = cmd.run();
             AS400Message[] messageList = cmd.getMessageList();
@@ -348,7 +347,7 @@ public class CmdRunTestcase extends Testcase
 	  "this variation will fail."; 
         try
         {
-            CommandCall cmd = new CommandCall(systemObject_, "STRCMNTRC");
+            CommandCall cmd = new CommandCall(systemObject_, "QSYS/STRCMNTRC");
             cmd.setThreadSafe(true);
             boolean check = cmd.run();
             if (DEBUG) printMessages(cmd);
@@ -625,7 +624,7 @@ public class CmdRunTestcase extends Testcase
         {
             CommandCall cmd = new CommandCall(systemObject_);
             cmd.setThreadSafe(true);
-            boolean check = cmd.run("CRTWLDPCE");
+            boolean check = cmd.run("QSYS/CRTWLDPCE");
             AS400Message[] messageList = cmd.getMessageList();
             messageList[0].load();
             messageList[1].load();
@@ -660,7 +659,7 @@ public class CmdRunTestcase extends Testcase
         {
             CommandCall cmd = new CommandCall(systemObject_);
             cmd.setThreadSafe(true);
-            boolean check = cmd.run("STRCMNTRC");
+            boolean check = cmd.run("QSYS/STRCMNTRC");
             if (DEBUG) printMessages(cmd);
             AS400Message[] messageList = cmd.getMessageList();
             messageList[0].load();
@@ -1172,7 +1171,7 @@ public class CmdRunTestcase extends Testcase
 
             AS400Text conv = new AS400Text(11, systemObject_);
             byte[] bytes = new byte[11];
-            conv.toBytes("CRTLIB FRED", bytes);
+            conv.toBytes("QSYS/CRTLIB FRED", bytes);
             cmd.setThreadSafe(false);
             cmd.run(bytes);
             AS400Message[] messageList = cmd.getMessageList();
@@ -1196,7 +1195,7 @@ public class CmdRunTestcase extends Testcase
             CommandCall cmd = new CommandCall(systemObject_);
             AS400Text conv = new AS400Text(11, systemObject_);
             byte[] bytes = new byte[11];
-            conv.toBytes("CRTLIB FRED", bytes);
+            conv.toBytes("QSYS/CRTLIB FRED", bytes);
             cmd.setThreadSafe(true);
             cmd.run(bytes);
             AS400Message[] messageList = cmd.getMessageList();

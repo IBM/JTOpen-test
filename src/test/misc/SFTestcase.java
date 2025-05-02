@@ -213,7 +213,7 @@ public class SFTestcase extends Testcase {
       answer = false;
     }
     try {
-      pwrCmd_.run("GRTOBJAUT OBJ(" + libName + ") OBJTYPE(*LIB) USER(" + userId_
+      pwrCmd_.run("QSYS/GRTOBJAUT OBJ(" + libName + ") OBJTYPE(*LIB) USER(" + userId_
           + ") AUT(*ALL)");
     } catch (Exception e) {
       e.printStackTrace();

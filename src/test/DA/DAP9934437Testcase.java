@@ -46,7 +46,7 @@ public class DAP9934437Testcase extends Testcase
         try
         {
             CommandCall cc = new CommandCall(systemObject_);
-            cc.run("CRTDTAARA DTAARA(DATEST/D9934437) TYPE(*CHAR) LEN(100)");
+            cc.run("QSYS/CRTDTAARA DTAARA(DATEST/D9934437) TYPE(*CHAR) LEN(100)");
         }
         catch (Exception e)
         {

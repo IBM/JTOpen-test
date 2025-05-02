@@ -232,7 +232,7 @@ Serializes and deserializes an object.
         // Compile it.
         System.out.println("Compiling " + sourceFileNameNoJvaPgm_ + ".");
         CommandCall cc = new CommandCall(systemObject_);
-        boolean success = cc.run("QSH CMD('javac " + sourceFileNoJvaPgm.getPath() + "') "); 
+        boolean success = cc.run("QSYS/QSH CMD('javac " + sourceFileNoJvaPgm.getPath() + "') "); 
         AS400Message[] messageList = cc.getMessageList();
         for(int i = 0; i < messageList.length; ++i)
             System.out.println(messageList[i].getText());
@@ -264,7 +264,7 @@ Serializes and deserializes an object.
         // Compile it.
         System.out.println("Compiling " + sourceFileName_ + ".");
         cc = new CommandCall(systemObject_);
-        success = cc.run("QSH CMD('javac " + sourceFile.getPath() + "') "); 
+        success = cc.run("QSYS/QSH CMD('javac " + sourceFile.getPath() + "') "); 
         messageList = cc.getMessageList();
         for(int i = 0; i < messageList.length; ++i)
             System.out.println(messageList[i].getText());
@@ -278,7 +278,7 @@ Serializes and deserializes an object.
         String jarFileName = className + ".jar";
         IFSFile jarFile = new IFSFile(systemObject_, directory, jarFileName);
         jarFilePath_ = jarFile.getPath();
-        success = cc.run("QSH CMD('jar cvf " + jarFilePath_ + " " + classFilePath_ + "') "); 
+        success = cc.run("QSYS/QSH CMD('jar cvf " + jarFilePath_ + " " + classFilePath_ + "') "); 
         messageList = cc.getMessageList();
         for(int i = 0; i < messageList.length; ++i)
             System.out.println(messageList[i].getText());
@@ -287,31 +287,10 @@ Serializes and deserializes an object.
         else
             System.out.println("Jar file " + jarFileName + " created.");
 
-        // Create the Java program for the class file.
-        createJavaProgram(systemObject_, classFilePath_);
-
-        // Create the Java program for the jar file.
-        createJavaProgram(systemObject_, jarFilePath_);
 
     }
 
 
-
-    public static boolean createJavaProgram(AS400 system, String path)
-    {
-        try {
-            CommandCall cc = new CommandCall(system);
-            boolean success = cc.run("CRTJVAPGM CLSF(\'" + path + "\')");
-            AS400Message[] messageList = cc.getMessageList();
-            for(int i = 0; i < messageList.length; ++i)
-                System.out.println(messageList[i].getText());
-            return success;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
 
 

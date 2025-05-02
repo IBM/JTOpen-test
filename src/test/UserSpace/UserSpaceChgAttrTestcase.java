@@ -97,9 +97,9 @@ public class UserSpaceChgAttrTestcase extends Testcase
         systemObject_.disconnectService(AS400.FILE);
 
 	deleteLibrary(""+testauth+""); 
-        cmdRun("DLTAUTL AUTL(USAUTHLIST)", "CPF2105");
+        cmdRun("QSYS/DLTAUTL AUTL(USAUTHLIST)", "CPF2105");
         cmdRun("QSYS/CRTAUTL AUTL(USAUTHLIST) AUT(*EXCLUDE)");
-        cmdRun("CRTLIB LIB("+testauth+") AUT(USAUTHLIST)");
+        cmdRun("QSYS/CRTLIB LIB("+testauth+") AUT(USAUTHLIST)");
 
         UserSpace bUserSpace = new UserSpace(pwrSys_, "/QSYS.LIB/"+testauth+".LIB/USATTRIB.USRSPC");
         bUserSpace.create(pre_existingLengthValue_, true, " ", pre_existingByteValue_, "chg attrs", "*ALL");
@@ -110,11 +110,11 @@ public class UserSpaceChgAttrTestcase extends Testcase
         // do setup for authorization tests (cannot do this
         // 'in-line' because when running on the AS/400 the
         // file server job does not end in time.  This causes
-        // the grtobjauth command to fail).
+        // the grtobjaut command to fail).
 	deleteLibrary(""+authlib_+""); 
-        cmdRun("CRTLIB LIB("+authlib_+")");
+        cmdRun("QSYS/CRTLIB LIB("+authlib_+")");
 
-        String command = "GRTOBJAUT OBJ("+authlib_+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
+        String command = "QSYS/GRTOBJAUT OBJ("+authlib_+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
         boolean success =  cmdRun(command);
         if (!success) { 
             System.out.println("Command Failed "+command ); 
@@ -123,11 +123,11 @@ public class UserSpaceChgAttrTestcase extends Testcase
         }
 
         // create user spaces needed for misc variations
-        cmdCreateUS("CRTUSRSPC USRSPC("+authlib_+"/USCHG1) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG1.USRSPC");
-        cmdCreateUS("CRTUSRSPC USRSPC("+authlib_+"/USCHG2) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG2.USRSPC");
-        cmdCreateUS("CRTUSRSPC USRSPC("+authlib_+"/USCHG3) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG3.USRSPC");
-        cmdCreateUS("CRTUSRSPC USRSPC("+authlib_+"/USCHG4) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG4.USRSPC");
-        cmdCreateUS("CRTUSRSPC USRSPC("+authlib_+"/USCHG5) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG5.USRSPC");
+        cmdCreateUS("QSYS/CRTUSRSPC USRSPC("+authlib_+"/USCHG1) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG1.USRSPC");
+        cmdCreateUS("QSYS/CRTUSRSPC USRSPC("+authlib_+"/USCHG2) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG2.USRSPC");
+        cmdCreateUS("QSYS/CRTUSRSPC USRSPC("+authlib_+"/USCHG3) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG3.USRSPC");
+        cmdCreateUS("QSYS/CRTUSRSPC USRSPC("+authlib_+"/USCHG4) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG4.USRSPC");
+        cmdCreateUS("QSYS/CRTUSRSPC USRSPC("+authlib_+"/USCHG5) SIZE(11000) AUT(*ALL) TEXT(UserSpaceChgAttrTestcase) REPLACE(*YES)", "/QSYS.LIB/"+authlib_+".LIB/USCHG5.USRSPC");
 
         pwrSys_.disconnectAllServices();
     }
@@ -431,7 +431,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
 
         try
         {
-            if (cmd.run("GRTOBJAUT OBJ("+authlib_+"/USCHG1) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ("+authlib_+"/USCHG1) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
             {
                 AS400Message[] messageList = cmd.getMessageList();
                 throw new IOException(messageList[0].toString());
@@ -834,7 +834,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
 
         try
         {
-            if (cmd.run("GRTOBJAUT OBJ("+authlib_+"/USCHG2) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ("+authlib_+"/USCHG2) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
             {
                 AS400Message[] messageList = cmd.getMessageList();
                 throw new IOException(messageList[0].toString());
@@ -1212,7 +1212,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
 
         try
         {
-            if (cmd.run("GRTOBJAUT OBJ("+authlib_+"/USCHG3) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ("+authlib_+"/USCHG3) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
             {
                 AS400Message[] messageList = cmd.getMessageList();
                 throw new IOException(messageList[0].toString());
@@ -1362,7 +1362,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
 
         try
         {
-            if (cmd.run("GRTOBJAUT OBJ("+authlib_+"/USCHG4) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ("+authlib_+"/USCHG4) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
             {
                 AS400Message[] messageList = cmd.getMessageList();
                 throw new IOException(messageList[0].toString());
@@ -1773,7 +1773,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
 
         try
         {
-            if (cmd.run("GRTOBJAUT OBJ("+authlib_+"/USCHG5) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ("+authlib_+"/USCHG5) OBJTYPE(*USRSPC) " + ustestUserID + " AUT(*EXCLUDE)") != true)
             {
                 AS400Message[] messageList = cmd.getMessageList();
                 throw new IOException(messageList[0].toString());

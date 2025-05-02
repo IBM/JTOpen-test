@@ -101,7 +101,7 @@ public class NLSDATestcase extends Testcase
     try
     {
         CommandCall cmd = new CommandCall(systemObject_);
-        if(cmd.run("CRTLIB LIB(DATEST)") == false)
+        if(cmd.run("QSYS/CRTLIB LIB(DATEST)") == false)
         {
           AS400Message[] messageList = cmd.getMessageList();
           throw new Exception("Setup - CRTLIB DATEST - failed.  " + messageList[0].toString());

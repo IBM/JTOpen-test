@@ -348,7 +348,7 @@ public class UserBasicTestcase extends Testcase
             String textDescription = u.getDescription();
 
             CommandCall cmd = new CommandCall(pwrSys_);
-            cmd.run("CHGUSRPRF USRPRF(" + userName + ") TEXT('YOU THERE')");
+            cmd.run("QSYS/CHGUSRPRF USRPRF(" + userName + ") TEXT('YOU THERE')");
 
             u.loadUserInformation();
             textDescription = u.getDescription();
@@ -1138,9 +1138,9 @@ public class UserBasicTestcase extends Testcase
             output_.println("Setting up profiles...");
             CommandCall cc = new CommandCall(pwrSys_);
             System.out.println("system = " + pwrSys_.getSystemName() + ", user = " + pwrSys_.getUserId());
-            boolean dltResult = cc.run("DLTUSRPRF "+testruser1+"");
+            boolean dltResult = cc.run("QSYS/DLTUSRPRF "+testruser1+"");
             System.out.println("Delete sucessful?" + dltResult);
-            boolean crtResult = cc.run("CRTUSRPRF "+testruser1+" *NONE");
+            boolean crtResult = cc.run("QSYS/CRTUSRPRF "+testruser1+" *NONE");
             System.out.println("Create sucessful?" + crtResult);
 
             RUser ruser = new RUser(pwrSys_, ""+testruser1+"");
@@ -1173,7 +1173,7 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
             }
             catch (Throwable t)
             {
@@ -1192,8 +1192,8 @@ public class UserBasicTestcase extends Testcase
             {
                 output_.println("Setting up profiles with " + authorities_[i] + " authority...");
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) SPCAUT(" + authorities_[i] + ")");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) SPCAUT(" + authorities_[i] + ")");
                 RUser ruser = new RUser(pwrSys_, ""+testruser1+"");
                 for (int j = 0; j < authorities_.length; ++j)
                 {
@@ -1235,7 +1235,7 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
             }
             catch (Throwable t)
             {
@@ -1252,10 +1252,10 @@ public class UserBasicTestcase extends Testcase
         {
             output_.println("Setting up profiles...");
             CommandCall cc = new CommandCall(pwrSys_);
-            cc.run("DLTUSRPRF "+testruser1+"");
-            cc.run("DLTUSRPRF TESTRGRP1");
-            cc.run("CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN)");
-            cc.run("CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1)");
+            cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+            cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+            cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN)");
+            cc.run("QSYS/CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1)");
             RUser ruser = new RUser(pwrSys_, "TESTRGRP1");
             for (int j = 0; j < authorities_.length; ++j)
             {
@@ -1304,8 +1304,8 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP1");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP1");
             }
             catch (Throwable t)
             {
@@ -1322,13 +1322,13 @@ public class UserBasicTestcase extends Testcase
         {
             output_.println("Setting up profiles...");
             CommandCall cc = new CommandCall(pwrSys_);
-            cc.run("DLTUSRPRF TESTRGRP1");
-            cc.run("CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN)");
+            cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+            cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN)");
             for (int i = 0; i < authorities_.length; ++i)
             {
                 output_.println("Setting up profiles with " + authorities_[i] + " authority...");
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SPCAUT(" + authorities_[i] + ")");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SPCAUT(" + authorities_[i] + ")");
                 RUser ruser = new RUser(pwrSys_, ""+testruser1+"");
                 for (int j = 0; j < authorities_.length; ++j)
                 {
@@ -1370,8 +1370,8 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP1");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP1");
             }
             catch (Throwable t)
             {
@@ -1390,10 +1390,10 @@ public class UserBasicTestcase extends Testcase
             {
                 output_.println("Setting up profiles with " + authorities_[i] + " authority...");
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP1");
-                cc.run("CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
-                cc.run("CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1)");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+                cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
+                cc.run("QSYS/CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1)");
                 RUser ruser = new RUser(pwrSys_, ""+testruser1+"");
                 for (int j = 0; j < authorities_.length; ++j)
                 {
@@ -1435,8 +1435,8 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP1");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP1");
             }
             catch (Throwable t)
             {
@@ -1453,15 +1453,15 @@ public class UserBasicTestcase extends Testcase
         {
             output_.println("Setting up profiles...");
             CommandCall cc = new CommandCall(pwrSys_);
-            cc.run("DLTUSRPRF TESTRGRP1");
-            cc.run("CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN)");
+            cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+            cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN)");
             for (int i = 0; i < authorities_.length; ++i)
             {
                 output_.println("Setting up profiles with " + authorities_[i] + " authority...");
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP2");
-                cc.run("CRTUSRPRF USRPRF(TESTRGRP2) PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
-                cc.run("CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SUPGRPPRF(TESTRGRP2)");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP2");
+                cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP2) PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
+                cc.run("QSYS/CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SUPGRPPRF(TESTRGRP2)");
                 RUser ruser = new RUser(pwrSys_, ""+testruser1+"");
                 for (int j = 0; j < authorities_.length; ++j)
                 {
@@ -1503,9 +1503,9 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP1");
-                cc.run("DLTUSRPRF TESTRGRP2");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP2");
             }
             catch (Throwable t)
             {
@@ -1522,17 +1522,17 @@ public class UserBasicTestcase extends Testcase
         {
             output_.println("Setting up profiles...");
             CommandCall cc = new CommandCall(pwrSys_);
-            cc.run("DLTUSRPRF TESTRGRP2");
-            cc.run("DLTUSRPRF TESTRGRP3");
-            cc.run("CRTUSRPRF USRPRF(TESTRGRP2) PASSWORD(*NONE) GID(*GEN)");
-            cc.run("CRTUSRPRF USRPRF(TESTRGRP3) PASSWORD(*NONE) GID(*GEN)");
+            cc.run("QSYS/DLTUSRPRF TESTRGRP2");
+            cc.run("QSYS/DLTUSRPRF TESTRGRP3");
+            cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP2) PASSWORD(*NONE) GID(*GEN)");
+            cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP3) PASSWORD(*NONE) GID(*GEN)");
             for (int i = 0; i < authorities_.length; ++i)
             {
                 output_.println("Setting up profiles with " + authorities_[i] + " authority...");
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP1");
-                cc.run("CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
-                cc.run("CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SUPGRPPRF(TESTRGRP2 TESTRGRP3)");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+                cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
+                cc.run("QSYS/CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SUPGRPPRF(TESTRGRP2 TESTRGRP3)");
                 RUser ruser = new RUser(pwrSys_, ""+testruser1+"");
                 for (int j = 0; j < authorities_.length; ++j)
                 {
@@ -1574,10 +1574,10 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP1");
-                cc.run("DLTUSRPRF TESTRGRP2");
-                cc.run("DLTUSRPRF TESTRGRP3");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP2");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP3");
             }
             catch (Throwable t)
             {
@@ -1594,19 +1594,19 @@ public class UserBasicTestcase extends Testcase
         {
             output_.println("Setting up profiles...");
             CommandCall cc = new CommandCall(pwrSys_);
-            cc.run("DLTUSRPRF TESTRGRP1");
-            cc.run("DLTUSRPRF TESTRGRP2");
-            cc.run("DLTUSRPRF TESTRGRP3");
-            cc.run("CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN)");
-            cc.run("CRTUSRPRF USRPRF(TESTRGRP2) PASSWORD(*NONE) GID(*GEN)");
-            cc.run("CRTUSRPRF USRPRF(TESTRGRP3) PASSWORD(*NONE) GID(*GEN)");
+            cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+            cc.run("QSYS/DLTUSRPRF TESTRGRP2");
+            cc.run("QSYS/DLTUSRPRF TESTRGRP3");
+            cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP1) PASSWORD(*NONE) GID(*GEN)");
+            cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP2) PASSWORD(*NONE) GID(*GEN)");
+            cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP3) PASSWORD(*NONE) GID(*GEN)");
             for (int i = 0; i < authorities_.length; ++i)
             {
                 output_.println("Setting up profiles with " + authorities_[i] + " authority...");
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP4");
-                cc.run("CRTUSRPRF USRPRF(TESTRGRP4) PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
-                cc.run("CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SUPGRPPRF(TESTRGRP2 TESTRGRP3 TESTRGRP4)");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP4");
+                cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP4) PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
+                cc.run("QSYS/CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SUPGRPPRF(TESTRGRP2 TESTRGRP3 TESTRGRP4)");
                 RUser ruser = new RUser(pwrSys_, ""+testruser1+"");
                 for (int j = 0; j < authorities_.length; ++j)
                 {
@@ -1648,11 +1648,11 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
-                cc.run("DLTUSRPRF TESTRGRP1");
-                cc.run("DLTUSRPRF TESTRGRP2");
-                cc.run("DLTUSRPRF TESTRGRP3");
-                cc.run("DLTUSRPRF TESTRGRP4");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP1");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP2");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP3");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP4");
             }
             catch (Throwable t)
             {
@@ -1669,13 +1669,13 @@ public class UserBasicTestcase extends Testcase
         {
             output_.println("Setting up profiles...");
             CommandCall cc = new CommandCall(pwrSys_);
-            cc.run("DLTUSRPRF "+testruser1+"");
+            cc.run("QSYS/DLTUSRPRF "+testruser1+"");
             for (int i = 0; i < authorities_.length; ++i)
             {
-                cc.run("DLTUSRPRF TESTRGRP" + (i + 1));
-                cc.run("CRTUSRPRF USRPRF(TESTRGRP" + (i + 1) + ") PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
+                cc.run("QSYS/DLTUSRPRF TESTRGRP" + (i + 1));
+                cc.run("QSYS/CRTUSRPRF USRPRF(TESTRGRP" + (i + 1) + ") PASSWORD(*NONE) GID(*GEN) SPCAUT(" + authorities_[i] + ")");
             }
-            String create = "CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SUPGRPPRF(";
+            String create = "QSYS/CRTUSRPRF USRPRF("+testruser1+") PASSWORD(*NONE) GRPPRF(TESTRGRP1) SUPGRPPRF(";
             for (int i = 0; i < authorities_.length; ++i)
             {
                 create += "TESTRGRP" + (i + 1) + " ";
@@ -1713,10 +1713,10 @@ public class UserBasicTestcase extends Testcase
             try
             {
                 CommandCall cc = new CommandCall(pwrSys_);
-                cc.run("DLTUSRPRF "+testruser1+"");
+                cc.run("QSYS/DLTUSRPRF "+testruser1+"");
                 for (int i = 0; i < authorities_.length; ++i)
                 {
-                    cc.run("DLTUSRPRF TESTRGRP" + (i + 1));
+                    cc.run("QSYS/DLTUSRPRF TESTRGRP" + (i + 1));
                 }
             }
             catch (Throwable t)

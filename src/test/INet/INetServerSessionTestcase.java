@@ -9,10 +9,6 @@
 // CHANGE ACTIVITY:
 //
 // $A0=PTR/DCR  Release  Date        Userid      Comments
-//              v5r3     06/19/2003  jlee        Created
-//  A1          v6r1     2008-08-12  dprigge     ZLSOLST uses an expanded
-//                       workstation name up to 124 chars (due to IPV6).
-//                       Previously, workstation name had 15 char limit.
 //
 // END CHANGE ACTIVITY
 //

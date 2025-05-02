@@ -98,7 +98,7 @@ Cleanup some of the AS400 objects created during the test.
         CommandCall cmd = new CommandCall(PwrSys);
 	TestDriver.deleteLibrary(cmd, "CERTTEST");
 
-        if(cmd.run("DLTUSRPRF USRPRF(CERTTEST) OWNOBJOPT(*DLT)") == false)
+        if(cmd.run("QSYS/DLTUSRPRF USRPRF(CERTTEST) OWNOBJOPT(*DLT)") == false)
         {
             AS400Message[] messageList = cmd.getMessageList();
            System.out.println(messageList[0].toString());
@@ -143,14 +143,14 @@ Creates Testcase objects for all the testcases in this component.
 
     try {
         CommandCall cmd = new CommandCall(PwrSys);
-        if(cmd.run("CRTLIB LIB(CERTTEST)") == false)
+        if(cmd.run("QSYS/CRTLIB LIB(CERTTEST)") == false)
         {
             AS400Message[] messageList = cmd.getMessageList();
             if (!messageList[0].getID().equals("CPF2111")) // Not "Already exists"
                throw new IOException(messageList[0].toString());
      }
 
-        if(cmd.run("CRTUSRPRF USRPRF(CERTTEST) PASSWORD(JTEAM1) TEXT('dennis  schroepfer 3-3073')") == false)
+        if(cmd.run("QSYS/CRTUSRPRF USRPRF(CERTTEST) PASSWORD(JTEAM1) TEXT('dennis  schroepfer 3-3073')") == false)
         {
             AS400Message[] messageList = cmd.getMessageList();
             throw new IOException(messageList[0].toString());

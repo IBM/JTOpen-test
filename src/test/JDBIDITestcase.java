@@ -46,12 +46,12 @@ public class JDBIDITestcase extends JDTestcase {
   public void createProfile(String ccsid, Connection con) {
     String user = "JD" + ccsid;
     String pwd = "PASS" + ccsid + "X";
-    String cmdCrtUsr = "CRTUSRPRF USRPRF(" + user + ") PASSWORD(" + pwd + ") USRCLS(*SECADM) SPCAUT(*ALLOBJ) "
+    String cmdCrtUsr = "QSYS/CRTUSRPRF USRPRF(" + user + ") PASSWORD(" + pwd + ") USRCLS(*SECADM) SPCAUT(*ALLOBJ) "
         + " TEXT(''Toolbox testing profile'') ACGCDE(514648897) CCSID(" + ccsid + ")";
     String sqlCrtUsr = "CALL QSYS2.QCMDEXC('" + cmdCrtUsr + "')";
-    String cmdChgPwd = "CHGUSRPRF USRPRF(" + user + ") PASSWORD(BOGUS7)  PWDEXP(*NO) ";
+    String cmdChgPwd = "QSYS/CHGUSRPRF USRPRF(" + user + ") PASSWORD(BOGUS7)  PWDEXP(*NO) ";
     String sqlChgPwd = "CALL QSYS2.QCMDEXC('" + cmdChgPwd + "')";
-    String cmdEnableUsr = "CHGUSRPRF USRPRF(" + user + ") PASSWORD(" + pwd
+    String cmdEnableUsr = "QSYS/CHGUSRPRF USRPRF(" + user + ") PASSWORD(" + pwd
         + ")  STATUS(*ENABLED) PWDEXP(*NO)                                                                                                     ";
     String sqlEnableUsr = "CALL QSYS2.QCMDEXC('" + cmdEnableUsr + "')";
     try {
@@ -74,7 +74,7 @@ public class JDBIDITestcase extends JDTestcase {
 
   public void deleteProfile(String ccsid, Connection con) {
     String user = "JD" + ccsid;
-    String cmdDltUsr = "DLTUSRPRF USRPRF(" + user
+    String cmdDltUsr = "QSYS/DLTUSRPRF USRPRF(" + user
         + ") OWNOBJOPT(*DLT)                                                   ";
     String sqlDltUsr = "CALL QSYS.QCMDEXC('" + cmdDltUsr + "',   0000000085.00000)";
     try {

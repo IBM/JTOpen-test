@@ -125,12 +125,12 @@ public class JobDescTestcase extends Testcase
       try
       {
         pwrCmd_ = new CommandCall(pwrSys_);
-        pwrCmd_.run("DLTJOBD JOBD("+jobDescLib_+"/"+jobDescName1_+")");
+        pwrCmd_.run("QSYS/DLTJOBD JOBD("+jobDescLib_+"/"+jobDescName1_+")");
         deleteLibrary(jobDescLib_);
         createLibrary(jobDescLib_);
 
         StringBuffer buf = new StringBuffer();
-        buf.append("CRTJOBD JOBD("+jobDescLib_+"/"+jobDescName1_+") JOBQ("+jobDescLib_+"/"+jobQName1_+") JOBPTY(8) OUTPTY(9) PRTDEV(PRT99) OUTQ(*WRKSTN) TEXT('test job description') USER("+pwrSys_.getUserId()+") PRTTXT('print text') ACGCDE(99999999) RTGDTA(*RQSDTA) RQSDTA('request data') SYNTAX(50) INLLIBL(*NONE) ENDSEV(70) LOG(3 30 *MSG) LOGCLPGM(*YES) INQMSGRPY(*DFT) HOLD(*YES) DATE(*SYSVAL) SWS(01100001) DEVRCYACN(*MSG) TSEPOOL(*BASE) AUT(*CHANGE) JOBMSGQMX(64) JOBMSGQFL(*NOWRAP) ALWMLTTHD(*YES)");
+        buf.append("QSYS/CRTJOBD JOBD("+jobDescLib_+"/"+jobDescName1_+") JOBQ("+jobDescLib_+"/"+jobQName1_+") JOBPTY(8) OUTPTY(9) PRTDEV(PRT99) OUTQ(*WRKSTN) TEXT('test job description') USER("+pwrSys_.getUserId()+") PRTTXT('print text') ACGCDE(99999999) RTGDTA(*RQSDTA) RQSDTA('request data') SYNTAX(50) INLLIBL(*NONE) ENDSEV(70) LOG(3 30 *MSG) LOGCLPGM(*YES) INQMSGRPY(*DFT) HOLD(*YES) DATE(*SYSVAL) SWS(01100001) DEVRCYACN(*MSG) TSEPOOL(*BASE) AUT(*CHANGE) JOBMSGQMX(64) JOBMSGQFL(*NOWRAP) ALWMLTTHD(*YES)");
         vrm_ = pwrSys_.getVRM();
         if (vrm_ >= VRM520) {
           // Added in V5R2: spooled file action, and initial ASP group names (not specifiable)
@@ -171,7 +171,7 @@ public class JobDescTestcase extends Testcase
       if (DEBUG) output_.println("Running testcase cleanup ...");
       ///if (!DEBUG)
       {
-        pwrCmd_.run("DLTJOBD JOBD("+jobDescLib_+"/"+jobDescName1_+")");
+        pwrCmd_.run("QSYS/DLTJOBD JOBD("+jobDescLib_+"/"+jobDescName1_+")");
 	deleteLibrary(pwrCmd_,jobDescLib_);
       }
     }

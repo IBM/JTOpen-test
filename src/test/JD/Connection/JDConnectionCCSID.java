@@ -188,7 +188,7 @@ Performs setup needed before running variations.
 	    stringArrayToSourceFile(connection_,cProgram, JDConnectionTest.COLLECTION, "SRVJBCCSID");
 
 	    CallableStatement cmd = connection_.prepareCall("call QGPL.JDCMDEXEC(?,?)");
-	    String command = "CRTCMOD MODULE("+JDConnectionTest.COLLECTION+"/SRVJBCCSID) "+
+	    String command = "QSYS/CRTCMOD MODULE("+JDConnectionTest.COLLECTION+"/SRVJBCCSID) "+
 	      " SRCFILE("+JDConnectionTest.COLLECTION+"/SRVJBCCSID)   ";
 
 	    cmd.setString(1, command );
@@ -200,7 +200,7 @@ Performs setup needed before running variations.
 		e.printStackTrace(); 
 	    }
 
-	    command = "CRTSRVPGM SRVPGM("+JDConnectionTest.COLLECTION+"/SRVJBCCSID) MODULE("+JDConnectionTest.COLLECTION+"/SRVJBCCSID) EXPORT(*ALL)  "; 
+	    command = "QSYS/CRTSRVPGM SRVPGM("+JDConnectionTest.COLLECTION+"/SRVJBCCSID) MODULE("+JDConnectionTest.COLLECTION+"/SRVJBCCSID) EXPORT(*ALL)  "; 
 	    cmd.setString(1, command );
 	    cmd.setInt(2, command.length());
 	    try {
@@ -258,13 +258,13 @@ Performs cleanup needed after running variations.
           // The profile has not been created.   Create it
           Statement s = connection_.createStatement(); 
           try { 
-            s.executeUpdate("CALL QSYS.QCMDEXC('" + "CRTUSRPRF USRPRF(" + profile
+            s.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + profile
                 + ") PASSWORD(DUMMY)                                                            ',"
                 + "0000000070.00000 ) ");
           } catch (Exception e) {
             
           }
-          s.executeUpdate("CALL QSYS.QCMDEXC('" + "CHGUSRPRF USRPRF(" + profile
+          s.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CHGUSRPRF USRPRF(" + profile
               + ") PASSWORD("+PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDConnectionCCSID.1")+") CCSID("+ccsid+")"
               + "                                                                      ',"
               + "0000000080.00000 ) ");
@@ -285,7 +285,7 @@ Performs cleanup needed after running variations.
         Statement s = connection_.createStatement(); 
         while (keys.hasMoreElements()) {
           String key = (String) keys.nextElement(); 
-          sql = "CALL QSYS.QCMDEXC('" + "DLTUSRPRF USRPRF(" + key
+          sql = "CALL QSYS.QCMDEXC('" + "QSYS/DLTUSRPRF USRPRF(" + key
               + ") OWNOBJOPT(*CHGOWN QUSER)                                                         ',"
               + "0000000070.00000 ) ";
           s.executeUpdate(sql);
@@ -354,7 +354,7 @@ Performs cleanup needed after running variations.
 
         CallableStatement cmd = connection_
             .prepareCall("call QGPL.JDCMDEXEC(?,?)");
-        String command = "CHGJOB CCSID(" + ccsid + ")";
+        String command = "QSYS/CHGJOB CCSID(" + ccsid + ")";
 
         cmd.setString(1, command);
         cmd.setInt(2, command.length());
@@ -378,7 +378,7 @@ Performs cleanup needed after running variations.
 
           CallableStatement cmd = connection_
               .prepareCall("call QGPL.JDCMDEXEC(?,?)");
-          String command = "CHGJOB CCSID(" + ccsid + ")";
+          String command = "QSYS/CHGJOB CCSID(" + ccsid + ")";
 
           cmd.setString(1, command);
           cmd.setInt(2, command.length());
@@ -410,7 +410,7 @@ Performs cleanup needed after running variations.
 
           CallableStatement cmd = connection_
               .prepareCall("call QGPL.JDCMDEXEC(?,?)");
-          String command = "CHGJOB CCSID(" + ccsid + ")";
+          String command = "QSYS/CHGJOB CCSID(" + ccsid + ")";
 
           cmd.setString(1, command);
           cmd.setInt(2, command.length());

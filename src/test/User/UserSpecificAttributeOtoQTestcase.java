@@ -871,7 +871,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             CommandCall command = new CommandCall(pwrSys_);
-            command.run("CHGUSRPRF USRPRF(" + user_ + ") PASSWORD(JTEAM1)");
+            command.run("QSYS/CHGUSRPRF USRPRF(" + user_ + ") PASSWORD(JTEAM1)");
 
             RUser u = new RUser(pwrSys_, user_);
             Object value = u.getAttributeValue(RUser.PASSWORD_CHANGE_DATE);
@@ -898,7 +898,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             CommandCall command = new CommandCall(pwrSys_);
-            command.run("CHGUSRPRF USRPRF(" + user_ + ") PASSWORD(JTEAM1)");
+            command.run("QSYS/CHGUSRPRF USRPRF(" + user_ + ") PASSWORD(JTEAM1)");
 
 
             User u = new User(pwrSys_, user_);

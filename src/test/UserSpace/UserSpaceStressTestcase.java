@@ -174,7 +174,7 @@ public class UserSpaceStressTestcase
    private void setup() 
    {
 
-      uslib_ = new CommandCall( sys2_, "crtlib STRESS" + curntThread_);
+      uslib_ = new CommandCall( sys2_, "QSYS/crtlib STRESS" + curntThread_);
 
       try 
       {

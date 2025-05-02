@@ -33,6 +33,8 @@ public class TestDriverTimeoutThread extends java.lang.Thread {
   }
 
   public void run() {
+    Thread myThread = Thread.currentThread(); 
+    myThread.setName("TestDriverTimeoutThread");
     reset();
     long leftTime = 1000;
     running = true;

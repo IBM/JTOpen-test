@@ -175,7 +175,7 @@ public class JDCleanSplf implements PrintObjectListListener {
 			}
 
 			System.out.println("Submitting RCLSPLSTG");
-			String command = "SBMJOB CMD(RCLSPLSTG DAYS(*NONE))";
+			String command = "QSYS/SBMJOB CMD(RCLSPLSTG DAYS(*NONE))";
 			CommandCall cmd = new CommandCall(as400);
 			cmd.run(command);
 			System.out.println("DONE");

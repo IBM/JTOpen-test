@@ -2020,8 +2020,8 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                    AS400 s = new AS400(systemObject_.getSystemName(), pwrSysUserID_, charPassword);
 		   PasswordVault.clearPassword(charPassword);
                    CommandCall cc = new CommandCall(s);
-                   cc.run("CRTLIB "+iniLibrary);
-                   cc.run("CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB("+iniLibrary+") DATA(*YES)");
+                   cc.run("QSYS/CRTLIB "+iniLibrary);
+                   cc.run("QSYS/CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB("+iniLibrary+") DATA(*YES)");
                  }
                    //AS400Message[] messageList = cc.getMessageList();
                    //for (int i = 0; i < messageList.length; ++i)

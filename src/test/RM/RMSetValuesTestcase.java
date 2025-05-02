@@ -124,7 +124,7 @@ public class RMSetValuesTestcase extends Testcase
       }
     }
 
-// Note: I don't know how to do this.  -jlee
+// Note: I don't know how to do this.  
 //    /**
 //     Test setValues(formatName,record) with a formatName that maps to an empty &lt;recordformat&gt;
 //     tag in the rfml document. Ensure an empty record created.

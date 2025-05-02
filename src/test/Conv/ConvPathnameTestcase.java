@@ -195,8 +195,8 @@ Expected results:
         return;
       }
       CommandCall cc = new CommandCall(pwrSys_);
-      cc.run("DLTUSRPRF USRPRF(CONVTST277) OWNOBJOPT(*DLT)");
-      boolean res = cc.run("CRTUSRPRF USRPRF(CONVTST277) PASSWORD(CNVTST1) CCSID(277)");
+      cc.run("QSYS/DLTUSRPRF USRPRF(CONVTST277) OWNOBJOPT(*DLT)");
+      boolean res = cc.run("QSYS/CRTUSRPRF USRPRF(CONVTST277) PASSWORD(CNVTST1) CCSID(277)");
       if (!res)
       {
         AS400Message[] msgs = cc.getMessageList();
@@ -226,7 +226,7 @@ Expected results:
 
       String lib37 = "CNVTEST$#@";
       deleteLibrary(cc, lib37); 
-      res = cc.run("CRTLIB " + lib37 + " AUT(*ALL)");
+      res = cc.run("QSYS/CRTLIB " + lib37 + " AUT(*ALL)");
       if (!res)
       {
         AS400Message[] msgs = cc.getMessageList();
@@ -288,7 +288,7 @@ Expected results:
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTUSRPRF USRPRF(CONVTST277) OWNOBJOPT(*DLT)");
+        cc.run("QSYS/DLTUSRPRF USRPRF(CONVTST277) OWNOBJOPT(*DLT)");
       }
       catch (Exception e)
       {
@@ -330,8 +330,8 @@ Expected results:
         return;
       }
       CommandCall cc = new CommandCall(pwrSys_);
-      cc.run("DLTUSRPRF USRPRF(CONVTST277) OWNOBJOPT(*DLT)");
-      boolean res = cc.run("CRTUSRPRF USRPRF(CONVTST277) PASSWORD(CNVTST1) CCSID(277)");
+      cc.run("QSYS/DLTUSRPRF USRPRF(CONVTST277) OWNOBJOPT(*DLT)");
+      boolean res = cc.run("QSYS/CRTUSRPRF USRPRF(CONVTST277) PASSWORD(CNVTST1) CCSID(277)");
       if (!res)
       {
         AS400Message[] msgs = cc.getMessageList();
@@ -363,7 +363,7 @@ Expected results:
       String lib277 = "CNVTEST\u00C5\u00C6\u00D8";
       CommandCall cc277 = new CommandCall(user277);
       deleteLibrary(cc277, lib277);
-      res = cc277.run("CRTLIB " + lib277 + " AUT(*ALL)");
+      res = cc277.run("QSYS/CRTLIB " + lib277 + " AUT(*ALL)");
       if (!res)
       {
         AS400Message[] msgs = cc277.getMessageList();
@@ -387,7 +387,7 @@ Expected results:
       // run it through our converter,
       // and delete it with IFS.
 
-      cc277.run("CRTLIB CNVTEMP");
+      cc277.run("QSYS/CRTLIB CNVTEMP");
       cc277.run("QDEVELOP/CRTUSRSPC CNVTEMP/CNVUSRSPC");
 
       ProgramParameter[] parms = new ProgramParameter[5];
@@ -457,7 +457,7 @@ Expected results:
       try
       {
         CommandCall cc = new CommandCall(pwrSys_);
-        cc.run("DLTUSRPRF USRPRF(CONVTST277) OWNOBJOPT(*DLT)");
+        cc.run("QSYS/DLTUSRPRF USRPRF(CONVTST277) OWNOBJOPT(*DLT)");
 	deleteLibrary(cc,"CNVTEMP");
       }
       catch (Exception e) {}

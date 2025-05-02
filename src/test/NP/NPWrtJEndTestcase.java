@@ -163,7 +163,7 @@ $$$ TO DO $$$ - delete this line */
            if (fWriterEnded == true)
                 {
         	   
-                if (cmd.run("STRPRTWTR DEV("+printer_+")") == false)
+                if (cmd.run("QSYS/STRPRTWTR DEV("+printer_+")") == false)
                     {
                 	System.out.println("Entre aqui STRPRTWTR");
                     output_.println("Could not start writer that we ended. "

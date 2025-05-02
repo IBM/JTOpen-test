@@ -1302,7 +1302,7 @@ public class NetServerTestcase extends Testcase
             NetServer ns = new NetServer(pwrSys_);
 
             CommandCall cmd = new CommandCall(pwrSys_);
-            if (!cmd.run("CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('JTOpen Toolbox test profile ')"))
+            if (!cmd.run("QSYS/CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('JTOpen Toolbox test profile ')"))
                failed("Setup for this variation failed.");
 
             String orig = (String)ns.getAttributeValue(NetServer.GUEST_USER_PROFILE_PENDING);
@@ -1318,8 +1318,8 @@ public class NetServerTestcase extends Testcase
             ns.setAttributeValue(NetServer.GUEST_USER_PROFILE_PENDING, orig);
             ns.commitAttributeChanges();
 
-            if (!cmd.run("DLTUSRPRF USRPRF(NETSRVTEST)"))
-               System.out.println("DLTUSRPRF USRPRF(NETSRVTETS) - failed.  Manually delete profile on AS/400");
+            if (!cmd.run("QSYS/DLTUSRPRF USRPRF(NETSRVTEST)"))
+               System.out.println("QSYS/DLTUSRPRF USRPRF(NETSRVTETS) - failed.  Manually delete profile on AS/400");
         }
         catch (Exception e) 
         {

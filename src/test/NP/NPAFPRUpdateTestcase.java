@@ -118,7 +118,7 @@ $$$ TO DO $$$ - delete this line */
 
             // change the text description of the AFP resource
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CHGOBJD OBJ(NPJAVA/C0D0GB10) OBJTYPE(*FNTRSC) TEXT('JAVAPRINT')") == false)
+            if (cmd.run("QSYS/CHGOBJD OBJ(NPJAVA/C0D0GB10) OBJTYPE(*FNTRSC) TEXT('JAVAPRINT')") == false)
                 {
                 failed("Could not change a AFP resource description. "
                        + cmd.getMessageList()[0].getID()
@@ -134,7 +134,7 @@ $$$ TO DO $$$ - delete this line */
             else failed("Could not update a printer device description.");
 
             // set the description back to the original value
-            if (cmd.run("CHGOBJD OBJ(NPJAVA/C0D0GB10) OBJTYPE(*FNTRSC) TEXT('GOTHIC ROMAN BOLD 100 10-PT')") == false)
+            if (cmd.run("QSYS/CHGOBJD OBJ(NPJAVA/C0D0GB10) OBJTYPE(*FNTRSC) TEXT('GOTHIC ROMAN BOLD 100 10-PT')") == false)
                 {
                 output_.println("Could not change a AFP resource description back. "
                                 + cmd.getMessageList()[0].getID()

@@ -455,9 +455,9 @@ public class UDFSTestcase extends Testcase
         try
         {
             // Delete the authorization list.
-            cmdRun("DLTAUTL AUTL(TBXUDFSTST)", "CPF2105");
+            cmdRun("QSYS/DLTAUTL AUTL(TBXUDFSTST)", "CPF2105");
             // Create the authorization list.
-            cmdRun("CRTAUTL AUTL(TBXUDFSTST)");
+            cmdRun("QSYS/CRTAUTL AUTL(TBXUDFSTST)");
             try
             {
                 UDFS obj = new UDFS(pwrSys_, "/dev/QASP01/tbxtest.udfs");
@@ -475,7 +475,7 @@ public class UDFSTestcase extends Testcase
             finally
             {
                 // Delete the authorization list.
-                cmdRun("DLTAUTL AUTL(TBXUDFSTST)");
+                cmdRun("QSYS/DLTAUTL AUTL(TBXUDFSTST)");
             }
 
         }
@@ -1243,9 +1243,9 @@ public class UDFSTestcase extends Testcase
         try
         {
             // Delete the mount directory.
-            cmdRun("RMVDIR DIR('/tbxmount')", "CPFA0A9");
+            cmdRun("QSYS/RMVDIR DIR('/tbxmount')", "CPFA0A9");
             // Create the mount directory.
-            cmdRun("CRTDIR DIR('/tbxmount')");
+            cmdRun("QSYS/CRTDIR DIR('/tbxmount')");
             try
             {
                 UDFS obj = new UDFS(pwrSys_, "/dev/QASP01/tbxtest.udfs");
@@ -1271,7 +1271,7 @@ public class UDFSTestcase extends Testcase
             finally
             {
                 // Delete the authorization list.
-                cmdRun("RMVDIR DIR('/tbxmount')");
+                cmdRun("QSYS/RMVDIR DIR('/tbxmount')");
             }
         }
         catch (Exception e)
@@ -1318,9 +1318,9 @@ public class UDFSTestcase extends Testcase
         try
         {
             // Delete the mount directory.
-            cmdRun("RMVDIR DIR('/tbxmount')", "CPFA0A9");
+            cmdRun("QSYS/RMVDIR DIR('/tbxmount')", "CPFA0A9");
             // Create the mount directory.
-            cmdRun("CRTDIR DIR('/tbxmount')");
+            cmdRun("QSYS/CRTDIR DIR('/tbxmount')");
             try
             {
                 UDFS obj = new UDFS(pwrSys_, "/dev/QASP01/tbxtest.udfs");
@@ -1346,7 +1346,7 @@ public class UDFSTestcase extends Testcase
             finally
             {
                 // Delete the authorization list.
-                cmdRun("RMVDIR DIR('/tbxmount')");
+                cmdRun("QSYS/RMVDIR DIR('/tbxmount')");
             }
         }
         catch (Exception e)
@@ -1366,9 +1366,9 @@ public class UDFSTestcase extends Testcase
         try
         {
             // Delete the mount directory.
-            cmdRun("RMVDIR DIR('/tbxmount')", "CPFA0A9");
+            cmdRun("QSYS/RMVDIR DIR('/tbxmount')", "CPFA0A9");
             // Create the mount directory.
-            cmdRun("CRTDIR DIR('/tbxmount')");
+            cmdRun("QSYS/CRTDIR DIR('/tbxmount')");
             try
             {
                 UDFS obj = new UDFS(pwrSys_, "/dev/QASP01/tbxtest.udfs");
@@ -1394,7 +1394,7 @@ public class UDFSTestcase extends Testcase
             finally
             {
                 // Delete the authorization list.
-                cmdRun("RMVDIR DIR('/tbxmount')");
+                cmdRun("QSYS/RMVDIR DIR('/tbxmount')");
             }
         }
         catch (Exception e)
@@ -1414,9 +1414,9 @@ public class UDFSTestcase extends Testcase
         try
         {
             // Delete the mount directory.
-            cmdRun("RMVDIR DIR('/tbxmount')", "CPFA0A9");
+            cmdRun("QSYS/RMVDIR DIR('/tbxmount')", "CPFA0A9");
             // Create the mount directory.
-            cmdRun("CRTDIR DIR('/tbxmount')");
+            cmdRun("QSYS/CRTDIR DIR('/tbxmount')");
             try
             {
                 UDFS obj = new UDFS(pwrSys_, "/dev/QASP01/tbxtest.udfs");
@@ -1442,7 +1442,7 @@ public class UDFSTestcase extends Testcase
             finally
             {
                 // Delete the authorization list.
-                cmdRun("RMVDIR DIR('/tbxmount')");
+                cmdRun("QSYS/RMVDIR DIR('/tbxmount')");
             }
         }
         catch (Exception e)
@@ -1462,9 +1462,9 @@ public class UDFSTestcase extends Testcase
         try
         {
             // Delete the mount directory.
-            cmdRun("RMVDIR DIR('/tbxmount')", "CPFA0A9");
+            cmdRun("QSYS/RMVDIR DIR('/tbxmount')", "CPFA0A9");
             // Create the mount directory.
-            cmdRun("CRTDIR DIR('/tbxmount')");
+            cmdRun("QSYS/CRTDIR DIR('/tbxmount')");
             try
             {
                 UDFS obj = new UDFS(pwrSys_, "/dev/QASP01/tbxtest.udfs");
@@ -1490,7 +1490,7 @@ public class UDFSTestcase extends Testcase
             finally
             {
                 // Delete the authorization list.
-                cmdRun("RMVDIR DIR('/tbxmount')");
+                cmdRun("QSYS/RMVDIR DIR('/tbxmount')");
             }
         }
         catch (Exception e)
@@ -1537,9 +1537,9 @@ public class UDFSTestcase extends Testcase
         try
         {
             // Delete the mount directory.
-            cmdRun("RMVDIR DIR('/tbxmount')", "CPFA0A9");
+            cmdRun("QSYS/RMVDIR DIR('/tbxmount')", "CPFA0A9");
             // Create the mount directory.
-            cmdRun("CRTDIR DIR('/tbxmount')");
+            cmdRun("QSYS/CRTDIR DIR('/tbxmount')");
             try
             {
                 UDFS obj = new UDFS(pwrSys_, "/dev/QASP01/tbxtest.udfs");
@@ -1559,7 +1559,7 @@ public class UDFSTestcase extends Testcase
             finally
             {
                 // Delete the authorization list.
-                cmdRun("RMVDIR DIR('/tbxmount')");
+                cmdRun("QSYS/RMVDIR DIR('/tbxmount')");
             }
         }
         catch (Exception e)

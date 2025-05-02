@@ -183,22 +183,22 @@ public class DQTest extends TestDriver
             }
         }
 
-        if (!cmdRun("CRTLIB DQSECTEST"))
+        if (!cmdRun("QSYS/CRTLIB DQSECTEST"))
         {
             out_.println("Setup failed.");
         }
-        if (!cmdRun("CRTLIB DQTEST"))
+        if (!cmdRun("QSYS/CRTLIB DQTEST"))
         {
             out_.println("Setup failed.");
 	} else {
 	    out_.println("Library DQTEST created");
 	}
-	if (!cmdRun("GRTOBJAUT OBJ(DQTEST) OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
-	    out_.println("CRTOBJAUT failed");
+	if (!cmdRun("QSYS/GRTOBJAUT OBJ(DQTEST) OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
+	    out_.println("QSYS/GRTOBJAUT failed");
 	} 
 	
-	if (!cmdRun("GRTOBJAUT OBJ(DQTEST) OBJTYPE(*LIB) USER("+userId_+") AUT(*CHANGE)")) {
-	  out_.println("CRTOBJAUT failed");
+	if (!cmdRun("QSYS/GRTOBJAUT OBJ(DQTEST) OBJTYPE(*LIB) USER("+userId_+") AUT(*CHANGE)")) {
+	  out_.println("QSYS/GRTOBJAUT failed");
 	} 
 
     }

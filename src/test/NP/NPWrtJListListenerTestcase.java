@@ -109,7 +109,7 @@ public class NPWrtJListListenerTestcase extends Testcase
             {
             // create LISTTST output queue
             CommandCall cmd = new CommandCall(systemObject_);
-            if (cmd.run("CRTOUTQ OUTQ(NPJAVA/LISTLTST) AUTCHK(*DTAAUT)") == false)
+            if (cmd.run("QSYS/CRTOUTQ OUTQ(NPJAVA/LISTLTST) AUTCHK(*DTAAUT)") == false)
                 {
                 failed("Could not create an output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -117,7 +117,7 @@ public class NPWrtJListListenerTestcase extends Testcase
                 return;
                 }
 
-            if (cmd.run("GRTOBJAUT OBJ(NPJAVA/LISTLTST) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
+            if (cmd.run("QSYS/GRTOBJAUT OBJ(NPJAVA/LISTLTST) OBJTYPE(*OUTQ) USER(*PUBLIC)") == false)
                 {
                 failed("Could not grant *public authority to output queue. "
                        + cmd.getMessageList()[0].getID()
@@ -126,7 +126,7 @@ public class NPWrtJListListenerTestcase extends Testcase
                 }
 
             // end the normal writer to printer
-            if (cmd.run("ENDWTR WTR("+printer_+") OPTION(*IMMED)") == false)
+            if (cmd.run("QSYS/ENDWTR WTR("+printer_+") OPTION(*IMMED)") == false)
                 {
                 // if the error we go back was not no active writer message
                 // exit
@@ -249,7 +249,7 @@ public class NPWrtJListListenerTestcase extends Testcase
 $$$ TO DO $$$ - delete this line */
 
             // clear the output queue we created.
-            if (cmd.run("CLROUTQ OUTQ(NPJAVA/LISTLTST)") == false)
+            if (cmd.run("QSYS/CLROUTQ OUTQ(NPJAVA/LISTLTST)") == false)
                 {
                 output_.println(" Could not clear output queue we created. "
                                 + cmd.getMessageList()[0].getID()
@@ -257,7 +257,7 @@ $$$ TO DO $$$ - delete this line */
                 }
 
             // delete the output queue we created.
-            if (cmd.run("DLTOUTQ OUTQ(NPJAVA/LISTLTST)") == false)
+            if (cmd.run("QSYS/DLTOUTQ OUTQ(NPJAVA/LISTLTST)") == false)
                 {
                 output_.println(" Could not delete output queue we created. "
                                 + cmd.getMessageList()[0].getID()
@@ -267,7 +267,7 @@ $$$ TO DO $$$ - delete this line */
             // if we stopped a writer then we will restart it.
             if (fWriterEnded == true)
                 {
-                if (cmd.run("STRPRTWTR DEV("+printer_+")") == false)
+                if (cmd.run("QSYS/STRPRTWTR DEV("+printer_+")") == false)
                     {
                     output_.println(" Could not start writer that we ended. "
                                     + cmd.getMessageList()[0].getID()

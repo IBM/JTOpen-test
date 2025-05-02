@@ -80,11 +80,11 @@ public class DQConnectTestcase extends Testcase
                 DataQueue dq = new DataQueue(system, "/QSYS.LIB/DQTEST.LIB/CONNECT.DTAQ");
 
                 // Remove the data queue server entry from the TCPIP service table
-                if (!cmdRun("RMVSRVTBLE SERVICE('" + serviceName + "') PORT(" + portNumber + ") PROTOCOL('tcp')"))
+                if (!cmdRun("QSYS/RMVSRVTBLE SERVICE('" + serviceName + "') PORT(" + portNumber + ") PROTOCOL('tcp')"))
                 {
                     ///failed("setup failed");
                     ///return;
-                    System.err.println("RMVSRVTBLE failed");
+                    System.err.println("QSYS/RMVSRVTBLE failed");
                 }
                 // Now, try to delete the data queue - this will cause a
                 // new as400 connection to be created.
@@ -158,11 +158,11 @@ public class DQConnectTestcase extends Testcase
                 KeyedDataQueue dq = new KeyedDataQueue(system, "/QSYS.LIB/DQTEST.LIB/CONNECT.DTAQ");
 
                 // Remove the data queue server entry from the TCPIP service table
-                if (!cmdRun("RMVSRVTBLE SERVICE('" + serviceName + "') PORT(" + portNumber + ") PROTOCOL('tcp')"))
+                if (!cmdRun("QSYS/RMVSRVTBLE SERVICE('" + serviceName + "') PORT(" + portNumber + ") PROTOCOL('tcp')"))
                 {
                     ///failed("setup failed");
                     ///return;
-                    System.err.println("RMVSRVTBLE failed");
+                    System.err.println("QSYS/RMVSRVTBLE failed");
                 }
                 try
                 {

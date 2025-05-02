@@ -155,7 +155,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
 
     try {
       CommandCall cmd = new CommandCall(systemObject_);
-      cmd.run("CRTLIB LIB(" + testLib_ + ")");
+      cmd.run("QSYS/CRTLIB LIB(" + testLib_ + ")");
 
     } catch (Exception e) {
       System.out.println("Could not create library or table " + testLib_);

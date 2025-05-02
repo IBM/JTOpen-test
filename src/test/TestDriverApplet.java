@@ -840,7 +840,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
 	    JDJobName.sendProgramMessage(d.toString()+" Running "+thisClass+" "+argString);
 	    loggingText= JDJobName.getLoggingText();
 	    if (!"*SECLVL".equals(loggingText)) {
-		String command = " CHGJOB LOG(4 00 *SECLVL)  ";
+		String command = "QSYS/CHGJOB LOG(4 00 *SECLVL)  ";
 		try { 
 		    JDJobName.system(command);
 		} catch (Exception e) {
@@ -992,7 +992,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
 	// If on a 400, change the logging level back
 	if (onAS400_) {
 	    if (!"*SECLVL".equals(loggingText)) {
-		String command = " CHGJOB LOG(4 00 "+loggingText+")  ";
+		String command = "QSYS/CHGJOB LOG(4 00 "+loggingText+")  ";
 		try { 
 		    JDJobName.system(command);
 		} catch (Exception e) {

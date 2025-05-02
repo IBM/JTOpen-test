@@ -345,34 +345,34 @@ public class JDTestUtilities
       {
         // End journaling for all files in the collection to close the journal.
         System.out.println("  Ending journaling for collection "+collection+"...");
-        cmd.setCommand("ENDJRNPF FILE(*ALL) JRN("+collection+"/QSQJRN)");
+        cmd.setCommand("QSYS/ENDJRNPF FILE(*ALL) JRN("+collection+"/QSQJRN)");
         cmd.run();
-        cmd.setCommand("ENDJRNAP FILE(*ALL) JRN("+collection+"/QSQJRN)");
+        cmd.setCommand("QSYS/ENDJRNAP FILE(*ALL) JRN("+collection+"/QSQJRN)");
         cmd.run();
 
         // Delete the SQL Journal that gets created when a "CREATE COLLECTION" is done.
         System.out.println("  Deleting journal...");
-        cmd.setCommand("DLTJRN "+collection+"/Q*");
+        cmd.setCommand("QSYS/DLTJRN "+collection+"/Q*");
         cmd.run();
 
         // Delete the temporary save file.
         // This prevents the notorious "...already contains data..." message from
         // appearing in the message queue.
         System.out.println("  Deleting pre-existing temporary save file...");
-        cmd.setCommand("DLTF "+collection+"/TEMP");
+        cmd.setCommand("QSYS/DLTF "+collection+"/TEMP");
         cmd.run();
 
         // Create a temporary save file into which the objects in the collection
         // will be saved.
         System.out.println("  Re-creating temporary save file...");
-        cmd.setCommand("CRTSAVF "+collection+"/TEMP");
+        cmd.setCommand("QSYS/CRTSAVF "+collection+"/TEMP");
         cmd.run();
 
         // Save the objects to the save file.
         // This prevents the notorious "...not fully saved..." message from
         // appearing in the message queue.
         System.out.println("  Saving all objects in collection "+collection+"...");
-        String str = "SAVOBJ OBJ(*ALL) LIB("+collection+") DEV(*SAVF) ";
+        String str = "QSYS/SAVOBJ OBJ(*ALL) LIB("+collection+") DEV(*SAVF) ";
         str += "SAVF("+collection+"/TEMP)";
         cmd.setCommand(str);
         cmd.run();
@@ -405,7 +405,7 @@ public class JDTestUtilities
         user = systemObject.getUserId();
 
       CommandCall cmd = new CommandCall(systemObject);
-      String str1 = "GRTOBJAUT OBJ("+library;
+      String str1 = "QSYS/GRTOBJAUT OBJ("+library;
       String str2 = str1+"/*ALL";
       str1 += ") OBJTYPE(*ALL) USER("+user+") AUT(*ALL)";
       str2 += ") OBJTYPE(*ALL) USER("+user+") AUT(*ALL)";
@@ -585,11 +585,11 @@ public class JDTestUtilities
       System.out.println("Creating save files...");
       try
       {
-        cmd.setCommand("CRTSAVF QGPL/JDBCSTP");
+        cmd.setCommand("QSYS/CRTSAVF QGPL/JDBCSTP");
         cmd.run();
-        cmd.setCommand("CRTSAVF QGPL/JDDMDLIB");
+        cmd.setCommand("QSYS/CRTSAVF QGPL/JDDMDLIB");
         cmd.run();
-        cmd.setCommand("CRTSAVF QGPL/JDDMDTST");
+        cmd.setCommand("QSYS/CRTSAVF QGPL/JDDMDTST");
         cmd.run();
       }
       catch(Exception e)

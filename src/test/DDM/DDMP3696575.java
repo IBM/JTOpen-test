@@ -97,7 +97,7 @@ public class DDMP3696575 extends Testcase
       CommandCall cc = new CommandCall(pwrSys_);
       deleteLibrary(cc, testLib_);
       cc = new CommandCall(systemObject_);
-      boolean res = cc.run("CRTLIB "+testLib_);
+      boolean res = cc.run("QSYS/CRTLIB "+testLib_);
       if (!res)
       {
         output_.println("Could not create test library:");

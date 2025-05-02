@@ -87,7 +87,7 @@ public class NetServerConnectionTestcase extends Testcase
 
        
        CommandCall c = new CommandCall(pwrSys_);
-       c.run("CHGFCNUSG FCNID(QIBM_IOSYSCFG_VIEW) USER("+systemObject_.getUserId()+") USAGE(*ALLOWED)"); 
+       c.run("QSYS/CHGFCNUSG FCNID(QIBM_IOSYSCFG_VIEW) USER("+systemObject_.getUserId()+") USAGE(*ALLOWED)"); 
        
        
        ResourceList connectionList = ns.listSessionConnections();

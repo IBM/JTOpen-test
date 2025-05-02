@@ -131,7 +131,7 @@ $$$ TO DO $$$ - delete this line */
             // if we stopped a writer then we will restart it.
             if (fWriterEnded == true)
                 {
-                if (cmd.run("STRPRTWTR DEV("+printer_+")") == false)
+                if (cmd.run("QSYS/STRPRTWTR DEV("+printer_+")") == false)
                     {
                     output_.println("Could not start writer that we ended. "
                                     + cmd.getMessageList()[0].getID()

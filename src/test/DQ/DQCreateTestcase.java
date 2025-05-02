@@ -2560,13 +2560,13 @@ public class DQCreateTestcase extends Testcase
         {
             String user = systemObject_.getUserId();
             DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
+            cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
             cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *ADD");
             try
             {
                 dq.create(10);
                 failed("No exception when creating data queue with user "+user);
-                cmdRun("DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
             }
             catch (Exception e)
             {
@@ -2589,13 +2589,13 @@ public class DQCreateTestcase extends Testcase
         {
             String user = systemObject_.getUserId();
             KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
+            cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
             cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *ADD");
             try
             {
                 dq.create(5, 10);
                 failed("No exception acccessing dataqueue with "+user);
-                cmdRun("DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
             }
             catch (Exception e)
             {
@@ -2618,13 +2618,13 @@ public class DQCreateTestcase extends Testcase
         {
             String user = systemObject_.getUserId();
             DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
+            cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
             cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *ADD");
             try
             {
                 dq.create(10, "*USE", false, false, false, "");
                 failed("No exception acccessing dataqueue with "+user);
-                cmdRun("DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
             }
             catch (Exception e)
             {
@@ -2647,13 +2647,13 @@ public class DQCreateTestcase extends Testcase
         {
             String user = systemObject_.getUserId();
             KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
+            cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
             cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *ADD");
             try
             {
                 dq.create(5, 10, "*USE", false, false, "");
                 failed("No exception acccessing dataqueue with "+user);
-                cmdRun("DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
             }
             catch (Exception e)
             {

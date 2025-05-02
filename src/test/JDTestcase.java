@@ -1683,13 +1683,13 @@ public class JDTestcase extends Testcase {
     //
     // Make sure the source file exists
     //
-    String command = "CRTSRCPF " + library + "/" + file;
+    String command = "QSYS/CRTSRCPF " + library + "/" + file;
     cmd.setString(1, command);
     cmd.setInt(2, command.length());
     try {
       cmd.execute();
 
-      command = "CRTJRNRCV  " + library + "/QSQJRN1000";
+      command = "QSYS/CRTJRNRCV  " + library + "/QSQJRN1000";
       cmd.setString(1, command);
       cmd.setInt(2, command.length());
       try {
@@ -1698,7 +1698,7 @@ public class JDTestcase extends Testcase {
         ignoreWarningException(ex, "already exists", "TBD");
       }
 
-      command = "CRTJRN JRN(" + library + "/QSQJRN) JRNRCV(" + library + "/QSQJRN1000)";
+      command = "QSYS/CRTJRN JRN(" + library + "/QSQJRN) JRNRCV(" + library + "/QSQJRN1000)";
       ;
       cmd.setString(1, command);
       cmd.setInt(2, command.length());
@@ -2978,7 +2978,7 @@ public class JDTestcase extends Testcase {
           sql = "create table " + lockInfoTable + "(srcdta varchar(200))";
           stmt.executeUpdate(sql);
 
-          sql = "CALL QSYS.QCMDEXC('QSH CMD(''system \"WRKOBJLCK OBJ(" + library + "/" + object + ") OBJTYPE("
+        sql = "CALL QSYS.QCMDEXC('QSH CMD(''system \"QSYS/WRKOBJLCK OBJ(" + library + "/" + object + ") OBJTYPE("
               + objectType + ")  \"" + "| sed \"s/^\\(.*\\)/insert into " + lockInfoTable
               + "(SRCDTA) values(''''\\1'''')/\"  > /tmp/" + lockInfoTable
               + ".txt '')                             ',000000180.00000)";

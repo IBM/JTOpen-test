@@ -167,7 +167,7 @@ public class DDMThreadTestcase extends ThreadedTestcase
   boolean startJournal(String fileToJournal)
   {
     // Start journaling
-    String cmdStr = "STRJRNPF FILE("+lib+"/"+fileToJournal+") ";
+    String cmdStr = "QSYS/STRJRNPF FILE("+lib+"/"+fileToJournal+") ";
     cmdStr += "JRN(QGPL/DDMTTJRN)";
     String msg = runCommand(cmdStr);
     if (msg != null)
@@ -182,7 +182,7 @@ public class DDMThreadTestcase extends ThreadedTestcase
   boolean endJournal(String fileToJournal)
   {
     // Stop journaling
-    String cmdStr = "ENDJRNPF FILE("+lib+"/"+fileToJournal+") ";
+    String cmdStr = "QSYS/ENDJRNPF FILE("+lib+"/"+fileToJournal+") ";
     cmdStr += "JRN(QGPL/DDMTTJRN)";
     String msg = runCommand(cmdStr);
     if (msg != null)
@@ -228,7 +228,7 @@ String runCommand(String command)
     try
     {
       // Create library DDMTEST
-      String msg = runCommand("CRTLIB LIB(" + lib + ") AUT(*ALL)");
+      String msg = runCommand("QSYS/CRTLIB LIB(" + lib + ") AUT(*ALL)");
       if (msg != null && !msg.equals("CPF2111"))
       {
         output_.println("Failure executing 'CRTLIB LIB(" + lib + ") AUT(*ALL)'");
@@ -237,14 +237,14 @@ String runCommand(String command)
       }
 
     // Create journal receiver and journal if it does not already exist
-    msg = runCommand("CRTJRNRCV JRNRCV(QGPL/DDMTTRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM Thread test cases')");
+    msg = runCommand("QSYS/CRTJRNRCV JRNRCV(QGPL/DDMTTRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM Thread test cases')");
     if (msg != null)
     {
       output_.println("Failure executing 'CRTJRNRCV JRNRCV(QGPL/DDMTTRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM Thread test cases')'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("CRTJRN JRN(QGPL/DDMTTJRN) JRNRCV(QGPL/DDMTTRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM Thread test case journal')");
+    msg = runCommand("QSYS/CRTJRN JRN(QGPL/DDMTTJRN) JRNRCV(QGPL/DDMTTRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM Thread test case journal')");
     if (msg != null)
     {
       output_.println("Failure executing 'CRTJRN JRN(QGPL/DDMTTJRN) JRNRCV(QGPL/DDMTTRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM Thread test case journal')'");
@@ -280,7 +280,7 @@ String runCommand(String command)
       output_.println(msg);
       success = false;
     }
-    msg = runCommand("DLTJRN QGPL/DDMTTJRN");
+    msg = runCommand("QSYS/DLTJRN QGPL/DDMTTJRN");
     if (msg != null)
     {
       output_.println("Failure executing 'DLTJRN QGPL/DDMTTJRN'");

@@ -743,7 +743,7 @@ public class JDStatementWarnings extends JDTestcase {
           } else if (message.indexOf("Not authorized")>=0) { 
             AS400 pwrSys = TestDriver.getPwrSys();
             CommandCall cmd = new CommandCall (pwrSys);
-            cmd.run ("GRTOBJAUT OBJ(" + collection_ + "/THROWIT) OBJTYPE(*PGM) USER(*PUBLIC) AUT(*ALL)");
+            cmd.run ("QSYS/GRTOBJAUT OBJ(" + collection_ + "/THROWIT) OBJTYPE(*PGM) USER(*PUBLIC) AUT(*ALL)");
 
           } else {
             System.out.println("Unable to drop procedure using " + dropSql);

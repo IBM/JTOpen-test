@@ -62,7 +62,7 @@ public class SetupNetworkPrint extends SetupLibraryTestcase
         CommandCall cmd = new CommandCall(pwrSys_);
 
         output_.println("Defining printer device description PRT01 ...");
-        cmd.setCommand("CRTDEVPRT DEVD(PRT01) DEVCLS(*LCL) TYPE(3812) MODEL(1) PORT(1) SWTSET(1) FONT(11)");
+        cmd.setCommand("QSYS/CRTDEVPRT DEVD(PRT01) DEVCLS(*LCL) TYPE(3812) MODEL(1) PORT(1) SWTSET(1) FONT(11)");
         cmd.run();
       }
 

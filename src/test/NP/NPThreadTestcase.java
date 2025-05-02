@@ -151,7 +151,7 @@ class NPThreadTestcase
     {
 	    // make sure JAVAPRINT printer device description exists
 	    CommandCall cmd = new CommandCall(systemObject_);
-	    cmd.run("crtdevprt devd(javaprint) devcls(*lcl) type(*ipds) " +
+	    cmd.run("QSYS/crtdevprt devd(javaprint) devcls(*lcl) type(*ipds) " +
 	            "model(0) port(5) swtset(0) online(*no) font(011)");
 	    systemObject_.disconnectService(AS400.COMMAND);
     }
@@ -172,7 +172,7 @@ output_.println("in cleanup");
 	    // delete the printer device description that we created
 	    CommandCall cmd = new CommandCall(systemObject_);
 output_.println("constructed cmdcall object");
-	    cmd.run("dltdevd javaprint");
+	    cmd.run("QSYS/dltdevd javaprint");
 	    systemObject_.disconnectService(AS400.COMMAND);
 	    systemObject_.disconnectService(AS400.PRINT);
 output_.println("end of cleanup");

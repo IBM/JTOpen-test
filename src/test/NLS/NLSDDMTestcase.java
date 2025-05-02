@@ -402,7 +402,7 @@ public class NLSDDMTestcase extends Testcase
 
       // Create lib NLSDDMT
       c = new CommandCall(systemObject_);
-      c.run("CRTLIB LIB(NLSDDMT) AUT(*ALL)");
+      c.run("QSYS/CRTLIB LIB(NLSDDMT) AUT(*ALL)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals("CPC2102")))
       {
@@ -437,7 +437,7 @@ public class NLSDDMTestcase extends Testcase
       f.open(AS400File.WRITE_ONLY, 2, AS400File.COMMIT_LOCK_LEVEL_NONE);
       f.write(r);
       f.close();
-      c.run("CHGPF FILE(NLSDDMT/QDDSSRC) MAXMBRS(*NOMAX)");
+      c.run("QSYS/CHGPF FILE(NLSDDMT/QDDSSRC) MAXMBRS(*NOMAX)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPC7303")))
       {
@@ -447,7 +447,7 @@ public class NLSDDMTestcase extends Testcase
         }
         throw new Exception("");
       }
-      c.run("CPYF FROMFILE(NLSDDMT/QDDSSRC) TOFILE(NLSDDMT/QDDSSRC) TOMBR(SRC1) MBROPT(*REPLACE)");
+      c.run("QSYS/CPYF FROMFILE(NLSDDMT/QDDSSRC) TOFILE(NLSDDMT/QDDSSRC) TOMBR(SRC1) MBROPT(*REPLACE)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2889")))
       {
@@ -457,7 +457,7 @@ public class NLSDDMTestcase extends Testcase
         }
         throw new Exception("");
       }
-      c.run("CPYF FROMFILE(NLSDDMT/QDDSSRC) TOFILE(NLSDDMT/QDDSSRC) TOMBR(\"qddssrc\") MBROPT(*REPLACE)");
+      c.run("QSYS/CPYF FROMFILE(NLSDDMT/QDDSSRC) TOFILE(NLSDDMT/QDDSSRC) TOMBR(\"qddssrc\") MBROPT(*REPLACE)");
       msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2889")))
       {
@@ -566,7 +566,7 @@ public class NLSDDMTestcase extends Testcase
       //@B0D f1.close();
       //@B0D f1.delete();
         CommandCall cc = new CommandCall(systemObject_);
-        cc.run("DLTF NLSDDMT/QDDSSRC");
+        cc.run("QSYS/DLTF NLSDDMT/QDDSSRC");
       }
 
 
@@ -1083,7 +1083,7 @@ public class NLSDDMTestcase extends Testcase
 
       // Issue a change physical file command to allow more than one member.
       CommandCall interpreter = new CommandCall(systemObject_);
-      interpreter.run("CHGPF FILE(NLSDDMT/"+file.getFileName()+") MAXMBRS(*NOMAX)");
+      interpreter.run("QSYS/CHGPF FILE(NLSDDMT/"+file.getFileName()+") MAXMBRS(*NOMAX)");
 
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
 

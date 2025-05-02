@@ -184,10 +184,10 @@ Verify that the User description is what is expected.
       // Change the user description.
       cmd = new CommandCall(systemObject_);
       String newDesc = dbcs_string50;
-      if(cmd.run("CHGOBJD OBJ(QSYS/" + uid + ") OBJTYPE(*USRPRF) TEXT('" + newDesc + "')") == false)
+      if(cmd.run("QSYS/CHGOBJD OBJ(QSYS/" + uid + ") OBJTYPE(*USRPRF) TEXT('" + newDesc + "')") == false)
       {
         AS400Message[] messageList = cmd.getMessageList();
-        System.out.println("CHGUSRPRF failed.  " + messageList[0].toString());
+        System.out.println("QSYS/CHGOBJD failed.  " + messageList[0].toString());
         failed("Unable to change user description.");
         return;
       }
@@ -220,7 +220,7 @@ Verify that the User description is what is expected.
     {
       try {
         if (oldDesc != null)
-          cmd.run("CHGOBJD OBJ(QSYS/" + uid + ") OBJTYPE(*USRPRF) TEXT('" + oldDesc + "')");
+          cmd.run("QSYS/CHGOBJD OBJ(QSYS/" + uid + ") OBJTYPE(*USRPRF) TEXT('" + oldDesc + "')");
       }
       catch(Exception e) {}
     }

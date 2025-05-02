@@ -221,7 +221,7 @@ job log.
 		s2.close();
 		if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
 		    (System.getProperty("java.home").indexOf("openjdk")<0)){
-		    JDJobName.system(" DSPJOBLOG OUTPUT(*OUTFILE) OUTFILE("+JDPSTest.COLLECTION+"/QPJOBLOG)  ");
+		    JDJobName.system("QSYS/DSPJOBLOG OUTPUT(*OUTFILE) OUTFILE("+JDPSTest.COLLECTION+"/QPJOBLOG)  ");
 
 		    Statement s = connection_.createStatement();
 		    ResultSet rs = s.executeQuery("select QMHMID from "+JDPSTest.COLLECTION+".QPJOBLOG");
@@ -231,7 +231,7 @@ job log.
 			if (mid.indexOf("MCH") >= 0) {
 			    passed = false;
 			    message+=" FOUND "+mid+" in job log\n";
-			    JDJobName.system("CHGJOB LOG(4 00 *SECLVL) "); 
+			    JDJobName.system("QSYS/CHGJOB LOG(4 00 *SECLVL) "); 
 			}
 
 		    } 

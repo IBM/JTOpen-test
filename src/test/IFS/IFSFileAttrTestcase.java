@@ -69,11 +69,11 @@ Constructor.
 
   void setPrivate(AS400 as400, String dirName)
   {
-    String cmdString = "CHGAUT OBJ('"
+    String cmdString = "QSYS/CHGAUT OBJ('"
                      + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
 
-    String cmdString2 = "CHGAUT OBJ('"
+    String cmdString2 = "QSYS/CHGAUT OBJ('"
                      + dirName
                      + "') USER("
                      + systemObject_.getUserId()
@@ -96,11 +96,11 @@ Constructor.
 
   void setPublic(AS400 as400, String dirName)
   {
-    String cmdString = "CHGAUT OBJ('"
+    String cmdString = "QSYS/CHGAUT OBJ('"
                      + dirName
                      + "') USER(*PUBLIC) DTAAUT(*EXCLUDE) OBJAUT(*NONE)";
 
-    String cmdString2 = "CHGAUT OBJ('"
+    String cmdString2 = "QSYS/CHGAUT OBJ('"
                      + dirName
                      + "') USER("
                      + systemObject_.getUserId()
@@ -1311,7 +1311,7 @@ The linked-to file is a directory.
       try
       {
         // RMVLNK - to clean up the link created earlier
-        String cmdStr = "RMVLNK OBJLNK('" + symlinkName+ "')";
+        String cmdStr = "QSYS/RMVLNK OBJLNK('" + symlinkName+ "')";
         cmd.run(cmdStr);
       }
       catch(Exception e)

@@ -188,7 +188,7 @@ public class DDMSQLCompatibility extends Testcase
       try { 
     CommandCall c = new CommandCall();
     c.setSystem(pwrSys_);
-    String command = "CHGUSRPRF "+userId_+" CCSID(65535)";
+    String command = "QSYS/CHGUSRPRF "+userId_+" CCSID(65535)";
     System.out.println("Running "+command); 
     boolean worked = c.run(command);
     if (!worked) { 
@@ -267,7 +267,7 @@ public class DDMSQLCompatibility extends Testcase
       // Create the library
       try
       {
-        cmd.run("CRTLIB LIB("+testLib_+")");
+        cmd.run("QSYS/CRTLIB LIB("+testLib_+")");
       }
       catch(Exception x) { x.printStackTrace(output_); }
 
@@ -412,7 +412,7 @@ public class DDMSQLCompatibility extends Testcase
     try {
     CommandCall c = new CommandCall();
     c.setSystem(pwrSys_);
-    String command = "CHGUSRPRF "+userId_+" CCSID(37)";
+    String command = "QSYS/CHGUSRPRF "+userId_+" CCSID(37)";
     System.out.println("Running "+command); 
     c.run(command); 
     } catch (Exception e) { 
