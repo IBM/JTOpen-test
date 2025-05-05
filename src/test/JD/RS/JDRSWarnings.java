@@ -309,7 +309,7 @@ getWarning() - Return warnings resulting from a fetch operation.
 **/
     public void Var008()
     {
-	String info = " -- added 8/2/2011 to test issue 45931 warnings should be returned by fetch operation "; 
+	StringBuffer sb = new StringBuffer(" -- added 8/2/2011 to test issue 45931 warnings should be returned by fetch operation "); 
         if (checkJdbc20 ()) {
 	    try {
 	        String sql = "select  current user, job_name from SYSIBM.SYSDUMMY1";
@@ -317,28 +317,36 @@ getWarning() - Return warnings resulting from a fetch operation.
 	        rs.next(); 
 	        String user  = rs.getString(1); 
 	        String jobname = rs.getString(2); 
-	        info += "/n jobname="+jobname+" user="+user; 
+	        sb.append("/n jobname="+jobname+" user="+user); 
 	        rs.close(); 
 		SQLWarning warnings = null; 
 		sql = "select 1/0 from sysibm.sqlcolumns fetch first 1000 rows only "; 
+		sb.append("\n running SQL "+sql); 
 		rs = statement_.executeQuery (sql);
+		sb.append("\n fetching rows  "); 
+
 		while ( rs.next () )  {
+		  sb.append("\n got row  "); 
 
 		    SQLWarning w = rs.getWarnings ();
 		    if (w != null) {
 			if (warnings == null) {
 			    warnings = w; 
+	                      sb.append("\n set warning "+w); 
 			} else {
 			    warnings.setNextException(w); 
+                            sb.append("\n chained warning "+w); 
 			} 
-		    } 
+		    } else {
+		      sb.append("\n no warning from row "); 
+		    }
 		}
                 rs.close ();
 
-                assertCondition (warnings != null, "warning not reflected "+info);
+                assertCondition (warnings != null, sb);
             }
             catch (Exception e) {
-                failed(e, "Unexpected Exception"+info);
+                failed(e, sb);
             }
         }
     }

@@ -294,6 +294,7 @@ public class SecSignonInfoTestcase extends Testcase {
       boolean expectedValue = false; 
       if (getRelease() > JDTestDriver.RELEASE_V7R5M0) 
         expectedValue = true; 
+      
       boolean accepted = JDReflectionUtil.callStaticMethod_B("com.ibm.as400.access.AS400",
           "isAdditionalAuthenticationFactorAccepted", systemName_);
       assertCondition(accepted == expectedValue, "AS400.isAdditionalAuthenticationFactorAccepted="+accepted+" sb "+expectedValue);

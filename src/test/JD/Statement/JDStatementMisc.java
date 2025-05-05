@@ -1718,7 +1718,7 @@ extends JDTestcase
             catch(Exception e)
             {
                 // should not see an Exception because the driver should change the maximum scale value to 31
-                failed(e, "Unexpected Exception.");
+                failed(e, "Unexpected Exception for invalid maximum precision=31;maximum scale=63");
             }
             finally
             {
@@ -1791,7 +1791,7 @@ extends JDTestcase
             catch(Exception e)
             {
                 // should not see an Exception because the driver should change maximum scale to 31
-                failed(e, "Unexpected Exception.");
+                failed(e, "Unexpected Exception for invalid setting maximum precision=31;maximum scale=33");
             }
             finally
             {
