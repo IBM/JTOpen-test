@@ -152,12 +152,7 @@ public class JDSchedulerRunnable implements Runnable {
           try {
 
             String lowerLine = action.toLowerCase();
-            if (lowerLine.indexOf("java test.bsoauthenticate") >= 0) {
-              // BSO no longer needed
-              // String[] mainArgs = new String[0];
-              // BSOAuthenticate.main(mainArgs);
-
-            } else if (lowerLine.indexOf("jtacleanuptx") >= 0) {
+            if (lowerLine.indexOf("jtacleanuptx") >= 0) {
               String[] cleanupArgs = new String[3];
               cleanupArgs[0] = "localhost";
               cleanupArgs[1] = "ThisIsDangerous";

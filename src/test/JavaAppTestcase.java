@@ -24,10 +24,6 @@ import java.net.*;
 /**
 The JavaAppTestcase class tests the methods of JavaApplicationCall.
 
-***NOTE TO TESTER: Beware of firewalls.  They can prevent JavaApplicationCall from opening the necessary additional 
-*ports (for stdin, stdout, stderr).  For example, in the case of the Rochester BSO firewall, you'll need to 
-*authenticate through the firewall, not only from client-to-server, but also from server-to-client.  You can accomplish 
-*this by doing 2 telnet's, one from each side.
 
 
 <p>This tests the following JavaApplicationCall methods:

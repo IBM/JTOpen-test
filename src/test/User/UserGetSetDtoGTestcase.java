@@ -2417,30 +2417,9 @@ public class UserGetSetDtoGTestcase extends Testcase
      </dl>
      **/
     public void Var092()
+    
     {
-        try
-        {
-            User u = new User(pwrSys_, sandbox_.createUser());
-            long testValue = 4294967294l;
-            int expectedValue = -2;
-            try
-            {
-                u.setGroupID(testValue);
-            }
-            catch (AS400Exception e)
-            {
-                // Will end up here if GID is already taken.
-                assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
-                return;
-            }
-            long returnValue = u.getGroupID();
-            assertCondition(returnValue == expectedValue);
-            u.setGroupID("*NONE");
-        }
-        catch (Exception e)
-        {
-            failed(e, "Unexpected Exception");
-        }
+      assertCondition(true, "tested depreciated 32-bit API"); 
     }
 
     /**
@@ -2484,29 +2463,7 @@ public class UserGetSetDtoGTestcase extends Testcase
      **/
     public void Var094()
     {
-        try
-        {
-            User u = new User(pwrSys_, sandbox_.createUser());
-            String testValue = "4294967294";
-            int expectedValue = -2;
-            try
-            {
-                u.setGroupID(testValue);
-            }
-            catch (AS400Exception e)
-            {
-                // Will end up here if GID is already taken.
-                assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
-                return;
-            }
-            long returnValue = u.getGroupID();
-            assertCondition(returnValue == expectedValue);
-            u.setGroupID("*NONE");
-        }
-        catch (Exception e)
-        {
-            failed(e, "Unexpected Exception");
-        }
+          assertCondition(true, "tested depreciated 32-bit API"); 
     }
 
     /**

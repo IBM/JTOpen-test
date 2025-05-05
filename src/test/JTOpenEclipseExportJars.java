@@ -25,7 +25,6 @@ import test.misc.TestUtilities;
  * 
  * Build the jar file using maven build with the target: package -f pom-dist.xml -e
  * 
- * C:\Users\JohnEberhard\git\JTOpenWorking\target\jt400-20.0.7.jar
  * 
  */
 public class JTOpenEclipseExportJars  {

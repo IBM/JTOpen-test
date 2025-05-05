@@ -120,14 +120,16 @@ Checks that a schema is in the library list.
 @return         true if the schema is in the library list,
                 false otherwise.
 **/
-    private boolean checkLibraryList (Connection c, String schema)
+    private boolean checkLibraryList (Connection c, String schema, StringBuffer sb)
     throws Exception
     {
+        sb.append("\nChecking schemas for "+schema); 
         DatabaseMetaData dmd = c.getMetaData ();
         ResultSet rs = dmd.getSchemas ();
         boolean found = false;
         while (rs.next ()) {
             String schema2 = rs.getString ("TABLE_SCHEM");
+            sb.append("\nChecking "+schema2); 
             if (schema2.equalsIgnoreCase (schema))
                 found = true;
         }
@@ -277,14 +279,15 @@ as the userId should be in the library list.
     {
         if (checkJdbc20StdExt()) {
             try {
+              StringBuffer sb = new StringBuffer(); 
                 DataSource dataSource = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2ConnectionPool");
                 JDReflectionUtil.callMethod_V(dataSource,"setDatabaseName",system_);
                 JDReflectionUtil.callMethod_V(dataSource,"setUser",userId_);
                 JDReflectionUtil.callMethod_V(dataSource,"setPassword",clearPassword_);
                 Connection c = dataSource.getConnection ();
-                boolean success = checkLibraryList (c, userId_);
+                boolean success = checkLibraryList (c, userId_, sb);
                 c.close ();
-                assertCondition (success);
+                assertCondition (success, sb);
             }
             catch (Exception e) {
                 failed(e, "Unexpected exception");
@@ -302,6 +305,8 @@ Those libraries should be in the library list.
     {
         if (checkJdbc20StdExt()) {
             try {
+              StringBuffer sb = new StringBuffer(); 
+
                 DataSource dataSource = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2ConnectionPool");
                 JDReflectionUtil.callMethod_V(dataSource,"setDatabaseName",system_);
                 JDReflectionUtil.callMethod_V(dataSource,"setUser",userId_);
@@ -309,10 +314,10 @@ Those libraries should be in the library list.
                 JDReflectionUtil.callMethod_V(dataSource,"setLibraries",JDCPDSTest.COLLECTION
                                         + " " + COLLECTION2);
                 Connection c = dataSource.getConnection ();
-                boolean successA = checkLibraryList (c, JDCPDSTest.COLLECTION);
-                boolean successB = checkLibraryList (c, COLLECTION2);
+                boolean successA = checkLibraryList (c, JDCPDSTest.COLLECTION, sb);
+                boolean successB = checkLibraryList (c, COLLECTION2,sb);
                 c.close ();
-                assertCondition (successA && successB);
+                assertCondition (successA && successB,sb);
             }
             catch (Exception e) {
                 failed(e,"Unexpected Exception");
@@ -331,6 +336,8 @@ Those libraries should be in the library list.
     {
         if (checkJdbc20StdExt()) {
             try {
+              StringBuffer sb = new StringBuffer(); 
+
                 DataSource dataSource = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2ConnectionPool");
                 JDReflectionUtil.callMethod_V(dataSource,"setDatabaseName",system_);
                 JDReflectionUtil.callMethod_V(dataSource,"setUser",userId_);
@@ -338,10 +345,10 @@ Those libraries should be in the library list.
                 JDReflectionUtil.callMethod_V(dataSource,"setLibraries",JDCPDSTest.COLLECTION
                                         + "," + COLLECTION2);
                 Connection c = dataSource.getConnection ();
-                boolean successA = checkLibraryList (c, JDCPDSTest.COLLECTION);
-                boolean successB = checkLibraryList (c, COLLECTION2);
+                boolean successA = checkLibraryList (c, JDCPDSTest.COLLECTION, sb);
+                boolean successB = checkLibraryList (c, COLLECTION2, sb);
                 c.close ();
-                assertCondition (successA && successB);
+                assertCondition (successA && successB, sb);
             }
             catch (Exception e) {
                 failed(e,"Unexpected Exception");

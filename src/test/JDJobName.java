@@ -17,7 +17,8 @@ import java.io.*;
 public class JDJobName {
     /* Change this name each time the nativeSource is changed */
     /* #11 - added getLoggingText */ 
-    static String  srvpgm= "JDJOBNM011";
+    /* #12 - add grant *USE  to public */ 
+    static String  srvpgm= "JDJOBNM012";
 
     static boolean loaded = false; 
     static boolean debug = false; 
@@ -653,6 +654,17 @@ public class JDJobName {
 						if (debug)
 							showProcessOutput(process, null);
 						process.waitFor();
+						
+                                                command = "system  GRTOBJAUT OBJ(QGPL/" + srvpgm + ") OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*USE) ";
+                                                if (debug)
+                                                  System.out.println("JobName.debug: " + command);
+                                                process = runtime.exec(command);
+                                                if (debug)
+                                                  showProcessOutput(process, null);
+                                                process.waitFor();
+                                    
+						
+						
 
 					} catch (Exception e) {
 						System.out.println("Exception caught building service program for JobName");

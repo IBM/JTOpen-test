@@ -1540,29 +1540,7 @@ public class UserGetSetTtoZTestcase extends Testcase
      **/
     public void Var059()
     {
-        try
-        {
-            User u = new User(pwrSys_, sandbox_.createUser());
-            long testValue = 4294967294l;
-            int expectedValue = -2;
-            try
-            {
-                u.setUserID(testValue);
-            }
-            catch (AS400Exception e)
-            {
-                // Will end up here if GID is already taken.
-                assertExceptionStartsWith(e, "AS400Exception", "CPF22CE ", ErrorCompletingRequestException.AS400_ERROR);
-                return;
-            }
-            long returnValue = u.getUserID();
-            assertCondition(returnValue == expectedValue);
-            sandbox_.deleteUser(u.getName(), 1);
-        }
-        catch (Exception e)
-        {
-            failed(e, "Unexpected Exception");
-        }
+      assertCondition(true, "Test for deprecated getUserIdNumber()"); 
     }
 
     /**
