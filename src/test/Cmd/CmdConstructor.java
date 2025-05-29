@@ -121,14 +121,37 @@ public class CmdConstructor extends Testcase
      **/
     public void Var006()
     {
+        StringBuffer sb = new StringBuffer(); 
         try
         {
+            
+            boolean passed = true; 
             CommandCall cmd = new CommandCall(systemObject_, "QSYS/CRTLIB FRED");
-            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("QSYS/CRTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: CRTLIB FRED):") != -1));
+            if (cmd.getSystem() != systemObject_) {
+                sb.append("\ncmd.getSystem()="+cmd.getSystem() +" != systemObject_="+systemObject_); 
+                passed = false; 
+            }
+            String expected = "QSYS/CRTLIB FRED";
+            if (!(cmd.getCommand().equals(expected))) {
+                sb.append("\ncmd.getCommand()="+cmd.getCommand()+" sb "+expected);
+                passed = false; 
+            }
+            expected = "CommandCall (system:"; 
+            if (!(cmd.toString().startsWith(expected))) { 
+               sb.append("\ncmd.toString()= "+cmd.toString()+" should begin with "+expected);
+               passed = false; 
+            }
+            expected = "command: QSYS/CRTLIB FRED):";
+            if (! (cmd.toString().indexOf(expected) != -1)) { 
+              sb.append("\ncmd.toString()= "+cmd.toString()+" should contain with "+expected);
+              passed = false; 
+            }
+        
+            assertCondition(passed, sb); 
         }
         catch (Exception e)
         {
-            failed(e, "Unexpected exception");
+            failed(e, sb);
         }
     }
 
@@ -158,7 +181,8 @@ public class CmdConstructor extends Testcase
         {
             CommandCall cmd = new CommandCall(systemObject_);
 	    cmd.setCommand("QSYS/DLTLIB FRED");
-            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("QSYS/DLTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: DLTLIB FRED):") != -1));
+            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("QSYS/DLTLIB FRED")) && 
+                (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: QSYS/DLTLIB FRED):") != -1));
         }
         catch (Exception e)
         {
@@ -176,7 +200,9 @@ public class CmdConstructor extends Testcase
             CommandCall cmd = new CommandCall(systemObject_, "PING " + systemObject_.getSystemName());
             cmd.run();
             cmd.setCommand("QSYS/DLTLIB FRED");
-            assertCondition((cmd.getSystem() == systemObject_) && (cmd.getCommand().equals("QSYS/DLTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && (cmd.toString().indexOf("command: DLTLIB FRED):") != -1));
+            assertCondition((cmd.getSystem() == systemObject_) && 
+                (cmd.getCommand().equals("QSYS/DLTLIB FRED")) && (cmd.toString().startsWith("CommandCall (system:")) && 
+                (cmd.toString().indexOf("command: QSYS/DLTLIB FRED):") != -1));
         }
         catch (Exception e)
         {

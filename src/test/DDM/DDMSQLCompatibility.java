@@ -204,7 +204,7 @@ public class DDMSQLCompatibility extends Testcase
 
     try
     {
-	if (JTOpenTestEnvironment.isOS400)
+	if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open)
 	{
   	   // CCSID of CURRENT job must be 65535
 	    System.out.println("Native test so setting job ccsid to 65535"); 

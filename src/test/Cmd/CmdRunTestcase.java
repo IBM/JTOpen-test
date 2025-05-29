@@ -1169,8 +1169,8 @@ public class CmdRunTestcase extends Testcase
         {
             CommandCall cmd = new CommandCall(systemObject_);
 
-            AS400Text conv = new AS400Text(11, systemObject_);
-            byte[] bytes = new byte[11];
+            AS400Text conv = new AS400Text(16, systemObject_);
+            byte[] bytes = new byte[16];
             conv.toBytes("QSYS/CRTLIB FRED", bytes);
             cmd.setThreadSafe(false);
             cmd.run(bytes);
@@ -1193,8 +1193,8 @@ public class CmdRunTestcase extends Testcase
         try
         {
             CommandCall cmd = new CommandCall(systemObject_);
-            AS400Text conv = new AS400Text(11, systemObject_);
-            byte[] bytes = new byte[11];
+            AS400Text conv = new AS400Text(16, systemObject_);
+            byte[] bytes = new byte[16];
             conv.toBytes("QSYS/CRTLIB FRED", bytes);
             cmd.setThreadSafe(true);
             cmd.run(bytes);

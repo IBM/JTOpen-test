@@ -148,7 +148,7 @@ public class JDHandleDump {
 	} else {
 	    try {
 	      
-	      char[] encryptedPassword = PasswordVault.encryptPassword(args[2].toCharArray());
+	      char[] encryptedPassword = PasswordVault.getEncryptedPassword(args[2]);
 		JDHandleDump handleDump = new JDHandleDump(args[0], args[1], encryptedPassword, args[3]);
 
 		handleDump.printSummary();

@@ -88,15 +88,15 @@ public class AS400JDBCDataSourceTestcase extends Testcase
                                        
                                        String password,
                                        String jndiType,
-                                       String ldapUsr,
-                                       String ldapPwd,
+                                       String pwrSysUser,
+                                       String pwrSysPwd,
                                        String systemName)  //C1A
     {
         super(systemObject, "AS400JDBCDataSourceTestcase", variationsToRun,
               runMode, fileOutputStream, password);
 
-        pwrSysUserID_ = ldapUsr; 
-        pwrSysEncryptedPassword_ = PasswordVault.encryptPassword(ldapPwd.toCharArray()); 
+        pwrSysUserID_ = pwrSysUser; 
+        pwrSysEncryptedPassword_ = PasswordVault.getEncryptedPassword(pwrSysPwd); 
         
         if (jndiType != null) {
             if (jndiType.equals("file"))
@@ -109,8 +109,8 @@ public class AS400JDBCDataSourceTestcase extends Testcase
         else
             System.out.println("WARNING... jndi type not specified.  Using default.");
 
-        ldapUsr_ = ldapUsr;  //@A2A
-        ldapPwd_ = ldapPwd;  //@A2A
+        ldapUsr_ = pwrSysUser;  //@A2A
+        ldapPwd_ = pwrSysPwd;  //@A2A
         systemNameLocal_ = systemName;  //@C1A
     }
 

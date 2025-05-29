@@ -54,7 +54,7 @@ public class JDCleanUsrSpc {
         }
       }
 
-      clean(system, userid, PasswordVault.encryptPassword(password.toCharArray()), System.out);
+      clean(system, userid, PasswordVault.getEncryptedPassword(password), System.out);
     } catch (Exception e) {
       e.printStackTrace();
       usage();

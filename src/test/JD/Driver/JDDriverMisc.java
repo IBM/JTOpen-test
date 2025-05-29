@@ -142,8 +142,8 @@ extends JDTestcase
         try
         {
             if(getDriver () == JDTestDriver.DRIVER_TOOLBOX) {
-		int expectedMajorVersion = 13;
-		// Major version is 13 for v7r5!!
+		int expectedMajorVersion = 14;
+		// Major version is 14 for v7r6!!
 
 
                 assertCondition (driver_.getMajorVersion () == expectedMajorVersion,

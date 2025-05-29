@@ -1185,26 +1185,25 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
                 failed("Encoding is null.");
                 return;
             }
-            String s = System.getProperty("os.name").trim().toUpperCase();
-            if (s.indexOf("WINDOWS") > -1 && (enc.equals("Cp1252") || enc.equals("UTF-8"))) // for Windows
+            if (JTOpenTestEnvironment.isWindows && (enc.equals("Cp1252") || enc.equals("UTF-8"))) // for Windows
             {
                 succeeded();
             }
-            else if (s.indexOf("OS/400") > -1 && (enc.equals("ISO8859_1")|| enc.equals("UTF-8"))) // for AS/400 
+            else if (JTOpenTestEnvironment.isOS400 && (enc.equals("ISO8859_1")|| enc.equals("UTF-8"))) // for AS/400 
             {
                 succeeded();
             }
-            else if (s.indexOf("AIX") > -1 && (enc.equals("Cp850") || enc.equals("ISO8859_1"))) // for AIX
+            else if (JTOpenTestEnvironment.isAIX && (enc.equals("Cp850") || enc.equals("ISO8859_1"))) // for AIX
             {
                 succeeded();
             }
-            else if ((s.indexOf("Linux") > -1 || s.indexOf("LINUX") > -1) && (enc.equals("ISO8859_1") || enc.equals("UTF-8"))) // for Linux
+            else if (JTOpenTestEnvironment.isLinux && (enc.equals("ISO8859_1") || enc.equals("UTF-8"))) // for Linux
             {
                 succeeded();
             }
             else
             {
-                failed("Incorrect encoding for '"+s+"': "+enc);
+                failed("Incorrect encoding for '"+JTOpenTestEnvironment.osVersion+"': "+enc);
             }
         }
         catch (Exception e)

@@ -37,13 +37,19 @@ public class JPingTest extends TestDriver
       // Need to disable System.exit in order for this test not to exit when JPing called. 
       SecurityManager defaultSecurityManager = System.getSecurityManager(); 
       SecurityManager sm = new TestDriverSecurityManager();
-      System.setSecurityManager(sm);
+      try { 
+        System.setSecurityManager(sm);
+      } catch (java.lang.UnsupportedOperationException e) { 
+        System.out.println("WARNING:  Unsupported operation "); 
+        e.printStackTrace(System.out); 
+        System.out.println("WARNING:  END WARNING"); 
+      }
 
         try
         {
             TestDriver.runApplication(new JPingTest(args));
         }
-        catch (Exception e)
+        catch (Throwable e)
         {
             System.out.println("Program terminated abnormally.");
             e.printStackTrace();

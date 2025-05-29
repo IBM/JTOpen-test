@@ -59,7 +59,7 @@ public class JDCleanJrnRcv {
         }
       }
 
-      clean(system, userid, PasswordVault.encryptPassword(password.toCharArray()), System.out);
+      clean(system, userid, PasswordVault.getEncryptedPassword(password), System.out);
     } catch (Exception e) {
       e.printStackTrace();
       usage();

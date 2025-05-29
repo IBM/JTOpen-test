@@ -1824,7 +1824,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
             }
           }
 
-	  // UCS-2 not support jdk1 and later
+	  // UCS-2 not support jdk11 and later
           if ((getJDK() >= JVMInfo.JDK_V11)
               && (byteEncoding.indexOf("UCS-2") >= 0)) {
             notApplicable("Encoding " + byteEncoding + " not supported on "

@@ -585,9 +585,9 @@ Performs cleanup needed after running variations.
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:06010";
 		    }
                 }
-                else if (isToolboxDriver()) {    //@A1A
-                  expected = "IBM Toolbox for Java:JDBC:070500";        //@A1A //jto6.1 //@rem removed last 2 digits so this requires no updates between jtopen releases
-                }                                                         //@A1A
+                else if (isToolboxDriver()) {    
+                  expected = "IBM Toolbox for Java:JDBC:070600";        
+                }                                                        
                 Connection conn = testDriver_.getConnection(baseURL_, ((isToolboxDriver()) ? pwrUID_ : userId_), ((isToolboxDriver()) ? encryptedPwrPwd_ : encryptedPassword_));  //@A1C Run with user id and password specified by -pwrSys param for toolbox
                 Statement stmt = conn.createStatement();
                 sql = "CALL QSYS.QCMDEXC('STRDBMON OUTFILE("+JDConnectionTest.COLLECTION+"/DBMONOUT)             ',0000000040.00000)";

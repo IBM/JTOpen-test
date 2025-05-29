@@ -26,6 +26,7 @@ public class JVMInfo {
   public static final int JDK_19  =  190;
   public static final int JDK_V11 = 1100;
   public static final int JDK_V17 = 1700;
+  public static final int JDK_V21 = 2100;
 
 
   static int jdk_ = 0;
@@ -48,6 +49,9 @@ public class JVMInfo {
 	} else if ((javaVersionString_.charAt(0) == '1') &&
 	  (javaVersionString_.charAt(1) == '7')){
 	    jdk_ = JDK_V17;
+        } else if ((javaVersionString_.charAt(0) == '2') &&
+            (javaVersionString_.charAt(1) == '1')){
+              jdk_ = JDK_V21;
 	} else {
 	    System.out
 	      .println("WARNING:  test.JVMInfo unable to determine jdk from java.version="

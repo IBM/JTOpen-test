@@ -55,6 +55,8 @@ import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -1931,11 +1933,10 @@ extends JDTestcase
         //
         Source source = null;
         if (sourceClassName.equals("javax.xml.transform.stax.StAXSource")) {
-          Object inputFactory = JDReflectionUtil.callStaticMethod_O(
-              "javax.xml.stream.XMLInputFactory", "newInstance");
-          Object xmlStreamReader = JDReflectionUtil.callMethod_O(inputFactory,
-              "createXMLStreamReader", Class.forName("java.io.Reader"),
+          XMLInputFactory inputFactory = XMLInputFactory.newInstance(); 
+          XMLStreamReader xmlStreamReader = inputFactory.createXMLStreamReader(
               new StringReader(writeString));
+
           source = (Source) JDReflectionUtil.createObject(
               "javax.xml.transform.stax.StAXSource",
               "javax.xml.stream.XMLStreamReader", xmlStreamReader);

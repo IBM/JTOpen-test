@@ -1296,7 +1296,6 @@ public class  JavaAppTestcase extends Testcase
     Method tested:getStandardOutString()
     - Ensure the method runs well.
     **/
-    @SuppressWarnings("deprecation")
     public void Var059()
     {
         try
@@ -1322,7 +1321,7 @@ public class  JavaAppTestcase extends Testcase
 
             String stdout = listener.getStandardOutString();
             String stderr = listener.getStandardErrorString();
-            thread1.stop();  // we're done with the thread
+            listener.setForceExit(true);  // we're done with the thread
             if (DEBUG) {
               System.out.println("listener.getStandardOutString() == |" + stdout + "|");
               System.out.println("listener.getStandardErrorString() == |" + stderr + "|");
@@ -2745,6 +2744,7 @@ public class  JavaAppTestcase extends Testcase
     private String stdout_ = null;
     private String stderr_ = null;
     private boolean done_ = false;
+    private boolean forceExit_ = false; 
     private JavaApplicationCall javaAppCall_;
 
 
@@ -2759,7 +2759,8 @@ public class  JavaAppTestcase extends Testcase
     public void run()
     {
       String s;
-      while (true)
+      boolean forceExit = false; 
+      while (!forceExit)
       {
         if (DEBUG) System.out.print("x");
 
@@ -2776,12 +2777,19 @@ public class  JavaAppTestcase extends Testcase
         }
 
         delay();
+        synchronized (this) { 
+          forceExit = forceExit_; 
+        }
       }
 
       done_ = true;
       if (DEBUG) System.out.println("\nExited while loop in PortListener. done="+done_);
     }
 
+    synchronized public void setForceExit(boolean value) { 
+      forceExit_ = value;
+    }
+    
     // Returns the stdout string.
     public String getStandardOutString()
     {

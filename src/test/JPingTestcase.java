@@ -81,7 +81,7 @@ public class JPingTestcase extends Testcase {
 
     String[] args = new String[0];
     String[] expectedOutput = {
-        "USAGE: java utilities.JPing [-h] <systemName> [-service <service>] [-ssl] [-verbose]",
+        "USAGE: java com.ibm.as400.util.JPing [-h] <systemName> [-service <service>] [-ssl] [-verbose]",
         "[-h | -help]        Help",
         "[-service | -s]     Service: as-file, as-netprt, as-rmtcmd,",
         "as-dtaq, as-database, as-ddm,", "as-central, as-signon",
@@ -99,7 +99,7 @@ public class JPingTestcase extends Testcase {
     }
     String[] args = { "-h", };
     String[] expectedOutput = {
-        "USAGE: java utilities.JPing [-h] <systemName> [-service <service>] [-ssl] [-verbose]",
+        "USAGE: java com.ibm.as400.util.JPing [-h] <systemName> [-service <service>] [-ssl] [-verbose]",
         "[-h | -help]        Help",
         "[-service | -s]     Service: as-file, as-netprt, as-rmtcmd,",
         "as-dtaq, as-database, as-ddm,", "as-central, as-signon",
