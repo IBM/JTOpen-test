@@ -86,7 +86,7 @@ Performs setup needed before running variations.
 
     /* If running on IBM i, change the job priority */
 
-    if (JTOpenTestEnvironment.isOS400) {
+    if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
       String jobName = JDJobName.getJobName();
       if (jobName.indexOf("not Available") < 0) {
         String sql = "";

@@ -3268,10 +3268,12 @@ public abstract class Testcase {
 	  if (systemName_ == null) { 
 		  systemName_ = systemObject_.getSystemName(); 
 	  }
-	  AS400 authAs400 = new AS400(systemName_,pwrSysUserID_, PasswordVault.decryptPassword(pwrSysEncryptedPassword_)); 
+	  char[] pwrPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
+	  AS400 authAs400 = new AS400(systemName_,pwrSysUserID_, pwrPassword); 
 	  CommandCall cc = new CommandCall(authAs400); 
 	  String command = "QSYS/CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(*NONE)   ";
 	  cc.run(command); 
+          Arrays.fill(pwrPassword, ' '); 
 	  command = "QSYS/CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(1)   ";
 	  mfaIntervalSeconds_ = 60; 
 	  cc.run(command); 

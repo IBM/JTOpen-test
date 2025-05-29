@@ -1000,7 +1000,7 @@ public class JDJobName {
     public static native String sendProgramMessageNative(String message);
 
 	public static void sendProgramMessage(String message) {
-		if (JTOpenTestEnvironment.isOS400) {
+		if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
 			try {
 				if (loaded) {
 					String rc = sendProgramMessageNative(message);

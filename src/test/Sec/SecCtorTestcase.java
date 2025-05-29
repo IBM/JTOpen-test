@@ -1452,6 +1452,62 @@ public class SecCtorTestcase extends Testcase {
       }
     }
   }
+    
+    
+    
+    // test AS400 constructor with given profile token
+    public void Var043() {
+     
+      ProfileTokenCredential profileToken = new ProfileTokenCredential();
+      AS400 system = null;
+      try {
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        system = new AS400(); 
+        system.setGuiAvailable(false);
+        system.setSystemName(systemName_);
+        system.setUserId(userId_);
+        system.setPassword(charPassword);
+        system.connectService(AS400.SIGNON);
+        
+        ProfileTokenCredential testptc = new ProfileTokenCredential();
+        testptc.setSystem(system);
+        testptc.setTimeoutInterval(60);
+        testptc.setTokenType(ProfileTokenCredential.TYPE_SINGLE_USE);
+        testptc.setTokenExtended(userId_, charPassword);
+        System.out.println("Generated the profile token.");
+
+        
+        byte[] tokenBytes = testptc.getToken();
+        ProfileTokenCredential tok2 = new ProfileTokenCredential();
+        tok2.setToken(tokenBytes);
+        AS400 testas4002 = new AS400(systemName_);
+        testas4002.setProfileToken(tok2);
+        testas4002.setGuiAvailable(false);
+        
+        
+        System.out.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
+        testas4002.connectService(AS400.COMMAND);
+        System.out.println("Successfully connected.");
+        testas4002.close(); 
+        
+        PasswordVault.clearPassword(charPassword);
+
+        assertCondition(true); 
+      } catch (Exception e) {
+        failed(e, "Unexpected exception.");
+        return;
+      } finally {
+        system.disconnectAllServices();
+      }
+      
+      
+      
+      
+      
+    }
+
+    
+  
 
   
   

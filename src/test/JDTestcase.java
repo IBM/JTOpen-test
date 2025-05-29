@@ -1997,6 +1997,8 @@ public class JDTestcase extends Testcase {
 
   char previousJVM(char JVM) {
     switch (JVM) {
+    case 'D':
+      return 'C';
     case 'C':
       return 'B';
     case 'B':
@@ -2122,6 +2124,9 @@ public class JDTestcase extends Testcase {
       break;
     case JVMInfo.JDK_V17:
       value += "C";
+      break;
+    case JVMInfo.JDK_V21:
+      value += "D";
       break;
     default:
       value += "X";

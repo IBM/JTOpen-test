@@ -35,6 +35,8 @@ import java.util.Hashtable; import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -1155,11 +1157,10 @@ public class JDPSSetSQLXML extends JDTestcase {
               "setResult",
               Class.forName("javax.xml.transform.stax.StAXResult"));
 
-          Object inputFactory = JDReflectionUtil.callStaticMethod_O(
-              "javax.xml.stream.XMLInputFactory", "newInstance");
-          Object xmlStreamReader = JDReflectionUtil.callMethod_O(inputFactory,
-              "createXMLStreamReader", Class.forName("java.io.Reader"),
+          XMLInputFactory inputFactory = XMLInputFactory.newInstance(); 
+          XMLStreamReader xmlStreamReader = inputFactory.createXMLStreamReader(
               new StringReader(input));
+
           Source source = (Source) JDReflectionUtil.createObject(
               "javax.xml.transform.stax.StAXSource",
               "javax.xml.stream.XMLStreamReader", xmlStreamReader);
@@ -1218,11 +1219,10 @@ public class JDPSSetSQLXML extends JDTestcase {
           Result result = (Result) JDReflectionUtil.callMethod_O(sqlxml,
               "setResult", Class.forName("javax.xml.transform.sax.SAXResult"));
 
-          Object inputFactory = JDReflectionUtil.callStaticMethod_O(
-              "javax.xml.stream.XMLInputFactory", "newInstance");
-          Object xmlStreamReader = JDReflectionUtil.callMethod_O(inputFactory,
-              "createXMLStreamReader", Class.forName("java.io.Reader"),
+          XMLInputFactory inputFactory = XMLInputFactory.newInstance(); 
+          XMLStreamReader xmlStreamReader = inputFactory.createXMLStreamReader(
               new StringReader(input));
+
           Source source = (Source) JDReflectionUtil.createObject(
               "javax.xml.transform.sax.SAXSource",
               "javax.xml.stream.XMLStreamReader", xmlStreamReader);

@@ -1636,7 +1636,7 @@ public class JDDriverConnect extends JDTestcase {
    **/
   public void Var047() {
     Connection conn1;
-    if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
+    if (!JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isOS400open) {
       notApplicable("i5 platform TC");
       return;
     }
@@ -1856,7 +1856,7 @@ public class JDDriverConnect extends JDTestcase {
   public void Var049() {
     if (checkPasswordLeak()) {
 
-      if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
+      if (!JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isOS400open) {
         notApplicable("i5 platform TC");
         return;
       }
@@ -2023,7 +2023,7 @@ public class JDDriverConnect extends JDTestcase {
       notApplicable("Toolbox TC");
       return;
     }
-    if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
+    if (!JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isOS400open) {
       notApplicable("i5 platform TC");
       return;
     }
@@ -2243,7 +2243,7 @@ public class JDDriverConnect extends JDTestcase {
       notApplicable("Toolbox TC");
       return;
     }
-    if (!JDTestDriver.getClientOS().equals(JDTestDriver.CLIENT_as400)) {
+    if (!JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isOS400open) {
       notApplicable("i5 platform TC");
       return;
     }
@@ -2592,7 +2592,7 @@ public class JDDriverConnect extends JDTestcase {
    */
 
   public void Var057() {
-    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && JTOpenTestEnvironment.isOS400) {
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && JTOpenTestEnvironment.isOS400 && (!JTOpenTestEnvironment.isOS400open)) {
       try {
         Connection c = DriverManager.getConnection("jdbc:as400:localhost;driver=native");
 

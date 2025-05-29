@@ -785,6 +785,8 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
   	           Statement s = cmdConn.createStatement(); 
   	           s.execute("CREATE COLLECTION "+library); 
   	           retry = true; 
+  	           s.executeUpdate("GRANT ALL ON SCHEMA " + library  + " TO PUBLIC " );
+  	              
   	         } else { 
   		   System.out.println("Warning:  Command = "+command);
   		   e.printStackTrace(); 

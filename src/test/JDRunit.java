@@ -152,7 +152,9 @@ public class JDRunit {
   static String[] inheritedProperties = { "jdbc.db2.", "com.ibm.as400.access.",
       "com.ibm.jtopenlite.", "jta.", "test.", "debug",
       "interactive", "os400.stdio", "com.ibm.cacheLocalHost", "java.net.",
-      "com.sun.management.", "https.", "jdk.", };
+      "com.sun.management.", "https.",  };
+  /* Removed jdk. as this cause problems by passing on unsupported JDK options from */
+  /* the source JVM to the target JVM */ 
 
   static String[] convertToXProperties = { "runjdwp:", "debug", "rs",
       "healthcenter", };
@@ -173,6 +175,7 @@ public class JDRunit {
   static long globalTimeout = 3600000;
 
   static boolean on400 = false;
+  static boolean on400open = false;
   static boolean onLinux = false;
 
   static {
@@ -202,6 +205,7 @@ public class JDRunit {
     }
  
     on400 = JTOpenTestEnvironment.isOS400; 
+    on400open = JTOpenTestEnvironment.isOS400open; 
     onLinux = JTOpenTestEnvironment.isLinux;
     
     property = System.getProperty("useTestJar"); 
@@ -460,7 +464,7 @@ public class JDRunit {
   }
 
   public static void runRegression(String initials) throws Exception {
-    if (on400) {
+    if (on400 && !on400open) {
       Date d = new Date();
       JDJobName.sendProgramMessage("LD " +Thread.currentThread().getName()+" " + d.toString()
           + " Running REGRESSION " + initials);
@@ -1189,7 +1193,7 @@ public class JDRunit {
            || args[1].equals("REPORT")
           || args[1].equals("EMAIL") || (args[1].indexOf("EMAILTO-") == 0)) {
         String initials = args[0];
-        if (on400) {
+        if (on400 && !on400open) {
           Date d = new Date();
           JDJobName.sendProgramMessage("LD "+Thread.currentThread().getName()+" "  + d.toString()
               + " Running JDRunit " + initials);
@@ -1232,7 +1236,7 @@ public class JDRunit {
       } else if (args.length < 2) {
         usage();
         System.out.println("JDRunit:  Exit 2. Calling System.exit(2)");
-        if (on400) {
+        if (on400 && !on400open) {
           JDJobName
               .sendProgramMessage("JDRunit:  Exit 2. Calling System.exit(2)");
         }
@@ -1264,7 +1268,7 @@ public class JDRunit {
           e.printStackTrace();
           usage();
           System.out.println("JDRunit:  Exit 2. Calling System.exit(3)");
-          if (on400) {
+          if (on400 && !on400open) {
             JDJobName
                 .sendProgramMessage("JDRunit:  Exit 2. Calling System.exit(3)");
           }
@@ -1272,7 +1276,7 @@ public class JDRunit {
         }
       }
       System.out.println("JDRunit:  DONE.. Calling System.exit(0)");
-      if (on400) {
+      if (on400 && !on400open) {
         JDJobName.sendProgramMessage("JDRunit:  DONE. Calling System.exit(0)");
       }
       /*
@@ -1287,7 +1291,7 @@ public class JDRunit {
       e.printStackTrace();
       usage();
       System.out.println("JDRunit:  Exit 1. Calling System.exit(1)");
-      if (on400) {
+      if (on400 && !on400open) {
         JDJobName
             .sendProgramMessage("JDRunit:  Exit 1. Calling System.exit(1)");
       }
@@ -1926,7 +1930,7 @@ public class JDRunit {
       iaspArgs = " -asp IASP_NOT_DEFINED_IN_INI ";
     }
 
-    if (on400) {
+    if (on400 && !on400open) {
       if (SYSTEM.equals("DB2MB1P4")
 || SYSTEM.equals("B2PAR")
 || SYSTEM.equals("B1PT")
@@ -2224,7 +2228,6 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     }
 
 
-
     String newTestJar = iniProperties.getProperty("testJar");
     if (newTestJar != null) {
       testcaseCode = newTestJar; 
@@ -2387,7 +2390,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       /* Not LINUX or WINDOWS -- must be OS400 */
       /* inputVector.addElement("echo SYSTEM WRKSYSSTS"); */
       /* inputVector.addElement("system wrksyssts"); */
-        if (javaHome.indexOf("/QOpenSys/pkgs/lib/jvm") >=0) {
+        if (javaHome.indexOf("/QOpenSys/pkgs/lib/jvm") < 0) {
             setClasspath=setClasspath+"\":/QIBM/ProdData/OS400/Java400/ext/db2_classes11.jar\"";
         } 
 
@@ -2635,7 +2638,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     }
 
     String parentJob = "UNKNOWN";
-    if (on400) {
+    if (on400 && !on400open) {
       parentJob = JDJobName.getJobName();
     }
 
@@ -2728,7 +2731,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       if (debug)
         System.out.println("JDRunit: Shell command (with args) is: " + cmdArray1[0] + " " + cmdArray1[1]);
     }
-    if (on400) {
+    if (on400 && !on400open) {
       JDJobName.sendProgramMessage(
           "GD " + Thread.currentThread().getName() + " " + date.toString() + " Running " + initials + " " + testArgs);
     }
@@ -2801,7 +2804,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         System.out.println("Process completed with rc=" + rc);
         if (rc != 0) {
           System.out.println("Running info: " + shellTestProcessInfo);
-          if (on400) {
+          if (on400 && !on400open) {
             Date d = new Date();
             JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString() + " Rc=" + rc
                 + " from " + initials + " " + testArgs);
@@ -2834,7 +2837,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         String outString = " Severe Error Running  " + initials + " " + testArgs + "\n";
         stdoutThread.addOutputString(outString);
         body.append(outString);
-        if (on400) {
+        if (on400 && !on400open) {
           Date d = new Date();
           JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString() + outString);
         }
@@ -2843,7 +2846,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         stdoutThread.addOutputString(outString);
         body.append(outString);
         System.out.print(outString);
-        if (on400) {
+        if (on400 && !on400open) {
           Date d = new Date();
           JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString() + outString);
         }
@@ -2852,7 +2855,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         // Check to see if we can recover
         //
         boolean recovered = false;
-        if (on400) {
+        if (on400 && !on400open) {
           if ((hangMessage.indexOf("sun.awt.X11GraphicsEnvironment") > 0)
               || (hangMessage.indexOf("connection to \":9.0\"") > 0)) {
             /* Something went wrong with the VNC server */
@@ -2908,7 +2911,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           stdoutThread.addOutputString(outString);
           System.out.println(outString);
           if (jobname != null) {
-            if (on400) {
+            if (on400 && !on400open) {
               String command = "DSPJOBLOG JOB(" + jobname + ") OUTPUT(*PRINT)";
               outString = "Dumping job log to *PRINT using " + command + "\n";
               stdoutThread.addOutputString(outString);
@@ -2917,7 +2920,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             }
           }
           System.out.println("ERROR:  JDRunit: Generating report and sleeping for 60 seconds");
-          if (on400) {
+          if (on400 && !on400open) {
             Date d = new Date();
             JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString()
                 + "ERROR:  JDRunit: Generating report and sleeping for 60 seconds");
@@ -2951,7 +2954,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
                 && (!vectorContainsString(hangMessagesFound, "Snap dump written"))) {
               System.out.println("JVM requested System dump, waiting for dump to complete.  RetryCount=" + retryCount
                   + "/" + MAXRETRIES + " Sleeping for 60 seconds ");
-              if (on400) {
+              if (on400 && !on400open) {
                 Date d = new Date();
                 JDJobName.sendProgramMessage("LD " + Thread.currentThread().getName() + " " + d.toString()
                     + "JVM requested System dump, waiting for dump to complete.  RetryCount=" + retryCount + "/"
@@ -3017,7 +3020,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         fatalError = true;
         stdoutThread.addOutputString(outString);
         System.out.print(outString);
-        if (on400) {
+        if (on400 && !on400open) {
           Date d = new Date();
           JDJobName.sendProgramMessage("LD "+Thread.currentThread().getName()+" "  + d.toString() + " " + outString);
         }
@@ -3126,7 +3129,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
         shellTestProcess.destroy();
 
-        if (on400) {
+        if (on400 && !on400open) {
           String info = "Parsed job name: " + stdoutThread.getParsedJobName();
           stdoutThread.addOutputString(info + "\n");
           System.out.println(info);
@@ -3725,7 +3728,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     } catch (Exception e) {
       System.out.println("Reset failed using "+jdbcUrl+" adminUserid=" + adminUserid+" password="+adminPassword);
       e.printStackTrace(System.out);
-      if (on400) {
+      if (on400 && !on400open) {
         JDJobName.sendProgramMessage("Reset of profile " + testUserid
             + " failed with " + e.toString());
       }

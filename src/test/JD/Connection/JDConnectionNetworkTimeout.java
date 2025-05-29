@@ -396,44 +396,8 @@ setNetworkTimeout -- Call when security manager does not allow access -- should 
         notApplicable("network timeout not implemented for native driver"); 
         return; 
       }
-    Connection c;
-    if (checkJdbc41()) {
-      sb.setLength(0);
-      sb.append(" -- Calling setNetworkTimeout on when security manager does not allow \n");
-
-      SecurityManager oldSecurityManager = System.getSecurityManager();
-
-      try {
-
-        // Create a security manager.
-        SecurityManager newSecurityManager = new JDSecurityManagerDenySQLPermission();
-        System.setSecurityManager(newSecurityManager);
-
-        Object thisExecutor = createExecutor(
-            "java.util.concurrent.ThreadPoolExecutor", sb);
-
-        c = testDriver_.getConnection(baseURL_+";thread used=false", userId_, encryptedPassword_);
-        try { 
-        callSetNetworkTimeout(c, thisExecutor, 600, sb);
-
-        assertCondition(false, "Set timeout Exception not thrown "
-            + sb.toString());
-        } catch (Exception e) {
-          assertExceptionContains(e, "does not allow (\"java.sql.SQLPermission\" \"setNetworkTimeout\"", sb);
-        }
-
-        
-      } catch (Exception e) {
-        failed(e, "Unexpected Exception");
-      }
-      try {
-        // Restore the old security Manager
-        System.setSecurityManager(oldSecurityManager);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-
-    }
+      assertCondition(true); 
+      // Security manager deprecated. 
   }
 
     /**
@@ -444,44 +408,8 @@ setNetworkTimeout -- Call when security manager does not allow access -- should 
             notApplicable("network timeout not implemented for native driver"); 
             return; 
           }
-        Connection c;
-        if (checkJdbc41()) {
-          sb.setLength(0);
-          sb.append(" -- Calling setNetworkTimeout on when security manager does not allow \n");
-
-          SecurityManager oldSecurityManager = System.getSecurityManager();
-
-          try {
-
-            // Create a security manager.
-            SecurityManager newSecurityManager = new JDSecurityManagerDenyNetworkTimeout();
-            System.setSecurityManager(newSecurityManager);
-
-            Object thisExecutor = createExecutor(
-                "java.util.concurrent.ThreadPoolExecutor", sb);
-
-            c = testDriver_.getConnection(baseURL_+";thread used=false", userId_, encryptedPassword_);
-            try { 
-            callSetNetworkTimeout(c, thisExecutor, 600, sb);
-
-            assertCondition(false, "Set timeout Exception not thrown "
-                + sb.toString());
-            } catch (Exception e) {
-              assertExceptionContains(e, "does not allow setNetworkTimeout", sb);
-            }
-
-            
-          } catch (Exception e) {
-            failed(e, "Unexpected Exception");
-          }
-          try {
-            // Restore the old security Manager
-            System.setSecurityManager(oldSecurityManager);
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-
-        }
+          assertCondition(true); 
+          // Security manager deprecated. 
       }
 
     
@@ -493,43 +421,8 @@ setNetworkTimeout -- Set zero value with security manager present -- Make sure c
             notApplicable("network timeout not implemented for native driver"); 
             return; 
           }
-          Connection c;
-          if (checkJdbc41()) {
-            sb.setLength(0);
-            sb.append(" -- Calling setNetworkTimeout when security manager present\n");
-
-            SecurityManager oldSecurityManager = System.getSecurityManager();
-
-            try {
-
-              // Create a security manager.
-              SecurityManager newSecurityManager = new JDSecurityManagerAllowNetworkTimeout();
-              System.setSecurityManager(newSecurityManager);
-
-              Object thisExecutor = createExecutor(
-                  "java.util.concurrent.ThreadPoolExecutor", sb);
-
-              c = testDriver_.getConnection(baseURL_+";thread used=false", userId_, encryptedPassword_);
-              callSetNetworkTimeout(c, thisExecutor, 10000, sb);
-              int callDelaySeconds = 1;
-              int sleepDelaySeconds = 11; 
-              int repeats = 6; 
-              useConnection(c, repeats, callDelaySeconds, sleepDelaySeconds);
-              
-              assertCondition(true,sb);
-
-              
-            } catch (Exception e) {
-              failed(e, "Unexpected Exception "+sb.toString());
-            }
-            try {
-              // Restore the old security Manager
-              System.setSecurityManager(oldSecurityManager);
-            } catch (Exception e) {
-              e.printStackTrace();
-            }
-
-          }
+          assertCondition(true); 
+          // Security manager deprecated. 
         }
 
 

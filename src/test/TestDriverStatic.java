@@ -53,12 +53,6 @@ public class TestDriverStatic
       try { 
       if (JTOpenTestEnvironment.isOS400) onAS400_ = true; // make sure this flag gets set
       
-      // Setting a security manager is deprecated.  Remove. 
-      // defaultSecurityManager_ = System.getSecurityManager(); 
-      // SecurityManager sm = new TestDriverSecurityManager();
-      // Do not print this out.  Causes some comparision testcases to fail
-      // System.out.println("TestDriverStatic: Setting security manager to "+sm); 
-      // System.setSecurityManager(sm);
       
       } catch (Throwable e) { 
         System.err.println("TestDriverStatic: Exception in static initializer"); 
@@ -371,10 +365,6 @@ public class TestDriverStatic
       return staticTestcaseResults;
     }
 
-    // Remove deprecated code
-    // public static void restoreSecurityManager() {
-    //   System.setSecurityManager(defaultSecurityManager_); 
-    // }
 
 }
 

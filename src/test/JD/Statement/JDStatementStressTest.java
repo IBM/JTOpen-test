@@ -2746,7 +2746,7 @@ public class JDStatementStressTest extends JDTestcase {
       sb.append(
           "Testing that DBStorage object are not leaked for toolbox driver\n");
       try {
-        boolean on400 = JTOpenTestEnvironment.isOS400; 
+        boolean on400 = JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open; 
         String jobName;
         int collectionLength = collection_.length();
         String pexKey = "JDSSTZ"

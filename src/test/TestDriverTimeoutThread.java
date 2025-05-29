@@ -34,7 +34,8 @@ public class TestDriverTimeoutThread extends java.lang.Thread {
 
   public void run() {
     Thread myThread = Thread.currentThread(); 
-    myThread.setName("TestDriverTimeoutThread");
+    myThread.setName("TestDriverTimeoutThread.starting");
+    System.out.println("TestDriverTimeoutThread.starting");
     reset();
     long leftTime = 1000;
     running = true;
@@ -43,10 +44,10 @@ public class TestDriverTimeoutThread extends java.lang.Thread {
         long currentTime = System.currentTimeMillis();
         leftTime = doneTime - currentTime;
         try {
+          myThread.setName("TestDriverTimeoutThread."+leftTime);
           if (leftTime > 1000) {
             wait(1000);
-          }
-          if (leftTime > 0) {
+          } else if (leftTime > 0) {
             wait(leftTime);
           }
         } catch (InterruptedException e) {
@@ -54,6 +55,9 @@ public class TestDriverTimeoutThread extends java.lang.Thread {
               .println("Interrupted exception caught.. Timeout thread exiting");
           running = false;
         } catch (Exception e) {
+          System.out.println("TestDriverTimeoutThread Exception caught"); 
+          e.printStackTrace(System.out); 
+          running = false; 
         }
       }
     }
@@ -63,12 +67,15 @@ public class TestDriverTimeoutThread extends java.lang.Thread {
       System.out.println("java.lang.Unknown job being killed");
       System.exit(1);
     }
+    System.out.println("TestDriverTimeoutThread.done");
+    myThread.setName("TestDriverTimeoutThread.done");
+    
   }
 
   public void markDone() {
     synchronized (this) {
       running = false;
-      notify();
+      notifyAll();
     }
     try {
       Thread.sleep(1000);

@@ -94,7 +94,7 @@ public class JDSchedulerServer extends JDScheduler {
       setupAccess(serverId);
       long emailSentTime = 0;
 
-      boolean on400 = JTOpenTestEnvironment.isOS400;
+      boolean on400 = JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open;
       AS400 thisAS400 = null;
 
       if (on400) {

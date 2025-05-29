@@ -196,6 +196,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
   protected boolean skipCleanup = false;
 
+  boolean debug_ = false; 
   /**
    * Constructs a TestDriver object. It is assumed that this is only called for
    * applets.
@@ -937,7 +938,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     // If on a 400, print the testcase information in the job log
     // Save the current logging level
     // change the job so it will log
-    if (onAS400_) {
+    if (onAS400_ && ! JTOpenTestEnvironment.isOS400open) {
       String thisClass = this.getClass().getName();
       String argString = obfuscatePasswords(argsToSave_);
       Date d = new Date();
@@ -975,29 +976,37 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 
     // Perform test driver setup.
     try {
+      if (debug_) out_.println("Running Setup");
       setup();
-    } catch (Exception e) {
+      if (debug_) out_.println("Setup complete");
+    } catch (Throwable e) {
       out_.println("Test driver setup error:");
       e.printStackTrace(out_);
     }
 
     // Run each testcase.
     try {
+      if (debug_) out_.println("Running through "+testcases_.size()+" testcases ");
+
       for (Enumeration<Testcase> e = testcases_.elements(); e.hasMoreElements();) {
         Testcase tc = (Testcase) e.nextElement();
         start_ = System.currentTimeMillis();
+        if (debug_) out_.println("Running "+tc.toString());
         tc.run();
+        if (debug_) out_.println("Done "+tc.toString());
         time_ = System.currentTimeMillis() - start_;
         tc.setTimeToRun((double) time_ / 1000);
         if (timeoutThread != null)
           timeoutThread.reset();
       }
-    } catch (Exception e) {
+    } catch (Throwable e) {
       out_.println("Test driver error while running testcases:");
       e.printStackTrace(out_);
     }
 
     // Output status for each testcase.
+    if (debug_) out_.println("Status for "+testcases_.size()+" testcases ");
+    
     for (Enumeration<Testcase> e = testcases_.elements(); e.hasMoreElements();) {
       Testcase tc = (Testcase) e.nextElement();
       tc.outputResults();
@@ -1258,8 +1267,21 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     } finally {
 
       if (timeoutThread != null) {
-        System.out.println("Marking timeout thead done"); 
+        System.out.println("TestDriver.Marking timeout thead done"); 
         timeoutThread.markDone();
+        System.out.println("TestDriver.Joining with timeout thread, limit 10 seconds"); 
+        try {
+          timeoutThread.join(10000);
+        } catch (InterruptedException e) {
+        }
+        if (timeoutThread.isAlive()) {
+          System.out.println("TestDriver.Timeout thread is still alive -- dumping stack and calling exit"); 
+          StackTraceElement[] stackTraceElements = timeoutThread.getStackTrace(); 
+          for (int i = 0; i < stackTraceElements.length; i++) {
+            System.out.println(stackTraceElements[i]); 
+          }
+          System.exit(0); 
+        }
       } else {
         System.out.println("Timeout thead done not present"); 
       }

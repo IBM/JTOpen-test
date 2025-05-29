@@ -189,7 +189,7 @@ public class JDPerformanceUtil {
     if (!platformKnown) {
       String srvpgm = "CPUUSE"; 
       platformKnown=true; 
-      if (JTOpenTestEnvironment.isOS400) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         // 
         // If on iSeries, determine if native method exists
         // Create native method and use it.
