@@ -1824,47 +1824,8 @@ Verify classpath code does not fail when running as an applet
 **/
 public void Var032()
 {
-  if (!isApplet_)
-  {
-    notApplicable("Not running as an applet.");
-    return;
-  }
-
-    try
-    {
-        createLocalSourceFiles(InstallTest.targetPath);
-        // Overwrite change LST file to make classpath affected.
-        InstallTest.writeFile(InstallTest.targetPath + "V1R1M1.LST",
-                         "ACCESS   ADD  NY   TEST1.TXT\n" +
-                         "ACCESS   ADD  NN   TEST2.TXT\n" +
-                         "ACCESS   PADD NY   \n" );
-        if (!AS400ToolboxInstaller.install("ACCESS",
-                                           target,
-                                           InstallTest.localURL))
-            failed("Update not needed when it is.");
-        if (verifyLocalInstall(target))
-            succeeded();
-    }
-    catch (Exception e)
-    {
-        failed(e, "Unexpected exception");
-    }
-    finally
-    {
-        // Remove change list file from source
-        File file = new File(InstallTest.targetPath + "V1R1M1.LST");
-        file.delete();
-        try
-        {
-            // Remove remaining files in source.
-            AS400ToolboxInstaller.unInstall("*ALL",
-                                            InstallTest.targetPath);
-            // Remove files in target and target directory.
-            AS400ToolboxInstaller.unInstall("*ALL",
-                                            target);
-        }
-        catch (IOException e) {e.printStackTrace(output_);}
-    }
+  notApplicable("Not running as an applet.");
+  return;
   }
 
 /**

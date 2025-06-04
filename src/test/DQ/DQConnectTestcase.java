@@ -379,14 +379,7 @@ public class DQConnectTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (isApplet_)
-                {
-                    succeeded();
-                }
-                else
-                {
                     assertExceptionIs(e, "UnknownHostException");
-                }
             }
         }
         catch (Exception e)
@@ -413,14 +406,7 @@ public class DQConnectTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (isApplet_)
-                {
-                    succeeded();
-                }
-                else
-                {
                     assertExceptionIs(e, "UnknownHostException");
-                }
             }
         }
         catch (Exception e)

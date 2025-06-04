@@ -156,7 +156,6 @@ protected void cleanup()
            System.out.println(ex);
       }
      
-      if (!isApplet_)
       {
         try
         {
@@ -562,11 +561,6 @@ Method tested: writeObject()
 **/  
 public void Var013()
 {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
     if (PermissionTestDriver.PwrSys == null)
        {
             failed("-misc testcase parm with PwrSys not specified.");
@@ -595,11 +589,6 @@ Method tested: writeObject() and readObject()
 **/
  public void Var014()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
     if (PermissionTestDriver.PwrSys == null)
        {
             failed("-misc testcase parm with PwrSys not specified.");
@@ -638,11 +627,6 @@ Method tested: commit()                                           //@A2A
 **/
  public void Var015()                                             //@A2A
  {
-   if (isApplet_)
-   {
-     notApplicable("Running as applet.");
-     return;
-   }
    if (PermissionTestDriver.PwrSys == null)
    {
      failed("-misc testcase parm with PwrSys not specified.");

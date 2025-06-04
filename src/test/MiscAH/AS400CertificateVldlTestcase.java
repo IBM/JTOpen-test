@@ -108,7 +108,6 @@ Constructor.
     }
 
     output_.println("Running under: " + operatingSystem_);
-    output_.println("Executing " + (isApplet_ ? "applet." : "application."));
 
     testInit();
   }
@@ -203,14 +202,7 @@ Constructor.
   {
     try
     {
-      if (isApplet_)
-      {
          aUserSpace.delete();
-      }
-      else
-      {
-         aUserSpace.delete();
-      }
     }
     catch(Exception e)
     {

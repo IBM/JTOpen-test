@@ -21,21 +21,19 @@
 
 package test.JD.Connection;
 
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDConnectionTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JD.JDSecurityManagerAllowNetworkTimeout;
-import test.JD.JDSecurityManagerDenyNetworkTimeout;
-import test.JD.JDSecurityManagerDenySQLPermission;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Hashtable; import java.util.Vector;
 
 
 

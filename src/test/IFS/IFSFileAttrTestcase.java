@@ -162,11 +162,6 @@ increases by one for every byte written to the file.
 **/
   public void Var002()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     String fileName = ifsPathName_ + "a2";
     createFile(fileName);
@@ -205,11 +200,6 @@ for every byte written to the file.
 **/
   public void Var003()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     String fileName = ifsPathName_ + "a3";
     createFile(fileName);
@@ -246,11 +236,6 @@ files and non-empty files).
 **/
   public void Var004()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     String emptyName = ifsDirName_ + "Empty";
     createFile(emptyName);
     String nonEmptyName = ifsDirName_ + "NonEmpty";

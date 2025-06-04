@@ -851,10 +851,10 @@ executeQuery() - Execute a read only query using an updatable statement.
                      getDriver () == JDTestDriver.DRIVER_NATIVE ) &&
                     getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
                 {
-                    assertCondition ((w == null) && (concurrency == ResultSet.CONCUR_UPDATABLE));
+                    assertCondition ((w == null) && (concurrency == ResultSet.CONCUR_UPDATABLE), "expected concurrency= ResultSet.CONCUR_UPDATABLE but got "+concurrency);
                 }
                 else
-                    assertCondition ((w != null) && (concurrency == ResultSet.CONCUR_READ_ONLY));
+                    assertCondition ((w != null) && (concurrency == ResultSet.CONCUR_READ_ONLY), "expected concurrency= ResultSet.CONCUR_READ_ONLY but got "+concurrency);
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");

@@ -87,7 +87,6 @@ public class NLSUserSpaceTestcase extends Testcase
 
     output_.println("Running under: " + operatingSystem_);
     output_.println("DOS-based file structure: " + DOS_);
-    output_.println("Executing applet: " + isApplet_);
 
     try
     {
@@ -614,7 +613,6 @@ Read and verify every byte of a user space containing all possible byte values.
 
     UserSpace aUserSpace = null;
 
-    byte[] inBuffer1 = new byte[1];
 
     try
     {
@@ -623,23 +621,6 @@ Read and verify every byte of a user space containing all possible byte values.
        aUserSpace.create(11000, true, " ", (byte)0x00, "NLSUSTEST", "*ALL");
        aUserSpace.write(data, 0);
 
-       if (isApplet_)
-       {
-          int i=0;
-          int i1;
-          do
-          {
-             i1 = aUserSpace.read(inBuffer1, i);
-          }
-          while(i < data.length && inBuffer1[0] == data[i++]);
-
-          if(i == data.length)
-             succeeded();
-          else
-             failed("Unexpected results occurred."+i1);
-
-       }
-       else
        {
           int i1;
           int i = 0;
@@ -677,7 +658,6 @@ Read and verify every byte of a user space containing all possible byte values.
 
     UserSpace aUserSpace = null;
 
-    byte[] inBuffer1 = new byte[1];
 
     try
     {
@@ -686,23 +666,6 @@ Read and verify every byte of a user space containing all possible byte values.
        aUserSpace.create(11000, true, " ", (byte)0x00, "NLSUSTEST", "*ALL");
        aUserSpace.write(data, 0, 0, data.length);
 
-       if (isApplet_)
-       {
-          int i=0;
-          int i1;
-          do
-          {
-             i1 = aUserSpace.read(inBuffer1, i);
-          }
-          while(i < data.length && inBuffer1[0] == data[i++]);
-
-          if(i == data.length)
-             succeeded();
-          else
-             failed("Unexpected results occurred."+i1);
-
-       }
-       else
        {
           int i1;
           int i = 0;
@@ -747,11 +710,6 @@ Ensure that the data read is stored at the specified offset in the byte array.
 
       byte[] data1 = { 0,1,2,3,4,5,6,7,8,9 };
 
-      if (isApplet_)
-      {
-        aUserSpace.read(data1, 3, 4, 1);
-      }
-      else
       {
         aUserSpace.read(data1, 3, 4, 1);
       }
@@ -786,11 +744,6 @@ Ensure that the expected String is returned.
       aUserSpace.create(1000, true, " ", (byte)0x00, "NLSUSTEST", "*ALL");
       aUserSpace.write(dbcs_string50, 10);
 
-      if (isApplet_)
-      {
-        readString = aUserSpace.read(10, dbcs_string50.length());
-      }
-      else
       {
         readString = aUserSpace.read(10, dbcs_string50.length());
       }

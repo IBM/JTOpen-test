@@ -103,7 +103,6 @@ public abstract class Testcase {
   public static StringBuffer getSysValTimeStringBuffer = new StringBuffer();
 
   protected boolean endIfSetupFails_ = true;
-  protected boolean isApplet_;
   protected String name_ = null; // Testcase name.
   protected String systemName_ = null;
   private int systemVRM_ = 0;

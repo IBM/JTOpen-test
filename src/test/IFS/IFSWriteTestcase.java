@@ -1093,12 +1093,6 @@ Test IFSTextFileOutputStream.flush().
    **/
   public void Var038()
   {
-    if (isApplet_)
-    {
-      notApplicable("Deactivated until IFS classes use the new Converters");
-      // The browser's JVM has no converter for Cp037.
-      return;
-    }
     String s = "The quick brown fox.";
     String fileName = ifsPathName_ + "w38";
     try
@@ -1142,12 +1136,6 @@ Test IFSTextFileOutputStream.flush().
    **/
   public void Var039()
   {
-    if (isApplet_)
-    {
-      notApplicable("Deactivated until IFS classes use the new Converters");
-      // The browser's JVM has no converter for Cp037.
-      return;
-    }
     String s = "The quick brown fox.";
     String fileName = ifsPathName_ + "w39";
     try

@@ -16,6 +16,7 @@ package test.Sec;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -46,7 +47,7 @@ public class SecChangePasswordTestcase extends Testcase {
         sys.close();
         failed("exception not generated");
       } catch (Exception e) {
-        if (onAS400_ /* && isNative_ */ ) {
+        if (onAS400_ /* && isNative_ */ && !JTOpenTestEnvironment.isOS400open) {
           sys.connectService(AS400.COMMAND);
           sys.disconnectAllServices();
           sys.close();
@@ -74,7 +75,7 @@ public class SecChangePasswordTestcase extends Testcase {
         sys.close();
         failed("exception not generated");
       } catch (Exception e) {
-        if (onAS400_ /* && isNative_ */ ) {
+        if (onAS400_ /* && isNative_ */ && !JTOpenTestEnvironment.isOS400open) {
           sys.connectService(AS400.COMMAND);
           sys.disconnectAllServices();
           sys.close();

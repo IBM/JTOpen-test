@@ -306,8 +306,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
      **/
     public void setup() throws Exception
     {
-        if (!isApplet_)
-        {
             // Make sure javatest dir exists.
             javatest_ = new File(logDirectory_);
             if (!javatest_.exists())
@@ -333,7 +331,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             }
 
             writer_ = new PrintWriter(new FileWriter(testFile_));
-        }
 
         // Determine the environment.
         String os = System.getProperty("os.name");
@@ -344,8 +341,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         else if (JTOpenTestEnvironment.isWindows)
             environment_ = OS_WINDOWS;
 
-        if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))
-        {
             // Get the JNDI Initial Context.
             Properties env = new Properties();
 
@@ -358,7 +353,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
 
             env.put(Context.INITIAL_CONTEXT_FACTORY, jndiType_);
             context_ = new InitialContext(env);
-        }
     }
 
     /**
@@ -3155,12 +3149,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
     **/
     public void Var113()
     {
-        if (isApplet_)
-        {
-
-            notApplicable("Running in applet");
-            return;
-        }
         Connection c = null;
 
         AS400JDBCDataSource ds = new AS400JDBCDataSource();
@@ -3536,11 +3524,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             notApplicable("Using serialized datasource");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
 
         String jndiName = "javatest/test123";
 
@@ -3615,11 +3598,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             notApplicable("Using serialized datasource");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
 
         String jndiName = "javatest/test124";
 
@@ -3683,11 +3661,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         if (dataSource_ != null)
         {
             notApplicable("Using serialized datasource");
-            return;
-        }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
             return;
         }
 
@@ -3769,11 +3742,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             notApplicable("Using serialized datasource");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
 
         String jndiName = "javatest/test126";
 
@@ -3844,11 +3812,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         if (dataSource_ != null)
         {
             notApplicable("Using serialized datasource");
-            return;
-        }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
             return;
         }
 
@@ -4017,11 +3980,6 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         if (dataSource_ != null)
         {
             notApplicable("Using serialized datasource");
-            return;
-        }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
             return;
         }
 

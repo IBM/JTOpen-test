@@ -76,14 +76,7 @@ public class ConvTableJavaTestcase extends Testcase
                         }
                         catch (UnsupportedEncodingException uee)
                         {
-                            if (isApplet_)
-                            {
-                                notApplicable("Browser does not possess encoding '" + encoding + "'.");
-                            }
-                            else
-                            {
                                 failed(uee, "Unexpected exception for encoding " + encoding + ".");
-                            }
                         }
                         catch(Exception e)
                         {

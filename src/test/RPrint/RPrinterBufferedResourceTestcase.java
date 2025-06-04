@@ -330,8 +330,8 @@ for a RPrinter whose properties have not been set.
                    && (fullName.equals(""))
                    && (descriptionText != null) // Can't compare directly, this is MRI.
                    && (helpText == null)
-                   && ((isApplet_) || (iconColor16 != null))    // Applets don't always load gifs.
-                   && ((isApplet_) || (iconColor32 != null))    // Applets don't always load gifs.
+                   && ( (iconColor16 != null))    // Applets don't always load gifs.
+                   && ( (iconColor32 != null))    // Applets don't always load gifs.
                    && (asString.equals("")));
         }
         catch (Exception e) {
@@ -362,8 +362,8 @@ for a RPrinter whose properties have been set and used.
                    && (fullName.equals(printerName_))
                    && (descriptionText != null) // Can't compare directly, this is MRI.
                    && (helpText == null)
-                   && ((isApplet_) || (iconColor16 != null))    // Applets don't always load gifs.
-                   && ((isApplet_) || (iconColor32 != null))    // Applets don't always load gifs.
+                   && ( (iconColor16 != null))    // Applets don't always load gifs.
+                   && ( (iconColor32 != null))    // Applets don't always load gifs.
                    && (asString.equals(printerName_)), "textDescription="+textDescription);
         }
         catch (Exception e) {

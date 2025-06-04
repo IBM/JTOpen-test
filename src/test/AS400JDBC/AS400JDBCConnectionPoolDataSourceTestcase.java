@@ -96,7 +96,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
      else if (JTOpenTestEnvironment.isWindows)  //@A7A
      	environment_ = OS_WINDOWS;	   //@A7A
 
-     if (!isApplet_)	 //@A5A
+     if (true)	 //@A5A
      {
 	// Make sure javatest dir exists.						//@A3A
 	javatest_ = new File(logDirectory_); //@A4C                                     //@A3A
@@ -121,7 +121,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 	}
      }
 
-     if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))		 //@A5A
+     if (true)		 //@A5A
      {
 	// Get the JNDI Initial Context.
 	Properties env = new Properties();                                                  //@A2A
@@ -974,11 +974,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 //           notApplicable("non i5 TC");
 //           return;
 //       }
-      if (isApplet_ && jndiType_ == JNDI_FILE)			 	//@A5A
-      { 								//@A5A
-              notApplicable("Running in applet and jndiType is file"); 	//@A5A
-              return;							//@A5A
-      }								 	//@A5A
 
       String jndiName = logDirectory_ + "/test120";   //@A3C  //"jdbc/test120"
 
@@ -1047,11 +1042,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 //           notApplicable("non i5 TC");
 //           return;
 //       }
-      if (isApplet_ && jndiType_ == JNDI_FILE)			 	//@A5A
-      { 								//@A5A
-              notApplicable("Running in applet and jndiType is file"); 	//@A5A
-              return;							//@A5A
-      }								 	//@A5A
 
       String jndiName = logDirectory_ + "/test121";    //@A3C  //"jdbc/test121"
 
@@ -1108,11 +1098,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
            // notApplicable("non i5 TC");
            // return;
        }
-      if (isApplet_ && jndiType_ == JNDI_FILE)			 	//@A5A
-      { 								//@A5A
-              notApplicable("Running in applet and jndiType is file"); 	//@A5A
-              return;							//@A5A
-      }								 	//@A5A
 
       String jndiName = logDirectory_ + "/test122";   //@A3C  //"jdbc/test122"
 
@@ -1184,11 +1169,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
            // notApplicable("non i5 TC");
            // return;
        }
-      if (isApplet_ && jndiType_ == JNDI_FILE)			 	//@A5A
-      { 								//@A5A
-              notApplicable("Running in applet and jndiType is file"); 	//@A5A
-              return;							//@A5A
-      }								 	//@A5A
 
       String jndiName = logDirectory_ + "/test123";    //@A3C  //"jdbc/test123"
 
@@ -1253,11 +1233,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
            // notApplicable("non i5 TC");
            // return;
        }
-      if (isApplet_ && jndiType_ == JNDI_FILE)			 	//@A5A
-      { 								//@A5A
-              notApplicable("Running in applet and jndiType is file"); 	//@A5A
-              return;							//@A5A
-      }								 	//@A5A
 
       String jndiName = logDirectory_ + "/test124";   //@A3C  //"jdbc/test124"
 
@@ -1314,11 +1289,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
    **/
    public void Var027()
    {
-      if (isApplet_)			 		//@A6A
-      { 						//@A6A
-              notApplicable("Running in applet"); 	//@A6A
-              return;					//@A6A
-      }	
       PooledConnection c = null;
       try
       {
@@ -1352,11 +1322,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
    **/
    public void Var028()
    {
-      if (isApplet_)			 		//@A6A
-      { 						//@A6A
-              notApplicable("Running in applet"); 	//@A6A
-              return;					//@A6A
-      }	
       PooledConnection c = null;
       try
       {
@@ -1464,11 +1429,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
    public void Var031()
    {
 
-      if (isApplet_ && jndiType_ == JNDI_FILE)			 	//@A5A
-      { 								//@A5A
-              notApplicable("Running in applet and jndiType is file"); 	//@A5A
-              return;							//@A5A
-      }								 	//@A5A
 
       String jndiName = logDirectory_ + "/test120";   //@A3C  //"jdbc/test120"
 

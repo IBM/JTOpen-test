@@ -723,26 +723,13 @@ public class UserSpaceReadTestcase extends Testcase
         {
             aUserSpace.create(3584, true, " ", (byte)0x00, "READ test", "*ALL");
 
-            if (isApplet_)
-            {
-                byte[] data = new byte[5000];
-                int bytesRead = aUserSpace.read(data, 0);
+            byte[] data = new byte[5000];
+            int bytesRead = aUserSpace.read(data, 0);
 
-                if(bytesRead < data.length)
-                    succeeded();
-                else
-                    failed("Unexpected results occurred.");
-            }
+            if(bytesRead < data.length)
+                succeeded();
             else
-            {
-                byte[] data = new byte[5000];
-                int bytesRead = aUserSpace.read(data, 0);
-
-                if(bytesRead < data.length)
-                    succeeded();
-                else
-                    failed("Unexpected results occurred.");
-            }
+                failed("Unexpected results occurred.");
         }
         catch (Exception e)
         {
@@ -763,7 +750,6 @@ public class UserSpaceReadTestcase extends Testcase
 
         UserSpace aUserSpace = null;
 
-        byte[] inBuffer1 = new byte[1];
 
         try
         {
@@ -772,38 +758,19 @@ public class UserSpaceReadTestcase extends Testcase
             aUserSpace.create(11000, true, " ", (byte)0x00, "read UserSpace", "*ALL");
             aUserSpace.write(data, 0);
 
-            if (isApplet_)
+            int i1;
+            int i = 0;
+            byte[] inByte1 = new byte[1];
+            do
             {
-                int i=0;
-                int i1;
-                do
-                {
-                    i1 = aUserSpace.read(inBuffer1, i);
-                }
-                while(i < data.length && inBuffer1[0] == data[i++]);
-
-                if(i == data.length)
-                    succeeded();
-                else
-                    failed("Unexpected results occurred."+i1);
-
+                i1 = aUserSpace.read(inByte1, i);
             }
+            while(i < 256 && inByte1[0] == data[i++]);
+
+            if (i == data.length)
+                succeeded();
             else
-            {
-                int i1;
-                int i = 0;
-                byte[] inByte1 = new byte[1];
-                do
-                {
-                    i1 = aUserSpace.read(inByte1, i);
-                }
-                while(i < 256 && inByte1[0] == data[i++]);
-
-                if (i == data.length)
-                    succeeded();
-                else
-                    failed("Unexpected results occurred."+i1);
-            }
+                failed("Unexpected results occurred."+i1);
         }
         catch (Exception e)
         {
@@ -824,7 +791,6 @@ public class UserSpaceReadTestcase extends Testcase
 
         UserSpace aUserSpace = null;
 
-        byte[] inBuffer1 = new byte[1];
 
         try
         {
@@ -833,38 +799,19 @@ public class UserSpaceReadTestcase extends Testcase
             aUserSpace.create(11000, true, " ", (byte)0x00, "read UserSpace", "*ALL");
             aUserSpace.write(data, 0, 0, data.length);
 
-            if (isApplet_)
+            int i1;
+            int i = 0;
+            byte[] inByte1 = new byte[1];
+            do
             {
-                int i=0;
-                int i1;
-                do
-                {
-                    i1 = aUserSpace.read(inBuffer1, i);
-                }
-                while(i < data.length && inBuffer1[0] == data[i++]);
-
-                if(i == data.length)
-                    succeeded();
-                else
-                    failed("Unexpected results occurred."+i1);
-
+                i1 = aUserSpace.read(inByte1, i);
             }
+            while(i < 256 && inByte1[0] == data[i++]);
+
+            if (i == data.length)
+                succeeded();
             else
-            {
-                int i1;
-                int i = 0;
-                byte[] inByte1 = new byte[1];
-                do
-                {
-                    i1 = aUserSpace.read(inByte1, i);
-                }
-                while(i < 256 && inByte1[0] == data[i++]);
-
-                if (i == data.length)
-                    succeeded();
-                else
-                    failed("Unexpected results occurred."+i1);
-            }
+                failed("Unexpected results occurred."+i1);
         }
         catch (Exception e)
         {
@@ -890,14 +837,7 @@ public class UserSpaceReadTestcase extends Testcase
 
             byte[] data1 = { 0,1,2,3,4,5,6,7,8,9 };
 
-            if (isApplet_)
-            {
-                aUserSpace.read(data1, 3, 4, 1);
-            }
-            else
-            {
-                aUserSpace.read(data1, 3, 4, 1);
-            }
+            aUserSpace.read(data1, 3, 4, 1);
             if (data1[4] == data[3])
                 succeeded();
             else
@@ -917,12 +857,6 @@ public class UserSpaceReadTestcase extends Testcase
      **/
     public void Var022()
     {
-        if (isApplet_)
-        {
-            notApplicable();
-            return;
-        }
-
         UserSpace aUserSpace = new UserSpace(systemObject_, userSpaceLibraryPath_+userSpaceObjectPath_);
 
         try
@@ -1134,26 +1068,13 @@ public class UserSpaceReadTestcase extends Testcase
         {
             aUserSpace.create(3584, true, " ", (byte)0x00, "READ test", "*ALL");
 
-            if (isApplet_)
-            {
-                int expectedLength = 10;
-                String readString = aUserSpace.read(3580, expectedLength);
+            int expectedLength = 10;
+            String readString = aUserSpace.read(3580, expectedLength);
 
-                if(readString.length() == expectedLength)
-                    succeeded();
-                else
-                    failed("Unexpected results occurred.");
-            }
+            if(readString.length() == expectedLength)
+                succeeded();
             else
-            {
-                int expectedLength = 10;
-                String readString = aUserSpace.read(3580, expectedLength);
-
-                if(readString.length() == expectedLength)
-                    succeeded();
-                else
-                    failed("Unexpected results occurred.");
-            }
+                failed("Unexpected results occurred.");
         }
         catch (Exception e)
         {
@@ -1249,14 +1170,7 @@ public class UserSpaceReadTestcase extends Testcase
             aUserSpace.create(1000, true, " ", (byte)0x00, "USREAD test", "*ALL");
             aUserSpace.write(expectedString, 10);
 
-            if (isApplet_)
-            {
-                readString = aUserSpace.read(10, 12);
-            }
-            else
-            {
-                readString = aUserSpace.read(10,12);
-            }
+            readString = aUserSpace.read(10,12);
             if (readString.equals(expectedString))
                 succeeded();
             else

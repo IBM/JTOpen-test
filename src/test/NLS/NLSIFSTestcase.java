@@ -90,7 +90,6 @@ public class NLSIFSTestcase extends Testcase
 
     output_.println("Running under: " + operatingSystem_);
     output_.println("DOS-based file structure: " + DOS_);
-    output_.println("Executing applet: " + isApplet_);
 
     ifsDirName_ = IFSFile.separator;
 
@@ -1016,11 +1015,6 @@ public void Var014()
   **/
 public void Var015()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     createDirectory(ifs_dbcs_dir);
     String emptyName = ifs_dbcs_dir + "Empty";
     createFile(emptyName);

@@ -431,9 +431,6 @@ public class CmdOnThreadTestcase extends Testcase
      **/
     public void Var005()
     {
-      if (isApplet_)
-        notApplicable("Applets cannot set system properties.");
-      else
       {
         try {
           setThreadsafeProperty(true);
@@ -491,9 +488,6 @@ public class CmdOnThreadTestcase extends Testcase
      **/
     public void Var006()
     {
-        if (isApplet_)
-            notApplicable("Applets cannot set system properties.");
-        else
         {
             try {
                 setThreadsafeProperty(false);
@@ -546,9 +540,6 @@ public class CmdOnThreadTestcase extends Testcase
      **/
     public void Var007()
     {
-      if (isApplet_)
-        notApplicable("Applets cannot set system properties.");
-      else
       {
         try {
           setThreadsafeProperty(false);
@@ -606,9 +597,6 @@ public class CmdOnThreadTestcase extends Testcase
      **/
     public void Var008()
     {
-        if (isApplet_)
-            notApplicable("Applets cannot set system properties.");
-        else
         {
             try {
                 setThreadsafeProperty(true);

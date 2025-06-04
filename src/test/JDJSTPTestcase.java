@@ -5448,6 +5448,22 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		+ "jars/java9/jt400.jar:.  -DJSTPPath=1.3 "
 		+ getInheritedJavaOptions() + " " + testbase;
 
+        } else if (jdk == JVMInfo.JDK_V17 )   {
+          command+= " -classpath /QIBM/proddata/OS400/jt400/lib/java9/jt400.jar:"+
+            "/QIBM/ProdData/OS400/Java400/ext/sqlj_classes.jar:/qibm/proddata/os400/java400/ext/runtime.zip:/qibm/proddata/os400/java400/ext/translator.zip:"
+            + javaRunPath
+            + pathSep
+            + "jars/java9/jt400.jar:.  -DJSTPPath=1.3 "
+            + getInheritedJavaOptions() + " " + testbase;
+
+        } else if (jdk == JVMInfo.JDK_V21 )   {
+          command+= " -classpath /QIBM/proddata/OS400/jt400/lib/java9/jt400.jar:"+
+            "/QIBM/ProdData/OS400/Java400/ext/sqlj_classes.jar:/qibm/proddata/os400/java400/ext/runtime.zip:/qibm/proddata/os400/java400/ext/translator.zip:"
+            + javaRunPath
+            + pathSep
+            + "jars/java9/jt400.jar:.  -DJSTPPath=1.3 "
+            + getInheritedJavaOptions() + " " + testbase;
+
 	} else {
 	    System.out.println("WARNING:  JDJSTPTestcase1:jdk='"+jdk+"' not recognized");
 
@@ -5937,6 +5953,8 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		} else if ((jdk == JVMInfo.JDK_V17 ) )  {
 		    command = "java -classpath /QIBM/proddata/OS400/jt400/lib/java9/jt400.jar:"+javaRunPath+pathSep+"jars/java9/jt400.jar:. -DJSTPPath=4.1 "+javaOptions+" "+getInheritedJavaOptions()+" "+testbase+" "+variation;
 
+                } else if ((jdk == JVMInfo.JDK_V21 ) )  {
+                  command = "java -classpath /QIBM/proddata/OS400/jt400/lib/java9/jt400.jar:"+javaRunPath+pathSep+"jars/java9/jt400.jar:. -DJSTPPath=4.1 "+javaOptions+" "+getInheritedJavaOptions()+" "+testbase+" "+variation;
 
 		} else {
 		    System.out.println("WARNING:  JDJSTPTestcase4:jdk='"+jdk+"' not recognized");
@@ -6869,6 +6887,20 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			 "call QSYS.QCMDEXC('CHGENVVAR ENVVAR(JAVA_HOME) VALUE(''/QOpenSys/QIBM/ProdData/JavaVM/jdk11/64bit'')                                            ', 000000090.00000)",
 		     };
 		     return answer; 
+             } else if (jdk == JVMInfo.JDK_V17) {
+
+               String[] answer = {
+                   "call QSYS.QCMDEXC('ADDENVVAR ENVVAR(JAVA_HOME) VALUE(''/QOpenSys/QIBM/ProdData/JavaVM/jdk17/64bit'')                                            ', 000000090.00000)",
+                   "call QSYS.QCMDEXC('CHGENVVAR ENVVAR(JAVA_HOME) VALUE(''/QOpenSys/QIBM/ProdData/JavaVM/jdk17/64bit'')                                            ', 000000090.00000)",
+               };
+               return answer; 
+             } else if (jdk == JVMInfo.JDK_V21) {
+
+               String[] answer = {
+                   "call QSYS.QCMDEXC('ADDENVVAR ENVVAR(JAVA_HOME) VALUE(''/QOpenSys/QIBM/ProdData/JavaVM/jdk21/64bit'')                                            ', 000000090.00000)",
+                   "call QSYS.QCMDEXC('CHGENVVAR ENVVAR(JAVA_HOME) VALUE(''/QOpenSys/QIBM/ProdData/JavaVM/jdk21/64bit'')                                            ', 000000090.00000)",
+               };
+               return answer; 
 	     }
 
 

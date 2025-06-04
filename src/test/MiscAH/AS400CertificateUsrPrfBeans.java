@@ -324,7 +324,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
 
     output_.println("Running under: " + operatingSystem_);
     output_.println("DOS-based file structure: " + DOS_);
-    output_.println("Executing " + (isApplet_ ? "applet." : "application."));
 
     testInit();
   }

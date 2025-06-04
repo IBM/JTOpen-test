@@ -48,11 +48,6 @@ public class DTTextTestcase extends Testcase
      **/
     public void Var001()
     {
-        if (isApplet_)
-        {
-            notApplicable("Locale not settable in an applet.");
-            return;
-        }
         if (proxified())
         {
             notApplicable("Running proxified.");
@@ -148,11 +143,6 @@ public class DTTextTestcase extends Testcase
      **/
     public void Var004()
     {
-        if (isApplet_)
-        {
-            notApplicable("Locale not settable in an applet.");
-            return;
-        }
         if (proxified())
         {
             notApplicable("Running proxified.");
@@ -531,11 +521,6 @@ public class DTTextTestcase extends Testcase
      **/
     public void Var018()
     {
-        if (isApplet_)
-        {
-            notApplicable("Locale not settable in an applet.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         String failMsg = "";
         try
@@ -650,11 +635,6 @@ public class DTTextTestcase extends Testcase
      **/
     public void Var020()
     {
-        if (isApplet_)
-        {
-            notApplicable("Locale not settable in an applet.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         String failMsg = "";
         try

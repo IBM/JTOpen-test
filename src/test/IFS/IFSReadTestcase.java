@@ -193,22 +193,6 @@ using IFSFileInputStream.read().
     {
       IFSFileInputStream is1 =
         new IFSFileInputStream(as400, ifsPathName_);
-      if (isApplet_)
-      {
-        IFSRandomAccessFile raf =
-          new IFSRandomAccessFile(as400, ifsPathName_, "r");
-        int i1;
-        int i2;
-        do
-        {
-          i1 = is1.read();
-          i2 = raf.read();
-        }
-        while(i1 == i2 && i2 != -1);
-        assertCondition(i1 == i2);
-        raf.close();
-      }
-      else
       {
         InputStream is2 = getNonIFSInputStream(ifsPathName_);
         int i1;
@@ -333,18 +317,6 @@ available to be read is less than the byte array length.
     {
       IFSFileInputStream is1 =
         new IFSFileInputStream(as400, ifsPathName_);
-      if (isApplet_)
-      {
-        IFSRandomAccessFile raf =
-          new IFSRandomAccessFile(as400, ifsPathName_, "r");
-        byte[] data1 = new byte[data.length * 2];
-        byte[] data2 = new byte[data.length * 2];
-        int bytesRead1 = is1.read(data1);
-        int bytesRead2 = raf.read(data2);
-        assertCondition(bytesRead1 == bytesRead2);
-        raf.close();
-      }
-      else
       {
         InputStream is2 = getNonIFSInputStream(ifsPathName_);
 
@@ -378,18 +350,6 @@ using IFSFileInputStream.read(byte[]).
     {
       IFSFileInputStream is1 =
         new IFSFileInputStream(as400, ifsPathName_);
-      if (isApplet_)
-      {
-        IFSRandomAccessFile is2 =
-          new IFSRandomAccessFile(as400, ifsPathName_, "r");
-        byte[] data1 = new byte[data.length];
-        byte[] data2 = new byte[data.length];
-        int bytesRead1 = is1.read(data1);
-        int bytesRead2 = is2.read(data2);
-        assertCondition(bytesRead1 == bytesRead2 && areEqual(data1, data2));
-        is2.close();
-      }
-      else
       {
         InputStream is2 = getNonIFSInputStream(ifsPathName_);
 
@@ -554,28 +514,14 @@ is less than the number of bytes available to be read.
     {
       IFSFileInputStream is1 =
         new IFSFileInputStream(as400, ifsPathName_);
-      if (isApplet_)
-      {
-        IFSRandomAccessFile is2 =
-          new IFSRandomAccessFile(as400, ifsPathName_, "r");
-        byte[] data1 = new byte[data.length * 2];
-        byte[] data2 = new byte[data.length * 2];
-        int bytesRead1 = is1.read(data1, 0, data1.length);
-        int bytesRead2 = is2.read(data2, 0, data2.length);
-        assertCondition(bytesRead1 == bytesRead2);
-        is2.close();
-      }
-      else
-      {
-        InputStream is2 = getNonIFSInputStream(ifsPathName_);
+      InputStream is2 = getNonIFSInputStream(ifsPathName_);
 
-        byte[] data1 = new byte[data.length * 2];
-        byte[] data2 = new byte[data.length * 2];
-        int bytesRead1 = is1.read(data1, 0, data1.length);
-        int bytesRead2 = is2.read(data2, 0, data2.length);
-        assertCondition(bytesRead1 == bytesRead2);
-        is2.close();
-      }
+      byte[] data1 = new byte[data.length * 2];
+      byte[] data2 = new byte[data.length * 2];
+      int bytesRead1 = is1.read(data1, 0, data1.length);
+      int bytesRead2 = is2.read(data2, 0, data2.length);
+      assertCondition(bytesRead1 == bytesRead2);
+      is2.close();
       is1.close();
     }
     catch(Exception e)
@@ -602,20 +548,10 @@ at the specified offset in the byte array.
       byte[] data1 = { 0,1,2,3,4,5,6,7,8,9 };
       byte[] data2 = { 0,1,2,3,4,5,6,7,8,9 };
       is1.read(data1, 3, 4);
-      if (isApplet_)
-      {
-        IFSRandomAccessFile is2 =
-          new IFSRandomAccessFile(as400, ifsPathName_, "r");
-        is2.read(data2, 3, 4);
-        is2.close();
-      }
-      else
-      {
-        InputStream is2 = getNonIFSInputStream(ifsPathName_);
+      InputStream is2 = getNonIFSInputStream(ifsPathName_);
 
-        is2.read(data2, 3, 4);
-        is2.close();
-      }
+      is2.read(data2, 3, 4);
+      is2.close();
       assertCondition(areEqual(data1, data2));
       is1.close();
     }
@@ -644,20 +580,10 @@ using IFSFileInputStream.read(byte[], int, int).
         new IFSFileInputStream(as400, ifsPathName_);
       int bytesRead1 = is1.read(data1, 0, data1.length);
       int bytesRead2 = 0;
-      if (isApplet_)
-      {
-        IFSRandomAccessFile is2 =
-          new IFSRandomAccessFile(as400, ifsPathName_, "r");
-        bytesRead2 = is2.read(data2, 0, data2.length);
-        is2.close();
-      }
-      else
-      {
-        InputStream is2 = getNonIFSInputStream(ifsPathName_);
+      InputStream is2 = getNonIFSInputStream(ifsPathName_);
 
-        bytesRead2 = is2.read(data2, 0, data2.length);
-        is2.close();
-      }
+      bytesRead2 = is2.read(data2, 0, data2.length);
+      is2.close();
       assertCondition(bytesRead1 == bytesRead2 && areEqual(data1, data2));
       is1.close();
     }
@@ -715,11 +641,6 @@ using IFSRandomAccessFile.read().
 **/
   public void CommonVar021(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -843,11 +764,6 @@ available to be read is less than the byte array length.
 **/
   public void CommonVar026(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -879,11 +795,6 @@ using IFSRandomAccessFile.read(byte[]).
 **/
   public void CommonVar027(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -1049,11 +960,6 @@ is greater than the number of bytes available to be read.
 **/
   public void CommonVar034(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -1085,11 +991,6 @@ at the specified offset in the byte array.
 **/
   public void CommonVar035(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = { 11,22,33,44,55,66,77 };
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -1121,11 +1022,6 @@ using IFSRandomAccessFile.read(byte[], int, int).
 **/
   public void CommonVar036(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -1199,11 +1095,6 @@ IFSRandomAccessFile.readBoolean().
 **/
   public void CommonVar039(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -1280,11 +1171,6 @@ using IFSRandomAccessFile.readByte().
 **/
   public void CommonVar042(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -1358,11 +1244,6 @@ Read and verify a file containing characters \u0000 through \u0080, \u7fff,
 **/
   public void CommonVar045(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     String s = "";
     for (int i = 0; i < 128; i++)
       s += (char) i;
@@ -1455,11 +1336,6 @@ Double value using IFSRandomAccessFile.readDouble().
 **/
   public void CommonVar048(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     createFile(ifsPathName_);
     try
     {
@@ -1544,11 +1420,6 @@ Float value using IFSRandomAccessFile.readFloat().
 **/
   public void CommonVar051(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     createFile(ifsPathName_);
     try
     {
@@ -1719,11 +1590,6 @@ using IFSRandomAccessFile.readFully(byte[]).
 **/
   public void CommonVar056(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -1756,11 +1622,6 @@ is null.
 **/
   public void CommonVar057(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     createFile(ifsPathName_);
     IFSRandomAccessFile raf = null;
     try
@@ -1942,11 +1803,6 @@ read at the specified offset in the byte array.
 **/
   public void CommonVar063(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = { 11,22,33,44,55,66,77 };
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -1980,11 +1836,6 @@ using IFSRandomAccessFile.readFully(byte[], int, int).
 **/
   public void CommonVar064(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
       data[i] = (byte) i;
@@ -2062,11 +1913,6 @@ Integer value using IFSRandomAccessFile.readInt().
 **/
   public void CommonVar067(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     createFile(ifsPathName_);
     try
     {
@@ -2225,11 +2071,6 @@ Long value using IFSRandomAccessFile.readLong().
 **/
   public void CommonVar073(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
     createFile(ifsPathName_);
     try
     {
@@ -2317,11 +2158,6 @@ IFSRandomAccessFile.readShort().
 **/
   public void CommonVar076(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     String fileName = ifsPathName_ + "r76";
     createFile(fileName);
@@ -2409,11 +2245,6 @@ using IFSRandomAccessFile.readUnsignedByte().
 **/
   public void CommonVar079(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     byte[] data = new byte[256];
     for (int i = 0; i < data.length; i++)
@@ -2495,11 +2326,6 @@ IFSRandomAccessFile.readUnsignedShort().
 **/
   public void CommonVar082(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     String fileName = ifsPathName_ + "r82";
     createFile(fileName);
@@ -2612,11 +2438,6 @@ Read an empty UTF string using IFSRandomAccessFile.readUTF().
 **/
   public void CommonVar086(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     String fileName = ifsPathName_ + "r86";
     createFile(fileName);
@@ -2677,11 +2498,6 @@ of unicode characters.
 **/
   public void CommonVar088(AS400 as400)
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     String fileName = ifsPathName_ + "r88";
     createFile(fileName);
@@ -2888,12 +2704,6 @@ at the end of file.
    **/
    public void CommonVar094(AS400 as400)
    {
-     if (isApplet_)
-     {
-       notApplicable("Deactivated until IFS classes use the new Converters");
-       // The browser's JVM has no converter for Cp037.
-       return;
-     }
      String fileName = ifsPathName_ + "r94";
      String s = "0123456789abcdefghijklmnopqrstuvwxyz)!@#$%^&*(-=_+[]{}|;':,./<>?";
      try
@@ -2928,12 +2738,6 @@ at the end of file.
    **/
    public void CommonVar095(AS400 as400)
    {
-     if (isApplet_)
-     {
-       notApplicable("Deactivated until IFS classes use the new Converters");
-       // The browser's JVM has no converter for Cp037.
-       return;
-     }
      String fileName = ifsPathName_ + "r95";
      String s = "0123456789abcdefghijklmnopqrstuvwxyz)!@#$%^&*(-=_+[]{}|;':,./<>?";
      try
@@ -3037,12 +2841,6 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
    **/
    public void CommonVar098(AS400 as400)
    {
-     if (isApplet_)
-     {
-       notApplicable("Deactivated until IFS classes use the new Converters");
-       // The browser's JVM has no converter for Cp437.
-       return;
-     }
      String fileName = ifsPathName_ + "r98";
      IFSFile file = new IFSFile(as400, fileName);
      String s = "0123456789abcdefghijklmnopqrstuvwxyz)!@#$%^&*(-=_+[]{}|;':,./<>?";
@@ -3168,12 +2966,6 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
    **/
    public void CommonVar102(AS400 as400)
    {
-     if (isApplet_)
-     {
-       notApplicable("Deactivated until IFS classes use the new Converters");
-       // The browser's JVM has no converter for Cp037.
-       return;
-     }
      String fileName = ifsPathName_ + "r102";
      String s = "0123456789abcdefghijklmnopqrstuvwxyz)!@#$%^&*(-=_+[]{}|;':,./<>?";
      try

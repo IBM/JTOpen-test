@@ -91,7 +91,7 @@ public class AS400JDBCMCPDSTestcase extends Testcase
      else if (JTOpenTestEnvironment.isWindows)
      	environment_ = OS_WINDOWS;
 
-     if (!isApplet_)
+     if (!false)
      {
 	// Make sure javatest dir exists.
 	javatest_ = new File(logDirectory_);
@@ -116,7 +116,6 @@ public class AS400JDBCMCPDSTestcase extends Testcase
 	}
      }
 
-     if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))
      {
 	// Get the JNDI Initial Context.
 	Properties env = new Properties();
@@ -984,12 +983,6 @@ public class AS400JDBCMCPDSTestcase extends Testcase
            return;
        }
      
-      if (isApplet_ && jndiType_ == JNDI_FILE)
-      {
-              notApplicable("Running in applet and jndiType is file");
-              return;
-      }
-
       String jndiName = logDirectory_ + "/test120";
 
       if (jndiType_ == JNDI_LDAP)
@@ -1057,12 +1050,6 @@ public class AS400JDBCMCPDSTestcase extends Testcase
            notApplicable("todo when time permits.");
            return;
        }
-      if (isApplet_ && jndiType_ == JNDI_FILE)
-      {
-              notApplicable("Running in applet and jndiType is file");
-              return;
-      }
-
       String jndiName = logDirectory_ + "/test121";
 
       if (jndiType_ == JNDI_LDAP)
@@ -1119,12 +1106,6 @@ public class AS400JDBCMCPDSTestcase extends Testcase
            notApplicable("todo when time permits.");
            return;
        }
-      if (isApplet_ && jndiType_ == JNDI_FILE)
-      {
-              notApplicable("Running in applet and jndiType is file");
-              return;
-      }
-
       String jndiName = logDirectory_ + "/test122";
 
       if (jndiType_ == JNDI_LDAP)
@@ -1196,11 +1177,6 @@ public class AS400JDBCMCPDSTestcase extends Testcase
            notApplicable("todo when time permits.");
            return;
        }
-      if (isApplet_ && jndiType_ == JNDI_FILE)
-      {
-              notApplicable("Running in applet and jndiType is file");
-              return;
-      }
 
       String jndiName = logDirectory_ + "/test123";
 
@@ -1265,11 +1241,6 @@ public class AS400JDBCMCPDSTestcase extends Testcase
            notApplicable("todo when time permits.");
            return;
        }
-      if (isApplet_ && jndiType_ == JNDI_FILE)
-      {
-              notApplicable("Running in applet and jndiType is file");
-              return;
-      }
 
       String jndiName = logDirectory_ + "/test124";
 
@@ -1326,11 +1297,6 @@ public class AS400JDBCMCPDSTestcase extends Testcase
    **/
    public void Var027()
    {
-      if (isApplet_)
-      {
-              notApplicable("Running in applet");
-              return;
-      }
       PooledConnection c = null;
       try
       {
@@ -1372,11 +1338,6 @@ public class AS400JDBCMCPDSTestcase extends Testcase
    **/
    public void Var028()
    {
-      if (isApplet_)
-      {
-              notApplicable("Running in applet");
-              return;
-      }
       PooledConnection c = null;
       try
       {

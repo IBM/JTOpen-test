@@ -259,7 +259,6 @@ protected void cleanup()
            System.out.println(ex);
       }
 
-      if (!isApplet_)
       {
         try
         {
@@ -3672,11 +3671,6 @@ for document library objects (DLO) stored in QDLS.
 **/
   public void Var094()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
   if (PermissionTestDriver.PwrSys == null)
        {
            failed("-pwrSys testcase parm not specified.");
@@ -3715,11 +3709,6 @@ for traditional AS/400 library structure stored in QSYS.LIB.
 **/
   public void Var095()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
       try
     {
           IFSFile file = new IFSFile(systemObject_,"/QSYS.Lib/JTESTLIB1.Lib");
@@ -3754,11 +3743,6 @@ for root directory structure.
 **/
   public void Var096()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
   if (PermissionTestDriver.PwrSys == null)
        {
            failed("-pwrSys testcase parm not specified.");
@@ -5554,11 +5538,6 @@ stored in QDLS.
 
   public void Var145()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
   if (PermissionTestDriver.PwrSys == null)
        {
            failed("-pwrSys testcase parm not specified.");
@@ -5589,11 +5568,6 @@ stored in QSYS.LIB.
 
   public void Var146()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
     try
     {
           IFSFile file = new IFSFile(systemObject_,"/QSYS.Lib/JTESTLIB1.Lib");
@@ -5618,11 +5592,6 @@ Method tested: writeObject()
   
   public void Var147()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
   if (PermissionTestDriver.PwrSys == null)
        {
            failed("-pwrSys testcase parm not specified.");

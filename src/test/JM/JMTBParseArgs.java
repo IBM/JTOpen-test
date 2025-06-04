@@ -155,9 +155,6 @@ This simulates a command-line invocation.
     private void printErrors ()
     {
       if (errorOutput_.length () != 0) {
-        if (isApplet_)
-          output_.println (errorOutput_);
-        else
           System.err.println (errorOutput_);
       }
     }
@@ -165,9 +162,6 @@ This simulates a command-line invocation.
     private void printInfo ()
     {
       if (infoOutput_.length () != 0) {
-        if (isApplet_)
-          output_.println (infoOutput_);
-        else
           System.out.println (infoOutput_);
       }
     }

@@ -951,7 +951,12 @@ is on there.
 				 && (type == ResultSet.TYPE_FORWARD_ONLY)
 				 && (concurrency == ResultSet.CONCUR_UPDATABLE)     //@C3C
 				 && (updatable == true)                             //@C3C
-				 && (scrollable == false));
+				 && (scrollable == false),
+				 "\nexpected type=ResultSet.TYPE_FORWARD_ONLY("+ResultSet.TYPE_FORWARD_ONLY+")  got "+type+"\n"+
+				 "expected concurrency=ResultSet.CONCUR_UPDATABLE("+ResultSet.CONCUR_UPDATABLE+") got "+concurrency+"\n"+
+				 "expected updatable==true but got "+updatable+"\n"+
+				 "expected scrollable=false but got "+scrollable
+				 );
 	    }
 	    
          } catch (Exception e) {

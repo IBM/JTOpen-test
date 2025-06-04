@@ -288,9 +288,6 @@ public class PgmOnThreadTestcase extends Testcase
      **/
     public void Var004()
     {
-        if (isApplet_)
-            notApplicable("Applets cannot set system properties.");
-        else
         {
             try {
                 setThreadsafeProperty(true);
@@ -344,9 +341,6 @@ public class PgmOnThreadTestcase extends Testcase
      **/
     public void Var005()
     {
-        if (isApplet_)
-            notApplicable("Applets cannot set system properties.");
-        else
         {
             try {
                 setThreadsafeProperty(false);
@@ -389,9 +383,6 @@ public class PgmOnThreadTestcase extends Testcase
      **/
     public void Var006()
     {
-        if (isApplet_)
-            notApplicable("Applets cannot set system properties.");
-        else
         {
             try {
                 setThreadsafeProperty(false);
@@ -444,9 +435,6 @@ public class PgmOnThreadTestcase extends Testcase
      **/
     public void Var007()
     {
-        if (isApplet_)
-            notApplicable("Applets cannot set system properties.");
-        else
         {
             try {
                 setThreadsafeProperty(true);
