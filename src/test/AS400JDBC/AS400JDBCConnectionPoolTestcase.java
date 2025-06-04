@@ -87,8 +87,6 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             dataSource_ = new AS400JDBCConnectionPoolDataSource(systemObject_.getSystemName(), systemObject_.getUserId(), passwordChars);
             PasswordVault.clearPassword(passwordChars);
 
-            if (!isApplet_)
-            {                           //@A2A
                 File dummyFile = new File(traceFileName_);        //@A2A
                 if (dummyFile.exists())               //@A2A
                 {                                                 //@A2A
@@ -96,7 +94,6 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
                 }                                                 //@A2A
                 testFile_ = new File(traceFileName_);
                 os_ = new FileOutputStream (testFile_);       //@A2A
-            }                           //@A2A
         }
         catch (Exception e)
         {
@@ -196,10 +193,6 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
     {  
         try
         {
-          if (isApplet_)                  //@A2A
-            Trace.setPrintWriter(null);               //@A2A
-          //else                    //@A2A
-          //  Trace.setFileName(null);  // This seems to send further output into nowhere.
           if (!testFile_.delete())
             System.out.println("WARNING... Testcase cleanup failed to delete: " + traceFileName_);
         }
@@ -2359,11 +2352,6 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
         return; 
       }
 
-        if (isApplet_)           //@A2A
-        {                        //@A2A
-            notApplicable();      //@A2A
-            return;               //@A2A
-        }                        //@A2A
 
 
         //@A4D Trace.setTraceOn(true);
@@ -2452,11 +2440,6 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
         return; 
       }
 
-        if (isApplet_)           //@A2A
-        {                        //@A2A
-            notApplicable();      //@A2A
-            return;               //@A2A
-        }                        //@A2A
 
         //@A4D Trace.setTraceOn(true);
         //@A4D Trace.setTraceInformationOn(true);

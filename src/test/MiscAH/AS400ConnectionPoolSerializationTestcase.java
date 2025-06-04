@@ -183,11 +183,6 @@ String runCommand(String command)
   **/
   public void Var001()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     if (runMode_ == ATTENDED) {
 	notApplicable("non attended testcase");
 	return; 
@@ -347,11 +342,6 @@ String runCommand(String command)
   **/
   public void Var002()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     if (runMode_ == UNATTENDED) {
 	notApplicable("Attended testcase");
 	return; 
@@ -520,11 +510,6 @@ String runCommand(String command)
   **/
   public void Var003()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     if (runMode_ == UNATTENDED) {
 	notApplicable("Attended testcase");
 	return; 
@@ -728,11 +713,6 @@ String runCommand(String command)
   **/
   public void Var004()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     if (runMode_ == UNATTENDED) {
 	notApplicable("Attended testcase");
 	return; 
@@ -895,11 +875,6 @@ String runCommand(String command)
   **/
   public void Var005()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     if (runMode_ == UNATTENDED) {
 	notApplicable("Attended testcase");
 	return; 

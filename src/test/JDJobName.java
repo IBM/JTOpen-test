@@ -595,7 +595,7 @@ public class JDJobName {
 			//
 			// Only build on iSeries machine
 			//
-			if (JTOpenTestEnvironment.isOS400) {
+			if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
 
 				String debugString = System.getProperty("debug");
 				if (debugString != null)

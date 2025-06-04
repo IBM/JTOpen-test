@@ -118,11 +118,6 @@ public class ServiceProgramCallBeans extends Testcase implements PropertyChangeL
     {
         try
         {
-            if (isApplet_)
-            {
-                notApplicable();
-            }
-            else
             {
                 ProgramParameter[] paramList = new ProgramParameter[1];
                 paramList[0] = new ProgramParameter(4);

@@ -177,7 +177,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       writer_.close();
       // @A3D DriverManager.setLogStream(null);
 
-      if (!isApplet_) // @A9A
+      if (!false) // @A9A
       {
         if (!testFile_.delete())
           System.out.println("WARNING... testcase cleanup could not delete: " + logFileName_);
@@ -201,7 +201,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
     String os = System.getProperty("os.name");
     System.out.println("Environment: " + os);
 
-    if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE)) // @B1A
     {
       // Get the JNDI Initial Context.
       env_ = new Properties(); // @A8C
@@ -228,7 +227,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       }
     }
 
-    if (!isApplet_) // @A9A
+    if (!false) // @A9A
     {
       // Make sure javatest dir exists.
       javatest_ = new File(logDirectory_); // @A6C
@@ -254,7 +253,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       }
     }
 
-    if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE)) // @B1A
     {
       registerDataSource();
       registerTraceDataSource();
@@ -705,7 +703,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -757,7 +754,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -809,7 +805,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.setPassword(charPassword);
       PasswordVault.clearPassword(charPassword);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -858,7 +853,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.setPassword(charPassword);
       PasswordVault.clearPassword(charPassword);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -927,7 +921,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -979,7 +972,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1041,7 +1033,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.addRowSetListener(listener);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1097,7 +1088,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.addRowSetListener(listener);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1155,7 +1145,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.addRowSetListener(listener);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1213,7 +1202,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.addRowSetListener(listener);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1273,7 +1261,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.addRowSetListener(listener);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1332,7 +1319,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setConcurrency(ResultSet.CONCUR_UPDATABLE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1397,7 +1383,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.addRowSetListener(listener);
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT WHERE BALDUE > 100");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1462,12 +1447,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
    **/
   public void Var028() {
     StringBuffer sb = new StringBuffer();
-    if (isApplet_) // @A9A
-    { // @A9A
-      notApplicable("Running in applet"); // @A9A
-      return; // @A9A
-    } // @A9A
-
     AS400JDBCRowSet rowset = null;
     String command = "SELECT * FROM QIWS.QCUSTCDT";
     try {
@@ -1518,7 +1497,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
 
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1628,7 +1606,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.setUseDataSource(false);
 
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1690,7 +1667,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.setUseDataSource(false);
 
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -1801,7 +1777,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       rowset.setUseDataSource(false);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
 
       rowset.execute();
@@ -1862,7 +1837,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       rowset.setUseDataSource(false);
       rowset.setCommand("CREATE TABLE " + collName_ + ".MYTBLRS (NAME VARCHAR(32), PRICE FLOAT, UNITS INTEGER)");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
 
       rowset.execute();
@@ -1980,7 +1954,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       rowset.setUseDataSource(false);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -2050,7 +2023,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       rowset.setUseDataSource(false);
 
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
       rowset.execute();
 
@@ -2064,11 +2036,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
    * Validates that setConcurrency() will trace the property information.
    **/
   public void Var050() {
-    if (isApplet_) // @A9A
-    { // @A9A
-      notApplicable("Running in applet"); // @A9A
-      return; // @A9A
-    } // @A9A
 
     AS400JDBCRowSet rowset = null;
     try {
@@ -2111,11 +2078,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
    * Validates that setType() will trace the property information.
    **/
   public void Var051() {
-    if (isApplet_) // @A9A
-    { // @A9A
-      notApplicable("Running in applet"); // @A9A
-      return; // @A9A
-    }
     // @A9A
     AS400JDBCRowSet rowset = null;
     try {
@@ -2123,7 +2085,6 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       DriverManager.setLogWriter(writer_);
 
       rowset = new AS400JDBCRowSet(traceDS_);
-      if (!isApplet_ || (isApplet_ && jndiType_ == JNDI_LDAP)) // @A2A B1C
         rowset.setContext(context_); // @A2A
 
       rowset.setUsername(username_);

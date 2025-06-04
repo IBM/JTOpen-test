@@ -412,7 +412,7 @@ entries).
     //    Each of those would need to be exported and mounted individually. @A3A
     //    Since you can mount over NFS, you can construct an identical      @A3A
     //    namespace if you mount over the correct subdirectories.           @A3A
-    if (isApplet_ || JTOpenTestEnvironment.isLinux || JTOpenTestEnvironment.isAIX)                                      //@A3C
+    if ( JTOpenTestEnvironment.isLinux || JTOpenTestEnvironment.isAIX)                                      //@A3C
     {
       notApplicable();
       return;

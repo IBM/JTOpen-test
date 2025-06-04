@@ -65,11 +65,7 @@ public class ConvTableEncodingTestcase extends Testcase
                 if (allVariations || variationsToRun_.contains("" + i))
                 {
                     setVariation(i);
-                    if (isApplet_)
-                    {
-                        notApplicable("Cannot set Locale inside a browser.");
-                    }
-                    else if (isProxified_)
+                    if (isProxified_)
                     {
                         notApplicable("Running proxified.");
                     }

@@ -6350,7 +6350,7 @@ protected void cleanup()
   {
     boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
     
-    if (!onAS400_)
+    if (!onAS400_ && !JTOpenTestEnvironment.isOS400open)
     {
       notApplicable("native only"); // This variation must be run natively.
       return;
@@ -6428,7 +6428,7 @@ protected void cleanup()
   public void Var088()
   {
     boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
-    if (!onAS400_)
+    if (!onAS400_ && !JTOpenTestEnvironment.isOS400open)
     {
       notApplicable("native only"); // This variation must be run natively.
       return;
@@ -6490,7 +6490,7 @@ protected void cleanup()
   **/
   public void Var089()
   {
-    boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
+    boolean onAS400_ = JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open; 
     
     if (!onAS400_ || ! isNative_)
     {
@@ -6568,7 +6568,7 @@ protected void cleanup()
     StringBuffer sb = new StringBuffer(); 
     boolean onAS400_ = JTOpenTestEnvironment.isOS400;
     
-    if (!onAS400_)
+    if (!onAS400_ && !JTOpenTestEnvironment.isOS400open)
     {
       notApplicable("native only"); // This variation must be run natively.
       return;

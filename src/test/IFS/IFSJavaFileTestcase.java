@@ -1778,11 +1778,6 @@ list() - Should return the same directory entry names as IFSJavaFile.list("*").
 **/
   public void Var068()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     try
     {
@@ -1853,11 +1848,6 @@ list() - Should return the same directory entry names as File.list().
 **/
   public void Var069()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     try
     {
@@ -1981,11 +1971,6 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
   public void Var071()
   {
     sb.setLength(0);
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     try
     {
@@ -2714,11 +2699,6 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.listFi
 **/
   public void Var094()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     try
     {
@@ -2800,11 +2780,6 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.list()
 **/
   public void Var095()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     try
     {
@@ -2906,11 +2881,6 @@ IFSJavaFile.list().
 **/
   public void Var097()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
 
     sb.setLength(0);
     try
@@ -3174,12 +3144,7 @@ list() or listFiles() is called.
 **/
   public void Var104()
   {
-    if (isApplet_)
-    {
-      notApplicable();
-      return;
-    }
-
+    
     try
     {
 

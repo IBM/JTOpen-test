@@ -209,11 +209,6 @@ public class ConvTableThreadTestcase extends Testcase
      **/
     public void Var002()
     {
-        if (isApplet_)
-        {
-            notApplicable("Various CCSIDs not available in browser JVMs.");
-            return;
-        }
 
         CTThread[] ct = null;
         Thread[] t = null;

@@ -14,11 +14,11 @@
 package test.IFS;
 
 import java.io.DataInput;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -27,22 +27,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
-import java.util.Vector; 
+import java.util.Vector;
 
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400JDBCDriver;
+import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.IFSFileOutputStream;
+import com.ibm.as400.access.IFSRandomAccessFile;
 
 import jcifs.smb.SmbException;
 import test.IFSTests;
 import test.JCIFSUtility;
 import test.JTOpenTestEnvironment;
 import test.Testcase;
-
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400JDBCDriver;
-import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.IFSFileInputStream;
-import com.ibm.as400.access.IFSFileOutputStream;
-import com.ibm.as400.access.IFSRandomAccessFile;
-import com.ibm.as400.access.IFSTextFileInputStream;
 
 public class IFSGenericTestcase extends Testcase
 {
@@ -660,7 +657,6 @@ Constructor.
 
    output_.println("Running under: " + JTOpenTestEnvironment.osVersion);
    output_.println("DOS-based file structure: " + DOS_);
-   output_.println("Executing " + (isApplet_ ? "applet." : "application."));
    output_.println("Linux Flag: " + JTOpenTestEnvironment.isLinux);
    output_.println("AIX Flag:   " + JTOpenTestEnvironment.isAIX); 
 
@@ -743,7 +739,7 @@ protected void cleanup() throws Exception {
   {
     try
     {
-      if (isApplet_ || IFSTests.IsRunningOnOS400)
+      if ( IFSTests.IsRunningOnOS400)
       {
         IFSFile file = new IFSFile(systemObject_, pathName);
         if (file.exists())
@@ -847,7 +843,7 @@ Create a file to be used for the testcases.
   {
     try
     {
-      if (isApplet_ || IFSTests.IsRunningOnOS400)
+      if ( IFSTests.IsRunningOnOS400)
       {
         IFSFile file = new IFSFile(systemObject_, pathName);
         if (file.exists())
@@ -914,7 +910,7 @@ Create a file to be used for the testcases.
   {
     try
     {
-      if (isApplet_ || IFSTests.IsRunningOnOS400)
+      if ( IFSTests.IsRunningOnOS400)
       {
         IFSFile file = new IFSFile(systemObject_, pathName);
         if (file.exists())
@@ -1177,15 +1173,6 @@ e.printStackTrace();
 
 
   public void checkReadWriteAccess(String ifsPathNameX) throws Exception {
-      if (isApplet_)
-      {
-          IFSFileInputStream is2 = new IFSFileInputStream(systemObject_,	ifsPathNameX);
-          IFSFileOutputStream is3 =
-            new IFSFileOutputStream(systemObject_, ifsPathNameX);
-          is2.close();
-          is3.close();
-      }
-      else
       {
           InputStream is2 = JCIFSUtility.getFileInputStream(systemName_, userId_, encryptedPassword_, ifsPathNameX); 
 
@@ -1198,12 +1185,6 @@ e.printStackTrace();
 
 
   public void checkReadAccess(String ifsPathNameX) throws Exception { 
-      if (isApplet_)
-      {
-          IFSFileInputStream is2 = new IFSFileInputStream(systemObject_, ifsPathNameX);
-          is2.close();
-      }
-      else
       {
         
           InputStream is2 = JCIFSUtility.getFileInputStream(systemName_, userId_, encryptedPassword_, ifsPathNameX); 
@@ -1231,7 +1212,7 @@ e.printStackTrace();
 
 
   public boolean checkFileExists(String ifsPathNameX) throws Exception { 
-      if (isApplet_ || JTOpenTestEnvironment.isLinux)
+      if ( JTOpenTestEnvironment.isLinux)
       {
   	IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
   	return (file.exists());
@@ -1248,7 +1229,7 @@ e.printStackTrace();
 
 
   public long checkFileLength(String ifsPathNameX) throws Exception { 
-      if (isApplet_ || JTOpenTestEnvironment.isLinux)
+      if ( JTOpenTestEnvironment.isLinux)
       {
   	IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
   	return (file.length());
@@ -1263,14 +1244,6 @@ e.printStackTrace();
 
   public boolean checkExpectedRead2(String ifsPathNameX, int x1, int x2) throws Exception  {  
     boolean passed = false; 
-    if (isApplet_)
-    {
-      IFSTextFileInputStream is =
-        new IFSTextFileInputStream(systemObject_, ifsPathNameX);
-      passed = is.read() == x1 && is.read() == x2;
-      is.close();
-    }
-    else
     {
       passed = JCIFSUtility.checkExpectedRead2(systemName_, userId_, encryptedPassword_, ifsPathNameX, x1, x2); 
       // FileInputStream is = new FileInputStream(convertToPCName(ifsPathNameX));

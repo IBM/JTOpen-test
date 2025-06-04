@@ -378,11 +378,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var001()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     AS400File f = null;
     AS400File deserf = null;
     try
@@ -588,11 +583,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var002()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     AS400File f = null;
     AS400File deserf = null;
     try
@@ -809,11 +799,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var003()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     AS400File f = null;
     AS400File deserf = null;
     try
@@ -1077,11 +1062,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var004()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     AS400File f = null;
     AS400File deserf = null;
     try
@@ -1271,11 +1251,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var005()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     AS400File f = null;
     AS400File deserf = null;
     try
@@ -1536,11 +1511,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var006()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     KeyedFile f = null;
     KeyedFile deserf = null;
     try
@@ -1729,11 +1699,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var007()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     KeyedFile f = null;
     KeyedFile deserf = null;
     try
@@ -1994,11 +1959,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var008()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     SequentialFile f = null;
     SequentialFile deserf = null;
     try
@@ -2189,11 +2149,6 @@ public class DDMSerialization extends Testcase
   **/
   public void Var009()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running in applet.");
-      return;
-    }
     SequentialFile f = null;
     SequentialFile deserf = null;
     try

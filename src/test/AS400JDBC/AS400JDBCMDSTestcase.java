@@ -175,7 +175,7 @@ public class AS400JDBCMDSTestcase extends Testcase
      **/
     public void setup() throws Exception
     {
-        if (!isApplet_)
+        if (!false)
         {
             // Make sure javatest dir exists.
             javatest_ = new File(logDirectory_);
@@ -213,7 +213,6 @@ public class AS400JDBCMDSTestcase extends Testcase
         else if (JTOpenTestEnvironment.isWindows)
             environment_ = OS_WINDOWS;
 
-        if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))
         {
             // Get the JNDI Initial Context.
             Properties env = new Properties();
@@ -3069,12 +3068,6 @@ public class AS400JDBCMDSTestcase extends Testcase
     **/
     public void Var113()
     {
-        if (isApplet_)
-        {
-
-            notApplicable("Running in applet");
-            return;
-        }
         Connection c = null;
 
         AS400JDBCManagedDataSource ds = new AS400JDBCManagedDataSource();
@@ -3402,12 +3395,6 @@ public class AS400JDBCMDSTestcase extends Testcase
             notApplicable("non i5 TC");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
-
         String jndiName = "javatest/test123";
 
         if (jndiType_ == JNDI_LDAP)
@@ -3481,12 +3468,6 @@ public class AS400JDBCMDSTestcase extends Testcase
             notApplicable("non i5 TC");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
-
         String jndiName = "javatest/test124";
 
         if (jndiType_ == JNDI_LDAP)
@@ -3551,12 +3532,6 @@ public class AS400JDBCMDSTestcase extends Testcase
             notApplicable("non i5 TC");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
-
         String jndiName = "javatest/test125";
 
         if (jndiType_ == JNDI_LDAP)
@@ -3635,12 +3610,6 @@ public class AS400JDBCMDSTestcase extends Testcase
             notApplicable("non i5 TC");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
-
         String jndiName = "javatest/test126";
 
         if (jndiType_ == JNDI_LDAP)
@@ -3712,12 +3681,6 @@ public class AS400JDBCMDSTestcase extends Testcase
             notApplicable("non i5 TC");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
-
         String jndiName = "javatest/test127";
 
         if (jndiType_ == JNDI_LDAP)
@@ -3884,12 +3847,6 @@ public class AS400JDBCMDSTestcase extends Testcase
             notApplicable("non i5 TC");
             return;
         }
-        if (isApplet_ && jndiType_ == JNDI_FILE)
-        {
-            notApplicable("Running in applet and jndiType is file");
-            return;
-        }
-
         String jndiName = "javatest/test130";
 
         if (jndiType_ == JNDI_LDAP)
@@ -4572,11 +4529,6 @@ public class AS400JDBCMDSTestcase extends Testcase
     **/
     public void Var150()
     {
-        if (isApplet_)                
-        {
-            notApplicable("Running in applet");     
-            return;                  
-        }                                
         Connection c = null;
 
         AS400JDBCManagedDataSource ds = new AS400JDBCManagedDataSource();

@@ -176,7 +176,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
      **/
     public void setup() throws Exception
     {
-        if (!isApplet_)                                     //@A6A
         {
             // Make sure javatest dir exists.
             javatest_ = new File(logDirectory_);  //@A4C
@@ -214,7 +213,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
         else if (JTOpenTestEnvironment.isWindows)
             environment_ = OS_WINDOWS;
 
-        if (!isApplet_ || (isApplet_ && jndiType_ != JNDI_FILE))          //@A7A
         {
             // Get the JNDI Initial Context.
             Properties env = new Properties();
@@ -3038,12 +3036,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
     **/
     public void Var113()
     {
-        if (isApplet_)                //@A6A
-        {
-            //@A6A
-            notApplicable("Running in applet");     //@A6A
-            return;                  //@A6A
-        }                                  //@A6A
         Connection c = null;
 
         AS400JDBCDataSource ds = new AS400JDBCDataSource();
@@ -3378,11 +3370,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
     **/
     public void Var123()
     {
-        if (isApplet_ && jndiType_ == JNDI_FILE)                //@A7A
-        {                                        //@A7A
-            notApplicable("Running in applet and jndiType is file"); //@A7A
-            return;                                  //@A7A
-        }                                        //@A7A
 
         String jndiName = "javatest/test123";
 
@@ -3458,11 +3445,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
     **/
     public void Var124()
     {
-        if (isApplet_ && jndiType_ == JNDI_FILE)     //@A7A
-        {                                                      //@A7A
-            notApplicable("Running in applet and jndiType is file");                             //@A7A
-            return;                                           //@A7A
-        }                                                      //@A7A
 
         String jndiName = "javatest/test124";
 
@@ -3527,11 +3509,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
     **/
     public void Var125()
     {
-        if (isApplet_ && jndiType_ == JNDI_FILE)     //@A7A
-        {                                                      //@A7A
-            notApplicable("Running in applet and jndiType is file");                             //@A7A
-            return;                                           //@A7A
-        }                                                      //@A7A
 
         String jndiName = "javatest/test125";
 
@@ -3610,11 +3587,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
     **/
     public void Var126()
     {
-        if (isApplet_ && jndiType_ == JNDI_FILE)     //@A7A
-        {                                                      //@A7A
-            notApplicable("Running in applet and jndiType is file");                             //@A7A
-            return;                                           //@A7A
-        }                                                      //@A7A
 
         String jndiName = "javatest/test126";
 
@@ -3686,11 +3658,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
     **/
     public void Var127()
     {
-        if (isApplet_ && jndiType_ == JNDI_FILE)     //@A7A
-        {                                                      //@A7A
-            notApplicable("Running in applet and jndiType is file");                             //@A7A
-            return;                                           //@A7A
-        }                                                      //@A7A
 
         String jndiName = "javatest/test127";
 
@@ -3855,11 +3822,6 @@ public class AS400JDBCDataSourceTestcase extends Testcase
     **/
     public void Var130()
     {
-        if (isApplet_ && jndiType_ == JNDI_FILE)     //@A7A
-        {                                                      //@A7A
-            notApplicable("Running in applet and jndiType is file");                             //@A7A
-            return;                                           //@A7A
-        }                                                      //@A7A
 
         String jndiName = "javatest/test130";
 
@@ -4571,11 +4533,6 @@ notApplicable("SSLight Testcase");
     **/
     public void Var150()
     {
-        if (isApplet_)                
-        {
-            notApplicable("Running in applet");     
-            return;                  
-        }                                
         Connection c = null;
 
         AS400JDBCDataSource ds = new AS400JDBCDataSource();
@@ -5651,11 +5608,6 @@ notApplicable("SSLight Testcase");
          **/
          public void Var187()
          {
-             if (isApplet_ && jndiType_ == JNDI_FILE)                //@A7A
-             {                                        //@A7A
-                 notApplicable("Running in applet and jndiType is file"); //@A7A
-                 return;                                  //@A7A
-             }                                        //@A7A
 
              String jndiName = "javatest/test123";
 

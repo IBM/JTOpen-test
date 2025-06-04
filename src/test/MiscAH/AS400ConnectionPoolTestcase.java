@@ -154,8 +154,7 @@ extends Testcase
 
           output_.println("Running under: " + operatingSystem_);
           output_.println("DOS-based file structure: " + DOS_);
-          output_.println("Executing " + (isApplet_ ? "applet." : "application."));
-        }
+       }
 
         //Get password in cache for later tests.
         //@B2D systemObject_.addPasswordCacheEntry(systemObject_.getSystemName(),          //@A6A

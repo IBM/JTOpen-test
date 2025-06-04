@@ -36,11 +36,6 @@ public class ConvExecutionTestcase extends Testcase
      **/
     public void Var001()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cannot set Locale inside a browser.");
-            return;
-        }
 
         Locale saveDefault = Locale.getDefault();
         try
@@ -78,11 +73,6 @@ public class ConvExecutionTestcase extends Testcase
      **/
     public void Var002()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cannot set Locale inside a browser.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         try
         {
@@ -119,11 +109,6 @@ public class ConvExecutionTestcase extends Testcase
      **/
     public void Var003()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cannot set Locale inside a browser.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         try
         {
@@ -190,11 +175,6 @@ public class ConvExecutionTestcase extends Testcase
      **/
     public void Var005()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cannot set Locale inside a browser.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         try
         {
@@ -231,11 +211,6 @@ public class ConvExecutionTestcase extends Testcase
      **/
     public void Var006()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cannot set Locale inside a browser.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         try
         {
@@ -279,11 +254,6 @@ public class ConvExecutionTestcase extends Testcase
      **/
     public void Var007()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cannot set Locale inside a browser.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         try
         {

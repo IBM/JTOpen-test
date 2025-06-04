@@ -620,9 +620,6 @@ ActionCompletedListener
     {
         try
         {
-            if (isApplet_)                                                //$B2A
-                notApplicable();                                           //$B2A
-            else
             {   
                 ProgramCall pgm = new ProgramCall(systemObject_, goodPgm_, buildParms());
                 pgm.addActionCompletedListener( this );

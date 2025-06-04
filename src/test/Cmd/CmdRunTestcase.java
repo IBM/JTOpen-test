@@ -285,19 +285,7 @@ public class CmdRunTestcase extends Testcase
         }
         catch (Exception e)
         {
-            if (isApplet_)
-            {
-              if (exceptionIs(e, "AppletSecurityException") || // Netscape
-                  (exceptionIs(e, "SecurityExceptionEx"))  ||
-                  (exceptionIs(e, "UnknownHostException")))    // Internet Explorer
-                succeeded();
-              else
-                failed(e);
-            }
-            else
-            {
                 assertExceptionIsInstanceOf(e, "java.net.UnknownHostException");
-            }
         }
     }
 
@@ -599,19 +587,7 @@ public class CmdRunTestcase extends Testcase
         }
         catch (Exception e)
         {
-            if (isApplet_)
-            {
-              if (exceptionIs(e, "AppletSecurityException") || // Netscape
-                  (exceptionIs(e, "UnknownHostException")) ||
-                  (exceptionIs(e, "SecurityExceptionEx")))     // Internet Explorer
-                succeeded();
-              else
-                failed(e);
-            }
-            else
-            {
                 assertExceptionIsInstanceOf(e, "java.net.UnknownHostException");
-            }
         }
     }
 

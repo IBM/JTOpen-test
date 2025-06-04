@@ -110,7 +110,7 @@ This testcase should detect this problem.
 	}
 
 	STATEMENTS_PER_CONNECTION = overrideFromProperty("test.JDConnectionClose.STATEMENTS_PER_CONNECTION", STATEMENTS_PER_CONNECTION); 
-  CONNECTIONS_TO_TEST = overrideFromProperty("test.JDConnectionClose.CONNECTIONS_TO_TEST", CONNECTIONS_TO_TEST); 
+	CONNECTIONS_TO_TEST = overrideFromProperty("test.JDConnectionClose.CONNECTIONS_TO_TEST", CONNECTIONS_TO_TEST); 
 
 	StringBuffer sb = new StringBuffer();
 	try {

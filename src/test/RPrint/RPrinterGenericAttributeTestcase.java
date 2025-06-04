@@ -709,9 +709,6 @@ getAttributeValue() - When the connection is bogus.
         }
         catch(Exception e) {
             // Browsers don't like even attempting to connect to "This".
-            if (isApplet_)
-                assertExceptionIsInstanceOf(e, "java.lang.Throwable");
-            else
                 assertExceptionIsInstanceOf (e, "com.ibm.as400.resource.ResourceException");
         }
     }

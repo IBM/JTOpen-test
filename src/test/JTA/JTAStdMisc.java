@@ -92,6 +92,8 @@ Constructor.
        gtridPrefix = 0x1DBCCC1B00000000L;    
      } else if (jdk == JVMInfo.JDK_V17) {
        gtridPrefix = 0x1DBCCC1C00000000L;    
+     } else if (jdk == JVMInfo.JDK_V21) {
+       gtridPrefix = 0x1DBCCC1D00000000L;    
      } else {
        System.out.println("Warning.. did not recognize jdk version "+jdk); 
      }

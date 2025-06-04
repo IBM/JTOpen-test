@@ -37,11 +37,6 @@ public class ConvConverterTestcase extends Testcase
    **/
   public void Var001()
   {
-    if (isApplet_)
-    {
-      notApplicable("Cannot set Locale inside a browser.");
-      return;
-    }
     Locale saveDefault = Locale.getDefault();
     try
     {
@@ -64,11 +59,6 @@ public class ConvConverterTestcase extends Testcase
    **/
   public void Var002()
   {
-    if (isApplet_)
-    {
-      notApplicable("Cannot set Locale inside a browser.");
-      return;
-    }
     Locale saveDefault = Locale.getDefault();
     try
     {
@@ -139,11 +129,6 @@ public class ConvConverterTestcase extends Testcase
    **/
   public void Var005()
   {
-    if (isApplet_)
-    {
-      notApplicable("Cp942C does not exist in IE.");
-      return;
-    }
     try
     {
         // Java should be able to handle Cp942C, and we punt to Java if we don't have a table.

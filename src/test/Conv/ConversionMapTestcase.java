@@ -257,11 +257,6 @@ public class ConversionMapTestcase extends Testcase
      **/
     public void Var005()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cannot set Locale inside a browser.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         String localeStr = "";
         try
@@ -314,11 +309,6 @@ public class ConversionMapTestcase extends Testcase
     @SuppressWarnings("unchecked")
     public void Var006()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cannot set Locale inside a browser.");
-            return;
-        }
         Locale saveDefault = Locale.getDefault();
         String localeStr = "";
         try
@@ -425,11 +415,6 @@ public class ConversionMapTestcase extends Testcase
      **/
     public void Var008()
     {
-        if (isApplet_)
-        {
-            notApplicable("Cp942C does not exist in IE.");
-            return;
-        }
         try
         {
             ConvTable t = ConvTable.getTable("Cp942C");

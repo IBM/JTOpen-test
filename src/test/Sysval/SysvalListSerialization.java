@@ -82,7 +82,6 @@ public class SysvalListSerialization extends Testcase implements PropertyChangeL
 
       output_.println("Running under: " + operatingSystem_);
       output_.println("DOS-based file structure: " + DOS_);
-      output_.println("Executing " + (isApplet_ ? "applet." : "application."));
     }
 
     /**

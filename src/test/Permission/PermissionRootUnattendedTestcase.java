@@ -138,7 +138,6 @@ protected void cleanup()
            System.out.println(ex);
       }
      
-      if (!isApplet_)
       {
         try
         {
@@ -911,11 +910,6 @@ Method tested: writeObject()
 **/  
   public void Var025()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
     try
     {
          Permission per = new Permission(systemObject_,"/testdir2");
@@ -939,11 +933,6 @@ Method tested: writeObject() and readObject()
 **/
  public void Var026()
   {
-    if (isApplet_)
-    {
-      notApplicable("Running as applet.");
-      return;
-    }
     try
     {
          Permission pers = new Permission(systemObject_,"/testdir2");

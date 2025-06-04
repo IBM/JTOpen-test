@@ -32,7 +32,6 @@ import test.Testcase;
  **/
 public class ProgramParameterBeanInfoTestcase extends Testcase
 {
-    private boolean inNetscape = false;
 
     /**
      Performs setup needed before running variations.
@@ -40,15 +39,6 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        Class<?> fred = null;
-        try { fred = Class.forName("netscape.security.PrivilegeManager"); }
-        catch (Throwable e) {}
-
-        if (fred != null)
-        {
-            inNetscape = true;
-            System.out.println("We think we are in Netscape");
-        }
     }
 
     /**
@@ -137,11 +127,6 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
             notApplicable("No GUI for icon test.");
             return;
         }
-        if (inNetscape)
-        {
-            notApplicable("-- Cannot load Icon in Netscape");
-            return;
-        }
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
@@ -165,11 +150,6 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         if (onAS400_)
         {
             notApplicable("No GUI for icon test.");
-            return;
-        }
-        if (inNetscape)
-        {
-            notApplicable("-- Cannot load Icon in Netscape");
             return;
         }
         try
@@ -196,11 +176,6 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
             notApplicable("No GUI for icon test.");
             return;
         }
-        if (inNetscape)
-        {
-            notApplicable("-- Cannot load Icon in Netscape");
-            return;
-        }
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
@@ -222,11 +197,6 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
         if (onAS400_)
         {
             notApplicable("No GUI for icon test.");
-            return;
-        }
-        if (inNetscape)
-        {
-            notApplicable("-- Cannot load Icon in Netscape");
             return;
         }
         try

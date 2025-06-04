@@ -29,9 +29,7 @@ import com.ibm.as400.access.IFSFileOutputStream;
 import com.ibm.as400.access.IFSJavaFile;
 import com.ibm.as400.access.IFSRandomAccessFile;
 import com.ibm.as400.access.IFSTextFileInputStream;
-import com.ibm.as400.access.IFSTextFileOutputStream;
-
-import test.JTOpenTestEnvironment; 
+import com.ibm.as400.access.IFSTextFileOutputStream; 
 
 /**
 Test constructors for IFSFile, IFSFileInputStream, IFSFileOutputStream,
@@ -2920,16 +2918,8 @@ exist and the existence option is OPEN_OR_CREATE.
                                 IFSRandomAccessFile.SHARE_ALL,
                                 IFSRandomAccessFile.OPEN_OR_CREATE);
       raf.close();
-      if (isApplet_ || JTOpenTestEnvironment.isLinux)
-      {
-        IFSFile file = new IFSFile(systemObject_, ifsPathNameX);
-        assertCondition(file.exists());
-      }
-      else
-      {
         
         assertCondition(checkFileExists(ifsPathNameX), "File "+ifsPathNameX+" does not exist");
-      }
     }
     catch(Exception e)
     {

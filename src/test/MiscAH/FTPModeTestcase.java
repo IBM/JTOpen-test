@@ -158,8 +158,6 @@ public class FTPModeTestcase extends    Testcase
       aix_ = JTOpenTestEnvironment.isAIX;
 
     output_.println("Running under: " + operatingSystem_);
-///    output_.println("DOS-based file structure: " + DOS_);
-    output_.println("Executing " + (isApplet_ ? "applet." : "application."));
 
     cleanUpDirs();
   }
