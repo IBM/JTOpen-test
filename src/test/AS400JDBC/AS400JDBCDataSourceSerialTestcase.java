@@ -1021,7 +1021,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
     **/
     public void Var022()
     {
-        int[] values = {0,8,16,32,64,128,256,512};
+        int[] values = {0,8,16,32,64,128,256,512,513,1000,15999,16000};
         try
         {
             AS400JDBCDataSource ds = new AS400JDBCDataSource();
@@ -4691,7 +4691,60 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
 
 
 
+    /**
+     *  Validates that setBlockSize(int) sets the block size as expected.
+     **/
+     public void Var0150()
+     {
+         int[] values = {513,1000,15999,16000};
+         try
+         {
+             AS400JDBCDataSource ds = new AS400JDBCDataSource();
 
+             boolean failed = false;
+             for (int i=0; i< values.length; i++)
+             {
+                 ds.setBlockSize(values[i]);
+                 if (! (ds.getBlockSize() == values[i]) )
+                 {
+                     failed = true;
+                 }
+             }
+
+             if (failed)
+                 failed("Unexpected Results.");
+             else
+                 succeeded();
+         }
+         catch (Exception e)
+         {
+             failed(e, "Unexpected exception.");
+         }
+     }
+
+
+
+     /**
+      *  Validates that setBlockSize(int) throws an ExtendedIllegalArgumentException if the value is invalid.
+      **/
+      public void Var151()
+      {
+          try
+          {
+              AS400JDBCDataSource ds = new AS400JDBCDataSource();
+              ds.setBlockSize(16001);
+
+              failed("Unexpected results.");
+          }
+          catch (ExtendedIllegalArgumentException o)
+          {
+              succeeded();
+          }
+          catch (Exception e)
+          {
+              failed(e, "Unexpected Exception.");
+          }
+      }
 
 
 
