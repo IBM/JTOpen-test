@@ -5682,6 +5682,61 @@ notApplicable("SSLight Testcase");
          }
 
 
+         
+         /**
+          *  Validates that setBlockSize(int) sets the block size as expected.
+          **/
+          public void Var188()
+          {
+              int[] values = {512,513,2000,4000,16000};
+              try
+              {
+                  AS400JDBCDataSource ds = new AS400JDBCDataSource();
+
+                  boolean failed = false;
+                  for (int i=0; i< values.length; i++)
+                  {
+                      ds.setBlockSize(values[i]);
+                      if (! (ds.getBlockSize() == values[i]) )
+                      {
+                          failed = true;
+                      }
+                  }
+
+                  if (failed)
+                      failed("Unexpected Results.");
+                  else
+                      succeeded();
+              }
+              catch (Exception e)
+              {
+                  failed(e, "Unexpected exception.");
+              }
+          }
+          
+          /**
+           *  Validates that setBlockSize(int) throws an ExtendedIllegalArgumentException if the value is invalid.
+           **/
+           public void Var189()
+           {
+               try
+               {
+                   AS400JDBCDataSource ds = new AS400JDBCDataSource();
+                   ds.setBlockSize(16001);
+
+                   failed("Unexpected results.");
+               }
+               catch (ExtendedIllegalArgumentException o)
+               {
+                   succeeded();
+               }
+               catch (Exception e)
+               {
+                   failed(e, "Unexpected Exception.");
+               }
+           }
+
+
     /**
       Serializes and deserializes the data source object.
      **/

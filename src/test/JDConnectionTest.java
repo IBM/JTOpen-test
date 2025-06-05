@@ -30,6 +30,7 @@ import com.ibm.as400.access.Job;
 
 import test.JD.JDSetupCollection;
 import test.JD.Connection.JDConnectionAbort;
+import test.JD.Connection.JDConnectionBlockSize;
 import test.JD.Connection.JDConnectionCCSID;
 import test.JD.Connection.JDConnectionCharacterTruncation;
 import test.JD.Connection.JDConnectionClientInfo;
@@ -227,7 +228,10 @@ Creates the testcases.
 	   } 
 	   
 	   
-	   
+	   addTestcase (new JDConnectionBlockSize (systemObject_,
+	          namesAndVars_, runMode_, fileOutputStream_, 
+	          password_));
+
 	   
 	  addTestcase (new JDConnectionClose (systemObject_,
                                           namesAndVars_, runMode_, fileOutputStream_, 
