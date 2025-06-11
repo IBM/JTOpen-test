@@ -671,9 +671,9 @@ public class JDJobName {
 						e.printStackTrace();
 					}
 				}
-				System.out.println("Calling System.load(" + libraryName + ")");
+				// System.out.println("Calling System.load(" + libraryName + ")");
 				System.load(libraryName);
-				System.out.println("Completed System.load(" + libraryName + ")");
+				// System.out.println("Completed System.load(" + libraryName + ")");
 				loaded = true;
 
 			}

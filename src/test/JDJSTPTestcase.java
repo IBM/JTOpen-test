@@ -995,25 +995,25 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			serverShellCommand(command, false);
 
 			if (debug)
-				System.out.println("JDJSTP.debug: Checking for " + jarFile);
-			if (!serverFileExists(sourcepath + "/" + jarFile)) {
-				throw new Exception("Jar file not created :" + jarFile);
+				System.out.println("JDJSTP.debug: Checking for "+ nativeBaseDir + "/" + sourcepath + "/" + jarFile);
+			if (!serverFileExists(nativeBaseDir + "/" + sourcepath + "/" + jarFile)) {
+				throw new Exception("Jar file not created :" + nativeBaseDir + "/" + sourcepath+"/"+jarFile + " server command was "+command);
 			}
 
 		}
 
-		public static int getIntFromQuery(String query) throws Exception {
-			ResultSet rs = cmdStatement.executeQuery(query);
-			if (rs.next()) {
-				int value = rs.getInt(1);
-				rs.close();
-				return value;
-			} else {
-				rs.close();
-				throw new Exception("Query returned no rows");
-			}
-		}
-
+                public static int getIntFromQuery(String query) throws Exception {
+                  ResultSet rs = cmdStatement.executeQuery(query);
+                  if (rs.next()) {
+                    int value = rs.getInt(1);
+                    rs.close();
+                    return value;
+                  } else {
+                    rs.close();
+                    throw new Exception("Query returned no rows");
+                  }
+                }
+		
      /**
       * checks to see if a server file exists
       * If a full path is not specified, then /home/jdbc/<path> is checked 
@@ -1251,7 +1251,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
 
 	  
-	  boolean updated = updateServerFile(sourceFile, serverPf, destFile);
+	  boolean updated = updateServerFile(sourceFile, serverPf, destFile, destClasses);
 
 
 	  if (! updated) {
@@ -1340,7 +1340,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			}
 			String serverPf = upperBase;
 			try {
-				boolean updated = updateServerFile(sourceFile, serverPf, destFile);
+				boolean updated = updateServerFile(sourceFile, serverPf, destFile, destFile);
 				if (!updated) {
 					if (debug)
 						System.out.println("JDJSTP.debug: 2. Skipping compile of " + sourceFile + "-- destination file"
@@ -1405,7 +1405,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      String createModCommand = null;
 	      String precompileCommand = null; 
 	      try { 
-				boolean updated = updateServerFile(sourceFile, serverPf, destFile);
+				boolean updated = updateServerFile(sourceFile, serverPf, destFile, destFile);
 				if (!updated) {
 					boolean doReturn = true;
 					if (usePase) {
@@ -1552,7 +1552,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      String createModCommand = null;
 	      try { 
 
-		  boolean updated = updateServerFile(sourceFile, serverPf, destFile);
+		  boolean updated = updateServerFile(sourceFile, serverPf, destFile, destFile);
 
 	      //
 	      // If destination program does not exist
@@ -1619,7 +1619,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      String destFile   = nativeBaseDir+"/"+sourcepath+"/"+javaSource;
               String serverPf   = upperBase;
 	      try { 
-		  boolean updated = updateServerFile(sourceFile, serverPf, destFile);
+		  boolean updated = updateServerFile(sourceFile, serverPf, destFile, destFile);
 		  if (! updated) {
 		      if (debug) System.out.println("JDJSTP.debug: 5. Skipping compile of "+sourceFile+"-- destination file"+ destFile+" is newer");
 		      return;
@@ -1650,7 +1650,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			String destFile = nativeBaseDir + "/" + sourcepath + "/" + source;
 			String serverPf = genPfName(source);
 
-			boolean updated = updateServerFile(sourceFile, serverPf, destFile);
+			boolean updated = updateServerFile(sourceFile, serverPf, destFile, destFile);
 			if (!updated) {
 				if (debug)
 					System.out.println("JDJSTP.debug: 6. Skipping compile of " + sourceFile + "-- destination file "
@@ -1679,7 +1679,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			String destFile = nativeBaseDir + "/" + sourcepath + "/" + source;
 			String serverPf = genPfName(source);
 
-			boolean updated = updateServerFile(sourceFile, serverPf, destFile);
+			boolean updated = updateServerFile(sourceFile, serverPf, destFile, destFile);
 			if (!updated) {
 				if (debug)
 					System.out.println("JDJSTP.debug: 7. Skipping compile of " + sourceFile + "-- destination file "
@@ -1764,8 +1764,15 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		String classpath = ".";
 		    if ( javaSource.trim().endsWith(".sqlj")) {
 
-			String command = "export -s CLASSPATH='.:/QIBM/ProdData/OS400/Java400/ext/runtime.zip:/QIBM/ProdData/OS400/Java400/ext/translator.zip:/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar';"+
+			String command;
+			if (JVMInfo.getJDK() >= JVMInfo.JDK_19) {
+                          command = "export -s CLASSPATH='.:/QIBM/ProdData/OS400/Java400/ext/runtime.zip:/QIBM/ProdData/OS400/Java400/ext/translator.zip:/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar:/QIBM/ProdData/OS400/Java400/ext/db2_classes11.jar';"+
+                          "cd "+javaRunPath+"; sqlj "+javaSource; 
+			  
+			} else {
+			  command = "export -s CLASSPATH='.:/QIBM/ProdData/OS400/Java400/ext/runtime.zip:/QIBM/ProdData/OS400/Java400/ext/translator.zip:/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar';"+
 			  "cd "+javaRunPath+"; sqlj "+javaSource; 
+			}
 
 			process = exec(command );
 			showProcessOutput(process, null, JDJSTPOutputThread.ENCODING_UNKNOWN);
@@ -2049,7 +2056,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	 String destSer      = nativeBaseDir+"/"+ base + "_*.ser";
 	 String serverPf   = genPfName(sqljSource);
 
-	 boolean updated = updateServerFile(sourceFile, serverPf, serverFile);
+	 boolean updated = updateServerFile(sourceFile, serverPf, serverFile,destFile);
 	 if (! updated) {
 	     if (debug) System.out.println("JDJSTP.debug: 10. Skipping compile of "+sourceFile+"-- destination file"+ serverFile+" is newer");
 	     return;
@@ -2062,8 +2069,13 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	     if ( vrm >= 510 ) {
 		 command = "cd "+nativeBaseDir+"; export -s CLASSPATH=\"$CLASSPATH\"\":/QIBM/ProdData/OS400/Java400/ext/runtime.zip:/QIBM/ProdData/OS400/Java400/ext/translator.zip:/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar\";  java  sqlj.tools.Sqlj  "  + sqljSource;
 	     } else {
+               if (JVMInfo.getJDK() >= JVMInfo.JDK_V11) {
+                 command = "export -s CLASSPATH=\"$CLASSPATH\"\":/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar:/QIBM/ProdData/OS400/Java400/ext/db2_classes11.jar:/QIBM/ProdData/Java400/ext/runtime.zip:/QIBM/ProdData/Java400/ext/translator.zip:/QIBM/ProdData/Java400/ext/db2routines_classes.jar\";  java  sqlj.tools.Sqlj  "  + sourcepath+"/"+sqljSource;
+               } else { 
+	       
 		 command = "export -s CLASSPATH=\"$CLASSPATH\"\":/QIBM/ProdData/Java400/ext/runtime.zip:/QIBM/ProdData/Java400/ext/translator.zip:/QIBM/ProdData/Java400/ext/db2routines_classes.jar\";  java  sqlj.tools.Sqlj  "  + sourcepath+"/"+sqljSource;
-	     }
+               }
+             }
 	     if (debug) System.out.println("JDJSTP.debug: Excuting \""+command+"\"");
 	     serverShellCommand(command, false);
 
@@ -2076,8 +2088,13 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
              //
              // End workaround
              // 
-	     serverShellCommand("cd "+nativeBaseDir+"; export -s CLASSPATH=\"$CLASSPATH\"\":/QIBM/ProdData/OS400/Java400/ext/runtime.zip:/QIBM/ProdData/OS400/Java400/ext/translator.zip:/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar\";"+
-                 "  javac -J-Dremoved.java.version=1.3 "+  javaFile+" 2>&1", false);
+             if (JVMInfo.getJDK() >= JVMInfo.JDK_V11) {
+               serverShellCommand("cd "+nativeBaseDir+"; export -s CLASSPATH=\"$CLASSPATH\"\":/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar:/QIBM/ProdData/OS400/Java400/ext/db2_classes11.jar:/QIBM/ProdData/OS400/Java400/ext/runtime.zip:/QIBM/ProdData/OS400/Java400/ext/translator.zip:/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar\";"+
+                   "  javac  "+  javaFile+" 2>&1", false);
+             } else { 	     
+               serverShellCommand("cd "+nativeBaseDir+"; export -s CLASSPATH=\"$CLASSPATH\"\":/QIBM/ProdData/OS400/Java400/ext/runtime.zip:/QIBM/ProdData/OS400/Java400/ext/translator.zip:/QIBM/ProdData/OS400/Java400/ext/db2routines_classes.jar\";"+
+                 "  javac  "+  javaFile+" 2>&1", false);
+             }  
 	     serverShellCommand("cd "+nativeBaseDir+"; chmod a+rx "+destFile, false);
 	     serverShellCommand("cd "+nativeBaseDir+"; chmod a+rx "+destClasses, false);
 	     serverCommand("QSYS/CPY OBJ('"+destFile+"') TODIR('"+funcpath+"')  REPLACE(*YES) ", false);
@@ -2564,7 +2581,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
       * JDJSTPENV library created.
       * JDJSTPCMD procedure exists. 
       */ 
-     public static boolean updateServerFile(String localFile, String serverPf, String serverFile) throws Exception {
+     public static boolean updateServerFile(String localFile, String serverPf, String serverFile, String serverGeneratedFile) throws Exception {
        
        checkSetup();
 
@@ -2582,17 +2599,54 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
 
        try {
-	     ResultSet rs = cmdStatement.executeQuery ("select sourcetimestamp from "+envLibrary+".FILES where source='"+serverFile+"'");
-	     boolean found = rs.next();
-	     if (found) { 
-   	        Timestamp lastTimestamp = rs.getTimestamp(1);
-	        lastTime = lastTimestamp.getTime();
-		 if (debug) System.out.println("JDJSTP.debug: updateServerFile:  Timestamp found for serverFile="+serverFile); 
-	     } else {
-		 if (debug) System.out.println("JDJSTP.debug: updateServerFile:  Timestamp not found for serverFile="+serverFile);
-		 lastTime = 0; 
-	     } 
-	     rs.close();
+             // Verify that the server file exists
+             String sql = "select SYSTOOLS.IFS_Access('"+serverFile+"','YES') FROM SYSIBM.SYSDUMMY1 ";
+             ResultSet rs = cmdStatement.executeQuery(sql); 
+             boolean fileExists = false; 
+             String message = "File does not exists on server: " + serverFile;
+             if (rs.next()) {
+               if (rs.getInt(1) == 0) {
+                 fileExists = true; 
+               }
+             }
+             rs.close(); 
+             if (fileExists) { 
+               fileExists = false; 
+               message = "File does not exists on server: " + serverGeneratedFile;
+               sql = "select SYSTOOLS.IFS_Access('"+serverGeneratedFile+"','YES') FROM SYSIBM.SYSDUMMY1 ";
+               
+               rs = cmdStatement.executeQuery(sql); 
+               if (rs.next()) {
+                 if (rs.getInt(1) == 0) {
+                   fileExists = true; 
+                 }
+               }
+               rs.close(); 
+               
+             }
+             if (fileExists) {
+               rs = cmdStatement.executeQuery(
+                   "select sourcetimestamp from " + envLibrary + ".FILES where source='" + serverFile + "'");
+               boolean found = rs.next();
+               if (found) {
+                 Timestamp lastTimestamp = rs.getTimestamp(1);
+                 lastTime = lastTimestamp.getTime();
+                 if (debug)
+                   System.out.println("JDJSTP.debug: updateServerFile:  Timestamp found in " + envLibrary
+                       + ".FILES  for serverFile=" + serverFile);
+               } else {
+                 if (debug)
+                   System.out.println("JDJSTP.debug: updateServerFile:  Timestamp not found in " + envLibrary
+                       + ".FILES  for serverFile=" + serverFile);
+                 lastTime = 0;
+               }
+               rs.close();
+             } else {
+               if (debug)
+                 System.out.println("JDJSTP.debug: updateServerFile:  " + message );
+               lastTime = 0;
+
+             }
 	     
        } catch (SQLException e)  {
 	     e.printStackTrace(System.out);
