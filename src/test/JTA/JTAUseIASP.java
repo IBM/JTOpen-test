@@ -107,7 +107,7 @@ public class JTAUseIASP {
 	  if (message.indexOf("not found") < 0) {
 	      System.out.println("Unexpected exception ");
 	      e.printStackTrace(System.out); 
-	  } 
+	  }    
       }
 
       stmt.executeUpdate("Create table "+libraryName+".iaspcommit2(c1 int)");
