@@ -1390,8 +1390,63 @@ wasNull() - Get from a BIGINT, when the column is null.
     }
 
 
-    
-    
+    public void checkNull(String query) {
+      try {
+        ResultSet rs = statement0_.executeQuery(query);
+        rs.next();
+        rs.getString(1);
+        boolean v = rs.wasNull();
+        assertCondition(v == true, "For query '" + query + "' wasNull returned false");
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception");
+      }
+
+    }
+   
+    /**
+     * wasNull() - Get from a TIMESTAMP, when the column had a data mapping error.
+     **/
+    public void Var059() {
+      checkNull("select TO_DATE (CHAR(9000000 +19000000), 'YYYYMMDD') from sysibm.sysdummy1");
+    }
+
+    /**
+     * wasNull() - Get from a INTEGER, when the column had a data mapping error.
+     **/
+    public void Var060() {
+      checkNull("select INTEGER(1) / INTEGER(0) from sysibm.sysdummy1");
+    }
+
+    /**
+     * wasNull() - Get from a CHAR, where truncation occurred.
+     **/
+    public void Var061() {
+      try {
+        String query = "select CAST('ABC' AS CHAR(2)) from sysibm.sysdummy1";
+        ResultSet rs = statement0_.executeQuery(query);
+        rs.next();
+        rs.getString(1);
+        boolean v = rs.wasNull();
+        assertCondition(v == false, "For query '" + query + "' wasNull returned true");
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception");
+      }
+    }
+
+    /**
+     * wasNull() - Get from various types,  when the column had a data mapping error.
+     **/
+    public void Var062() {   checkNull("select INTEGER('A') from sysibm.sysdummy1");   }
+    public void Var063() {   checkNull("select SMALLINT('A') from sysibm.sysdummy1");   }
+    public void Var064() {   checkNull("select BIGINT('A') from sysibm.sysdummy1");   }
+    public void Var065() {   checkNull("select DECIMAL('A') from sysibm.sysdummy1");   }
+    public void Var066() {   checkNull("select cast('A' as numeric(10,2)) from sysibm.sysdummy1");   }
+    public void Var067() {   checkNull("select FLOAT('A') from sysibm.sysdummy1");   }
+    public void Var068() {   checkNull("select DOUBLE('A') from sysibm.sysdummy1");   }
+    public void Var069() {   checkNull("select DECFLOAT('A') from sysibm.sysdummy1");   }
+    public void Var070() {   checkNull("select DATE('AA/AA/AA') from sysibm.sysdummy1");   }
+    public void Var071() {   checkNull("select TIME('AA/AA/AA') from sysibm.sysdummy1");   }
+    public void Var072() {   checkNull("select TIMESTAMP('AAAA/AA/AA') from sysibm.sysdummy1");   }
 
 
 }
