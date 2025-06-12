@@ -22,15 +22,19 @@
 package test.JD.Statement;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400JDBCConnection;
+import com.ibm.as400.access.Job;
 
 import test.JDReflectionUtil;
 import test.JDStatementTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.PasswordVault;
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -616,85 +620,6 @@ extends JDTestcase
         try
         {
             
-            class AuxThread extends Thread
-            {
- 
-                private Statement s_;
-                private boolean success_ = false;
-		private boolean done_ = false;
-		private String[]  expected_ ; 
-		private String message = ""; 
-                private int[] sqlcode_ ;
-                private String query_="";
-                private long queryTime_ = -1; 
-                public AuxThread(Statement s, String[] expected, int[] sqlcode, String query )
-                {
-                    s_ = s;
-		    expected_ = expected;
-                    sqlcode_ = sqlcode;
-                    query_ = query; 
-                }
-		public String getMessage() {
-		    return message;
-		} 
-                public boolean getSuccess()
-                {
-                    return success_;
-                }
-
-                public boolean getDone()
-                {
-                    return done_;
-                }
-
-                public long getQueryTime() {
-                   return queryTime_; 
-                }
-                public void run()
-                {
-                    try
-                    {
-                      Thread.currentThread().setName("QueryRunThread");
-                        queryTime_ = -1;  
-			message+="\nrunning query "+query_+"\n";
-                        long startTime = System.currentTimeMillis(); 
-                        ResultSet rs = s_.executeQuery(query_ /* slow_ */ );
-                        long endTime = System.currentTimeMillis(); 
-
-			message+="\nclosing result set\n"; 
-                        rs.close();
-			message+="\nQuery finished and result set closed for query \n"+query_+"\n"+
-                         "in "+(endTime-startTime)+" ms\n";
-                        queryTime_ = (endTime-startTime); 
-                    }
-                    catch(SQLException e)
-                    {
-			success_ = false;
-			for (int i = 0 ; i < expected_.length; i++) { 
-			   if (( e.toString().indexOf(expected_[i]) >= 0 ) && 
-			       (e.getErrorCode() == sqlcode_[i])) {
-			       success_ = true;
-			   } else {
-
-			    message += "Caught " +e.toString()+" Expecting '"+expected_[i]+"' sqlcode="+e.getErrorCode()+" sb "+sqlcode_[i]+"\n";
-			   }
-			} /* for i */
-                    }
-                    catch(Exception e)
-                    {
-			success_ = false;
-			for (int i = 0 ; i < expected_.length; i++) { 
-
-			    if ( e.toString().indexOf(expected_[i]) >= 0 ) {
-				success_ = true;
-			    } else { 
-				message += "Caught " +e.toString()+" Expecting '"+expected_[i]+"'\n";
-			    }
-			} /* for */ 
-                    }
-		    done_ = true; 
-                }
-            }
             
             Statement s1;
             
@@ -713,7 +638,7 @@ extends JDTestcase
             boolean retry = true; 
             boolean done = false; 
             boolean success = false; 
-            AuxThread t = null; 
+            CancelQueryRunThread t = null; 
             long queryTime = 0; 
             while (retry) {
               s1 = connection2_.createStatement ();
@@ -724,7 +649,7 @@ extends JDTestcase
 	      int[] sqlcode = new int[2];
               sqlcode[0] = -952;
 	      sqlcode[1] = -99999; 
-	      t = new AuxThread(s1, message, sqlcode, query  +  " optimize for all rows");
+	      t = new CancelQueryRunThread(s1, message, sqlcode, query  +  " optimize for all rows");
 
               t.start();
 
@@ -4131,6 +4056,231 @@ catch(Exception e)
 
     }
 
+    
+    
+        public void testMfaCancel() { 
+        if (proxy_ != null && (!proxy_.equals(""))) {
+            notApplicable("Do not test cancel with proxy driver");
+            return; 
+        }
+        if (getDriver() != JDTestDriver.DRIVER_TOOLBOX && getDriver() != JDTestDriver.DRIVER_NATIVE) {
+          notApplicable("TOOLBOX or NATIVE variation");
+        }
+        String systemName = systemObject_.getSystemName();
+
+        if (checkAdditionalAuthenticationFactor(systemName) && checkPasswordLeak()) {
+        StringBuffer sb = new StringBuffer(); 
+        boolean passed = true; 
+
+        try
+        {
+          String hcsJob = null; 
+          initMfaUser("*NONE");
+          String mfaFactorString = new String(mfaFactor_);
+          long totpMillis = System.currentTimeMillis(); 
+          
+          String url;
+          if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+            url = "jdbc:as400:" + systemName + ";secure=true;additionalAuthenticationFactor=" + mfaFactorString;
+          } else {
+            url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString;
+          }
+          String mfaPassword = new String(PasswordVault.decryptPassword(mfaEncryptedPassword_));
+          Connection c = DriverManager.getConnection(url, mfaUserid_, mfaPassword);
+          if (c instanceof AS400JDBCConnection) { 
+             AS400 as400 = ((AS400JDBCConnection)c).getSystem(); 
+             Job[] jobs = as400.getJobs(AS400.HOSTCNN);
+             if (jobs.length == 0) { 
+               hcsJob = null; 
+             } else {
+               hcsJob = jobs[0].getQualifiedJobName();
+               sb.append("\n HCS is "+hcsJob);
+             }
+          } else {
+             hcsJob = "NA"; 
+          }
+            
+            Statement s1;
+            
+            String query = "SELECT a.table_name  "+
+            "FROM QSYS2.SYSTABLES a,  "+
+            "     QSYS2.SYSVIEWS b,   "+
+            "     QSYS2.SYSCOLUMNS c, "+
+            "     QSYS2.SYSINDEXES d, " +
+            "     QSYS2.SYSTABLES e,  " +
+            "     QSYS2.SYSVIEWS f,   " +
+            "     QSYS2.SYSCOLUMNS g, " +
+            "     QSYS2.SYSCOLUMNS h, " +
+            "     QSYS2.SYSCOLUMNS i, " +
+            "     QSYS2.SYSCOLUMNS j  ";
+            char letter = 'k'; 
+            boolean retry = true; 
+            boolean done = false; 
+            boolean success = false; 
+            CancelQueryRunThread t = null; 
+            long queryTime = 0; 
+            
+            /* Wait for the TOTP interval to expire */ 
+            /* A new one is generated every 30 seconds. */
+            /* A new generated one seems valid up to 60  seconds */
+            /* The find the time window when generated, add 61 seconds and wait until that time */ 
+            long startMillis = (totpMillis / 30000) * 30000; 
+            long expirationMillis = startMillis + 61000;
+            long currentMillis = System.currentTimeMillis(); 
+            long sleepMillis = expirationMillis - currentMillis; 
+            System.out.println(".. sleeping for "+sleepMillis+" ms for TOTP("+mfaFactorString+") to expire"); 
+            Thread.sleep(sleepMillis);
+            while (retry) {
+              sb.append("\nAt top of loop"); 
+              passed = true; 
+              s1 = c.createStatement ();
+              retry = false;
+              String[] message = new String[2]; 
+              message[0] = "Processing of the SQL statement ended";
+              message[1] = "Operation cancelled"; 
+              int[] sqlcode = new int[2];
+              sqlcode[0] = -952;
+              sqlcode[1] = -99999; 
+              t = new CancelQueryRunThread(s1, message, sqlcode, query  +  " optimize for all rows");
+
+              t.start();
+
+              Thread.sleep(1000);    // Give the thread a chance to execute the statement.
+              s1.cancel();
+              Thread.sleep(1000);    // Give the thread a chance to end 
+              s1.close();
+              done = t.getDone();
+              if (!done) {
+                passed = false; 
+                sb.append("\n ERROR: done = "+done); 
+              }
+             
+              success = t.getSuccess();
+              if (!success) { 
+                passed = false; 
+                sb.append("\n ERROR: success = "+success); 
+              }
+              queryTime = t.getQueryTime(); 
+              sb.append("\n queryTime = "+queryTime); 
+              if (queryTime>=0 && queryTime <= 4000) { 
+                // Query ran too fast.. Retry
+                retry = true; 
+                query += ", QSYS2.SYSCOLUMNS "+letter; 
+                letter++; 
+              }
+            }
+            
+            if (hcsJob == null) { 
+              passed = false; 
+              sb.append("\nError:  No HOSTCNN server associated with job"); 
+            }   
+
+            String threadMessage =""; 
+            if (t != null) threadMessage = t.getMessage(); 
+            sb.append("\n threadMessage="+threadMessage); 
+            assertCondition( passed, sb);
+            
+        }
+        catch(Exception e)
+        {
+            failed (e, sb);
+        }
+    }
+    }
+
+        /**
+        cancel() - Cancel a long running statement from another thread.
+                 - Use a different connection so that it runs slower. 
+                 - Call using an MFA user. Try 5 times
+        **/
+        public void Var088() {   testMfaCancel();    }
+        public void Var089() {   testMfaCancel();    }
+        public void Var090() {   testMfaCancel();    }
+        public void Var091() {   testMfaCancel();    }
+        public void Var092() {   testMfaCancel();    }
+    
+    
+    class CancelQueryRunThread extends Thread
+    {
+
+        private Statement s_;
+        private boolean success_ = false;
+        private boolean done_ = false;
+        private String[]  expected_ ; 
+        private String message = ""; 
+        private int[] sqlcode_ ;
+        private String query_="";
+        private long queryTime_ = -1; 
+        public CancelQueryRunThread(Statement s, String[] expected, int[] sqlcode, String query )
+        {
+            s_ = s;
+            expected_ = expected;
+            sqlcode_ = sqlcode;
+            query_ = query; 
+        }
+        public String getMessage() {
+            return message;
+        } 
+        public boolean getSuccess()
+        {
+            return success_;
+        }
+
+        public boolean getDone()
+        {
+            return done_;
+        }
+
+        public long getQueryTime() {
+           return queryTime_; 
+        }
+        public void run()
+        {
+            try
+            {
+              Thread.currentThread().setName("QueryRunThread");
+                queryTime_ = -1;  
+                message+="\nrunning query "+query_+"\n";
+                long startTime = System.currentTimeMillis(); 
+                ResultSet rs = s_.executeQuery(query_ /* slow_ */ );
+                long endTime = System.currentTimeMillis(); 
+
+                message+="\nclosing result set\n"; 
+                rs.close();
+                message+="\nQuery finished and result set closed for query \n"+query_+"\n"+
+                 "in "+(endTime-startTime)+" ms\n";
+                queryTime_ = (endTime-startTime); 
+            }
+            catch(SQLException e)
+            {
+                success_ = false;
+                for (int i = 0 ; i < expected_.length; i++) { 
+                   if (( e.toString().indexOf(expected_[i]) >= 0 ) && 
+                       (e.getErrorCode() == sqlcode_[i])) {
+                       success_ = true;
+                       message += "Correctly caught SQLException " +e.toString()+" Expecting '"+expected_[i]+"' sqlcode="+e.getErrorCode()+" sb "+sqlcode_[i]+"\n";
+                       
+                   } else {
+                     message += "Checked caught SQLException " +e.toString()+" Expecting '"+expected_[i]+"' sqlcode="+e.getErrorCode()+" sb "+sqlcode_[i]+"\n";
+                   }
+                } /* for i */
+            }
+            catch(Exception e)
+            {
+                success_ = false;
+                for (int i = 0 ; i < expected_.length; i++) { 
+
+                    if ( e.toString().indexOf(expected_[i]) >= 0 ) {
+                        success_ = true;
+                        message += "Correctly caught " +e.toString()+" Expecting '"+expected_[i]+"'\n";
+                    } else { 
+                        message += "Checking caught " +e.toString()+" Expecting '"+expected_[i]+"'\n";
+                    }
+                } /* for */ 
+            }
+            done_ = true; 
+        }
+    }
 
 
 }

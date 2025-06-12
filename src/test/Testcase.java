@@ -3214,7 +3214,12 @@ public abstract class Testcase {
 		 return true; 
 	 }
   }
+
   public void initMfaUser() throws Exception { 
+     initMfaUser("1"); 
+  }
+  
+  public void initMfaUser(String interval ) throws Exception { 
 	  if (!mfaInitialized) {
 		  // For this to be used,  googleauth-1.5.0.jar and commons-codec-1.16.0.jar must in the classpath.
 		  // The authentication information is read from ini/netrc.ini and must match the configuration
@@ -3273,8 +3278,12 @@ public abstract class Testcase {
 	  String command = "QSYS/CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(*NONE)   ";
 	  cc.run(command); 
           Arrays.fill(pwrPassword, ' '); 
-	  command = "QSYS/CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(1)   ";
-	  mfaIntervalSeconds_ = 60; 
+	  command = "QSYS/CHGUSRPRF "+mfaUserid_+" TOTPOPTITV("+interval+")   ";
+	  if ("*NONE".equals(interval)) { 
+	    mfaIntervalSeconds_ = 0; 
+	  } else { 
+	    mfaIntervalSeconds_ = Integer.parseInt(interval) * 60 ; 
+	  }
 	  cc.run(command); 
 	  String mfaFactorString = ""+JDReflectionUtil.callMethod_I(googleAuthenticator_,  "getTotpPassword", mfaSecret_);
 	  while (mfaFactorString.length() < 6) {
