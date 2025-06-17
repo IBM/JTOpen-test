@@ -147,6 +147,23 @@ public class JDScheduler {
     }
   }
 
+  public static String getDefaultId() { 
+    return defaultId; 
+  }
+  
+  public static String getDefaultSystem() { 
+    return system; 
+  }
+  
+  public static String getAdminUserid() { 
+    return adminUserid;
+  }
+
+  
+  public static String getAdminPassword() { 
+    return adminPassword;
+  }
+
   public static String[] usageInfo = { "java JDSchedule <ID> SERVER ",
       "java JDSchedule <ID> ADD <priority> <initials> <action>  -- Adds a new entry if it does not exist",
       "java JDSchedule <ID> REMOVE <initials> <action> ", "java JDSchedule <ID> LIST",
