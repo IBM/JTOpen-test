@@ -28,7 +28,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SystemStatus;
 
 public class JDSchedulerServer extends JDScheduler {
-  static String[] nonGroupTestSystems = { "UT32P12", "SQ720", "SQ730",
+  static String[] nonGroupTestSystems = { "SQ720", "SQ730",
       "SQ740","SQ750","SQ760" };
 
   private static final long ONEDAYINMILLIS = 24 * 3600000;
@@ -54,8 +54,12 @@ public class JDSchedulerServer extends JDScheduler {
 
       Thread.currentThread().setName("JDScheduleServer-main");
       if (args.length < 2) {
-        usage();
-      } else {
+        args = new String[2];
+        args[0] = "0"; 
+        args[1] = "SERVER"; 
+      }
+      
+      {
 
         //
         // Before we start, make sure the CCSID is not 65535
@@ -679,8 +683,10 @@ public class JDSchedulerServer extends JDScheduler {
 
       if ((pwrUser != null) && (pwrPass != null)) {
         try {
+          char[] encryptedPassword = PasswordVault.getEncryptedPassword(pwrPass);
+          
           Connection pwrConnection = DriverManager
-              .getConnection(jdbcURL + ";prompt = false", pwrUser, pwrPass);
+              .getConnection(jdbcURL + ";prompt = false", pwrUser, PasswordVault.decryptPasswordLeak(encryptedPassword));
 
           Statement s = pwrConnection.createStatement();
 

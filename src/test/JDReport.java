@@ -71,7 +71,7 @@ public class JDReport {
   }
 
   public static String getReportName(String initials) {
-    return "ct/latest" + initials + ".html";
+    return JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/latest" + initials + ".html";
   }
 
   /*
@@ -301,7 +301,7 @@ public class JDReport {
       }
     }
     String schedCount = stats[7]; 
-    if (Integer.parseInt(schedCount) > 0) { 
+    if (schedCount != null && schedCount.length() > 0 && Integer.parseInt(schedCount) > 0) { 
       schedCount="<font color=\"red\"> ** " + schedCount + " ** </font>";
     }
     
@@ -772,9 +772,11 @@ public class JDReport {
 
     StringBuffer sb = new StringBuffer();
     
-    sb.append("<h2>JDTESTINFO.SYSNOTES</h2>\n");
-    appendSysNotes(sb, nativeConnection); 
-    sb.append("<a href=\"cgi-pase/AddSysNote.acgi\">Add System Note</a>\n"); 
+    if (nativeConnection != null) { 
+      sb.append("<h2>JDTESTINFO.SYSNOTES</h2>\n");
+      appendSysNotes(sb, nativeConnection); 
+      sb.append("<a href=\"cgi-pase/AddSysNote.acgi\">Add System Note</a>\n"); 
+    }
     
     sb.append("<h2>MUSTRUN RESULTS </h2>\n");
     sb.append("<table border>\n");
@@ -1050,7 +1052,7 @@ public class JDReport {
 
   public static void createToolboxIndex(Connection nativeConnection, String webDirectory) throws Exception {
 
-    String filename = "ct/toolbox.html";
+    String filename = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/toolbox.html";
     System.out.println("Creating index file " + filename);
 
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
@@ -1068,7 +1070,7 @@ public class JDReport {
         + "<body>\n");
 
     /* Get the list of file from ct */
-    File directory = new File("ct");
+    File directory = new File(JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
 
     File[] files = directory.listFiles();
 
@@ -1211,7 +1213,7 @@ public class JDReport {
 
   public static void createNativeIndex(Connection nativeConnection, String webDirectory) throws Exception {
 
-    String filename = "ct/native.html";
+    String filename = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/native.html";
     System.out.println("Creating index file " + filename);
 
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
@@ -1229,7 +1231,7 @@ public class JDReport {
         + "<body>\n");
 
     /* Get the list of file from ct */
-    File directory = new File("ct");
+    File directory = new File(JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
 
     File[] files = directory.listFiles();
 
@@ -1309,7 +1311,7 @@ public class JDReport {
 
   public static void createJvmIndex(Connection nativeConnection, String webDirectory) throws Exception {
 
-    String filename = "ct/jvm.html";
+    String filename = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/jvm.html";
     System.out.println("Creating index file " + filename);
 
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
@@ -1327,7 +1329,7 @@ public class JDReport {
         + "<body>\n");
 
     /* Get the list of file from ct */
-    File directory = new File("ct");
+    File directory = new File(JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
 
     File[] files = directory.listFiles();
 
@@ -2070,7 +2072,8 @@ public class JDReport {
         description = "Description not set in runit" + initials + ".ini";
       }
       String outputFilename = getReportName(initials);
-      String outfile = "ct/runit" + initials + ".out";
+      String outfile = JTOpenTestEnvironment.testcaseHomeDirectory+File.separatorChar+"ct"+File.separatorChar+"runit" + initials + ".out";
+      
       System.out.println("Creating " + outputFilename);
 
       writer = new PrintStream(new FileOutputStream(outputFilename));
@@ -2552,7 +2555,7 @@ public class JDReport {
       exUp(s, "create table " + SCHEMA + "." + notes
           + " (tablename varchar(80), testcase varchar(80), note varchar(400))");
 
-      File file = new File("ct/" + notes);
+      File file = new File(JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/" + notes);
       if (file.exists()) {
         PreparedStatement ps = connection.prepareStatement(
             "insert into " + SCHEMA + "." + notes + " values(?,?,?)");
@@ -3379,15 +3382,15 @@ public class JDReport {
 
       System.out.println("Creating index");
       if ("OS/400".equals(osName))   {
-        createIndex(connection, "ct");
-        createJvmIndex(connection, "ct");
-        createToolboxIndex(connection, "ct");
-        createNativeIndex(connection,"ct");
+        createIndex(connection, JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
+        createJvmIndex(connection, JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
+        createToolboxIndex(connection, JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
+        createNativeIndex(connection,JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
       } else {
-        createIndex(null,"ct"); 
-        createJvmIndex(null, "ct");
-        createToolboxIndex(null, "ct");
-        createNativeIndex(null,"ct" );
+        createIndex(connection,JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct"); 
+        createJvmIndex(connection, JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
+        createToolboxIndex(connection, JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct");
+        createNativeIndex(connection,JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct" );
 
       }
       connection.close();
@@ -3425,7 +3428,7 @@ public class JDReport {
 
   private static void updateAllRo(boolean on400 ) {
     try { 
-    File ctDir = new File("ct"); 
+    File ctDir = new File(JTOpenTestEnvironment.testcaseHomeDirectory+File.pathSeparator+"ct"); 
     if (ctDir.exists() && ctDir.isDirectory()) { 
       File[] files = ctDir.listFiles();
       
@@ -3468,7 +3471,7 @@ public class JDReport {
           System.out.println("refreshing "+rawFile); 
           try { 
             /* check to see if refresh needs to happen */ 
-            File outputFile = new File("ct/runit"+initials+".out");
+            File outputFile = new File(JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct"+File.separator+"runit"+initials+".out");
             long lastModifiedStreamFile = outputFile.lastModified();
             Timestamp sfTs = new Timestamp(lastModifiedStreamFile); 
             long lastModifiedSql = 0; 
@@ -3487,7 +3490,7 @@ public class JDReport {
               System.out.println(ts             +" last modified table"); 
               
               refreshRawFile( SCHEMA, rawFile, connection, null, 
-              "ct/runit"+initials+".out",  outputSb, false /* resetRegression */, 0 /*regressionEarliestTime*/, null /* newRunitOut */ ) ;
+                  JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/runit"+initials+".out",  outputSb, false /* resetRegression */, 0 /*regressionEarliestTime*/, null /* newRunitOut */ ) ;
           System.out.println(outputSb.toString()); 
             } else {
               System.out.println(SCHEMA+"."+rawFile+" is up to date"); 

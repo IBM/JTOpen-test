@@ -71,7 +71,10 @@ public class PasswordVault {
           
           File file = new File("ini/" + passwordName);
           if (!file.exists()) {
-            throw new Exception("Password file " + file.getAbsolutePath() + " does not exist");
+            file = new File(JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ini"+File.separator+passwordName); 
+            if (!file.exists()) {
+              throw new Exception("Password file " + file.getAbsolutePath() + " does not exist");
+            }
           }
 
           // Note: do not use a FileReader as it uses buffers that are not cleared.

@@ -1470,14 +1470,22 @@ public class JDRunit {
         inputStream=    new FileInputStream(iniFile);
         if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
     } else {
+      iniFile = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+iniFile; 
+      file = new File(iniFile); 
+      if (file.exists()) { 
+        inputStream=    new FileInputStream(iniFile);
+        if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
+      } else {       
         inputStream = JDRunit.class.getClassLoader().getResourceAsStream(iniFile);
         if (inputStream != null) { 
                 if (iniInfo!=null) iniInfo.append("echo loaded "+iniFile+" from classloader\n"); 
         } else {
+          JTOpenTestEnvironment.loadSystemsIni();
                 if (iniInfo!=null) iniInfo.append("echo unable to load "+iniFile+" from classloader\n"); 
                 byte[] emptyBuffer = new byte[0];
                 inputStream = new ByteArrayInputStream(emptyBuffer);
         }
+      }
     }
         return inputStream;
 }
