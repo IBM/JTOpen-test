@@ -48,6 +48,9 @@ import java.util.Date;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import test.servlet.BaseHandler;
+
 import java.net.URL;
 import java.net.URLClassLoader;
 
@@ -1028,7 +1031,7 @@ public class JDReport {
           sb.append("<table border>\n");
           sb.append("<tr><th>TS<th>NOTE</tr>\n");
           while (rs.next()) {
-            sb.append("<tr><td>" + rs.getString(1) + "<td>" + rs.getString(2) + "</tr>");
+            sb.append("<tr><td>" + rs.getString(1) + "<td>" + BaseHandler.escapeHtml(rs.getString(2)) + "</tr>");
           }
           sb.append("</table>\n");
 

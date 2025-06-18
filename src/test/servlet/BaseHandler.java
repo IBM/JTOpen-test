@@ -23,4 +23,25 @@ public class BaseHandler {
     return values[0];
   }
     
+  
+  /*
+   * Replace any HTML characters with appropriate escape 
+   */
+  public static String escapeHtml(String contents) {
+    
+  if (contents.indexOf('<') >= 0)  {
+    contents = contents.replace("<","&lt;");
+  }
+  
+  if (contents.indexOf('>') >= 0)  {
+    contents = contents.replace(">","&gt;");
+  }
+
+  if (contents.indexOf('&') >= 0)  {
+    contents = contents.replace("&","&amp;");
+  }
+    
+  return contents;
+}
+
 }

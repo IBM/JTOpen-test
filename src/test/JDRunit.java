@@ -1420,7 +1420,7 @@ public class JDRunit {
       throw new Exception(
           "Could not get testbase from "
               + test
-              + ".  Check ini/testbase.ini to make sure base test of variation exists");
+              + ".  Check ini/testbase.ini to make sure base test of variation exists "+iniInfo.toString()); 
     }
 
     // System.out.println("XXXX comparing testBase("+testBase+") to test("+test+")");

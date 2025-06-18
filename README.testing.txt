@@ -68,7 +68,10 @@ __________________________________________________
 
 ---------------------------------------------------------------
 ---------------------------------------------------------------
-An alternate way of running the tests is to use the JDRunit program.
+JDRunit.
+The JDRunit program can be used to run the tests and record the results in a runitXXXX.out file. 
+---------------------------------------------------------------
+---------------------------------------------------------------
 
 JDRunit setup. 
 ----------------------------
@@ -83,7 +86,7 @@ JDRunit setup.
     mkdir ini
 6.  Run the setup program to extract the sample .ini configuration files.  The files will need to be edited as described below. 
     java -cp JTOpen-test.jar test.JTOpenTestSetup 
-    The setup will also make sure the latest release of JTOpen-test.jar is begin. 
+    The setup will also make sure the latest release of JTOpen-test.jar is being used. 
     It will also check the test environment.   
 7.  Edit the ini/netrc.ini file and add the appropriate credentials.
 8.  Edit the ini/dropAuthority.ini file and make sure the USERID matches the TESTUSERID in the ini/netrc.ini file
@@ -93,7 +96,7 @@ JDRunit setup.
 12. Download the latest JTOpen release. 
     java -cp JTOpen-test.jar test.JTOpenDownloadReleaseJars
 13. For the IFS tests, get a copy of jcifs.jar and copy into the jar directory.   
-14. Copy the java certificate store to /home/jdbctest/cacerts. Add the necessary certificates in order to establish 
+14. Copy the java certificate store to $JTOPEN_TEST_DIR. Add the necessary certificates in order to establish 
     secure (TLS) connections to the server you are testing.   
 
 *Note: to refresh the test jar, you can use
@@ -120,7 +123,7 @@ and a file exists in ct/out/758AA that contains the output of the run.
 
 The JDReport program can generate a report of the test runs for the initials. 
 
-java -cp JTOpen-test.jar:jt400.jar test.JDReport 758AA 
+java -cp JTOpen-test.jar:jars/jt400.jar test.JDReport 758AA 
 
 The report will be generated in ct/latest758AA.html
 
@@ -132,9 +135,11 @@ Testcases run for regression purposes for JTOpen can be found in the following f
  ini/regressionBaseT.ini     -- JDBC tests
  ini/regressionBaseU.ini     -- JDBC native tests
  
- --
- -- Scheduler 
- -- 
+---------------------------------------------------------------
+---------------------------------------------------------------
+-- JDScheduler 
+---------------------------------------------------------------
+---------------------------------------------------------------
  
  The testbucket contains a scheduler to run the tests.  Tests are submitted to the scheduler, and the scheduler then runs the tests.
  
@@ -147,7 +152,7 @@ Testcases run for regression purposes for JTOpen can be found in the following f
 SCHEDULERID_localsystem=11
 SCHEDULERDB_localsystem=ibmi
     If you don't know that name of the system, attempt to start the scheduler using the following
-    java -cp JTOpen-test.jar:jar/jt400.jar test.JDSchedulerServer 11 SERVER
+    java -cp JTOpen-test.jar:jars/jt400.jar test.JDSchedulerServer 11 SERVER
     You will see the error message with the name of the system
     java.lang.Exception: ID for SCHEDULERID_localsystem not found in ini/systems.ini
     
@@ -205,6 +210,22 @@ END
 ----------------------------------------------------
 
  
+ ---------------------------------------------------------------
+---------------------------------------------------------------
+-- Web Interface 
+---------------------------------------------------------------
+---------------------------------------------------------------
  
+A web interface exists that is used in conjunction with the scheduler to view the results of testing. 
+The web interface runs using a Tomcat server running on the same system as the scheduler. 
+To use Tomcat, do the following.
+
+1.  Follow the directions to install a Tomcat 10 server on your platform. 
+    a.  Note.  The port used by Tomcat is set in conf/server.xml
+2.  Put a copy of JTOpen-test-X.X.X.war webaps directory
+3.  You can access the files using the url  http://localhost:port/JTOpen-test-X.X.X/.  This accesses files in the JTOPEN_TEST_DIR/ct directory. 
+
+
+
  
 
