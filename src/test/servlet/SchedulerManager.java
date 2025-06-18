@@ -147,6 +147,8 @@ public class SchedulerManager extends BaseHandler {
       return "os.name=" + osName;
     } else if (osName.indexOf("Linux") >= 0) {
       return "os.name=" + osName;
+    } else if (osName.indexOf("AIX") >= 0) {
+      return "os.name=" + osName;
     } else {
       return "os.name=" + osName + " not supported";
     }

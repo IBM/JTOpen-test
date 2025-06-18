@@ -27,3 +27,4 @@ JDDriverAcceptsURL                         29         0        2        0      0
 _____________________________________________________________________________________
 ```
 
+More details can be found in README.testing.txt [README.testing.txt](README.testing.txt)

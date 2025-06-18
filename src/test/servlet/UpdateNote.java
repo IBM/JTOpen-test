@@ -74,7 +74,7 @@ public class UpdateNote extends BaseHandler {
 						     test,
 						     note); 
 		    sb.append("UPDATE MADE NOTE FILE CONTAINS <br><pre>\n"); 
-		    sb.append(contents);
+		    sb.append(escapeHtml(contents));
 		    sb.append("</pre>\n");
 		}
 
@@ -96,6 +96,7 @@ public class UpdateNote extends BaseHandler {
 	} 
         
     }
+
 
     public static String  updateNoteFile(String noteFilename, String test, String note) throws Exception  { 
 	File noteFile = new File(JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct"+File.separator+ noteFilename);
