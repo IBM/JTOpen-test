@@ -21,6 +21,7 @@ import com.ibm.as400.access.QSYSObjectPathName;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.JDTestDriver;
+import test.JTOpenTestEnvironment;
 import test.MessageSandbox;
 import test.MessageTest;
 import test.Testcase;
@@ -3754,7 +3755,7 @@ public class QueuedMessageRFTestcase extends Testcase {
       f.open();
       qmsg = (RQueuedMessage) f.resourceAt(0);
       presObj = qmsg.getPresentation();
-      if (onAS400_) {
+      if (!JTOpenTestEnvironment.isGuiAvailable) {
         if (presObj != null
             && presObj.getFullName().equals(
                 "/QSYS.LIB/" + testLib_ + ".LIB/MQT.MSGQ-(0x00000180)")

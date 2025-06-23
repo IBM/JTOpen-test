@@ -2395,6 +2395,11 @@ public class JDDriverConnect extends JDTestcase {
       return;
     }
 
+    if (JTOpenTestEnvironment.isAIX) {
+      notApplicable("Test attempts to use GUI.  Not Applicable when running on AIX");
+      return;
+    }
+
     try {
       // use an AS400 object
       AS400JDBCDriver d = new AS400JDBCDriver();
@@ -2953,195 +2958,6 @@ public class JDDriverConnect extends JDTestcase {
     notApplicable();
   }
 
-  /*
-   * Connect after connecting with a bad profile.
-   */
-
-  public void Var071() {
-    if (checkPasswordLeak() && checkNotGroupTest()) {
-
-      /* Each profile has the last letter of the library which is usually */
-      /* the last letter of the test. JDRunit will not have two versions */
-      /* of a testcase running with the same letter */
-
-      String added = " -- added 11/2/2010 connect after connect with bad profile native  PTFs 61:SI41813,71:SI42110 ";
-      String goodUser = "JDBGDUSR" + letter_;
-      String goodPasswd = "xyz123zyz";
-      String badUser = "JDBBDUSR" + letter_;
-      String badPasswd = "xyz123zyz";
-      String expectedBadConnectException = "Error occurred in SQL Call Level Interface";
-      String expectedBadConnectException2 = "does not exist";
-      String expectedBadConnectException3 = "Processing of the SQL statement ended";
-      Connection c1 = null;
-      Statement s1 = null;
-
-      try {
-
-        if (isToolboxDriver()) {
-          expectedBadConnectException = "Communication link failure";
-        }
-
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-          expectedBadConnectException = "Processing of the SQL statement ended";
-        }
-        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
-        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", pwrSysUserID_, powerPassword);
-
-        // Delete and recreate the bad profile
-        s1 = c1.createStatement();
-
-        try {
-          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "QSYS/DLTUSRPRF " + badUser + "  OWNOBJOPT(*CHGOWN JAVA) '  ) ");
-        } catch (Exception e) {
-          if (e.toString().indexOf("not found") >= 0) {
-            // Just ignore */
-          } else {
-            System.out.println("Unexpected exception deleting old profile");
-            e.printStackTrace();
-          }
-        }
-
-        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + badUser + ") PASSWORD(" + badPasswd
-            + ")                               '," + "0000000070.00000 ) ");
-
-        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/GRTOBJAUT OBJ(QGPL/QDFTJOBD) OBJTYPE(*JOBD) USER(" + badUser
-            + ") AUT(*EXCLUDE)                                        '," + "0000000080.00000 ) ");
-
-        try {
-
-          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "QSYS/DLTUSRPRF " + goodUser + "     OWNOBJOPT(*CHGOWN JAVA) ') ");
-        } catch (Exception e) {
-          if (e.toString().indexOf("not found") >= 0) {
-            // Just ignore */
-          } else {
-            System.out.println("Unexpected exception deleting old profile");
-            e.printStackTrace();
-          }
-        }
-
-        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD(" + goodPasswd
-            + ")                               '," + "0000000070.00000 ) ");
-      } catch (Exception e) {
-        failed(e, "Error during testcase setup " + added);
-        return;
-      }
-
-      testBadProfile(goodUser, goodPasswd, badUser, badPasswd, expectedBadConnectException,
-          expectedBadConnectException2, expectedBadConnectException3, added);
-
-      System.gc();
-      try {
-        // if (s1 != null)
-        s1.close();
-
-        // if (c1 != null)
-        c1.close();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-  public void Var072() {
-    if (checkNotGroupTest() && checkPasswordLeak()) {
-      String added = " -- added 01/03/2012 connect after connect with bad profile (because of bad library list entry) CPS 8P6TF6  PTFs 61:SI45605,71:SI45604 ";
-
-      String goodUser = "JDBGDUS2" + letter_;
-      String goodPasswd = "xyz123zyz";
-      String badUser = "JDBBDUS2" + letter_;
-      String badPasswd = "xyz123zyz";
-      String expectedBadConnectException = "reason code is 0";
-      String expectedBadConnectException2 = "does not exist";
-      String expectedBadConnectException3 = "does not exist";
-      Connection c1 = null;
-      Statement s1 = null;
-
-      try {
-
-        if (isToolboxDriver()) {
-          expectedBadConnectException = "Communication link failure";
-
-        }
-        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
-        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", pwrSysUserID_, powerPassword);
-
-        // Delete and recreate the bad profile
-        s1 = c1.createStatement();
-
-        String deleteCommands[] = { "CALL QSYS2.QCMDEXC('DLTUSRPRF " + badUser + " OWNOBJOPT(*CHGOWN JAVA)  ') ",
-            "CALL QSYS.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)      ',0000000030.00000 ) ",
-            "CALL QSYS.QCMDEXC('DLTLIB JDBADLIB         ',0000000020.00000 ) ",
-            "CALL QSYS.QCMDEXC('DLTJOBD JOBD(QGPL/JDBADLIBL)  ', 0000000030.00000 )",
-            "CALL QSYS2.QCMDEXC('DLTUSRPRF " + goodUser + "  OWNOBJOPT(*CHGOWN JAVA)  ') ", };
-        String expectedErrors[] = { "not found" };
-        executeStatementsIgnoreErrors(s1, deleteCommands, expectedErrors);
-
-        String createCommands[] = { "CALL QSYS.QCMDEXC('CRTLIB JDBADLIB      ',0000000020.00000 ) ",
-            "CALL QSYS.QCMDEXC('CRTJOBD JOBD(QGPL/JDBADLIBL) JOBQ(QINTER) INLLIBL(JDBADLIB)                                    ',"
-                + "0000000080.00000 ) ",
-            "CALL QSYS.QCMDEXC('CRTUSRPRF USRPRF(" + badUser + ") PASSWORD(" + badPasswd
-                + ") JOBD(QGPL/JDBADLIBL)                                    '," + "0000000090.00000 ) ",
-            "CALL QSYS.QCMDEXC('GRTOBJAUT OBJ(QSYS/JDBADLIB) OBJTYPE(*LIB) USER(" + badUser
-                + ") AUT(*EXCLUDE)                                                                                           ',"
-                + "0000000080.00000 ) ",
-            "CALL QSYS.QCMDEXC('CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD(" + goodPasswd
-                + ")                               '," + "0000000070.00000 ) ", };
-        executeStatements(s1, createCommands);
-
-      } catch (Exception e) {
-        failed(e, "Error during testcase setup " + added);
-        return;
-      }
-
-      testBadProfile(goodUser, goodPasswd, badUser, badPasswd, expectedBadConnectException,
-          expectedBadConnectException2, expectedBadConnectException3, added);
-
-      System.gc();
-
-      try {
-        if (s1 != null)
-          s1.close();
-
-        // if (c1 != null)
-        c1.close();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-  public void Var073() {
-    notApplicable();
-  }
-
-  public void Var074() {
-    notApplicable();
-  }
-
-  public void Var075() {
-    notApplicable();
-  }
-
-  public void Var076() {
-    notApplicable();
-  }
-
-  public void Var077() {
-    notApplicable();
-  }
-
-  public void Var078() {
-    notApplicable();
-  }
-
-  public void Var079() {
-    notApplicable();
-  }
-
-  public void Var080() {
-    notApplicable();
-  }
-
   /* Tests for connecting to system with exit program */
   /* Return false if the system does not support the exit program. */
   /*
@@ -3179,7 +2995,7 @@ public class JDDriverConnect extends JDTestcase {
    * Test that the exit program information is correct for native and for toolbox
    * non-secure
    */
-  public void Var081() {
+  public void Var071() {
     try {
 
       StringBuffer sb = new StringBuffer();
@@ -3233,16 +3049,22 @@ public class JDDriverConnect extends JDTestcase {
 
           expectedVerificationId = "Verification_ID=QIBM_OS400_QZBS_SVR_DATABASE";
 
-          String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
-          rs = s.executeQuery(sql);
-          if (rs.next()) {
-            expectedRemoteIp = "Remote_IPAddress=" + rs.getString(1);
-            expectedRemotePort = "Remote_Port=" + rs.getString(2);
-            expectedLocalIp = "Local_IPAddress=" + rs.getString(3);
-            expectedLocalPort = "Local_Port=" + rs.getString(4);
+          if (isNative_) {
+            expectedRemotePort = "Remote_Port=0";
+            expectedLocalPort = "Local_Port=0";
+            expectedRemoteIp = "Remote_IPAddress=";
+            expectedLocalIp = "Local_IPAddress=";
+          } else {
+            String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
+            rs = s.executeQuery(sql);
+            if (rs.next()) {
+              expectedRemoteIp = "Remote_IPAddress=" + rs.getString(1);
+              expectedRemotePort = "Remote_Port=" + rs.getString(2);
+              expectedLocalIp = "Local_IPAddress=" + rs.getString(3);
+              expectedLocalPort = "Local_Port=" + rs.getString(4);
+            }
+            rs.close();
           }
-          rs.close();
-
         } else {
           expectedVerificationId = "Verification_ID=QIBM_QJDB_JDBC";
           expectedRemotePort = "Remote_Port=0";
@@ -3315,7 +3137,7 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /* Test that the exit program information is correct for toolbox non-secure */
-  public void Var082() {
+  public void Var072() {
     try {
       StringBuffer sb = new StringBuffer();
       boolean successful = true;
@@ -3417,7 +3239,7 @@ public class JDDriverConnect extends JDTestcase {
   }
 
   /* Test user supplied settings are passed for native driver */
-  public void Var083() {
+  public void Var073() {
     try {
 
       StringBuffer sb = new StringBuffer();
@@ -3522,5 +3344,502 @@ public class JDDriverConnect extends JDTestcase {
       failed(e, "Unexpected exception");
     }
   }
+
+  
+  
+  /* Test that the exit program information is correct for toolbox secure non-MFA users */
+  public void Var074() {
+    try {
+      StringBuffer sb = new StringBuffer();
+      boolean successful = true;
+      if (checkToolbox() && checkExitProgram() && checkPasswordLeak()) {
+        // Create a simple MFA connection and check the exit information.
+        AuthExit.cleanupExitProgramFiles(pwrConnection_);
+        AuthExit.enableUser(pwrConnection_, userId_ );
+        String mfaFactorString = "1234567891123456789212345678931234567894123456789512345678961234";
+        String url;
+        url = "jdbc:as400:" + systemObject_.getSystemName() + ";secure=true;additionalAuthenticationFactor="
+            + mfaFactorString;;
+        String password = PasswordVault.decryptPasswordLeak(encryptedPassword_);
+        Connection c = DriverManager.getConnection(url, userId_, password);
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
+        rs.next();
+        String currentUser = rs.getString(1);
+        if (!userId_.equalsIgnoreCase(currentUser)) {
+          successful = false;
+          sb.append("currentUser=" + currentUser + " userID=" + userId_ + "\n");
+        }
+        /* Read the output file using IFS_READ */
+        boolean foundProfileName = false;
+        boolean foundVerificationId = false;
+        boolean foundLocalPort = false;
+        boolean foundRemoteIp = false;
+        boolean foundLocalIp = false;
+        boolean foundAAlen = false;
+        boolean foundAFccsid = false; 
+        boolean foundAFbytes = false; 
+        String expectedVerificationId;
+        String expectedLocalPort = "NOTSET";
+        String expectedRemoteIp = "NOTSET";
+        String expectedLocalIp = "NOTSET";
+        
+        String expectedAFlen = "Additional_Factor_Length=64";
+        String expectedAFccsid = "Additional_Factor_CCSID=1208";
+        String expectedAFbytes = "Additional_FactorBytes=31323334353637383931313233343536373839323132333435363738393331323334353637383934313233343536373839353132333435363738393631323334"; 
+
+
+        expectedVerificationId = "Verification_ID=QIBM_QZBS_SVR_HOSTCNN";
+
+        String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
+        rs = s.executeQuery(sql);
+        if (rs.next()) {
+          expectedRemoteIp = "Remote_IPAddress=" + rs.getString(1);
+          expectedLocalIp = "Local_IPAddress=" + rs.getString(3);
+          expectedLocalPort = "Local_Port=9480";
+        }
+        rs.close();
+
+        c.close();
+
+        Statement pwrStmt = pwrConnection_.createStatement();
+        String pathname = null;
+        sql = "select LINE,PATH_NAME from " + "table(qsys2.IFS_OBJECT_STATISTICS('/tmp/authexit')), "
+            + "TABLE(QSYS2.IFS_READ_UTF8(PATH_NAME)) WHERE OBJECT_TYPE='*STMF'";
+        rs = pwrStmt.executeQuery(sql);
+        while (rs.next()) {
+          String line = rs.getString(1).trim();
+          pathname = rs.getString(2).trim();
+          sb.append(line);
+          sb.append("\n");
+          if (line.equals("User_Profile_Name=" + userId_.toUpperCase())) {
+            foundProfileName = true;
+          }
+          if (line.equals(expectedVerificationId))
+            foundVerificationId = true;
+          if (line.equals(expectedLocalIp))
+            foundLocalIp = true;
+          if (line.equals(expectedLocalPort))
+            foundLocalPort = true;
+          if (line.equals(expectedRemoteIp))
+            foundRemoteIp = true;
+          if (line.equals(expectedAFlen ))
+              foundAAlen = true; 
+          if (line.equals(expectedAFccsid ))
+            foundAFccsid = true; 
+          if (line.equals(expectedAFbytes ))
+            foundAFbytes = true; 
+        }
+        rs.close();
+        pwrStmt.close();
+        if (!foundProfileName) {
+          successful = false;
+          sb.append("Did not find USER PROFILE ("+userId_.toUpperCase()+") in " + pathname + "\n");
+        }
+        if (!foundVerificationId) {
+          successful = false;
+          sb.append("Did not find verification id:" + expectedVerificationId + "\n");
+        }
+        if (!foundLocalIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalIp + "\n");
+        }
+        if (!foundLocalPort) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalPort + "\n");
+        }
+        if (!foundRemoteIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedRemoteIp + "\n");
+        }
+        if (!foundAAlen) { 
+          successful=false; 
+          sb.append("Did not find expected:" + expectedAFlen+"\n"); 
+        }
+        if (!foundAFccsid) { 
+          successful=false; 
+          sb.append("Did not find expected:" + expectedAFccsid+"\n"); 
+        }
+        if (!foundAFbytes) { 
+          successful=false; 
+          sb.append("Did not find expected:" + expectedAFbytes+"\n"); 
+        }
+
+        
+        AuthExit.disableUser(pwrConnection_, userId_ );
+
+        if (!successful)
+          skipExitCleanup = true;
+        assertCondition(successful, sb);
+      }
+    } catch (Exception e) {
+      failed(e, "Unexpected exception");
+    }
+  }
+
+  
+  
+  /* Test that the exit program information is correct for toolbox non-secure non-MFA users */
+  public void Var075() {
+    try {
+      StringBuffer sb = new StringBuffer();
+      boolean successful = true;
+      if (checkToolbox() && checkExitProgram() && checkPasswordLeak()) {
+        // Create a simple MFA connection and check the exit information.
+        AuthExit.cleanupExitProgramFiles(pwrConnection_);
+        AuthExit.enableUser(pwrConnection_, userId_ );
+        String mfaFactorString = "1234567891123456789212345678931234567894123456789512345678961234";
+        String url;
+        url = "jdbc:as400:" + systemObject_.getSystemName() + ";additionalAuthenticationFactor="
+            + mfaFactorString;;
+        String password = PasswordVault.decryptPasswordLeak(encryptedPassword_);
+        Connection c = DriverManager.getConnection(url, userId_, password);
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
+        rs.next();
+        String currentUser = rs.getString(1);
+        if (!userId_.equalsIgnoreCase(currentUser)) {
+          successful = false;
+          sb.append("currentUser=" + currentUser + " userID=" + userId_ + "\n");
+        }
+        /* Read the output file using IFS_READ */
+        boolean foundProfileName = false;
+        boolean foundVerificationId = false;
+        boolean foundLocalPort = false;
+        boolean foundRemoteIp = false;
+        boolean foundLocalIp = false;
+        boolean foundAAlen = false;
+        boolean foundAFccsid = false; 
+        boolean foundAFbytes = false; 
+        String expectedVerificationId;
+        String expectedLocalPort = "NOTSET";
+        String expectedRemoteIp = "NOTSET";
+        String expectedLocalIp = "NOTSET";
+        
+        String expectedAFlen = "Additional_Factor_Length=64";
+        String expectedAFccsid = "Additional_Factor_CCSID=1208";
+        String expectedAFbytes = "Additional_FactorBytes=31323334353637383931313233343536373839323132333435363738393331323334353637383934313233343536373839353132333435363738393631323334"; 
+
+
+        expectedVerificationId = "Verification_ID=QIBM_OS400_QZBS_SVR_DATABASE";
+        String sql; 
+        if (toolboxNative) {
+          expectedRemoteIp = "Remote_IPAddress=";
+          expectedLocalIp = "Local_IPAddress=";
+          expectedLocalPort = "Local_Port=0";
+     
+        } else {
+          sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
+          rs = s.executeQuery(sql);
+          if (rs.next()) {
+            expectedRemoteIp = "Remote_IPAddress=" + rs.getString(1);
+            expectedLocalIp = "Local_IPAddress=" + rs.getString(3);
+            expectedLocalPort = "Local_Port=8471";
+          }
+          rs.close();
+        }
+
+        c.close();
+
+        Statement pwrStmt = pwrConnection_.createStatement();
+        String pathname = null;
+        sql = "select LINE,PATH_NAME from " + "table(qsys2.IFS_OBJECT_STATISTICS('/tmp/authexit')), "
+            + "TABLE(QSYS2.IFS_READ_UTF8(PATH_NAME)) WHERE OBJECT_TYPE='*STMF'";
+        rs = pwrStmt.executeQuery(sql);
+        while (rs.next()) {
+          String line = rs.getString(1).trim();
+          pathname = rs.getString(2).trim();
+          sb.append(line);
+          sb.append("\n");
+          if (line.equals("User_Profile_Name=" + userId_.toUpperCase())) {
+            foundProfileName = true;
+          }
+          if (line.equals(expectedVerificationId))
+            foundVerificationId = true;
+          if (line.equals(expectedLocalIp))
+            foundLocalIp = true;
+          if (line.equals(expectedLocalPort))
+            foundLocalPort = true;
+          if (line.equals(expectedRemoteIp))
+            foundRemoteIp = true;
+          if (line.equals(expectedAFlen ))
+              foundAAlen = true; 
+          if (line.equals(expectedAFccsid ))
+            foundAFccsid = true; 
+          if (line.equals(expectedAFbytes ))
+            foundAFbytes = true; 
+        }
+        rs.close();
+        pwrStmt.close();
+        if (!foundProfileName) {
+          successful = false;
+          sb.append("Did not find USER PROFILE ("+userId_.toUpperCase()+") in " + pathname + "\n");
+        }
+        if (!foundVerificationId) {
+          successful = false;
+          sb.append("Did not find verification id:" + expectedVerificationId + "\n");
+        }
+        if (!foundLocalIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalIp + "\n");
+        }
+        if (!foundLocalPort) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedLocalPort + "\n");
+        }
+        if (!foundRemoteIp) {
+          successful = false;
+          sb.append("Did not find expected:" + expectedRemoteIp + "\n");
+        }
+        if (!foundAAlen) { 
+          successful=false; 
+          sb.append("Did not find expected:" + expectedAFlen+"\n"); 
+        }
+        if (!foundAFccsid) { 
+          successful=false; 
+          sb.append("Did not find expected:" + expectedAFccsid+"\n"); 
+        }
+        if (!foundAFbytes) { 
+          successful=false; 
+          sb.append("Did not find expected:" + expectedAFbytes+"\n"); 
+        }
+
+        
+        AuthExit.disableUser(pwrConnection_, userId_ );
+
+        if (!successful)
+          skipExitCleanup = true;
+        assertCondition(successful, sb);
+      }
+    } catch (Exception e) {
+      failed(e, "Unexpected exception");
+    }
+  }
+
+
+  /* Test behavior when AAF is too long and exit program is not registered */
+  public void Var076() {
+    StringBuffer sb = new StringBuffer();
+    try {
+      boolean successful = true;
+      if (checkToolbox() && checkExitProgram() && checkPasswordLeak()) {
+        // Create a simple MFA connection and check the exit information.
+        AuthExit.cleanupExitProgramFiles(pwrConnection_);
+        String mfaFactorString = "12345678911234567892123456789312345678941234567895123456789612345";
+        String url;
+        url = "jdbc:as400:" + systemObject_.getSystemName() + ";additionalAuthenticationFactor="
+            + mfaFactorString;;
+        String password = PasswordVault.decryptPasswordLeak(encryptedPassword_);
+        Connection c = DriverManager.getConnection(url, userId_, password);
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
+        rs.next();
+        String currentUser = rs.getString(1);
+        if (!userId_.equalsIgnoreCase(currentUser)) {
+          successful = false;
+          sb.append("currentUser=" + currentUser + " userID=" + userId_ + "\n");
+        }
+        successful = false; 
+        sb.append("Did not throw error for big MFA "+mfaFactorString);
+        assertCondition(successful, sb);
+      }
+    } catch (Exception e) {
+      /* e.printStackTrace(System.out);  */ 
+      assertExceptionContains(e, "additionalAuthFactor: Length is not valid", sb); 
+    }
+  }
+
+
+
+  
+  public void Var077() {    notApplicable();  }
+  public void Var078() {    notApplicable();  }
+  public void Var079() {    notApplicable();  }
+  public void Var080() {    notApplicable();  }
+  public void Var081() {    notApplicable();  }
+  public void Var082() {    notApplicable();  }
+  public void Var083() {    notApplicable();  }
+  public void Var084() {    notApplicable();  }
+  public void Var085() {    notApplicable();  }
+  public void Var086() {    notApplicable();  }
+  public void Var087() {    notApplicable();  }
+  public void Var088() {    notApplicable();  }
+  public void Var089() {    notApplicable();  }
+  public void Var090() {    notApplicable();  }
+  public void Var091() {    notApplicable();  }
+  public void Var092() {    notApplicable();  }
+  public void Var093() {    notApplicable();  }
+  public void Var094() {    notApplicable();  }
+  public void Var095() {    notApplicable();  }
+  public void Var096() {    notApplicable();  }
+  public void Var097() {    notApplicable();  }
+  public void Var098() {    notApplicable();  }
+  public void Var099() {    notApplicable();  }
+  public void Var100() {    notApplicable();  }
+
+
+
+  /*
+   * Connect after connecting with a bad profile.
+   * These tests are at the end of the variation as then tend to cause
+   * problems with other variations. 
+   */
+
+  public void Var101() {
+    if (checkPasswordLeak() && checkNotGroupTest()) {
+
+      /* Each profile has the last letter of the library which is usually */
+      /* the last letter of the test. JDRunit will not have two versions */
+      /* of a testcase running with the same letter */
+
+      String added = " -- added 11/2/2010 connect after connect with bad profile native  PTFs 61:SI41813,71:SI42110 ";
+      String goodUser = "JDBGDUSR" + letter_;
+      String goodPasswd = "xyz123zyz";
+      String badUser = "JDBBDUSR" + letter_;
+      String badPasswd = "xyz123zyz";
+      String expectedBadConnectException = "Error occurred in SQL Call Level Interface";
+      String expectedBadConnectException2 = "does not exist";
+      String expectedBadConnectException3 = "Processing of the SQL statement ended";
+      Connection c1 = null;
+      Statement s1 = null;
+
+      
+      try {
+
+        if (isToolboxDriver()) {
+          expectedBadConnectException = "Communication link failure";
+        }
+
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
+          expectedBadConnectException = "Processing of the SQL statement ended";
+        }
+        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
+        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", pwrSysUserID_, powerPassword);
+
+        // Delete and recreate the bad profile
+        s1 = c1.createStatement();
+
+        try {
+          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "QSYS/DLTUSRPRF " + badUser + "  OWNOBJOPT(*CHGOWN JAVA) '  ) ");
+        } catch (Exception e) {
+          if (e.toString().indexOf("not found") >= 0) {
+            // Just ignore */
+          } else {
+            System.out.println("Unexpected exception deleting old profile");
+            e.printStackTrace();
+          }
+        }
+
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + badUser + ") PASSWORD(" + badPasswd
+            + ")                               '," + "0000000070.00000 ) ");
+
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/GRTOBJAUT OBJ(QGPL/QDFTJOBD) OBJTYPE(*JOBD) USER(" + badUser
+            + ") AUT(*EXCLUDE)                                        '," + "0000000080.00000 ) ");
+
+        try {
+
+          s1.executeUpdate("CALL QSYS2.QCMDEXC('" + "QSYS/DLTUSRPRF " + goodUser + "     OWNOBJOPT(*CHGOWN JAVA) ') ");
+        } catch (Exception e) {
+          if (e.toString().indexOf("not found") >= 0) {
+            // Just ignore */
+          } else {
+            System.out.println("Unexpected exception deleting old profile");
+            e.printStackTrace();
+          }
+        }
+
+        s1.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD(" + goodPasswd
+            + ")                               '," + "0000000070.00000 ) ");
+      } catch (Exception e) {
+        failed(e, "Error during testcase setup " + added);
+        return;
+      }
+
+      testBadProfile(goodUser, goodPasswd, badUser, badPasswd, expectedBadConnectException,
+          expectedBadConnectException2, expectedBadConnectException3, added);
+
+      System.gc();
+      try {
+        // if (s1 != null)
+        s1.close();
+
+        // if (c1 != null)
+        c1.close();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public void Var102() {
+    if (checkNotGroupTest() && checkPasswordLeak()) {
+      String added = " -- added 01/03/2012 connect after connect with bad profile (because of bad library list entry) CPS 8P6TF6  PTFs 61:SI45605,71:SI45604 ";
+
+      String goodUser = "JDBGDUS2" + letter_;
+      String goodPasswd = "xyz123zyz";
+      String badUser = "JDBBDUS2" + letter_;
+      String badPasswd = "xyz123zyz";
+      String expectedBadConnectException = "reason code is 0";
+      String expectedBadConnectException2 = "does not exist";
+      String expectedBadConnectException3 = "does not exist";
+      Connection c1 = null;
+      Statement s1 = null;
+
+      try {
+
+        if (isToolboxDriver()) {
+          expectedBadConnectException = "Communication link failure";
+
+        }
+        String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
+        c1 = DriverManager.getConnection(baseURL_ + ";errors=full", pwrSysUserID_, powerPassword);
+
+        // Delete and recreate the bad profile
+        s1 = c1.createStatement();
+
+        String deleteCommands[] = { "CALL QSYS2.QCMDEXC('DLTUSRPRF " + badUser + " OWNOBJOPT(*CHGOWN JAVA)  ') ",
+            "CALL QSYS.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)      ',0000000030.00000 ) ",
+            "CALL QSYS.QCMDEXC('DLTLIB JDBADLIB         ',0000000020.00000 ) ",
+            "CALL QSYS.QCMDEXC('DLTJOBD JOBD(QGPL/JDBADLIBL)  ', 0000000030.00000 )",
+            "CALL QSYS2.QCMDEXC('DLTUSRPRF " + goodUser + "  OWNOBJOPT(*CHGOWN JAVA)  ') ", };
+        String expectedErrors[] = { "not found" };
+        executeStatementsIgnoreErrors(s1, deleteCommands, expectedErrors);
+
+        String createCommands[] = { "CALL QSYS.QCMDEXC('CRTLIB JDBADLIB      ',0000000020.00000 ) ",
+            "CALL QSYS.QCMDEXC('CRTJOBD JOBD(QGPL/JDBADLIBL) JOBQ(QINTER) INLLIBL(JDBADLIB)                                    ',"
+                + "0000000080.00000 ) ",
+            "CALL QSYS.QCMDEXC('CRTUSRPRF USRPRF(" + badUser + ") PASSWORD(" + badPasswd
+                + ") JOBD(QGPL/JDBADLIBL)                                    '," + "0000000090.00000 ) ",
+            "CALL QSYS.QCMDEXC('GRTOBJAUT OBJ(QSYS/JDBADLIB) OBJTYPE(*LIB) USER(" + badUser
+                + ") AUT(*EXCLUDE)                                                                                           ',"
+                + "0000000080.00000 ) ",
+            "CALL QSYS.QCMDEXC('CRTUSRPRF USRPRF(" + goodUser + ") PASSWORD(" + goodPasswd
+                + ")                               '," + "0000000070.00000 ) ", };
+        executeStatements(s1, createCommands);
+
+      } catch (Exception e) {
+        failed(e, "Error during testcase setup " + added);
+        return;
+      }
+
+      testBadProfile(goodUser, goodPasswd, badUser, badPasswd, expectedBadConnectException,
+          expectedBadConnectException2, expectedBadConnectException3, added);
+
+      System.gc();
+
+      try {
+        if (s1 != null)
+          s1.close();
+
+        // if (c1 != null)
+        c1.close();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  
+  
 
 }

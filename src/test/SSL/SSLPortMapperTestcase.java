@@ -18,6 +18,7 @@ import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.ExtendedIllegalStateException;
 import com.ibm.as400.access.SecureAS400;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -265,11 +266,11 @@ public class SSLPortMapperTestcase extends Testcase
             {
                 int port = system.getServicePort(AS400.COMMAND);
                 system.close(); 
-                assertCondition(onAS400_, "No exception."+port);
+                assertCondition(JTOpenTestEnvironment.isOS400, "No exception."+port);
             }
             catch (Exception e)
             {
-                if (!onAS400_)
+                if (!JTOpenTestEnvironment.isOS400)
                 {
                     assertExceptionStartsWith(e, "ExtendedIllegalStateException", "systemName: ", ExtendedIllegalStateException.PROPERTY_NOT_SET);
                 }
@@ -972,11 +973,11 @@ public class SSLPortMapperTestcase extends Testcase
             {
                 system.setServicePort(AS400.COMMAND, 9475);
                 system.close(); 
-                assertCondition(onAS400_, "No exception.");
+                assertCondition(JTOpenTestEnvironment.isOS400, "No exception.");
             }
             catch (Exception e)
             {
-                if (!onAS400_)
+                if (!JTOpenTestEnvironment.isOS400)
                 {
                     assertExceptionStartsWith(e, "ExtendedIllegalStateException", "systemName: ", ExtendedIllegalStateException.PROPERTY_NOT_SET);
                 }
@@ -1380,11 +1381,11 @@ public class SSLPortMapperTestcase extends Testcase
             try
             {
                 system.setServicePortsToDefault();
-                assertCondition(onAS400_, "No exception.");
+                assertCondition(JTOpenTestEnvironment.isOS400, "No exception.");
             }
             catch (Exception e)
             {
-                if (!onAS400_)
+                if (!JTOpenTestEnvironment.isOS400)
                 {
                     assertExceptionStartsWith(e, "ExtendedIllegalStateException", "systemName: ", ExtendedIllegalStateException.PROPERTY_NOT_SET);
                 }

@@ -20,6 +20,7 @@ import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Trace;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 /**
@@ -98,7 +99,7 @@ public class CmdOnThreadTestcase extends Testcase
 
     private final boolean isRunningNatively()
     {
-      if (onAS400_ /*&& isNative_ && isLocal_*/ && systemObject_.canUseNativeOptimizations())
+      if (JTOpenTestEnvironment.isOS400 /*&& isNative_ && isLocal_*/ && systemObject_.canUseNativeOptimizations())
       {
         return true;
       }

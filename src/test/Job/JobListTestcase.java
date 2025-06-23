@@ -44,6 +44,7 @@ import com.ibm.as400.access.QSYSObjectPathName;
 import com.ibm.as400.access.Record;
 import com.ibm.as400.access.SequentialFile;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -5307,7 +5308,7 @@ public class JobListTestcase extends Testcase
        private final boolean isRunningNativelyAndThreadsafe()
        {
          String prop = getProgramCallThreadSafetyProperty(); // we only care about ProgramCall, not CommandCall
-         if (onAS400_ && isNative_ && isLocal_ &&
+         if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ &&
              prop != null && prop.equals("true"))
          {
            return true;
@@ -5342,7 +5343,7 @@ public class JobListTestcase extends Testcase
            j.close();
 
            // If we're running natively and assuming all program calls are threadsafe, we won't use the supplied uid/pwd.
-           if (onAS400_ && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
+           if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
            {
              System.out.println("Tolerating lack of exception.");
              succeeded();
@@ -5383,7 +5384,7 @@ public class JobListTestcase extends Testcase
            j.close();
 
            // If we're running natively and assuming all program calls are threadsafe, we won't use the supplied uid/pwd.
-           if (onAS400_ && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
+           if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
            {
              System.out.println("Tolerating lack of exception.");
              //succeeded();
@@ -5442,7 +5443,7 @@ public class JobListTestcase extends Testcase
            system.setGuiAvailable(false);
            j.load();
            // If we're running natively and assuming all program calls are threadsafe, we won't use the supplied uid/pwd.
-           if (onAS400_ && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
+           if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
            {
              System.out.println("Tolerating lack of exception.");
              succeeded();

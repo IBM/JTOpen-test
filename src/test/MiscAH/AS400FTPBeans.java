@@ -16,6 +16,7 @@ package test.MiscAH;
 import com.ibm.as400.access.*;
 
 import test.FTPTest;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -629,7 +630,7 @@ public class AS400FTPBeans
     public void Var012()
     {
 	
-      if (onAS400_) {
+      if (!JTOpenTestEnvironment.isGuiAvailable) {
 	    notApplicable("-- Cannot load Icon when running natively");
       }
       else

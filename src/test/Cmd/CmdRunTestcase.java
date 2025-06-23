@@ -24,6 +24,7 @@ import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.Job;
 
 import test.CmdTest;
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 
@@ -165,7 +166,7 @@ public class CmdRunTestcase extends Testcase
 
     private final boolean isRunningNatively()
     {
-      if (onAS400_ /*&& isNative_ && isLocal_*/ && systemObject_.canUseNativeOptimizations())
+      if (JTOpenTestEnvironment.isOS400 /*&& isNative_ && isLocal_*/ && systemObject_.canUseNativeOptimizations())
       {
         return true;
       }

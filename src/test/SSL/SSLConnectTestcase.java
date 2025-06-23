@@ -19,6 +19,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.SecureAS400;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -106,7 +107,8 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.FILE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400
+                && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -142,7 +144,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.FILE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -177,7 +179,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.FILE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -240,7 +242,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.PRINT;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -274,7 +276,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.PRINT;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -308,7 +310,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.PRINT;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -371,7 +373,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.COMMAND;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -405,7 +407,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.COMMAND;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -439,7 +441,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.COMMAND;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -502,7 +504,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(true);
             int serv = AS400.DATAQUEUE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -536,7 +538,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(true);
             int serv = AS400.DATAQUEUE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -570,7 +572,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(true);
             int serv = AS400.DATAQUEUE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -633,7 +635,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(false);
             int serv = AS400.DATAQUEUE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -667,7 +669,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(false);
             int serv = AS400.DATAQUEUE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -701,7 +703,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(false);
             int serv = AS400.DATAQUEUE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -765,7 +767,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.DATABASE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -800,7 +802,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.DATABASE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -835,7 +837,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(mustUseSockets_);
             int serv = AS400.DATABASE;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -898,7 +900,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(true);
             int serv = AS400.RECORDACCESS;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -932,7 +934,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(true);
             int serv = AS400.RECORDACCESS;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -966,7 +968,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(true);
             int serv = AS400.RECORDACCESS;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -1029,7 +1031,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(false);
             int serv = AS400.RECORDACCESS;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -1063,7 +1065,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(false);
             int serv = AS400.RECORDACCESS;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -1097,7 +1099,7 @@ public class SSLConnectTestcase extends Testcase
             sys.setMustUseSockets(false);
             int serv = AS400.RECORDACCESS;
 
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 sys.connectService(serv);
                 try
@@ -1198,7 +1200,7 @@ public class SSLConnectTestcase extends Testcase
             try
             {
                 sys.connectService(AS400.COMMAND);
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -1209,7 +1211,7 @@ public class SSLConnectTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     failed(e, "Unexpected exception");
                 }

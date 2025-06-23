@@ -1002,6 +1002,11 @@ public class JDReport {
         "JAVA 17 TESTING " + toolboxInfo+ " " + nativeInfo, java17Strings,
         toolboxTimestamp,nativeConnection, webDirectory);
 
+    String[] java21Strings = { "D6" };
+    totalRunMinutes += addSection(writer, sortedSet,
+        "JAVA 21 TESTING " + toolboxInfo+ " " + nativeInfo, java21Strings,
+        toolboxTimestamp,nativeConnection, webDirectory);
+
 
     writer.println("<hr>Total Run Minutes=" + totalRunMinutes
         + " Total run hours=" + (totalRunMinutes / 60) + " Total run days="

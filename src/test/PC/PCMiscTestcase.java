@@ -29,6 +29,7 @@ import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.Trace;
 import com.ibm.as400.data.ProgramCallDocument;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 /**
@@ -231,7 +232,7 @@ public class PCMiscTestcase extends Testcase
                 output_.println("DEBUG job3 name/user/number: |" + job3ID + "|");
 
             // Note: Threadsafety features became available in V5R1.
-            if (onAS400_ && isNative_ && systemObject_.getVersion() >= 5)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && systemObject_.getVersion() >= 5)
             {
                 if (DEBUG) output_.println("DEBUG Running on an AS/400 (V5 or later)");
                 assertCondition (!job1ID.equals(job2ID) &&

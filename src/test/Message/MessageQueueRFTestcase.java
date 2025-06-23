@@ -20,6 +20,7 @@ import com.ibm.as400.access.QueuedMessage;
 import com.ibm.as400.access.QSYSObjectPathName;
 import com.ibm.as400.resource.ResourceMetaData;
 
+import test.JTOpenTestEnvironment;
 import test.MessageSandbox;
 import test.Testcase;
 
@@ -1742,7 +1743,7 @@ public class MessageQueueRFTestcase extends Testcase {
     try {
       RMessageQueue f = new RMessageQueue(systemObject_);
       presObj = f.getPresentation();
-      if (onAS400_) {
+      if (!JTOpenTestEnvironment.isGuiAvailable) {
         if (presObj != null
             && presObj.getFullName().equals("*CURRENT")
             && presObj.getName().equals("*CURRENT")
@@ -4718,7 +4719,7 @@ public class MessageQueueRFTestcase extends Testcase {
         failed("Full name or name incorrect for Presentation object.");
         return;
       }
-      if (onAS400_) {
+      if (!JTOpenTestEnvironment.isGuiAvailable) {
         if (presObj.getValue(Presentation.DESCRIPTION_TEXT).equals(
             "Message Queue")
             && presObj.getValue(Presentation.HELP_TEXT) == null)

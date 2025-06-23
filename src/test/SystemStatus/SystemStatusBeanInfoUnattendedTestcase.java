@@ -125,13 +125,8 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+f);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+f);
             }
         }
         catch (Exception e)
@@ -149,13 +144,8 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+f);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "Got "+f);
             }
         }
         catch (Exception e)
@@ -173,13 +163,8 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+f);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true,"got "+f);
             }
         }
         catch (Exception e)
@@ -197,13 +182,9 @@ public class SystemStatusBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemStatusBeanInfo f = new SystemStatusBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+f);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+            
+                assertCondition(true, "got "+ f);
             }
         }
         catch (Exception e)

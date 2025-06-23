@@ -18,6 +18,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.SecureAS400;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -48,7 +49,7 @@ public class SSLSignonTestcase extends Testcase
                 SecureAS400 sys = new SecureAS400();
                 sys.setMustUseSockets(mustUseSockets_);
 
-                if (onAS400_ == false)
+                if (JTOpenTestEnvironment.isOS400 == false)
                 {
                     output_.println(" ");
                     output_.println(" ");
@@ -67,11 +68,11 @@ public class SSLSignonTestcase extends Testcase
                 try
                 {
                     sys.connectService(AS400.COMMAND);
-                    assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
+                    assertCondition(JTOpenTestEnvironment.isOS400 == false || isNative_ == true, "No exception thrown");
                 }
                 catch (Exception e)
                 {
-                    if (onAS400_ == true && isNative_ == false && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET))
+                    if (JTOpenTestEnvironment.isOS400 == true && isNative_ == false && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET))
                     {
                         succeeded();
                     }
@@ -108,7 +109,7 @@ public class SSLSignonTestcase extends Testcase
                 SecureAS400 sys = new SecureAS400(systemName_);
                 sys.setMustUseSockets(mustUseSockets_);
 
-                if (onAS400_ == false)
+                if (JTOpenTestEnvironment.isOS400 == false)
                 {
                     output_.println(" ");
                     output_.println(" ");
@@ -128,11 +129,11 @@ public class SSLSignonTestcase extends Testcase
                 try
                 {
                     sys.connectService(AS400.COMMAND);
-                    assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
+                    assertCondition(JTOpenTestEnvironment.isOS400 == false || isNative_ == true, "No exception thrown");
                 }
                 catch (Exception e)
                 {
-                    if (isNative_ == false && onAS400_ == true && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET))
+                    if (isNative_ == false && JTOpenTestEnvironment.isOS400 == true && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET))
                     {
                         succeeded();
                     }
@@ -169,7 +170,7 @@ public class SSLSignonTestcase extends Testcase
                 SecureAS400 sys = new SecureAS400(systemName_, userId_);
                 sys.setMustUseSockets(mustUseSockets_);
 
-                if (onAS400_ == false)
+                if (JTOpenTestEnvironment.isOS400 == false)
                 {
                     output_.println(" ");
                     output_.println(" ");
@@ -189,11 +190,11 @@ public class SSLSignonTestcase extends Testcase
                 try
                 {
                     sys.connectService(AS400.COMMAND);
-                    assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
+                    assertCondition(JTOpenTestEnvironment.isOS400 == false || isNative_ == true, "No exception thrown");
                 }
                 catch (Exception e)
                 {
-                    if (isNative_ == false && onAS400_ == true && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET))
+                    if (isNative_ == false && JTOpenTestEnvironment.isOS400 == true && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET))
                     {
                         succeeded();
                     }
@@ -230,7 +231,7 @@ public class SSLSignonTestcase extends Testcase
                 SecureAS400 sys = new SecureAS400(systemName_, userId_);
                 sys.setMustUseSockets(mustUseSockets_);
 
-                if (onAS400_ == false)
+                if (JTOpenTestEnvironment.isOS400 == false)
                 {
                     output_.println(" ");
                     output_.println(" ");
@@ -242,11 +243,11 @@ public class SSLSignonTestcase extends Testcase
                 try
                 {
                     sys.connectService(AS400.COMMAND);
-                    assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
+                    assertCondition(JTOpenTestEnvironment.isOS400 == false || isNative_ == true, "No exception thrown");
                 }
                 catch (Exception e)
                 {
-                    if (onAS400_ && isNative_ == false)
+                    if (JTOpenTestEnvironment.isOS400 && isNative_ == false)
                     {
                         assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
                     }
@@ -282,7 +283,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -330,7 +331,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -388,7 +389,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -458,7 +459,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -560,7 +561,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -618,7 +619,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -680,7 +681,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -742,7 +743,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -840,7 +841,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -892,7 +893,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -945,7 +946,7 @@ public class SSLSignonTestcase extends Testcase
         {
             try
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -1021,7 +1022,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
   
@@ -1067,7 +1068,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
    
@@ -1113,7 +1114,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
  
@@ -1186,7 +1187,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
  
@@ -1232,7 +1233,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
@@ -1302,7 +1303,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_, "".toCharArray());
                 try
@@ -1345,7 +1346,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_, "*current".toCharArray());
                 try
@@ -1413,7 +1414,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && !isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_)
             {
                         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
@@ -1466,7 +1467,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && !isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_)
             {          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_, charPassword);
@@ -1518,7 +1519,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && !isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_)
             {          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_, charPassword);
@@ -1594,7 +1595,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && !isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_)
             {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_, charPassword);
@@ -1646,7 +1647,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && !isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_)
             {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_, charPassword);
@@ -1698,7 +1699,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && !isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_)
             {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_, charPassword);
@@ -1774,7 +1775,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && !isNative_)
+            if (JTOpenTestEnvironment.isOS400 && !isNative_)
             {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_, charPassword);
@@ -1816,7 +1817,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && !isNative_)
+            if (JTOpenTestEnvironment.isOS400 && !isNative_)
             {
                char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
                 SecureAS400.addPasswordCacheEntry(systemName_, userId_,     charPassword);      
@@ -1883,7 +1884,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 SecureAS400.setDefaultUser(systemName_, "myUserIDxY");
                 try
@@ -1915,7 +1916,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 SecureAS400.setDefaultUser(systemName_, "myUserIDxY");
                 try
@@ -1947,7 +1948,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 SecureAS400.setDefaultUser(systemName_, "myUserIDxY");
                 try
@@ -2003,7 +2004,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 try
                 {
@@ -2036,7 +2037,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 try
                 {
@@ -2069,7 +2070,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 try
                 {
@@ -2126,7 +2127,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 SecureAS400.setDefaultUser("", "myUserIDxY");
                 try
@@ -2158,7 +2159,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 SecureAS400.setDefaultUser("localhost", "myUserIDxY");
                 try
@@ -2190,7 +2191,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_ && isLocal_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_)
             {
                 SecureAS400.setDefaultUser(InetAddress.getLocalHost().getHostName(), "myUserIDxY");
                 try
@@ -2247,7 +2248,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 SecureAS400.setDefaultUser(systemName_, "");
                 try
@@ -2280,7 +2281,7 @@ public class SSLSignonTestcase extends Testcase
     {
         try
         {
-            if (onAS400_ && isNative_)
+            if (JTOpenTestEnvironment.isOS400 && isNative_)
             {
                 SecureAS400.setDefaultUser(systemName_, "*current");
                 try

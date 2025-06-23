@@ -354,10 +354,7 @@ for a RIFSFile whose properties have not been set.
 **/
     public void Var013()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFile u = new RIFSFile();            
             Presentation p = u.getPresentation();
@@ -380,7 +377,7 @@ for a RIFSFile whose properties have not been set.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 /**
@@ -389,10 +386,8 @@ for a RIFSFile whose properties have been set and used.
 **/
     public void Var014()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
+        if (checkAttended())
         try {
             IFSFile f = sandbox_.createFile("Bill");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
@@ -417,7 +412,7 @@ for a RIFSFile whose properties have been set and used.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 /**
@@ -426,10 +421,7 @@ throws an exception.
 **/
     public void Var015()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFile u = new RIFSFile();            
             Presentation p = u.getPresentation();
@@ -440,7 +432,7 @@ throws an exception.
             assertExceptionIsInstanceOf (e, "java.lang.NullPointerException");
         }
     }
-
+    }
 
 
 /**
@@ -449,10 +441,7 @@ bogus information throws an exception.
 **/
     public void Var016()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFile u = new RIFSFile();            
             Presentation p = u.getPresentation();
@@ -462,7 +451,7 @@ bogus information throws an exception.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 /**

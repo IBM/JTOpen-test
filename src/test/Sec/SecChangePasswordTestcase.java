@@ -47,7 +47,7 @@ public class SecChangePasswordTestcase extends Testcase {
         sys.close();
         failed("exception not generated");
       } catch (Exception e) {
-        if (onAS400_ /* && isNative_ */ && !JTOpenTestEnvironment.isOS400open) {
+        if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ && !JTOpenTestEnvironment.isOS400open) {
           sys.connectService(AS400.COMMAND);
           sys.disconnectAllServices();
           sys.close();
@@ -75,7 +75,7 @@ public class SecChangePasswordTestcase extends Testcase {
         sys.close();
         failed("exception not generated");
       } catch (Exception e) {
-        if (onAS400_ /* && isNative_ */ && !JTOpenTestEnvironment.isOS400open) {
+        if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ && !JTOpenTestEnvironment.isOS400open) {
           sys.connectService(AS400.COMMAND);
           sys.disconnectAllServices();
           sys.close();

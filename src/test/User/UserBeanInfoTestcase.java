@@ -153,13 +153,8 @@ public class UserBeanInfoTestcase extends Testcase
         try
         {
             UserBeanInfo ubi = new UserBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+ubi);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+ubi);
             }
         }
         catch (Exception e)
@@ -176,13 +171,8 @@ public class UserBeanInfoTestcase extends Testcase
         try
         {
             UserBeanInfo ubi = new UserBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+ubi);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+ubi);
             }
         }
         catch (Exception e)
@@ -198,13 +188,7 @@ public class UserBeanInfoTestcase extends Testcase
     {
         try
         {
-            UserBeanInfo ubi = new UserBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+ubi);
-            }
-            else
-            {
+          if (checkGui()) { 
                 assertCondition(true);
             }
         }
@@ -221,13 +205,7 @@ public class UserBeanInfoTestcase extends Testcase
     {
         try
         {
-            UserBeanInfo ubi = new UserBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+ubi);
-            }
-            else
-            {
+          if (checkGui()) { 
                 assertCondition(true);
             }
         }
@@ -381,13 +359,8 @@ public class UserBeanInfoTestcase extends Testcase
         try
         {
             RUserBeanInfo ubi = new RUserBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+ubi);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+ubi);
             }
         }
         catch (Exception e)
@@ -404,13 +377,8 @@ public class UserBeanInfoTestcase extends Testcase
         try
         {
             RUserBeanInfo ubi = new RUserBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+ubi);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+ubi);
             }
         }
         catch (Exception e)
@@ -427,13 +395,8 @@ public class UserBeanInfoTestcase extends Testcase
         try
         {
             RUserBeanInfo ubi = new RUserBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+ubi);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+ubi);
             }
         }
         catch (Exception e)
@@ -450,13 +413,8 @@ public class UserBeanInfoTestcase extends Testcase
         try
         {
             RUserBeanInfo ubi = new RUserBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+ubi);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+ubi);
             }
         }
         catch (Exception e)

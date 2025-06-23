@@ -40,6 +40,7 @@ import com.ibm.as400.security.auth.UserProfilePrincipal;
 import test.JDJobName;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.SecAuthTest;
 import test.Testcase;
@@ -1223,7 +1224,7 @@ public class SecPTMiscTestcase extends Testcase
            boolean passed = true; 
            StringBuffer sb = new StringBuffer(); 
            String  expectedLocalPort="Local_Port=8476";
-           if (!onAS400_) {
+           if (!JTOpenTestEnvironment.isOS400) {
              if (!pt.getSystem().getSystemName().equals(sys.getSystemName())) {
                passed = false;
                sb.append("pt.getSystem():" + pt.getSystem().getSystemName() + " != sys:" + sys.getSystemName() + "\n");

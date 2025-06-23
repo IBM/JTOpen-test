@@ -21,6 +21,7 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
 import test.JDReflectionUtil;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -49,7 +50,7 @@ public class SecSignonTestcase extends Testcase {
         AS400 sys = new AS400();
         sys.setMustUseSockets(mustUseSockets_);
 
-        if (onAS400_ == false) {
+        if (JTOpenTestEnvironment.isOS400 == false) {
           output_.println(" ");
           output_.println(" ");
           output_.println("Verify:");
@@ -66,9 +67,9 @@ public class SecSignonTestcase extends Testcase {
         }
         try {
           sys.connectService(AS400.COMMAND);
-          assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
+          assertCondition(JTOpenTestEnvironment.isOS400 == false || isNative_ == true, "No exception thrown");
         } catch (Exception e) {
-          if (onAS400_ == true && isNative_ == false
+          if (JTOpenTestEnvironment.isOS400 == true && isNative_ == false
               && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET)) {
             succeeded();
           } else {
@@ -97,7 +98,7 @@ public class SecSignonTestcase extends Testcase {
         AS400 sys = new AS400(systemName_);
         sys.setMustUseSockets(mustUseSockets_);
 
-        if (onAS400_ == false) {
+        if (JTOpenTestEnvironment.isOS400 == false) {
           output_.println(" ");
           output_.println(" ");
           output_.println("Verify:");
@@ -116,9 +117,9 @@ public class SecSignonTestcase extends Testcase {
         try {
           sys.connectService(AS400.COMMAND);
 
-          assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
+          assertCondition(JTOpenTestEnvironment.isOS400 == false || isNative_ == true, "No exception thrown");
         } catch (Exception e) {
-          if (isNative_ == false && onAS400_ == true
+          if (isNative_ == false && JTOpenTestEnvironment.isOS400 == true
               && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET)) {
             succeeded();
           } else {
@@ -147,7 +148,7 @@ public class SecSignonTestcase extends Testcase {
         AS400 sys = new AS400(systemName_, userId_);
         sys.setMustUseSockets(mustUseSockets_);
 
-        if (onAS400_ == false) {
+        if (JTOpenTestEnvironment.isOS400 == false) {
           output_.println(" ");
           output_.println(" ");
           output_.println("Verify:");
@@ -165,9 +166,9 @@ public class SecSignonTestcase extends Testcase {
 
         try {
           sys.connectService(AS400.COMMAND);
-          assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
+          assertCondition(JTOpenTestEnvironment.isOS400 == false || isNative_ == true, "No exception thrown");
         } catch (Exception e) {
-          if (isNative_ == false && onAS400_ == true
+          if (isNative_ == false && JTOpenTestEnvironment.isOS400 == true
               && exceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET)) {
             succeeded();
           } else {
@@ -195,7 +196,7 @@ public class SecSignonTestcase extends Testcase {
         AS400 sys = new AS400(systemName_, userId_);
         sys.setMustUseSockets(mustUseSockets_);
 
-        if (onAS400_ == false) {
+        if (JTOpenTestEnvironment.isOS400 == false) {
           output_.println(" ");
           output_.println(" ");
           output_.println("Cancel the signon dialog");
@@ -205,9 +206,9 @@ public class SecSignonTestcase extends Testcase {
 
         try {
           sys.connectService(AS400.COMMAND);
-          assertCondition(onAS400_ == false || isNative_ == true, "No exception thrown");
+          assertCondition(JTOpenTestEnvironment.isOS400 == false || isNative_ == true, "No exception thrown");
         } catch (Exception e) {
-          if (onAS400_ && isNative_ == false) {
+          if (JTOpenTestEnvironment.isOS400 && isNative_ == false) {
             assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);
           } else {
             assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.SIGNON_CANCELED);
@@ -230,7 +231,7 @@ public class SecSignonTestcase extends Testcase {
   public void Var005() {
     if (checkAttended()) {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           AS400 sys = new AS400(systemName_, userId_);
@@ -266,7 +267,7 @@ public class SecSignonTestcase extends Testcase {
   public void Var006() {
     if (checkAttended()) {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           AS400 sys = new AS400(systemName_, userId_);
@@ -313,7 +314,7 @@ public class SecSignonTestcase extends Testcase {
   public void Var007() {
     if (checkAttended()) {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           AS400 sys = new AS400(systemName_, userId_);
@@ -370,7 +371,7 @@ public class SecSignonTestcase extends Testcase {
   public void Var008() {
     if (checkAttended()) {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
@@ -454,7 +455,7 @@ public class SecSignonTestcase extends Testcase {
       notApplicable("Attended TC");
     } else {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           AS400 sys = new AS400(systemName_, userId_);
@@ -503,7 +504,7 @@ public class SecSignonTestcase extends Testcase {
       notApplicable("Attended TC");
     } else {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           AS400 sys = new AS400(systemName_, userId_);
@@ -556,7 +557,7 @@ public class SecSignonTestcase extends Testcase {
       notApplicable("Attended TC");
     } else {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           AS400 sys = new AS400(systemName_, userId_);
@@ -609,7 +610,7 @@ public class SecSignonTestcase extends Testcase {
       notApplicable("Attended TC");
     } else {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           AS400 sys = new AS400(systemName_, userId_);
@@ -688,7 +689,7 @@ public class SecSignonTestcase extends Testcase {
       notApplicable("Attended TC");
     } else {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
@@ -731,7 +732,7 @@ public class SecSignonTestcase extends Testcase {
       notApplicable("Attended TC");
     } else {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
@@ -774,7 +775,7 @@ public class SecSignonTestcase extends Testcase {
       notApplicable("Attended TC");
     } else {
       try {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
@@ -833,7 +834,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var020() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
         AS400.addPasswordCacheEntry("localhost", userId_, charPassword);
         try {
@@ -868,7 +869,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var021() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
         AS400.addPasswordCacheEntry("", userId_, charPassword);
         try {
@@ -903,7 +904,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var022() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
         AS400.addPasswordCacheEntry(InetAddress.getLocalHost().getHostName(), userId_, charPassword);
         PasswordVault.clearPassword(charPassword);
@@ -959,7 +960,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var024() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         String currentUser = System.getProperty("user.name").toUpperCase();
         char[] charPassword;
         if (currentUser.equalsIgnoreCase(userId_)) {
@@ -1003,7 +1004,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var025() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         String currentUser = System.getProperty("user.name").toUpperCase();
 
         if (currentUser.equalsIgnoreCase(userId_)) {
@@ -1064,7 +1065,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var027() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         String currentUser = System.getProperty("user.name").toUpperCase();
 
         AS400.addPasswordCacheEntry(systemName_, currentUser, "".toCharArray());
@@ -1097,7 +1098,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var028() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         String currentUser = System.getProperty("user.name").toUpperCase();
 
         AS400.addPasswordCacheEntry(systemName_, currentUser, "*current".toCharArray());
@@ -1147,7 +1148,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var030() {
     try {
-      if (onAS400_ && !isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_) {
         // For this test, don't use the same id as the job. If using
         // the same id as the job, the password information will be
         // cached in the CurrentUserClass
@@ -1199,7 +1200,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var031() {
     try {
-      if (onAS400_ && !isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_) {
         // For this test, don't use the same id as the job. If using
         // the same id as the job, the password information will be
         // cached in the CurrentUserClass
@@ -1250,7 +1251,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var032() {
     try {
-      if (onAS400_ && !isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_) {
 
         // For this test, don't use the same id as the job. If using
         // the same id as the job, the password information will be
@@ -1321,7 +1322,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var034() {
     try {
-      if (onAS400_ && !isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_) {
         // For this test, don't use the same id as the job. If using
         // the same id as the job, the password information will be
         // cached in the CurrentUserClass
@@ -1372,7 +1373,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var035() {
     try {
-      if (onAS400_ && !isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_) {
         // For this test, don't use the same id as the job. If using
         // the same id as the job, the password information will be
         // cached in the CurrentUserClass
@@ -1424,7 +1425,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var036() {
     try {
-      if (onAS400_ && !isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && !isNative_ && isLocal_) {
         // For this test, don't use the same id as the job. If using
         // the same id as the job, the password information will be
         // cached in the CurrentUserClass
@@ -1490,7 +1491,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var038() {
     try {
-      if (onAS400_ && !isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && !isNative_) {
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
         AS400.addPasswordCacheEntry(systemName_, userId_, charPassword);
@@ -1524,7 +1525,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var039() {
     try {
-      if (onAS400_ && !isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && !isNative_) {
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
         AS400.addPasswordCacheEntry(systemName_, userId_, charPassword);
@@ -1574,7 +1575,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var041() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         AS400.setDefaultUser(systemName_, "myUserIDxY");
         try {
           String uid = AS400.getDefaultUser("");
@@ -1596,7 +1597,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var042() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         AS400.setDefaultUser(systemName_, "myUserIDxY");
         try {
           String uid = AS400.getDefaultUser("localhost");
@@ -1618,7 +1619,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var043() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         AS400.setDefaultUser(systemName_, "myUserIDxY");
         try {
           String uid = AS400.getDefaultUser(InetAddress.getLocalHost().getHostName());
@@ -1657,7 +1658,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var045() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         try {
           AS400.setDefaultUser(systemName_, userId_);
           AS400.removeDefaultUser("");
@@ -1680,7 +1681,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var046() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         try {
           AS400.setDefaultUser(systemName_, userId_);
           AS400.removeDefaultUser("localhost");
@@ -1703,7 +1704,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var047() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         try {
           AS400.setDefaultUser(systemName_, userId_);
           AS400.removeDefaultUser(InetAddress.getLocalHost().getHostName());
@@ -1743,7 +1744,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var049() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         AS400.setDefaultUser("", "myUserIDxY");
         try {
           String uid = AS400.getDefaultUser(systemName_);
@@ -1765,7 +1766,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var050() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         AS400.setDefaultUser("localhost", "myUserIDxY");
         try {
           String uid = AS400.getDefaultUser(systemName_);
@@ -1787,7 +1788,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var051() {
     try {
-      if (onAS400_ && isNative_ && isLocal_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_) {
         AS400.setDefaultUser(InetAddress.getLocalHost().getHostName(), "myUserIDxY");
         try {
           String uid = AS400.getDefaultUser(systemName_);
@@ -1827,7 +1828,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var053() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         AS400.setDefaultUser(systemName_, "");
         try {
           String currentUser = System.getProperty("user.name").toUpperCase();
@@ -1852,7 +1853,7 @@ public class SecSignonTestcase extends Testcase {
    **/
   public void Var054() {
     try {
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         AS400.setDefaultUser(systemName_, "*current");
         try {
           String uid = AS400.getDefaultUser(systemName_);
