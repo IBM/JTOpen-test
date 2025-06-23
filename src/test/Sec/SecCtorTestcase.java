@@ -105,7 +105,7 @@ public class SecCtorTestcase extends Testcase {
       boolean local = system.isLocal();
 
       String failMessage = "";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!systemName.equals("localhost"))
           failMessage += "Incorrect systemName '" + systemName + "'\n";
         if (!local)
@@ -116,7 +116,7 @@ public class SecCtorTestcase extends Testcase {
         if (local)
           failMessage += "Local is true.\n";
       }
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "' sb '" + expectedUser + "'\n";
@@ -152,7 +152,7 @@ public class SecCtorTestcase extends Testcase {
       String failMessage = "";
       if (!systemName.equals("testSystem"))
         failMessage += "Incorrect systemName '" + systemName + "'\n";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";
@@ -267,7 +267,7 @@ public class SecCtorTestcase extends Testcase {
         if (local)
           failMessage += "Local is true.\n";
       }
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";
@@ -384,7 +384,7 @@ public class SecCtorTestcase extends Testcase {
       boolean local = system.isLocal();
 
       String failMessage = "";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open ) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open ) {
         if (!systemName.equals("localhost"))
           failMessage += "Incorrect systemName '" + systemName + "'\n";
         if (!local)
@@ -395,7 +395,7 @@ public class SecCtorTestcase extends Testcase {
         if (local)
           failMessage += "Local is true.\n";
       }
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";
@@ -431,7 +431,7 @@ public class SecCtorTestcase extends Testcase {
       boolean local = system.isLocal();
 
       String failMessage = "";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!systemName.equals("localhost"))
           failMessage += "Incorrect systemName '" + systemName + "'\n";
         if (!local)
@@ -472,7 +472,7 @@ public class SecCtorTestcase extends Testcase {
       boolean local = system.isLocal();
 
       String failMessage = "";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!systemName.equals("localhost"))
           failMessage += "Incorrect systemName '" + systemName + "'\n";
         if (!local)
@@ -513,7 +513,7 @@ public class SecCtorTestcase extends Testcase {
       String failMessage = "";
       if (!systemName.equals("localhost"))
         failMessage += "Incorrect systemName '" + systemName + "'\n";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";
@@ -521,7 +521,7 @@ public class SecCtorTestcase extends Testcase {
         if (!userId.equals(""))
           failMessage += "Incorrect userId: '" + userId + "'\n";
       }
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!local)
           failMessage += "Local is false.\n";
       } else {
@@ -559,7 +559,7 @@ public class SecCtorTestcase extends Testcase {
         failMessage += "Incorrect systemName '" + systemName + "'\n";
       if (!userId.equals("TESTUID"))
         failMessage += "Incorrect userId: '" + userId + "'\n";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!local)
           failMessage += "Local is false.\n";
       } else {
@@ -597,7 +597,7 @@ public class SecCtorTestcase extends Testcase {
         failMessage += "Incorrect systemName '" + systemName + "'\n";
       if (!userId.equals("TESTUID"))
         failMessage += "Incorrect userId: '" + userId + "'\n";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!local)
           failMessage += "Local is false.\n";
       } else {
@@ -631,7 +631,7 @@ public class SecCtorTestcase extends Testcase {
       boolean local = system.isLocal();
 
       String failMessage = "";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!systemName.equals("localhost"))
           failMessage += "Incorrect systemName '" + systemName + "'\n";
         if (!local)
@@ -642,7 +642,7 @@ public class SecCtorTestcase extends Testcase {
         if (local)
           failMessage += "Local is true.\n";
       }
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";
@@ -677,7 +677,7 @@ public class SecCtorTestcase extends Testcase {
       boolean local = system.isLocal();
 
       String failMessage = "";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!systemName.equals("localhost"))
           failMessage += "Incorrect systemName '" + systemName + "'\n";
         if (!local)
@@ -717,7 +717,7 @@ public class SecCtorTestcase extends Testcase {
       boolean local = system.isLocal();
 
       String failMessage = "";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         if (!systemName.equals("localhost"))
           failMessage += "Incorrect systemName '" + systemName + "'\n";
         if (!local)
@@ -759,7 +759,7 @@ public class SecCtorTestcase extends Testcase {
       String failMessage = "";
       if (!systemName.equals("testSystem"))
         failMessage += "Incorrect systemName '" + systemName + "'\n";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";
@@ -798,7 +798,7 @@ public class SecCtorTestcase extends Testcase {
       String failMessage = "";
       if (!systemName.equals("testSystem"))
         failMessage += "Incorrect systemName '" + systemName + "'\n";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";
@@ -837,7 +837,7 @@ public class SecCtorTestcase extends Testcase {
       String failMessage = "";
       if (!systemName.equals("testSystem"))
         failMessage += "Incorrect systemName '" + systemName + "'\n";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";
@@ -876,7 +876,7 @@ public class SecCtorTestcase extends Testcase {
       String failMessage = "";
       if (!systemName.equals("testSystem"))
         failMessage += "Incorrect systemName '" + systemName + "'\n";
-      if (onAS400_ && !JTOpenTestEnvironment.isOS400open) {
+      if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
         String expectedUser = System.getProperty("user.name").toUpperCase();
         if (!userId.equals(expectedUser))
           failMessage += "Incorrect userId: '" + userId + "'\n";

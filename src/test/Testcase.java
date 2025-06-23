@@ -124,7 +124,7 @@ public abstract class Testcase {
   protected boolean mustUseSockets_ = false;
   protected boolean isNative_ = false;
   protected boolean isLocal_ = false;
-  protected boolean onAS400_ = TestDriver.onAS400_;
+  /* protected boolean onAS400_ = TestDriver.onAS400_; */
   String asp_ = null;
 
   boolean mfaInitialized = false; 
@@ -2364,7 +2364,7 @@ public abstract class Testcase {
     mustUseSockets_ = mustUseSockets;
     isNative_ = isNative;
     isLocal_ = isLocal;
-    onAS400_ = onAS400;
+    // onAS400_ = onAS400;
 
     // Note: Don't get system VRM yet. Some testcases need an unconnected
     // systemObject_.
@@ -3179,6 +3179,16 @@ public abstract class Testcase {
       notApplicable("ATTENDED TESTCASE");
       return false; 
     } else { 
+      return true; 
+    }
+  }
+  
+  /* Check is gui is supported */
+  protected boolean checkGui() { 
+    if (!JTOpenTestEnvironment.isGuiAvailable) {
+      notApplicable("GUI testcase"); 
+      return false; 
+    } else {
       return true; 
     }
   }

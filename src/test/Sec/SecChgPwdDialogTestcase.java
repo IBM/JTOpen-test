@@ -18,6 +18,7 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.SystemValue;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -89,7 +90,7 @@ public class SecChgPwdDialogTestcase extends Testcase {
           AS400 sys = new AS400(systemName_, "JAVAEXPIR", "MY1PWD".toCharArray());
           sys.setMustUseSockets(mustUseSockets_);
 
-          if (onAS400_ == false) {
+          if (JTOpenTestEnvironment.isOS400 == false) {
             output_.println(" ");
             output_.println("1) Verify password is expired message comes up; select Yes to change it.");
             output_.println("2) Verify 'Change Password' dialog comes up.");
@@ -105,7 +106,7 @@ public class SecChgPwdDialogTestcase extends Testcase {
 
             failed("Failed.  No exception.");
           } catch (Exception e) {
-            if (onAS400_) {
+            if (JTOpenTestEnvironment.isOS400) {
 
               assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_EXPIRED);
             } else {
@@ -143,7 +144,7 @@ public class SecChgPwdDialogTestcase extends Testcase {
           AS400 sys = new AS400(systemName_, "JAVAEXPIR", "MY1PWD".toCharArray());
           sys.setMustUseSockets(mustUseSockets_);
 
-          if (onAS400_ == false) {
+          if (JTOpenTestEnvironment.isOS400 == false) {
             output_.println(" ");
             output_.println("1) Verify password is expired message comes up; select Yes to change it.");
             output_.println("2) Verify 'Change Password' dialog comes up.");
@@ -169,7 +170,7 @@ public class SecChgPwdDialogTestcase extends Testcase {
             // Didn't get an exception when one was expected.
             failed("Failed.  No exception.");
           } catch (Exception e) {
-            if (onAS400_) {
+            if (JTOpenTestEnvironment.isOS400) {
               assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_EXPIRED);
             } else {
               assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.SIGNON_CANCELED);
@@ -204,7 +205,7 @@ public class SecChgPwdDialogTestcase extends Testcase {
           AS400 sys = new AS400(systemName_, "JAVAEXPIR", "MY1PWD".toCharArray());
           sys.setMustUseSockets(mustUseSockets_);
 
-          if (onAS400_ == false) {
+          if (JTOpenTestEnvironment.isOS400 == false) {
             output_.println(" ");
             output_.println("1) Verify password is expired message comes up; select Yes to change it.");
             output_.println("2) Verify 'Change Password' dialog comes up.");
@@ -216,13 +217,13 @@ public class SecChgPwdDialogTestcase extends Testcase {
 
           try {
             sys.connectService(AS400.COMMAND);
-            if (onAS400_) {
+            if (JTOpenTestEnvironment.isOS400) {
               failed("Failed.  No exception.");
             } else {
               succeeded();
             }
           } catch (Exception e) {
-            if (onAS400_) {
+            if (JTOpenTestEnvironment.isOS400) {
               assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_EXPIRED);
             } else {
               failed(e, "Unexpected exception.");

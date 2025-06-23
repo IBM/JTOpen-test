@@ -190,7 +190,7 @@ Method tested:getIcon().
 **/
      public void Var006 ()
     {
-       if (onAS400_) {
+       if (!JTOpenTestEnvironment.isGuiAvailable) {
           notApplicable("-- Cannot load Icon when running natively");
         }
         else
@@ -214,7 +214,7 @@ Method tested:getIcon().
 **/
     public void Var007 ()
     {
-        if (onAS400_) {
+        if (!JTOpenTestEnvironment.isGuiAvailable) {
           notApplicable("-- Cannot load Icon when running natively");
         }
         else
@@ -238,7 +238,7 @@ Method tested:getIcon().
 **/
      public void Var008 ()
     {
-        if (onAS400_) {
+        if (!JTOpenTestEnvironment.isGuiAvailable) {
           notApplicable("-- Cannot load Icon when running natively");
         }
         else
@@ -264,7 +264,7 @@ Method tested:getIcon().
 **/
     public void Var009 ()
     {
-        if (onAS400_) {
+        if (!JTOpenTestEnvironment.isGuiAvailable) {
           notApplicable("-- Cannot load Icon when running natively");
         }
         else

@@ -18,6 +18,7 @@ import com.ibm.as400.access.AS400;
 
 import test.JDReflectionUtil;
 import test.JDTestDriver;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -174,7 +175,7 @@ public class SecSignonInfoTestcase extends Testcase {
         AS400 sys = new AS400(systemName_, userId_, charPassword);
         PasswordVault.clearPassword(charPassword);
         sys.setMustUseSockets(mustUseSockets_);
-        if (!onAS400_) {
+        if (!JTOpenTestEnvironment.isOS400) {
           output_.println("You should see a password expiration warning.  Press No.");
         }
 

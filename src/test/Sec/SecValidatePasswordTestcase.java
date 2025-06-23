@@ -17,6 +17,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 
 import test.JDTestDriver;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -52,7 +53,7 @@ public class SecValidatePasswordTestcase extends Testcase
                 sys.validateSignon(userId_, charPassword);
    
      
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     succeeded();
                 }
@@ -63,7 +64,7 @@ public class SecValidatePasswordTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_)
+                if (JTOpenTestEnvironment.isOS400)
                 {
                     failed(e, "Unexpected exception");
                 }
@@ -243,7 +244,7 @@ public class SecValidatePasswordTestcase extends Testcase
             try
             {
                char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-		if (onAS400_ /* && isNative_ */ ) { 
+		if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ ) { 
 		    String currentUser= System.getProperty("user.name").toUpperCase();
 		    if (currentUser.equalsIgnoreCase(userId_)) {
 			    // alreadset 
@@ -257,7 +258,7 @@ public class SecValidatePasswordTestcase extends Testcase
 		}
                 sys.validateSignon(charPassword);
                  PasswordVault.clearPassword(charPassword);
-                if (onAS400_ /* && isNative_ */ )
+                if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ )
                 {
                     succeeded();
                 }
@@ -268,7 +269,7 @@ public class SecValidatePasswordTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_ && isNative_)
+                if (JTOpenTestEnvironment.isOS400 && isNative_)
                 {
                     failed(e, "Unexpected exception");
                 }
@@ -300,7 +301,7 @@ public class SecValidatePasswordTestcase extends Testcase
             try
             {
                char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-		if (onAS400_ /*  && isNative_ */ ) { 
+		if (JTOpenTestEnvironment.isOS400 /*  && isNative_ */ ) { 
 		    String currentUser= System.getProperty("user.name").toUpperCase();
 		    if (currentUser.equalsIgnoreCase(userId_)) {
 		    } else if (currentUser.equalsIgnoreCase(pwrSysUserID_)) {
@@ -314,7 +315,7 @@ public class SecValidatePasswordTestcase extends Testcase
 
                 sys.validateSignon(charPassword);
                  PasswordVault.clearPassword(charPassword);
-                if (onAS400_ /* && isNative_ */ )
+                if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ )
                 {
                     succeeded();
                 }
@@ -325,7 +326,7 @@ public class SecValidatePasswordTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_ && isNative_)
+                if (JTOpenTestEnvironment.isOS400 && isNative_)
                 {
                     failed(e, "Unexpected exception");
                 }
@@ -484,7 +485,7 @@ public class SecValidatePasswordTestcase extends Testcase
             try
             {
                 sys.validateSignon();
-                if (onAS400_ /*  && isNative_ */ )
+                if (JTOpenTestEnvironment.isOS400 /*  && isNative_ */ )
                 {
                     succeeded();
                 }
@@ -495,7 +496,7 @@ public class SecValidatePasswordTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_ /* && isNative_ */ )
+                if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ )
                 {
                     failed(e, "Unexpected exception");
                 }
@@ -527,7 +528,7 @@ public class SecValidatePasswordTestcase extends Testcase
             try
             {
                 sys.validateSignon();
-                if (onAS400_ /* && isNative_ */ )
+                if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ )
                 {
                     succeeded();
                 }
@@ -538,7 +539,7 @@ public class SecValidatePasswordTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_ /* && isNative_ */ )
+                if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ )
                 {
                     failed(e, "Unexpected exception");
                 }
@@ -565,7 +566,7 @@ public class SecValidatePasswordTestcase extends Testcase
         try
         {
 	    String userId = userId_; 
-	    if (onAS400_ /* && isNative_ */ ) { 
+	    if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ ) { 
 		userId =  System.getProperty("user.name").toUpperCase();
 	    }
 
@@ -575,7 +576,7 @@ public class SecValidatePasswordTestcase extends Testcase
             try
             {
                 sys.validateSignon();
-                if (onAS400_ /* && isNative_ */ )
+                if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ )
                 {
                     succeeded();
                 }
@@ -586,7 +587,7 @@ public class SecValidatePasswordTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_ /* && isNative_ */ )
+                if (JTOpenTestEnvironment.isOS400 /* && isNative_ */ )
                 {
                     failed(e, "Unexpected exception");
                 }

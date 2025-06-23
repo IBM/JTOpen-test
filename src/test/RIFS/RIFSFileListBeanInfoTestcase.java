@@ -184,10 +184,7 @@ getIcon().  Pass an invalid value.
 **/
     public void Var006()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
             Image icon = ubi.getIcon(-546);
@@ -197,7 +194,7 @@ getIcon().  Pass an invalid value.
             assertExceptionIsInstanceOf (e, "java.lang.IllegalArgumentException");
         }
     }
-
+    }
 
 
 /**
@@ -205,10 +202,7 @@ getIcon().  Pass ICON_COLOR_16x16.
 **/
     public void Var007()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
              // Note: jt400Native jar file has fewer gif's.
@@ -218,7 +212,7 @@ getIcon().  Pass ICON_COLOR_16x16.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 /**
@@ -226,10 +220,7 @@ getIcon().  Pass ICON_COLOR_32x32.
 **/
     public void Var008()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
             // Note: jt400Native jar file has fewer gif's.
@@ -239,7 +230,7 @@ getIcon().  Pass ICON_COLOR_32x32.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 /**
@@ -247,10 +238,7 @@ getIcon().  Pass ICON_MONO_16x16.
 **/
     public void Var009()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
             // Note: jt400Native jar file has fewer gif's.
@@ -260,7 +248,7 @@ getIcon().  Pass ICON_MONO_16x16.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 /**
@@ -268,10 +256,7 @@ getIcon().  Pass ICON_MONO_32x32.
 **/
     public void Var010()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFileListBeanInfo ubi = new RIFSFileListBeanInfo();
             // Note: jt400Native jar file has fewer gif's.
@@ -281,7 +266,7 @@ getIcon().  Pass ICON_MONO_32x32.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 /**

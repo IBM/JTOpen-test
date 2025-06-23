@@ -426,6 +426,7 @@ public class CommandListBeanInfoTestcase extends Testcase
    **/
    public void Var007()
    {
+     if (checkGui()) {
       try
       {
          CommandListBeanInfo bi = new CommandListBeanInfo();
@@ -434,8 +435,7 @@ public class CommandListBeanInfoTestcase extends Testcase
       }
       catch(AWTError e)
       {
-        if (onAS400_) notApplicable("No GUI available.");
-        else failed(e, "Unexpected exception");
+        failed(e, "Unexpected exception");
        
       }
       catch(Exception e)
@@ -444,6 +444,7 @@ public class CommandListBeanInfoTestcase extends Testcase
          return;
       }
      
+   }
    }
 
 

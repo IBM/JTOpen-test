@@ -126,7 +126,7 @@ Performs setup needed before running variations.
            System.setProperty(Context.INITIAL_CONTEXT_FACTORY,  "com.sun.jndi.fscontext.RefFSContextFactory");        //@C1A
 
            // Set the root to a writable directory on AIX and Linux
-	   if (JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isWindows || JTOpenTestEnvironment.isLinux) {
+	   if (JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isWindows || JTOpenTestEnvironment.isLinux || JTOpenTestEnvironment.isAIX) {
 	     
 	       System.setProperty("java.naming.provider.url", "file:///tmp");
 

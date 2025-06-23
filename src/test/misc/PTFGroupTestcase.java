@@ -16,6 +16,7 @@ package test.misc;
 import java.io.*;
 import com.ibm.as400.access.*;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import java.util.Date;
@@ -389,7 +390,7 @@ public class PTFGroupTestcase extends Testcase
         if (!validate(list)) succeeded = false;
 
         // If running natively, try using the *CURRENT user profile.
-        if (onAS400_ && isLocal_ && isNative_)
+        if (JTOpenTestEnvironment.isOS400 && isLocal_ && isNative_)
         {
           AS400 localSys = new AS400();  // use *CURRENT
           if (DEBUG) System.out.println("Local username: " + localSys.getUserId());

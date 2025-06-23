@@ -19,6 +19,7 @@ import java.util.Locale;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SecureAS400;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -62,7 +63,7 @@ public class SSLCtorTestcase extends Testcase
         // Verify state.
         if (!locale.equals(Locale.getDefault())) failMessage += "Incorrect Locale: '" + locale + "'\n";
         if (connected) failMessage += "Connected is true.\n";
-        if (onAS400_)
+        if (JTOpenTestEnvironment.isOS400)
         {
             if (guiAvailable) failMessage += "GUI available is true.\n";
         }
@@ -97,7 +98,7 @@ public class SSLCtorTestcase extends Testcase
             boolean local = system.isLocal();
 
             String failMessage = "";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
                 if (!local) failMessage += "Local is false.\n";
@@ -363,7 +364,7 @@ public class SSLCtorTestcase extends Testcase
             boolean local = system.isLocal();
 
             String failMessage = "";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
                 if (!local) failMessage += "Local is false.\n";
@@ -409,7 +410,7 @@ public class SSLCtorTestcase extends Testcase
             boolean local = system.isLocal();
 
             String failMessage = "";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
                 if (!local) failMessage += "Local is false.\n";
@@ -448,7 +449,7 @@ public class SSLCtorTestcase extends Testcase
             boolean local = system.isLocal();
 
             String failMessage = "";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
                 if (!local) failMessage += "Local is false.\n";
@@ -495,7 +496,7 @@ public class SSLCtorTestcase extends Testcase
             {
                 if (!userId.equals("")) failMessage += "Incorrect userId: '" + userId + "'\n";
             }
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!local) failMessage += "Local is false.\n";
             }
@@ -532,7 +533,7 @@ public class SSLCtorTestcase extends Testcase
             String failMessage = "";
             if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
             if (!userId.equals("TESTUID")) failMessage += "Incorrect userId: '" + userId + "'\n";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!local) failMessage += "Local is false.\n";
             }
@@ -569,7 +570,7 @@ public class SSLCtorTestcase extends Testcase
             String failMessage = "";
             if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
             if (!userId.equals("TESTUID")) failMessage += "Incorrect userId: '" + userId + "'\n";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!local) failMessage += "Local is false.\n";
             }
@@ -604,7 +605,7 @@ public class SSLCtorTestcase extends Testcase
             boolean local = system.isLocal();
 
             String failMessage = "";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
                 if (!local) failMessage += "Local is false.\n";
@@ -649,7 +650,7 @@ public class SSLCtorTestcase extends Testcase
             boolean local = system.isLocal();
 
             String failMessage = "";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
                 if (!local) failMessage += "Local is false.\n";
@@ -687,7 +688,7 @@ public class SSLCtorTestcase extends Testcase
             boolean local = system.isLocal();
 
             String failMessage = "";
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 if (!systemName.equals("localhost")) failMessage += "Incorrect systemName '" + systemName + "'\n";
                 if (!local) failMessage += "Local is false.\n";

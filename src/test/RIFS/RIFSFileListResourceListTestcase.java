@@ -540,10 +540,7 @@ for a RIFSFileList whose properties have not been set.
 **/
     public void Var020()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFileList u = new RIFSFileList();            
             Presentation p = u.getPresentation();
@@ -567,7 +564,7 @@ for a RIFSFileList whose properties have not been set.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 /**
@@ -576,10 +573,7 @@ for a RIFSFileList whose properties have been set and used.
 **/
     public void Var021()
     {
-        if (onAS400_) {
-          notApplicable("no GUI"); // need AWT in the environment for this variation
-          return;
-        }
+      if (checkGui()) { 
         try {
             RIFSFileList u = new RIFSFileList(systemObject_, dir25_);
             u.open();
@@ -604,7 +598,7 @@ for a RIFSFileList whose properties have been set and used.
             failed (e, "Unexpected Exception");
         }
     }
-
+    }
 
 
 

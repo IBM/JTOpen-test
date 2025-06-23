@@ -41,6 +41,7 @@ import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.JobLog;
 import com.ibm.as400.access.QueuedMessage;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 import com.ibm.as400.access.CommandCall;
@@ -2083,7 +2084,7 @@ public class JobLogTestcase extends Testcase
     private final boolean isRunningNativelyAndThreadsafe()
     {
       String prop = getProgramCallThreadSafetyProperty(); // we only care about ProgramCall, not CommandCall
-      if (onAS400_ && isNative_ && isLocal_ &&
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ &&
           prop != null && prop.equals("true"))
       {
         return true;
@@ -2095,7 +2096,7 @@ public class JobLogTestcase extends Testcase
     {
       if (!isRunningNativelyAndThreadsafe()) return false;
 
-      else if (onAS400_ && isNative_ && isLocal_ )
+      else if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ )
       {
         return true;
       }

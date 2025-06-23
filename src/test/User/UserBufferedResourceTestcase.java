@@ -21,6 +21,7 @@ import com.ibm.as400.resource.Presentation;
 import com.ibm.as400.resource.RUser;
 import com.ibm.as400.resource.ResourceEvent;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 import test.UserTest;
 
@@ -299,7 +300,7 @@ public class UserBufferedResourceTestcase extends Testcase
             String fullName = p.getFullName();
             String descriptionText = (String)p.getValue(Presentation.DESCRIPTION_TEXT);
             String helpText = (String)p.getValue(Presentation.HELP_TEXT);
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 String asString = p.toString();
                 assertCondition(name.equals("") && fullName.equals("") && descriptionText != null && helpText == null && asString.equals(""));
@@ -333,7 +334,7 @@ public class UserBufferedResourceTestcase extends Testcase
             String fullName = p.getFullName();
             String descriptionText = (String)p.getValue(Presentation.DESCRIPTION_TEXT);
             String helpText = (String)p.getValue(Presentation.HELP_TEXT);
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 String asString = p.toString();
                 assertCondition(name.equals(userName) && fullName.equals(userName) && descriptionText != null && helpText == null && asString.equals(userName), 

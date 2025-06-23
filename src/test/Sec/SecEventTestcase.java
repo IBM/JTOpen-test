@@ -18,6 +18,7 @@ import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.ConnectionEvent;
 import com.ibm.as400.access.ConnectionListener;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -472,7 +473,7 @@ public class SecEventTestcase extends Testcase implements ConnectionListener
     private final boolean isRunningNativelyAndThreadsafe()
     {
       String prop = getCommandCallThreadSafetyProperty(); // we only care about CommandCall, not ProgramCall
-      if (onAS400_ && isNative_ && isLocal_ &&
+      if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ &&
           prop != null && !prop.equals("false"))
       {
         return true;
@@ -505,7 +506,7 @@ public class SecEventTestcase extends Testcase implements ConnectionListener
                 resetState();
                 CommandCall cmd = new CommandCall(sys);
                 cmd.run("QSYS/crtlib fred");
-                if (onAS400_ && isNative_ && isLocal_ && !mustUseSockets_ &&
+                if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && !mustUseSockets_ &&
                     isRunningNativelyAndThreadsafe())
                 {
                     failMsg += verifyNoEvent();
@@ -517,7 +518,7 @@ public class SecEventTestcase extends Testcase implements ConnectionListener
 
                 resetState();
                 sys.disconnectService(serv);
-                if (onAS400_ && isNative_ && isLocal_ && !mustUseSockets_ &&
+                if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && !mustUseSockets_ &&
                     isRunningNativelyAndThreadsafe())
                 {
                     failMsg += verifyNoEvent();

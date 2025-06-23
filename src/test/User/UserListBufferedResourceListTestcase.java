@@ -22,6 +22,7 @@ import com.ibm.as400.resource.RUserList;
 import com.ibm.as400.resource.Resource;
 import com.ibm.as400.resource.ResourceListEvent;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 import test.UserTest;
 
@@ -541,7 +542,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             String fullName = p.getFullName();
             String descriptionText = (String)p.getValue(Presentation.DESCRIPTION_TEXT);
             String helpText = (String)p.getValue(Presentation.HELP_TEXT);
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 String asString = p.toString();
                 // Can't compare directly, this is MRI.
@@ -576,7 +577,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             String fullName = p.getFullName();
             String descriptionText = (String)p.getValue(Presentation.DESCRIPTION_TEXT);
             String helpText = (String)p.getValue(Presentation.HELP_TEXT);
-            if (onAS400_)
+            if (JTOpenTestEnvironment.isOS400)
             {
                 String asString = p.toString();
                 // Can't compare directly, this is MRI.

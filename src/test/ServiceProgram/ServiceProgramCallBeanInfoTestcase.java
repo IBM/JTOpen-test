@@ -40,7 +40,6 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
      }
      test.ServiceProgramCallTest.main(newArgs); 
    }
-    private boolean inNetscape_ = false;
 
     /**
      Performs setup needed before running variations.
@@ -48,20 +47,6 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        Class<?> fred = null;
-        try
-        {
-            fred = Class.forName("netscape.security.PrivilegeManager");
-        }
-        catch (Throwable e)
-        {
-        }
-
-        if (fred != null)
-        {
-            inNetscape_ = true;
-            System.out.println("We think we are in Netscape.");
-        }
     }
 
     /**
@@ -121,16 +106,7 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
      **/
     public void Var004()
     {
-        if (onAS400_)
-        {
-            notApplicable("No GUI for icon test.");
-            return;
-        }
-        if (inNetscape_)
-        {
-            notApplicable("-- Cannot load Icon in Netscape.");
-            return;
-        }
+      if (checkGui()) { 
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
@@ -141,23 +117,14 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
             failed(e, "Unexpected Exception.");
         }
     }
-
+    }
     /**
      Method tested:  getIcon().
      -Ensure that getIcon() returns a color icon when size 16 is specifed.
      **/
     public void Var005()
     {
-        if (onAS400_)
-        {
-            notApplicable("No GUI for icon test.");
-            return;
-        }
-        if (inNetscape_)
-        {
-            notApplicable("-- Cannot load Icon in Netscape.");
-            return;
-        }
+      if (checkGui()) { 
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
@@ -168,23 +135,14 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
             failed(e, "Unexpected Exception.");
         }
     }
-
+    }
     /**
      Method tested:  getIcon().
      - Ensure that getIcon() returns a monochrome icon when size 32 is specifed.
      **/
     public void Var006()
     {
-        if (onAS400_)
-        {
-            notApplicable("No GUI for icon test.");
-            return;
-        }
-        if (inNetscape_)
-        {
-            notApplicable("-- Cannot load Icon in Netscape.");
-            return;
-        }
+      if (checkGui()) { 
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
@@ -194,24 +152,15 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
         {
             failed(e, "Unexpected Exception.");
         }
+      }
     }
-
     /**
      Method tested:  getIcon().
      - Ensure that getIcon() returns a monochrome icon when size 16 is specifed.
      **/
     public void Var007()
     {
-        if (onAS400_)
-        {
-            notApplicable("No GUI for icon test.");
-            return;
-        }
-        if (inNetscape_)
-        {
-            notApplicable("-- Cannot load Icon in Netscape.");
-            return;
-        }
+      if (checkGui()) { 
         try
         {
             ServiceProgramCallBeanInfo f = new ServiceProgramCallBeanInfo();
@@ -222,7 +171,7 @@ public class ServiceProgramCallBeanInfoTestcase extends Testcase
             failed(e, "Unexpected Exception.");
         }
     }
-
+    }
     /**
      Method tested:  getIcon().
      -Ensure that getIcon() returns null when an invalid size is specifed.

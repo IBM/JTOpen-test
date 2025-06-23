@@ -122,11 +122,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
      **/
     public void Var006()
     {
-        if (onAS400_)
-        {
-            notApplicable("No GUI for icon test.");
-            return;
-        }
+        if (checkGui()) { 
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
@@ -139,6 +135,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
             failed("Unexpected Exception");
             e.printStackTrace();
         }
+    }
     }
 
     /**
@@ -147,11 +144,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
      **/
     public void Var007()
     {
-        if (onAS400_)
-        {
-            notApplicable("No GUI for icon test.");
-            return;
-        }
+      if (checkGui()) { 
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
@@ -163,6 +156,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
             failed("Unexpected Exception");
             e.printStackTrace();
         }
+      }
     }
 
     /**
@@ -171,11 +165,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
      **/
     public void Var008()
     {
-        if (onAS400_)
-        {
-            notApplicable("No GUI for icon test.");
-            return;
-        }
+      if (checkGui()) { 
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
@@ -186,6 +176,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
             failed("Unexpected Exception");
             e.printStackTrace();
         }
+      }
     }
 
     /**
@@ -194,11 +185,7 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
      **/
     public void Var009()
     {
-        if (onAS400_)
-        {
-            notApplicable("No GUI for icon test.");
-            return;
-        }
+      if (checkGui()) { 
         try
         {
             ProgramParameterBeanInfo f = new ProgramParameterBeanInfo();
@@ -209,7 +196,9 @@ public class ProgramParameterBeanInfoTestcase extends Testcase
             failed("Unexpected Exception");
             e.printStackTrace();
         }
+      }
     }
+      
 
     /**
      Method tested:getIcon().

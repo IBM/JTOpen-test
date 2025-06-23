@@ -17,6 +17,7 @@ import java.util.GregorianCalendar;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.SecureAS400;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -203,7 +204,7 @@ public class SSLSignonInfoTestcase extends Testcase
                 SecureAS400 sys = new SecureAS400(systemName_, userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
                 sys.setMustUseSockets(mustUseSockets_);
-                if (!onAS400_)
+                if (!JTOpenTestEnvironment.isOS400)
                 {
                     output_.println("You should see a password expiration warning.  Press No.");
                 }

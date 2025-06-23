@@ -125,15 +125,10 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+f);
-            }
-            else
-            {
+            if (checkGui()) { 
               // Icons / GUI components no longer available in JTOpen 20.0.X
 
-                assertCondition(true);
+                assertCondition(true, "got "+f);
             }
         }
         catch (Exception e)
@@ -151,13 +146,8 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+f);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+f);
             }
         }
         catch (Exception e)
@@ -175,13 +165,8 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+f);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "got "+f);
             }
         }
         catch (Exception e)
@@ -199,13 +184,8 @@ public class SystemPoolBeanInfoUnattendedTestcase extends Testcase
         try
         {
             SystemPoolBeanInfo f = new SystemPoolBeanInfo();
-            if (onAS400_)
-            {
-                notApplicable("No GUI for icon test."+f);
-            }
-            else
-            {
-                assertCondition(true);
+            if (checkGui()) { 
+                assertCondition(true, "Got "+f);
             }
         }
         catch (Exception e)

@@ -19,6 +19,7 @@ import com.ibm.as400.access.ConnectionEvent;
 import com.ibm.as400.access.ConnectionListener;
 import com.ibm.as400.access.SecureAS400;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -496,7 +497,7 @@ public class SSLEventTestcase extends Testcase implements ConnectionListener
                 resetState();
                 CommandCall cmd = new CommandCall(sys);
                 cmd.run("QSYS/crtlib fred");
-                if (onAS400_ && isNative_ && isLocal_ && !mustUseSockets_)
+                if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && !mustUseSockets_)
                 {
                     failMsg += verifyNoEvent();
                 }
@@ -507,7 +508,7 @@ public class SSLEventTestcase extends Testcase implements ConnectionListener
 
                 resetState();
                 sys.disconnectService(serv);
-                if (onAS400_ && isNative_ && isLocal_ && !mustUseSockets_)
+                if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && !mustUseSockets_)
                 {
                     failMsg += verifyNoEvent();
                 }

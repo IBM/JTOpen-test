@@ -23,6 +23,7 @@ import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.ExtendedIllegalStateException;
 
 import test.JDReflectionUtil;
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.TestDriver;
 import test.Testcase;
@@ -239,9 +240,9 @@ public class SecPortMapperTestcase extends Testcase {
       system.setMustUseSockets(mustUseSockets_);
       try {
         int port = system.getServicePort(AS400.COMMAND);
-        assertCondition(onAS400_, "No exception. but got port " + port);
+        assertCondition(JTOpenTestEnvironment.isOS400, "No exception. but got port " + port);
       } catch (Exception e) {
-        if (!onAS400_) {
+        if (!JTOpenTestEnvironment.isOS400) {
           assertExceptionStartsWith(e, "ExtendedIllegalStateException", "systemName: ",
               ExtendedIllegalStateException.PROPERTY_NOT_SET);
         } else {
@@ -880,9 +881,9 @@ public class SecPortMapperTestcase extends Testcase {
       system.setMustUseSockets(mustUseSockets_);
       try {
         system.setServicePort(AS400.COMMAND, 8475);
-        assertCondition(onAS400_, "No exception.");
+        assertCondition(JTOpenTestEnvironment.isOS400, "No exception.");
       } catch (Exception e) {
-        if (!onAS400_) {
+        if (!JTOpenTestEnvironment.isOS400) {
           assertExceptionStartsWith(e, "ExtendedIllegalStateException", "systemName: ",
               ExtendedIllegalStateException.PROPERTY_NOT_SET);
         } else {
@@ -1262,9 +1263,9 @@ public class SecPortMapperTestcase extends Testcase {
       system.setMustUseSockets(mustUseSockets_);
       try {
         system.setServicePortsToDefault();
-        assertCondition(onAS400_, "No exception.");
+        assertCondition(JTOpenTestEnvironment.isOS400, "No exception.");
       } catch (Exception e) {
-        if (!onAS400_) {
+        if (!JTOpenTestEnvironment.isOS400) {
           assertExceptionStartsWith(e, "ExtendedIllegalStateException", "systemName: ",
               ExtendedIllegalStateException.PROPERTY_NOT_SET);
         } else {

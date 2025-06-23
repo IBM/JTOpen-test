@@ -16,6 +16,7 @@ package test.SSL;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.SecureAS400;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -47,13 +48,13 @@ public class SSLValidatePasswordTestcase extends Testcase {
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
         sys.validateSignon(userId_, charPassword);
         PasswordVault.clearPassword(charPassword);
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           succeeded();
         } else {
           failed("exception not thrown");
         }
       } catch (Exception e) {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           failed(e, "Unexpected exception");
         } else {
           assertExceptionIs(e, "ExtendedIllegalStateException");
@@ -186,13 +187,13 @@ public class SSLValidatePasswordTestcase extends Testcase {
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
         sys.validateSignon(charPassword);
         PasswordVault.clearPassword(charPassword);
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           succeeded();
         } else {
           failed("exception not thrown");
         }
       } catch (Exception e) {
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           failed(e, "Unexpected exception");
         } else {
           assertExceptionIs(e, "ExtendedIllegalStateException");
@@ -217,13 +218,13 @@ public class SSLValidatePasswordTestcase extends Testcase {
         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
         sys.validateSignon(charPassword);
         PasswordVault.clearPassword(charPassword);
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           succeeded();
         } else {
           failed("exception not thrown");
         }
       } catch (Exception e) {
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           failed(e, "Unexpected exception");
         } else {
           assertExceptionIs(e, "ExtendedIllegalStateException");
@@ -335,13 +336,13 @@ public class SSLValidatePasswordTestcase extends Testcase {
 
       try {
         sys.validateSignon();
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           succeeded();
         } else {
           failed("exception not thrown");
         }
       } catch (Exception e) {
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           failed(e, "Unexpected exception");
         } else {
           assertExceptionIs(e, "ExtendedIllegalStateException");
@@ -364,13 +365,13 @@ public class SSLValidatePasswordTestcase extends Testcase {
 
       try {
         sys.validateSignon();
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           succeeded();
         } else {
           failed("exception not thrown");
         }
       } catch (Exception e) {
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           failed(e, "Unexpected exception");
         } else {
           assertExceptionIs(e, "ExtendedIllegalStateException");
@@ -393,13 +394,13 @@ public class SSLValidatePasswordTestcase extends Testcase {
 
       try {
         sys.validateSignon();
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           succeeded();
         } else {
           failed("exception not thrown");
         }
       } catch (Exception e) {
-        if (onAS400_ && isNative_) {
+        if (JTOpenTestEnvironment.isOS400 && isNative_) {
           failed(e, "Unexpected exception");
         } else {
           assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_NOT_SET);

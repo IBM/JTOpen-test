@@ -16,6 +16,7 @@ package test.Sec;
 import java.net.InetAddress;
 import com.ibm.as400.access.*;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -89,7 +90,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.FILE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -116,7 +117,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.FILE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -143,7 +144,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.FILE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -191,7 +192,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.PRINT;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -216,7 +217,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.PRINT;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -242,7 +243,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.PRINT;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -290,7 +291,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.COMMAND;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -315,7 +316,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.COMMAND;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -341,7 +342,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.COMMAND;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -390,7 +391,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(true);
       int serv = AS400.DATAQUEUE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -416,7 +417,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(true);
       int serv = AS400.DATAQUEUE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -442,7 +443,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(true);
       int serv = AS400.DATAQUEUE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -490,7 +491,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(false);
       int serv = AS400.DATAQUEUE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -515,7 +516,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(false);
       int serv = AS400.DATAQUEUE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -541,7 +542,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(false);
       int serv = AS400.DATAQUEUE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -591,7 +592,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.DATABASE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -618,7 +619,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.DATABASE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -645,7 +646,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(mustUseSockets_);
       int serv = AS400.DATABASE;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -694,7 +695,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(true);
       int serv = AS400.RECORDACCESS;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -720,7 +721,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(true);
       int serv = AS400.RECORDACCESS;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -746,7 +747,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(true);
       int serv = AS400.RECORDACCESS;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -794,7 +795,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(false);
       int serv = AS400.RECORDACCESS;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -819,7 +820,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(false);
       int serv = AS400.RECORDACCESS;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -845,7 +846,7 @@ public class SecConnectTestcase extends Testcase {
       sys.setMustUseSockets(false);
       int serv = AS400.RECORDACCESS;
 
-      if (onAS400_ && isNative_) {
+      if (JTOpenTestEnvironment.isOS400 && isNative_) {
         sys.connectService(serv);
         try {
           assertCondition(sys.isConnected(serv), "Connect failed");
@@ -926,7 +927,7 @@ public class SecConnectTestcase extends Testcase {
 
       try {
         sys.connectService(AS400.COMMAND);
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           sys.close(); 
           succeeded();
         } else {
@@ -934,7 +935,7 @@ public class SecConnectTestcase extends Testcase {
           failed("Exception not generated");
         }
       } catch (Exception e) {
-        if (onAS400_) {
+        if (JTOpenTestEnvironment.isOS400) {
           sys.close(); 
           failed(e, "Unexpected exception");
         } else {

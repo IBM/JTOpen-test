@@ -33,6 +33,7 @@ import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
 
 import test.JDReflectionUtil;
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 /**
@@ -155,7 +156,7 @@ public class PgmRunTestcase extends Testcase
 
     private final boolean isRunningNatively()
     {
-      if (onAS400_ /*&& isNative_ && isLocal_*/ && systemObject_.canUseNativeOptimizations())
+      if (JTOpenTestEnvironment.isOS400 /*&& isNative_ && isLocal_*/ && systemObject_.canUseNativeOptimizations())
       {
         return true;
       }

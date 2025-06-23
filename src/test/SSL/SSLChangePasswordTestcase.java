@@ -16,6 +16,7 @@ package test.SSL;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.SecureAS400;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -50,7 +51,7 @@ public class SSLChangePasswordTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_ && isNative_)
+                if ( JTOpenTestEnvironment.isOS400 && isNative_)
                 {
                     assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_INCORRECT);
                 }
@@ -84,7 +85,7 @@ public class SSLChangePasswordTestcase extends Testcase
             }
             catch (Exception e)
             {
-                if (onAS400_ && isNative_)
+                if (JTOpenTestEnvironment.isOS400 && isNative_)
                 {
                     assertExceptionIs(e, "AS400SecurityException", AS400SecurityException.PASSWORD_INCORRECT);
                 }
