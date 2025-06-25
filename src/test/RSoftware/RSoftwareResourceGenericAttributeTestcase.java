@@ -1373,7 +1373,7 @@ setAttributeValue() - Pass null for the attribute ID.
     {
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
-            u.setAttributeValue(null, new Integer(2));
+            u.setAttributeValue(null, Integer.valueOf(2));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1411,7 +1411,7 @@ setAttributeValue() - Pass an invalid attribute ID.
     {
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
-            u.setAttributeValue(u, new Integer(3));
+            u.setAttributeValue(u, Integer.valueOf(3));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1448,7 +1448,7 @@ setAttributeValue() - Pass a value which is the wrong type.
         /*
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
-            u.setAttributeValue(RSoftwareResource.LICENSED_INTERNAL_CODE_OPTIONS, new Integer(4));
+            u.setAttributeValue(RSoftwareResource.LICENSED_INTERNAL_CODE_OPTIONS, Integer.valueOf(4));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1469,7 +1469,7 @@ setAttributeValue() - Pass a value which is not one of the possible values.
         /*
         try {
             RSoftwareResource u = new RSoftwareResource(systemObject_, JC1ProductID_);
-            u.setAttributeValue(RSoftwareResource.OPTIMIZATION, new Integer(33));
+            u.setAttributeValue(RSoftwareResource.OPTIMIZATION, Integer.valueOf(33));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {

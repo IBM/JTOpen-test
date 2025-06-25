@@ -39,8 +39,6 @@ import test.JDConnectionTest;
 import test.JDHandleDump;
 import test.JDReflectionUtil;
 import test.JDTestcase;
-import test.JD.JDSecurityManagerDenyAbort;
-import test.JD.JDSecurityManagerDenySQLPermission;
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -216,7 +214,7 @@ Cleanup.
               Object[] args = new Object[2];
               argTypes[0] = Long.TYPE; 
               argTypes[1] = Class.forName("java.util.concurrent.TimeUnit");
-              args[0] = new Long(600); 
+              args[0] = Long.valueOf(600); 
               args[1] = timeUnitSeconds1; 
                 
               JDReflectionUtil.callMethod_V(thisExecutor, "awaitTermination",
@@ -390,7 +388,7 @@ Cleanup.
           Object[] args = new Object[2];
           argTypes[0] = Long.TYPE;
           argTypes[1] = Class.forName("java.util.concurrent.TimeUnit");
-          args[0] = new Long(600);
+          args[0] = Long.valueOf(600);
           args[1] = timeUnitSeconds1;
 
           JDReflectionUtil.callMethod_V(thisExecutor, "awaitTermination",
@@ -517,7 +515,7 @@ Cleanup.
              Object[] args = new Object[2];
              argTypes[0] = Long.TYPE; 
              argTypes[1] = Class.forName("java.util.concurrent.TimeUnit");
-             args[0] = new Long(600); 
+             args[0] = Long.valueOf(600); 
              args[1] = timeUnitSeconds11; 
                
              JDReflectionUtil.callMethod_V(thisExecutor, "awaitTermination",
@@ -565,7 +563,7 @@ Cleanup.
    }
    
    // Security manager has been deprecated.  Change tests to pass. 
-   public void testDenySecurityManager(SecurityManager newSecurityManager) {
+   public void testDenySecurityManager() {
      if (checkJdbc41() ) { 
            assertCondition (true);  
      }
@@ -578,8 +576,8 @@ Cleanup.
 
    public void Var008 () {
      // Create a security manager. 
-     SecurityManager newSecurityManager = new JDSecurityManagerDenyAbort(); 
-     testDenySecurityManager(newSecurityManager); 
+     
+     testDenySecurityManager(); 
    }
    
 
@@ -589,8 +587,7 @@ Cleanup.
     */ 
       public void Var009 () {
         // Create a security manager. 
-        SecurityManager newSecurityManager = new JDSecurityManagerDenySQLPermission(); 
-        testDenySecurityManager(newSecurityManager); 
+        testDenySecurityManager(); 
       }
       
 

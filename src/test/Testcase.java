@@ -209,6 +209,7 @@ public abstract class Testcase {
     }
   }
 
+  @SuppressWarnings("deprecation")
   protected static final Package TOOLBOX_PACKAGE = Package
       .getPackage("com.ibm.as400.access");
 
@@ -1768,7 +1769,7 @@ public abstract class Testcase {
         }
 
         Object[] parms = new Object[1];
-        parms[0] = new Integer(runMode_);
+        parms[0] = Integer.valueOf(runMode_);
 
         method.invoke(this, parms);
       }
@@ -2296,7 +2297,7 @@ public abstract class Testcase {
 
       if (methodName.substring(0, 3).equals("Var")) {
         ++variationCount;
-        number = new Integer(methodName.substring(3)).intValue();
+        number = Integer.valueOf(methodName.substring(3)).intValue();
         String stringNumber = "" + number;
         if (allVariations || variationsToRun_.contains(stringNumber)) {
           invokeVariation(number);

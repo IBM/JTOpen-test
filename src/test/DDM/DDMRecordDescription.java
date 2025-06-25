@@ -13,14 +13,34 @@
 
 package test.DDM;
 
-import java.io.*;
-
-import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.Vector;
 
-import com.ibm.as400.access.*;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Bin8;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400JDBCDriver;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.FieldDescription;
+import com.ibm.as400.access.IllegalPathNameException;
+import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
 
 import test.JDTestDriver;
 import test.Testcase;
@@ -509,10 +529,14 @@ public class DDMRecordDescription extends Testcase
       Class<?> simpleKeyClass = Class.forName("SIMPLEKEYFormat");
       Class<?> complexClass = Class.forName("ALLFLDSFormat");
       Class<?> complexKeyClass = Class.forName("ALLFLDSKEYFormat");
-      RecordFormat rf1 = (RecordFormat)simpleClass.newInstance();
-      RecordFormat rf2 = (RecordFormat)simpleKeyClass.newInstance();
-      RecordFormat rf3 = (RecordFormat)complexClass.newInstance();
-      RecordFormat rf4 = (RecordFormat)complexKeyClass.newInstance();
+      Constructor<?> simpleClassConstructor = simpleClass.getDeclaredConstructor(); 
+      Constructor<?> simpleKeyClassConstructor = simpleKeyClass.getDeclaredConstructor(); 
+      Constructor<?> complexClassConstructor = complexClass.getDeclaredConstructor(); 
+      Constructor<?> complexKeyClassConstructor = complexKeyClass.getDeclaredConstructor(); 
+      RecordFormat rf1 = (RecordFormat)simpleClassConstructor.newInstance();
+      RecordFormat rf2 = (RecordFormat)simpleKeyClassConstructor.newInstance();
+      RecordFormat rf3 = (RecordFormat)complexClassConstructor.newInstance();
+      RecordFormat rf4 = (RecordFormat)complexKeyClassConstructor.newInstance();
 
       SequentialFile s1 = new SequentialFile(systemObject_, simple);
       s1.setRecordFormat(rf1);
@@ -538,18 +562,18 @@ public class DDMRecordDescription extends Testcase
         for (int i = 1; i < 9; ++i)
         {
           r1.setField(0, "RECORD" + String.valueOf(i) + "   ");
-          r1.setField(1, new Integer(i));
+          r1.setField(1, Integer.valueOf(i));
           r1.setField(2, new BigDecimal(String.valueOf(i) + "." + String.valueOf(i)));
           s1.write(r1);
 
           r2.setField(0, "RECORD" + String.valueOf(i) + "   ");
-          r2.setField(1, new Integer(i));
+          r2.setField(1, Integer.valueOf(i));
           r2.setField(2, new BigDecimal(String.valueOf(i) + "." + String.valueOf(i)));
           k1.write(r2);
 
           r3.setField("VARCHAR", "RECORD" + String.valueOf(i));
-          r3.setField("BINARY2", new Short((short)i));
-          r3.setField("BINARY4", new Integer(i+10000));
+          r3.setField("BINARY2", Short.valueOf((short)i));
+          r3.setField("BINARY4", Integer.valueOf(i+10000));
           r3.setField("DATE", "01/01/97");
           r3.setField("TIME", "12.59.33");
           r3.setField("TIMESTAMP", "1997-01-01-12.59.33");
@@ -558,8 +582,8 @@ public class DDMRecordDescription extends Testcase
           s2.write(r3);
 
           r4.setField("CHARACTER", chars[i]);
-          r4.setField("BINARY2", new Short((short)(-(i))));
-          r4.setField("BINARY4", new Integer(i+10000));
+          r4.setField("BINARY2", Short.valueOf((short)(-(i))));
+          r4.setField("BINARY4", Integer.valueOf(i+10000));
           r4.setField("DATE", "01/0" + String.valueOf(i) + "/97");
           r4.setField("TIME", "12.59.33");
           r4.setField("TIMESTAMP", "1997-01-01-12.59.33.000000");
@@ -632,7 +656,7 @@ public class DDMRecordDescription extends Testcase
       sf.create(rf, "Testing AS400Bin8");
 
       Record rec = rf.getNewRecord();
-      rec.setField(0, new Long(1234567890));
+      rec.setField(0, Long.valueOf(1234567890));
       rec.setField(1, "THISISTEXT");
 
       sf.open(AS400File.READ_WRITE, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -779,7 +803,7 @@ public class DDMRecordDescription extends Testcase
         sb.append("\n for val00 got "+val00+" sb 0");
       }
 
-      Boolean expected = new Boolean(false);
+      Boolean expected = Boolean.valueOf(false);
       if (! expected.equals(val01)) {
         passed = false; 
         sb.append("\n for val01 got "+val01+" sb "+expected);
@@ -790,7 +814,7 @@ public class DDMRecordDescription extends Testcase
         sb.append("\n for val10 got "+val10+" sb 1");
       }
 
-      expected=new Boolean(true); 
+      expected=Boolean.valueOf(true); 
       if (! expected.equals(val11)) {
         passed = false; 
         sb.append("\n for val11 got "+val11+" sb "+expected);
@@ -1147,7 +1171,7 @@ sf.close();
         sb.append("\n for val00 got "+val00+" sb 0");
       }
 
-      Long expected = new Long(0);
+      Long expected = Long.valueOf(0);
       if (! expected.equals(val01)) {
         passed = false; 
         sb.append("\n for val01 got "+val01+" sb "+expected);
@@ -1159,7 +1183,7 @@ sf.close();
         sb.append("\n for val10 got "+val10+" sb 1");
       }
 
-      expected= new Long(123567890123L);
+      expected= Long.valueOf(123567890123L);
       if (! expected.equals(val11)) {
         passed = false; 
         sb.append("\n for val11 got "+val11+" sb "+expected);

@@ -15,7 +15,7 @@ package test.JD;
 
 import java.security.Permission;
 
-public class JDSecurityManagerAllowNetworkTimeout extends SecurityManager {
+public class JDSecurityManagerAllowNetworkTimeout  {
 
   // Allow all permissions
   public void checkPermission(Permission perm) {

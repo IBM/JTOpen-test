@@ -136,7 +136,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    **/
   public void Var002() {
     try {
-      cs.setObject(0, new Integer(7));
+      cs.setObject(0, Integer.valueOf(7));
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -148,7 +148,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    **/
   public void Var003() {
     try {
-      cs.setObject(100, new Integer(4));
+      cs.setObject(100, Integer.valueOf(4));
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -166,7 +166,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
       c = testDriver_.getConnection(baseURL_ + ";errors=full", userId_, encryptedPassword_);
       CallableStatement cs1 = c.prepareCall("CALL " + JDSetupProcedure.STP_CS0);
       cs1.execute();
-      cs1.setObject(1, new Integer(4));
+      cs1.setObject(1, Integer.valueOf(4));
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -187,7 +187,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
       CallableStatement cs1 = JDSetupProcedure.prepare(connection_,
           JDSetupProcedure.STP_CSTYPESOUT, supportedFeatures_); // @KK
       cs1.execute();
-      cs1.setObject(1, new Integer(4));
+      cs1.setObject(1, Integer.valueOf(4));
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -322,7 +322,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    **/
   public void Var010() {
     try {
-      cs.setObject(1, new Short((short) -33));
+      cs.setObject(1, Short.valueOf((short) -33));
       cs.execute();
       Integer p = (Integer) cs.getObject(1);
       assertCondition(p.intValue() == -33);
@@ -336,7 +336,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    **/
   public void Var011() {
     try {
-      cs.setObject(2, new Integer(-456));
+      cs.setObject(2, Integer.valueOf(-456));
       cs.execute();
       Integer p = (Integer) cs.getObject(2);
       assertCondition(p.intValue() == -456);
@@ -350,7 +350,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    **/
   public void Var012() {
     try {
-      cs.setObject(3, new Float(789.54f));
+      cs.setObject(3, Float.valueOf(789.54f));
       cs.execute();
       Float p = (Float) cs.getObject(3);
       assertCondition(p.floatValue() == 789.54f);
@@ -365,7 +365,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var013() {
     try {
 
-      cs.setObject(4, new Double(253.1027));
+      cs.setObject(4, Double.valueOf(253.1027));
       cs.execute();
       Double p = (Double) cs.getObject(4);
       assertCondition(p.doubleValue() == 253.1027);
@@ -379,7 +379,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    **/
   public void Var014() {
     try {
-      cs.setObject(5, new Double(-987.3434));
+      cs.setObject(5, Double.valueOf(-987.3434));
       cs.execute();
       Double p = (Double) cs.getObject(5);
       assertCondition(p.doubleValue() == -987.3434);
@@ -615,7 +615,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var028() {
     if (checkBigintSupport()) {
       try {
-        cs.setObject(22, new Long(-495959));
+        cs.setObject(22, Long.valueOf(-495959));
         cs.execute();
         Long p = (Long) cs.getObject(22);
         assertCondition(p.longValue() == -495959, " p = " + p);
@@ -661,7 +661,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var030() {
     if (checkNamedParametersSupport()) {
       try {
-        cs.setObject("P_SMALLINT", new Short((short) 123));
+        cs.setObject("P_SMALLINT", Short.valueOf((short) 123));
         cs.execute();
         Integer p = (Integer) cs.getObject("P_SMALLINT");
         assertCondition(p.intValue() == 123);
@@ -677,7 +677,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var031() {
     if (checkNamedParametersSupport()) {
       try {
-        cs.setObject("P_INTEGER", new Integer(-456));
+        cs.setObject("P_INTEGER", Integer.valueOf(-456));
         cs.execute();
         Integer p = (Integer) cs.getObject("P_INTEGER");
         assertCondition(p.intValue() == -456);
@@ -693,7 +693,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var032() {
     if (checkNamedParametersSupport()) {
       try {
-        cs.setObject("P_REAL", new Float(789.54f));
+        cs.setObject("P_REAL", Float.valueOf(789.54f));
         cs.execute();
         Float p = (Float) cs.getObject("P_REAL");
         assertCondition(p.floatValue() == 789.54f);
@@ -709,7 +709,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var033() {
     if (checkNamedParametersSupport()) {
       try {
-        cs.setObject("P_FLOAT", new Double(253.1027));
+        cs.setObject("P_FLOAT", Double.valueOf(253.1027));
         cs.execute();
         Double p = (Double) cs.getObject("P_FLOAT");
         assertCondition(p.doubleValue() == 253.1027);
@@ -725,7 +725,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var034() {
     if (checkNamedParametersSupport()) {
       try {
-        cs.setObject("P_DOUBLE", new Double(-987.3434));
+        cs.setObject("P_DOUBLE", Double.valueOf(-987.3434));
         cs.execute();
         Double p = (Double) cs.getObject("P_DOUBLE");
         assertCondition(p.doubleValue() == -987.3434);
@@ -962,7 +962,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
     if (checkNamedParametersSupport()) {
       if (checkBigintSupport()) {
         try {
-          cs.setObject("P_BIGINT", new Long(622345671));
+          cs.setObject("P_BIGINT", Long.valueOf(622345671));
           cs.execute();
           Long p = (Long) cs.getObject("P_BIGINT");
           assertCondition(p.longValue() == 622345671L, " p = " + p);
@@ -1111,7 +1111,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var050() {
     if (checkBooleanSupport()) {
       try {
-        cs.setObject(27, new Boolean(true));
+        cs.setObject(27, Boolean.valueOf(true));
         cs.execute();
         Boolean p = (Boolean) cs.getObject(27);
         assertCondition(p.booleanValue() == true, " p = " + p);
@@ -1127,7 +1127,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
   public void Var051() {
     if (checkBooleanSupport()) {
       try {
-        cs.setObject(27, new Boolean(false));
+        cs.setObject(27, Boolean.valueOf(false));
         cs.execute();
         Boolean p = (Boolean) cs.getObject(27);
         assertCondition(p.booleanValue() == false, " p = " + p);

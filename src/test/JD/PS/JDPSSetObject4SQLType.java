@@ -137,7 +137,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET
             + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 100, new Integer(4),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 100, Integer.valueOf(4),
             getSQLType(Types.INTEGER), 0);
         ps.close();
         failed("Didn't throw SQLException");
@@ -231,10 +231,10 @@ public class JDPSSetObject4SQLType extends JDTestcase {
         argClasses[2] = Class.forName("java.sql.SQLType");
         argClasses[3] = Integer.TYPE;
         Object[] args = new Object[4];
-        args[0] = new Integer(1);
+        args[0] = Integer.valueOf(1);
         args[1] = null;
         args[2] = getSQLType(Types.NUMERIC);
-        args[3] = new Integer(1);
+        args[3] = Integer.valueOf(1);
         JDReflectionUtil.callMethod_V(ps, "setObject", argClasses, args);
 
         ps.executeUpdate();
@@ -270,7 +270,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
            * PreparedStatement ps = connection_.prepareStatement (
            * "INSERT INTO " + JDPSTest.PSTEST_SET +
            * " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-           * JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Integer (4),
+           * JDReflectionUtil.callMethod_V(ps, "setObject", 1, Integer.valueOf(4),
            * 4848484, 0); failed ("Didn't throw SQLException");
            */
       } catch (Exception e) {
@@ -288,7 +288,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET
             + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Integer(4),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Integer.valueOf(4),
             getSQLType(Types.INTEGER), -1);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
@@ -306,7 +306,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
       try {
         PreparedStatement ps = connection_.prepareStatement("CALL "
             + JDSetupProcedure.STP_CSPARMS + " (?, ?, ?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 2, new Integer(3),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 2, Integer.valueOf(3),
             getSQLType(Types.INTEGER), 0);
         ps.close();
         failed("Didn't throw SQLException");
@@ -346,7 +346,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_SMALLINT) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setObject", 1,
-            new Short((short) -33), getSQLType(Types.SMALLINT), 0);
+            Short.valueOf((short) -33), getSQLType(Types.SMALLINT), 0);
         ps.executeUpdate();
         ps.close();
 
@@ -374,7 +374,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_SMALLINT) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setObject", 1,
-            new Short((short) 76), getSQLType(Types.SMALLINT), 2);
+            Short.valueOf((short) 76), getSQLType(Types.SMALLINT), 2);
         ps.executeUpdate();
         ps.close();
 
@@ -401,7 +401,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Integer(-595),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Integer.valueOf(-595),
             getSQLType(Types.INTEGER), 0);
         ps.executeUpdate();
         ps.close();
@@ -429,7 +429,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Integer(-595),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Integer.valueOf(-595),
             getSQLType(Types.INTEGER), 4);
         ps.executeUpdate();
         ps.close();
@@ -457,7 +457,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Float(-4.385),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Float.valueOf(-4.385f),
             getSQLType(Types.REAL), 0);
         ps.executeUpdate();
         ps.close();
@@ -485,7 +485,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Float(-4.3235),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Float.valueOf(-4.3235f),
             getSQLType(Types.REAL), 3);
         ps.executeUpdate();
         ps.close();
@@ -513,7 +513,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Float(-3.42),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Float.valueOf(-3.42f),
             getSQLType(Types.DOUBLE), 0);
         ps.executeUpdate();
         ps.close();
@@ -541,7 +541,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Float(3.43212),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Float.valueOf(3.43212f),
             getSQLType(Types.DOUBLE), 3);
         ps.executeUpdate();
         ps.close();
@@ -569,7 +569,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Double(-314.159),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Double.valueOf(-314.159),
             getSQLType(Types.DOUBLE), 0);
         ps.executeUpdate();
         ps.close();
@@ -597,7 +597,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
-        JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Double(3159.343),
+        JDReflectionUtil.callMethod_V(ps, "setObject", 1, Double.valueOf(3159.343),
             getSQLType(Types.DOUBLE), 2);
         ps.executeUpdate();
         ps.close();
@@ -1514,7 +1514,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
               + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
-          JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Integer(-92),
+          JDReflectionUtil.callMethod_V(ps, "setObject", 1, Integer.valueOf(-92),
               getSQLType(Types.INTEGER), 0);
           ps.executeUpdate();
           ps.close();
@@ -1544,7 +1544,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
               + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
-          JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Integer(12),
+          JDReflectionUtil.callMethod_V(ps, "setObject", 1, Integer.valueOf(12),
               getSQLType(Types.INTEGER), 2);
           ps.executeUpdate();
           ps.close();
@@ -1574,7 +1574,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
               + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
-          JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Long(5323495),
+          JDReflectionUtil.callMethod_V(ps, "setObject", 1, Long.valueOf(5323495),
               getSQLType(Types.BIGINT), 0);
           ps.executeUpdate();
           ps.close();
@@ -1604,7 +1604,7 @@ public class JDPSSetObject4SQLType extends JDTestcase {
 
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
               + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
-          JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Long(
+          JDReflectionUtil.callMethod_V(ps, "setObject", 1, Long.valueOf(
               -59322445665l), getSQLType(Types.BIGINT), 4);
           ps.executeUpdate();
           ps.close();
@@ -2507,13 +2507,13 @@ setParameterTest () - Set the specified parameter using an object.
 
   public void Var080() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Boolean(true), Types.BOOLEAN, 0, "1");
+      setParameterTest("C_BOOLEAN", Boolean.valueOf(true), Types.BOOLEAN, 0, "1");
     }
   }
 
   public void Var081() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Boolean(false),Types.BOOLEAN, 0, "0");
+      setParameterTest("C_BOOLEAN", Boolean.valueOf(false),Types.BOOLEAN, 0, "0");
     }
   }
 
@@ -2531,13 +2531,13 @@ setParameterTest () - Set the specified parameter using an object.
 
   public void Var084() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Integer(100),Types.BOOLEAN, 0, "1");
+      setParameterTest("C_BOOLEAN", Integer.valueOf(100),Types.BOOLEAN, 0, "1");
     }
   }
 
   public void Var085() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Integer(0),Types.BOOLEAN, 0, "0");
+      setParameterTest("C_BOOLEAN", Integer.valueOf(0),Types.BOOLEAN, 0, "0");
     }
   }
 

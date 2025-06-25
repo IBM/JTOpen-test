@@ -410,8 +410,8 @@ when the currentPage property is changed.
             splfv.addPropertyChangeListener (listener);
             splfv.setCurrentPage(3);
             assertCondition ((listener.lastEvent_.getPropertyName ().equals ("currentPage"))
-                    && (listener.lastEvent_.getOldValue ().equals (new Integer(1)))
-                    && (listener.lastEvent_.getNewValue ().equals (new Integer(3))));
+                    && (listener.lastEvent_.getOldValue ().equals (Integer.valueOf(1)))
+                    && (listener.lastEvent_.getNewValue ().equals (Integer.valueOf(3))));
 
             sf.delete();  // cleanup
         }
@@ -494,8 +494,8 @@ when the paperSize property is changed.
             splfv.setPaperSize(SpooledFileViewer.A3);
             splfv.setPaperSize(SpooledFileViewer.A5);
             assertCondition ((listener.lastEvent_.getPropertyName ().equals ("paperSize"))
-                    && (listener.lastEvent_.getOldValue ().equals (new Integer(SpooledFileViewer.A3)))
-                    && (listener.lastEvent_.getNewValue ().equals (new Integer(SpooledFileViewer.A5))));
+                    && (listener.lastEvent_.getOldValue ().equals (Integer.valueOf(SpooledFileViewer.A3)))
+                    && (listener.lastEvent_.getNewValue ().equals (Integer.valueOf(SpooledFileViewer.A5))));
             sf.delete();  // cleanup
         }
         catch (Exception e) {
@@ -520,8 +520,8 @@ when the viewingFidelity property is changed.
             splfv.setViewingFidelity(SpooledFileViewer.CONTENT_FIDELITY);
             splfv.setViewingFidelity(SpooledFileViewer.ABSOLUTE_FIDELITY);
             assertCondition ((listener.lastEvent_.getPropertyName ().equals ("viewingFidelity"))
-                    && (listener.lastEvent_.getOldValue ().equals(new Integer(SpooledFileViewer.CONTENT_FIDELITY)))
-                    && (listener.lastEvent_.getNewValue ().equals(new Integer(SpooledFileViewer.ABSOLUTE_FIDELITY))));
+                    && (listener.lastEvent_.getOldValue ().equals(Integer.valueOf(SpooledFileViewer.CONTENT_FIDELITY)))
+                    && (listener.lastEvent_.getNewValue ().equals(Integer.valueOf(SpooledFileViewer.ABSOLUTE_FIDELITY))));
             sf.delete();  // cleanup
         }
         catch (Exception e) {
@@ -621,8 +621,8 @@ when the currentPage property is changed.
             splfv.addVetoableChangeListener (listener);
             splfv.setCurrentPage(3);
             assertCondition ((listener.lastEvent_.getPropertyName ().equals ("currentPage"))
-                    && (listener.lastEvent_.getOldValue ().equals (new Integer(1)))
-                    && (listener.lastEvent_.getNewValue ().equals (new Integer(3))));
+                    && (listener.lastEvent_.getOldValue ().equals (Integer.valueOf(1)))
+                    && (listener.lastEvent_.getNewValue ().equals (Integer.valueOf(3))));
 
             sf.delete();  // cleanup
         }
@@ -706,8 +706,8 @@ when the paperSize property is changed.
             splfv.setPaperSize(SpooledFileViewer.A3);
             splfv.setPaperSize(SpooledFileViewer.A5);
             assertCondition ((listener.lastEvent_.getPropertyName ().equals ("paperSize"))
-                    && (listener.lastEvent_.getOldValue ().equals (new Integer(SpooledFileViewer.A3)))
-                    && (listener.lastEvent_.getNewValue ().equals (new Integer(SpooledFileViewer.A5))));
+                    && (listener.lastEvent_.getOldValue ().equals (Integer.valueOf(SpooledFileViewer.A3)))
+                    && (listener.lastEvent_.getNewValue ().equals (Integer.valueOf(SpooledFileViewer.A5))));
 
             sf.delete();  // cleanup
         }
@@ -733,8 +733,8 @@ when the viewingFidelity property is changed.
             splfv.setViewingFidelity(SpooledFileViewer.CONTENT_FIDELITY);
             splfv.setViewingFidelity(SpooledFileViewer.ABSOLUTE_FIDELITY);
             assertCondition ((listener.lastEvent_.getPropertyName ().equals ("viewingFidelity"))
-                    && (listener.lastEvent_.getOldValue ().equals (new Integer(SpooledFileViewer.CONTENT_FIDELITY)))
-                    && (listener.lastEvent_.getNewValue ().equals (new Integer(SpooledFileViewer.ABSOLUTE_FIDELITY))));
+                    && (listener.lastEvent_.getOldValue ().equals (Integer.valueOf(SpooledFileViewer.CONTENT_FIDELITY)))
+                    && (listener.lastEvent_.getNewValue ().equals (Integer.valueOf(SpooledFileViewer.ABSOLUTE_FIDELITY))));
 
             sf.delete();  // cleanup
         }

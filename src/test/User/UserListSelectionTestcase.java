@@ -478,7 +478,7 @@ public class UserListSelectionTestcase extends Testcase
         try
         {
             RUserList u = new RUserList(pwrSys_);
-            u.setSelectionValue(null, new Integer(2));
+            u.setSelectionValue(null, Integer.valueOf(2));
             failed("Didn't throw exception");
         }
         catch (Exception e)
@@ -543,7 +543,7 @@ public class UserListSelectionTestcase extends Testcase
         try
         {
             RUserList u = new RUserList(pwrSys_);
-            u.setSelectionValue(RUserList.GROUP_PROFILE, new Integer(4));
+            u.setSelectionValue(RUserList.GROUP_PROFILE, Integer.valueOf(4));
             failed("Didn't throw exception");
         }
         catch (Exception e)

@@ -1805,7 +1805,7 @@ public class SysvalGetSetTestcase extends Testcase
           return;
         }
         SystemValue sv = new SystemValue(pwrSys_, "qchridctl");
-        sv.setValue(new Integer(1));
+        sv.setValue(Integer.valueOf(1));
         failed("No exception.");
       }
       catch(Exception e)
@@ -1829,7 +1829,7 @@ public class SysvalGetSetTestcase extends Testcase
       try
       {
         SystemValue sv = new SystemValue(pwrSys_, "qabnormsw"); // is a readonly value
-        sv.setValue(new Boolean(true));
+        sv.setValue(Boolean.valueOf(true));
         failed("No exception.");
       }
       catch(Exception e)

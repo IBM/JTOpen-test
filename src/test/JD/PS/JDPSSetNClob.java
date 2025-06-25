@@ -219,7 +219,7 @@ public class JDPSSetNClob extends JDTestcase {
           argClasses[1] = Class.forName("com.ibm.db2.jdbc.app.NClob");
         }
         Object[] args = new Object[2];
-        args[0] = new Integer(1);
+        args[0] = Integer.valueOf(1);
         args[1] = null;
 
         JDReflectionUtil.callMethod_V(ps, "setNClob", argClasses, args);

@@ -163,7 +163,7 @@ class NLSMessageSandbox extends MessageSandbox {
       // then add the parm to the parm list.
 
       AS400Bin4 bin4 = new AS400Bin4();
-      Integer iMsgDataLength = new Integer(32);
+      Integer iMsgDataLength = Integer.valueOf(32);
       byte[] msgDataLength = bin4.toBytes(iMsgDataLength);
       parmlist[3] = new ProgramParameter(msgDataLength);
 
@@ -192,7 +192,7 @@ class NLSMessageSandbox extends MessageSandbox {
       // parameter. Sets its value to 1, convert it to AS/400 format,
       // then add the parm to the parm list.
 
-      Integer iNumMsgQueues = new Integer(1);
+      Integer iNumMsgQueues = Integer.valueOf(1);
       byte[] numMsgQueues = bin4.toBytes(iNumMsgQueues);
       parmlist[6] = new ProgramParameter(numMsgQueues);
 

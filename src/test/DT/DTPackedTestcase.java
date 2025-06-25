@@ -383,7 +383,7 @@ public class DTPackedTestcase extends Testcase
         AS400PackedDecimal conv = new AS400PackedDecimal(5,3);
         try
         {
-            byte[] ret = conv.toBytes(new Float(0.0f));
+            byte[] ret = conv.toBytes(Float.valueOf(0.0f));
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -806,7 +806,7 @@ public class DTPackedTestcase extends Testcase
         AS400PackedDecimal conv = new AS400PackedDecimal(5,3);
         try
         {
-            int ret = conv.toBytes(new Float(0.0f), new byte[10]);
+            int ret = conv.toBytes(Float.valueOf(0.0f), new byte[10]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -1134,7 +1134,7 @@ public class DTPackedTestcase extends Testcase
         AS400PackedDecimal conv = new AS400PackedDecimal(5,3);
         try
         {
-            int ret = conv.toBytes(new Float(0.0f), new byte[10], 0);
+            int ret = conv.toBytes(Float.valueOf(0.0f), new byte[10], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)

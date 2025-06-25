@@ -782,7 +782,7 @@ public class NPLDRWTestcase extends Testcase
 
           // check the encoding value
           String strEncode = ldw.getEncoding();
-          Integer intCcsid = new Integer(ccsid_);
+          Integer intCcsid = Integer.valueOf(ccsid_);
           
           if (strEncode.endsWith(intCcsid.toString()))
           {
@@ -845,7 +845,7 @@ public class NPLDRWTestcase extends Testcase
           ldw.writeRecord(record);
 
           // check the encoding value
-          Integer intCcsid = new Integer(ccsid_);
+          Integer intCcsid = Integer.valueOf(ccsid_);
           String strEncode = ldw.getEncoding();
           String strEncode2 = "Cp0"+ intCcsid.toString();
           
@@ -911,7 +911,7 @@ public class NPLDRWTestcase extends Testcase
           ldw.writeRecord(record);
 
           // check the encoding value
-          Integer intCcsid = new Integer(ccsid_);
+          Integer intCcsid = Integer.valueOf(ccsid_);
           String strEncode = ldw.getEncoding();
           String strEncode2 = "Cp0"+ intCcsid.toString();
           
@@ -977,7 +977,7 @@ public class NPLDRWTestcase extends Testcase
           ldw.writeRecord(record);
 
           // check the encoding value
-          Integer intCcsid = new Integer(ccsid_);
+          Integer intCcsid = Integer.valueOf(ccsid_);
           String strEncode = ldw.getEncoding();
           String strEncode2 = "Cp0"+ intCcsid.toString();
           
@@ -1042,7 +1042,7 @@ public class NPLDRWTestcase extends Testcase
           ldw.writeRecord(record);
 
           // check the encoding value
-          Integer intCcsid = new Integer(ccsid_);
+          Integer intCcsid = Integer.valueOf(ccsid_);
           String strEncode = ldw.getEncoding();
           String strEncode2 = "Cp0"+ intCcsid.toString();
           
@@ -1107,7 +1107,7 @@ public class NPLDRWTestcase extends Testcase
           ldw.writeRecord(record);
 
           // check the encoding value
-          Integer intCcsid = new Integer(ccsid_);
+          Integer intCcsid = Integer.valueOf(ccsid_);
           String strEncode = ldw.getEncoding();
           String strEncode2 = "Cp0"+ intCcsid.toString();
           

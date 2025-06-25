@@ -3093,7 +3093,7 @@ Ensure that log(DIAGNOSTIC, String, boolean) logs a message when diagnostic trac
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -3129,7 +3129,7 @@ Ensure that log(DIAGNOSTIC, String, boolean) logs a message when all tracing is 
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -3165,7 +3165,7 @@ Ensure that log(ERROR, String, boolean) logs a message when error tracing is ena
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -3201,7 +3201,7 @@ Ensure that log(ERROR, String, boolean) logs a message when all tracing is enabl
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -3237,7 +3237,7 @@ Ensure that log(INFORMATION, String, boolean) logs a message when information tr
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -3273,7 +3273,7 @@ Ensure that log(INFORMATION, String, boolean) logs a message when all tracing is
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -3309,7 +3309,7 @@ Ensure that log(WARNING, String, boolean) logs a message when warning tracing is
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -3345,7 +3345,7 @@ Ensure that log(WARNING, String, boolean) logs a message when all tracing is ena
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -5549,7 +5549,7 @@ Ensure that setFileName(String) appends to an existing file.
       {
         data += data2;
       }
-      assertCondition(data.indexOf(msg) != -1 && data.indexOf(new Boolean(value).toString()) != -1);
+      assertCondition(data.indexOf(msg) != -1 && data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -6466,7 +6466,7 @@ Ensure that log(PROXY, String, boolean) logs a message when proxy tracing is ena
         data += data2;
       }
       assertCondition(data.indexOf(msg) != -1 &&
-             data.indexOf(new Boolean(value).toString()) != -1);
+             data.indexOf(Boolean.valueOf(value).toString()) != -1);
       file.close();
     }
     catch (Exception e)
@@ -8622,7 +8622,7 @@ Ensure that Trace.ALL and Trace.PROXY agree.
         data += data2;
       }
       assertCondition(data.indexOf(message) != -1 &&
-             data.indexOf(new Boolean(number).toString()) != -1);
+             data.indexOf(Boolean.valueOf(number).toString()) != -1);
       file.close();
     }
     catch (Exception e)

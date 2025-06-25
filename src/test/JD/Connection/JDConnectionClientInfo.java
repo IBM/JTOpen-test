@@ -343,17 +343,17 @@ Performs cleanup needed after running variations.
                 DatabaseMetaData md = conn.getMetaData();
                 int clientInfoCount = 5;
                 ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_O(md, "getClientInfoProperties");
-                Object toolboxValues[][] =  { { "ApplicationName", new Integer(255), "", "The name of the application currently utilizing the connection." }, 
-                        { "ClientUser", new Integer(255), "", "The name of the user that the application using the connection is performing work for.  This may not be the same as the user name that was used in establishing the connection."},
-                        { "ClientHostname", new Integer(255), "", "The hostname of the system the application using the connection is running on."}, 
-                        { "ClientAccounting", new Integer(255), "", "Accounting information."},
-                        { "ClientProgramID", new Integer(255), "", "Program identification information."}};
+                Object toolboxValues[][] =  { { "ApplicationName", Integer.valueOf(255), "", "The name of the application currently utilizing the connection." }, 
+                        { "ClientUser", Integer.valueOf(255), "", "The name of the user that the application using the connection is performing work for.  This may not be the same as the user name that was used in establishing the connection."},
+                        { "ClientHostname", Integer.valueOf(255), "", "The hostname of the system the application using the connection is running on."}, 
+                        { "ClientAccounting", Integer.valueOf(255), "", "Accounting information."},
+                        { "ClientProgramID", Integer.valueOf(255), "", "Program identification information."}};
 
-                Object nativeValues55[][] =  { { "ApplicationName", new Integer(255), "", "The name of the application currently utilizing the connection.  This value is stored in the CLIENT_APPLNAME register." }, 
-                        { "ClientUser", new Integer(255), "", "The name of the user that the application using the connection is performing work for.  This may not be the same as the user name that was used in establishing the connection.  This value is stored in the CLIENT_USERID register."},
-                        { "ClientHostname", new Integer(255), "", "The hostname of the computer the application using the connection is running on.  This value is stored in the CLIENT_WRKSTNNAME register."},
-                        { "ClientAccounting", new Integer(255), "", "The accounting string for the client.  This value is stored in the CLIENT_ACCTNG register."},
-                        { "ClientProgramID", new Integer(255), "", "Program identification information."}};
+                Object nativeValues55[][] =  { { "ApplicationName", Integer.valueOf(255), "", "The name of the application currently utilizing the connection.  This value is stored in the CLIENT_APPLNAME register." }, 
+                        { "ClientUser", Integer.valueOf(255), "", "The name of the user that the application using the connection is performing work for.  This may not be the same as the user name that was used in establishing the connection.  This value is stored in the CLIENT_USERID register."},
+                        { "ClientHostname", Integer.valueOf(255), "", "The hostname of the computer the application using the connection is running on.  This value is stored in the CLIENT_WRKSTNNAME register."},
+                        { "ClientAccounting", Integer.valueOf(255), "", "The accounting string for the client.  This value is stored in the CLIENT_ACCTNG register."},
+                        { "ClientProgramID", Integer.valueOf(255), "", "Program identification information."}};
 
                 Object clientValues[][] = null;
                 if (isToolboxDriver()) 

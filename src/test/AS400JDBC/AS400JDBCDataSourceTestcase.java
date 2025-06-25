@@ -3006,7 +3006,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
             {
                 insert.setInt(1, 1000+i);
                 insert.setString(2, "Customer " + i);
-                insert.setDouble(3, new Double("100.01").doubleValue());
+                insert.setDouble(3, Double.valueOf("100.01").doubleValue());
                 insert.executeUpdate();
             }
             succeeded();

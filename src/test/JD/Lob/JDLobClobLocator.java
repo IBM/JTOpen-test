@@ -1472,7 +1472,7 @@ public class JDLobClobLocator extends JDTestcase {
           argClasses[1] = Long.TYPE;
           Object[] args = new Object[2];
           args[0] = null;
-          args[1] = new Long(1);
+          args[1] = Long.valueOf(1);
           long v = JDReflectionUtil.callMethod_L(clob, "position", argClasses, args);
 
           failed("Didn't throw SQLException" + v);
@@ -5195,7 +5195,7 @@ public class JDLobClobLocator extends JDTestcase {
           argClasses[1] = Long.TYPE;
           Object[] args = new Object[2];
           args[0] = null;
-          args[1] = new Long(1);
+          args[1] = Long.valueOf(1);
           long v = JDReflectionUtil.callMethod_L(clob, "position", argClasses, args);
 
           failed("Didn't throw SQLException " + v + DBCLOB_ADDED);

@@ -13,13 +13,27 @@
 
 package test.DDM;
 
-import com.ibm.as400.access.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.util.Arrays;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.FieldDescription;
+import com.ibm.as400.access.IllegalPathNameException;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
+import com.ibm.as400.access.SystemValue;
 
 import test.Testcase;
-
-import java.io.*;
-import java.io.ByteArrayOutputStream;
-import java.util.*;
 
 
 
@@ -1498,15 +1512,15 @@ public class DDMRegressionTestcase extends Testcase
           Vector<Integer> v = new Vector<Integer>(locks.length);
           for (int i = 0; i < locks.length; i++)
           {
-            v.addElement(new Integer(locks[i]));
+            v.addElement(Integer.valueOf(locks[i]));
           }
           assertCondition(locks.length == 6 &&
-                 v.contains(new Integer(AS400File.READ_EXCLUSIVE_LOCK)) &&
-                 v.contains(new Integer(AS400File.READ_ALLOW_SHARED_READ_LOCK)) &&
-                 v.contains(new Integer(AS400File.READ_ALLOW_SHARED_WRITE_LOCK)) &&
-                 v.contains(new Integer(AS400File.WRITE_EXCLUSIVE_LOCK)) &&
-                 v.contains(new Integer(AS400File.WRITE_ALLOW_SHARED_READ_LOCK)) &&
-                 v.contains(new Integer(AS400File.WRITE_ALLOW_SHARED_WRITE_LOCK)));
+                 v.contains(Integer.valueOf(AS400File.READ_EXCLUSIVE_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.READ_ALLOW_SHARED_READ_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.READ_ALLOW_SHARED_WRITE_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.WRITE_EXCLUSIVE_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.WRITE_ALLOW_SHARED_READ_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.WRITE_ALLOW_SHARED_WRITE_LOCK)));
         }
         else
         {

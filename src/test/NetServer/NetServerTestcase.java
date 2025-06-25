@@ -1045,7 +1045,7 @@ public class NetServerTestcase extends Testcase
         try 
         {
             NetServer ns = new NetServer(pwrSys_);   //@A1C
-            ns.setAttributeValue(NetServer.ALLOW_SYSTEM_NAME_PENDING, new Boolean(true));
+            ns.setAttributeValue(NetServer.ALLOW_SYSTEM_NAME_PENDING, Boolean.valueOf(true));
             ns.commitAttributeChanges();
             
             if (((Boolean)ns.getAttributeValue(NetServer.ALLOW_SYSTEM_NAME_PENDING)).booleanValue() != true)
@@ -1089,7 +1089,7 @@ public class NetServerTestcase extends Testcase
         try 
         {
             NetServer ns = new NetServer(systemObject_);
-            ns.setAttributeValue(NetServer.AUTOSTART, new Boolean(true));
+            ns.setAttributeValue(NetServer.AUTOSTART, Boolean.valueOf(true));
             ns.commitAttributeChanges();
             
             if (((Boolean)ns.getAttributeValue(NetServer.AUTOSTART)).booleanValue() != true)
@@ -1132,7 +1132,7 @@ public class NetServerTestcase extends Testcase
         try 
         {
             NetServer ns = new NetServer(pwrSys_);   //@A1C
-            ns.setAttributeValue(NetServer.BROWSING_INTERVAL_PENDING, new Integer(20000));
+            ns.setAttributeValue(NetServer.BROWSING_INTERVAL_PENDING, Integer.valueOf(20000));
             ns.commitAttributeChanges();
             
             if (((Integer)ns.getAttributeValue(NetServer.BROWSING_INTERVAL_PENDING)).intValue() != 20000)
@@ -1140,7 +1140,7 @@ public class NetServerTestcase extends Testcase
             else
                succeeded();
 
-            ns.setAttributeValue(NetServer.BROWSING_INTERVAL_PENDING, new Integer(0));
+            ns.setAttributeValue(NetServer.BROWSING_INTERVAL_PENDING, Integer.valueOf(0));
             ns.commitAttributeChanges();
         }
         catch (Exception e) 
@@ -1158,7 +1158,7 @@ public class NetServerTestcase extends Testcase
         try 
         {
             NetServer ns = new NetServer(pwrSys_);   //@A1C
-            ns.setAttributeValue(NetServer.CCSID_PENDING, new Integer(424));
+            ns.setAttributeValue(NetServer.CCSID_PENDING, Integer.valueOf(424));
             ns.commitAttributeChanges();
             
             if (((Integer)ns.getAttributeValue(NetServer.CCSID_PENDING)).intValue() != 424)
@@ -1166,7 +1166,7 @@ public class NetServerTestcase extends Testcase
             else
                succeeded();
 
-            ns.setAttributeValue(NetServer.CCSID_PENDING, new Integer(0));
+            ns.setAttributeValue(NetServer.CCSID_PENDING, Integer.valueOf(0));
             ns.commitAttributeChanges();
         }
         catch (Exception e) 
@@ -1359,7 +1359,7 @@ public class NetServerTestcase extends Testcase
         {
             NetServer ns = new NetServer(pwrSys_);   //@A1C
             Integer orig = (Integer)ns.getAttributeValue(NetServer.IDLE_TIMEOUT_PENDING);
-            ns.setAttributeValue(NetServer.IDLE_TIMEOUT_PENDING, new Integer(20000));
+            ns.setAttributeValue(NetServer.IDLE_TIMEOUT_PENDING, Integer.valueOf(20000));
             ns.commitAttributeChanges();
             
             if (((Integer)ns.getAttributeValue(NetServer.IDLE_TIMEOUT_PENDING)).intValue() == 20000)
@@ -1409,9 +1409,9 @@ public class NetServerTestcase extends Testcase
             NetServer ns = new NetServer(pwrSys_);   //@A1C
             Boolean orig = (Boolean)ns.getAttributeValue(NetServer.LOGON_SUPPORT_PENDING);
             if (orig.booleanValue() == true)
-               ns.setAttributeValue(NetServer.LOGON_SUPPORT_PENDING, new Boolean(false));
+               ns.setAttributeValue(NetServer.LOGON_SUPPORT_PENDING, Boolean.valueOf(false));
             else
-               ns.setAttributeValue(NetServer.LOGON_SUPPORT_PENDING, new Boolean(true));
+               ns.setAttributeValue(NetServer.LOGON_SUPPORT_PENDING, Boolean.valueOf(true));
 
             ns.commitAttributeChanges();
             
@@ -1522,9 +1522,9 @@ public class NetServerTestcase extends Testcase
             Boolean orig = (Boolean)ns.getAttributeValue(NetServer.WINS_ENABLEMENT_PENDING);
             
             if (orig.booleanValue() == true)
-               ns.setAttributeValue(NetServer.WINS_ENABLEMENT_PENDING, new Boolean(false));
+               ns.setAttributeValue(NetServer.WINS_ENABLEMENT_PENDING, Boolean.valueOf(false));
             else
-               ns.setAttributeValue(NetServer.WINS_ENABLEMENT_PENDING, new Boolean(true));
+               ns.setAttributeValue(NetServer.WINS_ENABLEMENT_PENDING, Boolean.valueOf(true));
 
             ns.commitAttributeChanges();
             
@@ -1765,8 +1765,8 @@ public class NetServerTestcase extends Testcase
       NetServer ns = null;
       Integer orig = null;
       Integer newVal = null;;
-      final Integer AUTH_PWD      = new Integer(0);  // encrypted passwords
-      final Integer AUTH_KERBEROS = new Integer(1);  // Kerberos v5 tokens
+      final Integer AUTH_PWD      = Integer.valueOf(0);  // encrypted passwords
+      final Integer AUTH_KERBEROS = Integer.valueOf(1);  // Kerberos v5 tokens
       try 
       {
         if (systemObject_.getVersion() < 5 ||

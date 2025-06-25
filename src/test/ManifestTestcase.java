@@ -192,6 +192,7 @@ public class ManifestTestcase extends Testcase
 
 
   // Helper to compare package information
+  @SuppressWarnings("deprecation")
   private void checkPackageInfo(String name)
   {
     try

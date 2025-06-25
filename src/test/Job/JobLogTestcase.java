@@ -2473,7 +2473,7 @@ public class JobLogTestcase extends Testcase
         }
         try
         {
-            Integer intObject=new Integer(132);
+            Integer intObject=Integer.valueOf(132);
             AS400Bin4 bin4Converter = new AS400Bin4();
             byte[] subst=bin4Converter.toBytes(intObject);
             String id = "CBE7001";
@@ -2500,7 +2500,7 @@ public class JobLogTestcase extends Testcase
         }
         try
         {
-            Short shortObject=new Short((short)15);
+            Short shortObject=Short.valueOf((short)15);
             AS400Bin2 bin2Converter = new AS400Bin2();
             byte[] subst=bin2Converter.toBytes(shortObject);
             String id = "CAE0027";
@@ -2618,34 +2618,34 @@ public class JobLogTestcase extends Testcase
 
 	// Add all tests that need to run. This is the default test so add all
 	// tests and set to 0
-        key.add( new Integer(101) );key.add( new Integer(0) ); 
-        key.add( new Integer(201) );key.add( new Integer(0) ); 
-        key.add( new Integer(301) );key.add( new Integer(0) ); 
-        key.add( new Integer(302) );key.add( new Integer(0) ); 
-        key.add( new Integer(401) );key.add( new Integer(0) ); 
-        key.add( new Integer(402) );key.add( new Integer(0) ); 
-        key.add( new Integer(403) );key.add( new Integer(0) ); 
-        key.add( new Integer(404) );key.add( new Integer(0) ); 
-        key.add( new Integer(501) );key.add( new Integer(0) ); 
-        key.add( new Integer(602) );key.add( new Integer(0) ); 
-        key.add( new Integer(603) );key.add( new Integer(0) ); 
-        key.add( new Integer(604) );key.add( new Integer(0) ); 
-        key.add( new Integer(605) );key.add( new Integer(0) ); 
-        key.add( new Integer(606) );key.add( new Integer(0) ); 
-        key.add( new Integer(607) );key.add( new Integer(0) ); 
-        key.add( new Integer(702) );key.add( new Integer(0) ); 
-        key.add( new Integer(703) );key.add( new Integer(0) ); 
-        key.add( new Integer(704) );key.add( new Integer(0) ); 
-        key.add( new Integer(705) );key.add( new Integer(0) ); 
-        key.add( new Integer(706) );key.add( new Integer(0) ); 
-        key.add( new Integer(801) );key.add( new Integer(0) ); 
-        key.add( new Integer(1001) );key.add( new Integer(0) ); 
-        key.add( new Integer(1101) );key.add( new Integer(0) ); 
-        key.add( new Integer(1201) );key.add( new Integer(0) ); 
-        key.add( new Integer(1301) );key.add( new Integer(0) ); 
-        key.add( new Integer(1302) );key.add( new Integer(0) ); 
-        key.add( new Integer(1303) );key.add( new Integer(0) ); 
-        key.add( new Integer(1304) );key.add( new Integer(0) ); 
+        key.add( Integer.valueOf(101) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(201) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(301) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(302) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(401) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(402) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(403) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(404) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(501) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(602) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(603) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(604) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(605) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(606) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(607) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(702) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(703) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(704) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(705) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(706) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(801) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(1001) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(1101) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(1201) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(1301) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(1302) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(1303) );key.add( Integer.valueOf(0) ); 
+        key.add( Integer.valueOf(1304) );key.add( Integer.valueOf(0) ); 
                 
         String[] job = startCLJob();
         if (job == null)
@@ -2733,34 +2733,34 @@ public class JobLogTestcase extends Testcase
 	            
 	            // Keys to the tests to run 
                     Vector<Integer> key = new Vector<Integer>( 2 );
-		    key.add( new Integer(101) );key.add( new Integer(1) ); 
-		    key.add( new Integer(201) );key.add( new Integer(1) ); 
-		    key.add( new Integer(301) );key.add( new Integer(1) ); 
-		    key.add( new Integer(302) );key.add( new Integer(1) ); 
-		    key.add( new Integer(401) );key.add( new Integer(1) ); 
-		    key.add( new Integer(402) );key.add( new Integer(1) ); 
-		    key.add( new Integer(403) );key.add( new Integer(1) ); 
-		    key.add( new Integer(404) );key.add( new Integer(1) ); 
-		    key.add( new Integer(501) );key.add( new Integer(1) ); 
-		    key.add( new Integer(602) );key.add( new Integer(1) ); 
-		    key.add( new Integer(603) );key.add( new Integer(1) ); 
-		    key.add( new Integer(604) );key.add( new Integer(1) ); 
-		    key.add( new Integer(605) );key.add( new Integer(1) ); 
-		    key.add( new Integer(606) );key.add( new Integer(1) ); 
-		    key.add( new Integer(607) );key.add( new Integer(1) ); 
-		    key.add( new Integer(702) );key.add( new Integer(1) ); 
-		    key.add( new Integer(703) );key.add( new Integer(1) ); 
-		    key.add( new Integer(704) );key.add( new Integer(1) ); 
-		    key.add( new Integer(705) );key.add( new Integer(1) ); 
-		    key.add( new Integer(706) );key.add( new Integer(1) ); 
-		    key.add( new Integer(801) );key.add( new Integer(1) ); 
-		    key.add( new Integer(1001) );key.add( new Integer(1) ); 
-		    key.add( new Integer(1101) );key.add( new Integer(1) ); 
-		    key.add( new Integer(1201) );key.add( new Integer(1) ); 
-		    key.add( new Integer(1301) );key.add( new Integer(1) ); 
-		    key.add( new Integer(1302) );key.add( new Integer(1) ); 
-		    key.add( new Integer(1303) );key.add( new Integer(1) ); 
-		    key.add( new Integer(1304) );key.add( new Integer(1) ); 
+		    key.add( Integer.valueOf(101) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(201) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(301) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(302) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(401) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(402) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(403) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(404) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(501) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(602) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(603) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(604) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(605) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(606) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(607) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(702) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(703) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(704) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(705) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(706) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(801) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(1001) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(1101) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(1201) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(1301) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(1302) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(1303) );key.add( Integer.valueOf(1) ); 
+		    key.add( Integer.valueOf(1304) );key.add( Integer.valueOf(1) ); 
                 
 		    Enumeration<?> e = jq.getMessages();
                     
@@ -2828,7 +2828,7 @@ public class JobLogTestcase extends Testcase
 	    j.clearAttributesToRetrieve();
 	    j.addAttributeToRetrieve( JobLog.REPLACEMENT_DATA );  //201 = 7
             Vector<Integer> key = new Vector<Integer>( 2 );
-	    key.add( new Integer(201) );key.add( new Integer(1) ); 
+	    key.add( Integer.valueOf(201) );key.add( Integer.valueOf(1) ); 
             j.getMessages();
 	    succeeded();
         }
@@ -2885,35 +2885,35 @@ public class JobLogTestcase extends Testcase
             
 	    Vector<Integer> key = new Vector<Integer>( 2 );
 	    
-	    key.add( new Integer(201) );key.add( new Integer(1) ); 
+	    key.add( Integer.valueOf(201) );key.add( Integer.valueOf(1) ); 
 
 	    // make sure everything else is empty 
-            key.add( new Integer(101) );key.add( new Integer(0) ); 
-	    key.add( new Integer(301) );key.add( new Integer(0) ); 
-            key.add( new Integer(302) );key.add( new Integer(1) ); 
-	    key.add( new Integer(401) );key.add( new Integer(0) ); 
-	    key.add( new Integer(402) );key.add( new Integer(0) ); 
-	    key.add( new Integer(403) );key.add( new Integer(0) ); 
-	    key.add( new Integer(404) );key.add( new Integer(0) ); 
-	    key.add( new Integer(602) );key.add( new Integer(0) ); 
-	    key.add( new Integer(603) );key.add( new Integer(0) ); 
-	    key.add( new Integer(604) );key.add( new Integer(0) ); 
-	    key.add( new Integer(605) );key.add( new Integer(0) ); 
-	    key.add( new Integer(606) );key.add( new Integer(0) ); 
-	    key.add( new Integer(607) );key.add( new Integer(0) ); 
-	    key.add( new Integer(702) );key.add( new Integer(0) ); 
-	    key.add( new Integer(703) );key.add( new Integer(0) ); 
-	    key.add( new Integer(704) );key.add( new Integer(0) ); 
-	    key.add( new Integer(705) );key.add( new Integer(0) ); 
-	    key.add( new Integer(706) );key.add( new Integer(0) ); 
-            key.add( new Integer(801) );key.add( new Integer(1) ); 
-	    key.add( new Integer(1201) );key.add( new Integer(0) ); 
-	    key.add( new Integer(1001) );key.add( new Integer(1) ); 
-	    key.add( new Integer(1101) );key.add( new Integer(1) ); 
-	    key.add( new Integer(1301) );key.add( new Integer(0) ); 
-	    key.add( new Integer(1302) );key.add( new Integer(0) ); 
-	    key.add( new Integer(1303) );key.add( new Integer(0) ); 
-	    key.add( new Integer(1304) );key.add( new Integer(0) ); 
+            key.add( Integer.valueOf(101) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(301) );key.add( Integer.valueOf(0) ); 
+            key.add( Integer.valueOf(302) );key.add( Integer.valueOf(1) ); 
+	    key.add( Integer.valueOf(401) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(402) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(403) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(404) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(602) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(603) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(604) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(605) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(606) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(607) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(702) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(703) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(704) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(705) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(706) );key.add( Integer.valueOf(0) ); 
+            key.add( Integer.valueOf(801) );key.add( Integer.valueOf(1) ); 
+	    key.add( Integer.valueOf(1201) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(1001) );key.add( Integer.valueOf(1) ); 
+	    key.add( Integer.valueOf(1101) );key.add( Integer.valueOf(1) ); 
+	    key.add( Integer.valueOf(1301) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(1302) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(1303) );key.add( Integer.valueOf(0) ); 
+	    key.add( Integer.valueOf(1304) );key.add( Integer.valueOf(0) ); 
             j.getMessages();
 	    succeeded();
         }

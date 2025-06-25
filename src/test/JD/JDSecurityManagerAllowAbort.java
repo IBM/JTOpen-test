@@ -15,7 +15,7 @@ package test.JD;
 
 import java.security.Permission;
 
-public class JDSecurityManagerAllowAbort extends SecurityManager {
+public class JDSecurityManagerAllowAbort {
 
   // Allow all permissions
   public void checkPermission(Permission perm) {

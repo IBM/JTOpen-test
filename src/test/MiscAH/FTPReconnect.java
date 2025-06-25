@@ -13,19 +13,28 @@
 
 package test.MiscAH;
 
-import com.ibm.as400.access.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.FTP;
+import com.ibm.as400.access.FTPEvent;
+import com.ibm.as400.access.FTPListener;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
 
 import test.FTPTest;
 import test.PasswordVault;
 import test.TestDriverStatic;
 import test.Testcase;
-
-import java.io.FileOutputStream;
-import java.io.File;
-import java.io.OutputStream;
-import java.util.Hashtable; import java.util.Vector;
-import java.lang.Integer;
-import java.lang.String;
 
 
 public class FTPReconnect extends    Testcase

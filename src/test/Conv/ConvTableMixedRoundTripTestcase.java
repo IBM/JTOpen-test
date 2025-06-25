@@ -13,6 +13,7 @@
 
 package test.Conv;
 
+import java.lang.reflect.Constructor;
 import java.util.Random;
 
 import test.ConvTest;
@@ -75,7 +76,8 @@ public class ConvTableMixedRoundTripTestcase extends Testcase
                     try
                     {
                         Class<?> c = Class.forName("com.ibm.as400.access.ConvTable" + ConvTest.mixedCcsids_[i - 1]);
-                        ConvTableMixedMap m = (ConvTableMixedMap)c.newInstance();
+                        Constructor<?> constructor = c.getDeclaredConstructor();
+                        ConvTableMixedMap m = (ConvTableMixedMap)constructor.newInstance();
                         roundTripDB(m);
                     }
                     catch (Exception e)
@@ -93,7 +95,8 @@ public class ConvTableMixedRoundTripTestcase extends Testcase
                     try
                     {
                         Class<?> c = Class.forName("com.ibm.as400.access.ConvTable" + ConvTest.mixedCcsids_[i - 1]);
-                        ConvTableMixedMap m = (ConvTableMixedMap)c.newInstance();
+                        Constructor<?> constructor = c.getDeclaredConstructor();
+                        ConvTableMixedMap m = (ConvTableMixedMap)constructor.newInstance();
                         roundTripMB(m);
                     }
                     catch (Exception e)

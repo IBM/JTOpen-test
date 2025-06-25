@@ -738,9 +738,9 @@ public class QueuedMessageRFTestcase extends Testcase {
     RQueuedMessage qmsg0, qmsgrcv0, qmsg1, qmsgrcv1;
     byte msgKey0[], msgKey1[];
     Integer value0, value1, value2, value3;
-    Integer Int80 = new Integer(80);
-    Integer Int99 = new Integer(99);
-    Integer Int0 = new Integer(0);
+    Integer Int80 = Integer.valueOf(80);
+    Integer Int99 = Integer.valueOf(99);
+    Integer Int0 = Integer.valueOf(0);
 
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");

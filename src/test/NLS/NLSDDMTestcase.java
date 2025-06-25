@@ -15,11 +15,29 @@ package test.NLS;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.util.Vector;
 import java.math.BigDecimal;
-import com.ibm.as400.access.*;
+import java.util.Vector;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Exception;
+import com.ibm.as400.access.AS400File;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.DBCSEitherFieldDescription;
+import com.ibm.as400.access.DBCSGraphicFieldDescription;
+import com.ibm.as400.access.DBCSOnlyFieldDescription;
+import com.ibm.as400.access.DBCSOpenFieldDescription;
+import com.ibm.as400.access.ErrorCompletingRequestException;
+import com.ibm.as400.access.KeyedFile;
+import com.ibm.as400.access.MemberDescription;
 import com.ibm.as400.access.ObjectDescription; ///
+import com.ibm.as400.access.ObjectDoesNotExistException;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
+import com.ibm.as400.access.SequentialFile;
 
 import test.NLSTest;
 import test.Testcase;

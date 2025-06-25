@@ -731,7 +731,7 @@ public class DTTextTestcase extends Testcase
         AS400Text conv = new AS400Text(5, 37, systemObject_);
         try
         {
-            byte[] ret = conv.toBytes(new Character('a'));
+            byte[] ret = conv.toBytes(Character.valueOf('a'));
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -943,7 +943,7 @@ public class DTTextTestcase extends Testcase
         AS400Text conv = new AS400Text(5, 37, systemObject_);
         try
         {
-            int ret = conv.toBytes(new Character('a'), new byte[10]);
+            int ret = conv.toBytes(Character.valueOf('a'), new byte[10]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -1229,7 +1229,7 @@ public class DTTextTestcase extends Testcase
         AS400Text conv = new AS400Text(5, 37, systemObject_);
         try
         {
-            int ret = conv.toBytes(new Character('a'), new byte[10], 0);
+            int ret = conv.toBytes(Character.valueOf('a'), new byte[10], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)

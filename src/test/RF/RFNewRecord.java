@@ -503,7 +503,7 @@ public void Var006()
 {
   RecordFormat r = new RecordFormat();
   // Create byte array with which to populate the record
-  byte[] bytes = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] bytes = (new AS400Bin4()).toBytes(Integer.valueOf(5));
 
   // Verify null returned when record format is empty
   try
@@ -541,7 +541,7 @@ public void Var007()
 {
   RecordFormat r = new RecordFormat();
   // Create byte array with which to populate the record
-  byte[] bytes = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] bytes = (new AS400Bin4()).toBytes(Integer.valueOf(5));
   // Verify record returned from record format with one field
   BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin4(), "b");
   r.addFieldDescription(b);
@@ -625,9 +625,9 @@ public void Var008()
   r.addFieldDescription(f);
 
   // Create byte array with which to populate the record
-  byte[] b1 = (new AS400Bin4()).toBytes(new Integer(10));
+  byte[] b1 = (new AS400Bin4()).toBytes(Integer.valueOf(10));
   byte[] b2 = (new AS400Text(10, systemObject_.getCcsid(), systemObject_)).toBytes("abcdefghij");
-  byte[] b3 = (new AS400Float8()).toBytes(new Double(123.89));
+  byte[] b3 = (new AS400Float8()).toBytes(Double.valueOf(123.89));
   byte[] bytes = new byte[22];  // Our byte arrays take up 22 bytes
   System.arraycopy(b1, 0, bytes, 0, b1.length);
   System.arraycopy(b2, 0, bytes, 4, b2.length);
@@ -816,7 +816,7 @@ public void Var012()
 {
   RecordFormat r = new RecordFormat();
   // Create byte array with which to populate the record
-  byte[] bytes = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] bytes = (new AS400Bin4()).toBytes(Integer.valueOf(5));
 
   // Verify null returned when record format is empty
   try
@@ -854,7 +854,7 @@ public void Var013()
 {
   RecordFormat r = new RecordFormat();
   // Create byte array with which to populate the record
-  byte[] bytes = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] bytes = (new AS400Bin4()).toBytes(Integer.valueOf(5));
   // Verify record returned from record format with one field
   BinaryFieldDescription b = new BinaryFieldDescription(new AS400Bin4(), "b");
   r.addFieldDescription(b);
@@ -938,9 +938,9 @@ public void Var014()
   r.addFieldDescription(f);
 
   // Create byte array with which to populate the record
-  byte[] b1 = (new AS400Bin4()).toBytes(new Integer(10));
+  byte[] b1 = (new AS400Bin4()).toBytes(Integer.valueOf(10));
   byte[] b2 = (new AS400Text(10, systemObject_.getCcsid(), systemObject_)).toBytes("abcdefghij");
-  byte[] b3 = (new AS400Float8()).toBytes(new Double(123.89));
+  byte[] b3 = (new AS400Float8()).toBytes(Double.valueOf(123.89));
   byte[] bytes = new byte[22];  // Our byte arrays take up 22 bytes
   System.arraycopy(b1, 0, bytes, 0, b1.length);
   System.arraycopy(b2, 0, bytes, 4, b2.length);
@@ -1133,7 +1133,7 @@ public void Var018()
 
   Record rec;
   // Verify NullPointerException when null passed for record name
-  byte[] bytes = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] bytes = (new AS400Bin4()).toBytes(Integer.valueOf(5));
   try
   {
     rec = r.getNewRecord(bytes, null);
@@ -1165,7 +1165,7 @@ public void Var019()
 {
   RecordFormat r = new RecordFormat();
   // Create byte array with which to populate the record
-  byte[] contents = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] contents = (new AS400Bin4()).toBytes(Integer.valueOf(5));
   byte[] bytes = new byte[contents.length + 10];
   System.arraycopy(contents, 0, bytes, 5, contents.length);
 
@@ -1205,7 +1205,7 @@ public void Var020()
 {
   RecordFormat r = new RecordFormat();
   // Create byte array with which to populate the record
-  byte[] contents = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] contents = (new AS400Bin4()).toBytes(Integer.valueOf(5));
   byte[] bytes = new byte[contents.length + 10];
   System.arraycopy(contents, 0, bytes, 5, contents.length);
   // Verify record returned from record format with one field
@@ -1291,9 +1291,9 @@ public void Var021()
   r.addFieldDescription(f);
 
   // Create byte array with which to populate the record
-  byte[] b1 = (new AS400Bin4()).toBytes(new Integer(10));
+  byte[] b1 = (new AS400Bin4()).toBytes(Integer.valueOf(10));
   byte[] b2 = (new AS400Text(10, systemObject_.getCcsid(), systemObject_)).toBytes("abcdefghij");
-  byte[] b3 = (new AS400Float8()).toBytes(new Double(123.89));
+  byte[] b3 = (new AS400Float8()).toBytes(Double.valueOf(123.89));
   byte[] bytes = new byte[22 + 10];  // Our byte arrays take up 22 bytes
   System.arraycopy(b1, 0, bytes, 5, b1.length);
   System.arraycopy(b2, 0, bytes, 9, b2.length);
@@ -1555,7 +1555,7 @@ public void Var027()
 {
   RecordFormat r = new RecordFormat();
   // Create byte array with which to populate the record
-  byte[] bytes = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] bytes = (new AS400Bin4()).toBytes(Integer.valueOf(5));
 
   // Verify null returned when record format is empty
   try
@@ -1593,7 +1593,7 @@ public void Var028()
 {
   RecordFormat r = new RecordFormat();
   // Create byte array with which to populate the record
-  byte[] contents = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] contents = (new AS400Bin4()).toBytes(Integer.valueOf(5));
   byte[] bytes = new byte[contents.length + 10];
   System.arraycopy(contents, 0, bytes, 5, contents.length);
   // Verify record returned from record format with one field
@@ -1681,9 +1681,9 @@ public void Var029()
   r.addFieldDescription(f);
 
   // Create byte array with which to populate the record
-  byte[] b1 = (new AS400Bin4()).toBytes(new Integer(10));
+  byte[] b1 = (new AS400Bin4()).toBytes(Integer.valueOf(10));
   byte[] b2 = (new AS400Text(10, systemObject_.getCcsid(), systemObject_)).toBytes("abcdefghij");
-  byte[] b3 = (new AS400Float8()).toBytes(new Double(123.89));
+  byte[] b3 = (new AS400Float8()).toBytes(Double.valueOf(123.89));
   byte[] bytes = new byte[22 + 10];  // Our byte arrays take up 22 bytes
   System.arraycopy(b1, 0, bytes, 5, b1.length);
   System.arraycopy(b2, 0, bytes, 9, b2.length);
@@ -1950,7 +1950,7 @@ public void Var035()
 
   Record rec;
   // Verify NullPointerException when null passed for record name
-  byte[] bytes = (new AS400Bin4()).toBytes(new Integer(5));
+  byte[] bytes = (new AS400Bin4()).toBytes(Integer.valueOf(5));
   try
   {
     rec = r.getNewRecord(bytes, 0, null);

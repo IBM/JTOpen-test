@@ -1203,11 +1203,11 @@ Getting 6 connections from a pooled connection w/ only 5 connections should work
             break;
           case SET_OPERATION_AUTO_COMMIT:
             sb.append("Calling c.setAutoCommit(" + setValue + ")\n");
-            c.setAutoCommit( (new Boolean(setValue)).booleanValue());
+            c.setAutoCommit( (Boolean.valueOf(setValue)).booleanValue());
             break;
           case SET_OPERATION_READONLY:
             sb.append("Calling c.setReadOnly(" + setValue + ")\n");
-            c.setReadOnly(( new Boolean(setValue)).booleanValue());
+            c.setReadOnly(( Boolean.valueOf(setValue)).booleanValue());
             break;
 
           default:

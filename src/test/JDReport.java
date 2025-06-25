@@ -2624,6 +2624,14 @@ public class JDReport {
         testBaseProperties.load(fileInputStream);
         fileInputStream.close();
 
+        // Also load local testbase2.ini if it exists 
+        File testbase2File = new File("ini/testbase2.ini");
+        if (testbase2File.exists()) { 
+          fileInputStream = JDRunit.loadResource("ini/testbase2.ini" , iniInfo);
+          testBaseProperties.load(fileInputStream);
+          fileInputStream.close();
+        }
+        
         String deleteSql = " DELETE FROM " + SCHEMA + "." + rawfile +" WHERE TESTCASE=?";
         PreparedStatement psDelete = connection.prepareStatement(deleteSql); 
         Enumeration<Object> enumeration = testBaseProperties.keys(); 
@@ -2652,6 +2660,12 @@ public class JDReport {
         Properties testBaseProperties = new Properties();
         testBaseProperties.load(fileInputStream);
         fileInputStream.close();
+        File testbase2File = new File("ini/testbase2.ini");
+        if (testbase2File.exists()) { 
+          fileInputStream = JDRunit.loadResource("ini/testbase2.ini" , iniInfo);
+          testBaseProperties.load(fileInputStream);
+          fileInputStream.close();
+        }
 
         String deleteSql = " DELETE FROM " + SCHEMA + "." + rawfile +" WHERE TESTCASE=?";
         PreparedStatement psDelete = connection.prepareStatement(deleteSql); 

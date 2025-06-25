@@ -1902,7 +1902,7 @@ public class SysvalExtendedTestcase extends Testcase
               toSet = trash;
             break;
           case SystemValueList.TYPE_INTEGER:
-            toSet = new Integer(-3);
+            toSet = Integer.valueOf(-3);
             break;
           case SystemValueList.TYPE_ARRAY:
             toSet = new String[] { "TRASH" };
@@ -2146,7 +2146,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var005()
     {
-      testGetSet("QACTJOB", new Integer(100));
+      testGetSet("QACTJOB", Integer.valueOf(100));
     }
 
     /**
@@ -2162,7 +2162,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var007()
     {
-      testGetSet("QADLACTJ", new Integer(100));
+      testGetSet("QADLACTJ", Integer.valueOf(100));
     }
 
     /**
@@ -2178,7 +2178,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var009()
     {
-      testGetSet("QADLTOTJ", new Integer(100));
+      testGetSet("QADLTOTJ", Integer.valueOf(100));
     }
 
     /**
@@ -2194,7 +2194,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var011()
     {
-      testGetSet("QADLSPLA", new Integer(1024));
+      testGetSet("QADLSPLA", Integer.valueOf(1024));
     }
 
     /**
@@ -2462,7 +2462,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var025()
     {
-      testGetSet("QAUDFRCLVL", new Integer(100));
+      testGetSet("QAUDFRCLVL", Integer.valueOf(100));
     }
 
     /**
@@ -2620,7 +2620,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var036()
     {
-      testGetSet("QAUTOVRT", new Integer(100));
+      testGetSet("QAUTOVRT", Integer.valueOf(100));
     }
 
     /**
@@ -2630,7 +2630,7 @@ public class SysvalExtendedTestcase extends Testcase
     {
 //      testGetSet("QAUTOVRT", "*NOMAX");
       String name = "QAUTOVRT";
-      Object toSet = new Integer(32767); // The chgsysval command won't let us use *NOMAX.
+      Object toSet = Integer.valueOf(32767); // The chgsysval command won't let us use *NOMAX.
                                          // *NOMAX is equivalent to 32767 on this command.
       String failMsg = "";
       Object obj = null;
@@ -2715,7 +2715,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var039()
     {
-      testGetSet("QBASACTLVL", new Integer(100));
+      testGetSet("QBASACTLVL", Integer.valueOf(100));
     }
 
     /**
@@ -2731,7 +2731,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var041()
     {
-      testGetSet("QBASPOOL", new Integer(256));
+      testGetSet("QBASPOOL", Integer.valueOf(256));
     }
 
     /**
@@ -2805,7 +2805,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var045()
     {
-      testGetSet("QCCSID", new Integer(37));
+      testGetSet("QCCSID", Integer.valueOf(37));
     }
 
     /**
@@ -2844,7 +2844,7 @@ public class SysvalExtendedTestcase extends Testcase
       {
         sysVal_QCCSID = new SystemValue(pwrSys_, "QCCSID");
         originalValue = sysVal_QCCSID.getValue();
-        sysVal_QCCSID.setValue(new Integer(65535));
+        sysVal_QCCSID.setValue(Integer.valueOf(65535));
 
         testGetSet("QCHRID", new String[] { "0000001172", "0000001027" });
       }
@@ -3606,7 +3606,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var093()
     {
-      testGetSet("QHSTLOGSIZ", new Integer(100));
+      testGetSet("QHSTLOGSIZ", Integer.valueOf(100));
     }
 
     /**
@@ -3963,7 +3963,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var109()
     {
-      testGetSet("QJOBMSGQMX", new Integer(32));
+      testGetSet("QJOBMSGQMX", Integer.valueOf(32));
     }
 
     /**
@@ -3979,7 +3979,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var111()
     {
-      testGetSet("QJOBMSGQSZ", new Integer(100));
+      testGetSet("QJOBMSGQSZ", Integer.valueOf(100));
     }
 
     /**
@@ -3995,7 +3995,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var113()
     {
-      testGetSet("QJOBMSGQTL", new Integer(100));
+      testGetSet("QJOBMSGQTL", Integer.valueOf(100));
     }
 
     /**
@@ -4011,7 +4011,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var115()
     {
-      testGetSet("QJOBSPLA", new Integer(9600));
+      testGetSet("QJOBSPLA", Integer.valueOf(9600));
     }
 
     /**
@@ -4159,7 +4159,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var123()
     {
-      testGetSet("QLEAPADJ", new Integer(1));
+      testGetSet("QLEAPADJ", Integer.valueOf(1));
     }
 
     /**
@@ -4281,7 +4281,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var133()
     {
-      testGetSet("QMAXACTLVL", new Integer(100));
+      testGetSet("QMAXACTLVL", Integer.valueOf(100));
     }
 
     /**
@@ -4464,7 +4464,7 @@ public class SysvalExtendedTestcase extends Testcase
         SystemValue sysVal_QMCHPOOL = new SystemValue(pwrSys_, "QMCHPOOL");
         int originalValue = ((Integer)sysVal_QMCHPOOL.getValue()).intValue();
 
-        testGetSet("QMCHPOOL", new Integer(originalValue+1));
+        testGetSet("QMCHPOOL", Integer.valueOf(originalValue+1));
       }
       catch (Exception e)
       {
@@ -4615,7 +4615,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var154()
     {
-      testGetSet("QPRBHLDITV", new Integer(100));
+      testGetSet("QPRBHLDITV", Integer.valueOf(100));
     }
 
     /**
@@ -5006,7 +5006,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var173()
     {
-      testGetSet("QPWDMAXLEN", new Integer(10));
+      testGetSet("QPWDMAXLEN", Integer.valueOf(10));
     }
 
     /**
@@ -5022,7 +5022,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var175()
     {
-      testGetSet("QPWDMINLEN", new Integer(4));
+      testGetSet("QPWDMINLEN", Integer.valueOf(4));
     }
 
     /**
@@ -5194,7 +5194,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var186()
     {
-      testGetSet("QPWRDWNLMT", new Integer(1000));
+      testGetSet("QPWRDWNLMT", Integer.valueOf(1000));
     }
 
     /**
@@ -5439,7 +5439,7 @@ public class SysvalExtendedTestcase extends Testcase
           s.clear();
           Object obj2 = s.getValue();
           // The seconds should be close... within 8 seconds.
-          int retSec = (new Integer((String)obj2)).intValue();
+          int retSec = (Integer.valueOf((String)obj2)).intValue();
           if ((retSec-30) > 8)
           {
             failMsg += " Unexpected data returned: '"+(String)obj2+"'";
@@ -5689,6 +5689,7 @@ public class SysvalExtendedTestcase extends Testcase
     /**
     Test QSTGLOWLMT with a good parameter.
     **/
+    @SuppressWarnings("deprecation")
     public void Var221()
     {
       testGetSet("QSTGLOWLMT", (new BigDecimal(6.1122)).setScale(4, BigDecimal.ROUND_HALF_UP)); // is a DECIMAL(7 4)
@@ -5813,7 +5814,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var231()
     {
-      testGetSet("QSVRAUTITV", new Integer(3600));
+      testGetSet("QSVRAUTITV", Integer.valueOf(3600));
     }
 
     /**
@@ -6056,7 +6057,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var239()
     {
-      testGetSet("QTOTJOB", new Integer(100));
+      testGetSet("QTOTJOB", Integer.valueOf(100));
     }
 
     /**
@@ -6518,7 +6519,7 @@ public class SysvalExtendedTestcase extends Testcase
 //      testBadParm("ALRHLDCNT");
       String name = "ALRHLDCNT";
       Object obj = null;
-      Object toSet = new Integer("-3");
+      Object toSet = Integer.valueOf("-3");
       String failMsg = "";
       int type;
       try
@@ -6800,7 +6801,7 @@ public class SysvalExtendedTestcase extends Testcase
 //      testBadParm("VRTAUTODEV");
       String name = "VRTAUTODEV";
       Object obj = null;
-      Object toSet = new Integer("-3");
+      Object toSet = Integer.valueOf("-3");
       String failMsg = "";
       int type;
       try
@@ -6847,7 +6848,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var279()
     {
-      testGetSet("VRTAUTODEV", new Integer(100));
+      testGetSet("VRTAUTODEV", Integer.valueOf(100));
     }
 
     /**
@@ -7049,7 +7050,7 @@ public class SysvalExtendedTestcase extends Testcase
 //      testBadParm("DTACPR");
       String name = "DTACPR";
       Object obj = null;
-      Object toSet = new Integer("-3");
+      Object toSet = Integer.valueOf("-3");
       String failMsg = "";
       int type;
       try
@@ -7195,7 +7196,7 @@ public class SysvalExtendedTestcase extends Testcase
     public void Var290()
     {
       String name = "DTACPR";
-      Object toSet = new Integer(100);
+      Object toSet = Integer.valueOf(100);
       String failMsg = "";
       Object obj = null;
       SystemValue s = null;
@@ -7315,7 +7316,7 @@ public class SysvalExtendedTestcase extends Testcase
 //      testBadParm("DTACPRINM");
       String name = "DTACPRINM";
       Object obj = null;
-      Object toSet = new Integer("-3");
+      Object toSet = Integer.valueOf("-3");
       String failMsg = "";
       int type;
       try
@@ -7449,9 +7450,9 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var293()
     {
-//      testGetSet("DTACPRINM", new Integer(200));
+//      testGetSet("DTACPRINM", Integer.valueOf(200));
       String name = "DTACPRINM";
-      Object toSet = new Integer(200);
+      Object toSet = Integer.valueOf(200);
       String failMsg = "";
       Object obj = null;
       SystemValue s = null;
@@ -7885,7 +7886,7 @@ public class SysvalExtendedTestcase extends Testcase
 //      testBadParm("MAXINTSSN");
       String name = "MAXINTSSN";
       Object obj = null;
-      Object toSet = new Integer(-5);
+      Object toSet = Integer.valueOf(-5);
       String failMsg = "";
       int type;
       SystemValue s = null;
@@ -7937,7 +7938,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var306()
     {
-      testGetSet("MAXINTSSN", new Integer(100));
+      testGetSet("MAXINTSSN", Integer.valueOf(100));
     }
 
     /**
@@ -7948,7 +7949,7 @@ public class SysvalExtendedTestcase extends Testcase
 //      testBadParm("MAXHOP");
       String name = "MAXHOP";
       Object obj = null;
-      Object toSet = new Integer(-5);
+      Object toSet = Integer.valueOf(-5);
       String failMsg = "";
       int type;
       SystemValue s = null;
@@ -8000,7 +8001,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var308()
     {
-      testGetSet("MAXHOP", new Integer(200));
+      testGetSet("MAXHOP", Integer.valueOf(200));
     }
 
     /**
@@ -8644,7 +8645,7 @@ public class SysvalExtendedTestcase extends Testcase
 //      testBadParm("RAR");
       String name = "RAR";
       Object obj = null;
-      Object toSet = new Integer(-5);
+      Object toSet = Integer.valueOf(-5);
       String failMsg = "";
       int type;
       SystemValue s = null;
@@ -8696,7 +8697,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var323()
     {
-      testGetSet("RAR", new Integer(100));
+      testGetSet("RAR", Integer.valueOf(100));
     }
 
     /**
@@ -8827,6 +8828,7 @@ public class SysvalExtendedTestcase extends Testcase
     /**
     Test QIGCFNTSIZ with a good parameter.
     **/
+    @SuppressWarnings("deprecation")
     public void Var331()
     {
       testGetSet("QIGCFNTSIZ", (new BigDecimal(123.4)).setScale(1, BigDecimal.ROUND_HALF_UP));
@@ -8854,7 +8856,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var334()
     {
-      testGetSet("QPRCFEAT", new Integer(1234));
+      testGetSet("QPRCFEAT", Integer.valueOf(1234));
     }
 
   //-------------------
@@ -9038,7 +9040,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var344()
     {
-      testGetSet("QMAXJOB", new Integer(100000));
+      testGetSet("QMAXJOB", Integer.valueOf(100000));
     }
 
     /**
@@ -9054,7 +9056,7 @@ public class SysvalExtendedTestcase extends Testcase
     **/
     public void Var346()
     {
-      testGetSet("QMAXSPLF", new Integer(10000));
+      testGetSet("QMAXSPLF", Integer.valueOf(10000));
     }
 
     /**

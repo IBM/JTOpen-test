@@ -114,7 +114,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var002() {
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(100, new Integer(3), Types.INTEGER);
+      cs.setObject(100, Integer.valueOf(3), Types.INTEGER);
       cs.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
@@ -209,7 +209,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var008() {
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(2, new Integer(3), Types.INTEGER);
+      cs.setObject(2, Integer.valueOf(3), Types.INTEGER);
       cs.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
@@ -238,7 +238,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var010() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);
-      cs.setObject(1, new Short((short) -33), Types.SMALLINT);
+      cs.setObject(1, Short.valueOf((short) -33), Types.SMALLINT);
       cs.registerOutParameter(2, Types.SMALLINT);
       cs.execute();
       short check = cs.getShort(2);
@@ -272,7 +272,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var012() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);
-      cs.setObject(1, new Float(-33.3f), Types.SMALLINT);
+      cs.setObject(1, Float.valueOf(-33.3f), Types.SMALLINT);
       cs.registerOutParameter(2, Types.SMALLINT);
       cs.execute();
       short check = cs.getShort(2);
@@ -303,7 +303,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var014() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);
-      cs.setObject(1, new Short((short) -33), Types.NULL);
+      cs.setObject(1, Short.valueOf((short) -33), Types.NULL);
       cs.registerOutParameter(2, Types.SMALLINT);
       cs.execute();
       short check = cs.getShort(2);
@@ -321,7 +321,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var015() {
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(1, new Integer(9595), Types.INTEGER);
+      cs.setObject(1, Integer.valueOf(9595), Types.INTEGER);
       cs.registerOutParameter(2, Types.INTEGER);
       cs.execute();
       int check = cs.getInt(2);
@@ -356,7 +356,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var017() {
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(1, new Float(-33.3f), Types.INTEGER);
+      cs.setObject(1, Float.valueOf(-33.3f), Types.INTEGER);
       cs.registerOutParameter(2, Types.INTEGER);
       cs.execute();
       int check = cs.getInt(2);
@@ -388,7 +388,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     try {
 
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(1, new Integer(9595), Types.DATE);
+      cs.setObject(1, Integer.valueOf(9595), Types.DATE);
       cs.registerOutParameter(2, Types.INTEGER);
       cs.execute();
       int check = cs.getInt(2);
@@ -406,7 +406,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var020() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(4.325), Types.REAL);
+      cs.setObject(1, Float.valueOf(4.325f), Types.REAL);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -437,7 +437,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var022() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(4.325), Types.VARCHAR);
+      cs.setObject(1, Float.valueOf(4.325f), Types.VARCHAR);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -455,7 +455,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var023() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(-34.2), Types.DOUBLE);
+      cs.setObject(1, Float.valueOf(-34.2f), Types.DOUBLE);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -486,7 +486,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var025() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(-34.2), Types.DATE);
+      cs.setObject(1, Float.valueOf(-34.2f), Types.DATE);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -504,7 +504,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var026() {
     try {
       CallableStatement cs = prepareCall(Types.DOUBLE);
-      cs.setObject(1, new Double(3.14159), Types.DOUBLE);
+      cs.setObject(1, Double.valueOf(3.14159), Types.DOUBLE);
       cs.registerOutParameter(2, Types.DOUBLE);
       cs.execute();
       double check = cs.getDouble(2);
@@ -535,7 +535,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var028() {
     try {
       CallableStatement cs = prepareCall(Types.DOUBLE);
-      cs.setObject(1, new Double(3.14159), Types.BINARY);
+      cs.setObject(1, Double.valueOf(3.14159), Types.BINARY);
       cs.registerOutParameter(2, Types.DOUBLE);
       cs.execute();
       double check = cs.getDouble(2);
@@ -891,7 +891,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.CLOB);
-        cs.setObject(1, new Short((short) 3342), Types.CLOB);
+        cs.setObject(1, Short.valueOf((short) 3342), Types.CLOB);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -906,7 +906,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.CLOB);
-        cs.setObject(1, new Integer(5), Types.NUMERIC);
+        cs.setObject(1, Integer.valueOf(5), Types.NUMERIC);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -945,7 +945,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(TYPES_DBCLOB);
-        cs.setObject(1, new Long(34242), Types.CLOB);
+        cs.setObject(1, Long.valueOf(34242), Types.CLOB);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -960,7 +960,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(TYPES_DBCLOB);
-        cs.setObject(1, new Float(4.33), Types.VARCHAR);
+        cs.setObject(1, Float.valueOf(4.33f), Types.VARCHAR);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1092,7 +1092,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var059() {
     try {
       CallableStatement cs = prepareCall(Types.VARBINARY);
-      cs.setObject(1, new Double(34.23), Types.VARBINARY);
+      cs.setObject(1, Double.valueOf(34.23), Types.VARBINARY);
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1353,7 +1353,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.DATALINK);
-        cs.setObject(1, new Integer(8), Types.INTEGER);
+        cs.setObject(1, Integer.valueOf(8), Types.INTEGER);
         assertCondition(false);
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1384,7 +1384,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.DISTINCT);
-        cs.setObject(1, new Integer(-412), Types.DISTINCT);
+        cs.setObject(1, Integer.valueOf(-412), Types.DISTINCT);
         cs.registerOutParameter(2, Types.DISTINCT);
         cs.execute();
         Object check = cs.getObject(2);
@@ -1444,7 +1444,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkBigintSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BIGINT);
-        cs.setObject(1, new Long(959543224556l), Types.BIGINT);
+        cs.setObject(1, Long.valueOf(959543224556l), Types.BIGINT);
         cs.registerOutParameter(2, Types.BIGINT);
         cs.execute();
         long check = cs.getLong(2);
@@ -1466,7 +1466,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkBigintSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BIGINT);
-        cs.setObject(1, new Float(-92233720368547758099.0f), Types.BIGINT);
+        cs.setObject(1, Float.valueOf(-92233720368547758099.0f), Types.BIGINT);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
 
@@ -1484,7 +1484,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
   public void Var081() {
     try {
       CallableStatement cs = prepareCall(Types.BIGINT);
-      cs.setObject(1, new Float(-33.3f), Types.BIGINT);
+      cs.setObject(1, Float.valueOf(-33.3f), Types.BIGINT);
       cs.registerOutParameter(2, Types.BIGINT);
       cs.execute();
       long check = cs.getLong(2);
@@ -1518,7 +1518,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkBigintSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BIGINT);
-        cs.setObject(1, new Long(959543224556l), Types.VARCHAR);
+        cs.setObject(1, Long.valueOf(959543224556l), Types.VARCHAR);
         cs.registerOutParameter(2, Types.BIGINT);
         cs.execute();
         long check = cs.getLong(2);
@@ -1809,7 +1809,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkBooleanSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BOOLEAN);
-        cs.setObject(1, new Boolean(true), Types.BOOLEAN);
+        cs.setObject(1, Boolean.valueOf(true), Types.BOOLEAN);
         cs.registerOutParameter(2, Types.BOOLEAN);
         cs.execute();
         boolean check = cs.getBoolean(2);
@@ -1830,7 +1830,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkBooleanSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BOOLEAN);
-        cs.setObject(1, new Float(-92233720368547758099.0f), Types.BOOLEAN);
+        cs.setObject(1, Float.valueOf(-92233720368547758099.0f), Types.BOOLEAN);
         cs.registerOutParameter(2, Types.BOOLEAN);
         cs.execute();
         boolean check = cs.getBoolean(2);
@@ -1851,7 +1851,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkBooleanSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BOOLEAN);
-        cs.setObject(1, new Float(1.3f), Types.BOOLEAN);
+        cs.setObject(1, Float.valueOf(1.3f), Types.BOOLEAN);
         cs.registerOutParameter(2, Types.BOOLEAN);
         cs.execute();
         boolean check = cs.getBoolean(2);
@@ -1886,7 +1886,7 @@ public class JDCSSetObject3 extends JDCSSetObjectBase {
     if (checkBooleanSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BOOLEAN);
-        cs.setObject(1, new Long(959543224556l), Types.VARCHAR);
+        cs.setObject(1, Long.valueOf(959543224556l), Types.VARCHAR);
         cs.registerOutParameter(2, Types.BOOLEAN);
         cs.execute();
         boolean check = cs.getBoolean(2);

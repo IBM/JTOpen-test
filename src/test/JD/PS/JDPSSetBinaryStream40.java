@@ -200,7 +200,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         argTypes[0] = Integer.TYPE;
         argTypes[1] = Class.forName("java.io.InputStream");
         Object[] args = new Object[2];
-        args[0] = new Integer(1);
+        args[0] = Integer.valueOf(1);
         args[1] = null;
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", argTypes, args);
         ps.executeUpdate();

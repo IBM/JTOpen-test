@@ -383,7 +383,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
     }
 
     public long length() {
-      Integer size = new Integer(data_.length());
+      Integer size = Integer.valueOf(data_.length());
       return size.longValue();
     }
 
@@ -460,7 +460,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
     }
 
     public long length() {
-      Integer size = new Integer(data_.length());
+      Integer size = Integer.valueOf(data_.length());
       return size.longValue();
     }
 
@@ -683,11 +683,11 @@ public class AS400JDBCRowSetTestcase extends Testcase {
   }
 
   private double getPurchases(String account) {
-    Integer dollar = new Integer(random_.nextInt(new Integer(account).intValue()));
-    Integer cents = new Integer(random_.nextInt(100));
+    Integer dollar = Integer.valueOf(random_.nextInt(Integer.valueOf(account).intValue()));
+    Integer cents = Integer.valueOf(random_.nextInt(100));
 
     String purchases = dollar + "." + cents;
-    return new Double(purchases).doubleValue();
+    return Double.valueOf(purchases).doubleValue();
   }
 
   /**

@@ -142,7 +142,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         try
         {
             AS400UnsignedBin1 conv = new AS400UnsignedBin1();
-            byte[] data = conv.toBytes(new Short((short)255));
+            byte[] data = conv.toBytes(Short.valueOf((short)255));
             if (data.length == 1 && data[0] == (byte)0xFF)
             {
                 succeeded();
@@ -192,7 +192,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            byte[] ret = conv.toBytes(new Short((short)-1));
+            byte[] ret = conv.toBytes(Short.valueOf((short)-1));
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -217,7 +217,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            byte[] ret = conv.toBytes(new Short((short)0x1000));
+            byte[] ret = conv.toBytes(Short.valueOf((short)0x1000));
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -351,7 +351,7 @@ public class DTUnsignedBin1Testcase extends Testcase
             {
                 ///for (int y = 0x00; y <= 0xFF; ++y)
                 ///{
-                    int ret = conv.toBytes(new Short(testValue++), data);
+                    int ret = conv.toBytes(Short.valueOf(testValue++), data);
 
                     if (ret != 1)
                     {
@@ -381,7 +381,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)0), new byte[0]);
+            int ret = conv.toBytes(Short.valueOf((short)0), new byte[0]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -431,7 +431,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)-1), new byte[10]);
+            int ret = conv.toBytes(Short.valueOf((short)-1), new byte[10]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -456,7 +456,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)0x0100), new byte[10]);
+            int ret = conv.toBytes(Short.valueOf((short)0x0100), new byte[10]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -506,7 +506,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)0), null);
+            int ret = conv.toBytes(Short.valueOf((short)0), null);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -677,7 +677,7 @@ public class DTUnsignedBin1Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            int ret = conv.toBytes(new Short((short)0), data, 0);
+            int ret = conv.toBytes(Short.valueOf((short)0), data, 0);
             if (ret != 1)
             {
                 valid = false;
@@ -698,7 +698,7 @@ public class DTUnsignedBin1Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            ret = conv.toBytes(new Short((short)0), data, 5);
+            ret = conv.toBytes(Short.valueOf((short)0), data, 5);
             if (ret != 1)
             {
                 valid = false;
@@ -726,7 +726,7 @@ public class DTUnsignedBin1Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            ret = conv.toBytes(new Short((short)0), data, 8);
+            ret = conv.toBytes(Short.valueOf((short)0), data, 8);
             if (ret != 1)
             {
                 valid = false;
@@ -760,7 +760,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)0), new byte[0], 0);
+            int ret = conv.toBytes(Short.valueOf((short)0), new byte[0], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -785,7 +785,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)0), new byte[11], 11);
+            int ret = conv.toBytes(Short.valueOf((short)0), new byte[11], 11);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -810,7 +810,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)0), new byte[10], -1);
+            int ret = conv.toBytes(Short.valueOf((short)0), new byte[10], -1);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -860,7 +860,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)-1), new byte[10], 0);
+            int ret = conv.toBytes(Short.valueOf((short)-1), new byte[10], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -885,7 +885,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)0x0100), new byte[10], 0);
+            int ret = conv.toBytes(Short.valueOf((short)0x0100), new byte[10], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -935,7 +935,7 @@ public class DTUnsignedBin1Testcase extends Testcase
         AS400UnsignedBin1 conv = new AS400UnsignedBin1();
         try
         {
-            int ret = conv.toBytes(new Short((short)0), null, 0);
+            int ret = conv.toBytes(Short.valueOf((short)0), null, 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)

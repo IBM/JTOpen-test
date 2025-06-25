@@ -48,7 +48,6 @@ public class TestDriverStatic
     protected static AS400 pwrSysStatic_ = null;
     static String SERIAL_FILE_NAME = "as400.ser";
      static boolean onAS400_ = false;
-     static SecurityManager defaultSecurityManager_; 
     static {
       try { 
       if (JTOpenTestEnvironment.isOS400) onAS400_ = true; // make sure this flag gets set
@@ -81,6 +80,7 @@ public class TestDriverStatic
     static String getToolboxImplementationVersion()
     {
       if (implementationVersion_ == null) {
+        @SuppressWarnings("deprecation")
         Package toolboxPkg = Package.getPackage("com.ibm.as400.access");
         if (toolboxPkg != null) {
           implementationVersion_ = toolboxPkg.getImplementationVersion();
@@ -96,6 +96,7 @@ public class TestDriverStatic
     static String getToolboxSpecificationVersion()
     {
       if (specificationVersion_ == null) {
+        @SuppressWarnings("deprecation")
         Package toolboxPkg = Package.getPackage("com.ibm.as400.access");
         if (toolboxPkg != null) {
           specificationVersion_ = toolboxPkg.getSpecificationVersion();

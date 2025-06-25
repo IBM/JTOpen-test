@@ -719,7 +719,7 @@ updateObject() - Update a SMALLINT.
         if (checkJdbc20 ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateObject ("C_SMALLINT", new Short ((short) 243));
+                rs_.updateObject ("C_SMALLINT", Short.valueOf((short) 243));
                 rs_.updateRow ();
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 JDRSTest.position (rs2, key_);
@@ -746,7 +746,7 @@ updateObject() - Update a SMALLINT, when the integer is too big.
         try {
             JDRSTest.position (rs_, key_);
             expectedColumn = rs_.findColumn ("C_SMALLINT");
-            rs_.updateObject ("C_SMALLINT", new Integer (4873423));
+            rs_.updateObject ("C_SMALLINT", Integer.valueOf(4873423));
             rs_.updateRow ();
             failed ("Didn't throw SQLException");
         }
@@ -778,7 +778,7 @@ This should work.
         if (checkJdbc20 ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateObject ("C_SMALLINT", new Float (243.6f));
+                rs_.updateObject ("C_SMALLINT", Float.valueOf(243.6f));
                 rs_.updateRow ();
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 JDRSTest.position (rs2, key_);
@@ -823,7 +823,7 @@ updateObject() - Update an INTEGER.
         if (checkJdbc20 ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateObject ("C_INTEGER", new Integer (-122833));
+                rs_.updateObject ("C_INTEGER", Integer.valueOf(-122833));
                 rs_.updateRow ();
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 JDRSTest.position (rs2, key_);
@@ -850,7 +850,7 @@ updateObject() - Update an INTEGER, when the integer is too big.
         try {
           JDRSTest.position (rs_, key_);
           expectedColumn = rs_.findColumn ("C_INTEGER");
-          rs_.updateObject ("C_INTEGER", new Long (245545147483647L));
+          rs_.updateObject ("C_INTEGER", Long.valueOf(245545147483647L));
           rs_.updateRow ();
           failed ("Didn't throw SQLException");
         }
@@ -883,7 +883,7 @@ should work.
         if (checkJdbc20 ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateObject ("C_INTEGER", new Float (-122833.6f));
+                rs_.updateObject ("C_INTEGER", Float.valueOf(-122833.6f));
                 rs_.updateRow ();
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 JDRSTest.position (rs2, key_);
@@ -928,7 +928,7 @@ updateObject() - Update a REAL.
         if (checkJdbc20 ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateObject ("C_REAL", new Float (31.53));
+                rs_.updateObject ("C_REAL", Float.valueOf(31.53f));
                 rs_.updateRow ();
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 JDRSTest.position (rs2, key_);
@@ -973,7 +973,7 @@ updateObject() - Update a FLOAT.
         if (checkJdbc20 ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateObject ("C_FLOAT", new Float (-9845.32));
+                rs_.updateObject ("C_FLOAT", Float.valueOf(-9845.32f));
                 rs_.updateRow ();
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 JDRSTest.position (rs2, key_);
@@ -1017,7 +1017,7 @@ updateObject() - Update a DOUBLE.
         if (checkJdbc20 ()) {
             try {
                 JDRSTest.position (rs_, key_);
-                rs_.updateObject ("C_DOUBLE", new Double (19845.987987));
+                rs_.updateObject ("C_DOUBLE", Double.valueOf(19845.987987));
                 rs_.updateRow ();
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 JDRSTest.position (rs2, key_);
@@ -2103,7 +2103,7 @@ updateObject() - Update a BIGINT.
             if (checkBigintSupport()) {
                 try {
                     JDRSTest.position (rs_, key_);
-                    rs_.updateObject ("C_BIGINT", new Integer (223833));
+                    rs_.updateObject ("C_BIGINT", Integer.valueOf(223833));
                     rs_.updateRow ();
                     ResultSet rs2 = statement2_.executeQuery (select_);
                     JDRSTest.position (rs2, key_);
@@ -2220,12 +2220,12 @@ updateObject() - Update an BIGINT, when the integer is too big.
                             + " (C_KEY, C_CHAR_50, C_VARCHAR_50  ) " +
                                     " VALUES (?, ?, ?)");
                     ps.setString(1, "PROP_CHAR_BOOL1");
-                    ps.setObject(2, new Boolean(true), Types.BOOLEAN);
-                    ps.setObject(3, new Boolean(true), Types.BOOLEAN);
+                    ps.setObject(2, Boolean.valueOf(true), Types.BOOLEAN);
+                    ps.setObject(3, Boolean.valueOf(true), Types.BOOLEAN);
                     ps.executeUpdate();
                     ps.setString(1, "PROP_CHAR_BOOL2");
-                    ps.setObject(2, new Boolean(false), Types.BOOLEAN);
-                    ps.setObject(3, new Boolean(false), Types.BOOLEAN);
+                    ps.setObject(2, Boolean.valueOf(false), Types.BOOLEAN);
+                    ps.setObject(3, Boolean.valueOf(false), Types.BOOLEAN);
                     ps.executeUpdate();
 
                     ps.close();
@@ -2236,8 +2236,8 @@ updateObject() - Update an BIGINT, when the integer is too big.
 
                     while (rs.next()) {
                        
-                        rs.updateObject("C_CHAR_50", new Boolean(true));
-                        rs.updateObject("C_VARCHAR_50", new Boolean(true));
+                        rs.updateObject("C_CHAR_50", Boolean.valueOf(true));
+                        rs.updateObject("C_VARCHAR_50", Boolean.valueOf(true));
                         rs.updateRow();
                         conn.commit();
                         String retVal = rs.getString("C_CHAR_50").trim();
@@ -2388,19 +2388,19 @@ updateObject() - Update an BIGINT, when the integer is too big.
     public void Var118 () { dfpTest(JDRSTest.RSTEST_DFP16, new BigDecimal("1.1E0"), "1.1");}
 
 
-    public void Var119 () { dfpTest(JDRSTest.RSTEST_DFP16, new Float(4533.43f), "4533.43"); }
-    public void Var120 () { dfpTest(JDRSTest.RSTEST_DFP16, new Float(Float.NaN), "NaN");} 
-    public void Var121 () { dfpTest(JDRSTest.RSTEST_DFP16, new Float(Float.POSITIVE_INFINITY), "Infinity");}
-    public void Var122 () { dfpTest(JDRSTest.RSTEST_DFP16, new Float(Float.NEGATIVE_INFINITY), "-Infinity");}
+    public void Var119 () { dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(4533.43f), "4533.43"); }
+    public void Var120 () { dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.NaN), "NaN");} 
+    public void Var121 () { dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.POSITIVE_INFINITY), "Infinity");}
+    public void Var122 () { dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.NEGATIVE_INFINITY), "-Infinity");}
     public void Var123 () {
 	    /* with the new native PASE support, this comes back with the zeros*/
-	    dfpTest(JDRSTest.RSTEST_DFP16, new Float(-1234567890123456.0), "-1.23456795E+15", "-1234567950000000");
+	    dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(-1234567890123456.0f), "-1.23456795E+15", "-1234567950000000");
     }
-    public void Var124 () { dfpTest(JDRSTest.RSTEST_DFP16, new Double(4533.43f), "4533.43017578125"); }
-    public void Var125 () { dfpTest(JDRSTest.RSTEST_DFP16, new Double(Double.NaN), "NaN");} 
-    public void Var126 () { dfpTest(JDRSTest.RSTEST_DFP16, new Double(Double.POSITIVE_INFINITY), "Infinity");}
-    public void Var127 () { dfpTest(JDRSTest.RSTEST_DFP16, new Double(Double.NEGATIVE_INFINITY), "-Infinity");}
-    public void Var128 () { dfpTest(JDRSTest.RSTEST_DFP16, new Double(-1234567890123456.0), "-1234567890123456");}
+    public void Var124 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.valueOf(4533.43f), "4533.43017578125"); }
+    public void Var125 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.NaN), "NaN");} 
+    public void Var126 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.POSITIVE_INFINITY), "Infinity");}
+    public void Var127 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.NEGATIVE_INFINITY), "-Infinity");}
+    public void Var128 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.valueOf(-1234567890123456.0), "-1234567890123456");}
 
 
 
@@ -2835,18 +2835,18 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
     public void Var166 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new BigDecimal("1.1E0"), "1,1");}
 
 
-    public void Var167 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Float(4533.43f), "4533,43"); }
-    public void Var168 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Float(Float.NaN), "NaN");} 
-    public void Var169 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Float(Float.POSITIVE_INFINITY), "Infinity");}
-    public void Var170 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Float(Float.NEGATIVE_INFINITY), "-Infinity");}
+    public void Var167 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(4533.43f), "4533,43"); }
+    public void Var168 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.NaN), "NaN");} 
+    public void Var169 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.POSITIVE_INFINITY), "Infinity");}
+    public void Var170 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.NEGATIVE_INFINITY), "-Infinity");}
     public void Var171 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Float(-1234567890123456.0), "-1,23456795E+15", "-1234567950000000");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(-1234567890123456.0f), "-1,23456795E+15", "-1234567950000000");
     }
-    public void Var172 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Double(4533.43f), "4533,43017578125"); }
-    public void Var173 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Double(Double.NaN), "NaN");} 
-    public void Var174 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Double(Double.POSITIVE_INFINITY), "Infinity");}
-    public void Var175 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Double(Double.NEGATIVE_INFINITY), "-Infinity");}
-    public void Var176 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, new Double(-1234567890123456.0), "-1234567890123456");}
+    public void Var172 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(4533.43f), "4533,43017578125"); }
+    public void Var173 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.NaN), "NaN");} 
+    public void Var174 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.POSITIVE_INFINITY), "Infinity");}
+    public void Var175 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.NEGATIVE_INFINITY), "-Infinity");}
+    public void Var176 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(-1234567890123456.0), "-1234567890123456");}
 
 /**
 updateBooleanObject() - Update a BOOLEAN.
@@ -2869,8 +2869,8 @@ updateBooleanObject() - Update a BOOLEAN.
     }
   }
 
-      public void Var177() { updateBooleanObject(new Boolean(true),"1"); } 
-      public void Var178() { updateBooleanObject(new Boolean(false),"0"); } 
+      public void Var177() { updateBooleanObject(Boolean.valueOf(true),"1"); } 
+      public void Var178() { updateBooleanObject(Boolean.valueOf(false),"0"); } 
       public void Var179() {updateBooleanObject("1", "1"); }
       public void Var180() {updateBooleanObject("0", "0"); }
       public void Var181() { updateBooleanObject("1000", "1");}
@@ -2902,14 +2902,14 @@ updateBooleanObject() - Update a BOOLEAN.
   public void Var188() {
     updateBooleanObject("no", "0");
   }
-      public void Var189() { updateBooleanObject(new Integer(1),"1"); } 
-      public void Var190() { updateBooleanObject(new Integer(0),"0"); } 
-      public void Var191() { updateBooleanObject(new Long(1),"1"); } 
-      public void Var192() { updateBooleanObject(new Long(0),"0"); } 
-      public void Var193() { updateBooleanObject(new Float(3.0),"1"); } 
-      public void Var194() { updateBooleanObject(new Float(0.0),"0"); } 
-      public void Var195() { updateBooleanObject(new Double(2.0),"1"); } 
-      public void Var196() { updateBooleanObject(new Double(0.0),"0"); } 
+      public void Var189() { updateBooleanObject(Integer.valueOf(1),"1"); } 
+      public void Var190() { updateBooleanObject(Integer.valueOf(0),"0"); } 
+      public void Var191() { updateBooleanObject(Long.valueOf(1),"1"); } 
+      public void Var192() { updateBooleanObject(Long.valueOf(0),"0"); } 
+      public void Var193() { updateBooleanObject(Float.valueOf(3.0f),"1"); } 
+      public void Var194() { updateBooleanObject(Float.valueOf(0.0f),"0"); } 
+      public void Var195() { updateBooleanObject(Double.valueOf(2.0),"1"); } 
+      public void Var196() { updateBooleanObject(Double.valueOf(0.0),"0"); } 
       public void Var197() { updateBooleanObject(new BigDecimal(3.14),"1"); } 
       public void Var198() { updateBooleanObject(new BigDecimal(0.0),"0"); } 
 

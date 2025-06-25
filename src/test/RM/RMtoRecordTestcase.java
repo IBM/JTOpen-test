@@ -895,7 +895,7 @@ public class RMtoRecordTestcase extends Testcase
               failed("Bad class type returned for first field.");
               return;
             }
-            Float testFloat = new Float(123.456);
+            Float testFloat = Float.valueOf(123.456f);
             if (  ((Float)newRec.getField(0)).floatValue() != testFloat.floatValue())
             {
                 failed("Bad value returned for first field.");
@@ -931,9 +931,9 @@ public class RMtoRecordTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtFloat");
-            Float float1 = new Float(100.100);
+            Float float1 = Float.valueOf(100.100f);
             rfmlDoc.setValue("format1.field1",float1);
-            Double double1 = new Double(13.1333);
+            Double double1 = Double.valueOf(13.1333);
             rfmlDoc.setValue("format1.field2",double1);
             Record newRec = rfmlDoc.toRecord("format1");
             if (newRec.getNumberOfFields() != 2) 
@@ -946,7 +946,7 @@ public class RMtoRecordTestcase extends Testcase
               failed("Bad class type returned for first field.");
               return;
             }
-            Float testFloat = new Float(100.100);
+            Float testFloat = Float.valueOf(100.100f);
             if (  ((Float)newRec.getField(0)).floatValue() != testFloat.floatValue())
             {
               failed("Bad value returned for first field.");
@@ -957,7 +957,7 @@ public class RMtoRecordTestcase extends Testcase
               failed("Bad class type returned for second field.");
               return;
             }
-          Double testDouble = new Double(13.1333);
+          Double testDouble = Double.valueOf(13.1333);
           if (  ((Double)newRec.getField(1)).doubleValue() != testDouble.doubleValue())
           {
               failed("Bad value returned for second field.");
@@ -984,7 +984,7 @@ public class RMtoRecordTestcase extends Testcase
 /*
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtFloatBig");
             Record newRec = rfmlDoc.toRecord("format1");
-            Float floatV = new Float(123456.789);
+            Float floatV = Float.valueOf(123456.789);
 System.out.println("floatV = " + floatV.floatValue() );
             Float floatF = (Float) newRec.getField(0);
 System.out.println("floatF = " + floatF.floatValue() );
@@ -993,7 +993,7 @@ System.out.println("floatF = " + floatF.floatValue() );
               failed("Bad value returned for first field.");
               return;
             }
-            Float float2 = new Float(5678.78123);
+            Float float2 = Float.valueOf(5678.78123);
             Float floatF2 = (Float) newRec.getField(1);
             if (  float2.floatValue() != floatF2.floatValue())
             {
@@ -1029,7 +1029,7 @@ System.out.println("floatF = " + floatF.floatValue() );
             }
             AS400ByteArray byteArray = new AS400ByteArray(100);
             byte[] bytes =  byteArray.toBytes(newRec.getField(0));
-//            Byte ByteA = new Byte(bytes);
+//            Byte ByteA = Byte.valueOf(bytes);
 //            if (  ByteA.toString().trim() != "")
 //            {
 //                failed("Bad value returned for first field.");

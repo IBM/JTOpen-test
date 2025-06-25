@@ -697,7 +697,7 @@ getObject() - getObject on a type registered as boolean, INOUT SMALLINT
 
 	    Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -737,7 +737,7 @@ getObject() - getObject on a type registered as boolean, INOUT INTEGER
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -781,7 +781,7 @@ getObject() - getObject on a type registered as boolean, INOUT REAL
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -825,7 +825,7 @@ getObject() - getObject on a type registered as boolean, INOUT FLOAT
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -868,7 +868,7 @@ getObject() - getObject on a type registered as boolean, INOUT DOUBLE
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -911,7 +911,7 @@ getObject() - getObject on a type registered as boolean, INOUT DECIMAL
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -954,7 +954,7 @@ getObject() - getObject on a type registered as boolean, INOUT DECIMAL(10,5)
 
         Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -997,7 +997,7 @@ getObject() - getObject on a type registered as boolean, INOUT NUMERIC(5,0)
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1041,7 +1041,7 @@ getObject() - getObject on a type registered as boolean, INOUT NUMERIC(10,5)
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1084,7 +1084,7 @@ getObject() - getObject on a type registered as boolean, INOUT CHAR(1)
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1127,7 +1127,7 @@ getObject() - getObject on a type registered as boolean, INOUT CHAR(50)
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1170,7 +1170,7 @@ getObject() - getObject on a type registered as boolean, INOUT VARCHAR(50)
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1217,7 +1217,7 @@ getObject() - getObject on a type registered as boolean, INOUT BINARY(20)
 
 	    Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1259,7 +1259,7 @@ getObject() - getObject on a type registered as boolean, INOUT VARBINARY(20)
 
 	    Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1300,7 +1300,7 @@ getObject() - getObject on a type registered as boolean, INOUT DATE
 
 	    Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1341,7 +1341,7 @@ getObject() - getObject on a type registered as boolean, INOUT TIME
 
 	    Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1381,7 +1381,7 @@ getObject() - getObject on a type registered as boolean, INOUT TIMESTAMP
 
 	    Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1423,7 +1423,7 @@ getObject() - getObject on a type registered as boolean, INOUT DATALINK
 
 	    Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1468,7 +1468,7 @@ getObject() - getObject on a type registered as boolean, INOUT BLOB(200)
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1510,7 +1510,7 @@ getObject() - getObject on a type registered as boolean, INOUT CLOB(200)
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }
@@ -1554,7 +1554,7 @@ getObject() - getObject on a type registered as boolean, INOUT BIGINT
 
 		Boolean check;
         if(isToolboxDriver()) {                
-            check = new Boolean((boolean)cstmt.getBoolean(1));
+            check = Boolean.valueOf((boolean)cstmt.getBoolean(1));
         } else {
             check = (Boolean) cstmt.getObject(1);
         }

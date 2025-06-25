@@ -1148,7 +1148,7 @@ public class UserSpecificAttributeAtoCTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , new Integer(37));
+            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , Integer.valueOf(37));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1169,7 +1169,7 @@ public class UserSpecificAttributeAtoCTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , new Integer(0));
+            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , Integer.valueOf(0));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1187,7 +1187,7 @@ public class UserSpecificAttributeAtoCTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , new Integer(-1));
+            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , Integer.valueOf(-1));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1205,7 +1205,7 @@ public class UserSpecificAttributeAtoCTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , new Integer(65535));
+            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , Integer.valueOf(65535));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1226,7 +1226,7 @@ public class UserSpecificAttributeAtoCTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , new Integer(65536));
+            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , Integer.valueOf(65536));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1244,7 +1244,7 @@ public class UserSpecificAttributeAtoCTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , new Integer(37));
+            u.setAttributeValue(RUser.CHARACTER_CODE_SET_ID , Integer.valueOf(37));
             u.commitAttributeChanges();
 
             User u2 = new User(pwrSys_, user_);

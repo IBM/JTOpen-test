@@ -1274,7 +1274,7 @@ setAttributeValue() - Pass null for the attribute ID.
     {
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
-            u.setAttributeValue(null, new Integer(2));
+            u.setAttributeValue(null, Integer.valueOf(2));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1308,7 +1308,7 @@ setAttributeValue() - Pass an invalid attribute ID.
     {
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
-            u.setAttributeValue(u, new Integer(3));
+            u.setAttributeValue(u, Integer.valueOf(3));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1342,7 +1342,7 @@ setAttributeValue() - Pass a value which is the wrong type.
     {
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
-            u.setAttributeValue(RPrinter.CHANGES_TAKE_EFFECT, new Integer(4));
+            u.setAttributeValue(RPrinter.CHANGES_TAKE_EFFECT, Integer.valueOf(4));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1448,13 +1448,13 @@ command.  Commit and verify that the both take effect.
         try {
             RPrinter u = new RPrinter(pwrSys_, printerName_);
             u.setAttributeValue(RPrinter.FORM_TYPE, RPrinter.FORM_TYPE_STANDARD);
-            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, new Integer(3));
+            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, Integer.valueOf(3));
             u.commitAttributeChanges();
             RPrinter u2 = new RPrinter(pwrSys_, printerName_);
             Object value1 = u2.getAttributeValue(RPrinter.FORM_TYPE);
             Object value2 = u2.getAttributeValue(RPrinter.NUMBER_OF_SEPARATORS);
             assertCondition((value1.equals(RPrinter.FORM_TYPE_STANDARD))
-                   && (value2.equals(new Integer(3))));
+                   && (value2.equals(Integer.valueOf(3))));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

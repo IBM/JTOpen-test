@@ -127,7 +127,7 @@ java -cp JTOpen-test.jar:jars/jt400.jar test.JDReport 758AA
 
 The report will be generated in ct/latest758AA.html
 
-Tests supported by JDRunit are specified in the ini/testbase.ini file. 
+Tests supported by JDRunit are specified in the ini/testbase.ini and (optionally, ini/testbase2.ini) files. 
 
 Testcases run for regression purposes for JTOpen can be found in the following files: 
  ini/regressionBaseA.ini     -- toolbox tests

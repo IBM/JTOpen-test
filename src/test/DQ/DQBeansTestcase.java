@@ -2166,7 +2166,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             int value = atts.getEntryLength();
-            failMsg += verifyPropertyChange(atts, "entryLength", new Integer(oldValue), new Integer(newValue), new Integer(value));
+            failMsg += verifyPropertyChange(atts, "entryLength", Integer.valueOf(oldValue), Integer.valueOf(newValue), Integer.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2198,7 +2198,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             boolean value = atts.isFIFO();
-            failMsg += verifyPropertyChange(atts, "FIFO", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+            failMsg += verifyPropertyChange(atts, "FIFO", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2230,7 +2230,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             boolean value = atts.isForceToAuxiliaryStorage();
-            failMsg += verifyPropertyChange(atts, "forceToAuxiliaryStorage", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+            failMsg += verifyPropertyChange(atts, "forceToAuxiliaryStorage", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2262,7 +2262,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             int value = atts.getKeyLength();
-            failMsg += verifyPropertyChange(atts, "keyLength", new Integer(oldValue), new Integer(newValue), new Integer(value));
+            failMsg += verifyPropertyChange(atts, "keyLength", Integer.valueOf(oldValue), Integer.valueOf(newValue), Integer.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2294,7 +2294,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             boolean value = atts.isSaveSenderInfo();
-            failMsg += verifyPropertyChange(atts, "saveSenderInfo", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+            failMsg += verifyPropertyChange(atts, "saveSenderInfo", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2548,7 +2548,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             int value = atts.getEntryLength();
-            failMsg += verifyVetoableChange(atts, "entryLength", new Integer(oldValue), new Integer(newValue), new Integer(value));
+            failMsg += verifyVetoableChange(atts, "entryLength", Integer.valueOf(oldValue), Integer.valueOf(newValue), Integer.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2588,7 +2588,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
                 // Verify event
                 PropertyChangeEvent event = e.getPropertyChangeEvent();
                 int value = atts.getEntryLength();
-                failMsg += verifyVetoedChange(event, atts, "entryLength", new Integer(oldValue), new Integer(newValue), new Integer(value));
+                failMsg += verifyVetoedChange(event, atts, "entryLength", Integer.valueOf(oldValue), Integer.valueOf(newValue), Integer.valueOf(value));
             }
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
@@ -2621,7 +2621,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             boolean value = atts.isFIFO();
-            failMsg += verifyVetoableChange(atts, "FIFO", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+            failMsg += verifyVetoableChange(atts, "FIFO", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2661,7 +2661,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
                 // Verify event
                 PropertyChangeEvent event = e.getPropertyChangeEvent();
                 boolean value = atts.isFIFO();
-                failMsg += verifyVetoedChange(event, atts, "FIFO", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+                failMsg += verifyVetoedChange(event, atts, "FIFO", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             }
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
@@ -2694,7 +2694,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             boolean value = atts.isForceToAuxiliaryStorage();
-            failMsg += verifyVetoableChange(atts, "forceToAuxiliaryStorage", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+            failMsg += verifyVetoableChange(atts, "forceToAuxiliaryStorage", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2734,7 +2734,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
                 // Verify event
                 PropertyChangeEvent event = e.getPropertyChangeEvent();
                 boolean value = atts.isForceToAuxiliaryStorage();
-                failMsg += verifyVetoedChange(event, atts, "forceToAuxiliaryStorage", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+                failMsg += verifyVetoedChange(event, atts, "forceToAuxiliaryStorage", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             }
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
@@ -2767,7 +2767,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             int value = atts.getKeyLength();
-            failMsg += verifyVetoableChange(atts, "keyLength", new Integer(oldValue), new Integer(newValue), new Integer(value));
+            failMsg += verifyVetoableChange(atts, "keyLength", Integer.valueOf(oldValue), Integer.valueOf(newValue), Integer.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2807,7 +2807,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
                 // Verify event
                 PropertyChangeEvent event = e.getPropertyChangeEvent();
                 int value = atts.getKeyLength();
-                failMsg += verifyVetoedChange(event, atts, "keyLength", new Integer(oldValue), new Integer(newValue), new Integer(value));
+                failMsg += verifyVetoedChange(event, atts, "keyLength", Integer.valueOf(oldValue), Integer.valueOf(newValue), Integer.valueOf(value));
             }
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
@@ -2840,7 +2840,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
 
             // Verify event
             boolean value = atts.isSaveSenderInfo();
-            failMsg += verifyVetoableChange(atts, "saveSenderInfo", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+            failMsg += verifyVetoableChange(atts, "saveSenderInfo", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -2880,7 +2880,7 @@ public class DQBeansTestcase extends Testcase implements DataQueueListener, Obje
                 // Verify event
                 PropertyChangeEvent event = e.getPropertyChangeEvent();
                 boolean value = atts.isSaveSenderInfo();
-                failMsg += verifyVetoedChange(event, atts, "saveSenderInfo", new Boolean(oldValue), new Boolean(newValue), new Boolean(value));
+                failMsg += verifyVetoedChange(event, atts, "saveSenderInfo", Boolean.valueOf(oldValue), Boolean.valueOf(newValue), Boolean.valueOf(value));
             }
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }

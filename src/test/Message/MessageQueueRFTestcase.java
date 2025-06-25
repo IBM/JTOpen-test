@@ -508,7 +508,7 @@ public class MessageQueueRFTestcase extends Testcase {
   public void Var021() {
     ResourceMetaData SelectionData;
     Object[] possibleValues;
-    Integer int0 = new Integer(0);
+    Integer int0 = Integer.valueOf(0);
     try {
       RMessageQueue f = new RMessageQueue();
       SelectionData = f.getSelectionMetaData(RMessageQueue.SEVERITY_CRITERIA);
@@ -759,7 +759,7 @@ public class MessageQueueRFTestcase extends Testcase {
   public void Var030() {
     ResourceMetaData SelectionData;
     Object[] possibleValues;
-    Integer int0 = new Integer(0);
+    Integer int0 = Integer.valueOf(0);
     try {
       RMessageQueue f = new RMessageQueue();
       SelectionData = findMetaData(f.getSelectionMetaData(),
@@ -1197,7 +1197,7 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var046() {
     Object SelectionValue;
-    Integer Int = new Integer(10);
+    Integer Int = Integer.valueOf(10);
     ResourceMetaData SelectionData;
     try {
       RMessageQueue f = new RMessageQueue();
@@ -1232,7 +1232,7 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var047() {
     Object SelectionValue;
-    Integer Int = new Integer(0);
+    Integer Int = Integer.valueOf(0);
     ResourceMetaData SelectionData;
     try {
       RMessageQueue f = new RMessageQueue();
@@ -1267,7 +1267,7 @@ public class MessageQueueRFTestcase extends Testcase {
    **/
   public void Var048() {
     Object SelectionValue;
-    Integer Int = new Integer(99);
+    Integer Int = Integer.valueOf(99);
     ResourceMetaData SelectionData;
     try {
       RMessageQueue f = new RMessageQueue();
@@ -2843,7 +2843,7 @@ public class MessageQueueRFTestcase extends Testcase {
    * only the correct type of messages are in queue.
    **/
   public void Var113() {
-    Integer Int99 = new Integer(99);
+    Integer Int99 = Integer.valueOf(99);
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       String replyPath = QSYSObjectPathName
@@ -3087,7 +3087,7 @@ public class MessageQueueRFTestcase extends Testcase {
    * only the correct type of messages are in queue.
    **/
   public void Var123() {
-    Integer Int99 = new Integer(99);
+    Integer Int99 = Integer.valueOf(99);
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
       String replyPath = QSYSObjectPathName
@@ -3276,7 +3276,7 @@ public class MessageQueueRFTestcase extends Testcase {
         attrValue = queuedMsg.getAttributeValue(RQueuedMessage.MESSAGE_TEXT);
         if (attrValue.toString().equals("Test Message...")) {
           attrValue = queuedMsg.getAttributeValue(RQueuedMessage.MESSAGE_TYPE);
-          Integer msgType = new Integer(QueuedMessage.INFORMATIONAL);
+          Integer msgType = Integer.valueOf(QueuedMessage.INFORMATIONAL);
           if (attrValue.equals(msgType)) {
             attrValue = queuedMsg
                 .getAttributeValue(RQueuedMessage.MESSAGE_QUEUE);
@@ -3805,7 +3805,7 @@ public class MessageQueueRFTestcase extends Testcase {
    * SELECTION_CRITERIA and then open list. Ensure correct Selectioning done.
    **/
   public void Var143() {
-    Integer Int99 = new Integer(99);
+    Integer Int99 = Integer.valueOf(99);
     int i;
     try {
       String path = QSYSObjectPathName.toPath(testLib_, "MQT", "MSGQ");
@@ -3841,9 +3841,9 @@ public class MessageQueueRFTestcase extends Testcase {
    * SEVERITY_CRITERIA and then open list. Ensure correct Selectioning done.
    **/
   public void Var144() {
-    Integer Int40 = new Integer(40);
-    Integer Int99 = new Integer(99);
-    Integer Int0 = new Integer(0);
+    Integer Int40 = Integer.valueOf(40);
+    Integer Int99 = Integer.valueOf(99);
+    Integer Int0 = Integer.valueOf(0);
     RQueuedMessage queuedMsg;
     long listLength;
     int i;

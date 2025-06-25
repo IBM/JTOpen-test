@@ -267,7 +267,7 @@ public class RMGetDoubleTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.zonedNoInit");
-            rfmlDoc.setValue("format1.field1", new Double(3.0));
+            rfmlDoc.setValue("format1.field1", Double.valueOf(3.0));
             double result = rfmlDoc.getDoubleValue("format1.field1");
             assertCondition(result == 3.0);
         }
@@ -311,7 +311,7 @@ public class RMGetDoubleTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount1init0");
             double result1 = rfmlDoc.getDoubleValue("format1.field3", new int[] {0});
-            rfmlDoc.setValue("format1.field3", new int[] {0}, new Double(5.5));
+            rfmlDoc.setValue("format1.field3", new int[] {0}, Double.valueOf(5.5));
             double result2 = rfmlDoc.getDoubleValue("format1.field3", new int[] {0});
             assertCondition (result1 == 0.0 && result2 == 5.5);
         }
@@ -333,7 +333,7 @@ public class RMGetDoubleTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount5init0");
             double result1 = rfmlDoc.getDoubleValue("format1.field4", new int[] {0});
-            rfmlDoc.setValue("format1.field4", new int[] {0}, new Double(6.7));
+            rfmlDoc.setValue("format1.field4", new int[] {0}, Double.valueOf(6.7));
             double result2 = rfmlDoc.getDoubleValue("format1.field4", new int[] {0});
             assertCondition (result1 == 0.0 && result2 == 6.7);
         }
@@ -359,11 +359,11 @@ public class RMGetDoubleTestcase extends Testcase
             double init2 = rfmlDoc.getDoubleValue("format1.field4", new int[] {2});
             double init3 = rfmlDoc.getDoubleValue("format1.field4", new int[] {3});
             double init4 = rfmlDoc.getDoubleValue("format1.field4", new int[] {4});
-            rfmlDoc.setValue("format1.field4", new int[] {0}, new Double(1.2));
-            rfmlDoc.setValue("format1.field4", new int[] {1}, new Double(3.4));
-            rfmlDoc.setValue("format1.field4", new int[] {2}, new Double(5.6));
-            rfmlDoc.setValue("format1.field4", new int[] {3}, new Double(7.8));
-            rfmlDoc.setValue("format1.field4", new int[] {4}, new Double(9.0));
+            rfmlDoc.setValue("format1.field4", new int[] {0}, Double.valueOf(1.2));
+            rfmlDoc.setValue("format1.field4", new int[] {1}, Double.valueOf(3.4));
+            rfmlDoc.setValue("format1.field4", new int[] {2}, Double.valueOf(5.6));
+            rfmlDoc.setValue("format1.field4", new int[] {3}, Double.valueOf(7.8));
+            rfmlDoc.setValue("format1.field4", new int[] {4}, Double.valueOf(9.0));
             double result0 = rfmlDoc.getDoubleValue("format1.field4", new int[] {0});
             double result1 = rfmlDoc.getDoubleValue("format1.field4", new int[] {1});
             double result2 = rfmlDoc.getDoubleValue("format1.field4", new int[] {2});
@@ -430,11 +430,11 @@ public class RMGetDoubleTestcase extends Testcase
             double init2 = rfmlDoc.getDoubleValue("format1.field7.field3", new int[] {1,0});
             double init3 = rfmlDoc.getDoubleValue("format1.field7.field3", new int[] {1,1});
             double init4 = rfmlDoc.getDoubleValue("format1.field7.field3", new int[] {0,4});
-            rfmlDoc.setValue("format1.field7.field3", new int[] {0,0}, new Double(1.2));
-            rfmlDoc.setValue("format1.field7.field3", new int[] {0,1}, new Double(3.4));
-            rfmlDoc.setValue("format1.field7.field3", new int[] {1,0}, new Double(5.6));
-            rfmlDoc.setValue("format1.field7.field3", new int[] {1,1}, new Double(7.8));
-            rfmlDoc.setValue("format1.field7.field3", new int[] {0,4}, new Double(9.0));
+            rfmlDoc.setValue("format1.field7.field3", new int[] {0,0}, Double.valueOf(1.2));
+            rfmlDoc.setValue("format1.field7.field3", new int[] {0,1}, Double.valueOf(3.4));
+            rfmlDoc.setValue("format1.field7.field3", new int[] {1,0}, Double.valueOf(5.6));
+            rfmlDoc.setValue("format1.field7.field3", new int[] {1,1}, Double.valueOf(7.8));
+            rfmlDoc.setValue("format1.field7.field3", new int[] {0,4}, Double.valueOf(9.0));
             double result0 = rfmlDoc.getDoubleValue("format1.field7.field3", new int[] {0,0});
             double result1 = rfmlDoc.getDoubleValue("format1.field7.field3", new int[] {0,1});
             double result2 = rfmlDoc.getDoubleValue("format1.field7.field3", new int[] {1,0});

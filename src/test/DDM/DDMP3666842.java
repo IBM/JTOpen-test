@@ -91,11 +91,11 @@ public class DDMP3666842 extends Testcase
           int i=0;
           records[i] = rf.getNewRecord();
           records[i].setField("CHAR", "test");
-          records[i++].setField("INT", new Integer(22));
+          records[i++].setField("INT", Integer.valueOf(22));
 
           records[i] = rf.getNewRecord();
           records[i].setField("CHAR", "test1");
-          records[i++].setField("INT", new Integer(23));
+          records[i++].setField("INT", Integer.valueOf(23));
 
           myFile.write(records);
           myFile.close();
@@ -200,7 +200,7 @@ public class DDMP3666842 extends Testcase
 
         Object[] key = new Object[2];
         key[0] = "test";
-        key[1] = new Integer(22);
+        key[1] = Integer.valueOf(22);
 
         Record keyedRecord = testFile.read(key);
         if (keyedRecord != null)
@@ -231,7 +231,7 @@ public class DDMP3666842 extends Testcase
 
         Object[] key = new Object[2];
         key[0] = "test";
-        key[1] = new Integer(22);
+        key[1] = Integer.valueOf(22);
 
         //CRS: Since the field is fixed length, we need to pad the key to be the length of the field
         while (((String)key[0]).length() < testFile.getRecordFormat().getKeyFieldDescription(0).getLength())

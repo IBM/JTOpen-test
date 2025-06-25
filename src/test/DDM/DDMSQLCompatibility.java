@@ -490,7 +490,7 @@ public class DDMSQLCompatibility extends Testcase
       f.close();
       f.open(AS400File.READ_WRITE, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
       Record writeRec = rfs[0].getNewRecord();
-      writeRec.setField("TEST", (new Integer(1)));
+      writeRec.setField("TEST", (Integer.valueOf(1)));
       f.write(writeRec);
 
       f.close();
@@ -574,7 +574,7 @@ public class DDMSQLCompatibility extends Testcase
       f.close();
       f.open(AS400File.READ_WRITE, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
       Record writeRec = rfs[0].getNewRecord();
-      writeRec.setField("TEST", (new Integer(1)));
+      writeRec.setField("TEST", (Integer.valueOf(1)));
       f.write(writeRec);
 
       f.close();
@@ -650,7 +650,7 @@ public class DDMSQLCompatibility extends Testcase
       f.close();
       f.open(AS400File.READ_WRITE, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
       Record writeRec = rfs[0].getNewRecord();
-      writeRec.setField("TEST", (new Integer(1)));
+      writeRec.setField("TEST", (Integer.valueOf(1)));
       f.write(writeRec);
 
       f.close();
@@ -730,7 +730,7 @@ public class DDMSQLCompatibility extends Testcase
       f.close();
       f.open(AS400File.READ_WRITE, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
       Record writeRec = rfs[0].getNewRecord();
-      writeRec.setField("TEST", (new Integer(1)));
+      writeRec.setField("TEST", (Integer.valueOf(1)));
       f.write(writeRec);
 
       f.close();

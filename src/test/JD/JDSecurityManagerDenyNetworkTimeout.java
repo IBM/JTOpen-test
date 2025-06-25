@@ -16,7 +16,7 @@ package test.JD;
 import java.security.Permission;
 import java.sql.SQLPermission;
 
-public class JDSecurityManagerDenyNetworkTimeout extends SecurityManager {
+public class JDSecurityManagerDenyNetworkTimeout  {
 
   // Disallow all calls to abort 
   public void checkPermission(Permission perm) {

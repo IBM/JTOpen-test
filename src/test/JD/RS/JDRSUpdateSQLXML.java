@@ -552,7 +552,7 @@ extends JDTestcase
 		    argTypes[1] = Class.forName("com.ibm.db2.jdbc.app.SQLXML"); 
 		}
 		Object[] args = new Object[2];
-		args[0] = new Integer(2);
+		args[0] = Integer.valueOf(2);
 		args[1] = null;
 
 		JDReflectionUtil.callMethod_V(rsXML_, "updateSQLXML", argTypes, args);

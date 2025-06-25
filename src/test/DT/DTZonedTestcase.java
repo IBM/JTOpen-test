@@ -356,7 +356,7 @@ public class DTZonedTestcase extends Testcase
         AS400ZonedDecimal conv = new AS400ZonedDecimal(5,3);
         try
         {
-            byte[] ret = conv.toBytes(new Float(0));
+            byte[] ret = conv.toBytes(Float.valueOf(0));
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -769,7 +769,7 @@ public class DTZonedTestcase extends Testcase
         AS400ZonedDecimal conv = new AS400ZonedDecimal(5,3);
         try
         {
-            int ret = conv.toBytes(new Float(0), new byte[10]);
+            int ret = conv.toBytes(Float.valueOf(0), new byte[10]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -1097,7 +1097,7 @@ public class DTZonedTestcase extends Testcase
         AS400ZonedDecimal conv = new AS400ZonedDecimal(5,3);
         try
         {
-            int ret = conv.toBytes(new Float(0), new byte[10], 0);
+            int ret = conv.toBytes(Float.valueOf(0), new byte[10], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)

@@ -188,7 +188,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     }
 
     public long length() {
-      Integer size = new Integer(data_.length());
+      Integer size = Integer.valueOf(data_.length());
       return size.longValue();
     }
 
@@ -266,7 +266,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     }
 
     public long length() {
-      Integer size = new Integer(data_.length());
+      Integer size = Integer.valueOf(data_.length());
       return size.longValue();
     }
 
@@ -504,11 +504,11 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
   }
 
   private double getPurchases(String account) {
-    Integer dollar = new Integer(random_.nextInt(new Integer(account).intValue()));
-    Integer cents = new Integer(random_.nextInt(100));
+    Integer dollar = Integer.valueOf(random_.nextInt(Integer.valueOf(account).intValue()));
+    Integer cents = Integer.valueOf(random_.nextInt(100));
 
     String purchases = dollar + "." + cents;
-    return new Double(purchases).doubleValue();
+    return Double.valueOf(purchases).doubleValue();
   }
 
   /**
@@ -2942,7 +2942,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     AS400JDBCRowSet rowset = null;
     try {
       rowset = new AS400JDBCRowSet();
-      rowset.updateFloat(1, new Float(10.25).floatValue());
+      rowset.updateFloat(1, Float.valueOf((float)10.25).floatValue());
 
       failed("Unexpected results.");
     } catch (ExtendedIllegalStateException is) {
@@ -2965,7 +2965,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     AS400JDBCRowSet rowset = null;
     try {
       rowset = new AS400JDBCRowSet();
-      rowset.updateFloat("A", new Float(10.33).floatValue());
+      rowset.updateFloat("A", Float.valueOf((float)10.33).floatValue());
 
       failed("Unexpected results.");
     } catch (ExtendedIllegalStateException is) {
@@ -3241,7 +3241,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     AS400JDBCRowSet rowset = null;
     try {
       rowset = new AS400JDBCRowSet();
-      rowset.updateShort(1, new Short("1").shortValue());
+      rowset.updateShort(1, Short.valueOf("1").shortValue());
 
       failed("Unexpected results.");
     } catch (ExtendedIllegalStateException is) {
@@ -3264,7 +3264,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     AS400JDBCRowSet rowset = null;
     try {
       rowset = new AS400JDBCRowSet();
-      rowset.updateShort("A", new Short("1").shortValue());
+      rowset.updateShort("A", Short.valueOf("1").shortValue());
 
       failed("Unexpected results.");
     } catch (ExtendedIllegalStateException is) {
@@ -3826,7 +3826,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     AS400JDBCRowSet rowset = null;
     try {
       rowset = new AS400JDBCRowSet();
-      rowset.setFloat(1, new Double(10.25).floatValue());
+      rowset.setFloat(1, Double.valueOf(10.25).floatValue());
 
       failed("Unexpected results.");
     } catch (ExtendedIllegalStateException is) {
@@ -3872,7 +3872,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     AS400JDBCRowSet rowset = null;
     try {
       rowset = new AS400JDBCRowSet();
-      rowset.setLong(1, new Long("10000").longValue());
+      rowset.setLong(1, Long.valueOf("10000").longValue());
 
       failed("Unexpected results.");
     } catch (ExtendedIllegalStateException is) {
@@ -4108,7 +4108,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     AS400JDBCRowSet rowset = null;
     try {
       rowset = new AS400JDBCRowSet();
-      rowset.setShort(1, new Short("1").shortValue());
+      rowset.setShort(1, Short.valueOf("1").shortValue());
 
       failed("Unexpected results.");
     } catch (ExtendedIllegalStateException is) {

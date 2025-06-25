@@ -317,9 +317,9 @@ public class SecPTMiscTestcase extends Testcase
             argTypes[0] = args[0].getClass(); 
             args[1]=tBytes; 
             argTypes[1] = args[1].getClass(); 
-            args[2] = new Integer(ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE);
+            args[2] = Integer.valueOf(ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE);
             argTypes[2] = Integer.TYPE; 
-            args[3] = new Integer(444); 
+            args[3] = Integer.valueOf(444); 
             argTypes[3] = Integer.TYPE; 
             
             // Create the token object.
@@ -1084,9 +1084,9 @@ public class SecPTMiscTestcase extends Testcase
      args = new Object[5]; 
      args[0] = verificationId; argTypes[0] = args[0].getClass();
      args[1] = remoteIp;   argTypes[1] = args[1].getClass(); 
-     args[2] = new Integer(remotePort);  argTypes[2] = Integer.TYPE; 
+     args[2] = Integer.valueOf(remotePort);  argTypes[2] = Integer.TYPE; 
      args[3] = localIp; argTypes[3] = args[3].getClass(); 
-     args[4] = new Integer(localPort);  argTypes[4] = Integer.TYPE; 
+     args[4] = Integer.valueOf(localPort);  argTypes[4] = Integer.TYPE; 
      info = JDReflectionUtil.createObject("com.ibm.as400.security.auth.ProfileTokenEnhancedInfo", argTypes, args);
      
      argTypes = new Class[9];
@@ -1094,11 +1094,11 @@ public class SecPTMiscTestcase extends Testcase
      args[0] = principal;   argTypes[0] = AS400BasicAuthenticationPrincipal.class; 
      args[1] = password;    argTypes[1] = args[1].getClass();
      args[2] = factor;      argTypes[2] = args[2].getClass();
-     args[3] = new Integer(authenticationIndicator);  argTypes[3] = Integer.TYPE; 
-     args[4] = new Boolean(isPrivate);   argTypes[4] = Boolean.TYPE;
-     args[5] = new Boolean(reusable);  argTypes[5] = Boolean.TYPE;
-     args[6] = new Boolean(renewable);  argTypes[6] = Boolean.TYPE;
-     args[7] = new Integer(timeoutInterval); argTypes[7] = Integer.TYPE; 
+     args[3] = Integer.valueOf(authenticationIndicator);  argTypes[3] = Integer.TYPE; 
+     args[4] = Boolean.valueOf(isPrivate);   argTypes[4] = Boolean.TYPE;
+     args[5] = Boolean.valueOf(reusable);  argTypes[5] = Boolean.TYPE;
+     args[6] = Boolean.valueOf(renewable);  argTypes[6] = Boolean.TYPE;
+     args[7] = Integer.valueOf(timeoutInterval); argTypes[7] = Integer.TYPE; 
      args[8] = info; argTypes[8] = info.getClass();   
   
  

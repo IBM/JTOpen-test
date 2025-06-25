@@ -299,7 +299,7 @@ public class RMToXmlTestcase extends Testcase
             nextLine = raFile1.readLine();
           }
           if (DEBUG) System.out.println("File contents:\n" + buffer.toString());
-          Integer intC = new Integer(systemObject_.getCcsid());
+          Integer intC = Integer.valueOf(systemObject_.getCcsid());
           String ccsidVal = new String(intC.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" count=\"5\" type=\"char\" length=\"8\" ccsid=\"" + ccsidVal.trim() + "\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
@@ -578,7 +578,7 @@ public class RMToXmlTestcase extends Testcase
           BinaryFieldDescription fd = new BinaryFieldDescription(converter, "field1", "BINFLD1", 4);
           ///fd.setCCSID("37");
           ///fd.setTEXT("Description for field1");
-          fd.setDFT(new Integer(123));
+          fd.setDFT(Integer.valueOf(123));
           RecordFormat rf = new RecordFormat("recformat1");
           rf.addFieldDescription(fd);
 
@@ -628,11 +628,11 @@ public class RMToXmlTestcase extends Testcase
           BinaryFieldDescription fd = new BinaryFieldDescription(converter, "field1", "BINFLD1", 4);
           ///fd.setCCSID("37");
           ///fd.setTEXT("Description for field1");
-          fd.setDFT(new Integer(123));
+          fd.setDFT(Integer.valueOf(123));
           RecordFormat rf = new RecordFormat("recformat1");
           rf.addFieldDescription(fd);
           Record rec = new Record(rf, "record1");
-          Integer fieldContents1 = new Integer(678);
+          Integer fieldContents1 = Integer.valueOf(678);
           rec.setField("field1", fieldContents1);
 
           RecordFormatDocument rfmlDoc = new RecordFormatDocument(rec);
@@ -737,7 +737,7 @@ public class RMToXmlTestcase extends Testcase
           fd.setDecimalPositions(2);
           fd.setFLTPCN("*DOUBLE");
           fd.setLength(4);
-          fd.setDFT(new Float(.123e25));
+          fd.setDFT(Float.valueOf(.123e25f));
 
           RecordFormat rf = new RecordFormat("recformat1");
           rf.addFieldDescription(fd);
@@ -790,14 +790,14 @@ public class RMToXmlTestcase extends Testcase
           fd.setDecimalPositions(8);
           fd.setFLTPCN("*DOUBLE");
           fd.setLength(8);
-          ///fd.setDFT(new Float(.123e25));
-          fd.setDFT(new Double(.123e25));
+          ///fd.setDFT(Float.valueOf(.123e25));
+          fd.setDFT(Double.valueOf(.123e25));
 
           RecordFormat rf = new RecordFormat("recformat1");
           rf.addFieldDescription(fd);
 
           Record rec = new Record(rf, "record1");
-          Double fieldContents1 = new Double(.456e78);
+          Double fieldContents1 = Double.valueOf(.456e78);
           rec.setField("field1", fieldContents1);
 
           RecordFormatDocument rfmlDoc = new RecordFormatDocument(rec);
@@ -956,7 +956,7 @@ public class RMToXmlTestcase extends Testcase
           rf.addFieldDescription(fd);
 
           Record rec = new Record(rf, "record1");
-          ///Float fieldContents1 = new Float(.456e78);
+          ///Float fieldContents1 = Float.valueOf(.456e78);
           BigDecimal fieldContents1 = new BigDecimal(998877D);
           rec.setField("field1", fieldContents1);
 
@@ -1332,7 +1332,7 @@ public class RMToXmlTestcase extends Testcase
           rf.addFieldDescription(fd);
 
           Record rec = new Record(rf, "record1");
-          ///Float fieldContents1 = new Float(.456e78);
+          ///Float fieldContents1 = Float.valueOf(.456e78);
           byte[] fieldContents1 = new byte[]{5,6,-1,-2};
           rec.setField("field1", fieldContents1);
 

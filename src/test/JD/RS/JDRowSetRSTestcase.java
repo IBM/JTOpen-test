@@ -5924,7 +5924,7 @@ updateTimestamp() - Should work when the column name is valid.
 
                 byte[] ba = new byte[] { (byte) 22, (byte) 4, (byte) 98, (byte) -2 };
                 //rowset.updateBinaryStream (16, new ByteArrayInputStream (ba), ba.length);
-                JDReflectionUtil.callMethod_V(rowset, "updateBinaryStream", 18, new ByteArrayInputStream(ba), (new Integer(ba.length)).longValue());
+                JDReflectionUtil.callMethod_V(rowset, "updateBinaryStream", 18, new ByteArrayInputStream(ba), (Integer.valueOf(ba.length)).longValue());
 
                 assertCondition(listener.isRowChanged());
 
@@ -5988,7 +5988,7 @@ updateTimestamp() - Should work when the column name is valid.
                 byte[] ba = new byte[] { (byte) 22, (byte) 4, (byte) 98, (byte) -2 };
                 // rowset.updateBlob (16, new ByteArrayInputStream (ba),
                 // ba.length);
-                JDReflectionUtil.callMethod_V(rowset, "updateBlob", 18, new ByteArrayInputStream(ba), (new Integer(ba.length)).longValue());
+                JDReflectionUtil.callMethod_V(rowset, "updateBlob", 18, new ByteArrayInputStream(ba), (Integer.valueOf(ba.length)).longValue());
 
                 assertCondition(listener.isRowChanged());
 
@@ -6635,7 +6635,7 @@ updateTimestamp() - Should work when the column name is valid.
 
                 byte[] ba = new byte[] { (byte) 11, (byte) 4, (byte) 98, (byte) -22 };
                 //rowset.updateBinaryStream (16, new ByteArrayInputStream (ba), ba.length);
-                JDReflectionUtil.callMethod_V(rowset, "updateBinaryStream", 18, new ByteArrayInputStream(ba), (new Integer(ba.length)).longValue());
+                JDReflectionUtil.callMethod_V(rowset, "updateBinaryStream", 18, new ByteArrayInputStream(ba), (Integer.valueOf(ba.length)).longValue());
 
                 rowset.updateRow();
                 rowset.close();
@@ -6669,7 +6669,7 @@ updateTimestamp() - Should work when the column name is valid.
 
                 byte[] ba = new byte[] { (byte) 12, (byte) 44, (byte) 98, (byte) -2 };
                 //rowset.updateBinaryStream (18, new ByteArrayInputStream (ba), ba.length);
-                JDReflectionUtil.callMethod_V_IS(rowset, "updateBinaryStream", "C_VARBINARY_20", new ByteArrayInputStream(ba), (new Integer(ba.length)).longValue());
+                JDReflectionUtil.callMethod_V_IS(rowset, "updateBinaryStream", "C_VARBINARY_20", new ByteArrayInputStream(ba), (Integer.valueOf(ba.length)).longValue());
 
                 rowset.updateRow();
                 rowset.close();
@@ -6705,7 +6705,7 @@ updateTimestamp() - Should work when the column name is valid.
 
                 byte[] ba = new byte[] { (byte) 1, (byte) 2, (byte) 3, (byte) 4 };
                 //rowset.updateBinaryStream (18, new ByteArrayInputStream (ba), ba.length);
-                JDReflectionUtil.callMethod_V_IS(rowset, "updateBlob", "C_VARBINARY_20", new ByteArrayInputStream(ba), (new Integer(ba.length)).longValue());
+                JDReflectionUtil.callMethod_V_IS(rowset, "updateBlob", "C_VARBINARY_20", new ByteArrayInputStream(ba), (Integer.valueOf(ba.length)).longValue());
 
                 rowset.updateRow();
                 rowset.close();
@@ -6740,7 +6740,7 @@ updateTimestamp() - Should work when the column name is valid.
 
                 byte[] ba = new byte[] { (byte) 1, (byte) 2, (byte) 3, (byte) 4 };
                 //rowset.updateBinaryStream (18, new ByteArrayInputStream (ba), ba.length);
-                JDReflectionUtil.callMethod_V(rowset, "updateBlob", 18, new ByteArrayInputStream(ba), (new Integer(ba.length)).longValue());
+                JDReflectionUtil.callMethod_V(rowset, "updateBlob", 18, new ByteArrayInputStream(ba), (Integer.valueOf(ba.length)).longValue());
 
                 rowset.updateRow();
                 rowset.close();

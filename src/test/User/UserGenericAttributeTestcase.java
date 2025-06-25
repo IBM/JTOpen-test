@@ -620,7 +620,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(15));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(15));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
@@ -642,7 +642,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(16));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(16));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
@@ -665,11 +665,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(17));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(17));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(18));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(18));
             Object value = u.getAttributeUnchangedValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(((Integer)value).intValue() == 17);
         }
@@ -688,11 +688,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(17));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(17));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(18));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(18));
             u.refreshAttributeValues();
             Object value = u.getAttributeUnchangedValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(((Integer)value).intValue() == 17);
@@ -712,11 +712,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(19));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(19));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(20));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(20));
             u.commitAttributeChanges();
             Object value = u.getAttributeUnchangedValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(((Integer)value).intValue() == 20);
@@ -825,7 +825,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(22));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(22));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
@@ -847,7 +847,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(23));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(23));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
@@ -870,11 +870,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(24));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(24));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(25));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(25));
             Object value = u.getAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(((Integer)value).intValue() == 25);
         }
@@ -893,11 +893,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(24));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(24));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(25));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(25));
             u.refreshAttributeValues();
             Object value = u.getAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(((Integer)value).intValue() == 25);
@@ -917,11 +917,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(26));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(26));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(27));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(27));
             u.commitAttributeChanges();
             Object value = u.getAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(((Integer)value).intValue() == 27);
@@ -1119,7 +1119,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(5));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(5));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
@@ -1141,7 +1141,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(6));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(6));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
@@ -1164,11 +1164,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(7));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(7));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(8));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(8));
             boolean pending = u.hasUncommittedAttributeChanges(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(pending == true);
         }
@@ -1187,11 +1187,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(7));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(7));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(8));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(8));
             u.refreshAttributeValues();
             boolean pending = u.hasUncommittedAttributeChanges(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(pending == true);
@@ -1211,11 +1211,11 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u2 = new RUser(pwrSys_, userName);
-            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(9));
+            u2.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(9));
             u2.commitAttributeChanges();
 
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(10));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(10));
             u.commitAttributeChanges();
             boolean pending = u.hasUncommittedAttributeChanges(RUser.PASSWORD_EXPIRATION_INTERVAL);
             assertCondition(pending == false);
@@ -1363,7 +1363,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(null, new Integer(2));
+            u.setAttributeValue(null, Integer.valueOf(2));
             failed("Didn't throw exception");
         }
         catch (Exception e)
@@ -1399,7 +1399,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(u, new Integer(3));
+            u.setAttributeValue(u, Integer.valueOf(3));
             failed("Didn't throw exception");
         }
         catch (Exception e)
@@ -1435,7 +1435,7 @@ public class UserGenericAttributeTestcase extends Testcase
         {
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
-            u.setAttributeValue(RUser.ASSISTANCE_LEVEL, new Integer(4));
+            u.setAttributeValue(RUser.ASSISTANCE_LEVEL, Integer.valueOf(4));
             failed("Didn't throw exception");
         }
         catch (Exception e)
@@ -1542,7 +1542,7 @@ public class UserGenericAttributeTestcase extends Testcase
             String userName = sandbox_.createUser();
             RUser u = new RUser(pwrSys_, userName);
             u.setAttributeValue(RUser.ASSISTANCE_LEVEL, RUser.ASSISTANCE_LEVEL_INTERMEDIATE);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(27));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(27));
             u.commitAttributeChanges();
             RUser u2 = new RUser(pwrSys_, userName);
             Object value1 = u2.getAttributeValue(RUser.ASSISTANCE_LEVEL);

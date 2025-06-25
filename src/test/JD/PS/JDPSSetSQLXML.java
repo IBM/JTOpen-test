@@ -245,7 +245,7 @@ public class JDPSSetSQLXML extends JDTestcase {
           argTypes[1] = Class.forName("com.ibm.db2.jdbc.app.SQLXML");
         }
         Object[] args = new Object[2];
-        args[0] = new Integer(1);
+        args[0] = Integer.valueOf(1);
         args[1] = null;
 
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", argTypes, args);

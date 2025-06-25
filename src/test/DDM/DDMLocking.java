@@ -1439,15 +1439,15 @@ public class DDMLocking extends Testcase
           Vector<Integer> v = new Vector<Integer>(locks.length);
           for (int i = 0; i < locks.length; i++)
           {
-            v.addElement(new Integer(locks[i]));
+            v.addElement(Integer.valueOf(locks[i]));
           }
           assertCondition(locks.length == 6 &&
-                 v.contains(new Integer(AS400File.READ_EXCLUSIVE_LOCK)) &&
-                 v.contains(new Integer(AS400File.READ_ALLOW_SHARED_READ_LOCK)) &&
-                 v.contains(new Integer(AS400File.READ_ALLOW_SHARED_WRITE_LOCK)) &&
-                 v.contains(new Integer(AS400File.WRITE_EXCLUSIVE_LOCK)) &&
-                 v.contains(new Integer(AS400File.WRITE_ALLOW_SHARED_READ_LOCK)) &&
-                 v.contains(new Integer(AS400File.WRITE_ALLOW_SHARED_WRITE_LOCK)));
+                 v.contains(Integer.valueOf(AS400File.READ_EXCLUSIVE_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.READ_ALLOW_SHARED_READ_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.READ_ALLOW_SHARED_WRITE_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.WRITE_EXCLUSIVE_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.WRITE_ALLOW_SHARED_READ_LOCK)) &&
+                 v.contains(Integer.valueOf(AS400File.WRITE_ALLOW_SHARED_WRITE_LOCK)));
         }
         else
         {

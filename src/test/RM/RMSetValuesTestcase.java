@@ -358,7 +358,7 @@ public class RMSetValuesTestcase extends Testcase
 
         // Make a Record.
         Record rec = recFmt.getNewRecord();
-        rec.setField("field1", new Short("567"));
+        rec.setField("field1", Short.valueOf("567"));
 
         RecordFormatDocument rfmlDoc = new RecordFormatDocument();
         rfmlDoc.setValues("format1", rec);
@@ -539,7 +539,7 @@ public class RMSetValuesTestcase extends Testcase
 
         // Make a Record.
         Record rec = recFmt.getNewRecord();
-        rec.setField("field1", new Float(1.2e3));
+        rec.setField("field1", Float.valueOf(1.2e3f));
 
         RecordFormatDocument rfmlDoc = new RecordFormatDocument();
         rfmlDoc.setValues("format1", rec);
@@ -600,7 +600,7 @@ public class RMSetValuesTestcase extends Testcase
 
         // Make a Record.
         Record rec = recFmt.getNewRecord();
-        rec.setField("field1", new Integer(-3456));
+        rec.setField("field1", Integer.valueOf(-3456));
 
         RecordFormatDocument rfmlDoc = new RecordFormatDocument();
         rfmlDoc.setValues("format1", rec);
@@ -710,11 +710,11 @@ public class RMSetValuesTestcase extends Testcase
         // Make a Record.
         Record rec = recFmt.getNewRecord();
         rec.setField("field1", "Val1");
-        rec.setField("field2", new Short("-34"));
+        rec.setField("field2", Short.valueOf("-34"));
         rec.setField("field3", new BigDecimal("-56.78"));
         rec.setField("field4", new BigDecimal("-1234.56"));
-        rec.setField("field5", new Float(-1.2e3));
-        rec.setField("field6", new Integer(-34567890));
+        rec.setField("field5", Float.valueOf(-1.2e3f));
+        rec.setField("field6", Integer.valueOf(-34567890));
         rec.setField("field7", new byte[] {1});
 
         RecordFormatDocument rfmlDoc = new RecordFormatDocument();
@@ -1799,7 +1799,7 @@ public class RMSetValuesTestcase extends Testcase
             }
 
             // format1.fieldA: The int field (8 bytes, precision 63).
-            bytes0 = new AS400Bin8().toBytes(new Long(-2433234545462216467L));
+            bytes0 = new AS400Bin8().toBytes(Long.valueOf(-2433234545462216467L));
             if (DEBUG) System.out.println("signedBin8 bytes length: " + bytes0.length);
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];
@@ -1885,7 +1885,7 @@ public class RMSetValuesTestcase extends Testcase
             }
 
             // format1.fieldS.fieldA: The int field (8 bytes, precision 63).
-            bytes0 = new AS400Bin8().toBytes(new Long(Long.MAX_VALUE));
+            bytes0 = new AS400Bin8().toBytes(Long.valueOf(Long.MAX_VALUE));
             if (DEBUG) System.out.println("signedBin8 bytes length: " + bytes0.length);
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];

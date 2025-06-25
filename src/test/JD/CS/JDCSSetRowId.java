@@ -757,7 +757,7 @@ public class JDCSSetRowId extends JDCSSetTestcase {
           argTypes[1] = Class.forName("com.ibm.db2.jdbc.app.RowId"); 
         }
         Object[] args = new Object[2];
-        args[0] = new Integer(13);
+        args[0] = Integer.valueOf(13);
         args[1] = null;
         
         JDReflectionUtil.callMethod_V(cs, "setRowId", argTypes, args);

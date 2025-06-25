@@ -1228,7 +1228,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.USER_ID_NUMBER , new Long(-1));
+            u.setAttributeValue(RUser.USER_ID_NUMBER , Long.valueOf(-1));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1246,7 +1246,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.USER_ID_NUMBER , new Long(0));
+            u.setAttributeValue(RUser.USER_ID_NUMBER , Long.valueOf(0));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1264,7 +1264,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.USER_ID_NUMBER , new Long( 4294967294l + 1));
+            u.setAttributeValue(RUser.USER_ID_NUMBER , Long.valueOf( 4294967294l + 1));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1284,7 +1284,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
             long uid = 94857345L;
 
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.USER_ID_NUMBER , new Long(uid));
+            u.setAttributeValue(RUser.USER_ID_NUMBER , Long.valueOf(uid));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1307,7 +1307,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
             long uid = 4294967255l;
 
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.USER_ID_NUMBER , new Long(uid));
+            u.setAttributeValue(RUser.USER_ID_NUMBER , Long.valueOf(uid));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1333,7 +1333,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
             RUser u2 = new RUser(pwrSys_, anotherUser);
             try
             {
-                u2.setAttributeValue(RUser.USER_ID_NUMBER, new Long(uid));
+                u2.setAttributeValue(RUser.USER_ID_NUMBER, Long.valueOf(uid));
                 u2.commitAttributeChanges();
             }
             catch (Exception e)
@@ -1342,7 +1342,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
             }
 
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.USER_ID_NUMBER , new Long(uid));
+            u.setAttributeValue(RUser.USER_ID_NUMBER , Long.valueOf(uid));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1362,7 +1362,7 @@ public class UserSpecificAttributeTtoZTestcase extends Testcase
             long uid = 45894586l;
 
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.USER_ID_NUMBER , new Long(uid));
+            u.setAttributeValue(RUser.USER_ID_NUMBER , Long.valueOf(uid));
             u.commitAttributeChanges();
 
             User u2 = new User(pwrSys_, user_);

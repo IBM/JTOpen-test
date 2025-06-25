@@ -215,14 +215,14 @@ public void Var006()
             shareList.waitForComplete();
             NetServerFileShare share = (NetServerFileShare)shareList.resourceAt(0);
             
-            share.setAttributeValue(NetServerFileShare.MAXIMUM_USERS, new Integer(100));
+            share.setAttributeValue(NetServerFileShare.MAXIMUM_USERS, Integer.valueOf(100));
             
             if (((Integer)share.getAttributeValue(NetServerFileShare.MAXIMUM_USERS)).intValue() != 100)
                failed("NetServerFileShare maximum users is invalid.");        
             else
                succeeded();
 
-            share.setAttributeValue(NetServerFileShare.MAXIMUM_USERS, new Integer(-1));
+            share.setAttributeValue(NetServerFileShare.MAXIMUM_USERS, Integer.valueOf(-1));
         }
         catch (Exception e) 
         {

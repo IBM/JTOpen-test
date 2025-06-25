@@ -60,6 +60,7 @@ public class SysvalP9928495 extends Testcase
      * Verify QSTGLOWLMT.getValue() returns when the value is 0.
      * The variation should be successful.
      **/
+    @SuppressWarnings("deprecation")
     public void Var001()
     {
       String oldValue = null;

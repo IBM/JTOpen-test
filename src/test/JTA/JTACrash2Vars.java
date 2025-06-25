@@ -1145,7 +1145,7 @@ public class JTACrash2Vars {
           }
         }
 
-        varNum = new Integer(fromCrash2.substring(3,6)).intValue();
+        varNum = Integer.valueOf(fromCrash2.substring(3,6)).intValue();
         Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
         try {
           conn_ = DriverManager.getConnection("jdbc:db2:" + system_);

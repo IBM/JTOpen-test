@@ -156,7 +156,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-            ps.setObject (100, new Integer (4), Types.INTEGER, 0);
+            ps.setObject (100, Integer.valueOf(4), Types.INTEGER, 0);
             ps.close ();
             failed ("Didn't throw SQLException");
         }
@@ -297,7 +297,7 @@ extends JDTestcase
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-		ps.setObject (1, new Integer (4), 4848484, 0);
+		ps.setObject (1, Integer.valueOf(4), 4848484, 0);
 		failed ("Didn't throw SQLException");
 */ 
 	    }
@@ -320,7 +320,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-            ps.setObject (1, new Integer (4), Types.INTEGER, -1);
+            ps.setObject (1, Integer.valueOf(4), Types.INTEGER, -1);
             failed ("Didn't throw SQLException for invalid scale");
         }
         catch(Exception e)
@@ -341,7 +341,7 @@ extends JDTestcase
         {
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "CALL " + JDSetupProcedure.STP_CSPARMS + " (?, ?, ?)");
-            ps.setObject (2, new Integer (3), Types.INTEGER, 0);
+            ps.setObject (2, Integer.valueOf(3), Types.INTEGER, 0);
             ps.close ();
             failed ("Didn't throw SQLException");
         }
@@ -388,7 +388,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_SMALLINT) VALUES (?)");
-            ps.setObject (1, new Short ((short) -33), Types.SMALLINT, 0);
+            ps.setObject (1, Short.valueOf((short) -33), Types.SMALLINT, 0);
             ps.executeUpdate ();
             ps.close ();
 
@@ -419,7 +419,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_SMALLINT) VALUES (?)");
-            ps.setObject (1, new Short ((short) 76), Types.SMALLINT, 2);
+            ps.setObject (1, Short.valueOf((short) 76), Types.SMALLINT, 2);
             ps.executeUpdate ();
             ps.close ();
 
@@ -450,7 +450,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_INTEGER) VALUES (?)");
-            ps.setObject (1, new Integer (-595), Types.INTEGER, 0);
+            ps.setObject (1, Integer.valueOf(-595), Types.INTEGER, 0);
             ps.executeUpdate ();
             ps.close ();
 
@@ -481,7 +481,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_INTEGER) VALUES (?)");
-            ps.setObject (1, new Integer (-595), Types.INTEGER, 4);
+            ps.setObject (1, Integer.valueOf(-595), Types.INTEGER, 4);
             ps.executeUpdate ();
             ps.close ();
 
@@ -512,7 +512,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_REAL) VALUES (?)");
-            ps.setObject (1, new Float (-4.385), Types.REAL, 0);
+            ps.setObject (1, Float.valueOf(-4.385f), Types.REAL, 0);
             ps.executeUpdate ();
             ps.close ();
 
@@ -543,7 +543,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_REAL) VALUES (?)");
-            ps.setObject (1, new Float (-4.3235), Types.REAL, 3);
+            ps.setObject (1, Float.valueOf(-4.3235f), Types.REAL, 3);
             ps.executeUpdate ();
             ps.close ();
 
@@ -574,7 +574,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_FLOAT) VALUES (?)");
-            ps.setObject (1, new Float (-3.42), Types.DOUBLE, 0);
+            ps.setObject (1, Float.valueOf(-3.42f), Types.DOUBLE, 0);
             ps.executeUpdate ();
             ps.close ();
 
@@ -605,7 +605,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_FLOAT) VALUES (?)");
-            ps.setObject (1, new Float (3.43212), Types.DOUBLE, 3);
+            ps.setObject (1, Float.valueOf(3.43212f), Types.DOUBLE, 3);
             ps.executeUpdate ();
             ps.close ();
 
@@ -636,7 +636,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_DOUBLE) VALUES (?)");
-            ps.setObject (1, new Double (-314.159), Types.DOUBLE, 0);
+            ps.setObject (1, Double.valueOf(-314.159), Types.DOUBLE, 0);
             ps.executeUpdate ();
             ps.close ();
 
@@ -667,7 +667,7 @@ extends JDTestcase
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_DOUBLE) VALUES (?)");
-            ps.setObject (1, new Double (3159.343), Types.DOUBLE, 2);
+            ps.setObject (1, Double.valueOf(3159.343), Types.DOUBLE, 2);
             ps.executeUpdate ();
             ps.close ();
 
@@ -1693,7 +1693,7 @@ extends JDTestcase
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_DISTINCT) VALUES (?)");
-                ps.setObject (1, new Integer (-92), Types.INTEGER, 0);
+                ps.setObject (1, Integer.valueOf(-92), Types.INTEGER, 0);
                 ps.executeUpdate ();
                 ps.close ();
 
@@ -1727,7 +1727,7 @@ extends JDTestcase
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_DISTINCT) VALUES (?)");
-                ps.setObject (1, new Integer (12), Types.INTEGER, 2);
+                ps.setObject (1, Integer.valueOf(12), Types.INTEGER, 2);
                 ps.executeUpdate ();
                 ps.close ();
 
@@ -1761,7 +1761,7 @@ extends JDTestcase
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_BIGINT) VALUES (?)");
-                ps.setObject (1, new Long (5323495), Types.BIGINT, 0);
+                ps.setObject (1, Long.valueOf(5323495), Types.BIGINT, 0);
                 ps.executeUpdate ();
                 ps.close ();
 
@@ -1795,7 +1795,7 @@ extends JDTestcase
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_BIGINT) VALUES (?)");
-                ps.setObject (1, new Long (-59322445665l), Types.BIGINT, 4);
+                ps.setObject (1, Long.valueOf(-59322445665l), Types.BIGINT, 4);
                 ps.executeUpdate ();
                 ps.close ();
 
@@ -2744,13 +2744,13 @@ setParameterTest () - Set the specified parameter using an object.
 
   public void Var080() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Boolean(true), Types.BOOLEAN, 0, "1");
+      setParameterTest("C_BOOLEAN", Boolean.valueOf(true), Types.BOOLEAN, 0, "1");
     }
   }
 
   public void Var081() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Boolean(false),Types.BOOLEAN, 0, "0");
+      setParameterTest("C_BOOLEAN", Boolean.valueOf(false),Types.BOOLEAN, 0, "0");
     }
   }
 
@@ -2768,13 +2768,13 @@ setParameterTest () - Set the specified parameter using an object.
 
   public void Var084() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Integer(100),Types.BOOLEAN, 0, "1");
+      setParameterTest("C_BOOLEAN", Integer.valueOf(100),Types.BOOLEAN, 0, "1");
     }
   }
 
   public void Var085() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Integer(0),Types.BOOLEAN, 0, "0");
+      setParameterTest("C_BOOLEAN", Integer.valueOf(0),Types.BOOLEAN, 0, "0");
     }
   }
 

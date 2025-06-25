@@ -772,13 +772,13 @@ protected void setup()
       records_[i] = rf.getNewRecord();
       field0 = "Record " + String.valueOf(i) + "   ";
       records_[i].setField(0, field0.substring(0, 10));
-      records_[i].setField(1, new Integer(i));
+      records_[i].setField(1, Integer.valueOf(i));
       records_[i].setField(2, new BigDecimal(String.valueOf(i) + ".00000"));
       records_[i].setField(3, new BigDecimal(String.valueOf(i) + ".00000"));
       dupKeyRecs_[i] = rf.getNewRecord();
       field0 = "Record " + String.valueOf(i) + "   ";
       dupKeyRecs_[i].setField(0, field0.substring(0, 10));
-      dupKeyRecs_[i].setField(1, new Integer(i));
+      dupKeyRecs_[i].setField(1, Integer.valueOf(i));
       dupKeyRecs_[i].setField(2, new BigDecimal(String.valueOf(i) + ".11111"));
       dupKeyRecs_[i].setField(3, new BigDecimal(String.valueOf(i) + ".00000"));
     }
@@ -3688,7 +3688,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
       file.read(key); // Get into the file
       file.positionCursorToNext();
       file.positionCursorToPrevious();
@@ -3745,7 +3745,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
       file.read(key); // Get into the file
       file.readNext();
       file.readPrevious();
@@ -3802,7 +3802,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
       file.read(key); // Get into the file
       file.positionCursorToPrevious();
       file.positionCursorToNext();
@@ -3859,7 +3859,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
       file.read(key); // Get into the file
       file.readPrevious();
       file.readNext();
@@ -3916,7 +3916,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
       file.read(key); // Get into the file
       file.positionCursorToNext();
       file.readPrevious();
@@ -3973,7 +3973,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
       file.read(key); // Get into the file
       file.readNext();
       file.positionCursorToPrevious();
@@ -4030,7 +4030,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
       file.read(key); // Get into the file
       file.positionCursorToPrevious();
       file.readNext();
@@ -4087,7 +4087,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
       file.read(key); // Get into the file
       file.readPrevious();
       file.positionCursorToNext();
@@ -4142,7 +4142,7 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName2_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-      Object[] key = {"Record 10 ", new Integer(10), new BigDecimal("10.00000")};
+      Object[] key = {"Record 10 ", Integer.valueOf(10), new BigDecimal("10.00000")};
       file.read(key); // Get into the file
       Record r = file.readNextEqual();
       if (r == null || !r.toString().equals("Record 10  10 10.11111 10.00000"))
@@ -4447,13 +4447,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+//      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 102"), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(102)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(102)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("102.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -4514,13 +4514,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+//      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 102"), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(102)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(102)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("102.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -4581,13 +4581,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+//      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 102"), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(102)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(102)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("102.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -4648,13 +4648,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+//      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 102"), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(102)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(102)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("102.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -4715,13 +4715,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+//      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 102"), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(102)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(102)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("102.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -4782,13 +4782,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+//      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 102"), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(102)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(102)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("102.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -4849,13 +4849,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+//      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 102"), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(102)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(102)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("102.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -4916,13 +4916,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 102", new Integer(102), new BigDecimal("102.00000")};
+//      Object[] key = {"Record 102", Integer.valueOf(102), new BigDecimal("102.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 102"), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(102)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(102)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("102.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -4981,13 +4981,13 @@ protected void cleanup()
       file = new KeyedFile(systemObject_, fileName2_);
       file.setRecordFormat(new DDMFormatCaching(systemObject_));
       file.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
-//      Object[] key = {"Record 10 ", new Integer(10), new BigDecimal("10.00000")};
+//      Object[] key = {"Record 10 ", Integer.valueOf(10), new BigDecimal("10.00000")};
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 10 "), 0, 10);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(10)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(10)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15,5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("10.00000")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
