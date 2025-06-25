@@ -1977,9 +1977,9 @@ public class FDSet extends Testcase
   {
     try
     {
-      Integer i = new Integer(5555);
-      Short s = new Short((short)1);
-      Long l = new Long(123456789L); //@D0A
+      Integer i = Integer.valueOf(5555);
+      Short s = Short.valueOf((short)1);
+      Long l = Long.valueOf(123456789L); //@D0A
       BinaryFieldDescription f = new BinaryFieldDescription();
       f.setDFT(i);
       if (f.getDFT() != i)
@@ -2087,9 +2087,9 @@ public class FDSet extends Testcase
     String msg = "";
     try
     {
-      Integer i = new Integer(5555);
-      Short s = new Short((short)1);
-      Long l = new Long(123456789L); //@D0A
+      Integer i = Integer.valueOf(5555);
+      Short s = Short.valueOf((short)1);
+      Long l = Long.valueOf(123456789L); //@D0A
       BinaryFieldDescription f = new BinaryFieldDescription();
 
       // set to Integer first
@@ -4758,8 +4758,8 @@ public class FDSet extends Testcase
   {
     try
     {
-      Float fv = new Float("2.1");
-      Double d = new Double("555.55");
+      Float fv = Float.valueOf("2.1");
+      Double d = Double.valueOf("555.55");
       FloatFieldDescription f = new FloatFieldDescription();
       f.setDFT(fv);
       if (f.getDFT() != fv)
@@ -4845,8 +4845,8 @@ public class FDSet extends Testcase
     try
     {
       FloatFieldDescription f = new FloatFieldDescription();
-      Float fv = new Float("2.1");
-      Double d = new Double("555.55");
+      Float fv = Float.valueOf("2.1");
+      Double d = Double.valueOf("555.55");
 
       // set to Float first
       f.setDFT(fv);

@@ -161,7 +161,7 @@ specified.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-            ps.setObject (100, new Integer (4));
+            ps.setObject (100, Integer.valueOf(4));
             ps.close ();
             failed ("Didn't throw SQLException");
         }
@@ -286,7 +286,7 @@ not an input parameter.
         try {
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "CALL " + JDSetupProcedure.STP_CSPARMS + " (?, ?, ?)");
-            ps.setObject (2, new Integer (3));
+            ps.setObject (2, Integer.valueOf(3));
             ps.close ();
             failed ("Didn't throw SQLException");
         }
@@ -331,7 +331,7 @@ setObject() - Set a SMALLINT parameter.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_SMALLINT) VALUES (?)");
-            ps.setObject (1, new Short ((short) -33));
+            ps.setObject (1, Short.valueOf((short) -33));
             ps.executeUpdate ();
             ps.close ();
 
@@ -390,7 +390,7 @@ This is ok.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_SMALLINT) VALUES (?)");
-            ps.setObject (1, new Float (-33.3f));
+            ps.setObject (1, Float.valueOf(-33.3f));
             ps.executeUpdate ();
             ps.close ();
 
@@ -441,7 +441,7 @@ setObject() - Set an INTEGER parameter.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_INTEGER) VALUES (?)");
-            ps.setObject (1, new Integer (9595));
+            ps.setObject (1, Integer.valueOf(9595));
             ps.executeUpdate ();
             ps.close ();
 
@@ -500,7 +500,7 @@ This is ok.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_INTEGER) VALUES (?)");
-            ps.setObject (1, new Float (-33.3f));
+            ps.setObject (1, Float.valueOf(-33.3f));
             ps.executeUpdate ();
             ps.close ();
 
@@ -552,7 +552,7 @@ setObject() - Set an REAL parameter.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_REAL) VALUES (?)");
-            ps.setObject (1, new Float (4.325));
+            ps.setObject (1, Float.valueOf(4.325f));
             ps.executeUpdate ();
             ps.close ();
 
@@ -604,7 +604,7 @@ setObject() - Set an FLOAT parameter.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_FLOAT) VALUES (?)");
-            ps.setObject (1, new Float (-34.2));
+            ps.setObject (1, Float.valueOf(-34.2f));
             ps.executeUpdate ();
             ps.close ();
 
@@ -656,7 +656,7 @@ setObject() - Set an DOUBLE parameter.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_DOUBLE) VALUES (?)");
-            ps.setObject (1, new Double (3.14159));
+            ps.setObject (1, Double.valueOf(3.14159));
             ps.executeUpdate ();
             ps.close ();
 
@@ -1127,7 +1127,7 @@ setObject() - Set a CLOB parameter, when the object is the wrong type.
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_CLOB) VALUES (?)");
-                ps.setObject (1, new Short ((short) 3342));
+                ps.setObject (1, Short.valueOf((short) 3342));
 	    ps.executeUpdate(); 
 
                 failed ("Didn't throw SQLException");
@@ -1188,7 +1188,7 @@ setObject() - Set a DBCLOB parameter, when the object is the wrong type.
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_DBCLOB) VALUES (?)");
-                ps.setObject (1, new Long (34242));
+                ps.setObject (1, Long.valueOf(34242));
 	    ps.executeUpdate(); 
 
                 failed ("Didn't throw SQLException");
@@ -1359,7 +1359,7 @@ setObject() - Set a VARBINARY parameter, when the object is the wrong type.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_VARBINARY_20) VALUES (?)");
-            ps.setObject (1, new Double (34.23));
+            ps.setObject (1, Double.valueOf(34.23));
 	    ps.executeUpdate(); 
 
             failed ("Didn't throw SQLException");
@@ -1524,7 +1524,7 @@ setObject() - Set a TIME parameter, when the object is the wrong type.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_TIME) VALUES (?)");
-            ps.setObject (1, new Float (4.332));
+            ps.setObject (1, Float.valueOf(4.332f));
 	    ps.executeUpdate(); 
 
             failed ("Didn't throw SQLException");
@@ -1661,7 +1661,7 @@ setObject() - Set a DISTINCT parameter.
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_DISTINCT) VALUES (?)");
-                ps.setObject (1, new Integer (432));
+                ps.setObject (1, Integer.valueOf(432));
                 ps.executeUpdate ();
                 ps.close ();
 
@@ -1696,7 +1696,7 @@ setObject() - Set a DATALINK parameter, when the object is the wrong type.
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_DATALINK) VALUES (?)");
-                ps.setObject (1, new Integer (-4));
+                ps.setObject (1, Integer.valueOf(-4));
 	    ps.executeUpdate(); 
 
                 failed ("Didn't throw SQLException");
@@ -1721,7 +1721,7 @@ setObject() - Set an BIGINT parameter.
                 PreparedStatement ps = connection_.prepareStatement (
                                                                     "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                     + " (C_BIGINT) VALUES (?)");
-                ps.setObject (1, new Long (-322123495953l));
+                ps.setObject (1, Long.valueOf(-322123495953l));
                 ps.executeUpdate ();
                 ps.close ();
 
@@ -1753,7 +1753,7 @@ cause a data truncation exception.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_BIGINT) VALUES (?)");
-		ps.setObject (1, new Float(-92233720368547758099.0f));
+		ps.setObject (1, Float.valueOf(-92233720368547758099.0f));
 		ps.executeUpdate(); 
 
 		failed ("Didn't throw SQLException");
@@ -1782,7 +1782,7 @@ This is ok.
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
                                                                 + " (C_BIGINT) VALUES (?)");
-            ps.setObject (1, new Float (-33.3f));
+            ps.setObject (1, Float.valueOf(-33.3f));
             ps.executeUpdate ();
             ps.close ();
 
@@ -2168,13 +2168,13 @@ setObject() - Set a DECFLOAT(16) parameter, when the object is the wrong type.
   /* Set XML column using various objects */ 
   public void Var071() { setXmlOk("<test>Var071</test>", "<test>Var071</test>");  }
   public void Var072() { setXmlFail(new BigDecimal("3.4"), "XML parsing failed"); } 
-  public void Var073() { setXmlFail(new Boolean(true), "XML parsing failed"); } 
-  public void Var074() { setXmlFail(new Byte((byte)1), "XML parsing failed"); } 
-  public void Var075() { setXmlFail(new Short((short)1), "XML parsing failed"); } 
-  public void Var076() { setXmlFail(new Integer(1), "XML parsing failed"); } 
-  public void Var077() { setXmlFail(new Long(1), "XML parsing failed"); } 
-  public void Var078() { setXmlFail(new Float(1), "XML parsing failed"); } 
-  public void Var079() { setXmlFail(new Double(1), "XML parsing failed"); } 
+  public void Var073() { setXmlFail(Boolean.valueOf(true), "XML parsing failed"); } 
+  public void Var074() { setXmlFail(Byte.valueOf((byte)1), "XML parsing failed"); } 
+  public void Var075() { setXmlFail(Short.valueOf((short)1), "XML parsing failed"); } 
+  public void Var076() { setXmlFail(Integer.valueOf(1), "XML parsing failed"); } 
+  public void Var077() { setXmlFail(Long.valueOf(1), "XML parsing failed"); } 
+  public void Var078() { setXmlFail(Float.valueOf(1), "XML parsing failed"); } 
+  public void Var079() { setXmlFail(Double.valueOf(1), "XML parsing failed"); } 
   public void Var080() {
     try {
       String expected = "<bytes>Var080</bytes>";
@@ -2461,13 +2461,13 @@ setDateTimeParameterTest () - Set the specified paramber using an object using a
 
   public void Var093() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Boolean(true), "1");
+      setParameterTest("C_BOOLEAN", Boolean.valueOf(true), "1");
     }
   }
 
   public void Var094() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Boolean(false), "0");
+      setParameterTest("C_BOOLEAN", Boolean.valueOf(false), "0");
     }
   }
 
@@ -2485,13 +2485,13 @@ setDateTimeParameterTest () - Set the specified paramber using an object using a
 
   public void Var097() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Integer(100), "1");
+      setParameterTest("C_BOOLEAN", Integer.valueOf(100), "1");
     }
   }
 
   public void Var098() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Integer(0), "0");
+      setParameterTest("C_BOOLEAN", Integer.valueOf(0), "0");
     }
   }
 

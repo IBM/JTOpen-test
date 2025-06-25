@@ -13,13 +13,25 @@
 
 package test.RF;
 
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.FileOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.Vector;
-import com.ibm.as400.access.*;
+
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400Bin4;
+import com.ibm.as400.access.AS400FileRecordDescription;
+import com.ibm.as400.access.AS400Message;
+import com.ibm.as400.access.AS400PackedDecimal;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.BinaryFieldDescription;
+import com.ibm.as400.access.CharacterFieldDescription;
+import com.ibm.as400.access.CommandCall;
+import com.ibm.as400.access.PackedDecimalFieldDescription;
+import com.ibm.as400.access.Record;
+import com.ibm.as400.access.RecordFormat;
 
 import test.PasswordVault;
 import test.Testcase;
@@ -926,11 +938,11 @@ public class RFSerialization extends Testcase
       Record r = new Record(rf, testContents, "myFirstRecord");
       // Set some more state
       r.setRecordNumber(22);
-      r.setField(1, new Integer(22));
+      r.setField(1, Integer.valueOf(22));
       r.setField("PACKEDDEC", null);
       Record matchRec = rf.getNewRecord(testContents);
       matchRec.setField(3, "RECORD0001");
-      matchRec.setField(1, new Integer(22));
+      matchRec.setField(1, Integer.valueOf(22));
       matchRec.setField("PACKEDDEC", null);
       byte[] matchContents = r.getContents();
       // Add some listeners

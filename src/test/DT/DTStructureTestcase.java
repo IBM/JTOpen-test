@@ -665,9 +665,9 @@ public class DTStructureTestcase extends Testcase
         };
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         AS400Structure conv = new AS400Structure();
@@ -706,9 +706,9 @@ public class DTStructureTestcase extends Testcase
         };
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         AS400Structure conv = new AS400Structure();
@@ -747,9 +747,9 @@ public class DTStructureTestcase extends Testcase
         };
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         AS400Structure conv = new AS400Structure();
@@ -1068,9 +1068,9 @@ public class DTStructureTestcase extends Testcase
         };
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         AS400Structure conv = new AS400Structure();
@@ -1109,9 +1109,9 @@ public class DTStructureTestcase extends Testcase
         };
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         AS400Structure conv = new AS400Structure();
@@ -1150,9 +1150,9 @@ public class DTStructureTestcase extends Testcase
         };
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         AS400Structure conv = new AS400Structure();
@@ -1296,9 +1296,9 @@ public class DTStructureTestcase extends Testcase
 
             Object[] value =
             {
-                new Integer(88),
+                Integer.valueOf(88),
                 new byte[0],
-                new Float(-1.5f),
+                Float.valueOf(-1.5f),
                 "1234"
             };
 
@@ -1382,9 +1382,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Double(-1.5),
+            Double.valueOf(-1.5),
             "1234"
         };
         try
@@ -1421,9 +1421,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
         };
         try
         {
@@ -1459,9 +1459,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "123456"
         };
         try
@@ -1491,9 +1491,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         try
@@ -1530,9 +1530,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         try
@@ -1589,7 +1589,7 @@ public class DTStructureTestcase extends Testcase
         {
             null,
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         try
@@ -1662,9 +1662,9 @@ public class DTStructureTestcase extends Testcase
 
             Object[] value =
             {
-                new Integer(88),
+                Integer.valueOf(88),
                 new byte[0],
-                new Float(-1.5f),
+                Float.valueOf(-1.5f),
                 "1234"
             };
 
@@ -1718,9 +1718,9 @@ public class DTStructureTestcase extends Testcase
 
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
 
@@ -1791,9 +1791,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Double(-1.5),
+            Double.valueOf(-1.5),
             "1234"
         };
         try
@@ -1830,9 +1830,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
         };
         try
         {
@@ -1868,9 +1868,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "123456"
         };
         try
@@ -1900,9 +1900,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         try
@@ -1939,9 +1939,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         byte[] expectedValue =
@@ -1998,7 +1998,7 @@ public class DTStructureTestcase extends Testcase
         {
             null,
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         try
@@ -2069,9 +2069,9 @@ public class DTStructureTestcase extends Testcase
 
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
 
@@ -2112,7 +2112,7 @@ public class DTStructureTestcase extends Testcase
 
             Object[] value =
             {
-                new Short((short)0),
+                Short.valueOf((short)0),
                 new byte[0]
             };
 
@@ -2234,17 +2234,17 @@ public class DTStructureTestcase extends Testcase
 
             Object[] innerValue =
             {
-                new Integer(88),
+                Integer.valueOf(88),
                 new byte[0],
-                new Float(-1.5f),
+                Float.valueOf(-1.5f),
                 "1234"
             };
 
             Object[] value =
             {
-                new Integer(99),
+                Integer.valueOf(99),
                 innerValue,
-                new Float(1.5f),
+                Float.valueOf(1.5f),
                 "5678"
             };
 
@@ -2304,13 +2304,13 @@ public class DTStructureTestcase extends Testcase
 
             Object[] innerValue =
             {
-                new Float(-1.5f),
-                new Float(1.5f),
+                Float.valueOf(-1.5f),
+                Float.valueOf(1.5f),
             };
 
             Object[] value =
             {
-                new Integer(99),
+                Integer.valueOf(99),
                 new byte[0],
                 innerValue,
                 "5678"
@@ -2367,9 +2367,9 @@ public class DTStructureTestcase extends Testcase
 
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
 
@@ -2408,9 +2408,9 @@ public class DTStructureTestcase extends Testcase
 
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
 
@@ -2449,9 +2449,9 @@ public class DTStructureTestcase extends Testcase
 
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
 
@@ -2522,9 +2522,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Double(-1.5),
+            Double.valueOf(-1.5),
             "1234"
         };
         try
@@ -2561,9 +2561,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
         };
         try
         {
@@ -2599,9 +2599,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure(struct);
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "123456"
         };
         try
@@ -2631,9 +2631,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         try
@@ -2670,9 +2670,9 @@ public class DTStructureTestcase extends Testcase
         AS400Structure conv = new AS400Structure();
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         byte[] expectedValue =
@@ -2729,7 +2729,7 @@ public class DTStructureTestcase extends Testcase
         {
             null,
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
         try
@@ -2800,9 +2800,9 @@ public class DTStructureTestcase extends Testcase
 
         Object[] value =
         {
-            new Integer(88),
+            Integer.valueOf(88),
             new byte[0],
-            new Float(-1.5f),
+            Float.valueOf(-1.5f),
             "1234"
         };
 

@@ -363,7 +363,7 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
             // Test the result.
             if (pce_ != null)
             {
-                assertCondition(new Integer(ti).equals(pce_.getNewValue()) && ti == pt.getTimeoutInterval(), "Property change failed.");
+                assertCondition(Integer.valueOf(ti).equals(pce_.getNewValue()) && ti == pt.getTimeoutInterval(), "Property change failed.");
             }
             else
             {
@@ -401,7 +401,7 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
             catch (PropertyVetoException pve)
             {
                 // Test the result.
-                assertCondition(new Integer(ti).equals(pve.getPropertyChangeEvent().getNewValue()) && new Integer(pt.getTimeoutInterval()).equals(pve.getPropertyChangeEvent().getOldValue()), "Veto of property change failed.");
+                assertCondition(Integer.valueOf(ti).equals(pve.getPropertyChangeEvent().getNewValue()) && Integer.valueOf(pt.getTimeoutInterval()).equals(pve.getPropertyChangeEvent().getOldValue()), "Veto of property change failed.");
             }
         }
         catch (Exception e)
@@ -715,7 +715,7 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
             // Test the result.
             if (pce_ != null)
             {
-                assertCondition(new Integer(tt).equals(pce_.getNewValue()) && tt == pt.getTokenType(), "Property change failed.");
+                assertCondition(Integer.valueOf(tt).equals(pce_.getNewValue()) && tt == pt.getTokenType(), "Property change failed.");
             }
             else
             {
@@ -753,7 +753,7 @@ public class SecPTPropertyTestcase extends Testcase implements PropertyChangeLis
             catch (PropertyVetoException pve)
             {
                 // Test the result.
-                assertCondition(new Integer(tt).equals(pve.getPropertyChangeEvent().getNewValue()) && new Integer(pt.getTokenType()).equals(pve.getPropertyChangeEvent().getOldValue()), "Veto of property change failed.");
+                assertCondition(Integer.valueOf(tt).equals(pve.getPropertyChangeEvent().getNewValue()) && Integer.valueOf(pt.getTokenType()).equals(pve.getPropertyChangeEvent().getOldValue()), "Veto of property change failed.");
             }
         }
         catch (Exception e)

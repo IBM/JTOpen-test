@@ -2304,15 +2304,15 @@ public class JDSetupProcedure {
     if (except != 1)
       if ((stp.equals(STP_CSTYPESIN)) || (stp.equals(STP_CSINOUT))
           || (stp.equals(STP_CSTYPESINOUT)) || (stp.equals(STP_CSTYPESINOUTX)))
-        cs.setObject(1, new Short("-33"));
+        cs.setObject(1, Short.valueOf("-33"));
     if (except != 2)
-      cs.setObject(2, new Integer(52));
+      cs.setObject(2, Integer.valueOf(52));
     if (except != 3)
-      cs.setObject(3, new Float(3.4f));
+      cs.setObject(3, Float.valueOf(3.4f));
     if (except != 4)
-      cs.setObject(4, new Float(4.5f));
+      cs.setObject(4, Float.valueOf(4.5f));
     if (except != 5)
-      cs.setObject(5, new Double(5.6));
+      cs.setObject(5, Double.valueOf(5.6));
     if (except != 6)
       cs.setObject(6, new BigDecimal("7"));
     if (except != 7)
@@ -2353,7 +2353,7 @@ public class JDSetupProcedure {
     }
     if (except != 22)
       if (supportedFeatures.bigintSupport)
-        cs.setObject(22, new Long((long) 45633));
+        cs.setObject(22, Long.valueOf((long) 45633));
     if (stp.equals(STP_CSINOUT)) {
       if (except != 23)
         cs.setObject(23, "Buenet");
@@ -2404,23 +2404,23 @@ public class JDSetupProcedure {
       if ((stp.equals(STP_CSTYPESIN)) || (stp.equals(STP_CSINOUT))
           || (stp.equals(STP_CSTYPESINOUT))
           || (stp.equals(STP_CSTYPESINOUTX))) {
-        cs.setObject(1, new Short("-34"));
+        cs.setObject(1, Short.valueOf("-34"));
         return;
       }
     if (accept == 2) {
-      cs.setObject(2, new Integer(53));
+      cs.setObject(2, Integer.valueOf(53));
       return;
     }
     if (accept == 3) {
-      cs.setObject(3, new Float(3.5f));
+      cs.setObject(3, Float.valueOf(3.5f));
       return;
     }
     if (accept == 4) {
-      cs.setObject(4, new Float(4.6f));
+      cs.setObject(4, Float.valueOf(4.6f));
       return;
     }
     if (accept == 5) {
-      cs.setObject(5, new Double(5.7));
+      cs.setObject(5, Double.valueOf(5.7));
       return;
     }
     if (accept == 6) {
@@ -2495,7 +2495,7 @@ public class JDSetupProcedure {
     }
     if (accept == 22)
       if (supportedFeatures.bigintSupport) {
-        cs.setObject(22, new Long(1411948972002L));
+        cs.setObject(22, Long.valueOf(1411948972002L));
         return;
       }
     if (stp.equals(STP_CSINOUT)) {

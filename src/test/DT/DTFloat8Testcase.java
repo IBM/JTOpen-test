@@ -150,7 +150,7 @@ public class DTFloat8Testcase extends Testcase
         try
         {
             AS400Float8 conv = new AS400Float8();
-            byte[] data = conv.toBytes(new Double(0.5546875));
+            byte[] data = conv.toBytes(Double.valueOf(0.5546875));
             if (data.length == 8 &&
                 data[0] == (byte)0x3F &&
                 data[1] == (byte)0xE1 &&
@@ -183,7 +183,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            byte[] ret = conv.toBytes(new Long(0));
+            byte[] ret = conv.toBytes(Long.valueOf(0));
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -291,7 +291,7 @@ public class DTFloat8Testcase extends Testcase
 
             for (int i=0; i < 6; ++i)
             {
-                int ret = conv.toBytes(new Double(testValue[i]), data);
+                int ret = conv.toBytes(Double.valueOf(testValue[i]), data);
 
                 if (ret != 8)
                 {
@@ -327,7 +327,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            int ret = conv.toBytes(new Double(0.0), new byte[7]);
+            int ret = conv.toBytes(Double.valueOf(0.0), new byte[7]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -352,7 +352,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            int ret = conv.toBytes(new Long(0), new byte[10]);
+            int ret = conv.toBytes(Long.valueOf(0), new byte[10]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -402,7 +402,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            int ret = conv.toBytes(new Double(0.0), null);
+            int ret = conv.toBytes(Double.valueOf(0.0), null);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -545,7 +545,7 @@ public class DTFloat8Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            int ret = conv.toBytes(new Double(0.0), data, 0);
+            int ret = conv.toBytes(Double.valueOf(0.0), data, 0);
             if (ret != 8)
             {
                 valid = false;
@@ -566,7 +566,7 @@ public class DTFloat8Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            ret = conv.toBytes(new Double(0.0), data, 5);
+            ret = conv.toBytes(Double.valueOf(0.0), data, 5);
             if (ret != 8)
             {
                 valid = false;
@@ -594,7 +594,7 @@ public class DTFloat8Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            ret = conv.toBytes(new Double(0.0), data, 16);
+            ret = conv.toBytes(Double.valueOf(0.0), data, 16);
             if (ret != 8)
             {
                 valid = false;
@@ -628,7 +628,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            int ret = conv.toBytes(new Double(0.0), new byte[7], 0);
+            int ret = conv.toBytes(Double.valueOf(0.0), new byte[7], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -653,7 +653,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            int ret = conv.toBytes(new Double(0.0), new byte[10], 4);
+            int ret = conv.toBytes(Double.valueOf(0.0), new byte[10], 4);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -678,7 +678,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            int ret = conv.toBytes(new Double(0.0), new byte[10], -1);
+            int ret = conv.toBytes(Double.valueOf(0.0), new byte[10], -1);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -703,7 +703,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            int ret = conv.toBytes(new Long(0), new byte[10], 0);
+            int ret = conv.toBytes(Long.valueOf(0), new byte[10], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -753,7 +753,7 @@ public class DTFloat8Testcase extends Testcase
         AS400Float8 conv = new AS400Float8();
         try
         {
-            int ret = conv.toBytes(new Double(0.0), null, 0);
+            int ret = conv.toBytes(Double.valueOf(0.0), null, 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)

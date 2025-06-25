@@ -329,9 +329,9 @@ public class SecPHMiscTestcase extends Testcase
           args[3] = null;          argTypes[3] = charArray.getClass();           /* AAF */ 
           args[4] = null;          argTypes[4] = args[1].getClass();           /* verification id */ 
           args[5] = null ;          argTypes[5] = args[1].getClass();           /* Remote id */ 
-          args[6] = new Integer(0);  argTypes[6] = Integer.TYPE;               /* Remote port */  
+          args[6] = Integer.valueOf(0);  argTypes[6] = Integer.TYPE;               /* Remote port */  
           args[7] = null ;          argTypes[7] = args[1].getClass();           /* local id */ 
-          args[8] = new Integer(0);  argTypes[8] = Integer.TYPE;               /* local port */  
+          args[8] = Integer.valueOf(0);  argTypes[8] = Integer.TYPE;               /* local port */  
 
           
           JDReflectionUtil.callStaticMethod_V("com.ibm.as400.access.AS400ImplNative","createProfileHandle2Native", argTypes, args);

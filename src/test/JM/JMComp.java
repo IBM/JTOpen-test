@@ -164,7 +164,7 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
-        inList.add (new Integer (999));
+        inList.add (Integer.valueOf(999));
         jm.setComponents (inList);
         failed ("Didn't throw exception.");
       }
@@ -252,7 +252,7 @@ Performs cleanup needed after running variations.
       try {
         Vector<Comparable<?>> inList = new Vector<Comparable<?>> (2);
         inList.add (ToolboxJarMaker.PROGRAM_CALL);
-        inList.add (new Integer (999));
+        inList.add (Integer.valueOf(999));
         jm.setComponents (inList);
         failed ("Didn't throw exception.");
       }

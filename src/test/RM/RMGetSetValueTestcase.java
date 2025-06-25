@@ -275,7 +275,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtint");
-            rfmlDoc.setValue("format1.field1", new Short((short)23));
+            rfmlDoc.setValue("format1.field1", Short.valueOf((short)23));
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == 23);
@@ -342,7 +342,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtint");
-            rfmlDoc.setValue("format1.field1", new Short((short)23));
+            rfmlDoc.setValue("format1.field1", Short.valueOf((short)23));
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1", new int[] {0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == 23);
@@ -366,7 +366,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount5init0");
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field2", new int[] {0});
-            rfmlDoc.setValue("format1.field2", new int[] {0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field2", new int[] {0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field2", new int[] {0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == 0 &&
@@ -391,11 +391,11 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount5init0");
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field2", new int[] {1});
-            rfmlDoc.setValue("format1.field2", new int[] {0}, new Short((short)20));
-            rfmlDoc.setValue("format1.field2", new int[] {1}, new Short((short)21));
-            rfmlDoc.setValue("format1.field2", new int[] {2}, new Short((short)22));
-            rfmlDoc.setValue("format1.field2", new int[] {3}, new Short((short)23));
-            rfmlDoc.setValue("format1.field2", new int[] {4}, new Short((short)24));
+            rfmlDoc.setValue("format1.field2", new int[] {0}, Short.valueOf((short)20));
+            rfmlDoc.setValue("format1.field2", new int[] {1}, Short.valueOf((short)21));
+            rfmlDoc.setValue("format1.field2", new int[] {2}, Short.valueOf((short)22));
+            rfmlDoc.setValue("format1.field2", new int[] {3}, Short.valueOf((short)23));
+            rfmlDoc.setValue("format1.field2", new int[] {4}, Short.valueOf((short)24));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field2", new int[] {1});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == 0 &&
@@ -420,11 +420,11 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount5init0");
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field2", new int[] {4});
-            rfmlDoc.setValue("format1.field2", new int[] {0}, new Short((short)20));
-            rfmlDoc.setValue("format1.field2", new int[] {1}, new Short((short)21));
-            rfmlDoc.setValue("format1.field2", new int[] {2}, new Short((short)22));
-            rfmlDoc.setValue("format1.field2", new int[] {3}, new Short((short)23));
-            rfmlDoc.setValue("format1.field2", new int[] {4}, new Short((short)24));
+            rfmlDoc.setValue("format1.field2", new int[] {0}, Short.valueOf((short)20));
+            rfmlDoc.setValue("format1.field2", new int[] {1}, Short.valueOf((short)21));
+            rfmlDoc.setValue("format1.field2", new int[] {2}, Short.valueOf((short)22));
+            rfmlDoc.setValue("format1.field2", new int[] {3}, Short.valueOf((short)23));
+            rfmlDoc.setValue("format1.field2", new int[] {4}, Short.valueOf((short)24));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field2", new int[] {4});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == 0 &&
@@ -478,7 +478,7 @@ public class RMGetSetValueTestcase extends Testcase
             ///System.out.print("valOut1: " );
             ///if (valOut1 == null) System.out.println("null");
             ///else System.out.println(valOut1.shortValue());
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == 0 &&
@@ -506,7 +506,7 @@ public class RMGetSetValueTestcase extends Testcase
             ///System.out.print("valOut1: " );
             ///if (valOut1 == null) System.out.println("null");
             ///else System.out.println(valOut1.shortValue());
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,1}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,1}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,1});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == 0 &&
@@ -534,7 +534,7 @@ public class RMGetSetValueTestcase extends Testcase
             ///System.out.print("valOut1: " );
             ///if (valOut1 == null) System.out.println("null");
             ///else System.out.println(valOut1.shortValue());
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,0});
             Short valOut00 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -564,7 +564,7 @@ public class RMGetSetValueTestcase extends Testcase
             ///System.out.print("valOut1: " );
             ///if (valOut1 == null) System.out.println("null");
             ///else System.out.println(valOut1.shortValue());
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,2}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,2}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,2});
             Short valOut00 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -723,7 +723,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray3Dim");
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,0});
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0,0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0,0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,0});
             Short valOut001 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,1});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -750,7 +750,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray3Dim");
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,1,0});
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,1,0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,1,0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,1,0});
             Short valOut000 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -777,7 +777,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray3Dim");
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,1});
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0,1}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0,1}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,1});
             Short valOut000 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -804,7 +804,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray3Dim");
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,1,1});
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,1,1}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,1,1}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,1,1});
             Short valOut000 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -832,7 +832,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray3Dim");
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,0,1});
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,0,1}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,0,1}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,0,1});
             Short valOut000 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -1048,7 +1048,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field4", new Integer(456));
+            rfmlDoc.setValue("format1.field4", Integer.valueOf(456));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field4");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.intValue() == 456);
@@ -1157,7 +1157,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field5", new Integer(567));
+            rfmlDoc.setValue("format1.field5", Integer.valueOf(567));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field5");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.intValue() == 567);
@@ -1262,7 +1262,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field6", new Long(56789));
+            rfmlDoc.setValue("format1.field6", Long.valueOf(56789));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field6");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.longValue() == 56789);
@@ -1369,7 +1369,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtint");
-            rfmlDoc.setValue("format1.field7", new Long(5678901));
+            rfmlDoc.setValue("format1.field7", Long.valueOf(5678901));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field7");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.longValue() == 5678901);
@@ -1881,7 +1881,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field7", new Float("-5432.02"));
+            rfmlDoc.setValue("format1.field7", Float.valueOf("-5432.02"));
             Float valOut1 = (Float)rfmlDoc.getValue("format1.field7");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.toString().equals("-5432.02"));
@@ -1985,7 +1985,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field8", new Double("10.4"));
+            rfmlDoc.setValue("format1.field8", Double.valueOf("10.4"));
             Double valOut1 = (Double)rfmlDoc.getValue("format1.field8");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.toString().equals("10.4"));
@@ -2050,7 +2050,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("", new Integer(2579));
+            rfmlDoc.setValue("", Integer.valueOf(2579));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -2074,7 +2074,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt1");
-            rfmlDoc.setValue((String)null, new Integer(5));
+            rfmlDoc.setValue((String)null, Integer.valueOf(5));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -2103,7 +2103,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.bogusField", new Integer(2579));
+            rfmlDoc.setValue("format1.bogusField", Integer.valueOf(2579));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -2127,8 +2127,8 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structChar1");
-            rfmlDoc.setValue("format1.field1", new Integer(2579));
-            ///rfmlDoc.setValue("format1", new Integer(2579));
+            rfmlDoc.setValue("format1.field1", Integer.valueOf(2579));
+            ///rfmlDoc.setValue("format1", Integer.valueOf(2579));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -2154,7 +2154,7 @@ public class RMGetSetValueTestcase extends Testcase
 ///        try
 ///        {
 ///            RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-///            rfmlDoc.setValue("format1.field3", new Long(987654321987654321L));
+///            rfmlDoc.setValue("format1.field3", Long.valueOf(987654321987654321L));
 ///            Short valOut1 = (Short)rfmlDoc.getValue("format1.field3");
 ///            System.out.println("valOut1 == " + valOut1.toString());
 ///        }
@@ -2225,7 +2225,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
-            rfmlDoc.setValue("format1.field1", new Short((short)25));
+            rfmlDoc.setValue("format1.field1", Short.valueOf((short)25));
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == 25);
@@ -2270,7 +2270,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             short shortVal = Short.MAX_VALUE;  // 32767
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
-            rfmlDoc.setValue("format1.field1", new Long(shortVal));
+            rfmlDoc.setValue("format1.field1", Long.valueOf(shortVal));
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == shortVal);
@@ -2294,7 +2294,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             short shortVal = Short.MAX_VALUE;  // 32767
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
-            rfmlDoc.setValue("format1.field1", new Short((short)-53));
+            rfmlDoc.setValue("format1.field1", Short.valueOf((short)-53));
             rfmlDoc.setValue("format1.field1", new BigDecimal(shortVal));
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -2343,7 +2343,7 @@ public class RMGetSetValueTestcase extends Testcase
             short shortVal = Short.MAX_VALUE;  // 32767
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
             rfmlDoc.setIntValue("format1.field1", -53);
-            rfmlDoc.setValue("format1.field1", new Float(shortVal));
+            rfmlDoc.setValue("format1.field1", Float.valueOf(shortVal));
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == shortVal);
@@ -2367,7 +2367,7 @@ public class RMGetSetValueTestcase extends Testcase
             short shortVal = Short.MIN_VALUE;  // -32768
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtPZ");
             rfmlDoc.setIntValue("format1.field1", -53);
-            rfmlDoc.setValue("format1.field1", new Double(shortVal));
+            rfmlDoc.setValue("format1.field1", Double.valueOf(shortVal));
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == shortVal);
@@ -2416,7 +2416,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             short shortVal = Short.MAX_VALUE;  // 32767
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
-            rfmlDoc.setValue("format1.field1", new int[] {0}, new Short(shortVal));
+            rfmlDoc.setValue("format1.field1", new int[] {0}, Short.valueOf(shortVal));
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.shortValue() == shortVal);
@@ -2437,7 +2437,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount5init0");
-            rfmlDoc.setValue("format1.field2", new int[] {0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field2", new int[] {0}, Short.valueOf((short)23));
             Short valOut0 = (Short)rfmlDoc.getValue("format1.field2", new int[] {0});
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field2", new int[] {1});
             assertCondition(valOut0.shortValue() == 23 &&
@@ -2459,7 +2459,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount5init0");
-            rfmlDoc.setValue("format1.field2", new int[] {1}, new Short((short)23));
+            rfmlDoc.setValue("format1.field2", new int[] {1}, Short.valueOf((short)23));
             Short valOut0 = (Short)rfmlDoc.getValue("format1.field2", new int[] {0});
             Short valOut1 = (Short)rfmlDoc.getValue("format1.field2", new int[] {1});
             assertCondition(valOut0.shortValue() == 0 &&
@@ -2481,7 +2481,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount5init0");
-            rfmlDoc.setValue("format1.field2", new int[] {2}, new Short((short)23));
+            rfmlDoc.setValue("format1.field2", new int[] {2}, Short.valueOf((short)23));
             Short valOut4 = (Short)rfmlDoc.getValue("format1.field2", new int[] {4});
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field2", new int[] {2});
             assertCondition(valOut4.shortValue() == 0 &&
@@ -2504,7 +2504,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.oneOfEachTypeCount5init0");
-            rfmlDoc.setValue("format1.field2", new int[] {5}, new Short((short)23));
+            rfmlDoc.setValue("format1.field2", new int[] {5}, Short.valueOf((short)23));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -2528,7 +2528,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray2DimInt");
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,2});
             Short valOut00 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -2551,7 +2551,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray2DimInt");
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,1}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,1}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,1});
             Short valOut00 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -2574,7 +2574,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray2DimInt");
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,0});
             Short valOut00 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -2599,7 +2599,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray2DimInt");
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,2}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,2}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {1,2});
             Short valOut00 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -2622,7 +2622,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray2DimInt");
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {3,1}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {3,1}, Short.valueOf((short)23));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -2646,7 +2646,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray2DimInt");
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,3}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {1,3}, Short.valueOf((short)23));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -2748,7 +2748,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray3Dim");
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0,0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,0,0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,0});
             Short valOut001 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,1});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -2771,7 +2771,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.structArray3Dim");
-            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,1,0}, new Short((short)23));
+            rfmlDoc.setValue("format1.field1.field1.field1", new int[] {0,1,0}, Short.valueOf((short)23));
             Short valOut2 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,1,0});
             Short valOut000 = (Short)rfmlDoc.getValue("format1.field1.field1.field1", new int[] {0,0,0});
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -2975,7 +2975,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
-            rfmlDoc.setValue("format1.field2", new Integer(56789));
+            rfmlDoc.setValue("format1.field2", Integer.valueOf(56789));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field2");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.intValue() == 56789);
@@ -3018,7 +3018,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field4", new Integer(56789));
+            rfmlDoc.setValue("format1.field4", Integer.valueOf(56789));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field4");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.intValue() == 56789);
@@ -3040,7 +3040,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field4", new Integer(56789));
+            rfmlDoc.setValue("format1.field4", Integer.valueOf(56789));
             rfmlDoc.setValue("format1.field4", new BigDecimal(98765));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field4");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
@@ -3089,7 +3089,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
             rfmlDoc.setIntValue("format1.field4", 56789);
-            rfmlDoc.setValue("format1.field4", new Float(98765));
+            rfmlDoc.setValue("format1.field4", Float.valueOf(98765));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field4");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.intValue() == 98765);
@@ -3111,7 +3111,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field4", new Double(98765));
+            rfmlDoc.setValue("format1.field4", Double.valueOf(98765));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field4");
             ///System.out.println("valOut1 == " + valOut1.shortValue());
             assertCondition(valOut1.intValue() == 98765);
@@ -3161,7 +3161,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
-            rfmlDoc.setValue("format1.field5", new Integer(567));
+            rfmlDoc.setValue("format1.field5", Integer.valueOf(567));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field5");
             assertCondition(valOut1.intValue() == 567);
         }
@@ -3203,7 +3203,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field5", new Short((short)567));
+            rfmlDoc.setValue("format1.field5", Short.valueOf((short)567));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field5");
             assertCondition(valOut1.intValue() == 567);
         }
@@ -3226,7 +3226,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field5", new Short((short)125));
+            rfmlDoc.setValue("format1.field5", Short.valueOf((short)125));
             rfmlDoc.setValue("format1.field5", new BigDecimal(567));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field5");
             assertCondition(valOut1.intValue() == 567);
@@ -3274,7 +3274,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
             rfmlDoc.setIntValue("format1.field5", 125);
-            rfmlDoc.setValue("format1.field5", new Float(567));
+            rfmlDoc.setValue("format1.field5", Float.valueOf(567));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field5");
             assertCondition(valOut1.intValue() == 567);
         }
@@ -3298,7 +3298,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
             rfmlDoc.setIntValue("format1.field5", 125);
-            rfmlDoc.setValue("format1.field5", new Double(567));
+            rfmlDoc.setValue("format1.field5", Double.valueOf(567));
             Integer valOut1 = (Integer)rfmlDoc.getValue("format1.field5");
             assertCondition(valOut1.intValue() == 567);
         }
@@ -3347,7 +3347,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
-            rfmlDoc.setValue("format1.field6", new Long(567890));
+            rfmlDoc.setValue("format1.field6", Long.valueOf(567890));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field6");
             assertCondition(valOut1.intValue() == 567890);
         }
@@ -3389,7 +3389,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field6", new Short((short)567));
+            rfmlDoc.setValue("format1.field6", Short.valueOf((short)567));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field6");
             assertCondition(valOut1.intValue() == 567);
         }
@@ -3412,7 +3412,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field6", new Integer(567));
+            rfmlDoc.setValue("format1.field6", Integer.valueOf(567));
             rfmlDoc.setValue("format1.field6", new BigDecimal(123456789));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field6");
             assertCondition(valOut1.intValue() == 123456789);
@@ -3460,7 +3460,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
             rfmlDoc.setIntValue("format1.field6", 567);
-            rfmlDoc.setValue("format1.field6", new Float(123456.789));
+            rfmlDoc.setValue("format1.field6", Float.valueOf(123456.789f));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field6");
             assertCondition(valOut1.intValue() == 123456);
         }
@@ -3483,7 +3483,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field6", new Double(123456.789));
+            rfmlDoc.setValue("format1.field6", Double.valueOf(123456.789));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field6");
             assertCondition(valOut1.intValue() == 123456);
         }
@@ -3506,7 +3506,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field6", new Character('Z'));
+            rfmlDoc.setValue("format1.field6", Character.valueOf('Z'));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -3531,7 +3531,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtintB");
-            rfmlDoc.setValue("format1.field7", new Long(55667788));
+            rfmlDoc.setValue("format1.field7", Long.valueOf(55667788));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field7");
             assertCondition(valOut1.longValue() == 55667788);
         }
@@ -3573,7 +3573,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtint");
-            rfmlDoc.setValue("format1.field7", new Short((short)556));
+            rfmlDoc.setValue("format1.field7", Short.valueOf((short)556));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field7");
             assertCondition(valOut1.longValue() == 556);
         }
@@ -3596,7 +3596,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtint");
-            rfmlDoc.setValue("format1.field7", new Short((short)556));
+            rfmlDoc.setValue("format1.field7", Short.valueOf((short)556));
             rfmlDoc.setValue("format1.field7", new BigDecimal(556.789));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field7");
             assertCondition(valOut1.longValue() == 556);
@@ -3644,7 +3644,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtint");
             rfmlDoc.setIntValue("format1.field7", 556);
-            rfmlDoc.setValue("format1.field7", new Float(556.789));
+            rfmlDoc.setValue("format1.field7", Float.valueOf(556.789f));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field7");
             assertCondition(valOut1.longValue() == 556);
         }
@@ -3666,7 +3666,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtint");
-            rfmlDoc.setValue("format1.field7", new Double(556.789));
+            rfmlDoc.setValue("format1.field7", Double.valueOf(556.789));
             Long valOut1 = (Long)rfmlDoc.getValue("format1.field7");
             assertCondition(valOut1.longValue() == 556);
         }
@@ -3760,7 +3760,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field2", new Short((short)(5566)));
+            rfmlDoc.setValue("format1.field2", Short.valueOf((short)(5566)));
             BigDecimal valOut1 = (BigDecimal)rfmlDoc.getValue("format1.field2");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.toString().equals("5566.00000"));
@@ -3784,8 +3784,8 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field2", new Short((short)(5566)));
-            rfmlDoc.setValue("format1.field2", new Long(12345));
+            rfmlDoc.setValue("format1.field2", Short.valueOf((short)(5566)));
+            rfmlDoc.setValue("format1.field2", Long.valueOf(12345));
             BigDecimal valOut1 = (BigDecimal)rfmlDoc.getValue("format1.field2");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.toString().equals("12345.00000"));
@@ -3826,6 +3826,7 @@ public class RMGetSetValueTestcase extends Testcase
      using setIntValue(). Reset the value using a Float that does not cause an overflow
      and ensure the new value has been set correctly.
      **/
+    @SuppressWarnings("deprecation")
     public void Var115()
     {
 	
@@ -3833,7 +3834,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
             rfmlDoc.setIntValue("format1.field2", 5566);
-            Float valIn = new Float(12345.68);
+            Float valIn = Float.valueOf(12345.68f);
             rfmlDoc.setValue("format1.field2", valIn);
             BigDecimal valOut1 = (BigDecimal)rfmlDoc.getValue("format1.field2");
             BigDecimal valOut1Rounded = valOut1.setScale(2, BigDecimal.ROUND_HALF_UP);  // match the scale of the inputted Float.
@@ -3853,13 +3854,14 @@ public class RMGetSetValueTestcase extends Testcase
      number value (init). Reset the value using a Double that does not cause an overflow
      and ensure the new value has been set correctly.
      **/
+    @SuppressWarnings("deprecation")
     public void Var116()
     {
 	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Double valIn = new Double(12345.68);
+            Double valIn = Double.valueOf(12345.68);
             rfmlDoc.setValue("format1.field2", valIn);
             BigDecimal valOut1 = (BigDecimal)rfmlDoc.getValue("format1.field2");
             BigDecimal valOut1Rounded = valOut1.setScale(2, BigDecimal.ROUND_HALF_UP);  // match the scale of the inputted Double.
@@ -3955,7 +3957,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field9", new Short((short)(5566)));
+            rfmlDoc.setValue("format1.field9", Short.valueOf((short)(5566)));
             BigDecimal valOut1 = (BigDecimal)rfmlDoc.getValue("format1.field9");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.toString().equals("5566.0000000"));
@@ -3980,8 +3982,8 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field9", new Short((short)(5566)));
-            rfmlDoc.setValue("format1.field9", new Long(123456789012345L));
+            rfmlDoc.setValue("format1.field9", Short.valueOf((short)(5566)));
+            rfmlDoc.setValue("format1.field9", Long.valueOf(123456789012345L));
             BigDecimal valOut1 = (BigDecimal)rfmlDoc.getValue("format1.field9");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.toString().equals("123456789012345.0000000"));
@@ -4027,9 +4029,10 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
             rfmlDoc.setIntValue("format1.field9", 5566);
-            Float valIn = new Float(-123456789012345.68);
+            Float valIn = Float.valueOf(-123456789012345.68f);
             rfmlDoc.setValue("format1.field9", valIn);
             BigDecimal valOut1 = (BigDecimal)rfmlDoc.getValue("format1.field9");
+            @SuppressWarnings("deprecation")
             BigDecimal valOut1Rounded = valOut1.setScale(2, BigDecimal.ROUND_HALF_UP);  // match the scale of the inputted Float.
             ///System.out.println("valOut1Rounded.floatValue()=="+valOut1Rounded.floatValue());
             ///System.out.println("valIn.floatValue()=="+valIn.floatValue());
@@ -4047,13 +4050,14 @@ public class RMGetSetValueTestcase extends Testcase
      number value (init). Reset the value using a Double that does not cause an overflow
      and ensure the new value has been set correctly.
      **/
+    @SuppressWarnings("deprecation")
     public void Var122()
     {
 	
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Double valIn = new Double(-123456789012345.68);
+            Double valIn = Double.valueOf(-123456789012345.68);
             rfmlDoc.setValue("format1.field9", valIn);
             BigDecimal valOut1 = (BigDecimal)rfmlDoc.getValue("format1.field9");
             BigDecimal valOut1Rounded = valOut1.setScale(2, BigDecimal.ROUND_HALF_UP);  // match the scale of the inputted Double.
@@ -4080,7 +4084,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field9", new Character('a'));
+            rfmlDoc.setValue("format1.field9", Character.valueOf('a'));
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -4105,7 +4109,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt6");
-            Float valIn = new Float("5566.77");
+            Float valIn = Float.valueOf("5566.77");
             rfmlDoc.setValue("format1.field5", valIn);
             Float valOut1 = (Float)rfmlDoc.getValue("format1.field5");
             ///System.out.println("valOut1 == " + valOut1.toString());
@@ -4148,7 +4152,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field7", new Short((short)1234));
+            rfmlDoc.setValue("format1.field7", Short.valueOf((short)1234));
             Float valOut1 = (Float)rfmlDoc.getValue("format1.field7");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.intValue() == 1234);
@@ -4171,7 +4175,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field7", new Short((short)1234));
+            rfmlDoc.setValue("format1.field7", Short.valueOf((short)1234));
             rfmlDoc.setValue("format1.field7", "123.4509");
             Float valOut1 = (Float)rfmlDoc.getValue("format1.field7");
             ///System.out.println("valOut1 == " + valOut1.toString());
@@ -4221,7 +4225,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
             rfmlDoc.setIntValue("format1.field7", 1234);
-            rfmlDoc.setValue("format1.field7", new Long(1234509));
+            rfmlDoc.setValue("format1.field7", Long.valueOf(1234509));
             Float valOut1 = (Float)rfmlDoc.getValue("format1.field7");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.longValue() == 1234509L);
@@ -4244,7 +4248,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Double valIn = new Double("12345.6789");
+            Double valIn = Double.valueOf("12345.6789");
             rfmlDoc.setValue("format1.field7", valIn);
             Float valOut1 = (Float)rfmlDoc.getValue("format1.field7");
             ///System.out.println("valOut1 == " + valOut1.doubleValue());
@@ -4294,7 +4298,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt6");
-            Double valIn = new Double("5566.778899");
+            Double valIn = Double.valueOf("5566.778899");
             rfmlDoc.setValue("format1.field6", valIn);
             Double valOut1 = (Double)rfmlDoc.getValue("format1.field6");
             ///System.out.println("valOut1 == " + valOut1.toString());
@@ -4336,7 +4340,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Short valIn = new Short((short)556);
+            Short valIn = Short.valueOf((short)556);
             rfmlDoc.setValue("format1.field8", valIn);
             Double valOut1 = (Double)rfmlDoc.getValue("format1.field8");
             ///System.out.println("valOut1 == " + valOut1.toString());
@@ -4360,7 +4364,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Short valIn = new Short((short)556);
+            Short valIn = Short.valueOf((short)556);
             rfmlDoc.setValue("format1.field8", valIn);
             rfmlDoc.setValue("format1.field8", "22334455.66778899D");
             Double valOut1 = (Double)rfmlDoc.getValue("format1.field8");
@@ -4409,7 +4413,7 @@ public class RMGetSetValueTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
             rfmlDoc.setIntValue("format1.field8", (short)345);
-            rfmlDoc.setValue("format1.field8", new Long(22334455));
+            rfmlDoc.setValue("format1.field8", Long.valueOf(22334455));
             Double valOut1 = (Double)rfmlDoc.getValue("format1.field8");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.longValue() == 22334455);
@@ -4432,7 +4436,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Float valIn = new Float(-123456789012345.68);
+            Float valIn = Float.valueOf(-123456789012345.68f);
             rfmlDoc.setValue("format1.field8", valIn);
             Double valOut1 = (Double)rfmlDoc.getValue("format1.field8");
             ///System.out.println("valOut1Rounded.floatValue()=="+valOut1Rounded.floatValue());
@@ -4524,7 +4528,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field11", new Short((short)2345));
+            rfmlDoc.setValue("format1.field11", Short.valueOf((short)2345));
             String valOut1 = (String)rfmlDoc.getValue("format1.field11");
             ///System.out.println("valOut1 == " + valOut1.toString());
             assertCondition(valOut1.equals("2345"));
@@ -4546,7 +4550,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field11", new Short((short)2345));
+            rfmlDoc.setValue("format1.field11", Short.valueOf((short)2345));
             rfmlDoc.setValue("format1.field11", "");
             String valOut1 = (String)rfmlDoc.getValue("format1.field11");
             ///System.out.println("valOut1 == " + valOut1.toString());
@@ -4590,7 +4594,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field1", new Float(123.456));
+            rfmlDoc.setValue("format1.field1", Float.valueOf(123.456f));
             String valOut1 = (String)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1);
             assertCondition(valOut1.trim().equals("123.456"));
@@ -4613,7 +4617,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            rfmlDoc.setValue("format1.field1", new Double(123.456));
+            rfmlDoc.setValue("format1.field1", Double.valueOf(123.456));
             String valOut1 = (String)rfmlDoc.getValue("format1.field1");
             ///System.out.println("valOut1 == " + valOut1);
             assertCondition(valOut1.trim().equals("123.456"));
@@ -4826,7 +4830,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Float valIn = new Float(3.0);
+            Float valIn = Float.valueOf(3.0f);
             byte[] valIn0 = new byte[] {3,3,3,3,3,3,3,3,3,3,3,3};
             rfmlDoc.setValue("format1.field10", valIn);
             byte[] valOut1 = (byte[])rfmlDoc.getValue("format1.field10");
@@ -4851,7 +4855,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Double valIn = new Double(3.0);
+            Double valIn = Double.valueOf(3.0);
             byte[] valIn0 = new byte[] {3,3,3,3,3,3,3,3,3,3,3,3};
             rfmlDoc.setValue("format1.field10", valIn);
             byte[] valOut1 = (byte[])rfmlDoc.getValue("format1.field10");
@@ -4876,7 +4880,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Integer valIn = new Integer(3);
+            Integer valIn = Integer.valueOf(3);
             byte[] valIn0 = new byte[] {3,3,3,3,3,3,3,3,3,3,3,3};
             rfmlDoc.setValue("format1.field10", valIn);
             byte[] valOut1 = (byte[])rfmlDoc.getValue("format1.field10");
@@ -4902,7 +4906,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Long valIn = new Long(3);
+            Long valIn = Long.valueOf(3);
             byte[] valIn0 = new byte[] {3,3,3,3,3,3,3,3,3,3,3,3};
             rfmlDoc.setValue("format1.field10", valIn);
             byte[] valOut1 = (byte[])rfmlDoc.getValue("format1.field10");
@@ -4927,7 +4931,7 @@ public class RMGetSetValueTestcase extends Testcase
         try
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmt5v");
-            Short valIn = new Short((short)3);
+            Short valIn = Short.valueOf((short)3);
             byte[] valIn0 = new byte[] {3,3,3,3,3,3,3,3,3,3,3,3};
             rfmlDoc.setValue("format1.field10", valIn);
             byte[] valOut1 = (byte[])rfmlDoc.getValue("format1.field10");

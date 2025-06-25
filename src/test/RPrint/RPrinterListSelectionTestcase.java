@@ -482,7 +482,7 @@ setSelectionValue() - Pass null for the selection ID.
     {
         try {
             RPrinterList u = new RPrinterList(pwrSys_);
-            u.setSelectionValue(null, new Integer(2));
+            u.setSelectionValue(null, Integer.valueOf(2));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -539,7 +539,7 @@ setSelectionValue() - Pass a value which is the wrong type.
     {
         try {
             RPrinterList u = new RPrinterList(pwrSys_);
-            u.setSelectionValue(RPrinterList.PRINTER_NAMES, new Integer(4));
+            u.setSelectionValue(RPrinterList.PRINTER_NAMES, Integer.valueOf(4));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {

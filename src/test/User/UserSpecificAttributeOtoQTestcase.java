@@ -977,7 +977,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(-2));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(-2));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -995,7 +995,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(-1));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(-1));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1016,7 +1016,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(0));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(0));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1037,7 +1037,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(1));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(1));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1058,7 +1058,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(100));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(100));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1079,7 +1079,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(366));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(366));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1100,7 +1100,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(367));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(367));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1118,7 +1118,7 @@ public class UserSpecificAttributeOtoQTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(14));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(14));
             u.commitAttributeChanges();
 
             User u2 = new User(pwrSys_, user_);

@@ -899,7 +899,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , new Integer(-2));
+            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , Integer.valueOf(-2));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -917,7 +917,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , new Integer(1234));
+            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , Integer.valueOf(1234));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -939,7 +939,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , new Integer(4));
+            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , Integer.valueOf(4));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -960,7 +960,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , new Integer(1));
+            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , Integer.valueOf(1));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -982,7 +982,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , new Integer(0));
+            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , Integer.valueOf(0));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1003,7 +1003,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , new Integer(-1));
+            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , Integer.valueOf(-1));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1024,7 +1024,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , new Integer(100));
+            u.setAttributeValue(RUser.MAXIMUM_ALLOWED_STORAGE , Integer.valueOf(100));
             u.commitAttributeChanges();
 
             User u2 = new User(pwrSys_, user_);
@@ -1555,7 +1555,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , new Integer(-1));
+            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , Integer.valueOf(-1));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1573,7 +1573,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , new Integer(100));
+            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , Integer.valueOf(100));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1591,7 +1591,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , new Integer(99));
+            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , Integer.valueOf(99));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1612,7 +1612,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , new Integer(49));
+            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , Integer.valueOf(49));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1633,7 +1633,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , new Integer(1));
+            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , Integer.valueOf(1));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1654,7 +1654,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , new Integer(0));
+            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , Integer.valueOf(0));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1675,7 +1675,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , new Integer(63));
+            u.setAttributeValue(RUser.MESSAGE_QUEUE_SEVERITY , Integer.valueOf(63));
             u.commitAttributeChanges();
 
             User u2 = new User(pwrSys_, user_);

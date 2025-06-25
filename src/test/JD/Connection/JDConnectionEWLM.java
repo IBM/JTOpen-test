@@ -30,6 +30,7 @@ import test.PasswordVault;
 import test.JD.CS.JDCSGetBlob;
 
 import java.io.FileOutputStream;
+import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -172,7 +173,8 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 	    // Get the factory
 	    // 
 	    Class<?> tranFactoryClass = Class.forName(tranFactoryName);
-	    armTransactionFactory = tranFactoryClass.newInstance();
+	    Constructor<?> constructor = tranFactoryClass.getDeclaredConstructor();
+	    armTransactionFactory = constructor.newInstance();
 
 	    //
 	    // Create the application

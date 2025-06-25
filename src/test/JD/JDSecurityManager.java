@@ -13,7 +13,7 @@
 
 package test.JD;
 
-public class JDSecurityManager extends SecurityManager {
+public class JDSecurityManager  {
 
   public void checkAwtEventQueueAccess() {}
   public void checkCreateClassLoader(){}

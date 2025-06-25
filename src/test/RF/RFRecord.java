@@ -585,9 +585,9 @@ public class RFRecord extends Testcase
     r.addFieldDescription(f);
 
     // Create byte array with which to populate the record
-    byte[] b1 = (new AS400Bin4()).toBytes(new Integer(10));
+    byte[] b1 = (new AS400Bin4()).toBytes(Integer.valueOf(10));
     byte[] b2 = (new AS400Text(10, systemObject_.getCcsid(), systemObject_)).toBytes("abcdefghij");
-    byte[] b3 = (new AS400Float8()).toBytes(new Double(123.89));
+    byte[] b3 = (new AS400Float8()).toBytes(Double.valueOf(123.89));
     byte[] bytes = new byte[22];  // Our byte arrays take up 22 bytes
     System.arraycopy(b1, 0, bytes, 0, b1.length);
     System.arraycopy(b2, 0, bytes, 4, b2.length);
@@ -817,9 +817,9 @@ public class RFRecord extends Testcase
     r.addFieldDescription(f);
 
     // Create byte array with which to populate the record
-    byte[] b1 = (new AS400Bin4()).toBytes(new Integer(10));
+    byte[] b1 = (new AS400Bin4()).toBytes(Integer.valueOf(10));
     byte[] b2 = (new AS400Text(10, systemObject_.getCcsid(), systemObject_)).toBytes("abcdefghij");
-    byte[] b3 = (new AS400Float8()).toBytes(new Double(123.89));
+    byte[] b3 = (new AS400Float8()).toBytes(Double.valueOf(123.89));
     byte[] bytes = new byte[22];  // Our byte arrays take up 22 bytes
     System.arraycopy(b1, 0, bytes, 0, b1.length);
     System.arraycopy(b2, 0, bytes, 4, b2.length);
@@ -1075,9 +1075,9 @@ public class RFRecord extends Testcase
     r.addFieldDescription(f);
 
     // Create byte array with which to populate the record
-    byte[] b1 = (new AS400Bin4()).toBytes(new Integer(10));
+    byte[] b1 = (new AS400Bin4()).toBytes(Integer.valueOf(10));
     byte[] b2 = (new AS400Text(10, systemObject_.getCcsid(), systemObject_)).toBytes("abcdefghij");
-    byte[] b3 = (new AS400Float8()).toBytes(new Double(123.89));
+    byte[] b3 = (new AS400Float8()).toBytes(Double.valueOf(123.89));
     byte[] bytes = new byte[32];  // Our byte arrays take up 22 bytes
     System.arraycopy(b1, 0, bytes, 5, b1.length);
     System.arraycopy(b2, 0, bytes, 9, b2.length);
@@ -1340,9 +1340,9 @@ public class RFRecord extends Testcase
     r.addFieldDescription(f);
 
     // Create byte array with which to populate the record
-    byte[] b1 = (new AS400Bin4()).toBytes(new Integer(10));
+    byte[] b1 = (new AS400Bin4()).toBytes(Integer.valueOf(10));
     byte[] b2 = (new AS400Text(10, systemObject_.getCcsid(), systemObject_)).toBytes("abcdefghij");
-    byte[] b3 = (new AS400Float8()).toBytes(new Double(123.89));
+    byte[] b3 = (new AS400Float8()).toBytes(Double.valueOf(123.89));
     byte[] bytes = new byte[32];  // Our byte arrays take up 22 bytes
     System.arraycopy(b1, 0, bytes, 5, b1.length);
     System.arraycopy(b2, 0, bytes, 9, b2.length);

@@ -215,7 +215,7 @@ getNetworkTimeout -- Get on closed connection -- should throw exception.
         argTypes[0] = Class.forName("java.util.concurrent.Executor"); 
         argTypes[1] = Integer.TYPE; 
         args[0] = thisExecutor; 
-        args[1] = new Integer(milliseconds); 
+        args[1] = Integer.valueOf(milliseconds); 
         JDReflectionUtil.callMethod_V(connection, "setNetworkTimeout", argTypes, args);
       }
     }

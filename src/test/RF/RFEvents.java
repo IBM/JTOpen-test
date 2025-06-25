@@ -306,7 +306,7 @@ public class RFEvents extends Testcase
 
   void rFireRecordDescriptionEvents(Record r)
   {
-    r.setField(0, new Integer(5));
+    r.setField(0, Integer.valueOf(5));
   }
 
   void rfFirePropertyChangeEvents(RecordFormat r, String name)
@@ -2012,7 +2012,7 @@ if (isAtLeastJDK17) {
       rf.addFieldDescription(new BinaryFieldDescription(new AS400Bin4(), "fld"));
       // Set the contents with a byte array so that getField will cause the
       // actual field value to be set prior to returning.
-      Record r = new Record(rf, new AS400Bin4().toBytes(new Integer(5)));
+      Record r = new Record(rf, new AS400Bin4().toBytes(Integer.valueOf(5)));
       r.addRecordDescriptionListener(rl1);
       r.addRecordDescriptionListener(rl2);
 
@@ -2068,7 +2068,7 @@ if (isAtLeastJDK17) {
       r.addRecordDescriptionListener(rl2);
 
       // Set a field
-      r.setField(0, new Integer(5));
+      r.setField(0, Integer.valueOf(5));
 
       // Verify listeners notified of the event and only that event
       if (rl1.fieldDescriptionAddedFired_ ||
@@ -2126,7 +2126,7 @@ if (isAtLeastJDK17) {
       byte[] b = new byte[14];
       AS400Bin4 b4 = new AS400Bin4();
       AS400Text t10 = new AS400Text(10, systemObject_.getCcsid(), systemObject_);
-      b4.toBytes(new Integer(10), b);
+      b4.toBytes(Integer.valueOf(10), b);
       t10.toBytes("AAAAAAAAAA", b, 4);
       r.setContents(b);
 

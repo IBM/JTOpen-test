@@ -173,15 +173,15 @@ public class DDMP9907036 extends Testcase
 
       f.open(AS400File.READ_WRITE, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
       Record rec = rf.getNewRecord();
-      rec.setField("MARKER", new Integer(1));
+      rec.setField("MARKER", Integer.valueOf(1));
       rec.setField("FLD1", "Fred");
       f.write(rec);
       rec = rf.getNewRecord();
-      rec.setField("MARKER", new Integer(2));
+      rec.setField("MARKER", Integer.valueOf(2));
       rec.setField("FLD1", "Fred ");
       f.write(rec);
       rec = rf.getNewRecord();
-      rec.setField("MARKER", new Integer(3));
+      rec.setField("MARKER", Integer.valueOf(3));
       rec.setField("FLD1", "Fred      ");
       f.write(rec);
       f.close();

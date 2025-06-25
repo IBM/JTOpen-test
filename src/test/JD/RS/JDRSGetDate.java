@@ -1673,14 +1673,14 @@ getDate() - Get from a TIMESTAMP.
                     + JDRSTest.RSTEST_GET);
             JDRSTest.position0 (rs, "DATE_2000");
             Date v = rs.getDate ("C_TIMESTAMP");
-            java.lang.Long l = new Long(v.getTime());
+            java.lang.Long l = Long.valueOf(v.getTime());
 
             if (getDriver () == JDTestDriver.DRIVER_NATIVE) {
                 /* NOTE:  For native, the toolbox check fails because timezone is UTC not CST */
                 /* Get the right answer and compare it */ 
                 GregorianCalendar cal = new GregorianCalendar(2000,5 /* zero based */ ,25);
                 java.util.Date eDate = cal.getTime(); 
-                assertCondition (l.equals(new Long(eDate.getTime())), "Added by Toolbox 8/26/2004 \n" +
+                assertCondition (l.equals(Long.valueOf(eDate.getTime())), "Added by Toolbox 8/26/2004 \n" +
                                 "-- date should be normalized \n" +
                                 "l = "+l+"("+v+")  \n" +
                                 "sb  "+eDate.getTime()+"  =" + eDate); 
@@ -1690,12 +1690,12 @@ getDate() - Get from a TIMESTAMP.
                 //@pdd long is platform dependent, change to generic getTime method
                 //if (timezone == null || (! timezone.equals("UTC"))) { 
                  //   System.out.println("aaa1" + l);
-                 //   assertCondition (l.equals(new Long("961909200000")), "Added by Toolbox 8/26/2004 -- date should be normalized l = "+l+"("+v+")  sb 961909200000  =" + new Date(961909200000L));
+                 //   assertCondition (l.equals(Long.valueOf("961909200000")), "Added by Toolbox 8/26/2004 -- date should be normalized l = "+l+"("+v+")  sb 961909200000  =" + new Date(961909200000L));
                 //} else {
                    
                     GregorianCalendar cal = new GregorianCalendar(2000,5 /* zero based */ ,25);
                     java.util.Date eDate = cal.getTime(); 
-                    assertCondition (l.equals(new Long(eDate.getTime())), 
+                    assertCondition (l.equals(Long.valueOf(eDate.getTime())), 
                         "Added by Toolbox 8/26/2004 -- date should be normalized \n" +
                         "l = "+l+"("+v+")\n" +
                         "sb  "+eDate.getTime()+"  =" + eDate); 

@@ -111,7 +111,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(10));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(10));
             u.commitAttributeChanges();
 
             // Verify that the difference between now and the date password expires is 10 days (864000000 ms).  Allow a 2 days (172800000 ms) error, since the date that comes back is set to midnight of the 9th day.
@@ -135,7 +135,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(-1));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(-1));
             u.commitAttributeChanges();
 
             Date value = (Date)u.getAttributeValue(RUser.DATE_PASSWORD_EXPIRES);
@@ -178,7 +178,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(5));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(5));
             u.commitAttributeChanges();
 
             // Verify that the difference between now and the date password expires is 10 days (432000000 ms).  Allow a 2 days (172800000 ms) error, since the date that comes back is set to midnight of the 4th day.
@@ -236,7 +236,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(10));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(10));
             u.commitAttributeChanges();
 
             Object value = u.getAttributeValue(RUser.DAYS_UNTIL_PASSWORD_EXPIRES);
@@ -256,7 +256,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(7));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(7));
             u.commitAttributeChanges();
 
             Object value = u.getAttributeValue(RUser.DAYS_UNTIL_PASSWORD_EXPIRES);
@@ -276,7 +276,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(1));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(1));
             u.commitAttributeChanges();
 
             Object value = u.getAttributeValue(RUser.DAYS_UNTIL_PASSWORD_EXPIRES);
@@ -296,7 +296,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(-1));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(-1));
             u.commitAttributeChanges();
 
             Object value = u.getAttributeValue(RUser.DAYS_UNTIL_PASSWORD_EXPIRES);
@@ -339,7 +339,7 @@ public class UserSpecificAttributeDtoFTestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, new Integer(4));
+            u.setAttributeValue(RUser.PASSWORD_EXPIRATION_INTERVAL, Integer.valueOf(4));
             u.commitAttributeChanges();
 
             int value = ((Integer)u.getAttributeValue(RUser.DAYS_UNTIL_PASSWORD_EXPIRES)).intValue();

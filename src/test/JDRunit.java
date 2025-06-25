@@ -1045,7 +1045,7 @@ public class JDRunit {
 
     Object[] parseArgs = new Object[2];
     parseArgs[0] = toAddress;
-    parseArgs[1] = new Boolean(false);
+    parseArgs[1] = Boolean.valueOf(false);
 
     setRecipientsArgs[1] = parseMethod.invoke(null, parseArgs);
     parameterTypes = new Class[2];
@@ -1398,6 +1398,13 @@ public class JDRunit {
     testBaseProperties = new Properties();
     testBaseProperties.load(fileInputStream);
     fileInputStream.close();
+
+    File testbase2File = new File("ini/testbase2.ini");
+    if (testbase2File.exists()) { 
+      fileInputStream = JDRunit.loadResource("ini/testbase2.ini" , iniInfo);
+      testBaseProperties.load(fileInputStream);
+      fileInputStream.close();
+    }
 
     //
     // Get the list of testcases that will drop authority

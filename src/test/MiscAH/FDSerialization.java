@@ -524,7 +524,7 @@ public class FDSerialization extends Testcase
     {
       // Construct and set the state
       BinaryFieldDescription f = new BinaryFieldDescription(new AS400Bin2(), "field1", "blah", 9);
-      f.setDFT(new Short((short)5));
+      f.setDFT(Short.valueOf((short)5));
       setBaseState(f);
 
       // Serialize
@@ -1750,7 +1750,7 @@ public class FDSerialization extends Testcase
     {
       // Construct and set the state
       FloatFieldDescription f = new FloatFieldDescription(new AS400Float8(), "field1", "blah", 17, 5);
-      f.setDFT(new Double("15467.23456"));
+      f.setDFT(Double.valueOf("15467.23456"));
       f.setFLTPCN("*DOUBLE");
       setBaseState(f);
 

@@ -269,7 +269,7 @@ public class ProxyStressTest
 
       th = arguments.getOptionValue("-threads");
       if (th != null)
-         maxThreads_ = (new Integer(th)).intValue();
+         maxThreads_ = (Integer.valueOf(th)).intValue();
       else
       {
          System.out.println("\n Missing -threads parameter. \n");
@@ -278,7 +278,7 @@ public class ProxyStressTest
 
       l = arguments.getOptionValue("-loop");
       if (l != null)
-         maxIterations_ = (new Integer(l)).intValue();
+         maxIterations_ = (Integer.valueOf(l)).intValue();
       else
       {
          System.out.println("\n Missing -loop parameter. \n");

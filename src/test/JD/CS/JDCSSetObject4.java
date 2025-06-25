@@ -133,7 +133,7 @@ connectionDateTime_.close();
   public void Var002() {
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(100, new Integer(3), Types.INTEGER, 0);
+      cs.setObject(100, Integer.valueOf(3), Types.INTEGER, 0);
       cs.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
@@ -228,7 +228,7 @@ connectionDateTime_.close();
   public void Var008() {
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(2, new Integer(3), Types.INTEGER, 0);
+      cs.setObject(2, Integer.valueOf(3), Types.INTEGER, 0);
       cs.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
@@ -257,7 +257,7 @@ connectionDateTime_.close();
   public void Var010() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);
-      cs.setObject(1, new Short((short) -33), Types.SMALLINT, 0);
+      cs.setObject(1, Short.valueOf((short) -33), Types.SMALLINT, 0);
       cs.registerOutParameter(2, Types.SMALLINT);
       cs.execute();
       short check = cs.getShort(2);
@@ -289,7 +289,7 @@ connectionDateTime_.close();
   public void Var012() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);
-      cs.setObject(1, new Float(-33.3f), Types.SMALLINT,0);
+      cs.setObject(1, Float.valueOf(-33.3f), Types.SMALLINT,0);
       cs.registerOutParameter(2, Types.SMALLINT);
       cs.execute();
       short check = cs.getShort(2);
@@ -320,7 +320,7 @@ connectionDateTime_.close();
   public void Var014() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);
-      cs.setObject(1, new Short((short) -33), Types.NULL,0);
+      cs.setObject(1, Short.valueOf((short) -33), Types.NULL,0);
       cs.registerOutParameter(2, Types.SMALLINT);
       cs.execute();
       short check = cs.getShort(2);
@@ -338,7 +338,7 @@ connectionDateTime_.close();
   public void Var015() {
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(1, new Integer(9595), Types.INTEGER, 0);
+      cs.setObject(1, Integer.valueOf(9595), Types.INTEGER, 0);
       cs.registerOutParameter(2, Types.INTEGER, 0);
       cs.execute();
       int check = cs.getInt(2);
@@ -373,7 +373,7 @@ connectionDateTime_.close();
   public void Var017() {
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(1, new Float(-33.3f), Types.INTEGER, 0);
+      cs.setObject(1, Float.valueOf(-33.3f), Types.INTEGER, 0);
       cs.registerOutParameter(2, Types.INTEGER, 0);
       cs.execute();
       int check = cs.getInt(2);
@@ -405,7 +405,7 @@ connectionDateTime_.close();
     try {
 
       CallableStatement cs = prepareCall(Types.INTEGER);
-      cs.setObject(1, new Integer(9595), Types.DATE,0);
+      cs.setObject(1, Integer.valueOf(9595), Types.DATE,0);
       cs.registerOutParameter(2, Types.INTEGER, 0);
       cs.execute();
       int check = cs.getInt(2);
@@ -423,7 +423,7 @@ connectionDateTime_.close();
   public void Var020() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(-4.385), Types.REAL, 0);
+      cs.setObject(1, Float.valueOf(-4.385f), Types.REAL, 0);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -454,7 +454,7 @@ connectionDateTime_.close();
   public void Var022() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(4.325), Types.VARCHAR, 0);
+      cs.setObject(1, Float.valueOf(4.325f), Types.VARCHAR, 0);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -472,7 +472,7 @@ connectionDateTime_.close();
   public void Var023() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(-34.2), Types.DOUBLE,0);
+      cs.setObject(1, Float.valueOf(-34.2f), Types.DOUBLE,0);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -503,7 +503,7 @@ connectionDateTime_.close();
   public void Var025() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(-34.2), Types.DATE,0);
+      cs.setObject(1, Float.valueOf(-34.2f), Types.DATE,0);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -521,7 +521,7 @@ connectionDateTime_.close();
   public void Var026() {
     try {
       CallableStatement cs = prepareCall(Types.DOUBLE);
-      cs.setObject(1, new Double(3.14159), Types.DOUBLE,0);
+      cs.setObject(1, Double.valueOf(3.14159), Types.DOUBLE,0);
       cs.registerOutParameter(2, Types.DOUBLE);
       cs.execute();
       double check = cs.getDouble(2);
@@ -552,7 +552,7 @@ connectionDateTime_.close();
   public void Var028() {
     try {
       CallableStatement cs = prepareCall(Types.DOUBLE);
-      cs.setObject(1, new Double(3.14159), Types.BINARY,0);
+      cs.setObject(1, Double.valueOf(3.14159), Types.BINARY,0);
       cs.registerOutParameter(2, Types.DOUBLE);
       cs.execute();
       double check = cs.getDouble(2);
@@ -909,7 +909,7 @@ connectionDateTime_.close();
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.CLOB);
-        cs.setObject(1, new Short((short) 3342), Types.CLOB,0);
+        cs.setObject(1, Short.valueOf((short) 3342), Types.CLOB,0);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -924,7 +924,7 @@ connectionDateTime_.close();
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.CLOB);
-        cs.setObject(1, new Integer(5), Types.NUMERIC, 1);
+        cs.setObject(1, Integer.valueOf(5), Types.NUMERIC, 1);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -965,7 +965,7 @@ connectionDateTime_.close();
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(TYPES_DBCLOB);
-        cs.setObject(1, new Long(34242), Types.CLOB,0);
+        cs.setObject(1, Long.valueOf(34242), Types.CLOB,0);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -980,7 +980,7 @@ connectionDateTime_.close();
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(TYPES_DBCLOB);
-        cs.setObject(1, new Float(4.33), Types.VARCHAR, 0);
+        cs.setObject(1, Float.valueOf(4.33f), Types.VARCHAR, 0);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1112,7 +1112,7 @@ connectionDateTime_.close();
   public void Var059() {
     try {
       CallableStatement cs = prepareCall(Types.VARBINARY);
-      cs.setObject(1, new Double(34.23), Types.VARBINARY,0);
+      cs.setObject(1, Double.valueOf(34.23), Types.VARBINARY,0);
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1372,7 +1372,7 @@ connectionDateTime_.close();
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.DATALINK);
-        cs.setObject(1, new Integer(8), Types.INTEGER, 0);
+        cs.setObject(1, Integer.valueOf(8), Types.INTEGER, 0);
         assertCondition(false);
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1403,7 +1403,7 @@ connectionDateTime_.close();
     if (checkLobSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.DISTINCT);
-        cs.setObject(1, new Integer(-412), Types.DISTINCT,0);
+        cs.setObject(1, Integer.valueOf(-412), Types.DISTINCT,0);
         cs.registerOutParameter(2, Types.DISTINCT);
         cs.execute();
         Object check = cs.getObject(2);
@@ -1463,7 +1463,7 @@ connectionDateTime_.close();
     if (checkBigintSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BIGINT);
-        cs.setObject(1, new Long(959543224556l), Types.BIGINT,0);
+        cs.setObject(1, Long.valueOf(959543224556l), Types.BIGINT,0);
         cs.registerOutParameter(2, Types.BIGINT);
         cs.execute();
         long check = cs.getLong(2);
@@ -1485,7 +1485,7 @@ connectionDateTime_.close();
     if (checkBigintSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BIGINT);
-        cs.setObject(1, new Float(-92233720368547758099.0f), Types.BIGINT,0);
+        cs.setObject(1, Float.valueOf(-92233720368547758099.0f), Types.BIGINT,0);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
 
@@ -1503,7 +1503,7 @@ connectionDateTime_.close();
   public void Var081() {
     try {
       CallableStatement cs = prepareCall(Types.BIGINT);
-      cs.setObject(1, new Float(-33.3f), Types.BIGINT,0);
+      cs.setObject(1, Float.valueOf(-33.3f), Types.BIGINT,0);
       cs.registerOutParameter(2, Types.BIGINT);
       cs.execute();
       long check = cs.getLong(2);
@@ -1537,7 +1537,7 @@ connectionDateTime_.close();
     if (checkBigintSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BIGINT);
-        cs.setObject(1, new Long(959543224556l), Types.VARCHAR, 0);
+        cs.setObject(1, Long.valueOf(959543224556l), Types.VARCHAR, 0);
         cs.registerOutParameter(2, Types.BIGINT);
         cs.execute();
         long check = cs.getLong(2);
@@ -1926,7 +1926,7 @@ connectionDateTime_.close();
     try {
       CallableStatement cs = prepareCall(Types.INTEGER);
 
-      cs.setObject(1, new Integer(4), Types.INTEGER, -1);
+      cs.setObject(1, Integer.valueOf(4), Types.INTEGER, -1);
       failed("Didn't throw SQLException when alling set object with invalid scale");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1939,7 +1939,7 @@ connectionDateTime_.close();
   public void Var101() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);
-      cs.setObject(1, new Short((short) 76), Types.SMALLINT, 2);
+      cs.setObject(1, Short.valueOf((short) 76), Types.SMALLINT, 2);
       cs.registerOutParameter(2, Types.SMALLINT);
       cs.execute();
       short check = cs.getShort(2);
@@ -1956,7 +1956,7 @@ connectionDateTime_.close();
   public void Var102() {
     try {
       CallableStatement cs = prepareCall(Types.SMALLINT);
-      cs.setObject(1, new Integer(-595), Types.INTEGER, 4);
+      cs.setObject(1, Integer.valueOf(-595), Types.INTEGER, 4);
       cs.registerOutParameter(2, Types.INTEGER);
       cs.execute();
       int check = cs.getInt(2);
@@ -1973,7 +1973,7 @@ connectionDateTime_.close();
   public void Var103() {
     try {
       CallableStatement cs = prepareCall(Types.REAL);
-      cs.setObject(1, new Float(-4.3235), Types.REAL, 3);
+      cs.setObject(1, Float.valueOf(-4.3235f), Types.REAL, 3);
       cs.registerOutParameter(2, Types.REAL);
       cs.execute();
       float check = cs.getFloat(2);
@@ -1994,7 +1994,7 @@ connectionDateTime_.close();
     try {
       CallableStatement cs = prepareCall(Types.FLOAT);
 
-      cs.setObject(1, new Float(3.43212), Types.DOUBLE, 3);
+      cs.setObject(1, Float.valueOf(3.43212f), Types.DOUBLE, 3);
       cs.registerOutParameter(2, Types.DOUBLE);
       cs.execute();
 
@@ -2017,7 +2017,7 @@ connectionDateTime_.close();
     try {
       CallableStatement cs = prepareCall(Types.DOUBLE);
 
-      cs.setObject(1, new Double(3159.343), Types.DOUBLE, 2);
+      cs.setObject(1, Double.valueOf(3159.343), Types.DOUBLE, 2);
       cs.registerOutParameter(2, Types.DOUBLE);
       cs.execute();
 
@@ -2479,7 +2479,7 @@ connectionDateTime_.close();
       try {
       CallableStatement cs = prepareCall(Types.DISTINCT);
 
-        cs.setObject(1, new Integer(12), Types.INTEGER, 2);
+        cs.setObject(1, Integer.valueOf(12), Types.INTEGER, 2);
 	cs.registerOutParameter(2, Types.INTEGER);
 	cs.execute();
 
@@ -2506,7 +2506,7 @@ connectionDateTime_.close();
       try {
       CallableStatement cs = prepareCall(Types.BIGINT);
 
-        cs.setObject(1, new Long(-59322445665l), Types.BIGINT, 4);
+        cs.setObject(1, Long.valueOf(-59322445665l), Types.BIGINT, 4);
 	cs.registerOutParameter(2, Types.BIGINT);
 	cs.execute();
 
@@ -2659,7 +2659,7 @@ connectionDateTime_.close();
     if (checkBooleanSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BOOLEAN);
-        cs.setObject(1, new Boolean(true), Types.BOOLEAN,0);
+        cs.setObject(1, Boolean.valueOf(true), Types.BOOLEAN,0);
         cs.registerOutParameter(2, Types.BOOLEAN);
         cs.execute();
         boolean check = cs.getBoolean(2);
@@ -2681,7 +2681,7 @@ connectionDateTime_.close();
     if (checkBooleanSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BOOLEAN);
-        cs.setObject(1, new Float(-92233720368547758099.0f), Types.BOOLEAN,0);
+        cs.setObject(1, Float.valueOf(-92233720368547758099.0f), Types.BOOLEAN,0);
         cs.registerOutParameter(2, Types.BOOLEAN);
         cs.execute();
         boolean check = cs.getBoolean(2);
@@ -2703,7 +2703,7 @@ connectionDateTime_.close();
       if (checkBooleanSupport()) { 
 	  try {
 	      CallableStatement cs = prepareCall(Types.BOOLEAN);
-	      cs.setObject(1, new Float(-33.3f), Types.BOOLEAN,0);
+	      cs.setObject(1, Float.valueOf(-33.3f), Types.BOOLEAN,0);
 	      cs.registerOutParameter(2, Types.BOOLEAN);
 	      cs.execute();
 	      boolean check = cs.getBoolean(2);
@@ -2738,7 +2738,7 @@ connectionDateTime_.close();
     if (checkBooleanSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BOOLEAN);
-        cs.setObject(1, new Long(959543224556l), Types.VARCHAR, 0);
+        cs.setObject(1, Long.valueOf(959543224556l), Types.VARCHAR, 0);
         cs.registerOutParameter(2, Types.BOOLEAN);
         cs.execute();
         boolean check = cs.getBoolean(2);

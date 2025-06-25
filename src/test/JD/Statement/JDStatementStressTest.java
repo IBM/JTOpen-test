@@ -1193,9 +1193,9 @@ public class JDStatementStressTest extends JDTestcase {
     if (miscParm != null) {
       StringTokenizer tok = new StringTokenizer(miscParm, ",");
       if (tok.countTokens() == 3) {
-        ustNum = new Integer(tok.nextToken()).intValue();
-        cstNum = new Integer(tok.nextToken()).intValue();
-        sstNum = new Integer(tok.nextToken()).intValue();
+        ustNum = Integer.valueOf(tok.nextToken()).intValue();
+        cstNum = Integer.valueOf(tok.nextToken()).intValue();
+        sstNum = Integer.valueOf(tok.nextToken()).intValue();
       }
     }
   }
@@ -1209,9 +1209,9 @@ public class JDStatementStressTest extends JDTestcase {
     if (miscParm != null) {
       StringTokenizer tok = new StringTokenizer(miscParm, ",");
       if (tok.countTokens() == 3) {
-        ustNum = new Integer(tok.nextToken()).intValue();
-        cstNum = new Integer(tok.nextToken()).intValue();
-        sstNum = new Integer(tok.nextToken()).intValue();
+        ustNum = Integer.valueOf(tok.nextToken()).intValue();
+        cstNum = Integer.valueOf(tok.nextToken()).intValue();
+        sstNum = Integer.valueOf(tok.nextToken()).intValue();
       }
     }
   }

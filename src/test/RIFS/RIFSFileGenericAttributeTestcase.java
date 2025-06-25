@@ -226,7 +226,7 @@ Verify that the changes are canceled.
             Boolean isHidden = (Boolean)u.getAttributeValue(RIFSFile.IS_HIDDEN);
             Date date1 = new Date();
             u.setAttributeValue(RIFSFile.LAST_MODIFIED, date1);
-            u.setAttributeValue(RIFSFile.IS_HIDDEN, new Boolean(!isHidden.booleanValue()));
+            u.setAttributeValue(RIFSFile.IS_HIDDEN, Boolean.valueOf(!isHidden.booleanValue()));
             u.cancelAttributeChanges();
             Date lastModified2 = (Date)u.getAttributeValue(RIFSFile.LAST_MODIFIED);
             Boolean isHidden2 = (Boolean)u.getAttributeValue(RIFSFile.IS_HIDDEN);
@@ -251,7 +251,7 @@ Verify that the changes are canceled, even when committed.
             Date lastModified = (Date)u.getAttributeValue(RIFSFile.LAST_MODIFIED);
             Boolean isHidden = (Boolean)u.getAttributeValue(RIFSFile.IS_HIDDEN);
             u.setAttributeValue(RIFSFile.LAST_MODIFIED, new Date());
-            u.setAttributeValue(RIFSFile.IS_HIDDEN, new Boolean(!isHidden.booleanValue()));
+            u.setAttributeValue(RIFSFile.IS_HIDDEN, Boolean.valueOf(!isHidden.booleanValue()));
             u.cancelAttributeChanges();
             u.commitAttributeChanges();
             Date lastModified2 = (Date)u.getAttributeValue(RIFSFile.LAST_MODIFIED);
@@ -1361,7 +1361,7 @@ setAttributeValue() - Pass null for the attribute ID.
         try {
             IFSFile f = sandbox_.createFile("Jim");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
-            u.setAttributeValue(null, new Integer(2));
+            u.setAttributeValue(null, Integer.valueOf(2));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1397,7 +1397,7 @@ setAttributeValue() - Pass an invalid attribute ID.
         try {
             IFSFile f = sandbox_.createFile("Terry");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
-            u.setAttributeValue(u, new Integer(3));
+            u.setAttributeValue(u, Integer.valueOf(3));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1415,7 +1415,7 @@ setAttributeValue() - Set a read only attribute.
         try {
             IFSFile f = sandbox_.createFile("Rod");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
-            u.setAttributeValue(RIFSFile.CCSID, new Integer(37));
+            u.setAttributeValue(RIFSFile.CCSID, Integer.valueOf(37));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1433,7 +1433,7 @@ setAttributeValue() - Pass a value which is the wrong type.
         try {
             IFSFile f = sandbox_.createFile("Laurel");
             RIFSFile u = new RIFSFile(systemObject_, f.getPath());
-            u.setAttributeValue(RIFSFile.LAST_ACCESSED, new Integer(4));
+            u.setAttributeValue(RIFSFile.LAST_ACCESSED, Integer.valueOf(4));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {

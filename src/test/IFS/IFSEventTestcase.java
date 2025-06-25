@@ -530,7 +530,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       IFSFile file = new IFSFile(systemObject_, ifsPathName_);
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
-      Long modifiedTime = new Long(1230000);
+      Long modifiedTime = Long.valueOf(1230000);
       file.setLastModified(modifiedTime.longValue());
       assertCondition(listener.propertyName.equals("lastModified") &&
              listener.newValue.equals(modifiedTime));
@@ -585,7 +585,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       IFSFile file = new IFSFile(systemObject_, ifsPathName_);
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);
-      Long modifiedTime = new Long(1230000);
+      Long modifiedTime = Long.valueOf(1230000);
       file.setLastModified(modifiedTime.longValue());
       assertCondition(listener.propertyName.equals("lastModified") &&
              listener.newValue.equals(modifiedTime));
@@ -1361,11 +1361,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileInputStream file = new IFSFileInputStream();
-      Integer oldShareOption = new Integer(IFSFileInputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileInputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileInputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileInputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -1388,12 +1388,12 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileInputStream file = new IFSFileInputStream();
-      Integer oldShareOption = new Integer(IFSFileInputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileInputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       listener.vetoNextChange("shareOption");
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileInputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileInputStream.SHARE_ALL);
       boolean vetoed = false;
       try
       {
@@ -1423,11 +1423,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileInputStream file = new IFSFileInputStream();
-      Integer oldShareOption = new Integer(IFSFileInputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileInputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileInputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileInputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -2164,11 +2164,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
-      Integer oldShareOption = new Integer(IFSFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -2190,12 +2190,12 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
-      Integer oldShareOption = new Integer(IFSFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       listener.vetoNextChange("shareOption");
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_ALL);
       boolean vetoed = false;
       try
       {
@@ -2224,11 +2224,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
-      Integer oldShareOption = new Integer(IFSFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -2504,8 +2504,8 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
-      Boolean oldAppend = new Boolean(true);
-      Boolean newAppend = new Boolean(!oldAppend.booleanValue());
+      Boolean oldAppend = Boolean.valueOf(true);
+      Boolean newAppend = Boolean.valueOf(!oldAppend.booleanValue());
       file.setAppend(oldAppend.booleanValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
@@ -2530,8 +2530,8 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
-      Boolean oldAppend = new Boolean(true);
-      Boolean newAppend = new Boolean(!oldAppend.booleanValue());
+      Boolean oldAppend = Boolean.valueOf(true);
+      Boolean newAppend = Boolean.valueOf(!oldAppend.booleanValue());
       file.setAppend(oldAppend.booleanValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       listener.vetoNextChange("append");
@@ -2564,8 +2564,8 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSFileOutputStream file = new IFSFileOutputStream();
-      Boolean oldAppend = new Boolean(true);
-      Boolean newAppend = new Boolean(!oldAppend.booleanValue());
+      Boolean oldAppend = Boolean.valueOf(true);
+      Boolean newAppend = Boolean.valueOf(!oldAppend.booleanValue());
       file.setAppend(oldAppend.booleanValue());
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);
@@ -3014,7 +3014,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       IFSFileListener fileListener = new IFSFileListener();
       file.addFileListener(fileListener);
       file.readFully(new byte[1]);
-      Long newFilePointer = new Long(1);
+      Long newFilePointer = Long.valueOf(1);
       assertCondition(!fileListener.closed && !fileListener.deleted &&
              !fileListener.modified && fileListener.opened, "newFilePointer="+newFilePointer);
       file.close();
@@ -3098,7 +3098,7 @@ public class IFSEventTestcase extends IFSGenericTestcase
       file.setMode("rw");
       IFSFileListener fileListener = new IFSFileListener();
       file.addFileListener(fileListener);
-      Long newFilePointer = new Long(file.length());
+      Long newFilePointer = Long.valueOf(file.length());
       file.readLine();
       assertCondition(!fileListener.closed && !fileListener.deleted &&
              !fileListener.modified && fileListener.opened, "newFilePointer="+newFilePointer);
@@ -3541,11 +3541,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSRandomAccessFile file = new IFSRandomAccessFile();
-      Integer oldShareOption = new Integer(IFSFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -3567,12 +3567,12 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSRandomAccessFile file = new IFSRandomAccessFile();
-      Integer oldShareOption = new Integer(IFSFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       listener.vetoNextChange("shareOption");
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_ALL);
       boolean vetoed = false;
       try
       {
@@ -3601,11 +3601,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSRandomAccessFile file = new IFSRandomAccessFile();
-      Integer oldShareOption = new Integer(IFSFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);
-      Integer newShareOption = new Integer(IFSFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSFileOutputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -3711,12 +3711,12 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       Integer oldExistenceOption =
-        new Integer(IFSRandomAccessFile.OPEN_OR_CREATE);
+        Integer.valueOf(IFSRandomAccessFile.OPEN_OR_CREATE);
       file.setExistenceOption(oldExistenceOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
       Integer newExistenceOption =
-        new Integer(IFSRandomAccessFile.REPLACE_OR_FAIL);
+        Integer.valueOf(IFSRandomAccessFile.REPLACE_OR_FAIL);
       file.setExistenceOption(newExistenceOption.intValue());
       assertCondition(listener.propertyName.equals("existenceOption") &&
              listener.oldValue.equals(oldExistenceOption) &&
@@ -3739,13 +3739,13 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       Integer oldExistenceOption =
-        new Integer(IFSRandomAccessFile.OPEN_OR_CREATE);
+        Integer.valueOf(IFSRandomAccessFile.OPEN_OR_CREATE);
       file.setExistenceOption(oldExistenceOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       listener.vetoNextChange("existenceOption");
       file.addVetoableChangeListener(listener);
       Integer newExistenceOption =
-        new Integer(IFSRandomAccessFile.REPLACE_OR_FAIL);
+        Integer.valueOf(IFSRandomAccessFile.REPLACE_OR_FAIL);
       boolean vetoed = false;
       try
       {
@@ -3775,12 +3775,12 @@ public class IFSEventTestcase extends IFSGenericTestcase
     {
       IFSRandomAccessFile file = new IFSRandomAccessFile();
       Integer oldExistenceOption =
-        new Integer(IFSRandomAccessFile.OPEN_OR_CREATE);
+        Integer.valueOf(IFSRandomAccessFile.OPEN_OR_CREATE);
       file.setExistenceOption(oldExistenceOption.intValue());
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);
       Integer newExistenceOption =
-        new Integer(IFSRandomAccessFile.REPLACE_OR_FAIL);
+        Integer.valueOf(IFSRandomAccessFile.REPLACE_OR_FAIL);
       file.setExistenceOption(newExistenceOption.intValue());
       assertCondition(listener.propertyName.equals("existenceOption") &&
              listener.oldValue.equals(oldExistenceOption) &&
@@ -4737,11 +4737,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileInputStream file = new IFSTextFileInputStream();
-      Integer oldShareOption = new Integer(IFSTextFileInputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSTextFileInputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSTextFileInputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSTextFileInputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -4763,12 +4763,12 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileInputStream file = new IFSTextFileInputStream();
-      Integer oldShareOption = new Integer(IFSTextFileInputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSTextFileInputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       listener.vetoNextChange("shareOption");
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSTextFileInputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSTextFileInputStream.SHARE_ALL);
       boolean vetoed = false;
       try
       {
@@ -4797,11 +4797,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileInputStream file = new IFSTextFileInputStream();
-      Integer oldShareOption = new Integer(IFSTextFileInputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSTextFileInputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);
-      Integer newShareOption = new Integer(IFSTextFileInputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSTextFileInputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -5536,11 +5536,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
-      Integer oldShareOption = new Integer(IFSTextFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSTextFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSTextFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSTextFileOutputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -5562,12 +5562,12 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
-      Integer oldShareOption = new Integer(IFSTextFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSTextFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       listener.vetoNextChange("shareOption");
       file.addVetoableChangeListener(listener);
-      Integer newShareOption = new Integer(IFSTextFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSTextFileOutputStream.SHARE_ALL);
       boolean vetoed = false;
       try
       {
@@ -5596,11 +5596,11 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
-      Integer oldShareOption = new Integer(IFSTextFileOutputStream.SHARE_NONE);
+      Integer oldShareOption = Integer.valueOf(IFSTextFileOutputStream.SHARE_NONE);
       file.setShareOption(oldShareOption.intValue());
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);
-      Integer newShareOption = new Integer(IFSTextFileOutputStream.SHARE_ALL);
+      Integer newShareOption = Integer.valueOf(IFSTextFileOutputStream.SHARE_ALL);
       file.setShareOption(newShareOption.intValue());
       assertCondition(listener.propertyName.equals("shareOption") &&
              listener.oldValue.equals(oldShareOption) &&
@@ -5876,8 +5876,8 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
-      Boolean oldAppend = new Boolean(true);
-      Boolean newAppend = new Boolean(!oldAppend.booleanValue());
+      Boolean oldAppend = Boolean.valueOf(true);
+      Boolean newAppend = Boolean.valueOf(!oldAppend.booleanValue());
       file.setAppend(oldAppend.booleanValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       file.addVetoableChangeListener(listener);
@@ -5902,8 +5902,8 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
-      Boolean oldAppend = new Boolean(true);
-      Boolean newAppend = new Boolean(!oldAppend.booleanValue());
+      Boolean oldAppend = Boolean.valueOf(true);
+      Boolean newAppend = Boolean.valueOf(!oldAppend.booleanValue());
       file.setAppend(oldAppend.booleanValue());
       IFSVetoableChangeListener listener = new IFSVetoableChangeListener();
       listener.vetoNextChange("append");
@@ -5936,8 +5936,8 @@ public class IFSEventTestcase extends IFSGenericTestcase
     try
     {
       IFSTextFileOutputStream file = new IFSTextFileOutputStream();
-      Boolean oldAppend = new Boolean(true);
-      Boolean newAppend = new Boolean(!oldAppend.booleanValue());
+      Boolean oldAppend = Boolean.valueOf(true);
+      Boolean newAppend = Boolean.valueOf(!oldAppend.booleanValue());
       file.setAppend(oldAppend.booleanValue());
       IFSPropertyChangeListener listener = new IFSPropertyChangeListener();
       file.addPropertyChangeListener(listener);

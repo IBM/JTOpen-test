@@ -258,9 +258,9 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
         java.sql.Array a = null;
 	Integer[] ia = new Integer[3];
-	ia[0] = new Integer(0);
-	ia[1] = new Integer(100);
-	ia[2] = new Integer(200);
+	ia[0] = Integer.valueOf(0);
+	ia[1] = Integer.valueOf(100);
+	ia[2] = Integer.valueOf(200);
         try{
 
 
@@ -1126,10 +1126,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    ////////create array and set/get data
 	    //check local copy of array and arrayResultSet
 		Integer[] ia = new Integer[4];
-		ia[0] = new Integer(0);
-		ia[1] = new Integer(100);
-		ia[2] = new Integer(200);
-		ia[3] = new Integer(300);
+		ia[0] = Integer.valueOf(0);
+		ia[1] = Integer.valueOf(100);
+		ia[2] = Integer.valueOf(200);
+		ia[3] = Integer.valueOf(300);
 		java.sql.Array a = createArray(connection_,  "INTEGER", ia);
 
 
@@ -1161,10 +1161,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             //check local copy of array and arrayResultSet
             boolean check1 = true;
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer(0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf(0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "INTEGER", ia);
 
             java.sql.ResultSet retRS = a.getResultSet();
@@ -1235,10 +1235,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    sb.append(" V7R1 Test for Arrays added by tb 2/26/09 chg 12/05/2011"); 
             ////////create array and set/get data
             Object[] ia = new Object[4];
-            ia[0] = new Integer(0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf(0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "SMALLINT", ia);
 
             //call proc to revers 4 elements in array
@@ -1273,7 +1273,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		Integer[] intArray =  (Integer[]) ia;
 		ia = new Short[intArray.length];
 		for (int i = 0; i < intArray.length; i++) {
-		    ia[i] = new Short(intArray[i].shortValue());
+		    ia[i] = Short.valueOf(intArray[i].shortValue());
 		}
 
 	    } else {
@@ -1306,10 +1306,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer( 0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf( 0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "INTEGER", ia);
 
             //call proc to revers 4 elements in array
@@ -1359,10 +1359,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Long[] ia = new Long[4];
-            ia[0] = new Long( 0);
-            ia[1] = new Long( 100);
-            ia[2] = new Long( 200);
-            ia[3] = new Long( 300);
+            ia[0] = Long.valueOf( 0);
+            ia[1] = Long.valueOf( 100);
+            ia[2] = Long.valueOf( 200);
+            ia[3] = Long.valueOf( 300);
             java.sql.Array a = createArray(connection_, "BIGINT", ia);
 
             //call proc to revers 4 elements in array
@@ -1419,10 +1419,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Float[] ia = new Float[4];
-            ia[0] = new Float((float)0);
-            ia[1] = new Float((float)100.1);
-            ia[2] = new Float((float)200.2);
-            ia[3] = new Float((float)300.3);
+            ia[0] = Float.valueOf((float)0);
+            ia[1] = Float.valueOf((float)100.1);
+            ia[2] = Float.valueOf((float)200.2);
+            ia[3] = Float.valueOf((float)300.3);
             //???real is valid??(it is a i5 type, but luw does not seem to like it)
             //C.createArrayOf("REAL) returns "INTEGER" as type flag (no big deal)
             //but when selected, the type is "REAL"   probably luw bug
@@ -1471,10 +1471,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Double[] ia = new Double[4];
-            ia[0] = new Double(0);
-            ia[1] = new Double((double)((float)100.1));
-            ia[2] = new Double((double)((float)200.2));
-            ia[3] = new Double((double)((float)300.3));
+            ia[0] = Double.valueOf(0);
+            ia[1] = Double.valueOf((double)((float)100.1));
+            ia[2] = Double.valueOf((double)((float)200.2));
+            ia[3] = Double.valueOf((double)((float)300.3));
 	    String baseTypeName = "FLOAT";
             java.sql.Array a;
 	    if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -1533,10 +1533,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Double[] ia = new Double[4];
-            ia[0] = new Double(0);
-            ia[1] = new Double(100.1);
-            ia[2] = new Double(200.2);
-            ia[3] = new Double(300.3);
+            ia[0] = Double.valueOf(0);
+            ia[1] = Double.valueOf(100.1);
+            ia[2] = Double.valueOf(200.2);
+            ia[3] = Double.valueOf(300.3);
             java.sql.Array a = createArray(connection_, "DOUBLE", ia);
 
             //call proc to revers 4 elements in array
@@ -2479,17 +2479,17 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             reconnect();
             ////////create array and set/get data
             Integer[] ia1 = new Integer[4];
-            ia1[0] = new Integer( 0);
-            ia1[1] = new Integer(1);
-            ia1[2] = new Integer(2);
-            ia1[3] = new Integer(3);
+            ia1[0] = Integer.valueOf( 0);
+            ia1[1] = Integer.valueOf(1);
+            ia1[2] = Integer.valueOf(2);
+            ia1[3] = Integer.valueOf(3);
             java.sql.Array a1 = createArray(connection_, "INTEGER", ia1);
 
             Integer[] ia2 = new Integer[4];
-            ia2[0] = new Integer( 0);
-            ia2[1] = new Integer(100);
-            ia2[2] = new Integer(200);
-            ia2[3] = new Integer(300);
+            ia2[0] = Integer.valueOf( 0);
+            ia2[1] = Integer.valueOf(100);
+            ia2[2] = Integer.valueOf(200);
+            ia2[3] = Integer.valueOf(300);
             java.sql.Array a2 = createArray(connection_, "INTEGER", ia2);
 
             //call proc   (in array, in int, inout array, inout int, out array, out int)
@@ -2628,10 +2628,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             reconnect();
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer( 0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf( 0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             String[] ias = new String[4];
             ias[0] = "0";
             ias[1] = "100";
@@ -2684,10 +2684,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             reconnect();
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer( 0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf( 0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             String[] ias = new String[4];
             ias[0] = "0";
             ias[1] = "100";
@@ -2771,10 +2771,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             ////////create array and set/get data
             //check local copy of array and arrayResultSet
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer(0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf(0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_,  "INTEGER", ia);
 
 
@@ -3268,7 +3268,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
         try{
 	    assureProcedureExists(JDSetupProcedure.STP_CSARRINT4 );
             reconnect();
-            Integer[] ia = { new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5), new Integer(6)};
+            Integer[] ia = { Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(3), Integer.valueOf(4), Integer.valueOf(5), Integer.valueOf(6)};
 
             CallableStatement cs = connection_.prepareCall("call " + JDSetupProcedure.STP_CSARRINT4 + " ( ?, ?) ");
             cs.setInt(1, 1);
@@ -3311,10 +3311,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             //check local copy of array and arrayResultSet
             boolean check1 = true;
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer(0);
+            ia[0] = Integer.valueOf(0);
             ia[1] = null;
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "INTEGER", ia);
 
             java.sql.ResultSet retRS = a.getResultSet();
@@ -3398,10 +3398,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer(0);
-            ia[1] = new Integer(100);
+            ia[0] = Integer.valueOf(0);
+            ia[1] = Integer.valueOf(100);
             ia[2] = null;
-            ia[3] = new Integer(300);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "SMALLINT", ia);
 
             //call proc to revers 4 elements in array
@@ -3450,10 +3450,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer( 0);
-            ia[1] = new Integer(100);
+            ia[0] = Integer.valueOf( 0);
+            ia[1] = Integer.valueOf(100);
             ia[2] = null;
-            ia[3] = new Integer(300);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "INTEGER", ia);
 
             //call proc to revers 4 elements in array
@@ -3497,10 +3497,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Long[] ia = new Long[4];
-            ia[0] = new Long( 0);
+            ia[0] = Long.valueOf( 0);
             ia[1] = null;
-            ia[2] = new Long( 200);
-            ia[3] = new Long( 300);
+            ia[2] = Long.valueOf( 200);
+            ia[3] = Long.valueOf( 300);
             java.sql.Array a = createArray(connection_, "BIGINT", ia);
 
             //call proc to revers 4 elements in array
@@ -3546,9 +3546,9 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             ////////create array and set/get data
             Float[] ia = new Float[4];
             ia[0] = null;
-            ia[1] = new Float((float)100.1);
-            ia[2] = new Float((float)200.2);
-            ia[3] = new Float((float)300.3);
+            ia[1] = Float.valueOf((float)100.1);
+            ia[2] = Float.valueOf((float)200.2);
+            ia[3] = Float.valueOf((float)300.3);
             //???real is valid??(it is a i5 type, but luw does not seem to like it)
             //C.createArrayOf("REAL) returns "INTEGER" as type flag (no big deal)
             //but when selected, the type is "REAL"   probably luw bug
@@ -3597,9 +3597,9 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             ////////create array and set/get data
             Double[] ia = new Double[4];
             ia[0] = null;
-            ia[1] = new Double((double)((float)100.1));
-            ia[2] = new Double((double)((float)200.2));
-            ia[3] = new Double((double)((float)300.3));
+            ia[1] = Double.valueOf((double)((float)100.1));
+            ia[2] = Double.valueOf((double)((float)200.2));
+            ia[3] = Double.valueOf((double)((float)300.3));
             java.sql.Array a;
 	    String baseTypeName = "FLOAT";
 	    if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -3657,9 +3657,9 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Double[] ia = new Double[4];
-            ia[0] = new Double(0);
-            ia[1] = new Double(100.1);
-            ia[2] = new Double(200.2);
+            ia[0] = Double.valueOf(0);
+            ia[1] = Double.valueOf(100.1);
+            ia[2] = Double.valueOf(200.2);
             ia[3] = null;
             java.sql.Array a = createArray(connection_, "DOUBLE", ia);
 
@@ -5999,7 +5999,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		Integer[] intArray =  (Integer[]) ia;
 		ia = new Short[intArray.length];
 		for (int i = 0; i < intArray.length; i++) {
-		    ia[i] = new Short(intArray[i].shortValue());
+		    ia[i] = Short.valueOf(intArray[i].shortValue());
 		}
 
 	    } else {
@@ -7334,10 +7334,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    ////////create array and set/get data
 	    //check local copy of array and arrayResultSet
 		Integer[] ia = new Integer[4];
-		ia[0] = new Integer(0);
-		ia[1] = new Integer(100);
-		ia[2] = new Integer(200);
-		ia[3] = new Integer(300);
+		ia[0] = Integer.valueOf(0);
+		ia[1] = Integer.valueOf(100);
+		ia[2] = Integer.valueOf(200);
+		ia[3] = Integer.valueOf(300);
 		java.sql.Array a = createArray(connection_,  "INTEGER", ia);
 
 
@@ -7371,10 +7371,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             //check local copy of array and arrayResultSet
             boolean check1 = true;
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer(0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf(0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "INTEGER", ia);
 
             java.sql.ResultSet retRS = a.getResultSet();
@@ -7457,10 +7457,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    sb.append(" V7R1 Test for Arrays added by tb 2/26/09 chg 12/05/2011"); 
             ////////create array and set/get data
             Object[] ia = new Object[4];
-            ia[0] = new Integer(0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf(0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "SMALLINT", ia);
 
             //call proc to revers 4 elements in array
@@ -7499,7 +7499,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		Integer[] intArray =  (Integer[]) ia;
 		ia = new Short[intArray.length];
 		for (int i = 0; i < intArray.length; i++) {
-		    ia[i] = new Short(intArray[i].shortValue());
+		    ia[i] = Short.valueOf(intArray[i].shortValue());
 		}
 
 	    } else {
@@ -7532,10 +7532,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer( 0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf( 0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "INTEGER", ia);
 
             //call proc to revers 4 elements in array
@@ -7587,10 +7587,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Long[] ia = new Long[4];
-            ia[0] = new Long( 0);
-            ia[1] = new Long( 100);
-            ia[2] = new Long( 200);
-            ia[3] = new Long( 300);
+            ia[0] = Long.valueOf( 0);
+            ia[1] = Long.valueOf( 100);
+            ia[2] = Long.valueOf( 200);
+            ia[3] = Long.valueOf( 300);
             java.sql.Array a = createArray(connection_, "BIGINT", ia);
 
             //call proc to revers 4 elements in array
@@ -7650,10 +7650,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Float[] ia = new Float[4];
-            ia[0] = new Float((float)0);
-            ia[1] = new Float((float)100.1);
-            ia[2] = new Float((float)200.2);
-            ia[3] = new Float((float)300.3);
+            ia[0] = Float.valueOf((float)0);
+            ia[1] = Float.valueOf((float)100.1);
+            ia[2] = Float.valueOf((float)200.2);
+            ia[3] = Float.valueOf((float)300.3);
             //???real is valid??(it is a i5 type, but luw does not seem to like it)
             //C.createArrayOf("REAL) returns "INTEGER" as type flag (no big deal)
             //but when selected, the type is "REAL"   probably luw bug
@@ -7705,10 +7705,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Double[] ia = new Double[4];
-            ia[0] = new Double(0);
-            ia[1] = new Double((double)((float)100.1));
-            ia[2] = new Double((double)((float)200.2));
-            ia[3] = new Double((double)((float)300.3));
+            ia[0] = Double.valueOf(0);
+            ia[1] = Double.valueOf((double)((float)100.1));
+            ia[2] = Double.valueOf((double)((float)200.2));
+            ia[3] = Double.valueOf((double)((float)300.3));
 	    String baseTypeName = "FLOAT";
             java.sql.Array a;
 	    if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -7770,10 +7770,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Double[] ia = new Double[4];
-            ia[0] = new Double(0);
-            ia[1] = new Double(100.1);
-            ia[2] = new Double(200.2);
-            ia[3] = new Double(300.3);
+            ia[0] = Double.valueOf(0);
+            ia[1] = Double.valueOf(100.1);
+            ia[2] = Double.valueOf(200.2);
+            ia[3] = Double.valueOf(300.3);
             java.sql.Array a = createArray(connection_, "DOUBLE", ia);
 
             //call proc to revers 4 elements in array
@@ -8756,17 +8756,17 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             reconnect();
             ////////create array and set/get data
             Integer[] ia1 = new Integer[4];
-            ia1[0] = new Integer( 0);
-            ia1[1] = new Integer(1);
-            ia1[2] = new Integer(2);
-            ia1[3] = new Integer(3);
+            ia1[0] = Integer.valueOf( 0);
+            ia1[1] = Integer.valueOf(1);
+            ia1[2] = Integer.valueOf(2);
+            ia1[3] = Integer.valueOf(3);
             java.sql.Array a1 = createArray(connection_, "INTEGER", ia1);
 
             Integer[] ia2 = new Integer[4];
-            ia2[0] = new Integer( 0);
-            ia2[1] = new Integer(100);
-            ia2[2] = new Integer(200);
-            ia2[3] = new Integer(300);
+            ia2[0] = Integer.valueOf( 0);
+            ia2[1] = Integer.valueOf(100);
+            ia2[2] = Integer.valueOf(200);
+            ia2[3] = Integer.valueOf(300);
             java.sql.Array a2 = createArray(connection_, "INTEGER", ia2);
 
             //call proc   (in array, in int, inout array, inout int, out array, out int)
@@ -8938,10 +8938,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             reconnect();
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer( 0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf( 0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             String[] ias = new String[4];
             ias[0] = "0";
             ias[1] = "100";
@@ -8997,10 +8997,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             reconnect();
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer( 0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf( 0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             String[] ias = new String[4];
             ias[0] = "0";
             ias[1] = "100";
@@ -9094,10 +9094,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             ////////create array and set/get data
             //check local copy of array and arrayResultSet
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer(0);
-            ia[1] = new Integer(100);
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[0] = Integer.valueOf(0);
+            ia[1] = Integer.valueOf(100);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_,  "INTEGER", ia);
 
 
@@ -9623,7 +9623,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    assureProcedureExists(JDSetupProcedure.STP_CSARRINT4 );
             reconnect();
             Integer[] ia = {
-		new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5), new Integer(6)};
+		Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(3), Integer.valueOf(4), Integer.valueOf(5), Integer.valueOf(6)};
 
             CallableStatement cs = connection_.prepareCall("call " + JDSetupProcedure.STP_CSARRINT4 + " ( ?, ?) ");
             cs.setInt(1, 2);
@@ -9669,10 +9669,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             //check local copy of array and arrayResultSet
             boolean check1 = true;
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer(0);
+            ia[0] = Integer.valueOf(0);
             ia[1] = null;
-            ia[2] = new Integer(200);
-            ia[3] = new Integer(300);
+            ia[2] = Integer.valueOf(200);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "INTEGER", ia);
 
             java.sql.ResultSet retRS = a.getResultSet();
@@ -9759,10 +9759,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer(0);
-            ia[1] = new Integer(100);
+            ia[0] = Integer.valueOf(0);
+            ia[1] = Integer.valueOf(100);
             ia[2] = null;
-            ia[3] = new Integer(300);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "SMALLINT", ia);
 
             //call proc to revers 4 elements in array
@@ -9815,10 +9815,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Integer[] ia = new Integer[4];
-            ia[0] = new Integer( 0);
-            ia[1] = new Integer(100);
+            ia[0] = Integer.valueOf( 0);
+            ia[1] = Integer.valueOf(100);
             ia[2] = null;
-            ia[3] = new Integer(300);
+            ia[3] = Integer.valueOf(300);
             java.sql.Array a = createArray(connection_, "INTEGER", ia);
 
             //call proc to revers 4 elements in array
@@ -9866,10 +9866,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Long[] ia = new Long[4];
-            ia[0] = new Long( 0);
+            ia[0] = Long.valueOf( 0);
             ia[1] = null;
-            ia[2] = new Long( 200);
-            ia[3] = new Long( 300);
+            ia[2] = Long.valueOf( 200);
+            ia[3] = Long.valueOf( 300);
             java.sql.Array a = createArray(connection_, "BIGINT", ia);
 
             //call proc to revers 4 elements in array
@@ -9918,9 +9918,9 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             ////////create array and set/get data
             Float[] ia = new Float[4];
             ia[0] = null;
-            ia[1] = new Float((float)100.1);
-            ia[2] = new Float((float)200.2);
-            ia[3] = new Float((float)300.3);
+            ia[1] = Float.valueOf((float)100.1);
+            ia[2] = Float.valueOf((float)200.2);
+            ia[3] = Float.valueOf((float)300.3);
             //???real is valid??(it is a i5 type, but luw does not seem to like it)
             //C.createArrayOf("REAL) returns "INTEGER" as type flag (no big deal)
             //but when selected, the type is "REAL"   probably luw bug
@@ -9972,9 +9972,9 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             ////////create array and set/get data
             Double[] ia = new Double[4];
             ia[0] = null;
-            ia[1] = new Double((double)((float)100.1));
-            ia[2] = new Double((double)((float)200.2));
-            ia[3] = new Double((double)((float)300.3));
+            ia[1] = Double.valueOf((double)((float)100.1));
+            ia[2] = Double.valueOf((double)((float)200.2));
+            ia[3] = Double.valueOf((double)((float)300.3));
             java.sql.Array a;
 	    String baseTypeName = "FLOAT";
 	    if (getDriver() == JDTestDriver.DRIVER_JCC) {
@@ -10035,9 +10035,9 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             ////////create array and set/get data
             Double[] ia = new Double[4];
-            ia[0] = new Double(0);
-            ia[1] = new Double(100.1);
-            ia[2] = new Double(200.2);
+            ia[0] = Double.valueOf(0);
+            ia[1] = Double.valueOf(100.1);
+            ia[2] = Double.valueOf(200.2);
             ia[3] = null;
             java.sql.Array a = createArray(connection_, "DOUBLE", ia);
 
@@ -12442,7 +12442,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		Integer[] intArray =  (Integer[]) ia;
 		ia = new Short[intArray.length];
 		for (int i = 0; i < intArray.length; i++) {
-		    ia[i] = new Short(intArray[i].shortValue());
+		    ia[i] = Short.valueOf(intArray[i].shortValue());
 		}
 
 	    } else {
@@ -13807,17 +13807,17 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             reconnect();
             ////////create array and set/get data
             Integer[] ia1 = new Integer[4];
-            ia1[0] = new Integer( 0);
-            ia1[1] = new Integer(1);
-            ia1[2] = new Integer(2);
-            ia1[3] = new Integer(3);
+            ia1[0] = Integer.valueOf( 0);
+            ia1[1] = Integer.valueOf(1);
+            ia1[2] = Integer.valueOf(2);
+            ia1[3] = Integer.valueOf(3);
             java.sql.Array a1 = createArray(connection_, "INTEGER", ia1);
 
             Integer[] ia2 = new Integer[4];
-            ia2[0] = new Integer( 0);
-            ia2[1] = new Integer(100);
-            ia2[2] = new Integer(200);
-            ia2[3] = new Integer(300);
+            ia2[0] = Integer.valueOf( 0);
+            ia2[1] = Integer.valueOf(100);
+            ia2[2] = Integer.valueOf(200);
+            ia2[3] = Integer.valueOf(300);
             java.sql.Array a2 = createArray(connection_, "INTEGER", ia2);
 
             //call proc   (in array, in int, inout array, inout int, out array, out int)
@@ -13912,7 +13912,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
           // check local copy of array and arrayResultSet
           ia = new Integer[101];
           for (int i = 0; i < ia.length; i++) {
-            ia[i] = new Integer(i);
+            ia[i] = Integer.valueOf(i);
           }
           a = createArray(connection_, "INTEGER", ia);
 
@@ -13933,7 +13933,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
           ia = new Integer[5];
           for (int i = 0; i < ia.length; i++) {
-            ia[i] = new Integer(i);
+            ia[i] = Integer.valueOf(i);
           }
           a = createArray(connection_, "INTEGER", ia);
 
@@ -13958,7 +13958,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
           ia = new Integer[100];
           for (int i = 0; i < ia.length; i++) {
-            ia[i] = new Integer(i);
+            ia[i] = Integer.valueOf(i);
           }
 
           a = createArray(connection_, "INTEGER", ia);
@@ -14010,7 +14010,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
           // check local copy of array and arrayResultSet
           ia = new Integer[101];
           for (int i = 0; i < ia.length; i++) {
-            ia[i] = new Integer(i);
+            ia[i] = Integer.valueOf(i);
           }
           a = createArray(connection_, "INTEGER", ia);
 
@@ -14031,7 +14031,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
           ia = new Integer[5];
           for (int i = 0; i < ia.length; i++) {
-            ia[i] = new Integer(i);
+            ia[i] = Integer.valueOf(i);
           }
           a = createArray(connection_, "INTEGER", ia);
 
@@ -14056,7 +14056,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
           ia = new Integer[100];
           for (int i = 0; i < ia.length; i++) {
-            ia[i] = new Integer(i);
+            ia[i] = Integer.valueOf(i);
           }
 
           a = createArray(connection_, "INTEGER", ia);
@@ -14468,7 +14468,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             out.next();
             outArray[x] = out.getObject(2);
 	    if (outArray[x] instanceof Short) {
-		outArray[x] = new Integer(((Short)outArray[x]).intValue());
+		outArray[x] = Integer.valueOf(((Short)outArray[x]).intValue());
 	    }
         }
         if(out.next()) {

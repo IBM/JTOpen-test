@@ -70,14 +70,14 @@ public class RFRecordMisc extends Testcase
   Record rec;       // Record for use in the variations
   // Contains the Java objects to use to create
   // the AS/400 data for contents byte array.
-  Object[] jtArray = {new Integer(5),
+  Object[] jtArray = {Integer.valueOf(5),
                       "Field2",
                       "01/01/97",
                       "Field3",
                       "Field four",
                       "Field five",
                       "Field six",
-                      new Double(999.111),
+                      Double.valueOf(999.111),
                       new byte[3],
                       new BigDecimal("1234567890.01234"),
                       "01:01:01",
@@ -1097,7 +1097,7 @@ public class RFRecordMisc extends Testcase
       rf1.addFieldDescription(new CharacterFieldDescription(txt10, "NAME"));
       rf1.addFieldDescription(new BinaryFieldDescription(bin2, "NEXTLEN"));
       rf1.addFieldDescription(new CharacterFieldDescription(txt50, "VARLEN"));
-      ((BinaryFieldDescription)rf1.getFieldDescription("TOTLEN")).setDFT(new Integer(68));
+      ((BinaryFieldDescription)rf1.getFieldDescription("TOTLEN")).setDFT(Integer.valueOf(68));
   
       RecordFormat rf2 = new RecordFormat();
       rf2.addFieldDescription(new BinaryFieldDescription(bin4, "TOTLEN"));
@@ -1187,7 +1187,7 @@ public class RFRecordMisc extends Testcase
       rf1.addFieldDescription(new CharacterFieldDescription(txt10, "NAME"));
       rf1.addFieldDescription(new BinaryFieldDescription(bin2, "NEXTLEN"));
       rf1.addFieldDescription(new CharacterFieldDescription(txt50, "VARLEN"));
-      ((BinaryFieldDescription)rf1.getFieldDescription("TOTLEN")).setDFT(new Integer(68));
+      ((BinaryFieldDescription)rf1.getFieldDescription("TOTLEN")).setDFT(Integer.valueOf(68));
   
       RecordFormat rf2 = new RecordFormat();
       rf2.addFieldDescription(new BinaryFieldDescription(bin4, "TOTLEN"));
@@ -1290,7 +1290,7 @@ public class RFRecordMisc extends Testcase
       rf1.addFieldDescription(new CharacterFieldDescription(txt10, "NAME"));
       rf1.addFieldDescription(new BinaryFieldDescription(bin2, "NEXTLEN"));
       rf1.addFieldDescription(new CharacterFieldDescription(txt50, "VARLEN"));
-      ((BinaryFieldDescription)rf1.getFieldDescription("TOTLEN")).setDFT(new Integer(68));
+      ((BinaryFieldDescription)rf1.getFieldDescription("TOTLEN")).setDFT(Integer.valueOf(68));
   
       RecordFormat rf2 = new RecordFormat();
       rf2.addFieldDescription(new BinaryFieldDescription(bin4, "TOTLEN"));
@@ -1530,7 +1530,7 @@ public class RFRecordMisc extends Testcase
         field = rec.getField(i);
         if (field.getClass() != jtArray[i].getClass())
         {
-          failed((new Integer(i)).toString() + ": Wrong object type returned");
+          failed((Integer.valueOf(i)).toString() + ": Wrong object type returned");
           return;
         }
       }
@@ -1749,12 +1749,12 @@ public class RFRecordMisc extends Testcase
       Object field;
       for (int i = 0; i < 13; ++i)
       {
-        name = "field" + (new Integer(i+1)).toString();
+        name = "field" + (Integer.valueOf(i+1)).toString();
         // Verify the type
         field = rec.getField(name);
         if (field.getClass() != jtArray[i].getClass())
         {
-          failed((new Integer(i)).toString() + ": Wrong object type returned");
+          failed((Integer.valueOf(i)).toString() + ": Wrong object type returned");
           return;
         }
       }
@@ -2302,7 +2302,7 @@ public class RFRecordMisc extends Testcase
     try
     {
       rec = new Record(rf);
-      rec.setField(0, new Integer(1));
+      rec.setField(0, Integer.valueOf(1));
       rec.setField(2, "ABCDE");
       Object[] fields = rec.getKeyFields();
       if (fields.length != 2)
@@ -3417,7 +3417,7 @@ public class RFRecordMisc extends Testcase
     rf.addFieldDescription(new CharacterFieldDescription(new AS400Text(10, systemObject_.getCcsid(), systemObject_), "c"));
     rf.setLengthDependency(1, 0);
     rec = r.getNewRecord();
-    rec.setField(0, new Integer(5));
+    rec.setField(0, Integer.valueOf(5));
     // Verify exception passing byte[] of length 0
     try
     {
@@ -3901,7 +3901,7 @@ public class RFRecordMisc extends Testcase
       // Create record with contents set with the contents array
       rec = r.getNewRecord(contents);
       // Set three of the fields
-      rec.setField(0, new Integer(25));
+      rec.setField(0, Integer.valueOf(25));
       if (((Integer)rec.getField(0)).intValue() != 25)
       {
         failed("getField() not returning correct value");
@@ -3941,7 +3941,7 @@ public class RFRecordMisc extends Testcase
       rec = new Record(rf);
 
       rec.setField(0, "Hello");
-      rec.setField(1, new Integer(10));
+      rec.setField(1, Integer.valueOf(10));
       rec.setField(2, "Variable");
       rec.setField(3, new BigDecimal("1.1"));
       // Verify the values set
@@ -3999,7 +3999,7 @@ public class RFRecordMisc extends Testcase
       rec = new Record(rf);
 
       rec.setField(0, "Hello");
-      rec.setField(1, new Integer(10));
+      rec.setField(1, Integer.valueOf(10));
       rec.setField(2, "Variable");
       rec.setField(3, new BigDecimal("1.1"));
       // Verify the values set
@@ -4050,7 +4050,7 @@ public class RFRecordMisc extends Testcase
     // Verify exception when setting field with invalid index
     try
     {
-      rec.setField(-1, new Integer(5));
+      rec.setField(-1, Integer.valueOf(5));
       failed("No exception");
       return;
     }
@@ -4083,7 +4083,7 @@ public class RFRecordMisc extends Testcase
     // Verify exception when setting field with invalid index
     try
     {
-      rec.setField(rec.getNumberOfFields(), new Integer(5));
+      rec.setField(rec.getNumberOfFields(), Integer.valueOf(5));
       failed("No exception");
       return;
     }
@@ -4146,7 +4146,7 @@ public class RFRecordMisc extends Testcase
     try
     {
       Record rc = new Record();
-      rc.setField(0, new Integer(10));
+      rc.setField(0, Integer.valueOf(10));
       failed("No exception calling without record format");
       return;
     }
@@ -4176,7 +4176,7 @@ public class RFRecordMisc extends Testcase
       // Create record with contents set with the contents array
       rec = r.getNewRecord(contents);
       // Set three of the fields
-      rec.setField("field1", new Integer(10));
+      rec.setField("field1", Integer.valueOf(10));
       rec.setField("field2", "new field");
       rec.setField("field10", new BigDecimal("99999.992"));
       // Verify the correctness of the record
@@ -4336,7 +4336,7 @@ public class RFRecordMisc extends Testcase
     // Verify exception when setting field with invalid field name
     try
     {
-      rec.setField("non existent", new Integer(5));
+      rec.setField("non existent", Integer.valueOf(5));
       failed("No exception setting field with invalid field name");
       return;
     }
@@ -4352,7 +4352,7 @@ public class RFRecordMisc extends Testcase
     // Verify exception passing null for field name
     try
     {
-      rec.setField(null, new Integer(5));
+      rec.setField(null, Integer.valueOf(5));
       failed("No exception passing null for field name");
       return;
     }
@@ -4378,7 +4378,7 @@ public class RFRecordMisc extends Testcase
     try
     {
       Record rc = new Record();
-      rc.setField("field1", new Integer(10));
+      rc.setField("field1", Integer.valueOf(10));
       failed("No exception calling without record format");
       return;
     }

@@ -21,7 +21,6 @@ import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import com.sun.jdi.AbsentInformationException;
 import com.sun.jdi.Bootstrap;
 import com.sun.jdi.ClassType;
@@ -72,7 +71,8 @@ public class JDDebugger extends Thread {
 	EventRequestManager eventRequestManager;
 	EventQueue eventQueue;
 
-	public JDDebugger(int portNumber, PrintStream out) throws Exception {
+	@SuppressWarnings("unchecked")
+  public JDDebugger(int portNumber, PrintStream out) throws Exception {
 		this.out = out;
 
 		VirtualMachineManager virtualMachineManager = Bootstrap.virtualMachineManager();

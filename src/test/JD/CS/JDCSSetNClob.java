@@ -237,7 +237,7 @@ public class JDCSSetNClob extends JDCSSetTestcase {
           argClasses[1] = Class.forName("com.ibm.db2.jdbc.app.NClob");
         }
         Object[] args = new Object[2];
-        args[0] = new Integer(20);
+        args[0] = Integer.valueOf(20);
         args[1] = null;
 
         JDReflectionUtil.callMethod_V(cs, "setNClob", argClasses, args);
@@ -912,7 +912,7 @@ public class JDCSSetNClob extends JDCSSetTestcase {
           argClasses[1] = Class.forName("com.ibm.db2.jdbc.app.NClob");
         }
         Object[] args = new Object[2];
-        args[0] = new Integer(20); 
+        args[0] = Integer.valueOf(20); 
         args[1] = null;
 
         JDReflectionUtil.callMethod_V(cs, "setNClob", argClasses, args);

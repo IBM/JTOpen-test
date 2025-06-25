@@ -1943,9 +1943,9 @@ public class JDTestcase extends Testcase {
       argTypes[3] = Class.forName("java.util.concurrent.TimeUnit");
       argTypes[4] = Class.forName("java.util.concurrent.BlockingQueue");
       Object[] args = new Object[5];
-      args[0] = new Integer(5);
-      args[1] = new Integer(20);
-      args[2] = new Long(60);
+      args[0] = Integer.valueOf(5);
+      args[1] = Integer.valueOf(20);
+      args[2] = Long.valueOf(60);
       args[3] = timeUnitSeconds;
       sb.append("Create LinkedBlockingQueue");
       args[4] = JDReflectionUtil.createObject("java.util.concurrent.LinkedBlockingQueue");
@@ -1959,7 +1959,7 @@ public class JDTestcase extends Testcase {
       Class<?>[] argTypes = new Class[1];
       argTypes[0] = Integer.TYPE;
       Object[] args = new Object[1];
-      args[0] = new Integer(5);
+      args[0] = Integer.valueOf(5);
       sb.append("Create " + executorClassname + "\n");
 
       return JDReflectionUtil.createObject(executorClassname, argTypes, args);

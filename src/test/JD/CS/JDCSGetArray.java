@@ -939,12 +939,12 @@ public class JDCSGetArray extends JDTestcase {
       // check local copy of array and arrayResultSet
       boolean check1 = true;
       Integer[] iaCheck = new Integer[6]; // 1,22,23,4,5,6
-      iaCheck[0] = new Integer(1);
-      iaCheck[1] = new Integer(22);
-      iaCheck[2] = new Integer(23);
-      iaCheck[3] = new Integer(4);
-      iaCheck[4] = new Integer(5);
-      iaCheck[5] = new Integer(6);
+      iaCheck[0] = Integer.valueOf(1);
+      iaCheck[1] = Integer.valueOf(22);
+      iaCheck[2] = Integer.valueOf(23);
+      iaCheck[3] = Integer.valueOf(4);
+      iaCheck[4] = Integer.valueOf(5);
+      iaCheck[5] = Integer.valueOf(6);
 
       CallableStatement cs = connection_
           .prepareCall("call " + JDSetupProcedure.STP_CSARRINT + " ( ?, ?) ");
@@ -998,12 +998,12 @@ public class JDCSGetArray extends JDTestcase {
       // check local copy of array and arrayResultSet
       boolean check1 = true;
       Integer[] ia = new Integer[6]; // 1,22,23,4,5,6
-      ia[0] = new Integer(1);
-      ia[1] = new Integer(22);
-      ia[2] = new Integer(23);
-      ia[3] = new Integer(4);
-      ia[4] = new Integer(5);
-      ia[5] = new Integer(6);
+      ia[0] = Integer.valueOf(1);
+      ia[1] = Integer.valueOf(22);
+      ia[2] = Integer.valueOf(23);
+      ia[3] = Integer.valueOf(4);
+      ia[4] = Integer.valueOf(5);
+      ia[5] = Integer.valueOf(6);
       java.sql.Array a;
       if (isJdbc40() || isToolboxDriver() // TB put createArrayOf into JDBC30
                                           // for testing

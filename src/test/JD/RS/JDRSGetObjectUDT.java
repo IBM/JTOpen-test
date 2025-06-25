@@ -653,8 +653,8 @@ customers will have to change applications that break.
 							 + JDRSTest.RSTEST_GET);
 		JDRSTest.position0 (rs, "NUMBER_POS");
 		Object s = rs.getObject ("C_SMALLINT", map_);
-	    // assertCondition ((s instanceof Short) && (s.equals (new Short ((short) 198))));
-		assertCondition ((s instanceof Integer) && (s.equals (new Integer (198))));
+	    // assertCondition ((s instanceof Short) && (s.equals (Short.valueOf((short) 198))));
+		assertCondition ((s instanceof Integer) && (s.equals (Integer.valueOf(198))));
 	    } catch (Exception e) {
 		failed (e, "Unexpected Exception");
 	    }
@@ -677,7 +677,7 @@ getObject() - Get from a INTEGER.
 							 + JDRSTest.RSTEST_GET);
 		JDRSTest.position0 (rs, "NUMBER_NEG");
 		Object s = rs.getObject ("C_INTEGER", map_);
-		assertCondition ((s instanceof Integer) && (s.equals (new Integer (-98765))));
+		assertCondition ((s instanceof Integer) && (s.equals (Integer.valueOf(-98765))));
 	    } catch (Exception e) {
 		failed (e, "Unexpected Exception");
 	    }
@@ -700,7 +700,7 @@ getObject() - Get from a REAL.
 							 + JDRSTest.RSTEST_GET);
 		JDRSTest.position0 (rs, "NUMBER_POS");
 		Object s = rs.getObject ("C_REAL", map_);
-		assertCondition ((s instanceof Float) && (s.equals (new Float (4.4))));
+		assertCondition ((s instanceof Float) && (s.equals (Float.valueOf(4.4f))));
 	    } catch (Exception e) {
 		failed (e, "Unexpected Exception");
 	    }
@@ -723,7 +723,7 @@ getObject() - Get from a FLOAT.
 							 + JDRSTest.RSTEST_GET);
 		JDRSTest.position0 (rs, "NUMBER_NEG");
 		Object s = rs.getObject ("C_FLOAT", map_);
-		assertCondition ((s instanceof Double) && (s.equals (new Double (-5.55))));
+		assertCondition ((s instanceof Double) && (s.equals (Double.valueOf(-5.55))));
 	    } catch (Exception e) {
 		failed (e, "Unexpected Exception");
 	    }
@@ -746,7 +746,7 @@ getObject() - Get from a DOUBLE.
 							 + JDRSTest.RSTEST_GET);
 		JDRSTest.position0 (rs, "NUMBER_POS");
 		Object s = rs.getObject ("C_DOUBLE", map_);
-		assertCondition ((s instanceof Double) && (s.equals (new Double (6.666))));
+		assertCondition ((s instanceof Double) && (s.equals (Double.valueOf(6.666))));
 	    } catch (Exception e) {
 		failed (e, "Unexpected Exception");
 	    }
@@ -1128,7 +1128,7 @@ getObject() - Get from a BIGINT.
 							     + JDRSTest.RSTEST_GET);
 		    JDRSTest.position0 (rs, "NUMBER_NEG");
 		    Object s = rs.getObject ("C_BIGINT",map_);
-		    assertCondition ((s instanceof Long) && (s.equals (new Long (-44332123))));
+		    assertCondition ((s instanceof Long) && (s.equals (Long.valueOf(-44332123))));
 		} catch (Exception e) {
 		    failed (e, "Unexpected Exception");
 		}

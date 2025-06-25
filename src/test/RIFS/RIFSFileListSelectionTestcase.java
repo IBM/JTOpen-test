@@ -544,7 +544,7 @@ setSelectionValue() - Pass null for the selection ID.
     {
         try {
             RIFSFileList u = new RIFSFileList(systemObject_, path_);
-            u.setSelectionValue(null, new Integer(2));
+            u.setSelectionValue(null, Integer.valueOf(2));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -612,7 +612,7 @@ setSelectionValue() - Pass a value which is the wrong type.
     {
         try {
             RIFSFileList u = new RIFSFileList(systemObject_, path_);
-            u.setSelectionValue(RIFSFileList.PATTERN, new Integer(4));
+            u.setSelectionValue(RIFSFileList.PATTERN, Integer.valueOf(4));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {

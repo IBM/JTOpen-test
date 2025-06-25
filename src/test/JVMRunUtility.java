@@ -19,24 +19,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.sun.jdi.Bootstrap;
-import com.sun.jdi.Method;
-import com.sun.jdi.ReferenceType;
-import com.sun.jdi.VirtualMachine;
-import com.sun.jdi.VirtualMachineManager;
-import com.sun.jdi.connect.Connector;
-import com.sun.jdi.connect.LaunchingConnector;
-import com.sun.jdi.event.Event;
-import com.sun.jdi.event.EventQueue;
-import com.sun.jdi.event.EventSet;
-import com.sun.jdi.event.MethodEntryEvent;
-import com.sun.jdi.event.MethodExitEvent;
-import com.sun.jdi.event.VMDeathEvent;
-import com.sun.jdi.event.VMDisconnectEvent;
-import com.sun.jdi.event.VMStartEvent;
-import com.sun.jdi.request.EventRequestManager;
-import com.sun.jdi.request.MethodEntryRequest;
-import com.sun.jdi.request.VMDeathRequest;
+ import com.sun.jdi.Bootstrap;
+ import com.sun.jdi.Method;
+ import com.sun.jdi.ReferenceType;
+ import com.sun.jdi.VirtualMachine;
+ import com.sun.jdi.VirtualMachineManager;
+ import com.sun.jdi.connect.Connector;
+ import com.sun.jdi.connect.LaunchingConnector;
+ import com.sun.jdi.event.Event;
+ import com.sun.jdi.event.EventQueue;
+ import com.sun.jdi.event.EventSet;
+ import com.sun.jdi.event.MethodEntryEvent;
+ import com.sun.jdi.event.MethodExitEvent;
+ import com.sun.jdi.event.VMDeathEvent;
+ import com.sun.jdi.event.VMDisconnectEvent;
+ import com.sun.jdi.event.VMStartEvent;
+ import com.sun.jdi.request.EventRequestManager;
+ import com.sun.jdi.request.MethodEntryRequest;
+ import com.sun.jdi.request.VMDeathRequest;
 
 /**
  * The JVMRunUtility run a programs in a JVM and provides information about the resources used by
@@ -84,6 +84,7 @@ public class JVMRunUtility extends Thread {
       args_ = args; 
     }
   
+    @SuppressWarnings("unchecked")
     public void startJVM() throws Exception {
       VirtualMachineManager virtualMachineManager = Bootstrap.virtualMachineManager(); 
       LaunchingConnector launchingConnector = virtualMachineManager.defaultConnector();

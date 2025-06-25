@@ -146,7 +146,7 @@ public class DTBin4Testcase extends Testcase
         try
         {
             AS400Bin4 conv = new AS400Bin4();
-            byte[] data = conv.toBytes(new Integer(-22216467));
+            byte[] data = conv.toBytes(Integer.valueOf(-22216467));
             if (data.length == 4 &&
                 data[0] == (byte)0xFE &&
                 data[1] == (byte)0xAD &&
@@ -175,7 +175,7 @@ public class DTBin4Testcase extends Testcase
         AS400Bin4 conv = new AS400Bin4();
         try
         {
-            byte[] ret = conv.toBytes(new Long(0));
+            byte[] ret = conv.toBytes(Long.valueOf(0));
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -287,7 +287,7 @@ public class DTBin4Testcase extends Testcase
                     {
                         for (int z = 0x00; z <= 0xFF; z+=0x80)
                         {
-                            int ret = conv.toBytes(new Integer(testValue[i++]), data);
+                            int ret = conv.toBytes(Integer.valueOf(testValue[i++]), data);
 
                             if (ret != 4)
                             {
@@ -323,7 +323,7 @@ public class DTBin4Testcase extends Testcase
 
         try
         {
-            int ret = conv.toBytes(new Integer(0), new byte[0]);
+            int ret = conv.toBytes(Integer.valueOf(0), new byte[0]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -348,7 +348,7 @@ public class DTBin4Testcase extends Testcase
         AS400Bin4 conv = new AS400Bin4();
         try
         {
-            int ret = conv.toBytes(new Long(0), new byte[10]);
+            int ret = conv.toBytes(Long.valueOf(0), new byte[10]);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -398,7 +398,7 @@ public class DTBin4Testcase extends Testcase
         AS400Bin4 conv = new AS400Bin4();
         try
         {
-            int ret = conv.toBytes(new Integer(0), null);
+            int ret = conv.toBytes(Integer.valueOf(0), null);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -547,7 +547,7 @@ public class DTBin4Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            int ret = conv.toBytes(new Integer(0), data, 0);
+            int ret = conv.toBytes(Integer.valueOf(0), data, 0);
             if (ret != 4)
             {
                 valid = false;
@@ -568,7 +568,7 @@ public class DTBin4Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            ret = conv.toBytes(new Integer(0), data, 4);
+            ret = conv.toBytes(Integer.valueOf(0), data, 4);
             if (ret != 4)
             {
                 valid = false;
@@ -596,7 +596,7 @@ public class DTBin4Testcase extends Testcase
             {
                 data[i] = (byte)0xEE;
             }
-            ret = conv.toBytes(new Integer(0), data, 8);
+            ret = conv.toBytes(Integer.valueOf(0), data, 8);
             if (ret != 4)
             {
                 valid = false;
@@ -630,7 +630,7 @@ public class DTBin4Testcase extends Testcase
         AS400Bin4 conv = new AS400Bin4();
         try
         {
-            int ret = conv.toBytes(new Integer(0), new byte[3], 0);
+            int ret = conv.toBytes(Integer.valueOf(0), new byte[3], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -655,7 +655,7 @@ public class DTBin4Testcase extends Testcase
         AS400Bin4 conv = new AS400Bin4();
         try
         {
-            int ret = conv.toBytes(new Integer(0), new byte[7], 5);
+            int ret = conv.toBytes(Integer.valueOf(0), new byte[7], 5);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -681,7 +681,7 @@ public class DTBin4Testcase extends Testcase
 
         try
         {
-            int ret = conv.toBytes(new Integer(0), new byte[10], -5);
+            int ret = conv.toBytes(Integer.valueOf(0), new byte[10], -5);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -706,7 +706,7 @@ public class DTBin4Testcase extends Testcase
         AS400Bin4 conv = new AS400Bin4();
         try
         {
-            int ret = conv.toBytes(new Long(0), new byte[4], 0);
+            int ret = conv.toBytes(Long.valueOf(0), new byte[4], 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)
@@ -756,7 +756,7 @@ public class DTBin4Testcase extends Testcase
         AS400Bin4 conv = new AS400Bin4();
         try
         {
-            int ret = conv.toBytes(new Integer(0), null, 0);
+            int ret = conv.toBytes(Integer.valueOf(0), null, 0);
             failed("Did not throw exception. ret="+ret);
         }
         catch (Exception e)

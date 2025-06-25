@@ -81,7 +81,7 @@ public class SysvalP9907639 extends Testcase
         }
         else
         {
-          int x = (new Integer(h1.trim())).intValue();
+          int x = (Integer.valueOf(h1.trim())).intValue();
           if (x != hours)
           {
             failed("Hours not equal. AS/400 says "+x+" and Java says "+hours+". Is the client time the same as the AS/400 time? Was this variation run at the top of the hour?");

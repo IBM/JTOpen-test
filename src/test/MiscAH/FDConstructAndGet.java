@@ -233,7 +233,7 @@ public class FDConstructAndGet extends Testcase
     String fieldName2 = "myNewJavaField";
     String ddsName1 = "EMPNUM";
     String ddsName2 = "myNewJavaF";
-    // Integer dftVal = new Integer(0);
+    // Integer dftVal = Integer.valueOf(0);
     // String[] keyFunctions = {"UNIQUE"};
 
     BinaryFieldDescription b1 = new BinaryFieldDescription(new AS400Bin4(), fieldName1);
@@ -1164,8 +1164,8 @@ public class FDConstructAndGet extends Testcase
     String fieldName2 = "myNewJavaField";
     String ddsName1 = "EMPNUM";
     String ddsName2 = "myNewJavaF";
-    //Double dftVal1 = new Double(0.00);
-    //Float dftVal2 = new Float(0.00);
+    //Double dftVal1 = Double.valueOf(0.00);
+    //Float dftVal2 = Float.valueOf(0.00);
     //String[] keyFunctions = {"UNIQUE"};
 
     FloatFieldDescription b1 = new FloatFieldDescription(new AS400Float8(), fieldName1);
@@ -2922,7 +2922,7 @@ public class FDConstructAndGet extends Testcase
     String fieldName2 = "myNewJavaField";
     String ddsName1 = "EMPNUM";
     String ddsName2 = "myNewJavaF";
-    //Integer dftVal = new Integer(0);
+    //Integer dftVal = Integer.valueOf(0);
     //String[] keyFunctions = {"UNIQUE"};
 
     BinaryFieldDescription b1 = new BinaryFieldDescription(new AS400Bin8(), fieldName1);

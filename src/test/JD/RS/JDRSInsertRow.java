@@ -435,7 +435,7 @@ insertRow() - Should insert a row with all but 3 nulls when exactly
             for (int i = 0; i < columnCount; ++i) {
 		if (i != 27) {  /* skip the rowid row */ 
 		    if (i == insertedColumn1) {
-			if (! after[i].equals (new Integer (365)))
+			if (! after[i].equals (Integer.valueOf(365)))
 			    success = false;
 			if (afterNulls[i] != false)
 			    success = false;
@@ -561,12 +561,12 @@ java.lang.Short object.  This testcase has been changed to match that expectatio
 		    if (i == updatedColumn) {
 			if (getDriver() == JDTestDriver.DRIVER_NATIVE &&  getRelease() ==  JDTestDriver.RELEASE_V7R1M0 )
 			{
-			    if ((! after[i].equals (new Short ((short) 77)))
+			    if ((! after[i].equals (Short.valueOf((short) 77)))
 				|| (afterNulls[i] != false))
 				success = false;
 
 			} else { 
-			    if ((! after[i].equals (new Integer (77)))
+			    if ((! after[i].equals (Integer.valueOf(77)))
 				|| (afterNulls[i] != false))
 				success = false;
 			}
@@ -620,7 +620,7 @@ be carried over to the next.
             for (int i = 0; i < columnCount; ++i) {
 		if (i != 27) {  /* skip the rowid row */ 
 		    if (i == updatedColumn) {
-			if ((! after[i].equals (new Integer (253)))
+			if ((! after[i].equals (Integer.valueOf(253)))
 			    || (afterNulls[i] != false))
 			    success = false;
 		    }

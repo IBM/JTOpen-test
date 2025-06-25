@@ -204,7 +204,7 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
-        inList.add (new Integer (-4));
+        inList.add (Integer.valueOf(-4));
         jm.setCCSIDs (inList);
         failed ("Didn't throw exception.");
       }
@@ -223,8 +223,8 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
-        inList.add (new Integer (1027));
-        inList.add (new Integer (9999));
+        inList.add (Integer.valueOf(1027));
+        inList.add (Integer.valueOf(9999));
         jm.setCCSIDs (inList);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
@@ -262,8 +262,8 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
-        inList.add (new Integer (930));  //@A1c
-        inList.add (new Integer (933));  //@A1c
+        inList.add (Integer.valueOf(930));  //@A1c
+        inList.add (Integer.valueOf(933));  //@A1c
         jm.setCCSIDs (inList);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
@@ -408,7 +408,7 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
-        inList.add (new Integer (-4));
+        inList.add (Integer.valueOf(-4));
         jm.setCCSIDsExcluded (inList);
         failed ("Didn't throw exception.");
       }
@@ -428,8 +428,8 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
-        inList.add (new Integer (1027));
-        inList.add (new Integer (9999));
+        inList.add (Integer.valueOf(1027));
+        inList.add (Integer.valueOf(9999));
         jm.setCCSIDsExcluded (inList);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
@@ -468,8 +468,8 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList = new Vector<Comparable<?>> (1);
-        inList.add (new Integer (1027));
-        inList.add (new Integer (835));
+        inList.add (Integer.valueOf(1027));
+        inList.add (Integer.valueOf(835));
         jm.setCCSIDsExcluded (inList);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
@@ -510,10 +510,10 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList1 = new Vector<Comparable<?>> (1);
-        inList1.add (new Integer (1027));
+        inList1.add (Integer.valueOf(1027));
         jm.setCCSIDs (inList1);
         Vector<Comparable<?>> inList2 = new Vector<Comparable<?>> (1);
-        inList2.add (new Integer (835));
+        inList2.add (Integer.valueOf(835));
         jm.setCCSIDsExcluded (inList2);
         // Remove the destination jar file if it exists.
         JMTest.deleteFile (JMTest.TOOLBOX_JAR_SMALL);
@@ -550,12 +550,12 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList1 = new Vector<Comparable<?>> (2);
-        inList1.add (new Integer (1027));
-        inList1.add (new Integer (61952));
+        inList1.add (Integer.valueOf(1027));
+        inList1.add (Integer.valueOf(61952));
         jm.setCCSIDs (inList1);
         Vector<Comparable<?>> inList2 = new Vector<Comparable<?>> (2);
-        inList2.add (new Integer (835));
-        inList2.add (new Integer (61952));
+        inList2.add (Integer.valueOf(835));
+        inList2.add (Integer.valueOf(61952));
         output_.println ("(NOTE TO TESTER: Please ignore warning about CCSID 61952)");
         jm.setCCSIDsExcluded (inList2);
         // Remove the destination jar file if it exists.
@@ -595,12 +595,12 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList1 = new Vector<Comparable<?>> (2);
-        inList1.add (new Integer (1027));
-        inList1.add (new Integer (61952));
+        inList1.add (Integer.valueOf(1027));
+        inList1.add (Integer.valueOf(61952));
         jm.setCCSIDs (inList1);
         Vector<Comparable<?>> inList2 = new Vector<Comparable<?>> (2);
-        inList2.add (new Integer (835));
-        inList2.add (new Integer (61952));
+        inList2.add (Integer.valueOf(835));
+        inList2.add (Integer.valueOf(61952));
         jm.setCCSIDsExcluded (inList2);
 
           succeeded ();
@@ -622,11 +622,11 @@ Performs cleanup needed after running variations.
       ToolboxJarMaker jm = new ToolboxJarMaker ();
       try {
         Vector<Comparable<?>> inList2 = new Vector<Comparable<?>> (2);
-        inList2.add (new Integer (835));
-        inList2.add (new Integer (61952));
+        inList2.add (Integer.valueOf(835));
+        inList2.add (Integer.valueOf(61952));
         Vector<Comparable<?>> inList1 = new Vector<Comparable<?>> (2);
-        inList1.add (new Integer (1027));
-        inList1.add (new Integer (61952));
+        inList1.add (Integer.valueOf(1027));
+        inList1.add (Integer.valueOf(61952));
         jm.setCCSIDs (inList1);
         jm.setCCSIDsExcluded (inList2);
 

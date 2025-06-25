@@ -173,7 +173,7 @@ specified.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",100, new Integer (4), getSQLType(Types.INTEGER));
+		JDReflectionUtil.callMethod_V(ps,"setObject",100, Integer.valueOf(4), getSQLType(Types.INTEGER));
 		ps.close ();
 		failed ("Didn't throw SQLException");
 	    } catch (Exception e) {
@@ -246,7 +246,7 @@ greater than 1.
 		argClasses[1] = Class.forName("java.lang.Object"); 
 		argClasses[2] = Class.forName("java.sql.SQLType"); 
 		Object[] args = new Object[3]; 
-		args[0] = new Integer(2);
+		args[0] = Integer.valueOf(2);
 		args[1] = new BigDecimal ("4.3");
 		args[2] = getSQLType(Types.NUMERIC); 
 		JDReflectionUtil.callMethod_V(ps,"setObject",argClasses, args );
@@ -284,7 +284,7 @@ setObject() - Should set to SQL NULL when the object is null.
     argClasses[1] = Class.forName("java.lang.Object"); 
     argClasses[2] = Class.forName("java.sql.SQLType"); 
     Object[] args = new Object[3]; 
-    args[0] = new Integer(1);
+    args[0] = Integer.valueOf(1);
     args[1] = null; 
     args[2] = getSQLType(Types.NUMERIC); 
     JDReflectionUtil.callMethod_V(ps,"setObject",argClasses, args );
@@ -325,7 +325,7 @@ setObject() - Should throw exception when the type is invalid.
 	      PreparedStatement ps = connection_.prepareStatement (
 								   "INSERT INTO " + JDPSTest.PSTEST_SET
 								   + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
-	      JDReflectionUtil.callMethod_V(ps,"setObject",1, new Integer (4), 4848484);
+	      JDReflectionUtil.callMethod_V(ps,"setObject",1, Integer.valueOf(4), 4848484);
 	      failed ("Didn't throw SQLException for invalid type of "+4848484);
 */ 
 		}
@@ -346,7 +346,7 @@ not an input parameter.
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
 								     "CALL " + JDSetupProcedure.STP_CSPARMS + " (?, ?, ?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",2, new Integer (3), getSQLType(Types.INTEGER));
+		JDReflectionUtil.callMethod_V(ps,"setObject",2, Integer.valueOf(3), getSQLType(Types.INTEGER));
 		ps.close ();
 		failed ("Didn't throw SQLException");
 	    } catch (Exception e) {
@@ -389,7 +389,7 @@ setObject() - Set a SMALLINT parameter.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_SMALLINT) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Short ((short) -33), getSQLType(Types.SMALLINT));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Short.valueOf((short) -33), getSQLType(Types.SMALLINT));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -445,7 +445,7 @@ This is ok.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_SMALLINT) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float (-33.3f), getSQLType(Types.SMALLINT));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(-33.3f), getSQLType(Types.SMALLINT));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -496,7 +496,7 @@ setObject() - Set a SMALLINT parameter, when the type is invalid.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_SMALLINT) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Short ((short) -33), getSQLType(Types.NULL));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Short.valueOf((short) -33), getSQLType(Types.NULL));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -525,7 +525,7 @@ setObject() - Set an INTEGER parameter.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_INTEGER) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Integer (9595), getSQLType(Types.INTEGER));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Integer.valueOf(9595), getSQLType(Types.INTEGER));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -578,7 +578,7 @@ This is ok.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_INTEGER) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float (-33.3f), getSQLType(Types.INTEGER));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(-33.3f), getSQLType(Types.INTEGER));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -629,7 +629,7 @@ setObject() - Set an INTEGER parameter, when the type is invalid.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_INTEGER) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Integer (9595), getSQLType(Types.DATE));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Integer.valueOf(9595), getSQLType(Types.DATE));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -658,7 +658,7 @@ setObject() - Set an REAL parameter.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_REAL) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float (4.325), getSQLType(Types.REAL));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(4.325f), getSQLType(Types.REAL));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -708,7 +708,7 @@ setObject() - Set a REAL parameter, when the type is invalid.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_REAL) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float (4.325), getSQLType(Types.VARCHAR));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(4.325f), getSQLType(Types.VARCHAR));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -737,7 +737,7 @@ setObject() - Set an FLOAT parameter.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_FLOAT) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float (-34.2), getSQLType(Types.DOUBLE));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(-34.2f), getSQLType(Types.DOUBLE));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -788,7 +788,7 @@ setObject() - Set a FLOAT parameter, when the object is the wrong type.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_FLOAT) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float (-34.2), getSQLType(Types.DATE));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(-34.2f), getSQLType(Types.DATE));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -817,7 +817,7 @@ setObject() - Set an DOUBLE parameter.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_DOUBLE) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Double (3.14159), getSQLType(Types.DOUBLE));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Double.valueOf(3.14159), getSQLType(Types.DOUBLE));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -867,7 +867,7 @@ setObject() - Set a DOUBLE parameter, when the type is invalid.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_DOUBLE) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Double (3.14159), getSQLType(Types.BINARY));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Double.valueOf(3.14159), getSQLType(Types.BINARY));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -1415,7 +1415,7 @@ setObject() - Set a CLOB parameter, when the object is the wrong type.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_CLOB) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Short ((short) 3342), getSQLType(Types.CLOB));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Short.valueOf((short) 3342), getSQLType(Types.CLOB));
 		failed ("Didn't throw SQLException");
 	    } catch (Exception e) {
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1437,7 +1437,7 @@ setObject() - Set a CLOB parameter, when the object is the wrong type.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_CLOB) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Integer (5), getSQLType(Types.NUMERIC));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Integer.valueOf(5), getSQLType(Types.NUMERIC));
 		failed ("Didn't throw SQLException");
 	    } catch (Exception e) {
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1490,7 +1490,7 @@ setObject() - Set a DBCLOB parameter, when the object is the wrong type.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_DBCLOB) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Long (34242), getSQLType(Types.CLOB));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Long.valueOf(34242), getSQLType(Types.CLOB));
 		failed ("Didn't throw SQLException");
 	    } catch (Exception e) {
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1512,7 +1512,7 @@ setObject() - Set a DBCLOB parameter, when the type is invalid.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_DBCLOB) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float (4.33), getSQLType(Types.VARCHAR));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(4.33f), getSQLType(Types.VARCHAR));
 		failed ("Didn't throw SQLException");
 	    } catch (Exception e) {
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1699,7 +1699,7 @@ setObject() - Set a VARBINARY parameter, when the object is the wrong type.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_VARBINARY_20) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Double (34.23), getSQLType(Types.VARBINARY));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Double.valueOf(34.23), getSQLType(Types.VARBINARY));
 		failed ("Didn't throw SQLException");
 	    } catch (Exception e) {
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -2083,7 +2083,7 @@ setObject() - Set a DATALINK parameter, when the object is the wrong type.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_DATALINK) VALUES (DLVALUE( CAST(? AS CHAR(20))))");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Integer(8), getSQLType(Types.INTEGER));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Integer.valueOf(8), getSQLType(Types.INTEGER));
 		assertCondition(true);
 	    } catch (Exception e) {
 		failed (e, "Unexpected Exception");
@@ -2125,7 +2125,7 @@ setObject() - Set a DISTINCT parameter.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_DISTINCT) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Integer (-412), getSQLType(Types.INTEGER));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Integer.valueOf(-412), getSQLType(Types.INTEGER));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -2204,7 +2204,7 @@ setObject() - Set a BIGINT parameter.
 		    PreparedStatement ps = connection_.prepareStatement (
 									 "INSERT INTO " + JDPSTest.PSTEST_SET
 									 + " (C_BIGINT) VALUES (?)");
-		    JDReflectionUtil.callMethod_V(ps,"setObject",1, new Long (959543224556l), getSQLType(Types.BIGINT));
+		    JDReflectionUtil.callMethod_V(ps,"setObject",1, Long.valueOf(959543224556l), getSQLType(Types.BIGINT));
 		    ps.executeUpdate ();
 		    ps.close ();
 
@@ -2236,7 +2236,7 @@ cause a data truncation exception.
 		    PreparedStatement ps = connection_.prepareStatement (
 									 "INSERT INTO " + JDPSTest.PSTEST_SET
 									 + " (C_BIGINT) VALUES (?)");
-		    JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float(-92233720368547758099.0f), getSQLType(Types.BIGINT));
+		    JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(-92233720368547758099.0f), getSQLType(Types.BIGINT));
 		    failed ("Didn't throw SQLException");
 		}
 		catch (Exception e) {
@@ -2264,7 +2264,7 @@ This is ok.
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + JDPSTest.PSTEST_SET
 								     + " (C_BIGINT) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps,"setObject",1, new Float (-33.3f), getSQLType(Types.BIGINT));
+		JDReflectionUtil.callMethod_V(ps,"setObject",1, Float.valueOf(-33.3f), getSQLType(Types.BIGINT));
 		ps.executeUpdate ();
 		ps.close ();
 
@@ -2318,7 +2318,7 @@ setObject() - Set a BIGINT parameter, when the type is invalid.
 		    PreparedStatement ps = connection_.prepareStatement (
 									 "INSERT INTO " + JDPSTest.PSTEST_SET
 									 + " (C_BIGINT) VALUES (?)");
-		    JDReflectionUtil.callMethod_V(ps,"setObject",1, new Long (959543224556l), getSQLType(Types.VARCHAR));
+		    JDReflectionUtil.callMethod_V(ps,"setObject",1, Long.valueOf(959543224556l), getSQLType(Types.VARCHAR));
 		    ps.executeUpdate ();
 		    ps.close ();
 
@@ -2496,19 +2496,19 @@ SQL400 - Not run through the Toolbox as I don't think they make this work.
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET 
 								     + " (C_CHAR_50, C_VARCHAR_50, C_LONGVARCHAR_257, C_GRAPHIC_10, C_VARGRAPHIC_10, C_LONGVARGRAPHIC_257  ) " +
 								     " VALUES (?, ?, ?, ?, ?, ?)");
-			ps.setObject(1, new Boolean(true), Types.BOOLEAN);
-			ps.setObject(2, new Boolean(true), Types.BOOLEAN);
-			ps.setObject(3, new Boolean(true), Types.BOOLEAN);                                     
-			ps.setObject(4, new Boolean(true), Types.BOOLEAN);
-			ps.setObject(5, new Boolean(true), Types.BOOLEAN);
-			ps.setObject(6, new Boolean(true), Types.BOOLEAN);
+			ps.setObject(1, Boolean.valueOf(true), Types.BOOLEAN);
+			ps.setObject(2, Boolean.valueOf(true), Types.BOOLEAN);
+			ps.setObject(3, Boolean.valueOf(true), Types.BOOLEAN);                                     
+			ps.setObject(4, Boolean.valueOf(true), Types.BOOLEAN);
+			ps.setObject(5, Boolean.valueOf(true), Types.BOOLEAN);
+			ps.setObject(6, Boolean.valueOf(true), Types.BOOLEAN);
 			ps.executeUpdate();
-			ps.setObject(1, new Boolean(false), Types.BOOLEAN);
-			ps.setObject(2, new Boolean(false), Types.BOOLEAN);
-			ps.setObject(3, new Boolean(false), Types.BOOLEAN);
-			ps.setObject(4, new Boolean(false), Types.BOOLEAN);
-			ps.setObject(5, new Boolean(false), Types.BOOLEAN);
-			ps.setObject(6, new Boolean(false), Types.BOOLEAN);
+			ps.setObject(1, Boolean.valueOf(false), Types.BOOLEAN);
+			ps.setObject(2, Boolean.valueOf(false), Types.BOOLEAN);
+			ps.setObject(3, Boolean.valueOf(false), Types.BOOLEAN);
+			ps.setObject(4, Boolean.valueOf(false), Types.BOOLEAN);
+			ps.setObject(5, Boolean.valueOf(false), Types.BOOLEAN);
+			ps.setObject(6, Boolean.valueOf(false), Types.BOOLEAN);
 
 			ps.executeUpdate();
 
@@ -2520,9 +2520,9 @@ SQL400 - Not run through the Toolbox as I don't think they make this work.
 			    String retVal = rs.getString("C_CHAR_50").trim();
 			    String retVal2 = rs.getString("C_VARCHAR_50");
 			    String retVal3 = rs.getString("C_LONGVARCHAR_257");
-			    Boolean retValB4 = new Boolean(rs.getBoolean("C_GRAPHIC_10"));
-			    Boolean retValB5 = new Boolean(rs.getBoolean("C_VARGRAPHIC_10"));
-			    Boolean retValB6 = new Boolean(rs.getBoolean("C_LONGVARGRAPHIC_257"));
+			    Boolean retValB4 = Boolean.valueOf(rs.getBoolean("C_GRAPHIC_10"));
+			    Boolean retValB5 = Boolean.valueOf(rs.getBoolean("C_VARGRAPHIC_10"));
+			    Boolean retValB6 = Boolean.valueOf(rs.getBoolean("C_LONGVARGRAPHIC_257"));
 			    if ( ((retVal.equals( falseString ) == false) && (retVal.equals( trueString ) == false))
 				 || ((retVal2.equals( falseString ) == false) && (retVal2.equals( trueString ) == false))
 				 || ((retVal3.equals( falseString ) == false) && (retVal3.equals( trueString ) == false))) {
@@ -3089,13 +3089,13 @@ setDateTimeParameterTest () - Set the specified parameter using an object.
 
   public void Var100() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Boolean(true), Types.BOOLEAN, "1");
+      setParameterTest("C_BOOLEAN", Boolean.valueOf(true), Types.BOOLEAN, "1");
     }
   }
 
   public void Var101() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Boolean(false),Types.BOOLEAN, "0");
+      setParameterTest("C_BOOLEAN", Boolean.valueOf(false),Types.BOOLEAN, "0");
     }
   }
 
@@ -3113,13 +3113,13 @@ setDateTimeParameterTest () - Set the specified parameter using an object.
 
   public void Var104() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Integer(100),Types.BOOLEAN, "1");
+      setParameterTest("C_BOOLEAN", Integer.valueOf(100),Types.BOOLEAN, "1");
     }
   }
 
   public void Var105() {
     if (checkBooleanSupport()) {
-      setParameterTest("C_BOOLEAN", new Integer(0),Types.BOOLEAN, "0");
+      setParameterTest("C_BOOLEAN", Integer.valueOf(0),Types.BOOLEAN, "0");
     }
   }
 

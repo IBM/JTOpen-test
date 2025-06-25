@@ -34,16 +34,6 @@ public class JPingTest extends TestDriver
      **/
     public static void main(String args[])
     {
-      // Need to disable System.exit in order for this test not to exit when JPing called. 
-      SecurityManager defaultSecurityManager = System.getSecurityManager(); 
-      SecurityManager sm = new TestDriverSecurityManager();
-      try { 
-        System.setSecurityManager(sm);
-      } catch (java.lang.UnsupportedOperationException e) { 
-        System.out.println("WARNING:  Unsupported operation "); 
-        e.printStackTrace(System.out); 
-        System.out.println("WARNING:  END WARNING"); 
-      }
 
         try
         {
@@ -55,8 +45,6 @@ public class JPingTest extends TestDriver
             e.printStackTrace();
         }
 
-        // Needed to make the virtual machine quit.
-        System.setSecurityManager(defaultSecurityManager);
 
         System.exit(0);
     }

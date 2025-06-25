@@ -16,7 +16,7 @@ package test.JD;
 import java.security.Permission;
 import java.sql.SQLPermission;
 
-public class JDSecurityManagerDenySQLPermission extends SecurityManager {
+public class JDSecurityManagerDenySQLPermission  {
 
   // Disallow all SQL calls 
   public void checkPermission(Permission perm) {

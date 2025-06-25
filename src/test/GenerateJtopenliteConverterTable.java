@@ -62,7 +62,7 @@ public class GenerateJtopenliteConverterTable
 
     for (int i=start; i<args.length; ++i)
     {
-      go((new Integer(args[i])).intValue());
+      go((Integer.valueOf(args[i])).intValue());
     }
   }
 

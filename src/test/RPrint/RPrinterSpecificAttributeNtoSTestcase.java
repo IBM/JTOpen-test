@@ -442,7 +442,7 @@ NUMBER_OF_SEPARATORS - Set and Get the attribute value to -99.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, new Integer(99));
+            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, Integer.valueOf(99));
             u.commitAttributeChanges();
             failed ("Didn't throw exception");
         }
@@ -460,7 +460,7 @@ NUMBER_OF_SEPARATORS - Set and Get the attribute value to 0.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, new Integer(0));
+            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, Integer.valueOf(0));
             u.commitAttributeChanges();
 
             RPrinter u2 = new RPrinter(systemObject_, printerName_);
@@ -481,7 +481,7 @@ NUMBER_OF_SEPARATORS - Set and Get the attribute value to 1.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, new Integer(1));
+            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, Integer.valueOf(1));
             u.commitAttributeChanges();
 
             RPrinter u2 = new RPrinter(systemObject_, printerName_);
@@ -502,7 +502,7 @@ NUMBER_OF_SEPARATORS - Set and Get the attribute value to 9.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, new Integer(9));
+            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, Integer.valueOf(9));
             u.commitAttributeChanges();
 
             RPrinter u2 = new RPrinter(systemObject_, printerName_);
@@ -523,7 +523,7 @@ NUMBER_OF_SEPARATORS - Set and Get the attribute value to 10.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, new Integer(10));
+            u.setAttributeValue(RPrinter.NUMBER_OF_SEPARATORS, Integer.valueOf(10));
             u.commitAttributeChanges();
             failed ("Didn't throw exception");
         }
@@ -982,7 +982,7 @@ SEPARATOR_DRAWER - Set and get the attribute value to -10.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, new Integer(-10));
+            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, Integer.valueOf(-10));
             u.commitAttributeChanges();
             failed ("Didn't throw exception");
         }
@@ -1000,7 +1000,7 @@ SEPARATOR_DRAWER - Set and get the attribute value to 0.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, new Integer(0));
+            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, Integer.valueOf(0));
             u.commitAttributeChanges();
             failed ("Didn't throw exception");
         }
@@ -1018,7 +1018,7 @@ SEPARATOR_DRAWER - Set and get the attribute value to 1.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, new Integer(1));
+            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, Integer.valueOf(1));
             u.commitAttributeChanges();
 
             RPrinter u2 = new RPrinter(systemObject_, printerName_);
@@ -1039,7 +1039,7 @@ SEPARATOR_DRAWER - Set and get the attribute value to 255.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, new Integer(255));
+            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, Integer.valueOf(255));
             u.commitAttributeChanges();
 
             RPrinter u2 = new RPrinter(systemObject_, printerName_);
@@ -1060,7 +1060,7 @@ SEPARATOR_DRAWER - Set and get the attribute value to 256.
     {
         try {
             RPrinter u = new RPrinter(systemObject_, printerName_);
-            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, new Integer(256));
+            u.setAttributeValue(RPrinter.SEPARATOR_DRAWER, Integer.valueOf(256));
             u.commitAttributeChanges();
             failed ("Didn't throw exception");
         }

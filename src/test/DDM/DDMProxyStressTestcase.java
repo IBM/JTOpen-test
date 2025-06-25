@@ -14,6 +14,7 @@ package test.DDM;
 
 import java.lang.Thread;
 import com.ibm.as400.access.*;
+import com.ibm.as400.access.Record;
 
 import test.JDTestcase;
 import test.PasswordVault;

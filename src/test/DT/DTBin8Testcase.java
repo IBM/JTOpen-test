@@ -130,7 +130,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            byte[] data = converter.toBytes(new Integer(0));
+            byte[] data = converter.toBytes(Integer.valueOf(0));
             failed("No exception thrown."+data);
         }
         catch (Exception e) {
@@ -164,7 +164,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            byte[] data = converter.toBytes(new Long(Long.MIN_VALUE));                
+            byte[] data = converter.toBytes(Long.valueOf(Long.MIN_VALUE));                
             assertCondition(data.length == 8 && data[0] == (byte)0x80 
                             && data[1] == (byte)0x00
                             && data[2] == (byte)0x00
@@ -188,7 +188,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            byte[] data = converter.toBytes(new Long(-2433234545462216467L));                
+            byte[] data = converter.toBytes(Long.valueOf(-2433234545462216467L));                
             assertCondition(data.length == 8 && data[0] == (byte)0xDE 
                             && data[1] == (byte)0x3B
                             && data[2] == (byte)0x6A
@@ -212,7 +212,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            byte[] data = converter.toBytes(new Long(-8L));                
+            byte[] data = converter.toBytes(Long.valueOf(-8L));                
             assertCondition(data.length == 8 && data[0] == (byte)0xFF 
                             && data[1] == (byte)0xFF
                             && data[2] == (byte)0xFF
@@ -236,7 +236,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            byte[] data = converter.toBytes(new Long(0));                
+            byte[] data = converter.toBytes(Long.valueOf(0));                
             assertCondition(data.length == 8 && data[0] == (byte)0x00 
                             && data[1] == (byte)0x00
                             && data[2] == (byte)0x00
@@ -260,7 +260,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            byte[] data = converter.toBytes(new Long(46L));                
+            byte[] data = converter.toBytes(Long.valueOf(46L));                
             assertCondition(data.length == 8 && data[0] == (byte)0x00 
                             && data[1] == (byte)0x00
                             && data[2] == (byte)0x00
@@ -284,7 +284,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            byte[] data = converter.toBytes(new Long(4645645787888794345L));                
+            byte[] data = converter.toBytes(Long.valueOf(4645645787888794345L));                
             assertCondition(data.length == 8 && data[0] == (byte)0x40 
                             && data[1] == (byte)0x78
                             && data[2] == (byte)0xA6
@@ -308,7 +308,7 @@ public class DTBin8Testcase extends Testcase
     {
         try {
             AS400Bin8 converter = new AS400Bin8();
-            byte[] data = converter.toBytes(new Long(Long.MAX_VALUE));                
+            byte[] data = converter.toBytes(Long.valueOf(Long.MAX_VALUE));                
             assertCondition(data.length == 8 && data[0] == (byte)0x7F 
                             && data[1] == (byte)0xFF
                             && data[2] == (byte)0xFF
@@ -537,7 +537,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
-            int length = converter.toBytes(new Long(543), data);       
+            int length = converter.toBytes(Long.valueOf(543), data);       
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -555,7 +555,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
-            int length = converter.toBytes(new Long(-45), data);       
+            int length = converter.toBytes(Long.valueOf(-45), data);       
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -573,7 +573,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
-            int length = converter.toBytes(new Long(30), data);       
+            int length = converter.toBytes(Long.valueOf(30), data);       
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -592,7 +592,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
-            int length = converter.toBytes(new Long(-4543), data);       
+            int length = converter.toBytes(Long.valueOf(-4543), data);       
             assertCondition(length == 8      && data[0] == (byte)0xFF 
                             && data[1] == (byte)0xFF
                             && data[2] == (byte)0xFF
@@ -619,7 +619,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[9];
             data[8] = (byte)0x75;
-            int length = converter.toBytes(new Long(4543), data);       
+            int length = converter.toBytes(Long.valueOf(4543), data);       
             assertCondition(length == 8      && data[0] == (byte)0x00 
                             && data[1] == (byte)0x00
                             && data[2] == (byte)0x00
@@ -771,7 +771,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
-            int length = converter.toBytes(new Short((short)43), data, 0);     
+            int length = converter.toBytes(Short.valueOf((short)43), data, 0);     
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -789,7 +789,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = null;
-            int length = converter.toBytes(new Long(43243), data, 0);   
+            int length = converter.toBytes(Long.valueOf(43243), data, 0);   
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -807,7 +807,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[0];
-            int length = converter.toBytes(new Long(-45543999), data, 0);       
+            int length = converter.toBytes(Long.valueOf(-45543999), data, 0);       
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -825,7 +825,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[7];
-            int length = converter.toBytes(new Long(30), data, 0);       
+            int length = converter.toBytes(Long.valueOf(30), data, 0);       
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -845,7 +845,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
-            int length = converter.toBytes(new Long(2), data, -1);   
+            int length = converter.toBytes(Long.valueOf(2), data, -1);   
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -864,7 +864,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
-            int length = converter.toBytes(new Long(-656444334112L), data, 1);       
+            int length = converter.toBytes(Long.valueOf(-656444334112L), data, 1);       
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -883,7 +883,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[8];
-            int length = converter.toBytes(new Long(3454656444334L), data, 0);       
+            int length = converter.toBytes(Long.valueOf(3454656444334L), data, 0);       
             assertCondition(length == 8      && data[0] == (byte)0x00 
                             && data[1] == (byte)0x00
                             && data[2] == (byte)0x03
@@ -909,7 +909,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[9];
-            int length = converter.toBytes(new Long(-4543), data, -1);       
+            int length = converter.toBytes(Long.valueOf(-4543), data, -1);       
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -928,7 +928,7 @@ public class DTBin8Testcase extends Testcase
         try {
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[9];
-            int length = converter.toBytes(new Long(-4543), data, 2);       
+            int length = converter.toBytes(Long.valueOf(-4543), data, 2);       
             failed("No exception thrown."+length);
         }
         catch (Exception e) {
@@ -948,7 +948,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[9];
             data[8] = (byte)0xFE;
-            int length = converter.toBytes(new Long(-9454332234L), data, 0);       
+            int length = converter.toBytes(Long.valueOf(-9454332234L), data, 0);       
             assertCondition(length == 8      && data[0] == (byte)0xFF 
                             && data[1] == (byte)0xFF
                             && data[2] == (byte)0xFF
@@ -976,7 +976,7 @@ public class DTBin8Testcase extends Testcase
             AS400Bin8 converter = new AS400Bin8();
             byte[] data = new byte[9];
             data[0] = (byte)0x96;
-            int length = converter.toBytes(new Long(43434332234L), data, 1);       
+            int length = converter.toBytes(Long.valueOf(43434332234L), data, 1);       
             assertCondition(length == 8      && data[0] == (byte)0x96 
                             && data[1] == (byte)0x00
                             && data[2] == (byte)0x00

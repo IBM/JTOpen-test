@@ -480,7 +480,7 @@ pending.
             boolean success = true;
             for (int i = 0; i < columnCount; ++i) {
                 if (i == updatedColumn1) {
-                    if ((! after[i].equals (new Integer (9876)))
+                    if ((! after[i].equals (Integer.valueOf(9876)))
                         || (afterNulls[i] != false))
                         success = false;
                 }
@@ -490,7 +490,7 @@ pending.
                         success = false;
                 }
                 else if (i == updatedColumn3) {
-                    if ((! after[i].equals (new Double (-4.25f)))
+                    if ((! after[i].equals (Double.valueOf(-4.25f)))
                         || (afterNulls[i] != false))
                         success = false;
                 }
@@ -606,7 +606,7 @@ java.lang.Short object.  This testcase has been changed to match that expectatio
             boolean success = true;
             for (int i = 0; i < columnCount; ++i) {
                 if (i == updatedColumn) {
-                    if ((! after[i].equals (new Integer (-123)))
+                    if ((! after[i].equals (Integer.valueOf(-123)))
                         || (afterNulls[i] != false))
                         success = false;
                 }
@@ -673,7 +673,7 @@ be carried over to the next..
               {
                 if (i == updatedColumn) 
                 {
-                    if ((! after[i].equals (new Integer (3343)))
+                    if ((! after[i].equals (Integer.valueOf(3343)))
                         || (afterNulls[i] != false))
                         {
                            success = false;
@@ -755,7 +755,7 @@ java.lang.Short object.  This testcase has been changed to match that expectatio
                         success = false;
                 }
                 else if (i == updatedColumn2) {
-                    if ((! after[i].equals(new Integer(-44)))
+                    if ((! after[i].equals(Integer.valueOf(-44)))
                         || (afterNulls[i] != false))
                         success = false;
                 }
@@ -1041,7 +1041,7 @@ afterwards.
             boolean success = true;
             for (int i = 0; i < columnCount; ++i) {
                 if (i == updatedColumn1) {
-                    if ((! after[i].equals (new Integer (444)))
+                    if ((! after[i].equals (Integer.valueOf(444)))
                         || (afterNulls[i] != false))
                         success = false;
                 }
@@ -1051,7 +1051,7 @@ afterwards.
                         success = false;
                 }
                 else if (i == updatedColumn3) {
-                    if ((! after[i].equals (new Double (34.53f)))
+                    if ((! after[i].equals (Double.valueOf(34.53f)))
                         || (afterNulls[i] != false))
                         success = false;
                 }

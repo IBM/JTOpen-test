@@ -1617,7 +1617,7 @@ setAttributeValue() - Pass null for the attribute ID.
 	} 
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
-            u.setAttributeValue(null, new Integer(2));
+            u.setAttributeValue(null, Integer.valueOf(2));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1659,7 +1659,7 @@ setAttributeValue() - Pass an invalid attribute ID.
 	} 
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
-            u.setAttributeValue(u, new Integer(3));
+            u.setAttributeValue(u, Integer.valueOf(3));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1701,7 +1701,7 @@ setAttributeValue() - Pass a value which is the wrong type.
 	} 
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
-            u.setAttributeValue(RJavaProgram.LICENSED_INTERNAL_CODE_OPTIONS, new Integer(4));
+            u.setAttributeValue(RJavaProgram.LICENSED_INTERNAL_CODE_OPTIONS, Integer.valueOf(4));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {
@@ -1722,7 +1722,7 @@ setAttributeValue() - Pass a value which is not one of the possible values.
 	} 
         try {
             RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
-            u.setAttributeValue(RJavaProgram.OPTIMIZATION, new Integer(33));
+            u.setAttributeValue(RJavaProgram.OPTIMIZATION, Integer.valueOf(33));
             failed ("Didn't throw exception");
         }
         catch(Exception e) {

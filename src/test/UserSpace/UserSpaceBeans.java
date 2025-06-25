@@ -1187,7 +1187,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
             us.addPropertyChangeListener(this);
             us.setMustUseProgramCall(true);
             // Verify event
-            if (verifyPropChange("mustUseProgramCall", new Boolean(false), new Boolean(true), us, new Boolean(true)))
+            if (verifyPropChange("mustUseProgramCall", Boolean.valueOf(false), Boolean.valueOf(true), us, Boolean.valueOf(true)))
             {
                 succeeded();
             }

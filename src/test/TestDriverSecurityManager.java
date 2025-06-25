@@ -15,7 +15,7 @@ package test;
 
 import java.security.Permission;
 
-public class TestDriverSecurityManager extends SecurityManager {
+public class TestDriverSecurityManager {
 
 	public static boolean allowExit = false;
 

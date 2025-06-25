@@ -909,7 +909,7 @@ public abstract class JDTestDriver extends TestDriver {
 
       // For now we have to do this the hard way....
       if (driver == DRIVER_NATIVE_RMI)
-        DriverManager.registerDriver((Driver) clazz.newInstance());
+        DriverManager.registerDriver((Driver) clazz.getDeclaredConstructor().newInstance());
 
       driver_ = driver;
       subDriver_ = driver;

@@ -579,7 +579,7 @@ public class JDSQL400 implements Runnable {
             urlArgs = "; date format=iso; time format=iso";
             baseUrlArgs = urlArgs;
             toolboxDriver = true;
-            toolboxDriverReference = (java.sql.Driver) c.newInstance();
+            toolboxDriverReference = (java.sql.Driver) c.getDeclaredConstructor().newInstance();
             DriverManager.registerDriver(toolboxDriverReference);
           } catch (Exception e2) {
             System.out.println(
@@ -1557,7 +1557,7 @@ public class JDSQL400 implements Runnable {
             toolboxDriver = false;
             if (debug)
               out.println("Loading jcc driver");
-            Class.forName("com.ibm.db2.jcc.DB2Driver").newInstance();
+            Class.forName("com.ibm.db2.jcc.DB2Driver").getDeclaredConstructor().newInstance();
             Driver currentDriver = DriverManager.getDriver(url);
             if (currentDriver.getClass().getName()
                 .equals("com.ibm.db2.jdbc.app.DB2Driver")) {
@@ -2273,7 +2273,7 @@ public class JDSQL400 implements Runnable {
             java.lang.reflect.Method method = traceClass
                 .getMethod("setCliTrace", argClasses);
             Object[] args = new Object[1];
-            args[0] = new Boolean(b);
+            args[0] = Boolean.valueOf(b);
             method.invoke(null, args);
 
           } catch (Exception e) {
@@ -2300,11 +2300,11 @@ public class JDSQL400 implements Runnable {
               argClasses);
           Object[] args = new Object[1];
           if (setting.startsWith("true")) {
-            args[0] = new Integer(3);
+            args[0] = Integer.valueOf(3);
           } else if (setting.startsWith("false")) {
-            args[0] = new Integer(0);
+            args[0] = Integer.valueOf(0);
           } else {
-            args[0] = new Integer(Integer.parseInt(setting));
+            args[0] = Integer.valueOf(Integer.parseInt(setting));
           }
           method.invoke(null, args);
 
@@ -3853,7 +3853,7 @@ public class JDSQL400 implements Runnable {
                             parameters[p] = arg;
                           } else if (parameterTypeName.equals("int")) {
                             try {
-                              parameters[p] = new Integer(arg);
+                              parameters[p] = Integer.valueOf(arg);
                             } catch (Exception e) {
                               methodInvocationErrorsSb.append(
                                   "\nCould not parse " + arg + " as integer");
@@ -3861,7 +3861,7 @@ public class JDSQL400 implements Runnable {
                             }
                           } else if (parameterTypeName.equals("boolean")) {
                             try {
-                              parameters[p] = new Boolean(arg);
+                              parameters[p] = Boolean.valueOf(arg);
                             } catch (Exception e) {
                               methodInvocationErrorsSb.append(
                                   "\nCould not parse " + arg + " as integer");
@@ -3869,7 +3869,7 @@ public class JDSQL400 implements Runnable {
                             }
                           } else if (parameterTypeName.equals("long")) {
                             try {
-                              parameters[p] = new Long(arg);
+                              parameters[p] = Long.valueOf(arg);
                             } catch (Exception e) {
                               methodInvocationErrorsSb.append(
                                   "\nCould not parse " + arg + " as long");
@@ -3921,15 +3921,15 @@ public class JDSQL400 implements Runnable {
                           } else if (parameterTypeName.equals("double")) {
                             try {
                               if (arg.equals("POSITIVE_INFINITY")) {
-                                parameters[p] = new Double(
+                                parameters[p] = Double.valueOf(
                                     Double.POSITIVE_INFINITY);
                               } else if (arg.equals("NEGATIVE_INFINITY")) {
-                                parameters[p] = new Double(
+                                parameters[p] = Double.valueOf(
                                     Double.NEGATIVE_INFINITY);
                               } else if (arg.equals("NaN")) {
-                                parameters[p] = new Double(Double.NaN);
+                                parameters[p] = Double.valueOf(Double.NaN);
                               } else {
-                                parameters[p] = new Double(arg);
+                                parameters[p] = Double.valueOf(arg);
                               }
                             } catch (Exception e) {
                               methodInvocationErrorsSb.append(
@@ -4192,7 +4192,7 @@ public class JDSQL400 implements Runnable {
                       parameters[p] = arg;
                     } else if (parameterTypeName.equals("int")) {
                       try {
-                        parameters[p] = new Integer(arg);
+                        parameters[p] = Integer.valueOf(arg);
                       } catch (Exception e) {
                         methodInvocationErrorsSb
                             .append("\nCould not parse " + arg + " as integer");
@@ -4200,7 +4200,7 @@ public class JDSQL400 implements Runnable {
                       }
                     } else if (parameterTypeName.equals("boolean")) {
                       try {
-                        parameters[p] = new Boolean(arg);
+                        parameters[p] = Boolean.valueOf(arg);
                       } catch (Exception e) {
                         methodInvocationErrorsSb
                             .append("\nCould not parse " + arg + " as integer");
@@ -4208,7 +4208,7 @@ public class JDSQL400 implements Runnable {
                       }
                     } else if (parameterTypeName.equals("long")) {
                       try {
-                        parameters[p] = new Long(arg);
+                        parameters[p] = Long.valueOf(arg);
                       } catch (Exception e) {
                         methodInvocationErrorsSb
                             .append("\nCould not parse " + arg + " as long");
@@ -6052,7 +6052,7 @@ public class JDSQL400 implements Runnable {
             if ("null".equals(s)) {
               parameter[i] = null;
             } else {
-              parameter[i] = new Integer(Integer.parseInt(s));
+              parameter[i] = Integer.valueOf(Integer.parseInt(s));
             }
           }
           if (returnSqlArray) {
@@ -6075,7 +6075,7 @@ public class JDSQL400 implements Runnable {
             // Toolbox does not handle native types on convert
             Integer[] newParameter = new Integer[arrayCardinality];
             for (int i = 0; i < arrayCardinality; i++) {
-              newParameter[i] = new Integer(parameter[i]);
+              newParameter[i] = Integer.valueOf(parameter[i]);
             }
             returnArray = makeArray(connection, newParameter, "INTEGER");
           } else {
@@ -6089,7 +6089,7 @@ public class JDSQL400 implements Runnable {
             if ("null".equals(s)) {
               parameter[i] = null;
             } else {
-              parameter[i] = new Short((short) Integer.parseInt(s));
+              parameter[i] = Short.valueOf((short) Integer.parseInt(s));
             }
           }
           if (returnSqlArray) {
@@ -6112,7 +6112,7 @@ public class JDSQL400 implements Runnable {
             // Toolbox does not handle native types on convert
             Short[] newParameter = new Short[arrayCardinality];
             for (int i = 0; i < arrayCardinality; i++) {
-              newParameter[i] = new Short(parameter[i]);
+              newParameter[i] = Short.valueOf(parameter[i]);
             }
 
             returnArray = makeArray(connection, newParameter, "SMALLINT");
@@ -6127,7 +6127,7 @@ public class JDSQL400 implements Runnable {
             if ("null".equals(s)) {
               parameter[i] = null;
             } else {
-              parameter[i] = new Boolean(Boolean.parseBoolean(s));
+              parameter[i] = Boolean.valueOf(Boolean.parseBoolean(s));
             }
           }
           if (returnSqlArray) {
@@ -6150,7 +6150,7 @@ public class JDSQL400 implements Runnable {
             // Toolbox does not handle native types on convert
             Boolean[] newParameter = new Boolean[arrayCardinality];
             for (int i = 0; i < arrayCardinality; i++) {
-              newParameter[i] = new Boolean(parameter[i]);
+              newParameter[i] = Boolean.valueOf(parameter[i]);
             }
 
             returnArray = makeArray(connection, newParameter, "BOOLEAN");
@@ -6165,7 +6165,7 @@ public class JDSQL400 implements Runnable {
             if ("null".equals(s)) {
               parameter[i] = null;
             } else {
-              parameter[i] = new Long(Long.parseLong(s));
+              parameter[i] = Long.valueOf(Long.parseLong(s));
             }
           }
           if (returnSqlArray) {
@@ -6188,7 +6188,7 @@ public class JDSQL400 implements Runnable {
             // Toolbox does not handle native types on convert
             Long[] newParameter = new Long[arrayCardinality];
             for (int i = 0; i < arrayCardinality; i++) {
-              newParameter[i] = new Long(parameter[i]);
+              newParameter[i] = Long.valueOf(parameter[i]);
             }
 
             returnArray = makeArray(connection, newParameter, "BIGINT");
@@ -6203,7 +6203,7 @@ public class JDSQL400 implements Runnable {
             if ("null".equals(s)) {
               parameter[i] = null;
             } else {
-              parameter[i] = new Float((float) Double.parseDouble(s));
+              parameter[i] = Float.valueOf((float) Double.parseDouble(s));
             }
           }
           if (returnSqlArray) {
@@ -6226,7 +6226,7 @@ public class JDSQL400 implements Runnable {
             // Toolbox does not handle native types on convert
             Float[] newParameter = new Float[arrayCardinality];
             for (int i = 0; i < arrayCardinality; i++) {
-              newParameter[i] = new Float(parameter[i]);
+              newParameter[i] = Float.valueOf(parameter[i]);
             }
 
             returnArray = makeArray(connection, newParameter, "REAL");
@@ -6241,7 +6241,7 @@ public class JDSQL400 implements Runnable {
             if ("null".equals(s)) {
               parameter[i] = null;
             } else {
-              parameter[i] = new Double(Double.parseDouble(s));
+              parameter[i] = Double.valueOf(Double.parseDouble(s));
             }
           }
           if (returnSqlArray) {
@@ -6265,7 +6265,7 @@ public class JDSQL400 implements Runnable {
             // Toolbox does not handle native types on convert
             Double[] newParameter = new Double[arrayCardinality];
             for (int i = 0; i < arrayCardinality; i++) {
-              newParameter[i] = new Double(parameter[i]);
+              newParameter[i] = Double.valueOf(parameter[i]);
             }
 
             returnArray = makeArray(connection, newParameter, "DOUBLE");

@@ -723,11 +723,11 @@ Also accepts range patterns such as "1:3,5", which it expands to { "1", "2", "3"
       StringTokenizer range = new StringTokenizer(token, ":");
       if (range.countTokens() == 2)
       {
-        int start = new Integer(range.nextToken()).intValue();
-        int end = new Integer(range.nextToken()).intValue();
+        int start = Integer.valueOf(range.nextToken()).intValue();
+        int end = Integer.valueOf(range.nextToken()).intValue();
         if (end < start) end = start;
         for (int num=start; num<=end; num++)
-          variations.addElement(new Integer(num).toString());
+          variations.addElement(Integer.valueOf(num).toString());
       }
       else
         variations.addElement(token);

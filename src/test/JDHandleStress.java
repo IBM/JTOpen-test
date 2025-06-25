@@ -341,12 +341,12 @@ public class JDHandleStress implements Runnable {
 
 	    rs.close();
 	    statementAndResult[0] = ps;
-	    statementAndResult[1] = new Integer(result);
-	    statementAndResult[2] = new Integer(allocCount);
+	    statementAndResult[1] = Integer.valueOf(result);
+	    statementAndResult[2] = Integer.valueOf(allocCount);
 	    synchronized(this) { 
 		connectionStatements.addElement(statementAndResult);
 		if (connectionStatements.size() > statementMaxCount) {
-			connectionStatementMaxCountHashtable_.put(c, new Integer(connectionStatements.size()));
+			connectionStatementMaxCountHashtable_.put(c, Integer.valueOf(connectionStatements.size()));
 		}
 		allocStatementCount_+=allocCount;
 	    }

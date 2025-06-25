@@ -542,7 +542,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, group_);
-            u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(-2));  // -1 is GROUP_ID_GENERATE now.
+            u.setAttributeValue(RUser.GROUP_ID_NUMBER, Long.valueOf(-2));  // -1 is GROUP_ID_GENERATE now.
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -560,7 +560,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, group_);
-            u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(0));
+            u.setAttributeValue(RUser.GROUP_ID_NUMBER, Long.valueOf(0));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, group_);
@@ -581,7 +581,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, group_);
-            u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(4294967294l + 1));
+            u.setAttributeValue(RUser.GROUP_ID_NUMBER, Long.valueOf(4294967294l + 1));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -599,7 +599,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, group_);
-            u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(gid_ + 1));
+            u.setAttributeValue(RUser.GROUP_ID_NUMBER, Long.valueOf(gid_ + 1));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, group_);
@@ -620,7 +620,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, group_);
-            u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(4294967200l));
+            u.setAttributeValue(RUser.GROUP_ID_NUMBER, Long.valueOf(4294967200l));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, group_);
@@ -653,7 +653,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
             }
 
             RUser u = new RUser(pwrSys_, group_);
-            u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(anotherGid));
+            u.setAttributeValue(RUser.GROUP_ID_NUMBER, Long.valueOf(anotherGid));
             u.commitAttributeChanges();
             failed("Didn't throw exception"+anotherGroup);
         }
@@ -671,7 +671,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(gid_));
+            u.setAttributeValue(RUser.GROUP_ID_NUMBER, Long.valueOf(gid_));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -689,7 +689,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, group_);
-            u.setAttributeValue(RUser.GROUP_ID_NUMBER, new Long(gid_ + 2));
+            u.setAttributeValue(RUser.GROUP_ID_NUMBER, Long.valueOf(gid_ + 2));
             u.commitAttributeChanges();
 
             User u2 = new User(pwrSys_, group_);
@@ -1071,7 +1071,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, new Integer(-1));
+            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, Integer.valueOf(-1));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1089,7 +1089,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, new Integer(10));
+            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, Integer.valueOf(10));
             u.commitAttributeChanges();
             failed("Didn't throw exception");
         }
@@ -1107,7 +1107,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, new Integer(0));
+            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, Integer.valueOf(0));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1128,7 +1128,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, new Integer(9));
+            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, Integer.valueOf(9));
             u.commitAttributeChanges();
 
             RUser u2 = new RUser(pwrSys_, user_);
@@ -1149,7 +1149,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
         try
         {
             RUser u = new RUser(pwrSys_, user_);
-            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, new Integer(5));
+            u.setAttributeValue(RUser.HIGHEST_SCHEDULING_PRIORITY, Integer.valueOf(5));
             u.commitAttributeChanges();
 
             User u2 = new User(pwrSys_, user_);

@@ -139,7 +139,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.INTEGER);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 100, new Integer(3),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 100, Integer.valueOf(3),
             getSQLType(Types.INTEGER));
         cs.close();
         failed("Didn't throw SQLException");
@@ -218,7 +218,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
         argClasses[1] = Class.forName("java.lang.Object");
         argClasses[2] = Class.forName("java.sql.SQLType");
         Object[] args = new Object[3];
-        args[0] = new Integer(1);
+        args[0] = Integer.valueOf(1);
         args[1] = null;
         args[2] = getSQLType(Types.NUMERIC);
         JDReflectionUtil.callMethod_V(cs, "setObject", argClasses, args);
@@ -262,7 +262,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.INTEGER);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 2, new Integer(3),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 2, Integer.valueOf(3),
             getSQLType(Types.INTEGER));
         cs.close();
         failed("Didn't throw SQLException");
@@ -298,7 +298,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       try {
         CallableStatement cs = prepareCall(Types.SMALLINT);
         JDReflectionUtil.callMethod_V(cs, "setObject", 1,
-            new Short((short) -33), getSQLType(Types.SMALLINT));
+            Short.valueOf((short) -33), getSQLType(Types.SMALLINT));
         cs.registerOutParameter(2, Types.SMALLINT);
         cs.execute();
         short check = cs.getShort(2);
@@ -337,7 +337,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.SMALLINT);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(-33.3f),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(-33.3f),
             getSQLType(Types.SMALLINT));
         cs.registerOutParameter(2, Types.SMALLINT);
         cs.execute();
@@ -375,7 +375,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       try {
         CallableStatement cs = prepareCall(Types.SMALLINT);
         JDReflectionUtil.callMethod_V(cs, "setObject", 1,
-            new Short((short) -33), getSQLType(Types.NULL));
+            Short.valueOf((short) -33), getSQLType(Types.NULL));
         cs.registerOutParameter(2, Types.SMALLINT);
         cs.execute();
         short check = cs.getShort(2);
@@ -395,7 +395,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.INTEGER);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Integer(9595),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Integer.valueOf(9595),
             getSQLType(Types.INTEGER));
         cs.registerOutParameter(2, Types.INTEGER);
         cs.execute();
@@ -435,7 +435,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.INTEGER);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(-33.3f),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(-33.3f),
             getSQLType(Types.INTEGER));
         cs.registerOutParameter(2, Types.INTEGER);
         cs.execute();
@@ -473,7 +473,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       try {
 
         CallableStatement cs = prepareCall(Types.INTEGER);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Integer(9595),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Integer.valueOf(9595),
             getSQLType(Types.DATE));
         cs.registerOutParameter(2, Types.INTEGER);
         cs.execute();
@@ -494,7 +494,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.REAL);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(4.325),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(4.325f),
             getSQLType(Types.REAL));
         cs.registerOutParameter(2, Types.REAL);
         cs.execute();
@@ -531,7 +531,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.REAL);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(4.325),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(4.325f),
             getSQLType(Types.VARCHAR));
         cs.registerOutParameter(2, Types.REAL);
         cs.execute();
@@ -552,7 +552,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.REAL);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(-34.2),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(-34.2f),
             getSQLType(Types.DOUBLE));
         cs.registerOutParameter(2, Types.REAL);
         cs.execute();
@@ -589,7 +589,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.REAL);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(-34.2),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(-34.2f),
             getSQLType(Types.DATE));
         cs.registerOutParameter(2, Types.REAL);
         cs.execute();
@@ -610,7 +610,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.DOUBLE);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Double(3.14159),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Double.valueOf(3.14159),
             getSQLType(Types.DOUBLE));
         cs.registerOutParameter(2, Types.DOUBLE);
         cs.execute();
@@ -647,7 +647,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.DOUBLE);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Double(3.14159),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Double.valueOf(3.14159),
             getSQLType(Types.BINARY));
         cs.registerOutParameter(2, Types.DOUBLE);
         cs.execute();
@@ -1063,7 +1063,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
         try {
           CallableStatement cs = prepareCall(Types.CLOB);
           JDReflectionUtil.callMethod_V(cs, "setObject", 1,
-              new Short((short) 3342), getSQLType(Types.CLOB));
+              Short.valueOf((short) 3342), getSQLType(Types.CLOB));
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1080,7 +1080,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       if (checkJdbc42()) {
         try {
           CallableStatement cs = prepareCall(Types.CLOB);
-          JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Integer(5),
+          JDReflectionUtil.callMethod_V(cs, "setObject", 1, Integer.valueOf(5),
               getSQLType(Types.NUMERIC));
           failed("Didn't throw SQLException");
         } catch (Exception e) {
@@ -1125,7 +1125,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       if (checkJdbc42()) {
         try {
           CallableStatement cs = prepareCall(TYPES_DBCLOB);
-          JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Long(34242),
+          JDReflectionUtil.callMethod_V(cs, "setObject", 1, Long.valueOf(34242),
               getSQLType(Types.CLOB));
           failed("Didn't throw SQLException");
         } catch (Exception e) {
@@ -1143,7 +1143,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       if (checkJdbc42()) {
         try {
           CallableStatement cs = prepareCall(TYPES_DBCLOB);
-          JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(4.33),
+          JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(4.33f),
               getSQLType(Types.VARCHAR));
           failed("Didn't throw SQLException");
         } catch (Exception e) {
@@ -1296,7 +1296,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.VARBINARY);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Double(34.23),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Double.valueOf(34.23),
             getSQLType(Types.VARBINARY));
         failed("Didn't throw SQLException");
       } catch (Exception e) {
@@ -1597,7 +1597,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       if (checkJdbc42()) {
         try {
           CallableStatement cs = prepareCall(Types.DATALINK);
-          JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Integer(8),
+          JDReflectionUtil.callMethod_V(cs, "setObject", 1, Integer.valueOf(8),
               getSQLType(Types.INTEGER));
           assertCondition(false);
         } catch (Exception e) {
@@ -1634,7 +1634,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       if (checkJdbc42()) {
         try {
           CallableStatement cs = prepareCall(Types.DISTINCT);
-          JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Integer(-412),
+          JDReflectionUtil.callMethod_V(cs, "setObject", 1, Integer.valueOf(-412),
               getSQLType(Types.DISTINCT));
           cs.registerOutParameter(2, Types.DISTINCT);
           cs.execute();
@@ -1704,7 +1704,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
         try {
           CallableStatement cs = prepareCall(Types.BIGINT);
           JDReflectionUtil.callMethod_V(cs, "setObject", 1,
-              new Long(959543224556l), getSQLType(Types.BIGINT));
+              Long.valueOf(959543224556l), getSQLType(Types.BIGINT));
           cs.registerOutParameter(2, Types.BIGINT);
           cs.execute();
           long check = cs.getLong(2);
@@ -1729,7 +1729,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
         try {
           CallableStatement cs = prepareCall(Types.BIGINT);
           JDReflectionUtil.callMethod_V(cs, "setObject", 1,
-              new Float(-92233720368547758099.0f), getSQLType(Types.BIGINT));
+              Float.valueOf(-92233720368547758099.0f), getSQLType(Types.BIGINT));
           failed("Didn't throw SQLException");
         } catch (Exception e) {
 
@@ -1749,7 +1749,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42()) {
       try {
         CallableStatement cs = prepareCall(Types.BIGINT);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(-33.3f),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(-33.3f),
             getSQLType(Types.BIGINT));
         cs.registerOutParameter(2, Types.BIGINT);
         cs.execute();
@@ -1790,7 +1790,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
         try {
           CallableStatement cs = prepareCall(Types.BIGINT);
           JDReflectionUtil.callMethod_V(cs, "setObject", 1,
-              new Long(959543224556l), getSQLType(Types.VARCHAR));
+              Long.valueOf(959543224556l), getSQLType(Types.VARCHAR));
           cs.registerOutParameter(2, Types.BIGINT);
           cs.execute();
           long check = cs.getLong(2);
@@ -2115,7 +2115,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
       if (checkJdbc42()) {
         try {
           CallableStatement cs = prepareCall(Types.BOOLEAN);
-          JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Boolean(true),
+          JDReflectionUtil.callMethod_V(cs, "setObject", 1, Boolean.valueOf(true),
               getSQLType(Types.BOOLEAN));
           cs.registerOutParameter(2, Types.BOOLEAN);
           cs.execute();
@@ -2140,7 +2140,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
         try {
           CallableStatement cs = prepareCall(Types.BOOLEAN);
           JDReflectionUtil.callMethod_V(cs, "setObject", 1,
-              new Float(-92233720368547758099.0f), getSQLType(Types.BOOLEAN));
+              Float.valueOf(-92233720368547758099.0f), getSQLType(Types.BOOLEAN));
           cs.registerOutParameter(2, Types.BOOLEAN);
           cs.execute();
           boolean check = cs.getBoolean(2);
@@ -2163,7 +2163,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
     if (checkJdbc42() && checkBooleanSupport()) {
       try {
         CallableStatement cs = prepareCall(Types.BOOLEAN);
-        JDReflectionUtil.callMethod_V(cs, "setObject", 1, new Float(-33.3f),
+        JDReflectionUtil.callMethod_V(cs, "setObject", 1, Float.valueOf(-33.3f),
             getSQLType(Types.BOOLEAN));
         cs.registerOutParameter(2, Types.BOOLEAN);
         cs.execute();
@@ -2204,7 +2204,7 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
         try {
           CallableStatement cs = prepareCall(Types.BOOLEAN);
           JDReflectionUtil.callMethod_V(cs, "setObject", 1,
-              new Long(959543224556l), getSQLType(Types.VARCHAR));
+              Long.valueOf(959543224556l), getSQLType(Types.VARCHAR));
           cs.registerOutParameter(2, Types.BOOLEAN);
           cs.execute();
           boolean check = cs.getBoolean(2);

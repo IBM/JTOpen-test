@@ -1047,10 +1047,10 @@ public class DTArrayTestcase extends Testcase
             AS400Array conv = new AS400Array(new AS400Bin2(), 4);
             Object[] inputValue =
             {
-                new Short((short)0x0000),
-                new Short((short)0x0080),
-                new Short((short)0x8000),
-                new Short((short)0x8080)
+                Short.valueOf((short)0x0000),
+                Short.valueOf((short)0x0080),
+                Short.valueOf((short)0x8000),
+                Short.valueOf((short)0x8080)
             };
             byte[] data = conv.toBytes(inputValue);
             if (data.length == 8 &&
@@ -1111,7 +1111,7 @@ public class DTArrayTestcase extends Testcase
         Object[] testValue = {
             new String("as"),
             new String("df"),
-            new Short((short)0),
+            Short.valueOf((short)0),
             new String("l;")
         };
         try
@@ -1235,10 +1235,10 @@ public class DTArrayTestcase extends Testcase
         conv.setNumberOfElements(4);
         Object[] testValue =
         {
-            new Short((short)0x0000),
-            new Short((short)0x0080),
-            new Short((short)0x8000),
-            new Short((short)0x8080)
+            Short.valueOf((short)0x0000),
+            Short.valueOf((short)0x0080),
+            Short.valueOf((short)0x8000),
+            Short.valueOf((short)0x8080)
         };
         try
         {
@@ -1277,10 +1277,10 @@ public class DTArrayTestcase extends Testcase
         AS400Array conv = new AS400Array();
         conv.setType(new AS400Bin4());
         Object[] testValue = {
-            new Integer(0),
-            new Integer(1),
-            new Integer(2),
-            new Integer(3)
+            Integer.valueOf(0),
+            Integer.valueOf(1),
+            Integer.valueOf(2),
+            Integer.valueOf(3)
         };
         try
         {
@@ -1310,10 +1310,10 @@ public class DTArrayTestcase extends Testcase
         conv.setType(new AS400Bin2());
         Object[] testValue =
         {
-            new Short((short)0x0000),
-            new Short((short)0x0080),
-            new Short((short)0x8000),
-            new Short((short)0x8080)
+            Short.valueOf((short)0x0000),
+            Short.valueOf((short)0x0080),
+            Short.valueOf((short)0x8000),
+            Short.valueOf((short)0x8080)
         };
         try
         {
@@ -1409,10 +1409,10 @@ public class DTArrayTestcase extends Testcase
         {
             Object[] testValue =
             {
-                new Short((short)-1),
-                new Short((short)-100),
-                new Short((short)1),
-                new Short((short)100)
+                Short.valueOf((short)-1),
+                Short.valueOf((short)-100),
+                Short.valueOf((short)1),
+                Short.valueOf((short)100)
             };
 
             byte[] expectedValue =
@@ -1515,7 +1515,7 @@ public class DTArrayTestcase extends Testcase
         Object[] testValue = {
             new String("as"),
             new String("df"),
-            new Short((short)0),
+            Short.valueOf((short)0),
             new String("l;")
         };
         try
@@ -1639,10 +1639,10 @@ public class DTArrayTestcase extends Testcase
         conv.setNumberOfElements(4);
         Object[] testValue =
         {
-            new Short((short)-1),
-            new Short((short)-100),
-            new Short((short)1),
-            new Short((short)100)
+            Short.valueOf((short)-1),
+            Short.valueOf((short)-100),
+            Short.valueOf((short)1),
+            Short.valueOf((short)100)
         };
         byte[] expectedValue =
         {
@@ -1690,10 +1690,10 @@ public class DTArrayTestcase extends Testcase
         AS400Array conv = new AS400Array();
         conv.setType(new AS400Bin4());
         Object[] testValue = {
-            new Integer(0),
-            new Integer(1),
-            new Integer(2),
-            new Integer(3)
+            Integer.valueOf(0),
+            Integer.valueOf(1),
+            Integer.valueOf(2),
+            Integer.valueOf(3)
         };
         try
         {
@@ -1723,10 +1723,10 @@ public class DTArrayTestcase extends Testcase
         conv.setType(new AS400Bin2());
         Object[] testValue =
         {
-            new Short((short)-1),
-            new Short((short)-100),
-            new Short((short)1),
-            new Short((short)100)
+            Short.valueOf((short)-1),
+            Short.valueOf((short)-100),
+            Short.valueOf((short)1),
+            Short.valueOf((short)100)
         };
 
         byte[] expectedValue =
@@ -1983,12 +1983,12 @@ public class DTArrayTestcase extends Testcase
             Object[][] testValue =
             {
                 {
-                    new Short((short)-1),
-                    new Short((short)-100)
+                    Short.valueOf((short)-1),
+                    Short.valueOf((short)-100)
                 },
                 {
-                    new Short((short)1),
-                    new Short((short)100)
+                    Short.valueOf((short)1),
+                    Short.valueOf((short)100)
                 }
             };
 
@@ -2038,12 +2038,12 @@ public class DTArrayTestcase extends Testcase
             Object[][] testValue =
             {
                 {
-                    new Short((short)-1),
-                    new Integer(-100)
+                    Short.valueOf((short)-1),
+                    Integer.valueOf(-100)
                 },
                 {
-                    new Short((short)1),
-                    new Integer(100)
+                    Short.valueOf((short)1),
+                    Integer.valueOf(100)
                 }
             };
 
@@ -2211,7 +2211,7 @@ public class DTArrayTestcase extends Testcase
         Object[] testValue = {
             new String("as"),
             new String("df"),
-            new Short((short)0),
+            Short.valueOf((short)0),
             new String("l;")
         };
         try
@@ -2335,10 +2335,10 @@ public class DTArrayTestcase extends Testcase
         conv.setNumberOfElements(4);
         Object[] testValue =
         {
-            new Short((short)-1),
-            new Short((short)-100),
-            new Short((short)1),
-            new Short((short)100)
+            Short.valueOf((short)-1),
+            Short.valueOf((short)-100),
+            Short.valueOf((short)1),
+            Short.valueOf((short)100)
         };
         byte[] expectedValue =
         {
@@ -2386,10 +2386,10 @@ public class DTArrayTestcase extends Testcase
         AS400Array conv = new AS400Array();
         conv.setType(new AS400Bin4());
         Object[] testValue = {
-            new Integer(0),
-            new Integer(1),
-            new Integer(2),
-            new Integer(3)
+            Integer.valueOf(0),
+            Integer.valueOf(1),
+            Integer.valueOf(2),
+            Integer.valueOf(3)
         };
         try
         {
@@ -2419,10 +2419,10 @@ public class DTArrayTestcase extends Testcase
         conv.setType(new AS400Bin2());
         Object[] testValue =
         {
-            new Short((short)-1),
-            new Short((short)-100),
-            new Short((short)1),
-            new Short((short)100)
+            Short.valueOf((short)-1),
+            Short.valueOf((short)-100),
+            Short.valueOf((short)1),
+            Short.valueOf((short)100)
         };
 
         byte[] expectedValue =

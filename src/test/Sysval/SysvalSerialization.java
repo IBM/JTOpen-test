@@ -570,7 +570,7 @@ Listens for vetoable change events.
       // Verify that the listeners are getting events
       sv1.setName("QCCSID");
       Object oldValue = sv1.getValue();
-      Integer intVal37 = new Integer (37);
+      Integer intVal37 = Integer.valueOf(37);
       sv1.setValue(intVal37);
       sv1.setValue(oldValue);
 
@@ -693,7 +693,7 @@ Listens for vetoable change events.
       sv2.setSystem(pwrSys_);  // sets the password
       sv2.setName("QCCSID");
       /*Object*/ oldValue = sv2.getValue();
-      /*Integer*/ intVal37 = new Integer (37);
+      /*Integer*/ intVal37 = Integer.valueOf(37);
       sv2.setValue(intVal37);
       sv2.setValue(oldValue);
 

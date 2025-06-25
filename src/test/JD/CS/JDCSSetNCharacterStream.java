@@ -231,9 +231,9 @@ SetNCharacterStream() - Should work with a valid parameter name.
                 argClasses[1] = Class.forName("java.io.Reader"); 
                 argClasses[2] = Long.TYPE; 
                 Object[] argValues = new Object[3];
-                argValues[0] = new Integer(20); 
+                argValues[0] = Integer.valueOf(20); 
                 argValues[1] = null; 
-                argValues[2] = new Long(0); 
+                argValues[2] = Long.valueOf(0); 
                 JDReflectionUtil.callMethod_V(cs, "setNCharacterStream", argClasses, argValues);
                 cs.execute();
                 Clob check = (Clob) JDReflectionUtil.callMethod_O(cs, "getNClob", 20);
@@ -932,9 +932,9 @@ SetNCharacterStream() - Should set to SQL NULL when the value is null.
                 argClasses[1] = Class.forName("java.io.Reader"); 
                 argClasses[2] = Long.TYPE; 
                 Object[] argValues = new Object[3];
-                argValues[0] = new Integer(20); 
+                argValues[0] = Integer.valueOf(20); 
                 argValues[1] = null; 
-                argValues[2] = new Long(0); 
+                argValues[2] = Long.valueOf(0); 
                 
                 JDReflectionUtil.callMethod_V(cs, "setNCharacterStream", argClasses, argValues);
                 cs.execute ();

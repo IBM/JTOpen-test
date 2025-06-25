@@ -310,6 +310,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
      Return the "implementation version" for the Toolbox 'access' package.
      For example:  "JTOpen 6.2".
      **/
+    @SuppressWarnings("deprecation")
     static String getToolboxImplementationVersion()
     {
       if (implementationVersion_ == null) {
@@ -325,6 +326,7 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
      Return the "specification version" for the Toolbox 'access' package.
      For example:  "6.1.0.4" would indicate V6R1M0, PTF 4.
      **/
+    @SuppressWarnings("deprecation")
     static String getToolboxSpecificationVersion()
     {
       if (specificationVersion_ == null) {
@@ -551,12 +553,12 @@ public abstract class TestDriverApplet   implements Runnable,  TestDriverI
               StringTokenizer range = new StringTokenizer(token, ":");
               if (range.countTokens() == 2)
               {
-                int start = new Integer(range.nextToken()).intValue();
-                int end = new Integer(range.nextToken()).intValue();
+                int start = Integer.valueOf(range.nextToken()).intValue();
+                int end = Integer.valueOf(range.nextToken()).intValue();
                 if (end < start) end = start;
                 for (int num = start; num <= end; ++num)
                 {
-                  variations.addElement(new Integer(num).toString());
+                  variations.addElement(Integer.valueOf(num).toString());
                 }
               }
               else

@@ -861,63 +861,63 @@ protected void setup()
     RecordFormat f3rf = f3.getRecordFormat();
     dupKey3Recs_[0] = f3rf.getNewRecord();
     dupKey3Recs_[0].setField(0, "Record 1   ");
-    dupKey3Recs_[0].setField(1, new Integer(1));
+    dupKey3Recs_[0].setField(1, Integer.valueOf(1));
     dupKey3Recs_[0].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[0].setField(3, "1 Record   ");
     dupKey3Recs_[0].setField(4, new BigDecimal("1.10000"));
 
     dupKey3Recs_[1] = f3rf.getNewRecord();
     dupKey3Recs_[1].setField(0, "Record 5   ");
-    dupKey3Recs_[1].setField(1, new Integer(5));
+    dupKey3Recs_[1].setField(1, Integer.valueOf(5));
     dupKey3Recs_[1].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[1].setField(3, "1 Record   ");
     dupKey3Recs_[1].setField(4, new BigDecimal("20.10000"));
 
     dupKey3Recs_[2] = f3rf.getNewRecord();
     dupKey3Recs_[2].setField(0, "Record 2   ");
-    dupKey3Recs_[2].setField(1, new Integer(2));
+    dupKey3Recs_[2].setField(1, Integer.valueOf(2));
     dupKey3Recs_[2].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[2].setField(3, "1 Record   ");
     dupKey3Recs_[2].setField(4, new BigDecimal("221.10000"));
 
     dupKey3Recs_[3] = f3rf.getNewRecord();
     dupKey3Recs_[3].setField(0, "Record 1   ");
-    dupKey3Recs_[3].setField(1, new Integer(1));
+    dupKey3Recs_[3].setField(1, Integer.valueOf(1));
     dupKey3Recs_[3].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[3].setField(3, "1 Record   ");
     dupKey3Recs_[3].setField(4, new BigDecimal("21.10000"));
 
     dupKey3Recs_[4] = f3rf.getNewRecord();
     dupKey3Recs_[4].setField(0, "Record 3   ");
-    dupKey3Recs_[4].setField(1, new Integer(3));
+    dupKey3Recs_[4].setField(1, Integer.valueOf(3));
     dupKey3Recs_[4].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[4].setField(3, "1 Record   ");
     dupKey3Recs_[4].setField(4, new BigDecimal("301.10000"));
 
     dupKey3Recs_[5] = f3rf.getNewRecord();
     dupKey3Recs_[5].setField(0, "Record 5   ");
-    dupKey3Recs_[5].setField(1, new Integer(5));
+    dupKey3Recs_[5].setField(1, Integer.valueOf(5));
     dupKey3Recs_[5].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[5].setField(3, "1 Record   ");
     dupKey3Recs_[5].setField(4, new BigDecimal("551.10000"));
 
     dupKey3Recs_[6] = f3rf.getNewRecord();
     dupKey3Recs_[6].setField(0, "Record 3   ");
-    dupKey3Recs_[6].setField(1, new Integer(3));
+    dupKey3Recs_[6].setField(1, Integer.valueOf(3));
     dupKey3Recs_[6].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[6].setField(3, "1 Record   ");
     dupKey3Recs_[6].setField(4, new BigDecimal("991.10000"));
 
     dupKey3Recs_[7] = f3rf.getNewRecord();
     dupKey3Recs_[7].setField(0, "Record 3   ");
-    dupKey3Recs_[7].setField(1, new Integer(3));
+    dupKey3Recs_[7].setField(1, Integer.valueOf(3));
     dupKey3Recs_[7].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[7].setField(3, "1 Record   ");
     dupKey3Recs_[7].setField(4, new BigDecimal("991.10000"));
 
     dupKey3Recs_[8] = f3rf.getNewRecord();
     dupKey3Recs_[8].setField(0, "Record 3   ");
-    dupKey3Recs_[8].setField(1, new Integer(3));
+    dupKey3Recs_[8].setField(1, Integer.valueOf(3));
     dupKey3Recs_[8].setField(2, new BigDecimal("0.00000"));
     dupKey3Recs_[8].setField(3, "1 Record   ");
     dupKey3Recs_[8].setField(4, new BigDecimal("21.10000"));
@@ -3460,7 +3460,7 @@ protected void cleanup()
       
       Object[] key = new Object[2];
       key[0] = "Record 1   ";
-      key[1] = new Integer(1);
+      key[1] = Integer.valueOf(1);
       Record r = f.readNextEqual(key);
       if (!match.toString().equals(r.toString()))
       {
@@ -3518,7 +3518,7 @@ protected void cleanup()
       
       Object[] key = new Object[3];
       key[0] = "Record 3   ";
-      key[1] = new Integer(3);
+      key[1] = Integer.valueOf(3);
       key[2] = new BigDecimal("301.1");
       Record r = f.readNextEqual(key);
       if (!match.toString().equals(r.toString()))
@@ -3641,7 +3641,7 @@ protected void cleanup()
       f.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
       Object[] key = new Object[3];
       key[0] = "Record 1   ";
-      key[1] = new Integer(1);
+      key[1] = Integer.valueOf(1);
       key[2] = new BigDecimal("1.1");
       f.positionCursorToNext();
       f.positionCursorToNext();
@@ -3757,7 +3757,7 @@ protected void cleanup()
       f.readLast();
       Object[] key = new Object[2];
       key[0] = "Record 1   ";
-      key[1] = new Integer(12);
+      key[1] = Integer.valueOf(12);
       Record r = f.readPreviousEqual(key);
       if (r != null)
       {
@@ -6221,13 +6221,13 @@ protected void cleanup()
       
 //      Object[] key = new Object[2];
 //      key[0] = "Record 1   ";
-//      key[1] = new Integer(1);
+//      key[1] = Integer.valueOf(1);
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(11, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 1   "), 0, 11);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(1)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(1)), 0, 4);
       byte[] key = keyAsBytes.toByteArray();
 
       Record r = f.readNextEqual(key, 2);
@@ -6287,14 +6287,14 @@ protected void cleanup()
       
 //      Object[] key = new Object[3];
 //      key[0] = "Record 3   ";
-//      key[1] = new Integer(3);
+//      key[1] = Integer.valueOf(3);
 //      key[2] = new BigDecimal("301.1");
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(11, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 3   "), 0, 11);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(3)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(3)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15, 5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("301.1")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -6429,14 +6429,14 @@ protected void cleanup()
       f.open(AS400File.READ_ONLY, bf_, AS400File.COMMIT_LOCK_LEVEL_NONE);
 //      Object[] key = new Object[3];
 //      key[0] = "Record 1   ";
-//      key[1] = new Integer(1);
+//      key[1] = Integer.valueOf(1);
 //      key[2] = new BigDecimal("1.1");
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(11, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 1   "), 0, 11);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(1)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(1)), 0, 4);
       AS400PackedDecimal decimal = new AS400PackedDecimal(15, 5);
       keyAsBytes.write(decimal.toBytes(new BigDecimal("1.1")), 0, decimal.getByteLength());
       byte[] key = keyAsBytes.toByteArray();
@@ -6561,13 +6561,13 @@ protected void cleanup()
       f.readLast();
 //      Object[] key = new Object[2];
 //      key[0] = "Record 1   ";
-//      key[1] = new Integer(12);
+//      key[1] = Integer.valueOf(12);
 
       ByteArrayOutputStream keyAsBytes = new ByteArrayOutputStream();
       AS400Text text = new AS400Text(11, systemObject_.getCcsid(), systemObject_);
       keyAsBytes.write(text.toBytes("Record 1   "), 0, 11);
       AS400Bin4 bin4 = new AS400Bin4();
-      keyAsBytes.write(bin4.toBytes(new Integer(12)), 0, 4);
+      keyAsBytes.write(bin4.toBytes(Integer.valueOf(12)), 0, 4);
       byte[] key = keyAsBytes.toByteArray();
 
       Record r = f.readPreviousEqual(key, 2);
