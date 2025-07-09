@@ -268,6 +268,7 @@ public class JTOpenDownloadDevJars {
 	    System.out.println("Unzipped "+ tmpDir+"/allArtifact.zip to "+tmpDir); 
 
             copyFile(tmpDir+"/JTOpen-test.jar", jdk14Path+"/JTOpen-test.jar");
+            copyFile(tmpDir+"/JTOpen-test.war", jdk14Path+"/JTOpen-test.war");
 
 	    connection.close();
 
@@ -326,7 +327,11 @@ public class JTOpenDownloadDevJars {
 
 		    }  else {
 			if (targetName.indexOf("JTOpen-test") == 0) {
-			    targetName="JTOpen-test.jar"; 
+			    if (targetName.endsWith(".jar")) { 
+			      targetName="JTOpen-test.jar"; 
+			    } else if (targetName.endsWith(".war")) {
+                              targetName="JTOpen-test.war"; 
+			    }
 			} 
 		    }
 		}

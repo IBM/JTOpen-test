@@ -198,7 +198,11 @@ public class JTOpenDownloadReleaseJars {
 
 		    }  else {
 			if (targetName.indexOf("JTOpen-test") == 0) {
-			    targetName="JTOpen-test.jar"; 
+                          if (targetName.endsWith(".jar")) { 
+                            targetName="JTOpen-test.jar"; 
+                          } else if (targetName.endsWith(".war")) {
+                            targetName="JTOpen-test.war"; 
+                          }
 			} 
 		    }
 		}
