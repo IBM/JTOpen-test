@@ -268,6 +268,7 @@ public class JTOpenDownloadDevJars {
 	    System.out.println("Unzipped "+ tmpDir+"/allArtifact.zip to "+tmpDir); 
 
             copyFile(tmpDir+"/JTOpen-test.jar", jdk14Path+"/JTOpen-test.jar");
+            copyFile(tmpDir+"/JTOpen-test.war", jdk14Path+"/JTOpen-test.war");
 
 	    connection.close();
 
