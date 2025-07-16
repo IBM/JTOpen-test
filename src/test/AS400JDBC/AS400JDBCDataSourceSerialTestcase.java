@@ -4694,7 +4694,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
     /**
      *  Validates that setBlockSize(int) sets the block size as expected.
      **/
-     public void Var0150()
+     public void Var150()
      {
          int[] values = {513,1000,15999,16000};
          try

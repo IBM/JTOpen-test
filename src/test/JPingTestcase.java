@@ -31,6 +31,17 @@ import com.ibm.as400.util.JPing;
  **/
 public class JPingTestcase extends Testcase {
 
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length+2];
+     newArgs[0] = "-tc";
+     newArgs[1] = "JPingTestcase";
+     for (int i = 0; i < args.length; i++) {
+       newArgs[2+i]=args[i];
+     }
+     test.JPingTest.main(newArgs); 
+   }
+
+
   /***
    * Test the JPing command looking for expected arguments
    */
