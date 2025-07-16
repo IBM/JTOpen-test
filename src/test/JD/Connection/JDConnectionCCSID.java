@@ -257,12 +257,12 @@ Performs cleanup needed after running variations.
       if (userProfiles.get(profile) == null) {
           // The profile has not been created.   Create it
           Statement s = connection_.createStatement(); 
+          String sql = "CALL QSYS2.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + profile + ") PASSWORD(DUMMY) JOBD(QGPL/QDFTJOBD)     ')"; 
           try { 
-            s.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + profile
-                + ") PASSWORD(DUMMY)                                                            ',"
-                + "0000000070.00000 ) ");
+            s.executeUpdate(sql);
           } catch (Exception e) {
-            
+              System.out.println("Warning.  unable to create profile using "+sql); 
+              e.printStackTrace(System.out); 
           }
           s.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CHGUSRPRF USRPRF(" + profile
               + ") PASSWORD("+PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDConnectionCCSID.1")+") CCSID("+ccsid+")"

@@ -12,23 +12,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDMDGetXxx.java
 //
 // Classes:      JDDMDGetXxx
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -2697,4 +2685,62 @@ public class JDDMDGetXxx extends JDTestcase {
     }
   }
 
+  /**
+   * getDatabaseMajorVersion() - Should return the DatabaseMajorVersion on a JTOpen
+   * connection  with DRDA metadata. 
+   **/
+  public void Var113() {
+    if (checkToolbox()) {
+
+      try {
+        Connection connection =  testDriver_.getConnection(url_+";use drda metadata version = true", systemObject_.getUserId(),
+                encryptedPassword_);
+            DatabaseMetaData dmd = connection.getMetaData();
+            
+            int majorVersion = dmd.getDatabaseMajorVersion(); 
+            int expectedMajorVersion = getRelease() / 100;
+            connection.close(); 
+        assertCondition(majorVersion == expectedMajorVersion,
+            " Major version returned " +majorVersion
+                + " expected " + expectedMajorVersion
+                + " New test added 07/16/2025");
+      } catch (Exception e) {
+        failed(e,
+            "Unexpected Exception - New test added by Native driver 11/2002");
+      }
+    }
+
+  }
+
+
+  /**
+   * getDatabaseMinorVersion() - Should return the DatabaseMinorVersion on a JTOpen
+   * connection  with DRDA metadata. 
+   **/
+  public void Var114() {
+    if (checkToolbox()) {
+
+      try {
+        Connection connection =  testDriver_.getConnection(url_+";use drda metadata version = true", systemObject_.getUserId(),
+                encryptedPassword_);
+            DatabaseMetaData dmd = connection.getMetaData();
+            int expectedMinorVersion = (getRelease() % 100) / 10;
+            int MinorVersion = dmd.getDatabaseMinorVersion(); 
+           
+            connection.close(); 
+        assertCondition(MinorVersion == expectedMinorVersion,
+            " Minor version returned " +MinorVersion
+                + " expected " + expectedMinorVersion
+                + " New test added 07/16/2025");
+      } catch (Exception e) {
+        failed(e,
+            "Unexpected Exception - New test added by Native driver 11/2002");
+      }
+    }
+
+  }
+
+  
+  
+  
 }

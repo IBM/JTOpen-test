@@ -2182,6 +2182,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           + thisRunNumber;
     }
     String results = "ct/runit" + initials + ".out";
+    String codeLevel = "ct/codeLevel" + initials + ".out";
     boolean fatalError = false;
     String fatalErrorString = "";
     String fatalErrorMessage = "";
@@ -3234,6 +3235,11 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     BufferedReader outputReader = new BufferedReader(new FileReader(
         runitOutputFile));
     // System.out.println("JDEBUG: reading output "+output);
+    String toolboxVersion = "NA";
+    String toolboxBuildDate = "NA";
+    String nativeVersion = "NA"; 
+    String nativeBuildDate = "NA"; 
+    
     String line = outputReader.readLine();
     while (line != null) {
       line = cleanupLine(line);
@@ -3322,11 +3328,44 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             "^.*Files.*'\\([^']*/exp[^']*\\)' .*$", "\\1");
         rxpVector.addElement(formattedLine);
       }
+      if (line.indexOf("TOOLBOX VERSION") >= 0) { 
+          int equalsIndex = line.indexOf("="); 
+          if (equalsIndex > 0) { 
+            toolboxVersion = line.substring(equalsIndex+1).trim().replace(' ','_'); 
+          }
+      }
+      if (line.indexOf("TOOLBOX BUILD DATE") >= 0) { 
+        int equalsIndex = line.indexOf("="); 
+        if (equalsIndex > 0) { 
+          toolboxBuildDate = line.substring(equalsIndex+1).trim().replace(' ','_'); 
+        }
+      }
+      
+      if (line.indexOf("NATIVE BUILD DATE") >= 0) { 
+        int equalsIndex = line.indexOf("="); 
+        if (equalsIndex > 0) { 
+          nativeBuildDate = line.substring(equalsIndex+1).trim().replace(' ','_'); 
+        }
+      }
+
+      if (line.indexOf("NATIVE JDBC VERSION") >= 0) { 
+        int equalsIndex = line.indexOf("="); 
+        if (equalsIndex > 0) { 
+          nativeVersion = line.substring(equalsIndex+1).trim().replace(' ','_'); 
+        }
+      }
+
 
       line = outputReader.readLine();
     }
     outputReader.close();
 
+    
+    // Write out the codeLevel as well
+    PrintWriter codeLevelWriter = new PrintWriter(new FileWriter(codeLevel, true));
+    codeLevelWriter.println(dateString + " " + AS400lc + " " + toolboxVersion+" "+toolboxBuildDate+" "+nativeVersion+" "+nativeBuildDate);
+    codeLevelWriter.close(); 
+    
     if (disabledProfile != null) {
       try {
         if (disabledProfile.equals(USERID)) {

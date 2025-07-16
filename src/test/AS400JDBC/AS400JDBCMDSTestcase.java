@@ -2992,7 +2992,11 @@ public class AS400JDBCMDSTestcase extends Testcase
     **/
     public void Var112()
     {
-        String collection = "dstest";
+      
+        String collection = "JDDS";
+        if (testLib_ != null && testLib_.length() > 4) { 
+          collection += testLib_.substring(testLib_.length() - 4); 
+        }
         String table = "dstable";
         Statement s = null;
         Connection c = null;
