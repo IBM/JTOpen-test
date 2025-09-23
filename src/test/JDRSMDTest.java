@@ -264,7 +264,7 @@ extends JDTestDriver
             buffer.append(",C_DECFLOAT16 DECFLOAT(16)");
             buffer.append(",C_DECFLOAT34 DECFLOAT(34)");
 	}
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (true) {
 	    buffer.append (", C_XML              XML              ");
 	}
         buffer.append (",C_NCHAR_50         NCHAR(50)      ");

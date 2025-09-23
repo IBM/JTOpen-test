@@ -1260,7 +1260,7 @@ public class SecPTMiscTestcase extends Testcase
            
            String  expectedVerificationId="Verification_ID=QIBM_OS400_JT400"; 
            String  expectedRemotePort=null; /* don't check remote port */ 
-           String expectedRemoteIp = null; /* don't check remote IP as it can vary and may be different than the local IP address because of network configuration */ 
+           String expectedRemoteIp = "Remote_IPAddress="+sys.getLocalIPAddress(); 
            String expectedLocalIp = null; /* don't check local ip */ 
              
 
@@ -1288,7 +1288,104 @@ public class SecPTMiscTestcase extends Testcase
        }
    }
    }
-   public void Var042() {notApplicable("Future variation"); } 
+   /**
+   Test successful creation of a profile token for nopwd id 
+   **/
+  public void Var042()
+  {
+    if (check750plus()) {
+      AS400 userAs400  = null; 
+      try
+      {
+        AuthExit.assureExitProgramExists(pwrConnection_, SecAuthTest.uid2, false);
+        AuthExit.clearOutputFiles(pwrConnection_); 
+        String jobName; 
+        
+ 
+        ProfileTokenCredential pt = new ProfileTokenCredential();
+        pt.setSystem(pwrSys_);
+        pt.setTimeoutInterval(600);
+        pt.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
+        pt.setToken(SecAuthTest.uid2, ProfileTokenCredential.PW_NOPWDCHK);
+        
+        // Perform test.
+        userAs400 = new AS400(pwrSys_.getSystemName(),pt); 
+        CommandCall userCommandCall = new CommandCall(userAs400); 
+        userCommandCall.run("DSPLIBL"); 
+
+          boolean passed = true; 
+          StringBuffer sb = new StringBuffer(); 
+          String  expectedLocalPort="Local_Port=8476";
+          if (!JTOpenTestEnvironment.isOS400) {
+            expectedLocalPort="Local_Port=0";   /* 0 is the default value passed in */
+            jobName="QUSER_NC.QZRCSRVS";
+          } else { 
+            expectedLocalPort="Local_Port=0";
+            
+            if (isNative_) {
+             jobName=JDJobName.getJobName().replace('/','.');
+            } else {
+             jobName="QUSER_NC.QZRCSRVS";
+            }
+
+          }
+          
+          if ( pt.getToken() == null) {
+            passed =false; 
+            sb.append("pt.getToken() is null\n"); 
+          }
+          if (pt.getTokenType() != ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE) {
+            passed = false; 
+            sb.append("pt.getTokenType():"+pt.getTokenType()+" != ProfileTokenCredential.TYPE_MULTIPLE_USE_NON_RENEWABLE:"+ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE+"\n"); 
+          }
+          int expectedExpirationMaximum = 600; 
+          int expectedExpirationMinimum = expectedExpirationMaximum - 30; 
+          
+          int timeToExpiration = pt.getTimeToExpiration();
+          if ( expectedExpirationMinimum < expectedExpirationMinimum || timeToExpiration > expectedExpirationMaximum) {
+            passed = false; 
+            sb.append("pt.GetTimeExpiration() = "+timeToExpiration+" sb >= "+expectedExpirationMinimum+" and <= "+expectedExpirationMaximum);
+          }
+          
+          String  expectedVerificationId="Verification_ID=QIBM_OS400_JT400"; 
+          String  expectedRemotePort=null; /* don't check remote port */ 
+          String expectedRemoteIp = "Remote_IPAddress="+pwrSys_.getLocalIPAddress(); 
+          String expectedLocalIp = null; /* don't check local ip */ 
+            
+
+          if (!AuthExit.checkResult(pwrConnection_, jobName, SecAuthTest.uid2, sb, expectedVerificationId,
+              expectedRemotePort, expectedLocalPort, expectedRemoteIp, expectedLocalIp)) {
+            passed = false;
+          }
+
+          if (passed) {
+            AuthExit.cleanup(pwrConnection_);
+          }
+
+          
+          assertCondition( passed, sb); 
+          
+      }
+      catch (Throwable e)
+      {
+          failed(e, "Unexpected exception.");
+      }
+      finally
+      {
+        if (userAs400 != null) {
+          try {
+            userAs400.disconnectAllServices();
+            userAs400.close(); 
+            
+          } catch (Exception e) { 
+            e.printStackTrace(); 
+          }
+        }
+
+      }
+  }
+  }
+
    public void Var043() {notApplicable("Future variation"); } 
  public void Var044() {notApplicable("Future variation"); } 
  public void Var045() {notApplicable("Future variation"); } 

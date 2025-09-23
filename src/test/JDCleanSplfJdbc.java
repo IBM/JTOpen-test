@@ -114,7 +114,7 @@ public class JDCleanSplfJdbc {
       if (userid == null) {
         conn = DriverManager.getConnection("jdbc:as400:" + system);
       } else {
-        conn = DriverManager.getConnection("jdbc:as400:"+system, userid, password);
+        conn = DriverManager.getConnection("jdbc:as400:" + system, userid, password);
       }
       /* endDateFilter is in the form. CYYMMDD */
       /* run the delete for the last year first */
@@ -225,8 +225,8 @@ public class JDCleanSplfJdbc {
 
         JDCleanSplfJdbcResults firstResults = deleteSpoolFiles(out, conn, nestLevel + "a ", startFilterTime,
             startFilterTime + quarterTime, deleteAll, deleteUserIds);
-        JDCleanSplfJdbcResults secondResults = deleteSpoolFiles(out, conn, nestLevel + "b ", startFilterTime + quarterTime,
-            startFilterTime + 2 * quarterTime, deleteAll, deleteUserIds);
+        JDCleanSplfJdbcResults secondResults = deleteSpoolFiles(out, conn, nestLevel + "b ",
+            startFilterTime + quarterTime, startFilterTime + 2 * quarterTime, deleteAll, deleteUserIds);
         JDCleanSplfJdbcResults thirdResults = deleteSpoolFiles(out, conn, nestLevel + "c ",
             startFilterTime + 2 * quarterTime, startFilterTime + 3 * quarterTime, deleteAll, deleteUserIds);
         JDCleanSplfJdbcResults fourthResults = deleteSpoolFiles(out, conn, nestLevel + "d ",
@@ -315,33 +315,35 @@ public class JDCleanSplfJdbc {
     }
   }
 
-  public static void runCleaningQuery(PrintStream out, Statement stmt, String query, JDCleanSplfJdbc clean) throws SQLException {
+  public static void runCleaningQuery(PrintStream out, Statement stmt, String query, JDCleanSplfJdbc clean)
+      throws SQLException {
     out.println("Running query " + query);
 
     ResultSet rs = stmt.executeQuery(query);
-    while (rs.next()) { 
-      String userName = rs.getString(1); 
-      String fileName = rs.getString(2); 
+    while (rs.next()) {
+      String userName = rs.getString(1);
+      String fileName = rs.getString(2);
       int fileNumber = rs.getInt(3);
-      String allJobName= rs.getString(4); 
-      int firstSlashIndex = allJobName.indexOf('/'); 
-      int secondSlashIndex = allJobName.indexOf('/',firstSlashIndex+1);
-      String fileJobName = allJobName.substring(secondSlashIndex+1); 
-      String fileJobUser = allJobName.substring(firstSlashIndex+1,secondSlashIndex); 
-      String fileJobNumber = allJobName.substring(0,firstSlashIndex);  
+      String allJobName = rs.getString(4);
+      int firstSlashIndex = allJobName.indexOf('/');
+      int secondSlashIndex = allJobName.indexOf('/', firstSlashIndex + 1);
+      String fileJobName = allJobName.substring(secondSlashIndex + 1);
+      String fileJobUser = allJobName.substring(firstSlashIndex + 1, secondSlashIndex);
+      String fileJobNumber = allJobName.substring(0, firstSlashIndex);
       Timestamp createTimestamp = rs.getTimestamp(5);
-      int pageCount = rs.getInt(6); 
-      int dataLength = rs.getInt(7) * 1024;  /* Size in Kilobtes */ 
-      
-      clean.processSplf(userName, fileName, fileNumber, fileJobName, fileJobUser,
-        fileJobNumber, createTimestamp, pageCount, dataLength);
+      int pageCount = rs.getInt(6);
+      int dataLength = rs.getInt(7) * 1024; /* Size in Kilobtes */
+
+      clean.processSplf(userName, fileName, fileNumber, fileJobName, fileJobUser, fileJobNumber, createTimestamp,
+          pageCount, dataLength);
     }
-    rs.close(); 
+    rs.close();
   }
+
   public static JDCleanSplfJdbcResults deleteSpoolFilesAttempt(PrintStream out, Connection c, String nestLevel,
       long startFilterTime, long endFilterTime, boolean deleteAll, Hashtable<String, String> deleteUserIds)
       throws Exception {
-    Statement stmt = c.createStatement(); 
+    Statement stmt = c.createStatement();
     JDCleanSplfJdbc clean = new JDCleanSplfJdbc(out, c, nestLevel, deleteAll, deleteUserIds);
     //
     // Get the list using an SQL query.
@@ -349,18 +351,18 @@ public class JDCleanSplfJdbc {
     Timestamp startTimestamp = new Timestamp(startFilterTime);
     Timestamp endTimestamp = new Timestamp(endFilterTime);
     long startMillis = System.currentTimeMillis();
-    String userInClause=""; 
-    Enumeration<String> enumeration = deleteUserIds.keys(); 
-    boolean addComma = false; 
-    if (deleteAll) { 
+    String userInClause = "";
+    Enumeration<String> enumeration = deleteUserIds.keys();
+    boolean addComma = false;
+    if (deleteAll) {
       String query = " SELECT JOB_USER, SPOOLED_FILE_NAME, SPOOLED_FILE_NUMBER ,JOB_NUMBER || '/' ||  JOB_USER || '/' ||  JOB_NAME ,  CREATION_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
           + " FROM TABLE(QSYS2 . SPOOLED_FILE_INFO (USER_NAME=>'*ALL', STARTING_TIMESTAMP => '"
           + startTimestamp.toString() + "'" + " , ENDING_TIMESTAMP =>'" + endTimestamp.toString() + "'))";
 
       System.out.println(query);
-      runCleaningQuery(out, stmt, query, clean); 
-      stmt.close(); 
-      
+      runCleaningQuery(out, stmt, query, clean);
+      stmt.close();
+
     } else {
       while (enumeration.hasMoreElements()) {
         String userId = enumeration.nextElement();
@@ -377,7 +379,7 @@ public class JDCleanSplfJdbc {
           + " CREATE_TIMESTAMP >= '" + startTimestamp.toString() + "'" + " AND CREATE_TIMESTAMP <= '"
           + endTimestamp.toString() + "'";
       out.println(query);
-      runCleaningQuery(out,stmt, query, clean);
+      runCleaningQuery(out, stmt, query, clean);
       stmt.close();
     }
     long finishMillis = System.currentTimeMillis();
@@ -399,12 +401,12 @@ public class JDCleanSplfJdbc {
     Timestamp startTimestamp = new Timestamp(startFilterTime);
     Timestamp endTimestamp = new Timestamp(endFilterTime);
     long startMillis = System.currentTimeMillis();
-    Statement stmt = c.createStatement(); 
+    Statement stmt = c.createStatement();
     String query = " SELECT JOB_USER, SPOOLED_FILE_NAME, SPOOLED_FILE_NUMBER ,JOB_NUMBER || '/' ||  JOB_USER || '/' ||  JOB_NAME ,  CREATION_TIMESTAMP ,  TOTAL_PAGES, SIZE , USER_DATA    "
         + " FROM TABLE(QSYS2 . SPOOLED_FILE_INFO (USER_NAME=>'*ALL', STARTING_TIMESTAMP => '"
         + startTimestamp.toString() + "'" + " , ENDING_TIMESTAMP =>'" + endTimestamp.toString() + "'))";
-    runCleaningQuery(out, stmt, query, clean); 
-    stmt.close(); 
+    runCleaningQuery(out, stmt, query, clean);
+    stmt.close();
     System.out.println("Running query " + query);
 
     long deleteCount = clean.deleteCount_;
@@ -513,8 +515,8 @@ public class JDCleanSplfJdbc {
     if (processCount_ % 1000 == 0) {
       out.println(
           nestLevel_ + "  processCount=" + processCount_ + " deleteCount=" + deleteCount_ + " keepCount=" + keepCount_);
-      out.println(nestLevel_+"    fileInfo = "+createTimestamp+" "+jobUser+" "+fileName+" "+fileNumber +" "+
-          fileJobName+" "+fileJobUser+" "+ fileJobNumber);
+      out.println(nestLevel_ + "    fileInfo = " + createTimestamp + " " + jobUser + " " + fileName + " " + fileNumber
+          + " " + fileJobName + " " + fileJobUser + " " + fileJobNumber);
       /* Check the number of jobs and delete extra if needed */
     }
     boolean doDelete = false;
@@ -528,18 +530,16 @@ public class JDCleanSplfJdbc {
 
           if (pageCount <= 100) {
             // Read in the file
-            StringBuffer sb = new StringBuffer(); 
-            String sql = " SELECT SPOOLED_DATA "
-                + "FROM TABLE(SYSTOOLS.SPOOLED_FILE_DATA("
-                + "JOB_NAME=>'"+fileJobNumber+"/"+fileJobUser+"/"+fileJobName+"'," 
-                + "SPOOLED_FILE_NAME =>'"+fileName+"',"
-                + "SPOOLED_FILE_NUMBER=> "+fileNumber+")) ORDER BY ORDINAL_POSITION"; 
-            ResultSet rs = stmt_.executeQuery(sql); 
-            while (rs.next()) { 
-              sb.append(rs.getString(1)); 
-              sb.append("\n"); 
+            StringBuffer sb = new StringBuffer();
+            String sql = " SELECT SPOOLED_DATA " + "FROM TABLE(SYSTOOLS.SPOOLED_FILE_DATA(" + "JOB_NAME=>'"
+                + fileJobNumber + "/" + fileJobUser + "/" + fileJobName + "'," + "SPOOLED_FILE_NAME =>'" + fileName
+                + "'," + "SPOOLED_FILE_NUMBER=> " + fileNumber + ")) ORDER BY ORDINAL_POSITION";
+            ResultSet rs = stmt_.executeQuery(sql);
+            while (rs.next()) {
+              sb.append(rs.getString(1));
+              sb.append("\n");
             }
-            String data = sb.toString(); 
+            String data = sb.toString();
             if (fileName.equals("QPJOBLOG")) {
 
               // Check for messages indicating a useless spool file
@@ -880,7 +880,8 @@ class JDCleanSplfJdbcResults {
     this.processSeconds = a.processSeconds + b.processSeconds;
   }
 
-  public JDCleanSplfJdbcResults(JDCleanSplfJdbcResults a, JDCleanSplfJdbcResults b, JDCleanSplfJdbcResults c, JDCleanSplfJdbcResults d) {
+  public JDCleanSplfJdbcResults(JDCleanSplfJdbcResults a, JDCleanSplfJdbcResults b, JDCleanSplfJdbcResults c,
+      JDCleanSplfJdbcResults d) {
     this.deleteCount = a.deleteCount + b.deleteCount + c.deleteCount + d.deleteCount;
     this.deleteBytes = a.deleteBytes + b.deleteBytes + c.deleteBytes + d.deleteBytes;
     this.keepCount = a.keepCount + b.keepCount + c.keepCount + d.keepCount;
@@ -889,4 +890,3 @@ class JDCleanSplfJdbcResults {
     this.processSeconds = a.processSeconds + b.processSeconds + c.processSeconds + d.processSeconds;
   }
 }
-

@@ -207,7 +207,7 @@ Performs setup needed before running variations.
                          + "REFERENCES " + JDDMDTest.COLLECTION2
                          + ".EK3 (CUSTID) ON DELETE NO ACTION ON UPDATE NO ACTION)");
 
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@C1A
+        if(true) //@C1A
         {
             //  Create primary key.  //@C1A
             s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION2
@@ -263,7 +263,7 @@ Performs cleanup needed after running variations.
             + ".EK8 DROP UNIQUE " + JDDMDTest.COLLECTION + ".EKKEY8");
 
         //@C1A
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        if(true){
             s.executeUpdate ("ALTER TABLE " + JDDMDTest.COLLECTION2     //@C1A
                 + ".LCNEK4 DROP FOREIGN KEY " + JDDMDTest.COLLECTION2 + ".LCNEKKEY4 CASCADE");
             s.executeUpdate ("ALTER TABLE " + JDDMDTest.COLLECTION2     //@C1A
@@ -290,7 +290,7 @@ Performs cleanup needed after running variations.
             + ".EK4");
 
         //@C1A
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        if(true)
         {
             s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION2     //@C1A
                 + ".LCNEK3");
@@ -763,7 +763,7 @@ getExportedKeys() - Specify "localhost" for the catalog.
 **/
   public void Var007() {
     if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4 ||
-        ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
+        ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true))
         ||(getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
       notApplicable("\"localhost\" variation ");
     } else {
@@ -982,11 +982,7 @@ SQL400 - for functions that call the SQLForeignKeys() CLI function,
                     ++rows;
 
                 rs.close ();
-		if ((getDriver () == JDTestDriver.DRIVER_NATIVE &&
-                    (getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-                       getJdbcLevel() < 4)) ) {
-                assertCondition (rows > 0, "rows="+rows+" sb > 0");
-		} else {
+                {
                 assertCondition (rows == 0, "rows="+rows+" sb 0 pattern specified for schema ");
 		}
             }
@@ -1129,11 +1125,7 @@ SQL400 - for functions that call the SQLForeignKeys() CLI function,
                     ++rows;
 
                 rs.close ();
-                if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-                    (getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-                     getJdbcLevel() < 4 )) {
-                  assertCondition (rows > 0, "rows="+rows+" sb > 0" );
-                } else {
+                 {
                   // Nothing should be found since the API doesn't support matching
                   assertCondition (rows == 0, "rows="+rows+" sb = 0 table pattern specified" );
 
@@ -1180,7 +1172,7 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
 **/
     public void Var020()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        
         {
             try {
                 ResultSet rs = dmd_.getExportedKeys (catalog_,
@@ -1208,8 +1200,7 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
                 failed (e, "Unexpected Exception.  Added by Toolbox 8/11/2004 for testing 128 byte column names.");
             }
         }
-        else
-            notApplicable("V5R4 and greater variation");
+        
     }
 
     /* use getObject -- version of Var002 added by native 5/2/32008 */

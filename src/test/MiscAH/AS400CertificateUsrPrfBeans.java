@@ -317,7 +317,7 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
 
 
     // Are we running on the AS/400?
-    else if (operatingSystem_.indexOf("OS/400") >= 0)
+    else if (JTOpenTestEnvironment.isOS400)
     {
       output_.println("Will use native implementation");
     }

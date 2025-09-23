@@ -268,12 +268,6 @@ getUDTs() - Check the result set format.
                         Types.SMALLINT, Types.VARCHAR, 
                         Types.SMALLINT};
 
-                int[] expectedTypes30V6R1 = { Types.VARCHAR, Types.VARCHAR,
-                        Types.VARCHAR, Types.VARCHAR,
-                        Types.INTEGER, Types.VARCHAR, 
-                        Types.SMALLINT};
-
-
                 int[] expectedTypes30V7R1 = { Types.VARCHAR, Types.VARCHAR,
                         Types.VARCHAR, Types.VARCHAR,
                         Types.SMALLINT, Types.VARCHAR, 
@@ -303,30 +297,24 @@ getUDTs() - Check the result set format.
                     rs.close ();
                     assertCondition ((count == expectedNames.length) && (namesCheck) && (typesCheck), message);
                 } else {
-                    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 ){
-			if (getDriver() == JDTestDriver.DRIVER_NATIVE ){
-			    if (isJdbc40()) {
-				expectedTypes30 = expectedTypes40V7R1Native;
-				message.append("using  expectedTypes40V7R1Native\n");
+                    if (getDriver() == JDTestDriver.DRIVER_NATIVE ){
+                        if (isJdbc40()) {
+                    	expectedTypes30 = expectedTypes40V7R1Native;
+                    	message.append("using  expectedTypes40V7R1Native\n");
 
-			    } else { 
-				expectedTypes30 = expectedTypes30V7R1Native;
-				message.append("using  expectedTypes30V7R1Native\n");
-			    } 
-			} else {
-			    if (isJdbc40()) {
-				message.append("using  expectedTypes40V7R1"); 
-				expectedTypes30 = expectedTypes40V7R1;
-			    } else {
-				message.append("using  expectedTypes30V7R1"); 
-				expectedTypes30 = expectedTypes30V7R1;
-			    }
-			}
-		    } else  if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&
-				getDriver() == JDTestDriver.DRIVER_NATIVE ){
-			/* SYSIBM changes PTF'd back to V6R1 1/11/2010 */ 
-			expectedTypes30 = expectedTypes30V6R1;
-		    }
+                        } else { 
+                    	expectedTypes30 = expectedTypes30V7R1Native;
+                    	message.append("using  expectedTypes30V7R1Native\n");
+                        } 
+                    } else {
+                        if (isJdbc40()) {
+                    	message.append("using  expectedTypes40V7R1"); 
+                    	expectedTypes30 = expectedTypes40V7R1;
+                        } else {
+                    	message.append("using  expectedTypes30V7R1"); 
+                    	expectedTypes30 = expectedTypes30V7R1;
+                        }
+                    }
 
 		    message.append("Checking column names\n"); 
                     boolean namesCheck = JDDMDTest.checkColumnNames (rsmd, expectedNames30, message);
@@ -680,7 +668,7 @@ All matching types should be returned.
       StringBuffer sb = new StringBuffer(); 
 
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4  ||
-              (getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) ||
+              (getDriver() == JDTestDriver.DRIVER_NATIVE  && true ) ||
               (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {
@@ -2188,12 +2176,7 @@ getUDTs() - Test new JDBC 3.0 field named BASE_TYPE using getObject
        public void Var038()
         {
          if (checkJdbc40()) { 
-	   if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	       notApplicable("V7R1 test for ROWID");
-	       return; 
-	   }
-
-          ExpectedTypeFormat ex = new ExpectedTypeFormat(
+	   ExpectedTypeFormat ex = new ExpectedTypeFormat(
               /* name */     "JDDMDGUROWID",
                              " AS ROWID ",
               /*className*/ "byte[]",
@@ -2219,12 +2202,7 @@ getUDTs() - Test new JDBC 3.0 field named BASE_TYPE using getObject
        public void Var039()
         {
 
-	   if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	       notApplicable("V7R1 test for XML");
-	       return; 
-	   }
-
-          ExpectedTypeFormat ex = new ExpectedTypeFormat(
+	   ExpectedTypeFormat ex = new ExpectedTypeFormat(
               /* name */     "JDDMDGUXML",
                              " AS XML ",
               /*className*/ "java.sql.SQLXML",

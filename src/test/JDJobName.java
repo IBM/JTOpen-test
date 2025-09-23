@@ -18,7 +18,8 @@ public class JDJobName {
     /* Change this name each time the nativeSource is changed */
     /* #11 - added getLoggingText */ 
     /* #12 - add grant *USE  to public */ 
-    static String  srvpgm= "JDJOBNM012";
+    /* #13 - access via PASE */ 
+    static String  srvpgm= "JDJOBNM013";
 
     static boolean loaded = false; 
     static boolean debug = false; 
@@ -166,6 +167,35 @@ public class JDJobName {
 	"    return (jint) jobi.Coded_Char_Set_ID; ",
 	"}",
 	"", 
+	"jint    test_JDJobName_getJobNameNative(",
+	"     char * jobname)",
+	"{",
+        "      char * dest; ", 
+        "      int i; ",
+        "      Qwc_JOBI0100_t jobi;",
+        "      QUSRJOBI(&jobi,",
+        "               sizeof(jobi),",
+        "               \"JOBI0100\",",
+        "               \"*                         \",",
+        "               \"                \");",
+        "       dest = jobname;",
+        "       for (i = 0; i < 6; i++) {",
+        "          *dest = etoa[jobi.Job_Number[i]];",
+        "          if (*dest != 0x20) dest++; ",
+        "       }",
+        "       *dest = etoa['/']; dest++; ",
+        "       for (i = 0; i < 10; i++) {",
+        "         *dest = etoa[jobi.User_Name[i]];",
+        "          if (*dest != 0x20) dest++; ",
+        "       }",
+        "       *dest = etoa['/']; dest++; ",
+        "       for (i = 0; i < 10; i++) {",
+        "         *dest = etoa[jobi.Job_Name[i]];",
+        "          if (*dest != 0x20) dest++; ",
+        "       } ",
+        "       *dest = 0; ",
+        "       return 0; ", 
+	"}",
         "jstring Java_test_JDJobName_getJobNameNative(",
         "  JNIEnv *env,",
         "  jobject obj)",
@@ -173,190 +203,196 @@ public class JDJobName {
         "{",
         "      int i;", 
         "      char jobname[NAMESIZE+1];",
-	"      char * dest; ", 
-	"      Qwc_JOBI0100_t jobi;",
-	"      QUSRJOBI(&jobi,",
-	"               sizeof(jobi),",
-	"               \"JOBI0100\",",
-	"               \"*                         \",",
-	"               \"                \");",
-	"       dest = jobname;",
-	"       for (i = 0; i < 6; i++) {",
-	"          *dest = etoa[jobi.Job_Number[i]];",
-	"          if (*dest != 0x20) dest++; ",
-	"       }",
-	"       *dest = etoa['/']; dest++; ",
-	"       for (i = 0; i < 10; i++) {",
-	"         *dest = etoa[jobi.User_Name[i]];",
-	"          if (*dest != 0x20) dest++; ",
-	"       }",
-	"       *dest = etoa['/']; dest++; ",
-	"       for (i = 0; i < 10; i++) {",
-	"         *dest = etoa[jobi.Job_Name[i]];",
-	"          if (*dest != 0x20) dest++; ",
-	"       } ",
-	"       *dest = 0; ",
-	"", 
+        "      test_JDJobName_getJobNameNative(jobname);",
         "       /* Create java string */ ",
 	"       return (*env)->NewStringUTF(env, jobname);", 
         "}",
         "",
+        "jint   test_JDJobName_getSubsystemNameNative(   ",
+        "          char * subsystemname ) {",
+        "      int i;", 
+        "      char * dest; ", 
+        "      Qwc_JOBI0200_t jobi;",
+        "      QUSRJOBI(&jobi,",
+        "               sizeof(jobi),",
+        "               \"JOBI0200\",",
+        "               \"*                         \",",
+        "               \"                \");",
+        "       dest = subsystemname;",
+        "       for (i = 0; i < 10; i++) {",
+        "          *dest = etoa[jobi.Subsys_Name[i]];",
+        "          if (*dest != 0x20) dest++; ",
+        "       }",
+        "       *dest = 0; ",
+        "      return 0; ",
+        "}", 
+        
         "jstring Java_test_JDJobName_getSubsystemNameNative(",
         "  JNIEnv *env,",
         "  jobject obj)",
         "",
         "{",
-        "      int i;", 
         "      char subsystemname[11];",
-	"      char * dest; ", 
-	"      Qwc_JOBI0200_t jobi;",
-	"      QUSRJOBI(&jobi,",
-	"               sizeof(jobi),",
-	"               \"JOBI0200\",",
-	"               \"*                         \",",
-	"               \"                \");",
-	"       dest = subsystemname;",
-	"       for (i = 0; i < 10; i++) {",
-	"          *dest = etoa[jobi.Subsys_Name[i]];",
-	"          if (*dest != 0x20) dest++; ",
-	"       }",
-	"       *dest = 0; ",
-	"", 
+        "      test_JDJobName_getSubsystemNameNative(subsystemname);",
         "       /* Create java string */ ",
 	"       return (*env)->NewStringUTF(env, subsystemname);", 
         "}",
         "",
+        "jint  test_JDJobName_getLoggingTextNative(",
+        "        char * loggingText){",
+        "      int i;", 
+        "      char * dest; ", 
+        "      Qwc_JOBI0500_t jobi;",
+        "      QUSRJOBI(&jobi,",
+        "               sizeof(jobi),",
+        "               \"JOBI0500\",",
+        "               \"*                         \",",
+        "               \"                \");",
+        "       dest = loggingText;",
+        "       for (i = 0; i < 10; i++) {",
+        "          *dest = etoa[jobi.Log_Text[i]];",
+        "          if (*dest != 0x20) dest++; ",
+        "       }",
+        "       *dest = 0; ",
+        "       return 0; ",
+        "", 
+        "}",
         "jstring Java_test_JDJobName_getLoggingTextNative(",
         "  JNIEnv *env,",
         "  jobject obj)",
         "",
         "{",
-        "      int i;", 
         "      char loggingText[11];",
-	"      char * dest; ", 
-	"      Qwc_JOBI0500_t jobi;",
-	"      QUSRJOBI(&jobi,",
-	"               sizeof(jobi),",
-	"               \"JOBI0500\",",
-	"               \"*                         \",",
-	"               \"                \");",
-	"       dest = loggingText;",
-	"       for (i = 0; i < 10; i++) {",
-	"          *dest = etoa[jobi.Log_Text[i]];",
-	"          if (*dest != 0x20) dest++; ",
-	"       }",
-	"       *dest = 0; ",
-	"", 
+        "      test_JDJobName_getLoggingTextNative(loggingText);",
         "       /* Create java string */ ",
 	"       return (*env)->NewStringUTF(env, loggingText);", 
         "}",
         "",
+        "jint  test_JDJobName_startPexNative(",
+        "       char * ascpexCopy){",
+        "      int i;",
+        "      char buffer[4096]; ",
+        "      char jobname[NAMESIZE+1];",
+        "      char * dest; ",
+        "      char * pascpex; ",
+        "      char * ppex;", 
+        "      Qwc_JOBI0100_t jobi;",
+        "      QUSRJOBI(&jobi,",
+        "               sizeof(jobi),",
+        "               \"JOBI0100\",",
+        "               \"*                         \",",
+        "               \"                \");",
+        "       dest = jobname;",
+        "       pascpex = ascpex;",
+        "       ppex=pex;",
+        "       *ppex = 'P';",
+        "       *pascpex = etoa['P'];",
+        "       ppex++; pascpex++; ",
+        "       *ppex = 'E';",
+        "       *pascpex = etoa['E'];",
+        "       ppex++; pascpex++; ",
+        "       *ppex = 'X';",
+        "       *pascpex = etoa['X'];",
+        "       ppex++; pascpex++; ",
+
+        "       for (i = 0; i < 6; i++) {",
+        "          *pascpex = etoa[jobi.Job_Number[i]];",
+        "          *ppex = jobi.Job_Number[i];",
+        "           ppex++; pascpex++; ",
+        "          *dest = jobi.Job_Number[i];",
+        "           dest++;", 
+        "       }",
+        "       *dest = '/'; dest++; ",
+        "       for (i = 0; i < 10; i++) {",
+        "         *dest = jobi.User_Name[i];",
+        "          if (*dest != 0x40) dest++; ",
+        "       }",
+        "       *dest = '/'; dest++; ",
+        "       for (i = 0; i < 10; i++) {",
+        "         *dest = jobi.Job_Name[i];",
+        "          if (*dest != 0x40) dest++; ",
+        "       } ",
+        "       *dest = 0; ",
+        "       *pascpex = 0; ",
+        "       *ppex = 0; ",
+        "",
+        "       sprintf(buffer, ",
+        "               \"QSYS/ADDPEXDFN DFN(%s) TYPE(*PROFILE)  PRFTYPE(*JOB)  JOB((%s))  MAXSTG(100000) INTERVAL(0.1)\",",
+        "               pex,",
+        "               jobname);",
+        "       printf(\"%s\\n\", buffer);", 
+        "       system(buffer);",
+        "       sprintf(buffer, ",
+        "              \"QSYS/STRPEX SSNID(%s) DFN(%s)\", ",
+        "              pex, pex);",
+        "       system(buffer);",
+        "   strcpy(ascpexCopy,ascpex);",   
+        "   return 0;", 
+        " }",
         "jstring Java_test_JDJobName_startPexNative(",
         "  JNIEnv *env,",
         "  jobject obj)",
         "",
         "{",
-        "      int i;",
-        "      char buffer[4096]; ",
-        "      char jobname[NAMESIZE+1];",
-	"      char * dest; ",
-	"      char * pascpex; ",
-        "      char * ppex;", 
-	"      Qwc_JOBI0100_t jobi;",
-	"      QUSRJOBI(&jobi,",
-	"               sizeof(jobi),",
-	"               \"JOBI0100\",",
-	"               \"*                         \",",
-	"               \"                \");",
-	"       dest = jobname;",
-	"       pascpex = ascpex;",
-        "       ppex=pex;",
-	"       *ppex = 'P';",
-        "       *pascpex = etoa['P'];",
-	"       ppex++; pascpex++; ",
-	"       *ppex = 'E';",
-        "       *pascpex = etoa['E'];",
-	"       ppex++; pascpex++; ",
-	"       *ppex = 'X';",
-        "       *pascpex = etoa['X'];",
-	"       ppex++; pascpex++; ",
-
-	"       for (i = 0; i < 6; i++) {",
-	"          *pascpex = etoa[jobi.Job_Number[i]];",
-	"          *ppex = jobi.Job_Number[i];",
-	"           ppex++; pascpex++; ",
-	"          *dest = jobi.Job_Number[i];",
-        "           dest++;", 
-	"       }",
-	"       *dest = '/'; dest++; ",
-	"       for (i = 0; i < 10; i++) {",
-	"         *dest = jobi.User_Name[i];",
-	"          if (*dest != 0x40) dest++; ",
-	"       }",
-	"       *dest = '/'; dest++; ",
-	"       for (i = 0; i < 10; i++) {",
-	"         *dest = jobi.Job_Name[i];",
-	"          if (*dest != 0x40) dest++; ",
-	"       } ",
-	"       *dest = 0; ",
-	"       *pascpex = 0; ",
-	"       *ppex = 0; ",
-	"",
-        "       sprintf(buffer, ",
-        "               \"QSYS/ADDPEXDFN DFN(%s) TYPE(*PROFILE)  PRFTYPE(*JOB)  JOB((%s))  MAXSTG(100000) INTERVAL(0.1)\",",
-        "               pex,",
-        "               jobname);",
-	"       printf(\"%s\\n\", buffer);", 
-	"       system(buffer);",
-        "       sprintf(buffer, ",
-	"              \"QSYS/STRPEX SSNID(%s) DFN(%s)\", ",
-        "              pex, pex);",
-  	"       system(buffer);",
+        "       char ascpexCopy[NAMESIZE+1];",
+        "       test_JDJobName_startPexNative(ascpexCopy);",
         "       /* Create java string */ ",
-	"       return (*env)->NewStringUTF(env, ascpex);", 
+	"       return (*env)->NewStringUTF(env, ascpexCopy);", 
         "}",
         "",
+	"",
+	"jint test_JDJobName_endPexNative(",
+	"  char * ascpexCopy){",
+        "    char buffer[200]; ",
+        "       sprintf(buffer, ",
+        "              \"QSYS/ENDPEX SSNID(%s) \", ",
+        "              pex);",
+        "       system(buffer);",
+        "   strcpy(ascpexCopy,ascpex);",
+	" return 0;",
+	"}", 
 	"",
         "jstring Java_test_JDJobName_endPexNative(",
         "  JNIEnv *env,",
         "  jobject obj)",
         "",
         "{",
-        "    char buffer[200]; ",
-        "       sprintf(buffer, ",
-	"              \"QSYS/ENDPEX SSNID(%s) \", ",
-        "              pex);",
-  	"       system(buffer);",
         "       /* Create java string */ ",
+        "       char ascpexCopy[NAMESIZE+1];",
+        "       test_JDJobName_endPexNative(ascpexCopy);",
 	"       return (*env)->NewStringUTF(env, ascpex);", 
         "}",
         "",
 	"",
 
         "#define NAME_SIZE 11",
-        "#define NULL_PH \"\0\0\0\0\0\0\0\0\0\0\0\0\"",
+        "#define NULL_PH \"\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\"",
         "#define PH_SIZE 12",
 	"char server_ph[PH_SIZE+1] = NULL_PH; /* Server's profile handle */",
 	"char client_ph[PH_SIZE+1] = NULL_PH; /* Client's profile handle */",
 	"char server_profile[NAME_SIZE] = \"*CURRENT  \";",
 	"char no_pwd[NAME_SIZE]         = \"*NOPWD    \";",
 
-        "jstring errorString(JNIEnv * env, int rc, Qus_EC_t * error) {",
-        "   char errorMsg[80];",
+	
+        
+        "jint asciiErrorString(",
+        "      char * asciiError,",
+        "      int rc,",
+        "      Qus_EC_t * error){",
         "   int i; ",
-        "   errorMsg[0]= 0x30 + rc; ", 
-        "   errorMsg[1]=0x20;",
+        "   asciiError[0]= 0x30 + rc; ", 
+        "   asciiError[1]=0x20;",
         "   for (i = 0; i < 7; i++) {",
-        "      errorMsg[i+2] = etoa[error->Exception_Id[i]];",
+        "      asciiError[i+2] = etoa[error->Exception_Id[i]];",
         "   }",
-        "   errorMsg[i+2]=0;",
-        "   return (*env)->NewStringUTF(env, errorMsg);", 
+        "   asciiError[i+2]=0;",
+        
         "}",
         "", 
-	"jstring Java_test_JDJobName_swapToNative(JNIEnv * env, jobject obj, ",
-	"                                                    jstring userid, ",
-        "                                                    jstring password  )",
-	"{",
+        "jint    test_JDJobName_swapToNative(",
+        "        char * asciiError,",
+        "        char * asciiUserid,",
+        "        char * asciiPassword){",
         "  char pad1[80]; ",
         "  Qus_EC_t error = { sizeof(Qus_EC_t)+80, 0 }; /* Error code for SPIs */",
         "  char pad2[80]; ",
@@ -366,8 +402,9 @@ public class JDJobName {
         "  int i; ",
         "  char * utfString; ",
         "  int strLen;",
-        "  strLen =       (*env)->GetStringUTFLength(env, userid);",
-        "  utfString = (char *) ((*env)->GetStringUTFChars(env, userid, &isCopy));  ",
+        "  asciiError[0]='\\0';",
+        "  strLen = strlen(asciiUserid);",
+        "  utfString = asciiUserid;  ",
         "  for (i = 0; i < NAME_SIZE; i++) { ",
         "     if ( i < strLen ) {",
         "       sy_profile[i] = atoe[utfString[i]];",
@@ -378,11 +415,10 @@ public class JDJobName {
         "       sy_profile[i]=' ';",
         "     }",
         "  }",
-        "  sy_profile[NAME_SIZE-1]='\0';",
-        "  (*env)->ReleaseStringUTFChars(env, userid, utfString); ",
+        "  sy_profile[NAME_SIZE-1]='\\0';",
         "",
-        "  strLen =    (*env)->GetStringUTFLength(env, password);",
-        "  utfString = (char *) ( (*env)->GetStringUTFChars(env, password, &isCopy));  ",
+        "  strLen =   strlen(asciiPassword);",
+        "  utfString = asciiPassword;  ",
         "  for (i = 0; i < NAME_SIZE; i++) { ",
         "     if ( i < strLen ) {",
         "       sy_password[i] = atoe[utfString[i]];",
@@ -390,60 +426,104 @@ public class JDJobName {
         "       sy_password[i]=' ';",
         "     }",
         "  }",
-        "  sy_password[NAME_SIZE-1]='\0';",
-        "  (*env)->ReleaseStringUTFChars(env, password, utfString); ",
+        "  sy_password[NAME_SIZE-1]='\\0';",
         
         "",
         "  /* Initialize the server's profile handle. */",
         "  QSYGETPH(server_profile, no_pwd, server_ph, &error);",
         "  if (error.Bytes_Available != 0) {",
-        "    return errorString(env, 1, &error); ",
+        "    asciiErrorString(asciiError, 1,&error);",
+        "    return 1; ",
         "  }",
         "",
         "  /* Get the profile handle for the client's user profile. */",
         "  QSYGETPH(sy_profile, sy_password, client_ph, &error, strlen(sy_password), 37 /* CCSID */ ); ",
         "  if (error.Bytes_Available != 0) {",
-        "      return errorString(env, 2, &error); ",
+        "    asciiErrorString(asciiError, 2,&error);",
+        "    return 2; ",
         "  }",
         "",
         "  /* Switch to client's user profile. */",
         "  QWTSETP(client_ph, &error);",
         "  if (error.Bytes_Available != 0) {",
         "      QSYRLSPH(client_ph, NULL);",
-        "      return errorString(env, 3, &error);",
+        "    asciiErrorString(asciiError, 3,&error);",
+        "    return 3; ",
         "  }",
         "",
         "  return 0;",
+          
+        "}",
+	"jstring Java_test_JDJobName_swapToNative(JNIEnv * env, jobject obj, ",
+	"                                                    jstring userid, ",
+        "                                                    jstring password  )",
+	"{",
+        "  char asciiUserid[NAME_SIZE]; ",
+        "  char asciiPassword[NAME_SIZE];",
+        "  char asciiError[80];",
+        "  jboolean isCopy; ",
+        "  int i; ",
+        "  char * utfString; ",
+        "  int strLen;",
+        "  strLen =       (*env)->GetStringUTFLength(env, userid);",
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, userid, &isCopy));  ",
+        "  strncpy(asciiUserid, utfString,strLen);",
+        "  asciiUserid[strLen]='\\0';",
+        "  (*env)->ReleaseStringUTFChars(env, userid, utfString); ",
+        "  strLen =       (*env)->GetStringUTFLength(env, password);",
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, password, &isCopy));  ",
+        "  strncpy(asciiPassword, utfString,strLen);",
+        "  asciiPassword[strLen]='\\0';",
+        "  (*env)->ReleaseStringUTFChars(env, password, utfString); ",
+
+        
+        "  int rc = test_JDJobName_swapToNative(asciiError,asciiUserid,asciiPassword);",
+        "  if (rc > 0) { ",
+        "   return (*env)->NewStringUTF(env, asciiError);", 
+        "  } else {", 
+        "     return 0; ",
+        "  }", 
         "}",
         "", 
-	"jstring Java_test_JDJobName_swapBackNative(JNIEnv * env, jobject obj) ",
-	"{",
+        "jint    test_JDJobName_swapBackNative(char * asciiError) {",
         "  Qus_EC_t error = { sizeof(Qus_EC_t), 0 }; /* Error code for SPIs */",
         "",
         "      /* Switch back to the server's user profile. */",
         "      QWTSETP(server_ph, &error);",
         "      if (error.Bytes_Available != 0) {",
-        "	  return errorString(env,4,&error); ",
+        "         asciiErrorString(asciiError,4,&error); ",
+        "         return 4; ",
         "      }",
         "",
         "      /* Release the client's profile handle. */",
         "      QSYRLSPH(client_ph, &error);",
         "      if (error.Bytes_Available != 0) {",
-        "	  return errorString(env,5,&error); ",
+        "         asciiErrorString(asciiError,5,&error); ",
+        "         return 5; ",
         "      }",
         "      return 0; ",
+        
         "}",
-	"jstring Java_test_JDJobName_setaspgrpNative(JNIEnv * env, jobject obj, ",
-	"                                                    jstring aspgrp  )",
+	"jstring Java_test_JDJobName_swapBackNative(JNIEnv * env, jobject obj) ",
 	"{",
+	"   char asciiError[80]; ",
+	"  int rc = test_JDJobName_swapBackNative(asciiError);",
+	"  if ( rc > 0) { ",
+        "   return (*env)->NewStringUTF(env, asciiError);", 
+        " } else { ", 
+        "   return 0;",
+        " }",
+        "}", 
+        
+        "jint test_JDJobName_setaspgrpNative(char* asciiAspgrp) {",
         "  char command[160]; ", 
         "  char sy_aspgrp[80]; ",
         "  jboolean isCopy; ",
         "  int i; ",
         "  char * utfString; ",
         "  int strLen;",
-        "  strLen =       (*env)->GetStringUTFLength(env, aspgrp);",
-        "  utfString = (char *) ((*env)->GetStringUTFChars(env, aspgrp, &isCopy));  ",
+        "  strLen =  strlen(asciiAspgrp);",
+        "  utfString = asciiAspgrp;  ",
         "  for (i = 0; i < NAME_SIZE; i++) { ",
         "     if ( i < strLen ) {",
         "       sy_aspgrp[i] = atoe[utfString[i]];",
@@ -454,19 +534,31 @@ public class JDJobName {
         "       sy_aspgrp[i]=' ';",
         "     }",
         "  }",
-        "  sy_aspgrp[NAME_SIZE-1]='\0';",
-        "  (*env)->ReleaseStringUTFChars(env, aspgrp, utfString); ",
+        "  sy_aspgrp[NAME_SIZE-1]='\\0';",
         "   sprintf(command, \"SETASPGRP %s\", sy_aspgrp); ",
-	"   system(command); ", 
+        "   system(command); ", 
         "",
         "  return 0;",
         "}",
-        "", 
-
-        "",
-	"jstring Java_test_JDJobName_systemNative(JNIEnv * env, jobject obj, ",
-        "                                                    jstring command  )",
+        
+	"jstring Java_test_JDJobName_setaspgrpNative(JNIEnv * env, jobject obj, ",
+	"                                                    jstring aspgrp  )",
 	"{",
+        "  char asciiAspgrp[80]; ",
+        "  jboolean isCopy; ",
+        "  int i; ",
+        "  char * utfString; ",
+        "  int strLen;",
+        "  strLen =       (*env)->GetStringUTFLength(env, aspgrp);",
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, aspgrp, &isCopy));  ",
+        "  strncpy(asciiAspgrp,utfString,strLen);",
+        "  (*env)->ReleaseStringUTFChars(env, aspgrp, utfString); ",
+        "  asciiAspgrp[strLen]=0;",
+        "  int rc = test_JDJobName_setaspgrpNative(asciiAspgrp);",
+        "  return 0;",
+        "}",
+        "", 
+        "jint test_JDJobName_systemNative(char * asciiError, char * asciiCommand) {",
         "  jstring rc = 0;", 
         "  char ebcdicCommand [512]; ",
         "  jboolean isCopy; ",
@@ -474,43 +566,66 @@ public class JDJobName {
         "  int strLen;",
         "  int i; ",
         "  int rc2; ", 
-        "  strLen =       (*env)->GetStringUTFLength(env, command);",
-	"  if (strLen > sizeof(ebcdicCommand)) { ",
-	"#pragma convert(819)",
-	"    return (*env)->NewStringUTF(env, \"ERROR:  Length of command too long\");",
-	"#pragma convert(0)",
-	"  } ", 
-        "  utfString = (char *) ((*env)->GetStringUTFChars(env, command, &isCopy));  ",
+        "  strLen =       strlen(asciiCommand);",
+        "  if (strLen > sizeof(ebcdicCommand)) { ",
+        "#pragma convert(819)",
+        "    strcpy(asciiError, \"ERROR:  Length of command too long\");",
+        "    return 1;",
+        "#pragma convert(0)",
+        "  } ", 
+        "  utfString = asciiCommand;  ",
         "  for (i = 0; i < strLen; i++) { ",
         "       ebcdicCommand[i] = atoe[utfString[i]];",
         "  }",
         "  ebcdicCommand[i]=0;",
         "  rc2 = system(ebcdicCommand);",
-	"  if (rc2 != 0) { ",
+        "  if (rc2 != 0) { ",
         "   char ebcdicErrorMessage[512];", 
         "   char errorMsg[512];",
         "   sprintf(ebcdicErrorMessage, \"system failed with rc=%d for '%s'\",rc2,ebcdicCommand); ", 
-        "   errorMsg[1]=0x20;",
         "   for (i = 0; i < strlen(ebcdicErrorMessage); i++) {",
-        "      errorMsg[i] = etoa[ebcdicErrorMessage[i]];",
+        "      asciiError[i] = etoa[ebcdicErrorMessage[i]];",
         "   }",
-        "   errorMsg[i]=0;",
-        "   rc = (*env)->NewStringUTF(env, errorMsg);", 
+        "   asciiError[i]=0;",
+
+        "  } ", 
+        "  return rc2;",
+        
+        "}",
+        "",
+	"jstring Java_test_JDJobName_systemNative(JNIEnv * env, jobject obj, ",
+        "                                                    jstring command  )",
+	"{",
+        "  jstring rc = 0;", 
+        "  char asciiCommand [512]; ",
+        "  char asciiError[512];", 
+        "  jboolean isCopy; ",
+        "  char * utfString; ",
+        "  int strLen;",
+        "  int i; ",
+        "  int rc2; ", 
+        "  strLen =       (*env)->GetStringUTFLength(env, command);",
+	"  if (strLen > sizeof(asciiCommand)) { ",
+	"#pragma convert(819)",
+	"    return (*env)->NewStringUTF(env, \"ERROR:  Length of command too long\");",
+	"#pragma convert(0)",
+	"  } ", 
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, command, &isCopy));  ",
+        "  strncpy(asciiCommand,utfString,strLen);",
+        "  (*env)->ReleaseStringUTFChars(env, command, utfString); ",
+        "  asciiCommand[strLen]='\\0';",
+        "  rc2 = test_JDJobName_systemNative(asciiError, asciiCommand); ",
+	"  if (rc2 != 0) { ",
+        "   rc = (*env)->NewStringUTF(env, asciiError);", 
 
 	"  } ", 
-        "  (*env)->ReleaseStringUTFChars(env, command, utfString); ",
         "",
         "  return rc;",
         "}",
         "", 
 
-
-        "",
-        "jstring Java_test_JDJobName_sendProgramMessageNative(JNIEnv * env, jobject obj, ",
-        "                                                    jstring message  )",
-        "{",
-        "  jstring rc = 0;", 
-        "  char ebcdicmessage [512]; ",
+        "jint   test_JDJobName_sendProgramMessageNative(char * asciiError, char * asciiMessage) {",
+        "  char ebcdicMessage[512]; ",
         "  jboolean isCopy; ",
         "  char * utfString; ",
         "  int strLen;",
@@ -518,32 +633,66 @@ public class JDJobName {
         "  int rc2; ", 
         "  Qus_EC_t   err_code = { sizeof(Qus_EC_t), 0 }; /* Error code for SPIs */",
         "  char       msg_key [4];",
+        "  strLen =       strlen(asciiMessage);",
+        "  if (strLen > sizeof(ebcdicMessage)) { ",
+        "#pragma convert(819)",
+        "    strcpy(asciiError, \"ERROR:  Length of message too long\");",
+        "    return 1; ",  
+        "#pragma convert(0)",
+        "  } ", 
+        "  for (i = 0; i < strLen; i++) { ",
+        "       ebcdicMessage[i] = atoe[asciiMessage[i]];",
+        "  }",
+        "  ebcdicMessage[i]=0;",
+        "  err_code.Bytes_Provided = 16; ",
+        "  QMHSNDPM (",
+        "   \"CPF9898\",                /* message id                  */",
+        "   \"QCPFMSG   *LIBL     \",   /* Qualified message file name */  ",    
+        "   ebcdicMessage,                  /* Message data                */",      
+        "   strlen(ebcdicMessage),          /* Length of message data      */  ",    
+        "   \"*DIAG     \",             /* Message type                */      ",
+        "   \"*         \",             /* Call stack entry            */      ",
+        "   0,                        /* Call stack counter          */      ",
+        "   msg_key,                  /* Message key                 */      ",
+        "   &err_code                 /* Error code                  */      ",
+        "   );",
+        "  if (err_code.Bytes_Available != 0) {",
+        "    asciiErrorString(asciiError, 2, &err_code);",
+        "    return 2; ",
+        "  }",
+        "",
+        "  return 0;",
+        
+        "}",
+
+        "",
+        "jstring Java_test_JDJobName_sendProgramMessageNative(JNIEnv * env, jobject obj, ",
+        "                                                    jstring message  )",
+        "{",
+        "  jstring rc = 0;", 
+        "  jboolean isCopy; ",
+        "  char * utfString; ",
+        "  int strLen;",
+        "  int i; ",
+        "  int rc2; ", 
+        "  char asciiMessage[512]; ",
+        "  char asciiError[512]; ",
         "  strLen =       (*env)->GetStringUTFLength(env, message);",
-        "  if (strLen > sizeof(ebcdicmessage)) { ",
+        "  if (strLen > sizeof(asciiMessage)) { ",
         "#pragma convert(819)",
         "    return (*env)->NewStringUTF(env, \"ERROR:  Length of message too long\");",
         "#pragma convert(0)",
         "  } ", 
         "  utfString = (char *) ((*env)->GetStringUTFChars(env, message, &isCopy));  ",
         "  for (i = 0; i < strLen; i++) { ",
-        "       ebcdicmessage[i] = atoe[utfString[i]];",
+        "       asciiMessage[i] = utfString[i];",
         "  }",
-        "  ebcdicmessage[i]=0;",
-        "  err_code.Bytes_Provided = 16; ",
-        "  QMHSNDPM (",
-        "   \"CPF9898\",                /* message id                  */",
-        "   \"QCPFMSG   *LIBL     \",   /* Qualified message file name */  ",    
-        "   ebcdicmessage,                  /* Message data                */",      
-        "   strlen(ebcdicmessage),          /* Length of message data      */  ",    
-        "   \"*DIAG     \",             /* Message type                */      ",
-        "   \"*         \",             /* Call stack entry            */      ",
-        "   0,                        /* Call stack counter          */      ",
-        "   msg_key,                  /* Message key                 */      ",
-        "   &err_code                 /* Error code                  */      ",
-        ");",
+        "  asciiMessage[i]=0;",
         "  (*env)->ReleaseStringUTFChars(env, message, utfString); ",
-        "  if (err_code.Bytes_Available != 0) {",
-        "      return errorString(env, 2, &err_code); ",
+        "  rc2 = test_JDJobName_sendProgramMessageNative(asciiError, asciiMessage);",
+        
+        "  if (rc2 > 0) {",
+        "      rc = (*env)->NewStringUTF(env, asciiError);", 
         "  }",
         "",
         "  return rc;",
@@ -554,6 +703,474 @@ public class JDJobName {
         
     };
 
+    
+    static String[] nativePaseSource = {
+        "#include <jni.h>",
+        "#include <time.h>",
+        "#include <sys/time.h>",
+        "#include <unistd.h>",
+        "#include <errno.h> ",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "#include <ctype.h>",
+        "#include <as400_types.h>",
+        "#include <as400_protos.h>",
+
+        "#define NAMESIZE 30",
+        "#define NAME_SIZE 11",
+        "void JDSETIGC();",
+        "", 
+        "      char pex[NAMESIZE+1];",
+        "      char ascpex[NAMESIZE+1];",
+
+        "",
+        "/* define etoa table */",
+        "char etoa[] = {",
+        "",
+        "0x00,0x01,0x02,0x03,0x1A,0x09,0x1A,0x7F,0x1A,0x1A,0x1A,0x0B,0x0C,0x0D,0x0E,0x0F,",
+        "0x10,0x11,0x12,0x13,0x1A,0x1A,0x08,0x1A,0x18,0x19,0x1A,0x1A,0x1C,0x1D,0x1E,0x1F,",
+        "0x1A,0x1A,0x1C,0x1A,0x1A,0x0A,0x17,0x1B,0x1A,0x1A,0x1A,0x1A,0x1A,0x05,0x06,0x07,",
+        "0x1A,0x1A,0x16,0x1A,0x1A,0x1E,0x1A,0x04,0x1A,0x1A,0x1A,0x1A,0x14,0x15,0x1A,0x1A,",
+        "",
+        "0x20,0xA6,0xE1,0x80,0xEB,0x90,0x9F,0xE2,0xAB,0x8B,0x9B,0x2E,0x3C,0x28,0x2B,0x7C,",
+        "0x26,0xA9,0xAA,0x9C,0xDB,0xA5,0x99,0xE3,0xA8,0x9E,0x21,0x24,0x2A,0x29,0x3B,0x5E,",
+        "0x2D,0x2F,0xDF,0xDC,0x9A,0xDD,0xDE,0x98,0x9D,0xAC,0xBA,0x2C,0x25,0x5F,0x3E,0x3F,",
+        "0xD7,0x88,0x94,0xB0,0xB1,0xB2,0xFC,0xD6,0xFB,0x60,0x3A,0x23,0x40,0x27,0x3D,0x22,",
+        "0xF8,0x41,0x42,0x43,0x44,0x45,0x46,0x47,0x48,0x49,0x96,0xA4,0xF3,0xAF,0xAE,0xC5,",
+        "0x8C,0x4A,0x4B,0x4C,0x4D,0x4E,0x4F,0x50,0x51,0x52,0x97,0x87,0xCE,0x93,0xF1,0xFE,",
+        "0xC8,0x7E,0x53,0x54,0x55,0x56,0x57,0x58,0x59,0x5A,0xEF,0xC0,0xDA,0x5B,0xF2,0xF9,",
+        "0xB5,0xB6,0xFD,0xB7,0xB8,0xB9,0xE6,0xBB,0xBC,0xBD,0x8D,0xD9,0xBF,0x5D,0xD8,0xC4,",
+        "0x7B,0x41,0x42,0x43,0x44,0x45,0x46,0x47,0x48,0x49,0xCB,0xCA,0xBE,0xE8,0xEC,0xED,",
+        "0x7D,0x4A,0x4B,0x4C,0x4D,0x4E,0x4F,0x50,0x51,0x52,0xA1,0xAD,0xF5,0xF4,0xA3,0x8F,",
+        "/*           S    T    U    V    W    X    Y    Z    */",
+        "0x5C,0xE7,0x53,0x54,0x55,0x56,0x57,0x58,0x59,0x5A,0xA0,0x85,0x8E,0xE9,0xE4,0xD1,",
+        "/* 0    1    2    3    4    5    6    7    8    9    */",
+        "0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0xB3,0xF7,0xF0,0xFA,0xA7,0xFF,",
+        "};",
+        "/* defined atoe table */",
+        "char atoe[] = {",
+        "0x00,0x01,0x02,0x03,0x37,0x2D,0x2E,0x2F,0x16,0x05,0x25,0x0B,0x0C,0x0D,0x0E,0x0F,",
+        "0x10,0x11,0x12,0x13,0xB6,0xB5,0x32,0x26,0x18,0x19,0x1C,0x27,0x3F,0x1D,0x1E,0x1F,",
+        "0x40,0x5A,0x7F,0x7B,0x5B,0x6C,0x50,0x7D,0x4D,0x5D,0x5C,0x4E,0x6B,0x60,0x4B,0x61,",
+        "0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0x7A,0x5E,0x4C,0x7E,0x6E,0x6F,",
+        "0x7C,0xC1,0xC2,0xC3,0xC4,0xC5,0xC6,0xC7,0xC8,0xC9,0xD1,0xD2,0xD3,0xD4,0xD5,0xD6,",
+        "0xD7,0xD8,0xD9,0xE2,0xE3,0xE4,0xE5,0xE6,0xE7,0xE8,0xE9,0xBA,0xE0,0xBB,0xB0,0x6D,",
+        "0x79,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x91,0x92,0x93,0x94,0x95,0x96,",
+        "0x97,0x98,0x99,0xA2,0xA3,0xA4,0xA5,0xA6,0xA7,0xA8,0xA9,0xC0,0x4F,0xD0,0xA1,0xFF,",
+        "0x68,0xDC,0x51,0x42,0x43,0x44,0x47,0x48,0x52,0x53,0x54,0x57,0x56,0x58,0x63,0x67,",
+        "0x71,0x9C,0x9E,0xCB,0xCC,0xCD,0xDB,0xDD,0xDF,0xEC,0xFC,0x4A,0xB1,0xB2,0xBF,0x07,",
+        "0x45,0x55,0xCE,0xDE,0x49,0x69,0x9A,0x9B,0xAB,0xAF,0x5F,0xB8,0xB7,0xAA,0x8A,0x8B,",
+        "0x2B,0x2C,0x09,0x21,0x28,0x65,0x62,0x64,0xB4,0x38,0x31,0x34,0x33,0x70,0x80,0x24,",
+        "0x22,0x17,0x29,0x06,0x20,0x2A,0x46,0x66,0x1A,0x35,0x08,0x39,0x36,0x30,0x3A,0x9F,",
+        "0x8C,0xAC,0x72,0x73,0x74,0x0A,0x75,0x76,0x77,0x23,0x15,0x14,0x04,0x6A,0x78,0x3B,",
+        "0xEE,0x59,0xEB,0xED,0xCF,0xEF,0xA0,0x8E,0xAE,0xFE,0xFB,0xFD,0x8D,0xAD,0xBC,0xBE,",
+        "0xCA,0x8F,0x1B,0xB9,0x3C,0x3D,0xE1,0x9D,0x90,0xBD,0xB3,0xDA,0xFA,0xEA,0x3E,0x41",
+        "};",
+        " /* PASE INTERFACE PROTOTYPES */",
+        "#define ROUND_QUAD(x) (((size_t)(x) + 0xf) & ~0xf)",
+
+        
+        " #define RESOLVE(function)                                                   \\",
+        " ILE_##function = (ILEpointer*)ROUND_QUAD(ILE_##function##_buf);             \\",
+        " rc = _ILESYMX(ILE_##function, actmark, #function);                          \\",
+        " if (rc < 0) {                                                               \\",
+        "     int savedErrno;                                                         \\",
+        "     savedErrno = errno;                                                     \\", 
+        "     perror(\"_ILESYMX failed\");                                            \\",
+        "     printf(\"_ILESYMX %s failed errno=%d\\n\", #function,savedErrno);       \\",
+        " }",
+        "",
+        " /* DEFINE */",
+        "",
+        "#define DEFINES1(function, ctype1, arg1, ptype1)                 \\",
+        "ILEpointer* ILE_##function;                                      \\",
+        "static char ILE_##function##_buf[sizeof(ILEpointer) + 15];       \\",
+        "static result_type_t result_type_##function = RESULT_INT32;      \\",
+        "typedef struct {                                                 \\",       
+        "    ILEarglist_base base;                                        \\",
+        "    ctype1       arg1;                                           \\",
+        "} function##_arglist_t;                                          \\",
+        "static arg_type_t signature_##function[] =                       \\",
+        "{                                                                \\",
+        "    ptype1,                                                      \\",
+        "    ARG_END                                                      \\",
+        "};                                                                ",
+        " #define DEFINES2(function, ctype1, arg1, ptype1, ctype2, arg2, ptype2)   \\",
+        "  ILEpointer* ILE_##function;                                      \\",
+        "static char ILE_##function##_buf[sizeof(ILEpointer) + 15];       \\",
+        "static result_type_t result_type_##function = RESULT_INT32;      \\",
+        "typedef struct {                                                 \\",
+        "    ILEarglist_base base;                                        \\",
+        "    ctype1       arg1;                                           \\",
+        "    ctype2       arg2;                                           \\",
+        "} function##_arglist_t;                                          \\",
+        "static arg_type_t signature_##function[] =                       \\",
+        "{                                                                \\",
+        "    ptype1,                                                      \\",
+        "    ptype2,                                                      \\",
+        "    ARG_END                                                      \\",
+        "};",
+        " #define DEFINES3(function, ctype1, arg1, ptype1, ctype2, arg2, ptype2, ctype3, arg3, ptype3)   \\",
+        "  ILEpointer* ILE_##function;                                      \\",
+        "static char ILE_##function##_buf[sizeof(ILEpointer) + 15];       \\",
+        "static result_type_t result_type_##function = RESULT_INT32;      \\",
+        "typedef struct {                                                 \\",
+        "    ILEarglist_base base;                                        \\",
+        "    ctype1       arg1;                                           \\",
+        "    ctype2       arg2;                                           \\",
+        "    ctype3       arg3;                                           \\",
+        "} function##_arglist_t;                                          \\",
+        "static arg_type_t signature_##function[] =                       \\",
+        "{                                                                \\",
+        "    ptype1,                                                      \\",
+        "    ptype2,                                                      \\",
+        "    ptype3,                                                      \\",
+        "    ARG_END                                                      \\",
+        "};",
+        "",
+        "/* CALL FUNCTIONS */",
+        "",
+        "#define ILECALL1(function, farg1, arg1)         \\",
+        "char ILEargliststorage[sizeof( function##_arglist_t)+15];         \\",
+        "function##_arglist_t * arglist;                                   \\",
+        "arglist = (function##_arglist_t *) ROUND_QUAD(ILEargliststorage); \\",
+        "arglist->farg1=arg1;                                               \\",
+        "_ILECALL(ILE_##function,                                          \\",
+        "         &arglist->base,                                          \\",
+        "         signature_##function,                                    \\",
+        "         result_type_##function);                                 \\",
+        "jint rc = arglist->base.result.s_int32.r_int32;            ",
+
+        "#define ILECALL2(function, farg1, arg1, farg2, arg2)         \\",
+        "char ILEargliststorage[sizeof( function##_arglist_t)+15];         \\",
+        "function##_arglist_t * arglist;                                   \\",
+        "arglist = (function##_arglist_t *) ROUND_QUAD(ILEargliststorage); \\",
+        "arglist->farg1=arg1;                                               \\",
+        "arglist->farg2=arg2;                                               \\",
+        "_ILECALL(ILE_##function,                                          \\",
+        "         &arglist->base,                                          \\",
+        "         signature_##function,                                    \\",
+        "         result_type_##function);                                 \\",
+        "jint rc = arglist->base.result.s_int32.r_int32;            ",
+
+
+        "#define ILECALL3(function, farg1, arg1, farg2, arg2, farg3, arg3)         \\",
+        "char ILEargliststorage[sizeof( function##_arglist_t)+15];         \\",
+        "function##_arglist_t * arglist;                                   \\",
+        "arglist = (function##_arglist_t *) ROUND_QUAD(ILEargliststorage); \\",
+        "arglist->farg1=arg1;                                               \\",
+        "arglist->farg2=arg2;                                               \\",
+        "arglist->farg3=arg3;                                               \\",
+        "_ILECALL(ILE_##function,                                          \\",
+        "         &arglist->base,                                          \\",
+        "         signature_##function,                                    \\",
+        "         result_type_##function);                                 \\",
+        "jint rc = arglist->base.result.s_int32.r_int32;            ",
+
+        
+        " /* define all the functions */",
+        "DEFINES3(Java_test_JDJobName_setIGCnative,ILEpointer,env,ARG_MEMPTR,",
+        "                                          ILEpointer,obj,ARG_MEMPTR,",
+        "                                          int,ccsid,ARG_INT32);",
+        "DEFINES1(Java_test_JDJobName_getJobMemNative,ILEpointer,env,ARG_MEMPTR);",
+        "DEFINES1(Java_test_JDJobName_setJobLogOptionNative,ILEpointer,env,ARG_MEMPTR);",
+        "DEFINES1(Java_test_JDJobName_getJobCCSIDNative,ILEpointer,env,ARG_MEMPTR);",
+        "DEFINES1(test_JDJobName_getJobNameNative,ILEpointer,jobname,ARG_MEMPTR);",
+        "DEFINES1(test_JDJobName_getSubsystemNameNative,ILEpointer,subsystemname,ARG_MEMPTR);",
+        "DEFINES1(test_JDJobName_getLoggingTextNative,ILEpointer,loggingText,ARG_MEMPTR);",
+        "DEFINES1(test_JDJobName_startPexNative,ILEpointer,ascpexCopy,ARG_MEMPTR);",
+        "DEFINES1(test_JDJobName_endPexNative,ILEpointer,ascpexCopy,ARG_MEMPTR);",
+        "DEFINES3(test_JDJobName_swapToNative,ILEpointer,asciiError,ARG_MEMPTR,",
+        "                                     ILEpointer,asciiUserid, ARG_MEMPTR,",
+        "                                     ILEpointer,asciiPassword, ARG_MEMPTR);",
+        "DEFINES1(test_JDJobName_swapBackNative,ILEpointer,asciiError,ARG_MEMPTR);",
+        "DEFINES1(test_JDJobName_setaspgrpNative,ILEpointer,asciiAspgrp,ARG_MEMPTR);",
+        "DEFINES2(test_JDJobName_systemNative,ILEpointer,asciiError,ARG_MEMPTR,",
+        "                                     ILEpointer, asciiCommand, ARG_MEMPTR);",
+        "DEFINES2(test_JDJobName_sendProgramMessageNative,ILEpointer,asciiError,ARG_MEMPTR,",
+        "                                     ILEpointer, asciiMessage, ARG_MEMPTR);",
+
+        
+        "static int do_init_done=0; ",
+        " /* Make sure the environment is initialized */", 
+        "int do_init() { ",
+        "if ( do_init_done == 0) { ",
+        "  char * srvpgm = \"QGPL/"+srvpgm+"\";",
+        "  long long actmark =  _ILELOADX(srvpgm, ILELOAD_LIBOBJ)  ; ",
+        "  if (actmark == -1) {",
+        "     printf(\"Unable to load %s\\n\",srvpgm);",
+        "     return 1;", 
+        "  } ",
+        "  int rc;",
+        "  RESOLVE(Java_test_JDJobName_setIGCnative);",
+        "  RESOLVE(Java_test_JDJobName_getJobMemNative);",
+        "  RESOLVE(Java_test_JDJobName_setJobLogOptionNative);", 
+        "  RESOLVE(Java_test_JDJobName_getJobCCSIDNative);", 
+        "  RESOLVE(test_JDJobName_getJobNameNative);",
+        "RESOLVE(test_JDJobName_getSubsystemNameNative);",
+        "RESOLVE(test_JDJobName_getLoggingTextNative);",
+        "RESOLVE(test_JDJobName_startPexNative);",
+        "RESOLVE(test_JDJobName_endPexNative);",
+        "RESOLVE(test_JDJobName_swapToNative);",
+        "RESOLVE(test_JDJobName_swapBackNative);",
+        "RESOLVE(test_JDJobName_setaspgrpNative);",
+        "RESOLVE(test_JDJobName_systemNative);",
+        "RESOLVE(test_JDJobName_sendProgramMessageNative);",
+
+        "  do_init_done=1;  ",  
+        "}",
+        "return 0;", 
+        "}",
+
+        "jint Java_test_JDJobName_setIGCnative(JNIEnv * env, jobject obj, jint ccsid )",
+        "{",
+        "  do_init();", 
+        "  ILECALL3(Java_test_JDJobName_setIGCnative,",
+        "              env.s.addr, NULL,",
+        "              obj.s.addr, NULL,",
+        "              ccsid,ccsid);",
+        "  return rc;",
+        "}",
+
+        "", 
+        "jint Java_test_JDJobName_getJobMemNative(JNIEnv * env)",
+        "{",
+        "  do_init();", 
+        "  ILECALL1(Java_test_JDJobName_getJobMemNative,",
+        "              env.s.addr, NULL);",
+        "  return rc;",
+        "}",
+        "", 
+        "jint Java_test_JDJobName_setJobLogOptionNative(JNIEnv * env)",
+        "{",
+        "  do_init();", 
+        "  ILECALL1(Java_test_JDJobName_setJobLogOptionNative,",
+        "              env.s.addr, NULL);",
+        "  return rc;",
+        "}",
+        "", 
+        "", 
+        "jint Java_test_JDJobName_getJobCCSIDNative(JNIEnv * env)",
+        "{",
+        "  do_init();", 
+        "  ILECALL1(Java_test_JDJobName_getJobCCSIDNative,",
+        "              env.s.addr, NULL);",
+        "  return rc;",
+        "}",
+        "", 
+
+        "jstring Java_test_JDJobName_getJobNameNative(",
+        "  JNIEnv *env,",
+        "  jobject obj)",
+        "",
+        "{",
+        "      int i;", 
+        "      char jobname[NAMESIZE+1];",
+        "      do_init();",
+        "      ILECALL1(test_JDJobName_getJobNameNative,",
+        "               jobname.s.addr,  (address64_t) jobname);",
+        "       /* Create java string */ ",
+        "       return (*env)->NewStringUTF(env, jobname);", 
+        "}",
+        "",
+        "jstring Java_test_JDJobName_getSubsystemNameNative(",
+        "  JNIEnv *env,",
+        "  jobject obj)",
+        "",
+        "{",
+        "      char subsystemname[11];",
+        "      do_init();",
+        "      ILECALL1(test_JDJobName_getSubsystemNameNative,",
+        "               subsystemname.s.addr, (address64_t) subsystemname);",
+        "       /* Create java string */ ",
+        "       return (*env)->NewStringUTF(env, subsystemname);", 
+        "}",
+        "",
+        "jstring Java_test_JDJobName_getLoggingTextNative(",
+        "  JNIEnv *env,",
+        "  jobject obj)",
+        "",
+        "{",
+        "      char loggingText[11];",
+        "      do_init();",
+        "      ILECALL1(test_JDJobName_getLoggingTextNative,",
+        "               loggingText.s.addr, (address64_t) loggingText);",
+        "       /* Create java string */ ",
+        "       return (*env)->NewStringUTF(env, loggingText);", 
+        "}",
+        "",
+        "jstring Java_test_JDJobName_startPexNative(",
+        "  JNIEnv *env,",
+        "  jobject obj)",
+        "",
+        "{",
+        "       char ascpexCopy[NAMESIZE+1];",
+        "      do_init();",
+        "       ILECALL1(test_JDJobName_startPexNative,",
+        "       ascpexCopy.s.addr,  (address64_t) ascpexCopy);",
+        "       /* Create java string */ ",
+        "       return (*env)->NewStringUTF(env, ascpexCopy);", 
+        "}",
+        "",
+        "",
+        "jstring Java_test_JDJobName_endPexNative(",
+        "  JNIEnv *env,",
+        "  jobject obj)",
+        "",
+        "{",
+        "       /* Create java string */ ",
+        "       char ascpexCopy[NAMESIZE+1];",
+        "      do_init();",
+        "       ILECALL1(test_JDJobName_endPexNative,",
+        "                ascpexCopy.s.addr,  (address64_t) ascpexCopy);",
+        "       return (*env)->NewStringUTF(env, ascpex);", 
+        "}",
+        "",
+        "",
+
+        "jstring Java_test_JDJobName_swapToNative(JNIEnv * env, jobject obj, ",
+        "                                                    jstring userid, ",
+        "                                                    jstring password  )",
+        "{",
+        "  char asciiUserid[NAME_SIZE]; ",
+        "  char asciiPassword[NAME_SIZE];",
+        "  char asciiError[80];",
+        "  jboolean isCopy; ",
+        "  int i; ",
+        "  char * utfString; ",
+        "  int strLen;",
+        "      do_init();",
+        "  strLen =       (*env)->GetStringUTFLength(env, userid);",
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, userid, &isCopy));  ",
+        "  strncpy(asciiUserid, utfString, strLen);",
+        "  asciiUserid[strLen]='\\0';",
+        "  (*env)->ReleaseStringUTFChars(env, userid, utfString); ",
+        "  strLen =       (*env)->GetStringUTFLength(env, password);",
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, password, &isCopy));  ",
+        "  strncpy(asciiPassword, utfString,strLen);",
+        "  asciiPassword[strLen]='\\0';",
+        "  (*env)->ReleaseStringUTFChars(env, password, utfString); ",
+
+        
+        "  ILECALL3(test_JDJobName_swapToNative,",
+        "         asciiError.s.addr,  (address64_t) asciiError,",
+        "         asciiUserid.s.addr,  (address64_t) asciiUserid,",
+        "         asciiPassword.s.addr,  (address64_t) asciiPassword);",
+        "  if (rc > 0) { ",
+        "   return (*env)->NewStringUTF(env, asciiError);", 
+        "  } else {", 
+        "     return 0; ",
+        "  }", 
+        "}",
+        "", 
+        "jstring Java_test_JDJobName_swapBackNative(JNIEnv * env, jobject obj) ",
+        "{",
+        "   char asciiError[80]; ",
+        "      do_init();",
+        "  ILECALL1(test_JDJobName_swapBackNative,",
+        "          asciiError.s.addr, (address64_t) asciiError);",
+        "  if ( rc > 0) { ",
+        "   return (*env)->NewStringUTF(env, asciiError);", 
+        " } else { ", 
+        "   return 0;",
+        " }", 
+        "}", 
+        
+        
+        "jstring Java_test_JDJobName_setaspgrpNative(JNIEnv * env, jobject obj, ",
+        "                                                    jstring aspgrp  )",
+        "{",
+        "  char asciiAspgrp[80]; ",
+        "  jboolean isCopy; ",
+        "  int i; ",
+        "  char * utfString; ",
+        "  int strLen;",
+        "      do_init();",
+        "  strLen =       (*env)->GetStringUTFLength(env, aspgrp);",
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, aspgrp, &isCopy));  ",
+        "  strncpy(asciiAspgrp,utfString,strLen);",
+        "  (*env)->ReleaseStringUTFChars(env, aspgrp, utfString); ",
+        "  asciiAspgrp[strLen]=0;",
+        "  ILECALL1(test_JDJobName_setaspgrpNative,",
+        "           asciiAspgrp.s.addr,  (address64_t) asciiAspgrp);",
+        "  return 0;",
+        "}",
+        "", 
+        "",
+        "jstring Java_test_JDJobName_systemNative(JNIEnv * env, jobject obj, ",
+        "                                                    jstring command  )",
+        "{",
+        "  jstring stringRc = 0;", 
+        "  char asciiCommand [512]; ",
+        "  char asciiError[512];", 
+        "  jboolean isCopy; ",
+        "  char * utfString; ",
+        "  int strLen;",
+        "  int i; ",
+        "  int rc2; ", 
+        "      do_init();",
+        "  strLen =       (*env)->GetStringUTFLength(env, command);",
+        "  if (strLen > sizeof(asciiCommand)) { ",
+        "    return (*env)->NewStringUTF(env, \"ERROR:  Length of command too long\");",
+        "  } ", 
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, command, &isCopy));  ",
+        "  strncpy(asciiCommand,utfString,strLen);",
+        "  (*env)->ReleaseStringUTFChars(env, command, utfString); ",
+        "  asciiCommand[strLen]='\\0';",
+        "  ILECALL2(test_JDJobName_systemNative,",
+        "          asciiError.s.addr,  (address64_t) asciiError, ",
+        "          asciiCommand.s.addr,  (address64_t) asciiCommand); ",
+        "  if (rc != 0) { ",
+        "   stringRc = (*env)->NewStringUTF(env, asciiError);", 
+        "  } ", 
+        "",
+        "  return stringRc;",
+        "}",
+        "", 
+
+
+        "",
+        "jstring Java_test_JDJobName_sendProgramMessageNative(JNIEnv * env, jobject obj, ",
+        "                                                    jstring message  )",
+        "{",
+        "  jstring stringRc = 0;", 
+        "  char asciiMessage [512]; ",
+        "  char asciiError [512]; ",
+        "  jboolean isCopy; ",
+        "  char * utfString; ",
+        "  int strLen;",
+        "  int i; ",
+        "  int rc2; ", 
+        "      do_init();",
+        "  strLen =       (*env)->GetStringUTFLength(env, message);",
+        "  if (strLen > sizeof(asciiMessage)) { ",
+        "    return (*env)->NewStringUTF(env, \"ERROR:  Length of message too long\");",
+        "  } ", 
+        "  utfString = (char *) ((*env)->GetStringUTFChars(env, message, &isCopy));  ",
+        "  for (i = 0; i < strLen; i++) { ",
+        "       asciiMessage[i] = utfString[i];",
+        "  }",
+        "  asciiMessage[i]=0;",
+        "  (*env)->ReleaseStringUTFChars(env, message, utfString); ",
+        "  ILECALL2(test_JDJobName_sendProgramMessageNative,",
+        "           asciiError.s.addr,  (address64_t) asciiError, ",
+        "           asciiMessage.s.addr,  (address64_t) asciiMessage)",
+        "  if (rc > 0) {",
+        "      stringRc = (*env)->NewStringUTF(env, asciiError);", 
+        "  }",
+        "",
+        "  return stringRc;",
+        "}",
+        "", 
+
+
+        
+    };
+
+    
+    
+    
+    
      public static char EtoChar[] = {
 (char)0x00,(char)0x01,(char)0x02,(char)0x03,       ' ',      '\t',       ' ',(char)0x7f, /* 00-07 */
        ' ',       ' ',       ' ',(char)0x0b,      '\f',      '\r',(char)0x0e,(char)0x0f, /* 08-0f */
@@ -590,95 +1207,164 @@ public class JDJobName {
      };
 
 
-		static {
+     static {
 
-			//
-			// Only build on iSeries machine
-			//
-			if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
+       //
+       // Only build on iSeries machine
+       //
+       if (JTOpenTestEnvironment.isOS400 ) {
 
-				String debugString = System.getProperty("debug");
-				if (debugString != null)
-					debug = true;
+         String debugString = System.getProperty("debug");
+         if (debugString != null)
+           debug = true;
 
-				//
-				// Make sure the Library exists QGPL/CURJOBNAME
-				// If it doesn't then build it
-				//
-				String libraryName = "/QSYS.LIB/QGPL.LIB/" + srvpgm + ".SRVPGM";
+         //
+         // Make sure the Library exists QGPL/CURJOBNAME
+         // If it doesn't then build it
+         //
+         String libraryName = "/QSYS.LIB/QGPL.LIB/" + srvpgm + ".SRVPGM";
 
-				File serviceProgramFile = new File(libraryName);
-				if (!serviceProgramFile.exists()) {
-					try {
-						Runtime runtime;
-						Process process;
-						runtime = Runtime.getRuntime();
+         File serviceProgramFile = new File(libraryName);
+         Runtime runtime;
+         Process process;
+         runtime = Runtime.getRuntime();
+         if (!serviceProgramFile.exists()) {
+           try {
 
-						String command = "rm -f /tmp/JOBNAME.c";
-						if (debug)
-							System.out.println("JobName.debug: " + command);
-						process = runtime.exec(command);
-						if (debug)
-							showProcessOutput(process, null);
-						process.waitFor();
+             String command = "rm -f /tmp/JOBNAME.c";
+             if (debug)
+               System.out.println("JobName.debug: " + command);
+             process = runtime.exec(command);
+             if (debug)
+               showProcessOutput(process, null);
+             process.waitFor();
 
-						command = "touch -C 819 /tmp/JOBNAME.c";
-						if (debug)
-							System.out.println("JobName.debug: " + command);
-						process = runtime.exec(command);
-						if (debug)
-							showProcessOutput(process, null);
-						process.waitFor();
+             command = "touch -C 819 /tmp/JOBNAME.c";
+             if (debug)
+               System.out.println("JobName.debug: " + command);
+             process = runtime.exec(command);
+             if (debug)
+               showProcessOutput(process, null);
+             process.waitFor();
 
-						PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("/tmp/JOBNAME.c")));
+             PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("/tmp/JOBNAME.c")));
 
-						for (int i = 0; i < nativeSource.length; i++) {
-							writer.println(nativeSource[i]);
-						}
-						writer.close();
+             for (int i = 0; i < nativeSource.length; i++) {
+               writer.println(nativeSource[i]);
+             }
+             writer.close();
 
-						command = "system  CRTCMOD MODULE(QGPL/" + srvpgm
-								+ ") SRCSTMF('/tmp/JOBNAME.c')  DBGVIEW(*ALL) TERASPACE(*YES) STGMDL(*INHERIT) ";
-						if (debug)
-							System.out.println("JobName.debug: " + command);
-						process = runtime.exec(command);
-						if (debug)
-							showProcessOutput(process, null);
-						process.waitFor();
+             command = "system  CRTCMOD MODULE(QGPL/" + srvpgm
+                 + ") SRCSTMF('/tmp/JOBNAME.c')  DBGVIEW(*ALL) TERASPACE(*YES) STGMDL(*INHERIT) ";
+             if (debug)
+               System.out.println("JobName.debug: " + command);
+             process = runtime.exec(command);
+             if (debug)
+               showProcessOutput(process, null);
+             process.waitFor();
 
-						command = "system  CRTSRVPGM SRVPGM(QGPL/" + srvpgm + ") MODULE(QGPL/" + srvpgm
-								+ ") EXPORT(*ALL) STGMDL(*INHERIT) ";
-						if (debug)
-							System.out.println("JobName.debug: " + command);
-						process = runtime.exec(command);
-						if (debug)
-							showProcessOutput(process, null);
-						process.waitFor();
-						
-                                                command = "system  GRTOBJAUT OBJ(QGPL/" + srvpgm + ") OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*USE) ";
-                                                if (debug)
-                                                  System.out.println("JobName.debug: " + command);
-                                                process = runtime.exec(command);
-                                                if (debug)
-                                                  showProcessOutput(process, null);
-                                                process.waitFor();
-                                    
-						
-						
+             command = "system  CRTSRVPGM SRVPGM(QGPL/" + srvpgm + ") MODULE(QGPL/" + srvpgm
+                 + ") EXPORT(*ALL) STGMDL(*INHERIT) ";
+             if (debug)
+               System.out.println("JobName.debug: " + command);
+             process = runtime.exec(command);
+             if (debug)
+               showProcessOutput(process, null);
+             process.waitFor();
 
-					} catch (Exception e) {
-						System.out.println("Exception caught building service program for JobName");
-						e.printStackTrace();
-					}
-				}
-				// System.out.println("Calling System.load(" + libraryName + ")");
-				System.load(libraryName);
-				// System.out.println("Completed System.load(" + libraryName + ")");
-				loaded = true;
+             command = "system  GRTOBJAUT OBJ(QGPL/" + srvpgm + ") OBJTYPE(*SRVPGM) USER(*PUBLIC) AUT(*USE) ";
+             if (debug)
+               System.out.println("JobName.debug: " + command);
+             process = runtime.exec(command);
+             if (debug)
+               showProcessOutput(process, null);
+             process.waitFor();
 
-			}
+           } catch (Exception e) {
+             System.out.println("Exception caught building service program for JobName");
+             e.printStackTrace();
+           }
+         } /* service program exists */ 
+         if (!JTOpenTestEnvironment.isOS400open) {
+           if (debug) System.out.println("Calling System.load(" + libraryName + ")");
+           System.load(libraryName);
+           if (debug) System.out.println("Completed System.load(" + libraryName + ")");
+           loaded = true;
+         } else { 
+           
+           // Check for and compile the PASE native library with the same functions. 
+           String ifsDir = JTOpenTestEnvironment.testcaseHomeDirectory; 
+           String paseLibraryName = ifsDir+"/"+srvpgm;
+           String libraryPath = ifsDir+"/lib"+srvpgm+".so"; 
+           String javaHome = System.getProperty("java.home"); 
+           String includeDirectory=javaHome+"/include"; 
+           String includeDirectoryAix = javaHome+"/include/aix"; 
+           File paseLibraryFile = new File(libraryPath);
+           if (!paseLibraryFile.exists()) {
 
-		}
+             try {
+
+               String command = "rm -f /tmp/PaseJOBNAME.c";
+               if (debug)
+                 System.out.println("JobName.debug: " + command);
+               process = runtime.exec(command);
+               if (debug)
+                 showProcessOutput(process, null);
+               process.waitFor();
+
+               PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("/tmp/PaseJOBNAME.c")));
+
+               for (int i = 0; i < nativePaseSource.length; i++) {
+                 writer.println(nativePaseSource[i]);
+               }
+               writer.close();
+               
+               // Choose the compiler to use
+               String compiler = "/qopensys/xlcpp/opt/IBM/xlc/16.1.0/bin/xlc"; 
+               File compilerFile = new File(compiler); 
+               String compilerOld=""; 
+               if (!compilerFile.exists()) { 
+                 if (debug) System.out.println("Unable to find compiler at "+compiler); 
+                 compilerOld=compilerOld+compiler+" "; 
+                 compiler = "/qopensys/xlcpp/opt/IBM/xlc/13.1.0/bin/xlc";
+                 compilerFile = new File(compiler); 
+                 if (!compilerFile.exists()) { 
+                   compilerOld=compilerOld+compiler+" "; 
+                   throw new Exception("Unable to find compiler files at" +compilerOld); 
+                 }
+               }
+
+               command = compiler+" -I/qopensys/QIBM/ProdData/OS400/PASE/include -I"+includeDirectory+" -I"+includeDirectoryAix+" -qpic -q64 -o /tmp/PaseJOBNAME.o -c /tmp/PaseJOBNAME.c";
+               if (debug)
+                 System.out.println("JobName.debug: " + command);
+               process = runtime.exec(command);
+               if (debug)
+                 showProcessOutput(process, null);
+               process.waitFor();
+
+               command = compiler+" -qmkshrobj -q64  -o "+libraryPath+" /tmp/PaseJOBNAME.o";
+               if (debug)
+                 System.out.println("JobName.debug: " + command);
+               process = runtime.exec(command);
+               if (debug)
+                 showProcessOutput(process, null);
+               process.waitFor();
+               
+               
+             } catch (Exception e) {
+               System.out.println("Exception caught building library for PaseJobName");
+               e.printStackTrace();
+             }
+           } /* serviceProgramFile.exists() */ 
+           System.load(paseLibraryName);
+           if (debug) System.out.println("Completed System.load(" + paseLibraryName + ")");
+           loaded = true;
+
+         }
+
+       }
+
+     }
 
 	public static void showProcessOutput(Process p, String outfile) throws Exception {
 		PrintWriter writer = null;
@@ -814,11 +1500,15 @@ public class JDJobName {
 	public static String getJobName() {
 		if (loaded) {
 			try {
-				return getJobNameNative();
+			    String jobname = getJobNameNative();
+			    if (jobname == null) { 
+			      System.out.println("Warning:  JDJobName.gtJobName returned null"); 
+			    }
+			    return jobname; 
 			} catch (UnsatisfiedLinkError e) {
 				System.out.println("UnsatisfiedLinkError in JDJobName");
 				e.printStackTrace(System.out);
-				return "99999/ERRROR/ERROR";
+				return "99999/ERROR/ERROR";
 
 			}
 		} else {
@@ -836,7 +1526,11 @@ public class JDJobName {
 
 	public static String getSubsystemName() {
 		if (loaded) {
-			return getSubsystemNameNative();
+		    String subsystemName = getSubsystemNameNative();
+                    if (subsystemName == null) { 
+                      System.out.println("Warning:  JDJobName.getSubsystemName returned null"); 
+                    }
+			return subsystemName; 
 		} else {
 			return "not Available because native method did not load";
 		}
@@ -847,7 +1541,13 @@ public class JDJobName {
 	public static String getLoggingText() {
 		try {
 			if (loaded) {
-				return getLoggingTextNative();
+			    String loggingText;
+			    loggingText = getLoggingTextNative();
+		                  if (loggingText == null) { 
+		                      System.out.println("Warning:  JDJobName.getLoggingText returned null"); 
+		                    }
+			    
+			        return loggingText  ;
 			} else {
 				return "not Available because native method did not load";
 			}
@@ -977,6 +1677,10 @@ public class JDJobName {
 
 
 	public static void system(String command) throws Exception {
+	      if (JTOpenTestEnvironment.bypassNativeMethods) {
+	        System.out.println("Warning: "+JTOpenTestEnvironment.bypassNativeCodeEnvvar+" set :  Tried to run system("+command+")");
+	        return; 
+	      }
 		try {
 			if (loaded) {
 				String rc = systemNative(command);
@@ -1000,7 +1704,12 @@ public class JDJobName {
     public static native String sendProgramMessageNative(String message);
 
 	public static void sendProgramMessage(String message) {
-		if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
+          if (JTOpenTestEnvironment.bypassNativeMethods) {
+            System.out.println("Warning: "+JTOpenTestEnvironment.bypassNativeCodeEnvvar+" set :  Attempted sendProgramMessage: "+message); 
+            return; 
+          }
+
+		if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open ) {
 			try {
 				if (loaded) {
 					String rc = sendProgramMessageNative(message);
@@ -1051,6 +1760,26 @@ public class JDJobName {
 	    System.out.println("JDJobName.startPex returned "+JDJobName.endPex());
 */ 
 
+	       System.out.println("LoggingText is '"+JDJobName.getLoggingText()+"'");
+	            try { 
+	             String command = "QSYS/CHGJOB LOG(4 00 *SECLVL)  ";
+	             System.out.println("Running command "+command); 
+	             JDJobName.system(command);   
+	                    } catch (Exception e) {
+	                e.printStackTrace(); 
+	            }
+	            System.out.println("LoggingText is '"+JDJobName.getLoggingText()+"'");
+
+	            try { 
+
+	             String message =  " This is a test  ";     
+	             System.out.println("Sending message  "+message); 
+	             JDJobName.sendProgramMessage(message);
+	            } catch (Exception e) {
+	                e.printStackTrace(); 
+	            }
+
+
 	    try { 
 		System.out.println("Calling SwapTo JJAPAN/j8p8npass"); 
 		JDJobName.swapTo("JJAPAN", "j8p8npass");
@@ -1060,25 +1789,6 @@ public class JDJobName {
 		JDJobName.swapBack();
 		System.out.println("SwapBack complete"); 
 
-	    } catch (Exception e) {
-		e.printStackTrace(); 
-	    }
-
-	    System.out.println("LoggingText is '"+JDJobName.getLoggingText()+"'");
-	    try { 
-	     String command = "QSYS/CHGJOB LOG(4 00 *SECLVL)  ";
-	     System.out.println("Running command "+command); 
-	     JDJobName.system(command);   
-             	    } catch (Exception e) {
-		e.printStackTrace(); 
-	    }
-	    System.out.println("LoggingText is '"+JDJobName.getLoggingText()+"'");
-
-	    try { 
-
-	     String message =  " This is a test  ";     
-	     System.out.println("Sending message  "+message); 
-	     JDJobName.sendProgramMessage(message);
 	    } catch (Exception e) {
 		e.printStackTrace(); 
 	    }

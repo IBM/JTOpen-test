@@ -860,7 +860,7 @@ public class JDPSSetInt extends JDTestcase {
       // ditto on toolbox
       if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE
           || ((isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE)
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+              && true)) {
         boolean success = e.getMessage().indexOf("Data type mismatch") != -1;
         if (success) {
           assertCondition(true);
@@ -919,7 +919,7 @@ public class JDPSSetInt extends JDTestcase {
       // ditto toolbox
       if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE
           || ((isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE)
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+              && true)) {
         boolean success = e.getMessage().indexOf("Data type mismatch") != -1;
         if (success) {
           assertCondition(true);
@@ -1051,6 +1051,7 @@ public class JDPSSetInt extends JDTestcase {
       ps.close();
     } catch (Exception e) {
       failed(e, "setup failed");
+      return; 
     }
 
     try {
@@ -1077,15 +1078,9 @@ public class JDPSSetInt extends JDTestcase {
           // This removes warning for V5R4 toolbox case.
           ps.executeQuery();
         }
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-          failed("Didn't throw DataTruncation");
-          return;
-        }
+        failed("Didn't throw DataTruncation");
+        return;
       } catch (Exception e) {
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
-            || getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
-          // In V5R5 native will throw a datatype mismatch
-          // ditto toolbox
           if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE || isToolboxDriver()
               || getDriver() == JDTestDriver.DRIVER_NATIVE) {
             boolean success = e.getMessage()
@@ -1110,121 +1105,67 @@ public class JDPSSetInt extends JDTestcase {
               succeeded("got DataTruncation as expected");
               return;
             } else {
-              throw e;
+              failed(e);
+              return; 
             }
           }
-        } /* release >= V7R1M0 */
-      }
-
-      SQLWarning warnings = ps.getWarnings();
-
-      if (warnings == null) {
-        if (getDriver() != JDTestDriver.DRIVER_JCC) {
-          failed("No warnings after string too long");
-          ps.close();
-          return;
-        }
-      } else {
-
-        //
-        // For JDK 1.6, the default java.sql.DataTrucation warning will return
-        // a state of 22001 when read is set to false. In this case, it isn't
-        // a read so we will have the expected warning.
-        //
-        String expectedWarning = "01004";
-
-        if (getJDK() >= 160) { // isJdbc40()) {
-          expectedWarning = "22001";
-        }
-
-        if (!(warnings.getSQLState().startsWith(expectedWarning))) {
-          failed("SQLState wrong.  Expected " + expectedWarning + ".  Received "
-              + warnings.getSQLState());
-          ps.close();
-          return;
-        }
-
-        if (warnings.getNextWarning() != null) {
-          failed("Too many warnings in list");
-          ps.close();
-          return;
-        }
-      }
-      ResultSet rs = ps.executeQuery();
-
-      warnings = ps.getWarnings();
-
-      if (warnings != null) {
-        failed("Warnings not cleared after execute query");
-        rs.close();
-        ps.close();
-        return;
-      }
-      rs.close();
-      succeeded();
-    } catch (Exception e) {
-      failed(e, "Unexpected Exception");
+      
+      } 
+    } catch (Exception e) { 
+        failed(e); 
     }
 
-    if (ps != null)
-      try {
-        ps.close();
-      } catch (Exception e) {
-      }
+    
+    
   }
-
-  /*
+ /*
    * Query from a SMALLINT parm where the INT is too big
    */
   public void Var041() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      String added = " -- added 06/17/2006 by native driver";
-      String tableName = JDPSTest.COLLECTION + ".JDPSSI041";
-      PreparedStatement ps = null;
+    String added = " -- added 06/17/2006 by native driver";
+    String tableName = JDPSTest.COLLECTION + ".JDPSSI041";
+    PreparedStatement ps = null;
 
-      try {
-        statement_.executeUpdate("DROP TABLE " + tableName);
-      } catch (Exception e) {
+    try {
+      statement_.executeUpdate("DROP TABLE " + tableName);
+    } catch (Exception e) {
 
+    }
+
+    try {
+      statement_.executeUpdate("CREATE TABLE " + tableName + "(c1 smallint)");
+      statement_.executeUpdate("INSERT INTO " + tableName + " VALUES(0)");
+      statement_.executeUpdate("INSERT INTO " + tableName + " VALUES(1)");
+
+      ps = connection_
+          .prepareStatement("Select * from " + tableName + " where c1=?");
+      ps.setInt(1, 2147483647);
+      SQLWarning warn = ps.getWarnings();
+      if (warn != null) {
+        System.out.println("warning=" + warn.toString() + " STATE="
+            + warn.getSQLState() + " CODE=" + warn.getErrorCode());
+      }
+      ps.executeQuery();
+      warn = ps.getWarnings();
+      if (warn != null) {
+        System.out.println("warning=" + warn.toString() + " STATE="
+            + warn.getSQLState() + " CODE=" + warn.getErrorCode());
+      }
+      failed("Didn't throw SQLException " + added);
+    } catch (Exception e) {
+      boolean passed = e.getMessage().indexOf("Data type mismatch") != -1;
+      if (passed) {
+        assertCondition(passed, "passed");
+      } else {
+        failed(e, "got " + e
+            + " expected data type mismatch for all drivers.  Updated 7/16/2014");
       }
 
-      try {
-        statement_.executeUpdate("CREATE TABLE " + tableName + "(c1 smallint)");
-        statement_.executeUpdate("INSERT INTO " + tableName + " VALUES(0)");
-        statement_.executeUpdate("INSERT INTO " + tableName + " VALUES(1)");
+    }
+    try {
+      statement_.executeUpdate("DROP TABLE " + tableName);
+    } catch (Exception e2) {
 
-        ps = connection_
-            .prepareStatement("Select * from " + tableName + " where c1=?");
-        ps.setInt(1, 2147483647);
-        SQLWarning warn = ps.getWarnings();
-        if (warn != null) {
-          System.out.println("warning=" + warn.toString() + " STATE="
-              + warn.getSQLState() + " CODE=" + warn.getErrorCode());
-        }
-        ps.executeQuery();
-        warn = ps.getWarnings();
-        if (warn != null) {
-          System.out.println("warning=" + warn.toString() + " STATE="
-              + warn.getSQLState() + " CODE=" + warn.getErrorCode());
-        }
-        failed("Didn't throw SQLException " + added);
-      } catch (Exception e) {
-        boolean passed = e.getMessage().indexOf("Data type mismatch") != -1;
-        if (passed) {
-          assertCondition(passed, "passed");
-        } else {
-          failed(e, "got " + e
-              + " expected data type mismatch for all drivers.  Updated 7/16/2014");
-        }
-
-      }
-      try {
-        statement_.executeUpdate("DROP TABLE " + tableName);
-      } catch (Exception e2) {
-
-      }
-    } else {
-      notApplicable("V5R5 and later 'numeric truncation'");
     }
 
   }

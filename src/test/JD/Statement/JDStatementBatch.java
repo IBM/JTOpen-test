@@ -356,7 +356,7 @@ addBatch() - Verify that addBatch() does NOT clear the warnings.
     {
         if (checkJdbc20 ()) {
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -372,7 +372,7 @@ addBatch() - Verify that addBatch() does NOT clear the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -855,7 +855,7 @@ executeBatch() - Verify that addBatch() clears the warnings.
     {
         if (checkJdbc20 ()) {
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                 Statement s = connection_.createStatement();
@@ -873,7 +873,7 @@ executeBatch() - Verify that addBatch() clears the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -1108,11 +1108,6 @@ addBatch() -- make sure we fail when we execute add statement with parameter mar
             **/
                 public void Var030 ()
                 {
-                    if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-                    {
-                        notApplicable("merge statements v7r1 only");
-                        return;
-                    }
                     if (checkJdbc20 ()) {
                         try {
                             Statement s = connection_.createStatement ();
@@ -1285,7 +1280,7 @@ addBatch() - Verify that addBatch() does NOT clear the warnings.
 		sb.append("-- added 9/23/2013 to test values with no parenthesis"); 
 
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -1301,7 +1296,7 @@ addBatch() - Verify that addBatch() does NOT clear the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -1803,7 +1798,7 @@ executeBatch() - Verify that addBatch() clears the warnings.
 		sb.append("-- added 9/23/2013 to test values with no parenthesis"); 
 
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                 Statement s = connection_.createStatement();
@@ -1821,7 +1816,7 @@ executeBatch() - Verify that addBatch() clears the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -2030,11 +2025,6 @@ addBatch() -- make sure we fail when we execute add statement with parameter mar
             **/
                 public void Var054 ()
                 {
-                    if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-                    {
-                        notApplicable("merge statements v7r1 only");
-                        return;
-                    }
                     if (checkJdbc20 ()) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("-- added 9/23/2013 to test values with no parenthesis"); 
@@ -2548,7 +2538,7 @@ executeLargeBatch() - Verify that addBatch() clears the warnings.
     {
         if (checkJdbc42 ()) {
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                 Statement s = connection_.createStatement();
@@ -2566,7 +2556,7 @@ executeLargeBatch() - Verify that addBatch() clears the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -2714,11 +2704,6 @@ executeLargeBatch() -- Make sure we can execute statements with question marks t
             **/
                 public void Var072 ()
                 {
-                    if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-                    {
-                        notApplicable("merge statements v7r1 only");
-                        return;
-                    }
                     if (checkJdbc42 ()) {
                         try {
                             Statement s = connection_.createStatement ();
@@ -3243,7 +3228,7 @@ executeLargeBatch() - Verify that addBatch() clears the warnings.
 		sb.append("-- added 9/23/2013 to test values with no parenthesis"); 
 
             if (isToolboxDriver() && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                 Statement s = connection_.createStatement();
@@ -3261,7 +3246,7 @@ executeLargeBatch() - Verify that addBatch() clears the warnings.
                 }
             }
             else if ( getDriver () == JDTestDriver.DRIVER_NATIVE  && 
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
 	    {
 		try {
 		    Statement s = connection_.createStatement ();
@@ -3418,11 +3403,6 @@ executeLargeBatch() -- Make sure we can execute statements with question marks t
             **/
 
 	    public void Var089 () 		{
-		if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-		{
-		    notApplicable("merge statements v7r1 only");
-		    return;
-		}
 		if (checkJdbc42 ()) {
 		    StringBuffer sb = new StringBuffer();
 		    sb.append("-- added 9/23/2013 to test values with no parenthesis"); 

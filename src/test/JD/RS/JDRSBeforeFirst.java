@@ -17,7 +17,6 @@ package test.JD.RS;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
@@ -296,12 +295,7 @@ beforeFirst() - Should work on a "simple" result set.
             try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else { 
-
-		  rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
                 rs.beforeFirst ();
                 rs.next ();
                 String s1 = rs.getString ("TABLE_TYPE");
@@ -1574,12 +1568,7 @@ beforeFirst() - Should work on a "simple" result set.
             try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else { 
-
-		  rs = dmdNoPrefetch_.getTableTypes ();
-		}
+		rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
                 rs.beforeFirst ();
                 rs.next ();
                 String s1 = rs.getString ("TABLE_TYPE");

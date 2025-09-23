@@ -288,14 +288,7 @@ Connection.setAutoCommit() - Verify that this fails when in a global transaction
 		if (!error) {
 		    System.out.println("Setting autocommit in global transaction did not fail as expected"); 
 		}
-		//
-// The native driver permits autocommit to be set 
-if (getDriver() == JDTestDriver.DRIVER_NATIVE & !useUDBDataSource // ) {	/* @A1 */
-    && getRelease() < JDTestDriver.RELEASE_V7R1M0 ) {				/* @A1 */
-    assertCondition(error == false);
-} else {
-    assertCondition(error == true);
-}
+		assertCondition(error == true);
 	    }
 	    catch (Exception e) {
 		failed (e, "Unexpected Exception");
@@ -866,15 +859,7 @@ no work done.
 		xar.rollback(xid);
 		xac.close();
 		boolean condition;
-		//
-// Native driver permits a commit if no work has been done
-    //
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE && !useUDBDataSource // ){	 /* @A1 */
-	&& getRelease() < JDTestDriver.RELEASE_V7R1M0 )	{			 /* @A1 */
-	condition = (error == false) && (countRows(34865) == 0);
-    } else {
-	condition = (error == true) && (countRows(34865) == 0);
-    }
+		condition = (error == true) && (countRows(34865) == 0);
 if (! condition) {
     System.out.println("Expect error to be true, but is "+error);
     System.out.println("Expected out to be 0, but is "+countRows(34865)); 
@@ -922,12 +907,7 @@ with no work done.
 // Native driver permits a commit if no work has been done
     //
     boolean condition; 
-if (getDriver() == JDTestDriver.DRIVER_NATIVE && !useUDBDataSource // ) {	/* @A1 */
-    && getRelease() < JDTestDriver.RELEASE_V7R1M0 )	{		        /* @A1 */
-    condition = (error == false);
-} else {
-    condition = (error == true);
-}
+condition = (error == true);
 
 if (!condition) {
     System.out.println("Expect error to be true, but is "+error);

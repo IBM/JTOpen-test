@@ -403,10 +403,6 @@ verify all columns with system remarks (the default).
     public void Var002()
     {
         if (checkJdbc40()) {
-        if((getDriver() == JDTestDriver.DRIVER_TOOLBOX)  && getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
-            notApplicable("V5R5 variation");
-            return;
-        }
         message.setLength(0);
         try {
 
@@ -545,11 +541,6 @@ verify all columns with system remarks (the default).
         }
 
       } catch (Exception e) {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0
-            && (getDriver() == JDTestDriver.DRIVER_TOOLBOX)) {
-          assertExceptionIs(e, "SQLFeatureNotSupportedException");
-          return;
-        }
         System.out.println("******* Exception Caught ******\n");
         failed(e, message.toString());
       }
@@ -1482,11 +1473,6 @@ verify all columns with system remarks (the default).
 	String sql="";
 
 	if (checkJdbc40()) {
-	    if((getDriver() == JDTestDriver.DRIVER_TOOLBOX)  &&
-	       getRelease() < JDTestDriver.RELEASE_V7R1M0)  {
-		notApplicable("V5R5 variation");
-		return;
-	    }
 	    StringBuffer sb = new StringBuffer();
 	    try {
 
@@ -2000,13 +1986,9 @@ verify all columns with system remarks (the default).
 
           // Now fix older releases with the wrong answers
           // Now fix older releases with the wrong answers
-          if ((getJdbcLevel() < 4) || getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	          ex.dataType = "1111";
-	          ex.length = "42";
-          }else if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+          
               ex.length = "42";
-          }
-
+          
 
 	  testDataType(ex);
             }

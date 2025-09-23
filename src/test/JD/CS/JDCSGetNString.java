@@ -1686,7 +1686,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    
 	    {
 		try
 		{
@@ -1720,10 +1720,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable(); 
-	    }
+	
 	}
     }
 
@@ -1734,8 +1731,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
-	    {
+	     {
 		try
 		{
 		    String sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+".ADD10 (OUT \"Col1\" CHAR(20), OUT \"Col2\" CHAR(20),"+
@@ -1769,10 +1765,8 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	  
+	    
 	}
     }
 
@@ -1783,7 +1777,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    
 	    {
 		try
 		{
@@ -1818,10 +1812,8 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
+	    
 	}
     }
 
@@ -1832,7 +1824,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    
 	    {
 		try
 		{
@@ -1869,10 +1861,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
     /*
@@ -1882,7 +1871,6 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -1920,10 +1908,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
     /*
@@ -1933,7 +1918,6 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -1970,10 +1954,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
     /*
@@ -1984,7 +1965,6 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -2026,10 +2006,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
 
@@ -2040,7 +2017,6 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 
 		try
@@ -2080,10 +2056,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	   
 	}
     }
 
@@ -2094,7 +2067,6 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -2133,10 +2105,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
 
@@ -2147,8 +2116,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
-	    {
+	     {
 		try
 		{
 		    String sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+".ADD10 (INOUT \"One\" CHAR(10), INOUT \"ONe\" CHAR(10),"+
@@ -2186,10 +2154,8 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
+	   
 	}
     }
     /*
@@ -2199,7 +2165,6 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
 	    {
 		try
 		{
@@ -2233,10 +2198,7 @@ extends JDCSGetTestcase
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	   
 	}
     }
 
@@ -2248,7 +2210,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc40()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    
 	    {
 		try
 		{
@@ -2283,10 +2245,7 @@ extends JDCSGetTestcase
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException"); 
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
 

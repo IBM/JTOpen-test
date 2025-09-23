@@ -293,7 +293,7 @@ ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             InputStream v = rs.getBinaryStream (18);
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+	       true)		// @K2
 		assertCondition( compareBeginsWithBytes( v, twelve,sb),sb);	// @K2
 	    else							// @K2
 		assertCondition (compare (v, twelve,sb),sb);
@@ -381,7 +381,7 @@ getBinaryStream() - Should throw an exception when the column name is valid.
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             InputStream v = rs.getBinaryStream ("C_BINARY_20");
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+	       true)		// @K2
 		assertCondition( compareBeginsWithBytes( v, eleven,sb),sb);	// @K2
 	    else							// @K2
 		assertCondition (compare (v, eleven,sb),sb);
@@ -412,7 +412,7 @@ getBinaryStream() - Should work when an update is pending.
       sb.setLength(0);
 
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)	// @K2
+	       true)	// @K2
 		check = compareBeginsWithBytes( v, test,sb);	// @K2
 	    else						// @K2
 		check = compare (v, test,sb);
@@ -448,7 +448,7 @@ getBinaryStream() - Should work when an update has been done.
       sb.setLength(0);
 
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)	// @K2
+	       true)	// @K2
 		check = compareBeginsWithBytes( v, test,sb);	// @K2
 	    else						// @K2
 		check = compare (v, test,sb);			// @K2
@@ -484,7 +484,7 @@ row, when an insert is pending.
             InputStream v = rs.getBinaryStream ("C_VARBINARY_20");
             boolean check;					// @K2
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)	// @K2
+	       true)	// @K2
 		check = compareBeginsWithBytes( v, test,sb);	// @K2
 	    else						// @K2
 		check = compare (v, test,sb);			// @K2
@@ -522,7 +522,7 @@ row, when an insert has been done.
             sb.setLength(0);
 	    boolean check;						// @K2
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+	       true)		// @K2
 		check = compareBeginsWithBytes( v, test,sb);		// @K2
 	    else							// @K2
 		check = (compare (v, test,sb));				// @K2
@@ -778,7 +778,7 @@ getBinaryStream() - Get from a BINARY.
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             InputStream v = rs.getBinaryStream ("C_BINARY_20");
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+	       true)		// @K2
 		assertCondition( compareBeginsWithBytes( v, eleven,sb),sb);	// @K2
 	    else							// @K2
 		assertCondition (compare (v, eleven,sb),sb);
@@ -802,7 +802,7 @@ getBinaryStream() - Get from a VARBINARY.
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             InputStream v = rs.getBinaryStream ("C_VARBINARY_20");
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+	       true)		// @K2
 		assertCondition( compareBeginsWithBytes( v, twelve,sb),sb);	// @K2
 	    else							// @K2
 		assertCondition (compare (v, twelve,sb),sb);
@@ -882,7 +882,7 @@ returned in the result set.
                 InputStream v = rs.getBinaryStream ("C_BLOB");
                 sb.setLength(0);
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @K2
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0)				// @K2
+		   true)				// @K2
 		    assertCondition( compareBeginsWithBytes( v, JDRSTest.BLOB_FULL,sb),sb);	// @K2
 		else									// @K2
 		    assertCondition (compare (v, JDRSTest.BLOB_FULL,sb),sb);
@@ -915,7 +915,7 @@ returned in the result set.
 		boolean check;							// @K2
     sb.setLength(0);
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @K2
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0)			// @K2
+		   true)			// @K2
 		    check = compareBeginsWithBytes( v, JDRSTest.BLOB_FULL,sb);	// @K2
 		else								// @K2
 		    check = (compare (v, JDRSTest.BLOB_FULL,sb));			// @K2
@@ -1076,7 +1076,7 @@ when the max field size is set to 0.
             s.close ();
             sb.setLength(0);
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)				// @K2
+	       true)				// @K2
 		assertCondition( compareBeginsWithBytes( v, twelve,sb) && dt == null,sb);	// @K2
 	    else									// @K2
 		assertCondition ((compare (v, twelve,sb)) && (dt == null),sb);		// @K2
@@ -1111,7 +1111,7 @@ to a value shorter than the byte array.
 
             sb.setLength(0);
 	    if(getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @K2
-	       getRelease() >= JDTestDriver.RELEASE_V7R1M0)				// @K2
+	       true)				// @K2
 		assertCondition( compareBeginsWithBytes( v, expected,sb) && w == null,sb);	// @K2
 	    else									// @K2
 		assertCondition ((compare (v, expected,sb)) && (w == null),sb);

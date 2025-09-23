@@ -705,12 +705,7 @@ SQL400 - The default look of a timestamp is different for the native
                 //@C3 Toolbox had changed to match native, now service asked us to change back,
                 //@C3 so we changed back in GA PTF.
 		if (getDriver () == JDTestDriver.DRIVER_NATIVE) {
-		    if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
-			assertCondition (v.equals ("1998-06-30-12.25.12.1234                          "), "got "+v+" sb '1998-06-30-12.25.12.1234                          '");
-
-		    } else { 
-			assertCondition (v.equals ("1998-06-30-12.25.12.123400                        "), "got "+v+" sb '1998-06-30-12.25.12.123400                        '");
-		    }
+		    assertCondition (v.equals ("1998-06-30-12.25.12.1234                          "), "got "+v+" sb '1998-06-30-12.25.12.1234                          '");
 		} else {
 
 		    // 4/8/2013 -- when going against char, zeros are dropped 

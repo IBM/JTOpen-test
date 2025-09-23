@@ -578,11 +578,7 @@ customers will have to change applications that break.
 						     + JDRSTest.RSTEST_GET);
 	    JDRSTest.position0 (rs, "NUMBER_POS");
 	    Object s = rs.getObject ("C_SMALLINT");
-	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&  getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
-	       assertCondition ((s instanceof Short) && (s.equals (Short.valueOf((short) 198))));
-	    } else {
-		assertCondition ((s instanceof Integer) && (s.equals (Integer.valueOf(198))));
-	    }
+	    assertCondition ((s instanceof Integer) && (s.equals (Integer.valueOf(198))));
 
 	} catch (Exception e) {
 	    failed (e, "Unexpected Exception");
@@ -939,7 +935,7 @@ NOTE: This really shouldn't be an issue as all datalinks on the AS/400 are http-
                 JDRSTest.position0 (rs, "LOB_FULL");
                 Object o = rs.getObject ("C_DATALINK");
 		//Native driver will return datalinks as strings until v5r3.
-                if ( (getJdbcLevel() < 3) || ( getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V7R1M0))
+                if ( (getJdbcLevel() < 3) || ( getDriver() == JDTestDriver.DRIVER_NATIVE && false))
                     assertCondition ((o instanceof String) && (o.toString().equalsIgnoreCase("https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt")));
                 else
                     assertCondition ((o instanceof java.net.URL) && (o.toString().equalsIgnoreCase("https://github.com/IBM/JTOpen-test/blob/main/README.testing.txt")));

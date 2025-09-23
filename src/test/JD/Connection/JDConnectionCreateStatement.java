@@ -554,20 +554,11 @@ not accessing the real table, updates can't be done.
                         && (updatable == false)
                         && (scrollable == true));
             } else {
-		if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
-		    // V5R1 version 
-		    assertCondition ((w != null)
-				     && (type == ResultSet.TYPE_SCROLL_INSENSITIVE)
-				     && (concurrency == ResultSet.CONCUR_READ_ONLY)
-				     && (updatable == false)
-				     && (scrollable == true));
-		} else { 
 		    assertCondition ((w == null)
 				     && (type == ResultSet.TYPE_SCROLL_SENSITIVE)
 				     && (concurrency == ResultSet.CONCUR_READ_ONLY)
 				     && (updatable == false)
 				     && (scrollable == true));
-		}
             }
          } catch (Exception e) {
             failed(e, "Unexpected Exception");
@@ -900,7 +891,7 @@ and read-only.
             rs.close ();
             s.close ();
             int expectedConcurrency = ResultSet.CONCUR_READ_ONLY;
-            if(isToolboxDriver() && getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+            if(isToolboxDriver() )
                 expectedConcurrency = ResultSet.CONCUR_UPDATABLE; //v7r1 actual cursor on host
             
             assertCondition ((w == null)
@@ -939,15 +930,7 @@ is on there.
             rs.close ();
             s.close ();
 
-	    if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
-	        // V5R1 version 
-		assertCondition ((w == null)
-				 && (type == ResultSet.TYPE_FORWARD_ONLY)
-				 && (concurrency == ResultSet.CONCUR_READ_ONLY)  
-				 && (updatable == false)  
-				 && (scrollable == false));
-	    } else { 
-		assertCondition ((w == null)
+            assertCondition ((w == null)
 				 && (type == ResultSet.TYPE_FORWARD_ONLY)
 				 && (concurrency == ResultSet.CONCUR_UPDATABLE)     //@C3C
 				 && (updatable == true)                             //@C3C
@@ -957,7 +940,7 @@ is on there.
 				 "expected updatable==true but got "+updatable+"\n"+
 				 "expected scrollable=false but got "+scrollable
 				 );
-	    }
+	    
 	    
          } catch (Exception e) {
             failed(e, "Unexpected Exception");
@@ -1095,19 +1078,12 @@ not accessing the real table, updates can't be done.
                         && (updatable == false)
 				 && (scrollable == true));
 	    } else {
-		if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
-		    assertCondition ((w != null)
-			    && (type == ResultSet.TYPE_SCROLL_INSENSITIVE)
-			    && (concurrency == ResultSet.CONCUR_READ_ONLY)
-			    && (updatable == false)
-			    && (scrollable == true));
-		} else { 
 		    assertCondition ((w == null)
 				     && (type == ResultSet.TYPE_SCROLL_SENSITIVE)
 				     && (concurrency == ResultSet.CONCUR_READ_ONLY)
 				     && (updatable == false)
 				     && (scrollable == true));
-		}
+		
 	    }
          } catch (Exception e) {
             failed(e, "Unexpected Exception");
@@ -1563,19 +1539,12 @@ not accessing the real table, updates can't be done.
                         && (scrollable == true));
             } else {
 
-		if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
-		    assertCondition ((w != null)
-                        && (type == ResultSet.TYPE_SCROLL_INSENSITIVE)
-                        && (concurrency == ResultSet.CONCUR_READ_ONLY)
-                        && (updatable == false)
-                        && (scrollable == true));
-		} else { 
 		    assertCondition ((w == null)
 				     && (type == ResultSet.TYPE_SCROLL_SENSITIVE)
 				     && (concurrency == ResultSet.CONCUR_READ_ONLY)
 				     && (updatable == false)
 				     && (scrollable == true));
-		}
+		
             }
          } catch (Exception e) {
             failed(e, "Unexpected Exception");

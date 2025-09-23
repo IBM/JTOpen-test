@@ -174,7 +174,7 @@ Performs setup needed before running testcases.
                                 connection_, COLLECTION2);
       JDSetupCollection.create (systemObject_, 
                                 connection_, COLLECTIONXX);
-      if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)  //@128sch 
+      if(true)  //@128sch 
       {
           JDSetupCollection.create (systemObject_,
                   connection_, SCHEMAS_LEN128);

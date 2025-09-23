@@ -31,7 +31,6 @@ import javax.sql.*;
 import com.ibm.as400.access.AS400;
 
 import test.JDReflectionUtil;
-import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
 
@@ -198,20 +197,15 @@ An exception should be thrown.
                 Connection c = dataSource.getConnection ();
                 Statement s = c.createStatement ();
                 s.executeQuery ("SELECT * FROM QIWS.QCUSTCDT");
-                /* 09/09/2012 -- V7R1 now accepts system naming */
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+                /* 09/09/2012 -- system now accepts system naming */
+		
 		    assertCondition(true); 
-		} else { 
-		    failed ("SQL naming accepted with system naming set.");
-		}
+		
             }
             catch (Exception e) {
-		/* 09/09/2012 -- V7R1 now accepts system naming */
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+		/* 09/09/2012 -- System now accepts system naming */
 		    failed(e, "Should not throw exception for naming mismatch in V7R2");  
-		} else { 
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		}
+		
             }
         }
     }

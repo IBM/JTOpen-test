@@ -85,9 +85,8 @@ public class DDMTranslation extends Testcase
   {
     try
     {
-      // Delete and recreate library DDMTEST
-      CommandCall c = new CommandCall(systemObject_);
-      deleteLibrary(c, testLib_);
+      // Create library if needed 
+      CommandCall c = new CommandCall(pwrSys_);
       c.run("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
       AS400Message[] msgs = c.getMessageList();
       if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals("CPC2102")))
@@ -98,6 +97,10 @@ public class DDMTranslation extends Testcase
         }
         throw new Exception("");
       }
+      
+      // Make sure the tester has authority to library 
+      c.run("QSYS/GRTOBJAUT OBJ("+testLib_+") OBJTYPE(*LIB) USER("+systemObject_.getUserId()+") AUT(*ALL)       ");
+
       // com.ibm.as400.access.AS400JDBCDriver driver; 
        
       AS400JDBCDriver driver = new AS400JDBCDriver();

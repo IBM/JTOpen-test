@@ -162,7 +162,7 @@ Property translate hex = character, expected to fail when we try to insert a hex
 **/
     public void Var001 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        
         {
         try {
 	    Statement stmt = conn_Char.createStatement ();
@@ -182,8 +182,7 @@ Property translate hex = character, expected to fail when we try to insert a hex
 	    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
+        
     }
 
 /**
@@ -192,7 +191,7 @@ Property translate hex = binary, should work when we try to insert a hex value i
     public void Var002 ()
     {
 	
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -215,16 +214,13 @@ Property translate hex = binary, should work when we try to insert a hex value i
 	     failed(e, "Unexpected Exception");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
 
 /**
 Property translate hex = character, should pass when we try to insert a hex value into a char column
 **/
     public void Var003 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Char.createStatement ();
 	    try{
@@ -247,9 +243,7 @@ Property translate hex = character, should pass when we try to insert a hex valu
 	     failed(e, "Unexpected Exception");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+  
 
 /**
 Property translate hex = binary, should fail when we try to insert a hex value into a char column
@@ -257,7 +251,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 **/
     public void Var004 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -276,11 +270,9 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 	    if (getDriver () == JDTestDriver.DRIVER_NATIVE)                                 //@B2
 		assertCondition(areEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
 	    else if (isToolboxDriver())      {
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+		
 		    assertCondition(areEqual(b,expected), "b = " +JDTestUtilities.dumpBytes(b)+ " exp = " +JDTestUtilities.dumpBytes(expected));
-		} else {
-		    failed("Toolbox pre v5r5 didn't throw SQLException");
-		}
+		
 	    } else {
 		failed("Unknown driver "+getDriver());
 	    } 
@@ -293,16 +285,14 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+   
 
 /**
 Property translate hex = character,should pass when we try to insert a hex value into a varchar column
 **/
     public void Var005 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Char.createStatement ();
 	    try{
@@ -324,10 +314,7 @@ Property translate hex = character,should pass when we try to insert a hex value
 	     failed(e, "Unexpected Exception");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
-
+       
 /**
 Property translate hex = binary, should fail when we try to insert a hex value into a varchar column
 
@@ -335,7 +322,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 **/
     public void Var006 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -353,11 +340,9 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 	    if (getDriver () == JDTestDriver.DRIVER_NATIVE)                                      //@B2
 		assertCondition(areEqual(b,expected));
 	    else {
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+		
 		    assertCondition(areEqual(b,expected), "retrieved bytes != expected bytes");
-		} else { 
-		    failed("Toolbox pre V5R5 didn't throw SQLException");
-		}
+		
 	    }
 	}
 	catch(SQLException e)
@@ -368,16 +353,14 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+        
 
 /**
 Property translate hex = character,should pass when we try to insert a hex value into a varbinary column
 **/
     public void Var007 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Char.createStatement ();
 	    try{
@@ -397,16 +380,14 @@ Property translate hex = character,should pass when we try to insert a hex value
 	    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+        
 
 /**
 Property translate hex = binary, should fail when we try to insert a hex value into a varbinary column
 **/
     public void Var008 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -428,16 +409,13 @@ Property translate hex = binary, should fail when we try to insert a hex value i
 	     failed(e, "Unexpected Exception");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
-
+       
 /**
 Property translate hex = character,should fail when we try to insert a hex value into a blob column
 **/
     public void Var009 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Char.createStatement ();
 	    try{
@@ -457,16 +435,14 @@ Property translate hex = character,should fail when we try to insert a hex value
 	     assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+      
 
 /**
 Property translate hex = binary, should pass when we try to insert a hex value into a binary column
 **/
     public void Var010 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try {
 	    Statement stmt = conn_Bin.createStatement ();
 	    try{
@@ -488,9 +464,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
 	     failed(e, "Unexpected Exception");
 	}
         }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+    
 
 /**
 Property translate hex = character, should fail when we try to insert a hex value into a binary parameter
@@ -498,7 +472,7 @@ Property translate hex = character, should fail when we try to insert a hex valu
     public void Var011()
     {
         
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE1 (IN B_IN BINARY(20), OUT B_OUT BINARY(20)) LANGUAGE SQL "+
              "SPECIFIC TRANSLATE1 JDCTRANSLATE1: BEGIN DECLARE DUMMY BINARY(20); "+
@@ -519,9 +493,7 @@ String sql = "CREATE PROCEDURE "+proc+".TRANSLATE1 (IN B_IN BINARY(20), OUT B_OU
 	     assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	 }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+     
 
 /**
 Property translate hex = binary, should pass when we try to insert a hex value into a binary parameter
@@ -529,7 +501,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
      public void Var012()
      {
         
-         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+         
          try{
 	     String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE2 (IN B_IN BINARY(20),OUT B_OUT BINARY(20)) LANGUAGE SQL "+
               "SPECIFIC TRANSLATE2 JDCTRANSLATE2: BEGIN DECLARE DUMMY BINARY(20); "+
@@ -553,9 +525,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
              failed (e, "Unexpected Exception");
          }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-     }
+         
 
 /**
 Property translate hex = character, should fail when we try to insert a hex value into a varbinary parameter
@@ -563,7 +533,7 @@ Property translate hex = character, should fail when we try to insert a hex valu
     public void Var013()
     {
         
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE3 (IN B_IN VARBINARY(20), OUT B_OUT VARBINARY(20)) LANGUAGE SQL " + "SPECIFIC TRANSLATE3 JDCTRANSLATE3: BEGIN DECLARE DUMMY VARBINARY(20); "+
              "SET B_OUT=B_IN; END JDCTRANSLATE3" ;
@@ -583,9 +553,7 @@ String sql = "CREATE PROCEDURE "+proc+".TRANSLATE3 (IN B_IN VARBINARY(20), OUT B
 	     assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	 }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+         
 
 /**
 Property translate hex = binary, should pass when we try to insert a hex value into a varbinary parameter
@@ -593,7 +561,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
      public void Var014()
      {
         
-         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+         
          try{
 String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE4 (IN B_IN VARBINARY(20),OUT B_OUT VARBINARY(20)) LANGUAGE SQL " + "SPECIFIC TRANSLATE4 JDCTRANSLATE4: BEGIN DECLARE DUMMY VARBINARY(20); "+
               "SET B_OUT=B_IN; END JDCTRANSLATE4" ;
@@ -614,9 +582,7 @@ String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE4 (IN B_IN VARBINARY(20),OUT B
              failed (e, "Unexpected Exception");
          }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-     }
+        
 
 
 /**
@@ -624,7 +590,7 @@ Property translate hex = character, should pass when we try to insert a hex valu
 **/
     public void Var015()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE5 (IN B_IN CHAR(20) FOR BIT DATA, OUT B_OUT CHAR(20) FOR BIT DATA) LANGUAGE SQL " + "SPECIFIC TRANSLATE5 JDCTRANSLATE5: BEGIN DECLARE DUMMY CHAR(20); "+
              "SET B_OUT=B_IN; END JDCTRANSLATE5   ";
@@ -648,9 +614,7 @@ String sql = "CREATE PROCEDURE "+proc+".TRANSLATE5 (IN B_IN CHAR(20) FOR BIT DAT
 	     failed(e, "UnexpectedException");
 	 }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+       
 
 /**
 Property translate hex = binary, should fail when we try to insert a hex value into a char parameter
@@ -658,7 +622,7 @@ Property translate hex = binary, should fail when we try to insert a hex value i
      public void Var016()
      {
         
-         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+         
          try{
 String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE6 (IN B_IN CHAR(20) FOR BIT DATA,OUT B_OUT CHAR(20) FOR BIT DATA) LANGUAGE SQL " + "SPECIFIC TRANSLATE6 JDCTRANSLATE6: BEGIN DECLARE DUMMY CHAR(20) FOR BIT DATA; " + "SET B_OUT=B_IN; END JDCTRANSLATE6" ;
 
@@ -671,31 +635,23 @@ String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE6 (IN B_IN CHAR(20) FOR BIT DA
              cstmt.registerOutParameter(1, java.sql.Types.CHAR);
 	     cstmt.execute();
 	     cstmt.close();
-	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		 /* In V6R1 the DB eased this restriction */ 
 		 assertCondition(true); 
-	     } else { 
-		 failed("Didn't Throw SQLException");
-	     }
+	
          }
          catch (SQLException e){
-	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		 failed(e, "Should not throw exception in V6R1 due to DB changes in May 2008"); 
-	     } else { 
-		 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	     }
+	    
+		 failed(e, "Should not throw exception "); 
+	     
          }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-     }
+        
 
 /**
 Property translate hex = character, should pass when we try to insert a hex value into a varchar parameter
 **/
     public void Var017()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE7 (IN B_IN VARCHAR(20) FOR BIT DATA, OUT B_OUT VARCHAR(20) FOR BIT DATA) LANGUAGE SQL " + "SPECIFIC TRANSLATE7 JDCTRANSLATE7: BEGIN DECLARE DUMMY VARCHAR(20) FOR BIT DATA; " + "SET B_OUT=B_IN; END JDCTRANSLATE7" ;
 
@@ -716,16 +672,14 @@ String sql = "CREATE PROCEDURE "+proc+".TRANSLATE7 (IN B_IN VARCHAR(20) FOR BIT 
 	     failed(e, "UnexpectedException");
 	 }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+        
 
 /**
 Property translate hex = binary, should fail when we try to insert a hex value into a varchar parameter
 **/
      public void Var018()
      {
-         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+         
 	 try{
 String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE8 (IN B_IN VARCHAR(20) FOR BIT DATA ,OUT B_OUT VARCHAR(20) FOR BIT DATA) LANGUAGE SQL " + "SPECIFIC TRANSLATE8 JDCTRANSLATE8: BEGIN DECLARE DUMMY VARCHAR(20) FOR BIT DATA; " + "SET B_OUT=B_IN; END JDCTRANSLATE8" ;
 
@@ -738,24 +692,17 @@ String  sql = "CREATE PROCEDURE "+proc+".TRANSLATE8 (IN B_IN VARCHAR(20) FOR BIT
              cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
 	     cstmt.execute();
 	     cstmt.close();
-	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		 /* In V6R1 the DB eased this restriction */ 
+	     
 		 assertCondition(true); 
-	     } else { 
-		 failed("Didn't Throw SQLException");
-	     }
+	     
          }
          catch (SQLException e){
-	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		 failed(e, "Should not throw exception in V6R1 due to DB changes in May 2008"); 
-	     } else { 
-		 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	     }
+	     
+		 failed(e, "Should not throw exception due to DB changes in May 2008"); 
+	     
          }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-     }
+        
 
 
 /**
@@ -763,7 +710,7 @@ Property translate hex = character, should fail when we try to insert a hex valu
 **/
     public void Var019()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+        
 	try{
 String sql = "CREATE PROCEDURE "+proc+".TRANSLATE9 (IN B_IN BLOB(20), OUT B_OUT BLOB(20)) LANGUAGE SQL " + "SPECIFIC TRANSLATE9 JDCTRANSLATE9: BEGIN DECLARE DUMMY BLOB(20); "+
              "SET B_OUT=B_IN; END JDCTRANSLATE9" ;
@@ -784,9 +731,7 @@ String sql = "CREATE PROCEDURE "+proc+".TRANSLATE9 (IN B_IN BLOB(20), OUT B_OUT 
 	      assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	 }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-    }
+       
 
 /**
 Property translate hex = binary, should pass when we try to insert a hex value into a blob parameter
@@ -800,7 +745,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
 	 }
 	 */
 	 String sql="not set "; 
-         if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+         
 	 try{
  sql = "CREATE PROCEDURE "+proc+".TRANSLATE10 (IN B_IN BLOB(200), OUT B_OUT BLOB(200)) LANGUAGE SQL " + "SPECIFIC TRANSLATE10 JDCTRANSLATE10: BEGIN DECLARE DUMMY BLOB(200); "+
               "SET B_OUT=B_IN; END JDCTRANSLATE10" ;
@@ -827,7 +772,5 @@ Property translate hex = binary, should pass when we try to insert a hex value i
        
 	 }
          }
-        else
-            notApplicable("V5R3 or greater variation");
-     }
+      
 }

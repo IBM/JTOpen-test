@@ -434,7 +434,7 @@ executeUpdate() - Verify that previous warnings are cleared.
         if (checkJdbc20 ()) {
             if (( isToolboxDriver() ||
 		  getDriver () == JDTestDriver.DRIVER_JTOPENLITE) &&
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -450,7 +450,7 @@ executeUpdate() - Verify that previous warnings are cleared.
                 }
             }
             else if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -718,7 +718,7 @@ executeQuery() - Verify that previous warnings are cleared.
     {
         if (checkJdbc20 ()) {
             if (isToolboxDriver() &&
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     //TB v7r1 returns warning if statement type does not match cursor type returned from host
@@ -735,7 +735,7 @@ executeQuery() - Verify that previous warnings are cleared.
                 }
             }
             else if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -817,7 +817,7 @@ executeQuery() - Execute an updatable query using a read only statement.
 
                 //TB v7r1 cursor info is actual info from host
                 if (isToolboxDriver() &&
-                    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                    true )
                     assertCondition ((w == null) && (concurrency == ResultSet.CONCUR_UPDATABLE), "concurrency="+concurrency+" sb CONCUR_UPDATABLE="+ResultSet.CONCUR_UPDATABLE+" Updated for V7R1");
                 else
                     assertCondition ((w == null) && (concurrency == ResultSet.CONCUR_READ_ONLY));
@@ -849,7 +849,7 @@ executeQuery() - Execute a read only query using an updatable statement.
                 // we also no longer warn that we changed concurrency.
                 if ((isToolboxDriver() ||
                      getDriver () == JDTestDriver.DRIVER_NATIVE ) &&
-                    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                    true )
                 {
                     assertCondition ((w == null) && (concurrency == ResultSet.CONCUR_UPDATABLE), "expected concurrency= ResultSet.CONCUR_UPDATABLE but got "+concurrency);
                 }
@@ -983,7 +983,7 @@ Updated 05/27/2009 to verify that exception is not a generic exception for CLI
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&
+	    if (true &&
 		getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		String expectedException = "Number of host variables not valid";
 		String exceptionMessage = e.toString();
@@ -1171,7 +1171,7 @@ execute() - Verify that previous warnings are closed.
     {
         if (checkJdbc20 ()) {
             if (isToolboxDriver() &&
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -1187,7 +1187,7 @@ execute() - Verify that previous warnings are closed.
                 }
             }
 	    else if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-		     getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+		     true )
 	    {
 
                 try {
@@ -1775,7 +1775,7 @@ Updated 05/27/2009 to verify that exception is not a generic exception for CLI
             failed ("Didn't throw SQLException when passing parameter markers on execute");
         }
         catch (Exception e) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&
+	    if (true &&
 		getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		String expectedException = "Number of host variables not valid";
 		String exceptionMessage = e.toString();
@@ -2559,7 +2559,7 @@ executeLargeUpdate() - Verify that previous warnings are cleared.
         if (checkJdbc42 ()) {
             if (( isToolboxDriver() ||
 		  getDriver () == JDTestDriver.DRIVER_JTOPENLITE) &&
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     Statement s = connection_.createStatement();
@@ -2575,7 +2575,7 @@ executeLargeUpdate() - Verify that previous warnings are cleared.
                 }
             }
             else if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-                getRelease() >= JDTestDriver.RELEASE_V7R1M0 )
+                true )
             {
                 try {
                     Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,

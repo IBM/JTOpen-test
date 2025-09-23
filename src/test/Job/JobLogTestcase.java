@@ -11,19 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//
-//
-///////////////////////////////////////////////////////////////////////////////
-//
-// File Name:  JobLogTestcase.java
-//
-// Class Name:  JobLogTestcase
-//
-///////////////////////////////////////////////////////////////////////////////
-//
-///////////////////////////////////////////////////////////////////////////////
 
 package test.Job;
 
@@ -32,9 +19,9 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import com.ibm.as400.access.Job;
-import com.ibm.as400.access.JobList; //writemsg
-import com.ibm.as400.access.AS400Bin2; //writemsg
-import com.ibm.as400.access.AS400Bin4; //writemsg
+import com.ibm.as400.access.JobList; 
+import com.ibm.as400.access.AS400Bin2; 
+import com.ibm.as400.access.AS400Bin4; 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.AS400Text;

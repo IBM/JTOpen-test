@@ -27,14 +27,15 @@ import test.Testcase;
  **/
 public class SecSignonInfoTestcase extends Testcase {
   public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "SecSignonInfoTestcase";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.SecTest.main(newArgs); 
-   }
+    String[] newArgs = new String[args.length + 2];
+    newArgs[0] = "-tc";
+    newArgs[1] = "SecSignonInfoTestcase";
+    for (int i = 0; i < args.length; i++) {
+      newArgs[2 + i] = args[i];
+    }
+    test.SecTest.main(newArgs);
+  }
+
   /**
    * Get password expiration date without signing on. Should return date.
    **/
@@ -45,7 +46,7 @@ public class SecSignonInfoTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       sys.setMustUseSockets(mustUseSockets_);
       GregorianCalendar date = sys.getPasswordExpirationDate();
-      sys.close(); 
+      sys.close();
       assertCondition(date != null, "Date is null");
     } catch (Exception e) {
       failed(e, "Unexpected exception");
@@ -62,7 +63,7 @@ public class SecSignonInfoTestcase extends Testcase {
       PasswordVault.clearPassword(charPassword);
       sys.setMustUseSockets(mustUseSockets_);
       GregorianCalendar date = sys.getPreviousSignonDate();
-      sys.close(); 
+      sys.close();
       assertCondition(date != null, "Date is null");
     } catch (Exception e) {
       failed(e, "Unexpected exception");
@@ -73,7 +74,7 @@ public class SecSignonInfoTestcase extends Testcase {
    * Get the signon date without signing on. Should return date.
    **/
   public void Var003() {
-    AS400 sys = null; 
+    AS400 sys = null;
     try {
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       sys = new AS400(systemName_, userId_, charPassword);
@@ -83,12 +84,12 @@ public class SecSignonInfoTestcase extends Testcase {
       assertCondition(date != null, "Date is null");
     } catch (Exception e) {
       failed(e, "Unexpected exception");
-    } finally { 
+    } finally {
       if (sys != null) {
-        try { 
-          sys.close(); 
-        } catch (Exception e) { 
-          e.printStackTrace(); 
+        try {
+          sys.close();
+        } catch (Exception e) {
+          e.printStackTrace();
         }
       }
     }
@@ -115,7 +116,7 @@ public class SecSignonInfoTestcase extends Testcase {
         }
       } finally {
         sys.disconnectService(AS400.COMMAND);
-        sys.close(); 
+        sys.close();
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception");
@@ -135,7 +136,7 @@ public class SecSignonInfoTestcase extends Testcase {
 
       AS400 newsys = new AS400(sys);
       GregorianCalendar prevDate = newsys.getPreviousSignonDate();
-      newsys.close(); 
+      newsys.close();
       assertCondition(prevDate.equals(lastDate), "Previous signon date not the same");
     } catch (Exception e) {
       failed(e, "Unexpected exception");
@@ -157,12 +158,13 @@ public class SecSignonInfoTestcase extends Testcase {
         assertCondition(date != null, "Did not get a current signon date");
       } finally {
         sys.disconnectService(AS400.DATAQUEUE);
-        sys.close(); 
+        sys.close();
       }
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     }
   }
+  
 
   /**
    * Set the password expiration warning date to a large number. We should get the
@@ -188,7 +190,7 @@ public class SecSignonInfoTestcase extends Testcase {
           succeeded();
         } finally {
           AS400.setPasswordExpirationWarningDays(oldVal);
-          sys.close(); 
+          sys.close();
         }
       } catch (Exception e) {
         failed(e, "Unexpected exception");
@@ -255,10 +257,10 @@ public class SecSignonInfoTestcase extends Testcase {
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     }
-    try { 
-      sys.close(); 
-    } catch (Exception e) { 
-      e.printStackTrace(); 
+    try {
+      sys.close();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
@@ -278,27 +280,27 @@ public class SecSignonInfoTestcase extends Testcase {
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     }
-    try { 
-      sys.close(); 
-    } catch (Exception e) { 
-      e.printStackTrace(); 
+    try {
+      sys.close();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
-  
   /**
    * Test isAdditionalAuthenticationFactorAccepted
    **/
   public void Var011() {
 
     try {
-      boolean expectedValue = false; 
-      if (getRelease() > JDTestDriver.RELEASE_V7R5M0) 
-        expectedValue = true; 
-      
+      boolean expectedValue = false;
+      if (getRelease() > JDTestDriver.RELEASE_V7R5M0)
+        expectedValue = true;
+
       boolean accepted = JDReflectionUtil.callStaticMethod_B("com.ibm.as400.access.AS400",
           "isAdditionalAuthenticationFactorAccepted", systemName_);
-      assertCondition(accepted == expectedValue, "AS400.isAdditionalAuthenticationFactorAccepted="+accepted+" sb "+expectedValue);
+      assertCondition(accepted == expectedValue,
+          "AS400.isAdditionalAuthenticationFactorAccepted=" + accepted + " sb " + expectedValue);
     } catch (Exception e) {
       failed(e, "Unexpected exception");
     }

@@ -18,8 +18,6 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JTOpenTestEnvironment;
-
 import java.io.FileOutputStream;
 
 import java.sql.ResultSet;
@@ -447,14 +445,6 @@ public class JDRSGetTime extends JDTestcase {
         int offset = (centralCal.getTimeZone().getRawOffset()
             - thisClientCal.getTimeZone().getRawOffset()) / 3600000;
         // System.out.println(offset);
-
-        if ((isToolboxDriver()) && (getRelease() == JDTestDriver.RELEASE_V7R1M0)
-            && JTOpenTestEnvironment.isOS400
-            && ("UTC".equals(tz))) {
-          assertCondition(v.toString().equals("08:14:03"),
-              "Got " + v.toString() + " expected 08:14:03 tz=" + tz);
-          return;
-        }
 
         if (((getDriver() == JDTestDriver.DRIVER_NATIVE && "UTC".equals(tz)))) {
           assertCondition(v.toString().equals("08:14:03"),

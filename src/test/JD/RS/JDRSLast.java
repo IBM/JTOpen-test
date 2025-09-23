@@ -304,12 +304,7 @@ last() - Should work on a "simple" result set.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else { 
-
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
             boolean success = rs.last ();
             String s1 = rs.getString ("TABLE_TYPE");
             rs.close ();
@@ -910,12 +905,7 @@ when positioned to the last row.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else { 
-
-		 rs  = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
             rs.last ();
             boolean success = rs.isLast ();
             rs.close ();
@@ -1656,12 +1646,7 @@ last() - Should work on a "simple" result set.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else { 
-
-		    rs = dmdNoPrefetch_.getTableTypes ();
-		}
+		rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
             boolean success = rs.last ();
             String s1 = rs.getString ("TABLE_TYPE");
             rs.close ();
@@ -2262,12 +2247,7 @@ when positioned to the last row.
          try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else { 
-
-		 rs  = dmdNoPrefetch_.getTableTypes ();
-		}
+		rs = statement2NoPrefetch_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
             rs.last ();
             boolean success = rs.isLast ();
             rs.close ();

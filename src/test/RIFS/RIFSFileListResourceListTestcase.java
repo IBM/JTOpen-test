@@ -25,6 +25,7 @@ import com.ibm.as400.resource.RIFSFileList;
 import com.ibm.as400.resource.Resource;
 import com.ibm.as400.resource.ResourceListEvent;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 import test.UserTest;
 import test.misc.VIFSSandbox;
@@ -131,7 +132,7 @@ Performs setup needed before running variations.
         pathNames_ = f25_.list();
 
         // See if we're running on OS/400.
-        if (System.getProperty("os.name").indexOf("OS/400") >= 0) {
+        if (JTOpenTestEnvironment.isOS400) {
           runningOnOS400_ = true;
         }
 

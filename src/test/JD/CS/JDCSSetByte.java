@@ -24,7 +24,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDSetupProcedure;
-import test.JDTestDriver;
 
 /**
 Testcase JDCSSetByte.  This tests the following
@@ -1314,7 +1313,7 @@ setByte() - Set a DATALINK parameter.
 // @B2 Changes made because it is illegal to Execute() before you register your output parm.  This may have worked fine before because JDSetupProcedure.register() registers all parms, just not to the correct type we want.
     public void Var044()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
+	
 	    if(checkJdbc30())
 	    {
 		if(checkLobSupport ())
@@ -1344,9 +1343,7 @@ setByte() - Set a DATALINK parameter.
 		    }
 		}
 	    }
-	} else {
-	    notApplicable(); 
-	} 
+	
     }
 
 /**

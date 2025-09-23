@@ -290,12 +290,8 @@ when the connection is open.
         try {
 
 
-	    if ((getRelease() < JDTestDriver.RELEASE_V7R1M0) && (getDriver () != JDTestDriver.DRIVER_TOOLBOX)) { 
-		assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == true); // @A1C
-	    } else {
-		    assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == false,
-				     "storesMixedCaseQuotedIdentifiers() returned true, but should return false because quoted SQL identifiers are case sensitive -- changed 12/31/2007 by native driver");
-	    } 
+	    assertCondition (dmd_.storesMixedCaseQuotedIdentifiers () == false,
+           "storesMixedCaseQuotedIdentifiers() returned true, but should return false because quoted SQL identifiers are case sensitive -- changed 12/31/2007 by native driver"); 
 
 
         }
@@ -315,12 +311,8 @@ when the connection is closed.
         try {
 
 
-	    if ((getRelease() < JDTestDriver.RELEASE_V7R1M0) && (getDriver () != JDTestDriver.DRIVER_TOOLBOX)) { 
-		assertCondition (dmd2_.storesMixedCaseQuotedIdentifiers () == true); // @A1C
-	    } else {
-		    assertCondition (dmd2_.storesMixedCaseQuotedIdentifiers () == false,
-				     "storesMixedCaseQuotedIdentifiers() returned true, but should return false because quoted SQL identifiers are case sensitive -- changed 12/31/2007 by native driver");
-	    } 
+	    assertCondition (dmd2_.storesMixedCaseQuotedIdentifiers () == false,
+           "storesMixedCaseQuotedIdentifiers() returned true, but should return false because quoted SQL identifiers are case sensitive -- changed 12/31/2007 by native driver"); 
 
         }
         catch (Exception e)  {

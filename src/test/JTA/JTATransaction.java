@@ -28,7 +28,6 @@ import com.ibm.as400.access.AS400JDBCDataSource;
 import com.ibm.as400.access.AS400JDBCXADataSource;
 
 import test.JDReflectionUtil;
-import test.JDTestDriver;
 import test.JTATest;
 import test.LCTXid;
 import test.PasswordVault;
@@ -116,11 +115,7 @@ public class JTATransaction extends JTATestcase {
      */
   
     public void Var001() {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("v5r4 or higher");
-            return;
-        }
-     if (isIasp && (! isNTS)) {
+        if (isIasp && (! isNTS)) {
        notApplicable("Not applicable for IASP and not NTS");
        return; 
      }
@@ -225,11 +220,7 @@ public class JTATransaction extends JTATestcase {
      * Since Loosely Coupled option is off, this variation should get exception
      */
     public void Var002() {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("v5r4 or higher");
-            return;
-        }
-     if (isIasp && (! isNTS)) {
+        if (isIasp && (! isNTS)) {
        notApplicable("Not applicable for IASP and not NTS");
        return; 
      }
@@ -335,11 +326,7 @@ public class JTATransaction extends JTATestcase {
      */
     
     public void Var003() {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("v5r4 or higher");
-            return;
-        }
-     if (isIasp && (! isNTS)) {
+        if (isIasp && (! isNTS)) {
        notApplicable("Not applicable for IASP and not NTS");
        return; 
      }
@@ -445,11 +432,7 @@ public class JTATransaction extends JTATestcase {
      * Since Loosely Coupled option is off, this variation should get exception
      */
     public void Var004() {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("v5r4 or higher");
-            return;
-        }
-     if (isIasp && (! isNTS)) {
+        if (isIasp && (! isNTS)) {
        notApplicable("Not applicable for IASP and not NTS");
        return; 
      }
@@ -552,11 +535,7 @@ public class JTATransaction extends JTATestcase {
   
 
     public void Var005() {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("v5r4 or higher");
-            return;
-        }
-     if (isIasp && (! isNTS)) {
+        if (isIasp && (! isNTS)) {
        notApplicable("Not applicable for IASP and not NTS");
        return; 
      }
@@ -661,11 +640,7 @@ public class JTATransaction extends JTATestcase {
      * Since Loosely Coupled option is off, this variation should get exception
      */
     public void Var006() {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("v5r4 or higher");
-            return;
-        }
-     if (isIasp && (! isNTS)) {
+        if (isIasp && (! isNTS)) {
        notApplicable("Not applicable for IASP and not NTS");
        return; 
      }

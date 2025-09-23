@@ -55,8 +55,9 @@ public class JTOpenEclipseExportJars  {
       System.out.println("gitDirectory is "+gitDirectory); 
       System.out.println("Current directory is "+currentDirectory);
       /* C:\Users\JohnEberhard\git\JTOpenWorking\target\jt400-20.0.7.jar */ 
-      
+      System.out.println("Transferring files to "+as400Name); 
       AS400 as400 = new AS400(as400Name, userid, password.toCharArray()); 
+      as400.setGuiAvailable(false);
       transferFiles(as400, gitDirectory); 
       System.out.println("Files transferred"); 
       System.out.println("==================================================================================================="); 

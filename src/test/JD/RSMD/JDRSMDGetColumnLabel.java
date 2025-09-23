@@ -855,23 +855,20 @@ public class JDRSMDGetColumnLabel extends JDTestcase {
    * cache = false)
    **/
   public void Var034() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      try {
-        reconnect(PACKAGE_CACHE_NO);
-        ResultSet rs = statement_.executeQuery("SELECT * FROM " + TABLELCN);
-        ResultSetMetaData rsmd = rs.getMetaData();
-        String s = rsmd.getColumnLabel(1);
-        String expected = "THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST";
-        assertCondition(s.equals(expected), "\nGot      " + s + "\nExpected "
-            + expected
-            + "Added by Toolbox 8/12/2004 to test 128 byte column names.");
-      } catch (Exception e) {
-        failed(
-            e,
-            "Unexpected Exception.  Added by Toolbox 8/12/2004 to test 128 byte column names.");
-      }
-    } else
-      notApplicable("V5R4 or greater variation.");
+    try {
+      reconnect(PACKAGE_CACHE_NO);
+      ResultSet rs = statement_.executeQuery("SELECT * FROM " + TABLELCN);
+      ResultSetMetaData rsmd = rs.getMetaData();
+      String s = rsmd.getColumnLabel(1);
+      String expected = "THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST";
+      assertCondition(s.equals(expected), "\nGot      " + s + "\nExpected "
+          + expected
+          + "Added by Toolbox 8/12/2004 to test 128 byte column names.");
+    } catch (Exception e) {
+      failed(
+          e,
+          "Unexpected Exception.  Added by Toolbox 8/12/2004 to test 128 byte column names.");
+    }
   }
 
   /**
@@ -956,7 +953,7 @@ public class JDRSMDGetColumnLabel extends JDTestcase {
       boolean passed = true;
       String label = "L";
       for (int i = 1; i < 60; i++) {
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+        if (true) {
           // Drop old table
           cleanupTable(statement_,  TABLE3);
           

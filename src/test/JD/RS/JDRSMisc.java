@@ -927,7 +927,7 @@ regardless of what they are set to.
 		ResultSet rs = statement.executeQuery ("CALL " + JDSetupProcedure.STP_RS1S);
 		int type = rs.getType ();
 		int firstFetch = -1, secondFetch = -2;
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {                   /* @D2A */
+		if (true) {                   /* @D2A */
 		    // verify that the cursor is scrollable                          /* @D2A */
 		    rs.first();
 		    firstFetch = rs.getInt("CUSNUM");
@@ -937,13 +937,7 @@ regardless of what they are set to.
 		}                                                                    /* @D2A */
 		rs.close ();
 		statement.close ();
-        if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {                                                  //@D1A
-            assertCondition (type == ResultSet.TYPE_FORWARD_ONLY);
-        } else if(getRelease() <= JDTestDriver.RELEASE_V7R1M0) { //@pda                                                                                             //@D1A
-            assertCondition (type == ResultSet.TYPE_SCROLL_INSENSITIVE && firstFetch == secondFetch, "Type is "+type+" instead of TYPE_SCROLL_INSENSITIVE or firstFetch("+firstFetch+") != secondFetch("+secondFetch+") Added by Toolbox 11/18/2003"); ///@D1A
-        } else {                                                                                             
-            assertCondition ( ((type == ResultSet.TYPE_SCROLL_SENSITIVE) || (type == ResultSet.TYPE_SCROLL_INSENSITIVE)) && firstFetch == secondFetch, "Type is "+type+" instead of TYPE_SCROLL_INSENSITIVE or firstFetch("+firstFetch+") != secondFetch("+secondFetch+") Added by Toolbox 05/31/2007"); //@pda //get from sp definition, which is assensitive by default
-        }
+        assertCondition ( ((type == ResultSet.TYPE_SCROLL_SENSITIVE) || (type == ResultSet.TYPE_SCROLL_INSENSITIVE)) && firstFetch == secondFetch, "Type is "+type+" instead of TYPE_SCROLL_INSENSITIVE or firstFetch("+firstFetch+") != secondFetch("+secondFetch+") Added by Toolbox 05/31/2007"); //@pda //get from sp definition, which is assensitive by default
 	    }
 	    catch (Exception e) {
 		failed (e, "Unexpected Exception -- changed by toolbox 11/18/2003 ");
@@ -1173,137 +1167,133 @@ even though it is declared to be. @D2A
     {
 	String command=""; 
 	if (checkJdbc20 ()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {                   /* @D2A */
-		try {
-		    String collection = collection_;
-		    if (collection == null) {
-			collection = "JDTESTSTP";
-		    }
-		    String procedure = collection+".JDRSMISC43";
+	    try {
+          String collection = collection_;
+          if (collection == null) {
+      	collection = "JDTESTSTP";
+          }
+          String procedure = collection+".JDRSMISC43";
 
-	            //
-                    // Create the array result sets procedure
-	            //
-		    Statement stmt = connection_.createStatement();
+                //
+                      // Create the array result sets procedure
+                //
+          Statement stmt = connection_.createStatement();
 
-		    //
-		    // Cleanup from last run 
-		    // 
-		    command = "CALL QSYS.QCMDEXC('DLTF "+collection+"/arrayrs                        ',0000000035.00000)";
-		    try { 
-			stmt.executeUpdate(command);
-		    }catch(Exception e) { } 
-		    command = "drop procedure "+procedure;
-		    try { 
-			stmt.executeUpdate(command);
-		    } catch(Exception e) {
-		    }
-
-
-		    //
-		    // create the source file
-		    //
-		    command = "CALL QSYS.QCMDEXC('CRTSRCPF "+collection+"/arrayrs                    ', 0000000030.00000)"; 
-		    stmt.executeUpdate(command);
-		    command = "CALL QSYS.QCMDEXC('ADDPFM   "+collection+"/arrayrs arrayrs                                   ',0000000060.00000)";
-		    stmt.executeUpdate(command) ;
+          //
+          // Cleanup from last run 
+          // 
+          command = "CALL QSYS.QCMDEXC('DLTF "+collection+"/arrayrs                        ',0000000035.00000)";
+          try { 
+      	stmt.executeUpdate(command);
+          }catch(Exception e) { } 
+          command = "drop procedure "+procedure;
+          try { 
+      	stmt.executeUpdate(command);
+          } catch(Exception e) {
+          }
 
 
-		    //
-		    // Load the code into it 
-		    // 
+          //
+          // create the source file
+          //
+          command = "CALL QSYS.QCMDEXC('CRTSRCPF "+collection+"/arrayrs                    ', 0000000030.00000)"; 
+          stmt.executeUpdate(command);
+          command = "CALL QSYS.QCMDEXC('ADDPFM   "+collection+"/arrayrs arrayrs                                   ',0000000060.00000)";
+          stmt.executeUpdate(command) ;
 
 
-		      String[] sourceCode= {
-			"     DRESULT           DS                  OCCURS(20)",
-			"     D COL1                    1     16A",
-			"     C     1             DO        20            X                 2 0",
-			"     C     X             OCCUR     RESULT",
-			"     C                   EVAL      COL1='array result set'",
-			"     C                   ENDDO",
-			"     C                   EVAL      X=X-1",
-			"     C/EXEC SQL",
-			"     C+ SET RESULT SETS FOR RETURN TO CLIENT ARRAY :RESULT FOR :X ROWS",
-			"     C/END-EXEC",
-			"     C                   SETON                                            LR",
-			"     C                   RETURN",
-			"",
-			""
-		    }; 
-		    command = "insert into "+collection+".arrayrs values(?, 0, ?)";
-		    PreparedStatement ps = connection_.prepareStatement(command);
+          //
+          // Load the code into it 
+          // 
 
-		    for (int i = 0; i < sourceCode.length; i++) {
-			ps.setInt(1, i+1); 
-			ps.setString(2, sourceCode[i]);
-			ps.executeUpdate();
-		    }
-		    //
-		    // Compile it 
-		    //
-		    command = "QSYS/crtsqlrpgi obj("+collection+"/arrayrs) srcfile("+collection+"/arrayrs) commit(*none) objtype(*module) option(*Xref *sql)";
-		    command = "call QSYS.QCMDEXC('"+
-		      command+"',0000000"+command.length()+".00000)";
-		    stmt.executeUpdate(command);
 
-		    command = "QSYS/crtpgm "+collection+"/arrayrs";
-		    command = "call QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
-		    stmt.executeUpdate(command);
+            String[] sourceCode= {
+      	"     DRESULT           DS                  OCCURS(20)",
+      	"     D COL1                    1     16A",
+      	"     C     1             DO        20            X                 2 0",
+      	"     C     X             OCCUR     RESULT",
+      	"     C                   EVAL      COL1='array result set'",
+      	"     C                   ENDDO",
+      	"     C                   EVAL      X=X-1",
+      	"     C/EXEC SQL",
+      	"     C+ SET RESULT SETS FOR RETURN TO CLIENT ARRAY :RESULT FOR :X ROWS",
+      	"     C/END-EXEC",
+      	"     C                   SETON                                            LR",
+      	"     C                   RETURN",
+      	"",
+      	""
+          }; 
+          command = "insert into "+collection+".arrayrs values(?, 0, ?)";
+          PreparedStatement ps = connection_.prepareStatement(command);
 
-		    //
-		    // Declare the procedures 
-		    // 
-		      command = "create procedure "+procedure+" language rpg parameter style general external name '"+collection+"/ARRAYRS'" ;
-		      stmt.executeUpdate(command); 
+          for (int i = 0; i < sourceCode.length; i++) {
+      	ps.setInt(1, i+1); 
+      	ps.setString(2, sourceCode[i]);
+      	ps.executeUpdate();
+          }
+          //
+          // Compile it 
+          //
+          command = "QSYS/crtsqlrpgi obj("+collection+"/arrayrs) srcfile("+collection+"/arrayrs) commit(*none) objtype(*module) option(*Xref *sql)";
+          command = "call QSYS.QCMDEXC('"+
+            command+"',0000000"+command.length()+".00000)";
+          stmt.executeUpdate(command);
 
-            Statement statement;
-            if (isToolboxDriver()){ 
-                statement =
-                    connection_.createStatement
-                       (ResultSet.TYPE_FORWARD_ONLY,
-                  ResultSet.CONCUR_READ_ONLY);   
-            } else {
-		        statement =
-                        connection_.createStatement
-                           (ResultSet.TYPE_SCROLL_INSENSITIVE,
-			    ResultSet.CONCUR_READ_ONLY);
-            }
-		    command = "CALL " + procedure;
-		    ResultSet rs = statement.executeQuery (command); 
-		    int type = rs.getType ();
+          command = "QSYS/crtpgm "+collection+"/arrayrs";
+          command = "call QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
+          stmt.executeUpdate(command);
 
-                    // System.out.println("Type is "+type +" Scroll insenstive = "+ResultSet.TYPE_SCROLL_INSENSITIVE );
+          //
+          // Declare the procedures 
+          // 
+            command = "create procedure "+procedure+" language rpg parameter style general external name '"+collection+"/ARRAYRS'" ;
+            stmt.executeUpdate(command); 
 
-		    // verify that the cursor is scrollable
-		    // this should throw exception for an array result set 
-		    rs.next();
-		    rs.previous();
-		    rs.close ();
-		    statement.close ();
+              Statement statement;
+              if (isToolboxDriver()){ 
+                  statement =
+                      connection_.createStatement
+                         (ResultSet.TYPE_FORWARD_ONLY,
+                    ResultSet.CONCUR_READ_ONLY);   
+              } else {
+              statement =
+                          connection_.createStatement
+                             (ResultSet.TYPE_SCROLL_INSENSITIVE,
+      	    ResultSet.CONCUR_READ_ONLY);
+              }
+          command = "CALL " + procedure;
+          ResultSet rs = statement.executeQuery (command); 
+          int type = rs.getType ();
 
-                    // assertCondition (type == ResultSet.TYPE_FORWARD_ONLY,
-		    //		       "Type is "+type+" instead of TYPE_SCROLL_INSENSITIVE Added by Native  12/15/2003");
+                      // System.out.println("Type is "+type +" Scroll insenstive = "+ResultSet.TYPE_SCROLL_INSENSITIVE );
 
-		    failed("Didn't throw expected exception -- Added by Native 12/15/2003 type was "+type);
+          // verify that the cursor is scrollable
+          // this should throw exception for an array result set 
+          rs.next();
+          rs.previous();
+          rs.close ();
+          statement.close ();
 
-		} catch (SQLException e) {
-		    // HY009 or HY024 is received by the native driver when trying to fetch prior when using a
-		    // cursor for an array result set
-   		    // Toolbox will need to add the error they expect
-		    String sqlState = e.getSQLState();
-		    if (sqlState == null) sqlState = "SQLSTATE IS NULL"; 
+                      // assertCondition (type == ResultSet.TYPE_FORWARD_ONLY,
+          //		       "Type is "+type+" instead of TYPE_SCROLL_INSENSITIVE Added by Native  12/15/2003");
 
-		    if (  sqlState.equals("HY009")  || sqlState.equals("HY024") || sqlState.equals("24000") )
-			succeeded();
-		    else 
-			failed (e, "Fetch prior failed with unexpected exception SQLState="+ sqlState +" -- Toolbox needs to add expected SQLState -- added by native driver 01/14/03");
-		}
-		catch(Exception e) {
-		    failed(e, "Unexpected Exception probably on "+command +" -- changed native 12/15/2003 ");
-		}
-	    } else {
-		notApplicable("V5R3 stored procedure scrollable result set variation"); 
-	    } 
+          failed("Didn't throw expected exception -- Added by Native 12/15/2003 type was "+type);
+
+      } catch (SQLException e) {
+          // HY009 or HY024 is received by the native driver when trying to fetch prior when using a
+          // cursor for an array result set
+      	    // Toolbox will need to add the error they expect
+          String sqlState = e.getSQLState();
+          if (sqlState == null) sqlState = "SQLSTATE IS NULL"; 
+
+          if (  sqlState.equals("HY009")  || sqlState.equals("HY024") || sqlState.equals("24000") )
+      	succeeded();
+          else 
+      	failed (e, "Fetch prior failed with unexpected exception SQLState="+ sqlState +" -- Toolbox needs to add expected SQLState -- added by native driver 01/14/03");
+      }
+      catch(Exception e) {
+          failed(e, "Unexpected Exception probably on "+command +" -- changed native 12/15/2003 ");
+      } 
 	}
     }
 
@@ -1323,129 +1313,125 @@ call JDTESTSTP.JDRSMISC43
     {
 	String command=""; 
 	if (checkJdbc20 ()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {                   /* @D2A */
-		try {
-		    String collection = collection_;
-		    if (collection == null) {
-			collection = "JDTESTSTP";
-		    }
-		    String procedure = collection+".JDRSMISC44";
+	    try {
+          String collection = collection_;
+          if (collection == null) {
+      	collection = "JDTESTSTP";
+          }
+          String procedure = collection+".JDRSMISC44";
 
-	            //
-                    // Create the array result sets procedure
-	            //
-		    Statement stmt = connection_.createStatement();
+                //
+                      // Create the array result sets procedure
+                //
+          Statement stmt = connection_.createStatement();
 
-		    //
-		    // Cleanup from last run 
-		    // 
-		    command = "CALL QSYS.QCMDEXC('DLTF "+collection+"/arrayrs                        ',0000000035.00000)";
-		    try { 
-			stmt.executeUpdate(command);
-		    }catch(Exception e) { } 
-		    command = "drop procedure "+procedure;
-		    try { 
-			stmt.executeUpdate(command);
-		    } catch(Exception e) {
-		    }
-
-
-		    //
-		    // create the source file
-		    //
-		    command = "CALL QSYS.QCMDEXC('CRTSRCPF "+collection+"/arrayrs                    ', 0000000030.00000)"; 
-		    stmt.executeUpdate(command);
-		    command = "CALL QSYS.QCMDEXC('ADDPFM   "+collection+"/arrayrs arrayrs                                   ',0000000060.00000)";
-		    stmt.executeUpdate(command) ;
+          //
+          // Cleanup from last run 
+          // 
+          command = "CALL QSYS.QCMDEXC('DLTF "+collection+"/arrayrs                        ',0000000035.00000)";
+          try { 
+      	stmt.executeUpdate(command);
+          }catch(Exception e) { } 
+          command = "drop procedure "+procedure;
+          try { 
+      	stmt.executeUpdate(command);
+          } catch(Exception e) {
+          }
 
 
-		    //
-		    // Load the code into it 
-		    // 
+          //
+          // create the source file
+          //
+          command = "CALL QSYS.QCMDEXC('CRTSRCPF "+collection+"/arrayrs                    ', 0000000030.00000)"; 
+          stmt.executeUpdate(command);
+          command = "CALL QSYS.QCMDEXC('ADDPFM   "+collection+"/arrayrs arrayrs                                   ',0000000060.00000)";
+          stmt.executeUpdate(command) ;
 
 
-		      String[] sourceCode= {
-			"     DRESULT           DS                  OCCURS(20)",
-			"     D COL1                    1     16A",
-			"     C     1             DO        20            X                 2 0",
-			"     C     X             OCCUR     RESULT",
-			"     C                   EVAL      COL1='array result set'",
-			"     C                   ENDDO",
-			"     C                   EVAL      X=X-1",
-			"     C/EXEC SQL",
-			"     C+ SET RESULT SETS FOR RETURN TO CLIENT ARRAY :RESULT FOR :X ROWS",
-			"     C/END-EXEC",
-			"     C                   SETON                                            LR",
-			"     C                   RETURN",
-			"",
-			""
-		    }; 
-		    command = "insert into "+collection+".arrayrs values(?, 0, ?)";
-		    PreparedStatement ps = connection_.prepareStatement(command);
-
-		    for (int i = 0; i < sourceCode.length; i++) {
-			ps.setInt(1, i+1); 
-			ps.setString(2, sourceCode[i]);
-			ps.executeUpdate();
-		    }
-		    //
-		    // Compile it 
-		    //
-		    command = "QSYS/crtsqlrpgi obj("+collection+"/arrayrs) srcfile("+collection+"/arrayrs) commit(*none) objtype(*module) option(*Xref *sql)";
-		    command = "call QSYS.QCMDEXC('"+
-		      command+"',0000000"+command.length()+".00000)";
-		    stmt.executeUpdate(command);
-
-		    command = "QSYS/crtpgm "+collection+"/arrayrs";
-		    command = "call QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
-		    stmt.executeUpdate(command);
-
-		    //
-		    // Declare the procedures 
-		    // 
-		      command = "create procedure "+procedure+" language rpg parameter style general external name '"+collection+"/ARRAYRS'" ;
-		      stmt.executeUpdate(command); 
+          //
+          // Load the code into it 
+          // 
 
 
-		    Statement statement =
-                        connection_.createStatement(); 
-		    command = "CALL " + procedure;
-		    ResultSet rs = statement.executeQuery (command); 
+            String[] sourceCode= {
+      	"     DRESULT           DS                  OCCURS(20)",
+      	"     D COL1                    1     16A",
+      	"     C     1             DO        20            X                 2 0",
+      	"     C     X             OCCUR     RESULT",
+      	"     C                   EVAL      COL1='array result set'",
+      	"     C                   ENDDO",
+      	"     C                   EVAL      X=X-1",
+      	"     C/EXEC SQL",
+      	"     C+ SET RESULT SETS FOR RETURN TO CLIENT ARRAY :RESULT FOR :X ROWS",
+      	"     C/END-EXEC",
+      	"     C                   SETON                                            LR",
+      	"     C                   RETURN",
+      	"",
+      	""
+          }; 
+          command = "insert into "+collection+".arrayrs values(?, 0, ?)";
+          PreparedStatement ps = connection_.prepareStatement(command);
 
-		    rs.next();
-		    rs.close ();
-		    statement.close(); 
+          for (int i = 0; i < sourceCode.length; i++) {
+      	ps.setInt(1, i+1); 
+      	ps.setString(2, sourceCode[i]);
+      	ps.executeUpdate();
+          }
+          //
+          // Compile it 
+          //
+          command = "QSYS/crtsqlrpgi obj("+collection+"/arrayrs) srcfile("+collection+"/arrayrs) commit(*none) objtype(*module) option(*Xref *sql)";
+          command = "call QSYS.QCMDEXC('"+
+            command+"',0000000"+command.length()+".00000)";
+          stmt.executeUpdate(command);
 
-		    statement =
-		      connection_.createStatement(); 
+          command = "QSYS/crtpgm "+collection+"/arrayrs";
+          command = "call QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
+          stmt.executeUpdate(command);
 
-		    rs = statement.executeQuery("select cast(null as int) from qsys2.qsqptabl");
+          //
+          // Declare the procedures 
+          // 
+            command = "create procedure "+procedure+" language rpg parameter style general external name '"+collection+"/ARRAYRS'" ;
+            stmt.executeUpdate(command); 
 
-		    rs.next();
-		    rs.close();
-		    statement.close();
 
-		    statement =
-		      connection_.createStatement(); 
-		    rs = statement.executeQuery (command); 
+          Statement statement =
+                          connection_.createStatement(); 
+          command = "CALL " + procedure;
+          ResultSet rs = statement.executeQuery (command); 
 
-		    rs.next();
-		    boolean isNull = (null == rs.getString(1)); 
-		    rs.close ();
-		    statement.close();
+          rs.next();
+          rs.close ();
+          statement.close(); 
 
-                    assertCondition (!isNull, "Error.. returned null for array result set .. added by native driver 06/21/2005"); 
+          statement =
+            connection_.createStatement(); 
 
-		} catch (SQLException e) {
-		    
-		    failed (e, " -- added by native driver 06/20/05");
-		}
-		catch(Exception e) {
-		    failed(e, "Unexpected Exception probably on "+command +" -- added native 06/20/2005 ");
-		}
-	    } else {
-		notApplicable("V5R3 stored procedure scrollable result set variation"); 
-	    } 
+          rs = statement.executeQuery("select cast(null as int) from qsys2.qsqptabl");
+
+          rs.next();
+          rs.close();
+          statement.close();
+
+          statement =
+            connection_.createStatement(); 
+          rs = statement.executeQuery (command); 
+
+          rs.next();
+          boolean isNull = (null == rs.getString(1)); 
+          rs.close ();
+          statement.close();
+
+                      assertCondition (!isNull, "Error.. returned null for array result set .. added by native driver 06/21/2005"); 
+
+      } catch (SQLException e) {
+          
+          failed (e, " -- added by native driver 06/20/05");
+      }
+      catch(Exception e) {
+          failed(e, "Unexpected Exception probably on "+command +" -- added native 06/20/2005 ");
+      } 
 	}
     }
 
@@ -1577,45 +1563,41 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var049() {
 	String added = " -- Added 03/01/2007";
-	if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-	    try { 
-		String procedureName = collection_+".JDRSMISC49";
-                if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-                    procedureName = JDRSTest.COLLECTION + ".JDRSMISC49";
-		int    expectedConcurrency = ResultSet.CONCUR_READ_ONLY;
-		String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS49: BEGIN"
-                  + "   DECLARE C49 CURSOR WITH RETURN FOR SELECT * FROM SYSIBM.SYSDUMMY1;"
-                  + "   OPEN C49;"
-                  + "   SET RESULT SETS CURSOR C49;"
-                  + " END JDRS49";
+	try { 
+String procedureName = collection_+".JDRSMISC49";
+            if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+                procedureName = JDRSTest.COLLECTION + ".JDRSMISC49";
+int    expectedConcurrency = ResultSet.CONCUR_READ_ONLY;
+String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS49: BEGIN"
+              + "   DECLARE C49 CURSOR WITH RETURN FOR SELECT * FROM SYSIBM.SYSDUMMY1;"
+              + "   OPEN C49;"
+              + "   SET RESULT SETS CURSOR C49;"
+              + " END JDRS49";
 
-		Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-								   ResultSet.CONCUR_UPDATABLE);
+Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+  					   ResultSet.CONCUR_UPDATABLE);
 
-		try {
-		    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-		} catch (Exception e) {
-		}
+try {
+    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+} catch (Exception e) {
+}
 
-                statement.executeUpdate(createProcedureSql); 
-		
-		ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+            statement.executeUpdate(createProcedureSql); 
 
-		int concurrency = rs.getConcurrency();
+ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
 
-		statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+int concurrency = rs.getConcurrency();
 
-		assertCondition(concurrency == expectedConcurrency,
-				"Expected "+expectedConcurrency+" but got "+concurrency+added); 
+statement.executeUpdate("DROP PROCEDURE "+procedureName); 
 
-	    } catch (Exception e) {
-		failed (e, "Unexpected Exception"+added);
-	    } 
-	} else {
-	    notApplicable("V5R5 and later variation"); 
-	}  
+assertCondition(concurrency == expectedConcurrency,
+  	"Expected "+expectedConcurrency+" but got "+concurrency+added); 
+
+  } catch (Exception e) {
+failed (e, "Unexpected Exception"+added);
+  }  
     }
       
 
@@ -1626,73 +1608,69 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var050() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-          String sql = ""; 
-            try { 
-                String procedureName = collection_+".JDRSMISC50";
-                String tableName =     collection_+".JDRSMISC50";
-                if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-                {
-                    procedureName = JDRSTest.COLLECTION + ".JDRSMISC50";
-                    tableName = JDRSTest.COLLECTION + ".JDRSMISC50";
-                }
+        String sql = ""; 
+          try { 
+              String procedureName = collection_+".JDRSMISC50";
+              String tableName =     collection_+".JDRSMISC50";
+              if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+              {
+                  procedureName = JDRSTest.COLLECTION + ".JDRSMISC50";
+                  tableName = JDRSTest.COLLECTION + ".JDRSMISC50";
+              }
 
-                int    expectedConcurrency = ResultSet.CONCUR_READ_ONLY;
-                String insertTableSql = " INSERT INTO "+tableName+" VALUES('TESTING')"; 
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS50: BEGIN"
-                  + "   DECLARE C50 CURSOR WITH RETURN FOR SELECT * FROM "+tableName+" FOR UPDATE;"
-                  + "   OPEN C50;"
-                  + "   SET RESULT SETS CURSOR C50;"
-                  + " END JDRS50";
+              int    expectedConcurrency = ResultSet.CONCUR_READ_ONLY;
+              String insertTableSql = " INSERT INTO "+tableName+" VALUES('TESTING')"; 
+              String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+                + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+                + " JDRS50: BEGIN"
+                + "   DECLARE C50 CURSOR WITH RETURN FOR SELECT * FROM "+tableName+" FOR UPDATE;"
+                + "   OPEN C50;"
+                + "   SET RESULT SETS CURSOR C50;"
+                + " END JDRS50";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                                                   ResultSet.CONCUR_UPDATABLE);
+              Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                                 ResultSet.CONCUR_UPDATABLE);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
+              try {
+                  statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+              } catch (Exception e) {
+              }
 
-                initTable(statement, tableName," (C1 VARCHAR(80)) "); ;
-                sql = insertTableSql;   statement.executeUpdate(sql);
-                sql = createProcedureSql;   statement.executeUpdate(sql);
-                sql = "CALL " + procedureName+"()"; 
-                ResultSet rs = statement.executeQuery (sql);
+              initTable(statement, tableName," (C1 VARCHAR(80)) "); ;
+              sql = insertTableSql;   statement.executeUpdate(sql);
+              sql = createProcedureSql;   statement.executeUpdate(sql);
+              sql = "CALL " + procedureName+"()"; 
+              ResultSet rs = statement.executeQuery (sql);
 
-                int concurrency = rs.getConcurrency();
-                rs.next(); 
-                
-                //
-                // Verify that it is updateable
-                //
-                String cursorName = rs.getCursorName(); 
-                boolean updateWorked = false; 
-                try { 
-                  Statement statement2 = connection_.createStatement ();
-                  sql = "DELETE FROM "+tableName+" WHERE CURRENT OF "+cursorName; 
-                  statement2.executeUpdate(sql);
-                  statement2.close(); 
-                  updateWorked = true; 
-                } catch (Exception e) {
-                   // System.out.println("FAILED : "+sql);
-                   // System.out.println(" This was created using rs.getCursorName"); 
-                   // e.printStackTrace(); 
-                   updateWorked = false; 
-                }
-                sql = "DROP PROCEDURE "+procedureName; statement.executeUpdate(sql);  
-                cleanupTable(statement, tableName);
+              int concurrency = rs.getConcurrency();
+              rs.next(); 
+              
+              //
+              // Verify that it is updateable
+              //
+              String cursorName = rs.getCursorName(); 
+              boolean updateWorked = false; 
+              try { 
+                Statement statement2 = connection_.createStatement ();
+                sql = "DELETE FROM "+tableName+" WHERE CURRENT OF "+cursorName; 
+                statement2.executeUpdate(sql);
+                statement2.close(); 
+                updateWorked = true; 
+              } catch (Exception e) {
+                 // System.out.println("FAILED : "+sql);
+                 // System.out.println(" This was created using rs.getCursorName"); 
+                 // e.printStackTrace(); 
+                 updateWorked = false; 
+              }
+              sql = "DROP PROCEDURE "+procedureName; statement.executeUpdate(sql);  
+              cleanupTable(statement, tableName);
 
-                assertCondition(concurrency == expectedConcurrency && (!updateWorked),
-                                "UpdateWorked = "+updateWorked+" sb false : Expected "+expectedConcurrency+" but got "+concurrency+added); 
+              assertCondition(concurrency == expectedConcurrency && (!updateWorked),
+                              "UpdateWorked = "+updateWorked+" sb false : Expected "+expectedConcurrency+" but got "+concurrency+added); 
 
-            } catch (Exception e) {
-                failed (e, "Unexpected Exception SQL="+sql+" "+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
-        }  
+          } catch (Exception e) {
+              failed (e, "Unexpected Exception SQL="+sql+" "+added);
+          }  
     }
       
 
@@ -1703,79 +1681,75 @@ call JDTESTSTP.JDRSMISC43
     public void Var051() {
       String added = " -- Added 03/01/2007";
       if (checkJdbc40()) {
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-          String sql = ""; 
-          try { 
-            String procedureName = collection_+".JDRSMISC51";
-            String tableName =     collection_+".JDRSMISC51";
-            if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-            {
-                procedureName = JDRSTest.COLLECTION + ".JDRSMISC51";
-                tableName = JDRSTest.COLLECTION + ".JDRSMISC51";
-            }
-            
-            int    expectedHoldability = ResultSet.HOLD_CURSORS_OVER_COMMIT;
-            String insertTableSql = " INSERT INTO "+tableName+" VALUES('TESTING')"; 
-            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-            + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-            + " JDRS51: BEGIN"
-            + "   DECLARE C51 CURSOR WITH HOLD WITH RETURN FOR SELECT * FROM "+tableName+" FOR UPDATE;"
-            + "   OPEN C51;"
-            + "   SET RESULT SETS CURSOR C51;"
-            + " END JDRS51";
-            
-            Connection connection = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
-            
-            
-            Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-                ResultSet.CONCUR_UPDATABLE,
-                ResultSet.CLOSE_CURSORS_AT_COMMIT);
-            
-            try {
-              statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-            } catch (Exception e) {
-            }
-            
-            connection.commit(); 
-            initTable(statement, tableName, " (C1 VARCHAR(80)) "); 
-            sql = insertTableSql;   statement.executeUpdate(sql);
-            sql = insertTableSql;   statement.executeUpdate(sql);
-            sql = insertTableSql;   statement.executeUpdate(sql);
-            sql = createProcedureSql;   statement.executeUpdate(sql);
-            connection.commit();
-            
-            sql = "CALL " + procedureName+"()"; 
-            ResultSet rs = statement.executeQuery (sql);
-            
-            int holdability = JDReflectionUtil.callMethod_I(rs, "getHoldability"); 
-            rs.next(); 
-            
-            //
-            // Verify that it is holdable. 
-            //
-            boolean holdable; 
-            try {
-              connection.commit(); 
-              rs.next(); 
-              holdable = true; 
-            } catch (Exception e) {
-              System.out.println("Using cursor after commit failed\n"); 
-              e.printStackTrace(); 
-              holdable = false; 
-            }
-            sql = "DROP PROCEDURE "+procedureName; statement.executeUpdate(sql);  
-            cleanupTable(statement, tableName);
-            
-            connection.close();
-            
-            assertCondition(holdability == expectedHoldability && holdable,
-                "Holdable = "+holdable+" : Expected "+expectedHoldability+" but got "+holdability); 
-            
+        String sql = ""; 
+        try { 
+          String procedureName = collection_+".JDRSMISC51";
+          String tableName =     collection_+".JDRSMISC51";
+          if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+          {
+              procedureName = JDRSTest.COLLECTION + ".JDRSMISC51";
+              tableName = JDRSTest.COLLECTION + ".JDRSMISC51";
+          }
+          
+          int    expectedHoldability = ResultSet.HOLD_CURSORS_OVER_COMMIT;
+          String insertTableSql = " INSERT INTO "+tableName+" VALUES('TESTING')"; 
+          String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+          + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+          + " JDRS51: BEGIN"
+          + "   DECLARE C51 CURSOR WITH HOLD WITH RETURN FOR SELECT * FROM "+tableName+" FOR UPDATE;"
+          + "   OPEN C51;"
+          + "   SET RESULT SETS CURSOR C51;"
+          + " END JDRS51";
+          
+          Connection connection = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
+          
+          
+          Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+              ResultSet.CONCUR_UPDATABLE,
+              ResultSet.CLOSE_CURSORS_AT_COMMIT);
+          
+          try {
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
           } catch (Exception e) {
-            failed (e, "Unexpected Exception SQL="+sql+" "+added);
-          } 
-        } else {
-          notApplicable("V5R5 and later variation"); 
+          }
+          
+          connection.commit(); 
+          initTable(statement, tableName, " (C1 VARCHAR(80)) "); 
+          sql = insertTableSql;   statement.executeUpdate(sql);
+          sql = insertTableSql;   statement.executeUpdate(sql);
+          sql = insertTableSql;   statement.executeUpdate(sql);
+          sql = createProcedureSql;   statement.executeUpdate(sql);
+          connection.commit();
+          
+          sql = "CALL " + procedureName+"()"; 
+          ResultSet rs = statement.executeQuery (sql);
+          
+          int holdability = JDReflectionUtil.callMethod_I(rs, "getHoldability"); 
+          rs.next(); 
+          
+          //
+          // Verify that it is holdable. 
+          //
+          boolean holdable; 
+          try {
+            connection.commit(); 
+            rs.next(); 
+            holdable = true; 
+          } catch (Exception e) {
+            System.out.println("Using cursor after commit failed\n"); 
+            e.printStackTrace(); 
+            holdable = false; 
+          }
+          sql = "DROP PROCEDURE "+procedureName; statement.executeUpdate(sql);  
+          cleanupTable(statement, tableName);
+          
+          connection.close();
+          
+          assertCondition(holdability == expectedHoldability && holdable,
+              "Holdable = "+holdable+" : Expected "+expectedHoldability+" but got "+holdability); 
+          
+        } catch (Exception e) {
+          failed (e, "Unexpected Exception SQL="+sql+" "+added);
         }
       }
     }
@@ -1786,79 +1760,75 @@ call JDTESTSTP.JDRSMISC43
     public void Var052() {
       String added = " -- Added 03/01/2007";
       if (checkJdbc40()) {
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-          String sql = ""; 
-          try { 
-            String procedureName = collection_+".JDRSMISC52";
-            String tableName =     collection_+".JDRSMISC52";
+        String sql = ""; 
+        try { 
+          String procedureName = collection_+".JDRSMISC52";
+          String tableName =     collection_+".JDRSMISC52";
 
-            if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-            {
-                procedureName = JDRSTest.COLLECTION + ".JDRSMISC52";
-                tableName = JDRSTest.COLLECTION + ".JDRSMISC52";
-            }
-            
-            int    expectedHoldability = ResultSet.CLOSE_CURSORS_AT_COMMIT; 
-            String createTableDefinition = " (C1 VARCHAR(80)) ";
-            String insertTableSql = " INSERT INTO "+tableName+" VALUES('TESTING')"; 
-            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-            + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-            + " JDRS52: BEGIN"
-            + "   DECLARE C52 CURSOR WITHOUT HOLD WITH RETURN FOR SELECT * FROM "+tableName+" FOR UPDATE WITH CS;"
-            + "   OPEN C52;"
-            + "   SET RESULT SETS CURSOR C52;"
-            + " END JDRS52";
-            
-            Connection connection = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
-            
-            
-            Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-                ResultSet.CONCUR_UPDATABLE,
-                ResultSet.HOLD_CURSORS_OVER_COMMIT);
-            
-            try {
-              statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-            } catch (Exception e) {
-            }
-            
-            connection.commit(); 
-            initTable(statement, tableName, createTableDefinition); 
-            sql = insertTableSql;   statement.executeUpdate(sql);
-            sql = insertTableSql;   statement.executeUpdate(sql);
-            sql = insertTableSql;   statement.executeUpdate(sql);
-            sql = createProcedureSql;   statement.executeUpdate(sql);
-            connection.commit();
-            
-            sql = "CALL " + procedureName+"()"; 
-            ResultSet rs = statement.executeQuery (sql);
-            
-            int holdability = JDReflectionUtil.callMethod_I(rs, "getHoldability"); 
-            rs.next(); 
-            
-            //
-            // Verify that it is holdable. 
-            //
-            boolean holdable; 
-            try {
-              connection.commit(); 
-              rs.next(); 
-              holdable = true; 
-            } catch (Exception e) {
-              holdable = false; 
-            }
-            sql = "DROP PROCEDURE "+procedureName; statement.executeUpdate(sql);  
-            cleanupTable(statement, tableName);
-            
-            connection.close();
-            
-            assertCondition(holdability == expectedHoldability && (!holdable),
-                "Holdable = "+holdable+" : Expected "+expectedHoldability+" but got "+holdability +  " - V7R1 *none - (needs hostserver support)"); 
-            
+          if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+          {
+              procedureName = JDRSTest.COLLECTION + ".JDRSMISC52";
+              tableName = JDRSTest.COLLECTION + ".JDRSMISC52";
+          }
+          
+          int    expectedHoldability = ResultSet.CLOSE_CURSORS_AT_COMMIT; 
+          String createTableDefinition = " (C1 VARCHAR(80)) ";
+          String insertTableSql = " INSERT INTO "+tableName+" VALUES('TESTING')"; 
+          String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+          + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+          + " JDRS52: BEGIN"
+          + "   DECLARE C52 CURSOR WITHOUT HOLD WITH RETURN FOR SELECT * FROM "+tableName+" FOR UPDATE WITH CS;"
+          + "   OPEN C52;"
+          + "   SET RESULT SETS CURSOR C52;"
+          + " END JDRS52";
+          
+          Connection connection = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
+          
+          
+          Statement statement = connection.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+              ResultSet.CONCUR_UPDATABLE,
+              ResultSet.HOLD_CURSORS_OVER_COMMIT);
+          
+          try {
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
           } catch (Exception e) {
-            failed (e, "Unexpected Exception SQL="+sql+" "+added);
-          } 
-        } else {
-          notApplicable("V5R5 and later variation"); 
+          }
+          
+          connection.commit(); 
+          initTable(statement, tableName, createTableDefinition); 
+          sql = insertTableSql;   statement.executeUpdate(sql);
+          sql = insertTableSql;   statement.executeUpdate(sql);
+          sql = insertTableSql;   statement.executeUpdate(sql);
+          sql = createProcedureSql;   statement.executeUpdate(sql);
+          connection.commit();
+          
+          sql = "CALL " + procedureName+"()"; 
+          ResultSet rs = statement.executeQuery (sql);
+          
+          int holdability = JDReflectionUtil.callMethod_I(rs, "getHoldability"); 
+          rs.next(); 
+          
+          //
+          // Verify that it is holdable. 
+          //
+          boolean holdable; 
+          try {
+            connection.commit(); 
+            rs.next(); 
+            holdable = true; 
+          } catch (Exception e) {
+            holdable = false; 
+          }
+          sql = "DROP PROCEDURE "+procedureName; statement.executeUpdate(sql);  
+          cleanupTable(statement, tableName);
+          
+          connection.close();
+          
+          assertCondition(holdability == expectedHoldability && (!holdable),
+              "Holdable = "+holdable+" : Expected "+expectedHoldability+" but got "+holdability +  " - V7R1 *none - (needs hostserver support)"); 
+          
+        } catch (Exception e) {
+          failed (e, "Unexpected Exception SQL="+sql+" "+added);
         }
       }
     }
@@ -1869,56 +1839,52 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var053() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+".JDRSMISC53";
-                if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-                    procedureName = JDRSTest.COLLECTION + ".JDRSMISC53";
-                int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS53: BEGIN"
-                  + "   DECLARE C53 NO SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C53;"
-                  + "   SET RESULT SETS CURSOR C53;"
-                  + " END JDRS53";
+        try { 
+            String procedureName = collection_+".JDRSMISC53";
+            if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+                procedureName = JDRSTest.COLLECTION + ".JDRSMISC53";
+            int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS53: BEGIN"
+              + "   DECLARE C53 NO SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C53;"
+              + "   SET RESULT SETS CURSOR C53;"
+              + " END JDRS53";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
-                                                                   ResultSet.CONCUR_UPDATABLE);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+                                                               ResultSet.CONCUR_UPDATABLE);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((!scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((!scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
 
@@ -1929,56 +1895,52 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var054() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+".JDRSMISC53";
-                if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-                    procedureName = JDRSTest.COLLECTION + ".JDRSMISC53";
-                int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS53: BEGIN"
-                  + "   DECLARE C53 NO SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C53;"
-                  + "   SET RESULT SETS CURSOR C53;"
-                  + " END JDRS53";
+        try { 
+            String procedureName = collection_+".JDRSMISC53";
+            if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+                procedureName = JDRSTest.COLLECTION + ".JDRSMISC53";
+            int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS53: BEGIN"
+              + "   DECLARE C53 NO SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C53;"
+              + "   SET RESULT SETS CURSOR C53;"
+              + " END JDRS53";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                                                   ResultSet.CONCUR_UPDATABLE);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                               ResultSet.CONCUR_UPDATABLE);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((!scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((!scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
       
@@ -1989,56 +1951,52 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var055() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+".JDRSMISC53";
-                if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-                    procedureName = JDRSTest.COLLECTION + ".JDRSMISC53";
-                int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS53: BEGIN"
-                  + "   DECLARE C53 NO SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C53;"
-                  + "   SET RESULT SETS CURSOR C53;"
-                  + " END JDRS53";
+        try { 
+            String procedureName = collection_+".JDRSMISC53";
+            if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+                procedureName = JDRSTest.COLLECTION + ".JDRSMISC53";
+            int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS53: BEGIN"
+              + "   DECLARE C53 NO SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C53;"
+              + "   SET RESULT SETS CURSOR C53;"
+              + " END JDRS53";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-                                                                   ResultSet.CONCUR_UPDATABLE);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+                                                               ResultSet.CONCUR_UPDATABLE);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((!scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((!scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
       
@@ -2048,54 +2006,50 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var056() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+".JDRSMISC54";
-                int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS54: BEGIN"
-                  + "   DECLARE C54 INSENSITIVE SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C54;"
-                  + "   SET RESULT SETS CURSOR C54;"
-                  + " END JDRS54";
+        try { 
+            String procedureName = collection_+".JDRSMISC54";
+            int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS54: BEGIN"
+              + "   DECLARE C54 INSENSITIVE SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C54;"
+              + "   SET RESULT SETS CURSOR C54;"
+              + " END JDRS54";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
-                                                                   ResultSet.CONCUR_READ_ONLY);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+                                                               ResultSet.CONCUR_READ_ONLY);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((!scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((!scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
       
@@ -2105,54 +2059,50 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var057() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+".JDRSMISC54";
-                int    expectedType = ResultSet.TYPE_SCROLL_INSENSITIVE;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS54: BEGIN"
-                  + "   DECLARE C54 INSENSITIVE SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C54;"
-                  + "   SET RESULT SETS CURSOR C54;"
-                  + " END JDRS54";
+        try { 
+            String procedureName = collection_+".JDRSMISC54";
+            int    expectedType = ResultSet.TYPE_SCROLL_INSENSITIVE;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS54: BEGIN"
+              + "   DECLARE C54 INSENSITIVE SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C54;"
+              + "   SET RESULT SETS CURSOR C54;"
+              + " END JDRS54";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                                                   ResultSet.CONCUR_READ_ONLY);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                               ResultSet.CONCUR_READ_ONLY);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb true) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb true) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
       
@@ -2161,54 +2111,50 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var058() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+".JDRSMISC54";
-		            int    expectedType = ResultSet.TYPE_SCROLL_INSENSITIVE;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS54: BEGIN"
-                  + "   DECLARE C54 INSENSITIVE SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C54;"
-                  + "   SET RESULT SETS CURSOR C54;"
-                  + " END JDRS54";
+        try { 
+            String procedureName = collection_+".JDRSMISC54";
+            int    expectedType = ResultSet.TYPE_SCROLL_INSENSITIVE;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS54: BEGIN"
+              + "   DECLARE C54 INSENSITIVE SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C54;"
+              + "   SET RESULT SETS CURSOR C54;"
+              + " END JDRS54";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-                                                                   ResultSet.CONCUR_READ_ONLY);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+                                                               ResultSet.CONCUR_READ_ONLY);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb true) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb true) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
       
@@ -2220,56 +2166,52 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var059() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+".JDRSMISC55";
-                if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-                    procedureName = JDRSTest.COLLECTION + ".JDRSMISC55";
-                int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS55: BEGIN"
-                  + "   DECLARE C55 SENSITIVE SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C55;"
-                  + "   SET RESULT SETS CURSOR C55;"
-                  + " END JDRS55";
+        try { 
+            String procedureName = collection_+".JDRSMISC55";
+            if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+                procedureName = JDRSTest.COLLECTION + ".JDRSMISC55";
+            int    expectedType = ResultSet.TYPE_FORWARD_ONLY;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS55: BEGIN"
+              + "   DECLARE C55 SENSITIVE SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C55;"
+              + "   SET RESULT SETS CURSOR C55;"
+              + " END JDRS55";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
-                                                                   ResultSet.CONCUR_READ_ONLY);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+                                                               ResultSet.CONCUR_READ_ONLY);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((!scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((!scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb false) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
       
@@ -2281,56 +2223,52 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var060() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+".JDRSMISC55";
-                if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
-                    procedureName = JDRSTest.COLLECTION + ".JDRSMISC55";
-                int    expectedType = ResultSet.TYPE_SCROLL_SENSITIVE;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS55: BEGIN"
-                  + "   DECLARE C55 SENSITIVE SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C55;"
-                  + "   SET RESULT SETS CURSOR C55;"
-                  + " END JDRS55";
+        try { 
+            String procedureName = collection_+".JDRSMISC55";
+            if(isToolboxDriver())  // Use JDTESTRS for colleciton as collecion might not exist for user
+                procedureName = JDRSTest.COLLECTION + ".JDRSMISC55";
+            int    expectedType = ResultSet.TYPE_SCROLL_SENSITIVE;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS55: BEGIN"
+              + "   DECLARE C55 SENSITIVE SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C55;"
+              + "   SET RESULT SETS CURSOR C55;"
+              + " END JDRS55";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-                                                                   ResultSet.CONCUR_READ_ONLY);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+                                                               ResultSet.CONCUR_READ_ONLY);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb true) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb true) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
 
@@ -2341,56 +2279,52 @@ call JDTESTSTP.JDRSMISC43
      */
     public void Var061() {
         String added = " -- Added 03/01/2007";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try { 
-                String procedureName = collection_+"JDRSMISC55";
-                // Use JDTESTRS for colleciton as collecion might not exist for user
-                    procedureName = JDRSTest.COLLECTION + ".JDRSMISC55";
-                int    expectedType = ResultSet.TYPE_SCROLL_SENSITIVE;
-                String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
-                  + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
-                  + " JDRS55: BEGIN"
-                  + "   DECLARE C55 SENSITIVE SCROLL CURSOR WITH RETURN FOR "
-                  + "   SELECT * FROM SYSIBM.SQLTABLES;"
-                  + "   OPEN C55;"
-                  + "   SET RESULT SETS CURSOR C55;"
-                  + " END JDRS55";
+        try { 
+            String procedureName = collection_+"JDRSMISC55";
+            // Use JDTESTRS for colleciton as collecion might not exist for user
+                procedureName = JDRSTest.COLLECTION + ".JDRSMISC55";
+            int    expectedType = ResultSet.TYPE_SCROLL_SENSITIVE;
+            String createProcedureSql = "CREATE PROCEDURE "+procedureName+"() "
+              + " RESULT SET 1 LANGUAGE SQL READS SQL DATA " 
+              + " JDRS55: BEGIN"
+              + "   DECLARE C55 SENSITIVE SCROLL CURSOR WITH RETURN FOR "
+              + "   SELECT * FROM SYSIBM.SQLTABLES;"
+              + "   OPEN C55;"
+              + "   SET RESULT SETS CURSOR C55;"
+              + " END JDRS55";
 
-                Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                                                   ResultSet.CONCUR_READ_ONLY);
+            Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                               ResultSet.CONCUR_READ_ONLY);
 
-                try {
-                    statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-                } catch (Exception e) {
-                }
-
-                statement.executeUpdate(createProcedureSql); 
-                
-                ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
-
-                int rsType = rs.getType();
-
-                rs.next(); 
-                rs.next();
-                boolean scrollable; 
-                try { 
-                  rs.previous(); 
-                  scrollable = true; 
-                } catch (Exception e) { 
-                  scrollable = false; 
-                }
-                
-                
+            try {
                 statement.executeUpdate("DROP PROCEDURE "+procedureName); 
-
-                assertCondition((scrollable) && (rsType  == expectedType),
-                                "Scrollable = "+scrollable+" (sb true) : Expected Type "+expectedType+" but got "+rsType+added); 
-
             } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
-            } 
-        } else {
-            notApplicable("V5R5 and later variation"); 
+            }
+
+            statement.executeUpdate(createProcedureSql); 
+            
+            ResultSet rs = statement.executeQuery ("CALL " + procedureName+"()");
+
+            int rsType = rs.getType();
+
+            rs.next(); 
+            rs.next();
+            boolean scrollable; 
+            try { 
+              rs.previous(); 
+              scrollable = true; 
+            } catch (Exception e) { 
+              scrollable = false; 
+            }
+            
+            
+            statement.executeUpdate("DROP PROCEDURE "+procedureName); 
+
+            assertCondition((scrollable) && (rsType  == expectedType),
+                            "Scrollable = "+scrollable+" (sb true) : Expected Type "+expectedType+" but got "+rsType+added); 
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
       
@@ -2408,130 +2342,126 @@ call JDTESTSTP.JDRSMISC43
             return; 
         }
         String added = " -- Added 04/30/2007 Bug fixed by native driver SE28737 SI27438(V5R3) ???(V5R4) ";
-        if (getRelease() >=   JDTestDriver.RELEASE_V7R1M0) {
-            try {
-                int runIterations = 20000; 
-                int iteration = 0;
-                boolean passed=true;
-                StringBuffer sb = new StringBuffer(); 
-                String tableName = collection_+".JDRSMISC56";
-                
-                String createTableDefinition = " ("+
-                " C1 VARCHAR(80) CCSID 870, "+
-                " C2 VARCHAR(80) CCSID 870, "+
-                " C3 VARCHAR(80) CCSID 870, "+
-                " C4 VARCHAR(80) CCSID 870, "+
-                " C5 VARCHAR(80) CCSID 870, "+
-                " C6 VARCHAR(80) CCSID 870, "+
-                " C7 VARCHAR(80) CCSID 870, "+
-                " C8 VARCHAR(80) CCSID 870, "+
-                " C9 VARCHAR(80) CCSID 870, "+
-                " C10 VARCHAR(80) CCSID 870, "+
-                " C11 VARCHAR(80) CCSID 870, "+
-                " C12 VARCHAR(80) CCSID 870, "+
-                " C13 VARCHAR(80) CCSID 870, "+
-                " C14 VARCHAR(80) CCSID 870, "+
-                " C15 VARCHAR(80) CCSID 870, "+
-                " C16 VARCHAR(80) CCSID 870, "+
-                " C17 VARCHAR(80) CCSID 870, "+
-                " C18 VARCHAR(80) CCSID 870, "+
-                " C19 VARCHAR(80) CCSID 870, "+
-                " C20 VARCHAR(80) CCSID 870, "+
-                " C21 VARCHAR(80) CCSID 870, "+
-                " C22 VARCHAR(80) CCSID 870, "+
-                " C23 VARCHAR(80) CCSID 870, "+
-                " C24 VARCHAR(80) CCSID 870, "+
-                " C25 VARCHAR(80) CCSID 870, "+
-                " C26 VARCHAR(80) CCSID 870, "+
-                " C27 VARCHAR(80) CCSID 870, "+
-                " C28 VARCHAR(80) CCSID 870, "+
-                " C29 VARCHAR(80) CCSID 870, "+
-                " C30 VARCHAR(80) CCSID 870, "+
-                " C31 VARCHAR(80) CCSID 870, "+
-                " C32 VARCHAR(80) CCSID 870, "+
-                " C33 VARCHAR(80) CCSID 870, "+
-                " C34 VARCHAR(80) CCSID 870, "+
-                " C35 VARCHAR(80) CCSID 870, "+
-                " C36 VARCHAR(80) CCSID 870, "+
-                " C37 VARCHAR(80) CCSID 870, "+
-                " C38 VARCHAR(80) CCSID 870, "+
-                " C39 VARCHAR(80) CCSID 870, "+
-                " C40 VARCHAR(80) CCSID 870) ";
+        try {
+            int runIterations = 20000; 
+            int iteration = 0;
+            boolean passed=true;
+            StringBuffer sb = new StringBuffer(); 
+            String tableName = collection_+".JDRSMISC56";
+            
+            String createTableDefinition = " ("+
+            " C1 VARCHAR(80) CCSID 870, "+
+            " C2 VARCHAR(80) CCSID 870, "+
+            " C3 VARCHAR(80) CCSID 870, "+
+            " C4 VARCHAR(80) CCSID 870, "+
+            " C5 VARCHAR(80) CCSID 870, "+
+            " C6 VARCHAR(80) CCSID 870, "+
+            " C7 VARCHAR(80) CCSID 870, "+
+            " C8 VARCHAR(80) CCSID 870, "+
+            " C9 VARCHAR(80) CCSID 870, "+
+            " C10 VARCHAR(80) CCSID 870, "+
+            " C11 VARCHAR(80) CCSID 870, "+
+            " C12 VARCHAR(80) CCSID 870, "+
+            " C13 VARCHAR(80) CCSID 870, "+
+            " C14 VARCHAR(80) CCSID 870, "+
+            " C15 VARCHAR(80) CCSID 870, "+
+            " C16 VARCHAR(80) CCSID 870, "+
+            " C17 VARCHAR(80) CCSID 870, "+
+            " C18 VARCHAR(80) CCSID 870, "+
+            " C19 VARCHAR(80) CCSID 870, "+
+            " C20 VARCHAR(80) CCSID 870, "+
+            " C21 VARCHAR(80) CCSID 870, "+
+            " C22 VARCHAR(80) CCSID 870, "+
+            " C23 VARCHAR(80) CCSID 870, "+
+            " C24 VARCHAR(80) CCSID 870, "+
+            " C25 VARCHAR(80) CCSID 870, "+
+            " C26 VARCHAR(80) CCSID 870, "+
+            " C27 VARCHAR(80) CCSID 870, "+
+            " C28 VARCHAR(80) CCSID 870, "+
+            " C29 VARCHAR(80) CCSID 870, "+
+            " C30 VARCHAR(80) CCSID 870, "+
+            " C31 VARCHAR(80) CCSID 870, "+
+            " C32 VARCHAR(80) CCSID 870, "+
+            " C33 VARCHAR(80) CCSID 870, "+
+            " C34 VARCHAR(80) CCSID 870, "+
+            " C35 VARCHAR(80) CCSID 870, "+
+            " C36 VARCHAR(80) CCSID 870, "+
+            " C37 VARCHAR(80) CCSID 870, "+
+            " C38 VARCHAR(80) CCSID 870, "+
+            " C39 VARCHAR(80) CCSID 870, "+
+            " C40 VARCHAR(80) CCSID 870) ";
 
-                String insertSql = "INSERT INTO "+tableName+" VALUES("+
-                " 'C1', "+
-                " 'C2', "+
-                " 'C3', "+
-                " 'C4', "+
-                " 'C5', "+
-                " 'C6', "+
-                " 'C7', "+
-                " 'C8', "+
-                " 'C9', "+
-                " 'C10', "+
-                " 'C11', "+
-                " 'C12', "+
-                " 'C13', "+
-                " 'C14', "+
-                " 'C15', "+
-                " 'C16', "+
-                " 'C17', "+
-                " 'C18', "+
-                " 'C19', "+
-                " 'C20', "+
-                " 'C21', "+
-                " 'C22', "+
-                " 'C23', "+
-                " 'C24', "+
-                " 'C25', "+
-                " 'C26', "+
-                " 'C27', "+
-                " 'C28', "+
-                " 'C29', "+
-                " 'C30', "+
-                " 'C31', "+
-                " 'C32', "+
-                " 'C33', "+
-                " 'C34', "+
-                " 'C35', "+
-                " 'C36', "+
-                " 'C37', "+
-                " 'C38', "+
-                " 'C39', "+
-                " 'C40') ";
-
+            String insertSql = "INSERT INTO "+tableName+" VALUES("+
+            " 'C1', "+
+            " 'C2', "+
+            " 'C3', "+
+            " 'C4', "+
+            " 'C5', "+
+            " 'C6', "+
+            " 'C7', "+
+            " 'C8', "+
+            " 'C9', "+
+            " 'C10', "+
+            " 'C11', "+
+            " 'C12', "+
+            " 'C13', "+
+            " 'C14', "+
+            " 'C15', "+
+            " 'C16', "+
+            " 'C17', "+
+            " 'C18', "+
+            " 'C19', "+
+            " 'C20', "+
+            " 'C21', "+
+            " 'C22', "+
+            " 'C23', "+
+            " 'C24', "+
+            " 'C25', "+
+            " 'C26', "+
+            " 'C27', "+
+            " 'C28', "+
+            " 'C29', "+
+            " 'C30', "+
+            " 'C31', "+
+            " 'C32', "+
+            " 'C33', "+
+            " 'C34', "+
+            " 'C35', "+
+            " 'C36', "+
+            " 'C37', "+
+            " 'C38', "+
+            " 'C39', "+
+            " 'C40') ";
 
 
-                Statement statement = connection_.createStatement (); 
 
-                
+            Statement statement = connection_.createStatement (); 
 
-                initTable(statement, tableName, createTableDefinition); 
-               
-                statement.executeUpdate(insertSql);
+            
 
-                while (passed && iteration < runIterations) {
-                    ResultSet rs = statement.executeQuery("select * from "+tableName);
-                    rs.next();
-                    String s = rs.getString(1); 
-                    if ("C1".equals(s)) {
-                        // ok 
-                    } else {
-                        passed=false;
-                        sb.append("Failed on iteration "+iteration+" got '"+s+"'"); 
-                    } 
-                    iteration++; 
+            initTable(statement, tableName, createTableDefinition); 
+           
+            statement.executeUpdate(insertSql);
+
+            while (passed && iteration < runIterations) {
+                ResultSet rs = statement.executeQuery("select * from "+tableName);
+                rs.next();
+                String s = rs.getString(1); 
+                if ("C1".equals(s)) {
+                    // ok 
+                } else {
+                    passed=false;
+                    sb.append("Failed on iteration "+iteration+" got '"+s+"'"); 
                 } 
-
-                cleanupTable(statement, tableName); 		
-
-                assertCondition(passed, sb.toString()+added);
-
-            } catch (Exception e) {
-                failed (e, "Unexpected Exception"+added);
+                iteration++; 
             } 
-        } else {
-            notApplicable("V5R3 and later variation"); 
+
+            cleanupTable(statement, tableName); 		
+
+            assertCondition(passed, sb.toString()+added);
+
+        } catch (Exception e) {
+            failed (e, "Unexpected Exception"+added);
         }  
     }
 
@@ -2573,10 +2503,7 @@ call JDTESTSTP.JDRSMISC43
 		    //ResultSet.HOLD_CURSORS_OVER_COMMIT or ResultSet.CLOSE_CURSORS_AT_COMMIT
 		    rs.close ();
 		    statement.close ();
-		    if(getRelease() >=   JDTestDriver.RELEASE_V7R1M0)
-                assertCondition (holdability == ResultSet.HOLD_CURSORS_OVER_COMMIT, "holdability="+holdability+" expected HOLD_CURSORS_OVER_COMMIT="+ResultSet.HOLD_CURSORS_OVER_COMMIT+" V7R1 *none - (needs hostserver support)");
-		    else
-		        assertCondition (holdability == ResultSet.CLOSE_CURSORS_AT_COMMIT);
+		    assertCondition (holdability == ResultSet.HOLD_CURSORS_OVER_COMMIT, "holdability="+holdability+" expected HOLD_CURSORS_OVER_COMMIT="+ResultSet.HOLD_CURSORS_OVER_COMMIT+" V7R1 *none - (needs hostserver support)");
 		}
 		catch (Exception e) {
 		    failed (e, "Unexpected Exception");
@@ -2606,14 +2533,9 @@ call JDTESTSTP.JDRSMISC43
 
 		    rs.close ();
 		    statement.close ();
-		    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
-                        // Last changed 2/23/2010 for java test.JDRunit 543CN JDRSMisc                        
-			assertCondition (type == ResultSet.TYPE_SCROLL_SENSITIVE, "type is "+type+" Driver is V5R4 or less"); //same that creatStatement()
-		    } else { 
-			assertCondition (type == ResultSet.TYPE_SCROLL_SENSITIVE || type == ResultSet.TYPE_SCROLL_INSENSITIVE,
-					 "Metadata RS Type = "+type+" sb TYPE_SCROLL_SENSITIVE/INSENSITIVIE="+ResultSet.TYPE_SCROLL_SENSITIVE+"/"+ResultSet.TYPE_SCROLL_INSENSITIVE
-					 ); //diff that creatStatement() - doc says default is asensitive and could result in sens or insens
-		    }
+		    assertCondition (type == ResultSet.TYPE_SCROLL_SENSITIVE || type == ResultSet.TYPE_SCROLL_INSENSITIVE,
+        		 "Metadata RS Type = "+type+" sb TYPE_SCROLL_SENSITIVE/INSENSITIVIE="+ResultSet.TYPE_SCROLL_SENSITIVE+"/"+ResultSet.TYPE_SCROLL_INSENSITIVE
+        		 ); //diff that creatStatement() - doc says default is asensitive and could result in sens or insens
 		}
 		catch (Exception e) {
 		    failed (e, "Unexpected Exception");
@@ -2692,10 +2614,7 @@ call JDTESTSTP.JDRSMISC43
 		    rs.close ();
 		    statement.close ();
 
-		    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)       
-			assertCondition (hold == ResultSet.CLOSE_CURSORS_AT_COMMIT); //conn3 is not holdable
-		    else
-			assertCondition (hold == ResultSet.HOLD_CURSORS_OVER_COMMIT); //from STP_RS1WH
+		    assertCondition (hold == ResultSet.HOLD_CURSORS_OVER_COMMIT); //from STP_RS1WH
 		}
 		catch (Exception e) {
 		    failed (e, "Unexpected Exception");
@@ -2720,12 +2639,7 @@ call JDTESTSTP.JDRSMISC43
 		    int hold = JDReflectionUtil.callMethod_I(rs, "getHoldability");
 		    rs.close ();
 		    statement.close ();
-		    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)       
-			    assertCondition (hold == ResultSet.HOLD_CURSORS_OVER_COMMIT); //conn2 is holdable
-		    else if(getRelease() >=   JDTestDriver.RELEASE_V7R1M0)
-			assertCondition (hold == ResultSet.HOLD_CURSORS_OVER_COMMIT, "hold="+hold+" expected HOLD_CURSORS_OVER_COMMIT -- V7R1 *none - (needs hostserver support)");
-		    else	
-			assertCondition (hold == ResultSet.CLOSE_CURSORS_AT_COMMIT); //STP_RS1WH
+		    assertCondition (hold == ResultSet.HOLD_CURSORS_OVER_COMMIT, "hold="+hold+" expected HOLD_CURSORS_OVER_COMMIT -- V7R1 *none - (needs hostserver support)");
 		}
 		catch (Exception e) {
 		    failed (e, "Unexpected Exception");

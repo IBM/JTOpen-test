@@ -100,7 +100,7 @@ extends JDTestcase
     **/
   public void Var001() {
      
-    if ( checkDriverTimstampSupport() && checkJdbc42()) {
+    if ( checkDriverTimestampSupport() && checkJdbc42()) {
       try {
         String expected = "2014-02-14 11:22:33.0";  
         Object localDateTime = JDReflectionUtil.callStaticMethod_O(localDateTimeClassName, "of", 2014, 2, 14, 11, 22, 33); 
@@ -125,7 +125,7 @@ extends JDTestcase
   LocalDateTime toLocalDateTime()
   **/
   public void Var002() {
-    if (checkDriverTimstampSupport() && checkJdbc42()) {
+    if (checkDriverTimestampSupport() && checkJdbc42()) {
       try {
         String input  =   "2014-02-14 11:22:33.123456789012";
         String expected = "2014-02-14T11:22:33.123456789";
@@ -150,7 +150,7 @@ extends JDTestcase
   LocalDateTime toLocalDateTime()
   **/
   public void Var003() {
-    if (checkDriverTimstampSupport() && checkJdbc42()) {
+    if (checkDriverTimestampSupport() && checkJdbc42()) {
       try {
         String input  =   "2014-02-14 11:22:33.12345678";
         String expected = "2014-02-14T11:22:33.123456780";
@@ -175,7 +175,7 @@ extends JDTestcase
   LocalDateTime toLocalDateTime()
   **/
   public void Var004() {
-    if (checkDriverTimstampSupport() && checkJdbc42()) {
+    if (checkDriverTimestampSupport() && checkJdbc42()) {
       try {
         String input  =   "2014-02-14 11:22:33.0";
         String expected = "2014-02-14T11:22:33";
@@ -201,7 +201,7 @@ extends JDTestcase
    * test static Timestamp from(Instant instant)
    **/
   public void Var005() {
-    if (checkDriverTimstampSupport() && checkJdbc42()) {
+    if (checkDriverTimestampSupport() && checkJdbc42()) {
       try {
 
         String expected;
@@ -245,7 +245,7 @@ extends JDTestcase
  */
 
   public void Var006() {
-    if (checkDriverTimstampSupport() && checkJdbc42()) {
+    if (checkDriverTimestampSupport() && checkJdbc42()) {
       try {
         String input  =   "2014-02-14 12:22:33.123456789012";
         String expected;
@@ -281,13 +281,9 @@ extends JDTestcase
 
 
 
-private boolean checkDriverTimstampSupport() {
-  if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-      getRelease() <= JDTestDriver.RELEASE_V7R1M0) { 
-    notApplicable("Extended timestamp not available for native driver before V7R2"); 
-    return false; 
-  }
+private boolean checkDriverTimestampSupport() {
   return true;
+  
 }
   
   

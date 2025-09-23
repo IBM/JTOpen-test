@@ -755,98 +755,94 @@ extends JDTestcase
     **/
     public void Var029()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-	    Statement s = null;
-	    ResultSet rs = null;
-	    try
-	    {
-		s = connection_.createStatement ();       
-		StringBuffer query = new StringBuffer("Select Parm_int, Parm_Date ");
-		int maxCount = 32800;
-	    // For V5R4M0 make the statement larger than 2 Meg 
-		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-		    maxCount = 2 * 1024 * 1024;
-		}
-		for(int i=0; i< maxCount; i++)
-		    query.append(i%10);
+	Statement s = null;
+  ResultSet rs = null;
+  try
+  {
+s = connection_.createStatement ();       
+StringBuffer query = new StringBuffer("Select Parm_int, Parm_Date ");
+int maxCount = 32800;
+  // For V5R4M0 make the statement larger than 2 Meg 
+if (true) {
+    maxCount = 2 * 1024 * 1024;
+}
+for(int i=0; i< maxCount; i++)
+    query.append(i%10);
 
-		query.append(" from types1");         
+query.append(" from types1");         
 
-		rs  = s.executeQuery(query.toString());
+rs  = s.executeQuery(query.toString());
 
-		rs.close();
-		s.close ();     
-		s = null;
-		rs = null;
-		failed("Didn't throw SQLException");
-	    }
-	    catch(Exception e)
-	    {
-	    // @G1 Changes for v5r3 Cli issue the error now
-		// AS of 08/04 the CLI will also issue the error in V5R2 
-		if((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))
-		{
-		    if(e instanceof SQLException)
-		    {
-			String message = e.getMessage().toUpperCase();
-			if(message.indexOf("ERROR OCCURRED IN SQL CALL LEVEL INTERFACE") >= 0)
-			    succeeded();
-			else if (message.indexOf("HY009") >= 0) {
-			    // 
-			    // In V5R5 CLI will issue the error if the message is too long
-			    // 
-			    succeeded(); 
-			} 
-			else {
-			    failed(e, "Wrong message.  Received " + message + " expected ERROR OCCURRED IN SQL CALL LEVEL INTERFACE ");
-			}
-		    }
-		    else {
-			failed(e, "wrong exception");
-		    }
-		}
-		else if(getDriver () == JDTestDriver.DRIVER_NATIVE)
-		{
-		    if(e instanceof SQLException)
-		    {
-			String message = e.getMessage().toUpperCase();
-			if(message.indexOf("TOO LONG") >= 0)	
-			    succeeded();
-			else
-			    failed(e, "Wrong message.  Received " + message + " expected SQL statement too long or complex");
-		    }
-		    else
-			failed(e, "wrong exception");
-		}
-		else
-		{
-		    if(exceptionIs(e, "SQLException"))
-		    {
-			String message = e.getMessage().toUpperCase();
-			if(message.indexOf("TOO LONG") >= 0)
-			    succeeded();
-			else
-			    failed(e, "Wrong message.  Received " + message + " expected SQL statement too long or complex");
-		    }
-		    else
-			failed(e, "wrong exception");   
-		}
-	    }
+rs.close();
+s.close ();     
+s = null;
+rs = null;
+failed("Didn't throw SQLException");
+  }
+  catch(Exception e)
+  {
+  // @G1 Changes for v5r3 Cli issue the error now
+// AS of 08/04 the CLI will also issue the error in V5R2 
+if((getDriver () == JDTestDriver.DRIVER_NATIVE) && (true))
+{
+    if(e instanceof SQLException)
+    {
+  String message = e.getMessage().toUpperCase();
+  if(message.indexOf("ERROR OCCURRED IN SQL CALL LEVEL INTERFACE") >= 0)
+      succeeded();
+  else if (message.indexOf("HY009") >= 0) {
+      // 
+      // In V5R5 CLI will issue the error if the message is too long
+      // 
+      succeeded(); 
+  } 
+  else {
+      failed(e, "Wrong message.  Received " + message + " expected ERROR OCCURRED IN SQL CALL LEVEL INTERFACE ");
+  }
+    }
+    else {
+  failed(e, "wrong exception");
+    }
+}
+else if(getDriver () == JDTestDriver.DRIVER_NATIVE)
+{
+    if(e instanceof SQLException)
+    {
+  String message = e.getMessage().toUpperCase();
+  if(message.indexOf("TOO LONG") >= 0)	
+      succeeded();
+  else
+      failed(e, "Wrong message.  Received " + message + " expected SQL statement too long or complex");
+    }
+    else
+  failed(e, "wrong exception");
+}
+else
+{
+    if(exceptionIs(e, "SQLException"))
+    {
+  String message = e.getMessage().toUpperCase();
+  if(message.indexOf("TOO LONG") >= 0)
+      succeeded();
+  else
+      failed(e, "Wrong message.  Received " + message + " expected SQL statement too long or complex");
+    }
+    else
+  failed(e, "wrong exception");   
+}
+  }
 
-	    try
-	    {
-		if(rs != null)
-		    rs.close();
+  try
+  {
+if(rs != null)
+    rs.close();
 
-		if(s != null)
-		    s.close();
-	    }
-	    catch(Exception e)
-	    {
-	    }
-	} else {
-	    notApplicable("V5R2 or later testcase");
-	} 
+if(s != null)
+    s.close();
+  }
+  catch(Exception e)
+  {
+  } 
     }
 
 
@@ -855,100 +851,95 @@ extends JDTestcase
     **/
     public void Var030()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	Statement s = null;
+  ResultSet rs = null;
+  try
+  {
+s = connection_.createStatement ();       
+StringBuffer query = new StringBuffer("Select Parm_int, Parm_Date ");
 
-	    Statement s = null;
-	    ResultSet rs = null;
-	    try
-	    {
-		s = connection_.createStatement ();       
-		StringBuffer query = new StringBuffer("Select Parm_int, Parm_Date ");
+int maxCount = 32800;
+  // For V5R4M0 make the statement larger than 2 Meg 
+if (true) {
+    maxCount = 2 * 1024 * 1024;
+}
 
-		int maxCount = 32800;
-	    // For V5R4M0 make the statement larger than 2 Meg 
-		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-		    maxCount = 2 * 1024 * 1024;
-		}
+for(int i=0; i<maxCount; i++)
+    query.append(" ");          
 
-		for(int i=0; i<maxCount; i++)
-		    query.append(" ");          
+query.append(" from types1");         
 
-		query.append(" from types1");         
+int queryLength = query.length(); 
+System.out.println("Var030 Running queryLength= "+
+  	   queryLength+" : " +
+  	   query.substring(0,30)+"..."+
+  	   query.substring(queryLength-30)); 
+rs  = s.executeQuery(query.toString());
 
-		int queryLength = query.length(); 
-		System.out.println("Var030 Running queryLength= "+
-				   queryLength+" : " +
-				   query.substring(0,30)+"..."+
-				   query.substring(queryLength-30)); 
-		rs  = s.executeQuery(query.toString());
+rs.close();
+s.close ();     
+s = null;
+rs = null;
+failed("Didn't throw SQLException");
+  }
+  catch(Exception e)
+  {
+  // @G1 Changes for v5r3 Cli issue the error now
+if ((getDriver () == JDTestDriver.DRIVER_NATIVE) && (true))
+{
+    if(e instanceof SQLException)
+    {
+  String message = e.getMessage().toUpperCase();
+  if(message.indexOf("ERROR OCCURRED IN SQL CALL LEVEL INTERFACE") >= 0)
+      succeeded();
+  else if (message.indexOf("HY009") >= 0) {
+      succeeded(); 
+  } 
+  else
+      failed("Wrong message.  Received " + message + " expected SQL statement too long or complex");
+    }
+    else
+  failed(e, "wrong exception");
+}
 
-		rs.close();
-		s.close ();     
-		s = null;
-		rs = null;
-		failed("Didn't throw SQLException");
-	    }
-	    catch(Exception e)
-	    {
-	    // @G1 Changes for v5r3 Cli issue the error now
-		if ((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getRelease() >=  JDTestDriver.RELEASE_V7R1M0))
-		{
-		    if(e instanceof SQLException)
-		    {
-			String message = e.getMessage().toUpperCase();
-			if(message.indexOf("ERROR OCCURRED IN SQL CALL LEVEL INTERFACE") >= 0)
-			    succeeded();
-			else if (message.indexOf("HY009") >= 0) {
-			    succeeded(); 
-			} 
-			else
-			    failed("Wrong message.  Received " + message + " expected SQL statement too long or complex");
-		    }
-		    else
-			failed(e, "wrong exception");
-		}
+else if(getDriver () == JDTestDriver.DRIVER_NATIVE)
+{
+    if(e instanceof SQLException)
+    {
+  String message = e.getMessage().toUpperCase();
+  if(message.indexOf("TOO LONG") >= 0)
+      succeeded();
+  else
+      failed("Wrong message.  Received " + message + " expected SQL statement too long or complex");
+    }
+    else
+  failed(e, "wrong exception");
+}
+else
+{
+    if(exceptionIs(e, "SQLException"))
+    {
+  String message = e.getMessage().toUpperCase();
+  if(message.indexOf("TOO LONG") >= 0)
+      succeeded();
+  else
+      failed("Wrong message.  Received " + message + " expected SQL statement too long or complex");
+    }
+    else
+  failed(e, "wrong exception");   
+}
+  }
+  try
+  {
+if(rs != null)
+    rs.close();
 
-		else if(getDriver () == JDTestDriver.DRIVER_NATIVE)
-		{
-		    if(e instanceof SQLException)
-		    {
-			String message = e.getMessage().toUpperCase();
-			if(message.indexOf("TOO LONG") >= 0)
-			    succeeded();
-			else
-			    failed("Wrong message.  Received " + message + " expected SQL statement too long or complex");
-		    }
-		    else
-			failed(e, "wrong exception");
-		}
-		else
-		{
-		    if(exceptionIs(e, "SQLException"))
-		    {
-			String message = e.getMessage().toUpperCase();
-			if(message.indexOf("TOO LONG") >= 0)
-			    succeeded();
-			else
-			    failed("Wrong message.  Received " + message + " expected SQL statement too long or complex");
-		    }
-		    else
-			failed(e, "wrong exception");   
-		}
-	    }
-	    try
-	    {
-		if(rs != null)
-		    rs.close();
-
-		if(s != null)
-		    s.close();
-	    }
-	    catch(Exception e)
-	    {
-	    }
-	} else {
-	    notApplicable("V5R2 or later testcase");
-	} 
+if(s != null)
+    s.close();
+  }
+  catch(Exception e)
+  {
+  } 
 
     }
 
@@ -2666,13 +2657,7 @@ extends JDTestcase
     */
     public void Var058()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Causes SQL0901 before V7R2 -- see issue 45200");
-	    return; 
-	} 
-
-        if(checkLargeDecimalPrecisionSupport())
+	if(checkLargeDecimalPrecisionSupport())
         {
             Connection connection = null;
             try
@@ -2824,63 +2809,57 @@ extends JDTestcase
     **/
     public void Var059()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        Connection connection = null;
+        try
         {
-            Connection connection = null;
-            try
+            connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
+
+            Statement statement = connection.createStatement();
+
+            StringBuffer sql = new StringBuffer();
+            sql.append("CREATE TABLE ");
+            sql.append(LARGE_COLUMN_NAME_TABLE);
+            sql.append(" (");
+            sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST INTEGER");
+            sql.append(")");
+
+            // try to create the table
+            statement.execute(sql.toString());
+
+            statement.close();
+            succeeded();
+        }
+        catch(Exception e)
+        {
+            failed(e, "Unexpected Exception.  Added by Toolbox 8/11/2004 to test 128 byte column name.");
+        }
+        finally
+        {
+            if(connection != null)
             {
-                connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
-
-                Statement statement = connection.createStatement();
-
-                StringBuffer sql = new StringBuffer();
-                sql.append("CREATE TABLE ");
-                sql.append(LARGE_COLUMN_NAME_TABLE);
-                sql.append(" (");
-                sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST INTEGER");
-                sql.append(")");
-
-                // try to create the table
-                statement.execute(sql.toString());
-
-                statement.close();
-                succeeded();
-            }
-            catch(Exception e)
-            {
-                failed(e, "Unexpected Exception.  Added by Toolbox 8/11/2004 to test 128 byte column name.");
-            }
-            finally
-            {
-                if(connection != null)
+                try
                 {
-                    try
-                    {
-                        Statement statement = connection.createStatement();
-                        statement.execute("DROP TABLE " + LARGE_COLUMN_NAME_TABLE);
-                        statement.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+                    Statement statement = connection.createStatement();
+                    statement.execute("DROP TABLE " + LARGE_COLUMN_NAME_TABLE);
+                    statement.close();
+                }
+                catch(SQLException sqlx)
+                {
+System.out.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(System.out); 
 
-                    }
-                    try
-                    {
-                        connection.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+                }
+                try
+                {
+                    connection.close();
+                }
+                catch(SQLException sqlx)
+                {
+System.out.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(System.out); 
 
-                    }
                 }
             }
-        }
-        else{
-            notApplicable("V5R4 or greater variation.");
         }
     }
 
@@ -2890,65 +2869,59 @@ extends JDTestcase
     **/
     public void Var060()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        Connection connection = null;
+        try
         {
-            Connection connection = null;
-            try
+            connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
+
+            Statement statement = connection.createStatement();
+
+            StringBuffer sql = new StringBuffer();
+            sql.append("CREATE TABLE ");
+            sql.append(LARGE_COLUMN_NAME_TABLE);
+            sql.append(" (");
+            sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST INTEGER, ");
+            sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQTWO INTEGER, ");
+            sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOTHREE INTEGER");
+            sql.append(")");
+
+            // try to create the table
+            statement.execute(sql.toString());
+
+            statement.close();
+            succeeded();
+        }
+        catch(Exception e)
+        {
+            failed(e, "Unexpected Exception.  Added by Toolbox 8/11/2004 TO TEST 128 BYTE COLUMN NAMES.");
+        }
+        finally
+        {
+            if(connection != null)
             {
-                connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
-
-                Statement statement = connection.createStatement();
-
-                StringBuffer sql = new StringBuffer();
-                sql.append("CREATE TABLE ");
-                sql.append(LARGE_COLUMN_NAME_TABLE);
-                sql.append(" (");
-                sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST INTEGER, ");
-                sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQTWO INTEGER, ");
-                sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOTHREE INTEGER");
-                sql.append(")");
-
-                // try to create the table
-                statement.execute(sql.toString());
-
-                statement.close();
-                succeeded();
-            }
-            catch(Exception e)
-            {
-                failed(e, "Unexpected Exception.  Added by Toolbox 8/11/2004 TO TEST 128 BYTE COLUMN NAMES.");
-            }
-            finally
-            {
-                if(connection != null)
+                try
                 {
-                    try
-                    {
-                        Statement statement = connection.createStatement();
-                        statement.execute("DROP TABLE " + LARGE_COLUMN_NAME_TABLE);
-                        statement.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+                    Statement statement = connection.createStatement();
+                    statement.execute("DROP TABLE " + LARGE_COLUMN_NAME_TABLE);
+                    statement.close();
+                }
+                catch(SQLException sqlx)
+                {
+System.out.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(System.out); 
 
-                    }
-                    try
-                    {
-                        connection.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+                }
+                try
+                {
+                    connection.close();
+                }
+                catch(SQLException sqlx)
+                {
+System.out.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(System.out); 
 
-                    }
                 }
             }
-        }
-        else{
-            notApplicable("V5R4 or greater variation.");
         }
     }
 
@@ -2958,63 +2931,57 @@ extends JDTestcase
     **/
     public void Var061()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        Connection connection = null;
+        try
         {
-            Connection connection = null;
-            try
+            connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
+
+            Statement statement = connection.createStatement();
+
+            StringBuffer sql = new StringBuffer();
+            sql.append("CREATE TABLE ");
+            sql.append(LARGE_COLUMN_NAME_TABLE);
+            sql.append(" (");
+            sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRSTUVWXYZ INTEGER");
+            sql.append(")");
+
+            // try to create the table
+            statement.execute(sql.toString());
+
+            statement.close();
+            failed("Didn't throw SQLException.  Added by Toolbox 8/11/2004 to test 128 byte column names");
+        }
+        catch(Exception e)
+        {
+            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        }
+        finally
+        {
+            if(connection != null)
             {
-                connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
-
-                Statement statement = connection.createStatement();
-
-                StringBuffer sql = new StringBuffer();
-                sql.append("CREATE TABLE ");
-                sql.append(LARGE_COLUMN_NAME_TABLE);
-                sql.append(" (");
-                sql.append("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRSTUVWXYZ INTEGER");
-                sql.append(")");
-
-                // try to create the table
-                statement.execute(sql.toString());
-
-                statement.close();
-                failed("Didn't throw SQLException.  Added by Toolbox 8/11/2004 to test 128 byte column names");
-            }
-            catch(Exception e)
-            {
-                assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            }
-            finally
-            {
-                if(connection != null)
+                try
                 {
-                    try
-                    {
-                        Statement statement = connection.createStatement();
-                        statement.execute("DROP TABLE " + LARGE_COLUMN_NAME_TABLE);
-                        statement.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+                    Statement statement = connection.createStatement();
+                    statement.execute("DROP TABLE " + LARGE_COLUMN_NAME_TABLE);
+                    statement.close();
+                }
+                catch(SQLException sqlx)
+                {
+System.out.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(System.out); 
 
-                    }
-                    try
-                    {
-                        connection.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+                }
+                try
+                {
+                    connection.close();
+                }
+                catch(SQLException sqlx)
+                {
+System.out.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(System.out); 
 
-                    }
                 }
             }
-        }
-        else{
-            notApplicable("V5R4 or greater variation.");
         }
     }
 
@@ -3204,80 +3171,75 @@ extends JDTestcase
      */
     public void Var070()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-        {               
-            Connection c = null;
-            try{
-		// In December 2017 getting intermittent failures when
-                // limit = 1 on 7.2 system.  Bumped limit to 2. 
-                c = testDriver_.getConnection(baseURL_ + ";query storage limit=2", userId_, encryptedPassword_);
-                //Create the table
-                Statement s = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                s.execute("CREATE TABLE " + QUERY_STORAGE_LIMIT_TABLE + " (COL1 VARCHAR(32739))");
-                StringBuffer buffer = new StringBuffer (32739);
-                int actualLength = 32739 - 2;
-                for (int i = 1; i <= actualLength; ++i)
-                    buffer.append ("&");
-                PreparedStatement ps = c.prepareStatement("INSERT INTO " + QUERY_STORAGE_LIMIT_TABLE + " VALUES(?)");
-                for (int j=1; j<20; j++)
+        Connection c = null;
+        try{
+// In December 2017 getting intermittent failures when
+            // limit = 1 on 7.2 system.  Bumped limit to 2. 
+            c = testDriver_.getConnection(baseURL_ + ";query storage limit=2", userId_, encryptedPassword_);
+            //Create the table
+            Statement s = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            s.execute("CREATE TABLE " + QUERY_STORAGE_LIMIT_TABLE + " (COL1 VARCHAR(32739))");
+            StringBuffer buffer = new StringBuffer (32739);
+            int actualLength = 32739 - 2;
+            for (int i = 1; i <= actualLength; ++i)
+                buffer.append ("&");
+            PreparedStatement ps = c.prepareStatement("INSERT INTO " + QUERY_STORAGE_LIMIT_TABLE + " VALUES(?)");
+            for (int j=1; j<20; j++)
+            {
+                ps.setString(1, buffer.toString());
+                ps.execute();
+            }
+            ps.close();
+
+            //execute the query
+            ResultSet rs = s.executeQuery("SELECT * FROM " + QUERY_STORAGE_LIMIT_TABLE + " ORDER BY COL1");
+            rs.close();
+            s.close();
+            succeeded();
+        }
+        catch(Exception e)
+        {
+try {
+
+  Statement statement = c.createStatement();
+  statement.execute("CALL QSYS2.QCMDEXC('DSPJOBLOG OUTPUT(*PRINT)')");
+  statement.execute("CALL QSYS2.QCMDEXC(' DSPJOBLOG OUTPUT(*OUTFILE) OUTFILE(QGPL/JDSMVAR70)      ')");
+  
+  statement.close();
+} catch (Exception e1) {
+  System.out.println("Warning:  cleanup exception");
+  e.printStackTrace(System.out); 
+
+} 
+            failed(e, "Unexpected Exception.  Added by Toolbox 6/29/2006 to test query storage limit support Check QGPL/JDSMVAR70 for job log ");
+        }
+        finally
+        {
+            if(c != null)
+            {
+                try
                 {
-                    ps.setString(1, buffer.toString());
-                    ps.execute();
+                    Statement statement = c.createStatement();
+                    statement.execute("DROP TABLE " + QUERY_STORAGE_LIMIT_TABLE);
+                    statement.close();
                 }
-                ps.close();
-
-                //execute the query
-                ResultSet rs = s.executeQuery("SELECT * FROM " + QUERY_STORAGE_LIMIT_TABLE + " ORDER BY COL1");
-                rs.close();
-                s.close();
-                succeeded();
-            }
-            catch(Exception e)
-            {
-		try {
-
-		    Statement statement = c.createStatement();
-		    statement.execute("CALL QSYS2.QCMDEXC('DSPJOBLOG OUTPUT(*PRINT)')");
-		    statement.execute("CALL QSYS2.QCMDEXC(' DSPJOBLOG OUTPUT(*OUTFILE) OUTFILE(QGPL/JDSMVAR70)      ')");
-		    
-		    statement.close();
-		} catch (Exception e1) {
-		    System.out.println("Warning:  cleanup exception");
-		    e.printStackTrace(System.out); 
-
-		} 
-                failed(e, "Unexpected Exception.  Added by Toolbox 6/29/2006 to test query storage limit support Check QGPL/JDSMVAR70 for job log ");
-            }
-            finally
-            {
-                if(c != null)
+                catch(SQLException sqlx)
                 {
-                    try
-                    {
-                        Statement statement = c.createStatement();
-                        statement.execute("DROP TABLE " + QUERY_STORAGE_LIMIT_TABLE);
-                        statement.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-                        System.out.println("EXCEPTION DELETING TABLE");
-                        sqlx.printStackTrace();
-                    }
-                    try
-                    {
-                        c.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+                    System.out.println("EXCEPTION DELETING TABLE");
+                    sqlx.printStackTrace();
+                }
+                try
+                {
+                    c.close();
+                }
+                catch(SQLException sqlx)
+                {
+System.out.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(System.out); 
 
-                    }
                 }
             }
         }
-        else
-            notApplicable("V5R5 or higher variation");
     }
 
     //@I2A
@@ -3290,83 +3252,74 @@ extends JDTestcase
 	    notApplicable("TOOLBOX TEST for 'query storage limit' connection property");
 	    return; 
 	} 
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        Connection c = null;
+        try{
+          // Need to use the pwrSysUserID_ userid because             @I3A
+          // query storage limit requires that the user have *JOBCTL  @I3A
+          // authority (beginning in V6R1)                            @I3A
+          // The DB host server has the *JOBCTL reqmt                 @I3A
+            c = testDriver_.getConnection(baseURL_ + ";query storage limit=1", pwrSysUserID_, 
+                pwrSysEncryptedPassword_); //@I3C
+            //Create the table
+            Statement s = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            s.execute("CREATE TABLE " + QUERY_STORAGE_LIMIT_TABLE + " (COL1 VARCHAR(32739))");
+            StringBuffer buffer = new StringBuffer (32739);
+            int actualLength = 32739 - 2;
+            for (int i = 1; i <= actualLength; ++i)
+                buffer.append ("&");
+            PreparedStatement ps = c.prepareStatement("INSERT INTO " + QUERY_STORAGE_LIMIT_TABLE + " VALUES(?)");
+            for (int j=1; j<50; j++)
+            {
+                ps.setString(1, buffer.toString());
+                ps.execute();
+            }
+            ps.close();
+
+            //execute the query
+            ResultSet rs = null;
+            rs = s.executeQuery("SELECT * FROM " + QUERY_STORAGE_LIMIT_TABLE + " ORDER BY COL1 optimize for all rows");
+            rs.close();
+            s.close();
+            
+            if (true && isToolboxDriver())
+            {
+                succeeded(); //in v6r1 now, this does not take up enough space to error out
+                return;
+            }
+            else
+                failed("Didn't throw SQLException.  Added by Toolbox 6/29/2006 to test query storage limit support");
+        }
+        catch(Exception e)
         {
-            Connection c = null;
-            try{
-              // Need to use the pwrSysUserID_ userid because             @I3A
-              // query storage limit requires that the user have *JOBCTL  @I3A
-              // authority (beginning in V6R1)                            @I3A
-              // The DB host server has the *JOBCTL reqmt                 @I3A
-                c = testDriver_.getConnection(baseURL_ + ";query storage limit=1", pwrSysUserID_, 
-                    pwrSysEncryptedPassword_); //@I3C
-                //Create the table
-                Statement s = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                s.execute("CREATE TABLE " + QUERY_STORAGE_LIMIT_TABLE + " (COL1 VARCHAR(32739))");
-                StringBuffer buffer = new StringBuffer (32739);
-                int actualLength = 32739 - 2;
-                for (int i = 1; i <= actualLength; ++i)
-                    buffer.append ("&");
-                PreparedStatement ps = c.prepareStatement("INSERT INTO " + QUERY_STORAGE_LIMIT_TABLE + " VALUES(?)");
-                for (int j=1; j<50; j++)
-                {
-                    ps.setString(1, buffer.toString());
-                    ps.execute();
-                }
-                ps.close();
-
-                //execute the query
-                ResultSet rs = null;
-                //33923 - v5r5 optimizer is smarter...
-                if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-                    rs = s.executeQuery("SELECT * FROM " + QUERY_STORAGE_LIMIT_TABLE + " ORDER BY COL1 optimize for all rows");
-                else
-                    rs = s.executeQuery("SELECT * FROM " + QUERY_STORAGE_LIMIT_TABLE + " ORDER BY COL1");
-                rs.close();
-                s.close();
-                
-                if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isToolboxDriver())
-                {
-                    succeeded(); //in v6r1 now, this does not take up enough space to error out
-                    return;
-                }
-                else
-                    failed("Didn't throw SQLException.  Added by Toolbox 6/29/2006 to test query storage limit support");
-            }
-            catch(Exception e)
+            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        }
+        finally
+        {
+            if(c != null)
             {
-                assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            }
-            finally
-            {
-                if(c != null)
+                try
                 {
-                    try
-                    {
-                        Statement statement = c.createStatement();
-                        statement.execute("DROP TABLE " + QUERY_STORAGE_LIMIT_TABLE);
-                        statement.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-                        System.out.println("EXCEPTION DELETING TABLE");
-                        sqlx.printStackTrace();
-                    }
-                    try
-                    {
-                        c.close();
-                    }
-                    catch(SQLException sqlx)
-                    {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+                    Statement statement = c.createStatement();
+                    statement.execute("DROP TABLE " + QUERY_STORAGE_LIMIT_TABLE);
+                    statement.close();
+                }
+                catch(SQLException sqlx)
+                {
+                    System.out.println("EXCEPTION DELETING TABLE");
+                    sqlx.printStackTrace();
+                }
+                try
+                {
+                    c.close();
+                }
+                catch(SQLException sqlx)
+                {
+System.out.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(System.out); 
 
-                    }
                 }
             }
         }
-        else
-            notApplicable("V5R5 or higher variation");
     }
 
     
@@ -3376,27 +3329,21 @@ extends JDTestcase
     **/
     public void Var072()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        try
         {
-            try
-            {
-                Statement s = connection_.createStatement ();
-                
-                ResultSet rs = s.executeQuery("values ('a', 'b', 'c')");
-                rs.next();
-                String val1 = rs.getString(1);
-                String val2 = rs.getString(2);
-                String val3 = rs.getString(3);
-                assertCondition (val1.equals("a") && val2.equals("b") && val3.equals("c"), "VALUES sql returned incorrect values");
-                
-            }
-            catch(Exception e)
-            {
-                failed(e, "Unexpected Exception.  Added by Toolbox 02/21/2007");
-            }
+            Statement s = connection_.createStatement ();
+            
+            ResultSet rs = s.executeQuery("values ('a', 'b', 'c')");
+            rs.next();
+            String val1 = rs.getString(1);
+            String val2 = rs.getString(2);
+            String val3 = rs.getString(3);
+            assertCondition (val1.equals("a") && val2.equals("b") && val3.equals("c"), "VALUES sql returned incorrect values");
+            
         }
-        else{
-            notApplicable("V5R5 or greater variation.");
+        catch(Exception e)
+        {
+            failed(e, "Unexpected Exception.  Added by Toolbox 02/21/2007");
         }
     }
 
@@ -3407,32 +3354,26 @@ extends JDTestcase
     **/
     public void Var073()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        try
         {
-            try
-            {
-                Statement s = connection_.createStatement ();
-                
-                ResultSet rs = s.executeQuery("select * from (VALUES 1,2,3) as vr");
-                
-                rs.next();
-                String val1 = rs.getString(1);
-                rs.next();
-                String val2 = rs.getString(1);
-                rs.next();
-                String val3 = rs.getString(1);
-                 
-                
-                assertCondition (val1.equals("1") && val2.equals("2") && val3.equals("3"), "VALUES sql returned incorrect values");
-                
-            }
-            catch(Exception e)
-            {
-                failed(e, "Unexpected Exception.  Added by Toolbox 02/21/2007");
-            }
+            Statement s = connection_.createStatement ();
+            
+            ResultSet rs = s.executeQuery("select * from (VALUES 1,2,3) as vr");
+            
+            rs.next();
+            String val1 = rs.getString(1);
+            rs.next();
+            String val2 = rs.getString(1);
+            rs.next();
+            String val3 = rs.getString(1);
+             
+            
+            assertCondition (val1.equals("1") && val2.equals("2") && val3.equals("3"), "VALUES sql returned incorrect values");
+            
         }
-        else{
-            notApplicable("V5R5 or greater variation.");
+        catch(Exception e)
+        {
+            failed(e, "Unexpected Exception.  Added by Toolbox 02/21/2007");
         }
     }
 
@@ -3448,19 +3389,6 @@ extends JDTestcase
 	String sql = ""; 
 	try
 	{
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0 && isToolboxDriver())
-        {
-            notApplicable("Too complex for v5r3");
-            return;
-        }
-
-
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Native fails in V5R3, need CLI header fix");
-            return; 
-	} 
-
 	    String longProc = JDStatementTest.COLLECTION + ".JDSMLONG";
 	    try {
 		Statement s = connection_.createStatement ();
@@ -3523,36 +3451,30 @@ extends JDTestcase
     **/
     public void Var075()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        try
         {
-            try
-            {
-                String t1 = JDStatementTest.COLLECTION + ".MERGE1";
-                String t2 = JDStatementTest.COLLECTION + ".MERGE2";
-                
-                Statement st = connection_.createStatement();
-                try{ st.execute("drop table " + t1); }catch(Exception e){ }
-                try{ st.execute("create table "+ t1 + " (col1 varchar(10))");}catch(Exception e){ }
-                try{ st.execute("drop table " + t2); }catch(Exception e){ }
-                try{ st.execute("create table "+ t2 + " (col1 varchar(10))");}catch(Exception e){ }
-               
-                
-                st.execute("MERGE INTO " +  t1 + " ar " +
-                        " USING " + t2 + " ac " +
-                        " ON ( ar.col1 = ac.col1 ) " +
-                        " WHEN MATCHED THEN " +
-                        " UPDATE SET ar.COL1 = 'a'");
-               
-                assertCondition (true);
-                
-            }
-            catch(Exception e)
-            {
-                failed(e, "Unexpected Exception.  Added by Toolbox 06/22/2009");
-            }
+            String t1 = JDStatementTest.COLLECTION + ".MERGE1";
+            String t2 = JDStatementTest.COLLECTION + ".MERGE2";
+            
+            Statement st = connection_.createStatement();
+            try{ st.execute("drop table " + t1); }catch(Exception e){ }
+            try{ st.execute("create table "+ t1 + " (col1 varchar(10))");}catch(Exception e){ }
+            try{ st.execute("drop table " + t2); }catch(Exception e){ }
+            try{ st.execute("create table "+ t2 + " (col1 varchar(10))");}catch(Exception e){ }
+           
+            
+            st.execute("MERGE INTO " +  t1 + " ar " +
+                    " USING " + t2 + " ac " +
+                    " ON ( ar.col1 = ac.col1 ) " +
+                    " WHEN MATCHED THEN " +
+                    " UPDATE SET ar.COL1 = 'a'");
+           
+            assertCondition (true);
+            
         }
-        else{
-            notApplicable("V7R1 or greater variation.");
+        catch(Exception e)
+        {
+            failed(e, "Unexpected Exception.  Added by Toolbox 06/22/2009");
         }
     }
 
@@ -3574,14 +3496,7 @@ extends JDTestcase
     public void Var077()
     {
 	String info = " -- Test specifying only maximum precision.  Defualt scale should be 31"; 
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in native V7R1 and earlier");
-	    return; 
-	} 
-
-	
-        if(checkLargeDecimalPrecisionSupport())
+	if(checkLargeDecimalPrecisionSupport())
         {
             Connection connection = null;
             try
@@ -3615,12 +3530,7 @@ extends JDTestcase
     {
 	String info = " -- Test specifying only minimum divide scale"; 
 
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in native V7R1 and earlier");
-	    return; 
-	} 
-        if(checkLargeDecimalPrecisionSupport())
+	if(checkLargeDecimalPrecisionSupport())
         {
             Connection connection = null;
             try

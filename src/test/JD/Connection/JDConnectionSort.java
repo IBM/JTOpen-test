@@ -31,7 +31,6 @@ package test.JD.Connection;
 import com.ibm.as400.access.AS400;
 
 import test.JDConnectionTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
 
@@ -638,9 +637,6 @@ Note:  The native JDBC driver default is hex, so this should work in previous re
 
 	    populateTable(connection, tableName, ccsid, sortStrings);
 	    boolean check = false;
-	    if(getRelease() <= JDTestDriver.RELEASE_V7R1M0)                 //@E1C things are ordered by order by sort
-		check = verifySort (connection, tableName, sortStrings );
-	    else                                                            //@E1A Things are implemented by order by index in V54
 		check = verifySort (connection, tableName, v5r4SortStrings); //@E1A
 	    cleanupTable(connection, tableName); 
 	    connection.close ();

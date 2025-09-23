@@ -299,7 +299,7 @@ Performs setup needed before running variations.
                          + ".TABLES3");
 
         // @128sch
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        if(true)
         {
             String sql = "CREATE TABLE " + JDDMDTest.SCHEMAS_LEN128
                 + ".TABLE1 (COL1 CHAR(15) DEFAULT 'DEFAULTVAL',"
@@ -356,7 +356,7 @@ Performs cleanup needed after running variations.
         s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTIONXX
                          + ".TABLESXX");
 
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@128sch
+        if(true) //@128sch
         {
             try{
                 s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
@@ -455,7 +455,7 @@ Performs cleanup needed after running variations.
                 if (JDTestDriver.isLUW()) {
                     expectedNames30 = expectedNames30LUW;
                    
-                }else if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 ){
+                }else if(true ){
                   if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 		      if (getJdbcLevel() < 4) {
 			  expectedTypes = expectedTypesV7R1toolbox;
@@ -549,15 +549,10 @@ SQL400 - the 400 doesn't support the LABEL on values being brought back
                 success = check(sb, operation, retrieved, expected) && success;
 
 
-                if (getDriver () == JDTestDriver.DRIVER_TOOLBOX
-                        || getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) {	// @C1
-                    operation = "rs.getString(\"TABLE_TYPE\")";
-                    retrieved = rs.getString ("TABLE_TYPE");
-                    expected = "TABLE";
-                    success = check(sb, operation, retrieved, expected) && success;
-                } else {
-                    success = success && rs.getString ("TABLE_TYPE").equals ("BASE TABLE");
-                }
+                operation = "rs.getString(\"TABLE_TYPE\")";
+                retrieved = rs.getString ("TABLE_TYPE");
+                expected = "TABLE";
+                success = check(sb, operation, retrieved, expected) && success;
 
                 String table = rs.getString ("TABLE_NAME");
                 String remarks = rs.getString ("REMARKS");
@@ -566,7 +561,7 @@ SQL400 - the 400 doesn't support the LABEL on values being brought back
                     if (JDTestDriver.isLUW() ||
 			getDriver() == JDTestDriver.DRIVER_JTOPENLITE || 
                             ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                                    ( isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+                                    ( isJdbc40() || true)) ||
                             (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                         expected=null;
                     } else {
@@ -645,11 +640,7 @@ verify all columns with sql remarks.
                 success = check(sb, operation, retrieved, expected) && success;
 
 
-                if (getDriver () == JDTestDriver.DRIVER_TOOLBOX
-                        || getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @C1
-                    success = success && rs.getString ("TABLE_TYPE").equals ("TABLE");
-                else
-                    success = success && rs.getString ("TABLE_TYPE").equals ("BASE TABLE");
+                success = success && rs.getString ("TABLE_TYPE").equals ("TABLE");
 
                 String table = rs.getString ("TABLE_NAME");
                 String remarks = rs.getString ("REMARKS");
@@ -658,7 +649,7 @@ verify all columns with sql remarks.
                     if (JDTestDriver.isLUW() ||
 			getDriver() == JDTestDriver.DRIVER_JTOPENLITE ||
                             ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                                    ( isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+                                    ( isJdbc40() || true)) ||
                               (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
 
                         expected=null;
@@ -813,7 +804,7 @@ No matching tables should be returned.
             rs.close ();
             if (JDTestDriver.isLUW() ||
                     ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                            ( isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+                            ( isJdbc40() || true)) ||
                     (getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata()) {
                 assertCondition (rows > 0, "Expected > zero rows with \"\" catalog, but got "+rows+"\n"+sb.toString());
             } else {
@@ -878,7 +869,7 @@ All matching tables should be returned.
       StringBuffer sb = new StringBuffer();
 
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4 ||
-          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V7R1M0)) ||
+          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true)) ||
           (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {
@@ -1493,7 +1484,7 @@ tables should be returned.
 
                 if ((getDriver () == JDTestDriver.DRIVER_TOOLBOX )
                     || (getDriver() == JDTestDriver.DRIVER_JCC) ||
-                    (getJdbcLevel() >= 4) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease()>= JDTestDriver.RELEASE_V7R1M0)))  {
+                    (getJdbcLevel() >= 4) || ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true)))  {
 		    if ((table.equals (JDDMDTest.COLLECTION + ".TABLES"))
 			&& (type.equals ("TABLE")))
 			check1 = true;
@@ -1511,14 +1502,10 @@ tables should be returned.
 			check3 = true;
 		} else {
 		    if ((table.equals (JDDMDTest.COLLECTION + ".TABLES"))){	// @C1
-			if( getRelease()>= JDTestDriver.RELEASE_V7R1M0 ){	// @C1
-			    if ( type.equals("TABLE") )	{			// @C1
-				check1 = true;					// @C1
-				// System.out.println("... check 1  type = "+type+" sb TABLE");
-			    }
-			}							// @C1
-			else if (type.equals("BASE TABLE"))			// @C1
-				check1 = true;					// @C1
+			if ( type.equals("TABLE") )	{			// @C1
+check1 = true;					// @C1
+// System.out.println("... check 1  type = "+type+" sb TABLE");
+      }
 		    }
                     else if ((table.equals (JDDMDTest.COLLECTION2 + ".TABLESV2"))
                              & (type.equals ("VIEW")))
@@ -1718,14 +1705,10 @@ exactly.  All matching tables should be returned.
                 } else {
 
 		    if ((table.equals (JDDMDTest.COLLECTION + ".TABLES"))){	// @C1
-			if( getRelease()>= JDTestDriver.RELEASE_V7R1M0 ){	// @C1
-			    if ( type.equals("TABLE") ) {			// @C1
-				check1 = true;					// @C1
-				// System.out.println("... type = "+type+" sb TABLE");
-			    }
-			}							// @C1
-			else if (type.equals("BASE TABLE"))			// @C1
-				check1 = true;					// @C1
+			if ( type.equals("TABLE") ) {			// @C1
+check1 = true;					// @C1
+// System.out.println("... type = "+type+" sb TABLE");
+      }
 		    }
                     else if ((table.equals (JDDMDTest.COLLECTION2 + ".TABLESV2"))
                              & (type.equals ("VIEW")))
@@ -1890,12 +1873,7 @@ to one ResultSet per DatabaseMetaData object at a time.
     {
       StringBuffer sb = new StringBuffer();
 
-	if(getRelease() < JDTestDriver.RELEASE_V7R1M0
-	   && getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE for less than v5r3 and Native");
-	    return;
-	}
-        try {
+	try {
             ResultSet rs = dmd_.getTables (connectionCatalog_,
                                            JDDMDTest.SCHEMAS_PERCENT, "%", null);
 	    boolean success = true;
@@ -1932,12 +1910,7 @@ to one ResultSet per DatabaseMetaData object at a time.
     {
       StringBuffer sb = new StringBuffer();
 
-	if(getRelease() < JDTestDriver.RELEASE_V7R1M0
-	   && getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE for less than v5r3 and Native");
-	    return;
-	}
-        try {
+	try {
 	    String[] types = {"TABLE"};
             ResultSet rs = dmd_.getTables (connectionCatalog_,
                                            JDDMDTest.SCHEMAS_PERCENT, "%", types);
@@ -1974,13 +1947,7 @@ to one ResultSet per DatabaseMetaData object at a time.
       StringBuffer sb = new StringBuffer();
 
       String schema = JDDMDTest.SCHEMAS_PERCENT;
-	if(getRelease() < JDTestDriver.RELEASE_V7R1M0
-	   && getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE for less than v5r3 and Native");
-	    return;
-	}
-
-        if(getDriver() == JDTestDriver.DRIVER_TOOLBOX){
+	if(getDriver() == JDTestDriver.DRIVER_TOOLBOX){
             notApplicable("Native driver variation only");      //System tables are represented as views
             return;
         }
@@ -2021,12 +1988,7 @@ to one ResultSet per DatabaseMetaData object at a time.
     {
       StringBuffer sb = new StringBuffer();
 
-	if(getRelease() < JDTestDriver.RELEASE_V7R1M0
-	   && getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE for less than v5r3 and Native");
-	    return;
-	}
-        try {
+	try {
 	    String[] types = {"VIEW"};
             ResultSet rs = dmd_.getTables (connectionCatalog_,
                                            JDDMDTest.SCHEMAS_PERCENT, "%", types);
@@ -2213,32 +2175,25 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
  and set notApplcable if running on a previous release.
 **/
 
-    ResultSetMetaData getResultSetMetaData() {
-	ResultSetMetaData rsmd;
-	if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("RSMD test run only on V5R3 and later");
-	    return null;
-	} else {
-	    try {
-		String[] types = { "VIEW"};
-		rsForMD = dmd_.getTables (connectionCatalog_,
-					       JDDMDTest.SCHEMAS_PERCENT, "%", types);
-		rsmd = rsForMD.getMetaData();
+ResultSetMetaData getResultSetMetaData() {
+  ResultSetMetaData rsmd;
+  try {
+    String[] types = { "VIEW" };
+    rsForMD = dmd_.getTables(connectionCatalog_, JDDMDTest.SCHEMAS_PERCENT, "%", types);
+    rsmd = rsForMD.getMetaData();
 
-		return rsmd;
+    return rsmd;
 
+  } catch (Exception e) {
+    failed(e, "Unexpected exception -- added by native 08/03/05");
+    return null;
+  }
 
-	    } catch (Exception e) {
-		failed(e, "Unexpected exception -- added by native 08/03/05");
-		return null;
-	    }
+}
 
-	}
-
-    }
 /**
-getTables() - check the metadata for the RS -- getColumnCount
-**/
+ * getTables() - check the metadata for the RS -- getColumnCount
+ **/
 
     public void Var038()
     {
@@ -2632,25 +2587,13 @@ getTables() - check the metadata for the RS -- getPrecision
        String expected13[] = {null, "128","128","128","128","254"};
        String expected14[] = {null, "128","128","128","128","254", "128","128","128","128","128"};
        String expectedSysibm[] = {null, "128","128","128","24","2000", "128","128","128","128","128"};
-       // 10/22/2009 -- size back to 2000
-       String expectedSysibmV7R1[] = {null, "128","128","128","24","2000", "128","128","128","128","128"};
-       String expectedSysibmV7R1toolbox[] = {null, "128","128","128","24","2000", "128","128","128","128","128"};
-
        String expectedSysibmV7R3[] = {null, "128","128","128","128","2000", "128","128","128","128","128"};
        String expectedSysibmV7R3toolbox[] = {null, "128","128","128","128","2000", "128","128","128","128","128"};
 
-       if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 ){
-	   if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-	       expectedSysibm = expectedSysibmV7R3toolbox;
-	   } else {
-	       expectedSysibm = expectedSysibmV7R3;
-	   }
-       } else     if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 ){
-	   if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-	       expectedSysibm = expectedSysibmV7R1toolbox;
-	   } else {
-	       expectedSysibm = expectedSysibmV7R1;
-	   }
+       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+           expectedSysibm = expectedSysibmV7R3toolbox;
+       } else {
+           expectedSysibm = expectedSysibmV7R3;
        }
        checkExpectedMDStrings(expected13, expected14, expectedSysibm, GETPRECISION);
    }
@@ -2676,7 +2619,7 @@ getTables() - check the metadata for the RS -- getColumnType
 	   String expected14V7R1toolbox[] = {null, "12","12","12","12","12", "12","12","12","12","12"}; //v7r1 longvarchar
 
 
-	   if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 ){
+	   if(true ){
 	       if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE || getDriver() == JDTestDriver.DRIVER_TOOLBOX ) {
 		   expected14 = expected14V7R1toolbox;
 	       } else {
@@ -2703,7 +2646,7 @@ getTables() - check the metadata for the RS -- getColumnTypeName
 
 	   String expected14V7R1toolbox[] = {null, "VARCHAR","VARCHAR","VARCHAR","VARCHAR","NVARCHAR", "VARCHAR","VARCHAR","VARCHAR","VARCHAR","VARCHAR"};
 
-	  if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 ){
+	  if(true ){
 	       if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE || getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 		   expected14 = expected14V7R1toolbox;
 	       } else {
@@ -3617,65 +3560,25 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
         if (!setupExpectedDone) {
             expectedSysibmRows = expectedSysibmRows54;
             setupSysibmVersion =      "expectedSysibmRows54";
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-                expectedSysibmRows = expectedSysibmRows53;
-                setupSysibmVersion="expectedSysibmRows53";
-                if( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()){
-                    expectedRows = expectedRowsToolbox53;
-                    setupVersion ="expectedRowsToolbox53";
-                }else  {
-                    expectedRows = expectedRows53;
-                    setupVersion ="expectedRows53 #1";
-                }
-            } else if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) ) {
-		if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-		    expectedSysibmRows = expectedSysibmRows72;
-		    setupSysibmVersion =      "expectedSysibmRows72";
+            if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
+                expectedSysibmRows = expectedSysibmRows72;
+                setupSysibmVersion =      "expectedSysibmRows72";
 
-		} else if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		    expectedSysibmRows = expectedSysibmRows71;
-		    setupSysibmVersion =      "expectedSysibmRows71";
-
-		} else {
-		    expectedSysibmRows = expectedSysibmRows55;
-		    setupSysibmVersion =      "expectedSysibmRows55";
-		}
-
-                if( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()){
-                    for (int i = 0; i < expectedSysibmRows.length; i++) {
-                        if (expectedSysibmRows[i].name.equals("SYSJARCONTENTS") ||
-                                expectedSysibmRows[i].name.equals("SYSJAROBJECTS")) {
-                            expectedSysibmRows[i].typeName="VIEW";
-                            expectedSysibmRows[i].typeFlag = VIEW;
-                        }
-                    }
-                }
-
-            } else if ((getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-                expectedRows = expectedRows52;
-                setupVersion =      "expectedRows52";
-                expectedSysibmRows = expectedSysibmRows52;
-                setupSysibmVersion ="expectedSysibmRows52";
             } else {
-                if( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()){
-                    expectedRows = expectedRowsToolbox53;
-                    setupVersion ="expectedRowsToolbox53";
-                } else  {
-                    if (! is400 ) {
-                        expectedRows = expectedRowsLUW;
-                        setupVersion ="expectedRowsLUW";
-                        expectedSysibmRows = expectedSysibmRowsLUW;
-                        setupSysibmVersion=    "expectedSysibmRowsLUW";
-                    } else {
-                        expectedRows = expectedRows53;
-                        setupVersion ="expectedRows53 #2";
-                        if (isSysibmMetadata()) {
-                            expectedSysibmRows = expectedSysibmRows5440;
-                            setupSysibmVersion =      "expectedSysibmRows5440";
-                        }
-                    }
-                }
+                expectedSysibmRows = expectedSysibmRows71;
+                setupSysibmVersion =      "expectedSysibmRows71";
+
             }
+
+                        if( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()){
+                            for (int i = 0; i < expectedSysibmRows.length; i++) {
+                                if (expectedSysibmRows[i].name.equals("SYSJARCONTENTS") ||
+                                        expectedSysibmRows[i].name.equals("SYSJAROBJECTS")) {
+                                    expectedSysibmRows[i].typeName="VIEW";
+                                    expectedSysibmRows[i].typeFlag = VIEW;
+                                }
+                            }
+                        }
 
         }
 
@@ -3687,31 +3590,21 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
 	if (!setupDone) {
 	    expectedSysibmRows = expectedSysibmRows54;
             setupSysibmVersion =      "expectedSysibmRows54";
-	    if ((getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-	        expectedRows = expectedRows52;
-		setupVersion ="expectedRows52";
-	    } else {
-	        if( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()){
-	            expectedRows = expectedRowsToolbox53;
-		    setupVersion ="expectedRowsToolbox53";
-	        }else  {
-	            if (! is400 ) {
-	                expectedRows = expectedRowsLUW;
-			setupVersion ="expectedRowsLUW";
-	                expectedSysibmRows =  expectedSysibmRowsLUW;
-			setupSysibmVersion = "expectedSysibmRowsLUW";
-	            } else {
-			if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-			    expectedRows = expectedRows53;
-			    setupVersion ="expectedRows53 #3";
-			} else {
-			    expectedRows = expectedRows71;
-			    setupVersion ="expectedRows71";
-			}
+	    if( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()){
+          expectedRows = expectedRowsToolbox53;
+  setupVersion ="expectedRowsToolbox53";
+      }else  {
+          if (! is400 ) {
+              expectedRows = expectedRowsLUW;
+setupVersion ="expectedRowsLUW";
+              expectedSysibmRows =  expectedSysibmRowsLUW;
+setupSysibmVersion = "expectedSysibmRowsLUW";
+          } else {
+expectedRows = expectedRows71;
+setupVersion ="expectedRows71";
 
-	            }
-	        }
-	    }
+          }
+      }
 
 	    if (isSysibmMetadata()) {
 	        // We must change all SYSTEM_TABLES to views in the regular tables
@@ -3781,14 +3674,7 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
 
 		try {
 
-		    // Check the release.. If the release if v5r2, don't execute those
-                    // setup statements with a 2
-		    if ((getRelease() < JDTestDriver.RELEASE_V7R1M0) &&
-			exceptionAction.equals("3")) {
-			// skipping V5R3 features
-		    } else {
-			stmt.executeUpdate(sql);
-		    }
+		    stmt.executeUpdate(sql);
 
 		} catch (Exception e) {
 		    if (exceptionAction.equals("I")) {
@@ -4073,13 +3959,9 @@ getTables() - check the metadata for the RS -- isAutoIncrement
 **/
    public void Var116()
     {
-       if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("New testcase for Native PTF SI24355");
-       } else {
-	   String expected13[] = {null, "false","false","false","false","false"};
-	   String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
-	   checkExpectedMDStrings(expected13, expected14, expected14, ISAUTOINCREMENT);
-       }
+       String expected13[] = {null, "false","false","false","false","false"};
+       String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
+       checkExpectedMDStrings(expected13, expected14, expected14, ISAUTOINCREMENT);
    }
 
 
@@ -4090,14 +3972,9 @@ getTables() - check the metadata for the RS -- isSearchable
 **/
    public void Var117()
     {
-       if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("New testcase for Native PTF SI24355");
-       } else {
-
-	   String expected13[] = {null, "true","true","true","true","true"};
-	   String expected14[] = {null, "true","true","true","true","true", "true","true","true","true","true"};
-	   checkExpectedMDStrings(expected13, expected14, expected14, ISSEARCHABLE);
-       }
+       String expected13[] = {null, "true","true","true","true","true"};
+       String expected14[] = {null, "true","true","true","true","true", "true","true","true","true","true"};
+       checkExpectedMDStrings(expected13, expected14, expected14, ISSEARCHABLE);
    }
 
 /**
@@ -4105,13 +3982,9 @@ getTables() - check the metadata for the RS -- isCurrency
 **/
    public void Var118()
    {
-       if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("New testcase for Native PTF SI24355");
-       } else {
-	   String expected13[] = {null, "false","false","false","false","false"};
-	   String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
-	   checkExpectedMDStrings(expected13, expected14,expected14,  ISCURRENCY);
-       }
+       String expected13[] = {null, "false","false","false","false","false"};
+       String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
+       checkExpectedMDStrings(expected13, expected14,expected14,  ISCURRENCY);
    }
 
 /**
@@ -4119,25 +3992,20 @@ getTables() - check the metadata for the RS -- getCatalogName
 **/
    public void Var119()
    {
-       if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("New testcase for Native PTF SI24355");
-       } else {
-
-	   String catalog = "UNKNOWN";
-	   try {
-	       catalog =  connection_.getCatalog();
-	       if (catalog == null) {
-		   catalog = getCatalogFromURL(baseURL_);
-		   System.out.println("Retrieved "+catalog+" from URL:"+baseURL_);
-	       }
-	   } catch (Exception e) {
-	       e.printStackTrace();
-	   }
-
-	   String expected13[] = {null, catalog,catalog,catalog,catalog,catalog};
-	   String expected14[] = {null, catalog,catalog,catalog,catalog,catalog, catalog,catalog,catalog,catalog,catalog};
-	   checkExpectedMDStrings(expected13, expected14, expected14, GETCATALOGNAME);
+       String catalog = "UNKNOWN";
+       try {
+           catalog =  connection_.getCatalog();
+           if (catalog == null) {
+         catalog = getCatalogFromURL(baseURL_);
+         System.out.println("Retrieved "+catalog+" from URL:"+baseURL_);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
        }
+
+       String expected13[] = {null, catalog,catalog,catalog,catalog,catalog};
+       String expected14[] = {null, catalog,catalog,catalog,catalog,catalog, catalog,catalog,catalog,catalog,catalog};
+       checkExpectedMDStrings(expected13, expected14, expected14, GETCATALOGNAME);
 
    }
 /**
@@ -4145,13 +4013,9 @@ getTables() - check the metadata for the RS -- isReadOnly
 **/
    public void Var120()
    {
-       if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("New testcase for Native PTF SI24355");
-       } else {
-	   String expected13[] = {null, "true","true","true","true","true"};
-	   String expected14[] = {null, "true","true","true","true","true", "true","true","true","true","true"};
-	   checkExpectedMDStrings(expected13, expected14, expected14, ISREADONLY);
-       }
+       String expected13[] = {null, "true","true","true","true","true"};
+       String expected14[] = {null, "true","true","true","true","true", "true","true","true","true","true"};
+       checkExpectedMDStrings(expected13, expected14, expected14, ISREADONLY);
    }
 
 /**
@@ -4159,13 +4023,9 @@ getTables() - check the metadata for the RS -- isWritable
 **/
    public void Var121()
    {
-       if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("New testcase for Native PTF SI24355");
-       } else {
-	   String expected13[] = {null, "false","false","false","false","false"};
-	   String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
-	   checkExpectedMDStrings(expected13, expected14, expected14, ISWRITABLE);
-       }
+       String expected13[] = {null, "false","false","false","false","false"};
+       String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
+       checkExpectedMDStrings(expected13, expected14, expected14, ISWRITABLE);
    }
 
 /**
@@ -4173,13 +4033,9 @@ getTables() - check the metadata for the RS -- isDefinitelyWritable
 **/
    public void Var122()
    {
-       if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("New testcase for Native PTF SI24355");
-       } else {
-	   String expected13[] = {null, "false","false","false","false","false"};
-	   String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
-	   checkExpectedMDStrings(expected13, expected14, expected14, ISDEFINITELYWRITABLE);
-       }
+       String expected13[] = {null, "false","false","false","false","false"};
+       String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
+       checkExpectedMDStrings(expected13, expected14, expected14, ISDEFINITELYWRITABLE);
    }
 
 
@@ -4191,11 +4047,6 @@ getTables() - check the metadata for the RS -- isDefinitelyWritable
    **/
        public void Var123()
        {
-           if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-           {
-               notApplicable("V7R1 long schema TC.");
-               return;
-           }
            try {
                StringBuffer sb = new StringBuffer();
                ResultSet rs = dmd_.getTables (connectionCatalog_,
@@ -4233,7 +4084,7 @@ getTables() - check the metadata for the RS -- isDefinitelyWritable
        **/
            public void Var124()
            {
-               if(getRelease() < JDTestDriver.RELEASE_V7R1M0 || getDriver() != JDTestDriver.DRIVER_TOOLBOX)
+               if(false || getDriver() != JDTestDriver.DRIVER_TOOLBOX)
                {
                    notApplicable("V7R1 long schema (non sysibm SP) TC.");
                    return;
@@ -4334,13 +4185,6 @@ Created 1/27/2011 for CPS 8DHTTE.
 
     public void checkRSMD(boolean extendedMetadata)
     {
-
-	if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&
-	    getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	    notApplicable("Native driver fails in V5R4 on call to isSearchable");
-	    return; 
-	} 
-
 
 	Connection connection = connection_;
 	DatabaseMetaData dmd = dmd_;

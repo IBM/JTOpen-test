@@ -327,12 +327,7 @@ A DIFFERENT TESTCASE SHOULD BE WRITTEN TO COVER THE LEFT OVER CONDITION
 **/
     public void Var001()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-	    getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE FOR <= V5R3");
-	    return;
-	}
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             if (checkLobSupport ()) {
                 try {
 
@@ -365,7 +360,7 @@ A DIFFERENT TESTCASE SHOULD BE WRITTEN TO COVER THE LEFT OVER CONDITION
 			    success = success && compare(v, expected, "8859_1",sb);
 			else
 			    success = success && compare(v, expected,
-							 getRelease()>=JDTestDriver.RELEASE_V7R1M0);	// @KK
+							 true);	// @KK
 		    }
 
 		    assertCondition ( success, "Large lob Testcases added 07/17/2003"+sb);
@@ -407,12 +402,7 @@ getSubString() - Native driver pads extra characters if mentioned length exceeds
 **/
     public void Var003()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-	    getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE FOR <= V5R3");
-	    return;
-	}
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             try {
                 rs_.absolute (3);
                 Clob clob = rs_.getClob ("C_CLOB");
@@ -843,12 +833,7 @@ setString(long, String, int, int) - Should set value beyond length_ as long as t
 **/
     public void Var021()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-	    getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE FOR <= V5R3");
-	    return;
-	}
-        if (checkUpdateableLobsSupport ()) {
+	if (checkUpdateableLobsSupport ()) {
 	    try {
 		rs2_=statement_.executeQuery(TABLE_QUERY);
 		rs2_.absolute (2);
@@ -1002,12 +987,7 @@ truncate() - Should work on a non-empty lob.
 **/
     public void Var026()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-	    getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE FOR <= V5R3");
-	    return;
-	}
-        if (checkUpdateableLobsSupport ())
+	if (checkUpdateableLobsSupport ())
         {
             try
             {
@@ -1089,12 +1069,7 @@ setString(long, String, int, int) - Should work to set str to a non-empty lob wi
 **/
     public void Var029()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-	    getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE FOR <= V5R3");
-	    return;
-	}
-        if (checkUpdateableLobsSupport ()) {
+	if (checkUpdateableLobsSupport ()) {
             try {
                 rs2_=statement_.executeQuery(TABLE_QUERY);
                 rs2_.absolute (3);
@@ -1188,12 +1163,7 @@ Playing around with VLARGE_ field by checking getSubString, length methods
 **/
     public void Var032()
     {
-	if( getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-	    getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("NOT APPLICABLE FOR <= V5R3");
-	    return;
-	}
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
 	    if (checkLobSupport ()) {
 		try {
 		    rs2_=statement_.executeQuery(TABLE_QUERY);
@@ -1238,13 +1208,7 @@ See Issue 44488 for more information
     public void Var033()
     {
 
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    System.out.println("Memory leak with locators.  Fix for native in V7R2");
-	    assertCondition(true);
-	    return; 
-	}
-        if (proxy_ != null && (!proxy_.equals(""))) {
+	if (proxy_ != null && (!proxy_.equals(""))) {
             notApplicable("Use of com.ibm.as400.access.AS400JDBCConnection does not work for proxy driver");
             return; 
         }

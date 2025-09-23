@@ -606,7 +606,7 @@ public class JDRSGetBytes extends JDTestcase {
           (byte) 0x40, (byte) 0x40 };
 
       if (getDriver() == JDTestDriver.DRIVER_NATIVE
-          && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+          && true)
         assertCondition(areEqual(v, expectedNative),
             " v = " + JDTestUtilities.dumpBytes(v) + " and expected = "
                 + JDTestUtilities.dumpBytes(expectedNative));
@@ -1179,7 +1179,7 @@ public class JDRSGetBytes extends JDTestcase {
         // toolbox: in pre 550, getbytes() ignores the length and return the
         // length of the column.
         if ((isToolboxDriver())
-            && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+            && (true)) {
           // 42 bytes
           byte[] tmp = new byte[40];
           System.arraycopy(expectedToolbox, 0, tmp, 0, 40);
@@ -1348,66 +1348,63 @@ public class JDRSGetBytes extends JDTestcase {
       return;
     }
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        ResultSet rs = statement0_
-            .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
-        JDRSTest.position0(rs, "GRAPHIC_FULL");
-        byte[] v = rs.getBytes("C_GRAPHIC");
+      ResultSet rs = statement0_
+          .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
+      JDRSTest.position0(rs, "GRAPHIC_FULL");
+      byte[] v = rs.getBytes("C_GRAPHIC");
 
-        byte[] expectedToolbox = { (byte) 0x00, (byte) 0x54, (byte) 0x00,
-            (byte) 0x4f, (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x4c,
-            (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x4f, (byte) 0x00,
-            (byte) 0x58, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x46,
-            (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x52, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x4a, (byte) 0x00, (byte) 0x41,
-            (byte) 0x00, (byte) 0x56, (byte) 0x00, (byte) 0x41, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20 };
+      byte[] expectedToolbox = { (byte) 0x00, (byte) 0x54, (byte) 0x00,
+          (byte) 0x4f, (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x4c,
+          (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x4f, (byte) 0x00,
+          (byte) 0x58, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x46,
+          (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x52, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x4a, (byte) 0x00, (byte) 0x41,
+          (byte) 0x00, (byte) 0x56, (byte) 0x00, (byte) 0x41, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20 };
 
-        byte[] expectedNative = { (byte) 0x00, (byte) 0x54, (byte) 0x00,
-            (byte) 0x4f, (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x4c,
-            (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x4f, (byte) 0x00,
-            (byte) 0x58, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x46,
-            (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x52, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x4a, (byte) 0x00, (byte) 0x41,
-            (byte) 0x00, (byte) 0x56, (byte) 0x00, (byte) 0x41, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20 };
+      byte[] expectedNative = { (byte) 0x00, (byte) 0x54, (byte) 0x00,
+          (byte) 0x4f, (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x4c,
+          (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x4f, (byte) 0x00,
+          (byte) 0x58, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x46,
+          (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x52, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x4a, (byte) 0x00, (byte) 0x41,
+          (byte) 0x00, (byte) 0x56, (byte) 0x00, (byte) 0x41, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20 };
 
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE)
-          assertCondition(areEqual(v, expectedNative),
-              "\nv        = " + JDTestUtilities.dumpBytes(v) + "\nexpected = "
-                  + JDTestUtilities.dumpBytes(expectedNative));
-        else
-          assertCondition(areEqual(v, expectedToolbox),
-              "\nv        = " + JDTestUtilities.dumpBytes(v) + "\nexpected = "
-                  + JDTestUtilities.dumpBytes(expectedToolbox));
-      } else
-        notApplicable();
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE)
+        assertCondition(areEqual(v, expectedNative),
+            "\nv        = " + JDTestUtilities.dumpBytes(v) + "\nexpected = "
+                + JDTestUtilities.dumpBytes(expectedNative));
+      else
+        assertCondition(areEqual(v, expectedToolbox),
+            "\nv        = " + JDTestUtilities.dumpBytes(v) + "\nexpected = "
+                + JDTestUtilities.dumpBytes(expectedToolbox));
 
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
@@ -1420,59 +1417,56 @@ public class JDRSGetBytes extends JDTestcase {
       return;
     }
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        ResultSet rs = statement0_
-            .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
-        JDRSTest.position0(rs, "GRAPHIC_FULL");
-        byte[] v = rs.getBytes("C_VARGRAPHIC");
+      ResultSet rs = statement0_
+          .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
+      JDRSTest.position0(rs, "GRAPHIC_FULL");
+      byte[] v = rs.getBytes("C_VARGRAPHIC");
 
-        byte[] expectedToolbox = { (byte) 0x00, (byte) 0x4A, (byte) 0x00,
-            (byte) 0x41, (byte) 0x00, (byte) 0x56, (byte) 0x00, (byte) 0x41,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x54, (byte) 0x00,
-            (byte) 0x4F, (byte) 0x00, (byte) 0x4F, (byte) 0x00, (byte) 0x4C,
-            (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x4F, (byte) 0x00,
-            (byte) 0x58, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
-            (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
-            (byte) 0x00, (byte) 0x20 };
+      byte[] expectedToolbox = { (byte) 0x00, (byte) 0x4A, (byte) 0x00,
+          (byte) 0x41, (byte) 0x00, (byte) 0x56, (byte) 0x00, (byte) 0x41,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x54, (byte) 0x00,
+          (byte) 0x4F, (byte) 0x00, (byte) 0x4F, (byte) 0x00, (byte) 0x4C,
+          (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x4F, (byte) 0x00,
+          (byte) 0x58, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00,
+          (byte) 0x20, (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x20,
+          (byte) 0x00, (byte) 0x20 };
 
-        // toolbox: in 550, if VLC is on, then the ending x0020 bytes are gone,
-        // but the length is still the same.
-        // toolbox: in pre 550, getbytes() ignores the length and return the
-        // length of the column.
-        if ((isToolboxDriver())
-            && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
-          // 26 bytes
-          byte[] tmp = new byte[26];
-          System.arraycopy(expectedToolbox, 0, tmp, 0, 26);
-          expectedToolbox = tmp;
-        }
+      // toolbox: in 550, if VLC is on, then the ending x0020 bytes are gone,
+      // but the length is still the same.
+      // toolbox: in pre 550, getbytes() ignores the length and return the
+      // length of the column.
+      if ((isToolboxDriver())
+          && (true)) {
+        // 26 bytes
+        byte[] tmp = new byte[26];
+        System.arraycopy(expectedToolbox, 0, tmp, 0, 26);
+        expectedToolbox = tmp;
+      }
 
-        byte[] expectedNative53 = { (byte) 0x00, (byte) 0x4a, (byte) 0x00,
-            (byte) 0x41, (byte) 0x00, (byte) 0x56, (byte) 0x00, (byte) 0x41,
-            (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x54, (byte) 0x00,
-            (byte) 0x4f, (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x4c,
-            (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x4f, (byte) 0x00,
-            (byte) 0x58 };
+      byte[] expectedNative53 = { (byte) 0x00, (byte) 0x4a, (byte) 0x00,
+          (byte) 0x41, (byte) 0x00, (byte) 0x56, (byte) 0x00, (byte) 0x41,
+          (byte) 0x00, (byte) 0x20, (byte) 0x00, (byte) 0x54, (byte) 0x00,
+          (byte) 0x4f, (byte) 0x00, (byte) 0x4f, (byte) 0x00, (byte) 0x4c,
+          (byte) 0x00, (byte) 0x42, (byte) 0x00, (byte) 0x4f, (byte) 0x00,
+          (byte) 0x58 };
 
-        assertCondition(areEqual(v, expectedNative53),
-            " v = " + JDTestUtilities.dumpBytes(v) + " and expected = "
-                + JDTestUtilities.dumpBytes(expectedNative53)
-                + " Updated 12/22/2011 -- toolbox and native now the same");
-      } else
-        notApplicable();
+      assertCondition(areEqual(v, expectedNative53),
+          " v = " + JDTestUtilities.dumpBytes(v) + " and expected = "
+              + JDTestUtilities.dumpBytes(expectedNative53)
+              + " Updated 12/22/2011 -- toolbox and native now the same");
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
@@ -1484,34 +1478,31 @@ public class JDRSGetBytes extends JDTestcase {
       return;
     }
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        ResultSet rs = statement0_
-            .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
-        JDRSTest.position0(rs, "GRAPHIC_FULL");
-        byte[] v = rs.getBytes("C_GRAPHIC_835");
+      ResultSet rs = statement0_
+          .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
+      JDRSTest.position0(rs, "GRAPHIC_FULL");
+      byte[] v = rs.getBytes("C_GRAPHIC_835");
 
-        byte[] expectedToolbox = { (byte) 0x4D, (byte) 0x6C, (byte) 0x4D,
-            (byte) 0x71, (byte) 0x4D, (byte) 0x7D, (byte) 0x50, (byte) 0x5B,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
-            (byte) 0x40, (byte) 0x40 }; // Graphic(50) ccsid 835
+      byte[] expectedToolbox = { (byte) 0x4D, (byte) 0x6C, (byte) 0x4D,
+          (byte) 0x71, (byte) 0x4D, (byte) 0x7D, (byte) 0x50, (byte) 0x5B,
+          (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
+          (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40, (byte) 0x40,
+          (byte) 0x40, (byte) 0x40 }; // Graphic(50) ccsid 835
 
-        byte[] expectedNative = { (byte) 0x5e, (byte) 0x03, (byte) 0x5f,
-            (byte) 0x17, (byte) 0x67, (byte) 0x2b, (byte) 0x53, (byte) 0x78,
-            (byte) 0x30, (byte) 0x00, (byte) 0x30, (byte) 0x00, (byte) 0x30,
-            (byte) 0x00, (byte) 0x30, (byte) 0x00, (byte) 0x30, (byte) 0x00,
-            (byte) 0x30, (byte) 0x00 };
+      byte[] expectedNative = { (byte) 0x5e, (byte) 0x03, (byte) 0x5f,
+          (byte) 0x17, (byte) 0x67, (byte) 0x2b, (byte) 0x53, (byte) 0x78,
+          (byte) 0x30, (byte) 0x00, (byte) 0x30, (byte) 0x00, (byte) 0x30,
+          (byte) 0x00, (byte) 0x30, (byte) 0x00, (byte) 0x30, (byte) 0x00,
+          (byte) 0x30, (byte) 0x00 };
 
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE)
-          assertCondition(areEqual(v, expectedNative),
-              "\nv        = " + JDTestUtilities.dumpBytes(v) + "\nexpected = "
-                  + JDTestUtilities.dumpBytes(expectedNative));
-        else
-          assertCondition(areEqual(v, expectedToolbox),
-              "\nv        = " + JDTestUtilities.dumpBytes(v) + "\nexpected = "
-                  + JDTestUtilities.dumpBytes(expectedToolbox));
-      } else
-        notApplicable();
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE)
+        assertCondition(areEqual(v, expectedNative),
+            "\nv        = " + JDTestUtilities.dumpBytes(v) + "\nexpected = "
+                + JDTestUtilities.dumpBytes(expectedNative));
+      else
+        assertCondition(areEqual(v, expectedToolbox),
+            "\nv        = " + JDTestUtilities.dumpBytes(v) + "\nexpected = "
+                + JDTestUtilities.dumpBytes(expectedToolbox));
 
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
@@ -1524,31 +1515,28 @@ public class JDRSGetBytes extends JDTestcase {
       return;
     }
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        ResultSet rs = statement0_
-            .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
-        JDRSTest.position0(rs, "GRAPHIC_FULL");
-        byte[] v = rs.getBytes("C_VARGRAPHIC_835");
+      ResultSet rs = statement0_
+          .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GRAPHIC);
+      JDRSTest.position0(rs, "GRAPHIC_FULL");
+      byte[] v = rs.getBytes("C_VARGRAPHIC_835");
 
-        // Updated expectedToolbox 12/22/2011 (removed length and padding)
-        byte[] expectedToolbox = { (byte) 0x4D, (byte) 0x6C, (byte) 0x4D,
-            (byte) 0x71, (byte) 0x4D, (byte) 0x7D, (byte) 0x50, (byte) 0x5B }; // Graphic(50)
-                                                                               // ccsid
-                                                                               // 835
+      // Updated expectedToolbox 12/22/2011 (removed length and padding)
+      byte[] expectedToolbox = { (byte) 0x4D, (byte) 0x6C, (byte) 0x4D,
+          (byte) 0x71, (byte) 0x4D, (byte) 0x7D, (byte) 0x50, (byte) 0x5B }; // Graphic(50)
+                                                                             // ccsid
+                                                                             // 835
 
-        byte[] expectedNative = { (byte) 0x5e, (byte) 0x03, (byte) 0x5f,
-            (byte) 0x17, (byte) 0x67, (byte) 0x2b, (byte) 0x53, (byte) 0x78 };
+      byte[] expectedNative = { (byte) 0x5e, (byte) 0x03, (byte) 0x5f,
+          (byte) 0x17, (byte) 0x67, (byte) 0x2b, (byte) 0x53, (byte) 0x78 };
 
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE)
-          assertCondition(areEqual(v, expectedNative),
-              " v = " + JDTestUtilities.dumpBytes(v) + " and expected = "
-                  + JDTestUtilities.dumpBytes(expectedNative));
-        else
-          assertCondition(areEqual(v, expectedToolbox),
-              "v = " + JDTestUtilities.dumpBytes(v) + " and expected = "
-                  + JDTestUtilities.dumpBytes(expectedToolbox));
-      } else
-        notApplicable();
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE)
+        assertCondition(areEqual(v, expectedNative),
+            " v = " + JDTestUtilities.dumpBytes(v) + " and expected = "
+                + JDTestUtilities.dumpBytes(expectedNative));
+      else
+        assertCondition(areEqual(v, expectedToolbox),
+            "v = " + JDTestUtilities.dumpBytes(v) + " and expected = "
+                + JDTestUtilities.dumpBytes(expectedToolbox));
 
     } catch (Exception e) {
       failed(e, "Unexpected Exception");

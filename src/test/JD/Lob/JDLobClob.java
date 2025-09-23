@@ -145,7 +145,7 @@ public class JDLobClob extends JDTestcase {
 
         sb.setLength(0);
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K9
-            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K9
+            true) // @K9
           assertCondition(compareBeginsWithBytes(v, "".getBytes("8859_1"), sb), sb); // @K9
         else // @K9
           assertCondition(compare(v, "", "8859_1", sb), sb);
@@ -166,7 +166,7 @@ public class JDLobClob extends JDTestcase {
         InputStream v = clob.getAsciiStream();
         sb.setLength(0);
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K9
-            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K9
+            true) // @K9
           assertCondition(compareBeginsWithBytes(v, MEDIUM_.getBytes("8859_1"), sb), sb); // @K9
         else // @K9
           assertCondition(compare(v, MEDIUM_, "8859_1", sb), sb);
@@ -187,7 +187,7 @@ public class JDLobClob extends JDTestcase {
         InputStream v = clob.getAsciiStream();
         sb.setLength(0);
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K9
-            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K9
+            true) // @K9
           assertCondition(compareBeginsWithBytes(v, LARGE_.getBytes("8859_1"), sb), sb); // @K9
         else // @K9
           assertCondition(compare(v, LARGE_, "8859_1", sb), sb);
@@ -347,30 +347,17 @@ public class JDLobClob extends JDTestcase {
    **/
   public void Var012() {
     if (checkJdbc20()) {
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-        try {
-          rs_.absolute(1);
-          Clob clob = rs_.getClob("C_VARCHAR");
-          String v = clob.getSubString(1, 0);
-          failed("Didn't throw SQLException :" + v); // @B1C
-        } // @B1C
-        catch (Exception e) { // @B1C
-          assertExceptionIsInstanceOf(e, "java.sql.SQLException"); // @B1C
-        } // @B1C
-
-      } else {
-        try {
-          rs_.absolute(1);
-          Clob clob = rs_.getClob("C_VARCHAR");
-          String v = clob.getSubString(1, 0);
+      try {
+        rs_.absolute(1);
+        Clob clob = rs_.getClob("C_VARCHAR");
+        String v = clob.getSubString(1, 0);
 //                failed ("Didn't throw SQLException");                           // @B1C
-          assertCondition("".equals(v), "Expected empty string but got '" + v + "'");
-        } // @B1C
-        catch (Exception e) { // @B1C
-//                assertExceptionIsInstanceOf (e, "java.sql.SQLException");       // @B1C
-          failed(connection_, e, "Unexpected exception");
-        }
+        assertCondition("".equals(v), "Expected empty string but got '" + v + "'");
       } // @B1C
+      catch (Exception e) { // @B1C
+//                assertExceptionIsInstanceOf (e, "java.sql.SQLException");       // @B1C
+        failed(connection_, e, "Unexpected exception");
+      }
     }
   }
 
@@ -1568,7 +1555,7 @@ public class JDLobClob extends JDTestcase {
         InputStream i = clob1.getAsciiStream();
         sb.setLength(0);
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K9
-            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K9
+            true) // @K9
           assertCondition(compareBeginsWithBytes(i, b, sb), sb); // @K9
         else // @K9
           assertCondition(compare(i, b, sb), sb); // @C3C
@@ -1607,7 +1594,7 @@ public class JDLobClob extends JDTestcase {
         // @C3A We put (byte) 1 into the first position in testcase 72.
         sb.setLength(0);
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K9
-            getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @K9
+            true) // @K9
           assertCondition(compareBeginsWithBytes(i, newBytes, sb), sb); // @K9
         else // @K9
           assertCondition(compare(i, newBytes, sb), sb); // @C3A

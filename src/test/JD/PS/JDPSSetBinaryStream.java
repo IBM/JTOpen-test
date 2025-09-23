@@ -2053,22 +2053,10 @@ public class JDPSSetBinaryStream extends JDTestcase {
    **/
   public void Var083() {
     if (isToolboxDriver()) {
-      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-        notApplicable("Toolbox V5R5M0 or later test");
-        return;
-      } else {
-        notApplicable("Toolbox possible todo later...");
-        return;
-      }
-    }
-
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Native JDBC driver needs fix > 27438 current fix = "
-          + getDriverFixLevel());
+      notApplicable("Toolbox possible todo later...");
       return;
     }
+
     String added = " -- added 5/8/07 by native driver for SE28810 ";
     int length = 0;
     try {
@@ -2104,17 +2092,6 @@ public class JDPSSetBinaryStream extends JDTestcase {
    * exception would occur on data copy
    **/
   public void Var084() {
-    if (isToolboxDriver() && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Toolbox V5R5M0 or later test");
-      return;
-    }
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Native JDBC driver needs fix > 27438 current fix = "
-          + getDriverFixLevel());
-      return;
-    }
     String added = " -- added 5/8/07 by native driver for SE28810 ";
     String tablename = JDPSTest.COLLECTION + ".JDPSSBS84";
 
@@ -2166,17 +2143,6 @@ public class JDPSSetBinaryStream extends JDTestcase {
    * method: EAO exception would occur on data copy
    **/
   public void Var085() {
-    if (isToolboxDriver() && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Toolbox V5R5M0 or later test");
-      return;
-    }
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Native JDBC driver needs fix > 27438 current fix = "
-          + getDriverFixLevel());
-      return;
-    }
     String added = " -- added 5/8/07 by native driver for SE28810 ";
     String tablename = JDPSTest.COLLECTION + ".JDPSSBS85";
 
@@ -2227,13 +2193,6 @@ public class JDPSSetBinaryStream extends JDTestcase {
    * Should work.
    **/
   public void Var086() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Native JDBC driver needs fix > 27438 current fix = "
-          + getDriverFixLevel());
-      return;
-    }
     String added = " -- added 5/8/07 by native driver for SE28810 ";
     String tablename = JDPSTest.COLLECTION + ".JDPSSBS85";
 
@@ -2267,20 +2226,6 @@ public class JDPSSetBinaryStream extends JDTestcase {
    **/
   public void Var087() {
     if (isToolboxDriver()) {
-      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-        notApplicable("Toolbox V5R5M0 or later test");
-        return;
-      } else {
-        // notApplicable("Toolbox possible todo later...");
-        // return;
-      }
-    }
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Native JDBC driver needs fix > 27438 current fix = "
-          + getDriverFixLevel());
-      return;
     }
     String added = " -- added 5/8/07 by native driver for SE28810 ";
     int length = 0;

@@ -2363,10 +2363,6 @@ public void Var074() {  testCCSID("CHAR", 10, 1208,"1\u68853456789");     }; /* 
 
 public void Var075() {
 
-    if (getRelease() == JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	notApplicable("Fails in V5R4 for native driver.  Not fixing");
-	return; 
-    }
     StringBuffer sb = new StringBuffer(" -- Added 11/19/2012 to Test toolbox data truncation\n"+
 				       "   Reported by forum\n");
 

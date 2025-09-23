@@ -417,6 +417,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     static boolean v7r4  = false;
     static boolean v7r5  = false;
     static boolean v7r6  = false; 
+    static boolean v7r6plus = false; 
     static boolean nativeClient = false; 
     static int CONTEXT_LINE_COUNT = 5;
     static int DIFFERENCES_COUNT = 10;
@@ -483,30 +484,33 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
           }
           if (!v7r3) {
-            v7r4 = osVersion.equals("V7R4M0");
+            v7r4 = osVersion.equals("V7R4M0") || osVersion.equals("7.4") ;
 
             if (debug) {
               System.out.println("JDJSTP.debug:  setting v7r4 = " + v7r4);
 
             }
 	    if (!v7r5) {
-		v7r5 = osVersion.equals("V7R5M0");
+		v7r5 = osVersion.equals("V7R5M0")  || osVersion.equals("7.5");
 
 		if (debug) {
 		    System.out.println("JDJSTP.debug:  setting v7r5 = " + v7r5);
 		}
 
 		if (!v7r6) {
-		    v7r6 = osVersion.equals("V7R6M0");
+		    v7r6 = osVersion.equals("V7R6M0")  || osVersion.equals("7.6");
 
 		    if (debug) {
 			System.out.println("JDJSTP.debug:  setting v7r6 = " + v7r6);
 		    }
 		    if (!v7r6) { 
-			if (debug) {
-			    System.out.println(
-					       "JDJSTP.debug:  v7rx flags not set for " + osVersion);
-			} /* debug */ 
+		      v7r6plus = (osVersion.indexOf("V7R") >= 0) || (osVersion.indexOf("7.") >= 0);
+		      if (debug) {
+		        System.out.println("JDJSTP.debug:  setting v7r6plus = " + v7r6plus);
+		      }
+		      if (!v7r6plus) { 
+		        throw new Exception("Unable to select release"); 
+		      }       
 		    } /* !v7r6 */ 
 		} /* !V7r6 */ 
 	    } /* not v7r5 */
@@ -2210,7 +2214,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		 }
                  process = runtime.exec(commands); 
 
-	     } else 	 if ( ( v7r1 || v7r2 || v7r3 || v7r4 || v7r5 || v7r6 ) && nativeClient ) {
+	     } else 	 if ( ( v7r1 || v7r2 || v7r3 || v7r4 || v7r5 || v7r6 || v7r6plus) && nativeClient ) {
 		 String[] commands = new String[4];
 		 if (command.indexOf("java ") >= 0 && (command.indexOf(';') < 0 )) {
 		     /* If java, just run directly */ 
@@ -2767,12 +2771,14 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
      public static void serverShellCommand(String command, boolean ignoreError) throws Exception {
 	 command = fixQuotes(command); 
 	 command = "QSYS/QSH CMD('"+command+"')";
+	 if (debug) System.out.println("Running serverCommand "+command); 
 	 serverCommand(command, ignoreError); 
      } 
 
      public static void serverShellCommandForUser(String command, boolean ignoreError, String userid, String password) throws Exception {
          command = fixQuotes(command); 
          command = "QSYS/QSH CMD('"+command+"')";
+         if (debug) System.out.println("Running serverCommandForUser "+command); 
          serverCommandForUser(command, ignoreError, userid, password); 
    } 
 
@@ -5283,7 +5289,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	     }
 		if (debug) {
 		    System.out.println("JDJSTP.debug:    .....................................");
-		    System.out.println("JDJSTP.debug:    Running c : "+command);
+		    System.out.println("JDJSTP.debug:    Running c using serverShellCommand #1 : "+command);
 		    System.out.println("JDJSTP.debug:    .....................................");
 		}
 		serverShellCommand(command, false);
@@ -5318,7 +5324,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		  getFileFromServer(output);
 		}
 		
-    if (v7r5 || v7r6) {
+    if (v7r5 || v7r6 || v7r6plus) {
         getFileFromServer(output+".2");
         File f2 = new File(output+".2");
         long lengthF1 = f1.length(); 
@@ -5378,7 +5384,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
 		if (debug) {
 		    System.out.println("JDJSTP.debug:    .....................................");
-		    System.out.println("JDJSTP.debug:    Running c : "+command);
+		    System.out.println("JDJSTP.debug:    Running c serverShellCommand #2: "+command);
 		    System.out.println("JDJSTP.debug:    .....................................");
 		}
 		serverShellCommand(command, false);
@@ -5392,7 +5398,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		getFileFromServer(output);
 	 } else if (testext.equals("sh")) {
 		command = "rm "+output+";  touch -C 819 "+output+"; cd "+nativeBaseDir+"/"+sourcepath+";   ./"+ testPgm+" "+variation +" "+arg2+" > "+output +" 2>&1";
-		if (v7r5 || v7r6)  { 
+		if (v7r5 || v7r6 || v7r6plus)  { 
 		    command = "rm "+output+";  touch -C 819 "+output+"; cd "+nativeBaseDir+"/"+sourcepath+";   ./"+ testPgm+" "+variation +" "+arg2+" | tee  "+output +".2  > "+output+" 2>&1";
 		    command = "rm "+output+";  touch -C 819 "+output+"; cd "+nativeBaseDir+"/"+sourcepath+";   ./"+ testPgm+" "+variation +" "+arg2+" | tee  "+output +"  > "+output+".2 2>&1";
 		}
@@ -5410,7 +5416,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		}
 
 		getFileFromServer(output);
-		if (v7r5 || v7r6) {
+		if (v7r5 || v7r6 || v7r6plus) {
 		    getFileFromServer(output+".2");
 		    File f1 = new File(output);
 		    File f2 = new File(output+".2");
@@ -6092,7 +6098,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 			}
 			if (debug) {
 			    System.out.println("JDJSTP.debug:    .....................................");
-			    System.out.println("JDJSTP.debug:    Running c : "+command);
+			    System.out.println("JDJSTP.debug:    Running c using exec1 : "+command);
 			    System.out.println("JDJSTP.debug:    .....................................");
 			}
 			Process process = exec(command);
@@ -6111,7 +6117,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
                         command =  nativeBaseDir+"/"+sourcepath+"/"+testbase+" "+variation + " "+arg2;
                         if (debug) {
                             System.out.println("JDJSTP.debug:    .....................................");
-                            System.out.println("JDJSTP.debug:    Running c : "+command);
+                            System.out.println("JDJSTP.debug:    Running c using exec2: "+command);
                             System.out.println("JDJSTP.debug:    .....................................");
                         }
                         Process process = exec(command);

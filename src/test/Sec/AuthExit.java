@@ -22,6 +22,7 @@
 package test.Sec;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,7 +43,7 @@ public class AuthExit {
   
   public static void cleanup(Connection c) throws Exception {
     if (!skipExitCleanup) {
-      cleanupExitProgam(c);
+      cleanupExitProgram(c);
       cleanupExitProgramFiles(c);
       exitProgramChecked_ = false;
     }
@@ -53,8 +54,10 @@ public class AuthExit {
    * caller is responsible for determining that the connected system supports the
    * AUTHEXIT. Registers the userid to use MFA and the exit program.
    */
-
   public static void assureExitProgramExists(Connection pwrConnection, String userid) throws Exception {
+      assureExitProgramExists(pwrConnection, userid, true); 
+  }
+  public static void assureExitProgramExists(Connection pwrConnection, String userid, boolean useMFA) throws Exception {
     if (!exitProgramChecked_) {
       Statement stmt = pwrConnection.createStatement();
       /* Check the exit point program */
@@ -146,7 +149,7 @@ public class AuthExit {
             "     fp = fopen(filename,\"w\");", 
             "    fprintf(fp,\"Exit_Point_Name=%20.20s\\n\",info->Exit_Point_Name);",
             "    fprintf(fp,\"Exit_Point_Format_Name=%8.8s\\n\",info->Exit_Point_Format_Name);",
-            "    fprintf(fp,\"User_Profile_Name=%8.8s\\n\",info->User_Profile_Name);",
+            "    fprintf(fp,\"User_Profile_Name=%10.10s\\n\",info->User_Profile_Name);",
             "    fprintf(fp,\"Remote_Port=%d\\n\",info->Authentication_Caller.Remote_Port);",
             "    fprintf(fp,\"Local_Port=%d\\n\",info->Authentication_Caller.Local_Port);", 
             "    strncpy(ipAddress,",
@@ -208,8 +211,11 @@ public class AuthExit {
         stmt.execute(sql); 
         
       } /* exit program library is null */
-
-      sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + userid + ") AUTHMTH(*TOTP *REGFAC)')";
+      if (useMFA) {
+        sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + userid + ") AUTHMTH(*TOTP *REGFAC)')";
+      } else {
+        sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF USRPRF(" + userid + ") AUTHMTH(*REGFAC)')";
+      }
       stmt.execute(sql);
       stmt.close();
       exitProgramChecked_ = true;
@@ -217,7 +223,7 @@ public class AuthExit {
     } /* exitProgramChecked_ */
   }
 
-  public static void cleanupExitProgam(Connection c) throws SQLException {
+  public static void cleanupExitProgram(Connection c) throws SQLException {
     if (exitProgramEnabled_) {
       Statement stmt = c.createStatement();
       String sql = "CALL QSYS2.QCMDEXC('RMVEXITPGM EXITPNT(QIBM_QSY_AUTH) FORMAT(AUTH0100) PGMNBR(1)')";
@@ -313,7 +319,7 @@ public class AuthExit {
   }
 
   pwrStmt.close(); 
-  if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE in /tmp/authexit/"+jobName+".txt\n"); }
+  if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE ("+mfaUserid+") in /tmp/authexit/"+jobName+".txt\n"); }
   if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
   if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
   if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
@@ -372,4 +378,33 @@ Vector<String> pathNames = new Vector<String>();
 
     
   }
+  
+  public static void main(String[] args) {
+    try { 
+      String operation = args[0];
+      String system = args[1]; 
+      String configUserid = args[2]; 
+      String configPassword = args[3]; 
+      String userid = args[4]; 
+
+      Connection pwrConnection = DriverManager.getConnection("jdbc:as400:"+system, configUserid, configPassword); 
+      if (operation.equals("setup")) { 
+         String useMfaString = args[5]; 
+         boolean useMFA = Boolean.parseBoolean(useMfaString);
+         assureExitProgramExists( pwrConnection, userid, useMFA);
+      } else if (operation.equals("cleanup")) { 
+        disableUser(pwrConnection,userid);
+        cleanupExitProgramFiles(pwrConnection);
+        cleanupExitProgram(pwrConnection);
+      } else { 
+        throw new Exception("Operation "+operation+" not supported"); 
+      }
+    } catch (Throwable t) { 
+      t.printStackTrace(System.out); 
+      System.out.println("Usage:  java test.AuthExit  setup    system configUserid configPassword testUser userMfa(true/false) ");
+      System.out.println("Usage:  java test.AuthExit  cleanup  system configUserid configPassword testUser");
+      
+    }
+  }
+  
 }

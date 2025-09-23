@@ -611,14 +611,14 @@ to the full stream, an odd number (to deal with Unicode issues).
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Paraguay".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available () - 1);
-	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&		// @E1
+	    if( true &&		// @E1
 		getDriver() == JDTestDriver.DRIVER_NATIVE )		// @E1
 		succeeded();						// @E1
 	    else							// @E1
 		failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&		// @E1
+	    if( true &&		// @E1
 		getDriver() == JDTestDriver.DRIVER_NATIVE )		// @E1
 		succeeded();						// @E1
 	    else							// @E1
@@ -645,14 +645,14 @@ the full stream.
             InputStream is = new ByteArrayInputStream ("Tobago".getBytes ("UnicodeBigUnmarked")); // @B0C
             InputStream is2 = new ByteArrayInputStream ("Tob".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is2.available ());
-	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&		// @E1
+	    if( true &&		// @E1
 		getDriver() == JDTestDriver.DRIVER_NATIVE )		// @E1
 		succeeded();						// @E1
 	    else							// @E1
 		failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-    	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&		// @E1
+    	    if( true &&		// @E1
 		getDriver() == JDTestDriver.DRIVER_NATIVE )		// @E1
 		succeeded();						// @E1
 	    else							// @E1
@@ -702,7 +702,7 @@ setUnicodeStream() - Set a VARCHAR(50) parameter, with the length set to 1 chara
             InputStream is = new ByteArrayInputStream ("Yucatan Penisula".getBytes ("UnicodeBigUnmarked")); // @B0C
             InputStream is2 = new ByteArrayInputStream ("Y".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is2.available ());
-	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&		// @E1
+	    if( true &&		// @E1
 		getDriver() == JDTestDriver.DRIVER_NATIVE )		// @E1
 		succeeded();						// @E1
 	    else							// @E1
@@ -710,7 +710,7 @@ setUnicodeStream() - Set a VARCHAR(50) parameter, with the length set to 1 chara
 		failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&		// @E1
+	    if( true &&		// @E1
 		getDriver() == JDTestDriver.DRIVER_NATIVE )		// @E1
 		succeeded();						// @E1
 	    else							// @E1
@@ -736,7 +736,7 @@ setUnicodeStream() - Set a VARCHAR(50) parameter, with the length set to 0.
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Baja California".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, 0);
-	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&		// @E1
+	    if( true &&		// @E1
 		getDriver() == JDTestDriver.DRIVER_NATIVE )		// @E1
 		succeeded();						// @E1
 	    else							// @E1
@@ -744,7 +744,7 @@ setUnicodeStream() - Set a VARCHAR(50) parameter, with the length set to 0.
 		failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-	    if( getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&		// @E1
+	    if( true &&		// @E1
 		getDriver() == JDTestDriver.DRIVER_NATIVE )		// @E1
 		succeeded();						// @E1
 	    else							// @E1

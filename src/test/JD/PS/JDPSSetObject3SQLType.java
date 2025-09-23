@@ -317,9 +317,7 @@ setObject() - Should throw exception when the type is invalid.
 		return;
 	    }
 	    try {
-		if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		    notApplicable("testcase didn't work in earlier releases ");
-		} else {
+		
 		    notApplicable("Native does not use col types");
 /* 
 	      PreparedStatement ps = connection_.prepareStatement (
@@ -328,7 +326,7 @@ setObject() - Should throw exception when the type is invalid.
 	      JDReflectionUtil.callMethod_V(ps,"setObject",1, Integer.valueOf(4), 4848484);
 	      failed ("Didn't throw SQLException for invalid type of "+4848484);
 */ 
-		}
+		
 	    } catch (Exception e) {
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }

@@ -151,7 +151,7 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void forceWarning(Statement s) throws Exception {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+        && true) {
       setNativeWarning(s);
     } else {
       // This should force the warning "option value changed".
@@ -168,9 +168,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var001() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+      if ((isToolboxDriver() && true)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+              && true)) {
         try {
           Statement s = connection_.createStatement();
           s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='cnock'");
@@ -207,9 +207,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var002() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+      if ((isToolboxDriver() && true)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+              && true)) {
         try {
           Statement s = connection_.createStatement();
           s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='Susan'");
@@ -243,9 +243,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var003() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+      if ((isToolboxDriver() && true)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+              && true)) {
         try {
           Statement s = connection_.createStatement();
           s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='Susan'");
@@ -279,9 +279,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var004() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+      if ((isToolboxDriver() && true)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+              && true)) {
         try {
           Statement s = connection_.createStatement();
           s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='murch'");
@@ -312,9 +312,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var005() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+      if ((isToolboxDriver() && true)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+              && true)) {
         try {
           Statement s = connection_.createStatement();
           s.clearWarnings();
@@ -349,9 +349,9 @@ public class JDStatementWarnings extends JDTestcase {
    **/
   public void Var006() {
     if (checkJdbc20()) {
-      if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+      if ((isToolboxDriver() && true)
           || (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+              && true)) {
         try {
           PreparedStatement s = connection_.prepareStatement(
               "SELECT * FROM QIWS.QCUSTCDT WHERE CUSNUM = ?",
@@ -368,14 +368,14 @@ public class JDStatementWarnings extends JDTestcase {
             SQLWarning w2 = w1.getNextWarning();
             SQLWarning w3 = w2.getNextWarning();
             s.close();
-            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
+            if (true
                 && (isToolboxDriver()
                     || getDriver() == JDTestDriver.DRIVER_NATIVE))
               failed("did not throw truncation exception for v5r5");
             else
               assertCondition((w1 != null) && (w2 != null) && (w3 == null));
           } catch (DataTruncation e) {
-            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
+            if (true
                 && (isToolboxDriver()
                     || getDriver() == JDTestDriver.DRIVER_NATIVE))
               succeeded();
@@ -412,9 +412,9 @@ public class JDStatementWarnings extends JDTestcase {
    * closed.
    **/
   public void Var007() {
-    if ((isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+    if ((isToolboxDriver() && true)
         || (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+            && true)) {
       try {
         Statement s = connection_.createStatement();
         s.executeUpdate("DELETE FROM " + table_ + " WHERE NAME='Susan'");
@@ -447,32 +447,28 @@ public class JDStatementWarnings extends JDTestcase {
    */
 
   public void Var008() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      try {
-        Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT 8/0 from QSYS2.QSQPTABL");
-        SQLWarning w = s.getWarnings();
-        s.close();
+    try {
+      Statement s = connection_.createStatement();
+      ResultSet rs = s.executeQuery("SELECT 8/0 from QSYS2.QSQPTABL");
+      SQLWarning w = s.getWarnings();
+      s.close();
 
-        String message;
-        if (w != null) {
-          message = w.getMessage();
-        } else {
-          message = "NO WARNING FOUND";
-        }
-        if (message == null)
-          message = "NO MESSAGE IN WARNING for rs=" + rs;
-        message = message.toUpperCase();
-        assertCondition(
-            message.indexOf("DATA CONVERSION OR DATA MAPPING ERROR") >= 0,
-            "message should be 'DATA CONVERSION OR DATA MAPPING ERROR', but is '"
-                + message + "' --  new V5R3 testcase, added by native driver");
-      } catch (Exception e) {
-        failed(e,
-            "Unexpected Exception -- new V5R3 testcase, added by native driver");
+      String message;
+      if (w != null) {
+        message = w.getMessage();
+      } else {
+        message = "NO WARNING FOUND";
       }
-    } else {
-      notApplicable();
+      if (message == null)
+        message = "NO MESSAGE IN WARNING for rs=" + rs;
+      message = message.toUpperCase();
+      assertCondition(
+          message.indexOf("DATA CONVERSION OR DATA MAPPING ERROR") >= 0,
+          "message should be 'DATA CONVERSION OR DATA MAPPING ERROR', but is '"
+              + message + "' --  new V5R3 testcase, added by native driver");
+    } catch (Exception e) {
+      failed(e,
+          "Unexpected Exception -- new V5R3 testcase, added by native driver");
     }
   }
 
@@ -481,68 +477,64 @@ public class JDStatementWarnings extends JDTestcase {
    */
 
   public void Var009() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      String tablename = JDStatementTest.COLLECTION + ".JDSTMWRNTS";
+    String tablename = JDStatementTest.COLLECTION + ".JDSTMWRNTS";
+    try {
+      Statement s = connection_.createStatement();
+
       try {
-        Statement s = connection_.createStatement();
-
-        try {
-          s.executeUpdate("drop table " + tablename);
-        } catch (Exception e) {
-           String message = e.toString(); 
-           if (message.indexOf("not found") < 0) {
-               if (message.indexOf("Not authorized")>=0) { 
-                 Connection pwrConnection = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
-                 Statement pwrStatement = pwrConnection.createStatement(); 
-                 pwrStatement.executeUpdate("drop table " + tablename);
-                 pwrStatement.close(); 
-                 pwrConnection.close(); 
-               } else { 
-                 throw e; 
-               }        
-           } /* else OK */ 
-        }
-
-        s.executeUpdate("create table " + tablename + "(cstts timestamp)");
-        s.executeUpdate("insert into " + tablename
-            + " values('1991-06-05-12.52.01.482752')");
-
-        ResultSet rs = s.executeQuery(
-            "SELECT CSTTS - 1990 YEARS - 5 MONTHS - 4 DAYS - 12 HOURS - 52 MINUTES - 20 SECONDS FROM "
-                + tablename);
-
-        SQLWarning w = s.getWarnings();
-        s.close();
-
-        String message;
-        if (w != null) {
-          message = w.getMessage();
-        } else {
-          message = "NO WARNING FOUND for rs=" + rs;
-        }
-        if (message == null)
-          message = "NO MESSAGE IN WARNING";
-        message = message.toUpperCase();
-
-        // @C2 if(isToolboxDriver()) //@C1A
-
-        assertCondition(
-            message.indexOf(
-                "RESULT OF DATE OR TIMESTAMP EXPRESSION NOT VALID") >= 0,
-            "message should be 'RESULT OF DATE OR TIMESTAMP EXPRESSION NOT VALID',"
-                + "but is '" + message); // @C1A
-        /*
-         * @C2 else //@C1A assertCondition
-         * (message.indexOf("DATA CONVERSION OR DATA MAPPING ERROR") >=0,
-         * "message should be 'DATA CONVERSION OR DATA MAPPING ERROR', but is '"
-         * +message+"' --  new V5R3 testcase, added by native driver");
-         */
+        s.executeUpdate("drop table " + tablename);
       } catch (Exception e) {
-        failed(e,
-            "Unexpected Exception -- new V5R3 testcase, added by native driver");
+         String message = e.toString(); 
+         if (message.indexOf("not found") < 0) {
+             if (message.indexOf("Not authorized")>=0) { 
+               Connection pwrConnection = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
+               Statement pwrStatement = pwrConnection.createStatement(); 
+               pwrStatement.executeUpdate("drop table " + tablename);
+               pwrStatement.close(); 
+               pwrConnection.close(); 
+             } else { 
+               throw e; 
+             }        
+         } /* else OK */ 
       }
-    } else {
-      notApplicable();
+
+      s.executeUpdate("create table " + tablename + "(cstts timestamp)");
+      s.executeUpdate("insert into " + tablename
+          + " values('1991-06-05-12.52.01.482752')");
+
+      ResultSet rs = s.executeQuery(
+          "SELECT CSTTS - 1990 YEARS - 5 MONTHS - 4 DAYS - 12 HOURS - 52 MINUTES - 20 SECONDS FROM "
+              + tablename);
+
+      SQLWarning w = s.getWarnings();
+      s.close();
+
+      String message;
+      if (w != null) {
+        message = w.getMessage();
+      } else {
+        message = "NO WARNING FOUND for rs=" + rs;
+      }
+      if (message == null)
+        message = "NO MESSAGE IN WARNING";
+      message = message.toUpperCase();
+
+      // @C2 if(isToolboxDriver()) //@C1A
+
+      assertCondition(
+          message.indexOf(
+              "RESULT OF DATE OR TIMESTAMP EXPRESSION NOT VALID") >= 0,
+          "message should be 'RESULT OF DATE OR TIMESTAMP EXPRESSION NOT VALID',"
+              + "but is '" + message); // @C1A
+      /*
+       * @C2 else //@C1A assertCondition
+       * (message.indexOf("DATA CONVERSION OR DATA MAPPING ERROR") >=0,
+       * "message should be 'DATA CONVERSION OR DATA MAPPING ERROR', but is '"
+       * +message+"' --  new V5R3 testcase, added by native driver");
+       */
+    } catch (Exception e) {
+      failed(e,
+          "Unexpected Exception -- new V5R3 testcase, added by native driver");
     }
   }
 
@@ -553,7 +545,7 @@ public class JDStatementWarnings extends JDTestcase {
    */
 
   public void Var010() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
+    if (true
         && getDriver() == JDTestDriver.DRIVER_NATIVE) // host server doesn't
                                                       // have a way to get
                                                       // truncation warnings
@@ -593,7 +585,7 @@ public class JDStatementWarnings extends JDTestcase {
     // this is where the warning test for SQL state 01506 goes
     // warning for an illegal date being created using addition and subtraction
     // of years/months to date type
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
+    if (true
         && getDriver() == JDTestDriver.DRIVER_NATIVE) {
       try {
         String select = "select date1 + 1 year from " + table_2
@@ -633,7 +625,7 @@ public class JDStatementWarnings extends JDTestcase {
     // this is where the warning test for SQL state 01506 goes
     // warning for an illegal date being created using addition and subtraction
     // of years/months to date type
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
+    if (true
         && getDriver() == JDTestDriver.DRIVER_NATIVE) {
       try {
         String select = "select date1 + 1 year from " + table_2

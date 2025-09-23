@@ -140,7 +140,7 @@ public class JDDriverConnect extends JDTestcase {
     // When this happens, the locks my still be held.
     //
     if (!skipExitCleanup) {
-      AuthExit.cleanupExitProgam(pwrConnection_);
+      AuthExit.cleanupExitProgram(pwrConnection_);
       AuthExit.cleanupExitProgramFiles(pwrConnection_);
     }
     pwrConnection_.close();

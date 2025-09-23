@@ -727,7 +727,7 @@ have update counts other than 1.
                 //in v7r1, we do true batch of updates (not pseudo-batch), and so we cannot get updatecounts
 		// Unless configured in V7R1, we do not do true batching of updates
 		// unless the "use block update" property is set
-    //            if(false /* isToolboxDriver() && getRelease() >= JDTestDriver.RELEASE_V7R1M0 */ )
+    //            if(false /* isToolboxDriver() && true */ )
     //                assertCondition ((updateCounts.length == 2)
     //                        && (updateCounts[0] == -2)
     //                        && (updateCounts[1] == -2),
@@ -1515,24 +1515,14 @@ executeBatch() - Verify that the Toolbox can execute a batch with 32,767 stateme
 
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) {
+	    if (true ) {
 		    /* "Longing running test only used on JDK 1.5 for release >= V5R4M0" */
 		assertCondition(true); 
 		    return; 
 	    } 
 	} 
 
-      if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-        if (longRunTest != 0) {
-          notApplicable("Long running test skipped");
-          return;
-        }
-      }
-
-
-
-      
-        if (checkJdbc20 ()) {
+      if (checkJdbc20 ()) {
             try {
                 PreparedStatement s = connection_.prepareStatement (insert1_);
                 String jdbc = null;
@@ -1569,7 +1559,7 @@ Native doesn't allow this though when useBlockInsert option is set to true.
 	// To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
 	//
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&  
+	    if (true &&  
                 true) {
 		    /* "Longing running test only used on JDK 1.5 for release >= V5R4M0" */
 		  assertCondition(true); 
@@ -1577,15 +1567,7 @@ Native doesn't allow this though when useBlockInsert option is set to true.
 	    } 
 	} 
 
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-              if (longRunTest != 1) {
-                notApplicable("Long running test skipped");
-                return;
-              }
-            }
-
-
-        if (checkJdbc20 ()) {
+            if (checkJdbc20 ()) {
             try {
                 PreparedStatement s = connection_.prepareStatement (insert1_);
                 for (int i = 0; i<37000; i++)
@@ -1597,17 +1579,10 @@ Native doesn't allow this though when useBlockInsert option is set to true.
                 int rows = countRows("Eagle%");
                 s.close();
 
-		// Big Batches now work in V5R5 
-		if(useBlockInsert && (getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() < JDTestDriver.RELEASE_V7R1M0))		// @L2
-		    failed("Didn't throw SQL Exception ! ");				// @L2
-		else									// @L2
-		    assertCondition(updateCounts.length == 37000 && rows == 37000, "updateCount.length="+updateCounts.length+" sb 37000  rows="+rows+" sb 37000");
+		assertCondition(updateCounts.length == 37000 && rows == 37000, "updateCount.length="+updateCounts.length+" sb 37000  rows="+rows+" sb 37000");
             }
             catch (Exception e) {
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE && (getRelease() < JDTestDriver.RELEASE_V7R1M0))			// @L2
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");			// @L2
-		else										// @L2
-		    failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
+		failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
             }
         }
 
@@ -1628,20 +1603,8 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
         //
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) { 
         } 
-        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-          if (longRunTest != 2) {
-            notApplicable("Long running test skipped");
-            return;
-          }
-        }
-
         if (checkJdbc20 ()) {
             try {
                 PreparedStatement s = connection_.prepareStatement (insert1_);
@@ -1654,17 +1617,10 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
                 int rows = countRows("Birdie%");
                 s.close();
 
-		if(useBlockInsert &&					// @L2
-		   getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))		// @L2
-		    failed("Didn't throw SQL Exception !");		// @L2
-		else							// @L2
-		    assertCondition(updateCounts.length == 65600 && rows == 65600);
+		assertCondition(updateCounts.length == 65600 && rows == 65600);
             }
             catch (Exception e) {
-		if(getDriver() == JDTestDriver.DRIVER_NATIVE && useBlockInsert && (getRelease() < JDTestDriver.RELEASE_V7R1M0))		// @L2
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");		// @L2
-		else									// @L2
-		    failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
+		failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
             }
         }
 	var032Time = System.currentTimeMillis() - startTime;
@@ -1681,12 +1637,7 @@ addBatch() - Verify that JTOpen Toolbox allows more than 65,534 statements to be
         //
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) { 
         } 
 
         if (checkJdbc20 ()) {
@@ -1727,19 +1678,8 @@ executeBatch() - Verify that the Toolbox can execute a batch with exactly 32000 
         //
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) { 
         } 
-        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-          if (longRunTest != 3) {
-            notApplicable("Long running test skipped");
-            return;
-          }
-        }
         if (checkJdbc20 ()) {
             try {
                 PreparedStatement s = connection_.prepareStatement (insert1_);
@@ -1772,11 +1712,9 @@ addBatch() - Verify that JTOpen Toolbox allows 32,766 statements to be added to 
         // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
         //
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
+                     notApplicable("JTOpen test");
 		    return;
-            } 
+            
         } 
         if (checkJdbc20 ()) {
             try {
@@ -1805,16 +1743,6 @@ addBatch() - Verify that JTOpen Toolbox allows 32,768 statements to be added to 
     public void Var036 ()
     {
 
-        //
-        // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
-        //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
-        } 
         if (checkJdbc20 ()) {
             try {
                 PreparedStatement s = connection_.prepareStatement (insert1_);
@@ -1848,17 +1776,7 @@ executeBatch() - Verify that the Toolbox can execute a batch with 32,766 stateme
 	}
 	
 long startTime = System.currentTimeMillis(); 
-        //
-        // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
-        //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
-        }
-        if (checkJdbc20 ()) {
+         if (checkJdbc20 ()) {
             try {
                 PreparedStatement s = connection_.prepareStatement (insert1_);
                 for (int i = 0; i<32766; i++)
@@ -1896,23 +1814,9 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
 	}
 
 long startTime = System.currentTimeMillis(); 
-        //
-        // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
-        //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
-        } 
+       
         
-        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-          if (longRunTest != 0) {
-            notApplicable("Long running test skipped");
-            return;
-          }
-        }
+      
 
         if (checkJdbc20 ()) {
             try {
@@ -1926,17 +1830,11 @@ long startTime = System.currentTimeMillis();
                 int rows = countRows("Par%");
                 s.close();
 
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))	// @L2
-		    failed("Didn't throw SQL Exception !");			// @L2
-		else								// @L2
-		    assertCondition(updateCounts.length == 32768 && rows == 32768);
+		assertCondition(updateCounts.length == 32768 && rows == 32768);
             }
             catch (Exception e) {
 
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))	// @L2
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");	// @L2
-		else								// @L2
-		    failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
+		failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
             }
         }
 	var038Time = System.currentTimeMillis() - startTime;
@@ -1950,16 +1848,7 @@ addBatch() - Verify that JTOpen Toolbox allows 31,999 statements to be added to 
     public void Var039 ()
     {
 
-        //
-        // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
-        //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
-        } 
+       
         if (checkJdbc20 ()) {
             try {
                 PreparedStatement s = connection_.prepareStatement (insert1_);
@@ -1987,16 +1876,7 @@ addBatch() - Verify that JTOpen Toolbox allows 32,001 statements to be added to 
     public void Var040 ()
     {
 
-        //
-        // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
-        //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
-        } 
+        
         
         if (checkJdbc20 ()) {
             try {
@@ -2033,22 +1913,7 @@ executeBatch() - Verify that the Toolbox can execute a batch with 31999 statemen
 
 long startTime = System.currentTimeMillis(); 
         //
-        // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
-        //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
-        }
         
-        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-          if (longRunTest != 1) {
-            notApplicable("Long running test skipped");
-            return;
-          }
-        }
 
         if (checkJdbc20 ()) {
             try {
@@ -2086,22 +1951,7 @@ executeBatch() - Verify that the Toolbox can execute a batch with 32,001 stateme
 	}
 
 long startTime = System.currentTimeMillis(); 
-        //
-        // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
-        //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
-        } 
-        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-          if (longRunTest != 2) {
-            notApplicable("Long running test skipped");
-            return;
-          }
-        }
+       
 
         if (checkJdbc20 ()) {
             try {
@@ -2140,22 +1990,7 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
 	    return; 
 	}
 
-        //
-        // To reduce runtime for group test.. Do not run for native driver for certain release/JDK combinations
-        //
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            if (getRelease() == JDTestDriver.RELEASE_V7R1M0 &&  
-              true) {
-                    notApplicable("Longing running test only used on JDK 1.5 for release V5R4M0");
-		    return;
-            } 
-        } 
-        if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-          if (longRunTest != 3) {
-            notApplicable("Long running test skipped");
-            return;
-          }
-        }
+      
 
         if (checkJdbc20 ()) {
             try {
@@ -2169,16 +2004,10 @@ Native doesn't allow more than 32767 statements to be added to a batch with useB
                 int rows = countRows("Divot%");
                 s.close();
 
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))	// @L2
-		    failed("Didn't throw SQL Exception !");			// @L2
-		else								// @L2
-		    assertCondition(updateCounts.length == 64000 && rows == 64000);
+		assertCondition(updateCounts.length == 64000 && rows == 64000);
             }
             catch (Exception e) {
-		if(useBlockInsert && getDriver() == JDTestDriver.DRIVER_NATIVE  && (getRelease() < JDTestDriver.RELEASE_V7R1M0))	// @L2
-		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");	// @L2
-		else								// @L2
-		    failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
+		failed (e, "Unexpected Exception:  Added by Toolbox 2/26/03 -> JTOpen testcase only for more than 32,767 statements in a batch");
             }
         }
     }
@@ -2953,60 +2782,50 @@ Adds a statement using a blob of varying lengths to a batch
 	} 
 
 
-	if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("16M test for V5R4 or later version" ); 
-	} else {
-	    if (getRelease() == JDTestDriver.RELEASE_V7R1M0 && 
-		runningJ9) {
-		notApplicable("16M test not working in J9 ");
-		return; 
-	    }
-	    String tablename = JDPSTest.COLLECTION+ ".JDPSBAT56"; 
-	    try {
-		Statement stmt = connection_.createStatement();
-		try {
-		    stmt.executeUpdate("DROP TABLE "+tablename);
-		} catch (Exception e) {
-		} 
+	String tablename = JDPSTest.COLLECTION+ ".JDPSBAT56"; 
+  try {
+Statement stmt = connection_.createStatement();
+try {
+    stmt.executeUpdate("DROP TABLE "+tablename);
+} catch (Exception e) {
+} 
 
-		stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 varchar(16384))");
+stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 varchar(16384))");
 
-		//
-		// Now create a batch with 1500 rows. This should exeed the
-		// 16 Meg limit
-		//
+//
+// Now create a batch with 1500 rows. This should exeed the
+// 16 Meg limit
+//
 
-		PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+" VALUES(?)");
+PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+" VALUES(?)");
 
-		for (int i = 0; i < 1500; i++) { 
-		    pStmt.setString(1, "ROW "+i); 
-		    pStmt.addBatch(); 
-		}
+for (int i = 0; i < 1500; i++) { 
+    pStmt.setString(1, "ROW "+i); 
+    pStmt.addBatch(); 
+}
 
-		int updateCounts[]  = pStmt.executeBatch ();
+int updateCounts[]  = pStmt.executeBatch ();
 
 
-		messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-		System.out.println(messageBuffer.toString());
+messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
+System.out.println(messageBuffer.toString());
 
-		assertCondition(true, messageBuffer.toString());
+assertCondition(true, messageBuffer.toString());
 
-	    } catch (Exception e) {
-		failed (e, "Unexpected Exception:  Added by Native 10/26/2005 "+messageBuffer.toString() );
-	    } finally {
-		/* Clean up the table */
+  } catch (Exception e) {
+failed (e, "Unexpected Exception:  Added by Native 10/26/2005 "+messageBuffer.toString() );
+  } finally {
+/* Clean up the table */
 
-		try {
-		    Statement stmt = connection_.createStatement();
+try {
+    Statement stmt = connection_.createStatement();
 
-		    stmt.executeUpdate("DROP TABLE "+tablename);
-		} catch (Exception e) {
-		    System.out.println("Warning:  Exception during test cleanup "+e); 
-		} 
+    stmt.executeUpdate("DROP TABLE "+tablename);
+} catch (Exception e) {
+    System.out.println("Warning:  Exception during test cleanup "+e); 
+} 
 
-	    } 
-
-	} 
+  } 
 
     }
 
@@ -3035,85 +2854,80 @@ for indicator variables.
 	    return; 
 	} 
 
-	if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("16M test for V5R5 or later version" ); 
-	} else {
-	    try {
-		String tablename = JDPSTest.COLLECTION+ ".JDPSBAT58";
-		Statement stmt = connection_.createStatement();
-		try {
-		    stmt.executeUpdate("DROP TABLE "+tablename);
-		} catch (Exception e) {
-		} 
+	try {
+String tablename = JDPSTest.COLLECTION+ ".JDPSBAT58";
+Statement stmt = connection_.createStatement();
+try {
+    stmt.executeUpdate("DROP TABLE "+tablename);
+} catch (Exception e) {
+} 
 
-		stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 int, "+
-                                                             "   c2 int, "+
-                                                             "   c3 int, "+
-                                                             "   c4 int, "+
-                                                             "   c5 int, "+
-                                                             "   c6 int, "+
-                                                             "   c7 int, "+
-                                                             "   c8 int, "+
-                                                             "   c9 int, "+
-                                                             "   c10 int, "+
-                                                             "   c11 int, "+
-                                                             "   c12 int, "+
-                                                             "   c13 int, "+
-                                                             "   c14 int, "+
-                                                             "   c15 int, "+
-                                                             "   c16 int)");
+stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 int, "+
+                                                         "   c2 int, "+
+                                                         "   c3 int, "+
+                                                         "   c4 int, "+
+                                                         "   c5 int, "+
+                                                         "   c6 int, "+
+                                                         "   c7 int, "+
+                                                         "   c8 int, "+
+                                                         "   c9 int, "+
+                                                         "   c10 int, "+
+                                                         "   c11 int, "+
+                                                         "   c12 int, "+
+                                                         "   c13 int, "+
+                                                         "   c14 int, "+
+                                                         "   c15 int, "+
+                                                         "   c16 int)");
 
-		//
-		// Now create a batch with 270,000 rows. This should exceed the
-		// 16 Meg limit
-		// 270,000 * 16 columns / row  * 4 bytes / column = 17,280,000 
-                //
+//
+// Now create a batch with 270,000 rows. This should exceed the
+// 16 Meg limit
+// 270,000 * 16 columns / row  * 4 bytes / column = 17,280,000 
+            //
 
-		PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+
-                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+
+                " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-                //
-                // Note:  The native block insert fails because CLI only permits
-                // 32K rows.  Opened issue 31000 to see if limit can be increased
-		//
-		// This was fixed internally by the native driver by breaking the execute into
-		// 32K row chunks. 
-                // 
-		for (int i = 1; i <= 270000; i++) {
-                  // if (i % 1000 == 0) { System.out.print(i+"."); }
-		  pStmt.setInt(1, i);   
-                  for (int j = 2; j <= 16; j++) { 
-		    pStmt.setNull(j,Types.INTEGER);
-                  }
-                  pStmt.addBatch(); 
-		}
-		// System.out.println(); 
-		int updateCounts[]  = pStmt.executeBatch ();
+            //
+            // Note:  The native block insert fails because CLI only permits
+            // 32K rows.  Opened issue 31000 to see if limit can be increased
+//
+// This was fixed internally by the native driver by breaking the execute into
+// 32K row chunks. 
+            // 
+for (int i = 1; i <= 270000; i++) {
+              // if (i % 1000 == 0) { System.out.print(i+"."); }
+  pStmt.setInt(1, i);   
+              for (int j = 2; j <= 16; j++) { 
+    pStmt.setNull(j,Types.INTEGER);
+              }
+              pStmt.addBatch(); 
+}
+// System.out.println(); 
+int updateCounts[]  = pStmt.executeBatch ();
 
-		ResultSet rs = stmt.executeQuery("Select sum( cast (c1 as bigint)) from "+tablename);
-		rs.next();
-		long answer = rs.getLong(1);
-		System.out.println("The answer is "+answer); 
+ResultSet rs = stmt.executeQuery("Select sum( cast (c1 as bigint)) from "+tablename);
+rs.next();
+long answer = rs.getLong(1);
+System.out.println("The answer is "+answer); 
 
-		messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-		System.out.println(messageBuffer.toString());
+messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
+System.out.println(messageBuffer.toString());
 
 
-		stmt.executeUpdate("DROP TABLE "+tablename);
+stmt.executeUpdate("DROP TABLE "+tablename);
 
-		stmt.close();
-		pStmt.close();
+stmt.close();
+pStmt.close();
 
-		// Check the answer sb 2700000 * (2700000 + 1 ) / 2
-		
-		assertCondition(answer==36450135000L && updateCounts.length == 270000, "answer="+answer+" sb 36450135000  updateCounts.length="+updateCounts.length+" sb 270000 "+
-                      messageBuffer.toString());
+// Check the answer sb 2700000 * (2700000 + 1 ) / 2
 
-	    } catch (Exception e) {
-		failed (e, "Unexpected Exception:  Added by Native 7/19/2006 "+messageBuffer.toString()+" Note:  Currently fails for native when native insert support used -- see issue 31000" );
-	    } 
+assertCondition(answer==36450135000L && updateCounts.length == 270000, "answer="+answer+" sb 36450135000  updateCounts.length="+updateCounts.length+" sb 270000 "+
+                  messageBuffer.toString());
 
-	} 
+  } catch (Exception e) {
+failed (e, "Unexpected Exception:  Added by Native 7/19/2006 "+messageBuffer.toString()+" Note:  Currently fails for native when native insert support used -- see issue 31000" );
+  } 
 
     }
 
@@ -3139,84 +2953,79 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	StringBuffer messageBuffer = new StringBuffer(); 
 
-	if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("16M test for V5R4 or later version" ); 
-	} else {
-	    try {
-		String tablename = JDPSTest.COLLECTION+ ".JDPSBAT59";
-		Statement stmt = connection_.createStatement();
-		try {
-		    stmt.executeUpdate("DROP TABLE "+tablename);
-		} catch (Exception e) {
-		} 
+	try {
+String tablename = JDPSTest.COLLECTION+ ".JDPSBAT59";
+Statement stmt = connection_.createStatement();
+try {
+    stmt.executeUpdate("DROP TABLE "+tablename);
+} catch (Exception e) {
+} 
 
-		stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 int, "+
-                                                             "   c2 int, "+
-                                                             "   c3 int, "+
-                                                             "   c4 int, "+
-                                                             "   c5 int, "+
-                                                             "   c6 int, "+
-                                                             "   c7 int, "+
-                                                             "   c8 int, "+
-                                                             "   c9 int, "+
-                                                             "   c10 int, "+
-                                                             "   c11 int, "+
-                                                             "   c12 int, "+
-                                                             "   c13 int, "+
-                                                             "   c14 int, "+
-                                                             "   c15 int, "+
-                                                             "   c16 int)");
+stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 int, "+
+                                                         "   c2 int, "+
+                                                         "   c3 int, "+
+                                                         "   c4 int, "+
+                                                         "   c5 int, "+
+                                                         "   c6 int, "+
+                                                         "   c7 int, "+
+                                                         "   c8 int, "+
+                                                         "   c9 int, "+
+                                                         "   c10 int, "+
+                                                         "   c11 int, "+
+                                                         "   c12 int, "+
+                                                         "   c13 int, "+
+                                                         "   c14 int, "+
+                                                         "   c15 int, "+
+                                                         "   c16 int)");
 
-		//
-		// Now create a batch with 270,000 rows. This should exeed the
-		// 16 Meg limit
-		// 270,000 * 16 columns / row  * 4 bytes / column = 17,280,000 
-                //
+//
+// Now create a batch with 270,000 rows. This should exeed the
+// 16 Meg limit
+// 270,000 * 16 columns / row  * 4 bytes / column = 17,280,000 
+            //
 
-		PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+
-                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+
+                " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-                //
-                // Note:  The native block instert fails because CLI only permits
-                // 32K rows.  Opened issue 31000 to see if limit can be increased
-                // 
-		for (int i = 0; i < 270000; i++) {
-                  // if (i % 1000 == 0) { System.out.print(i+"."); }
-                  for (int j = 1; j <= 16; j++) { 
-		    pStmt.setNull(j,Types.INTEGER);
-                  }
-                  pStmt.addBatch(); 
-		}
-		// System.out.println(); 
-		int updateCounts[]  = pStmt.executeBatch ();
+            //
+            // Note:  The native block instert fails because CLI only permits
+            // 32K rows.  Opened issue 31000 to see if limit can be increased
+            // 
+for (int i = 0; i < 270000; i++) {
+              // if (i % 1000 == 0) { System.out.print(i+"."); }
+              for (int j = 1; j <= 16; j++) { 
+    pStmt.setNull(j,Types.INTEGER);
+              }
+              pStmt.addBatch(); 
+}
+// System.out.println(); 
+int updateCounts[]  = pStmt.executeBatch ();
 
 
-		for (int i = 0; i < 270000; i++) {
-                  // if (i % 1000 == 0) { System.out.print(i+"."); }
-                  for (int j = 1; j <= 16; j++) { 
-		    pStmt.setNull(j,Types.INTEGER);
-                  }
-                  pStmt.addBatch(); 
-		}
-		// System.out.println(); 
-		int updateCounts2[]  = pStmt.executeBatch ();
+for (int i = 0; i < 270000; i++) {
+              // if (i % 1000 == 0) { System.out.print(i+"."); }
+              for (int j = 1; j <= 16; j++) { 
+    pStmt.setNull(j,Types.INTEGER);
+              }
+              pStmt.addBatch(); 
+}
+// System.out.println(); 
+int updateCounts2[]  = pStmt.executeBatch ();
 
 
-		stmt.executeUpdate("DROP TABLE "+tablename);
-		stmt.close();
-		pStmt.close(); 
-		
-		messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-		messageBuffer.append("Length of updateCounts2 is "+updateCounts2.length+"\n");
-		System.out.println(messageBuffer.toString()); 
-		assertCondition(updateCounts.length == 270000 && updateCounts2.length == 270000, "updateCounts.length="+updateCounts.length+" sb 270000 updateCounts2.length="+updateCounts2.length+ " "+
-                      messageBuffer.toString());
+stmt.executeUpdate("DROP TABLE "+tablename);
+stmt.close();
+pStmt.close(); 
 
-	    } catch (Exception e) {
-		failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.toString()+" Note:  Currently fails for native when native insert support used -- see issue 31000" );
-	    } 
+messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
+messageBuffer.append("Length of updateCounts2 is "+updateCounts2.length+"\n");
+System.out.println(messageBuffer.toString()); 
+assertCondition(updateCounts.length == 270000 && updateCounts2.length == 270000, "updateCounts.length="+updateCounts.length+" sb 270000 updateCounts2.length="+updateCounts2.length+ " "+
+                  messageBuffer.toString());
 
-	} 
+  } catch (Exception e) {
+failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.toString()+" Note:  Currently fails for native when native insert support used -- see issue 31000" );
+  } 
 
     }
 
@@ -3225,12 +3034,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
     {
 
 
-        if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("Batched update/merge/delete vor v7r1 only" ); 
-            return;
-        }
-
-	int expectedUpdateCount = 1;
+        int expectedUpdateCount = 1;
 	//if(false /* isToolboxDriver() */ ) {
 	    // -2 is the value of SUCCESS_NO_INFO
 	    //expectedUpdateCount = -2; 
@@ -3297,12 +3101,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
     public void Var061 ()
     {
 	if (getDriver() != JDTestDriver.DRIVER_NATIVE && useBlockInsert) {  notApplicable("Native block insert test");  return;	} 
-        if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("Batched update/merge/delete vor v7r1 only" ); 
-            return;
-        }
-
-	int expectedUpdateCount = 1;
+        int expectedUpdateCount = 1;
 
 	//if(false /* isToolboxDriver() */ ) {
 	    // -2 is the value of SUCCESS_NO_INFO
@@ -3365,13 +3164,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
     public void Var062 ()
     {
 	if (getDriver() != JDTestDriver.DRIVER_NATIVE && useBlockInsert) {  notApplicable("Native block insert test");  return;	} 
-        if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-        {
-            notApplicable("merge statements v7r1 only");
-            return;
-        }
-
-	int[] expectedUpdateCounts = {2,0,0 }; 
+        int[] expectedUpdateCounts = {2,0,0 }; 
 
 	if(isToolboxDriver()) {
 	    // -2 is the value of SUCCESS_NO_INFO
@@ -3434,7 +3227,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 	if (getDriver() != JDTestDriver.DRIVER_NATIVE && useBlockInsert) {  notApplicable("Native block insert test");  return;	} 
 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -3506,7 +3299,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 	if (getDriver() != JDTestDriver.DRIVER_NATIVE && useBlockInsert) {  notApplicable("Native block insert test");  return;	} 
 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -3586,7 +3379,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 	if (getDriver() != JDTestDriver.DRIVER_NATIVE && useBlockInsert) {  notApplicable("Native block insert test");  return;	} 
 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -3676,7 +3469,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -3873,7 +3666,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -4098,7 +3891,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -4314,7 +4107,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -4532,7 +4325,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -4748,7 +4541,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -4970,7 +4763,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -5189,7 +4982,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -5408,7 +5201,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -5626,7 +5419,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -5844,7 +5637,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -6060,7 +5853,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -6271,7 +6064,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -6491,7 +6284,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -6741,7 +6534,7 @@ for indicator variables.  Then reuse the statement to assure it is still usable.
 
 	int executeBatchCount = 0; 
 	// Batching should work for all releases.. 
-        // if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
+        // if(false) {
         //    notApplicable("Batched update/merge/delete vor v7r1 only" ); 
         //    return;
         //}
@@ -7336,19 +7129,9 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
 
 	if (getDriver() != JDTestDriver.DRIVER_NATIVE && useBlockInsert) {  notApplicable("Native block insert test");  return;	}
 
-	if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
-	    (useBlockInsert)) {
-	    notApplicable("Native block insert not working in V6R1 -- counts are wrong");
-	    return ; 
-	} 
-	    
 	String message = " -- New test 4/16/2010 to verify bach when insert statment inserts more than 1 row " ; 
 	StringBuffer sb = new StringBuffer();
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Does not work on V5R3");
-	    return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             try {
 		String tablename=JDPSTest.COLLECTION + ".JDPSBAT87"; 
 		Statement s = connection_.createStatement();
@@ -7656,109 +7439,100 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
             
             StringBuffer messageBuffer = new StringBuffer(); 
 	    System.out.println("Driver fix level is "+getDriverFixLevel()); 
-	    if ((getRelease() <= JDTestDriver.RELEASE_V7R1M0) &&
-                (getDriver() == JDTestDriver.DRIVER_NATIVE) && 
-		(getDriverFixLevel() <= 38878)) {
-                notApplicable("16M test on V6R1 requires PTF later than SI38878" ); 
-	    } else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-                notApplicable("16M test for V5R5 or later version" ); 
-            } else {
-                try {
-                  Connection connection =  testDriver_.getConnection (url+";maximum blocked input rows=1000", userId_, encryptedPassword_);
-                    String tablename = JDPSTest.COLLECTION+ ".JDPSBAT90";
-                    Statement stmt = connection.createStatement();
-                    try {
-                        stmt.executeUpdate("DROP TABLE "+tablename);
-                    } catch (Exception e) {
-                    } 
+	    try {
+        Connection connection =  testDriver_.getConnection (url+";maximum blocked input rows=1000", userId_, encryptedPassword_);
+          String tablename = JDPSTest.COLLECTION+ ".JDPSBAT90";
+          Statement stmt = connection.createStatement();
+          try {
+              stmt.executeUpdate("DROP TABLE "+tablename);
+          } catch (Exception e) {
+          } 
 
-                    stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 char(1000), "+
-                                                                 "   c2 char(1000), "+
-                                                                 "   c3 char(1000), "+
-                                                                 "   c4 char(1000), "+
-                                                                 "   c5 char(1000), "+
-                                                                 "   c6 char(1000), "+
-                                                                 "   c7 char(1000), "+
-                                                                 "   c8 char(1000), "+
-                                                                 "   c9 char(1000), "+
-                                                                 "   c10 char(1000), "+
-                                                                 "   c11 char(1000), "+
-                                                                 "   c12 char(1000), "+
-                                                                 "   c13 char(1000), "+
-                                                                 "   c14 char(1000), "+
-                                                                 "   c15 char(1000), "+
-                                                                 "   c16 char(1000))");
+          stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 char(1000), "+
+                                                       "   c2 char(1000), "+
+                                                       "   c3 char(1000), "+
+                                                       "   c4 char(1000), "+
+                                                       "   c5 char(1000), "+
+                                                       "   c6 char(1000), "+
+                                                       "   c7 char(1000), "+
+                                                       "   c8 char(1000), "+
+                                                       "   c9 char(1000), "+
+                                                       "   c10 char(1000), "+
+                                                       "   c11 char(1000), "+
+                                                       "   c12 char(1000), "+
+                                                       "   c13 char(1000), "+
+                                                       "   c14 char(1000), "+
+                                                       "   c15 char(1000), "+
+                                                       "   c16 char(1000))");
 
-                    //
-                    // Now create a batch with 10000 rows. This should exceed the
-                    // 16 Meg limit
-                    //  10000 * 16 columns / row  * 1000 bytes / column = 160,0000,000
-                    //
-                    // When running on toolbox without changing the batch size, this fails
-                    // with an out of memory error during execute... when reallocating a buffer 
-                    // Setting the maximum blocked input rows to 1000 prevents this problem. 
-                    //
-		    // Note:  When running using J9 on native, there is a 200 meg limit for
-		    // allocating parm space.
-		    //
+          //
+          // Now create a batch with 10000 rows. This should exceed the
+          // 16 Meg limit
+          //  10000 * 16 columns / row  * 1000 bytes / column = 160,0000,000
+          //
+          // When running on toolbox without changing the batch size, this fails
+          // with an out of memory error during execute... when reallocating a buffer 
+          // Setting the maximum blocked input rows to 1000 prevents this problem. 
+          //
+  // Note:  When running using J9 on native, there is a 200 meg limit for
+  // allocating parm space.
+  //
 
-		    int rowCount = 10000; 
+  int rowCount = 10000; 
 
-		    // If running on windows, 10000 rows is too big..
-		    if (JTOpenTestEnvironment.isWindows) {
-			rowCount=2000;
-		    } else if (JTOpenTestEnvironment.isLinux) {
-			// rowCount is good 
-		    } else if (JTOpenTestEnvironment.isOS400) {
-		       // Check if 32-bit os.. If so,
-                       // Then use smaller row count to avoid overflowing
-                       // the 200 meg limit for parameter space. 
-                       String bitmode = System.getProperty("com.ibm.vm.bitmode");
-		       if (bitmode != null && bitmode.equals("32")) {
-			   rowCount=5000;
-		       }
+  // If running on windows, 10000 rows is too big..
+  if (JTOpenTestEnvironment.isWindows) {
+rowCount=2000;
+  } else if (JTOpenTestEnvironment.isLinux) {
+// rowCount is good 
+  } else if (JTOpenTestEnvironment.isOS400) {
+    // Check if 32-bit os.. If so,
+             // Then use smaller row count to avoid overflowing
+             // the 200 meg limit for parameter space. 
+             String bitmode = System.getProperty("com.ibm.vm.bitmode");
+    if (bitmode != null && bitmode.equals("32")) {
+  rowCount=5000;
+    }
 
-		    } else {
-			System.out.println("OS is "+JTOpenTestEnvironment.osVersion); 
-		    } 
+  } else {
+System.out.println("OS is "+JTOpenTestEnvironment.osVersion); 
+  } 
 
-                    PreparedStatement pStmt = connection.prepareStatement("INSERT INTO "+tablename+
-                        " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+          PreparedStatement pStmt = connection.prepareStatement("INSERT INTO "+tablename+
+              " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-                    for (int i = 1; i <= rowCount; i++) {
-                      for (int j = 1;  j <= 16; j++) { 
-                        pStmt.setString(j, "row "+i+" column "+j); 
-                      }
-                      pStmt.addBatch(); 
-                    }
-                    // System.out.println(); 
-                    int updateCounts[]  = pStmt.executeBatch ();
+          for (int i = 1; i <= rowCount; i++) {
+            for (int j = 1;  j <= 16; j++) { 
+              pStmt.setString(j, "row "+i+" column "+j); 
+            }
+            pStmt.addBatch(); 
+          }
+          // System.out.println(); 
+          int updateCounts[]  = pStmt.executeBatch ();
 
-                    ResultSet rs = stmt.executeQuery("Select count (*) from "+tablename);
-                    rs.next();
-                    long answer = rs.getLong(1);
-                    System.out.println("The answer is "+answer); 
-                    rs.close(); 
-                    
-                    messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-                    System.out.println(messageBuffer.toString());
+          ResultSet rs = stmt.executeQuery("Select count (*) from "+tablename);
+          rs.next();
+          long answer = rs.getLong(1);
+          System.out.println("The answer is "+answer); 
+          rs.close(); 
+          
+          messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
+          System.out.println(messageBuffer.toString());
 
-                    pStmt.close();
+          pStmt.close();
 
-		    stmt.executeUpdate("DROP TABLE "+tablename);
-                    stmt.close();
+  stmt.executeUpdate("DROP TABLE "+tablename);
+          stmt.close();
 
-                    connection.close(); 
-                    
-                    assertCondition(answer==rowCount && updateCounts.length == rowCount, 
-                        "answer="+answer+" sb "+rowCount+"  updateCounts.length="+updateCounts.length+" sb "+rowCount+" "+
-                          messageBuffer.toString()+varInfo);
+          connection.close(); 
+          
+          assertCondition(answer==rowCount && updateCounts.length == rowCount, 
+              "answer="+answer+" sb "+rowCount+"  updateCounts.length="+updateCounts.length+" sb "+rowCount+" "+
+                messageBuffer.toString()+varInfo);
 
-                } catch (Exception e) {
-                    failed (e, "Unexpected Exception:  Added 3/05/2010 "+messageBuffer.toString() +varInfo);
-                } 
-
-            } 
+      } catch (Exception e) {
+          failed (e, "Unexpected Exception:  Added 3/05/2010 "+messageBuffer.toString() +varInfo);
+      } 
 
         }
 
@@ -7789,148 +7563,139 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
             
             StringBuffer messageBuffer = new StringBuffer(); 
 	    System.out.println("Driver fix level is "+getDriverFixLevel()); 
-	    if ((getRelease() <= JDTestDriver.RELEASE_V7R1M0) &&
-                (getDriver() == JDTestDriver.DRIVER_NATIVE) && 
-		(getDriverFixLevel() <= 38878)) {
-                notApplicable("16M test on V6R1 requires PTF later than SI38878" ); 
-	    } else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-                notApplicable("16M test for V5R5 or later version" ); 
-            } else {
-		String tablename = JDPSTest.COLLECTION+ ".JDPSBAT91";
-		Connection connection = null ;
-		Statement stmt = null; 
-                try {
-		    connection = testDriver_.getConnection (url+";maximum blocked input rows=4000", userId_, encryptedPassword_);
+	    String tablename = JDPSTest.COLLECTION+ ".JDPSBAT91";
+      Connection connection = null ;
+      Statement stmt = null; 
+                  try {
+          connection = testDriver_.getConnection (url+";maximum blocked input rows=4000", userId_, encryptedPassword_);
 
-                    stmt = connection.createStatement();
-                    try {
-                        stmt.executeUpdate("DROP TABLE "+tablename);
-                    } catch (Exception e) {
-                    } 
+                      stmt = connection.createStatement();
+                      try {
+                          stmt.executeUpdate("DROP TABLE "+tablename);
+                      } catch (Exception e) {
+                      } 
 
-                    stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 char(1000), "+
-                                                                 "   c2 char(1000), "+
-                                                                 "   c3 char(1000), "+
-                                                                 "   c4 char(1000), "+
-                                                                 "   c5 char(1000), "+
-                                                                 "   c6 char(1000), "+
-                                                                 "   c7 char(1000), "+
-                                                                 "   c8 char(1000), "+
-                                                                 "   c9 char(1000), "+
-                                                                 "   c10 char(1000), "+
-                                                                 "   c11 char(1000), "+
-                                                                 "   c12 char(1000), "+
-                                                                 "   c13 char(1000), "+
-                                                                 "   c14 char(1000), "+
-                                                                 "   c15 char(1000), "+
-                                                                 "   c16 char(1000), "+
-                                                                 "   c17 char(1000), "+
-                                                                 "   c18 char(1000), "+
-                                                                 "   c19 char(1000), "+
-                                                                 "   c20 char(1000), "+
-                                                                 "   c21 char(1000), "+
-                                                                 "   c22 char(1000), "+
-                                                                 "   c23 char(1000), "+
-                                                                 "   c24 char(1000), "+
-                                                                 "   c25 char(1000), "+
-                                                                 "   c26 char(1000), "+
-                                                                 "   c27 char(1000), "+
-                                                                 "   c28 char(1000), "+
-                                                                 "   c29 char(1000), "+
-                                                                 "   c30 char(1000))");
+                      stmt.executeUpdate("CREATE TABLE "+tablename+" ( c1 char(1000), "+
+                                                                   "   c2 char(1000), "+
+                                                                   "   c3 char(1000), "+
+                                                                   "   c4 char(1000), "+
+                                                                   "   c5 char(1000), "+
+                                                                   "   c6 char(1000), "+
+                                                                   "   c7 char(1000), "+
+                                                                   "   c8 char(1000), "+
+                                                                   "   c9 char(1000), "+
+                                                                   "   c10 char(1000), "+
+                                                                   "   c11 char(1000), "+
+                                                                   "   c12 char(1000), "+
+                                                                   "   c13 char(1000), "+
+                                                                   "   c14 char(1000), "+
+                                                                   "   c15 char(1000), "+
+                                                                   "   c16 char(1000), "+
+                                                                   "   c17 char(1000), "+
+                                                                   "   c18 char(1000), "+
+                                                                   "   c19 char(1000), "+
+                                                                   "   c20 char(1000), "+
+                                                                   "   c21 char(1000), "+
+                                                                   "   c22 char(1000), "+
+                                                                   "   c23 char(1000), "+
+                                                                   "   c24 char(1000), "+
+                                                                   "   c25 char(1000), "+
+                                                                   "   c26 char(1000), "+
+                                                                   "   c27 char(1000), "+
+                                                                   "   c28 char(1000), "+
+                                                                   "   c29 char(1000), "+
+                                                                   "   c30 char(1000))");
 
-		    int rowCount = 6000; 
-                    //
-                    // Now create a batch with 6000 rows. This should exceed the
-                    // 16 Meg limit
-                    //  6000 * 30 columns / row  * 1000 bytes / column = 300,0000,000
-                    //
-                    // When running on toolbox without changing the batch size, this fails
-                    // with an out of memory error during execute... when reallocating a buffer 
-                    // Setting the maximum blocked input rows to 1000 prevents this problem. 
-                    //
-		    // Note:  When running using J9 on native, there is a 200 meg limit for
-		    // allocating parm space.
-		    //
+          int rowCount = 6000; 
+                      //
+                      // Now create a batch with 6000 rows. This should exceed the
+                      // 16 Meg limit
+                      //  6000 * 30 columns / row  * 1000 bytes / column = 300,0000,000
+                      //
+                      // When running on toolbox without changing the batch size, this fails
+                      // with an out of memory error during execute... when reallocating a buffer 
+                      // Setting the maximum blocked input rows to 1000 prevents this problem. 
+                      //
+          // Note:  When running using J9 on native, there is a 200 meg limit for
+          // allocating parm space.
+          //
 
 
-		    // If running on windows, 10000 rows is too big..
-		    if (JTOpenTestEnvironment.isWindows ||
-		        JTOpenTestEnvironment.isLinux) {
-			rowCount=1000;
-		    } else if (JTOpenTestEnvironment.isOS400) {
-		       // Check if 32-bit os.. If so,
-                       // Then use smaller row count to avoid overflowing
-                       // the 200 meg limit for parameter space. 
-                       String bitmode = System.getProperty("com.ibm.vm.bitmode");
-		       if (bitmode != null && bitmode.equals("32")) {
-			   rowCount=1000;
-		       }
-		    } else {
-			System.out.println("OS is "+JTOpenTestEnvironment.osVersion); 
-		    } 
+          // If running on windows, 10000 rows is too big..
+          if (JTOpenTestEnvironment.isWindows ||
+              JTOpenTestEnvironment.isLinux) {
+      	rowCount=1000;
+          } else if (JTOpenTestEnvironment.isOS400) {
+             // Check if 32-bit os.. If so,
+                         // Then use smaller row count to avoid overflowing
+                         // the 200 meg limit for parameter space. 
+                         String bitmode = System.getProperty("com.ibm.vm.bitmode");
+             if (bitmode != null && bitmode.equals("32")) {
+      	   rowCount=1000;
+             }
+          } else {
+      	System.out.println("OS is "+JTOpenTestEnvironment.osVersion); 
+          } 
 
 
-                    PreparedStatement pStmt = connection.prepareStatement("INSERT INTO "+tablename+
-                        " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                      PreparedStatement pStmt = connection.prepareStatement("INSERT INTO "+tablename+
+                          " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-                    for (int i = 1; i <= rowCount; i++) {
-                      for (int j = 1;  j <= 30; j++) { 
-                        pStmt.setString(j, "row "+i+" column "+j); 
+                      for (int i = 1; i <= rowCount; i++) {
+                        for (int j = 1;  j <= 30; j++) { 
+                          pStmt.setString(j, "row "+i+" column "+j); 
+                        }
+                        pStmt.addBatch(); 
                       }
-                      pStmt.addBatch(); 
-                    }
-                    // System.out.println(); 
-                    int updateCounts[]  = pStmt.executeBatch ();
+                      // System.out.println(); 
+                      int updateCounts[]  = pStmt.executeBatch ();
 
-                    ResultSet rs = stmt.executeQuery("Select count (*) from "+tablename);
-                    rs.next();
-                    long answer = rs.getLong(1);
-                    System.out.println("The answer is "+answer); 
-                    rs.close(); 
-                    
-                    messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-                    System.out.println(messageBuffer.toString());
+                      ResultSet rs = stmt.executeQuery("Select count (*) from "+tablename);
+                      rs.next();
+                      long answer = rs.getLong(1);
+                      System.out.println("The answer is "+answer); 
+                      rs.close(); 
+                      
+                      messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
+                      System.out.println(messageBuffer.toString());
 
-		    try {
-			stmt.executeUpdate("DROP TABLE "+tablename);
-		    } catch (Exception e) {
-		    } 
+          try {
+      	stmt.executeUpdate("DROP TABLE "+tablename);
+          } catch (Exception e) {
+          } 
 
 
-                    stmt.close();
-		    stmt=null; 
-                    pStmt.close();
-		    pStmt = null; 
+                      stmt.close();
+          stmt=null; 
+                      pStmt.close();
+          pStmt = null; 
 
-                    connection.close();
-		    connection = null; 
-                    
-                    assertCondition(answer==rowCount && updateCounts.length == rowCount, 
-                        "answer="+answer+" sb "+rowCount+"  updateCounts.length="+updateCounts.length+" sb "+rowCount+" "+
-                          messageBuffer.toString()+varInfo);
+                      connection.close();
+          connection = null; 
+                      
+                      assertCondition(answer==rowCount && updateCounts.length == rowCount, 
+                          "answer="+answer+" sb "+rowCount+"  updateCounts.length="+updateCounts.length+" sb "+rowCount+" "+
+                            messageBuffer.toString()+varInfo);
 
-                } catch (Exception e) {
-                    failed (e, "Unexpected Exception:  Added 7/27/2010 "+messageBuffer.toString() +varInfo);
-		} finally {
-		    try {
-			if (stmt != null ) { 
-			    stmt.executeUpdate("DROP TABLE "+tablename);
-			    stmt.close();
-			    stmt = null; 
-			}
-			if (connection != null) {
-			    connection.close();
-			    connection = null; 
-			} 
+                  } catch (Exception e) {
+                      failed (e, "Unexpected Exception:  Added 7/27/2010 "+messageBuffer.toString() +varInfo);
+      } finally {
+          try {
+      	if (stmt != null ) { 
+      	    stmt.executeUpdate("DROP TABLE "+tablename);
+      	    stmt.close();
+      	    stmt = null; 
+      	}
+      	if (connection != null) {
+      	    connection.close();
+      	    connection = null; 
+      	} 
 
-		    } catch (Exception e) {
-			System.out.println("Warning:  Exception on testcase cleanup "+e);
-			e.printStackTrace(System.out); 
-		    } 
-		} 
-
-            } 
+          } catch (Exception e) {
+      	System.out.println("Warning:  Exception on testcase cleanup "+e);
+      	e.printStackTrace(System.out); 
+          } 
+      } 
 
         }
 

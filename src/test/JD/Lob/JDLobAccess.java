@@ -1535,10 +1535,7 @@ extends JDTestcase
     **/
     public void Var033()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R3 for native driver"); return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -1584,10 +1581,7 @@ extends JDTestcase
     **/
     public void Var034()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R3 for native driver"); return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -1637,10 +1631,7 @@ extends JDTestcase
     **/
     public void Var035()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R3 for native driver"); return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -1692,10 +1683,7 @@ extends JDTestcase
     **/
     public void Var036()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R3 for native driver"); return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -1749,10 +1737,7 @@ extends JDTestcase
     **/
     public void Var037()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R3 for native driver"); return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -1801,10 +1786,7 @@ extends JDTestcase
     **/
     public void Var038()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R3 for native driver"); return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -1855,10 +1837,7 @@ extends JDTestcase
     **/
     public void Var039()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R3 for native driver"); return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -1911,10 +1890,7 @@ extends JDTestcase
     **/
     public void Var040()
     {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R3 for native driver"); return; 
-	} 
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -2143,12 +2119,7 @@ extends JDTestcase
     **/
     public void Var045()
     {
-       if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("Not working in V7R1 native code");
-	   return; 
-       } 
-        if (checkJdbc20 ()) {
+       if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -2190,12 +2161,7 @@ extends JDTestcase
     **/
     public void Var046()
     {
-       if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("Not working in V7R1 native code");
-	   return; 
-       } 
-        if (checkJdbc20 ()) {
+       if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -2239,12 +2205,7 @@ extends JDTestcase
     **/
     public void Var047()
     {
-       if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("Not working in V7R1 native code");
-	   return; 
-       } 
-        if (checkJdbc20 ()) {
+       if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try
@@ -2287,12 +2248,7 @@ extends JDTestcase
     **/
     public void Var048()
     {
-       if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("Not working in V7R1 native code");
-	   return; 
-       } 
-        if (checkJdbc20 ()) {
+       if (checkJdbc20 ()) {
             Connection c = null;
             CallableStatement cs = null;
             try

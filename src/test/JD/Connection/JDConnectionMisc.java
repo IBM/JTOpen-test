@@ -812,7 +812,7 @@ getConnection -- test the servermode subsystem property
 
       	
       String added="-- added 01/09/2008 by native driver to test servermode subsystem";
-      if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
+      if ((getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
 
 	  if (remoteConnection_) {
 	      notApplicable("servermode substytem tests do not work for remote systems");
@@ -917,7 +917,7 @@ getConnection -- test the *same servermode subsystem property
     public void Var020() {
       String added="-- added 01/09/2008 by native driver to test *SAME subsystem";
       if (checkNative()) { 
-	  if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
+	  if ((getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
 	      Connection conn = null;
 	      Statement stmt = null ;
 
@@ -960,7 +960,7 @@ getConnection -- test a bogus subsystem property
     public void Var021() {
 	if (checkNative()) { 
 	    String added="-- added 01/09/2008 by native driver to test *SAME subsystem";
-	    if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
+	    if ((getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
 		Connection conn = null;
 		Statement stmt = null ;
 
@@ -1303,10 +1303,7 @@ getConnection -- test a bogus subsystem property
 
     String added = " -- Testcase added 1/24/2017 to test jt400native.jar connections ";
 
-    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Test for V7R2 and later"); 
-      return; 
-    }
+   
     
     StringBuffer sb = new StringBuffer();
     try {
@@ -1684,8 +1681,8 @@ getConnection -- test debug connection properties
         if (propertiesIndex > 0) {
           url = url.substring(0, propertiesIndex);
         }
-        url = url + ";thread used=false;socket timeout=2000";
-
+        url = url + ";thread used=false;socket timeout=5000";
+        sb.append("Connecting with URL="+url+"\n"); 
         for (int i = 0; i < 10; i++) {
 
           AS400JDBCConnection testConnection = (AS400JDBCConnection) testDriver_
@@ -1714,16 +1711,18 @@ getConnection -- test debug connection properties
           }
 
           try {
-            sql = "CALL QSYS2.QCMDEXC('DLYJOB 3')";
+            sql = "CALL QSYS2.QCMDEXC('DLYJOB 6')";
             stmt.executeUpdate(sql);
             sb.append("FAILED: No error from :" + sql + "\n");
             passed = false;
           } catch (SQLException e) {
             String expected = "Read timed out";
-            String message = e.toString();
+            StringBuffer sbError = new  StringBuffer(); 
+            printStackTraceToStringBuffer(e,sbError);
+            String message = sbError.toString();
             if (message.indexOf(expected) < 0) {
               sb.append(
-                  "FAILED: Found: " + message + " Expected " + expected + "\n");
+                  "FAILED: Expected " + expected + " Found: " + message + "\n");
               passed = false;
             }
           }

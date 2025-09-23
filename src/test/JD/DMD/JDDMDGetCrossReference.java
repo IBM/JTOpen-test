@@ -301,7 +301,7 @@ Performs setup needed before running variations.
 
 
 	}
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())) //@C1A
+        if(true && (!JDTestDriver.isLUW())) //@C1A
         {
             //  Create primary key.  //@C1A
             s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION2
@@ -395,7 +395,7 @@ Performs cleanup needed after running variations.
 	} catch (Exception e) {
 	    if (!ignoreErrors) e.printStackTrace();
 	}
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@C1A
+	if(true) //@C1A
 	{
 	    try {
 		s.executeUpdate ("ALTER TABLE " + JDDMDTest.COLLECTION2                   //@C1A
@@ -465,7 +465,7 @@ Performs cleanup needed after running variations.
 	} catch (Exception e) {
 	    if (!ignoreErrors) e.printStackTrace();
 	}
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@C1A
+	if(true) //@C1A
 	{
 	    try {
 		s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION2        //@C1A
@@ -784,7 +784,7 @@ getCrossReference() - Specify "localhost" for the primary catalog.
     public void Var007()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4 ||
-          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true)) ||
           (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {
@@ -1030,7 +1030,7 @@ getCrossReference() - Specify "localhost" for the foreign  catalog.
     public void Var013()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4 ||
-          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true)) ||
           (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {
@@ -1298,7 +1298,7 @@ SQL400 - for functions that call the SQLForeignKeys() CLI function,
 
                 rs.close ();
                 if ((getDriver() == JDTestDriver.DRIVER_JCC) || (getJdbcLevel() >= 4 ) ||
-                    ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+                    ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true)) ||
                     (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                   assertCondition (rows == 0, "Expected 0 rows when schema had a pattern  ");
                 } else {
@@ -1505,7 +1505,7 @@ SQL400 - for functions that call the SQLForeignKeys() CLI function,
                 rs.close ();
 
                 if ((getDriver() == JDTestDriver.DRIVER_JCC) || (getJdbcLevel() >= 4 ) ||
-                    ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+                    ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true)) ||
                     (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                   assertCondition (rows == 0, "Expected 0 rows when schema had a pattern  ");
                 } else {
@@ -1689,7 +1689,7 @@ SQL400 - for functions that call the SQLForeignKeys() CLI function,
 
                 rs.close ();
                 if ((getDriver() == JDTestDriver.DRIVER_JCC) || (getJdbcLevel() >= 4 ) ||
-                    ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+                    ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true)) ||
                     (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                   assertCondition (rows == 0, "Expected 0 rows when table had a pattern  ");
                 } else {
@@ -1873,7 +1873,7 @@ SQL400 - for functions that call the SQLForeignKeys() CLI function,
 
                 rs.close ();
                 if ((getDriver() == JDTestDriver.DRIVER_JCC) || (getJdbcLevel() >= 4 ) ||
-                    ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) ||
+                    ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true)) ||
                     (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
                   assertCondition (rows == 0, "Expected 0 rows when table had a pattern  ");
                 } else {
@@ -1925,7 +1925,7 @@ exactly.   Check that we can get back 128 byte column names.
 **/
     public void Var036()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        
         {
             try {
                 ResultSet rs = dmd_.getCrossReference (catalog,
@@ -1954,8 +1954,7 @@ exactly.   Check that we can get back 128 byte column names.
                 failed (e, "Unexpected Exception.  Added by Toolbox 8/11/2004 to test 128 byte column names.");
             }
         }
-        else
-            notApplicable("V5R4 and greater variation.");
+        
     }
 
 
@@ -1964,20 +1963,11 @@ getCrossReference() - Check all the RSMD results when using JDBC 3.0.
 **/
 
   public void Var037() {
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0 ) {
-	  notApplicable("Native Driver and SI24355 testing current level = "+getDriverFixLevel());
-      } else {
 
 	  checkRSMD(false);
-      }
   }
   public void Var038() {
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	  notApplicable("Native Driver and SI24355 testing current level = "+getDriverFixLevel());
-      } else {
-
 	  checkRSMD(true);
-      }
   }
 
     public void checkRSMD(boolean extendedMetadata)

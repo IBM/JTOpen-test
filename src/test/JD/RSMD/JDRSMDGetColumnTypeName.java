@@ -39,7 +39,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSMDTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -561,7 +560,7 @@ as VARCHAR, just like the type that comes back on JDRSMDGetColumnType.
             try {
                 String s = rsmd_.getColumnTypeName (rs_.findColumn ("C_DATALINK"));
 
-                if (isToolboxDriver() || (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isJDK14))
+                if (isToolboxDriver() || (true && isJDK14))
                 {
                    assertCondition (s.equals ("DATALINK"));
                 } else {

@@ -1039,30 +1039,13 @@ public class JDStatementDelimiters extends JDTestcase {
       String column4 = rsmd.getColumnName(4);
       rs.close();
       s.close();
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) //no extended column descriptions returned prior to V5R2, therefore no schema name or table name
-        assertCondition(schema.equals("") && table.equals("")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != \"\", "
-            + table + " != \"\", " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
-      else if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) //names should come back delimited
-        assertCondition(schema.equals(collection2_) && table.equals("MYTABLE")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
-            + table + " != MYTABLE, " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
-      else
-        assertCondition(schema.equals(collection2_) && table.equals("MYTABLE")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
-            + table + " != MYTABLE, " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
+      assertCondition(schema.equals(collection2_) && table.equals("MYTABLE")
+          && column1.equals("MYCOLUMN") && column2.equals("My Column")
+          && column3.equals("MYCO%LUMN")
+          && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
+          + table + " != MYTABLE, " + column1 + " != MYCOLUMN, " + column2
+          + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
+          + " != Yes, \"My Column\"");
 
     } catch (SQLException e) {
       failed(e, "Unexpected Exception");
@@ -1304,30 +1287,13 @@ public class JDStatementDelimiters extends JDTestcase {
       String column4 = rsmd.getColumnName(4);
       rs.close();
       s.close();
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) //no extended column descriptions returned prior to V5R2, therefore no schema name or table name
-        assertCondition(schema.equals("") && table.equals("")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != \"\", "
-            + table + " != \"\", " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
-      else if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)
-        assertCondition(schema.equals(collection2_) && table.equals("\"My Table\"")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
-            + table + " != \"My Table\", " + column1 + " != MYCOLUMN, "
-            + column2 + " != My Column, " + column3 + " != MYCO%LUMN, "
-            + column4 + " != Yes, \"My Column\"");
-      else
-        assertCondition(schema.equals(collection2_) && table.equals("My Table")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
-            + table + " != My Table, " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
+      assertCondition(schema.equals(collection2_) && table.equals("My Table")
+          && column1.equals("MYCOLUMN") && column2.equals("My Column")
+          && column3.equals("MYCO%LUMN")
+          && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
+          + table + " != My Table, " + column1 + " != MYCOLUMN, " + column2
+          + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
+          + " != Yes, \"My Column\"");
 
     } catch (SQLException e) {
       failed(e, "Unexpected Exception");
@@ -1479,9 +1445,6 @@ public class JDStatementDelimiters extends JDTestcase {
   }
   //Test that you can update a row into a result set, using descriptors
   public void Var030() {
-      if (getDriver()==JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	  notApplicable("Delimited tests not working for native JDBC driver on V5R3");  return;
-      } 
       if (checkJdbc30()) {
 	  Statement s = null;
 	  ResultSet rs = null;
@@ -1569,30 +1532,13 @@ public class JDStatementDelimiters extends JDTestcase {
       String column4 = rsmd.getColumnName(4);
       rs.close();
       s.close();
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) //no extended column descriptions returned prior to V5R2, therefore no schema name or table name
-        assertCondition(schema.equals("") && table.equals("")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != \"\", "
-            + table + " != \"\", " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
-      else if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)
-        assertCondition(schema.equals(collection2_) && table.equals("\"My%$Table\"")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
-            + table + " != \"My%$Table\", " + column1 + " != MYCOLUMN, "
-            + column2 + " != My Column, " + column3 + " != MYCO%LUMN, "
-            + column4 + " != Yes, \"My Column\"");
-      else
-        assertCondition(schema.equals(collection2_) && table.equals("My%$Table")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
-            + table + " != My%$Table, " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
+      assertCondition(schema.equals(collection2_) && table.equals("My%$Table")
+          && column1.equals("MYCOLUMN") && column2.equals("My Column")
+          && column3.equals("MYCO%LUMN")
+          && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM, "
+          + table + " != My%$Table, " + column1 + " != MYCOLUMN, " + column2
+          + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
+          + " != Yes, \"My Column\"");
 
     } catch (SQLException e) {
       failed(e, "Unexpected Exception");
@@ -1831,30 +1777,13 @@ public class JDStatementDelimiters extends JDTestcase {
       String column4 = rsmd.getColumnName(4);
       rs.close();
       s.close();
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) //no extended column descriptions returned prior to V5R2, therefore no schema name or table name
-        assertCondition(schema.equals("") && table.equals("")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != \"\", "
-            + table + " != \"\", " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
-      else if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) //names should come back delimited
-        assertCondition(schema.equals(collection3_) && table.equals("MYTABLE")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema
-            + " != \"JDDELIM%\", " + table + " != MYTABLE, " + column1
-            + " != MYCOLUMN, " + column2 + " != My Column, " + column3
-            + " != MYCO%LUMN, " + column4 + " != Yes, \"My Column\"");
-      else
-        assertCondition(schema.equals(collection3NoDelim_) && table.equals("MYTABLE")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != "+collection3NoDelim_+", "
-            + table + " != MYTABLE, " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
+      assertCondition(schema.equals(collection3NoDelim_) && table.equals("MYTABLE")
+          && column1.equals("MYCOLUMN") && column2.equals("My Column")
+          && column3.equals("MYCO%LUMN")
+          && column4.equals("Yes, \"My Column\""), schema + " != "+collection3NoDelim_+", "
+          + table + " != MYTABLE, " + column1 + " != MYCOLUMN, " + column2
+          + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
+          + " != Yes, \"My Column\"");
 
     } catch (SQLException e) {
       failed(e, "Unexpected Exception");
@@ -2093,30 +2022,13 @@ public class JDStatementDelimiters extends JDTestcase {
       String column4 = rsmd.getColumnName(4);
       rs.close();
       s.close();
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) //no extended column descriptions returned prior to V5R2, therefore no schema name or table name
-        assertCondition(schema.equals("") && table.equals("")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != \"\", "
-            + table + " != \"\", " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
-      else if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)
-        assertCondition(schema.equals(collection3_)
-            && table.equals("\"My Table\"") && column1.equals("MYCOLUMN")
-            && column2.equals("My Column") && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema
-            + " != \"JDDELIM%\", " + table + " != \"My Table\", " + column1
-            + " != MYCOLUMN, " + column2 + " != My Column, " + column3
-            + " != MYCO%LUMN, " + column4 + " != Yes, \"My Column\"");
-      else
-        assertCondition(schema.equals(collection3NoDelim_) && table.equals("My Table")
-            && column1.equals("MYCOLUMN") && column2.equals("My Column")
-            && column3.equals("MYCO%LUMN")
-            && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM%, "
-            + table + " != My Table, " + column1 + " != MYCOLUMN, " + column2
-            + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
-            + " != Yes, \"My Column\"");
+      assertCondition(schema.equals(collection3NoDelim_) && table.equals("My Table")
+          && column1.equals("MYCOLUMN") && column2.equals("My Column")
+          && column3.equals("MYCO%LUMN")
+          && column4.equals("Yes, \"My Column\""), schema + " != JDDELIM%, "
+          + table + " != My Table, " + column1 + " != MYCOLUMN, " + column2
+          + " != My Column, " + column3 + " != MYCO%LUMN, " + column4
+          + " != Yes, \"My Column\"");
 
     } catch (SQLException e) {
       failed(e, "Unexpected Exception");
@@ -6185,12 +6097,6 @@ public class JDStatementDelimiters extends JDTestcase {
   // Test the effect's of '.' in a delimited collection and procedure name.
   // This test was written specifically for native JDBC's DB2SQLTokenizer coverage. @A1A
   public void Var188() {
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	notApplicable("Native driver gets internal error in find parameter ");
-	return; 
-    } 
-
     if (checkJdbc30()) {
       CallableStatement cs = null;
       try {

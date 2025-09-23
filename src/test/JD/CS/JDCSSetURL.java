@@ -196,27 +196,23 @@ public class JDCSSetURL extends JDCSSetTestcase {
     }
     String info = " -- testcase updated 10/2011 for toolbox driver -- null is now value parameter";
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
-          cs.setURL(18, null);
-          cs.execute();
-          URL check = cs.getURL(18);
-          boolean wn = cs.wasNull();
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
+        cs.setURL(18, null);
+        cs.execute();
+        URL check = cs.getURL(18);
+        boolean wn = cs.wasNull();
 
-          assertCondition((check == null) && (wn == true),
-              "check=" + check + " sb null " + info);
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception" + info);
-        } catch (Exception e) {
-          failed(e, "Unexpected Exception" + info);
-        }
-      } else {
-        notApplicable();
+        assertCondition((check == null) && (wn == true),
+            "check=" + check + " sb null " + info);
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception" + info);
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception" + info);
       }
     }
   }
@@ -469,40 +465,35 @@ public class JDCSSetURL extends JDCSSetTestcase {
       return;
     }
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
 
-        try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
-
-          cs.setURL(11, sampleURL);
-          if (isToolboxDriver()) {
-            cs.execute();
-            URL check = cs.getURL(11);
-            cs.close();
-            assertCondition(
-                (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-          } else {
-            cs.execute();
-            URL nativecheck = cs.getURL(11);
-            cs.close();
-            assertCondition((nativecheck.toString())
-                .equalsIgnoreCase("http://java.sun.com"));
-          }
-
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception");
-        } catch (Exception e) {
-          if (isToolboxDriver())
-            failed(e, "Unexpected Exception");
-          else
-            failed(e, "Unexpected Exception");
+        cs.setURL(11, sampleURL);
+        if (isToolboxDriver()) {
+          cs.execute();
+          URL check = cs.getURL(11);
+          cs.close();
+          assertCondition(
+              (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+        } else {
+          cs.execute();
+          URL nativecheck = cs.getURL(11);
+          cs.close();
+          assertCondition((nativecheck.toString())
+              .equalsIgnoreCase("http://java.sun.com"));
         }
-      } else {
-        notApplicable();
+
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception");
+      } catch (Exception e) {
+        if (isToolboxDriver())
+          failed(e, "Unexpected Exception");
+        else
+          failed(e, "Unexpected Exception");
       }
     }
   }
@@ -512,35 +503,31 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var017() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
 
-          cs.setURL(12, sampleURL);
-          cs.execute();
-          URL check = cs.getURL(12);
+        cs.setURL(12, sampleURL);
+        cs.execute();
+        URL check = cs.getURL(12);
+        cs.close();
+        assertCondition(
+            (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception");
+      } catch (Exception e) {
+        try {
+          if (isToolboxDriver())
+            failed(e, "Unexcpected Exception");
+          else
+            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
           cs.close();
-          assertCondition(
-              (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception");
-        } catch (Exception e) {
-          try {
-            if (isToolboxDriver())
-              failed(e, "Unexcpected Exception");
-            else
-              assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            cs.close();
-          } catch (SQLException s) {
-            failed(s, "Unexpected Exception");
-          }
+        } catch (SQLException s) {
+          failed(s, "Unexpected Exception");
         }
-      } else {
-        notApplicable();
       }
 
     }
@@ -551,36 +538,32 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var018() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        if (checkLobSupport()) {
-          try {
-            cs = connection_.prepareCall(sql);
-            JDSetupProcedure.setTypesParameters(cs,
-                JDSetupProcedure.STP_CSINOUT, supportedFeatures_);
-            JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-                supportedFeatures_, getDriver());
+      if (checkLobSupport()) {
+        try {
+          cs = connection_.prepareCall(sql);
+          JDSetupProcedure.setTypesParameters(cs,
+              JDSetupProcedure.STP_CSINOUT, supportedFeatures_);
+          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+              supportedFeatures_, getDriver());
 
-            cs.setURL(20, sampleURL);
-            if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-              cs.execute();
-              URL check = cs.getURL(20);
-              assertCondition(
-                  (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-            } else
-              failed("Didn't throw SQLException");
-          } catch (MalformedURLException e) {
-            failed(e, "Malformed URL Exception");
-          } catch (Exception e) {
-            try {
-              assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-              cs.close();
-            } catch (SQLException s) {
-              failed(s, "Unexpected Exception");
-            }
+          cs.setURL(20, sampleURL);
+          if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+            cs.execute();
+            URL check = cs.getURL(20);
+            assertCondition(
+                (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+          } else
+            failed("Didn't throw SQLException");
+        } catch (MalformedURLException e) {
+          failed(e, "Malformed URL Exception");
+        } catch (Exception e) {
+          try {
+            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+            cs.close();
+          } catch (SQLException s) {
+            failed(s, "Unexpected Exception");
           }
         }
-      } else {
-        notApplicable();
       }
 
     }
@@ -763,34 +746,30 @@ public class JDCSSetURL extends JDCSSetTestcase {
   // @A1 This should work by default binary translate to character
   public void Var025() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
 
-          cs.setURL(13, sampleURL);
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            cs.execute();
-            URL check = cs.getURL(13);
-            assertCondition(
-                (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-          } else
-            failed("Didn't throw SQLException");
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception");
-        } catch (Exception e) {
-          try {
-            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            cs.close();
-          } catch (SQLException s) {
-            failed(s, "Unexpected Exception");
-          }
+        cs.setURL(13, sampleURL);
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+          cs.execute();
+          URL check = cs.getURL(13);
+          assertCondition(
+              (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+        } else
+          failed("Didn't throw SQLException");
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception");
+      } catch (Exception e) {
+        try {
+          assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          cs.close();
+        } catch (SQLException s) {
+          failed(s, "Unexpected Exception");
         }
-      } else {
-        notApplicable();
       }
     }
   }
@@ -802,34 +781,30 @@ public class JDCSSetURL extends JDCSSetTestcase {
   // @ A1
   public void Var026() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
 
-          cs.setURL(14, sampleURL);
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            cs.execute();
-            URL check = cs.getURL(14);
-            assertCondition(
-                (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-          } else
-            failed("Didn't throw SQLException");
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception");
-        } catch (Exception e) {
-          try {
-            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            cs.close();
-          } catch (SQLException s) {
-            failed(s, "Unexpected Exception");
-          }
+        cs.setURL(14, sampleURL);
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+          cs.execute();
+          URL check = cs.getURL(14);
+          assertCondition(
+              (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+        } else
+          failed("Didn't throw SQLException");
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception");
+      } catch (Exception e) {
+        try {
+          assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          cs.close();
+        } catch (SQLException s) {
+          failed(s, "Unexpected Exception");
         }
-      } else {
-        notApplicable();
       }
     }
   }
@@ -1092,36 +1067,32 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var036() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
+
+        cs.setURL("P_CHAR_50", sampleURL);
+        cs.execute();
+        URL check = cs.getURL("P_CHAR_50");
+        cs.close();
+        assertCondition(
+            (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception");
+      } catch (Exception e) {
+
         try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
-
-          cs.setURL("P_CHAR_50", sampleURL);
-          cs.execute();
-          URL check = cs.getURL("P_CHAR_50");
+          if (isToolboxDriver())
+            failed(e, "Unexpected Exception");
+          else
+            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
           cs.close();
-          assertCondition(
-              (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception");
-        } catch (Exception e) {
-
-          try {
-            if (isToolboxDriver())
-              failed(e, "Unexpected Exception");
-            else
-              assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            cs.close();
-          } catch (SQLException s) {
-            failed(s, "Unexpected Exception");
-          }
+        } catch (SQLException s) {
+          failed(s, "Unexpected Exception");
         }
-      } else {
-        notApplicable();
       }
     }
   }
@@ -1131,36 +1102,32 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var037() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
+
+        cs.setURL("P_VARCHAR_50", sampleURL);
+        cs.execute();
+        URL check = cs.getURL("P_VARCHAR_50");
+        cs.close();
+        assertCondition(
+            (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception");
+      } catch (Exception e) {
         try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
-
-          cs.setURL("P_VARCHAR_50", sampleURL);
-          cs.execute();
-          URL check = cs.getURL("P_VARCHAR_50");
+          if (isToolboxDriver())
+            failed(e, "Unexpected Exception");
+          else
+            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
           cs.close();
-          assertCondition(
-              (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception");
-        } catch (Exception e) {
-          try {
-            if (isToolboxDriver())
-              failed(e, "Unexpected Exception");
-            else
-              assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            cs.close();
-          } catch (SQLException s) {
-            failed(s, "Unexpected Exception");
-          }
+        } catch (SQLException s) {
+          failed(s, "Unexpected Exception");
         }
-      } else {
-        notApplicable();
       }
     }
   }
@@ -1170,37 +1137,33 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var038() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        if (checkLobSupport()) {
+      if (checkLobSupport()) {
+        try {
+          cs = connection_.prepareCall(sql);
+          JDSetupProcedure.setTypesParameters(cs,
+              JDSetupProcedure.STP_CSINOUT, supportedFeatures_);
+          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+              supportedFeatures_, getDriver());
+
+          cs.setURL("P_CLOB", sampleURL);
+
+          if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+            cs.execute();
+            URL check = cs.getURL("P_CLOB");
+            assertCondition(
+                (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+          } else
+            failed("Didn't throw SQLException");
+        } catch (MalformedURLException e) {
+          failed(e, "Malformed URL Exception");
+        } catch (Exception e) {
           try {
-            cs = connection_.prepareCall(sql);
-            JDSetupProcedure.setTypesParameters(cs,
-                JDSetupProcedure.STP_CSINOUT, supportedFeatures_);
-            JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-                supportedFeatures_, getDriver());
-
-            cs.setURL("P_CLOB", sampleURL);
-
-            if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-              cs.execute();
-              URL check = cs.getURL("P_CLOB");
-              assertCondition(
-                  (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-            } else
-              failed("Didn't throw SQLException");
-          } catch (MalformedURLException e) {
-            failed(e, "Malformed URL Exception");
-          } catch (Exception e) {
-            try {
-              assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-              cs.close();
-            } catch (SQLException s) {
-              failed(s, "Unexpected Exception");
-            }
+            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+            cs.close();
+          } catch (SQLException s) {
+            failed(s, "Unexpected Exception");
           }
         }
-      } else {
-        notApplicable();
       }
     }
   }
@@ -1381,34 +1344,30 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var045() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
 
-          cs.setURL("P_BINARY_20", sampleURL);
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            cs.execute();
-            URL check = cs.getURL("P_BINARY_20");
-            assertCondition(
-                (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-          } else
-            failed("Didn't throw SQLException");
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception");
-        } catch (Exception e) {
-          try {
-            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            cs.close();
-          } catch (SQLException s) {
-            failed(s, "Unexpected Exception");
-          }
+        cs.setURL("P_BINARY_20", sampleURL);
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+          cs.execute();
+          URL check = cs.getURL("P_BINARY_20");
+          assertCondition(
+              (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+        } else
+          failed("Didn't throw SQLException");
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception");
+      } catch (Exception e) {
+        try {
+          assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          cs.close();
+        } catch (SQLException s) {
+          failed(s, "Unexpected Exception");
         }
-      } else {
-        notApplicable();
       }
     }
   }
@@ -1419,34 +1378,30 @@ public class JDCSSetURL extends JDCSSetTestcase {
    **/
   public void Var046() {
     if (checkJdbc30()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        try {
-          cs = connection_.prepareCall(sql);
-          JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_);
-          JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
-              supportedFeatures_, getDriver());
+      try {
+        cs = connection_.prepareCall(sql);
+        JDSetupProcedure.setTypesParameters(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_);
+        JDSetupProcedure.register(cs, JDSetupProcedure.STP_CSINOUT,
+            supportedFeatures_, getDriver());
 
-          cs.setURL("P_VARBINARY_20", sampleURL);
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            cs.execute();
-            URL check = cs.getURL("P_VARBINARY");
-            assertCondition(
-                (check.toString()).equalsIgnoreCase("http://java.sun.com"));
-          } else
-            failed("Didn't throw SQLException");
-        } catch (MalformedURLException e) {
-          failed(e, "Malformed URL Exception");
-        } catch (Exception e) {
-          try {
-            assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-            cs.close();
-          } catch (SQLException s) {
-            failed(s, "Unexpected Exception");
-          }
+        cs.setURL("P_VARBINARY_20", sampleURL);
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+          cs.execute();
+          URL check = cs.getURL("P_VARBINARY");
+          assertCondition(
+              (check.toString()).equalsIgnoreCase("http://java.sun.com"));
+        } else
+          failed("Didn't throw SQLException");
+      } catch (MalformedURLException e) {
+        failed(e, "Malformed URL Exception");
+      } catch (Exception e) {
+        try {
+          assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          cs.close();
+        } catch (SQLException s) {
+          failed(s, "Unexpected Exception");
         }
-      } else {
-        notApplicable();
       }
     }
   }

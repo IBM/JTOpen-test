@@ -126,8 +126,6 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 07/10/2006 by jdbc driver to test setClientInfo";
 	StringBuffer sb = new StringBuffer(); 
-        if ( isJdbc40()  )
-        {
             try
             {
                 Connection conn = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
@@ -235,9 +233,6 @@ Performs cleanup needed after running variations.
                 failed(e, "unexpected exception calling setClientInfo " + added);
             }
 
-	} else {
-	    notApplicable("V5R5 or later variation"); 
-	}
     }
 
 
@@ -335,7 +330,7 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 07/10/2006 by jdbc driver to test getClientInfoProperties";
 
-        if (isJdbc40() || (isToolboxDriver() && getRelease()>=JDTestDriver.RELEASE_V7R1M0) || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease()>=JDTestDriver.RELEASE_V7R1M0) )        {
+        if (isJdbc40() || (isToolboxDriver() ) || (getDriver() == JDTestDriver.DRIVER_NATIVE ) )        {
             try
             {
                 Connection conn = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
@@ -429,18 +424,14 @@ Performs cleanup needed after running variations.
 
 
     /*
-     * For V5R5 check default settings in SQL registers for externalized values 
+     * Check default settings in SQL registers for externalized values 
      */ 
 
     public void Var004()
     {
         String added = "-- added 03/06/2007 by native to test client register default values"; 
 
-        if (getRelease() <  JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V5R5 or later release -- queries built in properties "); 
-	} else { 
-
-            String sql = "NONE"; 
+             String sql = "NONE"; 
             try   {
                 String expected[][] = { 
                     {"APPLNAME", ""}, 
@@ -476,21 +467,17 @@ Performs cleanup needed after running variations.
             {
                 failed(e, "unexpected exception SQL='"+sql+"' " + added);
             }
-        }
     }
 
     /*
-     * For V5R5 check settings in SQL registers for externalized values 
+     * Check settings in SQL registers for externalized values 
      */ 
 
     public void Var005()
     {
         String added = "-- added 03/06/2007 by native to test client register set values"; 
 
-        if (getRelease() <  JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V5R5 or later release"); 
-	} else { 
-
+ 
             String sql = "NONE"; 
             try   {
                 String expected[][] = { 
@@ -537,14 +524,13 @@ Performs cleanup needed after running variations.
             {
                 failed(e, "unexpected exception SQL='"+sql+"' " + added);
             }
-        }
     }
 
    
     
     /*
-     * For V5R5 check default settings for interface information
-     * The I0 states... 
+     * Check default settings for interface information
+     * The design states... 
      *   4.     The values of the Interface Information will be output on 1000 
      *          Database monitor records for CONNECT, DISCONNECT, RELEASE, and 
      *          SET CONNECTION operations. This information will also be captured 
@@ -562,14 +548,13 @@ Performs cleanup needed after running variations.
     {
         String added = "-- added 03/06/2007 by native to test client register default values"; 
 
-        if (getRelease() <  JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V5R5 or later release"); 
-	} else { 
             String sql = "NONE"; 
             try   {
                 String expected = ""; 
                 if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		    if        (getRelease() == JDTestDriver.RELEASE_V7R6M0) {
+                  if        (getRelease() == JDTestDriver.RELEASE_V7R6M0_PLUS) {
+                    expected = "IBM Developer Kit for Java JDBC Driver:JDBC:070X0";
+                  } else if        (getRelease() == JDTestDriver.RELEASE_V7R6M0) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07060";
 		    } else if        (getRelease() == JDTestDriver.RELEASE_V7R5M0) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07050";
@@ -579,10 +564,8 @@ Performs cleanup needed after running variations.
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07030";
 		    } else if (getRelease() == JDTestDriver.RELEASE_V7R2M0) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07020";
-		    } else if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
+		    } else  {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07010";
-		    } else { 
-			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:06010";
 		    }
                 }
                 else if (isToolboxDriver()) {    
@@ -608,7 +591,6 @@ Performs cleanup needed after running variations.
             {
                 failed(e, "unexpected exception SQL='"+sql+"' " + added);
             }
-        }
     }
 
 
@@ -621,9 +603,6 @@ Performs cleanup needed after running variations.
     {
 	String added = "-- added 09/06/2007 by native to test client register set values -- Note: as of 9/6/2007 this will fail because of issue 34082 "; 
 
-	if (getRelease() <  JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V5R5 or later release"); 
-	} else { 
 
 	    String sql = "NONE"; 
 	    try   {
@@ -765,7 +744,6 @@ Performs cleanup needed after running variations.
 	    {
 		failed(e, "unexpected exception SQL='"+sql+"' " + added);
 	    }
-	}
     }
 
 

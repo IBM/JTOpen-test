@@ -168,7 +168,7 @@ Performs setup needed before running variations.
             + ".TPRIVSXX (NAME INTEGER)");
 
         // @128sch
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        if(true)
         {
             String sql = "CREATE TABLE " + JDDMDTest.SCHEMAS_LEN128
                 + ".TABLE1 (COL1 CHAR(15) DEFAULT 'DEFAULTVAL',"
@@ -217,7 +217,7 @@ Performs cleanup needed after running variations.
         s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTIONXX
             + ".TPRIVSXX");
 
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@128sch
+        if(true) //@128sch
         {
             try{
                 s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
@@ -519,7 +519,7 @@ All matching tables should be returned.
       StringBuffer sb = new StringBuffer();
 
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4  ||
-           (getDriver() == JDTestDriver.DRIVER_NATIVE  && getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) ||
+           (getDriver() == JDTestDriver.DRIVER_NATIVE  && true ) ||
            (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
         notApplicable("\"localhost\" variation ");
       } else {
@@ -1260,12 +1260,6 @@ getTablePrivileges() - make sure we get all the correct privileges back from the
     **/
         public void Var024()
         {
-            if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-            {
-                notApplicable("V7R1 long schema TC.");
-                return;
-            }
-
             StringBuffer sb = new StringBuffer();
 
             try {
@@ -1313,12 +1307,6 @@ getTablePrivileges() - make sure we get all the correct privileges back from the
 		    notApplicable("Toolbox only testcase");
 		    return;
 		}
-                if(getRelease() < JDTestDriver.RELEASE_V7R1M0 )
-                {
-                    notApplicable("V7R1 long schema (non sysibm SP) TC.");
-                    return;
-                }
-
                 StringBuffer sb = new StringBuffer();
 
                 try {

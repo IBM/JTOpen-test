@@ -153,24 +153,11 @@ Forces a single warning to be posted to the connection.
     throws Exception
     {
         if (isJdbc20StdExt()) {
-	    if (  getRelease()  >= JDTestDriver.RELEASE_V7R1M0) {
-		// In V5R5, we not longer cause a warning when switching autocommit
+	    	// In V5R5, we not longer cause a warning when switching autocommit
 		// For another warning another way.
 		JDReflectionUtil.callMethod_V(c, "setClientInfo", "Bogus", "x"); 
 
-	    } else {
-
-		c.setAutoCommit (false);
-		c.setTransactionIsolation (Connection.TRANSACTION_READ_COMMITTED);
-
-		Statement s = c.createStatement ();
-		s.executeUpdate ("INSERT INTO " + table_ + " (NAME) VALUES ('MURCH')");
-		s.close ();
-
-	        // This forces a warning that the transaction was
-	        // committed.
-		c.setAutoCommit (true);
-	    }
+	   
         }
     }
 

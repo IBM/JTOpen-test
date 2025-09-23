@@ -78,6 +78,7 @@ public class JTOpenEclipseExport extends Thread  {
     
     Vector<String> fileList = buildFileList(testDirectoryFile, "test", lastModifiedTime); 
     AS400 as400 = new AS400(as400Name, userid, password.toCharArray()); 
+    as400.setGuiAvailable(false);
     transferFiles(as400, testDirectory, fileList); 
     System.out.println(prefix+"Files transferred"); 
     lastTimeFile.setLastModified(startTime);

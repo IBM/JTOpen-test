@@ -1269,63 +1269,58 @@ getFloat() - Get from a BIGINT.
         notApplicable("jcc doesn't obtain special values from decfloat "); 
         return; 
       }
-	// Note:  infinity only supported on V5R5 
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
-	    String added = " -- added 07/09/2007 to test getFloat on double values"; 
-	    String[][] testVars =
-	  /* SQL VALUE */  /* Get value */ 
-	    {
-		{"Infinity","Infinity"},
-		{"-Infinity","-Infinity"},
-		{"NaN",      "NaN"}, 
-		{"1.7E300", "Exception"},
-		{"-1.7E300", "Exception"},
-	    };
+	String added = " -- added 07/09/2007 to test getFloat on double values"; 
+  String[][] testVars =
+ /* SQL VALUE */  /* Get value */ 
+  {
+{"Infinity","Infinity"},
+{"-Infinity","-Infinity"},
+{"NaN",      "NaN"}, 
+{"1.7E300", "Exception"},
+{"-1.7E300", "Exception"},
+  };
 
-	    String sql =""; 
-	    boolean success = true;
-	    StringBuffer sb = new StringBuffer();
-	    String tablename = JDRSTest.COLLECTION+".JDRSGFLT51"; 
-	    try {
-		Statement stmt = connection_.createStatement(); 
-		initTable(stmt, tablename," ( C1 DOUBLE  )"); 
-		
-		for (int i = 0; i < testVars.length; i++) {
-		    sql = "insert into "+tablename+" VALUES("+testVars[i][0]+")"; 
-		    stmt.executeUpdate(sql); 
-		}
+  String sql =""; 
+  boolean success = true;
+  StringBuffer sb = new StringBuffer();
+  String tablename = JDRSTest.COLLECTION+".JDRSGFLT51"; 
+  try {
+Statement stmt = connection_.createStatement(); 
+initTable(stmt, tablename," ( C1 DOUBLE  )"); 
 
-		ResultSet rs = statement0_.executeQuery ("SELECT * FROM "+tablename);
-		for (int i = 0; i < testVars.length; i++) {
-		    String expected = testVars[i][1];
-		    sql="Retrieving "+expected; 
-		    try {
-			rs.next();
-			String answer = ""+rs.getFloat(1);
-			if (! expected.equals(answer)) {
-			    success=false;
-			    sb.append("\n Expected "+expected+" but got "+answer+" for "+testVars[i][0]); 
-			} 
-		    } catch (Exception e) {
-			if (!expected.equals("Exception")) {
-			    e.printStackTrace(); 
-			    success=false; 
-			    sb.append("\n Exception caught"+e+" for "+testVars[i][0]);
+for (int i = 0; i < testVars.length; i++) {
+    sql = "insert into "+tablename+" VALUES("+testVars[i][0]+")"; 
+    stmt.executeUpdate(sql); 
+}
 
-			} 
-		    } 
-		}
-		rs.close();
-		stmt.close();
-		assertCondition(success, sb.toString()+added); 
-	    }
-	    catch (Exception e) {
+ResultSet rs = statement0_.executeQuery ("SELECT * FROM "+tablename);
+for (int i = 0; i < testVars.length; i++) {
+    String expected = testVars[i][1];
+    sql="Retrieving "+expected; 
+    try {
+  rs.next();
+  String answer = ""+rs.getFloat(1);
+  if (! expected.equals(answer)) {
+      success=false;
+      sb.append("\n Expected "+expected+" but got "+answer+" for "+testVars[i][0]); 
+  } 
+    } catch (Exception e) {
+  if (!expected.equals("Exception")) {
+      e.printStackTrace(); 
+      success=false; 
+      sb.append("\n Exception caught"+e+" for "+testVars[i][0]);
 
-		failed (e, "Unexpected Exception sql="+sql+added);
-	    }
-	} else {
-	    notApplicable("V5R5 or later testcase"); 
-	} 
+  } 
+    } 
+}
+rs.close();
+stmt.close();
+assertCondition(success, sb.toString()+added); 
+  }
+  catch (Exception e) {
+
+failed (e, "Unexpected Exception sql="+sql+added);
+  } 
     }
 
 

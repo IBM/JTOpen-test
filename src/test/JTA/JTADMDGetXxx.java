@@ -112,8 +112,6 @@ public class JTADMDGetXxx extends JTATestcase
     static       int            VRM_520 = AS400.generateVRM(5,2,0);
     static       int            VRM_530 = AS400.generateVRM(5,3,0);
     
-    private static final String[] numericFunctionspre510_ = { "abs","acos","asin","atan","atan2", "ceiling", "cos", "cot", "degrees", "exp", "floor", "log", "log10", "mod", "pi", "power", "round", "sin", "sign", "sqrt", "tan", "truncate"};
-    
     private static final String[] numericFunctions510_ = { "abs", "acos", "asin", "atan", "atan2", "ceiling", "cos", "cot", "degrees", "exp", "floor", "log", "log10", "mod", "pi", "power", "radians", "rand", "round", "sin", "sign", "sqrt", "tan", "truncate"};
     
     private static final String[] numericFunctionsForNative_ = { "abs", "acos", "asin", "atan", "atan2", "ceiling", "cos", "cot", "degrees", "exp", "floor", "log", "log10", "mod", "pi", "power", "radians", "rand", "round", "sign", "sin", "sqrt", "tan", "truncate"};
@@ -128,19 +126,9 @@ public class JTADMDGetXxx extends JTATestcase
 
     private static final String[] stringFunctionsForNative530_ = { "concat", "difference", "insert", "lcase", "left", "length", "locate", "ltrim", "repeat", "replace", "right", "rtrim", "soundex", "space", "substring", "ucase"};
 
-    private static final String[] stringFunctionspre510_ = { "concat", "insert", "left", "length", "locate", "ltrim", "right", "rtrim", "substring", "ucase"};
-
-    private static final String[] stringFunctionspre520_ = { "concat", "difference", "insert", "left", "length", "locate", "ltrim", "right", "rtrim", "soundex", "space", "substring", "ucase"};
-    
-    private static final String[] stringFunctionspre530_ = { "concat", "difference", "insert", "lcase", "left", "length", "locate", "ltrim", "right", "rtrim", "soundex", "space", "substring", "ucase"};
-    
     private static final String[] stringFunctions530_ = { "concat", "difference", "insert", "lcase", "left", "length", "locate", "ltrim", "repeat", "replace", "right", "rtrim", "soundex", "space", "substring", "ucase"};
 
     private static final String[] systemFunctions_ = {  "database", "ifnull", "user"};
-
-    private static final String[] timeDateFunctionspre510_ = { "curdate", "curtime", "dayofmonth", "dayofweek", "dayofyear", "hour", "minute", "month", "now", "quarter", "second", "week", "year"};
- 
-    private static final String[] timeDateFunctionspre530_ = { "curdate", "curtime", "dayofmonth", "dayofweek", "dayofyear", "hour", "minute", "month", "now", "quarter", "second", "timestampdiff", "week", "year"};
 
     private static final String[] timeDateFunctions530_ = { "curdate", "curtime", "dayname", "dayofmonth", "dayofweek", "dayofyear", "hour", "minute", "month", "monthname", "now", "quarter", "second", "timestampdiff", "week", "year"};
 
@@ -757,10 +745,7 @@ getMaxColumnNameLength() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if(getRelease() <= JDTestDriver.RELEASE_V7R1M0)               //@F1A
-		   assertCondition (dmd_.getMaxColumnNameLength() == 30);
-	       else                                                          //@F1A
-		   assertCondition (dmd_.getMaxColumnNameLength() == 128);   //@F1A
+	       assertCondition (dmd_.getMaxColumnNameLength() == 128);   //@F1A
 	   } catch (Exception e)  {
 	       failed (e, "Unexpected Exception");
 	   }
@@ -779,13 +764,9 @@ getMaxColumnsInGroupBy() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)     {     
-		   int maxColumnsInGroupBy = dmd_.getMaxColumnsInGroupBy(); 
-		   assertCondition( maxColumnsInGroupBy == 8000,
-				    "maxColumnsInGroupBy is "+maxColumnsInGroupBy+" sb 8000" );
-	       } else                                                     
-
-		   assertCondition (dmd_.getMaxColumnsInGroupBy() == 120);
+	       int maxColumnsInGroupBy = dmd_.getMaxColumnsInGroupBy(); 
+         assertCondition( maxColumnsInGroupBy == 8000,
+        	    "maxColumnsInGroupBy is "+maxColumnsInGroupBy+" sb 8000" );
 
 
 	   } catch (Exception e)  {
@@ -897,10 +878,7 @@ getMaxCursorNameLength() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if(getRelease() < JDTestDriver.RELEASE_V7R1M0)          
-		   assertCondition (dmd_.getMaxCursorNameLength() == 18);
-	       else 
-		   assertCondition (dmd_.getMaxCursorNameLength() == 128);   
+	       assertCondition (dmd_.getMaxCursorNameLength() == 128);   
 	   } catch (Exception e)  {
 	       failed (e, "Unexpected Exception");
 	   }
@@ -995,13 +973,8 @@ getMaxStatementLength() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) {                         //@F2A
-		   assertCondition(dmd_.getMaxStatementLength() == 1048576,
-				   "Max statement length is "+dmd_.getMaxStatementLength()+" sb  1048576"); 
-	       } else {                                                                    //@F2A
-		   assertCondition (dmd_.getMaxStatementLength() == 32767,
-				    "Max statement lenght is "+dmd_.getMaxStatementLength()+"sb  32767"); 
-	       }
+	       assertCondition(dmd_.getMaxStatementLength() == 1048576,
+        	   "Max statement length is "+dmd_.getMaxStatementLength()+" sb  1048576");
 	   } catch (Exception e)  {
 	       failed (e, "Unexpected Exception");
 	   }
@@ -1067,11 +1040,7 @@ getMaxTablesInSelect() - Should return the correct value on a connection.
      }
        if (checkNative ()) {
 	   try {
-	       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		   assertCondition (dmd_.getMaxTablesInSelect() == 1000);
-	       } else { 
-		   assertCondition (dmd_.getMaxTablesInSelect() == 32);
-	       }
+	       assertCondition (dmd_.getMaxTablesInSelect() == 1000);
 	   } catch (Exception e)  {
 	       failed (e, "Unexpected Exception");
 	   }
@@ -1115,11 +1084,7 @@ getNumericFunctions() - Should return the correct value on a connection.
 	   try {
 	       String[]  expected; 
 	       if (getDriver () == JDTestDriver.DRIVER_TOOLBOX) {
-		   if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		       expected = numericFunctionspre510_;
-		   } else {
-		       expected = numericFunctions510_; 
-		   }
+		   expected = numericFunctions510_;
 	       } else {
 		   if (vrm_ < VRM_530) { 
 		       expected = numericFunctionsForNative_;
@@ -1285,15 +1250,7 @@ getStringFunctions() - Should return the correct value on a connection.
 	   try {
 	       if (getDriver () == JDTestDriver.DRIVER_TOOLBOX)
 	       {
-		   if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		       assertCondition(compare(stringFunctionspre510_, dmd_.getStringFunctions()));
-		   } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		       assertCondition(compare(stringFunctionspre520_, dmd_.getStringFunctions()));
-		   } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		       assertCondition(compare(stringFunctionspre530_, dmd_.getStringFunctions()));
-		   } else {
-		       assertCondition(compare(stringFunctions530_, dmd_.getStringFunctions()));
-		   }
+		   assertCondition(compare(stringFunctions530_, dmd_.getStringFunctions()));
 	       } else {
 		   String[] expected;
 		   if (vrm_ < VRM_530) { 
@@ -1407,13 +1364,7 @@ getTimeDateFunctions() - Should return the correct value on a connection.
 	   try {
 	       String expected[]; 
 	       if (getDriver () == JDTestDriver.DRIVER_TOOLBOX) {
-		   if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		       expected = timeDateFunctionspre510_;
-		   } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		       expected = timeDateFunctionspre530_;
-		   } else {
-		       expected = timeDateFunctions530_; 
-		   }
+		   expected = timeDateFunctions530_;
 	       } else  {
 		   if (vrm_ < VRM_530) { 
 		       expected = timeDateFunctionsForNative_;

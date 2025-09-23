@@ -1164,8 +1164,7 @@ public class SecCtorTestcase extends Testcase {
   // test AS400 constructor with given profile token
   public void Var032() {
    
-    String s = System.getProperty("os.name");
-    boolean onI5OS = (s != null && s.equalsIgnoreCase("OS/400")) ? true : false;
+    boolean onI5OS = JTOpenTestEnvironment.isOS400;
     if (!onI5OS) {
       notApplicable("on IBM i only");
       return;

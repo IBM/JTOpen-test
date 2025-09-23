@@ -17,7 +17,6 @@ package test.JD.RS;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
@@ -418,14 +417,8 @@ says that "Calling absolute(0) moves the cursor before the first row."
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs;
-		/* In V5R5 the metadata results are no longer scrollable */
-		/* run a different query */
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    // Note:  don't use statement_ since it is updatable 
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSDUMMY1"); 
-		} else { 
-		    rs = dmd_.getTableTypes ();
-		}
+		// Note:  don't use statement_ since it is updatable 
+    rs = statement2_.executeQuery("select * from SYSIBM.SYSDUMMY1");
                 /* boolean success = */  rs.absolute (0);
                 assertCondition(rs.isBeforeFirst(), "isBeforeFirst() returned false, but should have returned true");
             }
@@ -449,16 +442,9 @@ the cursor on the first row and return true.
 		boolean success ;
 		String s1;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSDUMMY1"); 
-		    success = rs.absolute (1);
-		    s1 = rs.getString ("IBMREQD");
-
-		} else { 
-		    rs = dmd_.getTableTypes ();
-		    success = rs.absolute (1);
-		    s1 = rs.getString ("TABLE_TYPE");
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSDUMMY1"); 
+    success = rs.absolute (1);
+    s1 = rs.getString ("IBMREQD");
 
                 rs.close ();
                 assertCondition ((success == true) && (s1 != null));
@@ -485,16 +471,9 @@ true.
 		boolean success ;
 		String s1;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		    success = rs.absolute (3);
-		    s1 = rs.getString ("TABLE_TYPE");
-
-		} else { 
-		    rs = dmd_.getTableTypes ();
-		    success = rs.absolute (3);
-		    s1 = rs.getString ("TABLE_TYPE");
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
+    success = rs.absolute (3);
+    s1 = rs.getString ("TABLE_TYPE");
                 if (s1 == null) {
                   System.out.println("TABLE_TYPE returned null"); 
                   s1=""; 
@@ -522,11 +501,7 @@ after the last row and return false.
 
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else { 
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
                 rs.next ();
                 rs.next ();
                 boolean success1 = rs.absolute (199);
@@ -555,15 +530,9 @@ the cursor on the last row and return true.
 		boolean success ;
 		String s1;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		    success = rs.absolute (-1);
-		    s1 = rs.getString ("TABLE_TYPE");
-		} else { 
-		    rs = dmd_.getTableTypes ();
-		    success = rs.absolute (-1);
-		    s1 = rs.getString ("TABLE_TYPE");
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
+    success = rs.absolute (-1);
+    s1 = rs.getString ("TABLE_TYPE");
                 if (s1 == null) {
                   System.out.println("TABLE_TYPE returned null"); 
                   s1=""; 
@@ -589,11 +558,7 @@ return true.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs;
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else {
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
                 boolean success = rs.absolute (-3);
                 String s1 = rs.getString ("TABLE_TYPE");
                 rs.close ();
@@ -617,12 +582,7 @@ before the first row and return false.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs;
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else {
-
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
                 rs.next ();
                 rs.next ();
                 boolean success1 = rs.absolute (-199);

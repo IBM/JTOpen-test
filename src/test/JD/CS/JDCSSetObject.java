@@ -250,7 +250,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
    * than the IN parameter.
    **/
   public void Var009() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    if (true) {
       try {
         CallableStatement cs1 = JDSetupProcedure.prepare(connection_,
             JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @KK
@@ -274,30 +274,13 @@ public class JDCSSetObject extends JDCSSetTestcase {
          * throw and error
          */
         /* Changing this back to the way it was */
-        /* As of 2/11/2008 on V6R1 an exception is not thrown */
-        if ((getDriver() == JDTestDriver.DRIVER_NATIVE)
-            && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-            && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) { // @KK
-          /*
-           * The native driver expects an exception to be thrown because the
-           * first call to setTypesParameters sets the value of column
-           * 14(1-based) to Bonjour first call to execute makes that value be
-           * "Dave WallBonjour" // procedure prepends Dave Wall to existing
-           * value ... NOTE: 'Dave Wall' (EBCDIC coding) and 'Bonjour' (ASCII
-           * coding) second call would result in "Dave WallDave WallBonjour"
-           * which is 25 characters past beyond the limit of that column, which
-           * is 20 characters
-           * 
-           */
-          Object p = cs1.getObject(12);
-          failed(" Didn't throw an exception but got " + p); // @KK
-        } else { // @KK
+        
           Object p = cs1.getObject(12);
           assertCondition(p.equals("test variation 9JDBC"));
-        }
+        
       } catch (Exception e) {
         if ((getDriver() == JDTestDriver.DRIVER_NATIVE)
-            && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) { // @KK
+            && (true)) { // @KK
           // With the new JDBC 4.0 support, this exception changes
           String classname = e.getClass().getName();
           if (classname.indexOf("DB2SQLData") >= 0) {
@@ -311,8 +294,6 @@ public class JDCSSetObject extends JDCSSetTestcase {
           failed(e, "Unexpected Exception");
         }
       }
-    } else {
-      notApplicable();
     }
   }
 
@@ -538,18 +519,14 @@ public class JDCSSetObject extends JDCSSetTestcase {
    * SetObject() - Set a type that was registered as a TIMESTAMP.
    **/
   public void Var024() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      try {
-        Timestamp t = new Timestamp(4342343);
-        cs.setObject(17, t);
-        cs.execute();
-        Timestamp p = (Timestamp) cs.getObject(17);
-        assertCondition(p.equals(t), " p = " + p);
-      } catch (Exception e) {
-        failed(e, "Unexpected Exception");
-      }
-    } else {
-      notApplicable();
+    try {
+      Timestamp t = new Timestamp(4342343);
+      cs.setObject(17, t);
+      cs.execute();
+      Timestamp p = (Timestamp) cs.getObject(17);
+      assertCondition(p.equals(t), " p = " + p);
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
     }
   }
 
@@ -632,24 +609,20 @@ public class JDCSSetObject extends JDCSSetTestcase {
    * SQL400 - We added this testcase because of a customer bug.
    **/
   public void Var029() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      try {
-        CallableStatement cs1 = JDSetupProcedure.prepare(connection_,
-            JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @KK
-        JDSetupProcedure.register(cs1, JDSetupProcedure.STP_CSTYPESINOUT,
-            supportedFeatures_, getDriver()); // @KK
-        cs1.registerOutParameter(12, Types.VARCHAR);
-        JDSetupProcedure.setTypesParameters(cs1,
-            JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @KK
-        cs1.setObject(12, "MiJDBC");
-        cs1.execute();
-        Object p = cs1.getObject(12);
-        assertCondition(p.equals("MiJDBCJDBC"), " p = " + p);
-      } catch (Exception e) {
-        failed(e, "Unexpected Exception");
-      }
-    } else {
-      notApplicable();
+    try {
+      CallableStatement cs1 = JDSetupProcedure.prepare(connection_,
+          JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @KK
+      JDSetupProcedure.register(cs1, JDSetupProcedure.STP_CSTYPESINOUT,
+          supportedFeatures_, getDriver()); // @KK
+      cs1.registerOutParameter(12, Types.VARCHAR);
+      JDSetupProcedure.setTypesParameters(cs1,
+          JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @KK
+      cs1.setObject(12, "MiJDBC");
+      cs1.execute();
+      Object p = cs1.getObject(12);
+      assertCondition(p.equals("MiJDBCJDBC"), " p = " + p);
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
     }
   }
 
@@ -880,20 +853,16 @@ public class JDCSSetObject extends JDCSSetTestcase {
    * SetObject() - Set a type that was registered as a TIMESTAMP.
    **/
   public void Var043() {
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      if (checkNamedParametersSupport()) {
-        try {
-          Timestamp t = new Timestamp(444);
-          cs.setObject("P_TIMESTAMP", t);
-          cs.execute();
-          Timestamp p = (Timestamp) cs.getObject("P_TIMESTAMP");
-          assertCondition(p.equals(t), " p = " + p);
-        } catch (Exception e) {
-          failed(e, "Unexpected Exception");
-        }
+    if (checkNamedParametersSupport()) {
+      try {
+        Timestamp t = new Timestamp(444);
+        cs.setObject("P_TIMESTAMP", t);
+        cs.execute();
+        Timestamp p = (Timestamp) cs.getObject("P_TIMESTAMP");
+        assertCondition(p.equals(t), " p = " + p);
+      } catch (Exception e) {
+        failed(e, "Unexpected Exception");
       }
-    } else {
-      notApplicable();
     }
   }
 
@@ -976,55 +945,51 @@ public class JDCSSetObject extends JDCSSetTestcase {
 
   // TESTING native driver
   public void Var048() { // @KK - added this Var
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-      try {
-        boolean success = true;
-        // This variation checks that none of the i-value in for loop causes an
-        // exception to e thrown
+    try {
+      boolean success = true;
+      // This variation checks that none of the i-value in for loop causes an
+      // exception to e thrown
 
-        int count = 24; // actually shldn't matter for 23,24 (1-based)
+      int count = 24; // actually shldn't matter for 23,24 (1-based)
 
-        for (int i = 0; i < count; i++) {
+      for (int i = 0; i < count; i++) {
 
-          CallableStatement cs1 = JDSetupProcedure.prepare(connection_,
-              JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_);
-          JDSetupProcedure.setTypesParameters(cs1,
-              JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_);
-          JDSetupProcedure.register(cs1, JDSetupProcedure.STP_CSTYPESINOUT,
-              supportedFeatures_, getDriver());
-          cs1.execute();
+        CallableStatement cs1 = JDSetupProcedure.prepare(connection_,
+            JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_);
+        JDSetupProcedure.setTypesParameters(cs1,
+            JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_);
+        JDSetupProcedure.register(cs1, JDSetupProcedure.STP_CSTYPESINOUT,
+            supportedFeatures_, getDriver());
+        cs1.execute();
 
-          // System.out.println("Setting all parameters but for parameter
-          // #(1-based): "+(i+1));
+        // System.out.println("Setting all parameters but for parameter
+        // #(1-based): "+(i+1));
 
-          // Sets all parameters but for i+1
-          JDSetupProcedure.setTypesParametersButForOne(cs1,
-              JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, i + 1);
+        // Sets all parameters but for i+1
+        JDSetupProcedure.setTypesParametersButForOne(cs1,
+            JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, i + 1);
 
-          // Sets parameter for i+1 alone
-          JDSetupProcedure.setTypesParametersForOne(cs1,
-              JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, i + 1);
+        // Sets parameter for i+1 alone
+        JDSetupProcedure.setTypesParametersForOne(cs1,
+            JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, i + 1);
 
-          cs1.execute();
+        cs1.execute();
 
-          // checkAll2 checks values for all but i+1 parameter
-          // checkAll2forOne checks values for only i+1 parameter
-          if (!(JDSetupProcedure.checkAllButForOne(cs1,
-              JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, i + 1)
-              && JDSetupProcedure.checkAllForOne(cs1,
-                  JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_,
-                  i + 1))) {
-            System.out.println("*** Failed on : " + (i + 1));
-            success = false;
-          }
-          cs1.close();
+        // checkAll2 checks values for all but i+1 parameter
+        // checkAll2forOne checks values for only i+1 parameter
+        if (!(JDSetupProcedure.checkAllButForOne(cs1,
+            JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, i + 1)
+            && JDSetupProcedure.checkAllForOne(cs1,
+                JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_,
+                i + 1))) {
+          System.out.println("*** Failed on : " + (i + 1));
+          success = false;
         }
-        assertCondition(success);
-      } catch (Exception e) {
-        failed(e, "Unexpected Exception");
+        cs1.close();
       }
-    } else {
-      notApplicable();
+      assertCondition(success);
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
     }
   }
 

@@ -659,13 +659,7 @@ public void Var014() {
         {
             notApplicable("Toolbox only TC");
             return;
-        }
-        else if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ){
-            succeeded("V6R1 onward");
-            return;
-        }
-        else
-        {
+        } else {
             int resultCount = 0; 
             try {
                 String url = baseURL_
@@ -796,13 +790,7 @@ public void Var014() {
         {
             notApplicable("Toolbox only TC");
             return;
-        }
-        else if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ){
-            succeeded("V6R1 onward");
-            return;
-        }
-        else
-        {
+        } else {
             try {
                 String url = baseURL_
                 
@@ -932,19 +920,7 @@ public void Var014() {
     **/
     public void Var022()
     {
-        if (getRelease() <= JDTestDriver.RELEASE_V7R1M0 && isToolboxDriver())
-        {
-            notApplicable("Too complex for v5r3/4");
-            return;
-        }
-
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Native fails in V5R4, needs CLI header fix");
-	    return; 
-	} 
-
-	int length = 0;
+        int length = 0;
 	String sql = ""; 
 	try
 	{

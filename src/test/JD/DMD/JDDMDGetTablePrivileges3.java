@@ -130,7 +130,7 @@ Performs setup needed before running variations.
             + ".TPRIVSXX (NAME INTEGER)");
 
         // @128sch
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        if(true)
         {
             String sql = "CREATE TABLE " + JDDMDTest.SCHEMAS_LEN128
                 + ".TABLE1 (COL1 CHAR(15) DEFAULT 'DEFAULTVAL',"
@@ -178,7 +178,7 @@ Performs cleanup needed after running variations.
         s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTIONXX
             + ".TPRIVSXX");
 
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@128sch
+        if(true) //@128sch
         {
             try{
                 s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");

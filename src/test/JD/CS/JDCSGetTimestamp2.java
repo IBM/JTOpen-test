@@ -35,7 +35,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDLobTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -445,7 +444,7 @@ getTimestamp() - getTimestamp on a type registered as Timestamp, INOUT TIME
 **/
     public void Var016()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	 {	
 	    try{
 
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION, "RETURNTIME");
@@ -467,8 +466,6 @@ getTimestamp() - getTimestamp on a type registered as Timestamp, INOUT TIME
                 //@C1D  else                                                        //@B1A
 		    failed(e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
 	} 
     }
 

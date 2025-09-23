@@ -17,6 +17,7 @@ import java.io.*;
 import java.beans.*;
 import com.ibm.as400.access.*;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 /**
@@ -316,7 +317,7 @@ ActionCompletedListener
         {
             ///AS400 as400 = new AS400();
             AS400 as400 = null;
-            if (System.getProperty("os.name").equals("OS/400"))
+            if (JTOpenTestEnvironment.isOS400)
             {
                 as400 = new AS400(systemObject_.getSystemName(), "dummyUser",
                                   "dummyPass".toCharArray());

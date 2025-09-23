@@ -29,7 +29,6 @@ import java.util.Hashtable; import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDHandleStress;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -106,18 +105,6 @@ Performs cleanup needed after running variations.
 	if (checkNative()) {
 	    long cliFixLevel =getCliFixLevel();
 	    System.out.println("cliFixLevel is "+cliFixLevel);
-	    if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) && (cliFixLevel < 47196)) {
-		notApplicable("Requires CLI fix SI47196 CLI LEVEL="+cliFixLevel);
-		return;
-	    }
-	    if ((getRelease() == JDTestDriver.RELEASE_V7R1M0)) {
-		notApplicable("Fix not in V5R4");
-		return;
-	    }
-	    if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) && (cliFixLevel < 47196)) {
-		notApplicable("Requires CLI fix SI47XXX CLI LEVEL="+cliFixLevel);
-		return;
-	    }
 
 
 	    PrintStream writer = null;

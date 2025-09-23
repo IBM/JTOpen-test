@@ -1737,7 +1737,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -1771,10 +1771,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable(); 
-	    }
+	    
 	}
     }
 
@@ -1785,7 +1782,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -1820,10 +1817,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
 
@@ -1834,7 +1828,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -1869,10 +1863,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
 
@@ -1883,7 +1874,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -1920,10 +1911,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
     /*
@@ -1933,7 +1921,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -1971,10 +1959,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
     /*
@@ -1984,47 +1969,40 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
-	    {
-		try
-		{
-		    String sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+".ADD10 (INOUT \"Col1\" CHAR(5), INOUT \"Col2\" CHAR(5),"+
-		      " OUT \"Col3\" CHAR(5)) LANGUAGE SQL SPECIFIC ADD10 JDCSADD10: BEGIN DECLARE DUMMY"+
-		      " CHAR(5); SET DUMMY = \"Col1\"; SET \"Col1\" = DUMMY ; END JDCSADD10";  
+	    try
+      {
+          String sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+".ADD10 (INOUT \"Col1\" CHAR(5), INOUT \"Col2\" CHAR(5),"+
+            " OUT \"Col3\" CHAR(5)) LANGUAGE SQL SPECIFIC ADD10 JDCSADD10: BEGIN DECLARE DUMMY"+
+            " CHAR(5); SET DUMMY = \"Col1\"; SET \"Col1\" = DUMMY ; END JDCSADD10";  
 
-		    Statement stmt = connection_.createStatement ();
+          Statement stmt = connection_.createStatement ();
 
-		    try
-		    {
-			stmt.executeUpdate("drop procedure "+JDCSTest.COLLECTION+".ADD10");
-		    }
-		    catch(Exception e)
-		    {
-		    }
+          try
+          {
+      	stmt.executeUpdate("drop procedure "+JDCSTest.COLLECTION+".ADD10");
+          }
+          catch(Exception e)
+          {
+          }
 
-		    stmt.executeUpdate(sql);
-		    CallableStatement cstmt = connection_.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10 (?,?,?)}");
-		    cstmt.registerOutParameter(1, java.sql.Types.CHAR);
-		    cstmt.registerOutParameter(2, java.sql.Types.CHAR);
-		    cstmt.registerOutParameter(3, java.sql.Types.CHAR);
+          stmt.executeUpdate(sql);
+          CallableStatement cstmt = connection_.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10 (?,?,?)}");
+          cstmt.registerOutParameter(1, java.sql.Types.CHAR);
+          cstmt.registerOutParameter(2, java.sql.Types.CHAR);
+          cstmt.registerOutParameter(3, java.sql.Types.CHAR);
 
-		    cstmt.setString("col1", "ABC");
-		    cstmt.setString("COL2", "xyz");
-		    cstmt.execute();
+          cstmt.setString("col1", "ABC");
+          cstmt.setString("COL2", "xyz");
+          cstmt.execute();
 
-		    String s = cstmt.getString(1);
-		    String t = cstmt.getString(2);
-		    assertCondition(s.equalsIgnoreCase("ABC  ") && (t.equalsIgnoreCase("xyz  ")));
-		}
-		catch(SQLException e)
-		{
-		    failed (e, "Unexpected Exception");
-		}
-	    }
-	    else
-	    {
-		notApplicable();
-	    }
+          String s = cstmt.getString(1);
+          String t = cstmt.getString(2);
+          assertCondition(s.equalsIgnoreCase("ABC  ") && (t.equalsIgnoreCase("xyz  ")));
+      }
+      catch(SQLException e)
+      {
+          failed (e, "Unexpected Exception");
+      }
 	}
     }
     /*
@@ -2035,52 +2013,45 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
-	    {
-		try
-		{
-		    String sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+".ADD10 (INOUT \"One\" CHAR(8), INOUT \"ONe\" CHAR(8),"+
-		      " INOUT \"ONE\" CHAR(8)) LANGUAGE SQL SPECIFIC ADD10 JDCSADD10: BEGIN DECLARE DUMMY"+
-		      " CHAR(8); SET DUMMY = \"One\"; SET \"One\" = DUMMY ; "+
-		      " SET DUMMY = \"ONe\"; SET \"ONe\" = DUMMY ; "+
-		      " SET DUMMY = \"ONE\"; SET \"ONE\" = DUMMY ; END JDCSADD10";  
+	    try
+      {
+          String sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+".ADD10 (INOUT \"One\" CHAR(8), INOUT \"ONe\" CHAR(8),"+
+            " INOUT \"ONE\" CHAR(8)) LANGUAGE SQL SPECIFIC ADD10 JDCSADD10: BEGIN DECLARE DUMMY"+
+            " CHAR(8); SET DUMMY = \"One\"; SET \"One\" = DUMMY ; "+
+            " SET DUMMY = \"ONe\"; SET \"ONe\" = DUMMY ; "+
+            " SET DUMMY = \"ONE\"; SET \"ONE\" = DUMMY ; END JDCSADD10";  
 
-		    Statement stmt = connection_.createStatement ();
+          Statement stmt = connection_.createStatement ();
 
-		    try
-		    {
-			stmt.executeUpdate("drop procedure "+JDCSTest.COLLECTION+".ADD10");
-		    }
-		    catch(Exception e)
-		    {
-		    }
+          try
+          {
+      	stmt.executeUpdate("drop procedure "+JDCSTest.COLLECTION+".ADD10");
+          }
+          catch(Exception e)
+          {
+          }
 
-		    stmt.executeUpdate(sql);
-		    CallableStatement cstmt = connection_.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10 (?,?,?)}");
-		    cstmt.registerOutParameter(1, java.sql.Types.CHAR);
-		    cstmt.registerOutParameter(2, java.sql.Types.CHAR);
-		    cstmt.registerOutParameter(3, java.sql.Types.CHAR);
+          stmt.executeUpdate(sql);
+          CallableStatement cstmt = connection_.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10 (?,?,?)}");
+          cstmt.registerOutParameter(1, java.sql.Types.CHAR);
+          cstmt.registerOutParameter(2, java.sql.Types.CHAR);
+          cstmt.registerOutParameter(3, java.sql.Types.CHAR);
 
-		    cstmt.setString("\"One\"", "test One");
-		    cstmt.setString("\"ONe\"", "test ONe");
-		    cstmt.setString("\"ONE\"", "test ONE");
-		    cstmt.setString("one", "tester");
-		    cstmt.execute();
+          cstmt.setString("\"One\"", "test One");
+          cstmt.setString("\"ONe\"", "test ONe");
+          cstmt.setString("\"ONE\"", "test ONE");
+          cstmt.setString("one", "tester");
+          cstmt.execute();
 
-		    String r = cstmt.getString("\"One\"");
-		    String s = cstmt.getString("\"ONe\"");
-		    String t = cstmt.getString("\"ONE\"");
-		    assertCondition((r.equalsIgnoreCase("tester  ")) && (s.equalsIgnoreCase("test ONe")) && (t.equalsIgnoreCase("test ONE")));
-		}
-		catch(SQLException e)
-		{
-		    failed (e, "Unexpected Exception");
-		}
-	    }
-	    else
-	    {
-		notApplicable();
-	    }
+          String r = cstmt.getString("\"One\"");
+          String s = cstmt.getString("\"ONe\"");
+          String t = cstmt.getString("\"ONE\"");
+          assertCondition((r.equalsIgnoreCase("tester  ")) && (s.equalsIgnoreCase("test ONe")) && (t.equalsIgnoreCase("test ONE")));
+      }
+      catch(SQLException e)
+      {
+          failed (e, "Unexpected Exception");
+      }
 	}
     }
 
@@ -2091,7 +2062,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 
 		try
@@ -2131,10 +2102,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
 
@@ -2145,7 +2113,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -2184,10 +2152,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	    
 	}
     }
 
@@ -2198,7 +2163,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -2237,10 +2202,7 @@ extends JDCSGetTestcase
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	     
 	}
     }
     /*
@@ -2250,7 +2212,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -2284,10 +2246,7 @@ extends JDCSGetTestcase
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	     
 	}
     }
 
@@ -2299,7 +2258,7 @@ extends JDCSGetTestcase
     {
 	if(checkJdbc30()) /* $E5 named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -2334,10 +2293,7 @@ extends JDCSGetTestcase
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException"); 
 		}
 	    }
-	    else
-	    {
-		notApplicable();
-	    }
+	     
 	}
     }
 
@@ -2351,12 +2307,7 @@ extends JDCSGetTestcase
     {
 	String added = " -- added by native driver 5/12/2009 to detect native bug in J9 native method when working with large allocated lobs -- Fixed in V7R1";
 	String sql = "";
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&          /* Native DBCLOB testing */ 
-	    getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-	    runningJ9) {
-	    notApplicable("Not working for J9 in V6R1 and earlier");
-	    return; 
-	} 
+	
 	if (checkNative()) { 
 	    if(checkLobSupport ())	    {
 		try { 

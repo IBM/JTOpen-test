@@ -223,11 +223,7 @@ test the getStringFunctions method of DatabaseMetaData
 	    } else {
                // NATIVE VERSION
 		String expected;
-		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-		    expected= "concat,difference,insert,lcase,left,length,locate,ltrim,repeat,replace,right,rtrim,soundex,space,substring,ucase";
-		} else {
-		    expected="concat,difference,insert,lcase,left,length,locate,ltrim,right,rtrim,soundex,space,substring,ucase";
-		}
+		expected= "concat,difference,insert,lcase,left,length,locate,ltrim,repeat,replace,right,rtrim,soundex,space,substring,ucase";
 		assertCondition(dmd_.getStringFunctions().equals(expected),
 				"dmd_.getStringFunctions() = " + dmd_.getStringFunctions() + " AND SHOULD BE  "+expected);
 
@@ -275,11 +271,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
                 // native driver
                 //
 		String expected;
-		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-		    expected = "curdate,curtime,dayname,dayofmonth,dayofweek,dayofyear,hour,minute,month,monthname,now,quarter,second,timestampdiff,week,year";
-		} else {
-		    expected = "curdate,curtime,dayofmonth,dayofweek,dayofyear,hour,minute,month,now,quarter,second,week,year";
-		}
+		expected = "curdate,curtime,dayname,dayofmonth,dayofweek,dayofyear,hour,minute,month,monthname,now,quarter,second,timestampdiff,week,year";
 
 		assertCondition(dmd_.getTimeDateFunctions().equals(expected), "dmd_.getTimeDateFunctions() = " + dmd_.getTimeDateFunctions() + " AND SHOULD BE "+expected);
 
@@ -416,7 +408,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     public void Var008()
     {
 	String added = "-- added 07/14/2015 to getColumns with different CCSIDS Fixed by SE62366 (SYSIBM) -- updated 02/16/2022 to check column 23 ";
-	if (checkRelease710(added)) { 
+	if (checkRelease720(added)) { 
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -498,7 +490,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     {
 	String added = "-- added 07/14/2015 to getFunctionColumns with different CCSIDS Fixed by SE62366 (SYSIBM)";
 
-	if (checkRelease710(added)) {
+	if (checkRelease720(added)) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -572,7 +564,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     {
 	String added = "-- added 07/14/2015 to getFunctions with different CCSIDS Fixed by SE62366 (SYSIBM)";
 
-	if (checkRelease710(added)) {
+	if (checkRelease720(added)) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -774,7 +766,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     public void Var013()
     {
 	String added = "-- added 07/14/2015 to getTables with different CCSIDS Fixed by SE62366 (SYSIBM) -- updated 2/16/2022 to check column 4";
-	if (checkRelease710(added)) {
+	if (checkRelease720(added)) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -849,7 +841,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     public void Var014()
     {
 	String added = "-- added 07/14/2015 to getColumnPrivileges with different CCSIDS Fixed by SE62366 (SYSIBM)";
-	if (checkRelease710(added)) {
+	if (checkRelease720(added)) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -918,7 +910,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     public void Var015()
     {
 	String added = "-- added 07/14/2015 to getTablePrivileges with different CCSIDS Fixed by SE62366 (SYSIBM)";
-	if (checkRelease710(added)) {
+	if (checkRelease720(added)) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -987,7 +979,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     {
 	String added = "-- added 07/14/2015 to getPseudoColumns with different CCSIDS Fixed by SE62366 (SYSIBM)";
 
-	if (checkRelease710(added)) {
+	if (checkRelease720(added)) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try

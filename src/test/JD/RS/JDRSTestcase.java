@@ -282,26 +282,22 @@ Performs cleanup needed after running variations.
     // This was added for V5R5
     // 
     public void checkLimitBAD(String query, String exceptionType, String method) {
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
-           try {
-               String values = ""; 
-               ResultSet rs = statement0_.executeQuery (query); 
-               while (rs.next()) { 
-                 if (method.equals("getByte")) { 
-                   byte v = rs.getByte (1);
-                   values += v+", "; 
-                 } else {
-                   values += "Error in checkLimitBAD: unsupported method "+method; 
-                 }
+        try {
+             String values = ""; 
+             ResultSet rs = statement0_.executeQuery (query); 
+             while (rs.next()) { 
+               if (method.equals("getByte")) { 
+                 byte v = rs.getByte (1);
+                 values += v+", "; 
+               } else {
+                 values += "Error in checkLimitBAD: unsupported method "+method; 
                }
-               failed ("Didn't throw SQLException values were:" +values+" for "+query );
-           }
-           catch (Exception e) {
-               assertExceptionIsInstanceOf (e, exceptionType);
-           }
-        } else {
-           notApplicable("Bad limit test for V5R5 or later"); 
-        } 
+             }
+             failed ("Didn't throw SQLException values were:" +values+" for "+query );
+         }
+         catch (Exception e) {
+             assertExceptionIsInstanceOf (e, exceptionType);
+         } 
     }
 
     public void checkLimitOK(String query, String expectedValue, String method) { 

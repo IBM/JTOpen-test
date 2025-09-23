@@ -789,7 +789,7 @@ public class JTAResource extends JTATestcase {
     if (checkJdbc20StdExt()) {
       int expectedErrorCode = XAException.XAER_PROTO;
       // If V5R4 and UDBdatasource then error should be XAER_NOTA
-      if ((useUDBDataSource) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+      if ((useUDBDataSource) && (true)) {
         expectedErrorCode = XAException.XAER_NOTA;
       }
       try {
@@ -2174,32 +2174,11 @@ public class JTAResource extends JTATestcase {
           condition = (errorCode == XAException.XAER_PROTO);
           expectedErrorCode = XAException.XAER_PROTO;
         } else {
-          //
-          // For UDB we use the more appropriate error
-          //
-          // WILSONJO
-          // This error should be XAER_DUPID, as the documentation states
-          // that XAER_DUPID should be thrown if the xid has already been
-          // seen by the start method
-          //
-          // Actually, the return code should be XAER_PROTO because the
-          // transaction branch is still active. This was fixed in
-          // V5R4.
-          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-            condition = (errorCode == XAException.XAER_PROTO /*
-                                                              * XAException.
-                                                              * XAER_INVAL
-                                                              */);
-            expectedErrorCode = XAException.XAER_PROTO;
-
-          } else {
-            condition = (errorCode == XAException.XAER_DUPID /*
-                                                              * XAException.
-                                                              * XAER_INVAL
-                                                              */);
-            expectedErrorCode = XAException.XAER_DUPID;
-
-          }
+          condition = (errorCode == XAException.XAER_PROTO /*
+                                                            * XAException.
+                                                            * XAER_INVAL
+                                                            */);
+          expectedErrorCode = XAException.XAER_PROTO;
         }
         if (!condition) {
           System.out.println("errorCode should be " + expectedErrorCode
@@ -2411,23 +2390,10 @@ public class JTAResource extends JTATestcase {
           }
           assertCondition(condition);
         } else {
-          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-            // in V5R4 we return XAER_NOTA
-            assertCondition(errorCode == XAException.XAER_NOTA,
-                "Error code should be XAER_NOTA=" + XAException.XAER_NOTA
-                    + " but is " + errorCode);
-
-          } else {
-            if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-              assertCondition((errorCode == XAException.XAER_INVAL)
-                  || (errorCode == XAException.XAER_NOTA),
-                  "Error code should be XAER_INVAL=" + XAException.XAER_INVAL
-                      + " but is " + errorCode);
-            } else
-              assertCondition(errorCode == XAException.XAER_INVAL,
-                  "Error code should be XAER_INVAL=" + XAException.XAER_INVAL
-                      + " but is " + errorCode);
-          }
+          // in V5R4 we return XAER_NOTA
+          assertCondition(errorCode == XAException.XAER_NOTA,
+              "Error code should be XAER_NOTA=" + XAException.XAER_NOTA
+                  + " but is " + errorCode);
         }
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -2471,23 +2437,10 @@ public class JTAResource extends JTATestcase {
           assertCondition(condition);
 
         } else {
-          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-            // in V5R4 we return XAER_NOTA
-            assertCondition(errorCode == XAException.XAER_NOTA,
-                "Error code should be XAER_NOTA=" + XAException.XAER_NOTA
-                    + " but is " + errorCode);
-
-          } else {
-            if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-              assertCondition((errorCode == XAException.XAER_INVAL)
-                  || (errorCode == XAException.XAER_NOTA),
-                  "Error code should be XAER_INVAL=" + XAException.XAER_INVAL
-                      + " but is " + errorCode);
-            } else
-              assertCondition(errorCode == XAException.XAER_INVAL,
-                  "Error code should be XAER_INVAL=" + XAException.XAER_INVAL
-                      + " but is " + errorCode);
-          }
+          // in V5R4 we return XAER_NOTA
+          assertCondition(errorCode == XAException.XAER_NOTA,
+              "Error code should be XAER_NOTA=" + XAException.XAER_NOTA
+                  + " but is " + errorCode);
         }
       } catch (Exception e) {
         failed(e, "Unexpected Exception");

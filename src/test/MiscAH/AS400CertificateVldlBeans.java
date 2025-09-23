@@ -317,7 +317,7 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
     }
 
     // Are we running on the AS/400?
-    else if (operatingSystem_.indexOf("OS/400") >= 0)
+    else if (JTOpenTestEnvironment.isOS400)
     {
       output_.println("Will use native implementation");
     }

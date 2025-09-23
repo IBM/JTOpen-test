@@ -41,7 +41,9 @@ public class JPingTestcase extends Testcase {
      test.JPingTest.main(newArgs); 
    }
 
-
+  protected void setup() { 
+    System.setProperty("com.ibm.as400.util.DisableExit","true"); 
+  }
   /***
    * Test the JPing command looking for expected arguments
    */

@@ -1327,13 +1327,6 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
     StringBuffer sb = new StringBuffer();
     String traceFile = null;
 
-    // If the release does not support compression, still run
-    // test, but do not verify compression
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	verifyCompression = VERIFY_NONE; 
-    }
-
-
     try {
       if ((verifyCompression != VERIFY_NONE) && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 
@@ -1409,11 +1402,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
       String traceFile = null; 
       try {
 
-	  if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	      verifyCompression = VERIFY_NONE; 
-	  }
-
-        createTable(tablename, dataTypes, sb);
+	  createTable(tablename, dataTypes, sb);
         resetGeneratedValues(sb); 
         String[][] expectedResults = batchInsert(tablename, dataTypes, rows, sb);
 
@@ -1487,11 +1476,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
     public void testDeleteCompression(String tablename, int[] dataTypes, int rows, int verifyCompression) {
       StringBuffer sb = new StringBuffer();
       String traceFile = null;
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	verifyCompression = VERIFY_NONE; 
-    }
-
-      try {
+    try {
         
         createTable(tablename, dataTypes, sb);
         useNulls = false; 
@@ -1575,13 +1560,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
     public boolean testMergeCompression(String tablename, int[] dataTypes, int rows, int verifyCompression, String comment ) {
       StringBuffer sb = new StringBuffer();
       String traceFile = null;
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	notApplicable("Merge testcase for V7R1 and later");
-	return true; 
-    }
-
-
-      try {
+    try {
   
         createTable(tablename, dataTypes, sb);
         resetGeneratedValues(sb); 
@@ -1769,87 +1748,83 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
 
    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
 
-       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
-	   StringBuffer sb = new StringBuffer();
-	   useNulls = false; 
-	   try {
-	       int TIME_SAMPLES = 10; 
-	       int runCount= 0; 
-	       long totalCompressedTime = 0; 
-	       long totalUncompressedTime = 0; 
-	       long[] compressedTime = new long[TIME_SAMPLES]; 
-	       long[] uncompressedTime = new long[TIME_SAMPLES];
-	       long testStartTime = System.currentTimeMillis();
-	       long testFinishTime = testStartTime +  runMinutes * 60000;
-	       boolean passed = true; 
-	       String[][] expectedResults;
-	       calculateBytesWritten = false; 
-	       boolean goalMet = false; 
-	       while ((!goalMet) && passed && System.currentTimeMillis() < testFinishTime ) { 
-		   useCompressConnection = true; 
-		   createTable(tablename, dataTypes, sb);
-		   resetGeneratedValues(sb); 
-		   expectedResults = batchInsert(tablename, dataTypes, rows, sb);
-		   compressedTime[runCount % compressedTime.length] = executeBatchTime; 
-		   passed = checkRows(tablename, expectedResults, dataTypes, sb);
-		   dropTable(tablename);
+       StringBuffer sb = new StringBuffer();
+       useNulls = false; 
+       try {
+           int TIME_SAMPLES = 10; 
+           int runCount= 0; 
+           long totalCompressedTime = 0; 
+           long totalUncompressedTime = 0; 
+           long[] compressedTime = new long[TIME_SAMPLES]; 
+           long[] uncompressedTime = new long[TIME_SAMPLES];
+           long testStartTime = System.currentTimeMillis();
+           long testFinishTime = testStartTime +  runMinutes * 60000;
+           boolean passed = true; 
+           String[][] expectedResults;
+           calculateBytesWritten = false; 
+           boolean goalMet = false; 
+           while ((!goalMet) && passed && System.currentTimeMillis() < testFinishTime ) { 
+         useCompressConnection = true; 
+         createTable(tablename, dataTypes, sb);
+         resetGeneratedValues(sb); 
+         expectedResults = batchInsert(tablename, dataTypes, rows, sb);
+         compressedTime[runCount % compressedTime.length] = executeBatchTime; 
+         passed = checkRows(tablename, expectedResults, dataTypes, sb);
+         dropTable(tablename);
 
-		   useCompressConnection = false; 
-		   createTable(tablename, dataTypes, sb);
-		   resetGeneratedValues(sb); 
-		   expectedResults = batchInsert(tablename, dataTypes, rows, sb);
-		   uncompressedTime[runCount % uncompressedTime.length] = executeBatchTime;
-		   passed = checkRows(tablename, expectedResults, dataTypes, sb);
-		   dropTable(tablename);
+         useCompressConnection = false; 
+         createTable(tablename, dataTypes, sb);
+         resetGeneratedValues(sb); 
+         expectedResults = batchInsert(tablename, dataTypes, rows, sb);
+         uncompressedTime[runCount % uncompressedTime.length] = executeBatchTime;
+         passed = checkRows(tablename, expectedResults, dataTypes, sb);
+         dropTable(tablename);
 
-		   runCount++;
-		   if (runCount > compressedTime.length) {
-		       totalCompressedTime = 0L; 
-		       totalUncompressedTime = 0; 
-		       for (int i = 0; i < compressedTime.length; i++) {
-			   totalCompressedTime += compressedTime[i]; 
-			   totalUncompressedTime += uncompressedTime[i]; 
-		       }
-		       double ratio = (((double)totalCompressedTime)/((double)totalUncompressedTime));
-		       if (ratio <= expectedRatio) {
-			   goalMet = true; 
-		       }
-		       if (runCount % compressedTime.length == 0) { 
-			   System.out.println("Count="+runCount+" ratio="+ratio+" expected="+expectedRatio+
-					      " compressedTime="+totalCompressedTime+" uncompressedTime="+totalUncompressedTime); 
-		       }
-		   }
-	       } /* while not goal met */ 
-	       System.out.println("Test info                 ="+testInfo); 
-	       System.out.println("Run milliseconds          ="+(System.currentTimeMillis() - testStartTime));
-	       System.out.println("Run count                 ="+runCount); 
-	       System.out.println("Compressed milliseconds   ="+totalCompressedTime); 
-	       System.out.println("Uncompressed milliseconds ="+totalUncompressedTime);
-	       sb.append("Run count                 ="+runCount+"\n"); 
-	       sb.append("Compressed milliseconds   ="+totalCompressedTime+"\n"); 
-	       sb.append("Uncompressed milliseconds ="+totalUncompressedTime+"\n");
-	       double ratio = (((double)totalCompressedTime)/((double)totalUncompressedTime));
-	       System.out.println("Ratio                     ="+ ratio);
-	       System.out.println("Expected ratio            ="+ expectedRatio);
-	       if (ratio > expectedRatio) { 
-		   sb.append("FAILED:  expectedRatio="+expectedRatio+" ratio="+ratio+"\n");
-		   passed = false; 
-	       }
-	       assertCondition(passed, sb);
+         runCount++;
+         if (runCount > compressedTime.length) {
+             totalCompressedTime = 0L; 
+             totalUncompressedTime = 0; 
+             for (int i = 0; i < compressedTime.length; i++) {
+      	   totalCompressedTime += compressedTime[i]; 
+      	   totalUncompressedTime += uncompressedTime[i]; 
+             }
+             double ratio = (((double)totalCompressedTime)/((double)totalUncompressedTime));
+             if (ratio <= expectedRatio) {
+      	   goalMet = true; 
+             }
+             if (runCount % compressedTime.length == 0) { 
+      	   System.out.println("Count="+runCount+" ratio="+ratio+" expected="+expectedRatio+
+      			      " compressedTime="+totalCompressedTime+" uncompressedTime="+totalUncompressedTime); 
+             }
+         }
+           } /* while not goal met */ 
+           System.out.println("Test info                 ="+testInfo); 
+           System.out.println("Run milliseconds          ="+(System.currentTimeMillis() - testStartTime));
+           System.out.println("Run count                 ="+runCount); 
+           System.out.println("Compressed milliseconds   ="+totalCompressedTime); 
+           System.out.println("Uncompressed milliseconds ="+totalUncompressedTime);
+           sb.append("Run count                 ="+runCount+"\n"); 
+           sb.append("Compressed milliseconds   ="+totalCompressedTime+"\n"); 
+           sb.append("Uncompressed milliseconds ="+totalUncompressedTime+"\n");
+           double ratio = (((double)totalCompressedTime)/((double)totalUncompressedTime));
+           System.out.println("Ratio                     ="+ ratio);
+           System.out.println("Expected ratio            ="+ expectedRatio);
+           if (ratio > expectedRatio) { 
+         sb.append("FAILED:  expectedRatio="+expectedRatio+" ratio="+ratio+"\n");
+         passed = false; 
+           }
+           assertCondition(passed, sb);
 
-	   } catch (Exception e) {
-	       if (useCompressConnection) { 
-		   failed(connection_, e, sb.toString());
-	       } else { 
-		   failed(connectionNoCompress_, e, sb.toString());
-	       }
-	   } finally { 
-	   }
-	   useCompressConnection = true; 
-	   useNulls = true;
-       } else {
-	   notApplicable("V7R1 or later release"); 
-       } 
+       } catch (Exception e) {
+           if (useCompressConnection) { 
+         failed(connection_, e, sb.toString());
+           } else { 
+         failed(connectionNoCompress_, e, sb.toString());
+           }
+       } finally { 
+       }
+       useCompressConnection = true; 
+       useNulls = true; 
    } else { 
      notApplicable("Toolbox only test"); 
    }
@@ -1859,71 +1834,67 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
 
   public void testInsertCompressionBytePerformance(String testInfo, String tablename, int[] dataTypes, int rows, double expectedRatio) {
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-	    // Make sure everything is release, so the the
-            // garbage collector does not generate
-            // unnecessary traffice
-	    System.gc(); 
-	    StringBuffer sb = new StringBuffer();
-	    useNulls = false; 
-	    calculateBytesWritten= true; 
-	    try {
-		int runCount= 0; 
-		long compressedBytes = 0; 
-		long uncompressedBytes = 0;
-		boolean passed = true; 
-		String[][] expectedResults;
-		while (passed && runCount < 10 ) { 
-		    useCompressConnection = true; 
-		    createTable(tablename, dataTypes, sb);
-		    resetGeneratedValues(sb);
-		    bytesWritten = 0; 
-		    expectedResults = batchInsert(tablename, dataTypes, rows, sb);
-		    compressedBytes+= bytesWritten; 
-		    passed = checkRows(tablename, expectedResults, dataTypes, sb);
-		    dropTable(tablename);
+	// Make sure everything is release, so the the
+        // garbage collector does not generate
+        // unnecessary traffice
+  System.gc(); 
+  StringBuffer sb = new StringBuffer();
+  useNulls = false; 
+  calculateBytesWritten= true; 
+  try {
+int runCount= 0; 
+long compressedBytes = 0; 
+long uncompressedBytes = 0;
+boolean passed = true; 
+String[][] expectedResults;
+while (passed && runCount < 10 ) { 
+    useCompressConnection = true; 
+    createTable(tablename, dataTypes, sb);
+    resetGeneratedValues(sb);
+    bytesWritten = 0; 
+    expectedResults = batchInsert(tablename, dataTypes, rows, sb);
+    compressedBytes+= bytesWritten; 
+    passed = checkRows(tablename, expectedResults, dataTypes, sb);
+    dropTable(tablename);
 
-		    useCompressConnection = false; 
-		    createTable(tablename, dataTypes, sb);
-		    resetGeneratedValues(sb);
-		    bytesWritten = 0; 
-		    expectedResults = batchInsert(tablename, dataTypes, rows, sb);
-		    uncompressedBytes += bytesWritten;
-		    passed = checkRows(tablename, expectedResults, dataTypes, sb);
-		    dropTable(tablename);
+    useCompressConnection = false; 
+    createTable(tablename, dataTypes, sb);
+    resetGeneratedValues(sb);
+    bytesWritten = 0; 
+    expectedResults = batchInsert(tablename, dataTypes, rows, sb);
+    uncompressedBytes += bytesWritten;
+    passed = checkRows(tablename, expectedResults, dataTypes, sb);
+    dropTable(tablename);
 
 
-		    runCount++; 
-		}
-		System.out.println("Test name: "+testInfo); 
-		System.out.println("Run count                 ="+runCount); 
-		System.out.println("Compressed bytes   ="+compressedBytes); 
-		System.out.println("Uncompressed bytes ="+uncompressedBytes);
-		double ratio = (((double)compressedBytes)/((double)uncompressedBytes));
-		System.out.println("Ratio              ="+ ratio);
-		System.out.println("Expected ratio     ="+ expectedRatio);
+    runCount++; 
+}
+System.out.println("Test name: "+testInfo); 
+System.out.println("Run count                 ="+runCount); 
+System.out.println("Compressed bytes   ="+compressedBytes); 
+System.out.println("Uncompressed bytes ="+uncompressedBytes);
+double ratio = (((double)compressedBytes)/((double)uncompressedBytes));
+System.out.println("Ratio              ="+ ratio);
+System.out.println("Expected ratio     ="+ expectedRatio);
 
-		if (ratio > expectedRatio) {
-		    sb.append("Expected ratio="+expectedRatio+" but got "+ratio+"\n"); 
-		    passed = false; 
+if (ratio > expectedRatio) {
+    sb.append("Expected ratio="+expectedRatio+" but got "+ratio+"\n"); 
+    passed = false; 
 
-		}
-		assertCondition(passed, sb);
+}
+assertCondition(passed, sb);
 
-	    } catch (Exception e) {
-		if (useCompressConnection) { 
-		    failed(connection_, e, sb.toString());
-		} else { 
-		    failed(connectionNoCompress_, e, sb.toString());
-		}
-	    } finally { 
-	    }
-	    calculateBytesWritten= false; 
-	    useCompressConnection = true; 
-	    useNulls = true;
-	} else {
-	    notApplicable("V7R1 or later release"); 
-	}
+  } catch (Exception e) {
+if (useCompressConnection) { 
+    failed(connection_, e, sb.toString());
+} else { 
+    failed(connectionNoCompress_, e, sb.toString());
+}
+  } finally { 
+  }
+  calculateBytesWritten= false; 
+  useCompressConnection = true; 
+  useNulls = true;
     } else { 
       notApplicable("Toolbox only test"); 
     }
@@ -3003,11 +2974,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
              * Randomly test combinations for 1 minutes
              */
             public void Var073() {
-		if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		    notApplicable("Merge testcase for V7R1 and later");
-		    return; 
-		}
-              System.out.println("Var062 is testing merge combinations for "+RUN_MINUTES+" minutes"); 
+		System.out.println("Var062 is testing merge combinations for "+RUN_MINUTES+" minutes"); 
               Random random = new Random(); 
               long endTime = System.currentTimeMillis()+ RUN_MINUTES * 60000; 
               boolean passed = true; 

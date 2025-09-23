@@ -62,7 +62,6 @@ public class AS400CertificateUsrPrfTestcase extends Testcase
   private String non_existingUserSpace_ = "/QSYS.LIB/CERTTEST.LIB/XKG52V9QWQ.USRSPC";
   private byte pre_existingByteValue_ = (byte)0x00;
   private int pre_existingLengthValue_ = 11000;
-  private String operatingSystem_;
   private boolean DOS_ = false;
   private boolean usingNativeImpl = false;
   boolean failed;  // Keeps track of failure in multi-part tests.
@@ -91,7 +90,7 @@ Constructor.
 
 
     // Determine operating system we're running under
-    operatingSystem_ = System.getProperty("os.name");
+    String operatingSystem = System.getProperty("os.name");
     if (JTOpenTestEnvironment.isWindows )
     {
       DOS_ = true;
@@ -99,13 +98,13 @@ Constructor.
 
 
     // Are we running on the AS/400?
-    else if (operatingSystem_.indexOf("OS/400") >= 0)
+    else if (JTOpenTestEnvironment.isOS400)
     {
       usingNativeImpl = true;
       output_.println("Will use native implementation");
     }
 
-    output_.println("Running under: " + operatingSystem_);
+    output_.println("Running under: " + operatingSystem);
     output_.println("DOS-based file structure: " + DOS_);
 
     testInit();

@@ -105,8 +105,6 @@ Performs setup needed before running variations.
     throws Exception
     {
         try {
-           // Register the JDBC driver.
-           Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
 
            // Get a global connection - choose how you which
            // to get the connection.
@@ -358,7 +356,7 @@ Test:  char(4) - value too big - doesn't fit - starts with <shift-out>
 			       " dt.getTransferSize()="+dt.getTransferSize()+"!=4"	);
       } catch (SQLException e) {
 	   if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				//@A1
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				//@A1
+	      true )				//@A1
 	      assertCondition( e.getSQLState().equals("22001") &&			//@A1
 	  		       e.getErrorCode() == -404 );				//@A1
 	   else										//@A1
@@ -688,7 +686,7 @@ Test:  char(20) - value too big - no room left for the shift in/out chars.
 			       " dt.getTransferSize()="+dt.getTransferSize()+"!=20"	);
       } catch (SQLException e) {
 	   if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				//@A1
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				//@A1
+	      true )				//@A1
 	      assertCondition( e.getSQLState().equals("22001") &&			//@A1
 	  		       e.getErrorCode() == -404 );				//@A1
 	   else										//@A1
@@ -756,7 +754,7 @@ Test:  char(20) - value too big - too big by 1 - doesn't start with shift out.
 			       " dt.getTransferSize()="+dt.getTransferSize()+"!=20"	);
       } catch (SQLException e) {
 	  if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				//@A1
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				//@A1
+	      true )				//@A1
 	      assertCondition( e.getSQLState().equals("22001") &&			//@A1
 	  		       e.getErrorCode() == -404 );				//@A1
 	   else										//@A1
@@ -825,7 +823,7 @@ Test:  char(20) - value too big - too big by 1 - starts with shift out.
 			       " dt.getTransferSize()="+dt.getTransferSize()+"!=20"	);
       } catch (SQLException e) {
 	  if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				//@A1
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				//@A1
+	      true )				//@A1
 	      assertCondition( e.getSQLState().equals("22001") &&			//@A1
 	  		       e.getErrorCode() == -404 );				//@A1
 	   else										//@A1

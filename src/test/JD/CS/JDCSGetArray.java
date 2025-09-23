@@ -127,7 +127,6 @@ public class JDCSGetArray extends JDTestcase {
    **/
   protected void cleanup() throws Exception {
     //// v7r1 array SPs
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
       Statement st = connection_.createStatement();
       try {
         st.execute(
@@ -141,7 +140,7 @@ public class JDCSGetArray extends JDTestcase {
           JDSetupProcedure.STP_CSARRSUM);
       JDSetupProcedure.dropProcedure(connection_,
           JDSetupProcedure.STP_CSARRINT);
-    }
+    
 
     connection_.close();
   }
@@ -928,11 +927,6 @@ public class JDCSGetArray extends JDTestcase {
    * getArray() - Get an ARRAY of ints
    **/
   public void Var051() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0)// || !isJdbc40())
-    {
-      notApplicable("v7r1 TC");
-      return;
-    }
     try {
 
       //////// create array and set/get data
@@ -987,11 +981,7 @@ public class JDCSGetArray extends JDTestcase {
    * getArray() - Get an ARRAY of ints
    **/
   public void Var052() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0)// || !isJdbc40())
-    {
-      notApplicable("v7r1 TC");
-      return;
-    }
+   
     try {
 
       //////// create array and set/get data
@@ -1097,11 +1087,7 @@ public class JDCSGetArray extends JDTestcase {
 
   public void testOutputArray(String typeName, String typeDefinition,
       String procedureName, String procedureDefinition, String expected) {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0)// || !isJdbc40())
-    {
-      notApplicable("v7r1 TC");
-      return;
-    }
+    
 
     StringBuffer sb = new StringBuffer();
     boolean passed = true;

@@ -91,8 +91,8 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
      String os = System.getProperty("os.name");	  //@A7A
      System.out.println("Environment: " + os);	  //@A7A
 
-     if (os.indexOf("OS/400") >= 0)        //@A7A
-	environment_ = OS_AS400;	   //@A7A
+     if (JTOpenTestEnvironment.isOS400)
+       environment_ = OS_AS400;	   //@A7A
      else if (JTOpenTestEnvironment.isWindows)  //@A7A
      	environment_ = OS_WINDOWS;	   //@A7A
 

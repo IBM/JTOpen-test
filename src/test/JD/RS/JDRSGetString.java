@@ -2332,11 +2332,6 @@ the result set.
 	    notApplicable("substitution test not application for toolbox < v7r2");
 	    return;
 	}
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V6R1 or later test");
-	    return;
-	}
-
 	StringBuffer sb = new StringBuffer();
 	/* Classic output is at [][1] */
 	/* J9 is at [][2] */
