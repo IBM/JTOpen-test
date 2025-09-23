@@ -1260,7 +1260,7 @@ public class SecPTMiscTestcase extends Testcase
            
            String  expectedVerificationId="Verification_ID=QIBM_OS400_JT400"; 
            String  expectedRemotePort=null; /* don't check remote port */ 
-           String expectedRemoteIp = "Remote_IPAddress="+sys.getLocalIPAddress(); 
+           String expectedRemoteIp = "Remote_IPAddress="+JDReflectionUtil.callMethod_S(sys,"getLocalIPAddress"); 
            String expectedLocalIp = null; /* don't check local ip */ 
              
 
@@ -1349,7 +1349,7 @@ public class SecPTMiscTestcase extends Testcase
           
           String  expectedVerificationId="Verification_ID=QIBM_OS400_JT400"; 
           String  expectedRemotePort=null; /* don't check remote port */ 
-          String expectedRemoteIp = "Remote_IPAddress="+pwrSys_.getLocalIPAddress(); 
+          String expectedRemoteIp = "Remote_IPAddress="+JDReflectionUtil.callMethod_S(pwrSys_,"getLocalIPAddress"); 
           String expectedLocalIp = null; /* don't check local ip */ 
             
 
