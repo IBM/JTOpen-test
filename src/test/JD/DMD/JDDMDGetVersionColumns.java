@@ -576,8 +576,6 @@ getVersionColumns() - Verify all columns.
             rs.close ();
 	    if (JDTestDriver.isLUW()) {
 		assertCondition ((rows == 0) && success, "Rows="+rows+" sb 0 "+message);
-	    } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
-            assertCondition ((rows == 0) && success, "Rows="+rows+" sb 0 "+message);  
         } else { 
 		assertCondition ((rows == 1) && success, "Rows="+rows+" sb 1 "+message);
 	    }
@@ -642,8 +640,6 @@ getVersionColumns() - Specify null for the catalog.
             rs.close ();
 	    if (JDTestDriver.isLUW()) {
 		assertCondition ((rows == 0), " rows="+rows+" sb 0");
-        } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
-            assertCondition ((rows == 0), " rows="+rows+" sb 0");
         } else { 
 		assertCondition (check1 && (rows == 1), "NAME found="+check1+" rows="+rows+" sb 1");
 	    }
@@ -703,8 +699,6 @@ exactly.
             rs.close ();
 	    if (JDTestDriver.isLUW()) {
 		assertCondition ((rows == 0), " rows="+rows+" sb 0");
-	    } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
-	        assertCondition ((rows == 0), " rows="+rows+" sb 0");
 	    } else { 
 		assertCondition (check1 && (rows == 1), "ACCTNBR found="+check1+" rows="+rows+" sb 1");
 	    }
@@ -831,8 +825,6 @@ getVersionColumns() - Specify null for the schema.
             rs.close ();
             if (JDTestDriver.isLUW()) {
                 assertCondition ( (rows == 0), " rows="+rows+" sb 0");
-            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
-                assertCondition ( (rows == 0), " rows="+rows+" sb 0");
             } else { 
                 assertCondition (check1 && (rows >= 1), "ACCTNBR found="+check1+" rows="+rows+" sb >=  1");
             }
@@ -893,8 +885,6 @@ exactly.
 
             rs.close ();
             if (JDTestDriver.isLUW()) {
-                assertCondition ((rows == 0), " rows="+rows+" sb 0");
-            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
                 assertCondition ((rows == 0), " rows="+rows+" sb 0");
             } else { 
                 assertCondition (check1 && (rows == 1), "NAME found="+check1+" rows="+rows+" sb 1");
@@ -1048,8 +1038,6 @@ exactly.  All matching columns should be returned.
             rs.close ();
             if (JDTestDriver.isLUW()) {
                 assertCondition ((rows == 0), " rows="+rows+" sb 0");
-            }else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
-                assertCondition ((rows == 0), " rows="+rows+" sb 0");
             } else { 
                 assertCondition (check1 && (rows == 1), "ACCTNBR found="+check1+" rows="+rows+" sb 1");
             }
@@ -1144,10 +1132,6 @@ getVersionColumns() - Specify null for the catalog.  retrieve a 128 byte column 
                 }
 
                 rs.close ();
-                if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
-                    assertCondition (!check1 && (rows == 0), "should return 0");
-                }
-                else
                 { 
                     assertCondition (check1 && (rows == 1), 
                     "columnName="+columnName+" sb THISIS... rows="+rows+" sb 1 " +
@@ -1243,8 +1227,6 @@ getVersionColumns() - Readonly conneciton
 	    c.close(); 
 	    if (JDTestDriver.isLUW()) {
 		assertCondition ((rows == 0), " rows="+rows+" sb 0");
-        } else if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
-            assertCondition ((rows == 0), " rows="+rows+" sb 0");
         } else { 
 		assertCondition (check1 && (rows == 1), "NAME found="+check1+" rows="+rows+" sb 1");
 	    }

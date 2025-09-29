@@ -13,7 +13,6 @@
 
 package test.Sec;
 
-import java.beans.PropertyVetoException;
 import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -1201,7 +1200,7 @@ public class SecCtorTestcase extends Testcase {
     new Random().nextBytes(token);
     try {
       profileToken.setToken(token);
-    } catch (PropertyVetoException e) {
+    } catch (Exception e) {
       failed(e, "Unexpected exception. -- added September 2011");
     }
     AS400 system = new AS400(systemName_, profileToken);
