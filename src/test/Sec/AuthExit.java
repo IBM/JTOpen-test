@@ -401,7 +401,7 @@ Vector<String> pathNames = new Vector<String>();
       }
     } catch (Throwable t) { 
       t.printStackTrace(System.out); 
-      System.out.println("Usage:  java test.AuthExit  setup    system configUserid configPassword testUser userMfa(true/false) ");
+      System.out.println("Usage:  java test.AuthExit  setup    system configUserid configPassword testUser useMfa(true/false) ");
       System.out.println("Usage:  java test.AuthExit  cleanup  system configUserid configPassword testUser");
       
     }

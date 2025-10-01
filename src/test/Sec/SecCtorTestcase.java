@@ -13,6 +13,7 @@
 
 package test.Sec;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,8 +24,17 @@ import java.util.Random;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
+import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.AS400Text;
+import com.ibm.as400.access.BinaryConverter;
+import com.ibm.as400.access.CharConverter;
+import com.ibm.as400.access.ProgramCall;
+import com.ibm.as400.access.ProgramParameter;
+import com.ibm.as400.access.QSYSObjectPathName;
+import com.ibm.as400.access.Trace;
 import com.ibm.as400.security.auth.DefaultProfileTokenProvider;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
+import com.ibm.as400.security.auth.RetrieveFailedException;
 
 import test.JDReflectionUtil;
 import test.JTOpenTestEnvironment;
@@ -46,6 +56,13 @@ import test.Testcase;
  * </ul>
  **/
 public class SecCtorTestcase extends Testcase {
+  static boolean debug = false; 
+  static { 
+    String debugProperty = System.getProperty("debug");
+    if (debugProperty != null)  {
+      debug = true; 
+    }
+  }
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length + 2];
     newArgs[0] = "-tc";
@@ -1454,7 +1471,7 @@ public class SecCtorTestcase extends Testcase {
     
     
     
-    // test AS400 constructor with given profile token
+    // test AS400 constructor with given profile token -- without enhanced info 
     public void Var043() {
      
       AS400 system = null;
@@ -1467,15 +1484,46 @@ public class SecCtorTestcase extends Testcase {
         system.setPassword(charPassword);
         system.connectService(AS400.SIGNON);
         
-        ProfileTokenCredential testptc = new ProfileTokenCredential();
-        testptc.setSystem(system);
-        testptc.setTimeoutInterval(60);
-        testptc.setTokenType(ProfileTokenCredential.TYPE_SINGLE_USE);
-        testptc.setTokenExtended(userId_, charPassword);
-        System.out.println("Generated the profile token.");
+        // This should occur below in the userEPT path. 
+        // MFA user requires enhanced information to be set
+        // if (additionalAuthenticationFactor != null && additionalAuthenticationFactor.length > 0) {
+        //   enhancedInfo.ensureRequiredFieldsSet(AS400.DEFAULT_LOCAL_IP_ADDRESS);
+        // }
+        // Setup parameters
+        ProgramParameter[] parmlist = new ProgramParameter[ 8];
+        // Output: Profile token.
+        parmlist[0] = new ProgramParameter(ProfileTokenCredential.TOKEN_LENGTH);
 
-        
-        byte[] tokenBytes = testptc.getToken();
+        // Input: User profile name. Uppercase, get bytes (ccsid 37).
+        AS400Text as400Text = new AS400Text(10,37); 
+        parmlist[1] = new ProgramParameter(as400Text.toBytes(userId_.toUpperCase()));
+        // Input: User password. String to char[], char[] to byte[] (unicode).
+        parmlist[2] = new ProgramParameter(as400Text.toBytes(charPassword));
+        // Input: Time out interval. Int to byte[].
+        byte[] timeoutIntervalBytes= {0x00,0x00,0x00,60}; 
+        parmlist[3] = new ProgramParameter(timeoutIntervalBytes);
+        byte[] tokenTypeBytes = {(byte) 0xF1};  
+        // Input: Profile token type. Int to string, get bytes.
+        parmlist[4] = new ProgramParameter(tokenTypeBytes);
+        // Input/output: Error code. NULL.
+        parmlist[5] = new ProgramParameter(BinaryConverter.intToByteArray(0));
+        // Input: Length of user password. Int to byte[].
+        parmlist[6] = new ProgramParameter(BinaryConverter.intToByteArray(charPassword.length));
+        // Input: CCSID of user password. Int to byte[]. Unicode = 37.
+        parmlist[7] = new ProgramParameter(BinaryConverter.intToByteArray(37));
+
+        ProgramCall programCall = new ProgramCall(system);
+
+        programCall.setProgram(QSYSObjectPathName.toPath("QSYS", "QSYGENPT", "PGM"), parmlist);
+        programCall.suggestThreadsafe(); // Run on-thread if possible; allows app to use disabled profile.
+        boolean result = programCall.run();
+        if (!result)
+        {
+          throw new RetrieveFailedException(programCall.getMessageList());
+        }
+
+        byte[] tokenBytes = parmlist[0].getOutputData();
+
         ProfileTokenCredential tok2 = new ProfileTokenCredential();
         tok2.setToken(tokenBytes);
         AS400 testas4002 = new AS400(systemName_);
@@ -1483,9 +1531,9 @@ public class SecCtorTestcase extends Testcase {
         testas4002.setGuiAvailable(false);
         
         
-        System.out.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
+        if (debug) System.out.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
         testas4002.connectService(AS400.COMMAND);
-        System.out.println("Successfully connected.");
+        if (debug) System.out.println("Successfully connected.");
         testas4002.close(); 
         
         PasswordVault.clearPassword(charPassword);
@@ -1504,6 +1552,64 @@ public class SecCtorTestcase extends Testcase {
       
     }
 
+    // test AS400 constructor with given profile token -- with enhanced info 
+    public void Var044() {
+     
+      AS400 system = null;
+      try {
+        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        system = new AS400(); 
+        system.setGuiAvailable(false);
+        system.setSystemName(systemName_);
+        system.setUserId(userId_);
+        system.setPassword(charPassword);
+        system.connectService(AS400.SIGNON);
+        
+        ProfileTokenCredential testptc = new ProfileTokenCredential();
+        testptc.setSystem(system);
+        testptc.setTimeoutInterval(60);
+        testptc.setTokenType(ProfileTokenCredential.TYPE_SINGLE_USE);
+        testptc.setTokenExtended(userId_, charPassword);
+        if (debug) System.out.println("Generated the profile token.");
+        String remoteIpAddress = testptc.getRemoteIPAddress(); 
+        if (debug) System.out.println("Generated token has verification id="+testptc.getVerificationID());
+        if (debug) System.out.println("Generated token has remote ip address="+remoteIpAddress); 
+        if (remoteIpAddress == null) { 
+          // the remoteIpAddress will come back null if the server does not support
+          // enhanced profile tokens.  Set to a valid values so that the call to 
+          // create an enhanced profile token does not fail 
+          remoteIpAddress = "127.0.0.1"; 
+        }
+        
+        byte[] tokenBytes = testptc.getToken();
+        // Use the constructor to create an enhanced profile token.
+        // Must be enhanced when created. 
+        ProfileTokenCredential tok2 = new ProfileTokenCredential(system,tokenBytes,ProfileTokenCredential.TYPE_SINGLE_USE,60,testptc.getVerificationID(),remoteIpAddress,0,"",0); 
+        AS400 testas4002 = new AS400(systemName_);
+        testas4002.setProfileToken(tok2);
+        testas4002.setGuiAvailable(false);
+        
+        
+        if (debug) System.out.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
+        testas4002.connectService(AS400.COMMAND);
+        if (debug) System.out.println("Successfully connected.");
+        testas4002.close(); 
+        
+        PasswordVault.clearPassword(charPassword);
+
+        assertCondition(true); 
+      } catch (Exception e) {
+        failed(e, "Unexpected exception.");
+        return;
+      } finally {
+        system.disconnectAllServices();
+      }
+      
+      
+      
+      
+      
+    }
     
   
 
