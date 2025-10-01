@@ -134,13 +134,9 @@ Performs cleanup needed after running variations.
             catch (Exception ex) {
 		try { 
 		    int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
-		    if (errorCode == javax.transaction.xa.XAException.XAER_PROTO)
-			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
-			} else { 
-			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-			}
-		    else
+		    if (errorCode == javax.transaction.xa.XAException.XAER_PROTO) {
+            assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
+        } else
 			failed("Expected error code " + javax.transaction.xa.XAException.XAER_PROTO + " got " + errorCode);
 		} catch (NoSuchFieldException ex2)  {
 		    System.out.println("exception of class "+ex.getClass().getName()+" did not have errorCode"); 
@@ -187,14 +183,9 @@ Performs cleanup needed after running variations.
             catch (Exception ex) {
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
-               if (errorCode == javax.transaction.xa.XAException.XAER_PROTO)
-			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
-			} else { 
-
-			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-			}
-               else
+               if (errorCode == javax.transaction.xa.XAException.XAER_PROTO) {
+                  assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
+              } else
                   failed("Expected error code " + javax.transaction.xa.XAException.XAER_PROTO + " got " + errorCode);
             }
          }
@@ -242,13 +233,9 @@ Performs cleanup needed after running variations.
             catch (Exception ex) {
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
-               if (errorCode == javax.transaction.xa.XAException.XAER_NOTA)
-			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
-			} else { 
-			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-			}
-               else
+               if (errorCode == javax.transaction.xa.XAException.XAER_NOTA) {
+                  assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
+              } else
                   failed("Expected error code " + javax.transaction.xa.XAException.XAER_NOTA + " got " + errorCode);
             }
          }
@@ -297,13 +284,9 @@ Performs cleanup needed after running variations.
             catch (Exception ex) {
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
-               if (errorCode == javax.transaction.xa.XAException.XAER_PROTO)
-			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
-			} else { 
-			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-			}
-               else
+               if (errorCode == javax.transaction.xa.XAException.XAER_PROTO) {
+                  assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
+              } else
                   failed("Expected error code " + javax.transaction.xa.XAException.XAER_PROTO + " got " + errorCode);
             }
          }
@@ -356,11 +339,7 @@ Performs cleanup needed after running variations.
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                if (errorCode == javax.transaction.xa.XAException.XAER_PROTO) {
-			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
-			} else { 
-			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-			}
+			assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
                   JDReflectionUtil.callMethod_V(xaRes,"rollback",newXid);
                }
                else
@@ -422,11 +401,7 @@ Performs cleanup needed after running variations.
               int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
                if (errorCode == javax.transaction.xa.XAException.XAER_PROTO) {
-			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
-			} else { 
-			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-			}
+			assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
                   JDReflectionUtil.callMethod_V(xaRes,"rollback",newXid);
                }
                else
@@ -521,13 +496,9 @@ Performs cleanup needed after running variations.
                catch (Exception ex) {
                  int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
-                  if (errorCode == javax.transaction.xa.XAException.XAER_NOTA)
-			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
-			} else { 
-			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-			}
-                  else
+                  if (errorCode == javax.transaction.xa.XAException.XAER_NOTA) {
+                      assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
+                  } else
                      failed("Expected error code " + javax.transaction.xa.XAException.XAER_NOTA + " got " + errorCode);
                }
 
@@ -580,13 +551,9 @@ Performs cleanup needed after running variations.
                catch (Exception ex) {
                  int errorCode =JDReflectionUtil.getField_I(ex,"errorCode"); 
 
-                  if (errorCode == javax.transaction.xa.XAException.XAER_NOTA)
-			if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			    assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
-			} else { 
-			    assertExceptionIsInstanceOf(ex, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-			}
-                  else
+                  if (errorCode == javax.transaction.xa.XAException.XAER_NOTA) {
+                      assertExceptionIsInstanceOf(ex, "javax.transaction.xa.XAException");
+                  } else
                      failed("Expected error code " + javax.transaction.xa.XAException.XAER_NOTA + " got " + errorCode);
                }
 

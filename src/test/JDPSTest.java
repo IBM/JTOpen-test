@@ -317,7 +317,7 @@ Performs setup needed before running testcases.
       } 
 
     // Setup PSTEST_SET table.
-    boolean lobSupport = (getRelease() >= RELEASE_V7R1M0);
+    boolean lobSupport = true;
     StringBuffer buffer = new StringBuffer();
     buffer.append(" (C_KEY VARCHAR(20)");
     buffer.append(",C_SMALLINT        SMALLINT      ");
@@ -391,7 +391,7 @@ Performs setup needed before running testcases.
       // Ignore any error
     }
 
-    if (getRelease() >= RELEASE_V7R1M0) {
+    if (true) {
       
       initTable(statement_, PSTEST_SETXML , "( C1 XML )");
 
@@ -468,14 +468,10 @@ Performs setup needed before running testcases.
       }
 
 
-      if (getRelease() >= RELEASE_V7R1M0) { 
 	      cleanupTable(statement_,  PSTEST_SETDFP16);
 	      cleanupTable(statement_,  PSTEST_SETDFP34);
-      }
 
-      if (getRelease() >= RELEASE_V7R1M0) { 
 	  cleanupTable(statement_,  PSTEST_SETXML);
-      }
 
       try { 
 	  connection_.commit(); // for xa

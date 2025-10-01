@@ -40,7 +40,6 @@ import java.util.Hashtable; import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -121,7 +120,7 @@ Performs setup needed before running variations.
         connection_ = testDriver_.getConnection (baseURL_
 						 + ";errors=full", userId_, encryptedPassword_);
 
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
+	if(true) { 
 	    String sql =   "CREATE PROCEDURE " + STP_BIN
 	      + " (IN P_BINARY_IN		BINARY(20),"
 	      + "  OUT P_BINARY_OUT		BINARY(20))"
@@ -160,7 +159,7 @@ Performs cleanup needed after running variations.
     throws Exception
     {
 	Statement s = connection_.createStatement ();
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
+	if(true) { 
 	    s.executeUpdate("DROP PROCEDURE " + STP_BIN);
 	    s.executeUpdate("DROP PROCEDURE " + STP_VAR);
 	}
@@ -177,8 +176,6 @@ setBytes() - Should work with a valid parameter name.
 **/
     public void Var001 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-        {
 
             try
             {
@@ -194,9 +191,6 @@ setBytes() - Should work with a valid parameter name.
             {
                 failed (e, "Unexpected Exception");
             }
-	} else {
-	    notApplicable(); 
-	} 
     }
 
 /**
@@ -206,8 +200,6 @@ posted when data is truncated.
 **/
     public void Var002()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-        {
 
             try
             {
@@ -241,9 +233,6 @@ posted when data is truncated.
             {
                 failed (e, "Unexpected Exception");
             }
-        } else {
-	    notApplicable(); 
-	} 
 
     }
 
@@ -253,8 +242,7 @@ setBytes() - Should set to SQL NULL when the value is null.
 **/
     public void Var003()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-        {
+        
             try
             {
                 cs=connection_.prepareCall(sql_bin);
@@ -270,9 +258,7 @@ setBytes() - Should set to SQL NULL when the value is null.
             {
                 failed (e, "Unexpected Exception");
             }
-        } else {
-	    notApplicable(); 
-	} 
+        
     }
 
 /**
@@ -281,8 +267,7 @@ setBytes() - Should work with a valid parameter name.
 **/
     public void Var004 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-	{
+       
 
 	    if(checkNamedParametersSupport())
 	    {
@@ -301,9 +286,7 @@ setBytes() - Should work with a valid parameter name.
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	} else {
-	    notApplicable(); 
-	} 
+	
     }
 
 /**
@@ -312,10 +295,9 @@ setBytes() - Set a BINARY parameter.
 **/
     public void Var005 ()
     {
-	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
+	if(checkJdbc30()) 
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-	    {
+	    
 
 		try
 		{
@@ -331,9 +313,7 @@ setBytes() - Set a BINARY parameter.
 		{
 		    failed (e, "Unexpected Exception");
 		}
-	    } else {
-		notApplicable(); 
-	    }
+	   
 	} 
     }
 
@@ -344,10 +324,9 @@ posted when data is truncated.
 **/
     public void Var006()
     {
-	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
+	if(checkJdbc30()) 
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-	    {
+	    
 
 		try
 		{
@@ -381,9 +360,7 @@ posted when data is truncated.
 		{
 		    failed (e, "Unexpected Exception");
 		}
-	    } else {
-		notApplicable(); 
-	    }
+	    
 	}
     }    
 
@@ -395,8 +372,7 @@ setBytes() - Should set to SQL NULL when the value is null.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-	    {
+	    
 		try
 		{
 		    cs=connection_.prepareCall(sql_bin);
@@ -412,9 +388,7 @@ setBytes() - Should set to SQL NULL when the value is null.
 		{
 		    failed (e, "Unexpected Exception");
 		}
-	    } else {
-		notApplicable(); 
-	    }
+	    
 	}
     }
 
@@ -424,8 +398,7 @@ setBytes() - Should work with a valid parameter name.
 **/
     public void Var008 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-        {
+        
 
             try
             {
@@ -441,9 +414,7 @@ setBytes() - Should work with a valid parameter name.
             {
                 failed (e, "Unexpected Exception");
             }
-        } else {
-	    notApplicable(); 
-	} 
+        
     }
 
 /**
@@ -453,8 +424,7 @@ posted when data is truncated.
 **/
     public void Var009()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-        {
+        
 
             try
             {
@@ -488,9 +458,7 @@ posted when data is truncated.
             {
                 failed (e, "Unexpected Exception");
             }
-        } else {
-	    notApplicable(); 
-	} 
+        
     }
 
 /**
@@ -499,8 +467,7 @@ setBytes() - Should set to SQL NULL when the value is null.
 **/
     public void Var010()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-        {
+        
             try
             {
                 cs=connection_.prepareCall(sql_var);
@@ -516,9 +483,7 @@ setBytes() - Should set to SQL NULL when the value is null.
             {
                 failed (e, "Unexpected Exception");
             }
-        } else {
-	    notApplicable(); 
-	} 
+        
     }
 
 /**
@@ -527,8 +492,7 @@ setBytes() - Should work with a valid parameter name.
 **/
     public void Var011 ()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-	{
+       
 
 	    if(checkNamedParametersSupport())
 	    {
@@ -547,9 +511,7 @@ setBytes() - Should work with a valid parameter name.
 		    failed (e, "Unexpected Exception");
 		}
 	    }
-	} else {
-	    notApplicable(); 
-	} 
+	
     }
 
 /**
@@ -560,8 +522,7 @@ setBytes() - Set a BINARY parameter.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-	    {
+	    
 
 		try
 		{
@@ -577,9 +538,7 @@ setBytes() - Set a BINARY parameter.
 		{
 		    failed (e, "Unexpected Exception");
 		}
-	    } else {
-		notApplicable(); 
-	    }
+	   
 	}
     }
 
@@ -592,7 +551,7 @@ posted when data is truncated.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 
 		try
@@ -627,9 +586,7 @@ posted when data is truncated.
 		{
 		    failed (e, "Unexpected Exception");
 		}
-	    } else {
-		notApplicable(); 
-	    }
+	    } 
 	}
     }    
 
@@ -641,7 +598,7 @@ setBytes() - Should set to SQL NULL when the value is null.
     {
 	if(checkJdbc30()) /* WILSONJO named parameters need jdbc 3.0 */
 	{
-	    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+	    if(true)
 	    {
 		try
 		{
@@ -658,10 +615,7 @@ setBytes() - Should set to SQL NULL when the value is null.
 		{
 		    failed (e, "Unexpected Exception");
 		}
-	    } else {
-		notApplicable(); 
-
-	    }
+	    } 
 	}
     }
 }

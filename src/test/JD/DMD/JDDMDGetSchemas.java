@@ -267,7 +267,7 @@ is closed.
     {
 
         StringBuffer sb = new StringBuffer();
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX  && getRelease() >= JDTestDriver.RELEASE_V7R1M0) || checkJdbc40())
+        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX  && true) || checkJdbc40())
         {
             try
             {
@@ -319,7 +319,7 @@ is closed.
      */
     public void Var005()
     {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V7R1M0) || checkJdbc40())
+        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && true) || checkJdbc40())
         {
             Class<?>[] ca = {String.class, String.class};
             StringBuffer sb = new StringBuffer();
@@ -372,7 +372,7 @@ is closed.
      */
     public void Var006()
     {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) || checkJdbc40())
+        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && true ) || checkJdbc40())
         {
             Class<?>[] ca = {String.class, String.class};
             StringBuffer sb = new StringBuffer();
@@ -427,12 +427,7 @@ getSchemas() - Check the result set format for the JDBC 4.0 version
     public void Var007()
     {
 
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V5R4 needs sysibm changes");
-	    return;
-	}
-
-        if (checkJdbc40()) {
+	if (checkJdbc40()) {
           message.setLength(0);
             try {
                 Class<?>[] ca = {String.class, String.class};
@@ -471,14 +466,8 @@ getSchemas() - Check the result set format for the JDBC 4.0 version
      */
     public void Var008()
     {
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V5R4 needs sysibm changes");
-	    return;
-	}
-
-
-        StringBuffer sb = new StringBuffer();
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX  && getRelease() >= JDTestDriver.RELEASE_V7R1M0) || checkJdbc40())
+	StringBuffer sb = new StringBuffer();
+        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX  && true) || checkJdbc40())
         {
             try
             {
@@ -530,12 +519,7 @@ getSchemas() - Check the result set format for the JDBC 4.0 version
      */
     public void Var009()
     {
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V5R4 needs sysibm changes");
-	    return;
-	}
-
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V7R1M0) || checkJdbc40())
+	if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && true) || checkJdbc40())
         {
             Class<?>[] ca = {String.class, String.class};
             StringBuffer sb = new StringBuffer();
@@ -589,13 +573,7 @@ getSchemas() - Check the result set format for the JDBC 4.0 version
     public void Var010()
     {
 
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V5R4 needs sysibm changes");
-	    return;
-	}
-
-
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) || checkJdbc40())
+	if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX && true ) || checkJdbc40())
         {
             Class<?>[] ca = {String.class, String.class};
             StringBuffer sb = new StringBuffer();
@@ -990,7 +968,7 @@ Created 1/31/2011 for CPS 8DHTTE.
     {
 
         StringBuffer sb = new StringBuffer();
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX  && getRelease() >= JDTestDriver.RELEASE_V7R1M0) || checkJdbc40())
+        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX  && true) || checkJdbc40())
         {
             try
             {

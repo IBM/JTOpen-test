@@ -128,7 +128,7 @@ Performs cleanup needed after running variations.
       if (checkJdbc20StdExt()) {
 	 int expectedErrorCode =  XAException.XAER_PROTO;
 	 // If V5R4 and UDBdatasource then error should be XAER_NOTA
-	 if ((useUDBDataSource) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+	 if ((useUDBDataSource) && (true)) {
 	     expectedErrorCode = XAException.XAER_NOTA; 
 	 }
 
@@ -183,7 +183,7 @@ Performs cleanup needed after running variations.
       if (checkJdbc20StdExt()) {
 	 int expectedErrorCode =  XAException.XAER_PROTO;
 	 // If V5R4 and UDBdatasource then error should be XAER_NOTA
-	 if ((useUDBDataSource) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+	 if ((useUDBDataSource) && (true)) {
 	     expectedErrorCode = XAException.XAER_NOTA; 
 	 }
 

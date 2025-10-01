@@ -14,14 +14,19 @@
 package test.Sec;
 
 import java.beans.*;
-
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
+import com.ibm.as400.access.BinaryConverter;
+import com.ibm.as400.access.CharConverter;
 import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.ExtendedIllegalArgumentException;   
+import com.ibm.as400.access.ExtendedIllegalArgumentException;
 import com.ibm.as400.access.Job;
+import com.ibm.as400.access.ProgramCall;
+import com.ibm.as400.access.ProgramParameter;
+import com.ibm.as400.access.QSYSObjectPathName;
 import com.ibm.as400.security.auth.*;
 
+import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.SecAuthTest;
 import test.Testcase;
@@ -56,13 +61,12 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
      }
      test.SecAuthTest.main(newArgs); 
    }
-    private static final boolean DEBUG = false;
+    private static boolean DEBUG = false;
     private static int refreshCount_ = 0;
     private static AS400CredentialEvent latestEvent_ = null;
 
     AS400 nativeSystemObject = null;
     private boolean profileHandleImplNativeAvailable = false; 
-
     /**
      Invoked when a create has been performed.
      @param  event  The credential event.
@@ -111,7 +115,14 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
 
 
     public void setup() throws Exception {
-
+        String debugProperty = System.getProperty("debug"); 
+        if (debugProperty != null) { 
+          if (debugProperty.length() == 0) { 
+            DEBUG= true; 
+           } else {
+            DEBUG = Boolean.parseBoolean(debugProperty);
+         }
+        }
 
 	if (isNative_) {
 	    nativeSystemObject = new AS400(); 
@@ -804,6 +815,7 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
 	    if (isLocal_) { 
         if (sameSys_ == null) {
           failed("sameSys_ = null, current user not same and passed user"); 
+          return; 
         }
 		ph.setSystem(sameSys_);
 	    } else {
@@ -879,7 +891,7 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
             // Perform test.
             String originalID = null;
             AS400 as400 = new AS400(); 
-            if (profileHandleImplNativeAvailable || (System.getProperty("os.name").indexOf("400") > 0)) originalID = as400.getUserId();
+            if (profileHandleImplNativeAvailable || JTOpenTestEnvironment.isOS400 ) originalID = as400.getUserId();
             as400.close(); 
             SecAuthTest.removeToken(pt.getSystem(), pt.getToken());
             try
@@ -973,7 +985,8 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
         try
         {
             // Check if system where test profiles were created is local.
-            if (!isLocal_ || !profileHandleImplNativeAvailable)
+            // This should also work on previous releases, even though an enhanced profile token is created 
+            if (!isLocal_ )
             {
                 notApplicable("local jt400native.jar testcase");
                 return;
@@ -1285,4 +1298,293 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
             failed(e, "Unexpected exception.");
         }
     }
+
+    /**
+    Test successful swap using enhanced profile token  if running on the local host; otherwise not applicable.  
+    Specify the host as "localhost" instead of by name.
+    **/
+   public void Var034()
+   {
+       try
+       {
+           // Check if system where test profiles were created is local.
+           // This should also work on previous releases, even though an enhanced profile token is created 
+           if (!isLocal_ )
+           {
+               notApplicable("local jt400native.jar testcase");
+               return;
+           }
+           // Create objects.
+           AS400 sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+           ProfileHandleCredential ph = new ProfileHandleCredential();
+           ph.setSystem(sys);
+           ph.setHandle();
+           
+           if (DEBUG) System.out.println("***************** doing creating profile token credentials *******************");
+           ProfileTokenCredential pt = new ProfileTokenCredential();
+           if (DEBUG) System.out.println("***************** setting enhanced information *******************");
+           ProfileTokenEnhancedInfo enhancedInfo = new ProfileTokenEnhancedInfo("MY_APP", "127.0.0.1",444,"127.0.0.1",666); 
+           pt.setEnhancedInfo(enhancedInfo);
+           if (DEBUG) System.out.println("***************** setting system  *******************");
+           pt.setSystem(sys);
+           pt.addCredentialListener(this);
+           pt.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
+           if (DEBUG) System.out.println("***************** setting uid/pwd "+SecAuthTest.uid2+"/***   *******************");
+           pt.setTokenExtended(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
+
+           byte[] rawToken = pt.getToken(); 
+           if (DEBUG) System.out.println("***************** creating ProfileTokenCredential from raw token   *******************");
+           
+           // Create a profile token from the raw token
+           ProfileTokenCredential pt2 = new ProfileTokenCredential(sys, rawToken,ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600,"MY_APP","127.0.0.1",444,"127.0.0.1",666);
+           pt2.addCredentialListener(this);
+           
+           // Reset internal state.
+           resetState();
+
+           // Perform test.
+           try
+           {
+               // Swap.
+             if (DEBUG) System.out.println("***************** doing swap to pt2 *******************");
+               AS400Credential cr = pt2.swap(true);
+               if (DEBUG) System.out.println("***************** swap completed ***************"); 
+               AS400 as400 = new AS400(); 
+               String swap1uid = as400.getUserId();
+               as400.close(); 
+               int swap1evt = latestEvent_ == null ? 0 : latestEvent_.getID();
+               // Swap back.
+               ph.swap();
+               // Test results.
+               assertCondition(SecAuthTest.uid2.equals(swap1uid) && swap1evt == AS400CredentialEvent.CR_SWAP && cr != null, 
+                   "Unexpected result. "+
+                   "SecAuthTest.uid2("+SecAuthTest.uid2+")!=swap1uid("+swap1uid+") OR swap1evt("+swap1evt+")!= CR_SWAP OR null="+cr+")");
+           }
+           catch (SwapFailedException sfe)
+           {
+               failed(sfe, "Unexpected swap exception.");
+           }
+       }
+       catch (Throwable e)
+       {
+           failed(e, "Unexpected exception.");
+       }
+   }
+
+   /**
+   Test swap using profile token created from a raw profile token that is not an enhanced token.
+   **/
+  public void Var035()
+  {
+      try
+      {
+          // Check if system where test profiles were created is local.
+          // This should also work on previous releases, even though an enhanced profile token is created 
+          if (!isLocal_ )
+          {
+              notApplicable("local jt400native.jar testcase");
+              return;
+          }
+          // Create objects.
+          AS400 sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+          ProfileHandleCredential ph = new ProfileHandleCredential();
+          ph.setSystem(sys);
+          ph.setHandle();
+          
+          if (DEBUG) System.out.println("***************** doing raw profile token create *******************");
+
+          byte[] rawToken =  generateRawTokenExtended(
+              sys,  SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(),"".toCharArray(), 
+              ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600); 
+              
+          if (DEBUG) System.out.println("***************** creating ProfileTokenCredential from raw token   *******************");
+          
+          // Create a profile token from the raw token
+          ProfileTokenCredential pt2 = new ProfileTokenCredential(sys, rawToken,ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600);
+          pt2.addCredentialListener(this);
+          
+          // Reset internal state.
+          resetState();
+
+          // Perform test.
+          try
+          {
+              // Swap.
+            if (DEBUG) System.out.println("***************** doing swap to pt2 *******************");
+              AS400Credential cr = pt2.swap(true);
+              if (DEBUG) System.out.println("***************** swap completed ***************"); 
+              AS400 as400 = new AS400(); 
+              String swap1uid = as400.getUserId();
+              as400.close(); 
+              int swap1evt = latestEvent_ == null ? 0 : latestEvent_.getID();
+              // Swap back.
+              ph.swap();
+              // Test results.
+              assertCondition(SecAuthTest.uid2.equals(swap1uid) && swap1evt == AS400CredentialEvent.CR_SWAP && cr != null, 
+                  "Unexpected result. "+
+                  "SecAuthTest.uid2("+SecAuthTest.uid2+")!=swap1uid("+swap1uid+") OR swap1evt("+swap1evt+")!= CR_SWAP OR null="+cr+")");
+          }
+          catch (SwapFailedException sfe)
+          {
+              failed(sfe, "Unexpected swap exception.");
+          }
+      }
+      catch (Throwable e)
+      {
+          failed(e, "Unexpected exception.");
+      }
+  }
+
+
+  
+  
+  /**
+  Test signon  using profile token created from a raw profile token that is not an enhanced token.
+  
+  **/
+ public void Var036()
+ {
+     try
+     {
+         AS400 sys = null; 
+         String systemName = null; 
+         // Check if system where test profiles were created is local.
+         // This should also work on previous releases, even though an enhanced profile token is created 
+         if (!isLocal_ )
+         {
+            sys = systemObject_;
+            systemName=systemObject_.getSystemName();
+         }  else {
+             // Create objects.
+             sys = new AS400("localhost", "*CURRENT", "*CURRENT".toCharArray());
+             systemName="localhost";
+         }
+         
+         if (DEBUG) System.out.println("***************** doing raw profile token create *******************");
+
+         byte[] rawToken =  generateRawTokenExtended(
+             sys,  SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(),"".toCharArray(), 
+             ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600); 
+             
+         if (DEBUG) System.out.println("***************** creating ProfileTokenCredential from raw token   *******************");
+         
+         // Create a profile token from the raw token
+         ProfileTokenCredential pt2 = new ProfileTokenCredential(sys, rawToken,ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600);
+         pt2.addCredentialListener(this);
+         
+         // Reset internal state.
+         resetState();
+
+         // Perform test.
+         if (DEBUG) System.out.println("***************** creating 400  *******************");
+         AS400 userAs400 = new AS400(systemName,pt2); 
+         CommandCall userCommandCall = new CommandCall(userAs400); 
+         userCommandCall.run("DSPLIBL"); 
+         assertCondition(true); 
+     }
+     catch (Throwable e)
+     {
+         failed(e, "Unexpected exception.");
+     }
+ }
+
+
+ /**
+ Test signon  using profile token that was created with NOPWDCHECK.
+ **/
+public void Var037()
+{
+    try
+    {
+        String systemName = null; 
+        
+        // Check if system where test profiles were created is local.
+        // This should also work on previous releases, even though an enhanced profile token is created 
+        if (!isLocal_ )
+        {
+           systemName=systemObject_.getSystemName();
+        }  else {
+            // Create objects.
+            systemName="localhost";
+        }
+        
+        
+        if (DEBUG) System.out.println("***************** creating profile token using PW_NOPWDCHK  *******************");
+
+        ProfileTokenCredential pt = new ProfileTokenCredential();
+        pt.setSystem(pwrSys_);
+        pt.setTimeoutInterval(600);
+        pt.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
+        pt.setToken(SecAuthTest.uid2, ProfileTokenCredential.PW_NOPWDCHK);
+        
+        // Perform test.
+        if (DEBUG) System.out.println("***************** creating 400 from profile token  *******************");
+        AS400 userAs400 = new AS400(systemName,pt); 
+        CommandCall userCommandCall = new CommandCall(userAs400); 
+        userCommandCall.run("DSPLIBL"); 
+        assertCondition(true); 
+    }
+    catch (Throwable e)
+    {
+        failed(e, "Unexpected exception.");
+    }
+}
+
+
+  
+  
+  
+  
+  public byte[] generateRawTokenExtended(
+      AS400 sys, 
+      String uid, 
+      char[] pwd, 
+      char[] additionalAuthenticationFactor,
+  int type, 
+  int timeoutInterval) throws Exception
+{
+
+// Setup parameters
+ProgramParameter[] parmlist = new ProgramParameter[ 8];
+
+// Output: Profile token.
+parmlist[0] = new ProgramParameter(ProfileTokenCredential.TOKEN_LENGTH);
+
+// Input: User profile name. Uppercase, get bytes (ccsid 37).
+parmlist[1] = new ProgramParameter(uid.toUpperCase().getBytes("Cp037"));
+
+// Input: User password. String to char[], char[] to byte[] (unicode).
+parmlist[2] = new ProgramParameter(BinaryConverter.charArrayToByteArray(pwd));
+
+// Input: Time out interval. Int to byte[].
+parmlist[3] = new ProgramParameter(BinaryConverter.intToByteArray(timeoutInterval));
+
+// Input: Profile token type. Int to string, get bytes.
+parmlist[4] = new ProgramParameter(CharConverter.stringToByteArray(sys, Integer.toString(type)));
+
+// Input/output: Error code. NULL.
+parmlist[5] = new ProgramParameter(BinaryConverter.intToByteArray(0));
+
+// Input: Length of user password. Int to byte[].
+parmlist[6] = new ProgramParameter(BinaryConverter.intToByteArray(parmlist[2].getInputData().length));
+
+// Input: CCSID of user password. Int to byte[]. Unicode = 13488.
+parmlist[7] = new ProgramParameter(BinaryConverter.intToByteArray(13488));
+
+
+ProgramCall programCall = new ProgramCall(sys);
+
+  programCall.setProgram(QSYSObjectPathName.toPath("QSYS", "QSYGENPT", "PGM"), parmlist);
+  programCall.suggestThreadsafe(); // Run on-thread if possible; allows app to use disabled profile.
+  if (!programCall.run())
+  {
+      throw new RetrieveFailedException(programCall.getMessageList());
+  }
+
+byte[] profileToken = parmlist[0].getOutputData();
+return profileToken; 
+}
+
+
+
 }

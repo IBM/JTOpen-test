@@ -58,7 +58,7 @@ extends JDTestcase
      for (int i = 0; i < args.length; i++) {
        newArgs[2+i]=args[i];
      }
-     test.JDCSTest.main(newArgs); 
+     test.JDCSTest.main(newArgs);
    }
 
     // Private data.
@@ -71,7 +71,7 @@ Constructor.
                           Hashtable<String,Vector<String>> namesAndVars,
                           int runMode,
                           FileOutputStream fileOutputStream,
-                          
+
                           String password)
     {
         super (systemObject, "JDCSGetString2",
@@ -84,16 +84,19 @@ Performs setup needed before running variations.
 
 @exception Exception If an exception occurs.
 **/
+    @Override
     protected void setup ()
         throws Exception
     {
         String url = baseURL_
-            
+
             ;
-        if(isToolboxDriver())          //@B1A
-            url = url + ";date format=iso";                     //@B1A
+        if(isToolboxDriver())
+         { //@B1A
+        	url = url + ";date format=iso";                     //@B1A
+        }
         connection = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
-        
+
     }
 
 /**
@@ -101,6 +104,7 @@ Performs cleanup needed after running variations.
 
 @exception Exception If an exception occurs.
 **/
+    @Override
     protected void cleanup ()
     throws Exception
     {
@@ -112,9 +116,9 @@ getString() - getString on a type registered as VARCHAR, INOUT SMALLINT
 **/
     public void Var001()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10SMINT");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10SMINT (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -134,9 +138,9 @@ getString() - getString on a type registered as VARCHAR, INOUT INTEGER
 **/
     public void Var002()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10INT");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10INT (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -156,9 +160,9 @@ getString() - getString on a type registered as VARCHAR, INOUT REAL
 **/
     public void Var003()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10REAL");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10REAL (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -181,9 +185,9 @@ getString() - getString on a type registered as VARCHAR, INOUT FLOAT
 
     public void Var004()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10FLOAT");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10FLOAT (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -192,7 +196,7 @@ getString() - getString on a type registered as VARCHAR, INOUT FLOAT
 
 	    String check = cstmt.getString(1);
 	    assertCondition(check.equalsIgnoreCase("133.45600000000002"), "check = "+check+" SB 133.45600000000002");
-	   
+
 	}
 	catch (SQLException e){
 	    failed (e, "Unexpected Exception");
@@ -204,9 +208,9 @@ getString() - getString on a type registered as VARCHAR, INOUT DOUBLE
 **/
     public void Var005()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DOUBLE");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10DOUBLE (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -226,9 +230,9 @@ getString() - getString on a type registered as VARCHAR, INOUT DECIMAL
 **/
     public void Var006()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC50");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10DEC50 (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -248,9 +252,9 @@ getString() - getString on a type registered as VARCHAR, INOUT DECIMAL(10,5)
 **/
     public void Var007()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC105");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10DEC105 (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -270,9 +274,9 @@ getString() - getString on a type registered as VARCHAR, INOUT NUMERIC(5,0)
 **/
     public void Var008()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM50");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10NUM50 (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -294,7 +298,7 @@ getString() - getString on a type registered as VARCHAR, INOUT NUMERIC(10,5)
     public void Var009()
     {
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM105");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10NUM105 (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -314,9 +318,9 @@ getString() - getString on a type registered as VARCHAR, INOUT CHAR
 **/
     public void Var010()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCHAR1");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNCHAR1 (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -336,9 +340,9 @@ getString() - getString on a type registered as VARCHAR, INOUT CHAR(50)
 **/
     public void Var011()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCHAR50");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNCHAR50 (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -358,9 +362,9 @@ getString() - getString on a type registered as VARCHAR, INOUT VARCHAR(50)
 **/
     public void Var012()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNVARCHAR50");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNVARCHAR50 (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -381,7 +385,7 @@ getString() - getString on a type registered as VARCHAR, INOUT BINARY(20)
 **/
     public void Var013()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	
 	    try{
 
 
@@ -398,27 +402,26 @@ getString() - getString on a type registered as VARCHAR, INOUT BINARY(20)
 
 		String check = cstmt.getString(1);
 		byte[] test = check.getBytes();
-                if(isToolboxDriver())      //@B1A
-                    assertCondition(areEqual(b, test, true));       //@B1A
-                else                                                //@B1A
-                    assertCondition(areEqual(test, b));
+                if(isToolboxDriver()) { //@B1A
+                	assertCondition(areEqual(b, test, true));       //@B1A
+                } else { //@B1A
+                	assertCondition(areEqual(test, b));
+                }
 	    }
 	    catch (SQLException e){
 		failed(e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	} 
-    }
-	    
-	
+	}
     
+
+
+
 /**
 getString() - getString on a type registered as VARCHAR, INOUT VARBINARY(20)
 **/
     public void Var014()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		byte [] b = { (byte) 23, (byte) 45, (byte) 48, (byte) 88};
@@ -430,27 +433,26 @@ getString() - getString on a type registered as VARCHAR, INOUT VARBINARY(20)
 
 		String check = cstmt.getString(1);
 		byte[] test = check.getBytes();
-                if(isToolboxDriver())          //@B1A
-                    assertCondition(areEqual(b, test, true));           //@B1A
-                else                                                    //@B1A
-                    assertCondition(areEqual(test, b));
+                if(isToolboxDriver()) { //@B1A
+                	assertCondition(areEqual(b, test, true));           //@B1A
+                } else { //@B1A
+                	assertCondition(areEqual(test, b));
+                }
 	    }
 	    catch (SQLException e){
 		failed(e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable();
-	} 
-    }
+	}
+    
 
 /**
 getString() - getString on a type registered as VARCHAR, INOUT DATE
 **/
     public void Var015()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDATE");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNDATE (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -470,9 +472,9 @@ getString() - getString on a type registered as VARCHAR, INOUT TIME
 **/
     public void Var016()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTIME");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNTIME (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -480,10 +482,11 @@ getString() - getString on a type registered as VARCHAR, INOUT TIME
 	    cstmt.execute();
 
 	    String check = cstmt.getString(1);
-            if(isToolboxDriver())      //@B1A
-                assertCondition(check.equalsIgnoreCase("22:33:44"), "check = " + check + " SB 22:33:44");   //@B1A
-            else                                                //@B1A
-                assertCondition(check.equalsIgnoreCase("22.33.44"), "check = " + check + " SB 22.33.44");
+            if(isToolboxDriver()) { //@B1A
+            	assertCondition(check.equalsIgnoreCase("22:33:44"), "check = " + check + " SB 22:33:44");   //@B1A
+            } else { //@B1A
+            	assertCondition(check.equalsIgnoreCase("22.33.44"), "check = " + check + " SB 22.33.44");
+            }
 	}
 	catch (SQLException e){
 	    failed(e, "Unexpected Exception");
@@ -495,7 +498,7 @@ getString() - getString on a type registered as VARCHAR, INOUT TIMESTAMP
 **/
     public void Var017()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTS");
@@ -517,10 +520,8 @@ getString() - getString on a type registered as VARCHAR, INOUT TIMESTAMP
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	} 
-    }
+	}
+    
 
 /**
 getString() - getString on a type registered as VARCHAR, INOUT DATALINK
@@ -529,7 +530,7 @@ getString() - getString on a type registered as VARCHAR, INOUT DATALINK
     public void Var018()
     {
         //Note:  It is illegal to register a DATALINK as an INOUT parameter according to the DB2 SQL Reference  //@B1A
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && !(isToolboxDriver()) ) {   //@B1C
+	if (true && !(isToolboxDriver()) ) {   //@B1C
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDL");
@@ -539,16 +540,16 @@ getString() - getString on a type registered as VARCHAR, INOUT DATALINK
 		cstmt.execute();
 
 		String check = cstmt.getString(1);
-		
+
 		failed ("Didn't throw SQLException"+check);                                   /*@B2*/
-		// assertCondition(check.equalsIgnoreCase("http://www.ibm.com/us/"));   /*@B2*/ 
+		// assertCondition(check.equalsIgnoreCase("http://www.ibm.com/us/"));   /*@B2*/
 	    }
 	    catch (SQLException e){
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");               /*@B2*/
 	    }
 	} else {
-	    notApplicable(); 
-	} 
+	    notApplicable();
+	}
     }
 
 
@@ -557,7 +558,7 @@ getString() - getString on a type registered as VARCHAR, INOUT BLOB(200)
 **/
     public void Var019()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		byte [] b = {(byte) 23, (byte) 65, (byte) 87, (byte) 88};
@@ -571,24 +572,22 @@ getString() - getString on a type registered as VARCHAR, INOUT BLOB(200)
 		String check = cstmt.getString(1);
                 String expected = "17415758";                   //@B1A      Each individual byte in HEX
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		    expected = "\u0017\u0041\u0057\u0058"; 
+		    expected = "\u0017\u0041\u0057\u0058";
 		}
                     assertCondition(check.equals(expected), "got "+check+" sb "+expected+ " updated 11/11/2011 for native JDBC 4.1");    //@B1A
 	    }
 	    catch (SQLException e){
 		failed(e, "Unexpected Exception Updated 11/11/2011 for native JDBC 4.1");          //@B1A
 	    }
-	} else {
-	    notApplicable(); 
-	} 
-    }
+	}
+    
 
 /**
 getString() - getString on a type registered as VARCHAR, INOUT CLOB(200)
 **/
     public void Var020()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCLOB200");
@@ -598,22 +597,22 @@ getString() - getString on a type registered as VARCHAR, INOUT CLOB(200)
 		cstmt.execute();
 
 		String check = cstmt.getString(1);
-                if(isToolboxDriver())          //@B1A
-                    assertCondition(check.equals("Test Clob"), "check = " + check + " SB Test Clob");   //@B1A
-                else                                                    //@B1A
-                   // failed ("Didn't throw SQLException");  // @B2A  This should be expected to work 
-		    assertCondition(check.equals("Test Clob"), "check = "+check+" SB Test Clob");
+                if(isToolboxDriver()) { //@B1A
+                	assertCondition(check.equals("Test Clob"), "check = " + check + " SB Test Clob");   //@B1A
+                } else { //@B1A
+                	// failed ("Didn't throw SQLException");  // @B2A  This should be expected to work
+                	assertCondition(check.equals("Test Clob"), "check = "+check+" SB Test Clob");
+                }
 	    }
 	    catch (SQLException e){
-                if(isToolboxDriver())          //@B1A
-                    failed(e, "Unexpected Exception");                  //@B1A
-                else                                                    //@B1A
-                    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+                if(isToolboxDriver()) { //@B1A
+                	failed(e, "Unexpected Exception");                  //@B1A
+                } else { //@B1A
+                	assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+                }
 	    }
-	} else {
-	    notApplicable(); 
-	} 
-    }
+	}
+    
 
 
 /**
@@ -621,9 +620,9 @@ getString() - getString on a type registered as VARCHAR, INOUT BIGINT
 **/
     public void Var021()
     {
-	
+
 	try{
-	   
+
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10BINT");
 	    CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10BINT (?)}");
 	    cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
@@ -645,7 +644,7 @@ getString() - getString on a type registered  as char, INOUT SMALLINT
 **/
     public void Var022()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10SMINT");
@@ -660,17 +659,15 @@ getString() - getString on a type registered  as char, INOUT SMALLINT
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
 	}
-    }
+    
 
 /**
 getString() - getString on a type registered  as char, INOUT INTEGER
 **/
     public void Var023()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10INT");
@@ -685,17 +682,15 @@ getString() - getString on a type registered  as char, INOUT INTEGER
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
 	}
-    }
+    
 
 /**
 getString() - getString on a type registered  as char, INOUT REAL
 **/
     public void Var024()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10REAL");
@@ -710,17 +705,15 @@ getString() - getString on a type registered  as char, INOUT REAL
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
 	}
-    }
+    
 
 /**
 getString() - getString on a type registered  as char, INOUT FLOAT
 **/
     public void Var025()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10FLOAT");
@@ -735,17 +728,15 @@ getString() - getString on a type registered  as char, INOUT FLOAT
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
 	}
-    }
+    
 
 /**
 getString() - getString on a type registered  as char, INOUT DOUBLE
 **/
     public void Var026()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DOUBLE");
@@ -760,9 +751,6 @@ getString() - getString on a type registered  as char, INOUT DOUBLE
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -770,7 +758,7 @@ getString() - getString on a type registered  as char, INOUT DECIMAL
 **/
     public void Var027()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC50");
@@ -785,9 +773,6 @@ getString() - getString on a type registered  as char, INOUT DECIMAL
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -795,7 +780,7 @@ getString() - getString on a type registered  as char, INOUT DECIMAL(10,5)
 **/
     public void Var028()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC105");
@@ -810,9 +795,6 @@ getString() - getString on a type registered  as char, INOUT DECIMAL(10,5)
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -820,7 +802,7 @@ getString() - getString on a type registered  as char, INOUT NUMERIC(5,0)
 **/
     public void Var029()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM50");
@@ -835,9 +817,6 @@ getString() - getString on a type registered  as char, INOUT NUMERIC(5,0)
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 
@@ -846,7 +825,7 @@ getString() - getString on a type registered  as char, INOUT NUMERIC(10,5)
 **/
     public void Var030()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	
 	    try{
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM105");
 		CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".ADD10NUM105 (?)}");
@@ -860,9 +839,6 @@ getString() - getString on a type registered  as char, INOUT NUMERIC(10,5)
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -870,7 +846,7 @@ getString() - getString on a type registered  as char, INOUT CHAR
 **/
     public void Var031()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCHAR1");
@@ -885,9 +861,6 @@ getString() - getString on a type registered  as char, INOUT CHAR
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -895,7 +868,7 @@ getString() - getString on a type registered  as char, INOUT CHAR(50)
 **/
     public void Var032()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCHAR50");
@@ -910,9 +883,6 @@ getString() - getString on a type registered  as char, INOUT CHAR(50)
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -920,7 +890,7 @@ getString() - getString on a type registered  as char, INOUT VARCHAR(50)
 **/
     public void Var033()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNVARCHAR50");
@@ -935,9 +905,6 @@ getString() - getString on a type registered  as char, INOUT VARCHAR(50)
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	}  else {
-	    notApplicable(); 
-	}
     }
 
 
@@ -946,7 +913,7 @@ getString() - getString on a type registered  as char, INOUT BINARY(20)
 **/
     public void Var034()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		byte[] b = { (byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) 87,
@@ -962,27 +929,25 @@ getString() - getString on a type registered  as char, INOUT BINARY(20)
 
 		String check = cstmt.getString(1);
 		byte[] test = check.getBytes();
-                if(isToolboxDriver())          //@B1A
-                    assertCondition(areEqual(b, test, true));           //@B1A
-                else                                                    //@B1A
-                    assertCondition(areEqual(test, b));
+                if(isToolboxDriver()) { //@B1A
+                	assertCondition(areEqual(b, test, true));           //@B1A
+                } else { //@B1A
+                	assertCondition(areEqual(test, b));
+                }
 	    }
 	    catch (SQLException e){
 		failed(e, "Unexpected Exception");
 	    }
-	}  else {
-	    notApplicable(); 
-	}
     }
-	    
-	
-    
+
+
+
 /**
 getString() - getString on a type registered  as char, INOUT VARBINARY(20)
 **/
     public void Var035()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		byte [] b = { (byte) 23, (byte) 45, (byte) 48, (byte) 88};
@@ -994,17 +959,15 @@ getString() - getString on a type registered  as char, INOUT VARBINARY(20)
 
 		String check = cstmt.getString(1);
 		byte[] test = check.getBytes();
-                if(isToolboxDriver())          //@B1A
-                    assertCondition(areEqual(b, test, true));           //@B1A
-                else                                                    //@B1A
-                    assertCondition(areEqual(test, b));
+                if(isToolboxDriver()) { //@B1A
+                	assertCondition(areEqual(b, test, true));           //@B1A
+                } else { //@B1A
+                	assertCondition(areEqual(test, b));
+                }
 	    }
 	    catch (SQLException e){
 		failed(e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -1012,7 +975,7 @@ getString() - getString on a type registered  as char, INOUT DATE
 **/
     public void Var036()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 	    JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDATE");
@@ -1027,9 +990,6 @@ getString() - getString on a type registered  as char, INOUT DATE
 	    catch (SQLException e){
 		failed(e, "Unexpected Exception");
 	    }
-	}  else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -1037,7 +997,7 @@ getString() - getString on a type registered  as char, INOUT TIME
 **/
     public void Var037()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTIME");
@@ -1047,17 +1007,15 @@ getString() - getString on a type registered  as char, INOUT TIME
 		cstmt.execute();
 
 		String check = cstmt.getString(1);
-                if(isToolboxDriver())      //@B1A
-                    assertCondition(check.equalsIgnoreCase("22:33:44"), "check = " + check + " SB 22:33:44");   //@B1A
-                else                                                //@B1A
-                    assertCondition(check.equalsIgnoreCase("22.33.44"));
+                if(isToolboxDriver()) { //@B1A
+                	assertCondition(check.equalsIgnoreCase("22:33:44"), "check = " + check + " SB 22:33:44");   //@B1A
+                } else { //@B1A
+                	assertCondition(check.equalsIgnoreCase("22.33.44"));
+                }
 	    }
 	    catch (SQLException e){
 		failed(e,"Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -1065,7 +1023,7 @@ getString() - getString on a type registered  as char, INOUT TIMESTAMP
 **/
     public void Var038()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTS");
@@ -1082,14 +1040,11 @@ getString() - getString on a type registered  as char, INOUT TIMESTAMP
 		    expected = expected.replace(':','.');
 		}
 
-		assertCondition(check.equalsIgnoreCase(expected),"check"+check+" sb "+expected); 
+		assertCondition(check.equalsIgnoreCase(expected),"check"+check+" sb "+expected);
 	    }
 	    catch (SQLException e){
 		failed (e,"Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -1098,7 +1053,7 @@ getString() - getString on a type registered  as char, INOUT DATALINK
     public void Var039()
     {
         //note:  It is illegal to register a Datalink as an INOUT parameter according to the DB2 SQL Reference      //@B1A
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && !(isToolboxDriver())) {	    //@B1C
+	if ( !(isToolboxDriver())) {	    //@B1C
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDL");
@@ -1108,15 +1063,15 @@ getString() - getString on a type registered  as char, INOUT DATALINK
 		cstmt.execute();
 
 		String check = cstmt.getString(1);
-		
+
 		failed ("Didn't throw SQLException"+check);                                   /*@B2*/
-		// assertCondition(check.equalsIgnoreCase("http://www.ibm.com/us/"));   /*@B2*/ 
+		// assertCondition(check.equalsIgnoreCase("http://www.ibm.com/us/"));   /*@B2*/
 	    }
 	    catch (SQLException e){
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");               /*@B2*/
 	    }
 	} else {
-	    notApplicable(); 
+	  notApplicable("native testcase"); 
 	}
     }
 
@@ -1126,7 +1081,7 @@ getString() - getString on a type registered  as char, INOUT BLOB(200)
 **/
     public void Var040()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		byte [] b = {(byte) 23, (byte) 65, (byte) 87, (byte) 88};
@@ -1139,7 +1094,7 @@ getString() - getString on a type registered  as char, INOUT BLOB(200)
 		String check = cstmt.getString(1);
                 String expected = "17415758";                   //@B1A      Each individual byte in HEX
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE) {
-		    expected = "\u0017\u0041\u0057\u0058"; 
+		    expected = "\u0017\u0041\u0057\u0058";
 		}
 		assertCondition(check.equals(expected), "got "+check+" sb "+expected+ " updated 11/11/2011 for native JDBC 4.1"       );    //@B1A
 
@@ -1147,9 +1102,6 @@ getString() - getString on a type registered  as char, INOUT BLOB(200)
 	    catch (SQLException e){
                     failed(e, "Unexpected Exception updated 11/11/2011 for native JDBC 4.1");          //@B1A
 	    }
-	} else {
-	    notApplicable(); 
-	}
     }
 
 /**
@@ -1157,7 +1109,7 @@ getString() - getString on a type registered  as char, INOUT CLOB(200)
 **/
     public void Var041()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNCLOB200");
@@ -1167,21 +1119,20 @@ getString() - getString on a type registered  as char, INOUT CLOB(200)
 		cstmt.execute();
 
 		String check = cstmt.getString(1);
-                if(isToolboxDriver())          //@B1A
-                    assertCondition(check.equals("Test Clob"), "check = " + check + " SB Test Clob");   //@B1A
-                else                                                    //@B1A
-                   // failed ("Didn't throw SQLException"); this should work
-		    assertCondition(check.equals("Test Clob"), "check = " + check + " SB Test Clob");
+                if(isToolboxDriver()) { //@B1A
+                	assertCondition(check.equals("Test Clob"), "check = " + check + " SB Test Clob");   //@B1A
+                } else { //@B1A
+                	// failed ("Didn't throw SQLException"); this should work
+                	assertCondition(check.equals("Test Clob"), "check = " + check + " SB Test Clob");
+                }
 	    }
 	    catch (SQLException e){
-                if(isToolboxDriver())          //@B1A
-                    failed(e, "Unexpected Exception");                  //@B1A
-                else                                                    //@B1A
-                    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+                if(isToolboxDriver()) { //@B1A
+                	failed(e, "Unexpected Exception");                  //@B1A
+                } else { //@B1A
+                	assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+                }
 	    }
-	} else {
-	    notApplicable(); 
-	} 
     }
 
 
@@ -1190,7 +1141,7 @@ getString() - getString on a type registered  as char, INOUT BIGINT
 **/
     public void Var042()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10BINT");
@@ -1205,9 +1156,6 @@ getString() - getString on a type registered  as char, INOUT BIGINT
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	} 
     }
 
 }

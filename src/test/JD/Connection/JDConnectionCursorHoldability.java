@@ -946,10 +946,7 @@ the ResultSet objects should not be closed when Connection.commit() is called.
                 ResultSet rs = cs.getResultSet();
                 c.commit();
                 //TB v5r4 no cursor info returned from hostserver, v6r1 has cursor hold support returned from hostserver,  v7r1 has isolation support returned from hostserver)
-                if( (getRelease() == JDTestDriver.RELEASE_V7R1M0 || getRelease() == JDTestDriver.RELEASE_V7R1M0) && (isToolboxDriver())){
-                    //DECLARE C1 CURSOR FOR SELECT * FROM "+dataCollection+".QCUSTCDT;
-                    assertCondition( !cursorOpen(rs), "V6R1- *none keeps cursor open. (requires host support)" );   
-                }else if( getRelease() > JDTestDriver.RELEASE_V7R5M0) {
+                 if( getRelease() > JDTestDriver.RELEASE_V7R5M0) {
                     //isol 2
                     assertCondition( !cursorOpen(rs) , "> V7R5 *none should close cursor open. (requires host support)" );  
                 }else{
@@ -1170,9 +1167,7 @@ on the same stored procedure.  It's valid JDBC, but a server limitation.
                 rs2.close();
                 cs2.close();
                 //TB v5r4 no cursor info returned from hostserver, v6r1 has cursor hold support returned from hostserver,  v7r1 has isolation support returned from hostserver)
-                if( (getRelease() == JDTestDriver.RELEASE_V7R1M0 || getRelease() == JDTestDriver.RELEASE_V7R1M0) && (isToolboxDriver())){
-                    assertCondition( !result && !result1 && !result2, "V6R1- *none keeps cursor open. (requires host support)" ); 
-                }else if( (getRelease() > JDTestDriver.RELEASE_V7R5M0)){
+                if( (getRelease() > JDTestDriver.RELEASE_V7R5M0)){
                     assertCondition( !result && !result1 && !result2, "> V7R5  *none keeps cursor open. (requires host support)" );  
                 }else{
                     assertCondition( !result && result1 && result2, "<= V7R5 *none keeps cursor open. (requires host support)" );  

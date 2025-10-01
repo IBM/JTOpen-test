@@ -443,13 +443,9 @@ Performs cleanup needed after running variations.
                   failed("Did not throw exception");
                }
                catch (Exception e) {
-                  if (exceptionMsgHas(e, "XAER_PROTO"))
-		      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			  assertExceptionIsInstanceOf(e, "javax.transaction.xa.XAException");
-		      } else { 
-			  assertExceptionIsInstanceOf(e, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-		      }
-                  else
+                  if (exceptionMsgHas(e, "XAER_PROTO")) {
+ assertExceptionIsInstanceOf(e, "javax.transaction.xa.XAException");
+                  } else
                      failed(e, "Incorrect Exception Message (NO XAER_PROTO) "+description );
                }
 
@@ -526,13 +522,9 @@ Performs cleanup needed after running variations.
                   failed("Did not throw exception");
                }
                catch (Exception e) {
-                  if (exceptionMsgHas(e, "XAER_PROTO"))
-		      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			  assertExceptionIsInstanceOf(e, "javax.transaction.xa.XAException");
-		      } else { 
-			  assertExceptionIsInstanceOf(e, "com.ibm.db2.jdbc.app.jta.javax.transaction.xa.XAException");
-		      }
-                  else
+                  if (exceptionMsgHas(e, "XAER_PROTO")) {
+ assertExceptionIsInstanceOf(e, "javax.transaction.xa.XAException");
+                  } else
                      failed(e, "Incorrect Exception Message");
                }
                JTATest.verboseOut("rollback");

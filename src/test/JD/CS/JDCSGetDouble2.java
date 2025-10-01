@@ -36,7 +36,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDLobTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -248,7 +247,7 @@ getDouble() - getDouble on a type registered as Double, INOUT DECIMAL(10,5)
     public void Var007()
     {
 
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
+	 { 
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10DEC105");
@@ -267,8 +266,7 @@ getDouble() - getDouble on a type registered as Double, INOUT DECIMAL(10,5)
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
+	
 	} 
     }
 
@@ -301,8 +299,7 @@ getDouble() - getDouble on a type registered as Double, INOUT NUMERIC(10,5)
 **/
     public void Var009()
     {
-
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
+ { 
 	    try{
 
           JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"ADD10NUM105");
@@ -321,8 +318,6 @@ getDouble() - getDouble on a type registered as Double, INOUT NUMERIC(10,5)
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
 	} 
     }
 

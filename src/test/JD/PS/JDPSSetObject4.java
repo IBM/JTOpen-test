@@ -289,9 +289,7 @@ extends JDTestcase
         }
         try
         {
-	    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("testcase didn't work in earlier releases ");
-	    } else {
+	    
 		notApplicable("Native doesn't use col types ");
 /* 
 		PreparedStatement ps = connection_.prepareStatement (
@@ -300,7 +298,7 @@ extends JDTestcase
 		ps.setObject (1, Integer.valueOf(4), 4848484, 0);
 		failed ("Didn't throw SQLException");
 */ 
-	    }
+	    
         }
         catch(Exception e)
         {

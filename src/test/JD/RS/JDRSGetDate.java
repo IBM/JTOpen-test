@@ -580,7 +580,7 @@ SQL400 - For this test to return UTC timezone information,
  	    // Make this work for V5R4 group test -- same result as before 
             // For the V5R4 group test, the timezone is set to UTC  @H2A 
  	    if ((isToolboxDriver()) &&
- 		( getRelease() >= JDTestDriver.RELEASE_V7R1M0) &&
+ 		( true) &&
  		(JTOpenTestEnvironment.isOS400) &&
                  "UTC".equals(tz)) {
                 assertCondition (v.toString ().equals ("1998-04-08"));

@@ -169,6 +169,7 @@ public class JDConnectionTrustStore extends JDTestcase {
    **/
   public void Var001() {
     if (checkToolbox()) {
+      if (checkNotNative()) { 
       try {
         boolean passed = true;
         sb.setLength(0);
@@ -181,6 +182,9 @@ public class JDConnectionTrustStore extends JDTestcase {
         rs.next();
         String jobname = rs.getString(1);
         String expectedJobname = "QZDASSINIT";
+        if (isNative_) {
+          expectedJobname = "QZDASOINIT";
+        }
         if (jobname.indexOf(expectedJobname) < 0) {
           passed = false;
           sb.append("\nJob name was " + jobname + " expected to see " + expectedJobname);
@@ -192,6 +196,7 @@ public class JDConnectionTrustStore extends JDTestcase {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+      }
     }
   }
 
@@ -199,12 +204,15 @@ public class JDConnectionTrustStore extends JDTestcase {
    * tls truststore / tls truststore Verify that *ANY / GARBAGE  fails
    **/
   public void Var002() {
-    if (checkToolbox()) {
+    if (checkToolbox() ) {
       String[] expectedErrorMessages = {
           "The filename, directory name, or volume label syntax is incorrect",
           "A file or directory in the path name does not exist."
       };
-      
+      if (isNative_) {
+        assertCondition(true, "Native does not use SSL"); 
+        return; 
+      }
       try {
         boolean passed = false;
         sb.setLength(0);
@@ -225,11 +233,15 @@ public class JDConnectionTrustStore extends JDTestcase {
    * tls truststore / tls truststore Verify that *ANY / not setfails
    **/
   public void Var003() {
-    if (checkToolbox()) {
+    if (checkToolbox() && checkNotNative()) {
       String[] expectedErrorMessages = {
           "The filename, directory name, or volume label syntax is incorrect",
           "A file or directory in the path name does not exist."
       };
+      if (isNative_) {
+        assertCondition(true, "Native does not use SSL"); 
+        return; 
+      }
 
       try {
         boolean passed = false;
@@ -252,7 +264,7 @@ public class JDConnectionTrustStore extends JDTestcase {
    * tls truststore / tls truststore Verify that cacerts / no password  works.
    **/
   public void Var004() {
-    if (checkToolbox()) {
+    if (checkToolbox() && checkNotNative()) {
       try {
         boolean passed = true;
         sb.setLength(0);
@@ -265,6 +277,9 @@ public class JDConnectionTrustStore extends JDTestcase {
         rs.next();
         String jobname = rs.getString(1);
         String expectedJobname = "QZDASSINIT";
+        if (isNative_) {
+          expectedJobname = "QZDASOINIT";
+        }
         if (jobname.indexOf(expectedJobname) < 0) {
           passed = false;
           sb.append("\nJob name was " + jobname + " expected to see " + expectedJobname);
@@ -283,7 +298,7 @@ public class JDConnectionTrustStore extends JDTestcase {
    * tls truststore / tls truststore Verify that cacerts / changeit  works.
    **/
   public void Var005() {
-    if (checkToolbox()) {
+    if (checkToolbox() && checkNotNative()) {
       try {
         boolean passed = true;
         sb.setLength(0);
@@ -296,6 +311,9 @@ public class JDConnectionTrustStore extends JDTestcase {
         rs.next();
         String jobname = rs.getString(1);
         String expectedJobname = "QZDASSINIT";
+        if (isNative_) {
+          expectedJobname = "QZDASOINIT";
+        }
         if (jobname.indexOf(expectedJobname) < 0) {
           passed = false;
           sb.append("\nJob name was " + jobname + " expected to see " + expectedJobname);
@@ -314,8 +332,12 @@ public class JDConnectionTrustStore extends JDTestcase {
    * tls truststore / tls truststore Verify that cacerts / bad password  fails
    **/
   public void Var006() {
-    if (checkToolbox()) {
+    if (checkToolbox() ) {
       String expectedErrorMessage = "Keystore was tampered with, or password was incorrect"; 
+      if (isNative_) {
+        assertCondition(true, "Native does not use SSL"); 
+        return; 
+      }
       try {
         boolean passed = false;
         sb.setLength(0);
@@ -337,6 +359,10 @@ public class JDConnectionTrustStore extends JDTestcase {
    **/
   public void Var007() {
     if (checkToolbox()) {
+      if (isNative_) {
+        assertCondition(true, "Native does not use SSL"); 
+        return; 
+      }
       String expectedErrorMessage = "PKIX path building failed"; 
       try {
         boolean passed = false;
@@ -359,6 +385,10 @@ public class JDConnectionTrustStore extends JDTestcase {
    **/
   public void Var008() {
     if (checkToolbox()) {
+      if (isNative_) {
+        assertCondition(true, "Native does not use SSL"); 
+        return; 
+      }
       String expectedErrorMessage = "PKIX path building failed"; 
       try {
         boolean passed = false;

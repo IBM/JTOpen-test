@@ -396,7 +396,7 @@ extends JDTestcase
 
     boolean isHeaderStripped() {
 	
-	return isXmlSupported() || (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0); 
+	return isXmlSupported() || (getDriver() == JDTestDriver.DRIVER_NATIVE && false); 
     } 
 
     /**
@@ -827,29 +827,18 @@ extends JDTestcase
     }
 
     public void Var011() {
-	if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 && isLocator) {
-	    testGetBinaryStream(rs37_, 2, ROW2_37_, null);
-	} else if (getRelease() < JDTestDriver.RELEASE_V7R1M0 || !isLocator) {
+	if ( !isLocator) {
 	    testGetBinaryStream(rs37_, 2, ROW2_1208_, null);
 	} else {
 	    testGetBinaryStream(rs37_, 2, ROW2_37_, null);
 	}
     }
     public void Var012() {
-	// Due to the locator implementation, we get back the results of
-        // getAsciiStream, prior to V7R1
-	if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 && isLocator) {
-	    testGetBinaryStream(rs37_, 3, ROW3_37_, null);
-	} else if (isLocator && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	    testGetBinaryStream(rs37_, 3, ROW3_1208_37_, null);
-	} else { 
-	    testGetBinaryStream(rs37_, 3, ROW3_37_, null);
-	}
+	
+
     }
     public void Var013() {
-	if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 && isLocator) {
-	    testGetBinaryStream(rs37_, 4, ROW4_37_, null);
-	} else 	if (isLocator && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator ) {
 	    testGetBinaryStream(rs37_, 4, ROW4_37_, null);
 	} else { 
 	    testGetBinaryStream(rs37_, 4, ROW4_1208_, null);
@@ -857,59 +846,35 @@ extends JDTestcase
     }
     public void Var014() {
 	if (isLocator) {
-	    if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 && isLocator) {
-		testGetBinaryStream(rs37_, 5, ROW5_37_, null);
-	    } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0) { 
-		testGetBinaryStream(rs37_, 5, ROW5_1208_37_, null);
-	    } else {
-		testGetBinaryStream(rs37_, 5, ROW5_37_, null);
-	    } 
+	    testGetBinaryStream(rs37_, 5, ROW5_37_, null); 
 	} else { 
 	    testGetBinaryStream(rs37_, 5, ROW5_37_, null);
 	}
     }
     public void Var015() {
-	if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 && isLocator) {
-	    testGetBinaryStream(rs37_, 6, ROW6_37_, null);
-	} else if (isLocator && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator ) {
 	    testGetBinaryStream(rs37_, 6, ROW6_37_, null);
 	} else { 
 	    testGetBinaryStream(rs37_, 6, ROW6_1208_, null);
 	}
     }
     public void Var016() {
-	if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 && isLocator) {
-	    testGetBinaryStream(rs37_, 7, ROW7_37_2_, null);
-	} else if (isLocator && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator ) {
 	    testGetBinaryStream(rs37_, 7, ROW7_37_2_, null);
 	} else { 
 	    testGetBinaryStream(rs37_, 7, ROW7_1208_, null);
 	}
     }
     public void Var017() {
-	if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 && isLocator) {
-	    testGetBinaryStream(rs37_, 8, ROW8_37_, null);
-	} else if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 ) {
-	    testGetBinaryStream(rs37_, 8, ROW8_1208_, null);
-	} else 	if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-	    if (isLocator) {
-		testGetBinaryStream(rs37_, 8, ROW8_37_, null);
-	    } else {
-		testGetBinaryStream(rs37_, 8, ROW8_1208_, null); 
-	    }
-	} else { 
-	    testGetBinaryStream(rs37_, 8, ROW8_1208_, "Data type mismatch");
-	}
+	if (isLocator) {
+testGetBinaryStream(rs37_, 8, ROW8_37_, null);
+  } else {
+testGetBinaryStream(rs37_, 8, ROW8_1208_, null); 
+  }
     }
     public void Var018() {
-	if (getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0 && isLocator) {
+	if (isLocator) {
 	    testGetBinaryStream(rs37_, 11, ROW11_37_, null);
-	} else 	if (isLocator) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0){
-		testGetBinaryStream(rs37_, 11, ROW11_37_, null);
-	    } else { 
-		testGetBinaryStream(rs37_, 11, ROW11_, null);
-	    }
 	} else { 
 	    testGetBinaryStream(rs37_, 11, ROW11_, "XML PARSING ERROR");
 	}
@@ -941,98 +906,64 @@ extends JDTestcase
     }
     public void Var030() {
 
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    testGetBinaryStream(rs1200_, 2, ROW2_1200_, null);
-	} else if (isLocator && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator ) {
 	    testGetBinaryStream(rs1200_, 2, ROW2_1200_, null);
 	} else {
 	    testGetBinaryStream(rs1200_, 2, ROW2_1208_, null);
 	}
     }
     public void Var031() {
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator) {
 	    testGetBinaryStream(rs1200_, 3, ROW3_1200_, null);
-	} else if (isLocator) {
-	    if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0 ) {
-		testGetBinaryStream(rs1200_, 3, ROW3_1200_, null);
-	    } else { 
-		testGetBinaryStream(rs1200_, 3, ROW3_1208_1200_, null);
-	    }
 	} else { 
 	    testGetBinaryStream(rs1200_, 3, ROW3_1200_M_, null);
 	}
     }
     public void Var032() {
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    testGetBinaryStream(rs1200_, 4, ROW4_1200_, null);
-	} else 	if (isLocator && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator ) {
 	    testGetBinaryStream(rs1200_, 4, ROW4_1200_, null);
 	} else { 
 	    testGetBinaryStream(rs1200_, 4, ROW4_1208_, null);
 	}
     }
     public void Var033() {
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator) {
 	    testGetBinaryStream(rs1200_, 5, ROW5_1200_, null);
-	} else 	if (isLocator) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		testGetBinaryStream(rs1200_, 5, ROW5_1200_, null);
-	    } else { 
-		testGetBinaryStream(rs1200_, 5, ROW5_1208_1200_, null);
-	    }
 	} else { 
 	    testGetBinaryStream(rs1200_, 5, ROW5_1200_M_, null);
 	}
     }
     public void Var034() {
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    testGetBinaryStream(rs1200_, 6, ROW6_1200_, null);
-	} else 	if (isLocator && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator ) {
 	    testGetBinaryStream(rs1200_, 6, ROW6_1200_, null);
 	} else { 
 	    testGetBinaryStream(rs1200_, 6, ROW6_1208_, null);
 	}
     }
     public void Var035() {
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    testGetBinaryStream(rs1200_, 7, ROW7_1200_, null);
-	} else if (isLocator && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator ) {
 	    testGetBinaryStream(rs1200_, 7, ROW7_1200_, null);
 	} else { 
 	    testGetBinaryStream(rs1200_, 7, ROW7_1208_, null);
 	}
     }
     public void Var036() {
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    testGetBinaryStream(rs1200_, 8, ROW8_1200_, null);
-	} else 	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-	    if (isLocator) {
-		testGetBinaryStream(rs1200_, 8, ROW8_1200_, null);
-	    } else { 
-		testGetBinaryStream(rs1200_, 8, ROW8_1208_, null);
-	    }
-	} else { 
-	    testGetBinaryStream(rs1200_, 8, ROW8_1208_, null);
-	}
+	if (isLocator) {
+testGetBinaryStream(rs1200_, 8, ROW8_1200_, null);
+  } else { 
+testGetBinaryStream(rs1200_, 8, ROW8_1208_, null);
+  }
     }
     public void Var037() {
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    testGetBinaryStream(rs1200_, 9, ROW9_1200_NO_BOM_, null);
-	} else if (isLocator && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator ) {
 	    testGetBinaryStream(rs1200_, 9, ROW9_1200_NO_BOM_, null);
 	} else { 
 	    testGetBinaryStream(rs1200_, 9, ROW9_1208_, null);
 	}
     }
     public void Var038() {
-	if (isLocator && getDriver()==JDTestDriver.DRIVER_NATIVE  && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
+	if (isLocator) {
 	    testGetBinaryStream(rs1200_, 11, ROW11_1200_, null);
-	} else if (isLocator) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		testGetBinaryStream(rs1200_, 11, ROW11_1200_, null);
-	    } else { 
-		testGetBinaryStream(rs1200_, 11, ROW11_, null);
-	    }
 	} else { 
 	    testGetBinaryStream(rs1200_, 11, ROW11_, "XML PARSING ERROR"); 
 	}
@@ -1932,13 +1863,7 @@ testGetSource(rs1200_, "C_CLOB", 10, "javax.xml.transform.sax.SAXSource", ROW2_S
   // testGetBinaryStream(rs930_, 5, ROW5_930_, null
   public void Var225() {
       if (isHeaderStripped()) {
-	  if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	      getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	      // 03/14/2012 on V6R1 on fowgai2 
-	      testGetSource(rs930_, "C_CLOB", 5, "JAVAX.xml.transform.dom.DOMSource", EXPECTED_ROW5_S1200_T_PLUS_NL_, null);
-	  } else { 
-	      testGetSource(rs930_, "C_CLOB", 5, "JAVAX.xml.transform.dom.DOMSource", ROW5_NODECL_T_, null);
-	  }
+	  testGetSource(rs930_, "C_CLOB", 5, "JAVAX.xml.transform.dom.DOMSource", ROW5_NODECL_T_, null);
 
       } else { 
 	  testGetSource(rs930_, "C_CLOB", 5, "JAVAX.xml.transform.dom.DOMSource", ROW5_S1200_T_, "XML PARSING ERROR");
@@ -2671,10 +2596,6 @@ testGetSource(rs1200_, "C_CLOB", 10, "javax.xml.transform.sax.SAXSource", ROW2_S
 
     // Test XMLTEXT 
     public void Var493() {
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V7R1 test with XMLTEXT");
-	    return; 
-	} 
 	if (checkJdbc40()) {
 
 	    String[][] tests = {

@@ -99,7 +99,7 @@ extends JDTestcase
         selectXML_         = "SELECT * FROM " + JDRSTest.RSTEST_UPDATEXML;
 
 
-	nodecl = (isToolboxDriver()) || (getRelease() >= JDTestDriver.RELEASE_V7R1M0);
+	nodecl = (isToolboxDriver()) || (true);
 
         if(isJdbc40 ())
         {
@@ -134,7 +134,7 @@ extends JDTestcase
             statement2XML_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                        ResultSet.CONCUR_READ_ONLY);
 
-            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+            if (true){
             	//table is only on 54+
                rsXML_ = statementXML_.executeQuery (selectXML_ + " FOR UPDATE");
             }
@@ -160,7 +160,7 @@ extends JDTestcase
         {
             rsOther_.close ();
             statementOther_.close ();
-            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0){
+            if (true){
             	//table is only on 54+
                 rsXML_.close ();
             }
@@ -179,11 +179,7 @@ extends JDTestcase
     public void Var001()
     {   
     
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
         	        	 
         	ResultSet rs = null;
@@ -236,11 +232,7 @@ extends JDTestcase
     **/
     public void Var002()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -268,11 +260,7 @@ extends JDTestcase
     **/
     public void Var003()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -296,11 +284,7 @@ extends JDTestcase
     **/
     public void Var004()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -323,11 +307,7 @@ extends JDTestcase
     **/
     public void Var005()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -350,11 +330,7 @@ extends JDTestcase
     **/
     public void Var006()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -376,11 +352,7 @@ extends JDTestcase
     **/
     public void Var007()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -416,11 +388,7 @@ extends JDTestcase
     **/
     public void Var008()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-      if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
       {
         if (getDriver() == JDTestDriver.DRIVER_JCC) {
           notApplicable("JCC throws null pointer exception when column name is null "); 
@@ -446,11 +414,7 @@ extends JDTestcase
     **/
     public void Var009()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -472,11 +436,7 @@ extends JDTestcase
     **/
     public void Var010()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -498,11 +458,7 @@ extends JDTestcase
     **/
     public void Var011()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -534,11 +490,7 @@ extends JDTestcase
     **/
     public void Var012()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -590,12 +542,7 @@ extends JDTestcase
     **/
     public void Var014()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-    	 
-      if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
       {
     	 
         try
@@ -627,11 +574,7 @@ extends JDTestcase
     **/
     public void Var015()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
         
             try
@@ -665,11 +608,7 @@ extends JDTestcase
     **/
     public void Var016()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -704,11 +643,7 @@ extends JDTestcase
     **/
     public void Var017()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -745,11 +680,7 @@ extends JDTestcase
     public void Var018()
     {
 
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
          
             try
@@ -779,11 +710,7 @@ extends JDTestcase
     **/
     public void Var019()
     {
-    	 if (getRelease() < JDTestDriver.RELEASE_V7R1M0){
-             notApplicable(); //table only created in 54+
-             return;
-         }
-        if(checkJdbc40 ())
+    	 if(checkJdbc40 ())
         {
             try
             {
@@ -1721,13 +1648,7 @@ extends JDTestcase
                     String v = JDReflectionUtil.callMethod_S(outSqlxml, "getString"); 
                     rs2.close ();
                     //trim decl since accessing blob via SQLXML.getString()
-		    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-			getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-			assertCondition (v.equals(JDRSTest.SAMPLE_XML2), "Got "+v+" expected "+JDRSTest.SAMPLE_XML2);
-		    } else { 
-                    //trim decl since accessing blob via SQLXML.getString()
-                    assertCondition (v.equals (JDTestUtilities.stripXmlDeclaration(JDRSTest.SAMPLE_XML2)), "Got "+v+" expected "+JDTestUtilities.stripXmlDeclaration(JDRSTest.SAMPLE_XML2));
-		    }
+        assertCondition (v.equals (JDTestUtilities.stripXmlDeclaration(JDRSTest.SAMPLE_XML2)), "Got "+v+" expected "+JDTestUtilities.stripXmlDeclaration(JDRSTest.SAMPLE_XML2));
                 }
                 catch(Exception e)
                 {

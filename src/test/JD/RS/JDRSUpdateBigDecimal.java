@@ -1711,16 +1711,10 @@ This is ok.
                     if(isToolboxDriver())
                         expectedValue = "0.0000001700";  //@big TB always this format
                     else if ( isJdbc40()) {
-                        if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
-                                (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
-                            // In V5R4 the native driver still returns the old value 
+                        if ((true) && (jdk_ >= JVMInfo.JDK_16  )) {
                             expectedValue = "0.0000001700";
-                        } else {
-                            if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (jdk_ >= JVMInfo.JDK_16  )) {
-                                expectedValue = "0.0000001700";
-                            } else { 
-                                expectedValue = "1.700E-7";
-                            }
+                        } else { 
+                            expectedValue = "1.700E-7";
                         }
                     }  
                     rs.close(); 
@@ -1827,16 +1821,10 @@ This is ok.
                     if(isToolboxDriver())
                         expectedValue = "0.0000001700";  //@big TB always this format
                     else if(isJdbc40()) {
-                        if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
-                                (getDriver() == JDTestDriver.DRIVER_NATIVE))  {
-                            // In V5R4, the native driver returns the other value
-                            expectedValue = "0.0000001700"; 
-                        } else {
-                            if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (jdk_ >= JVMInfo.JDK_16  )) {
-                                expectedValue = "0.0000001700";
-                            } else { 
-                                expectedValue = "1.700E-7";
-                            }
+                        if ((true) && (jdk_ >= JVMInfo.JDK_16  )) {
+                            expectedValue = "0.0000001700";
+                        } else { 
+                            expectedValue = "1.700E-7";
                         }
                     }
                     rs.close(); 
@@ -2845,16 +2833,10 @@ This is ok.
                     if(isToolboxDriver())
                         expectedValue = "0,0000001700";  //@big TB always this format
                     else if ( isJdbc40()) {
-                        if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
-                                (getDriver() == JDTestDriver.DRIVER_NATIVE) ) {
-                            // In V5R4 the native driver still returns the old value 
+                        if ((true) && (jdk_ >= JVMInfo.JDK_16 )) {
                             expectedValue = "0,0000001700";
-                        } else {
-                            if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (jdk_ >= JVMInfo.JDK_16 )) {
-                                expectedValue = "0,0000001700";
-                            } else { 
-                                expectedValue = "1.700E-7";
-                            }
+                        } else { 
+                            expectedValue = "1.700E-7";
                         }
                     }  
                     rs.close(); 
@@ -2960,16 +2942,10 @@ This is ok.
                     if(isToolboxDriver())
                         expectedValue = "0,0000001700";  //@big TB always this format
                     else if(isJdbc40()) {
-                        if ((getRelease() == JDTestDriver.RELEASE_V7R1M0) &&
-                                (getDriver() == JDTestDriver.DRIVER_NATIVE))  {
-                            // In V5R4, the native driver returns the other value
-                            expectedValue = "0,0000001700"; 
-                        } else {
-                            if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && (jdk_ >= JVMInfo.JDK_16  )) {
-                                expectedValue = "0,0000001700";
-                            } else { 
-                                expectedValue = "1.700E-7";
-                            }
+                        if ((true) && (jdk_ >= JVMInfo.JDK_16  )) {
+                            expectedValue = "0,0000001700";
+                        } else { 
+                            expectedValue = "1.700E-7";
                         }
                     }
                     rs.close(); 

@@ -102,7 +102,7 @@ Performs setup needed before running variations.
              dataSource_ = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2DataSource");
            
              //System.out.println("running with NATIVE");
-	     if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 &&
+	     if (true &&
 		 getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		 dataSource2_ = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2DataSource");
 	     } else {
@@ -293,11 +293,6 @@ getConnection(userid,pwd) - Should work with valid userid,pwd.
    public void Var007 ()
    {
 
-       if (getRelease() < JDTestDriver.RELEASE_V7R1M0 &&
-	   getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	   notApplicable("java.sqlx.DataSource test");
-	   return; 
-       } 
        if(!JDTestDriver.getClientOS().equals( JDTestDriver.CLIENT_as400)){
            notApplicable("i5 platform TC");
            return;

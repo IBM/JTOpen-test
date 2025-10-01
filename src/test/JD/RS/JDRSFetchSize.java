@@ -1331,17 +1331,7 @@ specified.
             rs.close ();
             s.close ();
             c.close ();
-            // Note:  Right or wrong, we do not expect relative to not work today when the 
-            //        cursor has not already been positioned on a ResultSet row (see 
-            //        JDRSRelative var005 for details).
-            // Native fixed this bug in V5R5.  Relative should work if there are 3 rows,
-            // which there are.
-            // Native fixed this bug in V5R4 using SI34211
-            if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isToolboxDriver()) {
-              assertCondition (check==true, "Relative should work when there are 3 more rows.  Fixed by native Driver 01/10/2007");
-            } else { 
-               assertCondition (check==false);
-            }
+            assertCondition (check==true, "Relative should work when there are 3 more rows.  Fixed by native Driver 01/10/2007");
          } catch (Exception e) {
             failed (e, "Unexpected Exception");
          }

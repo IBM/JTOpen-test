@@ -23,7 +23,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -559,17 +558,9 @@ java.lang.Short object.  This testcase has been changed to match that expectatio
             for (int i = 0; i < columnCount; ++i) {
 		if (i != 27) {  /* skip the rowid row */ 
 		    if (i == updatedColumn) {
-			if (getDriver() == JDTestDriver.DRIVER_NATIVE &&  getRelease() ==  JDTestDriver.RELEASE_V7R1M0 )
-			{
-			    if ((! after[i].equals (Short.valueOf((short) 77)))
-				|| (afterNulls[i] != false))
-				success = false;
-
-			} else { 
-			    if ((! after[i].equals (Integer.valueOf(77)))
-				|| (afterNulls[i] != false))
-				success = false;
-			}
+			if ((! after[i].equals (Integer.valueOf(77)))
+|| (afterNulls[i] != false))
+success = false;
 		    }
 		    else {
 			if ((after[i] != null) || (afterNulls[i] != true))

@@ -650,10 +650,7 @@ extends JDTestDriver {
             password_));
 
         try{
-            if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 ||
-               getRelease() == 0 )    // only run if i5/OS has support
-
-            // 5/15/2008 For some release getRelease() is returning 0.
+             // 5/15/2008 For some release getRelease() is returning 0.
             // Still add testcase if this occurs.  The testcase itself
             // should be smart enough to mark variations as notApplicable
             // if run on a previous release

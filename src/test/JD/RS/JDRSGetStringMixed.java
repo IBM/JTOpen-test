@@ -140,12 +140,8 @@ public class JDRSGetStringMixed extends JDTestcase {
             compareOk = false; 
         }
         if (!expectedString.equals(retrievedUnicode)) {
-	    // In 7.1 the CAST to DBCLOB is adding extra characters.
-	    // Do not check for this release
-	    if (getRelease()  != JDTestDriver.RELEASE_V7R1M0) { 
 		sb.append("TESTCASE ERROR: Expected != retrievedUnicode\n" ); 
 		compareOk = false;
-	    }
       }
         
         if (!compareOk) {   

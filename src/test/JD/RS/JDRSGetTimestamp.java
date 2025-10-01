@@ -444,8 +444,8 @@ public class JDRSGetTimestamp extends JDTestcase {
         // Group test runs with tz='UTC'
         String tz = System.getProperty("user.timezone");
         if ((isToolboxDriver())
-            && (getRelease() == JDTestDriver.RELEASE_V7R1M0
-                || getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+            && (false
+                || true)
             && JTOpenTestEnvironment.isOS400
             && ("UTC".equals(tz))) {
           assertCondition(v.toString().equals("1998-11-18 03:13:42.987654"),
@@ -769,20 +769,13 @@ public class JDRSGetTimestamp extends JDTestcase {
           .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GET);
       JDRSTest.position0(rs, "DATE_2000");
       Timestamp v = rs.getTimestamp("C_TIME");
-      // getTimestamp() should be permitted on a Time column - Changed by Native
-      // Driver!
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-        assertCondition(v.toString().equals("1970-01-01 14:04:55.0"),
-            v.toString() + " sb 1970-01-01 14:04:55.0 ");
-      else
-        failed("Didn't throw SQLException but retrieved " + v);
+      assertCondition(v.toString().equals("1970-01-01 14:04:55.0"),
+          v.toString() + " sb 1970-01-01 14:04:55.0 ");
     } catch (Exception e) {
       if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-      } else if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+      } else
         failed(e, "Unexpected Exception");
-      else
-        assertExceptionIsInstanceOf(e, "java.sql.SQLException");
     }
   }
 

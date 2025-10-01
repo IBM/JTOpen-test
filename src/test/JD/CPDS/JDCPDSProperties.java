@@ -11,26 +11,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-//
-// File Name:    JDCPDSProperties.java
-//
-// Classes:      JDCPDSProperties
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-// Release     Date        Userid    Comments
-//                                   to setTrace(), getTrace()
-//
-//
-////////////////////////////////////////////////////////////////////////
+
 
 package test.JD.CPDS;
 
@@ -1164,8 +1145,7 @@ an invalid value. Exception should be thrown.
         public void Var051 ()
         {
             if (checkJdbc20StdExt()) {
-              if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && 
-                  (getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
+              if ((getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
                 try {
                     ctx_.rebind(bindName_, dataSource_);
                     Object ds = ctx_.lookup(bindName_);
@@ -1189,8 +1169,7 @@ an invalid value. Exception should be thrown.
         public void Var052 ()
         {
             if (checkJdbc20StdExt()) {
-              if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && 
-                  (getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
+              if ((getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
 
                 try {
                     JDReflectionUtil.callMethod_V(dataSource_, "setDirectMap", true); 
@@ -1217,8 +1196,7 @@ an invalid value. Exception should be thrown.
         public void Var053 ()
         {
             if (checkJdbc20StdExt()) {
-              if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && 
-                  (getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
+              if ((getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
                 try {
                     ctx_.rebind(bindName_, dataSource_);
                     Object ds = ctx_.lookup(bindName_);
@@ -1242,8 +1220,7 @@ an invalid value. Exception should be thrown.
         public void Var054 ()
         {
             if (checkJdbc20StdExt()) {
-              if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) && 
-                  (getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
+              if ((getDriver()  == JDTestDriver.DRIVER_NATIVE)) { 
 
                 try {
 		    JDReflectionUtil.callMethod_V(dataSource_, "setQueryOptimizeGoal", "1"); 

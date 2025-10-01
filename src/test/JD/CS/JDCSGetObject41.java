@@ -239,9 +239,7 @@ Performs setup needed before running variations.
 	    debug = true; 
 	} 
 
-	if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    skipListRelease = skipListV5R4; 
-	} 
+	
 
 
 	if (JVMInfo.getJDK() < JVMInfo.JDK_16) { 
@@ -304,13 +302,7 @@ Performs setup needed before running variations.
 	    if (skipHash.get(thisType[0]) == null) { 
 		String sql = "CREATE TYPE "+JDCSTest.COLLECTION+"."+thisType[0]+thisType[1]; 
 		try {
-		    if ( (getRelease() < JDTestDriver.RELEASE_V7R1M0) &&
-			 ((sql.indexOf("ARRAY") >= 0 ) ||
-                          (sql.indexOf("XML") >= 0)
-			  )) {
-			// Skip type earlier than v7r1
-			
-		    } else if ((!areBooleansSupported()) && (sql.indexOf("BOOLEAN") >= 0)) {
+		    if ((!areBooleansSupported()) && (sql.indexOf("BOOLEAN") >= 0)) {
 		      // Skip booleans if not supported
 		    } else { 
 			stmt.executeUpdate(sql);
@@ -338,12 +330,7 @@ Performs setup needed before running variations.
 		String sql = "CREATE PROCEDURE "+JDCSTest.COLLECTION+"."+thisProc[0]+thisProc[1]; 
 		try {
 
-		    if ( (getRelease() < JDTestDriver.RELEASE_V7R1M0) &&
-			 ((sql.indexOf("ARINT") >= 0 ) ||
-			  (sql.indexOf("XML") >= 0)
-			  )) {
-			// Skip type earlier than v7r1
-        } else if ((!areBooleansSupported()) && (sql.indexOf("BOOLEAN") >= 0)) {
+		     if ((!areBooleansSupported()) && (sql.indexOf("BOOLEAN") >= 0)) {
           // Skip booleans if not supported
 
 		    } else { 

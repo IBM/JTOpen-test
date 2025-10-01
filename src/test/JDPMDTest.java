@@ -177,7 +177,7 @@ Performs setup needed before running testcases.
 
 
         // Setup PMDTEST_SET table.
-        boolean lobSupport = (getRelease () >= RELEASE_V7R1M0);
+        boolean lobSupport = true;
         StringBuffer buffer = new StringBuffer ();
         dropTable(statement_, PMDTEST_SET); 
         buffer.append ("CREATE TABLE ");

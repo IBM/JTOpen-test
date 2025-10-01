@@ -451,7 +451,7 @@ getClob() - getClob on a type registered as Clob, INOUT BINARY(20)
 	StringBuffer info = new StringBuffer( " -- Updated 1/3/2012 for native JDBC driver"); 
 
 	if (checkJdbc20()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 	
+	     { 	
 		try{
 
 		    byte [] p = {(byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x34, (byte) 0x35};
@@ -480,8 +480,7 @@ getClob() - getClob on a type registered as Clob, INOUT BINARY(20)
 		catch (SQLException e){
 			failed(e, "Unexpected Exception"+info);              //@B1A
 		}
-	    }  else { 
-		notApplicable("BINARY testcase for >= V5R3");
+	    
 	    }
 	}
     }
@@ -495,7 +494,7 @@ getClob() - getClob on a type registered as Clob, INOUT VARBINARY(20)
 	StringBuffer info = new StringBuffer( " -- Updated 1/3/2012 for native JDBC driver"); 
 
 	if (checkJdbc20()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 	
+	    { 	
 		try{
 
 
@@ -526,9 +525,7 @@ getClob() - getClob on a type registered as Clob, INOUT VARBINARY(20)
 		catch (SQLException e){
 		    failed(e, "Unexpected Exception");              //@B1A
 		}
-	    } else { 
-		notApplicable("VARBINARY testcase for >= V5R3");
-	    }
+	     }
 	}
     }
 

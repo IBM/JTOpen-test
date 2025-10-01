@@ -26,7 +26,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -271,12 +270,7 @@ previous() - Should work on a "simple" result set.
             try {
                 ResultSet rs ;
 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE"); 
-		} else { 
-
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery("select * from SYSIBM.SYSTBLTYPE");
                 rs.afterLast ();
                 boolean success = true;
                 int count = 0;
@@ -289,11 +283,11 @@ previous() - Should work on a "simple" result set.
 
 	    /* Changed the comparision -- @D3C */ 
 	    int expectedCount = 3;
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	    if (true) {
 		// add 1 for MQT
 		expectedCount++; 
 	    }
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	    if (true) {
 		// add 1 for ALIAS
 		expectedCount++; 
 	    }

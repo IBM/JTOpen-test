@@ -112,8 +112,6 @@ Performs setup needed before running variations.
     throws Exception
     {
         try {
-           // Register the JDBC driver.
-           Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
 
            // Get a global connection - choose how you which
            // to get the connection.
@@ -160,7 +158,7 @@ Performs setup needed before running variations.
                            " col2 graphic(20) CCSID 13488, " + 
                            " col3 graphic(16361) CCSID 13488)");
 
-	   if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	   if (true) {	
 	       s.executeUpdate("create table "+JDParmTest.COLLECTION+".stringsChar1 " + 
 			       "(col4 char(1) CCSID 1208, " +
 			       " col5 char(20) CCSID 1208, " + 
@@ -176,7 +174,7 @@ Performs setup needed before running variations.
            col1 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col1) values(?)");
            col2 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col2) values(?)");
            col3 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col3) values(?)");
-	   if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	   if (true) {	
 	       col4 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".stringsChar1 (col4) values(?)");
 	       col5 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".stringsChar1 (col5) values(?)");
 	       col6 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".stringsChar1 (col6) values(?)");
@@ -638,23 +636,19 @@ Test:  wchar(16361) - value too big
 Test:  wchar(1) - value is just right
 **/
    public void Var017() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col4.setString(1, "X");
-	       int count = col4.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col4", "X", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col4.setString(1, "X");
+           int count = col4.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col4", "X", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 Version"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
    }
 
@@ -663,23 +657,19 @@ Test:  wchar(1) - value is just right
 Test:  wchar(1) - empty string
 **/
    public void Var018() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col4.setString(1, "");
-	       int count = col4.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col4", " ", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col4.setString(1, "");
+           int count = col4.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col4", " ", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -690,23 +680,19 @@ Test:  wchar(1) - empty string
 Test:  wchar(1) - null value
 **/
    public void Var019() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col4.setString(1, null);
-	       int count = col4.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col4", null, connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col4.setString(1, null);
+           int count = col4.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col4", null, connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -718,41 +704,37 @@ Test:  wchar(1) - value too big
 **/
    public void Var020() {
        
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   String value = "TOO BIG";
-	   try {
-	       col4.setString(1, value);
-	       int count = col4.executeUpdate();
-	       if (count == 1)
-		   failed ("inserted a value without truncation");
-	       else
-		   failed("no exception - just an update count");
+       String value = "TOO BIG";
+       try {
+           col4.setString(1, value);
+           int count = col4.executeUpdate();
+           if (count == 1)
+         failed ("inserted a value without truncation");
+           else
+         failed("no exception - just an update count");
 
-	   } catch (DataTruncation dt) {
-	       if(getDriver() == JDTestDriver.DRIVER_NATIVE)			// @A2
-		   assertCondition ((dt.getIndex() == 1)			// @A2
-				    && (dt.getParameter() == true)		// @A2
-				    && (dt.getRead() == false)			// @A2
-				    && (dt.getDataSize() == value.length())	// @A2
-				    && (dt.getTransferSize() == 1));		// @A2
-	       else								// @A2
-		   assertCondition ((dt.getIndex() == 1)
-				    && (dt.getParameter() == true)
-				    && (dt.getRead() == false)
-				    && (dt.getDataSize() == value.length())
-				    && (dt.getTransferSize() == 1), 
-                                         "dt.getIndex()="+dt.getIndex()+" sb 1 "+
-                                         "dt.getParameter()="+dt.getParameter()+" sb true "+
-                                         "dt.getRead()="+dt.getRead()+" sb false "+
-                                         "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
-                                         "dt.getTransferSize()="+dt.getTransferSize()+" sb 2 ");
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } catch (DataTruncation dt) {
+           if(getDriver() == JDTestDriver.DRIVER_NATIVE)			// @A2
+         assertCondition ((dt.getIndex() == 1)			// @A2
+      		    && (dt.getParameter() == true)		// @A2
+      		    && (dt.getRead() == false)			// @A2
+      		    && (dt.getDataSize() == value.length())	// @A2
+      		    && (dt.getTransferSize() == 1));		// @A2
+           else								// @A2
+         assertCondition ((dt.getIndex() == 1)
+      		    && (dt.getParameter() == true)
+      		    && (dt.getRead() == false)
+      		    && (dt.getDataSize() == value.length())
+      		    && (dt.getTransferSize() == 1), 
+                                           "dt.getIndex()="+dt.getIndex()+" sb 1 "+
+                                           "dt.getParameter()="+dt.getParameter()+" sb true "+
+                                           "dt.getRead()="+dt.getRead()+" sb false "+
+                                           "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
+                                           "dt.getTransferSize()="+dt.getTransferSize()+" sb 2 ");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -763,23 +745,19 @@ Test:  wchar(1) - value too big
 Test:  wchar(20) - value is just right
 **/
    public void Var021() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col5.setString(1, "01234567890123456789");
-	       int count = col5.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col5", "01234567890123456789", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col5.setString(1, "01234567890123456789");
+           int count = col5.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col5", "01234567890123456789", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -790,23 +768,19 @@ Test:  wchar(20) - value is just right
 Test:  wchar(20) - value is smaller than column
 **/
    public void Var022() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col5.setString(1, "0123456789");
-	       int count = col5.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col5", "0123456789          ", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col5.setString(1, "0123456789");
+           int count = col5.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col5", "0123456789          ", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -816,23 +790,19 @@ Test:  wchar(20) - value is smaller than column
 Test:  wchar(20) - value is 1 char long
 **/
    public void Var023() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-	   try {
-	       col5.setString(1, "0");
-	       int count = col5.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col5", "0                   ", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col5.setString(1, "0");
+           int count = col5.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col5", "0                   ", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -843,23 +813,19 @@ Test:  wchar(20) - value is 1 char long
 Test:  wchar(20) - value is empty string
 **/
    public void Var024() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-	   try {
-	       col5.setString(1, "");
-	       int count = col5.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col5", "                    ", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col5.setString(1, "");
+           int count = col5.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col5", "                    ", connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -870,23 +836,19 @@ Test:  wchar(20) - value is empty string
 Test:  wchar(20) - value is null
 **/
    public void Var025() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-	   try {
-	       col5.setString(1, null);
-	       int count = col5.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col5", null, connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col5.setString(1, null);
+           int count = col5.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col5", null, connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -896,41 +858,37 @@ Test:  wchar(20) - value is null
 Test:  wchar(20) - value too big
 **/
    public void Var026() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
-	   String value = "012345678901234567890123";
-	   try {
-	       col5.setString(1, value);
-	       int count = col5.executeUpdate();
-	       if (count == 1)
-		   failed ("inserted a value without truncation");
-	       else
-		   failed("no exception - just an update count");
+       String value = "012345678901234567890123";
+       try {
+           col5.setString(1, value);
+           int count = col5.executeUpdate();
+           if (count == 1)
+         failed ("inserted a value without truncation");
+           else
+         failed("no exception - just an update count");
 
-	   } catch (DataTruncation dt) {
-	       if(getDriver() == JDTestDriver.DRIVER_NATIVE)			// @A2
-		   assertCondition ((dt.getIndex() == 1)			// @A2
-				    && (dt.getParameter() == true)		// @A2
-				    && (dt.getRead() == false)			// @A2
-				    && (dt.getDataSize() == value.length())	// @A2
-				    && (dt.getTransferSize() == 20));		// @A2
-	       else								// @A2
-		   assertCondition ((dt.getIndex() == 1)
-				    && (dt.getParameter() == true)
-				    && (dt.getRead() == false)
-				    && (dt.getDataSize() == value.length())
-				    && (dt.getTransferSize() == 20), 
-                                         "dt.getIndex()="+dt.getIndex()+" sb 1 "+
-                                         "dt.getParameter()="+dt.getParameter()+" sb true "+
-                                         "dt.getRead()="+dt.getRead()+" sb false "+
-                                         "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
-                                         "dt.getTransferSize()="+dt.getTransferSize()+" sb 40 ");
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } catch (DataTruncation dt) {
+           if(getDriver() == JDTestDriver.DRIVER_NATIVE)			// @A2
+         assertCondition ((dt.getIndex() == 1)			// @A2
+      		    && (dt.getParameter() == true)		// @A2
+      		    && (dt.getRead() == false)			// @A2
+      		    && (dt.getDataSize() == value.length())	// @A2
+      		    && (dt.getTransferSize() == 20));		// @A2
+           else								// @A2
+         assertCondition ((dt.getIndex() == 1)
+      		    && (dt.getParameter() == true)
+      		    && (dt.getRead() == false)
+      		    && (dt.getDataSize() == value.length())
+      		    && (dt.getTransferSize() == 20), 
+                                           "dt.getIndex()="+dt.getIndex()+" sb 1 "+
+                                           "dt.getParameter()="+dt.getParameter()+" sb true "+
+                                           "dt.getRead()="+dt.getRead()+" sb false "+
+                                           "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
+                                           "dt.getTransferSize()="+dt.getTransferSize()+" sb 40 ");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -941,23 +899,19 @@ Test:  wchar(20) - value too big
 Test:  wchar(16361) - value is just right
 **/
    public void Var027() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col6.setString(1, largeValue);
-	       int count = col6.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col6", largeValue, connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col6.setString(1, largeValue);
+           int count = col6.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col6", largeValue, connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -968,28 +922,24 @@ Test:  wchar(16361) - value is just right
 Test:  wchar(16361) - value is smaller than column
 **/
    public void Var028() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col6.setString(1, "0123456789012345678901234567890123456789");
-	       int count = col6.executeUpdate();
-	       if (count == 1) {
-		   StringBuffer expected = new StringBuffer("0123456789012345678901234567890123456789");
-		   for (; 16361 - expected.length() > 0; ) {
-		       expected.append(" ");
-		   }
-		   assertCondition(JDParmHelper.verifyString("col6", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       }
-	       else
-		   failed ("invalid update count");
+       try {
+           col6.setString(1, "0123456789012345678901234567890123456789");
+           int count = col6.executeUpdate();
+           if (count == 1) {
+         StringBuffer expected = new StringBuffer("0123456789012345678901234567890123456789");
+         for (; 16361 - expected.length() > 0; ) {
+             expected.append(" ");
+         }
+         assertCondition(JDParmHelper.verifyString("col6", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           }
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -999,28 +949,24 @@ Test:  wchar(16361) - value is smaller than column
 Test:  wchar(16361) - value is 1 char long
 **/
    public void Var029() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col6.setString(1, "0");
-	       int count = col6.executeUpdate();
-	       if (count == 1) {
-		   StringBuffer expected = new StringBuffer("0");
-		   for (; 16361 - expected.length() > 0; ) {
-		       expected.append(" ");
-		   }
-		   assertCondition(JDParmHelper.verifyString("col6", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       }
-	       else
-		   failed ("invalid update count");
+       try {
+           col6.setString(1, "0");
+           int count = col6.executeUpdate();
+           if (count == 1) {
+         StringBuffer expected = new StringBuffer("0");
+         for (; 16361 - expected.length() > 0; ) {
+             expected.append(" ");
+         }
+         assertCondition(JDParmHelper.verifyString("col6", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           }
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -1031,28 +977,24 @@ Test:  wchar(16361) - value is 1 char long
 Test:  wchar(16361) - value is empty string
 **/
    public void Var030() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col6.setString(1, "");
-	       int count = col6.executeUpdate();
-	       if (count == 1) {
-		   StringBuffer expected = new StringBuffer();
-		   for (int i = 0; i < 16361; i++) {
-		       expected.append(" ");
-		   }
-		   assertCondition(JDParmHelper.verifyString("col6", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       }
-	       else
-		   failed ("invalid update count");
+       try {
+           col6.setString(1, "");
+           int count = col6.executeUpdate();
+           if (count == 1) {
+         StringBuffer expected = new StringBuffer();
+         for (int i = 0; i < 16361; i++) {
+             expected.append(" ");
+         }
+         assertCondition(JDParmHelper.verifyString("col6", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           }
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -1063,23 +1005,19 @@ Test:  wchar(16361) - value is empty string
 Test:  wchar(16361) - value is null
 **/
    public void Var031() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col6.setString(1, null);
-	       int count = col6.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col6", null, connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col6.setString(1, null);
+           int count = col6.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col6", null, connection, ""+JDParmTest.COLLECTION+".stringsChar1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -1089,41 +1027,37 @@ Test:  wchar(16361) - value is null
 Test:  wchar(16361) - value too big
 **/
    public void Var032() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   String value = largeValue + "01234567890";
-	   try {
-	       col6.setString(1, value);
-	       int count = col6.executeUpdate();
-	       if (count == 1)
-		   failed ("inserted a value without truncation");
-	       else
-		   failed("no exception - just an update count");
+       String value = largeValue + "01234567890";
+       try {
+           col6.setString(1, value);
+           int count = col6.executeUpdate();
+           if (count == 1)
+         failed ("inserted a value without truncation");
+           else
+         failed("no exception - just an update count");
 
-	   } catch (DataTruncation dt) {
-	       if(getDriver() == JDTestDriver.DRIVER_NATIVE)			// @A2
-		   assertCondition ((dt.getIndex() == 1)			// @A2
-				    && (dt.getParameter() == true)		// @A2
-				    && (dt.getRead() == false)			// @A2
-				    && (dt.getDataSize() == value.length())	// @A2
-				    && (dt.getTransferSize() == 16361));	// @A2
-	       else								// @A2
-		   assertCondition ((dt.getIndex() == 1)
-				    && (dt.getParameter() == true)
-				    && (dt.getRead() == false)
-				    && (dt.getDataSize() == value.length())
-				    && (dt.getTransferSize() == 16361), 
-                                         "dt.getIndex()="+dt.getIndex()+" sb 1 "+
-                                         "dt.getParameter()="+dt.getParameter()+" sb true "+
-                                         "dt.getRead()="+dt.getRead()+" sb false "+
-                                         "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
-                                         "dt.getTransferSize()="+dt.getTransferSize()+" sb 32722 ");
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } catch (DataTruncation dt) {
+           if(getDriver() == JDTestDriver.DRIVER_NATIVE)			// @A2
+         assertCondition ((dt.getIndex() == 1)			// @A2
+      		    && (dt.getParameter() == true)		// @A2
+      		    && (dt.getRead() == false)			// @A2
+      		    && (dt.getDataSize() == value.length())	// @A2
+      		    && (dt.getTransferSize() == 16361));	// @A2
+           else								// @A2
+         assertCondition ((dt.getIndex() == 1)
+      		    && (dt.getParameter() == true)
+      		    && (dt.getRead() == false)
+      		    && (dt.getDataSize() == value.length())
+      		    && (dt.getTransferSize() == 16361), 
+                                           "dt.getIndex()="+dt.getIndex()+" sb 1 "+
+                                           "dt.getParameter()="+dt.getParameter()+" sb true "+
+                                           "dt.getRead()="+dt.getRead()+" sb false "+
+                                           "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
+                                           "dt.getTransferSize()="+dt.getTransferSize()+" sb 32722 ");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsChar1");
        } 
 
    }
@@ -1132,23 +1066,19 @@ Test:  wchar(16361) - value too big
 Test:  wchar(1) - value is just right
 **/
    public void Var033() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col7.setString(1, "X");
-	       int count = col7.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col7", "X", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col7.setString(1, "X");
+           int count = col7.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col7", "X", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1158,23 +1088,19 @@ Test:  wchar(1) - value is just right
 Test:  wchar(1) - empty string
 **/
    public void Var034() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col7.setString(1, "");
-	       int count = col7.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col7", " ", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col7.setString(1, "");
+           int count = col7.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col7", " ", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1185,23 +1111,19 @@ Test:  wchar(1) - empty string
 Test:  wchar(1) - null value
 **/
    public void Var035() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col7.setString(1, null);
-	       int count = col7.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col7", null, connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col7.setString(1, null);
+           int count = col7.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col7", null, connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1212,41 +1134,37 @@ Test:  wchar(1) - null value
 Test:  wchar(1) - value too big
 **/
    public void Var036() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   String value = "TOO BIG";
-       int size = (value.length()*2);
-       int transferSize = 2;
-       if (getDriver () == JDTestDriver.DRIVER_TOOLBOX)
-       {
-           size = (value.length());
-           transferSize = 1;
-       }
-	   try {
-	       col7.setString(1, value);
-	       int count = col7.executeUpdate();
-	       if (count == 1)
-		   failed ("inserted a value without truncation");
-	       else
-		   failed("no exception - just an update count");
+       String value = "TOO BIG";
+         int size = (value.length()*2);
+         int transferSize = 2;
+         if (getDriver () == JDTestDriver.DRIVER_TOOLBOX)
+         {
+             size = (value.length());
+             transferSize = 1;
+         }
+       try {
+           col7.setString(1, value);
+           int count = col7.executeUpdate();
+           if (count == 1)
+         failed ("inserted a value without truncation");
+           else
+         failed("no exception - just an update count");
 
-	   } catch (DataTruncation dt) {
-	       assertCondition ((dt.getIndex() == 1)
-				&& (dt.getParameter() == true)
-				&& (dt.getRead() == false)
-				&& (dt.getDataSize() == size)
-				&& (dt.getTransferSize() == transferSize), 
-                                 "dt.getIndex()="+dt.getIndex()+" sb 1 "+
-                                 "dt.getParameter()="+dt.getParameter()+" sb true "+
-                                 "dt.getRead()="+dt.getRead()+" sb false "+
-                                 "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
-                                 "dt.getTransferSize()="+dt.getTransferSize()+" sb 2 ");
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } catch (DataTruncation dt) {
+           assertCondition ((dt.getIndex() == 1)
+      		&& (dt.getParameter() == true)
+      		&& (dt.getRead() == false)
+      		&& (dt.getDataSize() == size)
+      		&& (dt.getTransferSize() == transferSize), 
+                                   "dt.getIndex()="+dt.getIndex()+" sb 1 "+
+                                   "dt.getParameter()="+dt.getParameter()+" sb true "+
+                                   "dt.getRead()="+dt.getRead()+" sb false "+
+                                   "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
+                                   "dt.getTransferSize()="+dt.getTransferSize()+" sb 2 ");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1257,23 +1175,19 @@ Test:  wchar(1) - value too big
 Test:  wchar(20) - value is just right
 **/
    public void Var037() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col8.setString(1, "01234567890123456789");
-	       int count = col8.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col8", "01234567890123456789", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col8.setString(1, "01234567890123456789");
+           int count = col8.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col8", "01234567890123456789", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1284,23 +1198,19 @@ Test:  wchar(20) - value is just right
 Test:  wchar(20) - value is smaller than column
 **/
    public void Var038() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col8.setString(1, "0123456789");
-	       int count = col8.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col8", "0123456789          ", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col8.setString(1, "0123456789");
+           int count = col8.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col8", "0123456789          ", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1310,23 +1220,19 @@ Test:  wchar(20) - value is smaller than column
 Test:  wchar(20) - value is 1 char long
 **/
    public void Var039() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col8.setString(1, "0");
-	       int count = col8.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col8", "0                   ", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col8.setString(1, "0");
+           int count = col8.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col8", "0                   ", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1337,23 +1243,19 @@ Test:  wchar(20) - value is 1 char long
 Test:  wchar(20) - value is empty string
 **/
    public void Var040() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col8.setString(1, "");
-	       int count = col8.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col8", "                    ", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col8.setString(1, "");
+           int count = col8.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col8", "                    ", connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1364,23 +1266,19 @@ Test:  wchar(20) - value is empty string
 Test:  wchar(20) - value is null
 **/
    public void Var041() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col8.setString(1, null);
-	       int count = col8.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col8", null, connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col8.setString(1, null);
+           int count = col8.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col8", null, connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1398,33 +1296,29 @@ Test:  wchar(20) - value too big
            size = (value.length());
            transferSize = 20;
        }
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col8.setString(1, value);
-	       int count = col8.executeUpdate();
-	       if (count == 1)
-		   failed ("inserted a value without truncation");
-	       else
-		   failed("no exception - just an update count");
+       try {
+           col8.setString(1, value);
+           int count = col8.executeUpdate();
+           if (count == 1)
+         failed ("inserted a value without truncation");
+           else
+         failed("no exception - just an update count");
 
-	   } catch (DataTruncation dt) {
-	       assertCondition ((dt.getIndex() == 1)
-				&& (dt.getParameter() == true)
-				&& (dt.getRead() == false)
-				&& (dt.getDataSize() == size)
-				&& (dt.getTransferSize() == transferSize), 
-                                 "dt.getIndex()="+dt.getIndex()+" sb 1 "+
-                                 "dt.getParameter()="+dt.getParameter()+" sb true "+
-                                 "dt.getRead()="+dt.getRead()+" sb false "+
-                                 "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
-                                 "dt.getTransferSize()="+dt.getTransferSize()+" sb 40 ");
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } catch (DataTruncation dt) {
+           assertCondition ((dt.getIndex() == 1)
+      		&& (dt.getParameter() == true)
+      		&& (dt.getRead() == false)
+      		&& (dt.getDataSize() == size)
+      		&& (dt.getTransferSize() == transferSize), 
+                                   "dt.getIndex()="+dt.getIndex()+" sb 1 "+
+                                   "dt.getParameter()="+dt.getParameter()+" sb true "+
+                                   "dt.getRead()="+dt.getRead()+" sb false "+
+                                   "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
+                                   "dt.getTransferSize()="+dt.getTransferSize()+" sb 40 ");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1435,23 +1329,19 @@ Test:  wchar(20) - value too big
 Test:  wchar(16361) - value is just right
 **/
    public void Var043() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col9.setString(1, largeValue);
-	       int count = col9.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col9", largeValue, connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col9.setString(1, largeValue);
+           int count = col9.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col9", largeValue, connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1462,28 +1352,24 @@ Test:  wchar(16361) - value is just right
 Test:  wchar(16361) - value is smaller than column
 **/
    public void Var044() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col9.setString(1, "0123456789012345678901234567890123456789");
-	       int count = col9.executeUpdate();
-	       if (count == 1) {
-		   StringBuffer expected = new StringBuffer("0123456789012345678901234567890123456789");
-		   for (; 16361 - expected.length() > 0; ) {
-		       expected.append(" ");
-		   }
-		   assertCondition(JDParmHelper.verifyString("col9", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       }
-	       else
-		   failed ("invalid update count");
+       try {
+           col9.setString(1, "0123456789012345678901234567890123456789");
+           int count = col9.executeUpdate();
+           if (count == 1) {
+         StringBuffer expected = new StringBuffer("0123456789012345678901234567890123456789");
+         for (; 16361 - expected.length() > 0; ) {
+             expected.append(" ");
+         }
+         assertCondition(JDParmHelper.verifyString("col9", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           }
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1493,28 +1379,24 @@ Test:  wchar(16361) - value is smaller than column
 Test:  wchar(16361) - value is 1 char long
 **/
    public void Var045() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col9.setString(1, "0");
-	       int count = col9.executeUpdate();
-	       if (count == 1) {
-		   StringBuffer expected = new StringBuffer("0");
-		   for (; 16361 - expected.length() > 0; ) {
-		       expected.append(" ");
-		   }
-		   assertCondition(JDParmHelper.verifyString("col9", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       }
-	       else
-		   failed ("invalid update count");
+       try {
+           col9.setString(1, "0");
+           int count = col9.executeUpdate();
+           if (count == 1) {
+         StringBuffer expected = new StringBuffer("0");
+         for (; 16361 - expected.length() > 0; ) {
+             expected.append(" ");
+         }
+         assertCondition(JDParmHelper.verifyString("col9", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           }
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1525,28 +1407,24 @@ Test:  wchar(16361) - value is 1 char long
 Test:  wchar(16361) - value is empty string
 **/
    public void Var046() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col9.setString(1, "");
-	       int count = col9.executeUpdate();
-	       if (count == 1) {
-		   StringBuffer expected = new StringBuffer();
-		   for (int i = 0; i < 16361; i++) {
-		       expected.append(" ");
-		   }
-		   assertCondition(JDParmHelper.verifyString("col9", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       }
-	       else
-		   failed ("invalid update count");
+       try {
+           col9.setString(1, "");
+           int count = col9.executeUpdate();
+           if (count == 1) {
+         StringBuffer expected = new StringBuffer();
+         for (int i = 0; i < 16361; i++) {
+             expected.append(" ");
+         }
+         assertCondition(JDParmHelper.verifyString("col9", expected.toString(), connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           }
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1557,23 +1435,19 @@ Test:  wchar(16361) - value is empty string
 Test:  wchar(16361) - value is null
 **/
    public void Var047() {
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col9.setString(1, null);
-	       int count = col9.executeUpdate();
-	       if (count == 1)
-		   assertCondition(JDParmHelper.verifyString("col9", null, connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
-	       else
-		   failed ("invalid update count");
+       try {
+           col9.setString(1, null);
+           int count = col9.executeUpdate();
+           if (count == 1)
+         assertCondition(JDParmHelper.verifyString("col9", null, connection, ""+JDParmTest.COLLECTION+".stringsGraphic1"));
+           else
+         failed ("invalid update count");
 
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
 
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
 
    }
@@ -1593,33 +1467,29 @@ Test:  wchar(16361) - value too big
            transferSize = 16361;
        }
        
-       if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
-	   try {
-	       col9.setString(1, value);
-	       int count = col9.executeUpdate();
-	       if (count == 1)
-		   failed ("inserted a value without truncation");
-	       else
-		   failed("no exception - just an update count");
+       try {
+           col9.setString(1, value);
+           int count = col9.executeUpdate();
+           if (count == 1)
+         failed ("inserted a value without truncation");
+           else
+         failed("no exception - just an update count");
 
-	   } catch (DataTruncation dt) {
-	       assertCondition ((dt.getIndex() == 1)
-				&& (dt.getParameter() == true)
-				&& (dt.getRead() == false)
-				&& (dt.getDataSize() == size)
-				&& (dt.getTransferSize() == transferSize), 
-                                 "dt.getIndex()="+dt.getIndex()+" sb 1 "+
-                                 "dt.getParameter()="+dt.getParameter()+" sb true "+
-                                 "dt.getRead()="+dt.getRead()+" sb false "+
-                                 "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
-                                 "dt.getTransferSize()="+dt.getTransferSize()+" sb 32722 ");
-	   } catch (SQLException e) {
-	       failed (e, "Unexpected Exception");
-	   } finally {
-	       JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
-	   }
-       } else {
-	   notApplicable("V5R3 CCSID 1200/1208 variation"); 
+       } catch (DataTruncation dt) {
+           assertCondition ((dt.getIndex() == 1)
+      		&& (dt.getParameter() == true)
+      		&& (dt.getRead() == false)
+      		&& (dt.getDataSize() == size)
+      		&& (dt.getTransferSize() == transferSize), 
+                                   "dt.getIndex()="+dt.getIndex()+" sb 1 "+
+                                   "dt.getParameter()="+dt.getParameter()+" sb true "+
+                                   "dt.getRead()="+dt.getRead()+" sb false "+
+                                   "dt.getDataSize()="+dt.getDataSize()+" sb "+(value.length()*2)+" "+
+                                   "dt.getTransferSize()="+dt.getTransferSize()+" sb 32722 ");
+       } catch (SQLException e) {
+           failed (e, "Unexpected Exception");
+       } finally {
+           JDParmHelper.purgeStringsTable(connection, ""+JDParmTest.COLLECTION+".stringsGraphic1");
        } 
    }
 

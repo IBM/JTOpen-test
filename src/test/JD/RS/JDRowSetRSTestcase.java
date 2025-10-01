@@ -1108,7 +1108,7 @@ getAsciiStream() - Should work when the column index is valid.
            InputStream v = rowset.getAsciiStream (12);
            sb.setLength(0); 
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @K2
+	      true )	// @K2
 	       assertCondition( compareBeginsWithBytes( v, "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb);			// @K2
 	   else							// @K2
 	       assertCondition (compare (v, "Toolbox for Java                                  ", "8859_1",sb),sb);
@@ -1138,7 +1138,7 @@ getAsciiStream() - Should work when the column name is valid.
            InputStream v = rowset.getAsciiStream ("C_CHAR_50");
            sb.setLength(0); 
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
+	      true )		// @K2
 	       assertCondition( compareBeginsWithBytes( v, "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb);				// @K2
 	   else								// @K2
 	       assertCondition (compare (v, "Toolbox for Java                                  ", "8859_1",sb),sb);
@@ -1169,7 +1169,7 @@ getBinaryStream() - Should work when the column index is valid.
           position0 (rowset, "BINARY_NOTRANS");
           InputStream v = rowset.getBinaryStream (18);
 	  if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	     getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
+	     true )		// @K2
 	      assertCondition( compareBeginsWithBytes( v, twelve));	// @K2
 	  else								// @K2
 	      assertCondition (compare (v, twelve, sb), sb);
@@ -1200,7 +1200,7 @@ getBinaryStream() - Should work when the column name is valid.
            position0 (rowset, "BINARY_NOTRANS");
            InputStream v = rowset.getBinaryStream ("C_BINARY_20");
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
+	      true )		// @K2
 	       assertCondition( compareBeginsWithBytes( v, eleven));	// @K2
 	   else								// @K2
 	       assertCondition (compare (v, eleven,sb),sb);
@@ -2204,7 +2204,7 @@ getUnicodeStream() - Should work when the column index is valid.
            Reader v = rowset.getCharacterStream (12);
            sb.setLength(0); 
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )			// @K2
+	      true )			// @K2
 	       assertCondition( compare( v, "Toolbox for Java                                  ",sb),sb);			// @K2
 	   else									// @K2
 	       assertCondition (compare (v, "Toolbox for Java                                  ",sb),sb); // @B0C
@@ -2235,7 +2235,7 @@ getUnicodeStream() - Should work when the column name is valid.
            Reader v = rowset.getCharacterStream ("C_CHAR_50");
            sb.setLength(0); 
 	   if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-	      getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
+	      true )		// @K2
 	       assertCondition( compare( v, "Toolbox for Java                                  ",sb),sb);			// @K2
 	   else								// @K2
 	       assertCondition (compare (v, "Toolbox for Java                                  ",sb),sb); // @B0C

@@ -23,7 +23,6 @@ package test.JD.Statement;
 
 import com.ibm.as400.access.*;
 
-import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDTestStatementHelper;
 
@@ -248,15 +247,8 @@ Performs cleanup needed after running variations.
             // Now try it with a string length.
             try {
                 StringBuffer queryString = new StringBuffer("SELECT * FROM QIWS.QCUSTCDT /*");
-                if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
-                    for (int i=0; i<2098000; ++i) {
-                        queryString.append("C");
-                    }
-                }
-                else{
-                    for (int i=0; i<33000; ++i) {
-                        queryString.append("C");
-                    }
+                for (int i=0; i<2098000; ++i) {
+                    queryString.append("C");
                 }
                 queryString.append("*/");
 

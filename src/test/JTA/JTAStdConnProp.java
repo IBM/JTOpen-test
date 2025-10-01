@@ -153,19 +153,11 @@ Performs cleanup needed after running variations.
 
             conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 
-	    if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ) { 
-		failed("Did not throw exception");
-	    } else {
-		succeeded(); 
-	    } 
+	    succeeded(); 
 
          }
          catch (SQLException e) {
-	     if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0 ) { 
-		 succeeded();
-	     } else {
-		 failed(e, "Unexpected  Exception Message Should not throw exception in V5R3 ");
-	     } 
+	     failed(e, "Unexpected  Exception Message Should not throw exception in V5R3 "); 
          }
          catch (Exception e) {
             failed(e, "Incorrect Exception Message");
@@ -751,21 +743,10 @@ Performs cleanup needed after running variations.
 
                try {
                   conn.setReadOnly(true);
-		  if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-		      assertCondition(true); 
-		  } else { 
-		      failed("Did not throw exception");
-		  }
+		  assertCondition(true);
                }
                catch (Exception e) {
-		   if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-			   failed(e, "Exception thrown calling setReadonly on readonly connection");
-		   } else { 
-		       if (exceptionMsgHas(e, "authorization failure"))
-			   assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		       else
-			   failed(e, "Incorrect Exception Message");
-		   }
+		   failed(e, "Exception thrown calling setReadonly on readonly connection");
                }
 
             }

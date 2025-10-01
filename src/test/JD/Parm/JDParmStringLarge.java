@@ -374,10 +374,6 @@ Test:  char huge
 **/
     public void Var002() {
 
-	if (runningJ9 && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working in V5R4 and J9P");
-	    return; 
-	} 
 	if (vrm <= 520) {
 	    notApplicable("Native problem with huge strings not fixed in V5R2"); 
 	} else { 

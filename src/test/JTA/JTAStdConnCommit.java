@@ -754,14 +754,7 @@ Performs cleanup needed after running variations.
        return; 
      }
 
-       if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   (getRelease() >= JDTestDriver.RELEASE_V7R1M0  &&
-	    getRelease() <= JDTestDriver.RELEASE_V7R1M0)) {
-	   notApplicable("Not working in V5R4/V6R1 native code");
-	   return; 
-       } 
-
-      if (checkJdbc20StdExt()) {
+       if (checkJdbc20StdExt()) {
 	 String xaModel = "standard"; 
          XAConnection            xaConn = null;
 	 XAResource              xaRes = null;

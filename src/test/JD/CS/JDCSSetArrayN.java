@@ -1045,10 +1045,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    } else if (areArraysSupported() ||  isToolboxDriver() ) { //toolbox supports setting an any i5.  Let host return error.
                 //with array support in TB this is okay
                 assertCondition(true);
-	    } else if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease()  == JDTestDriver.RELEASE_V7R1M0) {
-		// To set as null is not an error
-                assertCondition(true);
-            } else {
+	     } else {
                 failed("Didn't throw SQLException ");
             }
         } catch (Exception e)

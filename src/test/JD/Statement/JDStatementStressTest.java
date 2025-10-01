@@ -1779,10 +1779,8 @@ public class JDStatementStressTest extends JDTestcase {
   public void Var071() {
     if (isToolboxDriver())
       notApplicable();
-    else if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+    else {
       ccsidTest(71, 622708, "added by native driver 10/26/2005");
-    } else {
-      ccsidTest(71, 12708, "added by native driver 10/26/2005");
     }
   }
 
@@ -1961,13 +1959,10 @@ public class JDStatementStressTest extends JDTestcase {
 
         for (int i = 0; result && i < ccsidTestData.length; i++) {
           ccsid = ccsidTestData[i].ccsid;
-          if (ccsid == 424 && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+          if (ccsid == 424 && true) {
             // Skip
           } else if (ccsid == 12708
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-          } else if (ccsid >= 610000
-              && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            // skip
+              && true) {
           } else {
             result = stressCCSID(ccsid, "Testing CCSID " + ccsid
                 + " added by native driver 10/26/2005");
@@ -2437,13 +2432,10 @@ public class JDStatementStressTest extends JDTestcase {
 
         for (int i = 0; result && i < ccsidTestData.length; i++) {
           ccsid = ccsidTestData[i].ccsid;
-          if (ccsid == 424 && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+          if (ccsid == 424 && true) {
             // Skip
           } else if (ccsid == 12708
-              && getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-          } else if (ccsid >= 610000
-              && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            // skip
+              && true) {
           } else {
 
             result = stressCCSIDParm(ccsid, "Testing CCSID " + ccsid

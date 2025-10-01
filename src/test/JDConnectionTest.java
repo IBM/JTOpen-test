@@ -147,11 +147,10 @@ Performs setup needed before running testcases.
       JDSetupCollection.create (systemObject_,  c,
                                 COLLECTION);
       
-      if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)  //@128sch 
-      {
+      
           JDSetupCollection.create (systemObject_, 
                   c, SCHEMAS_LEN128);
-      }
+      
       
       
       JDSupportedFeatures supportedFeatures_= new JDSupportedFeatures(this);
@@ -301,9 +300,12 @@ Creates the testcases.
                                                          namesAndVars_, runMode_, fileOutputStream_, 
                                                          password_));
       
-      addTestcase (new JDConnectionTrustStore (systemObject_,
+      JDConnectionTrustStore trustStoreTest =new JDConnectionTrustStore (systemObject_,
           namesAndVars_, runMode_, fileOutputStream_, 
-          password_));
+          password_); 
+      trustStoreTest.isNative_ = isNative_; 
+      
+      addTestcase (trustStoreTest);
 
       addTestcase (new JDConnectionWarnings (systemObject_,
                                              namesAndVars_, runMode_, fileOutputStream_, 

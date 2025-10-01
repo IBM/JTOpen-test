@@ -19,7 +19,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.RJavaProgram;
 
-import test.JDTestDriver;
 import test.RJavaTest;
 import test.Testcase;
 import test.UserTest;
@@ -169,20 +168,8 @@ constructor() with 2 parms - Pass valid values.  Verify that the system and name
 **/
     public void Var005()
     {
-	if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Java program objects not supported after V7R1");
-	    return; 
-	} 
-        try {
-            RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.classFilePath_);
-            Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
-            assertCondition ((u.getSystem() == systemObject_) 
-                    && (u.getPath().equals(RJavaTest.classFilePath_))
-                    && (optimization.equals(systemObject_.getVRM() >= 0x00050500 ? RJavaProgram.OPTIMIZATION_INTERPRET : RJavaProgram.OPTIMIZATION_10)));
-        }
-        catch (Exception e) {
-            failed (e, "Unexpected Exception");
-        }
+	notApplicable("Java program objects not supported after V7R1");
+  return;
     }
 
 
@@ -319,21 +306,8 @@ verify that it is used.
 **/
     public void Var013()
     {
-	if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Java program objects not supported after V7R1");
-	    return; 
-	} 
-
-        try {
-            RJavaProgram u = new RJavaProgram(systemObject_, "vermont");
-            u.setPath(RJavaTest.classFilePath_);
-            Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
-            assertCondition ((u.getPath().equals(RJavaTest.classFilePath_))
-                    && (optimization.equals(systemObject_.getVRM() >= 0x00050500 ? RJavaProgram.OPTIMIZATION_INTERPRET : RJavaProgram.OPTIMIZATION_10)));
-        }
-        catch (Exception e) {
-            failed (e, "Unexpected Exception");
-        }
+	notApplicable("Java program objects not supported after V7R1");
+  return;
     }
 
 
@@ -343,20 +317,8 @@ setPath() - Set to a valid name after the RJavaProgram has made a connection.
 **/
     public void Var014()
     {
-	if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Java program objects not supported after V7R1");
-	    return; 
-	} 
-
-        try {
-            RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.classFilePath_);
-            Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
-            u.setPath("alabama");
-            failed ("Didn't throw exception"+optimization);
-        }
-        catch(Exception e) {
-            assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
-        }
+	notApplicable("Java program objects not supported after V7R1");
+  return;
     }
 
 
@@ -426,23 +388,8 @@ verify that it is used.
 **/
     public void Var018()
     {
-	if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Java program objects not supported after V7R1");
-	    return; 
-	} 
-
-        try {
-            AS400 bogus = new AS400("bogus", "bogus", "bogus");
-            RJavaProgram u = new RJavaProgram(bogus, RJavaTest.jarFilePath_);
-            u.setSystem(systemObject_);
-            Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
-            assertCondition ((u.getSystem().getSystemName().equals(systemObject_.getSystemName()))
-                    && (u.getSystem().getUserId().equals(systemObject_.getUserId()))
-                    && (optimization.equals(systemObject_.getVRM() >= 0x00050500 ? RJavaProgram.OPTIMIZATION_INTERPRET : RJavaProgram.OPTIMIZATION_10)));
-        }
-        catch (Exception e) {
-            failed (e, "Unexpected Exception");
-        }
+	notApplicable("Java program objects not supported after V7R1");
+  return;
     }
 
 
@@ -452,20 +399,12 @@ setSystem() - Set to a valid name after the RJavaProgram object has made a conne
 **/
     public void Var019()
     {
-	if (getRelease() > JDTestDriver.RELEASE_V7R1M0) {
+	if (true) {
 	    notApplicable("Java program objects not supported after V7R1");
 	    return; 
 	} 
 
-        try {
-            RJavaProgram u = new RJavaProgram(systemObject_, RJavaTest.jarFilePath_);
-            Integer optimization = (Integer)u.getAttributeValue(RJavaProgram.OPTIMIZATION);
-            u.setSystem(systemObject_);
-            failed ("Didn't throw exception"+optimization);
-        }
-        catch(Exception e) {
-            assertExceptionIsInstanceOf (e, "java.lang.IllegalStateException");
-        }
+    
     }
 
 

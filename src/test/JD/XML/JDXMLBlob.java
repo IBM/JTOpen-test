@@ -631,7 +631,7 @@ extends JDTestcase
 
 
     public boolean isXmlDeclarationStripped() {
-	return isXmlSupported() || (getRelease() == JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE); 
+	return isXmlSupported() ; 
     } 
 
     public void testMethodAfterFree(String method) {

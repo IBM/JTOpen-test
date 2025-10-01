@@ -1024,53 +1024,48 @@ execute() - Verify that lobs can be inserted, even when the declared width of th
 **/
     public void Var033()
     {
-	if ( (getRelease() <= JDTestDriver.RELEASE_V7R1M0) && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
-	    notApplicable("Native driver V5R2 and beyond test");
-	} else {
+	try {
 
-	    try {
+Statement stmt = connection_.createStatement();
 
-		Statement stmt = connection_.createStatement();
+try {
+    stmt.executeUpdate("drop table "+table4_); 
+} catch (Exception e) {
+ // just ignore 
+} 
 
-		try {
-		    stmt.executeUpdate("drop table "+table4_); 
-		} catch (Exception e) {
-		 // just ignore 
-		} 
+stmt.executeUpdate("create table "+table4_+"(b1 blob(1000M), b2 blob(1000M), b3 blob(1000M), b4 blob(1000M))");
 
-		stmt.executeUpdate("create table "+table4_+"(b1 blob(1000M), b2 blob(1000M), b3 blob(1000M), b4 blob(1000M))");
+PreparedStatement pstmt = null;
 
-		PreparedStatement pstmt = null;
+byte[] b1 = new byte[10];
+byte[] b2 = new byte[100];
+byte[] b3 = new byte[1000];
+byte[] b4 = new byte[10000];
+String sql = "insert into "+table4_+" values(?,?,?,?)";
+pstmt=connection_.prepareStatement(sql); 
+pstmt.setBytes(1, b1);
+pstmt.setBytes(2, b2);
+pstmt.setBytes(3, b3);
+pstmt.setBytes(4, b4);
 
-		byte[] b1 = new byte[10];
-		byte[] b2 = new byte[100];
-		byte[] b3 = new byte[1000];
-		byte[] b4 = new byte[10000];
-		String sql = "insert into "+table4_+" values(?,?,?,?)";
-		pstmt=connection_.prepareStatement(sql); 
-		pstmt.setBytes(1, b1);
-		pstmt.setBytes(2, b2);
-		pstmt.setBytes(3, b3);
-		pstmt.setBytes(4, b4);
+      //
+      // This should work..
+      // 
+pstmt.executeUpdate(); 
 
-	        //
-	        // This should work..
-	        // 
-		pstmt.executeUpdate(); 
+      //
+      // now cleanup
+      //
+stmt.executeUpdate("drop table "+table4_);
 
-	        //
-	        // now cleanup
-	        //
-		stmt.executeUpdate("drop table "+table4_);
-
-		succeeded ();
+succeeded ();
 
 
-	    }
-	    catch (Exception e) {
-		failed (e, "Unexpected Exception -- added by native driver 8/18/2003 ");
-	    }
-	}
+  }
+  catch (Exception e) {
+failed (e, "Unexpected Exception -- added by native driver 8/18/2003 ");
+  }
     }
 
 /**
@@ -1081,8 +1076,7 @@ execute() - Verify that lobs cannot be inserted even when the width of the inser
 **/
     public void Var034() {
 
-	if ( (isToolboxDriver()) || ((getRelease() <= JDTestDriver.RELEASE_V7R1M0)
-        && (getDriver() == JDTestDriver.DRIVER_NATIVE))) {
+	if ( (isToolboxDriver()) || false) {
       notApplicable("Native driver V5R3 and beyond test");
     } else {
       if (checkJdbc20()) {
@@ -1136,28 +1130,16 @@ execute() - Verify that lobs cannot be inserted even when the width of the inser
               failed = true;
 
               if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-                if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-                  if ((sqlEx.getMessage().indexOf(
-                      "Row length exceeds 3.5 gigabytes") >= 0)
-                      || (sqlEx.getMessage().indexOf(
-                          "ROW LENGTH EXCEEDS 3.5 GIGABYTES") >= 0)) {
-                    // we found the right error message
-                  } else {
-                    System.out
-                        .println("Unexpected error message -- looking for SQLDA not valid ");
-                    sqlEx.printStackTrace();
-                    failed = false;
-                  }
+                if ((sqlEx.getMessage().indexOf(
+                    "Row length exceeds 3.5 gigabytes") >= 0)
+                    || (sqlEx.getMessage().indexOf(
+                        "ROW LENGTH EXCEEDS 3.5 GIGABYTES") >= 0)) {
+                  // we found the right error message
                 } else {
-                  if ((sqlEx.getMessage().indexOf("SQLDA not valid") >= 0)
-                      || (sqlEx.getMessage().indexOf("SQLDA NOT VALID") >= 0)) {
-                    // we found the right error message
-                  } else {
-                    System.out
-                        .println("Unexpected error message -- looking for SQLDA not valid ");
-                    sqlEx.printStackTrace();
-                    failed = false;
-                  }
+                  System.out
+                      .println("Unexpected error message -- looking for SQLDA not valid ");
+                  sqlEx.printStackTrace();
+                  failed = false;
                 }
               }
 

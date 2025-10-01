@@ -39,7 +39,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSMDTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
 
@@ -437,26 +436,22 @@ getColumnName() - Check to see if you can get a 128 byte column name.
 **/
     public void Var013()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0){
-            if(checkJdbc20()){
-                try{
-                    Statement s = connection_.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM " + TABLELCN);
-                    ResultSetMetaData rsmd = rs.getMetaData();
-                    String columnName = rsmd.getColumnName(1);
-                    rs.close();
-                    s.close();
-                    assertCondition(columnName.equals("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST"), "Added by Toolbox 8/12/2004 to test 128 byte column names."+
-				    "\nGot      : "+columnName+
-				    "\nExpected : THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST");
-                }
-                catch(Exception e){
-                    failed(e, "Unexpected Exception.  Added by Toolbox 8/12/2004 to test 128 byte column names.");
-                }
+        if(checkJdbc20()){
+            try{
+                Statement s = connection_.createStatement();
+                ResultSet rs = s.executeQuery("SELECT * FROM " + TABLELCN);
+                ResultSetMetaData rsmd = rs.getMetaData();
+                String columnName = rsmd.getColumnName(1);
+                rs.close();
+                s.close();
+                assertCondition(columnName.equals("THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST"), "Added by Toolbox 8/12/2004 to test 128 byte column names."+
+        "\nGot      : "+columnName+
+        "\nExpected : THISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMETHISISACOLUMNWITHANONEHUNDREDTWENTYEIGHTBYTECOLUMNNAMEABCDEFGHIJKLMNOPQRST");
+            }
+            catch(Exception e){
+                failed(e, "Unexpected Exception.  Added by Toolbox 8/12/2004 to test 128 byte column names.");
             }
         }
-        else
-            notApplicable("V5R4 or greater variation.");
     }
     
     

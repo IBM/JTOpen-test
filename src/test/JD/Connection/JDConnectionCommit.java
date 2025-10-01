@@ -810,11 +810,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         public void Var020()
         {
 
-	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("Fix does not improve performance on V5R3");
-		return; 
-	    }  
+	     
 	    if (isToolboxDriver())  {
 	        notApplicable("N/A on Toolbox");
 	        return; 
@@ -902,11 +898,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         public void Var021()
         {
 
-	    if ( 
-		getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("*NONE CURSOR PROBLEM fixed by native/tb in V7R1");
-		return; 
-	    }
+	    
 
             String added = " commit should not close *NONE cursors -- Added by toolbox (needs v7r1 host support) 12/08/2008"; 
             try {
@@ -953,11 +945,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         public void Var022()
         {
 
-	    if ( 
-		getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("*NONE CURSOR PROBLEM fixed by native/tb in V7R1"); 
-		return; 
-	    }
+	   
 
             String added = " -- Added by toolbox (needs v7r1 host support) 12/08/2008"; 
             try {
@@ -1002,11 +990,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         public void Var023()
         {
 
-	    if ( 
-		getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("*NONE CURSOR PROBLEM fixed by native/tb in V7R1"); 
-		return; 
-	    }
+	    
 
             String added = " -- Added by toolbox (needs v7r1 host support) 12/08/2008"; 
             try {
@@ -1046,12 +1030,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         public void Var024()
         {
 
-	    if (
-		getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("*NONE CURSOR PROBLEM fixed by native/tb in V7R1"); 
-		return; 
-	    }
-
+	    
             String added = " -- Added by toolbox (needs v7r1 host support) 12/08/2008"; 
             try {
                 // Turn off auto-commit.

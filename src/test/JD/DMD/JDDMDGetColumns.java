@@ -233,7 +233,7 @@ Performs setup needed before running variations.
 	}
         String sql=null;
 	try {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
+      if (true
           && (!JDTestDriver.isLUW())) {
 
 	  JDTestDriver.dropTable(s,JDDMDTest.COLLECTION    + ".CHARCOLUMNS");
@@ -254,7 +254,7 @@ Performs setup needed before running variations.
             + ".GRAPHICUTF16COLUMNS (COL1 GRAPHIC(10) CCSID 1200 , COL2 VARGRAPHIC(10) CCSID 1200, COL3 DBCLOB(1M) CCSID 1200)";
         s.executeUpdate(sql);
       }
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())) {
+      if (true && (!JDTestDriver.isLUW())) {
           sql = "CREATE TABLE " + JDDMDTest.COLLECTION
               + ".ROWIDCOLUMNS (COL1 ROWID , COL2 VARGRAPHIC(10) CCSID 1200)";
           s.executeUpdate(sql);
@@ -267,7 +267,7 @@ Performs setup needed before running variations.
 
 
         // @L1A
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (!JDTestDriver.isLUW())){
+	if(true && (!JDTestDriver.isLUW())){
 
 	  JDTestDriver.dropTable(s,JDDMDTest.COLLECTION    + ".LCNCOLUMNS");
             sql = "CREATE TABLE "  + JDDMDTest.COLLECTION                         //@L1A
@@ -281,7 +281,7 @@ Performs setup needed before running variations.
 	}
 
         // @M1A
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        if(true)
         {
 
 	  JDTestDriver.dropTable(s,JDDMDTest.COLLECTION    + ".DEFCOLUMNS");
@@ -302,7 +302,7 @@ Performs setup needed before running variations.
             }
         }
         // @128sch
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        if(true)
         {
 	  JDTestDriver.dropTable(s,JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
 
@@ -361,7 +361,7 @@ Performs cleanup needed after running variations.
 	    }
 	}
 
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW())){     //@K1A
+	if(true && (! JDTestDriver.isLUW())){     //@K1A
 	    try {
 		s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION
 				 + ".CHARCOLUMNS");
@@ -392,7 +392,7 @@ Performs cleanup needed after running variations.
 
 	}
 
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW() )) //@L1A
+        if(true && (! JDTestDriver.isLUW() )) //@L1A
         {
 	try {
             s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION   //@L1A
@@ -404,7 +404,7 @@ Performs cleanup needed after running variations.
         }
 
         // @M1A
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+        if(true)
         {
             try{
                 s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".DEFCOLUMNS");
@@ -415,7 +415,7 @@ Performs cleanup needed after running variations.
             }
         }
 
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) //@128sch
+        if(true) //@128sch
         {
             try{
                 s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
@@ -605,7 +605,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
 
                 if (getDriver() == JDTestDriver.DRIVER_JCC  || (getJdbcLevel() >= 4)  ||
                         ((getDriver() == JDTestDriver.DRIVER_NATIVE ) &&
-                                (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
+                                (true))
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                     // Buffer length is "not used"  so don't check JCC
                     // check check below to assure that native and toolbox are consistent
@@ -615,7 +615,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     success =  check(sqlDateTimeSub, 0, "sqlDataTimeSub") && success;
                 }
 
-                if(getRelease() < JDTestDriver.RELEASE_V7R1M0 || ( !JDTestDriver.isLUW() && getDriver () != JDTestDriver.DRIVER_TOOLBOX ))  // @M1A
+                if(false || ( !JDTestDriver.isLUW() && getDriver () != JDTestDriver.DRIVER_TOOLBOX ))  // @M1A
                     success =  check(columnDef, (String) null, "columnDef" )&& success;
 
                 if (column.equals ("COLUMN")) {
@@ -636,7 +636,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                         success = check(charOctetLength, -1, "charOctetLength ") && success;
                     }
 
-                    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)   {              // @M1A
+                    if(true)   {              // @M1A
                         if (getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW()
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                             success = check(columnDef, null, "columnDef") && success;
@@ -680,7 +680,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     success = check(numPrecRadix, 0, "numPrecRadix")&& success;
                     success = check(isNullable,"YES", "isNullable")&& success;
 
-                    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)                 // @M1A
+                    if(true)                 // @M1A
                         if (getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW()
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                             success = check(columnDef, null, "columnDef") && success;
@@ -708,7 +708,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     success = check(charOctetLength,10,"charOctetLength") && success;
                     success = check(isNullable,"NO","isNullable") && success;
 
-                    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)                 // @M1A
+                    if(true)                 // @M1A
                         if (getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW()
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                             success = check(columnDef, null, "columnDef") && success;
@@ -738,7 +738,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     success = check(nullable , DatabaseMetaData.columnNullable, "nullable") && success;
                     success = check(isNullable,"YES", "isNullable") && success;
 
-                    if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)                 // @M1A
+                    if(true)                 // @M1A
                         if (getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW()
                                 || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX ) && isSysibmMetadata())) {
                             success = check(columnDef, null, "columnDef") && success;
@@ -961,7 +961,7 @@ No matching columns should be returned.
 
             rs.close ();
 	    if (getDriver () == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW() ||
-                (getDriver() == JDTestDriver.DRIVER_NATIVE && (isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V7R1M0))
+                (getDriver() == JDTestDriver.DRIVER_NATIVE && (isJdbc40() || true))
                 || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) {
 		assertCondition (rows > 0, "rows = "+rows+" sb > 0  empty string for the catalog parameter");
 	    } else {
@@ -1033,7 +1033,7 @@ All matching columns should be returned.
     public void Var008()
     {
       if (getDriver() == JDTestDriver.DRIVER_JCC || getJdbcLevel() >= 4  ||
-          ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) &&
+          ((true) &&
               (getDriver() == JDTestDriver.DRIVER_NATIVE) )
               || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())
              ) {
@@ -2041,15 +2041,6 @@ is closed.
 
 
 
-	String toolboxExpected30[][] = {
-	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-	    {"", systemName, JDDMDTest.COLLECTION,          "COLUMNS",    "COLUMN",      "4",         "INTEGER",   "10",          "0",             "0",              "10",              "0",         "",           null,         "0",             "0",                "-1",                 "1",                "NO", null, null, null, "0"},
-	    {"", systemName, JDDMDTest.COLLECTION,          "COLUMNS",    "COLUMN1",     "93",        "TIMESTAMP", "26",          "0",             "6",               "0",             "1",          "8",           null,         "0",             "0",                "-1",                 "2",                "YES", null, null, null, "0" },
-	    {"", systemName, JDDMDTest.COLLECTION,          "COLUMNS",    "COLUMN2",     "1",         "CHAR",      "10",          "0",             "0",               "0",             "0",          "Nine",           null,         "0",             "0",                "10",                 "3",                 "NO", null, null, null, "0"  },
-	    {"", systemName, JDDMDTest.COLLECTION,          "COLUMNS",    "COLUMNXX",    "3",         "DECIMAL",   "6",           "0",             "2",               "10",            "1",          "SQL/400",           null,         "0",             "0",                "-1",                 "4",                 "YES", null, null, null, "0"  },
-	    {"", systemName, JDDMDTest.COLLECTION2,          "COLUMNS",    "COLUMN2",     "3",         "DECIMAL",   "5",           "0",             "0",               "10",            "1",           "",          null,         "0",             "0",                "-1",                 "1",                 "YES", null, null, null, "0"  },
-	    {"", systemName, JDDMDTest.COLLECTION2,          "COLUMNS",    "COLUMNXX",    "1",          "CHAR",     "10",          "0",             "0",               "0",             "1",           "",          null,         "0",             "0",                "10",                 "2",                  "YES", null, null, null, "0"  }
-	};                      //@K1A
 
         String toolboxExpectedV5R5[][] = {
             {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
@@ -2061,15 +2052,6 @@ is closed.
             {"", systemName, JDDMDTest.COLLECTION2,   "COLUMNS",    "COLUMNXX",    "1",          "CHAR",     "10",          "0",             "0",               "0",             "1",           "",          "",         "0",             "0",                "10",                 "2",                  "YES", null, null, null, "0"  }
         };                      //@M1A
 
-        String toolboxJDBC40Expected[][] = {
-                {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-                {"", systemName, JDDMDTest.COLLECTION,    "COLUMNS",    "COLUMN",      "4",         "INTEGER",   "10",          "0",             "0",              "10",             "0",           "",          null,         "0",             "0",                "-1",                 "1",                "NO", null, null, null, "0", ""},
-                {"", systemName, JDDMDTest.COLLECTION,    "COLUMNS",    "COLUMN1",     "93",        "TIMESTAMP", "26",          "0",             "6",               "0",             "1",          "8",          null,         "0",             "0",                "-1",                 "2",                "YES", null, null, null, "0", "" },
-                {"", systemName, JDDMDTest.COLLECTION,    "COLUMNS",    "COLUMN2",     "1",         "CHAR",      "10",          "0",             "0",               "0",             "0",       "Nine",          null,         "0",             "0",                "10",                 "3",                 "NO", null, null, null, "0", ""  },
-                {"", systemName, JDDMDTest.COLLECTION,    "COLUMNS",    "COLUMNXX",    "3",         "DECIMAL",   "6",           "0",             "2",               "10",            "1",    "SQL/400",          null,         "0",             "0",                "-1",                 "4",                 "YES", null, null, null, "0", ""  },
-                {"", systemName, JDDMDTest.COLLECTION2,   "COLUMNS",    "COLUMN2",     "3",         "DECIMAL",   "5",           "0",             "0",               "10",            "1",           "",          null,         "0",             "0",                "-1",                 "1",                 "YES", null, null, null, "0", ""  },
-                {"", systemName, JDDMDTest.COLLECTION2,   "COLUMNS",    "COLUMNXX",    "1",          "CHAR",     "10",          "0",             "0",               "0",             "1",           "",          null,         "0",             "0",                "10",                 "2",                  "YES", null, null, null, "0", ""  }
-            };   //@pda
 
         String toolboxJDBC40ExpectedV5R5[][] = {
                 {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -2094,24 +2076,16 @@ is closed.
 	    String [][] expected;
 	    if(getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()) {     //@K1A
 	    	if((getJdbcLevel() >= 4)){ //@pda
-	    		if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	    			message.append("Expected = toolboxJDBC40Expected\n");//@pda
-	    			expected = toolboxJDBC40Expected;  //@pda
-	    		}else{
-	    			message.append("Expected = toolboxJDBC40ExpectedV5R5\n");//@pda
-	    			expected = toolboxJDBC40ExpectedV5R5;  //@pda
-	    		} //@pda
+	    		message.append("Expected = toolboxJDBC40ExpectedV5R5\n");//@pda
+          expected = toolboxJDBC40ExpectedV5R5;  //@pda
 	    	} //@pda
-                else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {   // @M1A
-                    message.append("Expected = toolboxExpected30\n");
-                    expected = toolboxExpected30;  //@K1a
-                } else  {                                        // @M1A
+                else  {                                        // @M1A
                   message.append("Expected = toolboxExpectedV5R5\n");
                     expected = toolboxExpectedV5R5;              // @M1A
                 }
             } else                                                //@K1A
 	    {						// @K3
-		if ((getRelease() >= JDTestDriver.RELEASE_V7R1M0) || JDTestDriver.isLUW() ||
+		if ( JDTestDriver.isLUW() ||
 		    (getJdbcLevel() >= 4) ) {
 		    if (getJdbcMajorMinorLevel () >= 41) { 
 	        message.append("Expected = nativeExpectedVar30Jdk17\n");
@@ -2221,12 +2195,6 @@ is closed.
 	    {"", systemName, JDDMDTest.COLLECTION, "LOBCOLUMNS", "BLOB400",     "2004",      "BLOB",      "400",         "0",             "0",              "0",              "1",             null,           null,         "0",             "0",                "400",               "3",                "YES",          null,       null,        null,      null  },
 	};
 
-        String toolboxExpected31[][] = {
-	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-	    {"", systemName, JDDMDTest.COLLECTION, "LOBCOLUMNS", "CLOB100",     "2005",      "CLOB",      "100",         "0",             "0",              "0",              "1",             "",         null,         "0",             "0",                "100",               "1",                "YES",          null,       null,        null,      "0"},
-	    {"", systemName, JDDMDTest.COLLECTION, "LOBCOLUMNS", "DBCLOB200",   "2005",      "DBCLOB",    "200",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "200",               "2",                "YES",          null,       null,        null,      "0" },
-	    {"", systemName, JDDMDTest.COLLECTION, "LOBCOLUMNS", "BLOB400",     "2004",      "BLOB",      "400",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "400",               "3",                "YES",          null,       null,        null,      "0"  },
-	};  //@K1A
 
         String toolboxExpectedV5R5[][] = {
 	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
@@ -2235,12 +2203,6 @@ is closed.
 	    {"", systemName, JDDMDTest.COLLECTION, "LOBCOLUMNS", "BLOB400",     "2004",      "BLOB",      "400",         "0",             "0",              "0",              "1",             "",         "",         "0",             "0",                "400",               "3",                "YES",          null,       null,        null,      "0"  },
 	};  //@M1A
 
-        String toolboxJDBC40Expected[][] = {
-        	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-        	    {"", systemName, JDDMDTest.COLLECTION, "LOBCOLUMNS", "CLOB100",     "2005",      "CLOB",      "100",         "0",             "0",              "0",              "1",             "",         null,         "0",             "0",                "100",               "1",                "YES",          null,       null,        null,      "0", ""},
-        	    {"", systemName, JDDMDTest.COLLECTION, "LOBCOLUMNS", "DBCLOB200",   "2005",      "DBCLOB",    "200",         "0",             "0",              "0",              "1",             "",         null,         "0",             "0",                "200",               "2",                "YES",          null,       null,        null,      "0", "" },
-        	    {"", systemName, JDDMDTest.COLLECTION, "LOBCOLUMNS", "BLOB400",     "2004",      "BLOB",      "400",         "0",             "0",              "0",              "1",             "",         null,         "0",             "0",                "400",               "3",                "YES",          null,       null,        null,      "0", "" },
-        	}; //@pda
 
         String toolboxJDBC40ExpectedV5R5[][] = {
         	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -2258,7 +2220,7 @@ is closed.
 
 	} else if ( (getJdbcLevel() >= 4   && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||   //@N1C
 	        ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-	                (getRelease() >= JDTestDriver.RELEASE_V7R1M0) )
+	                (true) )
 	                || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata()) ) {
 	    if (getJdbcMajorMinorLevel() >= 41) { 
 	      message.append("Expected = jdbc41Expected31\n");
@@ -2271,18 +2233,12 @@ is closed.
 	} else {
 	    if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()) {
 	        if((getJdbcLevel() >= 4)){ //@pda
-	            if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	                message.append("Expected = toolboxJDBC40Expected\n");//@pda
-	                expected31 = toolboxJDBC40Expected;  //@pda
-	            }else{
+	            {
 	                message.append("Expected = toolboxJDBC40ExpectedV5R5\n");//@pda
 	                expected31 = toolboxJDBC40ExpectedV5R5;  //@pda
 	            } //@pda
 	        } //@pda
-	        else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {    // @M1A
-	            message.append("Expected = toolboxExpected31\n");
-	            expected31=toolboxExpected31;
-	        } else {                                              // @M1A
+	        else {                                              // @M1A
 	            message.append("Expected = toolboxExpectedV5R5\n");
 	            expected31 = toolboxExpectedV5R5;             // @M1A
 	        }
@@ -2379,13 +2335,6 @@ is closed.
 	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL4",     "92",      "TIME",           "8",         "0",             "0",              "0",              "1",             null,           null,         "0",             "0",                "0",               "4",                "YES",          null,       null,        null,      null  },
 	};
 
-        String toolboxExpected32[][] = {
-	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL1",     "-5",      "BIGINT",        "19",         "0",             "0",              "10",              "1",             "",         null,         "0",             "0",                "-1",               "1",                "YES",          null,       null,        null,      "0"},
-	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL2",    "5",    "SMALLINT",           "5",         "0",             "0",              "10",              "1",             "",           null,         "0",             "0",                "-1",               "2",                "YES",          null,       null,        null,      "0" },
-	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL3",     "91",      "DATE",          "10",         "0",             "0",              "0",              "1",              "",           null,         "0",             "0",                "-1",               "3",                "YES",          null,       null,        null,      "0"  },
-	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL4",     "92",      "TIME",           "8",         "0",             "0",              "0",              "1",              "",           null,         "0",             "0",                "-1",               "4",                "YES",          null,       null,        null,      "0"  },
-	};
 
         String toolboxExpectedV5R5[][] = {
 	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
@@ -2395,13 +2344,6 @@ is closed.
 	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL4",     "92",      "TIME",           "8",         "0",             "0",              "0",              "1",              "",           "",         "0",             "0",                "-1",               "4",                "YES",          null,       null,        null,      "0"  },
 	};       // @M1A
 
-        String toolboxJDBC40Expected[][] = {
-        	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTO_INCREMENT"},
-        	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL1",     "-5",      "BIGINT",        "19",         "0",             "0",              "10",              "1",             "",         null,         "0",             "0",                "-1",               "1",                "YES",          null,       null,        null,      "0", ""},
-        	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL2",    "5",    "SMALLINT",           "5",         "0",             "0",              "10",              "1",             "",           null,         "0",             "0",                "-1",               "2",                "YES",          null,       null,        null,      "0", "" },
-        	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL3",     "91",      "DATE",          "10",         "0",             "0",              "0",              "1",              "",           null,         "0",             "0",                "-1",               "3",                "YES",          null,       null,        null,      "0", ""  },
-        	    {"", systemName, JDDMDTest.COLLECTION, "INTCOLUMNS", "COL4",     "92",      "TIME",           "8",         "0",             "0",              "0",              "1",              "",           null,         "0",             "0",                "-1",               "4",                "YES",          null,       null,        null,      "0", ""  },
-        	};   //@pda
 
         String toolboxJDBC40ExpectedV5R5[][] = {
         	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTO_INCREMENT"},
@@ -2420,7 +2362,7 @@ is closed.
 
 	} else if ( (getJdbcLevel() >= 4   && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||   //@N1C
                 ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V7R1M0) )
+                (true) )
                || ( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata()) ) {
 	    if (getJdbcMajorMinorLevel() >= 41) {
         message.append("Expected = jdbc40Expected32\n");
@@ -2433,17 +2375,12 @@ is closed.
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda
-        		  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-  	    			message.append("Expected = toolboxJDBC40Expected\n");//@pda
-  	    			expected32 = toolboxJDBC40Expected;  //@pda
-  	    		}else{
+        		  {
   	    			message.append("Expected = toolboxJDBC40ExpectedV5R5\n");//@pda
   	    			expected32 = toolboxJDBC40ExpectedV5R5;  //@pda
   	    		} //@pda
               } //@pda
-              else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {    // @M1A
-                  expected32=toolboxExpected32;
-              } else {                                               // @M1A
+              else  {                                               // @M1A
                   expected32 = toolboxExpectedV5R5;             // @M1A
               }
           }
@@ -2538,13 +2475,6 @@ is closed.
 	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL4",     "2",      "NUMERIC",         "6",         "0",             "2",              "10",              "1",             null,           null,         "0",             "0",                "0",               "4",                "YES",          null,       null,        null,      null  },
 	};
 
-        String toolboxExpected33[][] = {
-	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL1",     "8",      "FLOAT",       "53",         "0",             "0",              "2",              "1",             "",         null,         "0",             "0",                "-1",               "1",                "YES",          null,       null,        null,      "0"},
-	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL2",     "7",      "REAL",          "24",         "0",             "0",              "2",              "1",              "",           null,         "0",             "0",                "-1",               "2",                "YES",          null,       null,        null,      "0" },
-	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL3",     "7",      "REAL",         "24",         "0",             "0",              "2",              "1",             "",           null,         "0",             "0",                "-1",               "3",                "YES",          null,       null,        null,      "0"  },
-	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL4",     "2",      "NUMERIC",         "6",         "0",             "2",              "10",              "1",          "",           null,         "0",             "0",                "-1",               "4",                "YES",          null,       null,        null,      "0"  },
-	};  //@K1A
 
         String toolboxExpectedV5R5[][] = {
 	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
@@ -2554,13 +2484,6 @@ is closed.
 	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL4",     "2",      "NUMERIC",         "6",         "0",             "2",              "10",              "1",          "",           "",         "0",             "0",                "-1",               "4",                "YES",          null,       null,        null,      "0"  },
 	};  //@M1A
 
-        String toolboxJDBC40Expected[][] = {
-        	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-        	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL1",     "8",      "FLOAT",       "53",         "0",             "0",              "2",              "1",             "",         null,         "0",             "0",                "-1",               "1",                "YES",          null,       null,        null,      "0", ""},
-        	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL2",     "7",      "REAL",          "24",         "0",             "0",              "2",              "1",              "",           null,         "0",             "0",                "-1",               "2",                "YES",          null,       null,        null,      "0" , ""},
-        	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL3",     "7",      "REAL",         "24",         "0",             "0",              "2",              "1",             "",           null,         "0",             "0",                "-1",               "3",                "YES",          null,       null,        null,      "0", ""  },
-        	    {"", systemName, JDDMDTest.COLLECTION, "FLOATCOLUMNS", "COL4",     "2",      "NUMERIC",         "6",         "0",             "2",              "10",              "1",          "",           null,         "0",             "0",                "-1",               "4",                "YES",          null,       null,        null,      "0" , "" },
-        	};
 
         String toolboxJDBC40ExpectedV5R5[][] = {
         	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -2579,7 +2502,7 @@ is closed.
 
         } else if ( (getJdbcLevel() >= 4   && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||   //@N1C
                 ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V7R1M0) )
+                (true) )
                 ||( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata())) {
           if (getJdbcMajorMinorLevel() >= 41) { 
             message.append("Expected = jdbc41Expected33\n");
@@ -2592,16 +2515,11 @@ is closed.
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
               if((getJdbcLevel() >= 4)){ //@pda
-            	  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-  	    			message.append("Expected = toolboxJDBC40Expected\n");//@pda
-  	    			expected33 = toolboxJDBC40Expected;  //@pda
-  	    		}else{
+            	  {
   	    			message.append("Expected = toolboxJDBC40ExpectedV5R5\n");//@pda
   	    			expected33 = toolboxJDBC40ExpectedV5R5;  //@pda
   	    		} //@pda
             } //@pda
-              else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)    // @M1A
-                  expected33=toolboxExpected33;
               else                                              // @M1A
                   expected33 = toolboxExpectedV5R5;             // @M1A
 
@@ -2755,26 +2673,6 @@ is closed.
               "DATALINK", "200", "0", "0", "0", "1", null, null, "0", "0",
               "202", "4", "YES", null, null, null, null }, };
 
-      String toolboxExpected34[][] = {
-          { "", "TABLE_CAT", "SCHEMA", "TABLE_NAME", "COLUMN_NAME",
-              "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH",
-              "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS",
-              "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB",
-              "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE",
-              "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL1", "-2",
-              "BINARY", "10", "0", "0", "0", "1", "", null, "0", "0", "10",
-              "1", "YES", null, null, null, "0" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL2", "-3",
-              "VARBINARY", "10", "0", "0", "0", "1", "", null, "0", "0", "10",
-              "2", "YES", null, null, null, "0" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL3", "12",
-              "VARCHAR", "10", "0", "0", "0", "1", "", null, "0", "0", "10",
-              "3", "YES", null, null, null, "0" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL4", "70",
-              "DATALINK", "200", "0", "0", "0", "1", "", null, "0", "0", "200",
-              "4", "YES", null, null, null, "0" }, }; // @K1A
-
       String toolboxExpectedV7R134[][] = {
           { "", "TABLE_CAT", "SCHEMA", "TABLE_NAME", "COLUMN_NAME",
               "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH",
@@ -2794,94 +2692,6 @@ is closed.
           { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL4", "70",
               "DATALINK", "200", "200", null, null, "1", null, null, "70", null, "202",
               "4", "YES", null, null, null, null, "NO" }, }; // @M1A
-
-
-      String toolboxExpectedV6R134[][] = {
-          { "", "TABLE_CAT", "SCHEMA", "TABLE_NAME", "COLUMN_NAME",
-              "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH",
-              "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS",
-              "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB",
-              "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE",
-              "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL1", "-2",
-              "BINARY", "10", "0", "0", "0", "1", "", "", "0", "0", "10", "1",
-              "YES", null, null, null, "0" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL2", "-3",
-              "VARBINARY", "10", "0", "0", "0", "1", "", "", "0", "0", "10",
-              "2", "YES", null, null, null, "0" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL3", "12",
-              "VARCHAR", "10", "0", "0", "0", "1", "", "", "0", "0", "10", "3",
-              "YES", null, null, null, "0" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL4", "70",
-              "DATALINK", "200", "0", "0", "0", "1", "", "", "0", "0", "200",
-              "4", "YES", null, null, null, "0" }, }; // @M1A
-
-      String toolboxJDBC40Expected34[][] = {
-          { "", "TABLE_CAT", "SCHEMA", "TABLE_NAME", "COLUMN_NAME",
-              "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH",
-              "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS",
-              "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB",
-              "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE",
-              "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE",
-              "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL1", "-2",
-              "BINARY", "10", "0", "0", "0", "1", "", null, "0", "0", "10",
-              "1", "YES", null, null, null, "0", "" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL2", "-3",
-              "VARBINARY", "10", "0", "0", "0", "1", "", null, "0", "0", "10",
-              "2", "YES", null, null, null, "0", "" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL3", "12",
-              "VARCHAR", "10", "0", "0", "0", "1", "", null, "0", "0", "10",
-              "3", "YES", null, null, null, "0", "" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL4", "70",
-              "DATALINK", "200", "0", "0", "0", "1", "", null, "0", "0", "200",
-              "4", "YES", null, null, null, "0", "" }, }; // @pda
-
-      String toolboxJDBC40Expected34V5R5[][] = {
-          { "", "TABLE_CAT", "SCHEMA", "TABLE_NAME", "COLUMN_NAME",
-              "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH",
-              "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS",
-              "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB",
-              "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE",
-              "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE",
-              "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL1", "-2",
-              "BINARY", "10", "0", "0", "0", "1", "", "", "0", "0", "10", "1",
-              "YES", null, null, null, "0", "" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL2", "-3",
-              "VARBINARY", "10", "0", "0", "0", "1", "", "", "0", "0", "10",
-              "2", "YES", null, null, null, "0", "" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL3", "12",
-              "VARCHAR", "10", "0", "0", "0", "1", "", "", "0", "0", "10", "3",
-              "YES", null, null, null, "0", "" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL4", "70",
-              "DATALINK", "200", "0", "0", "0", "1", "", "", "0", "0", "200",
-              "4", "YES", null, null, null, "0", "" }, }; // @pda
-
-
-
-      String toolboxJDBC40Expected34V7R1[][] = {
-          { "", "TABLE_CAT", "SCHEMA", "TABLE_NAME", "COLUMN_NAME",
-              "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH",
-              "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS",
-              "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB",
-              "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE",
-              "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE",
-              "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL1", "-2",
-              "BINARY", "10", "10", null, null, "1", null, null, "-2", null, "10", "1",
-              "YES", null, null, null, null, "NO" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL2", "-3",
-              "VARBINARY", "10", "10", null, null, "1", null, null, "-3", null, "10",
-              "2", "YES", null, null, null, null, "NO" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL3", "12",
-              "VARCHAR", "10", "10", null, null, "1", null, null, "12", null, "10", "3",
-              "YES", null, null, null, null, "NO" },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL4", "70",
-              "DATALINK", "200", "200", null, null, "1", null, null, "70", null, "202",
-              "4", "YES", null, null, null, null, "NO" }, }; // @pda
-
-
 
 
       String toolboxJDBC40Expected34V7R2[][] = {
@@ -2918,51 +2728,14 @@ is closed.
 
 
 
-      String toolboxJDBC41Expected34V7R1[][] = {
-          { "", "TABLE_CAT", "SCHEMA", "TABLE_NAME", "COLUMN_NAME",
-              "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH",
-              "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS",
-              "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB",
-              "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE",
-              "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE",
-              "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT","IS_GENERATEDCOLUMN" },
-          { "", systemName, JDDMDTest.COLLECTION,  "CHARCOLUMNS",  "COL1",  "-2",  "BINARY",  "10",  "10",  null,  null,  "1",  null,  null,  "-2",  null,  "10",  "1",  "YES",  null,  null,  null,  null,  "NO", "NO", },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL2", "-3",
-              "VARBINARY", "10",  "10",  null,  null,  "1",  null,  null,  "-3",  null,  "10",  "2",  "YES",  null,  null,  null,  null,  "NO",  "NO", },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL3", "12",
-              "VARCHAR", "10",  "10",  null,  null,  "1",  null,  null,  "12",  null,  "10",  "3",  "YES",  null,  null,  null,  null,  "NO",   "NO", },
-          { "", systemName, JDDMDTest.COLLECTION, "CHARCOLUMNS", "COL4", "70",
-              "DATALINK", "200",  "200",  null,  null,  "1",  null,  null,  "70",  null,  "202",  "4",  "YES",  null,  null,  null,  null,  "NO",  "NO", }, }; // @pda
-
-
-
-
-
       message = new StringBuffer();
 
       String[][] expected34 = nativeExpected34;
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
           || getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
         if ((getJdbcLevel() >= 4)) { // @pda
-          if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-            message.append("Expected = toolboxJDBC40Expected34\n");// @pda
-            expected34 = toolboxJDBC40Expected34; // @pda
-          } else {
-	      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) { 
-		  message.append("Expected = toolboxJDBC40Expected34V5R5\n");// @pda
-		  expected34 = toolboxJDBC40Expected34V5R5; // @pda
-	      } else  if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		  if (getJdbcMajorMinorLevel() >= 41 ) { 
-		      message.append("Expected = toolboxJDBC41Expected34V7R1\n");// @pda
-		      expected34 = toolboxJDBC41Expected34V7R1; // @pda
-
-		  } else { 
-		      message.append("Expected = toolboxJDBC40Expected34V7R1\n");// @pda
-		      expected34 = toolboxJDBC40Expected34V7R1; // @pda
-		  }
-
-
-	      } else {
+           {
+	      {
 	        if (getJdbcMajorMinorLevel() >= 41 ) { 
 	          message.append("Expected = toolboxJDBC41Expected34V7R2\n");// @pda
 	          expected34 = toolboxJDBC41Expected34V7R2; // @pda
@@ -2975,13 +2748,7 @@ is closed.
           } // @pda
         } // @pda
         else {
-          if (getRelease() < JDTestDriver.RELEASE_V7R1M0) { // @M1A
-            expected34 = toolboxExpected34;
-            message.append("Expected = toolboxExpected34\n");
-          } else if (getRelease() < JDTestDriver.RELEASE_V7R1M0){ // @M1A
-            expected34 = toolboxExpectedV6R134; // @M1A
-            message.append("Expected = toolboxExpectedV6R134\n");
-	  } else {
+          {
             expected34 = toolboxExpectedV7R134; // @M1A
             message.append("Expected = toolboxExpectedV7R134\n");
 
@@ -2989,7 +2756,7 @@ is closed.
         }
       } else if ((getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX)
           || // @N1C
-          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
+          ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true))
           || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata())) {
 	  if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
 	    if (getJdbcMajorMinorLevel() >= 41) { 
@@ -3063,7 +2830,7 @@ is closed.
 **/
     public void Var035()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW()) ) {
+        if(true && (! JDTestDriver.isLUW()) ) {
      /** @K2 **/
      //String systemName = ((AS400JDBCConnection)connection_).getSystem().getSystemName();    //@K1A
         String jdbc40Expected35[][] = {
@@ -3085,27 +2852,12 @@ is closed.
 	    {"", systemName, JDDMDTest.COLLECTION, "GRAPHICCOLUMNS", "COL2",    "12",    "VARG",          "10",         "0",             "0",              "0",              "1",             null,           null,         "0",             "0",                "20",               "2",                "YES",          null,       null,        null,      null },
 	};
 
-        String toolboxExpected35[][] = {
-	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-	    {"", systemName, JDDMDTest.COLLECTION, "GRAPHICCOLUMNS", "COL1",     "1",      "GRAPHIC",       "10",         "0",             "0",              "0",              "1",          "",         null,         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0"},
-	    {"", systemName, JDDMDTest.COLLECTION, "GRAPHICCOLUMNS", "COL2",    "12",    "VARGRAPHIC",          "10",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
-	};            //@K1A
-
         String toolboxExpected35V5R5[][] = {
 	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
 	    {"", systemName, JDDMDTest.COLLECTION, "GRAPHICCOLUMNS", "COL1",     "1",      "GRAPHIC",       "10",         "0",             "0",              "0",              "1",          "",         "",         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0"},
 	    {"", systemName, JDDMDTest.COLLECTION, "GRAPHICCOLUMNS", "COL2",    "12",    "VARGRAPHIC",          "10",         "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
 	};            //@M1A
 
-        String toolboxJDBC40Expected35[][] = {
-        	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-        	    {"", systemName, JDDMDTest.COLLECTION, "GRAPHICCOLUMNS", "COL1",     "1",      "GRAPHIC",       "10",         "0",             "0",              "0",              "1",          "",         null,         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0", ""},
-        	    {"", systemName, JDDMDTest.COLLECTION, "GRAPHICCOLUMNS", "COL2",    "12",    "VARGRAPHIC",          "10",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0", "" },
-        	};  //@pda
-
-        
-
-        
         String toolboxJDBC40Expected35V5R5[][] = {
         	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
         	    {"", systemName, JDDMDTest.COLLECTION, "GRAPHICCOLUMNS", "COL1",     "1",      "GRAPHIC",       "10",         "0",             "0",              "0",              "1",          "",         "",         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0", ""},
@@ -3116,7 +2868,7 @@ is closed.
         String[][] expected35 = nativeExpected35;
         if ( (getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) || //@N1C
             ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V7R1M0) )
+                (true) )
                 || ( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata()) ) {
           if (getJdbcMajorMinorLevel() >= 41) {
             message.append("Expected = jdbc41Expected35\n");
@@ -3128,17 +2880,12 @@ is closed.
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda
-        		  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-  	    			message.append("Expected = toolboxJDBC40Expected35\n");//@pda
-  	    			expected35 = toolboxJDBC40Expected35;  //@pda
-  	    		}else{
+        		  {
   	    			message.append("Expected = toolboxJDBC40Expected35V5R5\n");//@pda
   	    			expected35 = toolboxJDBC40Expected35V5R5;  //@pda
   	    		} //@pda
               } //@pda
-        	  else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)    // @M1A
-                  expected35=toolboxExpected35;
-              else                                              // @M1A
+        	  else                                             // @M1A
                   expected35=toolboxExpected35V5R5;               // @M1A
           }
         }
@@ -3293,7 +3040,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                 messageColumnName=column;
 
                 /* success = check(bufferLength.intValue(),0,"bufferLength") && success ; */
-                if(getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getRelease() < JDTestDriver.RELEASE_V7R1M0 || getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW() || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata()))  // @M1A
+                if(getDriver () == JDTestDriver.DRIVER_JTOPENLITE || false || getDriver() == JDTestDriver.DRIVER_NATIVE || JDTestDriver.isLUW() || (getDriver() == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata()))  // @M1A
                     success = check(columnDef,(String) null, "columnDef") && success ;
                 else                                            // @M1A
                     success = check(columnDef, "", "columnDef") && success; // @M1A
@@ -3542,7 +3289,7 @@ SQL400 - The native driver will return null for a remarks field that
     */
     public void Var038()
     {
-        if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW())){
+        if(true && (! JDTestDriver.isLUW())){
             try{
                 ResultSet rs = dmd_.getColumns(null, JDDMDTest.COLLECTION, "LCNCOLUMNS", "%");
                 boolean success = false;
@@ -3633,14 +3380,6 @@ SQL400 - The native driver will return null for a remarks field that
 	    {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL4",     "70",      "DATALINK",               "200",         "0",             "0",              "0",              "1",             null,         null,         "0",             "0",                "202",              "4",                "YES",          null,       null,        null,      null  },
 	};
 
-        String toolboxExpected39[][] = {
-	    {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME",             "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-	    {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL1",     "-2",      "CHAR() FOR BIT DATA",    "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0"},
-	    {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL2",    "-3",       "VARCHAR() FOR BIT DATA", "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
-	    {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL3",     "12",      "VARCHAR",                "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "3",                "YES",          null,       null,        null,      "0"  },
-	    {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL4",     "70",      "DATALINK",               "200",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "200",              "4",                "YES",          null,       null,        null,      "0"  },
-	};  //@K1A
-
         String toolboxExpected39V5R5[][] = {
             {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME",             "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
             {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL1",     "-2",      "CHAR() FOR BIT DATA",    "10",          "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0"},
@@ -3648,14 +3387,6 @@ SQL400 - The native driver will return null for a remarks field that
             {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL3",     "12",      "VARCHAR",                "10",          "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "10",               "3",                "YES",          null,       null,        null,      "0"  },
             {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL4",     "70",      "DATALINK",               "200",         "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "200",              "4",                "YES",          null,       null,        null,      "0"  },
         };  //@M1A
-
-        String toolboxJDBC40Expected39[][] =  {
-                {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME",             "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-                {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL1",     "-2",      "CHAR() FOR BIT DATA",    "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0", ""},
-                {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL2",    "-3",       "VARCHAR() FOR BIT DATA", "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0", "" },
-                {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL3",     "12",      "VARCHAR",                "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "3",                "YES",          null,       null,        null,      "0", ""  },
-                {"", systemName, JDDMDTest.COLLECTION, "CHARBITCOLUMNS", "COL4",     "70",      "DATALINK",               "200",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "200",              "4",                "YES",          null,       null,        null,      "0", "" },
-            }; //@pda
 
         String toolboxJDBC40Expected39V5R5[][] =  {
                 {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME",             "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -3671,17 +3402,14 @@ SQL400 - The native driver will return null for a remarks field that
 	if ( JDTestDriver.isLUW() ) {
 	    expected39=luwExpected39;
 	} else if (  getDriver () == JDTestDriver.DRIVER_JTOPENLITE ) {
-	    if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-		message.append("Expected = toolboxJDBC40Expected39\n");//@pda
-		expected39 = toolboxJDBC40Expected39;  //@pda
-	    }else{
+	    {
 		message.append("Expected = toolboxJDBC40Expected39V5R5\n");//@pda
 		expected39 = toolboxJDBC40Expected39V5R5;  //@pda
 	    } //@pda
 
 	} else if (  getDriver () == JDTestDriver.DRIVER_JTOPENLITE ||  getDriver () == JDTestDriver.DRIVER_NATIVE || (getJdbcLevel() >= 4   && (getDriver() != JDTestDriver.DRIVER_TOOLBOX)) ||   //@N1C
                 ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
+                (true))
                 ||  ( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
                         isSysibmMetadata())) {
 	    if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
@@ -3706,17 +3434,12 @@ SQL400 - The native driver will return null for a remarks field that
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda
-        		  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-  	    			message.append("Expected = toolboxJDBC40Expected39\n");//@pda
-  	    			expected39 = toolboxJDBC40Expected39;  //@pda
-  	    		}else{
+        		  {
   	    			message.append("Expected = toolboxJDBC40Expected39V5R5\n");//@pda
   	    			expected39 = toolboxJDBC40Expected39V5R5;  //@pda
   	    		} //@pda
               } //@pda
-        	   else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)    // @M1A
-                  expected39=toolboxExpected39;
-              else                                      // @M1A
+        	   else                                       // @M1A
                   expected39 = toolboxExpected39V5R5;     // @M1A
           }
         }
@@ -3775,7 +3498,7 @@ SQL400 - The native driver will return null for a remarks field that
      */
     public void Var040()
     {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW())) {
+      if (true && (! JDTestDriver.isLUW())) {
         String added = " -- Added by native driver ";
             /** @K2 **/
        // String systemName = ((AS400JDBCConnection)connection_).getSystem().getSystemName();    //@K1A
@@ -3802,26 +3525,12 @@ SQL400 - The native driver will return null for a remarks field that
             {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL3",     "2005",   "CLOB",                  "1048576",     "0",             "0",              "0",              "1",             null,         null,         "0",             "0",                "1048576",               "3",                "YES",          null,       null,        null,      null  },
         };
 
-        String toolboxExpected40[][] = {
-            {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME",             "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-            {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL1",     "1",       "CHAR",                   "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0"},
-            {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL2",     "12",      "VARCHAR",                "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
-            {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL3",     "2005",    "CLOB",                   "1048576",      "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "1048576",               "3",                "YES",          null,       null,        null,      "0"  },
-        };  //@K1A
-
         String toolboxExpected40V5R5[][] = {
             {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME",             "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
             {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL1",     "1",       "CHAR",                   "10",          "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0"},
             {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL2",     "12",      "VARCHAR",                "10",          "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
             {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL3",     "2005",    "CLOB",                   "1048576",      "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "1048576",               "3",                "YES",          null,       null,        null,      "0"  },
         };  //@M1A
-
-        String toolboxJDBC40Expected40[][] =  {
-                {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME",             "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-                {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL1",     "1",       "CHAR",                   "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0", ""},
-                {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL2",     "12",      "VARCHAR",                "10",          "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" , ""},
-                {"", systemName, JDDMDTest.COLLECTION, "CHARUTF8COLUMNS", "COL3",     "2005",    "CLOB",                   "1048576",      "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "1048576",               "3",                "YES",          null,       null,        null,      "0" , "" },
-            };  //@pda
 
         String toolboxJDBC40Expected40V5R5[][] =  {
                 {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME",             "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -3836,7 +3545,7 @@ SQL400 - The native driver will return null for a remarks field that
         String[][] expected40 = nativeExpected40;
         if (getDriver () == JDTestDriver.DRIVER_JTOPENLITE ||  (getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) || //@N1C
             ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
+                (true))
                 ||( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
                         (isSysibmMetadata())) ) {
           if (getJdbcMajorMinorLevel() >= 41) { 
@@ -3850,17 +3559,12 @@ SQL400 - The native driver will return null for a remarks field that
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda
-        		  if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-  	    			message.append("Expected = toolboxJDBC40Expected40\n");//@pda
-  	    			expected40 = toolboxJDBC40Expected40;  //@pda
-  	    		}else{
+        		  {
   	    			message.append("Expected = toolboxJDBC40Expected40V5R5\n");//@pda
   	    			expected40 = toolboxJDBC40Expected40V5R5;  //@pda
   	    		} //@pda
               } //@pda
-        	   else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)    // @M1A
-                  expected40=toolboxExpected40;
-              else                                              // @M1A
+        	   else                                               // @M1A
                   expected40=toolboxExpected40V5R5;               // @M1A
           }
         }
@@ -3922,16 +3626,7 @@ SQL400 - The native driver will return null for a remarks field that
        public void Var041()
        {
 
-           if(getRelease() >= JDTestDriver.RELEASE_V7R1M0 && (! JDTestDriver.isLUW())) {
-
-             String jdbc40Expected41[][] = {
-                 {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-                 {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL1",     "1",      "GRAPHIC",       "10",       "20",            null,              null,              "1",             null,         null,        "-95",           null,                "20",               "1",                "YES",          null,       null,        null,      null, "NO"},
-                 {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL2",    "12",    "VARGRAPHIC",      "10",         "20",             null,             null,              "1",             null,         null,        "-96",            null,                "20",               "2",                "YES",          null,       null,        null,      null, "NO" },
-                 {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL3",     "2005", "DBCLOB",      "1048576",     "2097152",        null,             null,              "1",             null,         null,       "-350",           null,                "2097152",               "3",                "YES",          null,       null,        null,      null, "NO"  },
-             };
-
-
+           if(true && (! JDTestDriver.isLUW())) {
 
              String jdbc30Expected4155[][] = {
                  {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -3967,29 +3662,13 @@ SQL400 - The native driver will return null for a remarks field that
             {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL3",     "2005", "DBCLOB",      "1048576",     "0",             "0",              "0",              "1",             null,         null,         "0",             "0",                "2097152",               "3",                "YES",          null,       null,        null,      null  },
         };
 
-           String toolboxExpected41[][] = {
-            {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-            {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL1",     "1",      "GRAPHIC",       "10",         "0",             "0",              "0",              "1",          "",         null,         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0"},
-            {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL2",    "12",    "VARGRAPHIC",      "10",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
-            {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL3",     "2005", "DBCLOB",      "1048576",     "0",             "0",              "0",              "1",             "",         null,         "0",             "0",                "1048576",               "3",                "YES",          null,       null,        null,      "0"  },
-
-        };            //@K1A
-
-        String toolboxExpected41V5R5[][] = {
+           String toolboxExpected41V5R5[][] = {
             {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
             {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL1",     "1",      "GRAPHIC",       "10",         "0",             "0",              "0",              "1",          "",         "",         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0"},
             {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL2",    "12",    "VARGRAPHIC",      "10",         "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
             {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL3",     "2005", "DBCLOB",      "1048576",     "0",             "0",              "0",              "1",             "",         "",         "0",             "0",                "1048576",               "3",                "YES",          null,       null,        null,      "0"  },
 
         };            //@M1A
-
-        String toolboxJDBC40Expected41[][] =  {
-                {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-                {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL1",     "1",      "GRAPHIC",       "10",         "0",             "0",              "0",              "1",          "",         null,         "0",             "0",                "10",               "1",                "YES",          null,       null,        null,      "0", ""},
-                {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL2",    "12",    "VARGRAPHIC",      "10",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0", "" },
-                {"", systemName, JDDMDTest.COLLECTION, "GRAPHICUTF16COLUMNS", "COL3",     "2005", "DBCLOB",      "1048576",     "0",             "0",              "0",              "1",             "",         null,         "0",             "0",                "1048576",               "3",                "YES",          null,       null,        null,      "0", ""  },
-
-            };      //@pda
 
         String toolboxJDBC40Expected41V5R5[][] =  {
                 {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -4006,11 +3685,8 @@ SQL400 - The native driver will return null for a remarks field that
 	   if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
 	       message.append("Expected = toolboxJDBC40Expected41V5R5\n");//@pda
 	       expected41 = toolboxJDBC40Expected41V5R5;  //@pda
-	   } else  if ( getJdbcLevel() >= 4 && getRelease() == JDTestDriver.RELEASE_V7R1M0 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) {//@N1C
-             message.append("Expected = jdbc40Expected41\n");
-             expected41=jdbc40Expected41;
-	   } else if ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-		       (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+	   } else  if ( (getDriver() == JDTestDriver.DRIVER_NATIVE) &&
+		       (true)
 		       || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
 			   (isSysibmMetadata()))  || getDriver () == JDTestDriver.DRIVER_NATIVE  ) {
 	      if (getJdbcMajorMinorLevel() >= 41) {
@@ -4030,17 +3706,12 @@ SQL400 - The native driver will return null for a remarks field that
            } else {
              if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
             	 if((getJdbcLevel() >= 4)){ //@pda
-            		 if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-     	    			message.append("Expected = toolboxJDBC40Expected41\n");//@pda
-     	    			expected41 = toolboxJDBC40Expected41;  //@pda
-     	    		}else{
+            		 {
      	    			message.append("Expected = toolboxJDBC40Expected41V5R5\n");//@pda
      	    			expected41 = toolboxJDBC40Expected41V5R5;  //@pda
      	    		} //@pda
                  } //@pda
-            	   else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) // @M1A
-                     expected41=toolboxExpected41;
-                 else                                           // @M1A
+            	   else                                            // @M1A
                      expected41=toolboxExpected41V5R5;            // @M1A
              }
            }
@@ -4103,7 +3774,7 @@ SQL400 - The native driver will return null for a remarks field that
    */
   public void Var042() {
 
-    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0  && (! JDTestDriver.isLUW())) {
+    if (true  && (! JDTestDriver.isLUW())) {
 
 	       String jdbc40Expected42[][] = {
 		   {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -4147,24 +3818,12 @@ SQL400 - The native driver will return null for a remarks field that
 		   {"", systemName, JDDMDTest.COLLECTION, "ROWIDCOLUMNS", "COL2",    "12",    "VARG",          "10",         "0",             "0",              "0",              "1",             null,           null,         "0",             "0",                "20",               "2",                "YES",          null,       null,        null,      null },
 	       };
 
-	       String toolboxExpected42[][] = {
-		   {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
-		   {"", systemName, JDDMDTest.COLLECTION, "ROWIDCOLUMNS", "COL1",     "-2",      "ROWID",        "40",         "0",             "0",              "0",              "0",            "",         null,         "0",             "0",                "40",               "1",                "NO",          null,       null,        null,      "0"},
-		   {"", systemName, JDDMDTest.COLLECTION, "ROWIDCOLUMNS", "COL2",    "12",    "VARGRAPHIC",          "10",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
-	       };            //@K1A
-
-               String toolboxExpected42V5R5[][] = {
+	       String toolboxExpected42V5R5[][] = {
 		   {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE"},
 		   {"", systemName, JDDMDTest.COLLECTION, "ROWIDCOLUMNS", "COL1",     "-2",      "ROWID",        "40",         "0",             "0",              "0",              "0",            "",         "",         "0",             "0",                "40",               "1",                "NO",          null,       null,        null,      "0"},
 		   {"", systemName, JDDMDTest.COLLECTION, "ROWIDCOLUMNS", "COL2",    "12",    "VARGRAPHIC",          "10",         "0",             "0",              "0",              "1",             "",           "",         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0" },
 	       };            //@M1A
 
-
-               String toolboxJDBC40Expected42[][] = {
-		   {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
-		   {"", systemName, JDDMDTest.COLLECTION, "ROWIDCOLUMNS", "COL1",     "-8",      "ROWID",        "40",         "0",             "0",              "0",              "0",            "",         null,         "0",             "0",                "40",               "1",                "NO",          null,       null,        null,      "0", ""},
-		   {"", systemName, JDDMDTest.COLLECTION, "ROWIDCOLUMNS", "COL2",    "12",    "VARGRAPHIC",          "10",         "0",             "0",              "0",              "1",             "",           null,         "0",             "0",                "10",               "2",                "YES",          null,       null,        null,      "0","" },
-	       };
 
                String toolboxJDBC40Expected42V5R5[][] =  {
             		   {"", "TABLE_CAT","SCHEMA",             "TABLE_NAME", "COLUMN_NAME", "DATA_TYPE", "TYPE_NAME", "COLUMN_SIZE", "BUFFER_LENGTH", "DECIMAL_DIGITS", "NUM_PREC_RADIX", "NULLABLE", "REMARKS", "COLUMN_DEF", "SQL_DATA_TYPE", "SQL_DATETIME_SUB", "CHAR_OCTET_LENGTH", "ORDINAL_POSITION", "IS_NULLABLE", "SCOPE_CATLOG", "SCOPE_SCHEMA", "SCOPE_TABLE", "SOURCE_DATA_TYPE", "IS_AUTOINCREMENT"},
@@ -4179,7 +3838,7 @@ SQL400 - The native driver will return null for a remarks field that
 	    message.append("Expected = jdbc40Expected42\n");
 	    expected42 = jdbc40Expected42;
 	    if ((getDriver() == JDTestDriver.DRIVER_NATIVE || getDriver() == JDTestDriver.DRIVER_JTOPENLITE ) &&
-		(getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+		(true)) {
 	      if (getJdbcMajorMinorLevel() >= 41) { 
 	        message.append("Expected = jdbc41Expected4271\n");
 	        expected42 = jdbc41Expected4271;
@@ -4189,17 +3848,17 @@ SQL400 - The native driver will return null for a remarks field that
 		expected42 = jdbc40Expected4271;
 	      }
 	    } else if ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-		(getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+		(true)) {
 
 		message.append("Expected = jdbc40Expected4255\n");
 		expected42 = jdbc40Expected4255;
 	    }
 
 	}  else if (((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-	        (getRelease() >= JDTestDriver.RELEASE_V7R1M0))
+	        (true))
 	        || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
 	                (isSysibmMetadata()))) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_TOOLBOX && isJdbc40()) {
+	    if (true && getDriver() == JDTestDriver.DRIVER_TOOLBOX && isJdbc40()) {
 	      if (getJdbcMajorMinorLevel() >= 41) { 
           message.append("Expected = jdbc41Expected4271\n");
           expected42 = jdbc41Expected4271;
@@ -4212,27 +3871,18 @@ SQL400 - The native driver will return null for a remarks field that
 		message.append("Expected = expected4255\n");
 		expected42 = expected4255;
 
-	    } else if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	    } else if (true) {
 	        message.append("Expected = jdbc40Expected4255\n");
 	        expected42 = jdbc40Expected4255;
-	    } else {
-	        message.append("Expected = jdbc40Expected4255\n");
-	        expected42 = jdbc40Expected4255;
-	    }
+	    } 
 	} else {
 	    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 		if(getJdbcLevel() >= 4)                         
-		    if(getRelease() < JDTestDriver.RELEASE_V7R1M0) { 
-			message.append("Expected = toolboxJDBC40Expected42\n");
-			expected42 = toolboxJDBC40Expected42;       
-		    } else  {                                         
+		     {                                         
 			message.append("Expected = toolboxJDBC40Expected42V5R5\n");
 			expected42 = toolboxJDBC40Expected42V5R5;    
 		    }
-		else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) { 
-		    message.append("Expected = toolboxJDBC42\n");
-		    expected42 = toolboxExpected42;
-		} else {                                             
+		else {                                             
 		    message.append("Expected = toolboxExpected42V5R5\n");
 		    expected42 = toolboxExpected42V5R5;           
 		}
@@ -4316,11 +3966,7 @@ will attempt to recreate the error.
 		} 
 	    }
 
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0 ) {
-	  notApplicable("Native Driver and SI24355 testing");
-      } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() == JDTestDriver.RELEASE_V7R1M0 ) {
-	  notApplicable("Not tested for toolbox and V5R4");
-      } else {
+      {
 	  checkRSMD(false);
       }
   }
@@ -4341,11 +3987,7 @@ will attempt to recreate the error.
       }
 
 
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355 && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	  notApplicable("Native Driver and SI24355 testing");
-      } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && getRelease() == JDTestDriver.RELEASE_V7R1M0 ) {
-	  notApplicable("Not tested for toolbox and V5R4");
-      } else {
+       {
 
 	  checkRSMD(true);
       }
@@ -4359,7 +4001,7 @@ will attempt to recreate the error.
 	  notApplicable("LUW faling with com.ibm.db2.jcc.am.SqlException: DB2 SQL error: SQLCODE: -443, SQLSTATE: 38553, SQLERRMC: SYSIBM.SQLCOLUMNS;COLUMNS;SYSIBM:CLI:-727");
 	  return;
       }
-      if(getRelease() >= JDTestDriver.RELEASE_V7R1M0)
+      if(true)
       {
           message = new StringBuffer();
           ResultSet rs = null;
@@ -4402,8 +4044,7 @@ will attempt to recreate the error.
           }
 
       }
-      else
-          notApplicable("V5R5 or greater variation");
+     
   }
 
     public void checkRSMD(boolean extendedMetadata)
@@ -7279,11 +6920,7 @@ will attempt to recreate the error.
     **/
         public void Var046()
         {
-            if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-            {
-                notApplicable("V7R1 long schema TC.");
-                return;
-            }
+           
             try {
                 message = new StringBuffer();
                 messageColumnName="";
@@ -7337,7 +6974,7 @@ will attempt to recreate the error.
         **/
             public void Var047()
             {
-                if(getRelease() < JDTestDriver.RELEASE_V7R1M0 || getDriver() != JDTestDriver.DRIVER_TOOLBOX)
+                if(false || getDriver() != JDTestDriver.DRIVER_TOOLBOX)
                 {
                     notApplicable("V7R1 long schema (non sysibm SP) TC.");
                     return;
@@ -7393,10 +7030,6 @@ getColumns() - Get a list of those created in this testcase using a readonly con
     public void Var048()
     {
 
-	if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V7R1 or later test for readonly connection ");
-	    return;
-	}
         try {
             message = new StringBuffer();
             messageColumnName="";

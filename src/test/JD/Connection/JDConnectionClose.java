@@ -311,7 +311,7 @@ close() - Should close all its result sets, but not those of a different connect
 
             if (isToolboxDriver())
             {
-                notApplicable("Toolbox todo after dust settles from v5r5");
+                notApplicable("Toolbox todo ");
                 return;
             }
             Connection c = testDriver_.getConnection (baseURL_+";errors=full", userId_, encryptedPassword_);

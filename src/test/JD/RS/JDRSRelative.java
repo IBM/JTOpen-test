@@ -26,7 +26,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -211,13 +210,7 @@ relative() - Should work on a 1 row result set.
     public void Var005 ()
     {
 
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-	    getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Native fails in V5R3, need fix for 9C30869");
-	    return; 
-	} 
-
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             try {
                 ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                                                         + JDRSTest.RSTEST_POS + " WHERE ID = 1");
@@ -445,18 +438,10 @@ indentical to calling next.  So relative(1) should return true.
                 boolean success1 = rs.relative (1);     /* This must be 1 */ 
                 boolean success2 = rs.isBeforeFirst ();
                 rs.close ();
-                if (getRelease() > JDTestDriver.RELEASE_V7R1M0 ||
-                    isToolboxDriver() ) { 
-                  assertCondition ((success1 == true) && (success2 == false), 
-                        "rs.relative(1) returned "+success1+" sb true "+
-                        "rs.isBeforeFirst returned "+success2+" sb false"+
-                        comment);
-                
-                } else { 
-                  assertCondition ((success1 == false) && (success2 == true),
-                      "rs.relative(1) returned "+success1+" sb false "+
-                      "rs.isBeforeFirst returned "+success2+" sb true");
-                }       
+                assertCondition ((success1 == true) && (success2 == false), 
+                      "rs.relative(1) returned "+success1+" sb true "+
+                      "rs.isBeforeFirst returned "+success2+" sb false"+
+                      comment);       
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -494,17 +479,10 @@ indentical to calling previous.  So relative(-1) should return true.
                 boolean success1 = rs.relative (-1);
                 boolean success2 = rs.isAfterLast ();
                 rs.close ();
-                if (getRelease() > JDTestDriver.RELEASE_V7R1M0 || isToolboxDriver()) { 
-                  assertCondition ((success1 == true) && (success2 == false), 
-                        "rs.relative(-1) returned "+success1+" sb true "+
-                        "rs.isAfterLast returned "+success2+" sb false"+
-                        comment);
-                
-                } else { 
-                  assertCondition ((success1 == false) && (success2 == true),
-                      "rs.relative(-1) returned "+success1+" sb false "+
-                      "rs.isAfterLastFirst returned "+success2+" sb true");
-                }       
+                assertCondition ((success1 == true) && (success2 == false), 
+                      "rs.relative(-1) returned "+success1+" sb true "+
+                      "rs.isAfterLast returned "+success2+" sb false"+
+                      comment);       
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -526,23 +504,7 @@ Var 007
 **/
     public void Var015 ()
     {
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-	    notApplicable("In V5R5 or JDBC40, metafunctions are forward only"); 
-	} else { 
-	    if (checkJdbc20 ()) {
-		try {
-		    ResultSet rs = dmd_.getTableTypes ();
-		    rs.next ();
-		    boolean success = rs.relative (1);
-		    String s1 = rs.getString ("TABLE_TYPE");
-		    rs.close ();
-		    assertCondition ((success == true) && (s1 != null));
-		}
-		catch (Exception e) {
-		    failed (e, "Unexpected Exception");
-		}
-	    }
-	}
+	notApplicable("In V5R5 or JDBC40, metafunctions are forward only");
     }
 
 
@@ -553,23 +515,7 @@ the cursor on the next row and return true.
 **/
     public void Var016 ()
     {
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-	    notApplicable("In V5R5, metafunctions are forward only"); 
-	} else { 
-	    if (checkJdbc20 ()) {
-		try {
-		    ResultSet rs = dmd_.getTableTypes ();
-		    rs.next ();
-		    boolean success = rs.relative (1);
-		    String s1 = rs.getString ("TABLE_TYPE");
-		    rs.close ();
-		    assertCondition ((success == true) && (s1 != null));
-		}
-		catch (Exception e) {
-		    failed (e, "Unexpected Exception");
-		}
-	    }
-	}
+	notApplicable("In V5R5, metafunctions are forward only");
     }
 
 
@@ -581,23 +527,7 @@ the last row and return true.
 **/
     public void Var017 ()
     {
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-	    notApplicable("In JDBC 4.0, metafunctions are forward only"); 
-	} else { 
-	    if (checkJdbc20 ()) {
-		try {
-		    ResultSet rs = dmd_.getTableTypes ();
-		    rs.next ();
-		    boolean success = rs.relative (2);
-		    String s1 = rs.getString ("TABLE_TYPE");
-		    rs.close ();
-		    assertCondition ((success == true) && (s1 != null));
-		}
-		catch (Exception e) {
-		    failed (e, "Unexpected Exception");
-		}
-	    }
-	}
+	notApplicable("In JDBC 4.0, metafunctions are forward only");
     }
 
 
@@ -612,12 +542,8 @@ after the last row and return false.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs;
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement_.executeQuery ("SELECT * FROM "
-						  + JDRSTest.RSTEST_POS);
-		} else { 
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement_.executeQuery ("SELECT * FROM "
+    		  + JDRSTest.RSTEST_POS);
                 rs.next ();
                 rs.next ();
                 boolean success1 = rs.relative (199);
@@ -642,11 +568,7 @@ the cursor on the previous row and return true.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs; 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40()) {
-		    rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
-		} else { 
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
                 rs.last ();
                 boolean success = rs.relative (-1);
                 String s1 = rs.getString ("TABLE_TYPE");
@@ -671,12 +593,7 @@ on the first row and return true.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs; 
-		if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40() ) {
-		    rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
-		} else { 
-
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
                 rs.last ();
                 boolean success = rs.relative (-2);
                 String s1 = rs.getString ("TABLE_TYPE");
@@ -701,12 +618,7 @@ before the first row and return false.
         if (checkJdbc20 ()) {
             try {
 		ResultSet rs; 
-		if ( getRelease() >= JDTestDriver.RELEASE_V7R1M0 || isJdbc40() ) {
-		    rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
-		} else { 
-
-		    rs = dmd_.getTableTypes ();
-		}
+		rs = statement2_.executeQuery ("SELECT DISTINCT TABLE_TYPE FROM SYSIBM.SQLTABLES");
                 rs.next ();
                 rs.next ();
                 boolean success1 = rs.relative (-199);
@@ -974,12 +886,7 @@ Fixed in V5R5
                 rs.beforeFirst ();
                 boolean success = rs.relative (23);
                 rs.close ();
-                if (getRelease() > JDTestDriver.RELEASE_V7R1M0 || isToolboxDriver()) {
-                  assertCondition (success == true, comment);
-                 
-                } else { 
-                  assertCondition (success == false);
-                }       
+                assertCondition (success == true, comment);       
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -1158,11 +1065,7 @@ Nope:  should return true.
                 rs.afterLast ();
                 boolean success = rs.relative (-50);
                 rs.close ();
-                if (getRelease() > JDTestDriver.RELEASE_V7R1M0 || isToolboxDriver()) { 
-                  assertCondition (success == true, comment);
-                } else { 
-                   assertCondition (success == false);
-                }
+                assertCondition (success == true, comment);
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");

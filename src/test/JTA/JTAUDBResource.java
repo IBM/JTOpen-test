@@ -27,7 +27,6 @@ import java.util.*;
 import java.io.FileOutputStream;
 import com.ibm.as400.access.AS400;
 
-import test.JDTestDriver;
 import test.JTATest;
 import test.JTAUDBTest;
 
@@ -72,11 +71,6 @@ Constructor.
 
 
    public void Var011() {
-       if (getDriver()  == JDTestDriver.DRIVER_NATIVE &&
-	   getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	   notApplicable("Not working in V5R4 native code");
-	   return; 
-       } 
        super.Var011(); 
    } 
 
@@ -124,49 +118,38 @@ end() - Pass TMSUSPEND.
 **/
     public void Var053()
     {
-	// Don't run in V5R3 or earlier.  When the
-        // XAResource.end(SUSPEND) is followed by
-        // XAResource.end(END), the native JDBC driver has
-        // a bug that prevents that xa_open(END) from occurring
-        // The transaction is then in a weird state and does
-        // not get cleaned up when the transaction ends.
-	//
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
-	    if (checkJdbc20StdExt()) {
-		try {
-		    XADataSource xads = newXADataSource();
-		    XAConnection xac = xads.getXAConnection();
-		    XAResource xar = xac.getXAResource();
-		    Connection c = xac.getConnection();
+	if (checkJdbc20StdExt()) {
+try {
+    XADataSource xads = newXADataSource();
+    XAConnection xac = xads.getXAConnection();
+    XAResource xar = xac.getXAResource();
+    Connection c = xac.getConnection();
 
-		    Xid xid = new JTATestXid();
-		    globalIds[17]=xid.getGlobalTransactionId();
-		    xar.start(xid, XAResource.TMNOFLAGS);
-		    Statement s = c.createStatement();
-		    s.executeUpdate("INSERT INTO " + table_ + " (COL1) VALUES(-234077)");
-		    int errorCode = 0;
-		    try {
-			xar.end(xid, XAResource.TMSUSPEND);
-		    // Shouldn't have to call resume
-		    // xar.start(xid, XAResource.TMRESUME);
-		    }
-		    catch (XAException e) {
-			errorCode = e.errorCode;
-		    }
-		    xar.end(xid, XAResource.TMSUCCESS);
-		    xar.rollback(xid);
-		    xac.close();
+    Xid xid = new JTATestXid();
+    globalIds[17]=xid.getGlobalTransactionId();
+    xar.start(xid, XAResource.TMNOFLAGS);
+    Statement s = c.createStatement();
+    s.executeUpdate("INSERT INTO " + table_ + " (COL1) VALUES(-234077)");
+    int errorCode = 0;
+    try {
+  xar.end(xid, XAResource.TMSUSPEND);
+    // Shouldn't have to call resume
+    // xar.start(xid, XAResource.TMRESUME);
+    }
+    catch (XAException e) {
+  errorCode = e.errorCode;
+    }
+    xar.end(xid, XAResource.TMSUCCESS);
+    xar.rollback(xid);
+    xac.close();
 
-		    assertCondition((errorCode == 0) && (countRows(-234077) == 0));
+    assertCondition((errorCode == 0) && (countRows(-234077) == 0));
 
-		}
-		catch (Exception e) {
-		    failed (e, "Unexpected Exception");
-		}
-	    }
-	} else {
-	    notApplicable("V5R4 or later variation"); 
-	} 
+}
+catch (Exception e) {
+    failed (e, "Unexpected Exception");
+}
+  } 
     }
 
 

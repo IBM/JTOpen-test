@@ -824,7 +824,7 @@ setShort() - Set an CHAR(1) parameter.
         catch (Exception e) {
             // In V5R5 native will throw a datatype mismatch
             // In V5R5 toolbox also will throw a datatype mismatch
-            if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE || ((isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE) && getRelease() >= JDTestDriver.RELEASE_V7R1M0)) {
+            if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE || ((isToolboxDriver() || getDriver() == JDTestDriver.DRIVER_NATIVE) && true)) {
                 boolean success = e.getMessage().indexOf("Data type mismatch") != -1;
                 if (success) { 
                     assertCondition(true); 

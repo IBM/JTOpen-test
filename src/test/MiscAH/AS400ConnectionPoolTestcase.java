@@ -108,7 +108,7 @@ extends Testcase
             DOS_ = false;
         }
 
-        if (operatingSystem_.indexOf("OS/400") >= 0)
+        if (JTOpenTestEnvironment.isOS400)
         {
           runningNatively_ = true;
         }

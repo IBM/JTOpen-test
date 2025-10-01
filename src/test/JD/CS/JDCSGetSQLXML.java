@@ -1420,9 +1420,7 @@ getSQLXML() - Get a type that was registered as a BIGINT.
   public void Var057() {
     StringBuffer info = new StringBuffer(); 
 
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("V5R3 or later test");
-    } else {
+    {
       if (checkJdbc40()) {
 	  if (getDriver()  == JDTestDriver.DRIVER_NATIVE) { /* native only large lob test */ 
 	      String sql = "";

@@ -36,7 +36,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDLobTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -415,7 +414,7 @@ getBytes() - getBytes on a type registered as BINARY, INOUT BINARY(20)
 **/
     public void Var013()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	if (true) {
 	    try{
 
 		byte[] b = { (byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) 43,
@@ -439,8 +438,6 @@ getBytes() - getBytes on a type registered as BINARY, INOUT BINARY(20)
 		failed("Unexpected Exception");
 		e.printStackTrace(); 
 	    }
-	} else {
-	    notApplicable(); 
 	} 
     }
 	    
@@ -451,7 +448,7 @@ getBytes() - getBytes on a type registered as BINARY, INOUT VARBINARY(20)
 **/
     public void Var014()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	if (true) {
 	    try{
 
 
@@ -469,8 +466,6 @@ getBytes() - getBytes on a type registered as BINARY, INOUT VARBINARY(20)
 	    catch (SQLException e){
 		failed("Unexpected Exception");
 	    }
-	} else {
-	    notApplicable();
 	} 
     }
 
@@ -572,7 +567,7 @@ getBytes() - getBytes on a type registered as BINARY, INOUT BLOB(200)
 **/
     public void Var019()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {	
+	if (true) {	
 	    try{
 
 
@@ -591,8 +586,6 @@ getBytes() - getBytes on a type registered as BINARY, INOUT BLOB(200)
 	    catch (SQLException e){
 		failed(e, "Unexpected Exception");          //@B1A
 	    }
-	} else {
-	    notApplicable(); 
 	} 
     }
 
@@ -942,7 +935,7 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT BINARY(20)
 **/
     public void Var034()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	if (true) {
 	    try{
 
 
@@ -965,8 +958,6 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT BINARY(20)
 	    catch (SQLException e){
 		failed("Unexpected Exception");
 	    }
-	} else {
-	    notApplicable();
 	} 
     }
 	    
@@ -977,7 +968,7 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT VARBINARY(20)
 **/
     public void Var035()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	if (true) {
 	    try{
 
 
@@ -995,8 +986,6 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT VARBINARY(20)
 	    catch (SQLException e){
 		failed("Unexpected Exception");
 	    }
-	} else {
-	    notApplicable();
 	} 
     }
 
@@ -1098,7 +1087,7 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT BLOB(200)
 **/
     public void Var040()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	if (true) {
 	    try{
 
 		byte [] b = {(byte) 23, (byte) 65, (byte) 87, (byte) 88};
@@ -1116,8 +1105,6 @@ getBytes() - getBytes on a type registered as VARBINARY, INOUT BLOB(200)
 	    catch (SQLException e){
 		failed(e, "Unexpected Exception");          //@B1A
 	    }
-	} else {
-	    notApplicable(); 
 	} 
     }
 

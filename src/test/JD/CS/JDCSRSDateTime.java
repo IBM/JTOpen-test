@@ -24,7 +24,6 @@ package test.JD.CS;
 import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
@@ -321,10 +320,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is mdy.
 	 */
 	public void Var001() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+         
 		try {
 		    String expected = "06/25/07"; 
 		    csTypes_ = connectionMDYHMS_.prepareCall("CALL "
@@ -348,10 +344,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is dmy.
 	 */
 	public void Var002() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+         
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -374,10 +367,6 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is ymd.
 	 */
 	public void Var003() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -403,10 +392,6 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is julian.
 	 */
   public void Var004() {
-    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("JDCSRS not applicable for pre V5R5");
-      return;
-    }
     try {
       csTypes_ = connectionJULEUR_.prepareCall("CALL " + JDCSTest.COLLECTION
           + ".DTMDYHMS");
@@ -432,10 +417,6 @@ public class JDCSRSDateTime extends JDTestcase {
    * connection whose date format is iso.
    */
 	public void Var005() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -457,10 +438,6 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is usa.
 	 */
 	public void Var006() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -482,10 +459,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is eur.
 	 */
 	public void Var007() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+          
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -507,10 +481,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is jis.
 	 */
 	public void Var008() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+          
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -532,10 +503,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is mdy.
 	 */
 	public void Var009() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+          
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -557,10 +525,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is dmy.
 	 */
 	public void Var010() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+          
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -582,10 +547,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is ymd.
 	 */
 	public void Var011() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+          
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -607,10 +569,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is julian.
 	 */
 	public void Var012() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+          
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -632,10 +591,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is iso.
 	 */
 	public void Var013() {
-          if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("JDCSRS not applicable for pre V5R5"); 
-            return; 
-          }
+          
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -657,10 +613,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is usa.
 	 */
 	public void Var014() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -682,10 +635,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is eur.
 	 */
 	public void Var015() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -707,10 +657,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is jis.
 	 */
 	public void Var016() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -732,10 +679,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is mdy.
 	 */
 	public void Var017() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -757,10 +701,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is dmy.
 	 */
 	public void Var018() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -782,10 +723,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is ymd.
 	 */
 	public void Var019() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -807,10 +745,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is julian.
 	 */
 	public void Var020() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -832,10 +767,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is iso.
 	 */
 	public void Var021() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -857,10 +789,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is usa.
 	 */
 	public void Var022() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -882,10 +811,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is eur.
 	 */
 	public void Var023() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -907,10 +833,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is jis.
 	 */
 	public void Var024() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -932,10 +855,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is mdy.
 	 */
 	public void Var025() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -957,10 +877,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is dmy.
 	 */
 	public void Var026() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -982,10 +899,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is ymd.
 	 */
 	public void Var027() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -1007,10 +921,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is julian.
 	 */
 	public void Var028() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -1032,10 +943,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is iso.
 	 */
 	public void Var029() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -1057,10 +965,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is usa.
 	 */
 	public void Var030() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -1082,10 +987,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is eur.
 	 */
 	public void Var031() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -1107,10 +1009,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is jis.
 	 */
 	public void Var032() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -1132,10 +1031,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is mdy.
 	 */
 	public void Var033() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -1157,10 +1053,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is dmy.
 	 */
 	public void Var034() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -1182,10 +1075,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is ymd.
 	 */
 	public void Var035() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -1207,10 +1097,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is julian.
 	 */
 	public void Var036() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -1232,10 +1119,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is iso.
 	 */
 	public void Var037() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -1257,10 +1141,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is usa.
 	 */
 	public void Var038() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -1282,10 +1163,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is eur.
 	 */
 	public void Var039() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -1307,10 +1185,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is jis.
 	 */
 	public void Var040() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -1332,10 +1207,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is mdy.
 	 */
 	public void Var041() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -1357,10 +1229,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is dmy.
 	 */
 	public void Var042() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -1382,10 +1251,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is ymd.
 	 */
 	public void Var043() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -1407,10 +1273,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is julian.
 	 */
 	public void Var044() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -1432,10 +1295,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is iso.
 	 */
 	public void Var045() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -1457,10 +1317,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is usa.
 	 */
 	public void Var046() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -1482,10 +1339,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is eur.
 	 */
 	public void Var047() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -1507,10 +1361,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is jis.
 	 */
 	public void Var048() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -1532,10 +1383,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is mdy.
 	 */
 	public void Var049() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -1557,10 +1405,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is dmy.
 	 */
 	public void Var050() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -1582,10 +1427,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is ymd.
 	 */
 	public void Var051() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -1607,10 +1449,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is julian.
 	 */
 	public void Var052() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -1632,10 +1471,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is iso.
 	 */
 	public void Var053() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -1657,10 +1493,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is usa.
 	 */
 	public void Var054() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -1682,10 +1515,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is eur.
 	 */
 	public void Var055() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -1707,10 +1537,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is jis.
 	 */
 	public void Var056() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -1732,10 +1559,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is mdy.
 	 */
 	public void Var057() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -1757,10 +1581,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is dmy.
 	 */
 	public void Var058() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -1782,10 +1603,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is ymd.
 	 */
 	public void Var059() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -1807,10 +1625,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is julian.
 	 */
 	public void Var060() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -1832,10 +1647,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is iso.
 	 */
 	public void Var061() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -1857,10 +1669,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is usa.
 	 */
 	public void Var062() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -1882,10 +1691,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is eur.
 	 */
 	public void Var063() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -1907,10 +1713,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose date format is jis.
 	 */
 	public void Var064() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -1932,10 +1735,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is hms.
 	 */
 	public void Var065() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -1957,10 +1757,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is iso.
 	 */
 	public void Var066() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -1982,10 +1779,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var067() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -2007,10 +1801,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var068() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -2032,10 +1823,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var069() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -2057,10 +1845,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var070() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -2082,10 +1867,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var071() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -2107,10 +1889,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var072() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -2132,10 +1911,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is hms.
 	 */
 	public void Var073() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -2157,10 +1933,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is iso.
 	 */
 	public void Var074() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -2182,10 +1955,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var075() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -2207,10 +1977,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var076() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -2232,10 +1999,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var077() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -2257,10 +2021,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var078() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -2282,10 +2043,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var079() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -2307,10 +2065,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var080() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -2332,10 +2087,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is hms.
 	 */
 	public void Var081() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -2357,10 +2109,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is iso.
 	 */
 	public void Var082() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -2382,10 +2131,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var083() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -2407,10 +2153,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var084() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -2432,10 +2175,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var085() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -2457,10 +2197,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var086() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -2482,10 +2219,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var087() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -2507,10 +2241,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var088() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -2532,10 +2263,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is hms.
 	 */
 	public void Var089() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -2557,10 +2285,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is iso.
 	 */
 	public void Var090() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -2582,10 +2307,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var091() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -2607,10 +2329,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var092() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -2632,10 +2351,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var093() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -2657,10 +2373,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var094() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -2682,10 +2395,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var095() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -2707,10 +2417,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var096() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -2732,10 +2439,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is hms.
 	 */
 	public void Var097() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -2757,10 +2461,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is iso.
 	 */
 	public void Var098() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -2782,10 +2483,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var099() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -2807,10 +2505,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var100() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -2832,10 +2527,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var101() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -2857,10 +2549,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var102() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -2882,10 +2571,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var103() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -2907,10 +2593,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var104() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -2932,10 +2615,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is hms.
 	 */
 	public void Var105() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -2957,10 +2637,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is iso.
 	 */
 	public void Var106() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -2982,10 +2659,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var107() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -3007,10 +2681,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var108() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -3032,10 +2703,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var109() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -3057,10 +2725,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var110() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -3082,10 +2747,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var111() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -3107,10 +2769,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var112() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -3132,10 +2791,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is hms.
 	 */
 	public void Var113() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -3157,10 +2813,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is iso.
 	 */
 	public void Var114() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -3182,10 +2835,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var115() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -3207,10 +2857,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var116() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -3232,10 +2879,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var117() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -3257,10 +2901,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var118() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -3282,10 +2923,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var119() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -3307,10 +2945,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var120() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -3332,10 +2967,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is hms.
 	 */
 	public void Var121() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -3357,10 +2989,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is iso.
 	 */
 	public void Var122() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -3382,10 +3011,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var123() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -3407,10 +3033,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var124() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -3432,10 +3055,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var125() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -3457,10 +3077,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is usa.
 	 */
 	public void Var126() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -3482,10 +3099,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is eur.
 	 */
 	public void Var127() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -3507,10 +3121,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * connection whose time format is jis.
 	 */
 	public void Var128() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -3533,10 +3144,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var129() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -3561,10 +3169,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var130() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -3589,10 +3194,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var131() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -3617,10 +3219,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var132() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -3645,10 +3244,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var133() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -3673,10 +3269,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var134() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -3701,10 +3294,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var135() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -3729,10 +3319,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var136() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -3757,10 +3344,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var137() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -3785,10 +3369,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var138() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -3813,10 +3394,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var139() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -3841,10 +3419,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var140() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -3869,10 +3444,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var141() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -3897,10 +3469,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var142() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -3925,10 +3494,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var143() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -3953,10 +3519,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var144() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -3981,10 +3544,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var145() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -4009,10 +3569,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var146() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -4037,10 +3594,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var147() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -4065,10 +3619,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var148() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -4093,10 +3644,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var149() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -4121,10 +3669,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var150() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -4149,10 +3694,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var151() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -4177,10 +3719,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var152() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -4205,10 +3744,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var153() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -4233,10 +3769,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var154() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -4261,10 +3794,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var155() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -4289,10 +3819,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var156() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -4317,10 +3844,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var157() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -4345,10 +3869,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var158() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -4373,10 +3894,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var159() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -4401,10 +3919,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var160() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -4429,10 +3944,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var161() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -4457,10 +3969,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var162() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -4485,10 +3994,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var163() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -4513,10 +4019,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var164() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -4541,10 +4044,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var165() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -4569,10 +4069,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var166() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -4597,10 +4094,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var167() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -4625,10 +4119,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var168() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -4653,10 +4144,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var169() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -4681,10 +4169,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var170() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -4709,10 +4194,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var171() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -4737,10 +4219,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var172() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -4765,10 +4244,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var173() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -4793,10 +4269,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var174() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -4821,10 +4294,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var175() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -4849,10 +4319,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var176() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -4877,10 +4344,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var177() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -4905,10 +4369,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var178() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -4933,10 +4394,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var179() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -4961,10 +4419,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var180() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -4989,10 +4444,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var181() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -5017,10 +4469,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var182() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -5045,10 +4494,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var183() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -5073,10 +4519,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var184() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -5101,10 +4544,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var185() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -5129,10 +4569,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var186() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -5157,10 +4594,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var187() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -5185,10 +4619,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var188() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -5213,10 +4644,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var189() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -5241,10 +4669,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var190() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -5269,10 +4694,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var191() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -5297,10 +4719,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var192() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -5325,10 +4744,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var193() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -5353,10 +4769,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var194() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -5381,10 +4794,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var195() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -5409,10 +4819,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var196() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -5437,10 +4844,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var197() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -5465,10 +4869,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var198() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -5493,10 +4894,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var199() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -5521,10 +4919,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var200() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTMDYHMS");
@@ -5549,10 +4944,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var201() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -5577,10 +4969,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var202() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -5605,10 +4994,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var203() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -5633,10 +5019,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var204() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -5661,10 +5044,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var205() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -5689,10 +5069,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var206() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -5717,10 +5094,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var207() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -5745,10 +5119,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var208() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTDMYISO");
@@ -5773,10 +5144,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var209() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -5801,10 +5169,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var210() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -5829,10 +5194,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var211() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -5857,10 +5219,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var212() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -5885,10 +5244,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var213() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -5913,10 +5269,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var214() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -5941,10 +5294,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var215() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -5969,10 +5319,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var216() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTYMDUSA");
@@ -5997,10 +5344,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var217() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -6025,10 +5369,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var218() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -6053,10 +5394,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var219() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -6081,10 +5419,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var220() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -6109,10 +5444,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var221() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -6137,10 +5469,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var222() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -6165,10 +5494,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var223() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -6193,10 +5519,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var224() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTUSAUSA");
@@ -6221,10 +5544,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var225() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -6249,10 +5569,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var226() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -6277,10 +5594,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var227() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -6305,10 +5619,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var228() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -6333,10 +5644,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var229() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -6361,10 +5669,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var230() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -6389,10 +5694,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var231() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -6417,10 +5719,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var232() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJULEUR");
@@ -6445,10 +5744,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var233() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -6473,10 +5769,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var234() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -6501,10 +5794,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var235() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -6529,10 +5819,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var236() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -6557,10 +5844,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var237() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -6585,10 +5869,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var238() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -6613,10 +5894,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var239() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -6641,10 +5919,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var240() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTEUREUR");
@@ -6669,10 +5944,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var241() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -6697,10 +5969,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var242() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -6725,10 +5994,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var243() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -6753,10 +6019,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var244() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -6781,10 +6044,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var245() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -6809,10 +6069,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var246() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -6837,10 +6094,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var247() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -6865,10 +6119,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var248() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTISOJIS");
@@ -6893,10 +6144,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var249() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionMDYHMS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -6921,10 +6169,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var250() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionDMYISO_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -6949,10 +6194,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var251() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionUSAUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -6977,10 +6219,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var252() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionEUREUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -7005,10 +6244,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var253() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJISJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -7033,10 +6269,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var254() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionYMDUSA_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -7061,10 +6294,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var255() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionJULEUR_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");
@@ -7089,10 +6319,7 @@ public class JDCSRSDateTime extends JDTestcase {
 	 * Retrieve the date from the 2nd result set.
 	 */
 	public void Var256() {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-		notApplicable("JDCSRS not applicable for pre V5R5"); 
-		return; 
-	    }
+	    
 		try {
 			csTypes_ = connectionISOJIS_.prepareCall("CALL "
 					+ JDCSTest.COLLECTION + ".DTJISJIS");

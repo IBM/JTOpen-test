@@ -223,7 +223,7 @@ public class JDPSSetArray extends JDTestcase {
         ps.setArray(1, null);
         ps.close();
 
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0
+        if (true
             && getDriver() == JDTestDriver.DRIVER_NATIVE) {
           assertCondition(true, "Valid to set null value for array");
         } else {

@@ -180,15 +180,11 @@ An exception should be thrown.
             Statement s = c.createStatement ();
             s.executeQuery ("SELECT * FROM QIWS.QCUSTCDT");
             /* 09/09/2012 -- V7R1 now accepts system naming */
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
 		assertCondition(true); 
-	    } else { 
-		failed ("SQL naming accepted with system naming set.");
-	    }
         }
         catch (Exception e) {
 	    if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-		failed(e, "unexpected exception.  In V7R2, Sue Romano says Yes, I now accept the period as the delimiter when using *SYS naming.  It was part of the default parameter I0."); 
+		failed(e, "unexpected exception.  In 7.2 the system accepts the period as the delimiter when using *SYS naming.  It was part of the default parameter I0."); 
 	    } else { 
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
@@ -341,7 +337,7 @@ naming - Specifies system naming and sets of parameters of stored procedure by n
 naming - Specifies system naming and sets of parameters of stored procedure by name
 When not all parameters are parameter markers.
 
-Fixed in V5R5 using issue 33770.
+
 
 **/
 
@@ -350,10 +346,6 @@ Fixed in V5R5 using issue 33770.
 	    notApplicable("toolbox driver possible todo");
 	    return;
 	}
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Find named parameter problem when not all parms are parameter markers not working in V5R4");
-	    return; 
-	} 
 	if (checkNamedParametersSupport()) {
 	    try { 
 		Connection c = testDriver_.getConnection (baseURL_

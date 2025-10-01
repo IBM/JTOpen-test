@@ -983,25 +983,18 @@ public class JTAStdConn extends JTATestcase {
               return; // @B1A
             } else {
 
-              if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-                assertExceptionIsInstanceOf(ex,
-                    "com.ibm.db2.jdbc.app.DB2XAException");
-                return;
-              } else {
-
-                if (ex instanceof javax.transaction.xa.XAException) {
-                  XAException xaEx = (XAException) ex;
-                  if (xaEx.errorCode != XAException.XAER_DUPID) {
-                    failed(ex, "Second start of transaction failed");
-                    return;
-                  } else {
-                    assertCondition(true);
-                    return;
-                  }
+              if (ex instanceof javax.transaction.xa.XAException) {
+                XAException xaEx = (XAException) ex;
+                if (xaEx.errorCode != XAException.XAER_DUPID) {
+                  failed(ex, "Second start of transaction failed");
+                  return;
                 } else {
-                  failed(ex, "Incorrect exception type");
+                  assertCondition(true);
                   return;
                 }
+              } else {
+                failed(ex, "Incorrect exception type");
+                return;
               }
 
             }
@@ -1088,26 +1081,18 @@ public class JTAStdConn extends JTATestcase {
                   "javax.transaction.xa.XAException");
               return; // @B1A
             } else {
-              if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-                assertExceptionIsInstanceOf(ex,
-                    "com.ibm.db2.jdbc.app.DB2XAException");
-
-                return;
-
-              } else {
-                if (ex instanceof javax.transaction.xa.XAException) {
-                  XAException xaEx = (XAException) ex;
-                  if (xaEx.errorCode != XAException.XAER_DUPID) {
-                    failed(ex, "Second start of transaction failed");
-                    return;
-                  } else {
-                    assertCondition(true);
-                    return;
-                  }
+              if (ex instanceof javax.transaction.xa.XAException) {
+                XAException xaEx = (XAException) ex;
+                if (xaEx.errorCode != XAException.XAER_DUPID) {
+                  failed(ex, "Second start of transaction failed");
+                  return;
                 } else {
-                  failed(ex, "Incorrect exception type");
+                  assertCondition(true);
                   return;
                 }
+              } else {
+                failed(ex, "Incorrect exception type");
+                return;
               }
             }
 

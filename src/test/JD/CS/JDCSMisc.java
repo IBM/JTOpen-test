@@ -1643,7 +1643,7 @@ cache.
         String sql = "";
 	boolean passed = true;
         String failStr = "";
-        if ((getRelease() >=  JDTestDriver.RELEASE_V7R1M0)) {
+        if (true) {
         Connection conn = null;
 
         try {
@@ -1706,8 +1706,7 @@ cache.
             failed(e, "Unexpected Exception " + sql + "\n" +failStr +" " + added);
         }
         }
-        else
-            notApplicable("V5R5 variation -- toolbox add 08/10/06");
+        
 
 
   }
@@ -2914,10 +2913,7 @@ cache.
 
   public void Var033()
   {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	  notApplicable("V7R2 and latest test");
-	  return; 
-      } 
+     
       if (checkJdbc20 ()) {
 
 	  String rpmProgram[] = {
@@ -3125,10 +3121,7 @@ cache.
   public void Var034()
   {
 
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	  notApplicable("V7R2 and latest test");
-	  return; 
-      } 
+     
 
       if (checkJdbc20 ()) {
  

@@ -26,7 +26,6 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -278,11 +277,11 @@ next() - Should work on a "simple" result set.
             rs.close ();
 	    /* Changed the comparision -- @D2C */ 
 	    int expectedCount = 3;
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	    if (true) {
 		// add 1 for MQT
 		expectedCount++; 
 	    }
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+	    if (true) {
 		// add 1 for ALIAS
 		expectedCount++; 
 	    }

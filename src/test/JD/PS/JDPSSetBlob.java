@@ -29,7 +29,6 @@ import com.ibm.as400.access.AS400;
 import test.JDLobTest;
 import test.JDPSTest;
 import test.JDSetupProcedure;
-import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
@@ -941,15 +940,6 @@ public class JDPSSetBlob extends JDTestcase {
    * setBlob() - Set a BLOB parameter, when truncation occurs.
    **/
   public void Var034() {
-
-    if (getDriver() == JDTestDriver.DRIVER_NATIVE
-        && getDriverFixLevel() <= 27438
-        && getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(
-          "Not working for native JDBC PTF level < 27438 : current level "
-              + getDriverFixLevel());
-      return;
-    }
 
     String added = "Testcase to test truncation when setting a blob parameter -- Native bug returns internal server error -- added 05/08/2006 by native driver fix in native PTF level 27438 (V5R3) ";
 

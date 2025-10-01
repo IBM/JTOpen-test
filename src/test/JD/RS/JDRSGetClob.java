@@ -1159,32 +1159,28 @@ public class JDRSGetClob extends JDTestcase {
    **/
   public void Var045() {
     if (checkLevel()) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+      try {
+        String tablename = JDRSTest.COLLECTION + ".JDRSGCLB45";
         try {
-          String tablename = JDRSTest.COLLECTION + ".JDRSGCLB45";
-          try {
-            statement_.executeUpdate("DELETE FROM " + tablename);
-          } catch (Exception e) {
-            statement_.executeUpdate(
-                "CREATE TABLE " + tablename + " (c1 clob(50000) CCSID 1208)");
-          }
-
-          statement_.executeUpdate(
-              "INSERT INTO " + tablename + " VALUES('Java Toolbox')");
-
-          ResultSet rs = statement_.executeQuery("SELECT * from " + tablename);
-          rs.next();
-
-          Object v = JDReflectionUtil.callMethod_O(rs, methodName, 1);
-
-          assertCondition(compare(v, "Java Toolbox"),
-              "Blob != expected -- added by native driver 08/03/2005 to detect getClob() problem for UTF8 ");
+          statement_.executeUpdate("DELETE FROM " + tablename);
         } catch (Exception e) {
-          failed(e,
-              "Unexpected Exception -- added by native driver 08/03/2005 to detect getClob() problem for UTF8");
+          statement_.executeUpdate(
+              "CREATE TABLE " + tablename + " (c1 clob(50000) CCSID 1208)");
         }
-      } else {
-        notApplicable("V5R3 UTF-8 Testcase");
+
+        statement_.executeUpdate(
+            "INSERT INTO " + tablename + " VALUES('Java Toolbox')");
+
+        ResultSet rs = statement_.executeQuery("SELECT * from " + tablename);
+        rs.next();
+
+        Object v = JDReflectionUtil.callMethod_O(rs, methodName, 1);
+
+        assertCondition(compare(v, "Java Toolbox"),
+            "Blob != expected -- added by native driver 08/03/2005 to detect getClob() problem for UTF8 ");
+      } catch (Exception e) {
+        failed(e,
+            "Unexpected Exception -- added by native driver 08/03/2005 to detect getClob() problem for UTF8");
       }
     }
   }

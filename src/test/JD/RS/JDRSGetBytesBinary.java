@@ -146,31 +146,26 @@ getBytes() - Should work when the column index is valid.
 **/
    public void Var001 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         try {
-            statement_.close();
-	    try {
-		statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-							  ResultSet.CONCUR_UPDATABLE);
-	    } catch (SQLException ex) {
-		statement_ = connection_.createStatement ();
-	    }
+      try {
+          statement_.close();
+  try {
+statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+      			  ResultSet.CONCUR_UPDATABLE);
+  } catch (SQLException ex) {
+statement_ = connection_.createStatement ();
+  }
 
-            rs_ = statement_.executeQuery (statementQuery_);
+          rs_ = statement_.executeQuery (statementQuery_);
 
 
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                                                  + JDRSTest.RSTEST_BINARY);
-            JDRSTest.position0 (rs, "BINARY_NOTRANS");
-            byte[] v = rs.getBytes (4);
-            assertCondition (areEqual (v, twelve), "New testcase added by Native");
-         } catch (Exception e) {
-            failed (e, "Unexpected Exception - New testcase added by Native");
-         }
-      } else {
-        notApplicable();
-      }
+          ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+                                                + JDRSTest.RSTEST_BINARY);
+          JDRSTest.position0 (rs, "BINARY_NOTRANS");
+          byte[] v = rs.getBytes (4);
+          assertCondition (areEqual (v, twelve), "New testcase added by Native");
+       } catch (Exception e) {
+          failed (e, "Unexpected Exception - New testcase added by Native");
+       }
    }
 
 /**
@@ -178,20 +173,15 @@ getBytes() - Should work when the column name is valid.
 **/
    public void Var002 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                                                  + JDRSTest.RSTEST_BINARY);
-            JDRSTest.position0 (rs, "BINARY_NOTRANS");
-            byte[] v = rs.getBytes ("C_BINARY_20");
-            assertCondition (areEqual (v, eleven), "New testcase added by Native");
-         } catch (Exception e) {
-            failed (e, "Unexpected Exception - New testcase added by Native");
-         }
-      } else {
-        notApplicable();
-      }
+      try {
+          ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+                                                + JDRSTest.RSTEST_BINARY);
+          JDRSTest.position0 (rs, "BINARY_NOTRANS");
+          byte[] v = rs.getBytes ("C_BINARY_20");
+          assertCondition (areEqual (v, eleven), "New testcase added by Native");
+       } catch (Exception e) {
+          failed (e, "Unexpected Exception - New testcase added by Native");
+       }
    }
 
 /**
@@ -199,24 +189,19 @@ getBytes() - Should work when an update is pending.
 **/
    public void Var003 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         if (checkJdbc20 ()) {
-            try {
-               rs_ = JDRSTest.position (getDriver(), statement_, statementQuery_, rs_, "UPDATE_SANDBOX");
-               byte[] test = new byte[] { (byte) 0x34, (byte) 0x45, (byte) 0x50,
-                  (byte) 0x56, (byte) 0x67, (byte) 0x78, (byte) 0x89, (byte) 0x9A,
-                  (byte) 0xAB, (byte) 0xBC};
-               rs_.updateBytes ("C_VARBINARY_20", test);
-               byte[] v = rs_.getBytes ("C_VARBINARY_20");
-               assertCondition (areEqual (v, test), "New testcase added by Native");
-            } catch (Exception e) {
-               failed (e, "Unexpected Exception - New testcase added by Native");
-            }
-         }
-      } else {
-        notApplicable();
-      }
+      if (checkJdbc20 ()) {
+          try {
+             rs_ = JDRSTest.position (getDriver(), statement_, statementQuery_, rs_, "UPDATE_SANDBOX");
+             byte[] test = new byte[] { (byte) 0x34, (byte) 0x45, (byte) 0x50,
+                (byte) 0x56, (byte) 0x67, (byte) 0x78, (byte) 0x89, (byte) 0x9A,
+                (byte) 0xAB, (byte) 0xBC};
+             rs_.updateBytes ("C_VARBINARY_20", test);
+             byte[] v = rs_.getBytes ("C_VARBINARY_20");
+             assertCondition (areEqual (v, test), "New testcase added by Native");
+          } catch (Exception e) {
+             failed (e, "Unexpected Exception - New testcase added by Native");
+          }
+       }
    }
 
 
@@ -226,26 +211,21 @@ getBytes() - Should work when an update has been done.
 **/
    public void Var004 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         if (checkJdbc20 ()) {
-            try {
-               JDRSTest.position (rs_, "UPDATE_SANDBOX");
-               byte[] test = new byte[] { (byte) 0x01, (byte) 0x12, (byte) 0x34, (byte) 0x45, (byte) 0x50,
-                  (byte) 0x56, (byte) 0x67, (byte) 0x78, (byte) 0x89, (byte) 0x9A,
-                  (byte) 0xAB, (byte) 0xBC, (byte) 0xCD, (byte) 0xDE, (byte) 0xEF,
-                  (byte) 0xFF, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0xFF};
-               rs_.updateBytes ("C_BINARY_20", test);
-               rs_.updateRow ();
-               byte[] v = rs_.getBytes ("C_BINARY_20");
-               assertCondition (areEqual (v, test), "New testcase added by Native");
-            } catch (Exception e) {
-               failed (e, "Unexpected Exception - New testcase added by Native");
-            }
-         }
-      } else {
-        notApplicable();
-      }
+      if (checkJdbc20 ()) {
+          try {
+             JDRSTest.position (rs_, "UPDATE_SANDBOX");
+             byte[] test = new byte[] { (byte) 0x01, (byte) 0x12, (byte) 0x34, (byte) 0x45, (byte) 0x50,
+                (byte) 0x56, (byte) 0x67, (byte) 0x78, (byte) 0x89, (byte) 0x9A,
+                (byte) 0xAB, (byte) 0xBC, (byte) 0xCD, (byte) 0xDE, (byte) 0xEF,
+                (byte) 0xFF, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0xFF};
+             rs_.updateBytes ("C_BINARY_20", test);
+             rs_.updateRow ();
+             byte[] v = rs_.getBytes ("C_BINARY_20");
+             assertCondition (areEqual (v, test), "New testcase added by Native");
+          } catch (Exception e) {
+             failed (e, "Unexpected Exception - New testcase added by Native");
+          }
+       }
    }
 
 
@@ -255,26 +235,21 @@ row, when an insert is pending.
 **/
    public void Var005 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         if (checkJdbc20 ()) {
-           if (getDriver() == JDTestDriver.DRIVER_JCC) {
-             notApplicable("JCC does not support moveToInserRow");
-             return;
-           }
-            try {
-               rs_.moveToInsertRow ();
-               byte[] test = new byte[] { (byte) 0xBC, (byte) 0xCD};
-               rs_.updateBytes ("C_VARBINARY_20", test);
-               byte[] v = rs_.getBytes ("C_VARBINARY_20");
-               assertCondition (areEqual (v, test), "New testcase added by Native");
-            } catch (Exception e) {
-               failed (e, "Unexpected Exception - New testcase added by Native");
-            }
+      if (checkJdbc20 ()) {
+         if (getDriver() == JDTestDriver.DRIVER_JCC) {
+           notApplicable("JCC does not support moveToInserRow");
+           return;
          }
-      } else {
-        notApplicable();
-      }
+          try {
+             rs_.moveToInsertRow ();
+             byte[] test = new byte[] { (byte) 0xBC, (byte) 0xCD};
+             rs_.updateBytes ("C_VARBINARY_20", test);
+             byte[] v = rs_.getBytes ("C_VARBINARY_20");
+             assertCondition (areEqual (v, test), "New testcase added by Native");
+          } catch (Exception e) {
+             failed (e, "Unexpected Exception - New testcase added by Native");
+          }
+       }
    }
 
 
@@ -285,28 +260,23 @@ row, when an insert has been done.
 **/
    public void Var006 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         if (checkJdbc20 ()) {
-           if (getDriver() == JDTestDriver.DRIVER_JCC) {
-             notApplicable("JCC does not support moveToInserRow");
-             return;
-           }
-            try {
-               rs_.moveToInsertRow ();
-               byte[] test = new byte[] { (byte) 0xBC, (byte) 0xCD, (byte) 0xDE, (byte) 0xEF,
-                  (byte) 0xFF, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0xFF};
-               rs_.updateBytes ("C_VARBINARY_20", test);
-               rs_.insertRow ();
-               byte[] v = rs_.getBytes ("C_VARBINARY_20");
-               assertCondition (areEqual (v, test), "New testcase added by Native");
-            } catch (Exception e) {
-               failed (e, "Unexpected Exception - New testcase added by Native");
-            }
+      if (checkJdbc20 ()) {
+         if (getDriver() == JDTestDriver.DRIVER_JCC) {
+           notApplicable("JCC does not support moveToInserRow");
+           return;
          }
-      } else {
-        notApplicable();
-      }
+          try {
+             rs_.moveToInsertRow ();
+             byte[] test = new byte[] { (byte) 0xBC, (byte) 0xCD, (byte) 0xDE, (byte) 0xEF,
+                (byte) 0xFF, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0xFF};
+             rs_.updateBytes ("C_VARBINARY_20", test);
+             rs_.insertRow ();
+             byte[] v = rs_.getBytes ("C_VARBINARY_20");
+             assertCondition (areEqual (v, test), "New testcase added by Native");
+          } catch (Exception e) {
+             failed (e, "Unexpected Exception - New testcase added by Native");
+          }
+       }
    }
 
 
@@ -315,20 +285,15 @@ getBytes() - Should return null when the column is NULL.
 **/
    public void Var007 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                                                  + JDRSTest.RSTEST_BINARY);
-            JDRSTest.position0 (rs, "BINARY_NULL");
-            byte[] v = rs.getBytes ("C_VARBINARY_20");
-            assertCondition (v == null, "New testcase added by Native");
-         } catch (Exception e) {
-            failed (e, "Unexpected Exception - New testcase added by Native");
-         }
-      } else {
-        notApplicable();
-      }
+      try {
+          ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+                                                + JDRSTest.RSTEST_BINARY);
+          JDRSTest.position0 (rs, "BINARY_NULL");
+          byte[] v = rs.getBytes ("C_VARBINARY_20");
+          assertCondition (v == null, "New testcase added by Native");
+       } catch (Exception e) {
+          failed (e, "Unexpected Exception - New testcase added by Native");
+       }
    }
 
 
@@ -338,20 +303,15 @@ getBytes() - Get from a BINARY.
 **/
    public void Var008 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                                                     + JDRSTest.RSTEST_BINARY);
-            JDRSTest.position0 (rs, "BINARY_NOTRANS");
-            byte[] v = rs.getBytes ("C_BINARY_20");
-            assertCondition (areEqual (v, eleven), "New testcase added by Native");
-         } catch (Exception e) {
-            failed (e, "Unexpected Exception - New testcase added by Native");
-         }
-      } else {
-        notApplicable();
-      }
+      try {
+          ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+                                                   + JDRSTest.RSTEST_BINARY);
+          JDRSTest.position0 (rs, "BINARY_NOTRANS");
+          byte[] v = rs.getBytes ("C_BINARY_20");
+          assertCondition (areEqual (v, eleven), "New testcase added by Native");
+       } catch (Exception e) {
+          failed (e, "Unexpected Exception - New testcase added by Native");
+       }
    }
 
 
@@ -361,20 +321,15 @@ getBytes() - Get from a VARBINARY.
 **/
    public void Var009 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                                                     + JDRSTest.RSTEST_BINARY);
-            JDRSTest.position0 (rs, "BINARY_NOTRANS");
-            byte[] v = rs.getBytes ("C_VARBINARY_20");
-            assertCondition (areEqual (v, twelve), "New testcase added by Native");
-         } catch (Exception e) {
-            failed (e, "Unexpected Exception - New testcase added by Native");
-         }
-      } else {
-        notApplicable();
-      }
+      try {
+          ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+                                                   + JDRSTest.RSTEST_BINARY);
+          JDRSTest.position0 (rs, "BINARY_NOTRANS");
+          byte[] v = rs.getBytes ("C_VARBINARY_20");
+          assertCondition (areEqual (v, twelve), "New testcase added by Native");
+       } catch (Exception e) {
+          failed (e, "Unexpected Exception - New testcase added by Native");
+       }
    }
 
 
@@ -385,29 +340,24 @@ to a value shorter than the byte array.
 **/
    public void Var010 ()
    {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0)
-      {
-         try {
-            Statement s = connection_.createStatement ();
-            s.setMaxFieldSize (18);
-            ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                           + JDRSTest.RSTEST_BINARY);
-            JDRSTest.position0 (rs, "BINARY_NOTRANS");
+      try {
+          Statement s = connection_.createStatement ();
+          s.setMaxFieldSize (18);
+          ResultSet rs = s.executeQuery ("SELECT * FROM "
+                                         + JDRSTest.RSTEST_BINARY);
+          JDRSTest.position0 (rs, "BINARY_NOTRANS");
 
-            byte[] v = rs.getBytes ("C_BINARY_20");
-            SQLWarning w = rs.getWarnings ();
-            rs.close ();
-            s.close ();
-            byte[] expected =  { (byte) 'E', (byte) 'l', (byte) 'e', (byte) 'v', (byte) 'e', (byte) 'n',
-               (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ',
-               (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' '};
-            assertCondition ((areEqual (v, expected)) && (w == null), "New testcase added by Native");
-         } catch (Exception e) {
-            failed (e, "Unexpected Exception - New testcase added by Native");
-         }
-      } else {
-        notApplicable();
-      }
+          byte[] v = rs.getBytes ("C_BINARY_20");
+          SQLWarning w = rs.getWarnings ();
+          rs.close ();
+          s.close ();
+          byte[] expected =  { (byte) 'E', (byte) 'l', (byte) 'e', (byte) 'v', (byte) 'e', (byte) 'n',
+             (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ',
+             (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' ', (byte) ' '};
+          assertCondition ((areEqual (v, expected)) && (w == null), "New testcase added by Native");
+       } catch (Exception e) {
+          failed (e, "Unexpected Exception - New testcase added by Native");
+       }
    }
 }
 

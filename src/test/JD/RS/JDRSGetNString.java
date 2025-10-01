@@ -2022,7 +2022,7 @@ the result set.
 		    //also in TB, we get outofmem error and then it hangs the tc script
                     // For class in V6R1 we also see the same problem 
 		    if(runningJ9 && isToolboxDriver() ||
-		       (!runningJ9 &&  isToolboxDriver()  && getRelease() == JDTestDriver.RELEASE_V7R1M0 ))
+		       (!runningJ9 &&  isToolboxDriver()  && false ))
 		    {
 		        notApplicable("TOOLBOX_FIX_NEEDED:  sometimes gets outofmem and hangs tc script");
 		        return;

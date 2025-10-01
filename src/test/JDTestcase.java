@@ -390,6 +390,16 @@ public class JDTestcase extends Testcase {
     }
   }
 
+  public boolean checkNotNative() {
+    if (isNative_)  {
+      notApplicable("Non native testcase ");
+      return false; 
+    }
+    return true; 
+  }
+
+  
+  
   /**
    * Checks if we are using the toolbox driver. If not, this will report "not
    * applicable".
@@ -597,7 +607,7 @@ public class JDTestcase extends Testcase {
 
   protected boolean checkDecFloatSupport() {
     if (decFloatSupport_ == false)
-      notApplicable("Decimal Floating Point variation (>=V5R5).");
+      notApplicable("Decimal Floating Point variation.");
     return decFloatSupport_;
   }
 
@@ -1434,7 +1444,7 @@ public class JDTestcase extends Testcase {
     return release_;
   }
 
-  public boolean checkRelease750plus(String comment) {
+  public boolean checkRelease760(String comment) {
     return checkRelease(JDTestDriver.RELEASE_V7R6M0, comment);
   }
 
@@ -1463,19 +1473,16 @@ public class JDTestcase extends Testcase {
   }
 
   public boolean checkRelease710() {
-    return checkRelease710(null);
+    return checkRelease720(null);
   }
 
-  public boolean checkRelease710(String comment) {
-    return checkRelease(JDTestDriver.RELEASE_V7R1M0, comment);
-  }
 
   public boolean checkRelease610() {
-    return checkRelease610(null);
+    return checkRelease720(null);
   }
 
   public boolean checkRelease610(String comment) {
-    return checkRelease(JDTestDriver.RELEASE_V7R1M0, comment);
+    return checkRelease720(comment);
   }
 
   public boolean checkRelease(int release, String comment) {
@@ -1598,8 +1605,10 @@ public class JDTestcase extends Testcase {
           release_ = JDTestDriver.RELEASE_V7R4M0;
         else if (vrm == AS400.generateVRM(7, 5, 0))
           release_ = JDTestDriver.RELEASE_V7R5M0;
-        else
+        else if (vrm == AS400.generateVRM(7, 6, 0))
           release_ = JDTestDriver.RELEASE_V7R6M0;
+        else
+          release_ = JDTestDriver.RELEASE_V7R6M0_PLUS;
       } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
         e.printStackTrace(System.out);
@@ -2084,9 +2093,6 @@ public class JDTestcase extends Testcase {
   String getReleaseJvmDriver() {
     String value = "";
     switch (getRelease()) {
-    case JDTestDriver.RELEASE_V7R1M0:
-      value = "71";
-      break;
     case JDTestDriver.RELEASE_V7R2M0:
       value = "72";
       break;
@@ -2101,6 +2107,9 @@ public class JDTestcase extends Testcase {
       break;
     case JDTestDriver.RELEASE_V7R6M0:
       value = "76";
+      break;
+    case JDTestDriver.RELEASE_V7R6M0_PLUS:
+      value = "7X";
       break;
     default:
       value = "XX";

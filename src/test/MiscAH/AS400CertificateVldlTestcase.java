@@ -41,6 +41,7 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.UserSpace;
 
 import test.AS400CertificateTest;
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 /**
@@ -101,7 +102,7 @@ Constructor.
 
 
     // Are we running on the AS/400?
-    if (operatingSystem_.indexOf("OS/400") >= 0)
+    if (JTOpenTestEnvironment.isOS400)
     {
       usingNativeImpl = true;
       output_.println("Will use native implementation");

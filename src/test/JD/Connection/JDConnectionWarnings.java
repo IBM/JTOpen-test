@@ -178,7 +178,7 @@ Forces a single warning to be posted to the connection.
 	//
         c.setAutoCommit (true);
 
-	if ( (getRelease() >= JDTestDriver.RELEASE_V7R1M0) &&
+	if ( 
 	     (getDriver () == JDTestDriver.DRIVER_NATIVE)) {
 	    //
 	    // Creating a statement with
@@ -624,7 +624,7 @@ is closed.
          * Verify that no memory leak occurs
          */
             public void Var017() {
-              if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
+              if (getDriver() == JDTestDriver.DRIVER_NATIVE ) { 
                 try {
                   String expected = "NONE"; 
                   Connection c = testDriver_.getConnection (baseURL_+";ignore warnings=0100C,02000,01564", userId_, encryptedPassword_);

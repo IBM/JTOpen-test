@@ -40,7 +40,6 @@ import com.ibm.as400.access.AS400;
 import test.JDCSTest;
 import test.JDLobTest;
 import test.JDSetupProcedure;
-import test.JDTestDriver;
 
 
 /**
@@ -872,7 +871,6 @@ setBlob() - Set a BINARY parameter.
     {
 	String info = " -- Update 01/03/2011 for native driver"; 
 
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    if(checkJdbc20())
 	    {
 		try
@@ -893,9 +891,7 @@ setBlob() - Set a BINARY parameter.
                         failed(e, "Unexpected Exception"+info);                      //@K1A
 		}
 	    }
-	} else {
-	    notApplicable(); 
-	} 
+	
     }
 
 /**
@@ -906,7 +902,6 @@ setBlob() - Set a VARBINARY parameter.
     {
 	String info = " -- Update 01/03/2011 for native driver"; 
 
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
 	    if(checkJdbc20())
 	    {
 		try{
@@ -925,9 +920,7 @@ setBlob() - Set a VARBINARY parameter.
                         failed(e, "Unexpected Exception"+info);                      //@K1A
 		}
 	    }
-	} else {
-	    notApplicable(); 
-	} 
+	
     }
     
 
@@ -994,9 +987,7 @@ setBlob() - Should set to SQL NULL when the value is null.
    setBlob() - With a very large blob
    **/
   public void Var031() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("V5R3 or later test");
-    } else {
+    {
       if(isToolboxDriver()) {
         notApplicable("TOOLBOX can't handle large blobs on 32-bit platforms"); 
       } else { 

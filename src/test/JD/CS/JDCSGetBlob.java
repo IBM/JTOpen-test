@@ -1099,7 +1099,7 @@ getBlob() - Get blob on a large blob
        if (checkJdbc20 ()) {
 	   if (getDriver()  == JDTestDriver.DRIVER_NATIVE) { /* native only large blob tc */
 
-	       if ( getRelease() >=  JDTestDriver.RELEASE_V7R1M0 ) {
+	       if ( true ) {
 		   String sql ="";
 		   try {
 		       sql = "CREATE OR REPLACE  PROCEDURE "+JDCSTest.COLLECTION+".BIGBLOBOUT(OUT B BLOB(40000000)) LANGUAGE SQL " +
@@ -1139,9 +1139,7 @@ getBlob() - Get blob on a large blob
 			       " Currrently fails -- see issue 29243 ");
 		   }
 
-	       } else {
-		   notApplicable("New V5R4 testcase.. fails for native in V5R3 with The maximum number of concurrent LOB locators has been reached");
-	       }
+	       } 
 	   } else {
 	       notApplicable("Toolbox can't handle very large blob -- java.lang.OutOfMemory error occurs");
 	   }

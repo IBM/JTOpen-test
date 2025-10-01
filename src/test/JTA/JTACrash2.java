@@ -84,7 +84,7 @@ Performs setup needed before running variations.
        // 
        // Only NTS tests are valid in V7R1M0 and later
        // 
-       if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+       if (true) {
 	   if (!isNTS) { 
 	       validRelease = false;
 	   }

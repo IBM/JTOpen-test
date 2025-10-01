@@ -357,9 +357,6 @@ public class JDDMDGetXxx extends JDTestcase {
   private String getReleaseAsString() {
     String release;
     switch (getRelease()) {
-    case JDTestDriver.RELEASE_V7R1M0:
-      release = "07.01.0000 V7R1m0";
-      break;
     case JDTestDriver.RELEASE_V7R2M0:
       release = "07.02.0000 V7R2m0";
       break;
@@ -374,6 +371,9 @@ public class JDDMDGetXxx extends JDTestcase {
       break;
     case JDTestDriver.RELEASE_V7R6M0:
       release = "07.06.0000 V7R6m0";
+      break;
+    case JDTestDriver.RELEASE_V7R6M0_PLUS:
+      release = "07.0X.0000 V7RXm0";
       break;
     default:
       release = "UNKNOWN RELEASE";
@@ -1155,10 +1155,7 @@ public class JDDMDGetXxx extends JDTestcase {
    **/
   public void Var038() {
     try {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) // @F1A
-        assertCondition(dmd_.getMaxColumnNameLength() == 30);
-      else // @F1A
-        assertCondition(dmd_.getMaxColumnNameLength() == 128); // @F1A
+      assertCondition(dmd_.getMaxColumnNameLength() == 128); // @F1A
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
@@ -1174,10 +1171,7 @@ public class JDDMDGetXxx extends JDTestcase {
     } else {
 
       try {
-        if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) // @F1A
-          assertCondition(dmd2_.getMaxColumnNameLength() == 30);
-        else // @F1A
-          assertCondition(dmd2_.getMaxColumnNameLength() == 128); // @F1A
+        assertCondition(dmd2_.getMaxColumnNameLength() == 128); // @F1A
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1190,12 +1184,9 @@ public class JDDMDGetXxx extends JDTestcase {
    **/
   public void Var040() {
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { // @G1A
-        int maxColumnsInGroupBy = dmd_.getMaxColumnsInGroupBy();
-        assertCondition(maxColumnsInGroupBy == 8000,
-            "maxColumnsInGroupBy is " + maxColumnsInGroupBy + " sb 8000");// @G1A
-      } else // @G1A
-        assertCondition(dmd_.getMaxColumnsInGroupBy() == 120);
+      int maxColumnsInGroupBy = dmd_.getMaxColumnsInGroupBy();
+      assertCondition(maxColumnsInGroupBy == 8000,
+          "maxColumnsInGroupBy is " + maxColumnsInGroupBy + " sb 8000");// @G1A
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
@@ -1211,10 +1202,7 @@ public class JDDMDGetXxx extends JDTestcase {
     } else {
 
       try {
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @G1A
-          assertCondition(dmd2_.getMaxColumnsInGroupBy() == 8000); // @G1A
-        else // @G1A
-          assertCondition(dmd2_.getMaxColumnsInGroupBy() == 120);
+        assertCondition(dmd2_.getMaxColumnsInGroupBy() == 8000); // @G1A
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1372,10 +1360,7 @@ public class JDDMDGetXxx extends JDTestcase {
    **/
   public void Var052() {
     try {
-      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) // @G2A
-        assertCondition(dmd_.getMaxCursorNameLength() == 18);
-      else // @G2A
-        assertCondition(dmd_.getMaxCursorNameLength() == 128); // @G2A
+      assertCondition(dmd_.getMaxCursorNameLength() == 128); // @G2A
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
@@ -1391,10 +1376,7 @@ public class JDDMDGetXxx extends JDTestcase {
     } else {
 
       try {
-        if (getRelease() < JDTestDriver.RELEASE_V7R1M0) // @G2A
-          assertCondition(dmd2_.getMaxCursorNameLength() == 18);
-        else // @G2A
-          assertCondition(dmd2_.getMaxCursorNameLength() == 128); // @G2A
+        assertCondition(dmd2_.getMaxCursorNameLength() == 128); // @G2A
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1494,13 +1476,8 @@ public class JDDMDGetXxx extends JDTestcase {
     try {
 
       int maxSchemaNameLength = dmd_.getMaxSchemaNameLength();
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        assertCondition(maxSchemaNameLength == 128,
-            "Max schema length is " + maxSchemaNameLength + " sb 128 for V7R1");
-      } else {
-        assertCondition(maxSchemaNameLength == 10,
-            "Max schema length is " + maxSchemaNameLength + " sb 128 for V7R1");
-      }
+      assertCondition(maxSchemaNameLength == 128,
+          "Max schema length is " + maxSchemaNameLength + " sb 128 for V7R1");
 
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
@@ -1518,13 +1495,8 @@ public class JDDMDGetXxx extends JDTestcase {
       try {
 
         int maxSchemaNameLength = dmd_.getMaxSchemaNameLength();
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-          assertCondition(maxSchemaNameLength == 128, "Max schema length is "
-              + maxSchemaNameLength + " sb 128 for V7R1");
-        } else {
-          assertCondition(maxSchemaNameLength == 10, "Max schema length is "
-              + maxSchemaNameLength + " sb 128 for V7R1");
-        }
+        assertCondition(maxSchemaNameLength == 128, "Max schema length is "
+            + maxSchemaNameLength + " sb 128 for V7R1");
 
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -1538,12 +1510,9 @@ public class JDDMDGetXxx extends JDTestcase {
    */
   public void Var062() {
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @F2A
-        assertCondition(dmd_.getMaxStatementLength() == 1048576,
-            "maxStatementLength = " + dmd_.getMaxStatementLength()
-                + " sb 1048576 for V5R4 and beyond"); // @F2A
-      else // @F2A
-        assertCondition(dmd_.getMaxStatementLength() == 32767);
+      assertCondition(dmd_.getMaxStatementLength() == 1048576,
+          "maxStatementLength = " + dmd_.getMaxStatementLength()
+              + " sb 1048576 for V5R4 and beyond"); // @F2A
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
@@ -1559,12 +1528,9 @@ public class JDDMDGetXxx extends JDTestcase {
     } else {
 
       try {
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @F2A
-          assertCondition(dmd_.getMaxStatementLength() == 1048576,
-              "maxStatementLength = " + dmd_.getMaxStatementLength()
-                  + " sb 1048576 for V5R4 and beyond"); // @F2A
-        else // @F2A
-          assertCondition(dmd2_.getMaxStatementLength() == 32767);
+        assertCondition(dmd_.getMaxStatementLength() == 1048576,
+            "maxStatementLength = " + dmd_.getMaxStatementLength()
+                + " sb 1048576 for V5R4 and beyond"); // @F2A
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -1649,14 +1615,10 @@ public class JDDMDGetXxx extends JDTestcase {
    **/
   public void Var068() {
     try {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-        assertCondition(dmd_.getMaxTablesInSelect() == 1000,
-            "The maximum tables for V5R4 should be 1000, but was reported as "
-                + dmd_.getMaxTablesInSelect()
-                + " -- changed by native driver 08/10/2005");
-      } else {
-        assertCondition(dmd_.getMaxTablesInSelect() == 32);
-      }
+      assertCondition(dmd_.getMaxTablesInSelect() == 1000,
+          "The maximum tables for V5R4 should be 1000, but was reported as "
+              + dmd_.getMaxTablesInSelect()
+              + " -- changed by native driver 08/10/2005");
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
@@ -1671,15 +1633,10 @@ public class JDDMDGetXxx extends JDTestcase {
       notApplicable("JCC doesn't permit call on closed connection");
     } else {
       try {
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-          assertCondition(dmd_.getMaxTablesInSelect() == 1000,
-              "The maximum tables for V5R4 should be 1000, but was reported as "
-                  + dmd_.getMaxTablesInSelect()
-                  + " -- changed by native driver 08/10/2005");
-        } else {
-          assertCondition(dmd2_.getMaxTablesInSelect() == 32,
-              "maxTablesInSelect = " + dmd_.getMaxTablesInSelect() + " sb 32");
-        }
+        assertCondition(dmd_.getMaxTablesInSelect() == 1000,
+            "The maximum tables for V5R4 should be 1000, but was reported as "
+                + dmd_.getMaxTablesInSelect()
+                + " -- changed by native driver 08/10/2005");
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -2347,9 +2304,6 @@ public class JDDMDGetXxx extends JDTestcase {
   public void Var099() {
     if (checkJdbc30()) {
       int expectedMajorVersion = getRelease() / 100;
-      // There is no such thing as 550, but native driver tests using 550
-      if (getRelease() == JDTestDriver.RELEASE_V7R1M0)
-        expectedMajorVersion = 6;
       try {
         assertCondition(dmd_.getDatabaseMajorVersion() == expectedMajorVersion,
             "New test added by Native driver 11/2002 Expected major version "
@@ -2372,10 +2326,6 @@ public class JDDMDGetXxx extends JDTestcase {
     } else {
       if (checkJdbc30()) {
         int expectedMajorVersion = getRelease() / 100;
-        // There is no such thing as 550, but native driver tests using 550
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE
-            && getRelease() == JDTestDriver.RELEASE_V7R1M0)
-          expectedMajorVersion = 6;
         try {
 
           if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE)
@@ -2416,11 +2366,6 @@ public class JDDMDGetXxx extends JDTestcase {
 
       try {
         int expectedVersion = (getRelease() % 100) / 10;
-        // There is no such thing as 550, but native driver tests using 550
-        if (getRelease() == JDTestDriver.RELEASE_V7R1M0)
-          expectedVersion = 1;
-
-
         assertCondition(dmd_.getDatabaseMinorVersion() == expectedVersion,
             "New test added by Native driver 11/2002 -> minor version reported = "
                 + dmd_.getDatabaseMinorVersion() + " expected = "
@@ -2445,10 +2390,6 @@ public class JDDMDGetXxx extends JDTestcase {
 
         try {
           int expectedVersion = (getRelease() % 100) / 10;
-          // There is no such thing as 550, but native driver tests using 550
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE
-              && getRelease() == JDTestDriver.RELEASE_V7R1M0)
-            expectedVersion = 1;
           if (getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
             expectedVersion = 0;
           }

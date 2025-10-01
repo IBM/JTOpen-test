@@ -439,7 +439,7 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT BINARY(20)
 **/
     public void Var013()
     {
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
+	 { 
 	    try{
 		byte[] b = { (byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) (10),
 		(byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) (10),
@@ -461,9 +461,7 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT BINARY(20)
 	    catch (SQLException e){
 		failed(e,"Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
-	}
+	} 
     }
 	    
 	
@@ -474,7 +472,7 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT VARBINARY(20)
     public void Var014()
     {
 
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
+	 { 
 	    try{
 
 	   JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNVBIN20");
@@ -493,8 +491,6 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT VARBINARY(20)
 	    catch (SQLException e){
 		failed(e,"Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
 	} 
     }
 
@@ -549,7 +545,7 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT TIMESTAMP
 **/
     public void Var017()
     {
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
+	 { 
 	    try{
 
 	   JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNTS");
@@ -567,8 +563,6 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT TIMESTAMP
 	    catch (SQLException e){
 		failed (e, "Unexpected Exception");
 	    }
-	} else {
-	    notApplicable(); 
 	} 
     }
 
@@ -579,7 +573,7 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT DATALINK
     public void Var018()
     {
         //note:  illegal to have a Datalink as an inout parameter according to SQL Reference                                //@B1A
-	if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && !(isToolboxDriver())) {                //@B1C
+	if ((isToolboxDriver())) {                //@B1C
 	    try{
 
 	   JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNDL");
@@ -674,7 +668,7 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT VARBINARY(20)
     public void Var022()
     {
 
-	if(getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 
+     { 
 	    try{
 
 	   JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION,"RETURNVBIN20");
@@ -692,8 +686,7 @@ getObject() - getObject on a type registered as JAVA_OBJECT, INOUT VARBINARY(20)
 	    catch (Exception e){
 		failed(e,"Unexpected Exception added by native driver 11/10/2004");
 	    }
-	} else {
-	    notApplicable(); 
+	
 	} 
     }
 

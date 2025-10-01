@@ -1355,7 +1355,6 @@ setBoolean() - Set a DATALINK parameter.
 	if(checkNamedParametersSupport()) {
 	    if(checkJdbc30())
 	    {
-		if (getRelease() >=  JDTestDriver.RELEASE_V7R1M0) { 
 		    if(checkLobSupport ())
 		    {
 			try {
@@ -1385,9 +1384,7 @@ setBoolean() - Set a DATALINK parameter.
 		    }
 
 
-		} else {
-		    notApplicable(); 
-		}
+		
 	    }
 
 	}

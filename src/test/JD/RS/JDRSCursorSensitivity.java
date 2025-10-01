@@ -17,7 +17,6 @@ package test.JD.RS;
 import com.ibm.as400.access.*;
 
 import test.JDRSTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
@@ -148,32 +147,28 @@ Exeption should be thrown if try to jump ahead more than one row if TYPE_FORWARD
     public void Var002 ()
     {
 	if (checkJdbc20()) {
-	    if ( getRelease() > JDTestDriver.RELEASE_V7R1M0)  {
-		Statement statement_ = null;
-		ResultSet rs = null;
-		try 
-		{                      
-		    statement_ = connectionDefault_.createStatement (ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-		    rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+	    Statement statement_ = null;
+      ResultSet rs = null;
+      try 
+      {                      
+          statement_ = connectionDefault_.createStatement (ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+          rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
 
-		    rs.next();
-		    rs.absolute(3);
-		    rs.close ();
-		    failed("Didn't throw SQLException - New testcase created by toolbox 5/15/2003");
-		}
-		catch (Exception e) 
-		{
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		    try
-		    {
-			rs.close();
-			statement_.close();
-		    }
-		    catch (Exception c) {}
-		}
-	    }  else {
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.next();
+          rs.absolute(3);
+          rs.close ();
+          failed("Didn't throw SQLException - New testcase created by toolbox 5/15/2003");
+      }
+      catch (Exception e) 
+      {
+          assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          try
+          {
+      	rs.close();
+      	statement_.close();
+          }
+          catch (Exception c) {}
+      }
 	}
     }
 
@@ -185,36 +180,32 @@ Toolbox opens a scrollable sensitive cursor
     public void Var003 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() > JDTestDriver.RELEASE_V7R1M0)     {
-		try 
-		{
-		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(3);
-		    rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(3);
+          rs.getInt(1);
 
-		    Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(3);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(3);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(3);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154, "after is " + after + ", after should be 154");
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    } else { 
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(3);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == 154, "after is " + after + ", after should be 154");
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -225,37 +216,32 @@ Note:  Toolbox opens a scrollable sensitive cursor
     public void Var004 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)    {
-		try 
-		{
-		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(4);
-		    rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(4);
+          rs.getInt(1);
 
-		    Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(4);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(4);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(4);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154, "after is " + after + ", after should be 154");
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }
-	    else {
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(4);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == 154, "after is " + after + ", after should be 154");
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -266,38 +252,32 @@ Note:  Toolbox opens a scrollable insensitive cursor
     public void Var005 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		try 
-		{
-		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(5);
-		    int before = rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(5);
+          int before = rs.getInt(1);
 
-		    Statement statement2_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(5);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(5);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(5);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == before, "after is " + after + ", before is " + before + ", after should be " + before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }
-	    else {
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(5);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == before, "after is " + after + ", before is " + before + ", after should be " + before);
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -306,43 +286,34 @@ Should show changes made to the database while ResultSet is open if TYPE_SCROLL_
 **/
     public void Var006 ()
     {
-	if(getRelease() <= JDTestDriver.RELEASE_V7R1M0 &&
-	   getDriver() == JDTestDriver.DRIVER_NATIVE){
-	    notApplicable("V5R3 or greater variation for Native Driver.");
-	    return;
-	}   
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    // Note.. connection_ is default - which is asenstive.  Must use the sensitive one. 
-		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(6);
-		    rs.getInt(1);
+	    try 
+      {
+          // Note.. connection_ is default - which is asenstive.  Must use the sensitive one. 
+          Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(6);
+          rs.getInt(1);
 
-		    Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(6);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(6);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(6);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154, "after is " + after + ", after should be " + 154);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R2 or greater variation for ToolBox.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(6);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == 154, "after is " + after + ", after should be " + 154);
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -355,36 +326,32 @@ Toolbox opens a scrollable sensitive cursor
     public void Var007 ()
     {
 	if (checkJdbc20()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(7);
-		    rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(7);
+          rs.getInt(1);
 
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(7);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(7);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(7);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154, "after is " + after + ", after should be 154");
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(7);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == 154, "after is " + after + ", after should be 154");
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -396,36 +363,32 @@ Note:  Toolbox opens a scrollable sensitive cursor
     public void Var008 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)     {
-		try 
-		{
-		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(8);
-		    rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(8);
+          rs.getInt(1);
 
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(8);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(8);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(8);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154, "after is " + after + ", after should be 154");
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }   else  { 
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(8);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == 154, "after is " + after + ", after should be 154");
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -437,42 +400,37 @@ Note:  Toolbox opens a non-scrollable insensitive cursor
     public void Var009 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() > JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		Statement statement_ = null;
-		ResultSet rs = null;
-		try 
-		{
-		    statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE); 
-		    rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.next();
-		    rs.getInt(1);
+	    Statement statement_ = null;
+      ResultSet rs = null;
+      try 
+      {
+          statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE); 
+          rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.next();
+          rs.getInt(1);
 
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(1);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(1);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.next();
-		    failed("Didn't throw Exception - New testcase created by toolbox 5/15/2003.");
-		}
-		catch (Exception e) 
-		{
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		    try
-		    {
-			rs.close();
-			statement_.close();
-		    }
-		    catch (Exception c) {}
-		}
-	    }  else {
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.next();
+          failed("Didn't throw Exception - New testcase created by toolbox 5/15/2003.");
+      }
+      catch (Exception e) 
+      {
+          assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          try
+          {
+      	rs.close();
+      	statement_.close();
+          }
+          catch (Exception c) {}
+      }
 	}
     }
 
@@ -484,36 +442,30 @@ Toolbox opens a non-scrollable insensitive cursor
     public void Var010 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() > JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		try 
-		{
-		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.next();
-		    int before = rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.next();
+          int before = rs.getInt(1);
 
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(1);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(1);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    int after = rs.getInt(1);
-		    rs.close();
-		    statement_.close();
-		    assertCondition(after == before, "after = " + after + ", after should be " + before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }
-	    else { 
-		notApplicable("V5R2 or greater variation.");
-	    }
+          int after = rs.getInt(1);
+          rs.close();
+          statement_.close();
+          assertCondition(after == before, "after = " + after + ", after should be " + before);
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -562,36 +514,32 @@ Toolbox opens a scrollable sensitive cursor
     public void Var012 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)      {
-		try 
-		{
-		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(12);
-		    rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(12);
+          rs.getInt(1);
 
-		    Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(12);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(12);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(12);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154, "after is " + after + ", after should be 154");
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(12);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == 154, "after is " + after + ", after should be 154");
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -603,36 +551,32 @@ Note:  Toolbox opens a scrollable sensitive cursor
     public void Var013 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)   {
-		try 
-		{
-		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(13);
-		    rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(13);
+          rs.getInt(1);
 
-		    Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(13);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(13);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(13);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154, "after is " + after + ", after should be 154");
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(13);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == 154, "after is " + after + ", after should be 154");
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -845,38 +789,32 @@ Toolbox opens a scrollable insensitive cursor
     public void Var019 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		try 
-		{
-		    Statement statement_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(19);
-		    int before = rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(19);
+          int before = rs.getInt(1);
 
-		    Statement statement2_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(19);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(19);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(19);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == before , "after is " + after + ", after should be " + before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }
-	    else { 
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(19);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == before , "after is " + after + ", after should be " + before);
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -889,36 +827,32 @@ Note:  Toolbox opens a scrollable insensitive cursor
     public void Var020 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)     {
-		try 
-		{
-		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(20);
-		    int before = rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(20);
+          int before = rs.getInt(1);
 
-		    Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(20);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(20);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(20);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == before, "after is " + after + ", after should be " + before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }    else {
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(20);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == before, "after is " + after + ", after should be " + before);
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -930,36 +864,32 @@ Note:  Toolbox opens a scrollable insensitive cursor
     public void Var021 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() > JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(21);
-		    int before = rs.getInt(1);
+	    try 
+      {
+          Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+          ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs.absolute(21);
+          int before = rs.getInt(1);
 
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(21);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
+          Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
+          ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
+          rs1.absolute(21);
+          rs1.updateInt(1, 154);
+          rs1.updateRow();
+          rs1.close();
+          statement2_.close();
 
-		    rs.beforeFirst();
-		    rs.absolute(21);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == before, "after is " + after + ", after should be " + before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R2 or greater variation.");
-	    }
+          rs.beforeFirst();
+          rs.absolute(21);
+          int after = rs.getInt(1);
+          rs.close ();
+          statement_.close();
+          assertCondition( after == before, "after is " + after + ", after should be " + before);
+      }
+      catch (Exception e) 
+      {
+          failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
+      }
 	}
     }
 
@@ -1029,43 +959,7 @@ Note:  Toolbox opens a non-scrollable asensitive cursor
     public void Var024 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		Statement statement_ = null;
-		ResultSet rs = null;
-		try 
-		{
-		    statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE); 
-		    rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    for(int i=0; i<24; i++)
-			rs.next();
-		    rs.getInt(1);
-
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(1);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.next();
-		    failed("Didn't throw Exception - New testcase created by toolbox 5/15/2003.");
-		}
-		catch (Exception e) 
-		{
-		    assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-		    try
-		    {
-			rs.close();
-			statement_.close();
-		    }
-		    catch (Exception c) {}
-		}
-	    }  else { 
-		notApplicable("V5R1 or earlier variation");
-	    }
+	    notApplicable("V5R1 or earlier variation");
 	}
     }
 
@@ -1077,36 +971,7 @@ Toolbox opens a non-scrollable asensitive cursor
     public void Var025 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		try 
-		{
-		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    for(int i = 0; i<25; i++)
-			rs.next();
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(1);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    int after = rs.getInt(1);
-		    rs.close();
-		    statement_.close();
-		    assertCondition(after == before || after == 154);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1118,36 +983,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var026 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(26);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(26);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(26);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154 || after == before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1158,36 +994,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var027 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(27);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(27);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(27);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == before || after ==154);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    } else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1200,36 +1007,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var028 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(28);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(28);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(28);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154 || after ==before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    } else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1243,37 +1021,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var029 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		try 
-		{
-		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(29);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(29);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(29);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154 || after == before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }   else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1285,36 +1033,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var030 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)   {
-            try 
-            {
-                Statement statement_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-                ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-                rs.absolute(30);
-                int before = rs.getInt(1);
-
-                Statement statement2_ = connectionAsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-                ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-                rs1.absolute(30);
-                rs1.updateInt(1, 154);
-                rs1.updateRow();
-                rs1.close();
-                statement2_.close();
-                
-                rs.beforeFirst();
-                rs.absolute(30);
-                int after = rs.getInt(1);
-                rs.close ();
-                statement_.close();
-                assertCondition( after == before || after == 154);
-            }
-            catch (Exception e) 
-            {
-                failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-            }
-	    }  else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1326,36 +1045,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var031 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(31);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(31);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(31);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == before || after == 154);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    } else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1367,36 +1057,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var032 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(32);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(32);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(32);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == before || after == 154);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1407,37 +1068,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var033 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		try 
-		{
-		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(33);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(33);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(33);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154 || after == before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }       else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1449,37 +1080,7 @@ Toolbox opens a scrollable asensitive cursor
     public void Var034 ()
     {
 	if (checkJdbc20 ()) {
-	    if ( getRelease() <= JDTestDriver.RELEASE_V7R1M0) 
-	    {
-		try 
-		{
-		    Statement statement_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(34);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionDefault_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(34);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(34);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == before || after == 154);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    } else {
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 
 	}
     }
@@ -1491,36 +1092,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var035 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0)  {
-		try 
-		{
-		    Statement statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs.absolute(35);
-		    int before = rs.getInt(1);
-
-		    Statement statement2_ = connectionInsensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-		    ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-		    rs1.absolute(35);
-		    rs1.updateInt(1, 154);
-		    rs1.updateRow();
-		    rs1.close();
-		    statement2_.close();
-
-		    rs.beforeFirst();
-		    rs.absolute(35);
-		    int after = rs.getInt(1);
-		    rs.close ();
-		    statement_.close();
-		    assertCondition( after == 154 || after == before);
-		}
-		catch (Exception e) 
-		{
-		    failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-		}
-	    }  else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1532,36 +1104,7 @@ Note:  Toolbox opens a scrollable asensitive cursor
     public void Var036 ()
     {
 	if (checkJdbc20 ()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-            try 
-            {
-                Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-                ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-                rs.absolute(36);
-                int before = rs.getInt(1);
-
-                Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); 
-                ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE );
-                rs1.absolute(36);
-                rs1.updateInt(1, 154);
-                rs1.updateRow();
-                rs1.close();
-                statement2_.close();
-                
-                rs.beforeFirst();
-                rs.absolute(36);
-                int after = rs.getInt(1);
-                rs.close ();
-                statement_.close();
-                assertCondition( after == 154 || after == before);
-            }
-            catch (Exception e) 
-            {
-                failed(e, "Unexpected Exception - New testcase created by toolbox 5/15/2003");
-            }
-	    }   else { 
-		notApplicable("V5R1 or earlier variation.");
-	    }
+	    notApplicable("V5R1 or earlier variation.");
 	}
     }
 
@@ -1625,10 +1168,6 @@ Test with use of the with fetch first clause for scroll insensitive cursors
 Test with use of the optimize for all rows for scroll insensitive cursors
 **/
     public void Var040() {
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Not working for V5R3 native driver");
-	    return; 
-	} 
 	if (checkJdbc20 ())  {
 	    try {
 		Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 

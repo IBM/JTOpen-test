@@ -351,7 +351,7 @@ public class JDLobBlobLocator extends JDTestcase {
           sb.setLength(0);
           InputStream v = blob.getBinaryStream();
           if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @D3
-              getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @D3
+              true) // @D3
             assertCondition(compareBeginsWithBytes(v, new byte[0], sb), sb); // @D3
           else // @D3
             assertCondition(compare(v, new byte[0], sb), sb);
@@ -376,7 +376,7 @@ public class JDLobBlobLocator extends JDTestcase {
           sb.setLength(0);
           boolean condition; // @D3
           if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @D3
-              getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @D3
+              true) // @D3
             condition = id == 2 && compareBeginsWithBytes(v, MEDIUM_, sb); // @D3
           else // @D3
             condition = (id == 2 && compare(v, MEDIUM_, sb));
@@ -400,7 +400,7 @@ public class JDLobBlobLocator extends JDTestcase {
           sb.setLength(0);
           InputStream v = blob.getBinaryStream();
           if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @D3
-              getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @D3
+              true) // @D3
             assertCondition(compareBeginsWithBytes(v, LARGE_, sb), sb); // @D3
           else // @D3
             assertCondition(compare(v, LARGE_, sb), sb);
@@ -520,7 +520,7 @@ public class JDLobBlobLocator extends JDTestcase {
           Blob blob = rs_.getBlob("C_BLOB");
           byte[] v = blob.getBytes(47, 8);
           if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @D1
-              getRelease() >= JDTestDriver.RELEASE_V7R1M0) // @D1
+              true) // @D1
             succeeded(); // @D1
           else
             failed("Didn't throw SQLException" + v);
@@ -2087,11 +2087,8 @@ public class JDLobBlobLocator extends JDTestcase {
                                                         // 1);
         rs2_.updateBlob("C_BLOB", blob);
 
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 || false) // @K2D && getDriver () == JDTestDriver.DRIVER_NATIVE)
-                                                                  // // @D1
-          assertCondition(written == 1); // @D1
-        else // @D1
-          failed("Didn't throw SQLException");
+        // // @D1
+        assertCondition(written == 1); // @D1
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
@@ -2127,7 +2124,7 @@ public class JDLobBlobLocator extends JDTestcase {
         InputStream inputStream = blob1.getBinaryStream();
         byte[] actualExp = new byte[] { (byte) 6, (byte) 7, (byte) 8, (byte) 89 }; // 4th byte from var063 @D1
         sb.setLength(0);
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 // @D3
+        if (true // @D3
             && getDriver() == JDTestDriver.DRIVER_NATIVE) // @D1 // @D3
           assertCondition(compareBeginsWithBytes(inputStream, actualExp, sb), sb); // @D1 // @D3
         else // @D1 // @D3
@@ -2556,7 +2553,7 @@ public class JDLobBlobLocator extends JDTestcase {
         byte[] newBytes = new byte[] { (byte) 10, (byte) 11, (byte) 12, (byte) 65, (byte) 75 }; // from Var082: last 2
                                                                                                 // bytes @D1
         sb.setLength(0);
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 // @D3
+        if (true // @D3
             && getDriver() == JDTestDriver.DRIVER_NATIVE) // @D1 // @D3
           assertCondition(compareBeginsWithBytes(inputStream, newBytes, sb), sb); // @D1 // @D3
         else // @D3
@@ -2999,11 +2996,6 @@ public class JDLobBlobLocator extends JDTestcase {
    * free() Test select then free make sure locator not available
    **/
   public void Var096() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("v5r5 variation");
-      return;
-    }
-
     if ((getDriver() != JDTestDriver.DRIVER_TOOLBOX)) {
       if (checkJdbc40()) {
         try {
@@ -3051,11 +3043,6 @@ public class JDLobBlobLocator extends JDTestcase {
    * free() Test insert and close then free, then make sure lob not available
    **/
   public void Var097() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("v5r5 variation");
-      return;
-    }
-
     if ((getDriver() != JDTestDriver.DRIVER_TOOLBOX)) {
       if (checkLobSupport() && checkJdbc40()) {
         try {
@@ -3111,11 +3098,6 @@ public class JDLobBlobLocator extends JDTestcase {
    * free() Test insert without close
    **/
   public void Var098() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("v5r5 variation");
-      return;
-    }
-
     if ((getDriver() != JDTestDriver.DRIVER_TOOLBOX)) {
       if (checkLobSupport() && checkJdbc40()) {
         try {
@@ -3169,11 +3151,6 @@ public class JDLobBlobLocator extends JDTestcase {
    * case)
    **/
   public void Var099() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("v5r5 variation");
-      return;
-    }
-
     if ((getDriver() != JDTestDriver.DRIVER_TOOLBOX)) {
       if (checkLobSupport() && checkJdbc40()) {
         try {
@@ -3250,12 +3227,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.toString().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.toString() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3280,12 +3251,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3310,12 +3275,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3341,12 +3300,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3372,12 +3325,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3403,12 +3350,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3434,12 +3375,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3464,12 +3399,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3494,12 +3423,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3524,12 +3447,6 @@ public class JDLobBlobLocator extends JDTestcase {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3551,12 +3468,6 @@ public class JDLobBlobLocator extends JDTestcase {
         JDReflectionUtil.callMethod_V(blob, "free");
         assertCondition(true);
       } catch (Exception e) {
-        if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && (getRelease() < JDTestDriver.RELEASE_V7R1M0)) {
-          assertCondition(
-              e.getMessage().indexOf("not support this function") != -1 || e.toString().indexOf("NoSuchMethod") != -1,
-              "message is " + e.getMessage() + " sb ..not support");
-          return;
-        }
         failed(e, "Unexpected Exception");
       }
     }
@@ -3566,11 +3477,6 @@ public class JDLobBlobLocator extends JDTestcase {
    * Make sure lob locator not accessible after rs.close()
    **/
   public void Var111() {
-    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("v7r2 variation");
-      return;
-    }
-
     if ((getDriver() != JDTestDriver.DRIVER_TOOLBOX)) {
       if (checkJdbc40()) {
         try {
@@ -3610,10 +3516,6 @@ public class JDLobBlobLocator extends JDTestcase {
    **/
 
   public void Var112() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("v5r5 variation");
-      return;
-    }
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
       notApplicable();
       return;

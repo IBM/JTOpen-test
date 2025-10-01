@@ -1509,7 +1509,7 @@ extends JDTestcase
                 JDReflectionUtil.callMethod_V(nClob, "setString", 1L, "Toronto"); 
                 JDReflectionUtil.callMethod_V(rs_, "updateNClob", "C_VARCHAR_50", nClob);// "Toronto"));
 		if( (getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V7R1M0) || isToolboxDriver() )	// @D2
+		    true) || isToolboxDriver() )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    failed ("Didn't throw SQLException");
@@ -1517,7 +1517,7 @@ extends JDTestcase
             catch(Exception e)
             {
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @D2
+		    true )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1554,7 +1554,7 @@ extends JDTestcase
                 JDReflectionUtil.callMethod_V(nClob, "setString", 1L, "Winnipeg"); 
                 JDReflectionUtil.callMethod_V(rs_, "updateNClob", "C_VARCHAR_50", nClob);// "Winnipeg"));
 		if( (getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V7R1M0) || isToolboxDriver() )	// @D2
+		    true) || isToolboxDriver() )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    failed ("Didn't throw SQLException");
@@ -1562,7 +1562,7 @@ extends JDTestcase
             catch(Exception e)
             {
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @D2
-		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @D2
+		    true )	// @D2
 		    succeeded();					// @D2
 		else							// @D2
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");

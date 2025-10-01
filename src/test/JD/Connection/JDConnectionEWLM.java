@@ -330,7 +330,7 @@ Sleep for 1 second to identify this transcation.
 		return; 
 	    } 
 
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) { 
+	if ( getDriver() == JDTestDriver.DRIVER_NATIVE) { 
 	    try {
 		startTransaction(); 
 
@@ -366,7 +366,7 @@ setDB2eWLMCorrelator() -- Set the correlator and do some work.
 		return; 
 	    } 
 
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) { 
+	if ( getDriver() == JDTestDriver.DRIVER_NATIVE) { 
 	    try {
 		startTransaction(); 
 		byte[] correlator = getCorrelator();
@@ -409,7 +409,7 @@ setDB2eWLMCorrelator() -- Set the correlator and do some work.
 		return; 
 	    } 
 
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) { 
+	if ( getDriver() == JDTestDriver.DRIVER_NATIVE) { 
 	    try {
 		startTransaction(); 
 		byte[] correlator = getCorrelator();
@@ -454,7 +454,7 @@ setDB2eWLMCorrelator() -- Set the correlator on a DB2ConnectionHandle and do som
 		return; 
 	    } 
 
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) { 
+	if ( getDriver() == JDTestDriver.DRIVER_NATIVE) { 
 	    try {
 		Object dataSource =  JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2ConnectionPool");
 		
@@ -509,7 +509,7 @@ setDB2eWLMCorrelator() -- Set the correlator on a UDBConnectionHandle and do som
 		return; 
 	    } 
 
-	if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) { 
+	if ( getDriver() == JDTestDriver.DRIVER_NATIVE) { 
 	    try {
 			ConnectionPoolDataSource dataSource = (ConnectionPoolDataSource) JDReflectionUtil
 					.createObject("com.ibm.db2.jdbc.app.UDBConnectionPoolDataSource");

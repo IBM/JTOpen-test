@@ -26,7 +26,6 @@ import com.ibm.as400.access.AS400;
 import test.JDDriverTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 
 import java.beans.BeanInfo;
@@ -298,12 +297,6 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
    * properties are null.
    **/
   public void Var006() {
-    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-        && getRelease() == JDTestDriver.RELEASE_V7R1M0
-        && JTOpenTestEnvironment.isOS400) {
-      notApplicable("Toolbox on V5R4 on OS/400 not working");
-      return;
-    }
     try {
       DriverPropertyInfo[] propertyInfo = driver_.getPropertyInfo(baseURL_,
           null);
@@ -322,12 +315,6 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
    * properties are set.
    **/
   public void Var007() {
-    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
-        && getRelease() == JDTestDriver.RELEASE_V7R1M0
-        && JTOpenTestEnvironment.isOS400) {
-      notApplicable("Toolbox on V5R4 on OS/400 not working");
-      return;
-    }
     try {
       Properties properties = new Properties();
       properties.put("bogus", "property");

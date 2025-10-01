@@ -670,7 +670,7 @@ the full stream.
                 Reader r = new StringReader ("Roseville");
                 JDReflectionUtil.callMethod_V(ps,"setNCharacterStream",1, r, (long) 4);
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @C1
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @C1
+		   true )	// @C1
 		    succeeded();					// @C1
 		else							// @C1
 		    failed ("Didn't throw SQLException");
@@ -723,7 +723,7 @@ setNCharacterStream() - Set a VARCHAR(50) parameter, with the length set to 1 ch
                 Reader r = new StringReader ("Brooklyn Center");
                 JDReflectionUtil.callMethod_V(ps,"setNCharacterStream",1, r, (long) 1);
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @C1
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @C1
+		   true )	// @C1
 		    succeeded();					// @C1
 		else							// @C1
 		    failed ("Didn't throw SQLException");
@@ -751,7 +751,7 @@ setNCharacterStream() - Set a VARCHAR(50) parameter, with the length set to 0.
                 Reader r = new StringReader ("Brooklyn Park");
                 JDReflectionUtil.callMethod_V(ps,"setNCharacterStream",1, r, (long) 0);
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @C1
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @C1
+		   true )	// @C1
 		    succeeded();					// @C1
 		else							// @C1
 		    failed ("Didn't throw SQLException");
@@ -1009,7 +1009,7 @@ setNCharacterStream() - Set a BLOB parameter.
             catch(Exception e)
             {
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @C1
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @C1
+		   true )		// @C1
 		    assertExceptionIsInstanceOf (e, "java.sql.SQLException");	// @C1
 		else	
 		    failed(e, "Unexpected Exception - supported added by Toolbox"+

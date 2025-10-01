@@ -694,12 +694,7 @@ data size is 14 significant digits and the transfer size is 5 digits.
     public void Var021()
     {
 
-	if (getRelease() == JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	    notApplicable("Test not working in V5R4");
-	    return ; 
-
-	}
-        try {
+	try {
             statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
 
             PreparedStatement ps = connection_.prepareStatement (

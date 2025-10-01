@@ -186,9 +186,6 @@ Performs setup needed before running variations.
         tableRowChangeTimestampL = JDDMDTest.SCHEMAS_LEN128+".JDDPSDRC";
 
 
-	String dropStatements54[] = {};
-	String createStatements54[] = {};
-
 	String dropStatements[] = {
 	/* 0 */     "DROP TABLE " + tableCharHidden,
 	/* 1 */     "DROP TABLE " + tableIntHidden,
@@ -225,16 +222,10 @@ Performs setup needed before running variations.
 
 
 
-        if(getRelease() >=  JDTestDriver.RELEASE_V7R1M0)  {
+        if(true)  {
           dropStatements=dropStatements71;
           createStatements=createStatements71;
         }
-
-	if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    dropStatements=dropStatements54;
-	    createStatements=createStatements54;
-	}
-
 
 	for (int i = 0; i < dropStatements.length; i++) {
 
@@ -628,7 +619,7 @@ No matching columns should be returned.
 
             rs.close ();
 	    if (JDTestDriver.isLUW() ||
-                (getDriver() == JDTestDriver.DRIVER_NATIVE && (isJdbc40() || getRelease() >= JDTestDriver.RELEASE_V7R1M0))
+                (getDriver() == JDTestDriver.DRIVER_NATIVE && (isJdbc40() || true))
                 || (getDriver() == JDTestDriver.DRIVER_TOOLBOX)) {
 		assertCondition (rows > 0, "rows = "+rows+" sb > 0  empty string for the catalog parameter");
 	    } else {
@@ -2517,11 +2508,6 @@ is closed.
     **/
         public void Var031()
         {
-            if(getRelease() < JDTestDriver.RELEASE_V7R1M0)
-            {
-                notApplicable("V7R1 long schema TC.");
-                return;
-            }
             try {
                 message = new StringBuffer();
                 messageColumnName="";
@@ -2585,11 +2571,7 @@ getPseudoColumns() - Get a list of those created in this testcase using a readon
 **/
     public void Var032()
     {
-	if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("V7R1 or later test for readonly connection ");
-	    return;
-	}
-        try {
+	try {
             message = new StringBuffer();
             messageColumnName="";
 

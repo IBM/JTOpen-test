@@ -2406,8 +2406,14 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       /* Not LINUX or WINDOWS -- must be OS400 */
       /* inputVector.addElement("echo SYSTEM WRKSYSSTS"); */
       /* inputVector.addElement("system wrksyssts"); */
-        if (javaHome.indexOf("/QOpenSys/pkgs/lib/jvm") < 0) {
+        /* include native JDBC driver on classpath if Open JVM */ 
+        if (javaHome.indexOf("/QOpenSys/pkgs/lib/jvm") >= 0) {
+          if (javaHome.indexOf("openjdk-11") > 0) {
+            /* classes11.jar is compiled for Java 17 on 7.6.  Use the 1.8 jar */ 
+            setClasspath=setClasspath+"\":/QIBM/ProdData/OS400/Java400/ext/db2_classes18.jar\"";
+          } else { 
             setClasspath=setClasspath+"\":/QIBM/ProdData/OS400/Java400/ext/db2_classes11.jar\"";
+          }
         } 
 
 

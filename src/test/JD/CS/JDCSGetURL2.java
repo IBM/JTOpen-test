@@ -37,7 +37,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDLobTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -576,7 +575,7 @@ getURL() - getURL on a type registered as DATALINK, INOUT DATALINK
     public void Var018()
     {
         //Note:  It is illegal to have a DATALINK as an OUT/INOUT parameter according the the DB2 SQL Reference         //@B1A
-	if ( getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && !(isToolboxDriver())) {           //@B1C
+	if (  !(isToolboxDriver())) {           //@B1C
 	    try{
 
 		JDCSTest.assureProcedureExists(connection, JDCSTest.COLLECTION, "RETURNDL");
@@ -606,7 +605,7 @@ getURL() - getURL on a type registered as DATALINK, INOUT BLOB(200)
     {
 	if(checkJdbc30()) /* $B4 named parameters need jdbc 3.0 */
 	{
-	    if ( getRelease() >=  JDTestDriver.RELEASE_V7R1M0) {
+	  
 		try{
 
 		    byte [] b = {(byte) 23, (byte) 65, (byte) 87, (byte) 88};
@@ -627,9 +626,7 @@ getURL() - getURL on a type registered as DATALINK, INOUT BLOB(200)
 		catch(Exception e){
 		    failed(e, "Unexpected Exception"); 
 		}
-	    } else {
-		notApplicable(); 
-	    }
+	   
 	} 
     }
 

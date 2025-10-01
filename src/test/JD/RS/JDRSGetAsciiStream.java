@@ -319,7 +319,7 @@ getAsciiStream() - Should work when the column index is valid.
             JDRSTest.position0 (rs, "CHAR_FULL");
             InputStream v = rs.getAsciiStream (12);
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
+		true )		// @K2
 		assertCondition ( compareBeginsWithBytes(		// @K2
                     v, "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb); // @K2
 	    else							// @K2
@@ -405,7 +405,7 @@ getAsciiStream() - Should work when the column name is valid.
             JDRSTest.position0 (rs, "CHAR_FULL");
             InputStream v = rs.getAsciiStream ("C_CHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )			// @K2
+		true )			// @K2
 		assertCondition ( compareBeginsWithBytes(			// @K2
                     v, "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb);  // @K2
 	    else								// @K2
@@ -435,7 +435,7 @@ getAsciiStream() - Should work when an update is pending.
             InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
 	    boolean check;								// @K2
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				// @K2
+		true )				// @K2
 		check = compareBeginsWithBytes( v, "World Peace".getBytes("8859_1"),sb);	// @K2
 	    else									// @K2
 		check = compare (v, "World Peace", "8859_1",sb);				// @K2
@@ -467,7 +467,7 @@ getAsciiStream() - Should work when an update has been done.
             InputStream v = rs.getAsciiStream ("C_CHAR_50");
             boolean check;					// @K2
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @K2
+		true )	// @K2
 		check = compareBeginsWithBytes(			// @K2
                                  v, "New Planet                                        ".getBytes("8859_1"),sb);     // @K2
 	    else if (getDriver() == JDTestDriver.DRIVER_JCC)	 {
@@ -511,7 +511,7 @@ row, when an insert is pending.
             InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
             boolean check;								// @K2
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				// @K2
+		true )				// @K2
 		check = compareBeginsWithBytes( v, "El Nino".getBytes("8859_1"),sb);	// @K2
 	    else									// @K2
 		check = compare (v, "El Nino", "8859_1",sb);				// @K2
@@ -548,7 +548,7 @@ row, when an insert has been done.
             InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
             boolean check;						// @K2
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
+		true )		// @K2
 		check = compareBeginsWithBytes( v, "Year 2000 Problem".getBytes("8859_1"),sb);	// @K2
 	    else							// @K2
 		check = compare (v, "Year 2000 Problem", "8859_1",sb);	// @K2
@@ -794,7 +794,7 @@ getAsciiStream() - Get from an empty CHAR.
             JDRSTest.position0 (rs, "CHAR_EMPTY");
             InputStream v = rs.getAsciiStream ("C_CHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
+		true )		// @K2
 		assertCondition( compareBeginsWithBytes( v,		// @K2
 		"                                                  ".getBytes("8859_1"),sb),sb);	  // @K2
 	    else							// @K2
@@ -820,7 +820,7 @@ getAsciiStream() - Get from a full CHAR.
             JDRSTest.position0 (rs, "CHAR_FULL");
             InputStream v = rs.getAsciiStream ("C_CHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )	// @K2
+		true )	// @K2
 		assertCondition( compareBeginsWithBytes( v,	// @K2
                    "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb);	    // @K2
 	    else						// @K2
@@ -846,7 +846,7 @@ getAsciiStream() - Get from an empty VARCHAR.
             JDRSTest.position0 (rs, "CHAR_EMPTY");
             InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				// @K2
+		true )				// @K2
 		assertCondition( compareBeginsWithBytes( v, "".getBytes("8859_1"),sb),sb);	// @K2
 	    else									// @K2
 		assertCondition (compare (v, "", "8859_1",sb),sb);
@@ -871,7 +871,7 @@ getAsciiStream() - Get from a full VARCHAR.
             JDRSTest.position0 (rs, "CHAR_FULL");
             InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		getRelease() >= JDTestDriver.RELEASE_V7R1M0 )		// @K2
+		true )		// @K2
 		assertCondition( compareBeginsWithBytes( v, "Java Toolbox".getBytes("8859_1"),sb),sb); // @K2
 	    else							// @K2
 		assertCondition (compare (v, "Java Toolbox", "8859_1",sb),sb);
@@ -898,10 +898,7 @@ getAsciiStream() - Get from a BINARY.
             sb.setLength(0); 
             if(isToolboxDriver())                          //@F1A
                 assertCondition(compare(v, "456C6576656E2020202020202020202020202020", "8859_1",sb),sb);    //@F1A
-            else  if(getRelease() < JDTestDriver.RELEASE_V7R1M0)		// @K2
-                assertCondition (compare (v, "Eleven              ", "8859_1",sb),sb);
-	    else								// @K2
-		assertCondition( compareBeginsWithBytes( v, "Eleven              ".getBytes("8859_1"),sb),sb); // @K2
+            else assertCondition( compareBeginsWithBytes( v, "Eleven              ".getBytes("8859_1"),sb),sb); // @K2
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -924,10 +921,7 @@ getAsciiStream() - Get from a VARBINARY.
             InputStream v = rs.getAsciiStream ("C_VARBINARY_20");
             if(isToolboxDriver())                          //@F1A
                 assertCondition(compare(v, "5477656C7665", "8859_1",sb),sb);    //@F1A
-            else if(getRelease() < JDTestDriver.RELEASE_V7R1M0)           //@F1A	   // @K2
-                assertCondition (compare (v, "Twelve", "8859_1",sb),sb);
-	    else									   // @K2
-		assertCondition( compareBeginsWithBytes( v, "Twelve".getBytes("8859_1"),sb),sb); // @K2
+            else assertCondition( compareBeginsWithBytes( v, "Twelve".getBytes("8859_1"),sb),sb); // @K2
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -951,7 +945,7 @@ in the result set.
                 JDRSTest.position0 (rs, "LOB_FULL");
                 InputStream v = rs.getAsciiStream ("C_CLOB");
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+		   true)		// @K2
 		    assertCondition( compareBeginsWithBytes( v, JDRSTest.CLOB_FULL.getBytes("8859_1"),sb),sb); // @K2
 		else							// @K2
 		    assertCondition (compare (v, JDRSTest.CLOB_FULL, "8859_1",sb),""+sb);
@@ -986,7 +980,7 @@ outside of a JDBC 2.0 driver.
                 InputStream v = rs.getAsciiStream ("C_CLOB");
 		boolean check;						// @K2
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+		   true)		// @K2
 		    check = compareBeginsWithBytes( v, JDRSTest.CLOB_FULL.getBytes("8859_1"),sb);	// @K2
 		else							// @K2
 		    check = compare (v, JDRSTest.CLOB_FULL, "8859_1",sb);	// @K2
@@ -1015,7 +1009,7 @@ returned in the result set.
                 JDRSTest.position0 (rs, "LOB_FULL");
                 InputStream v = rs.getAsciiStream ("C_DBCLOB");
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+		   true)		// @K2
 		    assertCondition( compareBeginsWithBytes( v, JDRSTest.DBCLOB_FULL.getBytes("8859_1"),sb),sb); // @K2
 		else							// @K2
 		    assertCondition (compare (v, JDRSTest.DBCLOB_FULL, "8859_1",sb),sb);	// @K2
@@ -1051,7 +1045,7 @@ outside of a JDBC 2.0 driver.
                 InputStream v = rs.getAsciiStream ("C_DBCLOB");
 		boolean check;						// @K2
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		   getRelease() >= JDTestDriver.RELEASE_V7R1M0)		// @K2
+		   true)		// @K2
 		    check = compareBeginsWithBytes( v, JDRSTest.DBCLOB_FULL.getBytes("8859_1"),sb); // @K2
 		else							// @K2
 		    check = compare (v, JDRSTest.DBCLOB_FULL, "8859_1",sb);// @K2
@@ -1082,10 +1076,7 @@ in the result set.
                 InputStream v = rs.getAsciiStream ("C_BLOB");
                 if(isToolboxDriver())                          //@K1A
                     assertCondition(compare(v, JDRSTest.BLOB_FULL, true, sb),"PATH 1 "+sb);               //@K1A
-                else  if(getRelease() < JDTestDriver.RELEASE_V7R1M0 )                    //@K1A	// @K2
-                    assertCondition (compare (v, JDRSTest.BLOB_FULL,sb),"PATH 2 "+sb);	
-		else										// @K2
-		    assertCondition( compareBeginsWithBytes( v, JDRSTest.BLOB_FULL,sb),"PATH 3 "+sb);		// @K2
+                else assertCondition( compareBeginsWithBytes( v, JDRSTest.BLOB_FULL,sb),"PATH 3 "+sb);		// @K2
 
             }
             catch (Exception e) {
@@ -1129,10 +1120,7 @@ outside of a JDBC 2.0 driver.
 		if(isToolboxDriver()) {
 		    sb.append("Path 1:"); 
                     check = compare(v, JDRSTest.BLOB_FULL, true,sb);                                       //@K1A
-		} else if(getRelease() < JDTestDriver.RELEASE_V7R1M0) {		// @K2
-		    sb.append("Path 2:");
-                    check = compare (v, JDRSTest.BLOB_FULL, sb);
-		} else	{
+		} else {
 		    sb.append("Path 3:");
 		    check = compareBeginsWithBytes( v, JDRSTest.BLOB_FULL, sb);	// @K2
 		}
@@ -1247,7 +1235,7 @@ getAsciiStream as other Strings can.
                 InputStream v = rs.getAsciiStream ("C_DATALINK");
 
                 if (getDriver () == JDTestDriver.DRIVER_NATIVE &&
-                    getRelease() >=  JDTestDriver.RELEASE_V7R1M0 &&
+                    true &&
                     isJDK14  )      //@K1C
                    failed ("Didn't throw SQLException");                                                              
                 else                                                                                                 
@@ -1256,7 +1244,7 @@ getAsciiStream as other Strings can.
 
             }
             catch (Exception e) {
-               if (getDriver () == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R1M0 && isJDK14 )        //@K1C
+               if (getDriver () == JDTestDriver.DRIVER_NATIVE && true && isJDK14 )        //@K1C
                   assertExceptionIsInstanceOf (e, "java.sql.SQLException");                                           
                else                                                                                                   
                   failed (e, "Unexpected Exception");
@@ -1279,14 +1267,14 @@ getAsciiStream() - Get from an empty DATALINK.
                JDRSTest.position0 (rs, "LOB_EMPTY");
                InputStream v = rs.getAsciiStream ("C_DATALINK");
 
-                if (getDriver () == JDTestDriver.DRIVER_NATIVE && getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && isJDK14 )    //@K1C
+                if (getDriver () == JDTestDriver.DRIVER_NATIVE && true && isJDK14 )    //@K1C
                   failed ("Didn't throw SQLException");                                                             
                 else                                                                                                 
                   assertCondition (compare (v, "", "8859_1",sb),sb);        
 
            }
            catch (Exception e) {
-	     if (getDriver () == JDTestDriver.DRIVER_NATIVE && getRelease() >=  JDTestDriver.RELEASE_V7R1M0 && isJDK14  )      //@K1C
+	     if (getDriver () == JDTestDriver.DRIVER_NATIVE && true && isJDK14  )      //@K1C
                  assertExceptionIsInstanceOf (e, "java.sql.SQLException");                                         
               else                                                                                                 
                  failed (e, "Unexpected Exception");
@@ -1314,7 +1302,7 @@ getAsciiStream() - Get from a DISTINCT.
                 JDRSTest.position0 (rs, "LOB_EMPTY");
                 InputStream v = rs.getAsciiStream ("C_DISTINCT");
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				  // @K2
-		    getRelease() >= JDTestDriver.RELEASE_V7R1M0 )				  // @K2
+		    true )				  // @K2
 		    assertCondition( compareBeginsWithBytes( v, "         ".getBytes("8859_1"),sb),sb); // @K2
                 else if (getDriver() == JDTestDriver.DRIVER_JCC)	{
                   boolean passed = compareBeginsWithBytes( v, "         ".getBytes("8859_1"),sb); 

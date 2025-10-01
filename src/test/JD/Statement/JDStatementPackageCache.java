@@ -24,7 +24,6 @@ import com.ibm.as400.access.*;
 
 import test.JDReflectionUtil;
 import test.JDStatementTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
 
@@ -1414,12 +1413,6 @@ public class JDStatementPackageCache extends JDTestcase {
   public void Var025() {
       boolean passed = true;
       StringBuffer sb = new StringBuffer();
-
-    // Not working for V5R4 and on AS/400. Ignoring
-    if (getRelease() <= JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable("Not testing V5R4");
-      return;
-    }
 
     if (isToolboxDriver()) {
       if (system == null) {

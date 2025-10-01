@@ -37,7 +37,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDLobTest;
-import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -434,8 +433,7 @@ getBlob() - getBlob on a type registered as BLOB, INOUT BINARY(20)
     {
 	String info = " -- Updated 01/03/2012 for native driver"; 
 	if (checkJdbc20()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {         //BINARY is valid for V5r3 or higher	
-		try{
+	   	try{
 
 		    byte [] p = {(byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) (10)};
 
@@ -458,9 +456,7 @@ getBlob() - getBlob on a type registered as BLOB, INOUT BINARY(20)
 		catch (SQLException e){
 			failed(e, "Unexpected Exception"+info);              //@B1A
 		}
-	    } else { 
-		notApplicable("BINARY testcase for >= V5R3");
-	    }
+	   
 	}
     }
 
@@ -472,7 +468,6 @@ getBlob() - getBlob on a type registered as BLOB, INOUT VARBINARY(20)
     {
 	String info = " -- Updated 01/03/2012 for native driver"; 
 	if (checkJdbc20()) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) { 	    //VARBINARY is valid for V5R3 or greater
 		try{
 
 		    byte [] p = {(byte) 12, (byte) 23, (byte) 45, (byte) 89, (byte) (10)};
@@ -493,9 +488,7 @@ getBlob() - getBlob on a type registered as BLOB, INOUT VARBINARY(20)
 		catch (SQLException e){
 			failed(e, "Unexpected Exception"+info);              //@B1A
 		}
-	    } else { 
-		notApplicable("VARBINARY testcase for >= V5R3");
-	    }
+	   
 	}
     }
 /**

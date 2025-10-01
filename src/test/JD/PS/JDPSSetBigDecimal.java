@@ -1529,14 +1529,10 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
 
     public void Var046()
     {
-        if ((getDriver() == JDTestDriver.DRIVER_NATIVE) && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-            notApplicable("Variation doesn't work in V5R3");
-            return; 
-        } 
         //toolbox v6r1 has new behavior also
-        boolean oldBehavior =  ((isToolboxDriver()  && getRelease() < JDTestDriver.RELEASE_V7R1M0) || 
+        boolean oldBehavior =  ((isToolboxDriver()  && false) || 
                 ((getDriver() == JDTestDriver.DRIVER_NATIVE) && 
-                        (getRelease() < JDTestDriver.RELEASE_V7R1M0) ) );
+                        (false) ) );
 
         if (checkBigintSupport()) {
             try {
@@ -2090,7 +2086,7 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
 
 
 
-	      if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
+	      if (true && getDriver() == JDTestDriver.DRIVER_NATIVE) {
 	      } 
 
 
@@ -2112,13 +2108,9 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
 
         public void Var065()
         {
-            if ((getDriver() == JDTestDriver.DRIVER_NATIVE) && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-                notApplicable("Variation doesn't work in V5R3");
-                return; 
-            } 
-            boolean oldBehavior =  ((isToolboxDriver() && getRelease() < JDTestDriver.RELEASE_V7R1M0)|| 
+            boolean oldBehavior =  ((isToolboxDriver() && false)|| 
                     ((getDriver() == JDTestDriver.DRIVER_NATIVE) && 
-                            (getRelease() < JDTestDriver.RELEASE_V7R1M0) ) );
+                            (false) ) );
 
             if (checkBigintSupport()) {
                 try {

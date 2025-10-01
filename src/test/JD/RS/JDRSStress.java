@@ -959,15 +959,11 @@ Performs cleanup needed after running variations.
     }
     String[] lastSql = new String[1]; 
     try {
-      if (directMap && (getRelease() <= JDTestDriver.RELEASE_V7R1M0)) {
-        notApplicable("DirectMap test");
-      } else {
-        StringBuffer sb = new StringBuffer(); 
-        String failMessage = runTest2(connection1_, columns, rows, testId, ensureMinimumRows, valuesLimit, sb, lastSql);
-        assertCondition(failMessage == null, failMessage+"\n------------\n" 
-        + sb.toString()
-            + "\n--- testcase added by native 10/26/2006");
-      }
+      StringBuffer sb = new StringBuffer(); 
+      String failMessage = runTest2(connection1_, columns, rows, testId, ensureMinimumRows, valuesLimit, sb, lastSql);
+      assertCondition(failMessage == null, failMessage+"\n------------\n" 
+      + sb.toString()
+          + "\n--- testcase added by native 10/26/2006");
     } catch (Exception e) {
       failed(e, "Unexpected Exception ("+e.toString()+") running test " + columns + "," + rows
           + "," + testId + " last SQL = " + lastSql[0]
@@ -1034,9 +1030,7 @@ Performs cleanup needed after running variations.
 	    notApplicable("Native DRIVER direct map test");
 	    return;
 	}
-	if (directMap && (getRelease() <=  JDTestDriver.RELEASE_V7R1M0)) {
-	    notApplicable("DirectMap test");
-	} else {
+	{
     String[] lastSql = new String[1]; 
 
 	    verbose = true;
@@ -1089,48 +1083,44 @@ Performs cleanup needed after running variations.
       notApplicable("Native DRIVER direct map test");
       return;
     }
-    if (directMap && (getRelease() <= JDTestDriver.RELEASE_V7R1M0)) {
-      notApplicable("DirectMap test");
-    } else {
-      String[] lastSql = new String[1]; 
+    String[] lastSql = new String[1]; 
 
-      verbose = true;
-      Random random = new Random();
-      long startTime = System.currentTimeMillis();
-      long endTime = startTime + seconds * 1000;
-      long testId = 0;
-      StringBuffer sb = new StringBuffer(); 
-      try {
-        String failMessage = null;
-        while ((failMessage == null) && (System.currentTimeMillis() < endTime)) {
-          testId = 0;
-          for (int i = 0; i < columns; i++) {
-            int r = random.nextInt();
+    verbose = true;
+    Random random = new Random();
+    long startTime = System.currentTimeMillis();
+    long endTime = startTime + seconds * 1000;
+    long testId = 0;
+    StringBuffer sb = new StringBuffer(); 
+    try {
+      String failMessage = null;
+      while ((failMessage == null) && (System.currentTimeMillis() < endTime)) {
+        testId = 0;
+        for (int i = 0; i < columns; i++) {
+          int r = random.nextInt();
+          if (r < 0)
+            r = -r;
+          r = r % T_MAXCOUNT;
+          while (r == T_CLOB || r == T_DBCLOB || r == T_BLOB || r >= T_COUNT) {
+            r = random.nextInt();
             if (r < 0)
               r = -r;
             r = r % T_MAXCOUNT;
-            while (r == T_CLOB || r == T_DBCLOB || r == T_BLOB || r >= T_COUNT) {
-              r = random.nextInt();
-              if (r < 0)
-                r = -r;
-              r = r % T_MAXCOUNT;
-            }
-            testId = testId * T1 + (r % T_MAXCOUNT);
           }
-          failMessage = runTest2(connection1_, columns, rows, testId,
-              ensureMinimumRows, valuesLimit, sb, lastSql);
+          testId = testId * T1 + (r % T_MAXCOUNT);
         }
-        assertCondition(failMessage == null, failMessage
-            + "\n------\n"+sb.toString()+"\n--- testcase added by native 10/26/2006");
-        
-      } catch (Exception e) {
-        String joblogInfo = JobLogUtil.publishConnectionJoblog(connection1_);
-        failed(e, "Unexpected Exception("+e.toString()+") running test " + columns + "," + rows
-            + "," + testId + " last SQL = " + lastSql[0] +"\n"+joblogInfo
-            +"\n------\n"+sb.toString()+ "--- testcase added by native 10/26/2006");
+        failMessage = runTest2(connection1_, columns, rows, testId,
+            ensureMinimumRows, valuesLimit, sb, lastSql);
       }
-      verbose = false;
+      assertCondition(failMessage == null, failMessage
+          + "\n------\n"+sb.toString()+"\n--- testcase added by native 10/26/2006");
+      
+    } catch (Exception e) {
+      String joblogInfo = JobLogUtil.publishConnectionJoblog(connection1_);
+      failed(e, "Unexpected Exception("+e.toString()+") running test " + columns + "," + rows
+          + "," + testId + " last SQL = " + lastSql[0] +"\n"+joblogInfo
+          +"\n------\n"+sb.toString()+ "--- testcase added by native 10/26/2006");
     }
+    verbose = false;
   }
 
   public void runAllTests(int columns, int rows, boolean ensureMinimumRows,
@@ -1139,95 +1129,91 @@ Performs cleanup needed after running variations.
       notApplicable("Native DRIVER direct map test");
       return;
     }
-    if (directMap && (getRelease() <= JDTestDriver.RELEASE_V7R1M0)) {
-      notApplicable("DirectMap test");
-    } else {
-      Random random = new Random();
-      verbose = true;
-      int testId = 0;
-      StringBuffer sb = new StringBuffer();
-      String[] lastSql = new String[1];
+    Random random = new Random();
+    verbose = true;
+    int testId = 0;
+    StringBuffer sb = new StringBuffer();
+    String[] lastSql = new String[1];
 
-      try {
-        String failMessage = null;
-        int totalVars = 1;
-        for (int i = 0; i < columns; i++) {
-          totalVars = totalVars * T1;
+    try {
+      String failMessage = null;
+      int totalVars = 1;
+      for (int i = 0; i < columns; i++) {
+        totalVars = totalVars * T1;
+      }
+      boolean[] testRun = new boolean[totalVars];
+
+      long startTime = System.currentTimeMillis();
+      int i = 0;
+      int passCount = 0;
+      int randomMissCount = 0;
+      while ((failMessage == null) && (i < totalVars)
+          && (randomMissCount < (totalVars / 10))) {
+        randomMissCount = 0;
+        testId = -1;
+        while (testId == -1 && (randomMissCount < (totalVars / 10))) {
+          testId = random.nextInt(totalVars);
+          if (testRun[testId] == false) {
+            sb.setLength(0);
+            failMessage = runTest2(connection1_, columns, rows, testId,
+                ensureMinimumRows, valuesLimit, sb, lastSql);
+            testRun[testId] = true;
+            passCount++;
+          } else {
+            randomMissCount++;
+            testId = -1;
+          }
         }
-        boolean[] testRun = new boolean[totalVars];
-
-        long startTime = System.currentTimeMillis();
-        int i = 0;
-        int passCount = 0;
-        int randomMissCount = 0;
-        while ((failMessage == null) && (i < totalVars)
-            && (randomMissCount < (totalVars / 10))) {
-          randomMissCount = 0;
-          testId = -1;
-          while (testId == -1 && (randomMissCount < (totalVars / 10))) {
-            testId = random.nextInt(totalVars);
-            if (testRun[testId] == false) {
-              sb.setLength(0);
-              failMessage = runTest2(connection1_, columns, rows, testId,
-                  ensureMinimumRows, valuesLimit, sb, lastSql);
-              testRun[testId] = true;
-              passCount++;
-            } else {
-              randomMissCount++;
-              testId = -1;
+        i++;
+        if (i % 10 == 0) {
+          long currentTime = System.currentTimeMillis();
+          long passedTime = currentTime - startTime;
+          long predictedTime = passedTime * totalVars / passCount;
+          java.util.Date endTime = new java.util.Date(
+              startTime + predictedTime);
+          System.out
+              .println("Predicting completion of " + totalVars + " tests in "
+                  + (predictedTime - passedTime) + " = " + endTime);
+        }
+      }
+      if (failMessage == null) { /* Do final pass */
+        i = 0;
+        while ((failMessage == null) && (i < totalVars)) {
+          if (testRun[testId] == false) {
+            sb.setLength(0);
+            failMessage = runTest2(connection1_, columns, rows, i,
+                ensureMinimumRows, valuesLimit, sb, lastSql);
+            testRun[testId] = true;
+            passCount++;
+            if (passCount % 10 == 0) {
+              long currentTime = System.currentTimeMillis();
+              long passedTime = currentTime - startTime;
+              long predictedTime = passedTime * totalVars / passCount;
+              java.util.Date endTime = new java.util.Date(
+                  startTime + predictedTime);
+              System.out.println(
+                  "Predicting completion of " + totalVars + " tests in "
+                      + (predictedTime - passedTime) + " = " + endTime);
             }
+
           }
           i++;
-          if (i % 10 == 0) {
-            long currentTime = System.currentTimeMillis();
-            long passedTime = currentTime - startTime;
-            long predictedTime = passedTime * totalVars / passCount;
-            java.util.Date endTime = new java.util.Date(
-                startTime + predictedTime);
-            System.out
-                .println("Predicting completion of " + totalVars + " tests in "
-                    + (predictedTime - passedTime) + " = " + endTime);
-          }
-        }
-        if (failMessage == null) { /* Do final pass */
-          i = 0;
-          while ((failMessage == null) && (i < totalVars)) {
-            if (testRun[testId] == false) {
-              sb.setLength(0);
-              failMessage = runTest2(connection1_, columns, rows, i,
-                  ensureMinimumRows, valuesLimit, sb, lastSql);
-              testRun[testId] = true;
-              passCount++;
-              if (passCount % 10 == 0) {
-                long currentTime = System.currentTimeMillis();
-                long passedTime = currentTime - startTime;
-                long predictedTime = passedTime * totalVars / passCount;
-                java.util.Date endTime = new java.util.Date(
-                    startTime + predictedTime);
-                System.out.println(
-                    "Predicting completion of " + totalVars + " tests in "
-                        + (predictedTime - passedTime) + " = " + endTime);
-              }
 
-            }
-            i++;
-
-          }
         }
-        sb.append("--- testcase added by native 10/26/2006\n");
-        if (failMessage != null) {
-          sb.append(failMessage);
-        }
-        assertCondition(failMessage == null, sb);
-      } catch (Exception e) {
-        failed(e,
-            "Unexpected Exception(" + e.toString() + " running test " + columns
-                + "," + rows + "," + testId + " last SQL = " + lastSql[0]
-                + "\n------\n" + sb.toString()
-                + "--- testcase added by native 10/26/2006");
       }
-      verbose = false;
+      sb.append("--- testcase added by native 10/26/2006\n");
+      if (failMessage != null) {
+        sb.append(failMessage);
+      }
+      assertCondition(failMessage == null, sb);
+    } catch (Exception e) {
+      failed(e,
+          "Unexpected Exception(" + e.toString() + " running test " + columns
+              + "," + rows + "," + testId + " last SQL = " + lastSql[0]
+              + "\n------\n" + sb.toString()
+              + "--- testcase added by native 10/26/2006");
     }
+    verbose = false;
   }
 
   /**

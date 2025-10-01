@@ -355,12 +355,7 @@ extends JDTestcase
                 try
                 {
                     queryStart = System.currentTimeMillis();   
-                    //33923 - v5r5 optimizer is smarter...
-                    if   (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-                        s.executeQuery (query +  " optimize for all rows"); 
-                    } else { 
-                        s.executeQuery (query );    //@C1A@F1C
-                    }
+                    s.executeQuery (query +  " optimize for all rows");
                     queryEnd = System.currentTimeMillis();
 
                     // If query took less than a second and a half, make it bigger and retry
@@ -727,13 +722,7 @@ extends JDTestcase
                 try
                 {
                     queryStart = System.currentTimeMillis();   
-                    //@C1D s.executeQuery (slow_);
-                    //33923 - v5r5 optimizer is smarter...
-                    if   (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
-                        s.executeQuery (query +  " optimize for all rows"); 
-                    } else { 
-                        s.executeQuery (query );    //@C1A@F1C
-                    }
+                    s.executeQuery (query +  " optimize for all rows");
                     queryEnd = System.currentTimeMillis();
 
                     // If query took less than a second and a half, make it bigger and retry

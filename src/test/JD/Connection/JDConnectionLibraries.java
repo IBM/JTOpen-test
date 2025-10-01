@@ -364,11 +364,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 		      }
 		      else
 		      {
-			  if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
-			      failed ("Did not throw exception. for "+c);
-			  } else {
 			      succeeded();
-			  }
 		      }
 
 	    }
@@ -379,11 +375,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 		}
 		else
 		{
-		    if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
-			assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		    } else {
 			failed(e, "Unexpected exception");
-		    }
 		}
 	    } finally {
 		try {
@@ -659,21 +651,9 @@ extends JDTestcase implements TimeoutThreadCallback {
 								  + ";libraries=BAD_LIB", userId_, encryptedPassword_);
 			if (getDriver() == JDTestDriver.DRIVER_NATIVE)
 			{
-			    if ( getRelease() ==  JDTestDriver.RELEASE_V7R1M0) {
-				try {
-				    c.close();
-				    failed("Did not throw exception while passing bad library");
-				} catch (Exception ex) {
-				//
-				// This gets an attribute not valid exception
-				//
-				    succeeded();
-				}
-			    } else {
 				c.close();
 				/** The native driver doen't care about the libraries property unless system naming is used */
 				succeeded();
-			    }
 			}
 			else
 			{
@@ -1984,8 +1964,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
        public void Var052()
        {
            if ( (isToolboxDriver()) ||
-                (( getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-                    (getRelease() >= JDTestDriver.RELEASE_V7R1M0)))
+                ( getDriver() == JDTestDriver.DRIVER_NATIVE ))
            {
                boolean setupFailed = false;
                int setup = 0;
@@ -2128,8 +2107,6 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                    }
                }
 	   }
-           else
-               notApplicable("NATIVE V5R5 variation" );
        }
 
 
@@ -2144,12 +2121,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
        **/
        public void Var053()
        {
-           if(getRelease() < JDTestDriver.RELEASE_V7R1M0 )
-           {
-               notApplicable("V7R1 TC 128 len schemas");
-               return;
-           }
-           try {
+            try {
 
                Connection c = testDriver_.getConnection (baseURL_ + "/"
                                                          + JDConnectionTest.SCHEMAS_LEN128, userId_, encryptedPassword_);
@@ -2182,12 +2154,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
        **/
        public void Var054()
        {
-           if(getRelease() < JDTestDriver.RELEASE_V7R1M0 )
-           {
-               notApplicable("V7R1 TC 128 len schemas");
-               return;
-           }
-           try
+            try
            {
                Connection c = testDriver_.getConnection (baseURL_
                                                          + ";naming=sql;libraries=" + JDConnectionTest.SCHEMAS_LEN128
@@ -2211,11 +2178,6 @@ libraries - Specify library list with *LIBL before 2 other libraries.
        **/
        public void Var055()
        {
-           if(getRelease() < JDTestDriver.RELEASE_V7R1M0 )
-           {
-               notApplicable("V7R1 TC 128 len schemas");
-               return;
-           }
            try {
                Connection c = testDriver_.getConnection (baseURL_
                                                          + ";libraries=" + JDConnectionTest.SCHEMAS_LEN128
@@ -2240,11 +2202,6 @@ libraries - Specify library list with *LIBL before 2 other libraries.
        **/
        public void Var056()
        {
-           if(getRelease() < JDTestDriver.RELEASE_V7R1M0 )
-           {
-               notApplicable("V7R1 TC 128 len schemas");
-               return;
-           }
            try {
                Connection c = testDriver_.getConnection (baseURL_
                                                          + ";naming=system;libraries=" + JDConnectionTest.SCHEMAS_LEN128
@@ -2272,11 +2229,6 @@ libraries - Specify library list with *LIBL before 2 other libraries.
        **/
        public void Var057()
        {
-           if(getRelease() < JDTestDriver.RELEASE_V7R1M0 )
-           {
-               notApplicable("V7R1 TC 128 len schemas");
-               return;
-           }
            try {
                Connection c = testDriver_.getConnection (baseURL_
                                                          + "/" + JDConnectionTest.SCHEMAS_LEN128
@@ -2304,11 +2256,6 @@ libraries - Specify library list with *LIBL before 2 other libraries.
        {
          StringBuffer sb = new StringBuffer();
 
-           if(getRelease() < JDTestDriver.RELEASE_V7R1M0 )
-           {
-               notApplicable("V7R1 TC 128 len schemas");
-               return;
-           }
            try {
                Connection c = testDriver_.getConnection (baseURL_ + "/"
                                                          + JDConnectionTest.SCHEMAS_LEN128+";naming=system", userId_, encryptedPassword_);

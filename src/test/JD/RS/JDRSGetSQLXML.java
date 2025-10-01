@@ -165,19 +165,9 @@ public class JDRSGetSQLXML extends JDTestcase {
     if (i != null) {
       s = JDReflectionUtil.callMethod_S(i, "getString");
     }
-    //
-    // For native JDBC driver,
-    // only stip the declaration for V7R1 and later
-    //
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0
-        && getDriver() == JDTestDriver.DRIVER_NATIVE) {
-      // Don't strip declaration
-    } else {
-      b = JDTestUtilities.stripXmlDeclaration(b);
-      if (trim) {
-        b = b.trim();
-      }
-
+    b = JDTestUtilities.stripXmlDeclaration(b);
+    if (trim) {
+      b = b.trim();
     }
     boolean theSame = b.equals(s);
     if (!theSame) {
@@ -280,10 +270,6 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column index is valid and CCSID is 37
    **/
   public void Var006() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(); // table only created in 54+
-      return;
-    }
     if (checkJdbc40()) {
       try {
         message = new StringBuffer();
@@ -313,10 +299,6 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column index is valid.
    **/
   public void Var007() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(); // table only created in 54+
-      return;
-    }
     if (checkJdbc40()) {
       try {
         message = new StringBuffer();
@@ -348,10 +330,6 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column index is valid.
    **/
   public void Var008() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(); // table only created in 54+
-      return;
-    }
     if (checkJdbc40()) {
       try {
         message = new StringBuffer();
@@ -383,10 +361,6 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column index is valid.
    **/
   public void Var009() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(); // table only created in 54+
-      return;
-    }
     if (checkJdbc40()) {
       try {
         message = new StringBuffer();
@@ -562,10 +536,6 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should work when the column name is valid.
    **/
   public void Var016() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(); // table only created in 54+
-      return;
-    }
     if (checkJdbc40()) {
       try {
         message = new StringBuffer();
@@ -598,10 +568,6 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var017() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-        notApplicable("V5R4 or later only");
-        return;
-      }
       try {
         message = new StringBuffer();
         ResultSet rs = statement1_.executeQuery(
@@ -631,10 +597,6 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var018() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-        notApplicable("V5R4 or later only");
-        return;
-      }
       try {
         message = new StringBuffer();
         ResultSet rs = statement1_.executeQuery(
@@ -666,10 +628,6 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var019() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-        notApplicable("V5R4 or later only");
-        return;
-      }
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
         notApplicable("JCC does not support moveToInserRow");
         return;
@@ -706,10 +664,6 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var020() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-        notApplicable("V5R4 or later only");
-        return;
-      }
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
         notApplicable("JCC does not support moveToInserRow");
         return;
@@ -742,10 +696,6 @@ public class JDRSGetSQLXML extends JDTestcase {
    * getSQLXML() - Should throw an exception on a deleted row.
    **/
   public void Var021() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(); // table only created in 54+
-      return;
-    }
     if (checkJdbc40()) {
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
         notApplicable("JCC doesn't throw exception for get on deleted row");
@@ -780,10 +730,6 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var022() {
 
     if (checkJdbc40()) {
-      if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-        notApplicable("V5R4 or later only");
-        return;
-      }
       try {
         ResultSet rs = statement1_.executeQuery("SELECT * FROM "
             + JDRSTest.RSTEST_GETXML + " WHERE C_CLOB0037 IS NULL");
@@ -1419,10 +1365,6 @@ public class JDRSGetSQLXML extends JDTestcase {
    * size is set to 0.
    **/
   public void Var049() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(); // table only created in 54+
-      return;
-    }
     if (checkJdbc40()) {
       try {
         message = new StringBuffer(
@@ -1463,10 +1405,6 @@ public class JDRSGetSQLXML extends JDTestcase {
    * when the max field size is set to a value shorter than the data.
    **/
   public void Var050() {
-    if (getRelease() < JDTestDriver.RELEASE_V7R1M0) {
-      notApplicable(); // table only created in 54+
-      return;
-    }
     if (checkJdbc40()) {
       try {
         message = new StringBuffer();
@@ -1620,7 +1558,7 @@ public class JDRSGetSQLXML extends JDTestcase {
           ps55.setBytes(6, null);
           ps55.setBytes(7, null);
           ps55.setBytes(8, null);
-          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+          if (true) {
             ps55.setBytes(9, JDRSTest.SAMPLE_XML1_UTF16LE.getBytes("utf-16le")); // inserting
                                                                                  // bytes
                                                                                  // into
@@ -1670,7 +1608,7 @@ public class JDRSGetSQLXML extends JDTestcase {
           ps55.setBytes(6, null);
           ps55.setBytes(7, null);
           ps55.setBytes(8, null);
-          if (getRelease() >= JDTestDriver.RELEASE_V7R1M0) {
+          if (true) {
             ps55.setBytes(9, JDRSTest.SAMPLE_XML1_UTF16LE.getBytes("utf-16le")); // inserting
                                                                                  // bytes
                                                                                  // into

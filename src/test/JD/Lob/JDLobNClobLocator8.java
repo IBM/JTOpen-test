@@ -376,14 +376,7 @@ getAsciiStream() - When the lob is full and huge .
 	    return; 
 	}
 
-	if (runningJ9 && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("J9 test not working in V5R4"); return; 
-	} 
-	if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Large LOB truncated to 1000000 -- added 11/2005 Fixed in V54 by SQ"); return; 
-	} 
-
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             if (checkLobSupport ()) {
                 try {
 
@@ -419,15 +412,7 @@ getCharacterStream() - When the lob is full.
 	    return; 
 	}
 
-	if (runningJ9 && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("J9 test not working in V5R4"); return; 
-	} 
-
-	if (getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("Large LOB truncated to 1000000 -- added 11/2005 Fixed in V54 by SQ"); return; 
-	} 
-
-        if (checkJdbc20 ()) {
+	if (checkJdbc20 ()) {
             if (checkLobSupport ()) {
                 try {
 
@@ -459,9 +444,7 @@ getCharacterStream() - When the lob is full.
 	    notApplicable("JDBC 4.0 testcase");
 	    return; 
 	}
-	if (runningJ9 && getRelease() == JDTestDriver.RELEASE_V7R1M0) {
-	    notApplicable("J9 test not working in V5R4"); return; 
-	} 
+	 
 
 	    /*
 	     * Note:  This takes a while to run on V5R3

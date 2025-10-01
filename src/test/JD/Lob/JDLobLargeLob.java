@@ -115,7 +115,7 @@ Performs setup needed before running variations.
         initializeLargeArray();
 
 	extraBytesOK = getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K3
-	  getRelease() >= JDTestDriver.RELEASE_V7R1M0 ;				// @K3
+	  true ;				// @K3
 
         TABLE_  = JDLobTest.COLLECTION + ".JDLLLBLOB";
         if (isJdbc20 ()) {
@@ -465,7 +465,7 @@ Performs cleanup needed after running variations.
         rs_.absolute(3);
         Blob blob = rs_.getBlob("C_BLOB");
         blob.getBytes(3, LARGE_.length + 1);
-        if (getRelease() >= JDTestDriver.RELEASE_V7R1M0 && // @K2
+        if (true && // @K2
             getDriver() == JDTestDriver.DRIVER_NATIVE) // @K2
           succeeded(); // @K2
         else
@@ -1180,54 +1180,29 @@ setBytes(long, byte[], int, int) - Should work to set the last part of a non-emp
     {
         if (checkUpdateableLobsSupport ())
         {
-            if (getDriver () == JDTestDriver.DRIVER_NATIVE &&	// @K2
-		getRelease() < JDTestDriver.RELEASE_V7R1M0 )	// @K2
-            {
-                try
-                {
-                    rs2_=statement_.executeQuery("SELECT * FROM " + TABLE_ + " ORDER BY ID");
-                    rs2_.absolute(3);
-                    Blob blob = rs2_.getBlob ("C_BLOB");
-                    blob.truncate (5);
-                    failed("Didn't throw SQLException -- Large lob Testcases added 01/02/2003");
-                    rs2_.close();
-                }
-                catch (Exception e) {
-                    try {
-                        assertExceptionIsInstanceOf (e, "java.sql.SQLException", "Large lob Testcases added 01/02/2003");
-                        rs2_.close();
-                    }
-                    catch (Exception s) {
-                        failed (s, "Unexpected Exception -- Large lob Testcases added 01/02/2003");
-                    }
-                }
+            //@C4C Because Toolbox only knows the max length of a lob, we will
+            //@C4C not throw an exception if the user truncates to a length
+            //@C4C greater than the end of the lob until updateRow() is called.
+            try {
+                rs2_=statement_.executeQuery("SELECT * FROM " + TABLE_ + " ORDER BY ID");
+                rs2_.absolute (3);
+                Blob blob = rs2_.getBlob ("C_BLOB");
+                blob.truncate (5);
+                rs2_.updateBlob("C_BLOB", blob);
+                rs2_.updateRow();
+                //@K1D failed ("Didn't throw SQLException -- Large lob Testcases added 01/02/2003");
+                rs2_.close();
+                succeeded();
             }
-            else  /* if (getDriver () == JDTestDriver.DRIVER_TOOLBOX  ) */ /* DON'T NEED THIS CHECK */ 
-            {
-                //@C4C Because Toolbox only knows the max length of a lob, we will
-                //@C4C not throw an exception if the user truncates to a length
-                //@C4C greater than the end of the lob until updateRow() is called.
-                try {
-                    rs2_=statement_.executeQuery("SELECT * FROM " + TABLE_ + " ORDER BY ID");
-                    rs2_.absolute (3);
-                    Blob blob = rs2_.getBlob ("C_BLOB");
-                    blob.truncate (5);
-                    rs2_.updateBlob("C_BLOB", blob);
-                    rs2_.updateRow();
-                    //@K1D failed ("Didn't throw SQLException -- Large lob Testcases added 01/02/2003");
-                    rs2_.close();
-                    succeeded();
-                }
-                catch (Exception e) {
-                    //@K1D try {
-                    //@K1D     assertExceptionIsInstanceOf (e, "java.sql.SQLException", "Large lob Testcases added 01/02/2003");
-                    //@K1D     rs2_.close();
-                    //@K1D }
-                    //@K1D catch (Exception s) {
-                        failed (e, "Unexpected Exception -- Large lob Testcases added 01/02/2003"); //@K1C changed s to e
-                    //@K1D }
-                }
-	    }
+            catch (Exception e) {
+                //@K1D try {
+                //@K1D     assertExceptionIsInstanceOf (e, "java.sql.SQLException", "Large lob Testcases added 01/02/2003");
+                //@K1D     rs2_.close();
+                //@K1D }
+                //@K1D catch (Exception s) {
+                    failed (e, "Unexpected Exception -- Large lob Testcases added 01/02/2003"); //@K1C changed s to e
+                //@K1D }
+            }
 
 	}
     }
