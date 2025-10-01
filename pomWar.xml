@@ -5,7 +5,7 @@
   <groupId>JTOpen-test</groupId>
   <artifactId>JTOpen-test</artifactId>
   <packaging>war</packaging>
-  <version>1.0.8</version>
+  <version>1.0.9</version>
   <name>JTOpen-test-war</name>
   <description>Testcases for JTOpen</description>
   <build>
