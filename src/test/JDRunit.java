@@ -1477,10 +1477,10 @@ public class JDRunit {
         inputStream=    new FileInputStream(iniFile);
         if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
     } else {
-      iniFile = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+iniFile; 
-      file = new File(iniFile); 
+      String fullPathIniFile = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+iniFile; 
+      file = new File(fullPathIniFile); 
       if (file.exists()) { 
-        inputStream=    new FileInputStream(iniFile);
+        inputStream=    new FileInputStream(fullPathIniFile);
         if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
       } else {       
         inputStream = JDRunit.class.getClassLoader().getResourceAsStream(iniFile);
@@ -1901,6 +1901,8 @@ public class JDRunit {
       System.out.println("JDRunit:  Configuration missing from " + filename);
       System.out.println(sb.toString());
       System.out.println(optional.toString());
+      System.out.println("--------------Ini Info ---------------");
+      System.out.println(iniInfo.toString()); 
       throw new Exception("JDRunit:  Configuration missing from " + filename);
     }
 
