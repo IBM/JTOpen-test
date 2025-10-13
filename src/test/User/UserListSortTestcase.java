@@ -18,6 +18,7 @@ import java.util.Date;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
+import test.UserTest;
 
 import com.ibm.as400.resource.RUserList;
 
@@ -52,7 +53,7 @@ public class UserListSortTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "ULSOT");
+        sandbox_ = new UserSandbox(pwrSys_, "ULSO", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**

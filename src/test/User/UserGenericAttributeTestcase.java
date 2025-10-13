@@ -65,7 +65,8 @@ public class UserGenericAttributeTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "UGAT");
+      
+        sandbox_ = new UserSandbox(pwrSys_, "UGA", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**

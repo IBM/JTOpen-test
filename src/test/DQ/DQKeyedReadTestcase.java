@@ -1872,7 +1872,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    try
 	    {
 		for (int i = 0; i < DROPPER_RETRIES; i++) { 
-		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD1ADTST.DTAQ");
+		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD1ADTST.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		    byte[] key = (new String("key  ")).getBytes("UnicodeBigUnmarked");
 		    dq.create(10,80);
@@ -1935,7 +1935,7 @@ public class DQKeyedReadTestcase extends Testcase
 	 try
 	 {
 	     for (int i = 0; i < DROPPER_RETRIES; i++) { 
-		 KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD2ADTST.DTAQ");
+		 KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD2ADTST.DTAQ");
 		 byte[] key = (new String("key  ")).getBytes("UnicodeBigUnmarked");
 		 ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		 dq.create(10,80);
@@ -1985,14 +1985,14 @@ public class DQKeyedReadTestcase extends Testcase
 	try
 	{
 	    String user = systemObject_.getUserId();
-	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		dq.getDescription();
-		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR" );
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR" );
 		byte[] key = (new String("key  ")).getBytes("UnicodeBigUnmarked");
 		try
 		{
@@ -2013,7 +2013,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2031,15 +2031,15 @@ public class DQKeyedReadTestcase extends Testcase
 	try
 	{
 	    String user = systemObject_.getUserId();
-	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
+	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
 	    byte[] key = (new String("key  ")).getBytes("UnicodeBigUnmarked");
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		dq.getDescription();
-		cmdRun("QSYS/RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR" );
+		cmdRun("QSYS/RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR" );
 		try
 		{
 		    dq.read(key, 0, "EQ");
@@ -2059,7 +2059,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2077,13 +2077,13 @@ public class DQKeyedReadTestcase extends Testcase
 	try
 	{
 	    String user = systemObject_.getUserId();
-	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
 //		dq.getDescription();
-		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
 		byte[] key = (new String("key  ")).getBytes("UnicodeBigUnmarked");
 		try
 		{
@@ -2104,7 +2104,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2122,13 +2122,13 @@ public class DQKeyedReadTestcase extends Testcase
 	try
 	{
 	    String user = systemObject_.getUserId();
-	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
 //		dq.getDescription();
-		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE" );
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE" );
 		byte[] key = (new String("key  ")).getBytes("UnicodeBigUnmarked");
 		try
 		{
@@ -2149,7 +2149,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)

@@ -38,6 +38,8 @@ public class UserGetSetNtoQTestcase extends Testcase
      test.UserTest.main(newArgs); 
    }
     private UserSandbox sandbox_;
+    String testUserId = "UGSNQ";
+   String testUserId2 = "UGSNQX";
 
     /**
      Performs setup needed before running variations.
@@ -45,7 +47,10 @@ public class UserGetSetNtoQTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "UGSNQT");
+      String testLib = baseTestDriver_.getTestLib();
+      String letter = testLib.substring(testLib.length() - 1);
+      testUserId2 = testUserId2 + letter; 
+        sandbox_ = new UserSandbox(pwrSys_, testUserId,letter);
     }
 
     /**
@@ -67,7 +72,7 @@ public class UserGetSetNtoQTestcase extends Testcase
     {
         try
         {
-            CommandCall cmd = new CommandCall(pwrSys_, "QSYS/CRTUSRPRF USRPRF(UGSNQTX) PASSWORD(*NONE)");
+            CommandCall cmd = new CommandCall(pwrSys_, "QSYS/CRTUSRPRF USRPRF("+testUserId2+") PASSWORD(*NONE)");
             cmd.setThreadSafe(false);
 
             if (!cmd.run())
@@ -82,18 +87,18 @@ public class UserGetSetNtoQTestcase extends Testcase
 		}
             }
 
-            User u = new User(pwrSys_, "UGSNQTX");
+            User u = new User(pwrSys_, ""+testUserId2+"");
             boolean expectedValue = true;
             boolean returnValue = u.isNoPassword();
-            assertCondition(returnValue == expectedValue);
 
-            cmd = new CommandCall(pwrSys_, "QSYS/DLTUSRPRF USRPRF(UGSNQTX)");
+            cmd = new CommandCall(pwrSys_, "QSYS/DLTUSRPRF USRPRF("+testUserId2+")");
             cmd.setThreadSafe(false);
 
             if (!cmd.run())
             {
                 throw new AS400Exception(cmd.getMessageList());
             }
+            assertCondition(returnValue == expectedValue);
         }
         catch (Exception e)
         {

@@ -77,7 +77,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "ULBRLT");
+        sandbox_ = new UserSandbox(pwrSys_, "ULBRL", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
         groupAndUsers_ = sandbox_.createGroupAndUsers(25);
         groupAndUsers2_ = sandbox_.createGroupAndUsers(5);
     }
@@ -542,7 +542,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             String fullName = p.getFullName();
             String descriptionText = (String)p.getValue(Presentation.DESCRIPTION_TEXT);
             String helpText = (String)p.getValue(Presentation.HELP_TEXT);
-            if (JTOpenTestEnvironment.isOS400)
+            if (JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isLinux)
             {
                 String asString = p.toString();
                 // Can't compare directly, this is MRI.
@@ -577,7 +577,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             String fullName = p.getFullName();
             String descriptionText = (String)p.getValue(Presentation.DESCRIPTION_TEXT);
             String helpText = (String)p.getValue(Presentation.HELP_TEXT);
-            if (JTOpenTestEnvironment.isOS400)
+            if (JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isLinux )
             {
                 String asString = p.toString();
                 // Can't compare directly, this is MRI.

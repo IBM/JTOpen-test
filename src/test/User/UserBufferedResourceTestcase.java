@@ -59,8 +59,9 @@ public class UserBufferedResourceTestcase extends Testcase
      @exception  Exception  If an exception occurs.
      **/
     protected void setup() throws Exception
-    {
-        sandbox_ = new UserSandbox(pwrSys_, "UBRT");
+    {     
+
+        sandbox_ = new UserSandbox(pwrSys_, "UBR", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**
@@ -300,7 +301,7 @@ public class UserBufferedResourceTestcase extends Testcase
             String fullName = p.getFullName();
             String descriptionText = (String)p.getValue(Presentation.DESCRIPTION_TEXT);
             String helpText = (String)p.getValue(Presentation.HELP_TEXT);
-            if (JTOpenTestEnvironment.isOS400)
+            if (JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isLinux)
             {
                 String asString = p.toString();
                 assertCondition(name.equals("") && fullName.equals("") && descriptionText != null && helpText == null && asString.equals(""));
@@ -334,7 +335,7 @@ public class UserBufferedResourceTestcase extends Testcase
             String fullName = p.getFullName();
             String descriptionText = (String)p.getValue(Presentation.DESCRIPTION_TEXT);
             String helpText = (String)p.getValue(Presentation.HELP_TEXT);
-            if (JTOpenTestEnvironment.isOS400)
+            if (JTOpenTestEnvironment.isOS400 || JTOpenTestEnvironment.isLinux)
             {
                 String asString = p.toString();
                 assertCondition(name.equals(userName) && fullName.equals(userName) && descriptionText != null && helpText == null && asString.equals(userName), 

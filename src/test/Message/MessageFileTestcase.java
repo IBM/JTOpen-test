@@ -47,18 +47,19 @@ public class MessageFileTestcase extends Testcase
     private final static int LEFT_TO_RIGHT = BidiStringType.DEFAULT;
     private final static int CCSID_OF_JOB = MessageFile.CCSID_OF_JOB;
     private final static int CCSID_EBCDIC = 500;  // CCSID for "International EBCDIC"
-
+    String testlib; 
     /**
      Performs setup needed before running variations.
      @exception  Exception  If an exception occurs.
      **/
     protected void setup() throws Exception
     {
-        cmdRun("QSYS/CRTLIB MFTEST");
-        cmdRun("QSYS/GRTOBJAUT OBJ(MFTEST)      OBJTYPE(*LIB) USER("+userId_ +") ");
+        testlib = "MFTST"+super.testLib_.substring(super.testLib_.length()-1);
+        cmdRun("QSYS/CRTLIB "+testlib+"");
+        cmdRun("QSYS/GRTOBJAUT OBJ("+testlib+")      OBJTYPE(*LIB) USER("+userId_ +") ");
 
-        cmdRun("QSYS/CRTMSGF MFTEST/MFTEST AUT(*EXCLUDE)");
-        cmdRun("QSYS/MRGMSGF QSYS/QTCPMSG MFTEST/MFTEST");
+        cmdRun("QSYS/CRTMSGF "+testlib+"/"+testlib+" AUT(*EXCLUDE)");
+        cmdRun("QSYS/MRGMSGF QSYS/QTCPMSG "+testlib+"/"+testlib+"");
     }
 
     /**
@@ -67,7 +68,7 @@ public class MessageFileTestcase extends Testcase
      **/
     protected void cleanup() throws Exception
     {
-	deleteLibrary("MFTEST");
+	deleteLibrary(""+testlib+"");
     }
 
     /**
@@ -380,7 +381,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(systemObject_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(systemObject_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("TCP1A05");
 
@@ -400,7 +401,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("TCP1A73");
 
@@ -509,7 +510,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage(null);
 
@@ -529,7 +530,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage(null, "abcdefg");
 
@@ -550,7 +551,7 @@ public class MessageFileTestcase extends Testcase
 
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("");
 
@@ -570,7 +571,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("", "abcdefg");
 
@@ -590,7 +591,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("DAW0001");
 
@@ -610,7 +611,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("DAW0001", "abcdefg");
 
@@ -630,7 +631,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("tooooLongggg");
 
@@ -650,7 +651,7 @@ public class MessageFileTestcase extends Testcase
     {
         try
         {
-            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("tooooLongggg", "abcdefg");
 
@@ -687,7 +688,7 @@ public class MessageFileTestcase extends Testcase
         try
         {
             MessageFile aMessageFile = new MessageFile(pwrSys_);
-            aMessageFile.setPath("/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            aMessageFile.setPath("/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("TCP1A73");
             assertCondition(m.getText().equalsIgnoreCase("Internal Object Damaged."), "Wrong message: " + m.getText());
@@ -706,7 +707,7 @@ public class MessageFileTestcase extends Testcase
         try
         {
             MessageFile aMessageFile = new MessageFile(pwrSys_);
-            aMessageFile.setPath("/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+            aMessageFile.setPath("/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
             AS400Message m = aMessageFile.getMessage("TCP1A73");
 
@@ -1538,7 +1539,7 @@ public class MessageFileTestcase extends Testcase
      String added = " -- added 2/11/2011 to test message CreateDate/Modification date"; 
        try
        {
-           MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+           MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
            AS400Message m = aMessageFile.getMessage("TCP1A73");
 
@@ -1568,9 +1569,9 @@ public class MessageFileTestcase extends Testcase
     String added = " -- added 2/11/2011 to test message CreateDate/Modification date"; 
       try
       {
-        cmdRun("QSYS/CHGMSGD MSGID(TCP1AA0) MSGF(MFTEST/MFTEST) SECLVL(DUH)"); 
+        cmdRun("QSYS/CHGMSGD MSGID(TCP1AA0) MSGF("+testlib+"/"+testlib+") SECLVL(DUH)"); 
           
-          MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+          MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
           AS400Message m = aMessageFile.getMessage("TCP1AA0");
 
@@ -1601,9 +1602,9 @@ public class MessageFileTestcase extends Testcase
    String added = " -- added 2/11/2011 to test message CreateDate/Modification date"; 
      try
      {
-         cmdRun("ADDMSGD MSGID(A111112) MSGF(MFTEST/MFTEST) MSG('Testing 1') SECLVL('Testing')"); 
+         cmdRun("ADDMSGD MSGID(A111112) MSGF("+testlib+"/"+testlib+") MSG('Testing 1') SECLVL('Testing')"); 
          
-         MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+         MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
          AS400Message m = aMessageFile.getMessage("A111112");
 
@@ -1634,7 +1635,7 @@ public void Var048()
   String added = " -- added 2/11/2011 to test message CreateDate/Modification date"; 
     try
     {
-        MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+        MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
         AS400Message m = aMessageFile.getMessage("TCP1A73");
 
@@ -1665,7 +1666,7 @@ public void Var049()
   String added = " -- added 2/11/2011 to test message CreateDate/Modification date"; 
    try
    {
-       MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/MFTEST.LIB/MFTEST.MSGF");
+       MessageFile aMessageFile = new MessageFile(pwrSys_, "/QSYS.LIB/"+testlib+".LIB/"+testlib+".MSGF");
 
        AS400Message m = aMessageFile.getMessage("TCP1A73");
 

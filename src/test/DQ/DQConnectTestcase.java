@@ -25,6 +25,7 @@ import com.ibm.as400.access.SecureAS400;
 import com.ibm.as400.access.ServerStartupException;
 
 import test.ConnectionDropper;
+import test.DQTest;
 import test.JDTestDriver;
 import test.Testcase;
 
@@ -77,7 +78,7 @@ public class DQConnectTestcase extends Testcase
                 }
 
                 system.setServicePort(AS400.DATAQUEUE, AS400.USE_PORT_MAPPER);
-                DataQueue dq = new DataQueue(system, "/QSYS.LIB/DQTEST.LIB/CONNECT.DTAQ");
+                DataQueue dq = new DataQueue(system, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CONNECT.DTAQ");
 
                 // Remove the data queue server entry from the TCPIP service table
                 if (!cmdRun("QSYS/RMVSRVTBLE SERVICE('" + serviceName + "') PORT(" + portNumber + ") PROTOCOL('tcp')"))
@@ -155,7 +156,7 @@ public class DQConnectTestcase extends Testcase
                 }
 
                 system.setServicePort(AS400.DATAQUEUE, AS400.USE_PORT_MAPPER);
-                KeyedDataQueue dq = new KeyedDataQueue(system, "/QSYS.LIB/DQTEST.LIB/CONNECT.DTAQ");
+                KeyedDataQueue dq = new KeyedDataQueue(system, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CONNECT.DTAQ");
 
                 // Remove the data queue server entry from the TCPIP service table
                 if (!cmdRun("QSYS/RMVSRVTBLE SERVICE('" + serviceName + "') PORT(" + portNumber + ") PROTOCOL('tcp')"))
@@ -498,8 +499,8 @@ public class DQConnectTestcase extends Testcase
             try
             {
 		for (int i = 0; i < RETRIES; i++) { 
-		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CONNECT.DTAQ");
-		    DataQueue dq2 = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CONNECT.DTAQ");
+		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CONNECT.DTAQ");
+		    DataQueue dq2 = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CONNECT.DTAQ");
 		    dq2.create(80);
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 100);
 		    try
@@ -546,8 +547,8 @@ public class DQConnectTestcase extends Testcase
             try
             {
 		for (int i = 0; i < RETRIES; i++) { 
-		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CONNECT.DTAQ");
-		    KeyedDataQueue dq2 = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CONNECT.DTAQ");
+		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CONNECT.DTAQ");
+		    KeyedDataQueue dq2 = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CONNECT.DTAQ");
 		    dq2.create(10,80);
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 100);
 		    try

@@ -23,6 +23,7 @@ import com.ibm.as400.access.KeyedDataQueue;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.ConnectionDropper;
+import test.DQTest;
 import test.Testcase;
 
 /**
@@ -602,7 +603,7 @@ public class DQClearTestcase extends Testcase
             try
             {
 		for (int i = 0; i < DROPPER_RETRIES; i++) {
-		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD1ARTEST.DTAQ");
+		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD1ARTEST.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		    dq.create(80);
 		    try
@@ -650,7 +651,7 @@ public class DQClearTestcase extends Testcase
             {
 		for (int i = 0; i < DROPPER_RETRIES; i++) {
 
-		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD2ARTEST.DTAQ");
+		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD2ARTEST.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		    dq.create(5, 80);
 		    try
@@ -696,7 +697,7 @@ public class DQClearTestcase extends Testcase
             {
 		for (int i = 0; i < DROPPER_RETRIES; i++) {
 
-		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD3ARTEST.DTAQ");
+		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD3ARTEST.DTAQ");
 		    byte[] key = new String("key  ").getBytes("UnicodeBigUnmarked");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		    dq.create(10, 80);
@@ -736,14 +737,14 @@ public class DQClearTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80)");
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
                 dq.refreshAttributes();
-                cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR");
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR");
                 try
                 {
                     dq.clear();
@@ -751,12 +752,12 @@ public class DQClearTestcase extends Testcase
                 }
                 catch(Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
         }
         catch(Exception e)
@@ -774,14 +775,14 @@ public class DQClearTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
                 dq.refreshAttributes();
-                cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR");
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR");
                 try
                 {
                     dq.clear();
@@ -789,12 +790,12 @@ public class DQClearTestcase extends Testcase
                 }
                 catch(Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
         }
         catch(Exception e)
@@ -812,14 +813,14 @@ public class DQClearTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
                 dq.refreshAttributes();
-                cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR" );
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR" );
                 byte[] key = new String("key  ").getBytes("UnicodeBigUnmarked");
                 try
                 {
@@ -828,12 +829,12 @@ public class DQClearTestcase extends Testcase
                 }
                 catch(Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
         }
         catch(Exception e)
@@ -851,15 +852,15 @@ public class DQClearTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECLIBTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ DQSECTEST/SECLIBTST MAXLEN(80)");
+            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECLIBTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECLIBTST MAXLEN(80)");
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ )");
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECLIBTST *DTAQ " + user + " AUT(*USE )");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ )");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECLIBTST *DTAQ " + user + " AUT(*USE )");
                 
                 dq.refreshAttributes();
-                cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
                 try
                 {
                     dq.clear();
@@ -867,12 +868,12 @@ public class DQClearTestcase extends Testcase
                 }
                 catch(Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECLIBTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECLIBTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECLIBTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECLIBTST");
             }
         }
         catch(Exception e)
@@ -890,15 +891,15 @@ public class DQClearTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECLIBTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ DQSECTEST/SECLIBTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECLIBTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECLIBTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECLIBTST *DTAQ " + user + " AUT(*USE )");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECLIBTST *DTAQ " + user + " AUT(*USE )");
 
                 dq.refreshAttributes();
-                cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
                 try
                 {
                     dq.clear();
@@ -906,12 +907,12 @@ public class DQClearTestcase extends Testcase
                 }
                 catch(Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECLIBTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECLIBTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECLIBTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECLIBTST");
             }
         }
         catch(Exception e)
@@ -929,14 +930,14 @@ public class DQClearTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECLIBTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ DQSECTEST/SECLIBTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECLIBTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECLIBTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECLIBTST *DTAQ " + user + " AUT(*USE )");
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECLIBTST *DTAQ " + user + " AUT(*USE )");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
                 dq.refreshAttributes();
-                cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
                 byte[] key = new String("key  ").getBytes("UnicodeBigUnmarked");
                 try
                 {
@@ -945,12 +946,12 @@ public class DQClearTestcase extends Testcase
                 }
                 catch(Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECLIBTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECLIBTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECLIBTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECLIBTST");
             }
         }
         catch(Exception e)

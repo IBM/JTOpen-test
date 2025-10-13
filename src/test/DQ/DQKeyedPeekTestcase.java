@@ -2039,7 +2039,7 @@ public class DQKeyedPeekTestcase extends Testcase
 	{
 	    try
 	    {
-		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD1EKTST.DTAQ");
+		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD1EKTST.DTAQ");
 
 		    for (int i = 0; i < RETRIES; i++) {
 			System.out.println("Running drop iteration "+i); 
@@ -2097,7 +2097,7 @@ public class DQKeyedPeekTestcase extends Testcase
 
 	    try
 	    {
-		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD2EKTST.DTAQ");
+		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD2EKTST.DTAQ");
 		dq.create(10, 80);
 		try
 		{
@@ -2139,17 +2139,17 @@ public class DQKeyedPeekTestcase extends Testcase
     {
 	try
 	{
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
 		String user = systemObject_.getUserId();
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 
-		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
+		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
 		dq.getDescription();
 
-		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR");
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR");
 		try
 		{
 		    dq.peek((new String("key  ")).getBytes("UnicodeBigUnmarked"));
@@ -2162,7 +2162,7 @@ public class DQKeyedPeekTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2179,17 +2179,17 @@ public class DQKeyedPeekTestcase extends Testcase
     {
 	try
 	{
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
 		String user = systemObject_.getUserId();
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 
-		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
+		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
 		dq.getDescription();
 
-		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR" );
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR" );
 		try
 		{
 		    dq.peek((new String("key  ")).getBytes("UnicodeBigUnmarked"), 0, "EQ");
@@ -2202,7 +2202,7 @@ public class DQKeyedPeekTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2219,14 +2219,14 @@ public class DQKeyedPeekTestcase extends Testcase
     {
 	try
 	{
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
 		String user = systemObject_.getUserId();
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
 
-		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
+		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
 		try
 		{
 		    dq.peek((new String("key  ")).getBytes("UnicodeBigUnmarked"));
@@ -2239,7 +2239,7 @@ public class DQKeyedPeekTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -2256,14 +2256,14 @@ public class DQKeyedPeekTestcase extends Testcase
     {
 	try
 	{
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(10)");
 	    try
 	    {
 		String user = systemObject_.getUserId();
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
 
-		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
+		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
 		try
 		{
 		    dq.peek((new String("key  ")).getBytes("UnicodeBigUnmarked"), 0, "EQ");
@@ -2276,7 +2276,7 @@ public class DQKeyedPeekTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)

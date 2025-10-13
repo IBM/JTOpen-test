@@ -15,7 +15,6 @@ package test.JD.RS;
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -1088,7 +1087,9 @@ public class JDRSUpdateRow extends JDTestcase {
       Connection c = null;
       String city = "";
       try {
-        c = DriverManager.getConnection(url);
+        
+        c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
+        
         Statement s = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery("SELECT CITY AS TOWN FROM " + table3);
 
@@ -1129,7 +1130,7 @@ public class JDRSUpdateRow extends JDTestcase {
       // String city = "";
       Connection c = null;
       try {
-        c = DriverManager.getConnection(url);
+        c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
         Statement s = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery("SELECT CITY AS TOWN FROM " + table3);
 
@@ -1165,7 +1166,7 @@ public class JDRSUpdateRow extends JDTestcase {
       String state = "";
       Connection c = null;
       try {
-        c = DriverManager.getConnection(url);
+        c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
         Statement s = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery("SELECT CITY AS TOWN,STATE AS LOCATION FROM " + table3);
 

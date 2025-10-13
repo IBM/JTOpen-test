@@ -44,7 +44,9 @@ public class UserGetSetDtoGTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "UGSD" + UserTest.COLLECTION.substring(UserTest.COLLECTION.length()-3));
+ 
+
+        sandbox_ = new UserSandbox(pwrSys_, "UGSD", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**

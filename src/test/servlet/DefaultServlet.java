@@ -46,7 +46,7 @@ public class DefaultServlet extends HttpServlet {
       void dumpServletInfo(PrintWriter writer, HttpServletRequest request) {
         int parameterCount = 0; 
 
-        writer.append("Default Servlet info updated 2025-06-13 13:17  ");
+        writer.append("Default Servlet info updated 2025-10-09 12:29  ");
         writer.append(request.getContextPath());
         writer.append("<br>\n");
 
@@ -106,6 +106,7 @@ public class DefaultServlet extends HttpServlet {
  	  } else if (servletPath.endsWith("/")) { 
 	    showDirectory(writer, servletPath);
 	  } else  if (servletPath.endsWith(".html")) { 
+	      response.setContentType("text/html"); 
 	      showHtml(writer, servletPath); 
 	  } else if (servletPath.indexOf("/out/") == 0) {
 	    response.setContentType("text/plain"); 
@@ -183,6 +184,7 @@ public class DefaultServlet extends HttpServlet {
 	      BufferedReader in = new BufferedReader(new FileReader(filename));
 	      String line = in.readLine(); 
 	      while (line != null) { 
+	        
 	        writer.println(line); 
 	        line = in.readLine(); 
 	      }

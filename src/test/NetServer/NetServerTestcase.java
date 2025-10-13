@@ -84,6 +84,16 @@ public class NetServerTestcase extends Testcase
     throws Exception
     {
       lockSystem("NETSVR", 600);
+      // Make sure the net server has started
+      CommandCall cmdCall = new CommandCall(pwrSys_); 
+      boolean success = cmdCall.run("STRTCPSVR SERVER(*NETSVR)   ");
+      if (success) { 
+        System.out.println("*NETSVR  started"); 
+      } else {
+        System.out.println("*NETSVR not started"); 
+      }
+      
+      
       super.setup();
 	
        jcifs = new JCIFSUtility(pwrSys_.getSystemName().toUpperCase(), pwrSysUserID_, pwrSysEncryptedPassword_); 

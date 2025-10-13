@@ -23,13 +23,13 @@ public class JDJobName {
 
     static boolean loaded = false; 
     static boolean debug = false; 
+    static boolean jdk21 = false;
+    static boolean usePaseNativeMethods = false; 
     static String[] nativeSource = {
         "#include <jni.h>",
         "#include <time.h>",
         "#include <sys/time.h>",
         "#include <unistd.h>",
-        /* remove the next line to compile on V5R1 */ 
-        "/* #include <sys/resource.h> */ ",
         "#include <errno.h> ",
 	"#include <qusrjobi.h> ",
 	"#include <stdio.h>",
@@ -1285,7 +1285,9 @@ public class JDJobName {
              e.printStackTrace();
            }
          } /* service program exists */ 
-         if (!JTOpenTestEnvironment.isOS400open) {
+         String javaHome = System.getProperty("java.home");
+         jdk21 =  javaHome.indexOf("jdk21/64bit") >= 0 ;
+         if ((!JTOpenTestEnvironment.isOS400open) && (!jdk21)) {
            if (debug) System.out.println("Calling System.load(" + libraryName + ")");
            System.load(libraryName);
            if (debug) System.out.println("Completed System.load(" + libraryName + ")");
@@ -1296,10 +1298,11 @@ public class JDJobName {
            String ifsDir = JTOpenTestEnvironment.testcaseHomeDirectory; 
            String paseLibraryName = ifsDir+"/"+srvpgm;
            String libraryPath = ifsDir+"/lib"+srvpgm+".so"; 
-           String javaHome = System.getProperty("java.home"); 
+           javaHome = System.getProperty("java.home"); 
            String includeDirectory=javaHome+"/include"; 
            String includeDirectoryAix = javaHome+"/include/aix"; 
            File paseLibraryFile = new File(libraryPath);
+           if(debug) System.out.println("Checking for "+libraryPath); 
            if (!paseLibraryFile.exists()) {
 
              try {
@@ -1359,7 +1362,7 @@ public class JDJobName {
            System.load(paseLibraryName);
            if (debug) System.out.println("Completed System.load(" + paseLibraryName + ")");
            loaded = true;
-
+           usePaseNativeMethods = true; 
          }
 
        }
@@ -1709,7 +1712,7 @@ public class JDJobName {
             return; 
           }
 
-		if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open ) {
+		if (JTOpenTestEnvironment.isOS400 && !usePaseNativeMethods ) {
 			try {
 				if (loaded) {
 					String rc = sendProgramMessageNative(message);
@@ -1735,6 +1738,7 @@ public class JDJobName {
 
 	try { 
 	    System.out.println("Running");
+	    System.out.println("UsePaseNativeMethods="+usePaseNativeMethods);
 	    System.out.println("Current job  is "+ getJobName());
 	    System.out.println("Current job  is "+ getJobName());
 	    System.out.println("Current job  is "+ getJobName());

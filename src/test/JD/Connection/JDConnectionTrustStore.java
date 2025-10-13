@@ -207,7 +207,8 @@ public class JDConnectionTrustStore extends JDTestcase {
     if (checkToolbox() ) {
       String[] expectedErrorMessages = {
           "The filename, directory name, or volume label syntax is incorrect",
-          "A file or directory in the path name does not exist."
+          "A file or directory in the path name does not exist.",
+          "No such file or directory"
       };
       if (isNative_) {
         assertCondition(true, "Native does not use SSL"); 
@@ -236,7 +237,8 @@ public class JDConnectionTrustStore extends JDTestcase {
     if (checkToolbox() && checkNotNative()) {
       String[] expectedErrorMessages = {
           "The filename, directory name, or volume label syntax is incorrect",
-          "A file or directory in the path name does not exist."
+          "A file or directory in the path name does not exist.",
+          "No such file or directory"
       };
       if (isNative_) {
         assertCondition(true, "Native does not use SSL"); 

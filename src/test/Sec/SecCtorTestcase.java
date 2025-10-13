@@ -13,7 +13,6 @@
 
 package test.Sec;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,14 +23,11 @@ import java.util.Random;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
-import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.AS400Text;
 import com.ibm.as400.access.BinaryConverter;
-import com.ibm.as400.access.CharConverter;
 import com.ibm.as400.access.ProgramCall;
 import com.ibm.as400.access.ProgramParameter;
 import com.ibm.as400.access.QSYSObjectPathName;
-import com.ibm.as400.access.Trace;
 import com.ibm.as400.security.auth.DefaultProfileTokenProvider;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 import com.ibm.as400.security.auth.RetrieveFailedException;

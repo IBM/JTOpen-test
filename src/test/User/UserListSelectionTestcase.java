@@ -19,6 +19,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
+import test.UserTest;
 
 import com.ibm.as400.resource.RUser;
 import com.ibm.as400.resource.RUserList;
@@ -52,7 +53,7 @@ public class UserListSelectionTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "ULST");
+        sandbox_ = new UserSandbox(pwrSys_, "ULS", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**

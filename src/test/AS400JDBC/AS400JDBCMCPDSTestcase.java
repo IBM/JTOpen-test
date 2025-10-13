@@ -480,12 +480,12 @@ public class AS400JDBCMCPDSTestcase extends Testcase
          AS400JDBCManagedConnectionPoolDataSource ds = new AS400JDBCManagedConnectionPoolDataSource();
          ds.setServerName(systemObject_.getSystemName());
 
-   char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+         char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
          c = ds.getConnection(systemObject_.getUserId(), charPassword);
 
          ds.setUser(systemObject_.getUserId());
          ds.setPassword(charPassword);
-   PasswordVault.clearPassword(charPassword);
+         PasswordVault.clearPassword(charPassword);
          c2 = ds.getConnection();
 
          if (c != null && c2 != null)

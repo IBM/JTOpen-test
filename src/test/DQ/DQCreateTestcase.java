@@ -25,6 +25,7 @@ import com.ibm.as400.access.ObjectAlreadyExistsException;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.ConnectionDropper;
+import test.DQTest;
 import test.Testcase;
 
 /**
@@ -2364,8 +2365,8 @@ public class DQCreateTestcase extends Testcase
             try
             {
 		for (int i = 0; i < DROPPER_RETRIES; i++) { 
-		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CDCRTTEST1.DTAQ");
-		    DataQueue dq2 = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CDCRTTEST2.DTAQ");
+		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CDCRTTEST1.DTAQ");
+		    DataQueue dq2 = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CDCRTTEST2.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		// Create this queue just to get connection going.  This will cause the next connect to go fast, so that the timing of the drop should work correctly (during create).
 		    dq2.create(80);
@@ -2413,8 +2414,8 @@ public class DQCreateTestcase extends Testcase
             try
             {
 		for (int i = 0; i < DROPPER_RETRIES; i++) { 
-		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CDCRTTEST5.DTAQ");
-		    KeyedDataQueue dq2 = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CDCRTTEST6.DTAQ");
+		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CDCRTTEST5.DTAQ");
+		    KeyedDataQueue dq2 = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CDCRTTEST6.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		// Create this queue just to get connection going.  This will cause the next connect to go fast, so that the timing of the drop should work correctly (during create).
 		    dq2.create(10, 80);
@@ -2463,8 +2464,8 @@ public class DQCreateTestcase extends Testcase
             {
 		for (int i = 0; i < DROPPER_RETRIES; i++) { 
 
-		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CDCRTTEST3.DTAQ");
-		    DataQueue dq2 = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CDCRTTEST4.DTAQ");
+		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CDCRTTEST3.DTAQ");
+		    DataQueue dq2 = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CDCRTTEST4.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		// Create this queue just to get connection going.  This will cause the next connect to go fast, so that the timing of the drop should work correctly (during create).
 		    dq2.create(80);
@@ -2516,8 +2517,8 @@ public class DQCreateTestcase extends Testcase
             {
 		for (int i = 0; i < DROPPER_RETRIES; i++) { 
 
-		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CDCRTTEST7.DTAQ");
-		    KeyedDataQueue dq2 = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CDCRTTEST8.DTAQ");
+		    KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CDCRTTEST7.DTAQ");
+		    KeyedDataQueue dq2 = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CDCRTTEST8.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		// Create this queue just to get connection going.  This will cause the next connect to go fast, so that the timing of the drop should work correctly (during create).
 		    dq2.create(10, 80);
@@ -2559,18 +2560,18 @@ public class DQCreateTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
-            cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *ADD");
+            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *READ");
+            cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *ADD");
             try
             {
                 dq.create(10);
                 failed("No exception when creating data queue with user "+user);
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
             catch (Exception e)
             {
-                assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
             }
         }
         catch (Exception e)
@@ -2588,18 +2589,18 @@ public class DQCreateTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
-            cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *ADD");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *READ");
+            cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *ADD");
             try
             {
                 dq.create(5, 10);
                 failed("No exception acccessing dataqueue with "+user);
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
             catch (Exception e)
             {
-                assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
             }
         }
         catch (Exception e)
@@ -2617,18 +2618,18 @@ public class DQCreateTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
-            cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *ADD");
+            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *READ");
+            cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *ADD");
             try
             {
                 dq.create(10, "*USE", false, false, false, "");
                 failed("No exception acccessing dataqueue with "+user);
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
             catch (Exception e)
             {
-                assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
             }
         }
         catch (Exception e)
@@ -2646,18 +2647,18 @@ public class DQCreateTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " *READ");
-            cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *ADD");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *READ");
+            cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *ADD");
             try
             {
                 dq.create(5, 10, "*USE", false, false, "");
                 failed("No exception acccessing dataqueue with "+user);
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
             catch (Exception e)
             {
-                assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
             }
         }
         catch (Exception e)

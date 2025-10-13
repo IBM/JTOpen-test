@@ -128,6 +128,7 @@ public class SocketProxy implements Runnable {
       masterThread.start() ;
       Timestamp ts = new Timestamp(System.currentTimeMillis());
       printWriter_.println(ts.toString()+":Started SocketProxyMasterThread on "+proxyPort_); 
+      printWriter_.flush(); 
       done =  false; 
       while (!done) { 
           Thread.sleep(100); 
@@ -135,9 +136,11 @@ public class SocketProxy implements Runnable {
       masterThread.join();
       ts = new Timestamp(System.currentTimeMillis());
       printWriter_.println(ts.toString()+":Joined with SocketProxyMasterThread on "+proxyPort_); 
+      printWriter_.flush(); 
       
     } catch (Throwable t) {
       printWriter_.println("Throwable caught ");
+      printWriter_.flush(); 
       try { 
         if (masterThread != null) { 
           masterThread.endService(); 
@@ -145,6 +148,7 @@ public class SocketProxy implements Runnable {
         }
       } catch (Throwable t2) { 
         printWriter_.println("Throwable caught ending masterThread ");
+        printWriter_.flush(); 
         
       }
 

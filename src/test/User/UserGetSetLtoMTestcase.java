@@ -22,6 +22,7 @@ import com.ibm.as400.access.User;
 
 import test.JDTestDriver;
 import test.Testcase;
+import test.UserTest;
 
 /**
  Testcase UserGetSetTestcase.  This tests the get and set methods of the User class.
@@ -45,7 +46,7 @@ public class UserGetSetLtoMTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "UGSLMT");
+        sandbox_ = new UserSandbox(pwrSys_, "UGSLM", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**

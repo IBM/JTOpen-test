@@ -648,7 +648,7 @@ public class DQPeekTestcase extends Testcase
 	    try
 	    {
 		for (int i = 0; i < 20; i++) { 
-		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD1KTEST.DTAQ");
+		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD1KTEST.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		    dq.create(80);
 		    try
@@ -702,7 +702,7 @@ public class DQPeekTestcase extends Testcase
 	    try
 	    {
 		for (int i = 0 ; i < 20; i++) { 
-		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD2KTEST.DTAQ");
+		    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD2KTEST.DTAQ");
 		    ConnectionDropper drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, 10);
 		    dq.create(80);
 		    try
@@ -742,14 +742,14 @@ public class DQPeekTestcase extends Testcase
 	try
 	{
 	    String user = systemObject_.getUserId();
-	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		dq.getDescription();
-		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR");
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR");
 		try
 		{
 		    dq.peek();
@@ -762,7 +762,7 @@ public class DQPeekTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -780,14 +780,14 @@ public class DQPeekTestcase extends Testcase
 	try
 	{
 	    String user = systemObject_.getUserId();
-	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
 		dq.getDescription();
-		cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " *OBJOPR");
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " *OBJOPR");
 		try
 		{
 		    dq.peek(0);
@@ -800,7 +800,7 @@ public class DQPeekTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -818,13 +818,13 @@ public class DQPeekTestcase extends Testcase
 	try
 	{
 	    String user = systemObject_.getUserId();
-	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
 //		dq.getDescription();
-		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
 		try
 		{
 		    dq.peek();
@@ -837,7 +837,7 @@ public class DQPeekTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)
@@ -855,13 +855,13 @@ public class DQPeekTestcase extends Testcase
 	try
 	{
 	    String user = systemObject_.getUserId();
-	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-	    cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+	    cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80)");
 	    try
 	    {
-		cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+		cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
 //		dq.getDescription();
-		cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+		cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
 		try
 		{
 		    dq.peek(0);
@@ -874,7 +874,7 @@ public class DQPeekTestcase extends Testcase
 	    }
 	    finally
 	    {
-		cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+		cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
 	    }
 	}
 	catch (Exception e)

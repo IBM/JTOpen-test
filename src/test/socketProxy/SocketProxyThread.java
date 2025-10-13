@@ -81,10 +81,13 @@ public class SocketProxyThread extends Thread {
       synchronized (printWriter_) {
         printWriter_.println("Exception caught by thread " + threadName_);
         e.printStackTrace(printWriter_); 
+        printWriter_.flush(); 
+
       }
     }
       synchronized (printWriter_) {
         printWriter_.println(threadName_+" Completed processing " +processedBytes+" bytes");
+        printWriter_.flush(); 
      
       }
 
@@ -99,6 +102,7 @@ public class SocketProxyThread extends Thread {
       synchronized (printWriter_) {
         printWriter_.println(threadName_+" Caught exception"); 
         e.printStackTrace(printWriter_); 
+        printWriter_.flush(); 
       }
     }
     socket_ = null;
@@ -111,6 +115,7 @@ public class SocketProxyThread extends Thread {
       synchronized (printWriter_) {
         printWriter_.println(threadName_+" Caught exception"); 
         e.printStackTrace(printWriter_); 
+        printWriter_.flush(); 
       }
     }
     serverSocket_ = null;
