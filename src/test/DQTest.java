@@ -155,12 +155,17 @@ public class DQTest extends TestDriver
         }
     }
 
+    public static String DQSECLIB = "DQSECTST";
+    public static String DQLIB    = "DQTST"; 
     /**
      Performs setup needed before running testcases.
      @exception  Exception  If an exception occurs.
      **/
     public void setup() throws Exception
     {
+        String INITIAL=super.testLib_.substring(super.testLib_.length()-1); 
+          DQSECLIB=DQSECLIB+INITIAL; 
+          DQLIB=DQLIB+INITIAL; 
         if (misc_ != null)
         {
             StringTokenizer miscTokenizer = new StringTokenizer(misc_, ",");
@@ -183,21 +188,21 @@ public class DQTest extends TestDriver
             }
         }
 
-        if (!cmdRun("QSYS/CRTLIB DQSECTEST"))
+        if (!cmdRun("QSYS/CRTLIB "+DQSECLIB))
         {
-            out_.println("Setup failed.");
+            out_.println("Setup failed for CRTLIB "+DQSECLIB);
         }
-        if (!cmdRun("QSYS/CRTLIB DQTEST"))
+        if (!cmdRun("QSYS/CRTLIB "+DQLIB))
         {
-            out_.println("Setup failed.");
+            out_.println("Setup failed for "+DQLIB);
 	} else {
-	    out_.println("Library DQTEST created");
+	    out_.println("Library "+DQLIB+" created");
 	}
-	if (!cmdRun("QSYS/GRTOBJAUT OBJ(DQTEST) OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
+	if (!cmdRun("QSYS/GRTOBJAUT OBJ("+DQTest.DQLIB+") OBJTYPE(*LIB) USER("+userId_+") AUT(*ALL)")) {
 	    out_.println("QSYS/GRTOBJAUT failed");
 	} 
 	
-	if (!cmdRun("QSYS/GRTOBJAUT OBJ(DQTEST) OBJTYPE(*LIB) USER("+userId_+") AUT(*CHANGE)")) {
+	if (!cmdRun("QSYS/GRTOBJAUT OBJ("+DQTest.DQLIB+") OBJTYPE(*LIB) USER("+userId_+") AUT(*CHANGE)")) {
 	  out_.println("QSYS/GRTOBJAUT failed");
 	} 
 
@@ -212,8 +217,8 @@ public class DQTest extends TestDriver
         // Shut down servers.
         systemObject_.disconnectService(AS400.DATAQUEUE);
         CommandCall c= new CommandCall(pwrSys_); 
-	deleteLibrary(c,"DQSECTEST");
-	deleteLibrary(c, "DQTEST"); 
+	deleteLibrary(c,DQTest.DQSECLIB);
+	deleteLibrary(c, DQTest.DQLIB); 
         if (pwrSys_ != null) pwrSys_.disconnectService(AS400.COMMAND);
         super.cleanup();
     }

@@ -73,6 +73,7 @@ public class SocketProxyMasterThread extends Thread {
       Socket socket;
       try {
 	printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" at accept"); 
+	printWriter_.flush(); 
         socket = serverSocket_.accept();
 	boolean isEnabled;
 	synchronized(this) {
@@ -80,6 +81,8 @@ public class SocketProxyMasterThread extends Thread {
 	}
         if (isEnabled) {
 	    printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" starting thread to process"); 
+	    printWriter_.flush(); 
+
           SocketProxyThread socketProxyThread = new SocketProxyThread(this,
               "PROXY_THREAD_" + connectionCount_+" "+socket+" to "+serverName_+"/"+serverPort_, socket, serverName_, serverPort_,
               printWriter_);
@@ -92,12 +95,16 @@ public class SocketProxyMasterThread extends Thread {
           connectionCount_++;
         } else {
 	    printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" not enabled"); 
+	    printWriter_.flush(); 
+
           failedConnectCount_++;
           if (outputFailedAttempts != null) {
             double seconds = (System.currentTimeMillis() - startTime) / 1000.0;
             outputFailedAttempts.println(" Failed attempt on port "
                 + localPort_ + " after " + seconds + " seconds ");
+            outputFailedAttempts.flush(); 
           }
+          
           // Make sure this takes some time
           try {
             Thread.sleep(2);
@@ -114,6 +121,8 @@ public class SocketProxyMasterThread extends Thread {
           printWriter_.println("Failure #" + exceptionCount
               + "in SocketProxyMasterThread");
           e.printStackTrace(printWriter_);
+          printWriter_.flush(); 
+
         }
 
         if (exceptionCount >= 100) {
@@ -214,6 +223,8 @@ public class SocketProxyMasterThread extends Thread {
   
   synchronized public void enable(boolean b) {
       printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" enabled set to "+b); 
+      printWriter_.flush(); 
+
     enabled_ = b;
 
   }

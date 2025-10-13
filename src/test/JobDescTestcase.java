@@ -42,7 +42,7 @@ public class JobDescTestcase extends Testcase
 
     static final boolean DEBUG = false;
 
-    private static String jobDescLib_   = "JDTESTLIB";
+    private static String jobDescLib_   = "JDTSTLIB";
     private static String jobDescName1_ = "JOBDESC1";
     private static String jobQName1_    = "JOBQ1";
 
@@ -93,6 +93,16 @@ public class JobDescTestcase extends Testcase
     static String timeSlice_;
     static String userName_;
 
+    public static void main(String args[]) throws Exception {
+      String[] newArgs = new String[args.length+2];
+       newArgs[0] = "-tc";
+       newArgs[1] = "JobDescTestcase";
+       for (int i = 0; i < args.length; i++) {
+         newArgs[2+i]=args[i];
+       }
+       test.JobDescTest.main(newArgs); 
+     }
+
     /**
      Constructor.
      **/
@@ -124,6 +134,7 @@ public class JobDescTestcase extends Testcase
       if (DEBUG) output_.println("Running testcase setup ...");
       try
       {
+          jobDescLib_ = super.testLib_; 
         pwrCmd_ = new CommandCall(pwrSys_);
         pwrCmd_.run("QSYS/DLTJOBD JOBD("+jobDescLib_+"/"+jobDescName1_+")");
         deleteLibrary(jobDescLib_);

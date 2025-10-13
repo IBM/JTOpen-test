@@ -2290,8 +2290,11 @@ updateObject() - Update an BIGINT, when the integer is too big.
   public void dfpTest(String table, Object value, String expected) {
       dfpTest(table, value, expected, expected); 
   }
-
   public void dfpTest(String table, Object value, String expected, String expected2) {
+    dfpTest(table, value, expected, expected2, expected2); 
+      
+  }
+  public void dfpTest(String table, Object value, String expected, String expected2, String expected3) {
       if (checkDecFloatSupport()) {
         try {
           Statement s = connection_.createStatement(
@@ -2311,7 +2314,8 @@ updateObject() - Update an BIGINT, when the integer is too big.
           } catch (Exception e) {} 
           assertCondition((v==null && expected==null) || 
                           (v!=null && v.equals(expected)) || 
-                          (v!=null && v.equals(expected2)) , "Got " + v + " from "+ value +" sb " + expected);
+                          (v!=null && v.equals(expected2)) || 
+                          (v!=null && v.equals(expected3)) , "Got " + v + " from "+ value +" sb " + expected + " or "+expected2+" or "+expected3);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -2393,8 +2397,13 @@ updateObject() - Update an BIGINT, when the integer is too big.
     public void Var121 () { dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.POSITIVE_INFINITY), "Infinity");}
     public void Var122 () { dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.NEGATIVE_INFINITY), "-Infinity");}
     public void Var123 () {
+      
 	    /* with the new native PASE support, this comes back with the zeros*/
-	    dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(-1234567890123456.0f), "-1.23456795E+15", "-1234567950000000");
+            /* Java 21, specifically starting from Java 19, changed the behavior of Double.toString() and Float.toString() 
+             * to produce the smallest number of digits that still uniquely distinguish the float or
+             *  double from its adjacent float or double. */
+	    dfpTest(JDRSTest.RSTEST_DFP16, Float.valueOf(-1234567890123456.0f), "-1.23456795E+15", "-1234567950000000","-1.234568E15");
+	                                                                      
     }
     public void Var124 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.valueOf(4533.43f), "4533.43017578125"); }
     public void Var125 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.NaN), "NaN");} 
@@ -2750,8 +2759,10 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
  public void dfpTestCommaSeparator(String table, Object value, String expected) {
       dfpTestCommaSeparator(table, value, expected, expected); 
   }
-
-  public void dfpTestCommaSeparator(String table, Object value, String expected, String expected2) {
+ public void dfpTestCommaSeparator(String table, Object value, String expected, String expected2) {
+   dfpTestCommaSeparator(table, value, expected, expected2, expected2); 
+ }
+  public void dfpTestCommaSeparator(String table, Object value, String expected, String expected2, String expected3) {
     String added = " -- added 12/17/2009 to test native driver for CPS 7YSU2X";
       if (checkDecFloatSupport()) {
         try {
@@ -2774,7 +2785,8 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
           } catch (Exception e) {} 
           assertCondition((v==null && expected==null) || 
                           (v!=null && v.equals(expected)) || 
-                          (v!=null && v.equals(expected2)) , "Got " + v + " from "+ value +" sb " + expected+added);
+                          (v!=null && v.equals(expected2)) ||
+                          (v!=null && v.equals(expected3)), "Got " + v + " from "+ value +" sb " + expected +" or "+expected2+" or "+expected3+added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception"+added);
         }
@@ -2840,7 +2852,7 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
     public void Var169 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.POSITIVE_INFINITY), "Infinity");}
     public void Var170 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(Float.NEGATIVE_INFINITY), "-Infinity");}
     public void Var171 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(-1234567890123456.0f), "-1,23456795E+15", "-1234567950000000");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Float.valueOf(-1234567890123456.0f), "-1,23456795E+15", "-1234567950000000","-1,234568E+15");
     }
     public void Var172 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(4533.43f), "4533,43017578125"); }
     public void Var173 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.NaN), "NaN");} 

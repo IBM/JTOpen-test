@@ -720,7 +720,7 @@ public class JDReport {
 
     String filename = webDirectory+"/index.html";
     System.out.println("Creating index file " + filename);
-
+    File writerFile = new File(filename); 
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
 
     if (hostname == null || hostname.length() == 0) {
@@ -1020,6 +1020,7 @@ public class JDReport {
     writer.println("</html>");
 
     writer.close();
+    writerFile.setReadable(true, false); 
 
   }
 
@@ -1063,6 +1064,7 @@ public class JDReport {
     String filename = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/toolbox.html";
     System.out.println("Creating index file " + filename);
 
+    File writerFile = new File(filename); 
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
 
     if (hostname == null || hostname.length() == 0) {
@@ -1216,6 +1218,7 @@ public class JDReport {
     writer.println("</html>");
 
     writer.close();
+    writerFile.setReadable(true,false); 
 
   }
 
@@ -1223,6 +1226,8 @@ public class JDReport {
 
     String filename = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/native.html";
     System.out.println("Creating index file " + filename);
+
+    File writerFile = new File(filename); 
 
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
 
@@ -1314,6 +1319,7 @@ public class JDReport {
     writer.println("</html>");
 
     writer.close();
+    writerFile.setReadable(true,false); 
 
   }
 
@@ -1321,6 +1327,8 @@ public class JDReport {
 
     String filename = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+"ct/jvm.html";
     System.out.println("Creating index file " + filename);
+
+    File writerFile = new File(filename); 
 
     PrintWriter writer = new PrintWriter(new FileWriter(filename));
 
@@ -1407,6 +1415,7 @@ public class JDReport {
     writer.println("</html>");
 
     writer.close();
+    writerFile.setReadable(true,false); 
 
   }
 
@@ -2083,6 +2092,7 @@ public class JDReport {
       String outfile = JTOpenTestEnvironment.testcaseHomeDirectory+File.separatorChar+"ct"+File.separatorChar+"runit" + initials + ".out";
       
       System.out.println("Creating " + outputFilename);
+      File writerFile = new File(outputFilename); 
 
       writer = new PrintStream(new FileOutputStream(outputFilename));
 
@@ -3390,6 +3400,8 @@ public class JDReport {
 
 
       writer.close();
+      writerFile.setReadable(true,false); 
+
       writer = null;
 
       //

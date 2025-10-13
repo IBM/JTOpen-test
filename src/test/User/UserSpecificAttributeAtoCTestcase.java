@@ -17,6 +17,7 @@ import com.ibm.as400.access.User;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
+import test.UserTest;
 
 import com.ibm.as400.resource.RUser;
 
@@ -58,7 +59,7 @@ public class UserSpecificAttributeAtoCTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "USAAC");
+        sandbox_ = new UserSandbox(pwrSys_, "USAA", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
         user_ = sandbox_.createUser(true);
     }
 

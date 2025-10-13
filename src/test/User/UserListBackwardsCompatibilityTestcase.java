@@ -21,6 +21,7 @@ import com.ibm.as400.access.User;
 import com.ibm.as400.access.UserList;
 
 import test.Testcase;
+import test.UserTest;
 
 /**
  Testcase UserListBackwardsCompatibilityTestcase.  This tests the following methods of the UserList class:
@@ -53,7 +54,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "ULBCT");
+        sandbox_ = new UserSandbox(pwrSys_, "ULBC", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
 
         userNotInGroup_ = sandbox_.createUser();
         groupWithNoMembers_ = sandbox_.createGroup();

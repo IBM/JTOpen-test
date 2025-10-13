@@ -74,6 +74,16 @@ public class NetServerSessionTestcase extends Testcase
       lockSystem("NETSVR", 600);
       super.setup();
 
+   // Make sure the net server has started
+      CommandCall cmdCall = new CommandCall(pwrSys_); 
+      boolean success = cmdCall.run("STRTCPSVR SERVER(*NETSVR)   ");
+      if (success) { 
+        System.out.println("*NETSVR  started sleeping for 30 seconds"); 
+        Thread.sleep(30000);
+      } else {
+        System.out.println("*NETSVR not started"); 
+      }
+      
 	jcifs = new JCIFSUtility(pwrSys_.getSystemName(), pwrSysUserID_, pwrSysEncryptedPassword_); 
 
        NetServer netser = new NetServer(pwrSys_);

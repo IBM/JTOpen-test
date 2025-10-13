@@ -17,6 +17,7 @@ import com.ibm.as400.access.User;
 import com.ibm.as400.resource.ResourceMetaData;
 
 import test.Testcase;
+import test.UserTest;
 
 import com.ibm.as400.resource.RUser;
 
@@ -61,7 +62,7 @@ public class UserSpecificAttributeGtoITestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "USAGI");
+        sandbox_ = new UserSandbox(pwrSys_, "USAG", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
         String[] groupAndUsers = sandbox_.createGroupAndUsers(1);
         groupWithUsers_ = groupAndUsers[0];
         user_ = groupAndUsers[1];

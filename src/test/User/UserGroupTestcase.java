@@ -22,6 +22,7 @@ import com.ibm.as400.access.User;
 import com.ibm.as400.access.UserGroup;
 
 import test.Testcase;
+import test.UserTest;
 
 /**
  Testcase UserGroupTestcase.  This tests the following methods of the User class:
@@ -49,7 +50,7 @@ public class UserGroupTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "UGT");
+        sandbox_ = new UserSandbox(pwrSys_, "UG", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**

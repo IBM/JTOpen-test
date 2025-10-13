@@ -3500,6 +3500,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     dualPrintln(System.out, writer, "---------------------------------------");
 
     writer.close();
+    savefile.setReadable(true,  false);   /* Make sure the output is readable */ 
     resultsWriter.close();
 
     //

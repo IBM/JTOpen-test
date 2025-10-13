@@ -71,7 +71,7 @@ public class UserListBasicTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "ULBT");
+        sandbox_ = new UserSandbox(pwrSys_, "ULB", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
 
         userNotInGroup_ = sandbox_.createUser();
         groupWithNoMembers_ = sandbox_.createGroup();
@@ -1861,7 +1861,7 @@ public class UserListBasicTestcase extends Testcase
             UserList ul = new UserList(pwrSys_);
             ul.setUserInfo(UserList.ALL);
             ul.setGroupInfo(UserList.NONE);
-            ul.setUserProfile("ULBT*");
+            ul.setUserProfile("ULB*");
             assertCondition(verifyList(ul, new String[] { userNotInGroup_, userInGroup_, groupWithMembers_, groupWithNoMembers_ }, new String[0]));
         }
         catch (Exception e)

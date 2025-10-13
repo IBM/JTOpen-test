@@ -51,12 +51,19 @@ public class SocketProxyStreamThread extends Thread {
           synchronized(printWriter_) { 
             printWriter_.println("Exception in "+threadName_);
             e.printStackTrace(printWriter_);
+            printWriter_.flush(); 
+
           }
           running = false; 
         } 
         
       
     } /* while running */ 
+    try {
+      /* Sleep for things to get used before closing connection */ 
+      Thread.sleep(1000);
+    } catch (InterruptedException e1) {
+    }; 
     
     try {
       inputStream_.close();

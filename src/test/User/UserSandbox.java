@@ -44,11 +44,12 @@ public class UserSandbox
 
     /**
      Constructor.
+     The letter is to distinguish between A and B tests running concurrently
      **/
-    public UserSandbox(AS400 system, String prefix)
+    public UserSandbox(AS400 system, String prefix, String letter)
     {
         system_ = system;
-        prefix_ = prefix;
+        prefix_ = prefix + letter;
     }
 
     /**

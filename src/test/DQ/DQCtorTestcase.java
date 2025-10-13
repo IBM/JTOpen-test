@@ -19,6 +19,7 @@ import com.ibm.as400.access.DataQueue;
 import com.ibm.as400.access.IllegalPathNameException;
 import com.ibm.as400.access.KeyedDataQueue;
 
+import test.DQTest;
 import test.Testcase;
 
 /**
@@ -100,8 +101,8 @@ public class DQCtorTestcase extends Testcase
     {
         try
         {
-            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTAQ");
-            String failMsg = verifyCtor(dq, 0, systemObject_, "TESTQUEUE", "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTAQ");
+            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTAQ");
+            String failMsg = verifyCtor(dq, 0, systemObject_, "TESTQUEUE", "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTAQ");
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -118,8 +119,8 @@ public class DQCtorTestcase extends Testcase
     {
         try
         {
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTAQ");
-            String failMsg = verifyCtor(dq, 0, systemObject_, "TESTQUEUE", "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTAQ");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTAQ");
+            String failMsg = verifyCtor(dq, 0, systemObject_, "TESTQUEUE", "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTAQ");
             assertCondition(failMsg.equals(""), "\n" + failMsg);
         }
         catch (Exception e)
@@ -136,7 +137,7 @@ public class DQCtorTestcase extends Testcase
     {
         try
         {
-            DataQueue dq = new DataQueue(null, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTAQ");
+            DataQueue dq = new DataQueue(null, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTAQ");
             failed("No exception."+dq);
         }
         catch (Exception e)
@@ -153,7 +154,7 @@ public class DQCtorTestcase extends Testcase
     {
         try
         {
-            KeyedDataQueue dq = new KeyedDataQueue(null, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTAQ");
+            KeyedDataQueue dq = new KeyedDataQueue(null, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTAQ");
             failed("No exception."+dq);
         }
         catch (Exception e)
@@ -238,12 +239,12 @@ public class DQCtorTestcase extends Testcase
     {
         try
         {
-            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTA");
+            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTA");
             failed("No exception."+dq);
         }
         catch (Exception e)
         {
-            assertExceptionStartsWith(e, "IllegalPathNameException", "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTA: ", IllegalPathNameException.OBJECT_TYPE_NOT_VALID);
+            assertExceptionStartsWith(e, "IllegalPathNameException", "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTA: ", IllegalPathNameException.OBJECT_TYPE_NOT_VALID);
         }
     }
 
@@ -255,12 +256,12 @@ public class DQCtorTestcase extends Testcase
     {
         try
         {
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTA");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTA");
             failed("No exception."+dq);
         }
         catch (Exception e)
         {
-            assertExceptionStartsWith(e, "IllegalPathNameException", "/QSYS.LIB/DQTEST.LIB/TESTQUEUE.DTA: ", IllegalPathNameException.OBJECT_TYPE_NOT_VALID);
+            assertExceptionStartsWith(e, "IllegalPathNameException", "/QSYS.LIB/"+DQTest.DQLIB+".LIB/TESTQUEUE.DTA: ", IllegalPathNameException.OBJECT_TYPE_NOT_VALID);
         }
     }
 }

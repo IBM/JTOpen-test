@@ -22,6 +22,7 @@ import com.ibm.as400.access.IllegalPathNameException;
 import com.ibm.as400.access.User;
 
 import test.Testcase;
+import test.UserTest;
 
 /**
  Testcase UserGetSetTestcase.  This tests the get and set methods of the User class.
@@ -45,7 +46,7 @@ public class UserGetSetRtoSTestcase extends Testcase
      **/
     protected void setup() throws Exception
     {
-        sandbox_ = new UserSandbox(pwrSys_, "UGSRST");
+        sandbox_ = new UserSandbox(pwrSys_, "UGSRS", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**

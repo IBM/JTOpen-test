@@ -60,18 +60,6 @@ public class UserBasicTestcase extends Testcase
     String testruser1 = "TESTRUSER1";
     private UserSandbox sandbox_;
     private static boolean areV7R1MethodsDefined_ = true;
-    static {
-      try {
-        areV7R1MethodsDefined_ = TOOLBOX_PACKAGE.isCompatibleWith("6.1.0.7");
-        // V6R1M0 PTF 7 (JTOpen 6.4)
-      }
-      catch (NumberFormatException e) {
-        // This can happen if we have individual Toolbox *.class files
-        // on the classpath (rather than just the jt400.jar or jt400Native.jar file).
-        System.err.println(e.getMessage());
-        System.err.println("An empty version string could be explained by the presence of additional Toolbox class files on classpath.");
-      }
-    }
 
     /**
      Performs setup needed before running variations.
@@ -80,9 +68,12 @@ public class UserBasicTestcase extends Testcase
     protected void setup() throws Exception
     {
 
-	testruser1 = generateClientUser("TBTUR"); 
+      String testLib = baseTestDriver_.getTestLib();
+      String letter = testLib.substring(testLib.length() - 1);
 
-        sandbox_ = new UserSandbox(pwrSys_, "UBT");
+	testruser1 = generateClientUser("TBTU"+letter); 
+
+        sandbox_ = new UserSandbox(pwrSys_, "UBT", UserTest.COLLECTION.substring(UserTest.COLLECTION.length() - 1));
     }
 
     /**

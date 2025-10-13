@@ -21,6 +21,7 @@ import com.ibm.as400.access.KeyedDataQueue;
 import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.ConnectionDropper;
+import test.DQTest;
 import test.Testcase;
 
 /**
@@ -247,7 +248,7 @@ public class DQDeleteTestcase extends Testcase
                 {
 		    int raceTime = 10;
 		    while (raceTime > 0) { 
-			DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD1DLTTEST.DTAQ");
+			DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD1DLTTEST.DTAQ");
 			drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, raceTime);
 			dq.create(80);
 			drop.start();
@@ -294,7 +295,7 @@ public class DQDeleteTestcase extends Testcase
                 {
 		    int raceTime = 20;
 		    while (raceTime > 0) { 
-			KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQTEST.LIB/CD2DLTTEST.DTAQ");
+			KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD2DLTTEST.DTAQ");
 			drop = new ConnectionDropper(systemObject_, AS400.DATAQUEUE, raceTime);
 			dq.create(10, 80);
 			drop.start();
@@ -331,13 +332,13 @@ public class DQDeleteTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80)");
+            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80)");
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
-                cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*OBJEXIST)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*OBJEXIST)");
                 dq.getDescription();
                 try
                 {
@@ -346,12 +347,12 @@ public class DQDeleteTestcase extends Testcase
                 }
                 catch (Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
         }
         catch (Exception e)
@@ -369,15 +370,15 @@ public class DQDeleteTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
-            cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*USE )");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+            cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*USE )");
 
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
-                cmdRun("RVKOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*OBJEXIST)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*READ *OBJOPR)");
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*OBJEXIST)");
                 dq.getDescription();
                 
                 try
@@ -387,12 +388,12 @@ public class DQDeleteTestcase extends Testcase
                 }
                 catch (Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.OBJECT_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
         }
         catch (Exception e)
@@ -410,16 +411,16 @@ public class DQDeleteTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ   DQSECTEST/SECTST MAXLEN(80)");
-            cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*USE )");
+            DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ   "+DQTest.DQSECLIB+"/SECTST MAXLEN(80)");
+            cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*USE )");
 
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
                 
                 dq.getDescription();
-                cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE");
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE");
                 try
                 {
                     dq.delete();
@@ -427,12 +428,12 @@ public class DQDeleteTestcase extends Testcase
                 }
                 catch (Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
         }
         catch (Exception e)
@@ -450,14 +451,14 @@ public class DQDeleteTestcase extends Testcase
         try
         {
             String user = systemObject_.getUserId();
-            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ");
-            cmdRun("QSYS/CRTDTAQ   DQSECTEST/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
-            cmdRun("QSYS/GRTOBJAUT DQSECTEST/SECTST *DTAQ " + user + " AUT(*USE )");
+            KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ");
+            cmdRun("QSYS/CRTDTAQ   "+DQTest.DQSECLIB+"/SECTST MAXLEN(80) SEQ(*KEYED) KEYLEN(5)");
+            cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+"/SECTST *DTAQ " + user + " AUT(*USE )");
             try
             {
-                cmdRun("QSYS/GRTOBJAUT DQSECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
+                cmdRun("QSYS/GRTOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " AUT(*EXECUTE *READ)");
                 dq.getDescription();
-                cmdRun("RVKOBJAUT DQSECTEST *LIB " + user + " *EXECUTE" );
+                cmdRun("RVKOBJAUT "+DQTest.DQSECLIB+" *LIB " + user + " *EXECUTE" );
                 try
                 {
                     dq.delete();
@@ -465,12 +466,12 @@ public class DQDeleteTestcase extends Testcase
                 }
                 catch (Exception e)
                 {
-                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/DQSECTEST.LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
+                    assertExceptionStartsWith(e, "AS400SecurityException", "/QSYS.LIB/"+DQTest.DQSECLIB+".LIB/SECTST.DTAQ: ", AS400SecurityException.LIBRARY_AUTHORITY_INSUFFICIENT);
                 }
             }
             finally
             {
-                cmdRun("QSYS/DLTDTAQ DQSECTEST/SECTST");
+                cmdRun("QSYS/DLTDTAQ "+DQTest.DQSECLIB+"/SECTST");
             }
         }
         catch (Exception e)
