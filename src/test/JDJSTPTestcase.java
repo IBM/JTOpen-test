@@ -177,7 +177,7 @@ extends JDTestcase
     
     
     public static boolean useCliJobRun = false; 
-    String systemName = null ;
+    protected String systemName = null ;
 
 
     public static int cliJobRunPort  = 0;
@@ -397,9 +397,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     static String hostname =null; 
     static boolean clientSameAsServer = false;
 
-    static String nativeBaseDir = JTOpenTestEnvironment.testcaseHomeDirectory+"3.NOLIB"; 
-    static String funcpath = "/QIBM/UserData/OS400/SQLLib/Function";
-    static String library = "NOLIB";
+    protected static String nativeBaseDir = JTOpenTestEnvironment.testcaseHomeDirectory+"3.NOLIB"; 
+    protected static String funcpath = "/QIBM/UserData/OS400/SQLLib/Function";
+    protected static String library = "NOLIB";
 
     // Keep this static variable private
     // These should be set in the setup (not in the constructor) 
@@ -551,12 +551,12 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
      * Do actions at connect time to set up code coverage tool (or other action)
      */ 
 
-    static void connectionConnect(Connection conn, String name)  {
+    protected static void connectionConnect(Connection conn, String name)  {
 	connectionConnect(conn, name, System.getProperty("java.home"));
     } 
 
 
-    static void connectionConnect(Connection conn, String name, String javaHome)  {
+    protected static void connectionConnect(Connection conn, String name, String javaHome)  {
 	try { 
 	    if (connectSTP != null) { 
 		CallableStatement cstmt = conn.prepareCall("call "+connectSTP+"(?)");
@@ -593,7 +593,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	} 
     } 
 
-    static void connectionDisconnect(Connection conn, String name)  {
+    protected static void connectionDisconnect(Connection conn, String name)  {
 	try { 
 	    if (disconnectSTP != null) { 
 		CallableStatement cstmt = conn.prepareCall("call "+disconnectSTP+"(?)");
@@ -609,7 +609,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     /**
      * Make sure the envLibrary is setup
      */ 
-    static void checkSetup() throws Exception {
+    protected static void checkSetup() throws Exception {
 	
         // Make sure the connection exists 
 	if (cmdConn == null) {
@@ -726,7 +726,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     /**
      * execute a statement and ignore errors if needed
      */
-    static int execStatement(Statement stmt, String sql, boolean ignoreErrors) throws Exception {
+    protected static int execStatement(Statement stmt, String sql, boolean ignoreErrors) throws Exception {
 	int count = 0; 
 	try {
 	    if (debug) System.out.println("JDJSTP.debug: execStatement: "+sql); 
@@ -6228,7 +6228,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
     static Hashtable<String, String> jdbcReplaceHashtable = new Hashtable<String,String>();  
     
-    static void setJdbcReplace(String from, String to) {
+    protected static void setJdbcReplace(String from, String to) {
       jdbcReplaceHashtable.put(from, to); 
     }
     

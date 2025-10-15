@@ -157,7 +157,7 @@ public class JDSetupProcedure {
     @param  connection  The connection.
     @param  stp         The stored procedure.
     **/
-    static void create (AS400 system,
+    public static void create (AS400 system,
                         
                         Connection connection,
                         String stp)

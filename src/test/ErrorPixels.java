@@ -17,12 +17,12 @@ package test;
 import java.awt.image.ColorModel;
 
 
-class ErrorPixels
+public class ErrorPixels
 {
 /**
 The color model used for this image.
 **/
-  static ColorModel colorModel = new BasicColorModel();
+  public static ColorModel colorModel = new BasicColorModel();
 
   private final static long[] data_ =
   {
@@ -51,18 +51,18 @@ The color model used for this image.
 /**
 The height of the image in pixels.
 **/
-  final static int height = 40;
+  public final static int height = 40;
 
 /**
 The width of the image in pixels.
 **/
-  final static int width = 40;
+  public final static int width = 40;
 
 
 /**
 Returns the pixel data.
 **/
-  static byte[] getPixels()
+  public static byte[] getPixels()
   {
     byte[] data = new byte[ErrorPixels.data_.length * 16];
     for (int i = 0, j = 0; i < ErrorPixels.data_.length; i++, j += 16)

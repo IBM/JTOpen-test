@@ -142,16 +142,21 @@ protected void setup () throws Exception
 	      }
             }
         String commandString;
+        String shortSysName = sysName; 
+        int dotIndex = shortSysName.indexOf("."); 
+        if (dotIndex > 0) {
+          shortSysName = shortSysName.substring(0,dotIndex); 
+        }
         if (userName.length() > 8) {
           commandString = "QSYS/ADDDIRE USRID(" + userName.substring(0, 8) + " "
-              + sysName + ") USRD('Test') USER(" + userName + ")";
+              + shortSysName + ") USRD('Test') USER(" + userName + ")";
         } else {
-          commandString = "QSYS/ADDDIRE USRID(" + userName + " " + sysName
+          commandString = "QSYS/ADDDIRE USRID(" + userName + " " + shortSysName
               + ") USRD('Test') USER(" + userName + ")";
         }
         System.out.println("Setup: " + commandString);
         runCommand(ccallPow_, commandString);
-        commandString = "QSYS/ADDDIRE USRID(" + pwrUserName + " " + sysName
+        commandString = "QSYS/ADDDIRE USRID(" + pwrUserName + " " + shortSysName
             + ") USRD('Test') USER(" + pwrUserName + ")";
         System.out.println("Setup: " + commandString);
         runCommand(ccallPow_, commandString);
@@ -176,9 +181,9 @@ protected void setup () throws Exception
         runCommand(ccallPow_, "QSYS/CRTUSRPRF USRPRF(TESTUSR4) PASSWORD(JTEST4)");
 
         // This is needed in order for setOwner() to work:
-        runCommand(ccallPow_, "QSYS/ADDDIRE USRID(TESTUSR1 " + sysName
+        runCommand(ccallPow_, "QSYS/ADDDIRE USRID(TESTUSR1 " + shortSysName
             + ") USRD('Test') USER(TESTUSR1)");
-        runCommand(ccallPow_, "QSYS/ADDDIRE USRID(TESTUSR2 " + sysName
+        runCommand(ccallPow_, "QSYS/ADDDIRE USRID(TESTUSR2 " + shortSysName
             + ") USRD('Test') USER(TESTUSR2)");
 
         for (int i = 0; i <= 6; i++) {
