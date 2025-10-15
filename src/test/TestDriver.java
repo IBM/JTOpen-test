@@ -1534,7 +1534,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   
   }
 
-  static String arrayToString(String[] strings) {
+  public static String arrayToString(String[] strings) {
     if (strings == null)
       return "null";
     if (strings.length == 0)

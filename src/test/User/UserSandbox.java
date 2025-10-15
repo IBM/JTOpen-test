@@ -52,6 +52,17 @@ public class UserSandbox
         prefix_ = prefix + letter;
     }
 
+    
+    
+    /**
+    Constructor.
+    **/
+   public UserSandbox(AS400 system, String prefix)
+   {
+       system_ = system;
+       prefix_ = prefix + "X";
+   }
+
     /**
      Cleans up after the variations.
      @exception  Exception  If an exception occurs.

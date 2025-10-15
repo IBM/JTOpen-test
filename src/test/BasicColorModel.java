@@ -33,7 +33,7 @@ This class is a simple 16 color index color scheme.  The colors are:
 14 Gray5
 15 White
 **/
-class BasicColorModel extends java.awt.image.IndexColorModel
+public class BasicColorModel extends java.awt.image.IndexColorModel
 {
   private static byte[] colorMap = new byte[64];
 
@@ -123,7 +123,7 @@ class BasicColorModel extends java.awt.image.IndexColorModel
     colorMap[63] = (byte) 255;
   }
 
-  BasicColorModel()
+  public BasicColorModel()
   {
     super(4, 16, colorMap, 0, true, 0);
   }

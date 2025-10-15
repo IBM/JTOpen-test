@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-final class TestOutput extends FilterOutputStream
+public final class TestOutput extends FilterOutputStream
 {
   // Represents the output stream for file output.
   public PrintWriter fileOut = null;
