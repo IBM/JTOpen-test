@@ -1730,6 +1730,35 @@ public class JDReflectionUtil {
 
 
     /**
+     * call a method which returns nothing, but is passed integer and boolean 
+     *
+     * Examples
+     *
+     *  callMethod_V(ds, "setReturnExtendedMetaData", true);
+     */
+
+     public static void callMethod_V(Object o, String methodName, int parm1, boolean parm2) throws Exception {
+
+         java.lang.reflect.Method method;
+
+         Class<?> thisClass = o.getClass();
+         Class<?>[] argTypes = new Class<?>[2];
+         argTypes[0] = java.lang.Integer.TYPE;
+         argTypes[1] = java.lang.Boolean.TYPE;
+         method = thisClass.getMethod(methodName, argTypes);
+     method.setAccessible(true); //allow toolbox proxy methods to be invoked
+         Object[] args = new Object[2];
+         args[0] = Integer.valueOf(parm1);
+         args[1] = Boolean.valueOf(parm2);
+         try {
+             method.invoke(o, args);
+         } catch (java.lang.reflect.InvocationTargetException ite) {
+             handleIte(ite);
+         }
+
+     }
+
+    /**
      * call a method which returns nothing, but is passed an integer and object
      * The method to be called is dynamically resolved
      *
