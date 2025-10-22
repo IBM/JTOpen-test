@@ -65,6 +65,8 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
 
+import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.IFSFileReader;
 
 import test.JD.DataSource.JDDatabaseOverride;
 import test.JTA.JTACleanupTx;
