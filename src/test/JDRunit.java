@@ -31,6 +31,7 @@
 package test;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -64,6 +65,8 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
 
+import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.IFSFileReader;
 
 import test.JD.DataSource.JDDatabaseOverride;
 import test.JTA.JTACleanupTx;
@@ -156,7 +159,7 @@ public class JDRunit {
   /* Removed jdk. as this cause problems by passing on unsupported JDK options from */
   /* the source JVM to the target JVM */ 
 
-  static String[] convertToXProperties = { "runjdwp:", "debug", "rs",
+  static String[] convertToXProperties = { "runjdwp:", /* "debug", */  "rs",
       "healthcenter", };
 
   static String[] hangMessages = {
@@ -1473,15 +1476,17 @@ public class JDRunit {
   public static InputStream loadResource(String iniFile, StringBuffer iniInfo) throws FileNotFoundException {
     InputStream inputStream ;
     File file = new File(iniFile); 
+    String userDir=System.getProperty("user.dir"); 
+    
     if (file.exists()) { 
         inputStream=    new FileInputStream(iniFile);
-        if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
+        if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system user.dir="+userDir+"\n"); 
     } else {
       String fullPathIniFile = JTOpenTestEnvironment.testcaseHomeDirectory+File.separator+iniFile; 
       file = new File(fullPathIniFile); 
       if (file.exists()) { 
         inputStream=    new FileInputStream(fullPathIniFile);
-        if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system\n"); 
+        if (iniInfo != null) iniInfo.append("echo loaded "+iniFile+" from file system user.dir="+userDir+"\n"); 
       } else {       
         inputStream = JDRunit.class.getClassLoader().getResourceAsStream(iniFile);
         if (inputStream != null) { 
@@ -2170,7 +2175,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     
     int failedCount = 0; 
     int successfulCount = 0; 
-    
+    boolean runNativeTestFromWindows  = false; 
     boolean forceReport = false;
     long thisRunNumber = nextRunNumber();
     if (pid == 0) initialize(); 
@@ -2196,6 +2201,17 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       System.out.println("JDRunit: Building the script");
     }
 
+    /* See if we are trying to run a native test from a PC */ 
+    /* In this case, ssh is used to connect to the system and run the test */
+    /* This assumes the test are updated in /home/jdbctest */ 
+    
+    String vmInitials = initials.substring(2,4);
+    if (vmInitials.endsWith("3") || vmInitials.endsWith("6")) {
+       runNativeTestFromWindows = true; 
+       testcaseCode="/home/jdbctest"; 
+    }
+
+
     PrintWriter writer = new PrintWriter(new FileWriter(runitInputFile));
 
     inputVector.addElement("echo Running " + initials + " " + test);
@@ -2217,7 +2233,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     String classpath = iniProperties.getProperty("classpath");
     if (classpath != null) {
-        if (JTOpenTestEnvironment.isWindows) { 
+        if (JTOpenTestEnvironment.isWindows && !runNativeTestFromWindows) { 
                 inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
                 inputVector.addElement("CLASSPATH='" + classpath+"'");
         } else {
@@ -2225,7 +2241,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
                 inputVector.addElement("CLASSPATH=" + classpath);
         }
     } else {
-        if (JTOpenTestEnvironment.isWindows) { 
+        if (JTOpenTestEnvironment.isWindows && !runNativeTestFromWindows) { 
                 /* Just inherit the classpath.  */ 
                 classpath = System.getProperty("java.class.path"); 
                 inputVector.addElement("echo setting classpath using \"CLASSPATH='" + classpath+"'\"");
@@ -2279,8 +2295,11 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       setClasspath += ":" + jtopenliteJar;
     }
 
-    if (JTOpenTestEnvironment.isWindows) {
+    
+    if (JTOpenTestEnvironment.isWindows && !runNativeTestFromWindows) {
 
+      
+      if (!runNativeTestFromWindows) { 
       /* On windows, we copy the toolbox jar so that the original can be updated */
       /*
        * On windows, the JVM puts a lock on the jar file which prevents it from
@@ -2288,7 +2307,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
        */
       /* To get around this,we make a copy in C:\\runningJars */
       /*
-       * We will attempt to delete this extra copies each time this program is
+       * We will attempt to delete the extra copies each time this program is
        * run
        */
 
@@ -2371,7 +2390,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
            */
 
           jtopenliteJar + "\"";
-
+      }
       /* NOT WINDOWS */
     } else if (iniProperties.getProperty("CLIENTOS", "AS400").equals("LINUX")) {
 
@@ -2589,40 +2608,6 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     /* AS/400, then the file will be there when the Windows/linux */
     /* clients run these tests. */
 
-    /* In V7R1 on 3/7/2013 on lp01ut18 -- the testcases no longer run unless */
-    /* -Dos400.stdio.convert=Y. Rather than fix all the runit.ini file */
-    /* the fix will be done here */
-
-    /* In V7R1 on 8/5/2013 on lp01ut18 -- testcases now fail with */
-    /* -Dos400.stdio.convert=Y */
-    if (release.equals("v7r1m0")) {
-      int convertIndex = javaArgs.indexOf("-Dos400.stdio.convert=");
-      if (convertIndex >= 0) {
-        int spaceIndex = javaArgs.indexOf(" ", convertIndex);
-        if (spaceIndex < 0) {
-
-          javaArgs = javaArgs.substring(0, convertIndex);
-
-        } else {
-          if (convertIndex > 0) {
-            javaArgs = javaArgs.substring(0, convertIndex)
-                + javaArgs.substring(spaceIndex);
-          } else {
-            javaArgs = javaArgs.substring(spaceIndex);
-          }
-        }
-      }
-      /* Note: 3/21/2013 -- x1423p1 is failing.. Change back if */
-      /* that system. */
-      if (SYSTEM.toUpperCase().indexOf("X1423P1") >= 0) {
-        javaArgs += "-DsystemIsX1423p1 -Dos400.stdio.convert=N";
-      } else {
-        /* 8/5/2013 change back to N */
-        javaArgs += "-Dos400.stdio.convert=N";
-      }
-
-    }
-
     /* Move this earlier so that it can be added to the job log */
 
     String AS400lc = AS400.toLowerCase();
@@ -2657,7 +2642,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     String savefileName = "ct" + sep + "out" + sep + initials + sep + "runit."
         + dateStringNoSpace;
-    if (JTOpenTestEnvironment.isWindows) {
+    if (JTOpenTestEnvironment.isWindows && !runNativeTestFromWindows) {
       savefileName = savefileName.replace(':', '.');
     }
 
@@ -2721,6 +2706,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     writer.flush();
     writer.close();
+    JDJSTPRunFlag runFlag = new JDJSTPRunFlag();
 
     if (debug) {
       System.out.println("JDRunit: INPUT SCRIPT IS ");
@@ -2729,79 +2715,112 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       System.out.println("-------------------------------------------------");
     }
 
-    /* Run the script in a shell process */
-    String[] cmdArray1;
-    String shellArgs = iniProperties.getProperty("shellArgs");
-    if (shellArgs == null) {
-      cmdArray1 = new String[1];
-      cmdArray1[0] = shellBinary;
-      System.out.println("Shell binary1 is " + shellBinary);
-      /* Fix the command line if running on windows in */
-      if (debug)
-        System.out.println("JDRunit: osVersion=" + JTOpenTestEnvironment.osVersion);
-      if (JTOpenTestEnvironment.isWindows && cmdArray1[0].indexOf("/bin") >= 0) {
-        cmdArray1[0] = JTOpenTestEnvironment.cygwinBase + cmdArray1[0].replace('/', '\\');
-      }
-
-      if (debug)
-        System.out.println("JDRunit: Shell command is: " + cmdArray1[0]);
-
-    } else {
-
-      cmdArray1 = new String[2];
-      cmdArray1[0] = shellBinary;
-      System.out.println("Shell binary2 is " + shellBinary);
-      cmdArray1[1] = shellArgs;
-      if (debug)
-        System.out.println("JDRunit: Shell command (with args) is: " + cmdArray1[0] + " " + cmdArray1[1]);
-    }
-    if (on400 && !on400open) {
-      JDJobName.sendProgramMessage(
-          "GD " + Thread.currentThread().getName() + " " + date.toString() + " Running " + initials + " " + testArgs);
-    }
-
-    Process shellTestProcess;
+    
+    OutputStream stdin = null; 
+    JDJSTPOutputThread stdoutThread = null ; 
+    /* Assynchronously start the process output threads */
+    Vector<String> hangMessagesFound = new Vector<String>();
+    int encoding; 
+    Process shellTestProcess = null; 
     String shellTestProcessInfo = "";
-    // If current JVM is PASE, but target JVM is classic. Don't inherit
-    // any environment variables.
-    // This scenario should only typically happened on V6R1
-    if ((System.getProperty("java.home").indexOf("QOpenSys") > 0) && (javaHome.indexOf("QOpenSys") == -1)) {
-      String[] envp = { "PATH=/usr/bin:", "HOME=" + testcaseCode, };
-      if (debug)
-        System.out.println("Calling exec1 with envp and cmdArray[0]=" + cmdArray1[0]);
-      shellTestProcess = runtime.exec(cmdArray1, envp);
-      shellTestProcessInfo = "Running with envp cmdArray1[" + cmdArray1.length + "] ";
-      for (int i = 0; i < cmdArray1.length; i++) {
-        shellTestProcessInfo += cmdArray1[i] + " ";
-      }
-    } else {
-      if (debug)
-        System.out.println("Calling exec2 with cmdArray[0]=" + cmdArray1[0]);
-      shellTestProcess = runtime.exec(cmdArray1);
-      shellTestProcessInfo = "Running  cmdArray1[" + cmdArray1.length + "]";
-      for (int i = 0; i < cmdArray1.length; i++) {
-        shellTestProcessInfo += " " + cmdArray1[i];
-      }
-
+    String[] cmdArray1 = null;
+    String shellArgs = iniProperties.getProperty("shellArgs");
+    String shellArgs2 = null; 
+    String shellArgs3 = null; 
+    if (runNativeTestFromWindows) { 
+      shellBinary = "ssh";
+      shellArgs = "-e";
+      shellArgs2 = "none";
+      shellArgs3 = USERID + "@"+AS400; 
     }
+    if (true) {
+      /* Run the script in a shell process */
+      if (shellArgs == null) {
+        cmdArray1 = new String[1];
+        cmdArray1[0] = shellBinary;
+        System.out.println("Shell binary1 is " + shellBinary);
+        /* Fix the command line if running on windows in */
+        if (debug)
+          System.out.println("JDRunit: osVersion=" + JTOpenTestEnvironment.osVersion);
+        if (JTOpenTestEnvironment.isWindows && !runNativeTestFromWindows && cmdArray1[0].indexOf("/bin") >= 0) {
+          cmdArray1[0] = JTOpenTestEnvironment.cygwinBase + cmdArray1[0].replace('/', '\\');
+        }
 
+        if (debug)
+          System.out.println("JDRunit: Shell command is: " + cmdArray1[0]);
+
+      } else {
+        if (shellArgs3 != null) {
+          cmdArray1 = new String[4];
+        } else  if (shellArgs2 != null) {
+          cmdArray1 = new String[3];
+        } else { 
+          cmdArray1 = new String[2];
+        }
+        cmdArray1[0] = shellBinary;
+        System.out.println("Shell binary2 is " + shellBinary);
+        cmdArray1[1] = shellArgs;
+        if (shellArgs2 != null) {
+          cmdArray1[2] = shellArgs2; 
+        }
+        if (shellArgs3 != null) {
+          cmdArray1[3] = shellArgs3; 
+        }
+        if (debug)
+          System.out.println("JDRunit: Shell command (with args) is: " + cmdArray1[0] + " " + cmdArray1[1]);
+      }
+      if (on400 && !on400open) {
+        JDJobName.sendProgramMessage(
+            "GD " + Thread.currentThread().getName() + " " + date.toString() + " Running " + initials + " " + testArgs);
+      }
+
+      // If current JVM is PASE, but target JVM is classic. Don't inherit
+      // any environment variables.
+      // This scenario should only typically happened on V6R1
+      if ((System.getProperty("java.home").indexOf("QOpenSys") > 0) && (javaHome.indexOf("QOpenSys") == -1)) {
+        String[] envp = { "PATH=/usr/bin:", "HOME=" + testcaseCode, };
+        if (debug)
+          System.out.println("Calling exec1 with envp and cmdArray[0]=" + cmdArray1[0]);
+        shellTestProcess = runtime.exec(cmdArray1, envp);
+        shellTestProcessInfo = "Running with envp cmdArray1[" + cmdArray1.length + "] ";
+        for (int i = 0; i < cmdArray1.length; i++) {
+          shellTestProcessInfo += cmdArray1[i] + " ";
+        }
+      } else {
+        if (debug)
+          System.out.println("Calling exec2 with cmdArray[0]=" + cmdArray1[0]);
+        shellTestProcess = runtime.exec(cmdArray1);
+        shellTestProcessInfo = "Running  cmdArray1[" + cmdArray1.length + "]";
+        for (int i = 0; i < cmdArray1.length; i++) {
+          shellTestProcessInfo += " " + cmdArray1[i];
+        }
+
+      }
+
+      encoding = JDJSTPOutputThread.ENCODING_UNKNOWN;
+      
+      stdin = shellTestProcess.getOutputStream();
+      stdoutThread = JDJSTPTestcase.startProcessOutput(shellTestProcess, runitOutputFile, true, hangMessages,
+          hangMessagesException, hangMessagesFound, encoding, runFlag);
+    }
+    
     /* Setup the input */
-    OutputStream stdin = shellTestProcess.getOutputStream();
+    
     JDJSTPInputThread inputThread;
-    int encoding = JDJSTPOutputThread.ENCODING_UNKNOWN;
     if (debug)
       System.out.println("InputStream is ASCII");
-    inputThread = new JDJSTPInputThread(stdin, runitInputFile);
+    long sleepTime = 0; 
+    if (runNativeTestFromWindows) {
+      sleepTime=500; 
+    }
+    inputThread = new JDJSTPInputThread(stdin, runitInputFile,shellTestProcess,runFlag, sleepTime );
     encoding = JDJSTPOutputThread.ENCODING_ASCII;
 
     if (debug)
       JDJSTPTestcase.debug = true;
 
-    /* Assynchronously start the process output threads */
-    Vector<String> hangMessagesFound = new Vector<String>();
 
-    JDJSTPOutputThread stdoutThread = JDJSTPTestcase.startProcessOutput(shellTestProcess, runitOutputFile, true,
-        hangMessages, hangMessagesException, hangMessagesFound, encoding);
+    
 
     /* start the input after output is ready */
     inputThread.start();
@@ -2823,8 +2842,20 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       // System.out.println("JDEBUG: process checked " + currentTime + "<"+
       // endTime);
       try {
-        int rc = shellTestProcess.exitValue();
+        int rc;
+        if (shellTestProcess != null) { 
+          rc = shellTestProcess.exitValue();
+        } else {
+          rc = -1; 
+        }
         processCompleted = true;
+        /* Sleep to allow output to finish */ 
+        
+        try {
+          Thread.sleep(1000);
+        } catch (Exception sleepEx) {
+          /* ignore */
+        }
         System.out.println("Process completed with rc=" + rc);
         if (rc != 0) {
           System.out.println("Running info: " + shellTestProcessInfo);
@@ -2911,9 +2942,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             Process shellProcess = runtime.exec(commands);
             StringBuffer outputBuffer = new StringBuffer();
             JDJSTPOutputThread cmdStdoutThread = new JDJSTPOutputThread(shellProcess.getInputStream(), outputBuffer,
-                null, JDJSTPOutputThread.ENCODING_ASCII);
+                null, JDJSTPOutputThread.ENCODING_ASCII,null);
             JDJSTPOutputThread stderrThread = new JDJSTPOutputThread(shellProcess.getErrorStream(), outputBuffer, null,
-                JDJSTPOutputThread.ENCODING_ASCII);
+                JDJSTPOutputThread.ENCODING_ASCII,null);
             cmdStdoutThread.start();
             stderrThread.start();
             cmdStdoutThread.join();
@@ -3099,7 +3130,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             Vector<String> shellHangMessagesFound = new Vector<String>();
             JDJSTPOutputThread stdoutThread2 = JDJSTPTestcase
                 .startProcessOutput(shellProcess, shellOutputFile, true,
-                    hangMessages, hangMessagesException, shellHangMessagesFound, encoding);
+                    hangMessages, hangMessagesException, shellHangMessagesFound, encoding,null);
             Thread.sleep(500);
 
             String lines = stdoutThread2.getOutput();
@@ -3512,6 +3543,45 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     while (enumeration.hasMoreElements()) {
       String rxpFile = enumeration.nextElement();
       System.out.println("Processing file " + rxpFile);
+      if (runNativeTestFromWindows) {
+        int startIndex = rxpFile.indexOf("Files '/tmp/");
+        if (startIndex >= 0) {
+          startIndex += 12;
+          int endIndex = rxpFile.indexOf("'", startIndex);
+          if (endIndex > 0) {
+            // Save the output file locally so that we can run a diff between the file and
+            // expect files
+            String systemFile = rxpFile.substring(startIndex,endIndex); 
+            File tmpDir = new File("tmp");
+            if (!tmpDir.exists()) {
+              tmpDir.mkdir();
+            }
+            char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
+            char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
+            com.ibm.as400.access.AS400 myAS400 = new com.ibm.as400.access.AS400(AS400, USERID, clearPassword);
+            PasswordVault.clearPassword(clearPassword);
+            myAS400.setGuiAvailable(false); 
+            IFSFile ifsFile = new IFSFile(myAS400,"/tmp/"+systemFile); 
+            if (ifsFile.exists()) { 
+              IFSFileReader ifsFileReader = new IFSFileReader(ifsFile);
+              BufferedReader  bufferedReader = new BufferedReader(ifsFileReader); 
+              FileWriter fileWriter = new FileWriter("tmp/"+systemFile); 
+              BufferedWriter bufferedWriter = new BufferedWriter(fileWriter); 
+              String readLine = bufferedReader.readLine();
+              while (readLine != null) { 
+                bufferedWriter.write(readLine); 
+                bufferedWriter.write("\n"); 
+                readLine = bufferedReader.readLine();
+              }
+              bufferedReader.close(); 
+              bufferedWriter.close(); 
+            } else {
+              System.out.println("Warning IFSfile "+ifsFile+" does not exist"); 
+            }
+          }
+        }
+
+      }
     }
 
     System.out.println("JDRunit: Cleaning up output files");

@@ -114,12 +114,12 @@ public class JVMRunUtility extends Thread {
       InputStream errorStream = process_.getErrorStream(); 
 
       outputStringBuffer = new StringBuffer(); 
-      outputThread = new JDJSTPOutputThread(inputStream, outputStringBuffer,null,JDJSTPOutputThread.ENCODING_UNKNOWN);
+      outputThread = new JDJSTPOutputThread(inputStream, outputStringBuffer,null,JDJSTPOutputThread.ENCODING_UNKNOWN,null);
       outputThread.setName("JDJSTPOutputThread"); 
       outputThread.start(); 
       
       errorStringBuffer = new StringBuffer(); 
-      errorThread = new JDJSTPOutputThread(errorStream, outputStringBuffer,null,JDJSTPOutputThread.ENCODING_UNKNOWN);
+      errorThread = new JDJSTPOutputThread(errorStream, outputStringBuffer,null,JDJSTPOutputThread.ENCODING_UNKNOWN,null);
       outputThread.setName("JDJSTPErrorOutputThread"); 
       errorThread.start(); 
       

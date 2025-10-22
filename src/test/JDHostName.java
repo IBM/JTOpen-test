@@ -51,7 +51,7 @@ public class JDHostName {
   }
   
   /** Return the current host name in lower case with the domain removed.
-   *  The name is normalize using the ini/hostname.ini properties file
+   *  The name is normalized using the ini/hostname.ini properties file
    */ 
   public static String getHostName() {
     String hostname = null;

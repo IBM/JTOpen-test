@@ -2317,8 +2317,9 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	     InputStream iStream = p.getInputStream();
              StringBuffer outputBuffer = new StringBuffer(); 
 	     if (debug) System.out.println("JDJSTP.debug: ");
-             JDJSTPOutputThread stdoutThread = new JDJSTPOutputThread(iStream, outputBuffer, writer, encoding);
-             JDJSTPOutputThread stderrThread = new JDJSTPOutputThread(p.getErrorStream(), outputBuffer, writer, encoding);
+             JDJSTPRunFlag runFlag = new JDJSTPRunFlag(); 
+            JDJSTPOutputThread stdoutThread = new JDJSTPOutputThread(iStream, outputBuffer, writer, encoding, runFlag);
+             JDJSTPOutputThread stderrThread = new JDJSTPOutputThread(p.getErrorStream(), outputBuffer, writer, encoding, runFlag);
 	     if (toStdout) {
 		 stdoutThread.setWriteToStdout();
 		 stderrThread.setWriteToStdout();
@@ -2349,7 +2350,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
       * Like showProcessOutput, but does not wait for output threads
       */
      public static JDJSTPOutputThread startProcessOutput(Process p, String outfile, boolean toStdout, int encoding ) throws Exception {
-	 return startProcessOutput(p, outfile, toStdout, null, null, null, encoding ); 
+	 return startProcessOutput(p, outfile, toStdout, null, null, null, encoding, new JDJSTPRunFlag() ); 
      }
      public static JDJSTPOutputThread startProcessOutput(Process p,
 							 String outfile,
@@ -2357,7 +2358,8 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 							 String[] hangMessages,
 							 String[] hangMessagesException,
 							 Vector<String> hangMessagesFound, 
-							 int encoding) throws Exception {
+							 int encoding,
+							 JDJSTPRunFlag runFlag) throws Exception {
 	 if (debug) {
 	     System.out.println("JDJSTPTestcase.startProcessOutput");
 
@@ -2391,8 +2393,8 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	     InputStream iStream = p.getInputStream();
              StringBuffer outputBuffer = new StringBuffer(); 
 	     if (debug) System.out.println("JDJSTP.debug: ");
-             stdoutThread = new JDJSTPOutputThread(iStream, outputBuffer, writer, hangMessages, hangMessagesException, hangMessagesFound, encoding);
-             JDJSTPOutputThread stderrThread = new JDJSTPOutputThread(p.getErrorStream(), outputBuffer, writer, hangMessages, hangMessagesException, hangMessagesFound, encoding);
+             stdoutThread = new JDJSTPOutputThread(iStream, outputBuffer, writer, hangMessages, hangMessagesException, hangMessagesFound, encoding, runFlag);
+             JDJSTPOutputThread stderrThread = new JDJSTPOutputThread(p.getErrorStream(), outputBuffer, writer, hangMessages, hangMessagesException, hangMessagesFound, encoding, runFlag);
              stdoutThread.setSecondaryOutputThread(stderrThread); 
 	     if (toStdout) {
 		 stdoutThread.setWriteToStdout();
