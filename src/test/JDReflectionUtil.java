@@ -3687,6 +3687,30 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      
      }
 
+     
+     
+     public static Object createObject(String classname, Object arg1) throws Exception  {
+       Class<?> objectClass11 = Class.forName(classname);
+       Class<?>[] twoArgTypes = new Class<?>[1];
+       twoArgTypes[0] = arg1.getClass();
+       Object[] oneArg    = new Object[1];
+       oneArg[0] = arg1; 
+       
+       Object newObject =null;
+       try {
+           Constructor<?> constructor = objectClass11.getDeclaredConstructor(twoArgTypes);
+
+           constructor.setAccessible(true);  
+           newObject = constructor.newInstance(oneArg);
+       } catch (java.lang.reflect.InvocationTargetException ite) {
+           handleIte(ite);
+
+       }
+       return newObject;
+               
+       }
+
+     
  	public static Object createObject(String classname, int arg1, Object arg2) throws Exception  {
         Class<?> objectClass11 = Class.forName(classname);
         Class<?>[] twoArgTypes = new Class<?>[2];

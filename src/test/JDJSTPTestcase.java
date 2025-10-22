@@ -5199,7 +5199,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     }
 
     
-    int vrms[] = { 760, 750, 740, 730, 720, 710, 0 };
+    int vrms[] = { 770, 760, 750, 740, 730, 720, 710, 0 };
     int jdks[] = { 180,170,160,150,142,140,0}; 
     int currentJdk = JVMInfo.getJDK(); 
     
