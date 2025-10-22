@@ -213,7 +213,7 @@ public class JTAUseIASP {
       String output = null;
 
       JDJSTPOutputThread stdoutThread = JDJSTPTestcase.startProcessOutput(p,
-          output, true, null, null, null, JDJSTPOutputThread.ENCODING_UNKNOWN);
+          output, true, null, null, null, JDJSTPOutputThread.ENCODING_UNKNOWN,null);
 
       p.waitFor();
       stdoutThread.join();
