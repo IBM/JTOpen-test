@@ -175,10 +175,10 @@ public class PasswordLeakTool {
       StringBuffer outputBuffer = new StringBuffer();
       JDJSTPOutputThread cmdStdoutThread = new JDJSTPOutputThread(
           p.getInputStream(), outputBuffer, null,
-          JDJSTPOutputThread.ENCODING_ASCII);
+          JDJSTPOutputThread.ENCODING_ASCII, null);
       JDJSTPOutputThread stderrThread = new JDJSTPOutputThread(
           p.getErrorStream(), outputBuffer, null,
-          JDJSTPOutputThread.ENCODING_ASCII);
+          JDJSTPOutputThread.ENCODING_ASCII, null );
       cmdStdoutThread.start();
       stderrThread.start();
       printWriter.println("readyForCommand");
