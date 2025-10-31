@@ -24,6 +24,7 @@ import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.ConnectionDropper;
 import test.DQTest;
+import test.JDJobName;
 import test.JDTestDriver;
 import test.Testcase;
 
@@ -55,6 +56,7 @@ public class DQReadTestcase extends Testcase
     if (isNative_ && systemObject_.canUseNativeOptimizations())
     {
       usingNativeOptimizations_ = true;
+     
     }
     super.setup();
     if (getRelease() > JDTestDriver.RELEASE_V7R5M0) {
@@ -843,4 +845,57 @@ public class DQReadTestcase extends Testcase
 	    failed(e, "Unexpected exception.");
 	}
     }
+    
+    
+    /**
+    <p>Test:  Start concurrent data queue operations by several threads using the same native AS400 object.
+    This should work without an error. 
+    **/
+    public void Var019()
+  {
+      try
+      {
+          boolean failed = false;  // Keeps track of failure in multi-part tests.
+          String msg = "";      // Keeps track of reason for failure in multi-part tests.
+          DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/QTEMP.LIB/RWTEST.DTAQ");
+          dq.create(80);
+          DataQueue dqWrite = new DataQueue(systemObject_, "/QSYS.LIB/QTEMP.LIB/RWTEST.DTAQ");
+
+          try
+          {
+             DQRunnable writeRunnable = new DQRunnable(dqWrite, "WRITE", 15);
+             DQRunnable readRunnable = new DQRunnable(dq, "READ", 15);
+             
+             Thread readThread = new Thread(readRunnable);
+             Thread writeThread = new Thread(writeRunnable);
+             readThread.start(); 
+             writeThread.start();
+             
+             writeThread.join(); 
+             readThread.join(); 
+             Exception writeException = writeRunnable.getException(); 
+             Exception readException = readRunnable.getException(); 
+             if (writeException != null) { 
+               msg += "writeRunnable failed with exception "+writeException+"\n"; 
+               failed = true; 
+             }
+             if (readException != null) { 
+               msg += "readRunnable failed with exception "+readException+"\n"; 
+               failed = true; 
+             }
+             System.out.println("Write completed. opCount="+writeRunnable.getOpCount());
+             System.out.println("Read completed. opCount="+readRunnable.getOpCount());
+          }
+          finally
+          {
+              dq.delete();
+          }
+          assertCondition(!failed, msg);
+      }
+      catch (Exception e)
+      {
+          failed(e, "Unexpected exception.");
+      }
+  }
+
 }

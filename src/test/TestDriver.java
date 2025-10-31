@@ -1399,6 +1399,13 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     }
     out_.println("CLIENT NAME      = " + clientMachineName);
     out_.println("CLIENT OS/VERSION= " + JTOpenTestEnvironment.osVersion); 
+    if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
+      out_.println("CLIENT JOB NAME  = " + JDJobName.getJobName()); 
+      if (totalFail_ > 0) {
+        JDJobName.setJobLogOption();
+        JDJobName.printJobLog(); 
+      }
+    }
     out_.println("CLIENT USER NAME = " + System.getProperty("user.name"));
     String sysName = systemName_;
     if (sysName != null && sysName.equalsIgnoreCase("localhost")) {

@@ -2727,6 +2727,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     String shellArgs2 = null; 
     String shellArgs3 = null; 
     if (runNativeTestFromWindows) { 
+      System.out.println("Running native test from Windows"); 
       shellBinary = "ssh";
       shellArgs = "-e";
       shellArgs2 = "none";

@@ -19,7 +19,7 @@ public class JDJobName {
     /* #11 - added getLoggingText */ 
     /* #12 - add grant *USE  to public */ 
     /* #13 - access via PASE */ 
-    static String  srvpgm= "JDJOBNM013";
+    static String  srvpgm= "JDJOBNM015";
 
     static boolean loaded = false; 
     static boolean debug = false; 
@@ -155,6 +155,11 @@ public class JDJobName {
 	"    return (jint) 0; ",
 	"}",
 	"", 
+        "jint Java_test_JDJobName_printJobLogNative(JNIEnv * env)",
+        "{",
+        "    system(\" DSPJOBLOG OUTPUT(*PRINT)\");",
+        "    return (jint) 0; ",
+        "}",
         "", 
 	"jint Java_test_JDJobName_getJobCCSIDNative(JNIEnv * env)",
 	"{",
@@ -874,6 +879,7 @@ public class JDJobName {
         "                                          int,ccsid,ARG_INT32);",
         "DEFINES1(Java_test_JDJobName_getJobMemNative,ILEpointer,env,ARG_MEMPTR);",
         "DEFINES1(Java_test_JDJobName_setJobLogOptionNative,ILEpointer,env,ARG_MEMPTR);",
+        "DEFINES1(Java_test_JDJobName_printJobLogNative,ILEpointer,env,ARG_MEMPTR);",
         "DEFINES1(Java_test_JDJobName_getJobCCSIDNative,ILEpointer,env,ARG_MEMPTR);",
         "DEFINES1(test_JDJobName_getJobNameNative,ILEpointer,jobname,ARG_MEMPTR);",
         "DEFINES1(test_JDJobName_getSubsystemNameNative,ILEpointer,subsystemname,ARG_MEMPTR);",
@@ -905,6 +911,7 @@ public class JDJobName {
         "  RESOLVE(Java_test_JDJobName_setIGCnative);",
         "  RESOLVE(Java_test_JDJobName_getJobMemNative);",
         "  RESOLVE(Java_test_JDJobName_setJobLogOptionNative);", 
+        "  RESOLVE(Java_test_JDJobName_printJobLogNative);", 
         "  RESOLVE(Java_test_JDJobName_getJobCCSIDNative);", 
         "  RESOLVE(test_JDJobName_getJobNameNative);",
         "RESOLVE(test_JDJobName_getSubsystemNameNative);",
@@ -949,6 +956,13 @@ public class JDJobName {
         "  return rc;",
         "}",
         "", 
+        "jint Java_test_JDJobName_printJobNative(JNIEnv * env)",
+        "{",
+        "  do_init();", 
+        "  ILECALL1(Java_test_JDJobName_printJobLogNative,",
+        "              env.s.addr, NULL);",
+        "  return rc;",
+        "}",
         "", 
         "jint Java_test_JDJobName_getJobCCSIDNative(JNIEnv * env)",
         "{",
@@ -1593,16 +1607,26 @@ public class JDJobName {
 		}
 	}
 
-    public static native int setJobLogOptionNative();
+        public static native int setJobLogOptionNative();
 
-	public static int setJobLogOption() {
-		if (loaded) {
-			return setJobLogOptionNative();
-		} else {
-			return -1;
-		}
-	}
+        public static int setJobLogOption() {
+          if (loaded) {
+            return setJobLogOptionNative();
+          } else {
+            return -1;
+          }
+        }
 
+        public static native int printJobLogNative();
+
+        public static int printJobLog() {
+          if (loaded) {
+            return printJobLogNative();
+          } else {
+            return -1;
+          }
+        }
+	
     public static native String startPexNative(); 
 
 	public static String startPex() {
