@@ -9,26 +9,14 @@ echo UNAME is $UNAME
 #
 UVERSION=`uname -v`
 URELEASE=`uname -r`
-CLASSPATH=".:/qibm/proddata/http/public/jt400/lib/java8/jt400.jar:/qibm/proddata/http/public/jt400/lib/jt400Servlet.jar:/home/jdbctest/jars/servlet.jar:/home/jdbctest/jars/sslightx.zip:/qibm/proddata/os400/java400/jdk/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/32bit/lib/tools.jar:./db2_classes.jar:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar:/home/jdbctest/jars/jcifs.jar"
-#
-# if the cli/exp directories contain jar files, unjar them and then delete them
-#
+CLASSPATH=".:/qibm/proddata/http/public/jt400/lib/java8/jt400.jar:/qibm/proddata/http/public/jt400/lib/jt400Servlet.jar:/home/jdbctest/jars/servlet.jar:/home/jdbctest/jars/sslightx.zip:/qibm/proddata/os400/java400/jdk/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/32bit/lib/tools.jar:./db2_classes.jar:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar:/home/jdbctest/jars/jcifs.jar:/home/jdbctest/jars/jakarta.servlet-api-5.0.0.jar"
+
+
 echo ----------------------------------------
 echo -- removing com/ibm/as400
 echo ----------------------------------------
 rm -fr com/ibm/as400
 #
-echo ----------------------------------------
-echo .. expanding jar files
-echo ----------------------------------------
-find cli/exp -name 'C*.jar'  | sed 's%^\(.*\)/\([^/]*\)%pwd=`pwd`; cd \1; jar xvf \2; rm \2 ; cd $pwd %'  | sh 
-#
-find xml/xmlDecomp -name '*.jar'  | sed 's%^\(.*\)/\([^/]*\)%pwd=`pwd`; cd \1; jar xvf \2; rm \2 ; cd $pwd %'  | sh 
-#
-#
-echo ----------------------------------------
-echo done expanding jar files 
-echo ----------------------------------------
 #
 echo 'CLASSPATH set to '$CLASSPATH
 #
@@ -75,6 +63,7 @@ rm -f test/SocketProxyPair.java
 rm -f test/SocketProxyPair.class
 rm -f test/JDASSeamlessFailover*
 rm -f test/JDConnectionMisc.*
+
 # javac -g -source 1.6 -target 1.6 -cp  .:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar scripts/Mail.java
 javac -g -source 1.6 -target 1.6 -cp "$CLASSPATH" scripts/Mail.java         
 grep -v Lite $COMPILELIST > $COMPILELIST.new

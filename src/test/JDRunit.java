@@ -2206,7 +2206,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     /* This assumes the test are updated in /home/jdbctest */ 
     
     String vmInitials = initials.substring(2,4);
-    if (vmInitials.endsWith("3") || vmInitials.endsWith("6")) {
+
+    if (JTOpenTestEnvironment.isWindows && (vmInitials.endsWith("3") || vmInitials.endsWith("6"))) {
        runNativeTestFromWindows = true; 
        testcaseCode="/home/jdbctest"; 
     }
@@ -2728,6 +2729,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     String shellArgs2 = null; 
     String shellArgs3 = null; 
     if (runNativeTestFromWindows) { 
+      System.out.println("Running native test from Windows"); 
       shellBinary = "ssh";
       shellArgs = "-e";
       shellArgs2 = "none";
@@ -3558,12 +3560,21 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             }
             char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
             char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
-            com.ibm.as400.access.AS400 myAS400 = new com.ibm.as400.access.AS400(AS400, USERID, clearPassword);
+            //
+            // Note: reflection is used so that jt400.jar does not need to be in the classpath for JDRunit
+            // 
+            Object myAS400 = JDReflectionUtil.createObject("com.ibm.as400.access.AS400",AS400, USERID, clearPassword,null);
             PasswordVault.clearPassword(clearPassword);
-            myAS400.setGuiAvailable(false); 
-            IFSFile ifsFile = new IFSFile(myAS400,"/tmp/"+systemFile); 
-            if (ifsFile.exists()) { 
-              IFSFileReader ifsFileReader = new IFSFileReader(ifsFile);
+            JDReflectionUtil.callMethod_V(myAS400,"setGuiAvailable",false); 
+            Class<?>[] argTypes = new Class<?>[2]; 
+            Object[] args = new Object[2]; 
+            argTypes[0]=Class.forName("com.ibm.as400.access.AS400");
+            argTypes[1]=systemFile.getClass(); 
+            args[0] = "/tmp/"+systemFile;
+            args[1] = myAS400; 
+            Object ifsFile = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile",argTypes,args); 
+            if (JDReflectionUtil.callMethod_B(ifsFile,"exists")) { 
+              FileReader ifsFileReader = (FileReader) JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileReader",ifsFile);
               BufferedReader  bufferedReader = new BufferedReader(ifsFileReader); 
               FileWriter fileWriter = new FileWriter("tmp/"+systemFile); 
               BufferedWriter bufferedWriter = new BufferedWriter(fileWriter); 
