@@ -11,7 +11,6 @@ UVERSION=`uname -v`
 URELEASE=`uname -r`
 CLASSPATH=".:/qibm/proddata/http/public/jt400/lib/java8/jt400.jar:/qibm/proddata/http/public/jt400/lib/jt400Servlet.jar:/home/jdbctest/jars/servlet.jar:/home/jdbctest/jars/sslightx.zip:/qibm/proddata/os400/java400/jdk/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/32bit/lib/tools.jar:./db2_classes.jar:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar:/home/jdbctest/jars/jcifs.jar:/home/jdbctest/jars/jakarta.servlet-api-5.0.0.jar"
 
-
 echo ----------------------------------------
 echo -- removing com/ibm/as400
 echo ----------------------------------------
@@ -92,8 +91,8 @@ do #
   if [ $? -ne 0 ] ; then
       echo 'COMPILE ERROR' 
       error=1;
-  fi #
-done #
+  fi 
+done 
 
 
 
