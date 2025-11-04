@@ -16,6 +16,7 @@ package test;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.ObjectDescription;
@@ -2869,7 +2870,6 @@ public class ObjectListTestcase extends Testcase {
             
 
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL,ObjectList.ALL,"*LIB");
-            @SuppressWarnings("unchecked")
             Enumeration<ObjectDescription> enumeration=objList.getObjects();
             ArrayList<String> objDecList=new ArrayList<String>();
             while (enumeration.hasMoreElements()) {
@@ -3188,6 +3188,103 @@ public class ObjectListTestcase extends Testcase {
 	    System.out.println("Message : "+ e.getMessage());
 	    failed(e, "Exception should NOT have been thrown.");        
 	}
+    }
+
+    /**
+     * Method tested: getObjectsList()
+     * Successful, Returns the complete list of objects.
+     */
+    public void Var190() {
+        try {
+
+            ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL, ObjectList.ALL, "*LIB");
+            List<ObjectDescription> objdes = objList.getObjectsList();
+            if (objdes != null) {
+                succeeded();
+            } else {
+                failed("objs = null");
+            }
+        } catch (Exception e) {
+            failed(e, "Failed trying to get the subset list of objects.");
+        }
+    }
+
+    /**
+     * Method tested: getObjectsList(int listOffset, int number)
+     * Successful, Returns a subset of the list of objects.
+     */
+    public void Var191() {
+        try {
+            ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL, ObjectList.ALL, "*LIB");
+            List<ObjectDescription> objs = objList.getObjectsList(-1, -1);
+            if (objs != null) {
+                succeeded();
+            } else {
+                failed("objs = null");
+            }
+        } catch (Exception e) {
+            failed(e, "Unexpected exception.");
+        }
+
+    }
+
+    /**
+     * Method tested: getObjectsList(int listOffset, int number).
+     * Should throw an exception when an invalid listOffset is specified.
+     */
+    public void Var192() {
+        try {
+            ObjectList objList = new ObjectList(systemObject_);
+            List<ObjectDescription> objs = objList.getObjectsList(-2, 1);
+            failed("Didn't throw exception." + objs);
+        } catch (Exception e) {
+            assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
+        }
+    }
+
+    /**
+     * Method tested: getObjectsList(int listOffset, int number).
+     * Should succeed when valid listOffset==0 is specified.
+     */
+    public void Var193() {
+        if (checkNotGroupTest()) {
+            try {
+                // ObjectList objList = new ObjectList(systemObject_);
+                ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL, ObjectList.ALL, "*LIB");
+                List<ObjectDescription> objs = objList.getObjectsList(0, 1);
+                assertCondition(true, "Objects returned " + objs);
+            } catch (Exception e) {
+                failed(e, "Unexpected exception.");                   //@A1A
+            }
+        }
+    }
+
+    /**
+     * Method tested: getObjectsList(int listOffset, int number).
+     * Should throw an exception when an invalid number is specified.
+     */
+    public void Var194() {
+        try {
+            ObjectList objList = new ObjectList(systemObject_);
+            List<ObjectDescription> objs = objList.getObjectsList(0, -1);
+            failed("Didn't throw exception." + objs);
+        } catch (Exception e) {
+            assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
+        }
+    }
+
+    /**
+     * Method tested: getObjectsList(int listOffset, int number).
+     * Should throw an exception when an invalid number is specified.
+     */
+    public void Var195() {
+        try {
+            ObjectList objList = new ObjectList(systemObject_);
+            List<ObjectDescription> objs = objList.getObjectsList(0, -99);
+            failed("Didn't throw exception." + objs);
+        } catch (Exception e) {
+            assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
+        }
     }
 
 }//End of ObjectListTestCase Class
