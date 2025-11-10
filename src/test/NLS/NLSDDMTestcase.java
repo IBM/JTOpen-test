@@ -404,6 +404,8 @@ public class NLSDDMTestcase extends Testcase
   // DDMCreateAndAdd setup()
     try
     {
+      lockSystem("DDMTESTSAV",600); 
+
       // Delete NLSDDMT if it exists
       CommandCall c = new CommandCall(NLSTest.PwrSys);
       deleteLibrary(c, "NLSDDMT");
@@ -577,6 +579,7 @@ public class NLSDDMTestcase extends Testcase
   {
     try
     {
+      unlockSystem(); 
     // QDDSSRC cleanup()
       {
       // Delete the files created during setup()

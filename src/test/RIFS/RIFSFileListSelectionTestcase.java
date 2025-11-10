@@ -88,7 +88,7 @@ Constructor.
             throw new IllegalStateException("ERROR: Please specify a power system.");
     }
 
-
+    String sandboxLib_="RIFSFLST"; 
 
 /**
 Performs setup needed before running variations.
@@ -98,7 +98,14 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
-        sandbox_ = new VIFSSandbox(systemObject_, "RIFSFLST");
+      if (testLib_ != null ) { 
+        int len = testLib_.length(); 
+        if (len >= 5) { 
+          sandboxLib_ = "RIFLS"+testLib_.substring(len-5); 
+        }
+      }
+
+        sandbox_ = new VIFSSandbox(systemObject_, sandboxLib_);
         f_ = sandbox_.createDirectory("MILWAUKEE");
 
         sandbox_.createNumberedDirectoriesAndFiles(f_.getName(), 25, 25);

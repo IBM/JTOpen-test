@@ -50,7 +50,8 @@ public class CleanupQzrcsrvsJobs {
       
       JobList joblist = new JobList(as400); 
       joblist.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_ACTIVE, Boolean.TRUE);
-      joblist.addJobSelectionCriteria(JobList.SELECTION_JOB_NAME, "QZRCSRVS");
+      joblist.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
+     joblist.addJobSelectionCriteria(JobList.SELECTION_JOB_NAME, "QZRCSRVS");
       Hashtable<String, String> userSet = new Hashtable<String, String>(); 
       SimpleDateFormat simpleDateFormat = new SimpleDateFormat(); 
       Enumeration<?> enumeration = joblist.getJobs(); 

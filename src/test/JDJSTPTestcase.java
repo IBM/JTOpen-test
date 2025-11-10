@@ -461,62 +461,63 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     disconnectSTP = System.getProperty("JDJSTP.disconnectSTP");
 
     try {
-
-      String osVersion = System.getProperty("os.version");
-      if (osVersion == null)
-        osVersion = "null";
-      v7r1 = osVersion.equals("V7R1M0");
-      if (debug) {
-        System.out.println("JDJSTP.debug:  setting v7r1 = " + v7r1);
-      }
-      if (!v7r1) {
-        v7r2 = osVersion.equals("V7R2M0");
-
+      if (JTOpenTestEnvironment.isOS400) {
+        String osVersion = System.getProperty("os.version");
+        if (osVersion == null)
+          osVersion = "null";
+        v7r1 = osVersion.equals("V7R1M0");
         if (debug) {
-          System.out.println("JDJSTP.debug:  setting v7r2 = " + v7r2);
+          System.out.println("JDJSTP.debug:  setting v7r1 = " + v7r1);
         }
-        if (!v7r2) {
-
-          v7r3 = osVersion.equals("V7R3M0");
+        if (!v7r1) {
+          v7r2 = osVersion.equals("V7R2M0");
 
           if (debug) {
-            System.out.println("JDJSTP.debug:  setting v7r3 = " + v7r3);
-
+            System.out.println("JDJSTP.debug:  setting v7r2 = " + v7r2);
           }
-          if (!v7r3) {
-            v7r4 = osVersion.equals("V7R4M0") || osVersion.equals("7.4") ;
+          if (!v7r2) {
+
+            v7r3 = osVersion.equals("V7R3M0");
 
             if (debug) {
-              System.out.println("JDJSTP.debug:  setting v7r4 = " + v7r4);
+              System.out.println("JDJSTP.debug:  setting v7r3 = " + v7r3);
 
             }
-	    if (!v7r5) {
-		v7r5 = osVersion.equals("V7R5M0")  || osVersion.equals("7.5");
+            if (!v7r3) {
+              v7r4 = osVersion.equals("V7R4M0") || osVersion.equals("7.4");
 
-		if (debug) {
-		    System.out.println("JDJSTP.debug:  setting v7r5 = " + v7r5);
-		}
+              if (debug) {
+                System.out.println("JDJSTP.debug:  setting v7r4 = " + v7r4);
 
-		if (!v7r6) {
-		    v7r6 = osVersion.equals("V7R6M0")  || osVersion.equals("7.6");
+              }
+              if (!v7r5) {
+                v7r5 = osVersion.equals("V7R5M0") || osVersion.equals("7.5");
 
-		    if (debug) {
-			System.out.println("JDJSTP.debug:  setting v7r6 = " + v7r6);
-		    }
-		    if (!v7r6) { 
-		      v7r6plus = (osVersion.indexOf("V7R") >= 0) || (osVersion.indexOf("7.") >= 0);
-		      if (debug) {
-		        System.out.println("JDJSTP.debug:  setting v7r6plus = " + v7r6plus);
-		      }
-		      if (!v7r6plus) { 
-		        throw new Exception("Unable to select release"); 
-		      }       
-		    } /* !v7r6 */ 
-		} /* !V7r6 */ 
-	    } /* not v7r5 */
-	  } /* not v7r3 */ 
-	} /* not v7r2 */ 
-      } /* not v7r1 */
+                if (debug) {
+                  System.out.println("JDJSTP.debug:  setting v7r5 = " + v7r5);
+                }
+
+                if (!v7r6) {
+                  v7r6 = osVersion.equals("V7R6M0") || osVersion.equals("7.6");
+
+                  if (debug) {
+                    System.out.println("JDJSTP.debug:  setting v7r6 = " + v7r6);
+                  }
+                  if (!v7r6) {
+                    v7r6plus = (osVersion.indexOf("V7R") >= 0) || (osVersion.indexOf("7.") >= 0);
+                    if (debug) {
+                      System.out.println("JDJSTP.debug:  setting v7r6plus = " + v7r6plus);
+                    }
+                    if (!v7r6plus) {
+                      throw new Exception("Unable to select release");
+                    }
+                  } /* !v7r6 */
+                } /* !V7r6 */
+              } /* not v7r5 */
+            } /* not v7r3 */
+          } /* not v7r2 */
+        } /* not v7r1 */
+      }
     } catch (Exception dontCare) {
       dontCare.printStackTrace(System.out);
     }

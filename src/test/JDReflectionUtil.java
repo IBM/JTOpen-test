@@ -697,6 +697,33 @@ public class JDReflectionUtil {
 
      }
 
+      public static Object callMethod_O(Object o, String methodName, int i, int j )  throws Exception {
+        java.lang.reflect.Method method;
+
+        Class<?> thisClass = o.getClass();
+        // System.out.println("Class of object is "+thisClass);
+        Class<?>[] argTypes = new Class<?>[2];
+        argTypes[0] = Integer.TYPE ;
+        argTypes[1] = Integer.TYPE ;
+        method = thisClass.getMethod(methodName, argTypes);
+        method.setAccessible(true); //allow toolbox proxy methods to be invoked
+        Object[] args = new Object[2];
+        args[0] = Integer.valueOf(i);
+        args[1] = Integer.valueOf(j);
+        try {
+            // System.out.println("Calling method");
+            Object outObject = method.invoke(o, args);
+            // System.out.println("outObject is "+outObject);
+            return outObject;
+        } catch (java.lang.reflect.InvocationTargetException ite) {
+            handleIte(ite);
+            return "";
+        }
+
+     }
+
+      
+      
       public static Object callMethod_O(Object o, String methodName, long i, long j )  throws Exception {
           java.lang.reflect.Method method;
 

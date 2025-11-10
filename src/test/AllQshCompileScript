@@ -11,6 +11,7 @@ UVERSION=`uname -v`
 URELEASE=`uname -r`
 CLASSPATH=".:/qibm/proddata/http/public/jt400/lib/java8/jt400.jar:/qibm/proddata/http/public/jt400/lib/jt400Servlet.jar:/home/jdbctest/jars/servlet.jar:/home/jdbctest/jars/sslightx.zip:/qibm/proddata/os400/java400/jdk/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/32bit/lib/tools.jar:./db2_classes.jar:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar:/home/jdbctest/jars/jcifs.jar:/home/jdbctest/jars/jakarta.servlet-api-5.0.0.jar"
 
+
 echo ----------------------------------------
 echo -- removing com/ibm/as400
 echo ----------------------------------------
@@ -26,7 +27,7 @@ COMPILELIST=/tmp2/compilelist.$$
 #
 rm -f rm "$COMPILELIST"*
 # compile at least something so that the split command works
-touch -C 819 $COMPILELIST
+touch  $COMPILELIST
 #
 echo test"$FILESEP"JDReport.java >> $COMPILELIST
 #
@@ -36,10 +37,12 @@ echo COMPILELIST is $COMPILELIST
      echo Compiling test/PrepareCompile.java
      javac -g test/PrepareCompile.java
   fi
+  
   if [ test/PrepareCompile.java -nt test/PrepareCompile.class ] ; then
      echo Compiling test/PrepareCompile.java
      javac -g test/PrepareCompile.java
   fi
+  
   echo 'Preparing for compile'
   java test.PrepareCompile $COMPILELIST 
   echo 'Done preparing for compile' 
@@ -63,8 +66,8 @@ rm -f test/SocketProxyPair.class
 rm -f test/JDASSeamlessFailover*
 rm -f test/JDConnectionMisc.*
 
-# javac -g -source 1.6 -target 1.6 -cp  .:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar scripts/Mail.java
-javac -g -source 1.6 -target 1.6 -cp "$CLASSPATH" scripts/Mail.java         
+# javac -g -source 1.8 -target 1.8 -cp  .:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar scripts/Mail.java
+javac -g -source 1.8 -target 1.8 -cp "$CLASSPATH" scripts/Mail.java         
 grep -v Lite $COMPILELIST > $COMPILELIST.new
 echo '============= Compile list ========================'
 cat $COMPILELIST.new
@@ -86,13 +89,13 @@ do #
   JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit
   export JAVA_HOME
   echo JAVA_HOME is $JAVA_HOME
-  echo "javac -classpath $CLASSPATH -g -source 1.6  -target 1.6 $files"
-  javac -classpath "$CLASSPATH" -g -source 1.6 -target 1.6 $files
+  echo "javac -classpath $CLASSPATH -g -source 1.8  -target 1.8 $files"
+  javac -classpath "$CLASSPATH" -g -source 1.8 -target 1.8 $files
   if [ $? -ne 0 ] ; then
       echo 'COMPILE ERROR' 
       error=1;
   fi 
-done 
+done
 
 
 

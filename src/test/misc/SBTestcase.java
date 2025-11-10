@@ -44,7 +44,6 @@ public class SBTestcase extends Testcase
 
     private static String subsystemName1_ = "TESTSBS1";
     private static String subsystemName2_ = "TESTSBS2";
-    private static String subsystemLib_ = "SBSLIB";
 
     private static CommandCall pwrCmd_;
    
@@ -91,13 +90,13 @@ public class SBTestcase extends Testcase
       try
       {
         pwrCmd_ = new CommandCall(pwrSys_);
-        Subsystem sbs1 = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
-        Subsystem sbs2 = new Subsystem(pwrSys_, subsystemLib_, subsystemName2_);
+        Subsystem sbs1 = new Subsystem(pwrSys_, testLib_, subsystemName1_);
+        Subsystem sbs2 = new Subsystem(pwrSys_, testLib_, subsystemName2_);
         {
           if (sbs1.exists()) { sbs1.endImmediately(); sbs1.delete(); }
           if (sbs2.exists()) { sbs2.endImmediately(); sbs2.delete(); }
-          deleteLibrary(subsystemLib_);
-          createLibrary(subsystemLib_);
+          deleteLibrary(testLib_);
+          createLibrary(testLib_);
 
           sbs1.create();
           sbs1.changeDescriptionText("Test subsystem 1 for Toolbox Subsystem component");
@@ -105,7 +104,7 @@ public class SBTestcase extends Testcase
           sbs2.create();
           sbs2.changeDescriptionText("Test subsystem 2 for Toolbox Subsystem component");
           
-          cmdRun("QSYS/GRTOBJAUT OBJ("+subsystemLib_+"/*ALL) OBJTYPE(*ALL) USER("+userId_+")"); 
+          cmdRun("QSYS/GRTOBJAUT OBJ("+testLib_+"/*ALL) OBJTYPE(*ALL) USER("+userId_+")"); 
         }
       }
       catch(AS400Exception e) {
@@ -132,11 +131,11 @@ public class SBTestcase extends Testcase
     {
       if (DEBUG) output_.println("Running testcase cleanup ...");
       {
-        Subsystem sbs1 = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
-        Subsystem sbs2 = new Subsystem(pwrSys_, subsystemLib_, subsystemName2_);
+        Subsystem sbs1 = new Subsystem(pwrSys_, testLib_, subsystemName1_);
+        Subsystem sbs2 = new Subsystem(pwrSys_, testLib_, subsystemName2_);
         if (sbs1.exists()) { sbs1.endImmediately(); sbs1.delete(); }
         if (sbs2.exists()) { sbs2.endImmediately(); sbs2.delete(); }
-	deleteLibrary(pwrCmd_,subsystemLib_);
+	deleteLibrary(pwrCmd_,testLib_);
       }
     }
 
@@ -176,9 +175,9 @@ public class SBTestcase extends Testcase
 
 
     // Validate all of the attribute values of a Subsystem object.
-    private static boolean validateAttributeValues(Subsystem sbs, boolean refreshed, boolean started, String[] expectedStatuses)
+    private static boolean validateAttributeValues(Subsystem sbs, boolean refreshed, boolean started, String[] expectedStatuses, String testLib)
     {
-      return validateAttributeValues(sbs, refreshed, started, expectedStatuses, "SBSLIB", "TESTSBS1");
+      return validateAttributeValues(sbs, refreshed, started, expectedStatuses, testLib, "TESTSBS1");
     }
 
 
@@ -663,19 +662,19 @@ public class SBTestcase extends Testcase
       boolean ok = true;
       try
       {
-        Subsystem sbs1 = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbspwr = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
+        Subsystem sbs1 = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbspwr = new Subsystem(pwrSys_, testLib_, subsystemName1_);
 
         String[] expectedStatuses = null;
 
-        if (!validateAttributeValues(sbs1, !REFRESHED, !STARTED, expectedStatuses)) {
+        if (!validateAttributeValues(sbs1, !REFRESHED, !STARTED, expectedStatuses,testLib_)) {
           ok = false;
           System.out.println("Attributes not valid before first refresh().");
         }
 
         sbs1.refresh();
         expectedStatuses = new String[] {"*INACTIVE"};
-        if (!validateAttributeValues(sbs1, REFRESHED, !STARTED, expectedStatuses)) {
+        if (!validateAttributeValues(sbs1, REFRESHED, !STARTED, expectedStatuses,testLib_)) {
           ok = false;
           System.out.println("Attributes not valid after refresh() but before start().");
         }
@@ -684,7 +683,7 @@ public class SBTestcase extends Testcase
         Thread.sleep(2000);  // give it time to start
         sbs1.refresh();
         expectedStatuses = new String[] {"*ACTIVE"};
-        if (!validateAttributeValues(sbs1, REFRESHED, STARTED, expectedStatuses)) {
+        if (!validateAttributeValues(sbs1, REFRESHED, STARTED, expectedStatuses,testLib_)) {
           ok = false;
           System.out.println("Attributes not valid after start().");
         }
@@ -693,7 +692,7 @@ public class SBTestcase extends Testcase
         Thread.sleep(4000);  // give the subsys a few seconds to end
         sbs1.refresh();
         expectedStatuses = new String[] {"*INACTIVE", "*ENDING"};
-        if (!validateAttributeValues(sbs1, REFRESHED, !STARTED, expectedStatuses)) {
+        if (!validateAttributeValues(sbs1, REFRESHED, !STARTED, expectedStatuses,testLib_)) {
           ok = false;
           System.out.println("Attributes not valid after endImmediately().");
         }
@@ -750,9 +749,9 @@ public class SBTestcase extends Testcase
       boolean ok = true;
       try
       {
-        Subsystem sbs1 = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbs2= new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbspwr = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
+        Subsystem sbs1 = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbs2= new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbspwr = new Subsystem(pwrSys_, testLib_, subsystemName1_);
 
         if (!attributeValuesMatch(sbs1, sbs2)) {
           ok = false;
@@ -799,7 +798,7 @@ public class SBTestcase extends Testcase
     {
       try
       {
-        Subsystem sbs = new Subsystem(null, subsystemLib_, subsystemName1_);
+        Subsystem sbs = new Subsystem(null, testLib_, subsystemName1_);
         failed("No exception"+sbs);
       }
       catch (Exception e) {
@@ -831,7 +830,7 @@ public class SBTestcase extends Testcase
     {
       try
       {
-        Subsystem sbs = new Subsystem(systemObject_, subsystemLib_, null);
+        Subsystem sbs = new Subsystem(systemObject_, testLib_, null);
         failed("No exception"+sbs);
       }
       catch (Exception e) {
@@ -848,7 +847,7 @@ public class SBTestcase extends Testcase
       boolean ok = true;
       try
       {
-        Subsystem sbs1 = new Subsystem(systemObject_, subsystemLib_, "NONESUCH");
+        Subsystem sbs1 = new Subsystem(systemObject_, testLib_, "NONESUCH");
         if (sbs1.exists()) {
           System.out.println("exists() reported true for subsystem NONESUCH");
           ok = false;
@@ -875,9 +874,9 @@ public class SBTestcase extends Testcase
     {
       try
       {
-        Subsystem sbs1 = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbs2= new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbs3= new Subsystem(systemObject_, subsystemLib_, subsystemName2_);
+        Subsystem sbs1 = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbs2= new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbs3= new Subsystem(systemObject_, testLib_, subsystemName2_);
 
         assertCondition(sbs1.equals(sbs1) &&
                         sbs1.equals(sbs2) &&
@@ -904,8 +903,8 @@ public class SBTestcase extends Testcase
     {
       try
       {
-        Subsystem sbs = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbspwr = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
+        Subsystem sbs = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbspwr = new Subsystem(pwrSys_, testLib_, subsystemName1_);
         sbs.refresh();
         String oldValue = sbs.getDescriptionText();
         String newValue = "New description ; Old was: " + oldValue +")";
@@ -932,8 +931,8 @@ public class SBTestcase extends Testcase
     {
       try
       {
-        Subsystem sbs = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbspwr = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
+        Subsystem sbs = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbspwr = new Subsystem(pwrSys_, testLib_, subsystemName1_);
         sbs.refresh();
         int oldValue = sbs.getMaximumActiveJobs();
         int newValue = ( oldValue == Subsystem.NO_MAX ? 999 : Subsystem.NO_MAX);
@@ -960,8 +959,8 @@ public class SBTestcase extends Testcase
       boolean ok = true;
       try
       {
-        Subsystem sbs = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbspwr = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
+        Subsystem sbs = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbspwr = new Subsystem(pwrSys_, testLib_, subsystemName1_);
         sbs.refresh();
 
         String pathA = "/QSYS.LIB/QDSIGNON.FILE";
@@ -997,11 +996,11 @@ public class SBTestcase extends Testcase
       boolean ok = true;
       try
       {
-        Subsystem sbs = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbspwr = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
+        Subsystem sbs = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbspwr = new Subsystem(pwrSys_, testLib_, subsystemName1_);
         sbs.refresh();
         String oldValue = sbs.getLanguageLibrary();
-        String newValue = ( oldValue.equals("*NONE") ? subsystemLib_ : "*NONE");
+        String newValue = ( oldValue.equals("*NONE") ? testLib_ : "*NONE");
 
         sbspwr.changeLanguageLibrary(newValue);
         sbs.refresh();
@@ -1043,8 +1042,8 @@ public class SBTestcase extends Testcase
       boolean changedSharedPoolAttributes = false;
       try
       {
-        Subsystem sbs = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbspwr = new Subsystem(pwrSys_, subsystemLib_, subsystemName1_);
+        Subsystem sbs = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbspwr = new Subsystem(pwrSys_, testLib_, subsystemName1_);
 
         SystemPool[] pools;
 
@@ -1260,8 +1259,8 @@ public class SBTestcase extends Testcase
 
         // Check that the list includes both of the subsystems defined in this test bucket.
 
-        Subsystem sbs1 = new Subsystem(systemObject_, subsystemLib_, subsystemName1_);
-        Subsystem sbs2 = new Subsystem(systemObject_, subsystemLib_, subsystemName2_);
+        Subsystem sbs1 = new Subsystem(systemObject_, testLib_, subsystemName1_);
+        Subsystem sbs2 = new Subsystem(systemObject_, testLib_, subsystemName2_);
         Subsystem qspl = new Subsystem(systemObject_, "QSYS", "QSPL");
 
         boolean found1 = false;

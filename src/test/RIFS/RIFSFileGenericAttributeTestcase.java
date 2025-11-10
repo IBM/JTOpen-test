@@ -97,10 +97,18 @@ Performs setup needed before running variations.
 
 @exception Exception If an exception occurs.
 **/
+    String sandboxLib_ = "RIFSFGAT";
     protected void setup ()
     throws Exception
     {
-        sandbox_ = new VIFSSandbox(systemObject_, "RIFSFGAT");
+      if (testLib_ != null ) { 
+        int len = testLib_.length(); 
+        if (len >= 5) { 
+          sandboxLib_ = "RIFGA"+testLib_.substring(len-5); 
+        }
+      }
+
+        sandbox_ = new VIFSSandbox(systemObject_, sandboxLib_);
     }
 
 

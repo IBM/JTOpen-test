@@ -46,6 +46,16 @@ public class DADeleteTestcase extends Testcase
      test.DATest.main(newArgs); 
    }
 
+  String daSecTest_ ="DASECTST"; 
+    protected void setup() { 
+      if (testLib_ != null ) { 
+        int len = testLib_.length(); 
+        if (len >= 5) { 
+          daSecTest_ = "DASEC"+testLib_.substring(len-5); 
+        }
+      }
+
+    }
     String getPaddedUser()
     {
         String user = systemObject_.getUserId();
@@ -268,23 +278,23 @@ public class DADeleteTestcase extends Testcase
     public void Var007()
     {
         CommandCall cmd = new CommandCall(pwrSys_);
-        CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/DASECTEST.LIB/SECTST.DTAARA");
+        CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/"+daSecTest_+".LIB/SECTST.DTAARA");
 
         try
         {
-            deleteLibrary(cmd,"DASECTEST");
-            if (!cmd.run("QSYS/CRTLIB DASECTEST"))
+            deleteLibrary(cmd,daSecTest_);
+            if (!cmd.run("QSYS/CRTLIB "+daSecTest_))
             {
-                failed("Unable to create library DASECTEST");
+                failed("Unable to create library "+daSecTest_);
                 return;
             }
 
             String user = systemObject_.getUserId();
-            cmd.run("QSYS/CRTDTAARA DASECTEST/SECTST TYPE(*CHAR) LEN(20)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST/SECTST *DTAARA " + user + " AUT(*READ *EXECUTE *OBJOPR)");
+            cmd.run("QSYS/CRTDTAARA "+daSecTest_+"/SECTST TYPE(*CHAR) LEN(20)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+"/SECTST *DTAARA " + user + " AUT(*READ *EXECUTE *OBJOPR)");
             da.getLength();
-            cmd.run("QSYS/RVKOBJAUT DASECTEST/SECTST *DTAARA " + user + " *OBJOPR");
+            cmd.run("QSYS/RVKOBJAUT "+daSecTest_+"/SECTST *DTAARA " + user + " *OBJOPR");
             try
             {
                 da.delete();
@@ -303,8 +313,8 @@ public class DADeleteTestcase extends Testcase
             }
             finally
             {
-                cmd.run("QSYS/DLTDTAARA DASECTEST/SECTST");
-                deleteLibrary(cmd,"DASECTEST");
+                cmd.run("QSYS/DLTDTAARA "+daSecTest_+"/SECTST");
+                deleteLibrary(cmd,daSecTest_);
             }
         }
         catch (Exception e)
@@ -321,21 +331,21 @@ public class DADeleteTestcase extends Testcase
     public void Var008()
     {
         CommandCall cmd = new CommandCall(pwrSys_);
-        CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/DASECTEST.LIB/SECTST.DTAARA");
+        CharacterDataArea da = new CharacterDataArea(systemObject_, "/QSYS.LIB/"+daSecTest_+".LIB/SECTST.DTAARA");
 
         try
         {
-            deleteLibrary(cmd,"DASECTEST");
-            if (!cmd.run("QSYS/CRTLIB DASECTEST"))
+            deleteLibrary(cmd,daSecTest_);
+            if (!cmd.run("QSYS/CRTLIB "+daSecTest_))
             {
-                failed("Unable to create library DASECTEST");
+                failed("Unable to create library "+daSecTest_);
                 return;
             }
 
             String user = systemObject_.getUserId();
-            cmd.run("QSYS/CRTDTAARA DASECTEST/SECTST TYPE(*CHAR) LEN(20)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-            cmd.run("QSYS/RVKOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE)");
+            cmd.run("QSYS/CRTDTAARA "+daSecTest_+"/SECTST TYPE(*CHAR) LEN(20)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmd.run("QSYS/RVKOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE)");
             try
             {
                 da.delete();
@@ -354,8 +364,8 @@ public class DADeleteTestcase extends Testcase
             }
             finally
             {
-                cmd.run("QSYS/DLTDTAARA DASECTEST/SECTST");
-                deleteLibrary(cmd,"DASECTEST");
+                cmd.run("QSYS/DLTDTAARA "+daSecTest_+"/SECTST");
+                deleteLibrary(cmd,daSecTest_);
             }
         }
         catch (Exception e)
@@ -616,23 +626,23 @@ public class DADeleteTestcase extends Testcase
     public void Var016()
     {
         CommandCall cmd = new CommandCall(pwrSys_);
-        DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/DASECTEST.LIB/SECTST.DTAARA");
+        DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/"+daSecTest_+".LIB/SECTST.DTAARA");
 
         try
         {
-            deleteLibrary(cmd,"DASECTEST");
-            if (!cmd.run("QSYS/CRTLIB DASECTEST"))
+            deleteLibrary(cmd,daSecTest_);
+            if (!cmd.run("QSYS/CRTLIB "+daSecTest_))
             {
-                failed("Unable to create library DASECTEST");
+                failed("Unable to create library "+daSecTest_);
                 return;
             }
 
             String user = systemObject_.getUserId();
-            cmd.run("QSYS/CRTDTAARA DASECTEST/SECTST TYPE(*DEC)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST/SECTST *DTAARA " + user + " AUT(*READ *EXECUTE *OBJOPR)");
+            cmd.run("QSYS/CRTDTAARA "+daSecTest_+"/SECTST TYPE(*DEC)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+"/SECTST *DTAARA " + user + " AUT(*READ *EXECUTE *OBJOPR)");
             da.getLength();
-            cmd.run("QSYS/RVKOBJAUT DASECTEST/SECTST *DTAARA " + user + " *OBJOPR");
+            cmd.run("QSYS/RVKOBJAUT "+daSecTest_+"/SECTST *DTAARA " + user + " *OBJOPR");
             try
             {
                 da.delete();
@@ -651,8 +661,8 @@ public class DADeleteTestcase extends Testcase
             }
             finally
             {
-                cmd.run("QSYS/DLTDTAARA DASECTEST/SECTST");
-                deleteLibrary(cmd,"DASECTEST");
+                cmd.run("QSYS/DLTDTAARA "+daSecTest_+"/SECTST");
+                deleteLibrary(cmd,daSecTest_);
             }
         }
         catch (Exception e)
@@ -669,21 +679,21 @@ public class DADeleteTestcase extends Testcase
     public void Var017()
     {
         CommandCall cmd = new CommandCall(pwrSys_);
-        DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/DASECTEST.LIB/SECTST.DTAARA");
+        DecimalDataArea da = new DecimalDataArea(systemObject_, "/QSYS.LIB/"+daSecTest_+".LIB/SECTST.DTAARA");
 
         try
         {
-            deleteLibrary(cmd,"DASECTEST");
-            if (!cmd.run("QSYS/CRTLIB DASECTEST"))
+            deleteLibrary(cmd,daSecTest_);
+            if (!cmd.run("QSYS/CRTLIB "+daSecTest_))
             {
-                failed("Unable to create library DASECTEST");
+                failed("Unable to create library "+daSecTest_);
                 return;
             }
 
             String user = systemObject_.getUserId();
-            cmd.run("QSYS/CRTDTAARA DASECTEST/SECTST TYPE(*DEC)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-            cmd.run("QSYS/RVKOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE)");
+            cmd.run("QSYS/CRTDTAARA "+daSecTest_+"/SECTST TYPE(*DEC)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmd.run("QSYS/RVKOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE)");
             try
             {
                 da.delete();
@@ -702,8 +712,8 @@ public class DADeleteTestcase extends Testcase
             }
             finally
             {
-                cmd.run("QSYS/DLTDTAARA DASECTEST/SECTST");
-                deleteLibrary(cmd,"DASECTEST");
+                cmd.run("QSYS/DLTDTAARA "+daSecTest_+"/SECTST");
+                deleteLibrary(cmd,daSecTest_);
             }
         }
         catch (Exception e)
@@ -964,23 +974,23 @@ public class DADeleteTestcase extends Testcase
     public void Var025()
     {
         CommandCall cmd = new CommandCall(pwrSys_);
-        LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/DASECTEST.LIB/SECTST.DTAARA");
+        LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/"+daSecTest_+".LIB/SECTST.DTAARA");
 
         try
         {
-            deleteLibrary(cmd,"DASECTEST");
-            if (!cmd.run("QSYS/CRTLIB DASECTEST"))
+            deleteLibrary(cmd,daSecTest_);
+            if (!cmd.run("QSYS/CRTLIB "+daSecTest_))
             {
-                failed("Unable to create library DASECTEST");
+                failed("Unable to create library "+daSecTest_);
                 return;
             }
 
             String user = systemObject_.getUserId();
-            cmd.run("QSYS/CRTDTAARA DASECTEST/SECTST TYPE(*LGL)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST/SECTST *DTAARA " + user + " AUT(*READ *EXECUTE *OBJOPR)");
+            cmd.run("QSYS/CRTDTAARA "+daSecTest_+"/SECTST TYPE(*LGL)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+"/SECTST *DTAARA " + user + " AUT(*READ *EXECUTE *OBJOPR)");
             da.getLength();
-            cmd.run("QSYS/RVKOBJAUT DASECTEST/SECTST *DTAARA " + user + " *OBJOPR");
+            cmd.run("QSYS/RVKOBJAUT "+daSecTest_+"/SECTST *DTAARA " + user + " *OBJOPR");
             try
             {
                 da.delete();
@@ -999,8 +1009,8 @@ public class DADeleteTestcase extends Testcase
             }
             finally
             {
-                cmd.run("QSYS/DLTDTAARA DASECTEST/SECTST");
-                deleteLibrary(cmd,"DASECTEST");
+                cmd.run("QSYS/DLTDTAARA "+daSecTest_+"/SECTST");
+                deleteLibrary(cmd,daSecTest_);
             }
         }
         catch (Exception e)
@@ -1017,21 +1027,21 @@ public class DADeleteTestcase extends Testcase
     public void Var026()
     {
         CommandCall cmd = new CommandCall(pwrSys_);
-        LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/DASECTEST.LIB/SECTST.DTAARA");
+        LogicalDataArea da = new LogicalDataArea(systemObject_, "/QSYS.LIB/"+daSecTest_+".LIB/SECTST.DTAARA");
 
         try
         {
-            deleteLibrary(cmd,"DASECTEST");
-            if (!cmd.run("QSYS/CRTLIB DASECTEST"))
+            deleteLibrary(cmd,daSecTest_);
+            if (!cmd.run("QSYS/CRTLIB "+daSecTest_))
             {
-                failed("Unable to create library DASECTEST");
+                failed("Unable to create library "+daSecTest_);
                 return;
             }
 
             String user = systemObject_.getUserId();
-            cmd.run("QSYS/CRTDTAARA DASECTEST/SECTST TYPE(*LGL)");
-            cmd.run("QSYS/GRTOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE *READ)");
-            cmd.run("QSYS/RVKOBJAUT DASECTEST *LIB " + user + " AUT(*EXECUTE)");
+            cmd.run("QSYS/CRTDTAARA "+daSecTest_+"/SECTST TYPE(*LGL)");
+            cmd.run("QSYS/GRTOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE *READ)");
+            cmd.run("QSYS/RVKOBJAUT "+daSecTest_+" *LIB " + user + " AUT(*EXECUTE)");
             try
             {
                 da.delete();
@@ -1050,8 +1060,8 @@ public class DADeleteTestcase extends Testcase
             }
             finally
             {
-                cmd.run("QSYS/DLTDTAARA DASECTEST/SECTST");
-                deleteLibrary(cmd,"DASECTEST");
+                cmd.run("QSYS/DLTDTAARA "+daSecTest_+"/SECTST");
+                deleteLibrary(cmd,daSecTest_);
             }
         }
         catch (Exception e)

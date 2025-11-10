@@ -628,6 +628,7 @@ public class JobDescTestcase extends Testcase
         int numObjs = olist.getLength();
         if (numObjs == 0) {
           failed("No JOBDs returned by ObjectList.");
+          olist.close(); 
           return;
         }
         if (DEBUG) println("Number of JOBD's: " + numObjs);
@@ -640,6 +641,7 @@ public class JobDescTestcase extends Testcase
             ok = false;
           }
         }
+        olist.close(); 
         if (ok) succeeded();
         else failed();
       }

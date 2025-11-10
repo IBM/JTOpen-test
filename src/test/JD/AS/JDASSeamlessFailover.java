@@ -496,7 +496,7 @@ url = "jdbc:as400:localhost:7;enableClientAffinitiesList=1;enableSeamlessFailove
 + "," + localPort3 + "," + localPort4;
 
 sb.append("Connecting to " + url + " via DataSource\n");
-AS400JDBCDataSource ds = new AS400JDBCDataSource("loclhost",
+AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost",
 systemObject_.getUserId(), encryptedPassword_);
 ds.setPortNumber(7);
 ds.setEnableClientAffinitiesList(1);

@@ -346,6 +346,8 @@ public class DDMPosition extends Testcase {
   protected void setup() throws Exception {
     try {
      
+      lockSystem("DDMTESTSAV",600); 
+
       // Delete and recreate library DDMTEST
       CommandCall c = new CommandCall(pwrSys_);
       deleteLibrary(c, testLib_);
@@ -385,6 +387,14 @@ public class DDMPosition extends Testcase {
     }
   }
 
+  void clenanup() {
+    try { 
+    unlockSystem(); 
+    } catch (Exception e) {
+      e.printStackTrace(output_);
+    }
+    
+  }
   /**
    * Verify valid usage of AS400File.positionCursorAfterLast() with a
    * SequentialFile.

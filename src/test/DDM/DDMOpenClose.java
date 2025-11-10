@@ -261,14 +261,23 @@ String runCommand(String command)
 /**
  @exception  Exception  If an exception occurs.
  **/
+String qgplLib_ = testLib_+"A";
 protected void setup()
   throws Exception
 {
   try
   {
+    if (testLib_ != null ) { 
+      int len = testLib_.length(); 
+      if (len >= 5) { 
+        qgplLib_ = "DDMOC"+testLib_.substring(len-5); 
+      }
+    }
+
     CommandCall c = new CommandCall(pwrSys_);
     deleteLibrary(c, testLib_); 
-    c.run();
+    deleteLibrary(c, qgplLib_); 
+    // c.run();
 
     // Create library DDMTEST
     String msg = runCommand("QSYS/CRTLIB LIB(" + testLib_ + ") AUT(*ALL)");
@@ -279,6 +288,17 @@ protected void setup()
       throw new Exception("");
     }
 
+    // Create library 
+    msg = runCommand("QSYS/CRTLIB LIB(" + qgplLib_ + ") AUT(*ALL)");
+    if (msg != null && !msg.equals("CPF2111"))
+    {
+      output_.println("Failure executing 'CRTLIB LIB(" + qgplLib_ + ") AUT(*ALL)'");
+      output_.println(msg);
+      throw new Exception("");
+    }
+
+    
+    
     // Create the necessary files
     SequentialFile f1 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/F1M1RW.FILE/MBR1.MBR");
     f1.create(new DDMChar10NoKeyFormat(systemObject_), "One field, CHAR(10), no key");
@@ -288,7 +308,7 @@ protected void setup()
     f3.create(new DDMChar10NoKeyFormat(systemObject_), "One field, CHAR(10), no key");
     KeyedFile f4 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
     f4.create(new DDMChar10KeyFormat(systemObject_), "One field, CHAR(10), one key");
-    KeyedFile f5 = new KeyedFile(systemObject_, "/QSYS.LIB/QGPL.LIB/KEYSRC.FILE/MBR1.MBR");
+    KeyedFile f5 = new KeyedFile(systemObject_, "/QSYS.LIB/"+qgplLib_+".LIB/KEYSRC.FILE/MBR1.MBR");
     f5.create(new DDMChar10KeyFormat(systemObject_), "One field, CHAR(10), one key");
     KeyedFile f6 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC3.FILE/KEYSRC3.MBR");
     f6.create(new DDMChar10KeyFormat(systemObject_), "One field, CHAR(10), one key");
@@ -326,63 +346,63 @@ protected void setup()
 
 
     // Create journal receiver and journal if it does not already exist
-    msg = runCommand("QSYS/CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
+    msg = runCommand("QSYS/CRTJRNRCV JRNRCV("+qgplLib_+"/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
     if (msg != null && !msg.equals("CPF7010")) /* CPF7011 means already exists */ 
     {
-      output_.println("Failure executing 'QSYS/CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
+      output_.println("Failure executing 'QSYS/CRTJRNRCV JRNRCV("+qgplLib_+"/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
       output_.println(msg);
       throw new Exception("");
     }
     if (msg != null && msg.equals("CPF7010")) /* CPF7011 means already exists */
     {
-	runCommand("QSYS/ENDJRNPF FILE(*ALL) JRN(QGPL/JT4DDMJRN)"); 
-        runCommand("QSYS/DLTJRN QGPL/JT4DDMJRN");
-	runCommand("QSYS/DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV) DLTOPT(*IGNINQMSG)"); 
+	runCommand("QSYS/ENDJRNPF FILE(*ALL) JRN("+qgplLib_+"/JT4DDMJRN)"); 
+        runCommand("QSYS/DLTJRN "+qgplLib_+"/JT4DDMJRN");
+	runCommand("QSYS/DLTJRNRCV JRNRCV("+qgplLib_+"/JT4DDMRCV) DLTOPT(*IGNINQMSG)"); 
 	// Try again.... 
-	msg = runCommand("QSYS/CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
+	msg = runCommand("QSYS/CRTJRNRCV JRNRCV("+qgplLib_+"/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')");
 	if (msg != null && !msg.equals("CPF7010")) /* CPF7011 means already exists */ 
 	{
-	    output_.println("Failure executing 'CRTJRNRCV JRNRCV(QGPL/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
+	    output_.println("Failure executing 'CRTJRNRCV JRNRCV("+qgplLib_+"/JT4DDMRCV) THRESHOLD(256000) AUT(*ALL) TEXT('Receiver for DDM test cases')'");
 	    output_.println(msg);
 	    throw new Exception("");
 	}
 
     }
 
-    msg = runCommand("QSYS/CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')");
+    msg = runCommand("QSYS/CRTJRN JRN("+qgplLib_+"/JT4DDMJRN) JRNRCV("+qgplLib_+"/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')");
     if (msg != null && !msg.equals("CPF7010"))
     {
-      output_.println("Failure executing 'CRTJRN JRN(QGPL/JT4DDMJRN) JRNRCV(QGPL/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')'");
+      output_.println("Failure executing 'CRTJRN JRN("+qgplLib_+"/JT4DDMJRN) JRNRCV("+qgplLib_+"/JT4DDMRCV) MNGRCV(*SYSTEM) DLTRCV(*YES) AUT(*ALL) TEXT('DDM test case journal')'");
       output_.println(msg);
       throw new Exception("");
     }
 
     // Start journaling
-    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/F1M1RW) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/F1M1RW) JRN("+qgplLib_+"/JT4DDMJRN)");
     if (msg != null)
     {
-      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/F1M1RW) JRN(QGPL/JT4DDMJRN)'");
+      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/F1M1RW) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/F2M1RW) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/F2M1RW) JRN("+qgplLib_+"/JT4DDMJRN)");
     if (msg != null)
     {
-      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/F2M1RW) JRN(QGPL/JT4DDMJRN)'");
+      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/F2M1RW) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN("+qgplLib_+"/JT4DDMJRN)");
     if (msg != null)
     {
-      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN(QGPL/JT4DDMJRN)'");
+      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN("+qgplLib_+"/JT4DDMJRN)");
     if (msg != null)
     {
-      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN(QGPL/JT4DDMJRN)'");
+      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
@@ -406,31 +426,31 @@ protected void cleanup()
   {
     // Stop journaling
     output_.println("  Ending journaling...");
-    String msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/F1M1RW) JRN(QGPL/JT4DDMJRN)");
+    String msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/F1M1RW) JRN("+qgplLib_+"/JT4DDMJRN)");
       if (!precleaning_ && msg != null && !msg.startsWith("CPF9803") && !msg.startsWith("CPF9801") && !msg.startsWith("CPF7032")) //7032 because on cleanup, the system might think we are not actually journaling the file.
     {
-      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/F1M1RW) JRN(QGPL/JT4DDMJRN)'");
+      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/F1M1RW) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       success = false;
     }
-    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/F2M1RW) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/F2M1RW) JRN("+qgplLib_+"/JT4DDMJRN)");
       if (!precleaning_ && msg != null && !msg.startsWith("CPF9803") && !msg.startsWith("CPF9801") && !msg.startsWith("CPF7032")) //7032 because on cleanup, the system might think we are not actually journaling the file.
     {
-      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/F2M1RW) JRN(QGPL/JT4DDMJRN)'");
+      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/F2M1RW) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       success = false;
     }
-    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/KEYSRC) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/KEYSRC) JRN("+qgplLib_+"/JT4DDMJRN)");
       if (!precleaning_ && msg != null && !msg.startsWith("CPF9803") && !msg.startsWith("CPF9801") && !msg.startsWith("CPF7032")) //7032 because on cleanup, the system might think we are not actually journaling the file.
     {
-      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/KEYSRC) JRN(QGPL/JT4DDMJRN)'");
+      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/KEYSRC) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       success = false;
     }
-    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN(QGPL/JT4DDMJRN)");
+    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN("+qgplLib_+"/JT4DDMJRN)");
       if (!precleaning_ && msg != null && !msg.startsWith("CPF9803") && !msg.startsWith("CPF9801") && !msg.startsWith("CPF7032")) //7032 because on cleanup, the system might think we are not actually journaling the file.
     {
-      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN(QGPL/JT4DDMJRN)'");
+      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       success = false;
     }
@@ -442,7 +462,7 @@ protected void cleanup()
       testLib_+"/KEYSRC",
       testLib_+"/F2M1RW",
       testLib_+"/KEYSRC2",
-      "QGPL/KEYSRC",
+      ""+qgplLib_+"/KEYSRC",
       testLib_+"/KEYSRC3"
     };
 
@@ -457,7 +477,7 @@ protected void cleanup()
         output_.println("       Type a '4' (End job) on the line containing the QRWTSRVR job for user QUSER.");
         output_.println("       After pressing Enter twice, use the F5 key to refresh the screen.");
         output_.println("       Verify that there are no more locks for that file.");
-        output_.println("       Repeat the above procedure for WRKOBJLCK OBJ(QGPL/JT4DDMRCV) OBJTYPE(*JRNRCV).");
+        output_.println("       Repeat the above procedure for WRKOBJLCK OBJ("+qgplLib_+"/JT4DDMRCV) OBJTYPE(*JRNRCV).");
         output_.println("       Re-run this testcase.");
         throw new Exception("Delete file locks and re-run testcase.");
       }
@@ -470,7 +490,7 @@ protected void cleanup()
     f3.delete();
     KeyedFile f4 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
     f4.delete();
-    KeyedFile f5 = new KeyedFile(systemObject_, "/QSYS.LIB/QGPL.LIB/KEYSRC.FILE/MBR1.MBR");
+    KeyedFile f5 = new KeyedFile(systemObject_, "/QSYS.LIB/"+qgplLib_+".LIB/KEYSRC.FILE/MBR1.MBR");
     f5.delete();
     KeyedFile f6 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC3.FILE/KEYSRC3.MBR");
     f6.delete();
@@ -489,25 +509,25 @@ protected void cleanup()
       success = false;
     }
     output_.println("  Deleting journal...");
-    msg = runCommand("QSYS/DLTJRN QGPL/JT4DDMJRN");
+    msg = runCommand("QSYS/DLTJRN "+qgplLib_+"/JT4DDMJRN");
     if (msg != null && !msg.startsWith("CPF2105"))
     {
-      output_.println("Failure executing 'DLTJRN QGPL/JT4DDMJRN'");
+      output_.println("Failure executing 'DLTJRN "+qgplLib_+"/JT4DDMJRN'");
       output_.println(msg);
       success = false;
     }
     output_.println("  Deleting receiver...");
-    msg = runCommand("QSYS/DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV) DLTOPT(*IGNINQMSG)");
+    msg = runCommand("QSYS/DLTJRNRCV JRNRCV("+qgplLib_+"/JT4DDMRCV) DLTOPT(*IGNINQMSG)");
     if (msg != null && !msg.startsWith("CPF2105"))
     {
-      output_.println("Failure executing 'DLTJRNRCV JRNRCV(QGPL/JT4DDMRCV) DLTOPT(*IGNINQMSG)'");
+      output_.println("Failure executing 'DLTJRNRCV JRNRCV("+qgplLib_+"/JT4DDMRCV) DLTOPT(*IGNINQMSG)'");
       output_.println(msg);
       success = false;
     }
   }
   catch(Exception e)
   {
-    output_.println("Cleanup unsuccessful.  Some files may have been left in " + testLib_ + " and QGPL.");
+    output_.println("Cleanup unsuccessful.  Some files may have been left in " + testLib_ + " and "+qgplLib_+".");
     e.printStackTrace(output_);
     throw e;
   }
@@ -4149,7 +4169,7 @@ public void Var047()
   try
   {
     file = new KeyedFile(systemObject_,
-                         "/QSYS.LIB/QGPL.LIB/KEYSRC.FILE/%FIRST%.MBR");
+                         "/QSYS.LIB/"+qgplLib_+".LIB/KEYSRC.FILE/%FIRST%.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -4218,7 +4238,7 @@ public void Var048()
   try
   {
     file = new KeyedFile(systemObject_,
-                         "/QSYS.LIB/QGPL.LIB/KEYSRC.FILE/%LAST%.MBR");
+                         "/QSYS.LIB/"+qgplLib_+".LIB/KEYSRC.FILE/%LAST%.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
 

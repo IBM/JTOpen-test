@@ -153,6 +153,7 @@ public class JDCleanJrnRcv {
                 .getValue(ObjectDescription.OBJECT_SIZE)).longValue();
 
           }
+          jrnRcvList.close(); 
 
         } /* for i -- journal receivers*/ 
           // Check the object size, if it isn't big, don't mess with it
@@ -239,6 +240,7 @@ public class JDCleanJrnRcv {
         e.printStackTrace(System.out);
       }
     } /* while processing libraries */
+    jrnList.close(); 
     System.out.println("Deleted "
         + NumberFormat.getInstance().format(totalDeletedSize) + " bytes from "
         + totalDeletedCount + " journal receivers");
