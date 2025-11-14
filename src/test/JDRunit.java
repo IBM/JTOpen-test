@@ -2698,7 +2698,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     inputVector.addElement("echo Here is the Java command "); 
     inputVector.addElement("echo " + javaCommand);
+    inputVector.addElement(""); 
     inputVector.addElement(javaCommand);
+    inputVector.addElement(""); 
     inputVector.addElement("echo this is after the Java command"); 
     inputVector.addElement("\n\n\n\n");
     inputVector.addElement("echo DONE");
@@ -3578,6 +3580,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             if (!tmpDir.exists()) {
               tmpDir.mkdir();
             }
+            System.out.println("Storing files in "+tmpDir.getCanonicalPath());
             char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
             char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
             //
@@ -3590,11 +3593,11 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             Object[] args = new Object[2]; 
             argTypes[0]=Class.forName("com.ibm.as400.access.AS400");
             argTypes[1]=systemFile.getClass(); 
-            args[0] = "/tmp/"+systemFile;
-            args[1] = myAS400; 
+            args[0] = myAS400; 
+            args[1] = "/tmp/"+systemFile;
             Object ifsFile = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile",argTypes,args); 
             if (JDReflectionUtil.callMethod_B(ifsFile,"exists")) { 
-              FileReader ifsFileReader = (FileReader) JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileReader",ifsFile);
+              Reader ifsFileReader = (Reader) JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileReader",ifsFile);
               BufferedReader  bufferedReader = new BufferedReader(ifsFileReader); 
               FileWriter fileWriter = new FileWriter("tmp/"+systemFile); 
               BufferedWriter bufferedWriter = new BufferedWriter(fileWriter); 
