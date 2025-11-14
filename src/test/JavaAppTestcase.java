@@ -2367,18 +2367,18 @@ public class  JavaAppTestcase extends Testcase
         {
             JavaApplicationCall s = new JavaApplicationCall(systemObject_,"TestPrg1","javatest");
 
-            FileOutputStream fOut = new FileOutputStream("tmp");
+            FileOutputStream fOut = new FileOutputStream("tmpStream");
             ObjectOutput  output  =  new  ObjectOutputStream(fOut);
             output.writeObject(s);
             output.flush();
 
-            FileInputStream fIn = new FileInputStream("tmp");
+            FileInputStream fIn = new FileInputStream("tmpStream");
             ObjectInput  input  =  new  ObjectInputStream(fIn);
             JavaApplicationCall sIn = (JavaApplicationCall)input.readObject();
 
             fOut.close();
             fIn.close();
-            File tempFile = new File("tmp");
+            File tempFile = new File("tmpStream");
             if(tempFile.exists())
             {
                 if(!tempFile.delete())

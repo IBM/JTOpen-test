@@ -622,6 +622,7 @@ ActionCompletedListener
         try
         {
             {   
+                lockSystem("PGMSER",600);; 
                 ProgramCall pgm = new ProgramCall(systemObject_, goodPgm_, buildParms());
                 pgm.addActionCompletedListener( this );
 
@@ -695,6 +696,14 @@ ActionCompletedListener
                 failed("Class not found: RJob");
             }
             else failed(e, "Unexpected exception");
+        }
+        finally 
+        {
+          try {
+            unlockSystem();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
         }
 
     }

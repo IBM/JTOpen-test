@@ -2829,12 +2829,12 @@ public class UserGetSetTtoZTestcase extends Testcase
 	    		      }
 	    		      catch (Exception e)
 			      {
-				  // Updated 9/4/2017 ot user id is not known
+				  
 
 				  if (getRelease() > JDTestDriver.RELEASE_V7R4M0)
 				      assertExceptionIs(e,"AS400SecurityException", "Password is incorrect.:JAVAX12345");
 				  else
-				      assertExceptionIs(e,"AS400SecurityException", "User ID is not known.:JAVAX12345");
+				      assertExceptionIs(e,"AS400SecurityException", "User ID is not known.:USER:JAVAX12345 CPF2204");
 			      }
 	    		}
 
@@ -3123,7 +3123,7 @@ public class UserGetSetTtoZTestcase extends Testcase
 				    if (getRelease() > JDTestDriver.RELEASE_V7R4M0)
 					assertExceptionIs(e,"AS400SecurityException", "Password is incorrect.:JAVAX12345");
 				    else
-					 assertExceptionIs(e, "AS400SecurityException", "User ID is not known.:JAVAX12345"); 
+					 assertExceptionIs(e, "AS400SecurityException", "User ID is not known.:USER:JAVAX12345 CPF2204"); 
 				}
 			}
 			else

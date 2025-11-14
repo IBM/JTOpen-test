@@ -51,6 +51,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -65,8 +66,8 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
 
-import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.IFSFileReader;
+import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.CommandCall;
 
 import test.JD.DataSource.JDDatabaseOverride;
 import test.JTA.JTACleanupTx;
@@ -1938,11 +1939,15 @@ public class JDRunit {
     AS400 = getAS400(iniProperties, initials);
 
     SYSTEM = iniProperties.getProperty("SYSTEM", AS400);
+    if (SYSTEM == null) { 
+      throw new Exception("Unable to determine system.  Please check systems.ini"); 
+    }
     SYSTEM = SYSTEM.toUpperCase();
 
     if (driver.equals("native")) {
         SYSTEM = JDDatabaseOverride.getDatabaseNameFromSystemName(SYSTEM); 
     } 
+
 
 
     String iasp = iniProperties.getProperty("IASP_" + SYSTEM);
@@ -2691,9 +2696,12 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       }
     }
 
+    inputVector.addElement("echo Here is the Java command "); 
     inputVector.addElement("echo " + javaCommand);
+    inputVector.addElement(""); 
     inputVector.addElement(javaCommand);
-
+    inputVector.addElement(""); 
+    inputVector.addElement("echo this is after the Java command"); 
     inputVector.addElement("\n\n\n\n");
     inputVector.addElement("echo DONE");
     inputVector.addElement("echo exit");
@@ -2734,6 +2742,20 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       shellArgs = "-e";
       shellArgs2 = "none";
       shellArgs3 = USERID + "@"+AS400; 
+      
+      /* Make sure that the ssh server is active */ 
+      try (Socket socket = new Socket()) {
+        socket.connect(new InetSocketAddress(AS400,22), 500);
+      } catch (IOException e) {
+        // Connection failed, start the server
+        char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
+        char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
+        AS400 startSshAs400 = new AS400(AS400,USERID,clearPassword);
+        CommandCall cc = new CommandCall(startSshAs400); 
+        cc.run("STRTCPSVR *SSHD");
+        startSshAs400.close(); 
+        Thread.sleep(1000); 
+      }
     }
     if (true) {
       /* Run the script in a shell process */
@@ -3558,6 +3580,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             if (!tmpDir.exists()) {
               tmpDir.mkdir();
             }
+            System.out.println("Storing files in "+tmpDir.getCanonicalPath());
             char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
             char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
             //
@@ -3570,11 +3593,11 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             Object[] args = new Object[2]; 
             argTypes[0]=Class.forName("com.ibm.as400.access.AS400");
             argTypes[1]=systemFile.getClass(); 
-            args[0] = "/tmp/"+systemFile;
-            args[1] = myAS400; 
+            args[0] = myAS400; 
+            args[1] = "/tmp/"+systemFile;
             Object ifsFile = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile",argTypes,args); 
             if (JDReflectionUtil.callMethod_B(ifsFile,"exists")) { 
-              FileReader ifsFileReader = (FileReader) JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileReader",ifsFile);
+              Reader ifsFileReader = (Reader) JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileReader",ifsFile);
               BufferedReader  bufferedReader = new BufferedReader(ifsFileReader); 
               FileWriter fileWriter = new FileWriter("tmp/"+systemFile); 
               BufferedWriter bufferedWriter = new BufferedWriter(fileWriter); 

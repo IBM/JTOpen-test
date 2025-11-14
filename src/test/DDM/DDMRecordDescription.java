@@ -94,6 +94,8 @@ public class DDMRecordDescription extends Testcase
   {
     try
     {
+      lockSystem("DDMTESTSAV",600); 
+
       // Verify the existence of library DDMTESTSAV on the system
       CommandCall c = new CommandCall(systemObject_, "CHKOBJ OBJ(DDMTESTSAV) OBJTYPE(*LIB)");
       boolean ran = c.run();
@@ -142,6 +144,7 @@ public class DDMRecordDescription extends Testcase
   {
     try
     {
+      unlockSystem();
       // Verify the existence of library DDMTESTSAV on the system
       CommandCall c = new CommandCall(systemObject_, "QSYS/CLRPFM DDMTESTSAV/SIMPLESEQ");
       c.run();

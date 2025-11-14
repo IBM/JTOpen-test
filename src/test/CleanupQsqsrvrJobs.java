@@ -26,10 +26,8 @@ import com.ibm.as400.access.QueuedMessage;
 
 public class CleanupQsqsrvrJobs {
   public static void usage() {
-    System.out.println(
-        "Usage:  java CleanupQsqsrvrjobs [<SYSTEM> <USERID> <PASSWORD> ]");
-    System.out.println(
-        "   Ends all the QSQSRVR jobs that are used by testcases and older than 1 hour");
+    System.out.println("Usage:  java CleanupQsqsrvrjobs [<SYSTEM> <USERID> <PASSWORD> ]");
+    System.out.println("   Ends all the QSQSRVR jobs that are used by testcases and older than 1 hour");
   }
 
   public static void cleanup(String system, String userid, String password) throws Exception {
@@ -42,8 +40,8 @@ public class CleanupQsqsrvrJobs {
     }
 
     JobList joblist = new JobList(as400);
-    joblist.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_ACTIVE,
-        Boolean.TRUE);
+    joblist.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_ACTIVE, Boolean.TRUE);
+    joblist.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
     joblist.addJobSelectionCriteria(JobList.SELECTION_JOB_NAME, "QSQSRVR");
     Hashtable<String, String> userSet = new Hashtable<String, String>();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
@@ -51,84 +49,93 @@ public class CleanupQsqsrvrJobs {
     long currentTimeMillis = System.currentTimeMillis();
     while (enumeration.hasMoreElements()) {
       Job j = (Job) enumeration.nextElement();
-      String user = j.getStringValue(Job.CURRENT_USER);
-      userSet.put(user, user);
-      // System.out.println("Job name is
-      // "+j.getNumber()+"/"+j.getUser()+"/"+j.getName()+" user is "+user);
-      if (user.equalsIgnoreCase("JAVA") || user.equalsIgnoreCase("NEWTONJUDF")
-          || user.equalsIgnoreCase("SQLJTEST")
-          || user.equalsIgnoreCase("JDPWRSYS")) {
-        System.out.println("-------------------");
-        System.out.println("Job name is " + j.getNumber() + "/" + j.getUser()
-            + "/" + j.getName() + " user is " + user);
-        JobLog joblog = j.getJobLog();
-        Enumeration<?> messageEnumeration = joblog.getMessages();
-        boolean endJob = false;
-        //
-        // Look for message of the following form. If the message is older than
-        // 1 hour then
-        // end the job.
-        // Message ID . . . . . . : CPF9898 Severity . . . . . . . : 40
-        // Message type . . . . . : Completion
-        // Date sent . . . . . . : 12/16/14 Time sent . . . . . . : 08:01:35
-        //
-        // Message . . . . : SERVER MODE CONNECTING JOB IS 631220/JAVA/QJVAEXEC.
-        // Cause . . . . . : This message is used by application programs as a
-        // general
-        // escape message.
-        //
-        boolean connectingJobMessageFound = false;
-        while (!connectingJobMessageFound
-            && messageEnumeration.hasMoreElements()) {
-          QueuedMessage message = (QueuedMessage) messageEnumeration
-              .nextElement();
-          if (message.getID().equals("CPF9898")) {
-            // System.out.println("CPF9898 found");
-            String text = "Text is " + message.getText();
-            System.out.println(text);
-            if (text.indexOf("SERVER MODE CONNECTING JOB") >= 0) {
-              connectingJobMessageFound = true;
-
-              Calendar date = message.getDate();
-              long millis = date.getTimeInMillis();
-              if (currentTimeMillis - millis > 3600000) {
-                System.out.println("Message send over an hour ago "
-                    + simpleDateFormat.format(date.getTime()));
-                endJob = true;
-              } else {
-                System.out.println(
-                    "New message " + simpleDateFormat.format(date.getTime()));
-              }
-
-            }
-          }
+      if (j.getStatus() == Job.JOB_STATUS_ACTIVE) {
+        String user = j.getStringValue(Job.CURRENT_USER);
+        if (user.length() == 0) {
+          user = j.getStringValue(Job.USER_NAME);
         }
-        if (endJob) {
-          System.out.println("Ending job");
+        userSet.put(user, user);
+        // "+j.getNumber()+"/"+j.getUser()+"/"+j.getName()+" user is "+user);
+        if (user.equalsIgnoreCase("JAVA") || user.equalsIgnoreCase("NEWTONJUDF") || user.equalsIgnoreCase("SQLJTEST")
+            || user.equalsIgnoreCase("JDPWRSYS")) {
+          System.out.println("-------------------");
+          System.out
+              .println("Job name is " + j.getNumber() + "/" + j.getUser() + "/" + j.getName() + " user is " + user);
+          JobLog joblog = j.getJobLog();
           try {
-            j.end(0);
-          } catch (Exception e) {
-            String message = e.toString();
-            if (message.indexOf("not allowed") >= 0) {
-              System.out.println("Job already ending");
-            } else {
-              e.printStackTrace();
+            Enumeration<?> messageEnumeration = joblog.getMessages();
+            boolean endJob = false;
+            //
+            // Look for message of the following form. If the message is older than
+            // 1 hour then
+            // end the job.
+            // Message ID . . . . . . : CPF9898 Severity . . . . . . . : 40
+            // Message type . . . . . : Completion
+            // Date sent . . . . . . : 12/16/14 Time sent . . . . . . : 08:01:35
+            //
+            // Message . . . . : SERVER MODE CONNECTING JOB IS 631220/JAVA/QJVAEXEC.
+            // Cause . . . . . : This message is used by application programs as a
+            // general
+            // escape message.
+            //
+            boolean connectingJobMessageFound = false;
+            while (!connectingJobMessageFound && messageEnumeration.hasMoreElements()) {
+              QueuedMessage message = (QueuedMessage) messageEnumeration.nextElement();
+              if (message.getID().equals("CPF9898")) {
+                // System.out.println("CPF9898 found");
+                String text = "Text is " + message.getText();
+                System.out.println(text);
+                if (text.indexOf("SERVER MODE CONNECTING JOB") >= 0) {
+                  connectingJobMessageFound = true;
+
+                  Calendar date = message.getDate();
+                  long millis = date.getTimeInMillis();
+                  if (currentTimeMillis - millis > 3600000) {
+                    System.out.println("Message send over an hour ago " + simpleDateFormat.format(date.getTime()));
+                    endJob = true;
+                  } else {
+                    System.out.println("New message " + simpleDateFormat.format(date.getTime()));
+                  }
+
+                }
+              }
             }
+            if (endJob) {
+              System.out.println("Ending job");
+              try {
+                j.end(0);
+              } catch (Exception e) {
+                String message = e.toString();
+                if (message.indexOf("not allowed") >= 0) {
+                  System.out.println("Job already ending");
+                } else {
+                  e.printStackTrace();
+                }
+              }
+            }
+          } catch (Exception e) {
+            System.out.println("Warning.. caught exception " + e.toString());
           }
+        } else {
+          System.out.println("-------------------");
+          System.out.println("CleanupQzdasoinitJobs: Skipping job " + j.getNumber() + "/" + j.getUser() + "/"
+              + j.getName() + "  for user " + user);
         }
-      } else {
-        System.out.println("-------------------");
-        System.out.println("Skipping job for " + user);
       }
     }
 
     System.out.println("-----------------------------------------");
-    System.out.println("Here are the users found on the system");
-    Enumeration<String> userEnumeration = userSet.keys();
-    while (userEnumeration.hasMoreElements()) {
-      System.out.println(userEnumeration.nextElement());
+    if (userSet.size() > 0) {
+      System.out.println("Here are the users found on the system");
+      Enumeration<String> userEnumeration = userSet.keys();
+      while (userEnumeration.hasMoreElements()) {
+        System.out.println(userEnumeration.nextElement());
+      }
+    } else {
+      System.out.println("No users were found on the system");
     }
 
+    as400.close();
   }
 
   public static void main(String args[]) {
@@ -142,11 +149,13 @@ public class CleanupQsqsrvrJobs {
         userid = args[1];
         password = args[2];
       }
-       cleanup(system,userid,password);
+      cleanup(system, userid, password);
+      System.exit(0);
 
     } catch (Exception e) {
       e.printStackTrace();
       usage();
+      System.exit(1);
     }
 
   }

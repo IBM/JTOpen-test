@@ -1774,6 +1774,7 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
 	      }
 
         }
+        list.close(); 
 	if (count == 0)  {
 	    failed("No journals were found on system.");
 	} else  {

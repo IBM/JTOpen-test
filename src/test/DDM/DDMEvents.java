@@ -428,6 +428,7 @@ public class DDMEvents extends Testcase
   {
     try
     {
+      lockSystem("DDMTESTSAV",600); 
       // Delete and recreate library DDMTEST
       CommandCall c = new CommandCall(systemObject_);
 	deleteLibrary(c, testLib_);
@@ -500,6 +501,7 @@ public class DDMEvents extends Testcase
   protected void cleanup()
     throws Exception
   {
+    unlockSystem(); 
     try
     {
       // Delete the files created during setup()

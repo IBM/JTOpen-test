@@ -73,9 +73,20 @@ public class RIFSFileBasicTestcase extends Testcase {
    * 
    * @exception Exception If an exception occurs.
    **/
-  protected void setup() throws Exception {
-    sandbox_ = new VIFSSandbox(systemObject_, "RIFSFBT");
+  String sandboxLib_ = "RIFSFBT";
+  protected void setup ()
+  throws Exception
+  {
+    if (testLib_ != null ) { 
+      int len = testLib_.length(); 
+      if (len >= 5) { 
+        sandboxLib_ = "RIFBT"+testLib_.substring(len-5); 
+      }
+    }
+
+      sandbox_ = new VIFSSandbox(systemObject_, sandboxLib_);
   }
+
 
   /**
    * Performs cleanup needed after running variations.

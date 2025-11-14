@@ -37,6 +37,7 @@ public class ObjectListTestcase extends Testcase {
     {
         try {
             ObjectList objectList = new ObjectList(systemObject_);
+            objectList.close();
             assertCondition(true, "Object list created"+objectList); 
             
         } catch (Exception e) {
@@ -53,6 +54,7 @@ public class ObjectListTestcase extends Testcase {
     {
         try {
             ObjectList objectList = new ObjectList(null);
+            objectList.close(); 
             failed("Exception didn't occur."+objectList);
         } catch (Exception e) {
             assertExceptionIs(e, "NullPointerException", "system");
@@ -69,6 +71,8 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.ALL,ObjectList.ALL,ObjectList.ALL);
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
+
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -83,6 +87,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             
             ObjectList objectList = new ObjectList(systemObject_,null,ObjectList.ALL,ObjectList.ALL);
+            objectList.close(); 
             failed("Exception didn't occur."+objectList);
         } catch (Exception e) {
             assertExceptionIs(e, "NullPointerException", "objectLibrary");
@@ -99,6 +104,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
@@ -116,6 +122,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.CURRENT_LIBRARY ,ObjectList.LIBRARY_LIST ,"*FILE");
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -131,6 +138,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.LIBRARY_LIST ,"QSYS","*LIB");
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -147,6 +155,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.LIBRARY_LIST ,ObjectList.IBM,"*LIB");
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
        } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -162,6 +171,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.USER_LIBRARY_LIST ,ObjectList.LIBRARY_LIST,"*FILE");
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -181,6 +191,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB",ObjectList.ASP_NAME_ALL );
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
        } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -201,6 +212,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.CURRENT_LIBRARY ,ObjectList.LIBRARY_LIST ,"*FILE",ObjectList.ASP_NAME_ALLAVL);
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
        } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -220,6 +232,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.LIBRARY_LIST ,"QSYS","*LIB",ObjectList.ASP_NAME_CURASPGRP);
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -239,6 +252,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objectList = new ObjectList(systemObject_,ObjectList.LIBRARY_LIST ,ObjectList.IBM,"*LIB",ObjectList.ASP_NAME_SYSBAS );
             assertCondition(true, "Object list created"+objectList); 
+            objectList.close(); 
         } catch (Exception e) {
             failed(e, "Unexpected exception.");
         }
@@ -250,11 +264,12 @@ public class ObjectListTestcase extends Testcase {
      * 
      */
     public void Var014(){
-
+        ObjectList objList = null; 
         try {
             
-            ObjectList objList=new ObjectList(systemObject_);
+            objList=new ObjectList(systemObject_);
             objList.addLibraryAuthorityCriteria(null);
+            objList.close(); 
             failed("Not Exception was thrown.");
 
         } catch (Exception e) {
@@ -276,6 +291,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_ALL);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -293,6 +309,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_CHANGE);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -310,6 +327,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_USE);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -327,6 +345,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_OBJECT_OPERATIONAL);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -344,6 +363,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_OBJECT_MANAGEMENT);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -361,6 +381,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_OBJECT_EXISTENCE);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -378,6 +399,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_OBJECT_ALTER );
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -397,6 +419,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_OBJECT_REFERENCE );
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -414,6 +437,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_DATA_READ);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -431,6 +455,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_DATA_ADD);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -448,6 +473,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_DATA_UPDATE);
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -465,6 +491,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_DATA_DELETE );
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -482,6 +509,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addLibraryAuthorityCriteria(ObjectList.AUTH_DATA_EXECUTE );
+            objList.close(); 
             succeeded();        
 
         } catch (Exception e) {
@@ -497,6 +525,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             objList.addLibraryAuthorityCriteria("MY_CRITERIA");
+            objList.close(); 
             failed("Didn't throw exception.");
         }
         catch(Exception e){
@@ -515,6 +544,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.ALLOW_CHANGE_BY_PROGRAM);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -531,6 +561,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.APAR);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -547,6 +578,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.AUDITING);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -563,6 +595,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.CHANGE_DATE);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -579,6 +612,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.CHANGED_BY_PROGRAM);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -595,6 +629,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.COMPILER);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -611,6 +646,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.COMPRESSION);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -627,6 +663,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.CREATION_DATE);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -643,6 +680,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.CREATOR_SYSTEM);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -659,6 +697,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.CREATOR_USER_PROFILE);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -675,6 +714,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.DAYS_USED);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -691,6 +731,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.DIGITALLY_SIGNED);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -707,6 +748,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.DIGITALLY_SIGNED_MULTIPLE);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -723,7 +765,8 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.DIGITALLY_SIGNED_TRUSTED);
-            succeeded();
+            objList.close(); 
+            succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding DIGITALLY_SIGNED_TRUSTED attribute.");
@@ -739,7 +782,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.DOMAIN);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding DOMAIN attribute.");
@@ -755,7 +798,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.EXTENDED_ATTRIBUTE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding EXTENDED_ATTRIBUTE attribute.");
@@ -771,7 +814,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.JOURNAL);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL attribute.");
@@ -787,7 +830,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.JOURNAL_IMAGES);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL_IMAGES attribute.");
@@ -803,7 +846,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.JOURNAL_OMITTED_ENTRIES);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL_OMITTED_ENTRIES attribute.");
@@ -819,7 +862,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.JOURNAL_START_DATE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL_START_DATE attribute.");
@@ -835,7 +878,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.JOURNAL_STATUS);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL_STATUS attribute.");
@@ -851,7 +894,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.LAST_USED_DATE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LAST_USED_DATE attribute.");
@@ -867,7 +910,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.LIBRARY);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LIBRARY attribute.");
@@ -883,7 +926,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.LIBRARY_ASP_DEVICE_NAME);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LIBRARY_ASP_DEVICE_NAME attribute.");
@@ -899,7 +942,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.LIBRARY_ASP_NUMBER);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LIBRARY_ASP_NUMBER attribute.");
@@ -915,7 +958,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.LICENSED_PROGRAM);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LICENSED_PROGRAM attribute.");
@@ -931,7 +974,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.NAME);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding NAME attribute.");
@@ -947,7 +990,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.OBJECT_ASP_DEVICE_NAME);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OBJECT_ASP_DEVICE_NAME attribute.");
@@ -963,7 +1006,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.OBJECT_ASP_NUMBER);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OBJECT_ASP_NUMBER attribute.");
@@ -979,7 +1022,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.OBJECT_LEVEL);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OBJECT_LEVEL attribute.");
@@ -995,7 +1038,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.OBJECT_SIZE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OBJECT_SIZE attribute.");
@@ -1011,7 +1054,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.ORDER_IN_LIBRARY_LIST);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding ORDER_IN_LIBRARY_LIST attribute.");
@@ -1027,7 +1070,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.OVERFLOWED_ASP);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OVERFLOWED_ASP attribute.");
@@ -1043,7 +1086,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.OWNER);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OWNER attribute.");
@@ -1059,7 +1102,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.PRIMARY_GROUP);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding PRIMARY_GROUP attribute.");
@@ -1075,7 +1118,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.PTF);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding PTF attribute.");
@@ -1092,7 +1135,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.RESET_DATE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding RESET_DATE attribute.");
@@ -1108,7 +1151,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.RESTORE_DATE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding RESTORE_DATE attribute.");
@@ -1124,7 +1167,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_ACTIVE_DATE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_ACTIVE_DATE attribute.");
@@ -1141,7 +1184,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_COMMAND);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_COMMAND attribute.");
@@ -1157,7 +1200,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_DATE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_DATE attribute.");
@@ -1173,7 +1216,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_DEVICE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_DEVICE attribute.");
@@ -1189,7 +1232,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_FILE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_FILE attribute.");
@@ -1205,7 +1248,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_LABEL);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_LABEL attribute.");
@@ -1221,7 +1264,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_SEQUENCE_NUMBER);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_SEQUENCE_NUMBER attribute.");
@@ -1237,7 +1280,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_SIZE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_SIZE attribute.");
@@ -1253,7 +1296,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SAVE_VOLUME_ID);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_VOLUME_ID attribute.");
@@ -1269,7 +1312,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SOURCE_FILE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SOURCE_FILE attribute.");
@@ -1285,7 +1328,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SOURCE_FILE_UPDATED_DATE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SOURCE_FILE_UPDATED_DATE attribute.");
@@ -1301,7 +1344,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.STORAGE_STATUS);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding STORAGE_STATUS attribute.");
@@ -1317,7 +1360,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.SYSTEM_LEVEL);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SYSTEM_LEVEL attribute.");
@@ -1333,7 +1376,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.TEXT_DESCRIPTION);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding TEXT_DESCRIPTION attribute.");
@@ -1349,7 +1392,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.TYPE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding TYPE attribute.");
@@ -1365,7 +1408,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.USAGE_INFO_UPDATED);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding USAGE_INFO_UPDATED attribute.");
@@ -1381,7 +1424,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.USER_CHANGED);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding USER_CHANGED attribute.");
@@ -1397,7 +1440,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToRetrieve(ObjectDescription.USER_DEFINED_ATTRIBUTE);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding USER_DEFINED_ATTRIBUTE attribute.");
@@ -1412,6 +1455,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             objList.addObjectAttributeToRetrieve(-98764);
+            objList.close(); 
             failed("Didn't throw exception.");
         }
         catch(Exception e){
@@ -1429,7 +1473,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.ALLOW_CHANGE_BY_PROGRAM,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding ALLOW_CHANGE_BY_PROGRAM attribute.");
@@ -1445,7 +1489,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.APAR,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding APAR attribute.");
@@ -1461,7 +1505,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.AUDITING,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding AUDITING attribute.");
@@ -1477,7 +1521,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.CHANGE_DATE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding CHANGE_DATE attribute.");
@@ -1493,7 +1537,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.CHANGED_BY_PROGRAM,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding CHANGED_BY_PROGRAM attribute.");
@@ -1509,7 +1553,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.COMPILER,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding COMPILER attribute.");
@@ -1525,7 +1569,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.COMPRESSION,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding COMPRESSION attribute.");
@@ -1541,7 +1585,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.CREATION_DATE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding CREATION_DATE attribute.");
@@ -1557,7 +1601,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.CREATOR_SYSTEM,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding CREATOR_SYSTEM attribute.");
@@ -1573,7 +1617,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.CREATOR_USER_PROFILE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding CREATOR_USER_PROFILE attribute.");
@@ -1589,7 +1633,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.DAYS_USED,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding DAYS_USED attribute.");
@@ -1605,7 +1649,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.DIGITALLY_SIGNED,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding DIGITALLY_SIGNED attribute.");
@@ -1621,7 +1665,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.DIGITALLY_SIGNED_MULTIPLE,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding DIGITALLY_SIGNED_MULTIPLE attribute.");
@@ -1637,7 +1681,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.DIGITALLY_SIGNED_TRUSTED,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding DIGITALLY_SIGNED_TRUSTED attribute.");
@@ -1653,7 +1697,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.DOMAIN,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding DOMAIN attribute.");
@@ -1669,7 +1713,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.EXTENDED_ATTRIBUTE,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding EXTENDED_ATTRIBUTE attribute.");
@@ -1685,7 +1729,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.JOURNAL,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL attribute.");
@@ -1701,7 +1745,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.JOURNAL_IMAGES,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL_IMAGES attribute.");
@@ -1717,7 +1761,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.JOURNAL_OMITTED_ENTRIES,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL_OMITTED_ENTRIES attribute.");
@@ -1733,7 +1777,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.JOURNAL_START_DATE,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL_START_DATE attribute.");
@@ -1749,7 +1793,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.JOURNAL_STATUS,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding JOURNAL_STATUS attribute.");
@@ -1765,7 +1809,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.LAST_USED_DATE,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LAST_USED_DATE attribute.");
@@ -1781,6 +1825,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.LIBRARY,false);
+            objList.close(); 
             failed("Didn't throw exception.");
 
         } catch (Exception e) {
@@ -1797,7 +1842,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.LIBRARY_ASP_DEVICE_NAME,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LIBRARY_ASP_DEVICE_NAME attribute.");
@@ -1813,7 +1858,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.LIBRARY_ASP_NUMBER,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LIBRARY_ASP_NUMBER attribute.");
@@ -1829,7 +1874,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.LICENSED_PROGRAM,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding LICENSED_PROGRAM attribute.");
@@ -1845,6 +1890,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.NAME,false);
+            objList.close(); 
             failed("Didn't throw exception.");
 
         } catch (Exception e) {
@@ -1861,7 +1907,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.OBJECT_ASP_DEVICE_NAME,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OBJECT_ASP_DEVICE_NAME attribute.");
@@ -1877,7 +1923,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.OBJECT_ASP_NUMBER,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OBJECT_ASP_NUMBER attribute.");
@@ -1893,7 +1939,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.OBJECT_LEVEL,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OBJECT_LEVEL attribute.");
@@ -1909,7 +1955,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.OBJECT_SIZE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OBJECT_SIZE attribute.");
@@ -1925,7 +1971,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.ORDER_IN_LIBRARY_LIST,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding ORDER_IN_LIBRARY_LIST attribute.");
@@ -1941,7 +1987,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.OVERFLOWED_ASP,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OVERFLOWED_ASP attribute.");
@@ -1957,7 +2003,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.OWNER,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding OWNER attribute.");
@@ -1973,7 +2019,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.PRIMARY_GROUP,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding PRIMARY_GROUP attribute.");
@@ -1989,7 +2035,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.PTF,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding PTF attribute.");
@@ -2006,7 +2052,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.RESET_DATE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding RESET_DATE attribute.");
@@ -2022,7 +2068,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.RESTORE_DATE,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding RESTORE_DATE attribute.");
@@ -2038,7 +2084,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_ACTIVE_DATE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_ACTIVE_DATE attribute.");
@@ -2055,7 +2101,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_COMMAND,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_COMMAND attribute.");
@@ -2071,7 +2117,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_DATE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_DATE attribute.");
@@ -2087,7 +2133,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_DEVICE,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_DEVICE attribute.");
@@ -2103,7 +2149,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_FILE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_FILE attribute.");
@@ -2119,7 +2165,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_LABEL,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_LABEL attribute.");
@@ -2135,7 +2181,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_SEQUENCE_NUMBER,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_SEQUENCE_NUMBER attribute.");
@@ -2151,7 +2197,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_SIZE,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_SIZE attribute.");
@@ -2167,7 +2213,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SAVE_VOLUME_ID,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SAVE_VOLUME_ID attribute.");
@@ -2183,7 +2229,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SOURCE_FILE,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SOURCE_FILE attribute.");
@@ -2199,7 +2245,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SOURCE_FILE_UPDATED_DATE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SOURCE_FILE_UPDATED_DATE attribute.");
@@ -2215,7 +2261,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.STORAGE_STATUS,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding STORAGE_STATUS attribute.");
@@ -2231,7 +2277,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.SYSTEM_LEVEL,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding SYSTEM_LEVEL attribute.");
@@ -2247,7 +2293,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.TEXT_DESCRIPTION,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding TEXT_DESCRIPTION attribute.");
@@ -2263,6 +2309,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.TYPE,true);
+            objList.close(); 
             failed("Didn't throw exception.");
 
         } catch (Exception e) {
@@ -2279,7 +2326,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.USAGE_INFO_UPDATED,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding USAGE_INFO_UPDATED attribute.");
@@ -2295,7 +2342,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.USER_CHANGED,true);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding USER_CHANGED attribute.");
@@ -2311,7 +2358,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAttributeToSortOn(ObjectDescription.USER_DEFINED_ATTRIBUTE,false);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding USER_DEFINED_ATTRIBUTE attribute.");
@@ -2326,6 +2373,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             objList.addObjectAttributeToSortOn(-31765, false);
+            objList.close(); 
             failed("Didn't throw exception.");
         }
         catch(Exception e){
@@ -2342,11 +2390,12 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(null);
+            objList.close();
             failed("Exception didn't occur");
 
         } catch (Exception e) {
             if (exceptionIs(e, "NullPointerException")) {
-                succeeded();
+                 succeeded(); 
             } else {
                 failed(e, "Wrong exception info.");
             }
@@ -2362,7 +2411,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_ALL);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding AUTH_ALL attribute.");
@@ -2378,7 +2427,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_CHANGE );
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding AUTH_CHANGE attribute.");
@@ -2394,7 +2443,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_USE );
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Wrong exception info, adding AUTH_USE attribute.");
@@ -2410,7 +2459,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_LIST_MANAGEMENT  );
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding AUTH_LIST_MANAGEMENT  attribute, check object type *AUTL.");
@@ -2426,7 +2475,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_OBJECT_OPERATIONAL );
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding AUTH_USE authority.");
@@ -2442,7 +2491,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_OBJECT_MANAGEMENT );
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding AUTH_OBJECT_MANAGEMENT  authority.");
@@ -2458,7 +2507,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_OBJECT_EXISTENCE );
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding AUTH_OBJECT_EXISTENCE  authority.");
@@ -2480,7 +2529,7 @@ public class ObjectListTestcase extends Testcase {
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_DATA_UPDATE   );
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_DATA_DELETE   );
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_DATA_EXECUTE  );
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding several authorities.");
@@ -2497,10 +2546,11 @@ public class ObjectListTestcase extends Testcase {
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_ANY );
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_DATA_READ  );
+            objList.close();
             failed("Didn't throw exception.");
 
         } catch (Exception e) {
-            succeeded();           
+             succeeded();            
             //failed(e, "Failed, adding AUTH_ANY authority.");
         }
     }
@@ -2513,6 +2563,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             objList.addObjectAuthorityCriteria("MY_CRITERIA");
+            objList.close();
             failed("Didn't throw exception.");
         }
         catch(Exception e){
@@ -2529,7 +2580,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectSelectionCriteria(ObjectDescription.STATUS_NO_AUTHORITY);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding STATUS_NO_AUTHORITY  status.");
@@ -2545,7 +2596,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.addObjectSelectionCriteria(ObjectDescription.STATUS_DAMAGED);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding STATUS_DAMAGED status.");
@@ -2561,7 +2612,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.addObjectSelectionCriteria(ObjectDescription.STATUS_LOCKED);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding STATUS_LOCKED status.");
@@ -2577,7 +2628,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.addObjectSelectionCriteria(ObjectDescription.STATUS_PARTIALLY_DAMAGED);
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding STATUS_PARTIALLY_DAMAGED status.");
@@ -2593,7 +2644,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.addObjectSelectionCriteria(ObjectList.STATUS_ANY );
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, adding STATUS_ANY status.");
@@ -2608,7 +2659,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             objList.addObjectSelectionCriteria((byte)0xFF);
-            failed("Didn't throw exception.");
+            objList.close();            failed("Didn't throw exception.");
         }
         catch(Exception e){
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -2625,7 +2676,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.clearLibraryAuthorityCriteria();
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, cleaning library authority criteria.");
@@ -2641,7 +2692,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.clearObjectAttributesToRetrieve();
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, cleaning attributes to retrieve.");
@@ -2657,7 +2708,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.clearObjectAttributesToSortOn();
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, cleaning attributes to sort on.");
@@ -2673,7 +2724,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.clearObjectAuthorityCriteria();
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, cleaning authority criteria.");
@@ -2689,7 +2740,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_);
             objList.clearObjectSelectionCriteria();
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed, cleaning object selection criteria.");
@@ -2706,8 +2757,7 @@ public class ObjectListTestcase extends Testcase {
             
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectSelectionCriteria(ObjectDescription.STATUS_LOCKED);
-            objList.close();
-            succeeded();
+            objList.close(); succeeded(); 
 
         } catch (Exception e) {
             failed(e, "Failed,problems to close object.");
@@ -2720,13 +2770,14 @@ public class ObjectListTestcase extends Testcase {
      */
     public void Var166(){   
         try {
-            
+            boolean passed = false; 
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             String aspDevice=objList.getAspDeviceName();
             if (aspDevice==null) {
-                succeeded();
+                passed = true; 
             }
-
+            objList.close(); 
+            assertCondition(passed); 
         } catch (Exception e) {
             failed(e, "Unexpected Exception.");
         }
@@ -2738,12 +2789,18 @@ public class ObjectListTestcase extends Testcase {
      */
     public void Var167(){
         try{
+            boolean passed = false; 
+            String msg = ""; 
             ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL_USER, ObjectList.ALL_USER, "*LIB", "MY_ASPNAME");
             String aspDevice = objList.getAspDeviceName();
             if(aspDevice.equals("MY_ASPNAME"))
-                succeeded();
-            else
-                failed("MY_ASPNAME != " + aspDevice);
+                passed = true ;
+            else {
+              passed = false; 
+              msg = "MY_ASPNAME != " + aspDevice;
+            }
+            objList.close(); 
+            assertCondition(passed, msg); 
         }
         catch(Exception e){
             failed("Unexpected exception.");
@@ -2765,7 +2822,7 @@ public class ObjectListTestcase extends Testcase {
             } else {
                 failed("no ASP search type name has been set.");
             }
-
+            objList.close(); 
         } catch (Exception e) {
             if (exceptionIs(e, "ExtendedIllegalArgumentException")) {
                 failed(e,"Failed to set ASPSearchType");
@@ -2783,6 +2840,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             String aspSearchType = objList.getAspSearchType();
+            objList.close();
             if(aspSearchType == ObjectList.ASP_SEARCH_TYPE_ASP)
                 succeeded();
             else
@@ -2815,6 +2873,7 @@ public class ObjectListTestcase extends Testcase {
             } else {
                 failed("Problems obtaining list of objects.");
             }
+            objList.close(); 
 
         } catch (Exception e) {
             failed(e,"Failed trying to get object list.");      
@@ -2835,6 +2894,7 @@ public class ObjectListTestcase extends Testcase {
             } else {
                 failed("Problems obtaining library used to filter this list.");
             }
+            objList.close(); 
 
         } catch (Exception e) {
             failed(e,"Failed trying to get library used to filter this list.");         
@@ -2855,6 +2915,7 @@ public class ObjectListTestcase extends Testcase {
             } else {
                 failed("Problems obtaining the object name used to filter this list.");
             }
+            objList.close(); 
 
         } catch (Exception e) {
             failed(e,"Failed trying to get the object name used to filter this list.");         
@@ -2881,6 +2942,7 @@ public class ObjectListTestcase extends Testcase {
             } else {
                 failed("No objects returned in the list");
             }
+            objList.close(); 
 
         } catch (Exception e) {
             failed(e,"Failed trying to get he list of objects in the object list.");        
@@ -2903,6 +2965,7 @@ public class ObjectListTestcase extends Testcase {
             }
             else
                 failed("objs = null");
+            objList.close(); 
         } catch (Exception e) {
             failed(e,"Failed trying to get the subset list of objects.");       
         }
@@ -2921,6 +2984,7 @@ public class ObjectListTestcase extends Testcase {
             }
             else
                 failed("objs = null");
+            objList.close(); 
         }
         catch(Exception e){
             failed(e, "Unexpected exception.");
@@ -2937,6 +3001,7 @@ public class ObjectListTestcase extends Testcase {
             ObjectList objList = new ObjectList(systemObject_);
             ObjectDescription[] objs = objList.getObjects(-2, 1);
             failed("Didn't throw exception."+objs);
+            objList.close(); 
         }
         catch(Exception e){
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -2954,6 +3019,7 @@ public class ObjectListTestcase extends Testcase {
 		ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL,ObjectList.ALL,"*LIB");
 		ObjectDescription[] objs = objList.getObjects(0,1);
 	        assertCondition(true, "Objects returned "+objs); 
+	            objList.close(); 
 	    }
 	    catch(Exception e){
 		failed(e, "Unexpected exception.");                   //@A1A
@@ -2970,6 +3036,7 @@ public class ObjectListTestcase extends Testcase {
             ObjectList objList = new ObjectList(systemObject_);
             ObjectDescription[] objs = objList.getObjects(0,-1);
             failed("Didn't throw exception."+objs);
+            objList.close(); 
         }
         catch(Exception e){
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -2985,6 +3052,7 @@ public class ObjectListTestcase extends Testcase {
             ObjectList objList = new ObjectList(systemObject_);
             ObjectDescription[] objs = objList.getObjects(0,-99);
             failed("Didn't throw exception."+objs);
+            objList.close(); 
         }
         catch(Exception e){
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -3002,7 +3070,11 @@ public class ObjectListTestcase extends Testcase {
             AS400 system=objList.getSystem();
             if (system != null) {
                 succeeded();
+            } else {
+              failed(); 
             }
+            objList.close(); 
+
         } catch (Exception e) {
             failed(e,"Failed trying to get the system.");       
         }
@@ -3019,7 +3091,11 @@ public class ObjectListTestcase extends Testcase {
             String type=objList.getType();
             if (type != null && !type.equals("")) {
                 succeeded();
+            } else {
+              failed(); 
             }
+            objList.close(); 
+
         } catch (Exception e) {
             failed(e,"Failed trying to get the type used to filter this list.");        
         }
@@ -3034,6 +3110,7 @@ public class ObjectListTestcase extends Testcase {
                   
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.load();
+            objList.close(); 
             succeeded();
         } catch (Exception e) {
             failed(e,"Failed trying to load the system objects.");      
@@ -3054,6 +3131,7 @@ public class ObjectListTestcase extends Testcase {
             } else {
                 failed("AspSearchType obtained is not the expected.");
             }
+            objList.close(); 
 
         } catch (Exception e) {
             if (exceptionIs(e, "ExtendedIllegalArgumentException")) {
@@ -3073,6 +3151,7 @@ public class ObjectListTestcase extends Testcase {
                   
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.setAspSearchType(null);         
+            objList.close(); 
             failed("Didn't throw exception."); 
 
 
@@ -3097,6 +3176,7 @@ public class ObjectListTestcase extends Testcase {
                   
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.setObjectSelection(true);
+            objList.close(); 
             succeeded();
 
         } catch (Exception e) {
@@ -3140,6 +3220,7 @@ public class ObjectListTestcase extends Testcase {
         try{
             ObjectList objList = new ObjectList(systemObject_);
             ObjectDescription[] objs = objList.getObjects(-2,1);
+            objList.close(); 
             failed("Didn't throw exception."+objs);
         }
         catch(Exception e){
@@ -3158,6 +3239,7 @@ public class ObjectListTestcase extends Testcase {
             ObjectList objList=new ObjectList(systemObject_,ObjectList.ALL_USER,ObjectList.ALL_USER,"*LIB");
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_DATA_READ  );
             objList.addObjectAuthorityCriteria(ObjectList.AUTH_ANY );
+            objList.close(); 
             failed("Didn't throw exception.");
 
         } catch (Exception e) {
@@ -3180,6 +3262,7 @@ public class ObjectListTestcase extends Testcase {
 	{
 	    //System.out.println("myOL.len="+myOL.getLength());
 	    ObjectDescription[] myODs = myOL.getObjects(1, 1);
+	    myOL.close(); 
             assertCondition(true, "Objects returned "+myODs); 
 	}
 	catch (Exception e)
@@ -3188,6 +3271,7 @@ public class ObjectListTestcase extends Testcase {
 	    System.out.println("Message : "+ e.getMessage());
 	    failed(e, "Exception should NOT have been thrown.");        
 	}
+
     }
 
     /**
@@ -3198,12 +3282,14 @@ public class ObjectListTestcase extends Testcase {
         try {
 
             ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL, ObjectList.ALL, "*LIB");
-            List<ObjectDescription> objdes = objList.getObjectsList();
+            @SuppressWarnings("unchecked")
+            List<ObjectDescription> objdes = (List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList");
             if (objdes != null) {
                 succeeded();
             } else {
                 failed("objs = null");
             }
+            objList.close(); 
         } catch (Exception e) {
             failed(e, "Failed trying to get the subset list of objects.");
         }
@@ -3216,7 +3302,8 @@ public class ObjectListTestcase extends Testcase {
     public void Var191() {
         try {
             ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL, ObjectList.ALL, "*LIB");
-            List<ObjectDescription> objs = objList.getObjectsList(-1, -1);
+            @SuppressWarnings("unchecked")
+            List<ObjectDescription> objs = (List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) -1, -1);
             if (objs != null) {
                 succeeded();
             } else {
@@ -3235,7 +3322,8 @@ public class ObjectListTestcase extends Testcase {
     public void Var192() {
         try {
             ObjectList objList = new ObjectList(systemObject_);
-            List<ObjectDescription> objs = objList.getObjectsList(-2, 1);
+            @SuppressWarnings("unchecked")
+            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) -2, 1);
             failed("Didn't throw exception." + objs);
         } catch (Exception e) {
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -3251,7 +3339,8 @@ public class ObjectListTestcase extends Testcase {
             try {
                 // ObjectList objList = new ObjectList(systemObject_);
                 ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL, ObjectList.ALL, "*LIB");
-                List<ObjectDescription> objs = objList.getObjectsList(0, 1);
+                @SuppressWarnings("unchecked")
+                List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) 0, 1);
                 assertCondition(true, "Objects returned " + objs);
             } catch (Exception e) {
                 failed(e, "Unexpected exception.");                   //@A1A
@@ -3266,7 +3355,8 @@ public class ObjectListTestcase extends Testcase {
     public void Var194() {
         try {
             ObjectList objList = new ObjectList(systemObject_);
-            List<ObjectDescription> objs = objList.getObjectsList(0, -1);
+            @SuppressWarnings("unchecked")
+            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) 0, -1);
             failed("Didn't throw exception." + objs);
         } catch (Exception e) {
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -3280,7 +3370,8 @@ public class ObjectListTestcase extends Testcase {
     public void Var195() {
         try {
             ObjectList objList = new ObjectList(systemObject_);
-            List<ObjectDescription> objs = objList.getObjectsList(0, -99);
+            @SuppressWarnings("unchecked")
+            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) 0, -99);
             failed("Didn't throw exception." + objs);
         } catch (Exception e) {
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");

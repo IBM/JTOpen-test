@@ -84,6 +84,9 @@ public class RFSerialization extends Testcase
   **/
   public void run()
   {
+    try { 
+    lockSystem("DDMTESTSAV",600); 
+
     boolean allVariations = (variationsToRun_.size() == 0);
 
     if ((allVariations || variationsToRun_.contains("1")) &&
@@ -121,6 +124,10 @@ public class RFSerialization extends Testcase
     {
       setVariation(6);
       Var006();
+    }
+    unlockSystem(); 
+    } catch (Exception e) { 
+      e.printStackTrace(); 
     }
   }
 

@@ -24,7 +24,6 @@ import com.ibm.as400.access.ObjectDoesNotExistException;
 
 import test.ConnectionDropper;
 import test.DQTest;
-import test.JDJobName;
 import test.JDTestDriver;
 import test.Testcase;
 

@@ -158,7 +158,7 @@ public abstract class Testcase {
                                                                 // variation
                                                                 // started
   protected boolean skipCleanup;
-  private String lockDtaaraName_;
+  private String lockDtaaraName_ = null;
 
   protected static boolean debug = false;
   static { 
@@ -2935,6 +2935,9 @@ public abstract class Testcase {
 
   public void lockSystem(String lockDtaaraName, int lockSeconds)
       throws Exception {
+    if (lockDtaaraName_ != null) { 
+      throw new Exception("Nested locking -- already locked "+lockDtaaraName_); 
+    }
     lockDtaaraName_ = lockDtaaraName;
     AS400 system;
     if (pwrSys_ != null) {
@@ -3033,24 +3036,27 @@ public abstract class Testcase {
                 System.out.println("/QSYS.LIB/JDTESTINFO.LIB/"+lockDtaaraName_+".DTAARA locked by "+jobname); 
                 Job job = new Job(system, entry.getJobName(), entry.getJobUserName(), entry.getJobNumber());
                 JobLog joblog = job.getJobLog(); 
-                QueuedMessage[] messages = joblog.getMessages(-1, 999999); 
-
-                QueuedMessage lastMessage = messages[messages.length-1]; 
-                
-                Calendar date = lastMessage.getDate();
-                Timestamp ts = new Timestamp(date.getTime().getTime()); 
-                System.out.println("lastMessage date = "+ts); 
+                QueuedMessage[] messages = joblog.getMessages(-1, 999999);
+                long sentMillis = 0; 
+                if (messages.length > 0) {
+                  QueuedMessage lastMessage = messages[messages.length - 1];
+                  Calendar date = lastMessage.getDate();
+                  Timestamp ts = new Timestamp(date.getTime().getTime());
+                  System.out.println("lastMessage date = " + ts);
+                  sentMillis = date.getTimeInMillis(); 
+                }
                 Calendar signonDate = system.getSignonDate(); 
                 Timestamp signonTs = new Timestamp(signonDate.getTime().getTime()); 
                 
-                System.out.println("signonDate = "+signonTs); 
-                long sentMillis = date.getTimeInMillis(); 
-                long signonMillis = signonDate.getTimeInMillis();
-                long elapsedMillis = signonMillis  - sentMillis; 
-                if ( elapsedMillis > 3600 * 1000 ) {
-                  // If longer than 1 hour -- Let's kill the job 
-                  job.end(0);   
-                  i=objectLockList.length; 
+                System.out.println("signonDate = " + signonTs);
+                if (sentMillis > 0) {
+                  long signonMillis = signonDate.getTimeInMillis();
+                  long elapsedMillis = signonMillis - sentMillis;
+                  if (elapsedMillis > 3600 * 1000) {
+                    // If longer than 1 hour -- Let's kill the job
+                    job.end(0);
+                    i = objectLockList.length;
+                  }
                 }
                 Thread.sleep(10000);
              }

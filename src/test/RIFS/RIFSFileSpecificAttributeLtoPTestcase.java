@@ -90,6 +90,7 @@ Constructor.
     }
 
 
+    String sandboxLib_ = "RIFSFSAAI"; 
 
 /**
 Performs setup needed before running variations.
@@ -99,7 +100,14 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
-        sandbox_ = new VIFSSandbox(systemObject_, "RIFSFSAAI");
+      if (testLib_ != null ) { 
+        int len = testLib_.length(); 
+        if (len >= 5) { 
+          sandboxLib_ = "RIAAI"+testLib_.substring(len-5); 
+        }
+      }
+
+        sandbox_ = new VIFSSandbox(systemObject_, sandboxLib_);
     }
 
 

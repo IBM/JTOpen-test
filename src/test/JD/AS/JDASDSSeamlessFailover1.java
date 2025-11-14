@@ -30,6 +30,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDataSource;
 
 import test.JDASTest;
+import test.PasswordVault;
 import test.SocketProxy;
 
 /**
@@ -80,7 +81,9 @@ public class JDASDSSeamlessFailover1 extends JDASSeamlessFailover {
             + ";retryIntervalForClientReroute=1";
 
         sb.append("Connecting to " + url + "\n");
-        AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost", systemObject_.getUserId(), encryptedPassword_);
+        char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword_);
+        AS400JDBCDataSource ds = new AS400JDBCDataSource("localhost", systemObject_.getUserId(), clearPassword);
+        PasswordVault.clearPassword(clearPassword);
         ds.setPortNumber(localPort);;
         ds.setEnableClientAffinitiesList(1);
         ds.setEnableSeamlessFailover(1);

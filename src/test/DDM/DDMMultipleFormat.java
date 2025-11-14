@@ -191,6 +191,8 @@ public class DDMMultipleFormat extends Testcase
   {
     try
     {
+      lockSystem("DDMTESTSAV",600); 
+
       fileName_ = "/qsys.lib/ddmtestsav.lib/mltfmt.file/%file%.mbr";
       // Verify the existence of library DDMTESTSAV on the system
       CommandCall c = new CommandCall(pwrSys_, "CHKOBJ OBJ(DDMTESTSAV) OBJTYPE(*LIB)");
@@ -290,6 +292,7 @@ public class DDMMultipleFormat extends Testcase
   protected void cleanup()
     throws Exception
   {
+    unlockSystem(); 
   }
 
   /**

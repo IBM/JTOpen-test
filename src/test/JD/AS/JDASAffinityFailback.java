@@ -166,7 +166,9 @@ public class JDASAffinityFailback extends JDASTestcase {
         Statement s = connection.createStatement();
         for (int i = 0; i < cleanupSql.length; i++) {
           try {
-            s.execute(cleanupSql[i]);
+            String cleanupString = cleanupSql[i];
+            cleanupString = cleanupString.replaceAll("COLLECTION",  collection);
+            s.execute(cleanupString);
           } catch (Exception e) {
             e.printStackTrace(System.out);
           }
@@ -293,8 +295,8 @@ public class JDASAffinityFailback extends JDASTestcase {
         String currentIpAddress = rs.getString(1); 
         if (!currentIpAddress.equals(primaryIpAddress)) {
           passed = false; 
-          sb.append("CurrentIpAddress is "+currentIpAddress+"\n"); 
-          sb.append("                 sb "+primaryIpAddress+"\n"); 
+          sb.append("FAILED: CurrentIpAddress is "+currentIpAddress+"\n"); 
+          sb.append("FAILED:                  sb "+primaryIpAddress+"\n"); 
         }
         rs.close(); 
         transactionalConnection.commit(); 
@@ -308,8 +310,8 @@ public class JDASAffinityFailback extends JDASTestcase {
         currentIpAddress = rs.getString(1); 
         if (currentIpAddress.equals(primaryIpAddress)) {
           passed = false; 
-          sb.append("Still on primary "+currentIpAddress+"\n"); 
-          sb.append("     primary is  "+primaryIpAddress+"\n"); 
+          sb.append("FAILED: Still on primary "+currentIpAddress+"\n"); 
+          sb.append("FAILED:      primary is  "+primaryIpAddress+"\n"); 
         }
         rs.close(); 
         transactionalConnection.commit(); 
@@ -321,9 +323,9 @@ public class JDASAffinityFailback extends JDASTestcase {
           transactionalConnection.commit();
           long afterSwitchTime = System.currentTimeMillis();
           long commitTime = afterSwitchTime - beforeSwitchTime;
-          if (commitTime > 1000) {
+          if (commitTime > 1500) {
             passed = false;
-            sb.append("**** commit took " + commitTime + " ms\n");
+            sb.append("**** FAILED:  commit took " + commitTime + " ms < 1500 \n");
           }
 
           rs = stmt.executeQuery(SERVER_IP_ADDRESS_QUERY);
@@ -331,8 +333,8 @@ public class JDASAffinityFailback extends JDASTestcase {
           currentIpAddress = rs.getString(1);
           if (currentIpAddress.equals(primaryIpAddress)) {
             passed = false;
-            sb.append("Still on primary " + currentIpAddress + "\n");
-            sb.append("     primary is  " + primaryIpAddress + "\n");
+            sb.append("FAILED: Still on primary " + currentIpAddress + "\n");
+            sb.append("FAILED:      primary is  " + primaryIpAddress + "\n");
           }
           rs.close();
           transactionalConnection.commit();

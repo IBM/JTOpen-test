@@ -53,9 +53,11 @@ public class SetupRLA extends SetupLibraryTestcase
   {
     try
     {
+      lockSystem("DDMTESTSAV",600); 
 
       restoreLibrary("ddmtestsav.savf", "DDMTESTSAV"); 
 
+      unlockSystem(); 
       output_.println("Setup of RLATestcase on "+pwrSys_.getSystemName()+" is complete.");
       succeeded();
     }
