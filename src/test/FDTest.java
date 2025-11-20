@@ -113,7 +113,7 @@ Creates Testcase objects for all the testcases in this component.
         new FDConstructAndGet(systemObject_,
                       namesAndVars_.get("FDConstructAndGet"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("FDConstructAndGet");
     }
 
@@ -123,7 +123,7 @@ Creates Testcase objects for all the testcases in this component.
         new FDInvUsage(systemObject_,
                       namesAndVars_.get("FDInvUsage"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("FDInvUsage");
     }
 
@@ -133,7 +133,7 @@ Creates Testcase objects for all the testcases in this component.
         new FDSet(systemObject_,
                       namesAndVars_.get("FDSet"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("FDSet");
     }
 
@@ -143,7 +143,7 @@ Creates Testcase objects for all the testcases in this component.
         new FDSerialization(systemObject_,
                       namesAndVars_.get("FDSerialization"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("FDSerialization");
     }
 

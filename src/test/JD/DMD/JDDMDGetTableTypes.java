@@ -76,7 +76,6 @@ public class JDDMDGetTableTypes extends JDTestcase {
 
 
     // Private data.
-    private Connection          connection_;
     private Connection          closedConnection_;
     private DatabaseMetaData    dmd_;
     private DatabaseMetaData    dmd2_;
@@ -148,6 +147,8 @@ Performs cleanup needed after running variations.
         throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

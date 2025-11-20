@@ -80,7 +80,6 @@ public class JDDMDTest
    /**
 	 * 
 	 */
-	public static final long serialVersionUID = 1L;
 // Constants.
    public static  String COLLECTION     = "JDTSTDMD";
    public static  String COLLECTION2    = "JDTSTDMD2";

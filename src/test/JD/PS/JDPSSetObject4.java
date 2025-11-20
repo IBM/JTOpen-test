@@ -66,7 +66,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private Statement           statement_;
 
     private Connection          connectionCommaSeparator_;
@@ -117,6 +116,8 @@ extends JDTestcase
     {
         statement_.close ();
         connection_.close ();
+        connection_ = null; 
+
         connectionCommaSeparator_.close ();
     }
 

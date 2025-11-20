@@ -94,7 +94,7 @@ Creates Testcase objects for all the testcases in this component.
 //                    (Vector) namesAndVars_.get("SetupJDBC"), runMode_,
 //                     fileOutputStream_, password_,
 //                     pwrSys_, pwrPwd_, rs6000_, rsUserId_, rsPassword_);
-//      testcases_.addElement(tc);
+//      addTestcase(tc);
 //      namesAndVars_.remove("SetupJDBC");
 //    }
 
@@ -105,7 +105,7 @@ Creates Testcase objects for all the testcases in this component.
                       namesAndVars_.get("SetupNLS"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("SetupNLS");
     }
 
@@ -116,7 +116,7 @@ Creates Testcase objects for all the testcases in this component.
                      namesAndVars_.get("SetupJobLog"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("SetupJobLog");
     }
 
@@ -127,7 +127,7 @@ Creates Testcase objects for all the testcases in this component.
                      namesAndVars_.get("SetupRLA"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("SetupRLA");
     }
 
@@ -138,7 +138,7 @@ Creates Testcase objects for all the testcases in this component.
                     namesAndVars_.get("SetupNetworkPrint"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("SetupNetworkPrint");
     }
 
@@ -149,7 +149,7 @@ Creates Testcase objects for all the testcases in this component.
                       namesAndVars_.get("SetupPgmCall"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("SetupPgmCall");
     }
 
@@ -160,7 +160,7 @@ Creates Testcase objects for all the testcases in this component.
                       namesAndVars_.get("SetupRFML"), runMode_,
                      fileOutputStream_, password_,
                      pwrSys_, pwrSysPassword_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("SetupRFML");
     }
 

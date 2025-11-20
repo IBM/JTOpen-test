@@ -58,7 +58,6 @@ public class JDPSSetNClob extends JDTestcase {
   private static final String PACKAGE = "JDPSSCLOB";
 
   // Private data.
-  private Connection connection_;
   private Statement statement_;
 
   /**

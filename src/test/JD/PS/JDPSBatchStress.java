@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSBatchStress.java
@@ -24,12 +18,15 @@
 // Classes:      JDPSBatchStress
 //
 ////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
+
+import java.io.FileOutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -37,13 +34,6 @@ import test.JDJobName;
 import test.JDPSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -76,7 +66,6 @@ extends JDTestcase {
 
     
 
-    protected Connection      connection_;
 
     protected boolean  useBlockInsert = false;			// @L2
     
@@ -174,6 +163,8 @@ Performs cleanup needed after running variations.
         s.close ();
         connection_.commit(); // for xa
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

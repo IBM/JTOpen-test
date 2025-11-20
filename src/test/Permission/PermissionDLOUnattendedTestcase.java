@@ -59,7 +59,6 @@ extends Testcase
   //private data
   private CommandCall ccall_;
   private CommandCall ccallPow_;
-  private String systemName_;
 
   /*private*/ static final boolean DEBUG       = false; //@A2A
   // Sensitivity levels: (for var015 @A2A)

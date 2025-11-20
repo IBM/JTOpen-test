@@ -65,7 +65,6 @@ extends JDTestcase {
 
     // Private data.
     private static String table_      = JDCPDSTest.COLLECTION + ".JDCFORMAT";
-    private Connection  connection_;
 
     private String clearPassword_ = null;
 
@@ -137,6 +136,9 @@ Performs cleanup needed after running variations.
             s.executeUpdate ("DROP TABLE " + table_);
             s.close ();
         }
+        connection_.close(); 
+        connection_=null; 
+
     }
 
 

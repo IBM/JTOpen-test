@@ -29,7 +29,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -69,7 +68,6 @@ extends JDTestcase
     // Private data.
     private static  String table_  = JDStatementTest.COLLECTION + ".JDSR";
 
-    private Connection      connection_;
     private Statement       stmt_; 
     private static PreparedStatement  ps_;
     private static CallableStatement  cs_;

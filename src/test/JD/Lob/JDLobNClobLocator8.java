@@ -66,7 +66,6 @@ extends JDLobNClobLocator
 
 
     private boolean LONGRUNNING = true;
-    boolean toolboxNative = false; 
 
 
 

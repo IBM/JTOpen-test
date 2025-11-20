@@ -55,7 +55,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private Connection          closedConnection_;
     StringBuffer message = new StringBuffer();
 
@@ -191,6 +190,8 @@ Performs cleanup needed after running variations.
 
         s.close ();
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

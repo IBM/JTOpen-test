@@ -95,7 +95,6 @@ extends JDTestcase {
      }
   
       boolean useCompressConnection = true; 
-      Connection connection_;
       String formatProperties=";time format=jis;date format=jis";
       String compressionProperties=";variable field compression=all;use block update=true";   
       String nocompressionProperties=";variable field compression=true";   
@@ -177,6 +176,8 @@ Performs cleanup needed after running variations.
     throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
         connectionNoCompress_.close(); 
     }
 

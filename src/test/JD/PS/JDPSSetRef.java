@@ -16,11 +16,11 @@ package test.JD.PS;
 
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Ref;
 import java.sql.SQLException;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -53,8 +53,6 @@ extends JDTestcase {
 
 
 
-    // Private data.
-    private Connection          connection_;
 
 
 
@@ -107,6 +105,8 @@ extends JDTestcase {
     throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

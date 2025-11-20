@@ -48,7 +48,6 @@ public class JTATest
    /**
    * 
    */
-  public  static final long serialVersionUID = 1L;
   public static  String DEFAULT_COLLECTION1 = "JTATESTCO";
    public static  String COLLECTION     = DEFAULT_COLLECTION1; 
    public static boolean verbose = false; // turn off verbose output for JTA tests

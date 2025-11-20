@@ -53,8 +53,6 @@ public class DDMP9936798 extends Testcase implements Runnable
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
-  AS400 pwrSys_;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -72,7 +70,7 @@ public class DDMP9936798 extends Testcase implements Runnable
     // in this testcase.
     super(systemObject, "DDMP9936798", 1,
           variationsToRun, runMode, fileOutputStream, password);
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = pwrSys;
   }
 

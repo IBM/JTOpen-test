@@ -107,7 +107,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   protected String outputFileName_ = null;
   // Set of Testcase objects for this component. This is filled in by the
   // createTestcases() method.
-  protected Vector<Testcase> testcases_ = new Vector<Testcase>();
+  private Vector<Testcase> testcases_ = new Vector<Testcase>();
   protected Vector<String> skipTestcases_ = new Vector<String>();
   Vector<String[]> testcaseResults = new Vector<String[]>();
   static Vector<String[]> staticTestcaseResults = new Vector<String[]>();

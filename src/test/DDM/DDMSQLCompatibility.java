@@ -57,7 +57,6 @@ public class DDMSQLCompatibility extends Testcase
    }
   long start;
   long time;
-  String testLib_ = "DDMSQLT";
   String[] fileName_ = new String[4];
   boolean qigc_ = true; // Is DBCS installed on the 400? See setup().
 
@@ -91,7 +90,7 @@ public class DDMSQLCompatibility extends Testcase
           fileOutputStream, password, PwrSys);
 //    if (testLib != null)
 //    {
-//      testLib_ = testLib;
+//      setTestLib(testLib);
 //    }
   }
 

@@ -63,7 +63,6 @@ public class JDLobClobLocator extends JDTestcase {
   public final static int FREE_LOCATOR_BLOCK_SIZE = 32;
 
   // Private data.
-  Connection connection_;
   Statement statement_;
   Statement statement1_;
   Statement statement2_;
@@ -135,7 +134,6 @@ public class JDLobClobLocator extends JDTestcase {
   String setMethod = "setClob";
   boolean skipAsciiTests = false;
   boolean requireJdbc40 = false;
-  boolean skipCleanup = false;
 
   /**
    * Constructor.
@@ -556,6 +554,8 @@ public class JDLobClobLocator extends JDTestcase {
         statement3_.close();
         connection_.commit();
         connection_.close();
+        connection_ = null; 
+
       }
     }
   }

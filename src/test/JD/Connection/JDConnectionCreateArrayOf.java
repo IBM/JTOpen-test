@@ -27,7 +27,6 @@ import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -86,7 +85,6 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
    }
 
   // Private data.
-  private Connection connection_;
   private Statement stmt_;
   private String collection = "JDCONTST";
 
@@ -378,6 +376,8 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
 
     stmt_.close();
     connection_.close();
+    connection_ = null; 
+
   }
 
   void dropProcedure(String name) {

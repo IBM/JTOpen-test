@@ -660,7 +660,7 @@ public class CHTEntryTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
 	    String myData = new String("This is my data");
@@ -698,7 +698,7 @@ public class CHTEntryTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
 	    String myData = new String("This is my data");
@@ -736,7 +736,7 @@ public class CHTEntryTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
 	    String myData = new String("This is my data");

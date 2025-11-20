@@ -48,7 +48,6 @@ extends JDTestDriver
     /**
    * 
    */
-    public static final long serialVersionUID = 1L;
     public static  String COLLECTION     = "JDTESTDRVR";
 
     /**

@@ -104,7 +104,6 @@ extends JDTestcase {
     
     private static final int    forceErrorId_ = 555;
 
-    protected Connection      connection_;
     protected Connection      connection2_;
 
     protected boolean  useBlockInsert = false;			// @L2
@@ -331,6 +330,8 @@ Performs cleanup needed after running variations.
         s.close ();
         connection_.commit(); // for xa
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

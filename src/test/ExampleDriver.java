@@ -89,7 +89,7 @@ Creates Testcase objects for all the testcases in this component.
         new ExampleTestcase(systemObject_,
                       namesAndVars_.get("example"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("example");
     }
 

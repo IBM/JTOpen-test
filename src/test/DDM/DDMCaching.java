@@ -85,8 +85,6 @@ public class DDMCaching extends Testcase
   int bf_;
   String fileName_ = null;
   String fileName2_ = null;
-  String testLib_ = null;
-  AS400 pwrSys_;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -102,7 +100,7 @@ public class DDMCaching extends Testcase
     // The third parameter is the total number of variations in this class.
     super(systemObject, "DDMCaching", 70,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = pwrSys;
   }
 
@@ -122,7 +120,7 @@ public class DDMCaching extends Testcase
     super(systemObject, (blockingFactor == 1)? "DDMCaching" : "DDMCaching" + String.valueOf(blockingFactor), 70,
           variationsToRun, runMode, fileOutputStream);
     bf_ = blockingFactor;
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = pwrSys;
   }
 

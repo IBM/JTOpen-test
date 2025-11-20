@@ -69,7 +69,6 @@ extends JDTestcase
 
     // Private data.
     private static  String         table_      = JDConnectionTest.COLLECTION + ".JDCCOMMIT";
-    private              Connection     connection_;
     private              boolean        remoteConnection_ = false; 
 
 
@@ -134,6 +133,8 @@ Cleanup.
 
         // Close the connection.
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

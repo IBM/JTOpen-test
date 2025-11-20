@@ -31,7 +31,6 @@ package test.JD.CS;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -52,7 +51,6 @@ import test.JDTestcase;
 public class JDCSSetTestcase extends JDTestcase {
 
   // Private data.
-  Connection connection_;
   CallableStatement cs;
   boolean lobSupport;
   boolean bigintSupport;;
@@ -121,6 +119,8 @@ public class JDCSSetTestcase extends JDTestcase {
       cs=null; 
     }
     connection_.close();
+    connection_ = null; 
+
   }
 
   public void setTestSuccessful(String setMethodName, int parameterNumber,

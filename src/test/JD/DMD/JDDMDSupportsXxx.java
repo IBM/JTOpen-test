@@ -130,7 +130,6 @@ extends JDTestcase
      test.JDDMDTest.main(newArgs); 
    }
     // Private data.
-    private Connection          connection_;
     private Connection          closedConnection_;
     private DatabaseMetaData    dmd_;
     private DatabaseMetaData    dmd2_;
@@ -211,6 +210,8 @@ extends JDTestcase
     throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

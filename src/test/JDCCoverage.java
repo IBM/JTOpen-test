@@ -36,7 +36,6 @@ import test.JD.JDSetupCollection;
 public class JDCCoverage extends JDJSTPTestcase {
 
   // Private data.
-  private Connection connection_;
 
   static final String sourcepath1 = "jdbc/client/test";
   static final String exppath1 = "jdbc/client/exp";

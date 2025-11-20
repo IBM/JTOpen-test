@@ -28,7 +28,6 @@ import test.JDStatementTest;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -57,7 +56,6 @@ public class JDStatementCloseOnCompletion extends JDTestcase {
    }
 
   // Private data.
-  private Connection connection_;
 
   private String CALLINSERT = "SET BY SETUP"; 
   private String CALLQUERY = "SET BY SETUP"; 
@@ -178,6 +176,8 @@ public class JDStatementCloseOnCompletion extends JDTestcase {
 
     stmt.close(); 
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

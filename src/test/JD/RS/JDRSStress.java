@@ -56,7 +56,6 @@ extends JDTestcase
     private Connection          connection2_;
     private Connection          connection3_;
     private Statement           statement1_;
-    boolean skipCleanup = false; 
     String url_; 
     // private String sql = "";
     private boolean verbose = false;

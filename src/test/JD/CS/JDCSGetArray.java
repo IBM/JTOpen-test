@@ -60,7 +60,6 @@ public class JDCSGetArray extends JDTestcase {
    }
 
   // Private data.
-  private Connection connection_;
   private CallableStatement csTypes_;
 
   /**
@@ -143,6 +142,8 @@ public class JDCSGetArray extends JDTestcase {
     
 
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

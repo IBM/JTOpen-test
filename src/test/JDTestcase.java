@@ -89,12 +89,11 @@ public class JDTestcase extends Testcase {
   private boolean returnValueSupport_;
   private boolean decFloatSupport_;
   protected JDTestDriver testDriver_;
-  protected String collection_;
   private long driverFixLevel_ = 0;
   private long driverFixDate_ = 0;
   static Object timeUnitSeconds = null;
   protected boolean toolboxNative = false;
-
+  
   protected JDSupportedFeatures supportedFeatures_;
 
   private boolean isOpenJdk = false;
@@ -210,7 +209,6 @@ public class JDTestcase extends Testcase {
     testDriver_ = null;
     totalVariations_ = countVariations();
     userId_ = systemObject_.getUserId();
-    collection_ = null;
     jdk_ = JVMInfo.getJDK();
 
   }
@@ -1571,23 +1569,19 @@ public class JDTestcase extends Testcase {
       decFloatSupport_ = testDriver_.areDecfloatsSupported();
 
       supportedFeatures_ = new JDSupportedFeatures(this);
-      // Testcase fails in V6R1 for U testcases
-      String initials = "";
+      
+      initials_ = "";
       int l = collection_.length();
       if (l > 5) {
-        initials = collection_.substring(l - 5);
+        initials_ = collection_.substring(l - 5);
       }
       // System.out.println("initials are "+initials);
-      if (initials.length() > 4) {
-        char letter = initials.charAt(4);
+      if (initials_.length() > 4) {
+        char letter = initials_.charAt(4);
         if (letter == 'U') {
           toolboxNative = true;
         }
       }
-      /*
-       * if (initials.equals("614CU") || initials.equals("615CU") ||
-       * initials.equals("616CU") ) { toolboxNative = true; }
-       */
 
     }
 
@@ -2061,8 +2055,11 @@ public class JDTestcase extends Testcase {
 
     if (!skipPreviousRelease) {
       /* Search for an earlier release */
-      if (currentRelease.equals("76")) {
+      if (currentRelease.equals("77")) {
         sb.append("Trying previous release\n");
+        return getFixup(fixupArray, "76" + releaseJvmDriver.substring(2), extraId, info, sb);
+      } else if (currentRelease.equals("76")) {
+        sb.append("Trying previous release 75 \n");
         return getFixup(fixupArray, "75" + releaseJvmDriver.substring(2), extraId, info, sb);
       } else if (currentRelease.equals("75")) {
         sb.append("Trying previous release\n");
@@ -2109,7 +2106,7 @@ public class JDTestcase extends Testcase {
       value = "76";
       break;
     case JDTestDriver.RELEASE_V7R6M0_PLUS:
-      value = "7X";
+      value = "77";
       break;
     default:
       value = "XX";

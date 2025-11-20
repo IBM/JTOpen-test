@@ -69,7 +69,6 @@ extends JDTestcase
     private static  String         table_ = JDConnectionTest.COLLECTION + ".JDCWARN";
     private static  String         procedure_ = JDConnectionTest.COLLECTION + ".JDCWARNCALL";
     private static  String         emptytable_ = JDConnectionTest.COLLECTION + ".JDCEMPTY";
-    private              Connection     connection_;
 
 
 
@@ -146,6 +145,8 @@ Cleanup.
         s.close ();
         connection_.commit(); // for xa
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

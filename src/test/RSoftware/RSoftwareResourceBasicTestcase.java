@@ -66,7 +66,6 @@ extends Testcase {
     // Private data.
     private String          JC1ProductID_ = RSoftwareTest.JC1ProductID_;
     private String          releaseLevel_;
-    AS400           pwrSys_;
 
 
 

@@ -70,7 +70,6 @@ extends JDTestcase {
     // Private data.
     private static String         table_      = JDCPDSTest.COLLECTION + ".JDCCOMMIT";
     private DataSource db2ConnectionPoolDataSource;
-    private Connection     connection_;
 
 
 
@@ -146,6 +145,8 @@ Cleanup.
 
             // Close the connection.
             connection_.close ();
+            connection_ = null; 
+
         }
     }
 

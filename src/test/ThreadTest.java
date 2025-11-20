@@ -86,7 +86,7 @@ public class ThreadTest extends TestDriver
         new IFSThreadTestcase(systemObject_,
                       namesAndVars_.get("IFSThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("IFSThreadTestcase");
     }
     if (allTestcases || namesAndVars_.containsKey("DQThreadTestcase"))
@@ -95,7 +95,7 @@ public class ThreadTest extends TestDriver
         new DQThreadTestcase(systemObject_,
                      namesAndVars_.get("DQThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("DQThreadTestcase");
     }
     if (allTestcases || namesAndVars_.containsKey("CmdCallThreadTestcase"))
@@ -104,7 +104,7 @@ public class ThreadTest extends TestDriver
         new CmdCallThreadTestcase(systemObject_,
                     namesAndVars_.get("CmdCallThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("CmdCallThreadTestcase");
     }
 ///    if (allTestcases || namesAndVars_.containsKey("JDBCThreadTestcase"))
@@ -113,7 +113,7 @@ public class ThreadTest extends TestDriver
 ///        new JDBCThreadTestcase(systemObject_,
 ///                     (Vector) namesAndVars_.get("JDBCThreadTestcase"), runMode_,
 ///                     fileOutputStream_, password_);
-///      testcases_.addElement(tc);
+///      addTestcase(tc);
 ///      namesAndVars_.remove("JDBCThreadTestcase");
 ///    }
     if (allTestcases || namesAndVars_.containsKey("PgmCallThreadTestcase"))
@@ -122,7 +122,7 @@ public class ThreadTest extends TestDriver
         new PgmCallThreadTestcase(systemObject_,
                      namesAndVars_.get("PgmCallThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("PgmCallThreadTestcase");
     }
     if (allTestcases || namesAndVars_.containsKey("DDMThreadTestcase"))
@@ -131,7 +131,7 @@ public class ThreadTest extends TestDriver
         new DDMThreadTestcase(systemObject_,
                      namesAndVars_.get("DDMThreadTestcase"), runMode_,
                      fileOutputStream_, password_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("DDMThreadTestcase");
     }
 

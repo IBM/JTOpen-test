@@ -40,12 +40,6 @@ public class PCTransformTestcase extends Testcase
      }
      test.PCTest.main(newArgs); 
    }
-    static boolean debug = false; 
-    
-    static { 
-       String debugSet = System.getProperty("debug");
-       if (debugSet != null) debug = true;
-    }
   
     
     int jdk_; 

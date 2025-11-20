@@ -80,7 +80,6 @@ extends JDTestcase {
     // Private data.
     private static String         table_      = JDSCPDSTest.COLLECTION + ".JDCCLOSE";
     private DataSource dataSource;
-    private Connection     connection_;
 
 
 /**
@@ -126,6 +125,8 @@ Setup.
                                          JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection_);        
 
             connection_.close ();
+            connection_ = null; 
+
         }
     }
 

@@ -51,7 +51,6 @@ public class DDMTranslation extends Testcase
      test.DDMTest.main(newArgs); 
    }
 
-  String testLib_ = null;
   Connection conn_ = null;
   Statement stmt_ = null; 
 
@@ -73,7 +72,7 @@ public class DDMTranslation extends Testcase
     // The third parameter is the total number of variations in this class.
     super(systemObject, "DDMTranslation", 
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
 

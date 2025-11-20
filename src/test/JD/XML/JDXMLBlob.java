@@ -45,7 +45,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
 import java.sql.Blob;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -122,7 +121,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private Statement           statement1_;
     private Statement           statement2_;
     private Statement           statement37_;
@@ -626,6 +624,8 @@ extends JDTestcase
             statement1_.close ();
 
             connection_.close ();
+            connection_ = null; 
+
         }
     }
 

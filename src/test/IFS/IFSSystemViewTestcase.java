@@ -39,7 +39,6 @@ public class IFSSystemViewTestcase extends IFSGenericTestcase {
      }
      test.IFSTests.main(newArgs); 
    }
-  String collection_ = "COL";
 
   /**
    * Constructor.

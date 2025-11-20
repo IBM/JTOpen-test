@@ -54,7 +54,6 @@ extends JDTestcase
    }
 
     // Private data.
-    private Connection          connection_;
     private Statement           statement_;
     // 
     // private ResultSet           rs_;
@@ -171,11 +170,11 @@ extends JDTestcase
     protected void cleanup ()
     throws Exception
     {
-        if (isJdbc20 ()) {
             statement_.executeUpdate ("DROP TABLE " + TABLE_);
             statement_.close ();
             connection_.close ();
-        }
+            connection_ = null; 
+
     }
 
     /*

@@ -394,7 +394,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     static String globalUserId = null;
     static char[] globalEncryptedPassword = null; 
     static JDTestDriver globalDriver = null;
-    static String hostname =null; 
+    static String hostname1 =null; 
     static boolean clientSameAsServer = false;
 
     protected static String nativeBaseDir = JTOpenTestEnvironment.testcaseHomeDirectory+"3.NOLIB"; 
@@ -628,15 +628,15 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	}
 
 
-	if (hostname == null) {
-	    hostname =  java.net.InetAddress.getLocalHost().getHostName().toLowerCase();
-	    int dotIndex = hostname.indexOf('.');
+	if (hostname1 == null) {
+	    hostname1 =  java.net.InetAddress.getLocalHost().getHostName().toLowerCase();
+	    int dotIndex = hostname1.indexOf('.');
 	    if (dotIndex > 0) {
-		hostname = hostname.substring(0, dotIndex); 
+		hostname1 = hostname1.substring(0, dotIndex); 
 	    }
 	    if (globalURL == null) globalURL="jdbc:db2:*LOCAL"; 
-	    if (debug) System.out.println("JDJSTP.debug: checkSetup: hostname is "+hostname+" globalURL is "+globalURL);
-	    if (globalURL.indexOf(hostname) > 0) clientSameAsServer=true;
+	    if (debug) System.out.println("JDJSTP.debug: checkSetup: hostname is "+hostname1+" globalURL is "+globalURL);
+	    if (globalURL.indexOf(hostname1) > 0) clientSameAsServer=true;
 	    if (globalURL.indexOf("*LOCAL") > 0) clientSameAsServer=true;
 	    if (globalURL.indexOf("*local") > 0) clientSameAsServer=true;
 	    if (globalURL.indexOf("localhost") > 0) clientSameAsServer=true;
@@ -2444,14 +2444,14 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
       rs.next();
       String serverName = rs.getString(1).toUpperCase();
 
-      hostname = java.net.InetAddress.getLocalHost().getHostName()
+      hostname1 = java.net.InetAddress.getLocalHost().getHostName()
           .toUpperCase();
-      int dotIndex = hostname.indexOf('.');
+      int dotIndex = hostname1.indexOf('.');
       if (dotIndex > 0) {
-        hostname = hostname.substring(0, dotIndex);
+        hostname1 = hostname1.substring(0, dotIndex);
       }
 
-      if (hostname.equals(serverName)) {
+      if (hostname1.equals(serverName)) {
         // File is already here. Return
         return; 
       }

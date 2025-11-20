@@ -40,7 +40,6 @@ public class DDMConstructors extends Testcase
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
   /**
   Constructor.  This is called from the DDMTest constructor.
   **/
@@ -55,7 +54,7 @@ public class DDMConstructors extends Testcase
     // in this testcase.
     super(systemObject, "DDMConstructors", 14,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

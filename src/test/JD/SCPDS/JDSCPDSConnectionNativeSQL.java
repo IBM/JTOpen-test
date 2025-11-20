@@ -65,7 +65,6 @@ public class JDSCPDSConnectionNativeSQL extends JDTestcase {
   }
 
   // Private data.
-  private Connection connection_;
   private int vrm_;
   static int VRM_450 = AS400.generateVRM(4, 5, 0);
   private static int VRM_510 = AS400.generateVRM(5, 1, 0);
@@ -124,9 +123,8 @@ public class JDSCPDSConnectionNativeSQL extends JDTestcase {
    * @exception Exception If an exception occurs.
    **/
   protected void cleanup() throws Exception {
-    if (checkJdbc20StdExt()) {
       connection_.close();
-    }
+      connection_ = null; 
   }
 
   /**

@@ -43,7 +43,6 @@ public class DDMDeletedRecords extends Testcase
    }
   long start;
   long time;
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -58,7 +57,7 @@ public class DDMDeletedRecords extends Testcase
     // The third parameter is the total number of variations in this class.
     super(systemObject, "DDMDeletedRecords", 3,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

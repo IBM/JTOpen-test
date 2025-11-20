@@ -50,7 +50,6 @@ public class JTAUDBTest
    /**
    * 
    */
-  static final long serialVersionUID = 1605219299733362471L;
   public static  String COLLECTION     = "JTAUDBTST";
    static boolean verbose = false; // turn off verbose output for JTA tests
 

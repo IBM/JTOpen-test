@@ -37,7 +37,7 @@ public class IFSFileDescriptorTestcase extends IFSGenericTestcase
      test.IFSTests.main(newArgs); 
    }
   private IFSFile ifsFile_ = null;
-  private String name_ = "/JAVATEST/AFILE";
+  private String fileName = "/JAVATEST/AFILE";
   private String mode_ = "rw";
   private int share_ = IFSRandomAccessFile.SHARE_ALL;
   private int existOption_ = IFSRandomAccessFile.OPEN_OR_CREATE;
@@ -55,7 +55,7 @@ Constructor.
     {
         super (systemObject, userid, password,  "IFSFileDescriptorTestcase",
             namesAndVars, runMode, fileOutputStream,  pwrSys);
-        ifsFile_ = new IFSFile(systemObject_, name_);
+        ifsFile_ = new IFSFile(systemObject_, fileName);
     }
 
 /**
@@ -84,7 +84,7 @@ object instantiated by the constructor.
     {
        aFile = new IFSRandomAccessFile();
        aFile.setSystem(systemObject_);
-       aFile.setPath(name_);
+       aFile.setPath(fileName);
        aFile.setMode(mode_);
        IFSFileDescriptor ahandle = aFile.getFD();
        ahandle.sync();
@@ -114,7 +114,7 @@ object instantiated by IFSFileDescriptor(as400,name,mode).
     IFSRandomAccessFile aFile = null;
     try
     {
-       aFile = new IFSRandomAccessFile(systemObject_, name_, mode_);
+       aFile = new IFSRandomAccessFile(systemObject_, fileName, mode_);
        IFSFileDescriptor ahandle = aFile.getFD();
        ahandle.sync();
 
@@ -143,7 +143,7 @@ object instantiated by IFSFileDescriptor(as400,name,mode,share,existOption).
     IFSRandomAccessFile aFile = null;
     try
     {
-       aFile = new IFSRandomAccessFile(systemObject_, name_, mode_, share_, existOption_);
+       aFile = new IFSRandomAccessFile(systemObject_, fileName, mode_, share_, existOption_);
        IFSFileDescriptor ahandle = aFile.getFD();
        ahandle.sync();
 
@@ -204,7 +204,7 @@ object instantiated by IFSFileDescriptor(AS400,IFSFile,String,int,int).
     {
        aFile = new IFSFileOutputStream();
        aFile.setSystem(systemObject_);
-       aFile.setPath(name_);
+       aFile.setPath(fileName);
        IFSFileDescriptor ahandle = aFile.getFD();
        ahandle.sync();
 
@@ -233,7 +233,7 @@ object instantiated by IFSFileDescriptor(AS400,IFSFile,String,int,int).
     IFSFileOutputStream aFile = null;
     try
     {
-       aFile = new IFSFileOutputStream(systemObject_, name_, share_, true);
+       aFile = new IFSFileOutputStream(systemObject_, fileName, share_, true);
        IFSFileDescriptor ahandle = aFile.getFD();
        ahandle.sync();
 

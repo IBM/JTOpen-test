@@ -63,8 +63,6 @@ public class DDMRecordDescription extends Testcase
    }
   long start;
   long time;
-  String testLib_ = null;
-  AS400 pwrSys_;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -81,7 +79,7 @@ public class DDMRecordDescription extends Testcase
     super(systemObject, "DDMRecordDescription", 
           variationsToRun, runMode, fileOutputStream);
     
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = pwrSys;
   }
 

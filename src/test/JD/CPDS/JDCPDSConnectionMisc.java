@@ -63,7 +63,6 @@ extends JDTestcase {
 
 
     // Private data.
-    private              Connection     connection_;
     private              Connection     closedConnection_;
 
 
@@ -121,6 +120,7 @@ Performs cleanup needed after running variations.
     {
         if (isJdbc20StdExt()) {
             connection_.close ();
+            connection_=null; 
         }
     }
 

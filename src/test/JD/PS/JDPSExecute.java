@@ -79,7 +79,6 @@ extends JDTestcase {
     private static String table3_  = JDPSTest.COLLECTION + ".JDPSE3";
     private static String table4_  = JDPSTest.COLLECTION + ".JDPSE4";
     private static String tableErr_  = JDPSTest.COLLECTION + ".JDPSERR";
-    private Connection      connection_;
     private Connection      connection2_ = null;
     private Connection      connectionNoPrefetch_; 
 
@@ -196,6 +195,8 @@ Performs cleanup needed after running variations.
         s.close ();
         connection_.commit(); // for xa
         connection_.close ();
+        connection_ = null; 
+
 	if (connection2_ != null) { 
             connection2_.close ();
         }

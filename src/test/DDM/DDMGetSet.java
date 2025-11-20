@@ -65,7 +65,6 @@ public class DDMGetSet extends Testcase
      test.DDMTest.main(newArgs); 
    }
   CommandCall cmd_;
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -81,7 +80,7 @@ public class DDMGetSet extends Testcase
     super(systemObject, "DDMGetSet", 129,
           variationsToRun, runMode, fileOutputStream);
     cmd_ = new CommandCall(systemObject_);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

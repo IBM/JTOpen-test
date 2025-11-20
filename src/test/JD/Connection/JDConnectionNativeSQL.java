@@ -55,8 +55,7 @@ extends JDTestcase
 
 
     // Private data.
-    private              Connection     connection_;
-    private              AS400          system_;
+    private              AS400          system_1;
     private              int            vrm_;
     
     
@@ -104,8 +103,8 @@ Performs setup needed before running variations.
 	    /* This cast doesn't work for native driver @H1A */ 
          
         try{
-	    system_ = ((AS400JDBCConnection)connection_).getSystem();
-        vrm_ = system_.getVRM();
+	    system_1 = ((AS400JDBCConnection)connection_).getSystem();
+        vrm_ = system_1.getVRM();
         }catch(Exception e){
             vrm_ = testDriver_.getRelease();  //for proxy
             VRM_710 = 710;
@@ -125,6 +124,8 @@ Performs cleanup needed after running variations.
         throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

@@ -41,7 +41,6 @@ import test.Sec.SecUPPropertyTestcase;
  **/
 public class SecAuthTest extends TestDriver
 {
-   static final long serialVersionUID = 1L;
     public static  String uid1 = "SECPTTEST1";
     public static  String pwd1 = "SECPT01PWD";
     public static  String uid2 = "SECPTTEST2";

@@ -28,7 +28,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -60,7 +59,6 @@ extends JDTestcase {
 
 
     // Private data.
-    private Connection          connection_;
     // private Statement           statement_;
     // private String              properties_;
     private String              url; 
@@ -138,6 +136,7 @@ This is the place to put all cleanup work for the testcase.
             // Close the global connection opened in setup().
 	    connection_.commit(); 
             connection_.close();
+            connection_=null; 
 
         } catch (Exception e) {
             System.out.println("Caught exception: ");

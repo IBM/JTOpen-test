@@ -30,7 +30,6 @@ import test.JDTestcase;
 
 import java.io.FileOutputStream;
 import java.sql.BatchUpdateException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
@@ -69,7 +68,6 @@ extends JDTestcase
     private static String table_  = JDStatementTest.COLLECTION + ".JDSB";
     private static String table2_  = JDStatementTest.COLLECTION + ".JDSB2";
 
-    private Connection      connection_;
 
 
 
@@ -134,6 +132,8 @@ Performs cleanup needed after running variations.
         s.close ();
         connection_.commit(); // for xa
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

@@ -69,7 +69,6 @@ public class JDPSSetRowId extends JDTestcase {
   private static final String PACKAGE = "JDPSSBYTES";
 
   // Private data.
-  private Connection connection_;
   private Statement statement_;
 
   /**
@@ -103,6 +102,8 @@ public class JDPSSetRowId extends JDTestcase {
   protected void cleanup() throws Exception {
     statement_.close();
     connection_.close();
+    connection_ = null; 
+
   }
 
   Object createRowId(byte[] arg) throws Exception {

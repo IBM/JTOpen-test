@@ -77,7 +77,7 @@ public class ManifestTest extends TestDriver
     if (allTestcases || namesAndVars_.containsKey("ManifestTestcase"))
     {
       ManifestTestcase tc = new ManifestTestcase(systemObject_, (Vector<String>) namesAndVars_.get("ManifestTestcase"), runMode_, fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("ManifestTestcase");
     }
     // Put out error message for each invalid testcase name.

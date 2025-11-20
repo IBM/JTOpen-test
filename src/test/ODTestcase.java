@@ -32,7 +32,7 @@ public class ODTestcase extends Testcase
 	
 	private String path_ = "";//contains the fully-qualified integrated file system path for the created object
 	private String lib_ = "";//contains the library where the object is
-	private String name_ = "";//contains the name of the object 
+	private String objectName_ = "";//contains the name of the object 
 	private String type_ = "";//contains the type of the object
 	private String dpath_ = "";//contains the fully-qualified integrated file system path for a different created object 
 
@@ -108,7 +108,7 @@ public class ODTestcase extends Testcase
 			 QSYSObjectPathName op = new QSYSObjectPathName("QUSRSYS","QSECOFR","MSGQ");
 			 path_ = op.getPath();
 			 lib_  = op.getLibraryName();
-			 name_ = op.getObjectName();
+			 objectName_ = op.getObjectName();
 			 type_ = op.getObjectType();		 
 		 }
 		 catch(Exception e)
@@ -204,7 +204,7 @@ public class ODTestcase extends Testcase
 	{
 		try 
 		{
-			ObjectDescription od = new ObjectDescription(systemObject_, lib_, name_, type_);
+			ObjectDescription od = new ObjectDescription(systemObject_, lib_, objectName_, type_);
 			assertCondition(od != null); 	
 		} 
 		catch (Exception e) 
@@ -224,7 +224,7 @@ public class ODTestcase extends Testcase
 	{
 		try 
 		{
-			ObjectDescription od = new ObjectDescription(null, lib_, name_, type_);
+			ObjectDescription od = new ObjectDescription(null, lib_, objectName_, type_);
 			failed("Exception didn't occur."+od);	
 		} 
 		catch (Exception e) 
@@ -244,7 +244,7 @@ public class ODTestcase extends Testcase
 	{
 		try 
 		{
-			ObjectDescription od = new ObjectDescription(systemObject_, null, name_, type_);
+			ObjectDescription od = new ObjectDescription(systemObject_, null, objectName_, type_);
 			failed("Exception didn't occur."+od);
 			
 		} 
@@ -285,7 +285,7 @@ public class ODTestcase extends Testcase
 	{
 		try 
 		{
-			ObjectDescription od = new ObjectDescription(systemObject_, lib_, name_, null);
+			ObjectDescription od = new ObjectDescription(systemObject_, lib_, objectName_, null);
 			failed("Exception didn't occur."+od);		
 		} 
 		catch (Exception e) 
@@ -304,7 +304,7 @@ public class ODTestcase extends Testcase
 	{
 		try 
 		{
-			ObjectDescription od = new ObjectDescription(systemObject_, ObjectDescription.CURRENT_LIBRARY, name_, type_);
+			ObjectDescription od = new ObjectDescription(systemObject_, ObjectDescription.CURRENT_LIBRARY, objectName_, type_);
 			assertCondition(od != null); 	
 		} 
 		catch (Exception e) 
@@ -326,7 +326,7 @@ public class ODTestcase extends Testcase
 	{
 		try 
 		{
-			ObjectDescription od = new ObjectDescription(systemObject_, ObjectDescription.LIBRARY_LIST , name_, type_);
+			ObjectDescription od = new ObjectDescription(systemObject_, ObjectDescription.LIBRARY_LIST , objectName_, type_);
 			assertCondition(od != null); 	
 		} 
 		catch (Exception e) 
@@ -635,7 +635,7 @@ public class ODTestcase extends Testcase
 		{
 			ObjectDescription od = new ObjectDescription(systemObject_, path_);
 			String name = od.getName();
-			assertCondition(name.equals(name_), "The correct name: " + name_
+			assertCondition(name.equals(objectName_), "The correct name: " + objectName_
 					+ " was not returned ");
 
 		} 
@@ -661,7 +661,7 @@ public class ODTestcase extends Testcase
 			String name = "Wrong name";
 			name = od.getName();
 			assertCondition(!name.equals("Wrong name"), "The name 'Wrong name' was  returned,"
-					 + "the expected name was was: " + name_);
+					 + "the expected name was was: " + objectName_);
 		}
 		catch (Exception e) 
 		{

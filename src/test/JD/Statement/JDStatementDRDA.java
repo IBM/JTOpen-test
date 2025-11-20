@@ -22,7 +22,6 @@
 package test.JD.Statement;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -58,8 +57,7 @@ extends JDTestcase
 
 
    // Private data.
-   private Connection          connection_;
-   private static final String remoteSystem_   = "RCHAS1FD"; // ??? do no hardcode
+   private static final String remoteSystem_   = "UNKNOWN"; 
 
 
 
@@ -131,6 +129,7 @@ Performs cleanup needed after running variations.
    throws Exception
    {
       connection_.close ();
+      connection_ = null; 
    }
 
 

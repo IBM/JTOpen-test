@@ -62,7 +62,6 @@ public class JDPSSetSQLXML extends JDTestcase {
    }
 
   // Private data.
-  private Connection connection_;
   private Statement statement_;
 
   private Object sqlxml_;
@@ -119,6 +118,8 @@ public class JDPSSetSQLXML extends JDTestcase {
 
       statement_.close();
       connection_.close();
+      connection_ = null; 
+
     }
   }
 

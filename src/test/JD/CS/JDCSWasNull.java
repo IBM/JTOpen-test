@@ -64,7 +64,6 @@ extends JDTestcase
 
 
    // Private data.
-   private Connection          connection_;
    private CallableStatement   csTypes_;
    private CallableStatement   csTypes2_;
 
@@ -121,6 +120,8 @@ Performs cleanup needed after running variations.
    throws Exception
    {
       connection_.close ();
+      connection_ = null; 
+
    }
 
 

@@ -46,10 +46,11 @@ public class DDMOpenClose extends Testcase
      }
      test.DDMTest.main(newArgs); 
    }
+  
   CommandCall cmd_;
   Record[] records_;
-  String testLib_ = null;
   private boolean precleaning_ = false;
+  String keySource = "KEYSRC"; 
   
   /**
    Constructor.  This is called from the DDMTest constructor.
@@ -66,7 +67,7 @@ public DDMOpenClose(AS400            systemObject,
   // in this testcase.
   super(systemObject, "DDMOpenClose", 48,
         variationsToRun, runMode, fileOutputStream);
-  testLib_ = testLib;
+  setTestLib(testLib);
   pwrSys_ = pwrsys;
   cmd_ = new CommandCall(pwrSys_);
 }
@@ -261,7 +262,7 @@ String runCommand(String command)
 /**
  @exception  Exception  If an exception occurs.
  **/
-String qgplLib_ = testLib_+"A";
+String qgplLib_ = "SETTHISLIB";
 protected void setup()
   throws Exception
 {
@@ -300,18 +301,22 @@ protected void setup()
     
     
     // Create the necessary files
+    
+    keySource = "KSRC"+initials_; 
     SequentialFile f1 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/F1M1RW.FILE/MBR1.MBR");
     f1.create(new DDMChar10NoKeyFormat(systemObject_), "One field, CHAR(10), no key");
-    KeyedFile f2 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+    KeyedFile f2 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     f2.create(new DDMChar10KeyFormat(systemObject_), "One field, CHAR(10), one key");
     SequentialFile f3 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/F2M1RW.FILE/MBR1.MBR");
     f3.create(new DDMChar10NoKeyFormat(systemObject_), "One field, CHAR(10), no key");
-    KeyedFile f4 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+    KeyedFile f4 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     f4.create(new DDMChar10KeyFormat(systemObject_), "One field, CHAR(10), one key");
-    KeyedFile f5 = new KeyedFile(systemObject_, "/QSYS.LIB/"+qgplLib_+".LIB/KEYSRC.FILE/MBR1.MBR");
+    KeyedFile f5 = new KeyedFile(systemObject_, "/QSYS.LIB/"+qgplLib_+".LIB/"+keySource+".FILE/MBR1.MBR");
     f5.create(new DDMChar10KeyFormat(systemObject_), "One field, CHAR(10), one key");
-    KeyedFile f6 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC3.FILE/KEYSRC3.MBR");
+    KeyedFile f6 = new KeyedFile(systemObject_, "/QSYS.LIB/QGPL.LIB/"+keySource+".FILE/MBR1.MBR");
     f6.create(new DDMChar10KeyFormat(systemObject_), "One field, CHAR(10), one key");
+    KeyedFile f7 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"3.FILE/"+keySource+"3.MBR");
+    f7.create(new DDMChar10KeyFormat(systemObject_), "One field, CHAR(10), one key");
 
     // Create an array of records to write to the files
     records_ = new Record[9];
@@ -331,18 +336,21 @@ protected void setup()
     f4.open(AS400File.WRITE_ONLY, 9, AS400File.COMMIT_LOCK_LEVEL_NONE);
     f5.open(AS400File.WRITE_ONLY, 9, AS400File.COMMIT_LOCK_LEVEL_NONE);
     f6.open(AS400File.WRITE_ONLY, 9, AS400File.COMMIT_LOCK_LEVEL_NONE);
+    f7.open(AS400File.WRITE_ONLY, 9, AS400File.COMMIT_LOCK_LEVEL_NONE);
     f1.write(records_);
     f2.write(records_);
     f3.write(records_);
     f4.write(records_);
     f5.write(records_);
     f6.write(records_);
+    f7.write(records_);
     f1.close();
     f2.close();
     f3.close();
     f4.close();
     f5.close();
     f6.close();
+    f7.close();
 
 
     // Create journal receiver and journal if it does not already exist
@@ -392,17 +400,17 @@ protected void setup()
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN("+qgplLib_+"/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/"+keySource+") JRN("+qgplLib_+"/JT4DDMJRN)");
     if (msg != null)
     {
-      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/KEYSRC) JRN("+qgplLib_+"/JT4DDMJRN)'");
+      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/"+keySource+") JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
-    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN("+qgplLib_+"/JT4DDMJRN)");
+    msg = runCommand("QSYS/STRJRNPF FILE(" + testLib_ + "/"+keySource+"2) JRN("+qgplLib_+"/JT4DDMJRN)");
     if (msg != null)
     {
-      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN("+qgplLib_+"/JT4DDMJRN)'");
+      output_.println("Failure executing 'STRJRNPF FILE(" + testLib_ + "/"+keySource+"2) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       throw new Exception("");
     }
@@ -440,17 +448,17 @@ protected void cleanup()
       output_.println(msg);
       success = false;
     }
-    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/KEYSRC) JRN("+qgplLib_+"/JT4DDMJRN)");
+    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/"+keySource+") JRN("+qgplLib_+"/JT4DDMJRN)");
       if (!precleaning_ && msg != null && !msg.startsWith("CPF9803") && !msg.startsWith("CPF9801") && !msg.startsWith("CPF7032")) //7032 because on cleanup, the system might think we are not actually journaling the file.
     {
-      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/KEYSRC) JRN("+qgplLib_+"/JT4DDMJRN)'");
+      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/"+keySource+") JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       success = false;
     }
-    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN("+qgplLib_+"/JT4DDMJRN)");
+    msg = runCommand("ENDJRNPF FILE(" + testLib_ + "/"+keySource+"2) JRN("+qgplLib_+"/JT4DDMJRN)");
       if (!precleaning_ && msg != null && !msg.startsWith("CPF9803") && !msg.startsWith("CPF9801") && !msg.startsWith("CPF7032")) //7032 because on cleanup, the system might think we are not actually journaling the file.
     {
-      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/KEYSRC2) JRN("+qgplLib_+"/JT4DDMJRN)'");
+      output_.println("Failure executing 'ENDJRNPF FILE(" + testLib_ + "/"+keySource+"2) JRN("+qgplLib_+"/JT4DDMJRN)'");
       output_.println(msg);
       success = false;
     }
@@ -459,11 +467,11 @@ protected void cleanup()
     String[] filesToDelete = new String[]
     {
       testLib_+"/F1M1RW",
-      testLib_+"/KEYSRC",
+      testLib_+"/"+keySource+"",
       testLib_+"/F2M1RW",
-      testLib_+"/KEYSRC2",
-      ""+qgplLib_+"/KEYSRC",
-      testLib_+"/KEYSRC3"
+      testLib_+"/"+keySource+"2",
+      ""+qgplLib_+"/"+keySource+"",
+      testLib_+"/"+keySource+"3"
     };
 
     output_.println("  Deleting files...");
@@ -484,15 +492,15 @@ protected void cleanup()
     }
 /*    SequentialFile f1 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/F1M1RW.FILE/MBR1.MBR");
     f1.delete();
-    KeyedFile f2 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+    KeyedFile f2 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     f2.delete();
     SequentialFile f3 = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/F2M1RW.FILE/MBR1.MBR");
     f3.delete();
-    KeyedFile f4 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+    KeyedFile f4 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     f4.delete();
-    KeyedFile f5 = new KeyedFile(systemObject_, "/QSYS.LIB/"+qgplLib_+".LIB/KEYSRC.FILE/MBR1.MBR");
+    KeyedFile f5 = new KeyedFile(systemObject_, "/QSYS.LIB/"+qgplLib_+".LIB/"+keySource+".FILE/MBR1.MBR");
     f5.delete();
-    KeyedFile f6 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC3.FILE/KEYSRC3.MBR");
+    KeyedFile f6 = new KeyedFile(systemObject_, "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"3.FILE/"+keySource+"3.MBR");
     f6.delete();
 */
 
@@ -919,7 +927,7 @@ public void Var004()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -1030,7 +1038,7 @@ public void Var005()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, 2, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -1160,7 +1168,7 @@ public void Var006()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(format);
     file.open(AS400File.WRITE_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -1566,7 +1574,7 @@ public void Var012()
   StringBuffer failMsg = new StringBuffer();
   KeyedFile file =
     new KeyedFile(systemObject_,
-                       "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                       "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
   try
   {
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -1622,7 +1630,7 @@ public void Var013()
   {
     KeyedFile file =
       new KeyedFile(systemObject_,
-                         "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                         "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     try
     {
@@ -1693,7 +1701,7 @@ public void Var014()
   StringBuffer failMsg = new StringBuffer();
   KeyedFile file =
     new KeyedFile(systemObject_,
-                       "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                       "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
   try
   {
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
@@ -1747,7 +1755,7 @@ public void Var015()
   {
     KeyedFile file =
       new KeyedFile(systemObject_,
-                         "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                         "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     try
     {
@@ -1819,7 +1827,7 @@ public void Var016()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
     file.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -1884,7 +1892,7 @@ public void Var017()
   KeyedFile file = null;
   try
   {
-    file = new KeyedFile(systemObject_,                   "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+    file = new KeyedFile(systemObject_,                   "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(format);
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
     file.close();
@@ -2337,7 +2345,7 @@ public void Var021()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 9, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -2455,7 +2463,7 @@ public void Var022()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.WRITE_ONLY, 9, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -2544,7 +2552,7 @@ public void Var023()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, 9, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -2778,7 +2786,7 @@ public void Var025()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -3408,7 +3416,7 @@ public void Var035()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_ALL);
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
@@ -3474,7 +3482,7 @@ public void Var036()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_CHANGE);
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_DEFAULT);
@@ -3541,7 +3549,7 @@ public void Var037()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
@@ -3608,7 +3616,7 @@ public void Var038()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_ALL);
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_ALL);
@@ -3675,7 +3683,7 @@ public void Var039()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_CHANGE);
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_CHANGE);
@@ -3742,7 +3750,7 @@ public void Var040()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_DEFAULT);
     // Verify the object state
@@ -3800,7 +3808,7 @@ public void Var041()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
     // Verify the object state
@@ -3858,7 +3866,7 @@ public void Var042()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_ALL);
     // Verify the object state
@@ -3916,7 +3924,7 @@ public void Var043()
   try
   {
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC2.FILE/MBR1.MBR");
+                              "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"2.FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_WRITE, 1, AS400File.COMMIT_LOCK_LEVEL_CHANGE);
     // Verify the object state
@@ -4032,8 +4040,9 @@ public void Var045()
   KeyedFile file = null;
   try
   {
+    System.out.println("... Var045 opening /QSYS.LIB/%CURLIB%.LIB/"+keySource+".FILE/MBR1.MBR");
     file = new KeyedFile(systemObject_,
-                              "/QSYS.LIB/%CURLIB%.LIB/KEYSRC.FILE/MBR1.MBR");
+                              "/QSYS.LIB/%CURLIB%.LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -4099,7 +4108,7 @@ public void Var046()
   try
   {
     file = new KeyedFile(systemObject_,
-                         "/QSYS.LIB/" + testLib_ + ".LIB/KEYSRC3.FILE/%FILE%.MBR");
+                         "/QSYS.LIB/" + testLib_ + ".LIB/"+keySource+"3.FILE/%FILE%.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -4108,7 +4117,7 @@ public void Var046()
     {
       failMsg.append("isOpen() not returning true.\n");
     }
-    if (!file.getMemberName().toString().equals("KEYSRC3"))
+    if (!file.getMemberName().toString().equals(""+keySource+"3"))
     {
       failMsg.append("getMemberName() failed: " + file.getMemberName() + "\n");
     }
@@ -4169,7 +4178,7 @@ public void Var047()
   try
   {
     file = new KeyedFile(systemObject_,
-                         "/QSYS.LIB/"+qgplLib_+".LIB/KEYSRC.FILE/%FIRST%.MBR");
+                         "/QSYS.LIB/"+qgplLib_+".LIB/"+keySource+".FILE/%FIRST%.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
 
@@ -4238,7 +4247,7 @@ public void Var048()
   try
   {
     file = new KeyedFile(systemObject_,
-                         "/QSYS.LIB/"+qgplLib_+".LIB/KEYSRC.FILE/%LAST%.MBR");
+                         "/QSYS.LIB/"+qgplLib_+".LIB/"+keySource+".FILE/%LAST%.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));
     file.open(AS400File.READ_ONLY, 1, AS400File.COMMIT_LOCK_LEVEL_NONE);
 

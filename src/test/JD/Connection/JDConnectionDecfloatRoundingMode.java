@@ -62,7 +62,6 @@ extends JDTestcase
     private static  String         table16_ = JDConnectionTest.COLLECTION + ".JDCDFPP16";
     private static  String         table34_ = JDConnectionTest.COLLECTION + ".JDCDFPP34";
 
-    private Connection connection_; 
 
     
     static String[][] DFP16= {
@@ -248,6 +247,8 @@ Cleanup.
 	s.close ();
 	connection_ .commit();
 	connection_ .close ();
+        connection_ = null; 
+
     }
 
 

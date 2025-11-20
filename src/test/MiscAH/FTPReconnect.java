@@ -68,7 +68,6 @@ public class FTPReconnect extends    Testcase
 
     private long timeout = 1000 * 60 * 8;
     private long oldTimeout;
-    AS400 pwrSys_ = null;
 
     FTPEvent ftpEvent = null;
     private char[] clearPassword_;

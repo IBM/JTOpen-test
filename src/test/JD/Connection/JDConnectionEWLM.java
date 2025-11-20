@@ -50,7 +50,6 @@ public class JDConnectionEWLM
 extends JDTestcase {
 
     // Private data.
-    private              Connection     connection_;
     private              Connection     closedConnection_;
     private              Connection     pooledConnection_; 
 
@@ -95,6 +94,8 @@ Performs cleanup needed after running variations.
     throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

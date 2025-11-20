@@ -48,7 +48,6 @@ public class DDMP3666842 extends Testcase
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -64,7 +63,7 @@ public class DDMP3666842 extends Testcase
     // in this testcase.
     super(systemObject, "DDMP3666842", 3,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   public KeyedFile createAndPopulate(boolean varLen) throws AS400Exception,Exception

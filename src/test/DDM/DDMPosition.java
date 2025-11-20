@@ -81,7 +81,7 @@ public class DDMPosition extends Testcase {
     // in this testcase.
     super(systemObject, "DDMPosition", 109, // @A1C @A2C
         variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   public DDMPosition(AS400 systemObject, Vector<String> variationsToRun, int runMode,
@@ -95,7 +95,7 @@ public class DDMPosition extends Testcase {
                                                                      // @A2C
         variationsToRun, runMode, fileOutputStream);
     bf_ = blockingFactor;
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = pwrsys; // Added for @A1A
   }
 

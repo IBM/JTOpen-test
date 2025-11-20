@@ -19,7 +19,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Clob;
-import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,7 +51,6 @@ import test.JDTestcase;
 public class JDLobClob extends JDTestcase {
 
   // Private data.
-  private Connection connection_;
   private Statement statement1_;
   private Statement statement2_;
   private ResultSet rs_;
@@ -130,6 +128,8 @@ public class JDLobClob extends JDTestcase {
       cleanupTable(statement1_, TABLE_);
       statement1_.close();
       connection_.close();
+      connection_ = null; 
+
     }
   }
 

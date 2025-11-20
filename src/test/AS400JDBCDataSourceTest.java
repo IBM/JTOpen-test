@@ -196,40 +196,40 @@ Performs setup needed before running testcases.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCDataSourceTestcase"))
       {
          AS400JDBCDataSourceTestcase tc = new AS400JDBCDataSourceTestcase(systemObject_,  namesAndVars_.get("AS400JDBCDataSourceTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());	//@A1C //@A2C
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCDataSourceTestcase");
       }
 
       if (/*allTestcases ||*/ namesAndVars_.containsKey("AS400JDBCDataSourceSerialTestcase"))
       {
          AS400JDBCDataSourceSerialTestcase tc = new AS400JDBCDataSourceSerialTestcase(systemObject_,  namesAndVars_.get("AS400JDBCDataSourceSerialTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCDataSourceSerialTestcase");
       }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCDataSourcePropertiesTestcase"))
       {
          AS400JDBCDataSourcePropertiesTestcase tc = new AS400JDBCDataSourcePropertiesTestcase(systemObject_,  namesAndVars_.get("AS400JDBCDataSourcePropertiesTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCDataSourcePropertiesTestcase");
       }
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCDataSourceBeanInfoTestcase"))
       {
          AS400JDBCDataSourceBeanInfoTestcase tc = new AS400JDBCDataSourceBeanInfoTestcase(systemObject_,  namesAndVars_.get("AS400JDBCDataSourceBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCDataSourceBeanInfoTestcase");
       }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCConnectionPoolDataSourceTestcase"))
       {
          AS400JDBCConnectionPoolDataSourceTestcase tc = new AS400JDBCConnectionPoolDataSourceTestcase(systemObject_,  namesAndVars_.get("AS400JDBCConnectionPoolDataSourceTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCConnectionPoolDataSourceTestcase");
       }
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCConnectionPoolDataSourceBeanInfoTestcase"))
       {
          AS400JDBCConnectionPoolDataSourceBeanInfoTestcase tc = new AS400JDBCConnectionPoolDataSourceBeanInfoTestcase(systemObject_,  namesAndVars_.get("AS400JDBCConnectionPoolDataSourceBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCConnectionPoolDataSourceBeanInfoTestcase");
       }
 
@@ -237,7 +237,7 @@ Performs setup needed before running testcases.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCMCPDSTestcase"))
       {
          AS400JDBCMCPDSTestcase tc = new AS400JDBCMCPDSTestcase(systemObject_,  namesAndVars_.get("AS400JDBCMCPDSTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCMCPDSTestcase");
       }
 
@@ -245,7 +245,7 @@ Performs setup needed before running testcases.
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCMDSTestcase"))
       {
          AS400JDBCMDSTestcase tc = new AS400JDBCMDSTestcase(systemObject_,  namesAndVars_.get("AS400JDBCMDSTestcase"), runMode_, fileOutputStream_,  password_, jndi, ldapUsr, ldapPwd, getSystemName());  //@A1C //@A2C
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCMDSTestcase");
       }
 

@@ -45,7 +45,6 @@ public class DDMP9946152 extends Testcase implements Runnable
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -63,7 +62,7 @@ public class DDMP9946152 extends Testcase implements Runnable
     // in this testcase.
     super(systemObject, "DDMP9946152", 1,
           variationsToRun, runMode, fileOutputStream, password);
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = pwrSys;
   }
 

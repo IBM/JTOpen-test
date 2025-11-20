@@ -32,18 +32,18 @@
 
 package test.JD.PMD;
 
+import java.io.FileOutputStream;
+import java.sql.CallableStatement;
+import java.sql.ParameterMetaData;
+import java.sql.PreparedStatement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCParameterMetaData;
 
 import test.JDPMDTest;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ParameterMetaData;
-import java.sql.PreparedStatement;
-import java.util.Hashtable; import java.util.Vector;
 
 /**
  * Testcase JDPSetInt. This tests the following method of the JDBC
@@ -65,7 +65,6 @@ public class JDPMDGetDB2ParameterName extends JDTestcase {
    }
 
   // Private data.
-  private Connection connection_;
   private PreparedStatement ps;
   private ParameterMetaData pmd;
 
@@ -99,6 +98,8 @@ public class JDPMDGetDB2ParameterName extends JDTestcase {
    **/
   protected void cleanup() throws Exception {
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

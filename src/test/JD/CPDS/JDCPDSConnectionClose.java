@@ -71,7 +71,6 @@ extends JDTestcase {
     // Private data.
     private static String         table_      = JDCPDSTest.COLLECTION + ".JDCCLOSE";
     private DataSource db2ConnectionPooolDataSource;
-    private Connection     connection_;
 
 
 /**
@@ -145,6 +144,7 @@ Cleanup.
             s.close ();
             c.close ();
         }
+
     }
 
 

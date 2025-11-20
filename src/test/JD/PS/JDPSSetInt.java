@@ -72,7 +72,6 @@ public class JDPSSetInt extends JDTestcase {
   private static final String PACKAGE = "JDPSSI";
 
   // Private data.
-  private Connection connection_;
   private Statement statement_;
 
   private Connection connectionNoTruncation_;
@@ -121,6 +120,7 @@ public class JDPSSetInt extends JDTestcase {
   protected void cleanup() throws Exception {
     statement_.close();
     connection_.close();
+    connection_ = null; 
 
     statementNoTruncation_.close();
     connectionNoTruncation_.close();

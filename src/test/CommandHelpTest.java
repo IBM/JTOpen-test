@@ -128,28 +128,28 @@ public class CommandHelpTest extends TestDriver
         if (allTestcases || namesAndVars_.containsKey("CommandTestcase"))
         {
             CommandTestcase tc = new CommandTestcase(systemObject_,  namesAndVars_.get("CommandTestcase"), runMode_, fileOutputStream_ );
-            testcases_.addElement(tc);
+            addTestcase(tc);
             namesAndVars_.remove("CommandTestcase");
         }
 
         if (allTestcases || namesAndVars_.containsKey("CommandBeanInfoTestcase"))
         {
             CommandBeanInfoTestcase tc = new CommandBeanInfoTestcase(systemObject_,  namesAndVars_.get("CommandBeanInfoTestcase"), runMode_, fileOutputStream_ );
-            testcases_.addElement(tc);
+            addTestcase(tc);
             namesAndVars_.remove("CommandBeanInfoTestcase");
         }
 
         if (allTestcases || namesAndVars_.containsKey("CommandListTestcase"))
         {
             CommandListTestcase tc = new CommandListTestcase(systemObject_,  namesAndVars_.get("CommandListTestcase"), runMode_, fileOutputStream_ );
-            testcases_.addElement(tc);
+            addTestcase(tc);
             namesAndVars_.remove("CommandListTestcase");
         }
 
         if (allTestcases || namesAndVars_.containsKey("CommandListBeanInfoTestcase"))
         {
             CommandListBeanInfoTestcase tc = new CommandListBeanInfoTestcase(systemObject_,  namesAndVars_.get("CommandListBeanInfoTestcase"), runMode_, fileOutputStream_ );
-            testcases_.addElement(tc);
+            addTestcase(tc);
             namesAndVars_.remove("CommandListBeanInfoTestcase");
         }
 
@@ -157,7 +157,7 @@ public class CommandHelpTest extends TestDriver
         if (allTestcases || namesAndVars_.containsKey("CommandHelpRetrieverTestcase"))
         {
             CommandHelpRetrieverTestcase tc = new CommandHelpRetrieverTestcase(systemObject_,  namesAndVars_.get("CommandHelpRetrieverTestcase"), runMode_, fileOutputStream_ );
-            testcases_.addElement(tc);
+            addTestcase(tc);
             namesAndVars_.remove("CommandHelpRetrieverTestcase");
         }
 

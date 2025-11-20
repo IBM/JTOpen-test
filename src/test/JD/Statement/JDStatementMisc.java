@@ -83,7 +83,6 @@ extends JDTestcase
 
 
     // Private data.
-    private              Connection     connection_;
     private              Connection     connection2_;
     private              Connection     connection3_;
     private              Connection     connectionPwrSys_;        //@I3A
@@ -152,6 +151,7 @@ extends JDTestcase
         }
 
         connection_.close ();
+        connection_ = null; 
         connection2_.close ();
         connection3_.close();
         connectionPwrSys_.close();                                //@I3A

@@ -239,7 +239,7 @@ public void createTestcases()
         new INAppTestcase(systemObject_,
                      (Vector<String>) namesAndVars_.get("INAppTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("INAppTestcase");
     }
     if (allTestcases || namesAndVars_.containsKey("INAttributesTestcase"))
@@ -248,7 +248,7 @@ public void createTestcases()
         new INAttributesTestcase(systemObject_,
                      (Vector<String>) namesAndVars_.get("INAttributesTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("INAttributesTestcase");
     }
 
@@ -258,7 +258,7 @@ public void createTestcases()
         new INInstallTestcase(systemObject_,
                      (Vector<String>) namesAndVars_.get("INInstallTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("INInstallTestcase");
     }
 
@@ -268,7 +268,7 @@ public void createTestcases()
         new INIsInstalledTestcase(systemObject_,
                      (Vector<String>) namesAndVars_.get("INIsInstalledTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("INIsInstalledTestcase");
     }
 
@@ -278,7 +278,7 @@ public void createTestcases()
         new INIsUpdateNeededTestcase(systemObject_,
                      (Vector<String>) namesAndVars_.get("INIsUpdateNeededTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("INIsUpdateNeededTestcase");
     }
 
@@ -288,7 +288,7 @@ public void createTestcases()
         new INUnInstallTestcase(systemObject_,
                      (Vector<String>) namesAndVars_.get("INUnInstallTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("INUnInstallTestcase");
     }
 

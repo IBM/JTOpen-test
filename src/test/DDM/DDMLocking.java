@@ -56,7 +56,6 @@ public class DDMLocking extends Testcase
   BufferedReader inBuf_ = new BufferedReader(new InputStreamReader(System.in));
   long start;
   long time;
-  String testLib_ = null;
   String journalLib_ = null; 
   String fileName_ = null;
   private boolean brief_ = TestDriverStatic.brief_;
@@ -81,15 +80,15 @@ public class DDMLocking extends Testcase
 
   public void setupTestLib() {
       if (baseTestDriver_ == null) {
-	  testLib_ = DDMTest.COLLECTION; 
+	      setTestLib(DDMTest.COLLECTION); 
       }  else { 
-	  testLib_ = baseTestDriver_.getTestLib();
+	 setTestLib(baseTestDriver_.getTestLib());
       }
       if (testLib_.length() > 8) {
-	  testLib_ = testLib_.substring(0,8); 
+	  setTestLib(testLib_.substring(0,8)); 
       }
       journalLib_ = testLib_ + "JN"; 
-      testLib_ = testLib_ + "DM";
+      setTestLib(testLib_ + "DM");
       
   }
   /**

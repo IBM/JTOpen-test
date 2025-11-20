@@ -79,7 +79,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private Statement           statement_;
     private Connection          connection1_;           // @E1A
     private Statement           statement1_;            // @E1A
@@ -135,6 +134,8 @@ Performs cleanup needed after running variations.
         connection1_.close ();      // @E1A
         statement_.close ();
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

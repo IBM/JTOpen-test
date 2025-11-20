@@ -61,7 +61,7 @@ public class JDASSFStatement extends JDASTestcase {
   String collection;
 
   private String table;
-  Vector<String> cleanupSql = new Vector<String>(); 
+  Vector<String> cleanupSql1 = new Vector<String>(); 
 
   /**
    * Constructor.
@@ -165,7 +165,7 @@ public class JDASSFStatement extends JDASTestcase {
       if (isToolboxFixDate(TOOLBOX_FIX_DATE)) {
 
         Statement stmt = transactionalConnection.createStatement();
-        Enumeration<String> e = cleanupSql.elements(); 
+        Enumeration<String> e = cleanupSql1.elements(); 
         while (e.hasMoreElements()) {
           try { 
              String sql = (String) e.nextElement(); 
@@ -487,7 +487,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.execute(sql); 
         } catch (Exception e) { 
@@ -621,7 +621,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.execute(sql); 
         } catch (Exception e) { 
@@ -753,7 +753,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.execute(sql); 
         } catch (Exception e) { 
@@ -984,7 +984,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.executeUpdate(sql); 
         } catch (Exception e) { 
@@ -1118,7 +1118,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.executeUpdate(sql); 
         } catch (Exception e) { 
@@ -1250,7 +1250,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.executeUpdate(sql); 
         } catch (Exception e) { 
@@ -1481,7 +1481,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.executeLargeUpdate(sql); 
         } catch (Exception e) { 
@@ -1616,7 +1616,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.executeLargeUpdate(sql); 
         } catch (Exception e) { 
@@ -1748,7 +1748,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.executeLargeUpdate(sql); 
         } catch (Exception e) { 
@@ -1980,7 +1980,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup 
         try {
           sql = "DROP PROCEDURE  "+procedure;
-          cleanupSql.add(sql); 
+          cleanupSql1.add(sql); 
           sb.append("Executing "+sql+"\n"); 
           stmt.executeLargeUpdate(sql); 
        } catch (Exception e) { 
@@ -2194,7 +2194,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup 
         try {
           sql = "DROP PROCEDURE  "+procedure;
-          cleanupSql.add(sql); 
+          cleanupSql1.add(sql); 
           sb.append("Executing "+sql+"\n"); 
           stmt.executeLargeUpdate(sql); 
        } catch (Exception e) { 
@@ -2411,7 +2411,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.executeUpdate(sql); 
         } catch (Exception e) { 
@@ -2545,7 +2545,7 @@ public class JDASSFStatement extends JDASTestcase {
         // Setup
         try {
            sql = "DROP TABLE  "+table;
-           cleanupSql.add(sql); 
+           cleanupSql1.add(sql); 
            sb.append("Executing "+sql+"\n"); 
            stmt.executeUpdate(sql); 
         } catch (Exception e) { 

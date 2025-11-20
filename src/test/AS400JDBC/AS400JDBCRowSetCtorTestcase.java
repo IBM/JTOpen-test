@@ -50,7 +50,6 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
   private AS400JDBCDataSource dataSource_;
   private static final String logDirectory_ = "javatest"; // @A3A
   private String dataSourceName_ = logDirectory_ + "/myds"; // @A3C //"/jdbc/myds"
-  private String collection_ = "ROWSET";
   private String dbaseName_ = collection_ + ".JTBOX"; // "QGPL.JTBOX";
   private Context context_;
   private File testFile_;

@@ -24,7 +24,6 @@ import test.JDTestcase;
 import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.sql.Array;
-import java.sql.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,8 +52,6 @@ public class JDPSSetArray extends JDTestcase {
      test.JDPSTest.main(newArgs); 
    }
 
-  // Private data.
-  private Connection connection_;
 
   /**
    * Constructor.
@@ -85,6 +82,8 @@ public class JDPSSetArray extends JDTestcase {
    **/
   protected void cleanup() throws Exception {
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

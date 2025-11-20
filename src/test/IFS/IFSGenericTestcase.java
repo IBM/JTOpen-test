@@ -55,7 +55,6 @@ public class IFSGenericTestcase extends Testcase
   public static String ifsPathName_ = ifsDirName_ + fileName_;
   
   public String dirName_=null;
-  public String collection_ = "JDIFSCOL"; 
 
   public boolean DOS_ = false;
   public boolean OS2_ = false;

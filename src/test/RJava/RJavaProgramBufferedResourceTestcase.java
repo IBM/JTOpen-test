@@ -60,14 +60,6 @@ extends Testcase {
 
 
 
-    // Constants.
-
-
-
-    // Private data.
-    private AS400           pwrSys_;
-
-
 
 /**
 Constructor.

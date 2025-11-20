@@ -51,7 +51,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection  connection_;
     private Statement   statement_;
     private String      TABLE_;        
     private String      url_;
@@ -290,6 +289,8 @@ Performs cleanup needed after running variations.
         {
             statement_.close ();
             connection_.close ();
+            connection_ = null; 
+
 
             Connection c = testDriver_.getConnection(url_,systemObject_.getUserId(), encryptedPassword_);
 

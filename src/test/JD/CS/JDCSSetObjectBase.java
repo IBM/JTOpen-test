@@ -35,7 +35,6 @@ public class JDCSSetObjectBase extends JDCSSetTestcase {
   public final static int TYPES_DECFLOAT34 = 104503;
 
   // Private data.
-  protected Connection connection_;
   protected Statement statement_;
 
   protected Connection connectionCommaSeparator_;
@@ -92,6 +91,8 @@ public class JDCSSetObjectBase extends JDCSSetTestcase {
     super.cleanup(); 
     statement_.close();
     connection_.close();
+    connection_ = null; 
+
     connectionCommaSeparator_.close();
   }
 

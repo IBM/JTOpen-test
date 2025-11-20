@@ -70,7 +70,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private CallableStatement   csTypes_;
     private CallableStatement   csTypesB_;
 
@@ -204,6 +203,8 @@ extends JDTestcase
         stmt.close();
 
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

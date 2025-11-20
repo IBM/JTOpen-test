@@ -63,7 +63,7 @@ public class EventLogTest extends TestDriver
           new EventLogTestcase(systemObject_,
                               (Vector<String>) namesAndVars_.get("EventLogTestcase"),
                               runMode_, fileOutputStream_);
-        testcases_.addElement(test);
+        addTestcase(test);
       }
       catch(Exception e)
       {

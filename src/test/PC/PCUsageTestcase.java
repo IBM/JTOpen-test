@@ -46,12 +46,6 @@ public class PCUsageTestcase extends Testcase
      }
      test.PCTest.main(newArgs); 
    }
-    static boolean debug = false; 
-    
-    static { 
-       String debugSet = System.getProperty("debug");
-       if (debugSet != null) debug = true;
-    }
       
 
     Connection connection_ = null; 

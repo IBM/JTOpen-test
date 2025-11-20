@@ -46,7 +46,6 @@ public class IFSProxyStressTestcase
    
    IFSRandomAccessFile aFile_;
 
-   AS400 sys_ = null; 
       
 
 //Constructor

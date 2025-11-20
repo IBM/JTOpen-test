@@ -49,7 +49,6 @@ Ability to handle nested scalar functions is also tested.
 public class JDScalarFunctions extends JDTestcase {
 
     // Private data.
-    private Connection connection_;
     private Statement statement_;
     private ResultSet rs_;
 
@@ -105,6 +104,8 @@ public class JDScalarFunctions extends JDTestcase {
         statement_.executeUpdate("DROP TABLE " + JDStatementTest.COLLECTION + ".SCLRTST");
         statement_.close();
         connection_.close();
+        connection_ = null; 
+
         decsepconn1_.close();
         decsepstmnt1_.close();
         decsepconn2_.close();

@@ -32,7 +32,6 @@ import java.io.FileOutputStream;
 import java.io.Reader;
 import java.sql.CallableStatement;
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -45,7 +44,6 @@ import test.JDTestcase;
 
 public class JDCSGetTestcase extends JDTestcase {
 
-  Connection connection_;
 
   CallableStatement csTypes_;
   CallableStatement csTypesB_;
@@ -115,6 +113,8 @@ public class JDCSGetTestcase extends JDTestcase {
    **/
   protected void cleanup() throws Exception {
     connection_.close();
+    connection_ = null; 
+
   }
   public void getTestFailed(CallableStatement cstmt, String getMethodName, int parameter, String exceptionInfo, String info) { 
     StringBuffer sb = new StringBuffer(); 

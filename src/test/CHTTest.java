@@ -38,7 +38,6 @@ extends TestDriver
 
     // Constants.
     public static final String chtSvrName_ = "CHTJTTEST";
-    public static AS400 pwrSys_ = null;
 
     private static final String clusterName = "CHTCLUSTER";
 
@@ -85,11 +84,11 @@ Constructs an object for testing applications.
 Does a STRCHTSVR command.
  @exception  Exception  If an exception occurs.
 **/
-    public static void strChtSvr()
+    public static void strChtSvr(AS400 pwrSys)
       throws Exception
     {
 	String STRCHTSVR_CMD = "QSYS/STRCHTSVR SERVER(" + chtSvrName_ + ")";
-	CommandCall cmd = new CommandCall(pwrSys_);
+	CommandCall cmd = new CommandCall(pwrSys);
         // Create the clustered hash table
 	if (cmd.run(STRCHTSVR_CMD) != true)
 	{
@@ -110,11 +109,11 @@ Does a STRCHTSVR command.
 Does an ENDCHTSVR command.
  @exception  Exception  If an exception occurs.
 **/
-    public static void endChtSvr()
+    public static void endChtSvr(AS400 pwrSys)
       throws Exception
     {
 	String ENDCHTSVR_CMD = "QSYS/ENDCHTSVR SERVER(" + chtSvrName_ + ")";
-	CommandCall cmd = new CommandCall(pwrSys_);
+	CommandCall cmd = new CommandCall(pwrSys);
         // Create the clustered hash table
 	if (cmd.run(ENDCHTSVR_CMD) != true)
 	{

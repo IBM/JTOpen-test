@@ -24,7 +24,6 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -97,7 +96,6 @@ public class JDXMLXML extends JDTestcase {
   public static final String STREAMRESULT = "javax.xml.transform.stream.StreamResult";
 
   // Private data.
-  private Connection connection_;
 
   private Statement statement1_;
 
@@ -1030,6 +1028,8 @@ try {
       statement1_.close();
 
       connection_.close();
+      connection_ = null; 
+
     }
   }
 

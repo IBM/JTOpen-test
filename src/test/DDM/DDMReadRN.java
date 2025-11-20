@@ -55,7 +55,6 @@ public class DDMReadRN extends Testcase
   long time;
   Record[] records_;
   int bf_;
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -70,7 +69,7 @@ public class DDMReadRN extends Testcase
     // The third parameter is the total number of variations in this class.
     super(systemObject, "DDMReadRN", 15,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**
@@ -88,7 +87,7 @@ public class DDMReadRN extends Testcase
     super(systemObject, (blockingFactor == 1)? "DDMReadRN" : "DDMReadRNCaching" + String.valueOf(blockingFactor), 15,
           variationsToRun, runMode, fileOutputStream);
     bf_ = blockingFactor;
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

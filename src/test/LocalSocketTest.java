@@ -83,7 +83,7 @@ public class LocalSocketTest extends TestDriver
         new LocalSocketCtorTestcase(systemObject_,
                      (Vector<String>) namesAndVars_.get("LocalSocketCtorTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("LocalSocketCtorTestcase");
     }
 
@@ -93,7 +93,7 @@ public class LocalSocketTest extends TestDriver
         new LocalSocketConnectTestcase(systemObject_,
                      (Vector<String>) namesAndVars_.get("LocalSocketConnectTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("LocalSocketConnectTestcase");
     }
 

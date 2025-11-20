@@ -35,11 +35,11 @@ package test.JD.PMD;
 
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.Types;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -71,7 +71,6 @@ extends JDTestcase
    }
 
     // Private data.
-    private Connection          connection_;
     // Change when we get a JDK 1.4
     private PreparedStatement   ps;
     // Change when we get a JDK 1.4
@@ -122,6 +121,8 @@ Performs cleanup needed after running variations.
         throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

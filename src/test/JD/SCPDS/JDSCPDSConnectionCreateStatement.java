@@ -89,7 +89,6 @@ extends JDTestcase {
     // This cannot be cast to DB2Connection
 
     // Private data.
-    private              java.sql.Connection     connection_;
     private              Connection     closedConnection_;
     private static String         table_      = JDSCPDSTest.COLLECTION + ".JDCCS";
     private static String               keysTable_  = JDSCPDSTest.COLLECTION + ".JDGENERATEDKEYS";
@@ -184,6 +183,8 @@ Performs cleanup needed after running variations.
             s.close ();
 
             connection_.close ();
+            connection_ = null; 
+
         }
     }
 

@@ -59,7 +59,6 @@ public class AS400FTPTestcase extends    Testcase
 
     private FTPEvent ftpEvent = null;
 
-    AS400 pwrSys_ = null;
 
     private boolean cleanup = true;
 

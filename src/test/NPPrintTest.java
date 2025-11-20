@@ -209,7 +209,7 @@ public class NPPrintTest extends TestDriver
                                                     namesAndVars_.get("NPPrtParmGetFloatTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtParmGetFloatTestcase");
                     }
 
@@ -221,7 +221,7 @@ public class NPPrintTest extends TestDriver
                                                     namesAndVars_.get("NPPrtParmSetFloatTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtParmSetFloatTestcase");
                     }
 
@@ -233,7 +233,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPPrtParmGetIntTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtParmGetIntTestcase");
                     }
 
@@ -245,7 +245,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPPrtParmSetIntTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtParmSetIntTestcase");
                     }
 
@@ -257,7 +257,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPPrtParmGetStrTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtParmGetStrTestcase");
                     }
 
@@ -269,7 +269,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPPrtParmSetStrTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtParmSetStrTestcase");
                     }
 
@@ -283,7 +283,7 @@ public class NPPrintTest extends TestDriver
                                                             namesAndVars_.get("NPPrtObjectInStrAvailableTestcase"),
                                                             runMode_,
                                                             fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjectInStrAvailableTestcase");
                     }
 
@@ -294,7 +294,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPPrtObjectInStrCloseTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjectInStrCloseTestcase");
                     }
 
@@ -305,7 +305,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPPrtObjectInStrMarkTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjectInStrMarkTestcase");
                     }
 
@@ -316,7 +316,7 @@ public class NPPrintTest extends TestDriver
                                                           namesAndVars_.get("NPPrtObjectInStrMarkSupTestcase"),
                                                           runMode_,
                                                           fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjectInStrMarkSupTestcase");
                     }
 
@@ -327,7 +327,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPPrtObjectInStrReadTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjectInStrReadTestcase");
                     }
 
@@ -338,7 +338,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPPrtObjectInStrResetTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjectInStrResetTestcase");
                     }
 
@@ -349,7 +349,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPPrtObjectInStrSkipTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjectInStrSkipTestcase");
                     }
 
@@ -364,7 +364,7 @@ public class NPPrintTest extends TestDriver
                                                     namesAndVars_.get("NPPrtObjPageInStrTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjPageInStrTestcase");
                     }
 
@@ -378,7 +378,7 @@ public class NPPrintTest extends TestDriver
                                                     namesAndVars_.get("NPPrtObjTransInStrTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtObjTransInStrTestcase");
                     }
 
@@ -395,7 +395,7 @@ public class NPPrintTest extends TestDriver
                                                     namesAndVars_.get("NPSplFOutStrCloseTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFOutStrCloseTestcase");
                     }
 
@@ -407,7 +407,7 @@ public class NPPrintTest extends TestDriver
                                                    namesAndVars_.get("NPSplFOutStrCtorTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFOutStrCtorTestcase");
                     }
 
@@ -419,7 +419,7 @@ public class NPPrintTest extends TestDriver
                                                     namesAndVars_.get("NPSplFOutStrFlushTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFOutStrFlushTestcase");
                     }
 
@@ -431,7 +431,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPSplFOutStrGetSplFTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFOutStrGetSplFTestcase");
                     }
 
@@ -443,7 +443,7 @@ public class NPPrintTest extends TestDriver
                                                     namesAndVars_.get("NPSplFOutStrWriteTestcase"),
                                                     runMode_,
                                                     fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFOutStrWriteTestcase");
                     }
 
@@ -459,7 +459,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSplFCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFCtorTestcase");
                     }
 
@@ -472,7 +472,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSplFAnsMsgTestcase"),
                                                runMode_,
                                                fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFAnsMsgTestcase");
                     }
 
@@ -484,7 +484,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSplFDeleteTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFDeleteTestcase");
                     }
 
@@ -496,7 +496,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPSplFGetInputStreamTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFGetInputStreamTestcase");
                     }
 
@@ -508,7 +508,7 @@ public class NPPrintTest extends TestDriver
                                                    namesAndVars_.get("NPSplFGetMessageTestcase"),
                                                    runMode_,
                                                    fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFGetMessageTestcase");
                     }
 
@@ -521,7 +521,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSplFNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFNameTestcase");
                     }
 
@@ -533,7 +533,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSplFHoldTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFHoldTestcase");
                     }
 
@@ -545,7 +545,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPSplFMoveOutQTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFMoveOutQTestcase");
                     }
 
@@ -557,7 +557,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPSplFMoveSplFTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFMoveSplFTestcase");
                     }
 
@@ -569,7 +569,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPSplFMoveToTopTestcase"),
                                                   runMode_,
                                                   fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFMoveToTopTestcase");
                     }
 
@@ -581,7 +581,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPSplFReleaseTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFReleaseTestcase");
                     }
 
@@ -593,7 +593,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPSplFSendNetTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFSendNetTestcase");
                     }
 
@@ -605,7 +605,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPSplFSendTCPTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFSendTCPTestcase");
                     }
 
@@ -617,7 +617,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPSplFSetAttrsTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFSetAttrsTestcase");
                     }
 
@@ -630,7 +630,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSplFSystemTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFSystemTestcase");
                     }
 
@@ -642,7 +642,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSplFUpdateTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFUpdateTestcase");
                     }
 
@@ -658,7 +658,7 @@ public class NPPrintTest extends TestDriver
                                                            namesAndVars_.get("NPSplFListFormTypeFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListFormTypeFilterTestcase");
                     }
 
@@ -670,7 +670,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPSplFListQueueFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListQueueFilterTestcase");
                     }
 
@@ -682,7 +682,7 @@ public class NPPrintTest extends TestDriver
                                                    namesAndVars_.get("NPSplFListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListSystemTestcase");
                     }
 
@@ -694,7 +694,7 @@ public class NPPrintTest extends TestDriver
                                                            namesAndVars_.get("NPSplFListUserDataFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListUserDataFilterTestcase");
                     }
                 // Date Filter
@@ -705,7 +705,7 @@ public class NPPrintTest extends TestDriver
                                                            namesAndVars_.get("NPSplFListDateFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListDateFilterTestcase");
                     }
                 // Job System Filter
@@ -716,7 +716,7 @@ public class NPPrintTest extends TestDriver
                                                            namesAndVars_.get("NPSplFListJobSystemFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListJobSystemFilterTestcase");
                     }
                 // User Filter
@@ -727,7 +727,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPSplFListUserFilterTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListUserFilterTestcase");
                     }
 
@@ -739,7 +739,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPSplFListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListCtorTestcase");
                     }
 
@@ -751,7 +751,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPSplFListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListOpenAsyncTestcase");
                     }
 
@@ -763,7 +763,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPSplFListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListOpenSyncTestcase");
                     }
 
@@ -775,7 +775,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPSplFListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListListenerTestcase");
                     }
 
@@ -787,7 +787,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPSplFListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListResetFilterTestcase");
                     }
 
@@ -801,7 +801,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPSplFListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListAttrsToRetTestcase");
                     }
 
@@ -813,7 +813,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPSplFListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSplFListSerializeTestcase");
                     }
 
@@ -829,7 +829,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPOutQCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQCtorTestcase");
                     }
 
@@ -841,7 +841,7 @@ public class NPPrintTest extends TestDriver
                                               namesAndVars_.get("NPOutQClearTestcase"),
                                               runMode_,
                                               fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQClearTestcase");
                     }
 
@@ -854,7 +854,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPOutQNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQNameTestcase");
                     }
 
@@ -867,7 +867,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPOutQPathTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQPathTestcase");
                     }
 
@@ -879,7 +879,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPOutQHoldTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQHoldTestcase");
                     }
 
@@ -893,7 +893,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPOutQSystemTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQSystemTestcase");
                     }
 
@@ -905,7 +905,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPOutQReleaseTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQReleaseTestcase");
                     }
 
@@ -917,7 +917,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPOutQUpdateTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQUpdateTestcase");
                     }
 
@@ -929,7 +929,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPOutQSerializeTestcase"),
                                                   runMode_,
                                                   fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQSerializeTestcase");
                     }
 
@@ -947,7 +947,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPOutQListQueueFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListQueueFilterTestcase");
                     }
 
@@ -961,7 +961,7 @@ public class NPPrintTest extends TestDriver
                                                    namesAndVars_.get("NPOutQListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListSystemTestcase");
                     }
 
@@ -973,7 +973,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPOutQListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListCtorTestcase");
                     }
 
@@ -985,7 +985,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPOutQListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListOpenAsyncTestcase");
                     }
 
@@ -997,7 +997,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPOutQListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListOpenSyncTestcase");
                     }
 
@@ -1009,7 +1009,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPOutQListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListListenerTestcase");
                     }
 
@@ -1021,7 +1021,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPOutQListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListResetFilterTestcase");
                     }
 
@@ -1035,7 +1035,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPOutQListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListAttrsToRetTestcase");
                     }
 
@@ -1047,7 +1047,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPOutQListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPOutQListSerializeTestcase");
                     }
 
@@ -1063,7 +1063,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPPrtDCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDCtorTestcase");
                     }
 
@@ -1077,7 +1077,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPPrtDNameTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDNameTestcase");
                     }
 
@@ -1091,7 +1091,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPPrtDSystemTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDSystemTestcase");
                     }
 
@@ -1103,7 +1103,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPPrtDUpdateTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDUpdateTestcase");
                     }
 
@@ -1115,7 +1115,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPPrtDSerializeTestcase"),
                                                   runMode_,
                                                   fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDSerializeTestcase");
                     }
 
@@ -1133,7 +1133,7 @@ public class NPPrintTest extends TestDriver
                                                           namesAndVars_.get("NPPrtDListPrinterFilterTestcase"),
                                                           runMode_,
                                                           fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListPrinterFilterTestcase");
                     }
 
@@ -1147,7 +1147,7 @@ public class NPPrintTest extends TestDriver
                                                    namesAndVars_.get("NPPrtDListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListSystemTestcase");
                     }
 
@@ -1159,7 +1159,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPPrtDListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListCtorTestcase");
                     }
 
@@ -1171,7 +1171,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPPrtDListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListOpenAsyncTestcase");
                     }
 
@@ -1183,7 +1183,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPPrtDListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListOpenSyncTestcase");
                     }
 
@@ -1195,7 +1195,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPPrtDListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListListenerTestcase");
                     }
 
@@ -1207,7 +1207,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPPrtDListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListResetFilterTestcase");
                     }
 
@@ -1221,7 +1221,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPPrtDListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListAttrsToRetTestcase");
                     }
 
@@ -1233,7 +1233,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPPrtDListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtDListSerializeTestcase");
                     }
 
@@ -1249,7 +1249,7 @@ public class NPPrintTest extends TestDriver
                                               namesAndVars_.get("NPWrtJStartTestcase"),
                                               runMode_,
                                               fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJStartTestcase");
                     }
 
@@ -1262,7 +1262,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPWrtJNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJNameTestcase");
                     }
 
@@ -1274,7 +1274,7 @@ public class NPPrintTest extends TestDriver
                                             namesAndVars_.get("NPWrtJEndTestcase"),
                                             runMode_,
                                             fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJEndTestcase");
                     }
 
@@ -1287,7 +1287,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPWrtJSystemTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJSystemTestcase");
                     }
 
@@ -1299,7 +1299,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPWrtJUpdateTestcase"),
                                                runMode_,
                                                fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJUpdateTestcase");
                     }
 
@@ -1317,7 +1317,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPWrtJListQueueFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListQueueFilterTestcase");
                     }
 
@@ -1331,7 +1331,7 @@ public class NPPrintTest extends TestDriver
                                                    namesAndVars_.get("NPWrtJListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListSystemTestcase");
                     }
 
@@ -1345,7 +1345,7 @@ public class NPPrintTest extends TestDriver
                                                          namesAndVars_.get("NPWrtJListWriterFilterTestcase"),
                                                          runMode_,
                                                          fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListWriterFilterTestcase");
                     }
 
@@ -1357,7 +1357,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPWrtJListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListCtorTestcase");
                     }
 
@@ -1369,7 +1369,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPWrtJListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListOpenAsyncTestcase");
                     }
 
@@ -1381,7 +1381,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPWrtJListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListOpenSyncTestcase");
                     }
 
@@ -1393,7 +1393,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPWrtJListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListListenerTestcase");
                     }
 
@@ -1405,7 +1405,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPWrtJListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListResetFilterTestcase");
                     }
 
@@ -1419,7 +1419,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPWrtJListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListAttrsToRetTestcase");
                     }
 
@@ -1431,7 +1431,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPWrtJListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, printer_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPWrtJListSerializeTestcase");
                     }
 
@@ -1447,7 +1447,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPPrtFCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFCtorTestcase");
                     }
 
@@ -1460,7 +1460,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPPrtFNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFNameTestcase");
                     }
 
@@ -1472,7 +1472,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPPrtFSetAttrsTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFSetAttrsTestcase");
                     }
 
@@ -1486,7 +1486,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPPrtFPathTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFPathTestcase");
                     }
 
@@ -1500,7 +1500,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPPrtFSystemTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFSystemTestcase");
                     }
 
@@ -1512,7 +1512,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPPrtFUpdateTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFUpdateTestcase");
                     }
 
@@ -1524,7 +1524,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPPrtFSerializeTestcase"),
                                                   runMode_,
                                                   fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFSerializeTestcase");
                     }
 
@@ -1541,7 +1541,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPPrtFListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListCtorTestcase");
                     }
 
@@ -1555,7 +1555,7 @@ public class NPPrintTest extends TestDriver
                                                               namesAndVars_.get("NPPrtFListPrinterFileFilterTestcase"),
                                                               runMode_,
                                                               fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListPrinterFileFilterTestcase");
                     }
 
@@ -1569,7 +1569,7 @@ public class NPPrintTest extends TestDriver
                                                    namesAndVars_.get("NPPrtFListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListSystemTestcase");
                     }
 
@@ -1581,7 +1581,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPPrtFListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListOpenAsyncTestcase");
                     }
 
@@ -1593,7 +1593,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPPrtFListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListOpenSyncTestcase");
                     }
 
@@ -1605,7 +1605,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPPrtFListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListListenerTestcase");
                     }
 
@@ -1617,7 +1617,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPPrtFListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListResetFilterTestcase");
                     }
 
@@ -1631,7 +1631,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPPrtFListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListAttrsToRetTestcase");
                     }
 
@@ -1643,7 +1643,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPPrtFListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPPrtFListSerializeTestcase");
                     }
 
@@ -1659,7 +1659,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPAFPRCtorTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRCtorTestcase");
                     }
 
@@ -1673,7 +1673,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPAFPRNameTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRNameTestcase");
                     }
 
@@ -1686,7 +1686,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPAFPRPathTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRPathTestcase");
                     }
 
@@ -1700,7 +1700,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPAFPRSystemTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRSystemTestcase");
                     }
 
@@ -1712,7 +1712,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPAFPRUpdateTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRUpdateTestcase");
                     }
 
@@ -1724,7 +1724,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPAFPRGetInputStreamTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRGetInputStreamTestcase");
                     }
 
@@ -1736,7 +1736,7 @@ public class NPPrintTest extends TestDriver
                                                   namesAndVars_.get("NPAFPRSerializeTestcase"),
                                                   runMode_,
                                                   fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRSerializeTestcase");
                     }
 
@@ -1752,7 +1752,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPAFPRListCtorTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListCtorTestcase");
                     }
 
@@ -1769,7 +1769,7 @@ public class NPPrintTest extends TestDriver
                                                            namesAndVars_.get("NPAFPRListFontPelDFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListFontPelDFilterTestcase");
                     }
 */
@@ -1784,7 +1784,7 @@ public class NPPrintTest extends TestDriver
                                                            namesAndVars_.get("NPAFPRListResourceFilterTestcase"),
                                                            runMode_,
                                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListResourceFilterTestcase");
                     }
 
@@ -1799,7 +1799,7 @@ public class NPPrintTest extends TestDriver
                                                               namesAndVars_.get("NPAFPRListSpooledFileFilterTestcase"),
                                                               runMode_,
                                                               fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListSpooledFileFilterTestcase");
                     }
 
@@ -1814,7 +1814,7 @@ public class NPPrintTest extends TestDriver
                                                    namesAndVars_.get("NPAFPRListSystemTestcase"),
                                                    runMode_,
                                                    fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListSystemTestcase");
                     }
 
@@ -1826,7 +1826,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPAFPRListOpenAsyncTestcase"),
                                                       runMode_,
                                                       fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListOpenAsyncTestcase");
                     }
 
@@ -1838,7 +1838,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPAFPRListOpenSyncTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListOpenSyncTestcase");
                     }
 
@@ -1850,7 +1850,7 @@ public class NPPrintTest extends TestDriver
                                                      namesAndVars_.get("NPAFPRListListenerTestcase"),
                                                      runMode_,
                                                      fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListListenerTestcase");
                     }
 
@@ -1862,7 +1862,7 @@ public class NPPrintTest extends TestDriver
                                                         namesAndVars_.get("NPAFPRListResetFilterTestcase"),
                                                         runMode_,
                                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListResetFilterTestcase");
                     }
 
@@ -1876,7 +1876,7 @@ public class NPPrintTest extends TestDriver
                                                        namesAndVars_.get("NPAFPRListAttrsToRetTestcase"),
                                                        runMode_,
                                                        fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListAttrsToRetTestcase");
                     }
 
@@ -1888,7 +1888,7 @@ public class NPPrintTest extends TestDriver
                                                       namesAndVars_.get("NPAFPRListSerializeTestcase"),
                                                       runMode_,
                                                       fileOutputStream_, password_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPAFPRListSerializeTestcase");
                     }
 
@@ -1903,7 +1903,7 @@ public class NPPrintTest extends TestDriver
                                           namesAndVars_.get("NPSCS5256CtorTestcase"),
                                           runMode_,
                                           fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5256CtorTestcase");
                     }
 
@@ -1914,7 +1914,7 @@ public class NPPrintTest extends TestDriver
                                         namesAndVars_.get("NPSCSCRTestcase"),
                                         runMode_,
                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSCRTestcase");
                     }
 
@@ -1925,7 +1925,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCSCloseTestcase"),
                                            runMode_,
                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSCloseTestcase");
                     }
 
@@ -1936,7 +1936,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPSCS5256EndPageTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5256EndPageTestcase");
                     }
 
@@ -1947,7 +1947,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCSFlushTestcase"),
                                            runMode_,
                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSFlushTestcase");
                     }
 
@@ -1958,7 +1958,7 @@ public class NPPrintTest extends TestDriver
                                             namesAndVars_.get("NPSCSGetEncTestcase"),
                                             runMode_,
                                             fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSGetEncTestcase");
                     }
 
@@ -1969,7 +1969,7 @@ public class NPPrintTest extends TestDriver
                                         namesAndVars_.get("NPSCSLFTestcase"),
                                         runMode_,
                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSLFTestcase");
                     }
 
@@ -1980,7 +1980,7 @@ public class NPPrintTest extends TestDriver
                                         namesAndVars_.get("NPSCSNLTestcase"),
                                         runMode_,
                                         fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSNLTestcase");
                     }
 
@@ -1991,7 +1991,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCSWriteTestcase"),
                                            runMode_,
                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSWriteTestcase");
                     }
 
@@ -2002,7 +2002,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCS5256Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5256Testcase");
                     }
 
@@ -2017,7 +2017,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSCS5224CPITestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5224CPITestcase");
                     }
 
@@ -2028,7 +2028,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSCS5224LPITestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5224LPITestcase");
                     }
 
@@ -2039,7 +2039,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCS5224Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5224Testcase");
                     }
 
@@ -2055,7 +2055,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSCSAbsHorPosTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSAbsHorPosTestcase");
                     }
 
@@ -2066,7 +2066,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSCSAbsVerPosTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSAbsVerPosTestcase");
                     }
 
@@ -2077,7 +2077,7 @@ public class NPPrintTest extends TestDriver
                                           namesAndVars_.get("NPSCSBoldTestcase"),
                                           runMode_,
                                           fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSBoldTestcase");
                     }
 
@@ -2088,7 +2088,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSCS5219CPITestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5219CPITestcase");
                     }
 
@@ -2099,7 +2099,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPSCSDestDrawerTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSDestDrawerTestcase");
                     }
 
@@ -2110,7 +2110,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPSCS5219EndPageTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5219EndPageTestcase");
                     }
 
@@ -2121,7 +2121,7 @@ public class NPPrintTest extends TestDriver
                                               namesAndVars_.get("NPSCSEnvelopeTestcase"),
                                               runMode_,
                                               fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSEnvelopeTestcase");
                     }
 
@@ -2132,7 +2132,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPSCSLeftMarginTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSLeftMarginTestcase");
                     }
 
@@ -2143,7 +2143,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCSPaperTestcase"),
                                            runMode_,
                                            fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSPaperTestcase");
                     }
 
@@ -2154,7 +2154,7 @@ public class NPPrintTest extends TestDriver
                                              namesAndVars_.get("NPSCSQualityTestcase"),
                                              runMode_,
                                              fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSQualityTestcase");
                     }
 
@@ -2165,7 +2165,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSCSSrcDrawerTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSSrcDrawerTestcase");
                     }
 
@@ -2176,7 +2176,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSCSUnderlineTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSUnderlineTestcase");
                     }
 
@@ -2187,7 +2187,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCS5219Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5219Testcase");
                     }
 
@@ -2202,7 +2202,7 @@ public class NPPrintTest extends TestDriver
                                           namesAndVars_.get("NPSCSBoldTestcase"),
                                           runMode_,
                                           fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSBoldTestcase");
                     }
 
@@ -2213,7 +2213,7 @@ public class NPPrintTest extends TestDriver
                                             namesAndVars_.get("NPSCSDuplexTestcase"),
                                             runMode_,
                                             fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSDuplexTestcase");
                     }
 
@@ -2224,7 +2224,7 @@ public class NPPrintTest extends TestDriver
                                           namesAndVars_.get("NPSCSFontTestcase"),
                                           runMode_,
                                           fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSFontTestcase");
                     }
 
@@ -2235,7 +2235,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPSCSOrientationTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSOrientationTestcase");
                     }
 
@@ -2246,7 +2246,7 @@ public class NPPrintTest extends TestDriver
                                                  namesAndVars_.get("NPSCSCreateSplfTestcase"),
                                                  runMode_,
                                                  fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSCreateSplfTestcase");
                     }
 
@@ -2257,7 +2257,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCS3812Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS3812Testcase");
                     }
 
@@ -2272,7 +2272,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSCSHGridLineTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSHGridLineTestcase");
                     }
 
@@ -2283,7 +2283,7 @@ public class NPPrintTest extends TestDriver
                                                 namesAndVars_.get("NPSCSCharRotateTestcase"),
                                                 runMode_,
                                                 fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSCharRotateTestcase");
                     }
 
@@ -2294,7 +2294,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSCSFontScaleTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSFontScaleTestcase");
                     }
 
@@ -2305,7 +2305,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSCSVGridLineTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSVGridLineTestcase");
                     }
 
@@ -2316,7 +2316,7 @@ public class NPPrintTest extends TestDriver
                                                namesAndVars_.get("NPSCSCreateDBCSSplfTestcase"),
                                                runMode_,
                                                fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCSCreateDBCSSplfTestcase");
                     }
 
@@ -2327,7 +2327,7 @@ public class NPPrintTest extends TestDriver
                                            namesAndVars_.get("NPSCS5553Testcase"),
                                            runMode_,
                                            fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPSCS5553Testcase");
                     }
 
@@ -2341,7 +2341,7 @@ public class NPPrintTest extends TestDriver
                                        namesAndVars_.get("NPLDRWTestcase"),
                                         runMode_,
                                         fileOutputStream_, printer_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("NPLDRWTestcase");
                     }
 
@@ -2361,7 +2361,7 @@ public class NPPrintTest extends TestDriver
                       new ExampleTestcase(systemObject_,
                                           namesAndVars_.get("example"), runMode_,
                                           fileOutputStream_);
-                    testcases_.addElement(tc);
+                    addTestcase(tc);
                     namesAndVars_.remove("example");
                     }
 $$$ TO DO $$$ - delete this line */

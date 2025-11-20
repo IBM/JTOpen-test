@@ -54,8 +54,6 @@ public class DDMMultipleFormat extends Testcase
 //  AS400 pwrSys_ = DDMTest.PwrSys;
   long start;
   long time;
-//  String testLib_ = "DDMTest";
-  String testLib_ = null;
   String fileName_;
   Record[] records_ = new Record[100];
   Record[] recordsFmt1_ = new Record[100];
@@ -94,7 +92,7 @@ public class DDMMultipleFormat extends Testcase
     pwrSys_ = pwrSys;
 //    if (testLib != null)
 //    {
-    testLib_ = testLib;
+    setTestLib(testLib);
 //    }
   }
 

@@ -78,7 +78,6 @@ extends JDTestcase {
 
     // Private data.
     private static String table_      = JDSCPDSTest.COLLECTION + ".JDCFORMAT";
-    private Connection  connection_;
 	private DataSource dataSource;
 
 

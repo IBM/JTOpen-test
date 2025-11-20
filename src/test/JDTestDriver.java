@@ -43,7 +43,6 @@ public abstract class JDTestDriver extends TestDriver {
   /**
    *
    */
-  static final long serialVersionUID = 1L;
 
   public static String DEFAULT_COLLECTION = "JDTESTDRVR";
 

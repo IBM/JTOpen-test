@@ -65,7 +65,6 @@ public class FTPQuickVerification extends    Testcase
 
     private boolean cleanup = true;
 
-    private AS400 pwrSys_ = null;
     private char[] clearPassword_;
 
     public FTPQuickVerification (AS400 systemObject,

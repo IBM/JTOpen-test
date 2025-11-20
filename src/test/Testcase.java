@@ -146,12 +146,14 @@ public abstract class Testcase {
   private int notApplicables_ = 0; // # of variations that don't apply.
   private int successes_ = 0; // # of successful variations.
   private double timeToRun_ = 0.0; // Time it took to run the testcase.
-
   int seed = 0; // Seed for random selection
 
   static int failureSleepSeconds = 0;
 
-  protected String testLib_; 
+  protected String testLib_="JTTESTLIB"; 
+  protected String collection_ = "JTTESTLIB";
+  protected String initials_ = ""; 
+
   protected TestDriverI baseTestDriver_; 
 
   private long variationStartTime = System.currentTimeMillis(); // Time when
@@ -2232,7 +2234,7 @@ public abstract class Testcase {
     boolean allVariations = (variationsToRun_.size() == 0);
 
     if (baseTestDriver_ != null) {
-      testLib_ = baseTestDriver_.getTestLib();
+      setTestLib(baseTestDriver_.getTestLib());
     }
 
     String skipCleanupString = System.getProperty("test.skipCleanup");
@@ -2809,6 +2811,16 @@ public abstract class Testcase {
     baseTestDriver_ = baseTestDriver;
   }
 
+  public void setTestLib(String testlib) { 
+    testLib_ = testlib; 
+    collection_ = testLib_; 
+    initials_ = "";
+    int l = collection_.length();
+    if (l > 5) {
+      initials_ = collection_.substring(l - 5);
+    }
+
+  }
   public void setAsp(String asp) {
     asp_ = asp;
   }
