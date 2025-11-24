@@ -66,10 +66,8 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   private static final String PACKAGE = "JDPSSBS";
 
   // Private data.
-  private Connection connection_;
   private Connection connectionNoDT_;
   private Statement statement_;
-  String testUrl;
   String javaHome;
 
   /**

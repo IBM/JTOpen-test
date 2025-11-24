@@ -76,7 +76,6 @@ public class JDCPDSConnectionCreateStatement extends JDTestcase {
   // This cannot be cast to DB2Connection
 
   // Private data.
-  private Connection connection_;
   private Connection closedConnection_;
   private static String table_ = JDCPDSTest.COLLECTION + ".JDCCS";
   private static String keysTable_ = JDCPDSTest.COLLECTION + ".JDGENERATEDKEYS";
@@ -153,6 +152,8 @@ public class JDCPDSConnectionCreateStatement extends JDTestcase {
       s.close();
 
       connection_.close();
+      connection_ = null; 
+
     }
   }
 

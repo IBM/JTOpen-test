@@ -78,7 +78,7 @@ public class MessageQueueRFTestcase extends Testcase {
   protected void setup() throws Exception {
 
     if (baseTestDriver_ != null) {  
-        testLib_     = baseTestDriver_.getTestLib();
+        setTestLib(baseTestDriver_.getTestLib());
     }
 
     sandbox_ = new MessageSandbox(systemObject_, testLib_, "MQT",userId_);

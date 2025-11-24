@@ -83,7 +83,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private String              connectionCatalog_;
     private Connection          closedConnection_;
     private DatabaseMetaData    dmd_;
@@ -334,6 +333,8 @@ Performs cleanup needed after running variations.
 	} catch (Exception e) {
 	}
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

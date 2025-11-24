@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDGetDirection.java
@@ -24,29 +18,20 @@
 // Classes:      JDPMDGetDirection
 //
 ////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.PMD;
+
+import java.io.FileOutputStream;
+import java.sql.CallableStatement;
+import java.sql.ParameterMetaData;
+import java.sql.PreparedStatement;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
 import test.JDPMDTest;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-
-import java.sql.ParameterMetaData;
-import java.sql.PreparedStatement;
-
-import java.util.Hashtable; import java.util.Vector;
-// remove when we get JDK 1.4
-//import com.ibm.db2.jdbc.app.*;
 
 
 /**
@@ -71,7 +56,6 @@ extends JDTestcase
    }
 
     // Private data.
-    private Connection          connection_;
     private PreparedStatement   ps;
     private ParameterMetaData   pmd;
 
@@ -120,6 +104,8 @@ Performs cleanup needed after running variations.
         throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

@@ -73,7 +73,6 @@ extends JDTestcase {
     // Private data.
     private static String         table_ = JDSCPDSTest.COLLECTION + ".JDCWARN";
 
-    private              Connection     connection_;
     private DataSource dataSource;
 
 
@@ -132,6 +131,8 @@ Cleanup.
             s.executeUpdate ("DROP TABLE " + table_);
             s.close ();
             connection_.close ();
+            connection_ = null; 
+
         }
     }
 

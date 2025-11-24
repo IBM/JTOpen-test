@@ -63,7 +63,6 @@ extends JDTestcase
 
 
     // Private data.
-    private              Connection     connection_;
     private              Connection     connection2_;
     private              Connection     connection3_;
     private              Connection     connectionPwrSys_;        //@I3A

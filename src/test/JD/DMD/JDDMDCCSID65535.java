@@ -33,7 +33,6 @@
 package test.JD.DMD;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -69,7 +68,6 @@ public class JDDMDCCSID65535 extends JDTestcase {
   public final static String added = " -- added 03/01/2022";
   public static boolean useDbmon = true; 
   // Private data.
-  private Connection connection_;
   private DatabaseMetaData dmd_;
   private Statement stmt_;
   private StringBuffer sb = new StringBuffer();
@@ -119,6 +117,7 @@ public class JDDMDCCSID65535 extends JDTestcase {
     rs.close(); 
     JDDMDGetColumnPrivileges.cleanupPrivileges(stmt_, getDriver(), getRelease());
     connection_.close();
+    connection_ = null; 
 
   }
 

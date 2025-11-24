@@ -34,7 +34,6 @@ import java.io.Writer;
 import java.io.PrintWriter;
 import java.io.OutputStream;                          //@C1A
 import java.sql.Clob; 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -98,7 +97,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private Statement           statement1_;
     private Statement           statement2_;
     private Statement           statement37_;
@@ -689,6 +687,8 @@ extends JDTestcase
             statement1_.close ();
 
             connection_.close ();
+            connection_ = null; 
+
         }
     }
 
@@ -834,8 +834,7 @@ extends JDTestcase
 	}
     }
     public void Var012() {
-	
-
+       testGetBinaryStream(rs37_, 3, ROW3_37_, null);
     }
     public void Var013() {
 	if (isLocator ) {

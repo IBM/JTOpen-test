@@ -56,8 +56,6 @@ public class DDMCommitmentControl extends Testcase
    }
   CommandCall cmd_;
   Record[] records_;
-  String testLib_ = null;
-  AS400 pwrSys_;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -73,7 +71,7 @@ public class DDMCommitmentControl extends Testcase
     super(systemObject, "DDMCommitmentControl", 90,
           variationsToRun, runMode, fileOutputStream);
     cmd_ = new CommandCall(systemObject_);
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = sys;
   }
 

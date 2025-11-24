@@ -30,12 +30,12 @@ package test.JD.CS;
 
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.Hashtable; import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 
@@ -67,7 +67,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private CallableStatement   cs;
     
     byte[] test = new byte[] { (byte) 0x34, (byte) 0x45, (byte) 0x50,
@@ -164,8 +163,9 @@ Performs cleanup needed after running variations.
 	    s.executeUpdate("DROP PROCEDURE " + STP_VAR);
 	}
 	s.close();	
-	//cs.close();
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

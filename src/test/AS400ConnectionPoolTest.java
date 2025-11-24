@@ -31,7 +31,7 @@ extends TestDriver
 {
 
   // Determine if testcase is running on AS/400.
-  static boolean onAS400_ = JTOpenTestEnvironment.isOS400; 
+  static boolean onAS400_1 = JTOpenTestEnvironment.isOS400; 
   
 
 
@@ -136,7 +136,7 @@ Creates the testcases.
 
         for (int i = 0; i < testcases.length; ++i)
         {
-            testcases[i].setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, namesAndVars_, runMode_, fileOutputStream_,  pwrSysUserID_, pwrSysPassword_);
+            testcases[i].setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_1, namesAndVars_, runMode_, fileOutputStream_,  pwrSysUserID_, pwrSysPassword_);
             addTestcase(testcases[i]);
         }
     }

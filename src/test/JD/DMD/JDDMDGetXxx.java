@@ -100,7 +100,6 @@ public class JDDMDGetXxx extends JDTestcase {
    }
 
   // Private data.
-  private Connection connection_;
   private Connection closedConnection_;
   private Connection sqlConnection_;
   private DatabaseMetaData dmd_;
@@ -320,6 +319,8 @@ public class JDDMDGetXxx extends JDTestcase {
    **/
   protected void cleanup() throws Exception {
     connection_.close();
+    connection_ = null; 
+
     sqlConnection_.close();
   }
 

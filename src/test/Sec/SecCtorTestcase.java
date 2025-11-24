@@ -52,13 +52,6 @@ import test.Testcase;
  * </ul>
  **/
 public class SecCtorTestcase extends Testcase {
-  static boolean debug = false; 
-  static { 
-    String debugProperty = System.getProperty("debug");
-    if (debugProperty != null)  {
-      debug = true; 
-    }
-  }
   public static void main(String args[]) throws Exception {
     String[] newArgs = new String[args.length + 2];
     newArgs[0] = "-tc";

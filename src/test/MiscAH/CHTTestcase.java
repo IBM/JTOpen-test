@@ -117,7 +117,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    AS400 sys = CHTTest.pwrSys_;
+	    AS400 sys = pwrSys_;
 	    String name = null;
 	    ClusteredHashTable cht = new ClusteredHashTable(sys, name);
 	    failed("Did not throw exception."+cht);
@@ -135,7 +135,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    AS400 sys = CHTTest.pwrSys_;
+	    AS400 sys = pwrSys_;
 	    String name = "VERYLONGNAME";
 	    ClusteredHashTable cht = new ClusteredHashTable(sys, name);
 	    failed("Did not throw exception."+cht);
@@ -153,7 +153,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    AS400 sys = CHTTest.pwrSys_;
+	    AS400 sys = pwrSys_;
 	    String name = CHTTest.chtSvrName_;
 	    ClusteredHashTable cht = new ClusteredHashTable(sys, name);
             assertCondition((cht.getSystem() == sys) && (cht.getName() == name) );
@@ -172,7 +172,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    PropertyChangeListener listener = null;
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.addPropertyChangeListener(listener);
 	    failed("Did not throw exception.");
         }
@@ -189,7 +189,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    String newName = "NEWNAME";
             CHTPropertyChangeListener listener = new CHTPropertyChangeListener();
 	    cht.addPropertyChangeListener(listener);
@@ -211,7 +211,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.close();
 	    succeeded();
         }
@@ -228,9 +228,9 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
-	    CHTTest.endChtSvr();
+	    CHTTest.endChtSvr(pwrSys_);
 	    cht.close();
 	    failed("Did not throw exception.");
         }
@@ -247,8 +247,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.strChtSvr(pwrSys_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    cht.close();
 	    succeeded();
@@ -266,7 +266,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    byte[] key = null;
 	    boolean rc;
 	    rc = cht.containsKey(key);
@@ -308,7 +308,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    byte[] key = new byte[16];
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
@@ -330,7 +330,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    String name = "WRONG";
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, name);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, name);
 	    byte[] key = new byte[16];
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
@@ -351,7 +351,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    byte[] key = new byte[16];
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
@@ -372,9 +372,9 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
-	    CHTTest.endChtSvr();
+	    CHTTest.endChtSvr(pwrSys_);
 	    byte[] key = new byte[16];
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
@@ -395,8 +395,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.strChtSvr(pwrSys_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
@@ -438,7 +438,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    ClusteredHashTableEntry[] list = cht.elements();
             assertCondition((list != null));
         }
@@ -455,7 +455,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    String usrPrf = "TOOLONGUSER";
 	    String lastMod = "LASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
@@ -475,7 +475,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    String usrPrf = "USER";
 	    String lastMod = "TOOLONGLASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
@@ -495,7 +495,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    String usrPrf = "USER";
 	    String lastMod = "LASTMOD";
 	    int sts = 5;
@@ -537,7 +537,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    String usrPrf = "USER";
 	    String lastMod = "LASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
@@ -557,9 +557,9 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
-	    CHTTest.endChtSvr();
+	    CHTTest.endChtSvr(pwrSys_);
 	    String usrPrf = "USER";
 	    String lastMod = "LASTMOD";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
@@ -579,8 +579,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.strChtSvr(pwrSys_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    String usrPrf = "*ALL";
 	    String lastMod = "*ALL";
 	    int sts = ClusteredHashTable.CONSISTENT_ENTRIES;
@@ -619,7 +619,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    byte[] key = cht.generateKey();
 	    failed("Did not throw exception."+key);
         }
@@ -637,7 +637,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    String name = "WRONG";
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, name);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, name);
 	    byte[] key = cht.generateKey();
 	    failed("Did not throw exception."+key);
         }
@@ -654,9 +654,9 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
-	    CHTTest.endChtSvr();
+	    CHTTest.endChtSvr(pwrSys_);
 	    byte[] key = cht.generateKey();
 	    failed("Did not throw exception."+key);
         }
@@ -673,8 +673,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.strChtSvr(pwrSys_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    byte[] key = cht.generateKey();
             assertCondition((key != null));
         }
@@ -691,7 +691,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    byte[] key = null;
 	    ClusteredHashTableEntry results = cht.get(key);
@@ -732,7 +732,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    byte[] key = new byte[16];
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
@@ -753,7 +753,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    String name = "WRONG";
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, name);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, name);
 	    byte[] key = new byte[16];
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
@@ -773,9 +773,9 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
-	    CHTTest.endChtSvr();
+	    CHTTest.endChtSvr(pwrSys_);
 	    byte[] key = new byte[16];
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
@@ -795,8 +795,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.strChtSvr(pwrSys_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
 	    String myData = new String("This is my data");
@@ -819,7 +819,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    String handle = cht.getHandle();
             assertCondition((handle == null));
         }
@@ -836,7 +836,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    String handle = cht.getHandle();
             assertCondition((handle != null));
@@ -907,9 +907,9 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    AS400 system = cht.getSystem();
-            assertCondition((system == CHTTest.pwrSys_));
+            assertCondition((system == pwrSys_));
         }
         catch (Exception e)
         {
@@ -943,7 +943,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    boolean results = cht.isEmpty();
 	    failed("Did not throw exception."+results);
         }
@@ -960,9 +960,9 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
-	    CHTTest.endChtSvr();
+	    CHTTest.endChtSvr(pwrSys_);
 	    boolean results = cht.isEmpty();
 	    failed("Did not throw exception."+results);
         }
@@ -979,8 +979,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.strChtSvr(pwrSys_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    boolean results = cht.isEmpty();
             assertCondition((results == true));
         }
@@ -997,7 +997,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
@@ -1039,7 +1039,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    cht.open();
 	    failed("Did not throw exception.");
         }
@@ -1056,7 +1056,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    cht.open();
 	    succeeded();
@@ -1074,8 +1074,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
-	    CHTTest.endChtSvr();
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.endChtSvr(pwrSys_);
 	    cht.open();
 	    failed("Did not throw exception.");
         }
@@ -1092,7 +1092,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
+	    CHTTest.strChtSvr(pwrSys_);
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setName(CHTTest.chtSvrName_);
 	    cht.open();
@@ -1117,7 +1117,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    cht.open();
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
@@ -1139,7 +1139,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    ClusteredHashTableEntry myEntry = null;
 	    cht.put(myEntry);
@@ -1159,7 +1159,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    String name = "WRONG";
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, name);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, name);
 	    byte[] key = new byte[16];
 	    for (int j=0; j<16; ++j)
 		key[j] = 0x01;
@@ -1182,13 +1182,13 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
 	    String myData = new String("This is my data");
 	    myEntry = new ClusteredHashTableEntry(key,myData.getBytes(),2400,ClusteredHashTableEntry.ENTRY_AUTHORITY_ANY_USER,ClusteredHashTableEntry.DUPLICATE_KEY_FAIL);
-	    CHTTest.endChtSvr();
+	    CHTTest.endChtSvr(pwrSys_);
 	    cht.put(myEntry);
 	    failed("Did not throw exception.");
         }
@@ -1205,8 +1205,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.strChtSvr(pwrSys_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;
 	    String myData = new String("This is my data");
@@ -1230,7 +1230,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    PropertyChangeListener listener = null;
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.removePropertyChangeListener(listener);
 	    failed("Did not throw exception.");
         }
@@ -1303,7 +1303,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    cht.setName(CHTTest.chtSvrName_);
 	    failed("Did not throw exception.");
@@ -1322,7 +1322,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    cht.setName(CHTTest.chtSvrName_);
 	    cht.open();
             assertCondition((CHTTest.chtSvrName_ == cht.getName()));
@@ -1358,9 +1358,9 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -1378,9 +1378,9 @@ public class CHTTestcase extends Testcase
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
 	    cht.setName(CHTTest.chtSvrName_);
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    cht.open();
-            assertCondition((CHTTest.pwrSys_ == cht.getSystem()));
+            assertCondition((pwrSys_ == cht.getSystem()));
         }
         catch (Exception e)
         {
@@ -1414,7 +1414,7 @@ public class CHTTestcase extends Testcase
         try
         {
 	    ClusteredHashTable cht = new ClusteredHashTable();
-	    cht.setSystem(CHTTest.pwrSys_);
+	    cht.setSystem(pwrSys_);
 	    int results = cht.size();
 	    failed("Did not throw exception."+results);
         }
@@ -1431,9 +1431,9 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
-	    CHTTest.endChtSvr();
+	    CHTTest.endChtSvr(pwrSys_);
 	    int results = cht.size();
 	    failed("Did not throw exception."+results);
         }
@@ -1450,8 +1450,8 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    CHTTest.strChtSvr();
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    CHTTest.strChtSvr(pwrSys_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    int results = cht.size();
             assertCondition((results == 0));
         }
@@ -1468,7 +1468,7 @@ public class CHTTestcase extends Testcase
     {
         try
         {
-	    ClusteredHashTable cht = new ClusteredHashTable(CHTTest.pwrSys_, CHTTest.chtSvrName_);
+	    ClusteredHashTable cht = new ClusteredHashTable(pwrSys_, CHTTest.chtSvrName_);
 	    cht.open();
 	    byte[] key = cht.generateKey();
 	    ClusteredHashTableEntry myEntry = null;

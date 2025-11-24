@@ -64,7 +64,6 @@ extends JDTestcase {
 
 
     // Private data.
-    private Connection          connection_;
     private Statement           statement_;
     private Connection          connectionDateTime_;
     private Statement           statementDateTime_;
@@ -120,6 +119,8 @@ Performs cleanup needed after running variations.
     {
         statement_.close ();
         connection_.close ();
+        connection_ = null; 
+
         connectionCommaSeparator_.close ();
 	connectionDateTime_.close(); 
     }

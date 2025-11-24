@@ -76,7 +76,6 @@ public class JDPSSetTimestamp extends JDTestcase {
   private static final String PACKAGE = "JDPSSTS";
 
   // Private data.
-  private Connection connection_;
   private Statement statement_;
 
   private boolean nativeDriver = false;
@@ -122,6 +121,8 @@ public class JDPSSetTimestamp extends JDTestcase {
   protected void cleanup() throws Exception {
     statement_.close();
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

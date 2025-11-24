@@ -21,16 +21,21 @@
 
 package test.JD.Connection;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDConnectionTest;
 import test.JDReflectionUtil;
 import test.JDTestcase;
-
-import java.io.*;
-import java.sql.Connection;
-import java.util.Hashtable; import java.util.Vector;
-import java.sql.*;
 
 /**
 Testcase JDConnectionCreateXXX.  This tests the following methods
@@ -57,7 +62,6 @@ extends JDTestcase {
 
 
     // Private data.
-    private              Connection     connection_;
     private              Statement      stmt_;
     private              String         collection = "JDCONTST";
     private              String         blobTable = null;
@@ -206,6 +210,8 @@ Performs cleanup needed after running variations.
 	}
 
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

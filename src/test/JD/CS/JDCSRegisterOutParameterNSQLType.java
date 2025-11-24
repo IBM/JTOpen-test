@@ -17,7 +17,6 @@ package test.JD.CS;
 
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.Types;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -67,7 +66,6 @@ extends JDTestcase
     private static String callRv_ = "?=CALL " + JDSetupProcedure.STP_CSPARMSRV + " (?, ?, ?)";    // @C1A
 
 
-    private Connection          connection_     = null;
     private String              properties_     = "";
     private CallableStatement   cs1_;
     private CallableStatement   cs3_;

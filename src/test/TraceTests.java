@@ -61,7 +61,7 @@ public class TraceTests extends TestDriver
           new TraceMiscTestcase(systemObject_,
                                namesAndVars_.get("TraceMiscTestcase"),
                               runMode_, fileOutputStream_);
-        testcases_.addElement(test);
+        addTestcase(test);
       }
       catch(Exception e)
       {

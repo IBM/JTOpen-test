@@ -77,7 +77,6 @@ public class JDPSSetBytes extends JDTestcase {
   private static final String PACKAGE = "JDPSSBYTES";
 
   // Private data.
-  private Connection connection_;
   private Statement statement_;
   private String jvm = "";
 
@@ -122,6 +121,8 @@ public class JDPSSetBytes extends JDTestcase {
   protected void cleanup() throws Exception {
     statement_.close();
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

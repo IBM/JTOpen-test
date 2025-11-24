@@ -67,7 +67,6 @@ extends Testcase {
 
 
     // Private data.
-    private AS400           pwrSys_;
     private VIFSSandbox     sandbox_;
 
 

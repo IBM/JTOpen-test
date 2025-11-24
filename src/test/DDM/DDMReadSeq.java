@@ -63,7 +63,6 @@ public class DDMReadSeq extends Testcase
 
   long start;
   long time;
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -78,7 +77,7 @@ public class DDMReadSeq extends Testcase
     // The third parameter is the total number of variations in this class.
     super(systemObject, "DDMReadSeq", 50,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**
@@ -96,7 +95,7 @@ public class DDMReadSeq extends Testcase
     super(systemObject, (blockingFactor == 1)? "DDMReadSeq" : "DDMReadSeqCaching" + String.valueOf(blockingFactor), 50,
           variationsToRun, runMode, fileOutputStream);
     bf_ = blockingFactor;
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

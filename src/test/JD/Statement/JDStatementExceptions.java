@@ -66,7 +66,7 @@ public class JDStatementExceptions extends JDTestcase {
   public static final String added = "-- added by native driver for JDBC 4.0 07/11/2006";
 
   // Private data.
-  private Connection connection_, connectionPwr_;
+  private Connection connectionPwr_;
   private Statement stmt_;
 
   /**
@@ -105,6 +105,7 @@ public class JDStatementExceptions extends JDTestcase {
   protected void cleanup() throws Exception {
     stmt_.close();
     connection_.close();
+    connection_ = null; 
   }
 
   protected void checkException(Exception ex, String checkName,

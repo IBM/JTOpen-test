@@ -40,7 +40,6 @@ public class DDMPassword extends Testcase
    }
   long start;
   long time;
-  String testLib_ = "DDMTEST";
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -70,7 +69,7 @@ public class DDMPassword extends Testcase
           fileOutputStream);
     if (testLib != null)
     {
-      testLib_ = testLib;
+      setTestLib(testLib);
     }
   }
 

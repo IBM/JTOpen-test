@@ -51,7 +51,6 @@ public class DDMDelete extends Testcase
    }
   long start;
   long time;
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -66,7 +65,7 @@ public class DDMDelete extends Testcase
     // The third parameter is the total number of variations in this class.
     super(systemObject, "DDMDelete", 18,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

@@ -73,7 +73,6 @@ public class DDMReadKey extends Testcase
   Record[] dupKeyRecs_;
   Record[] dupKey3Recs_;
   int bf_;
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -88,7 +87,7 @@ public class DDMReadKey extends Testcase
     // The third parameter is the total number of variations in this class.
     super(systemObject, "DDMReadKey", 86,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**
@@ -106,7 +105,7 @@ public class DDMReadKey extends Testcase
     super(systemObject, (blockingFactor == 1)? "DDMReadKey" : "DDMReadKeyCaching" + String.valueOf(blockingFactor), 86,
           variationsToRun, runMode, fileOutputStream);
     bf_ = blockingFactor;
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

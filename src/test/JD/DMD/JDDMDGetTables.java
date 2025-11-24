@@ -93,7 +93,6 @@ extends JDTestcase {
 
 
     // Private data.
-    private Connection          connection_;
     private String              connectionCatalog_;
     private Connection          closedConnection_;
     private Connection          connectionNoSysibm_; //@128sch
@@ -370,6 +369,8 @@ Performs cleanup needed after running variations.
 
         s.close ();
         connection_.close ();
+        connection_ = null; 
+
     }
 
   public boolean check(StringBuffer message1, String info, String a, String b) {

@@ -41,7 +41,6 @@ public class DDMCheckFields extends Testcase implements Runnable {
      test.DDMTest.main(newArgs); 
    }
 
-  String testLib_ = "DDMCHKFLD";
   boolean qigc_ = true; // Is DBCS installed on the 400? See setup().
 
   SequentialFile f = null;

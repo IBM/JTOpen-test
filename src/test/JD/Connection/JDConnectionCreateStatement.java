@@ -67,7 +67,6 @@ extends JDTestcase {
 
 
    // Private data.
-   private              Connection     connection_;
    private              Connection     closedConnection_;
    private static String table_ = JDConnectionTest.COLLECTION + ".JDCCS";
 
@@ -144,6 +143,8 @@ Performs cleanup needed after running variations.
 
       connection_.commit(); // for xa testing
       connection_.close ();
+      connection_ = null; 
+
    }
 
 

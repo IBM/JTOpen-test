@@ -55,7 +55,6 @@ public class DDMCreateAndAdd extends Testcase
   long start;
   long time;
   ///String blankText_;
-  String testLib_ = null;
   
   DDMFormat1Field0Key f1f0_ = null;
   DDMFormat1Field1Key f1f1_ = null;
@@ -83,7 +82,7 @@ public class DDMCreateAndAdd extends Testcase
 ///      bt.append(" ");
 ///    }
 ///    blankText_ = bt.toString();
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = pwrsys;
     f1f0_ = new DDMFormat1Field0Key(systemObject_);
     f1f1_ = new DDMFormat1Field1Key(systemObject_);

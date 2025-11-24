@@ -80,10 +80,8 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private Connection          connection2_;  //@PDA
     
-    private String collection_ = JDCSTest.COLLECTION; 
     private String TABLE1 = collection_ + ".JDCSMISCT1";
     private String SPBase = collection_ + ".JDCSMISCSP";
 
@@ -202,6 +200,8 @@ Performs setup needed before running variations.
 
 
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

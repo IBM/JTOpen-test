@@ -32,18 +32,18 @@
 
 package test.JD.PMD;
 
+import java.io.FileOutputStream;
+import java.sql.CallableStatement;
+import java.sql.ParameterMetaData;
+import java.sql.PreparedStatement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDPMDTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ParameterMetaData;
-import java.sql.PreparedStatement;
-import java.util.Hashtable; import java.util.Vector;
 
 
 /**
@@ -68,7 +68,6 @@ extends JDTestcase
    }
 
     // Private data.
-    private Connection          connection_;
     private PreparedStatement   ps;
     private ParameterMetaData   pmd;
 
@@ -117,6 +116,8 @@ extends JDTestcase
     throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

@@ -71,7 +71,6 @@ public class JDPSResults extends JDTestcase {
   // Private data.
   private static String table_ = JDPSTest.COLLECTION + ".JDPSR"; // @B2C
 
-  private Connection connection_;
 
   /**
    * Constructor.
@@ -125,6 +124,8 @@ public class JDPSResults extends JDTestcase {
     s.close();
     connection_.commit(); // for xa
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

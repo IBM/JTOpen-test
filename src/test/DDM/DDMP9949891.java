@@ -47,7 +47,6 @@ public class DDMP9949891 extends Testcase implements Runnable
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
   static final int numThreads_ = 4;
 
   private boolean brief_ = false; 
@@ -72,7 +71,7 @@ public class DDMP9949891 extends Testcase implements Runnable
     }
     testLib+="Z";
 
-    testLib_ = testLib;
+    setTestLib(testLib);
 
     pwrSys_ = pwrSys;
 

@@ -77,7 +77,6 @@ extends JDTestcase {
     // Private data.
     private static String         table_      = JDSCPDSTest.COLLECTION + ".JDCCOMMIT";
     private DataSource dataSource;
-    private Connection     connection_;
 
 
 
@@ -145,6 +144,8 @@ Cleanup.
 
             // Close the connection.
             connection_.close ();
+            connection_ = null; 
+
         }
     }
 

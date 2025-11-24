@@ -56,7 +56,7 @@ public class JobDescTestcase extends Testcase
 
 
     // Attribute values.  We declare them static to keep the compiler from optimizing them out.
-    static String name_;
+    static String localName_;
     static String acctCode_;
     static boolean allowMult_;
     static String cymdJobDate_;
@@ -220,7 +220,7 @@ public class JobDescTestcase extends Testcase
       boolean ok = true;
       try
       {
-        name_ = jd.getName();
+        localName_ = jd.getName();
         acctCode_ = jd.getAccountingCode();
         if (acctCode_ == null) ok = false;  // sanity check
         allowMult_ = jd.isAllowMultipleThreads();
@@ -259,7 +259,7 @@ public class JobDescTestcase extends Testcase
         userName_ = jd.getUserName();
         if (display)
         {
-          println("\nAttributes of job desc named |" + name_ + "|");
+          println("\nAttributes of job desc named |" + localName_ + "|");
           println("  AccountingCode: " + acctCode_);
           println("  AllowMultipleThreads: " + allowMult_);
           println("  CYMDJobDate: " + cymdJobDate_);

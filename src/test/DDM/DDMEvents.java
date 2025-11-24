@@ -85,7 +85,6 @@ public class DDMEvents extends Testcase
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
   /**
    *Constructor.  This is called from DDMTest::createTestcases().
   **/
@@ -98,7 +97,7 @@ public class DDMEvents extends Testcase
   {
     super(systemObject, "DDMEvents", 48,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
 /**

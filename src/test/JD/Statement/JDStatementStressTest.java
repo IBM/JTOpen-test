@@ -76,7 +76,6 @@ public class JDStatementStressTest extends JDTestcase {
   private static final int AGE = 1;
 
   // Private data.
-  protected Connection connection_;
   protected Statement statement_;
   Vector<Connection> badConnections = new Vector<Connection>();
   protected int ustNum = 20;
@@ -1313,6 +1312,8 @@ public class JDStatementStressTest extends JDTestcase {
 
     statement_.close();
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

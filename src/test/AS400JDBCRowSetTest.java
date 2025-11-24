@@ -169,7 +169,7 @@ public class AS400JDBCRowSetTest extends TestDriver
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCRowSetTestcase"))
       {
          AS400JDBCRowSetTestcase tc = new AS400JDBCRowSetTestcase(systemObject_,  namesAndVars_.get("AS400JDBCRowSetTestcase"), runMode_, fileOutputStream_,  password_, jndiType, ldapUsr, ldapPwd); //@A1C
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCRowSetTestcase");
       }
 
@@ -177,7 +177,7 @@ public class AS400JDBCRowSetTest extends TestDriver
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCRowSetCtorTestcase"))
       {
          AS400JDBCRowSetCtorTestcase tc = new AS400JDBCRowSetCtorTestcase(systemObject_,  namesAndVars_.get("AS400JDBCRowSetCtorTestcase"), runMode_, fileOutputStream_,  password_, jndiType, ldapUsr, ldapPwd); //@A1C
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCRowSetCtorTestcase");
       }
 
@@ -185,7 +185,7 @@ public class AS400JDBCRowSetTest extends TestDriver
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCRowSetBeanInfoTestcase"))
       {
          AS400JDBCRowSetBeanInfoTestcase tc = new AS400JDBCRowSetBeanInfoTestcase(systemObject_,  namesAndVars_.get("AS400JDBCRowSetBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCRowSetBeanInfoTestcase");
       }
 

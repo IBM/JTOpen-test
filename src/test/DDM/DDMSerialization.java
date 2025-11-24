@@ -51,7 +51,6 @@ public class DDMSerialization extends Testcase
   FileInputStream ris = null;
   ObjectInputStream rin = null;
   String fileName_ = null;
-  String testLib_ = null;
 
   
   /**
@@ -66,7 +65,7 @@ public class DDMSerialization extends Testcase
     super(systemObject, "DDMSerialization", 9,
           variationsToRun, runMode, fileOutputStream);
     cmd_ = new CommandCall(systemObject_);
-    testLib_ = testLib;
+    setTestLib(testLib);
     fileName_ = "/QSYS.LIB/" + testLib_ + ".LIB/ddmser.FILE/%FILE%.MBR";
   }
 

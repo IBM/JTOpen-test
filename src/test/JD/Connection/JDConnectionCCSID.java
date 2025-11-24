@@ -60,7 +60,6 @@ extends JDTestcase {
 
 
     // Private data.
-    private              Connection     connection_;
     String pwrUID_; 
     String pwrPwd_;
     char[] encryptedPwrPwd_; 
@@ -245,6 +244,8 @@ Performs cleanup needed after running variations.
     {
        cleanupProfiles(); 
         connection_.close ();
+        connection_ = null; 
+
     }
 
 /**

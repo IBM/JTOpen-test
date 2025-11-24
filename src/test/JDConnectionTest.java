@@ -77,7 +77,6 @@ public class JDConnectionTest
    /**
    * 
    */
-  public static final long serialVersionUID = 1L;
   // Private data.
    public static  String COLLECTION     = "JDTESTCONN";
    public static  String SCHEMAS_LEN128   = "JDTESTCOTHISISAREALLYLONGSCHEMANAMEOFLENGTH128AB0123456789THISISAREALLYLONGSCHEMANAMEOFLENGTH128AB0123456789THISISAREALLYLONGSAB"; //@128sch

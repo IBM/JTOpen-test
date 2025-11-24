@@ -62,7 +62,6 @@ public class JDLobBlobLocator extends JDTestcase {
   public final static int FREE_LOCATOR_BLOCK_SIZE = 32;
 
   // Private data.
-  private Connection connection_;
   private Statement statement_;
   private Statement statement2_;
   private Statement statement6_;
@@ -328,6 +327,7 @@ public class JDLobBlobLocator extends JDTestcase {
 
     statement_.close();
     connection_.close();
+    connection_ = null; 
 
   }
 

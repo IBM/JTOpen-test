@@ -195,7 +195,7 @@ Creates Testcase objects for all the testcases in this component.
         new RFMisc(systemObject_,
                      namesAndVars_.get("RFMisc"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("RFMisc");
     }
 
@@ -205,7 +205,7 @@ Creates Testcase objects for all the testcases in this component.
         new RFNewRecord(systemObject_,
                      namesAndVars_.get("RFNewRecord"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("RFNewRecord");
     }
 
@@ -215,7 +215,7 @@ Creates Testcase objects for all the testcases in this component.
         new RFRecord(systemObject_,
                      namesAndVars_.get("RFRecord"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("RFRecord");
     }
 
@@ -225,7 +225,7 @@ Creates Testcase objects for all the testcases in this component.
         new RFRecordMisc(systemObject_,
                      namesAndVars_.get("RFRecordMisc"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("RFRecordMisc");
     }
 
@@ -235,7 +235,7 @@ Creates Testcase objects for all the testcases in this component.
         new RFSerialization(systemObject_, 
                      namesAndVars_.get("RFSerialization"), runMode_,
                      fileOutputStream_, password_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("RFSerialization");
     }
     if (allTestcases || namesAndVars_.containsKey("RFEvents"))
@@ -244,7 +244,7 @@ Creates Testcase objects for all the testcases in this component.
         new RFEvents(systemObject_,
                      namesAndVars_.get("RFEvents"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("RFEvents");
     }
 

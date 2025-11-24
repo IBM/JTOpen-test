@@ -173,7 +173,7 @@ Creates Testcase objects for all the testcases in this component.
         new AS400CertificateVldlBeans(systemObject_,
                       namesAndVars_.get("AS400CertificateVldlBeans"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("AS400CertificateVldlBeans");
     }
 
@@ -184,7 +184,7 @@ Creates Testcase objects for all the testcases in this component.
         new AS400CertificateVldlTestcase(systemObject_,
                      namesAndVars_.get("AS400CertificateVldlTestcase"), runMode_,
                      fileOutputStream_, "e");
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("AS400CertificateVldlTestcase");
     }
 
@@ -194,7 +194,7 @@ Creates Testcase objects for all the testcases in this component.
         new AS400CertificateUsrPrfTestcase(systemObject_,
                      namesAndVars_.get("AS400CertificateUsrPrfTestcase"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("AS400CertificateUsrPrfTestcase");
     }
 
@@ -206,7 +206,7 @@ Creates Testcase objects for all the testcases in this component.
         new AS400CertificateUsrPrfBeans(systemObject_,
                       namesAndVars_.get("AS400CertificateUsrPrfBeans"), runMode_,
                      fileOutputStream_);
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("AS400CertificateUsrPrfBeans");
     }
 

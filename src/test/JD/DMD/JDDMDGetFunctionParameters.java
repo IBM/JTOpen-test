@@ -60,7 +60,6 @@ public class JDDMDGetFunctionParameters extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private String              connectionCatalog_; 
     private Connection          closedConnection_;
     // private DatabaseMetaData    dmd_;
@@ -144,11 +143,9 @@ Performs cleanup needed after running variations.
     protected void cleanup ()
         throws Exception
     {
-        //Statement s = connection_.createStatement ();
-
-        
-        //s.close ();
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

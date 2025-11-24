@@ -60,7 +60,6 @@ public class JDPSSetBlob extends JDTestcase {
   private static final String PACKAGE = "JDPSSBLOB";
 
   // Private data.
-  private Connection connection_;
   private Connection connectionNoDT_;
   private Statement statement_;
   private String jvm;
@@ -104,6 +103,8 @@ public class JDPSSetBlob extends JDTestcase {
   protected void cleanup() throws Exception {
     statement_.close();
     connection_.close();
+    connection_ = null; 
+
     connectionNoDT_.close();
   }
 

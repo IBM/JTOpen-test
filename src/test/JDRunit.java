@@ -2762,7 +2762,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       if (shellArgs == null) {
         cmdArray1 = new String[1];
         cmdArray1[0] = shellBinary;
+        System.out.println("----------- starting shell -----------------------------");
         System.out.println("Shell binary1 is " + shellBinary);
+        System.out.println("--------------------------------------------------------");
         /* Fix the command line if running on windows in */
         if (debug)
           System.out.println("JDRunit: osVersion=" + JTOpenTestEnvironment.osVersion);
@@ -3574,9 +3576,33 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           int endIndex = rxpFile.indexOf("'", startIndex);
           if (endIndex > 0) {
             // Save the output file locally so that we can run a diff between the file and
-            // expect files
+            // expected files
             String systemFile = rxpFile.substring(startIndex,endIndex); 
-            File tmpDir = new File("tmp");
+            String localFile = systemFile; 
+            // See if we can choose a destination close to the file to compare
+            String destinationDir = "tmp";
+            int expectedFileIndex = rxpFile.indexOf("' '");
+            if (expectedFileIndex > 0) { 
+              expectedFileIndex+=3;
+              int expectedFileEnd = rxpFile.indexOf("' ",expectedFileIndex);
+              if (expectedFileEnd > 0) { 
+                String expectedFileName = rxpFile.substring(expectedFileIndex, expectedFileEnd); 
+                int slashIndex = expectedFileName.lastIndexOf('/'); 
+                if (slashIndex > 0) { 
+                  String expectedDirectory=expectedFileName.substring(0,slashIndex); 
+                  File expectedDirFile = new File(expectedDirectory) ;
+                  if (expectedDirFile.exists()) {
+                    destinationDir = expectedDirectory; 
+                    localFile = systemFile+".deleteMe.txt";
+                  }
+                }
+              }
+            }
+            
+            // Look for a replacement file.
+            Hashtable<String,String> replaceStrings = getReplaceStrings(destinationDir); 
+            
+            File tmpDir = new File(destinationDir);
             if (!tmpDir.exists()) {
               tmpDir.mkdir();
             }
@@ -3599,10 +3625,12 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             if (JDReflectionUtil.callMethod_B(ifsFile,"exists")) { 
               Reader ifsFileReader = (Reader) JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileReader",ifsFile);
               BufferedReader  bufferedReader = new BufferedReader(ifsFileReader); 
-              FileWriter fileWriter = new FileWriter("tmp/"+systemFile); 
+              FileWriter fileWriter = new FileWriter(destinationDir+"/"+localFile); 
               BufferedWriter bufferedWriter = new BufferedWriter(fileWriter); 
               String readLine = bufferedReader.readLine();
               while (readLine != null) { 
+                // Do the regularExpresionProcessing on the line
+                readLine = doReplacement(readLine, replaceStrings); 
                 bufferedWriter.write(readLine); 
                 bufferedWriter.write("\n"); 
                 readLine = bufferedReader.readLine();
@@ -3645,6 +3673,64 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     return new JDRunitGoOutput(failedCount, successfulCount); 
   } 
+
+  private String doReplacement(String readLine, Hashtable<String, String> replaceStrings) {
+    Enumeration<String> keysEnum = replaceStrings.keys(); 
+    while(keysEnum.hasMoreElements()) {
+      String from = keysEnum.nextElement(); 
+      String to = replaceStrings.get(from); 
+      readLine=readLine.replaceAll(from, to);
+    }
+    
+    return readLine; 
+  }
+
+  private Hashtable<String, String> getReplaceStrings(String destinationDir) {
+    Hashtable<String, String> replaceStrings = new Hashtable<String,String>() ;
+    
+    String replaceStringsFilename = destinationDir+"/aaReplaceStrings.txt"; 
+    File replaceStringsFile = new File(replaceStringsFilename);
+    if (replaceStringsFile.exists()) {
+      try { 
+      BufferedReader bufferedReader = new BufferedReader(new FileReader(replaceStringsFile)); 
+      String line = bufferedReader.readLine();
+      while (line != null) {
+        if (line.length() > 0) {
+          String separatorString = line.substring(0, 1);
+          String lastSeparator = line.substring(line.length() - 1);
+          if (separatorString.equals(lastSeparator)) {
+            int separatorIndex = line.indexOf(separatorString, 1);
+            if (separatorIndex > 0) {
+              String from = line.substring(1, separatorIndex);
+              String to = line.substring(separatorIndex + 1, line.length() - 1);
+              replaceStrings.put(from, to);
+            } else {
+              System.out.println("In " + replaceStringsFilename + " did not process line : " + line);
+            }
+          } else {
+            System.out.println("In " + replaceStringsFilename + " begin/end separator mismatch for line : " + line);
+          }
+        }
+        line = bufferedReader.readLine();
+      }
+      bufferedReader.close(); 
+      } catch (Exception e) { 
+        System.out.println("Exception processing "+replaceStringsFilename);
+        e.printStackTrace(System.out); 
+      }
+    } else {
+      String cannonicalPath; 
+      try {
+        cannonicalPath = replaceStringsFile.getCanonicalPath(); 
+      } catch (IOException e) {
+        cannonicalPath = e.toString(); 
+      } 
+      System.out.println("No replacement because "+replaceStringsFilename+" .. "+
+          cannonicalPath+" does not exist");
+    }
+    
+    return replaceStrings;
+  }
 
   public static long runNumber = 0L;
   public static Object runNumberSync = new Object();

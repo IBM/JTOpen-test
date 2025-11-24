@@ -61,7 +61,6 @@ public class JDStatementWarnings extends JDTestcase {
    }
 
   // Private data.
-  private Connection connection_;
   private static String table_ = JDStatementTest.COLLECTION + ".JDSE5";
   private static String table_2 = JDStatementTest.COLLECTION + ".JDSW11";
 
@@ -117,6 +116,8 @@ public class JDStatementWarnings extends JDTestcase {
     s.executeUpdate("DROP TABLE " + table_2);
     s.close();
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

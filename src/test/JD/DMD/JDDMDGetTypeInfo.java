@@ -55,7 +55,6 @@ public class JDDMDGetTypeInfo extends JDTestcase {
    }
 
   // Private data.
-  private Connection connection_;
   private Connection closedConnection_;
   private DatabaseMetaData dmd_;
   private DatabaseMetaData dmd2_;
@@ -118,6 +117,8 @@ public class JDDMDGetTypeInfo extends JDTestcase {
       connection_.commit();
     }
     connection_.close();
+    connection_ = null; 
+
   }
 
   /**

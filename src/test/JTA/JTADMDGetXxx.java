@@ -99,7 +99,6 @@ public class JTADMDGetXxx extends JTATestcase
    }
     
    // Private data.
-    private Connection         connection_;
     private Object       xaConn;
     private DatabaseMetaData   dmd_;
     private Driver	       driver_;
@@ -212,6 +211,7 @@ Performs cleanup needed after running variations.
        unlockSystem(); 
        if (connection_ != null) { 
 	   connection_.close ();
+	   connection_ = null; 
        }
    }
 

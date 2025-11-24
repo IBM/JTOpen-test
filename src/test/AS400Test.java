@@ -188,7 +188,7 @@ Creates Testcase objects for all the testcases in this component.
           pwrSysUserID_, pwrSysPassword_);
            
 
-      testcases_.addElement(tc);
+      addTestcase(tc);
       namesAndVars_.remove("AS400NewInstance");
     }
 

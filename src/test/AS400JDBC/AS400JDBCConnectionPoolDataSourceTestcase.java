@@ -74,7 +74,6 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
    private String ldapPwd_ = null;        //@A2A
    private static final String logDirectory_ = "javatest"; //@A3A
    private static File javatest_;         //@A4A 
-   private String systemName_ = null;     //@B1A
    
    // Environment variables.
    private static final int OS_AS400 = 0;    //@A7A

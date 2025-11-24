@@ -71,7 +71,7 @@ extends JDTestcase {
     private static String jdbc_dbcs_string20b;
     private static String[] jdbc_dbcs_words;
 
-    private Connection          connection_;
+    private Connection          localConnection_;
 
     StringBuffer sb = new StringBuffer(); 
 
@@ -105,7 +105,7 @@ Performs setup needed before running variations.
         String url = baseURL_
             
             ;
-        connection_ = DriverManager.getConnection (url);
+        localConnection_ = DriverManager.getConnection (url);
 
         jdbc_dbcs_string20a = getResource ("JDBC_DBCS_STRING20A");
         jdbc_dbcs_string20b = getResource ("JDBC_DBCS_STRING20B");
@@ -114,11 +114,11 @@ Performs setup needed before running variations.
             jdbc_dbcs_words[i-1] = getResource("JDBC_DBCS_WORDS"+i);
 
         JDSetupCollection.create (systemObject_, 
-            connection_, COLLECTION);
+            localConnection_, COLLECTION);
         JDSetupCollection.create (systemObject_, 
-            connection_, COLLECTION2);
+            localConnection_, COLLECTION2);
         JDSetupCollection.create (systemObject_, 
-            connection_, COLLECTIONXX);
+            localConnection_, COLLECTIONXX);
     }
 
 
@@ -131,7 +131,7 @@ Performs cleanup needed after running variations.
     protected void cleanup ()
         throws Exception
     {
-        connection_.close ();
+        localConnection_.close ();
     }
 
 
@@ -144,7 +144,7 @@ One row should be returned. No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             s.executeUpdate ("CREATE TABLE " + COLLECTION
                 + ".BR1 (CUSTID INT, NAME CHAR(10) NOT NULL, "
                 + "ACCTNBR INT NOT NULL WITH DEFAULT, BALANCE DECIMAL(6,2), "
@@ -163,7 +163,7 @@ One row should be returned. No Exceptions should be thrown.
                 + " CONSTRAINT " + COLLECTION2 + ".BRKEY4 UNIQUE (BALANCE))");
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
             ResultSet rs = dmd.getBestRowIdentifier (null, COLLECTION,
                 "BR1", DatabaseMetaData.bestRowTemporary, true);
             boolean success = true;
@@ -200,7 +200,7 @@ One row should be returned. No Exceptions should be thrown.
         finally {
             // Variation cleanup.
             try {
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("ALTER TABLE " + COLLECTION
                     + ".BR1 DROP UNIQUE " + COLLECTION + ".BRKEY1");
@@ -237,7 +237,7 @@ no patterns for all arguments.  No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             s.executeUpdate ("CREATE TABLE " + COLLECTION
                 + ".COLUMNS (COLUMN INT NOT NULL, COLUMN1 TIMESTAMP, "
                 + "COLUMN2 CHAR(10) NOT NULL, "
@@ -253,7 +253,7 @@ no patterns for all arguments.  No Exceptions should be thrown.
                     + ".COLUMNS (COLUMN1 TEXT IS '8')");
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
             ResultSet rs = dmd.getColumns (null, COLLECTION,
                 "COLUMNS", "COLUMN1");
             boolean success = true;
@@ -261,7 +261,7 @@ no patterns for all arguments.  No Exceptions should be thrown.
             int rows = 0;
             while (rs.next ()) {
                 ++rows;
-                success = success && rs.getString ("TABLE_CAT").equals (connection_.getCatalog ());
+                success = success && rs.getString ("TABLE_CAT").equals (localConnection_.getCatalog ());
                 success = success && rs.getString ("TABLE_SCHEM").equals (COLLECTION);
                 success = success && rs.getString ("TABLE_NAME").equals ("COLUMNS");
 
@@ -312,7 +312,7 @@ no patterns for all arguments.  No Exceptions should be thrown.
         finally {
             try {
                 // Variation cleanup.
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("DROP TABLE " + COLLECTION
                     + ".COLUMNS");
@@ -339,7 +339,7 @@ all parameters.  One row should be returned.  No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             s.executeUpdate ("CREATE TABLE " + COLLECTION
                 + ".CPRIVS (COLUMN INT NOT NULL, COLUMN1 TIMESTAMP, "
                 + "COLUMN2 CHAR(10) NOT NULL, "
@@ -352,7 +352,7 @@ all parameters.  One row should be returned.  No Exceptions should be thrown.
                 + ".CPRIVS (COLUMN2 DECIMAL, COLUMNXX CHAR(10))");
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
             String userName = dmd.getUserName ();
             ResultSet rs = dmd.getColumnPrivileges (null, COLLECTION,
                                                      "CPRIVS", null);
@@ -365,7 +365,7 @@ all parameters.  One row should be returned.  No Exceptions should be thrown.
             boolean check4 = false;
             while (rs.next ()) {
                 ++rows;
-                success = success && rs.getString ("TABLE_CAT").equals (connection_.getCatalog ());
+                success = success && rs.getString ("TABLE_CAT").equals (localConnection_.getCatalog ());
 
                 String schemaName   = rs.getString ("TABLE_SCHEM");
                 String tableName    = rs.getString ("TABLE_NAME");
@@ -418,7 +418,7 @@ all parameters.  One row should be returned.  No Exceptions should be thrown.
         finally {
             try {
                 // Variation cleanup.
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("DROP TABLE " + COLLECTION
                     + ".CPRIVS");
@@ -447,7 +447,7 @@ containing "%" and "_" wildcards.  No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             s.executeUpdate ("CREATE TABLE " + COLLECTION
                 + ".COLUMNS (COLUMN INT NOT NULL, COLUMN1 TIMESTAMP, "
                 + "COLUMN2 CHAR(10) NOT NULL, "
@@ -460,7 +460,7 @@ containing "%" and "_" wildcards.  No Exceptions should be thrown.
                 + ".COLUMNS (COLUMN2 DECIMAL, COLUMNXX CHAR(10))");
 
             // Label the columns.  No label on COLUMN, please.
-            s = connection_.createStatement ();
+            s = localConnection_.createStatement ();
             s.executeUpdate ("LABEL ON COLUMN " + COLLECTION
                 + ".COLUMNS (COLUMN1 TEXT IS '8')");
             s.executeUpdate ("LABEL ON COLUMN " + COLLECTION
@@ -469,7 +469,7 @@ containing "%" and "_" wildcards.  No Exceptions should be thrown.
                 + ".COLUMNS (COLUMNXX TEXT IS 'SQL/400')");
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
             ResultSet rs = dmd.getColumns (null, COLLECTION,
                 "COLUMNS", "COL_MN%");
             boolean success = true;
@@ -477,7 +477,7 @@ containing "%" and "_" wildcards.  No Exceptions should be thrown.
             int rows = 0;
             while (rs.next ()) {
                 ++rows;
-                success = success && rs.getString ("TABLE_CAT").equals (connection_.getCatalog ());
+                success = success && rs.getString ("TABLE_CAT").equals (localConnection_.getCatalog ());
                 success = success && rs.getString ("TABLE_SCHEM").equals (COLLECTION);
                 success = success && rs.getString ("TABLE_NAME").equals ("COLUMNS");
 
@@ -609,7 +609,7 @@ containing "%" and "_" wildcards.  No Exceptions should be thrown.
         finally {
             try {
                 // Variation cleanup.
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("DROP TABLE " + COLLECTION
                     + ".COLUMNS");
@@ -638,7 +638,7 @@ One procedure should be returned. No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             s.executeUpdate ("CREATE PROCEDURE " + COLLECTION
                 + ".PROCS LANGUAGE SQL READS SQL DATA P1: BEGIN DECLARE DUMMY INTEGER;"
                 + " SET DUMMY = 5; END P1");
@@ -667,7 +667,7 @@ One procedure should be returned. No Exceptions should be thrown.
                 + " SET DUMMY = 5; END P1");
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
             ResultSet rs = dmd.getProcedures (null, COLLECTION,
                 "PROCS%");
             boolean success = true;
@@ -675,7 +675,7 @@ One procedure should be returned. No Exceptions should be thrown.
             int rows = 0;
             while (rs.next ()) {
                 ++rows;
-                success = success && rs.getString ("PROCEDURE_CAT").equals (connection_.getCatalog ());
+                success = success && rs.getString ("PROCEDURE_CAT").equals (localConnection_.getCatalog ());
                 success = success && rs.getString ("PROCEDURE_SCHEM").equals (COLLECTION);
                 success = success && rs.getString ("REMARKS").equals ("");
 
@@ -705,7 +705,7 @@ One procedure should be returned. No Exceptions should be thrown.
         finally {
             try {
                 // Variation cleanup.
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("DROP PROCEDURE " + COLLECTION
                     + ".PROCS");
@@ -742,7 +742,7 @@ One row should be returned. No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
 
             s.executeUpdate ("CREATE TABLE " + COLLECTION
                              + ".PK1 (CUSTID INT NOT NULL, NAME CHAR(10) NOT NULL, "
@@ -764,7 +764,7 @@ One row should be returned. No Exceptions should be thrown.
 
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
             ResultSet rs = dmd.getPrimaryKeys (null, COLLECTION,
                 "PK1");
             boolean success = true;
@@ -780,7 +780,7 @@ One row should be returned. No Exceptions should be thrown.
                 short keySeq          = rs.getShort ("KEY_SEQ");
                 String pkName         = rs.getString ("PK_NAME");
 
-                success = success && (tableCat.equals (connection_.getCatalog ()));
+                success = success && (tableCat.equals (localConnection_.getCatalog ()));
                 success = success && (tableSchem.equals (COLLECTION));
                 success = success && (tableName.equals ("PK1"));
                 success = success && (columnName.equals ("CUSTID"));
@@ -797,7 +797,7 @@ One row should be returned. No Exceptions should be thrown.
         finally {
             try {
                 // Variation cleanup.
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("ALTER TABLE " + COLLECTION
                     + ".PK1 DROP PRIMARY KEY CASCADE");
@@ -830,7 +830,7 @@ catalog argument. No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             s.executeUpdate ("CREATE TABLE " + COLLECTION
                 + ".TABLES (NAME INTEGER)");
             s.executeUpdate ("CREATE TABLE " + COLLECTION
@@ -864,7 +864,7 @@ catalog argument. No Exceptions should be thrown.
                 + ".TABLESXX IS 'Client Access/400'");
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
             final String[] justTables = { "TABLE" };
             ResultSet rs = dmd.getTables (null, COLLECTION,
                 "TABLES%", justTables);
@@ -873,7 +873,7 @@ catalog argument. No Exceptions should be thrown.
             int rows = 0;
             while (rs.next ()) {
                 ++rows;
-                success = success && rs.getString ("TABLE_CAT").equals (connection_.getCatalog ());
+                success = success && rs.getString ("TABLE_CAT").equals (localConnection_.getCatalog ());
                 success = success && rs.getString ("TABLE_SCHEM").equals (COLLECTION);
                 success = success && rs.getString ("TABLE_TYPE").equals ("TABLE");
 
@@ -902,7 +902,7 @@ catalog argument. No Exceptions should be thrown.
         finally {
             try {
                 // Variation cleanup.
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("DROP VIEW " + COLLECTION
                     + ".TABLESV");
@@ -944,7 +944,7 @@ One row should be returned. No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             s.executeUpdate ("CREATE TABLE " + COLLECTION
                 + ".TPRIVS (NAME INTEGER)");
             s.executeUpdate ("CREATE TABLE " + COLLECTION
@@ -964,7 +964,7 @@ One row should be returned. No Exceptions should be thrown.
 
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
             String userName = dmd.getUserName ();
             ResultSet rs = dmd.getTablePrivileges (null,
                 COLLECTION, "TPRIVS%");
@@ -973,7 +973,7 @@ One row should be returned. No Exceptions should be thrown.
             int rows = 0;
             while (rs.next ()) {
                 ++rows;
-                success = success && rs.getString ("TABLE_CAT").equals (connection_.getCatalog ());
+                success = success && rs.getString ("TABLE_CAT").equals (localConnection_.getCatalog ());
                 success = success && rs.getString ("TABLE_SCHEM").equals (COLLECTION);
 
                 success = success && (rs.getString ("TABLE_NAME").length () > 0);
@@ -997,7 +997,7 @@ One row should be returned. No Exceptions should be thrown.
         finally {
             try {
                 // Variation cleanup.
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("DROP TABLE " + COLLECTION
                     + ".TPRIVS");
@@ -1033,7 +1033,7 @@ One row should be returned. No Exceptions should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
 
             s.executeUpdate ("CREATE TABLE " + COLLECTION
                              + ".VC1 (CUSTID INT NOT NULL, NAME CHAR(10) NOT NULL, "
@@ -1055,8 +1055,8 @@ One row should be returned. No Exceptions should be thrown.
 
             s.close ();
 
-            DatabaseMetaData dmd = connection_.getMetaData ();
-            ResultSet rs = dmd.getVersionColumns (connection_.getCatalog (),
+            DatabaseMetaData dmd = localConnection_.getMetaData ();
+            ResultSet rs = dmd.getVersionColumns (localConnection_.getCatalog (),
                                                   COLLECTION, "VC1");
             boolean success = true;
 
@@ -1097,7 +1097,7 @@ One row should be returned. No Exceptions should be thrown.
         finally {
             try {
                 // Variation cleanup.
-                Statement s = connection_.createStatement ();
+                Statement s = localConnection_.createStatement ();
 
                 s.executeUpdate ("ALTER TABLE " + COLLECTION
                     + ".VC1 DROP PRIMARY KEY CASCADE");
@@ -1132,7 +1132,7 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
                              + " (NAME VARCHAR(50), ID INT, SCORE INT)");
@@ -1166,18 +1166,18 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
                 + " (NAME VARCHAR(50), ID INT, SCORE INT)");
-            PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " + table
+            PreparedStatement ps = localConnection_.prepareStatement ("INSERT INTO " + table
                 + " (NAME, ID) VALUES (?, 15)");
             InputStream w = new ByteArrayInputStream (jdbc_dbcs_string20a.getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, w, w.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            PreparedStatement ps2 = connection_.prepareStatement ("SELECT * "
+            PreparedStatement ps2 = localConnection_.prepareStatement ("SELECT * "
                 + " FROM " + table + " WHERE NAME = ?");
             w = new ByteArrayInputStream (jdbc_dbcs_string20a.getBytes ("ISO8859_1"));
             ps2.setAsciiStream (1, w, w.available ());
@@ -1209,18 +1209,18 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
                 + " (NAME VARCHAR(50), ID INT, SCORE INT)");
-            PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " + table
+            PreparedStatement ps = localConnection_.prepareStatement ("INSERT INTO " + table
                 + " (NAME, ID) VALUES (?, 15)");
             Reader w = new StringReader (jdbc_dbcs_string20b);
             ps.setCharacterStream (1, w, jdbc_dbcs_string20b.length ());
             ps.executeUpdate ();
             ps.close ();
 
-            PreparedStatement ps2 = connection_.prepareStatement ("SELECT * "
+            PreparedStatement ps2 = localConnection_.prepareStatement ("SELECT * "
                 + " FROM " + table + " WHERE NAME = ?");
             w = new StringReader (jdbc_dbcs_string20b);
             ps2.setCharacterStream (1, w, jdbc_dbcs_string20b.length ());
@@ -1252,18 +1252,18 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
                 + " (NAME VARCHAR(50), ID INT, SCORE INT)");
-            PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " + table
+            PreparedStatement ps = localConnection_.prepareStatement ("INSERT INTO " + table
                 + " (NAME, ID) VALUES (?, 15)");
             Clob w = new JDLobTest.JDTestClob (jdbc_dbcs_string20a);
             ps.setClob (1, w);
             ps.executeUpdate ();
             ps.close ();
 
-            PreparedStatement ps2 = connection_.prepareStatement ("SELECT * "
+            PreparedStatement ps2 = localConnection_.prepareStatement ("SELECT * "
                 + " FROM " + table + " WHERE NAME = ?");
             ps2.setClob (1, w);
             ResultSet rs = ps2.executeQuery ();
@@ -1293,17 +1293,17 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
                 + " (NAME VARCHAR(50), ID INT, SCORE INT)");
-            PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " + table
+            PreparedStatement ps = localConnection_.prepareStatement ("INSERT INTO " + table
                 + " (NAME, ID) VALUES (?, 15)");
             ps.setObject (1, jdbc_dbcs_string20b);
             ps.executeUpdate ();
             ps.close ();
 
-            PreparedStatement ps2 = connection_.prepareStatement ("SELECT * "
+            PreparedStatement ps2 = localConnection_.prepareStatement ("SELECT * "
                 + " FROM " + table + " WHERE NAME = ?");
             ps2.setObject (1, jdbc_dbcs_string20b);
             ResultSet rs = ps2.executeQuery ();
@@ -1334,17 +1334,17 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
                 + " (NAME VARCHAR(50), ID INT, SCORE INT)");
-            PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " + table
+            PreparedStatement ps = localConnection_.prepareStatement ("INSERT INTO " + table
                 + " (NAME, ID) VALUES (?, 15)");
             ps.setString (1, jdbc_dbcs_string20b);
             ps.executeUpdate ();
             ps.close ();
 
-            PreparedStatement ps2 = connection_.prepareStatement ("SELECT * "
+            PreparedStatement ps2 = localConnection_.prepareStatement ("SELECT * "
                 + " FROM " + table + " WHERE NAME = ?");
             ps2.setString (1, jdbc_dbcs_string20b);
             ResultSet rs = ps2.executeQuery ();
@@ -1373,13 +1373,13 @@ Set values in a table that has columns with different CCSIDs.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".CCSIDFUN";
             s.executeUpdate ("CREATE TABLE " + table
                 + "(COL1 VARCHAR(20) CCSID 37, "
                 + " COL2 VARCHAR(20) CCSID 5026, "
                 + " COL3 VARCHAR(20) CCSID 937)");
-            PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " + table
+            PreparedStatement ps = localConnection_.prepareStatement ("INSERT INTO " + table
                 + " (COL1, COL2, COL3) VALUES (?, ?, ?)");
             ps.setString (1, jdbc_dbcs_string20a);
             ps.setString (2, jdbc_dbcs_string20a);
@@ -1391,7 +1391,7 @@ Set values in a table that has columns with different CCSIDs.
             ps.executeUpdate ();
             ps.close ();
 
-            PreparedStatement ps2 = connection_.prepareStatement ("SELECT * "
+            PreparedStatement ps2 = localConnection_.prepareStatement ("SELECT * "
                 + " FROM " + table + " WHERE COL1 = ?");
 
             ps2.setString (1, jdbc_dbcs_string20a);
@@ -1441,18 +1441,18 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
                 + " (NAME VARCHAR(50), ID INT, SCORE INT)");
-            PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " + table
+            PreparedStatement ps = localConnection_.prepareStatement ("INSERT INTO " + table
                 + " (NAME, ID) VALUES (?, 15)");
             InputStream w = new ByteArrayInputStream (jdbc_dbcs_string20a.getBytes ("Unicode"));
             ps.setUnicodeStream (1, w, w.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            PreparedStatement ps2 = connection_.prepareStatement ("SELECT * "
+            PreparedStatement ps2 = localConnection_.prepareStatement ("SELECT * "
                 + " FROM " + table + " WHERE NAME = ?");
             w = new ByteArrayInputStream (jdbc_dbcs_string20a.getBytes ("Unicode"));
             ps2.setUnicodeStream (1, w, w.available ());
@@ -1483,10 +1483,10 @@ INOUT parameter.
     {
         try {
             // Variation cleanup.
-            JDSetupProcedure.create (systemObject_, connection_, 
+            JDSetupProcedure.create (systemObject_, localConnection_, 
                 JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @D0C
 
-            CallableStatement csTypes = JDSetupProcedure.prepare (connection_,
+            CallableStatement csTypes = JDSetupProcedure.prepare (localConnection_,
                 JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @D0C
             JDSetupProcedure.setTypesParameters (csTypes, JDSetupProcedure.STP_CSTYPESINOUT,
                                                  supportedFeatures_); // @D0C
@@ -1513,7 +1513,7 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+            Statement s = localConnection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
                                                        ResultSet.CONCUR_UPDATABLE);
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
@@ -1555,7 +1555,7 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+            Statement s = localConnection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
                                                        ResultSet.CONCUR_UPDATABLE);
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
@@ -1597,7 +1597,7 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+            Statement s = localConnection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
                                                        ResultSet.CONCUR_UPDATABLE);
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
@@ -1637,7 +1637,7 @@ to execute it using executeUpdate().  No SQLException should be thrown.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+            Statement s = localConnection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
                                                        ResultSet.CONCUR_UPDATABLE);
             final String table = COLLECTION + ".NLSEX";
             s.executeUpdate ("CREATE TABLE " + table
@@ -1676,7 +1676,7 @@ than 1 character in the name.
     {
         try {
             // Variation setup.
-            Statement s = connection_.createStatement ();
+            Statement s = localConnection_.createStatement ();
             final String table = COLLECTION + ".NLSRSMD";
             s.executeUpdate ("CREATE TABLE " + table
                 + " (C INTEGER, COL2 INTEGER)");

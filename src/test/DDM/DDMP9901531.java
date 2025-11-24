@@ -38,7 +38,6 @@ public class DDMP9901531 extends Testcase
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -54,7 +53,7 @@ public class DDMP9901531 extends Testcase
     // in this testcase.
     super(systemObject, "DDMP9901531", 1,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

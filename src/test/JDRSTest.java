@@ -126,7 +126,6 @@ public class JDRSTest extends JDTestDriver {
   /**
   * 
   */
-  static final long serialVersionUID = 1L;
 
 
   public static String BOOLEAN_TRUE_STRING  = "1";

@@ -32,21 +32,19 @@
 
 package test.JD.PS;
 
+import java.io.FileOutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDPSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
- 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
- 
-import java.sql.Statement;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -74,7 +72,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private Statement           statement_;
 
 
@@ -124,6 +121,8 @@ Performs cleanup needed after running variations.
     {
         statement_.close ();
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

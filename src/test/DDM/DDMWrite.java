@@ -59,7 +59,6 @@ public class DDMWrite extends Testcase
   long start;
   long time;
   int bf_ = 1;
-  String testLib_ = null;
 
   /**
   Constructor.  This is called from the DDMTest constructor.
@@ -74,7 +73,7 @@ public class DDMWrite extends Testcase
     // The third parameter is the total number of variations in this class.
     super(systemObject, "DDMWrite", 35,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**
@@ -92,7 +91,7 @@ public class DDMWrite extends Testcase
     super(systemObject, (blockingFactor == 1)? "DDMWrite" : "DDMWriteCaching" + String.valueOf(blockingFactor), 35,
           variationsToRun, runMode, fileOutputStream);
     bf_ = blockingFactor;
-    testLib_ = testLib;
+    setTestLib(testLib);
   }
 
   /**

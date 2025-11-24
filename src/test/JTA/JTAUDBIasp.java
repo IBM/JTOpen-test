@@ -51,7 +51,7 @@ extends JDJSTPTestcase
 
 
     // Private data.
-    private              Connection     connection_;
+    private              Connection     localConnection_;
    protected  String      VxRxMx;
    protected static boolean jdk14 = false; 
  
@@ -104,7 +104,7 @@ Constructor.
     iaspAvailableCount = 0;
     iaspVariedOff = null;
 
-    Statement stmt = connection_.createStatement();
+    Statement stmt = localConnection_.createStatement();
 
     try {
       stmt.executeUpdate("CREATE TABLE QGPL.IASPSTATUS (NAME VARCHAR(80), STATUS VARCHAR(80))");
@@ -123,7 +123,7 @@ Constructor.
     } catch (Exception e) {
 
     }
-    CallableStatement cstmt = connection_
+    CallableStatement cstmt = localConnection_
         .prepareCall("CALL QGPL.QCMDEXC(?,000000200.00000)");
     String commandString = shellCommand.toString();
     System.out.println("Running " + commandString);
@@ -158,7 +158,7 @@ Performs setup needed before running variations.
 
 	super.setup(); 
 
-	connection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
+	localConnection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
 
 	getIaspInfo(); 
 	  if (iaspCount == 0) {

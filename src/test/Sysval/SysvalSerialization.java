@@ -55,7 +55,6 @@ public class SysvalSerialization extends Testcase
   ObjectInputStream rin = null;
   String fileName_ = null;
 
-  ///String testLib_ = null;
 
 /**
   Runs the variations requested.

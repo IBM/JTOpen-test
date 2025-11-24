@@ -64,7 +64,6 @@ extends JDTestcase
     // Private data.
     private static  String table_      = JDConnectionTest.COLLECTION + ".JDCFORMAT";
 
-    private Connection  connection_;
 
 
 
@@ -118,6 +117,9 @@ Performs cleanup needed after running variations.
         s.executeUpdate ("DROP TABLE " + table_);
         connection_.commit(); // for xa
         s.close ();
+        connection_.close(); 
+        connection_ = null; 
+
     }
 
 

@@ -41,7 +41,6 @@ public class DDMP9908190 extends Testcase implements Runnable
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
   private boolean brief_;
 
   /**
@@ -58,7 +57,7 @@ public class DDMP9908190 extends Testcase implements Runnable
     // in this testcase.
     super(systemObject, "DDMP9908190", 1,
           variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
     brief_ = TestDriverStatic.brief_;
   }
 

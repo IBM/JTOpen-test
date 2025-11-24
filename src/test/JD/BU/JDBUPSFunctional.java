@@ -21,22 +21,20 @@
 
 package test.JD.BU;
 
+import java.io.FileOutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import com.ibm.as400.access.AS400;
 
 import test.JDBUTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
-import java.io.FileOutputStream;
-import java.sql.Connection;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import java.sql.Timestamp;
-import java.util.Hashtable; import java.util.Vector;
 
 
 
@@ -61,9 +59,6 @@ extends JDTestcase {
    }
 
 
-
-    // Private data.
-    private Connection          connection_;
 
 
 /**
@@ -218,6 +213,7 @@ This is the place to put all cleanup work for the testcase.
             // Close the global connection opened in setup().
 	    connection_.commit(); 
             connection_.close();
+            connection_=null; 
 
         } catch (Exception e) {
             System.out.println("Caught exception: ");

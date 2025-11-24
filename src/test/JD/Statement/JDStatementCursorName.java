@@ -59,7 +59,6 @@ public class JDStatementCursorName extends JDTestcase {
   // Private data.
   private static String table_ = JDStatementTest.COLLECTION + ".JDSCN";
 
-  private Connection connection_;
 
   /**
    * Constructor.
@@ -94,6 +93,7 @@ public class JDStatementCursorName extends JDTestcase {
    **/
   protected void cleanup() throws Exception {
     connection_.close();
+    connection_ = null; 
 
     // Drop the table using another connection
     // because if some variations fail, they leave the

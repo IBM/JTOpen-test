@@ -17,7 +17,6 @@ package test.JD.CS;
 
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.Types;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -67,7 +66,6 @@ extends JDTestcase
     private static String callRv0_ = "?=CALL " + JDSetupProcedure.STP_CSRV;                       // @C1A
 
 
-    private Connection          connection_     = null;
     private String              properties_     = "";
     private CallableStatement   cs1_;
     private CallableStatement   cs3_;
@@ -112,10 +110,10 @@ Reconnects with different properties, if needed.
             cs1_ = connection_.prepareCall (call1_);
             cs3_ = connection_.prepareCall (call3_);
             cs4_ = connection_.prepareCall (call4_);
-            if (areReturnValuesSupported()) {                       // @C1A
-                csRv_ = connection_.prepareCall (callRv_);          // @C1A
-                csRv0_ = connection_.prepareCall (callRv0_);        // @C1A
-            }                                                       // @C1A
+            if (areReturnValuesSupported()) {                       
+                csRv_ = connection_.prepareCall (callRv_);          
+                csRv0_ = connection_.prepareCall (callRv0_);       
+            }                                                      
         }
     }
 
@@ -138,8 +136,8 @@ SQL400 - Removed the package priming code - we won't be using it. B1A
 
 
 
-	callRv_ = "?=CALL " + JDSetupProcedure.STP_CSPARMSRV + " (?, ?, ?)";    // @C1A
-	callRv0_ = "?=CALL " + JDSetupProcedure.STP_CSRV;                       // @C1A
+	callRv_ = "?=CALL " + JDSetupProcedure.STP_CSPARMSRV + " (?, ?, ?)";    
+	callRv0_ = "?=CALL " + JDSetupProcedure.STP_CSRV;                       
 
 
 
@@ -151,12 +149,12 @@ SQL400 - Removed the package priming code - we won't be using it. B1A
             package_, JDCSTest.COLLECTION, call3_);
         JDSetupPackage.prime (systemObject_,
             package_, JDCSTest.COLLECTION, call4_);
-        if (areReturnValuesSupported()) {                               // @C1A
-            JDSetupPackage.prime (systemObject_,            // @C1A
-                package_, JDCSTest.COLLECTION, callRv_);                // @C1A
-            JDSetupPackage.prime (systemObject_,            // @C1A
-                package_, JDCSTest.COLLECTION, callRv0_);               // @C1A
-        }                                                               // @C1A
+        if (areReturnValuesSupported()) {                               
+            JDSetupPackage.prime (systemObject_,            
+                package_, JDCSTest.COLLECTION, callRv_);                
+            JDSetupPackage.prime (systemObject_,            
+                package_, JDCSTest.COLLECTION, callRv0_);               
+        }                                                               
         }
         else {
             /* SQL400 - don't do this package priming right now. */
@@ -176,11 +174,13 @@ Performs cleanup needed after running variations.
         cs1_.close ();
         cs3_.close ();
         cs4_.close ();
-        if (areReturnValuesSupported()) {           // @C1A
-            csRv_.close ();                         // @C1A
-            csRv0_.close ();                        // @C1A
-        }                                           // @C1A
+        if (areReturnValuesSupported()) {           
+            csRv_.close ();                        
+            csRv0_.close ();                        
+        }                                        
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

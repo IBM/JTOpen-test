@@ -61,7 +61,7 @@ public class JDASSFConnection extends JDASTestcase {
   String collection;
 
   private String table;
-  Vector<String> cleanupSql = new Vector<String>(); 
+  Vector<String> cleanupSql1 = new Vector<String>(); 
 
   /**
    * Constructor.
@@ -165,7 +165,7 @@ public class JDASSFConnection extends JDASTestcase {
       if (isToolboxFixDate(TOOLBOX_FIX_DATE)) {
 
         Statement stmt = transactionalConnection.createStatement();
-        Enumeration<String> e = cleanupSql.elements(); 
+        Enumeration<String> e = cleanupSql1.elements(); 
         while (e.hasMoreElements()) {
           try { 
              String sql = (String) e.nextElement(); 

@@ -44,7 +44,6 @@ public class FATestcase extends Testcase
     private static final String DIR_PATH_PERSISTENT = "/fatest."+System.getProperty("user.name");
     private static final String FILE_PATH_PERSISTENT = DIR_PATH_PERSISTENT+"/"+FILENAME;
 
-    boolean skipCleanup = false; 
     /**
      Performs setup needed before running variations.
      @exception  Exception  If an exception occurs.

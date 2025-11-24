@@ -44,7 +44,6 @@ extends JDTestcase
 
 
     // Private data.
-    private Connection          connection_;
     private Connection          connection2_; 
     private Statement           stmt;
 
@@ -94,6 +93,8 @@ Performs cleanup needed after running variations.
         if(isJdbc20 ())
         {
             connection_.close ();
+            connection_ = null; 
+
         }
     }
 

@@ -29,7 +29,6 @@ package test.JD.CS;
 
 import java.io.FileOutputStream;
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
@@ -365,7 +364,6 @@ public static final int D4 = D3 * D1;
   
   
 
-    private Connection          connection_     = null;
     boolean verbose = false;
 
 

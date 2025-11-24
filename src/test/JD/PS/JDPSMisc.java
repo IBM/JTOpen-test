@@ -80,7 +80,6 @@ extends JDTestcase
     // Private data.
     private String              TABLE           = JDPSTest.COLLECTION + ".JDPSMISC";
     private String              TABLE2           = JDPSTest.COLLECTION + ".JDPSMISC2";
-    private Connection          connection_;
     private Statement           statement_;
 
 
@@ -138,6 +137,8 @@ Performs cleanup needed after running variations.
         statement_.close ();
         connection_.commit(); // for xa
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

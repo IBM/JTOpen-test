@@ -65,8 +65,6 @@ extends Testcase {
 
 
 
-    // Private data.
-    private AS400           pwrSys_;
 
 
 

@@ -56,7 +56,6 @@ public class JDDriverPerformance extends JDTestcase {
   static int TABLEROWS = 100000;
 
   // Private data.
-  private Connection connection_;
 
   private static Hashtable<String,String> insertSetupDone = new Hashtable<String,String>();
 
@@ -138,6 +137,8 @@ public class JDDriverPerformance extends JDTestcase {
 	      }
 	  }
 	  connection_.close();
+	  connection_ = null; 
+
       } catch (Exception e) {
 	  System.out.println("Error during cleanup");
 	  e.printStackTrace(System.out); 

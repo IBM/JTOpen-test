@@ -59,7 +59,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
    }
 
     
-    Hashtable<String, String> createdProceduresHashtable = new Hashtable<String, String>();
+    Hashtable<String, String> createdProceduresHashtable1 = new Hashtable<String, String>();
 
     private CallableStatement cstmt;
 
@@ -91,10 +91,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     }
 
     public void assureProcedureExists(String procedure) throws Exception  {
-	if (createdProceduresHashtable.get(procedure) == null) {
+	if (createdProceduresHashtable1.get(procedure) == null) {
 	    JDSetupProcedure.create (systemObject_, 
 				 connection_, procedure, supportedFeatures_);
-	    createdProceduresHashtable.put(procedure, procedure);
+	    createdProceduresHashtable1.put(procedure, procedure);
 	}
     }
 
@@ -205,7 +205,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	           JDSetupProcedure.STP_CSARRXML,
 	      };
 	      for (int i = 0; i < procedures.length; i++) {
-	        if (createdProceduresHashtable.get(procedures[i]) != null ) {
+	        if (createdProceduresHashtable1.get(procedures[i]) != null ) {
 	          JDSetupProcedure.dropProcedure(connection_, procedures[i]);
 	        }
 	      }

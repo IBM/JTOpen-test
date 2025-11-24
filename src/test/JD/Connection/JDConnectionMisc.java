@@ -74,7 +74,6 @@ extends JDTestcase {
 
 
     // Private data.
-    private              Connection     connection_;
     private              Connection     closedConnection_;
     private              boolean        remoteConnection_ = false; 
     static boolean systemNamingLibrariesCreated = false;
@@ -137,6 +136,8 @@ Performs cleanup needed after running variations.
     {
         cleanupSystemNamingLibraries(connection_ );
         connection_.close ();
+        connection_ = null; 
+
 	pwrConnection_.close(); 
     }
 

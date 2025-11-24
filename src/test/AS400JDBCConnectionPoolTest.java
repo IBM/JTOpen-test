@@ -127,26 +127,26 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
       if (allTestcases || namesAndVars_.containsKey("ConnectionPoolPropertiesTestcase"))
       {
          ConnectionPoolPropertiesTestcase tc = new ConnectionPoolPropertiesTestcase(systemObject_,  namesAndVars_.get("ConnectionPoolPropertiesTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("ConnectionPoolPropertiesTestcase");
       }
       //@A1D if (allTestcases || namesAndVars_.containsKey("ConnectionPoolPropertiesBeanInfoTestcase"))
       //@A1D {
       //@A1D    ConnectionPoolPropertiesBeanInfoTestcase tc = new ConnectionPoolPropertiesBeanInfoTestcase(systemObject_, (Vector) namesAndVars_.get("ConnectionPoolPropertiesBeanInfoTestcase"), runMode_, fileOutputStream_, output_, password_);
-      //@A1D    testcases_.addElement(tc);
+      //@A1D    addTestcase(tc);
       //@A1D    namesAndVars_.remove("ConnectionPoolPropertiesBeanInfoTestcase");
       //@A1D }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCPooledConnectionTestcase"))
       {
          AS400JDBCPooledConnectionTestcase tc = new AS400JDBCPooledConnectionTestcase(systemObject_,  namesAndVars_.get("AS400JDBCPooledConnectionTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCPooledConnectionTestcase");
       }
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCConnectionPoolTestcase"))
       {
          AS400JDBCConnectionPoolTestcase tc = new AS400JDBCConnectionPoolTestcase(systemObject_,  namesAndVars_.get("AS400JDBCConnectionPoolTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCConnectionPoolTestcase");
       }
 
@@ -154,27 +154,27 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCConnectionPoolBeanInfoTestcase"))
       {
          AS400JDBCConnectionPoolBeanInfoTestcase tc = new AS400JDBCConnectionPoolBeanInfoTestcase(systemObject_,  namesAndVars_.get("AS400JDBCConnectionPoolBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCConnectionPoolBeanInfoTestcase");
       }
       if (allTestcases || namesAndVars_.containsKey("ConnectionPoolBeanInfoTestcase"))
       {
          ConnectionPoolBeanInfoTestcase tc = new ConnectionPoolBeanInfoTestcase(systemObject_,  namesAndVars_.get("ConnectionPoolBeanInfoTestcase"), runMode_, fileOutputStream_,  password_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("ConnectionPoolBeanInfoTestcase");
       }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCManagedConnectionPoolTestcase"))
       {
          AS400JDBCManagedConnectionPoolTestcase tc = new AS400JDBCManagedConnectionPoolTestcase(systemObject_,  namesAndVars_.get("AS400JDBCManagedConnectionPoolTestcase"), runMode_, fileOutputStream_,  password_, pwrSys_, pwrSysPassword_);///, duration_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCManagedConnectionPoolTestcase");
       }
 
       if (allTestcases || namesAndVars_.containsKey("AS400JDBCManagedConnectionPool2Testcase"))
       {
          AS400JDBCManagedConnectionPool2Testcase tc = new AS400JDBCManagedConnectionPool2Testcase(systemObject_, namesAndVars_.get("AS400JDBCManagedConnectionPool2Testcase"), runMode_, fileOutputStream_,  password_, pwrSys_, pwrSysPassword_);///, duration_);
-         testcases_.addElement(tc);
+         addTestcase(tc);
          namesAndVars_.remove("AS400JDBCManagedConnectionPool2Testcase");
       }
 

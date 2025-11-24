@@ -54,7 +54,6 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
     //   AS400JDBCConnection.TESTING_THREAD_SAFETY.
     private static final boolean TESTING_THREAD_SAFETY = false;
 
-    private static AS400 pwrSys_;
  
     // Note: For consistency, all time values are stored units of milliseconds.
     private int initialPoolSize_;  // initial # of connections in pool

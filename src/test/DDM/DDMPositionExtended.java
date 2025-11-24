@@ -72,7 +72,7 @@ public class DDMPositionExtended extends Testcase
     // in this testcase.
     super(systemObject, "DDMPositionExtended", 18,
           variationsToRun, runMode, fileOutputStream);
-     testLib_ = testLib;
+     setTestLib(testLib);
     pwrSys_ = pwrsys; // Added for @A1A
 
   }

@@ -33,7 +33,6 @@
 package test.JD.PS;
 
 import java.io.FileOutputStream;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,8 +68,6 @@ extends JDTestcase
 
 
 
-    // Private data.
-    private Connection  connection_;
 
 
 
@@ -114,6 +111,8 @@ Performs cleanup needed after running variations.
         throws Exception
     {
         connection_.close ();
+        connection_ = null; 
+
     }
 
 

@@ -71,7 +71,6 @@ extends JDTestcase {
     private static  String table3_  = JDStatementTest.COLLECTION + ".JDSE3";
     private static  String table4_  = JDStatementTest.COLLECTION + ".JDSE4";  // 30 Char column name table
 
-    private Connection      connection_;
     private Connection      connection2_;
 
 
@@ -150,7 +149,7 @@ Performs cleanup needed after running variations.
         s.close ();
         connection_.commit(); // for xa
         connection_.close ();
-
+        connection_ = null; 
         connection2_.close ();
     }
 

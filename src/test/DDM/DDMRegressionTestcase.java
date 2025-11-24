@@ -57,7 +57,6 @@ public class DDMRegressionTestcase extends Testcase
      }
      test.DDMTest.main(newArgs); 
    }
-  String testLib_ = null;
   String fileName_ = null;
 
 
@@ -73,7 +72,7 @@ public class DDMRegressionTestcase extends Testcase
                                AS400            PwrSys)
   {
     super(systemObject, "DDMRegressionTestcase", 24, variationsToRun, runMode, fileOutputStream);
-    testLib_ = testLib;
+    setTestLib(testLib);
     pwrSys_ = PwrSys;
   }
 
