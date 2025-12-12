@@ -1405,13 +1405,31 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	      if (usePase) {
 		  destFile   = "/QOpenSys/"+nativeBaseDir+"/"+sourcepath+"/"+javaSource;
 	      }
+	      
+	      // Check if the target program exists
+	      boolean programExists = true;
+              if (!usePase) {
+                String targetProgram = "/QSYS.LIB/" + library + ".LIB/" + upperBase + ".PGM";
+                String sql = "SELECT * FROM TABLE(QSYS2.IFS_OBJECT_STATISTICS('" + targetProgram + "'))";
+                ResultSet rs = cmdStatement.executeQuery(sql);
+                programExists = rs.next();
+                if (debug) {
+                  if (!programExists) {
+                    System.out.println("Program " + targetProgram + " does not exist 1418");
+                  } else {
+                    System.out.println("Program " + targetProgram + " exists 1420");
+                  }
+                }
+                rs.close();
+              }
+	      
               String serverPf   = upperBase;
 	      String command = ""; 
 	      String createModCommand = null;
 	      String precompileCommand = null; 
 	      try { 
 				boolean updated = updateServerFile(sourceFile, serverPf, destFile, destFile);
-				if (!updated) {
+				if (!updated && programExists) {
 					boolean doReturn = true;
 					if (usePase) {
 						String compiledFilename = "/QOpenSys/" + nativeBaseDir + "/" + sourcepath + "/" + base;
@@ -1846,12 +1864,47 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
                 
                 //
                 // Check to see if the file needs to be recompiled
-                //
+                // 
+		String destinationPath; 
+		/// JWE check here.. 
+                String base ;
+                String upperBase ;
+
+		if (javaSource.trim().endsWith(".c")) {
+		  base = javaSource.substring(0, javaSource.lastIndexOf(".c"));
+	          upperBase = base.toUpperCase();
+                  destinationPath =  "/QSYS.LIB/"+library+".LIB/"+upperBase+".PGM";
+		} else {
+		  base = javaSource.substring(0, javaSource.lastIndexOf(".h"));
+		  upperBase = base.toUpperCase();
+		  destinationPath =  "/QSYS.LIB/"+library+".LIB/H.FILE/"+upperBase+".mbr";
+		}
+
+                Timestamp destTimestamp = null ;
+                String sql = "SELECT MAX(OBJECT_CHANGE_TIMESTAMP, CREATE_TIMESTAMP, DATA_CHANGE_TIMESTAMP)  FROM TABLE(QSYS2.IFS_OBJECT_STATISTICS('"
+                    + destinationPath + "'))";
+                ResultSet rs = cmdStatement.executeQuery(sql);
+                boolean programExists = rs.next();
+                if (programExists) {
+                  destTimestamp = rs.getTimestamp(1);
+                }
+                if (destTimestamp == null)
+                  destTimestamp = new Timestamp(0);
+                if (debug) {
+                  if (!programExists) {
+                    System.out.println("Destination" + destinationPath + " does not exist");
+                  } else {
+                    System.out.println("Destination" + destinationPath + " exists");
+                  }
+                }
+                rs.close();
+		
                 File sourceFile = new File( sourcepath+"/"+javaSource);
                 File newSourceFile = new File (javaRunPath+"/"+javaSource); 
                 File destFile   = new File( javaRunPath+"/"+classFilename);
                 if (destFile.exists()) {
-                    if (destFile.lastModified() > sourceFile.lastModified()) {
+                    if ((destFile.lastModified() > sourceFile.lastModified()) &&
+                        (destTimestamp.getTime() > sourceFile.lastModified())) {
                         if (debug) System.out.println("JDJSTP.debug: 9. Skipping compile of "+sourceFile+"-- destination file"+ destFile+" is newer");
                         return;
                     }
@@ -1870,36 +1923,34 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
                 } 
                 in.close();
                 out.close(); 
-				if (debug) {
-					System.out.println("JDJSTP.debug:  Copied from " + sourceFile + " to " + newSourceFile);
-				}
+                if (debug) {
+                  System.out.println("JDJSTP.debug:  Copied from " + sourceFile + " to " + newSourceFile);
+                }
 
-				if (javaSource.trim().endsWith(".c")) {
-					String base = javaSource.substring(0, javaSource.lastIndexOf(".c"));
-					String upperBase = base.toUpperCase();
-
-					if (JTOpenTestEnvironment.isWindows) {
-						// Compile if CYGWIN
-						System.out.println("compiling on windows");
-
-						String command = "cd " + shellRunPath + ";cc  -v -Wl,-trace -DWINDOWS -I. "
+                if (javaSource.trim().endsWith(".c")) {
+ 
+                  if (JTOpenTestEnvironment.isWindows) {
+                    // Compile if CYGWIN
+                    System.out.println("compiling on windows");
+                    
+                    String command = "cd " + shellRunPath + ";cc  -v -Wl,-trace -DWINDOWS -I. "
 								+ "-I/c/Program\\ Files/IBM/SQLLIB/include  "
 								+ "-ldb2cli -ldb2api -L/c/ProgramFiles/IBM/SQLLIB/lib " + "    " + javaSource + " -o "
 								+ classFilename + " /c/ProgramFiles/IBM/SQLLIB/lib/db2cli.lib";
+                    
+                    process = exec(command);
+                    showProcessOutput(process, "/tmp/JDJSTP.cc.out", JDJSTPOutputThread.ENCODING_UNKNOWN);
+                    process.waitFor();
 
-						process = exec(command);
-						showProcessOutput(process, "/tmp/JDJSTP.cc.out", JDJSTPOutputThread.ENCODING_UNKNOWN);
-						process.waitFor();
+                  } else if (usePase) {
+                    String command = "/QOpenSys/bin/sh -c \"xlc -ldb400 -DPASE -o /QOpenSys/" + nativeBaseDir + "/"
+                        + sourcepath + "/" + base + " /QOpenSys/" + nativeBaseDir + "/" + sourcepath + "/"
+                        + base + ".c\"";
+                    process = exec(command);
+                    showProcessOutput(process, "/tmp/JDJSTP.cc.out", JDJSTPOutputThread.ENCODING_UNKNOWN);
+                    process.waitFor();
 
-					} else if (usePase) {
-						String command = "/QOpenSys/bin/sh -c \"xlc -ldb400 -DPASE -o /QOpenSys/" + nativeBaseDir + "/"
-								+ sourcepath + "/" + base + " /QOpenSys/" + nativeBaseDir + "/" + sourcepath + "/"
-								+ base + ".c\"";
-						process = exec(command);
-						showProcessOutput(process, "/tmp/JDJSTP.cc.out", JDJSTPOutputThread.ENCODING_UNKNOWN);
-						process.waitFor();
-
-                    } else {
+                  } else {
 
 			// Setup / cleanup before the compile
 			String command = "system CRTLIB "+library+";"+
@@ -1992,9 +2043,6 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 		} else {
 		    // Must end with .h
 		    // Make sure the srcpf exst
-
-		    String base = javaSource.substring(0, javaSource.lastIndexOf(".h"));
-		    String upperBase = base.toUpperCase();
 
 		   String command = " system 'CRTLIB "+library+"'";
 		   process = exec(command );
@@ -6401,8 +6449,22 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	"CPD0170:  Program QJVACHKP in library QSYS not found.",
 	"CPF0001:  Error found on CALL command."
     };
+    
+    static String diffIgnoresSource = "JDJSTPTestcase.java"; 
+    
     public static void setDiffIgnores(String[] newIgnores) {
-	diffIgnores = newIgnores; 
+      StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace(); 
+      if (stackTrace.length > 2) {
+        setDiffIgnores(newIgnores, stackTrace[1].getClassName()+ " or "+stackTrace[2].getClassName());
+      } else {
+        setDiffIgnores(newIgnores,"unknown"); 
+      }
+    }
+    
+    public static void setDiffIgnores(String[] newIgnores, String newSource) {
+      
+	     diffIgnores = newIgnores; 
+	     diffIgnoresSource = newSource; 
     } 
     public static void diff(String filenameOne, String filenameTwo, String possibleOutputFiles) throws Exception {
 	diff(filenameOne, filenameTwo, possibleOutputFiles, null); 
@@ -6464,7 +6526,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
     // Open the files and compare line by line... Show at most 10 differences
     //
     if (debug) {
-      System.out.println("JDJSTP.debug: diffing " + filenameOne + " "
+       System.out.println("JDJSTP.debug: diffing " + filenameOne + " "
           + filenameTwo);
     }
     BufferedReader readerOne = null;
@@ -6590,7 +6652,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
                       diffLinesPrinted = true;
                       if (diffIgnores != null) {
                         System.out
-                            .println("JDJSTP.debug: ----- diffIgnore lines ---------------------");
+                            .println("JDJSTP.debug: ----- diffIgnore lines ------- source = "+diffIgnoresSource);
                         for (int i = 0; i < diffIgnores.length; i++) {
                           System.out
                               .println("JDJSTP.debug:  " + diffIgnores[i]);

@@ -2447,11 +2447,11 @@ public class JDDSProperties extends JDTestcase {
     String added = " -- new V5R5 property added by native driver 05/22/07";
     if (true && (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
       try {
-        JDReflectionUtil.callMethod_V(dataSource_, "setQaqqinilib", "EBERHARD");
+        JDReflectionUtil.callMethod_V(dataSource_, "setQaqqinilib", "JDPWRSYS");
         ctx_.rebind(bindName_, dataSource_);
         Object ds = ctx_.lookup(bindName_);
         String property = JDReflectionUtil.callMethod_S(ds, "getQaqqinilib");
-        assertCondition("EBERHARD".equals(property), "Expecting: \"EBERHARD\" Received: \"" + property + "\"" + added);
+        assertCondition("JDPWRSYS".equals(property), "Expecting: \"JDPWRSYS\" Received: \"" + property + "\"" + added);
         ctx_.unbind(bindName_);
       } catch (Exception e) {
         failed(e, "Unexpected Exception" + added);

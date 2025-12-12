@@ -161,6 +161,7 @@ public abstract class Testcase {
                                                                 // started
   protected boolean skipCleanup;
   private String lockDtaaraName_ = null;
+  private Exception lockDtaaraLocation_ = null;
 
   protected static boolean debug = false;
   static { 
@@ -2948,9 +2949,12 @@ public abstract class Testcase {
   public void lockSystem(String lockDtaaraName, int lockSeconds)
       throws Exception {
     if (lockDtaaraName_ != null) { 
-      throw new Exception("Nested locking -- already locked "+lockDtaaraName_); 
+      Exception lockException = new Exception("Nested locking -- already locked "+lockDtaaraName_); 
+      lockException.initCause(lockDtaaraLocation_); 
+      throw lockException; 
     }
     lockDtaaraName_ = lockDtaaraName;
+    lockDtaaraLocation_  = new Exception("locked here"); 
     AS400 system;
     if (pwrSys_ != null) {
       system = pwrSys_;
@@ -3190,6 +3194,7 @@ public abstract class Testcase {
             + " failed with no error message");
       }
     }
+    lockDtaaraName_ = null; 
   }
   
   /** 

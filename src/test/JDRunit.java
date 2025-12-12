@@ -68,7 +68,9 @@ import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
-
+import com.ibm.as400.access.IFSFile;
+import com.ibm.as400.access.Permission;
+import com.ibm.as400.access.RootPermission;
 import test.JD.DataSource.JDDatabaseOverride;
 import test.JTA.JTACleanupTx;
 
@@ -2755,8 +2757,60 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         cc.run("STRTCPSVR *SSHD");
         startSshAs400.close(); 
         Thread.sleep(1000); 
+      } finally {
+        socket.close();
+      }
+
+      /* Make sure SSH is configured on the system for the user */
+      /*
+       * This means that a /home/$user/.ssh/authorized_keys file exists and permission
+       * is set correctly for the file and all parent directories 
+       */
+      if (true) {
+        char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD);
+        char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
+        AS400 checkIfsAs400 = new AS400(AS400, USERID, clearPassword);
+        IFSFile homeDir = new IFSFile(checkIfsAs400, "/home/" + USERID);
+
+        if (homeDir.exists()) {
+          Permission permission = homeDir.getPermission();
+          RootPermission userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
+          String dataAuthority = userPermission.getDataAuthority();
+          if (dataAuthority.indexOf("W") < 0) { 
+            IFSFile sshDir = new IFSFile(checkIfsAs400, "/home/" + USERID+"/.ssh");
+            if (sshDir.exists()) { 
+              permission = sshDir.getPermission();
+              userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
+              dataAuthority = userPermission.getDataAuthority();
+              if (dataAuthority.indexOf("W") < 0) { 
+                  IFSFile authorizedKeysFile = new IFSFile (checkIfsAs400, "/home/" + USERID+"/.ssh/authorized_keys");
+                  if (authorizedKeysFile.exists()) {
+                    permission = authorizedKeysFile.getPermission();
+                    userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
+                    dataAuthority = userPermission.getDataAuthority();
+                    if (dataAuthority.indexOf("W") < 0) { 
+                    } else {
+                      throw new Exception("Cannot use ssh since user permissions on " + authorizedKeysFile + " are "+dataAuthority);
+                    }
+                  } else {
+                    throw new Exception("Cannot use ssh since " + authorizedKeysFile + " does not exist");
+                  }
+              } else {
+                throw new Exception("Cannot use ssh since user permissions on " + sshDir + " are "+dataAuthority);
+              }
+            } else { 
+              throw new Exception("Cannot use ssh since " + sshDir + " does not exist");
+            }
+          } else {
+            throw new Exception("Cannot use ssh since user permissions on " + homeDir + " are "+dataAuthority);
+          }
+        } else {
+          throw new Exception("Cannot use ssh since " + homeDir + " does not exist");
+        }
+        checkIfsAs400.close();
       }
     }
+
     if (true) {
       /* Run the script in a shell process */
       if (shellArgs == null) {
@@ -3559,7 +3613,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     writer.close();
     savefile.setReadable(true,  false);   /* Make sure the output is readable */ 
     resultsWriter.close();
-
+  
     //
     // #
     // # Dump output files that failed
@@ -3669,7 +3723,6 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       reportArgs[0] = initials;
       JDReport.main(reportArgs);
     }
-
 
     return new JDRunitGoOutput(failedCount, successfulCount); 
   } 
