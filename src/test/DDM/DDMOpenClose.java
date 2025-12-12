@@ -507,7 +507,7 @@ protected void cleanup()
     // Delete the DDMTest library and the journal file.  The journal
     // receive should be automatically deleted due to the way that the
     // journal and receiver were deleted.
-    output_.println("  Deleting library...");
+    output_.println("  Deleting library..." + testLib_ );
 
     msg = deleteLibrary(cmd_, testLib_); 
     if (msg != null && !msg.startsWith("CPF2110"))
@@ -516,6 +516,18 @@ protected void cleanup()
       output_.println(msg);
       success = false;
     }
+    
+    output_.println("  Deleting library..." + qgplLib_ );
+
+    msg = deleteLibrary(cmd_, qgplLib_); 
+    if (msg != null && !msg.startsWith("CPF2110"))
+    {
+      output_.println("Failure deleting library " + testLib_ );
+      output_.println(msg);
+      success = false;
+    }
+    
+    
     output_.println("  Deleting journal...");
     msg = runCommand("QSYS/DLTJRN "+qgplLib_+"/JT4DDMJRN");
     if (msg != null && !msg.startsWith("CPF2105"))
@@ -532,6 +544,15 @@ protected void cleanup()
       output_.println(msg);
       success = false;
     }
+    
+    msg = runCommand("QSYS/DLTF QGPL/"+keySource ); 
+    if (msg != null && !msg.startsWith("CPF2105"))
+    {
+      output_.println("Failure executing '"+msg+"DLTJRNRCV JRNRCV("+qgplLib_+"/JT4DDMRCV) DLTOPT(*IGNINQMSG)'");
+      output_.println(msg);
+      success = false;
+    }
+
   }
   catch(Exception e)
   {

@@ -1222,7 +1222,6 @@ public class JDJobName {
 
 
      static {
-
        //
        // Only build on iSeries machine
        //
@@ -1373,6 +1372,8 @@ public class JDJobName {
                e.printStackTrace();
              }
            } /* serviceProgramFile.exists() */ 
+           paseLibraryName=libraryPath; 
+           if (debug) System.out.println("Attempting to load "+paseLibraryName); 
            System.load(paseLibraryName);
            if (debug) System.out.println("Completed System.load(" + paseLibraryName + ")");
            loaded = true;

@@ -132,7 +132,7 @@ Performs setup needed before running variations.
 	    "",
 	    "   CREATE FUNCTION SRVJBCCSID () RETURNS INT ",
 	    "   LANGUAGE C EXTERNAL NAME ",
-	    "   'EBERHARD/SRVJBCCSID(SRVJBCCSID)', PARAMETER STYLE SQL",
+	    "   'JDPWRSYS/SRVJBCCSID(SRVJBCCSID)', PARAMETER STYLE SQL",
 	    "",
 	    "   To test",
 	    "",

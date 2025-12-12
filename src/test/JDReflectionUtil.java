@@ -697,7 +697,7 @@ public class JDReflectionUtil {
 
      }
 
-      public static Object callMethod_O(Object o, String methodName, int i, int j )  throws Exception {
+      public static Object callMethod_OII(Object o, String methodName, int i, int j )  throws Exception {
         java.lang.reflect.Method method;
 
         Class<?> thisClass = o.getClass();
@@ -2685,7 +2685,7 @@ try {
     }
 
     if (method == null) {
-      throw new Exception("Unable to find method:  tried "+tryArgs);
+      throw new Exception("Unable to find method: "+methodName+" tried "+tryArgs);
     }
     Object[] args = new Object[1];
     args[0] = parm1;

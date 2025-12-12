@@ -30,6 +30,7 @@ public class JTOpenEclipseExport extends Thread {
   String as400Name_;
   String userid_;
   String password_;
+  private String compileError;
 
   public JTOpenEclipseExport(String as400Name, String userid, String password) {
     as400Name_ = as400Name;
@@ -39,7 +40,7 @@ public class JTOpenEclipseExport extends Thread {
 
   public void run() {
     try {
-      export(as400Name_, userid_, password_);
+     compileError = export(as400Name_,userid_,password_); 
     } catch (Exception e) {
       synchronized (System.out) {
         System.out.println("Exception caught exporting to " + as400Name_);
@@ -54,7 +55,7 @@ public class JTOpenEclipseExport extends Thread {
     System.out.println("   Uses {user.dir}/lastUpdate.$system as a time marker");
   }
 
-  public static void export(String as400Name, String userid, String password) throws Exception {
+  public static String export(String as400Name, String userid, String password) throws Exception {   
     String prefix = as400Name + ":";
     String currentDirectory = System.getProperty("user.dir");
     // Home directory should be the base of the git repository
@@ -85,15 +86,19 @@ public class JTOpenEclipseExport extends Thread {
     System.out.println(prefix + "Files transferred");
     lastTimeFile.setLastModified(startTime);
 
-    compileFiles(as400);
+    String compileError = compileFiles(as400); 
     synchronized (System.out) {
-      System.out.println(prefix
-          + "===================================================================================================");
-      System.out
-          .println(prefix + "DONE exporting to " + as400Name + " at " + (new Timestamp(System.currentTimeMillis())));
-      System.out.println(prefix
-          + "===================================================================================================");
+       if (compileError != null) { 
+         System.out.println(prefix+"==================================================================================================="); 
+         System.out.println(prefix+"COMPILE ERROR ("+compileError+") exporting to "+as400Name+" at "+ (new Timestamp(System.currentTimeMillis()))); 
+         System.out.println(prefix+"==================================================================================================="); 
+       } else {
+         System.out.println(prefix+"==================================================================================================="); 
+         System.out.println(prefix+"DONE exporting to "+as400Name+" at "+ (new Timestamp(System.currentTimeMillis()))); 
+         System.out.println(prefix+"==================================================================================================="); 
+       }
     }
+    return compileError; 
   }
 
   public static void main(String args[]) {
@@ -106,7 +111,8 @@ public class JTOpenEclipseExport extends Thread {
       String userid = args[1];
       String password = args[2];
       if (as400Name.indexOf('+') < 0) {
-        export(as400Name, userid, password);
+         String compileError = export(as400Name, userid, password); 
+         if (compileError != null) { System.out.println("Hit compile erorr "+compileError); }
       } else {
         String[] systems = as400Name.split("\\+");
         JTOpenEclipseExport[] threads = new JTOpenEclipseExport[systems.length];
@@ -117,12 +123,30 @@ public class JTOpenEclipseExport extends Thread {
           System.out.println("Starting export for system " + systems[i]);
           threads[i].start();
         }
-        for (int i = 0; i < systems.length; i++) {
-          System.out.println("Waiting for export for system " + systems[i]);
-          threads[i].join();
-          System.out.println("Export completed for system " + systems[i]);
+        String systemList=""; 
+        String errorSystemList = ""; 
+        int completedCount = 0; 
+        boolean[] joined = new boolean[systems.length]; 
+        System.out.println("Waiting for exports"); 
+        while (completedCount < systems.length) {
+          for (int i = 0; i < systems.length; i++) {
+            if (!joined[i]) {
+              if (!threads[i].isAlive()) {
+                threads[i].join();
+                if ( threads[i].compileError != null) { 
+                  errorSystemList += " " + systems[i];
+                }
+                systemList += " " + systems[i];
+                completedCount++;
+                System.out.println("Export completed for " + (completedCount) + "/" + systems.length + " systems " + systemList);
+                joined[i] = true; 
+              }
+            }
+          }
         }
-
+        if (errorSystemList.length() > 0) { 
+          System.out.println("Compiles failed on the following systems : "+errorSystemList);
+        }
         System.out.println("All exports done");
       }
     } catch (Exception e) {
@@ -132,8 +156,8 @@ public class JTOpenEclipseExport extends Thread {
 
   }
 
-  protected static void compileFiles(AS400 as400) throws AS400SecurityException, ErrorCompletingRequestException,
-      IOException, InterruptedException, PropertyVetoException {
+  protected static String compileFiles(AS400 as400) throws AS400SecurityException, ErrorCompletingRequestException, IOException, InterruptedException, PropertyVetoException {
+   String errorOutput = null; 
     String prefix = as400 + ":";
     System.out.println(prefix + "Running compile ");
     CommandCall cc = new CommandCall(as400);
@@ -145,9 +169,14 @@ public class JTOpenEclipseExport extends Thread {
     String line = bufferedReader.readLine();
     while (line != null) {
       System.out.println(prefix + line);
+     if (line.indexOf("COMPILE ERROR") >= 0) { 
+       errorOutput= "COMPILE ERROR"; 
+     }
       line = bufferedReader.readLine();
     }
     bufferedReader.close();
+   
+   return errorOutput; 
   }
 
   static int bufferCleanup(byte[] buffer, int length, boolean binary) {
@@ -193,9 +222,11 @@ public class JTOpenEclipseExport extends Thread {
     int totalCount = fileList.size();
     int count = 0;
     int transferCount = 0;
+    long totalTransferTime = 0; 
     long startMillis = System.currentTimeMillis();
     System.out.println(prefix + "Transferring " + totalCount + " files");
     Enumeration<String> enumeration = fileList.elements();
+    int skipCount = 0; 
     while (enumeration.hasMoreElements()) {
       String localFilename = enumeration.nextElement();
       boolean binary = isBinaryFile(localFilename);
@@ -204,7 +235,7 @@ public class JTOpenEclipseExport extends Thread {
       long elapsedMillis = currentMillis - startMillis;
       double millisPerFile;
       if (transferCount > 0)
-        millisPerFile = (double) elapsedMillis / (double) transferCount;
+        millisPerFile = (double) totalTransferTime / (double) transferCount; 
       else
         millisPerFile = (double) elapsedMillis / (double) count;
 
@@ -214,14 +245,16 @@ public class JTOpenEclipseExport extends Thread {
       IFSFile ifsFile = new IFSFile(as400, remoteFilename);
       File localFile = new File(testDirectory + File.separatorChar + localFilename);
       if (localFile.lastModified() <= ifsFile.lastModified()) {
-        System.out
-            .println(count + "/" + totalCount + " (" + leftSeconds + " s) " + prefix + "Skipping " + remoteFilename);
+        skipCount++; 
+        if(skipCount % 100 == 1) 
+           System.out.println(count+"/"+totalCount+" ("+leftSeconds+" s) "+prefix+"Skipping "+remoteFilename);
 
       } else {
+        skipCount = 0; 
         transferCount++;
-        System.out.println(
-            count + "/" + totalCount + " (" + leftSeconds + " s) " + prefix + "Transferring to " + remoteFilename);
+      System.out.println(count+"/"+totalCount+" ("+leftSeconds+" s) "+prefix+"Transferring to "+remoteFilename);
 
+      long startTransferTime = System.currentTimeMillis(); 
         ifsFile.delete();
         verifyParent(ifsFile);
         ifsFile.createNewFile();
@@ -239,17 +272,16 @@ public class JTOpenEclipseExport extends Thread {
         }
         fileInputStream.close();
         ifsFileOutputStream.close();
-
+      long endTransferTime = System.currentTimeMillis(); 
+      totalTransferTime += endTransferTime - startTransferTime; 
       }
     }
 
   }
 
   static boolean isBinaryFile(String localFilename) {
-    if (localFilename.endsWith(".zip"))
-      return true;
-    if (localFilename.endsWith(".savf"))
-      return true;
+    if (localFilename.endsWith(".zip")) return true; 
+    if (localFilename.endsWith(".savf")) return true; 
     return false;
   }
 
@@ -271,7 +303,8 @@ public class JTOpenEclipseExport extends Thread {
     for (int i = 0; i < files.length; i++) {
       File f = files[i];
       String fName = f.getName();
-      if (fName.indexOf(".git") < 0) {
+      if ((fName.indexOf(".git") < 0) &&
+          !(fName.equals("gen"))){
         if (f.isFile()) {
           if (f.lastModified() > lastModifiedTime) {
             if (prefix.length() > 0) {

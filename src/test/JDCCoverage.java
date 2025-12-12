@@ -80,7 +80,7 @@ public class JDCCoverage extends JDJSTPTestcase {
     String[] diffIgnores1 = { "Jdbc:.*Cleanup Thread Running",
                                 };
 
-    setDiffIgnores(diffIgnores1);
+    setDiffIgnores(diffIgnores1, "test.JDCCoverage");
 
     setupUserProfile(testUser, encryptedTestPass);
 
@@ -215,7 +215,7 @@ public class JDCCoverage extends JDJSTPTestcase {
 //debug and more drivers
   public void Var009() {   
     System.setProperty("com.ibm.as400.access.jdbcClient.drivers",
-       "com.ibm.as400.access.AS400JDBCDriver:us.eberhard.MasterDriver:eberhard.us.otherDriver"); 
+       "com.ibm.as400.access.AS400JDBCDriver:us.jdpwrsys.MasterDriver:jdpwrsys.us.otherDriver"); 
     System.setProperty("com.ibm.as400.access.jdbcClient.debug",  "true")  ; 
     runTest("Coverage9.jdbc");  
     System.setProperty("com.ibm.as400.access.jdbcClient.debug",  "false")  ; 

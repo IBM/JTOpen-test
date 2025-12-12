@@ -3303,7 +3303,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL, ObjectList.ALL, "*LIB");
             @SuppressWarnings("unchecked")
-            List<ObjectDescription> objs = (List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) -1, -1);
+            List<ObjectDescription> objs = (List<ObjectDescription>) JDReflectionUtil.callMethod_OII(objList,"getObjectsList",  -1, -1);
             if (objs != null) {
                 succeeded();
             } else {
@@ -3323,7 +3323,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             ObjectList objList = new ObjectList(systemObject_);
             @SuppressWarnings("unchecked")
-            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) -2, 1);
+            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_OII(objList,"getObjectsList", (int) -2, 1);
             failed("Didn't throw exception." + objs);
         } catch (Exception e) {
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -3340,7 +3340,7 @@ public class ObjectListTestcase extends Testcase {
                 // ObjectList objList = new ObjectList(systemObject_);
                 ObjectList objList = new ObjectList(systemObject_, ObjectList.ALL, ObjectList.ALL, "*LIB");
                 @SuppressWarnings("unchecked")
-                List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) 0, 1);
+                List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_OII(objList,"getObjectsList", (int) 0, 1);
                 assertCondition(true, "Objects returned " + objs);
             } catch (Exception e) {
                 failed(e, "Unexpected exception.");                   //@A1A
@@ -3356,7 +3356,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             ObjectList objList = new ObjectList(systemObject_);
             @SuppressWarnings("unchecked")
-            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) 0, -1);
+            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_OII(objList,"getObjectsList",  0, -1);
             failed("Didn't throw exception." + objs);
         } catch (Exception e) {
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
@@ -3371,7 +3371,7 @@ public class ObjectListTestcase extends Testcase {
         try {
             ObjectList objList = new ObjectList(systemObject_);
             @SuppressWarnings("unchecked")
-            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_O(objList,"getObjectsList", (int) 0, -99);
+            List<ObjectDescription> objs =(List<ObjectDescription>) JDReflectionUtil.callMethod_OII(objList,"getObjectsList",  0, -99);
             failed("Didn't throw exception." + objs);
         } catch (Exception e) {
             assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");

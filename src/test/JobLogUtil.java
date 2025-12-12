@@ -241,11 +241,11 @@ public class JobLogUtil {
   // Sample messages
   //  MSGID      TYPE                    SEV  DATE      TIME             FROM PGM     LIBRARY     INST     TO PGM      LIBRARY     INST
   //  CPF1124    Information             00   01/08/19  15:52:57.228665  QWTPIIPP     QSYS        04CC     *EXT                    *N
-  //                                       Message . . . . :   Job 076431/EBERHARD/QPADEV000F started on 01/08/19 at
+  //                                       Message . . . . :   Job 076431/JDPWRSYS/QPADEV000F started on 01/08/19 at
   //                                         15:52:57 in subsystem QINTER in QSYS. Job entered system on 01/08/19 at
   //                                         15:52:57.
   //  CPF2451    Information             40   01/08/19  15:52:57.267266  QMHCHMSQ     QSYS        0B04     *EXT                    *N
-  //                                       Message . . . . :   Message queue EBERHARD is allocated to another job.
+  //                                       Message . . . . :   Message queue JDPWRSYS is allocated to another job.
   //                                       Cause . . . . . :   If this message was received when trying to sign on, the
   //                                        most probable cause is that you are already signed on to another work
     
