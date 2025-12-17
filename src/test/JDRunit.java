@@ -2542,7 +2542,14 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     inputVector.addElement("echo which java");
     inputVector.addElement("which java");
     inputVector.addElement("echo java -version");
-    inputVector.addElement("java -version");
+    if (runNativeTestFromWindows) {
+      /* The java -version appears to eating the incoming command */ 
+      /* Feed it something else instead */ 
+      inputVector.addElement("echo 'hi' | java -version");
+      inputVector.addElement(""); 
+    } else { 
+       inputVector.addElement("java -version");
+    }
     String extraCommand = iniProperties.getProperty("extraCommand");
     if (extraCommand != null) {
       inputVector.addElement("echo " + extraCommand);
@@ -2719,7 +2726,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     writer.close();
     JDJSTPRunFlag runFlag = new JDJSTPRunFlag();
 
-    if (debug) {
+    if (true) {   /* was debug */ 
       System.out.println("JDRunit: INPUT SCRIPT IS ");
       System.out.println("-------------------------------------------------");
       JDJSTPTestcase.cat(runitInputFile);
@@ -2838,7 +2845,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           cmdArray1 = new String[2];
         }
         cmdArray1[0] = shellBinary;
+        System.out.println("----------- starting shell -----------------------------");
         System.out.println("Shell binary2 is " + shellBinary);
+        System.out.println("--------------------------------------------------------");
         cmdArray1[1] = shellArgs;
         if (shellArgs2 != null) {
           cmdArray1[2] = shellArgs2; 
@@ -2936,7 +2945,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         } catch (Exception sleepEx) {
           /* ignore */
         }
+        System.out.println("---------------------------------------------"); 
         System.out.println("Process completed with rc=" + rc);
+        System.out.println("---------------------------------------------"); 
         if (rc != 0) {
           System.out.println("Running info: " + shellTestProcessInfo);
           if (on400 && !on400open) {

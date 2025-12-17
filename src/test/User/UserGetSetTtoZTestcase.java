@@ -2531,11 +2531,17 @@ public class UserGetSetTtoZTestcase extends Testcase {
           failed("Should throw an exception.");
 
         } catch (Exception e) {
-
-          if (getRelease() > JDTestDriver.RELEASE_V7R4M0)
-            assertExceptionIs(e, "AS400SecurityException", "Password is incorrect.:USER:JAVAX12345 CPF22E2");
-          else
-            assertExceptionIs(e, "AS400SecurityException", "User ID is not known.:USER:JAVAX12345 CPF2204");
+          if (isNative_) {
+            if (getRelease() > JDTestDriver.RELEASE_V7R4M0)
+              assertExceptionIs(e, "AS400SecurityException", "Password is incorrect.:USER:JAVAX12345 CPF22E2");
+            else
+              assertExceptionIs(e, "AS400SecurityException", "User ID is not known.:USER:JAVAX12345 CPF2204");
+          } else {
+              if (getRelease() > JDTestDriver.RELEASE_V7R4M0)
+                assertExceptionIs(e, "AS400SecurityException", "Password is incorrect.:JAVAX12345");
+              else
+                assertExceptionIs(e, "AS400SecurityException", "User ID is not known.:JAVAX12345");
+          }
         }
       }
 
@@ -2775,11 +2781,18 @@ public class UserGetSetTtoZTestcase extends Testcase {
           u.setUserExpirationInterval(210);
           failed("Should throw an exception.");
 
-        } catch (Exception e) {
+        } catch (Exception e) { 
+          if (isNative_) {
           if (getRelease() > JDTestDriver.RELEASE_V7R4M0)
             assertExceptionIs(e, "AS400SecurityException", "Password is incorrect.:USER:JAVAX12345 CPF22E2");
           else
             assertExceptionIs(e, "AS400SecurityException", "User ID is not known.:USER:JAVAX12345 CPF2204");
+          } else {
+            if (getRelease() > JDTestDriver.RELEASE_V7R4M0)
+              assertExceptionIs(e, "AS400SecurityException", "Password is incorrect.:JAVAX12345");
+            else
+              assertExceptionIs(e, "AS400SecurityException", "User ID is not known.:JAVAX12345");
+          }
         }
       } else {
         notApplicable("Only for V7R1 and later");

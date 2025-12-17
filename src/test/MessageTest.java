@@ -23,24 +23,22 @@ import test.Message.MessageQueueTestcase;
 import test.Message.QueuedMessageRFTestcase;
 
 /**
- Test driver for the Message components.  Refer to TestDriver for calling syntax.
+ * Test driver for the Message components. Refer to TestDriver for calling
+ * syntax.
  **/
-public class MessageTest extends TestDriver
-{
+public class MessageTest extends TestDriver {
 
   public static final boolean runningOnThread_;
   static {
     boolean onThread = false;
-    if (onAS400_)
-    {
+    if (onAS400_) {
       String threadSafe = SystemProperties.getProperty(SystemProperties.PROGRAMCALL_THREADSAFE);
       // Note: The 'Message' component isn't sensitive to CommandCall thread-safety.
 
       String mustUseSockets = SystemProperties.getProperty(SystemProperties.AS400_MUST_USE_SOCKETS);
 
-      if ((threadSafe != null && threadSafe.equalsIgnoreCase("true")) &&
-          (mustUseSockets == null || !mustUseSockets.equalsIgnoreCase("true")))
-      {
+      if ((threadSafe != null && threadSafe.equalsIgnoreCase("true"))
+          && (mustUseSockets == null || !mustUseSockets.equalsIgnoreCase("true"))) {
         // We are running natively and on-thread.
         onThread = true;
       }
@@ -48,66 +46,58 @@ public class MessageTest extends TestDriver
     runningOnThread_ = onThread;
   }
 
-    /**
-     Main for running standalone application tests.
-     @param  args  The command line arguments.
-     **/
-    public static void main(String args[])
-    {
-        try
-        {
-            TestDriver.runApplication(new MessageTest(args));
-        }
-        catch (Exception e)
-        {
-            System.out.println("Program terminated abnormally.");
-            e.printStackTrace();
-        }
-
-            System.exit(0);
+  /**
+   * Main for running standalone application tests.
+   * 
+   * @param args The command line arguments.
+   **/
+  public static void main(String args[]) {
+    try {
+      TestDriver.runApplication(new MessageTest(args));
+    } catch (Exception e) {
+      System.out.println("Program terminated abnormally.");
+      e.printStackTrace();
     }
 
-    /**
-     Constructs an object for applets.
-     @exception  Exception  If an exception occurs.
-     **/
-    public MessageTest() throws Exception
-    {
-        super();
-    }
+    System.exit(0);
+  }
 
-    /**
-     Constructs an object for testing applications.
-     @param  args  The command line arguments.
-     @exception  Exception  If an exception occurs.
-     **/
-    public MessageTest(String[] args) throws Exception
-    {
-        super(args);
-    }
+  /**
+   * Constructs an object for applets.
+   * 
+   * @exception Exception If an exception occurs.
+   **/
+  public MessageTest() throws Exception {
+    super();
+  }
 
-    /**
-     Creates the testcases.
-     **/
-    public void createTestcases()
-    {
-        Testcase[] testcases =
-        {
-            // MessageFile testcases.
-            new MessageFileTestcase(),
-            new MessageFileBeansTestcase(),
-            // MessageQueue testcases.
-            new MessageQueueTestcase(),
-            new MessageQueueBeans(),
-            // Resource Framework testcases.
-            new MessageQueueRFTestcase(),
-            new QueuedMessageRFTestcase()
-        };
+  /**
+   * Constructs an object for testing applications.
+   * 
+   * @param args The command line arguments.
+   * @exception Exception If an exception occurs.
+   **/
+  public MessageTest(String[] args) throws Exception {
+    super(args);
+  }
 
-        for (int i = 0; i < testcases.length; ++i)
-        {
-            testcases[i].setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, namesAndVars_, runMode_, fileOutputStream_, pwrSysUserID_, pwrSysPassword_);
-            addTestcase(testcases[i]);
-        }
+  /**
+   * Creates the testcases.
+   **/
+  public void createTestcases() {
+    Testcase[] testcases = {
+        // MessageFile testcases.
+        new MessageFileTestcase(), new MessageFileBeansTestcase(),
+        // MessageQueue testcases.
+        new MessageQueueTestcase(), new MessageQueueBeans(),
+        // Resource Framework testcases.
+        new MessageQueueRFTestcase(), new QueuedMessageRFTestcase() };
+
+    for (int i = 0; i < testcases.length; ++i) {
+      testcases[i].setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, proxy_,
+          mustUseSockets_, isNative_, isLocal_, onAS400_, namesAndVars_, runMode_, fileOutputStream_, pwrSysUserID_,
+          pwrSysPassword_);
+      addTestcase(testcases[i]);
     }
+  }
 }
