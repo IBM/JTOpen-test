@@ -562,7 +562,7 @@ public class JDLobClobLocator extends JDTestcase {
 
   public String getClob(Object clob) throws Exception {
     int length = (int) JDReflectionUtil.callMethod_L(clob, "length");
-    return (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 1, length);
+    return (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, length);
   }
 
   /**
@@ -724,7 +724,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubString", (long) -1, (int) 5);
+          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) -1, (int) 5);
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -746,7 +746,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 0, (int) 5);
+          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 0, (int) 5);
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -768,8 +768,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubString", MEDIUM_.length() + 2, 5);
+          Clob clob = (Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          clob.getSubString( MEDIUM_.length() + 2, 5);
           failed("Didn't throw SQLException for start belong length of lob ");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -791,7 +791,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 2, (int) -1);
+          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 2, (int) -1);
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -816,7 +816,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String s = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 4, (int) MEDIUM_.length() + 2);
+          String s = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 4, (int) MEDIUM_.length() + 2);
 
           // The latest javadoc implies that this should work.
           // Testcase changed 6/17/2013.
@@ -846,7 +846,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(1);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 1, (int) 0);
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, (int) 0);
           assertCondition("".equals(v), "expected \"\" got \"" + v + "\" -- testcase fixed 06/22/2006");
         } catch (Exception e) {
           failed(connection_, e, "Unexpected exception");
@@ -868,7 +868,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 1, (int) MEDIUM_.length());
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, (int) MEDIUM_.length());
           assertCondition(v.equals(MEDIUM_), "Got '" + JDTestUtilities.getMixedString(v) + "'\n" + "sb  '"
               + JDTestUtilities.getMixedString(MEDIUM_) + "'");
         } catch (Exception e) {
@@ -898,7 +898,7 @@ public class JDLobClobLocator extends JDTestcase {
           String v = null;
 
           // Testcase bug.
-          v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 1, (int) LARGE_.length());
+          v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, (int) LARGE_.length());
 
           assertCondition(v.equals(LARGE_));
         } catch (Exception e) {
@@ -921,7 +921,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 1, (int) 6);
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, (int) 6);
           assertCondition(v.equals(MEDIUM_.substring(0, 6)), "Got '" + JDTestUtilities.getMixedString(v) + "'\n"
               + "sb  '" + JDTestUtilities.getMixedString(MEDIUM_.substring(0, 6)) + "'");
         } catch (Exception e) {
@@ -944,7 +944,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 6, (int) 7);
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 6, (int) 7);
           assertCondition(v.equals(MEDIUM_.substring(5, 12)), "Got '" + JDTestUtilities.getMixedString(v) + "'\n"
               + "sb  '" + JDTestUtilities.getMixedString(MEDIUM_.substring(5, 12)) + "'");
         } catch (Exception e) {
@@ -967,7 +967,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs1_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 10,
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 10,
               (int) MEDIUM_.length() - 9);
           assertCondition(v.equals(MEDIUM_.substring(9)), "Got '" + JDTestUtilities.getMixedString(v) + "'\n" + "sb  '"
               + JDTestUtilities.getMixedString(MEDIUM_.substring(9)) + "'");
@@ -1859,10 +1859,10 @@ public class JDLobClobLocator extends JDTestcase {
           Object clob3 = JDReflectionUtil.callMethod_O(rs, getMethod, "C_CLOB");
 
           if ((JDLobGraphicData.checkResults(mediumClob,
-              (String) JDReflectionUtil.callMethod_O(clob1, "getSubString", (long) 1,
+              (String) JDReflectionUtil.callMethod_O(clob1, "getSubstring",(long) 1,
                   (int) JDReflectionUtil.callMethod_L(clob1, "length"))))
               && (JDLobGraphicData.checkResults(medium2Clob,
-                  (String) JDReflectionUtil.callMethod_O(clob2, "getSubString", (long) 1,
+                  (String) JDReflectionUtil.callMethod_O(clob2, "getSubstring",(long) 1,
                       (int) JDReflectionUtil.callMethod_L(clob2, "length"))))
               && (JDLobGraphicData.checkResults(largeClob, (String) JDReflectionUtil.callMethod_O(clob3, "getSubString",
                   (long) 1, (int) JDReflectionUtil.callMethod_L(clob3, "length")))))
@@ -3426,8 +3426,8 @@ public class JDLobClobLocator extends JDTestcase {
           rs.next();
           Object clob = JDReflectionUtil.callMethod_O(rs, getMethod, 2);
           long length = JDReflectionUtil.callMethod_L(clob, "length");
-          String myString = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 1, 10);
-          String myString2 = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 37991, 10);
+          String myString = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, 10);
+          String myString2 = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 37991, 10);
           rs.close();
           statement2_.executeUpdate("DROP TABLE " + filename);
           assertCondition(myString.equals("SSSSSSSSSS") && myString2.equals("SSSSSSSSSS") && (length == 38000));
@@ -3489,8 +3489,8 @@ public class JDLobClobLocator extends JDTestcase {
           rs.next();
           Object clob = JDReflectionUtil.callMethod_O(rs, getMethod, 2);
           long length = JDReflectionUtil.callMethod_L(clob, "length");
-          String myString = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 1, 10);
-          String myString2 = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 37991, 10);
+          String myString = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, 10);
+          String myString2 = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 37991, 10);
           rs.close();
           statement2_.executeUpdate("DROP TABLE " + filename + "");
           assertCondition(myString.equals("SSSSSSSSSS") && myString2.equals("SSSSSSSSSS") && (length == 38000));
@@ -4188,8 +4188,8 @@ public class JDLobClobLocator extends JDTestcase {
         Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         // Updated 9/30/2013 -- there is no way to exceed the maximum
         // size of the lob..
-        JDReflectionUtil.callMethod_O(clob, "getSubString", 1, 0x7FFFFFFF);
-        String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 1, MEDIUM_.length());
+        JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, (int) 0x7FFFFFFF);
+        String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, (int) MEDIUM_.length());
         assertCondition(v.equals(MEDIUM_), "Updated 9/30/2013 allow exceed max length of the current clob");
       } catch (Exception e) {
         failed(connection_, e, "Unexpected Exception Updated 9/30/2013. Allow exceed of maxlength of clob");
@@ -4461,7 +4461,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubString", -1, 5);
+          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)-1, (int) 5);
           failed("Didn't throw SQLException" + DBCLOB_ADDED);
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException", DBCLOB_ADDED);
@@ -4483,7 +4483,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubString", 0, 5);
+          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 0, 5);
           failed("Didn't throw SQLException" + DBCLOB_ADDED);
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException", DBCLOB_ADDED);
@@ -4506,7 +4506,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubString", DBCLOB_MEDIUM_.length() + 2, 5);
+          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)DBCLOB_MEDIUM_.length() + 2, 5);
           failed("Didn't throw SQLException" + DBCLOB_ADDED);
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException", DBCLOB_ADDED);
@@ -4528,7 +4528,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubString", 2, -1);
+          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)2, -1);
           failed("Didn't throw SQLException" + DBCLOB_ADDED);
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException", DBCLOB_ADDED);
@@ -4552,7 +4552,7 @@ public class JDLobClobLocator extends JDTestcase {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
 
-          String s = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 4, WIDTH_ + 2);
+          String s = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)4, WIDTH_ + 2);
 
           // The latest javadoc implies that this should work.
 
@@ -4587,7 +4587,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(1);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 1, 0);
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, 0);
           assertCondition("".equals(v), "Expected \"\" got \"" + v + "\"" + DBCLOB_ADDED);
         } catch (Exception e) {
 
@@ -4610,7 +4610,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 1, DBCLOB_MEDIUM_.length());
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, DBCLOB_MEDIUM_.length());
           assertCondition(v.equals(DBCLOB_MEDIUM_), DBCLOB_ADDED);
         } catch (Exception e) {
           failed(connection_, e, "Unexpected Exception" + DBCLOB_ADDED);
@@ -4638,7 +4638,7 @@ public class JDLobClobLocator extends JDTestcase {
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String v = null;
 
-          v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 1, DBCLOB_LARGE_.length());
+          v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, DBCLOB_LARGE_.length());
 
           assertCondition(v.equals(DBCLOB_LARGE_), "got '" + v + "' sb '" + DBCLOB_LARGE_ + "' " + DBCLOB_ADDED);
         } catch (Exception e) {
@@ -4661,7 +4661,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 1, 6);
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, 6);
           assertCondition(v.equals(DBCLOB_MEDIUM_.substring(0, 6)), DBCLOB_ADDED);
         } catch (Exception e) {
           failed(connection_, e, "Unexpected Exception" + DBCLOB_ADDED);
@@ -4683,7 +4683,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 6, 7);
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)6, 7);
           assertCondition(v.equals(DBCLOB_MEDIUM_.substring(5, 12)), DBCLOB_ADDED);
         } catch (Exception e) {
           failed(connection_, e, "Unexpected Exception" + DBCLOB_ADDED);
@@ -4705,7 +4705,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           rs3_.absolute(2);
           Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubString", 10, DBCLOB_MEDIUM_.length() - 9);
+          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)10, DBCLOB_MEDIUM_.length() - 9);
           assertCondition(v.equals(DBCLOB_MEDIUM_.substring(9)), DBCLOB_ADDED);
         } catch (Exception e) {
           failed(connection_, e, "Unexpected Exception" + DBCLOB_ADDED);
@@ -8035,7 +8035,7 @@ public class JDLobClobLocator extends JDTestcase {
         Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
-          JDReflectionUtil.callMethod_O(clob, "getSubString", (long) 1, 1);
+          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, 1);
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
