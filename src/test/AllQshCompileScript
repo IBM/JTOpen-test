@@ -95,7 +95,7 @@ do #
   if [ $? -ne 0 ] ; then
       echo 'COMPILE ERROR' 
       error=1;
-  fi 
+  fi  
 done
 
 
@@ -103,8 +103,9 @@ done
 chmod +x scripts/*.sh
 
 if [ $error -eq  0 ] ; then
-        rm -f $COMPILELIST*
+  rm -f $COMPILELIST.*
 else
-  echo not cleaning because of error $COMPILELIST*
+  echo not cleaning because of error $COMPILELIST.*
 fi
+
 exit $error
