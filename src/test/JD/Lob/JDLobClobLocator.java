@@ -560,9 +560,9 @@ public class JDLobClobLocator extends JDTestcase {
     }
   }
 
-  public String getClob(Object clob) throws Exception {
+  public String getClob(Clob clob) throws Exception {
     int length = (int) JDReflectionUtil.callMethod_L(clob, "length");
-    return (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, length);
+    return (String) clob.getSubString((long)1, length);
   }
 
   /**
@@ -579,7 +579,7 @@ public class JDLobClobLocator extends JDTestcase {
     }
     try {
       rs1_.absolute(1);
-      Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+      Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
       InputStream v = (InputStream) JDReflectionUtil.callMethod_O(clob, "getAsciiStream");
       sb.setLength(0);
       assertCondition(compare(v, "", "8859_1", sb), sb);
@@ -604,7 +604,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           InputStream v = (InputStream) JDReflectionUtil.callMethod_O(clob, "getAsciiStream");
           sb.setLength(0);
           assertCondition(compare(v, MEDIUM_, "8859_1", sb), sb);
@@ -631,7 +631,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(3);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           InputStream v = (InputStream) JDReflectionUtil.callMethod_O(clob, "getAsciiStream");
           sb.setLength(0);
           assertCondition(compare(v, LARGE_, "8859_1", sb), sb);
@@ -654,7 +654,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(1);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           Reader v = (Reader) JDReflectionUtil.callMethod_O(clob, "getCharacterStream");
           sb.setLength(0);
           assertCondition(compare(v, "", sb), sb);
@@ -677,7 +677,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           Reader v = (Reader) JDReflectionUtil.callMethod_O(clob, "getCharacterStream");
           sb.setLength(0);
           assertCondition(compare(v, MEDIUM_, sb), sb);
@@ -700,7 +700,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(3);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           Reader v = (Reader) JDReflectionUtil.callMethod_O(clob, "getCharacterStream");
           sb.setLength(0);
           assertCondition(compare(v, LARGE_, sb), sb);
@@ -723,8 +723,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) -1, (int) 5);
+          Clob clob = (Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          clob.getSubString((long) -1, (int) 5);
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -745,8 +745,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 0, (int) 5);
+          Clob clob = (Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          clob.getSubString((long) 0, (int) 5);
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -790,8 +790,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 2, (int) -1);
+          Clob clob = (Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          clob.getSubString((long) 2, (int) -1);
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -815,8 +815,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String s = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 4, (int) MEDIUM_.length() + 2);
+          Clob clob = (Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          String s = (String) clob.getSubString((long) 4, (int) MEDIUM_.length() + 2);
 
           // The latest javadoc implies that this should work.
           // Testcase changed 6/17/2013.
@@ -845,8 +845,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(1);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, (int) 0);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          String v = (String) clob.getSubString((long) 1, (int) 0);
           assertCondition("".equals(v), "expected \"\" got \"" + v + "\" -- testcase fixed 06/22/2006");
         } catch (Exception e) {
           failed(connection_, e, "Unexpected exception");
@@ -867,8 +867,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, (int) MEDIUM_.length());
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          String v = (String) clob.getSubString((long) 1, (int) MEDIUM_.length());
           assertCondition(v.equals(MEDIUM_), "Got '" + JDTestUtilities.getMixedString(v) + "'\n" + "sb  '"
               + JDTestUtilities.getMixedString(MEDIUM_) + "'");
         } catch (Exception e) {
@@ -894,11 +894,11 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(3);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           String v = null;
 
           // Testcase bug.
-          v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, (int) LARGE_.length());
+          v = (String) clob.getSubString((long) 1, (int) LARGE_.length());
 
           assertCondition(v.equals(LARGE_));
         } catch (Exception e) {
@@ -920,8 +920,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, (int) 6);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          String v = (String) clob.getSubString((long) 1, (int) 6);
           assertCondition(v.equals(MEDIUM_.substring(0, 6)), "Got '" + JDTestUtilities.getMixedString(v) + "'\n"
               + "sb  '" + JDTestUtilities.getMixedString(MEDIUM_.substring(0, 6)) + "'");
         } catch (Exception e) {
@@ -943,8 +943,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 6, (int) 7);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          String v = (String) clob.getSubString((long) 6, (int) 7);
           assertCondition(v.equals(MEDIUM_.substring(5, 12)), "Got '" + JDTestUtilities.getMixedString(v) + "'\n"
               + "sb  '" + JDTestUtilities.getMixedString(MEDIUM_.substring(5, 12)) + "'");
         } catch (Exception e) {
@@ -966,8 +966,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 10,
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          String v = (String) clob.getSubString((long) 10,
               (int) MEDIUM_.length() - 9);
           assertCondition(v.equals(MEDIUM_.substring(9)), "Got '" + JDTestUtilities.getMixedString(v) + "'\n" + "sb  '"
               + JDTestUtilities.getMixedString(MEDIUM_.substring(9)) + "'");
@@ -993,7 +993,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(1);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           assertCondition(JDReflectionUtil.callMethod_L(clob, "length") == 0);
 
         } catch (Exception e) {
@@ -1019,7 +1019,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
 
           if (CCSID_ == 5035 && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
             notApplicable(
@@ -1052,7 +1052,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(3);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
 
           if (CCSID_ == 5035 && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
             notApplicable(
@@ -1081,7 +1081,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", (String) null, (long) 0);
 
           failed("Didn't throw SQLException" + v);
@@ -1104,7 +1104,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "Test", (long) -1);
 
           failed("Didn't throw SQLException" + v);
@@ -1127,7 +1127,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "Test", (long) 0);
 
           failed("Didn't throw SQLException" + v);
@@ -1151,7 +1151,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "Test", (long) MEDIUM_.length() + 1);
 
           if (CCSID_ == 5035 && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
@@ -1181,7 +1181,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "NONO", (long) 1);
           assertCondition(v == -1, "v = " + v + " SB -1 clob.getClass()=" + clob.getClass());
         } catch (Exception e) {
@@ -1204,7 +1204,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", MEDIUM_.substring(1, 4), (long) 11);
           assertCondition(v == -1, "v = " + v + " SB -1 clob.getClass()=" + clob.getClass());
         } catch (Exception e) {
@@ -1228,7 +1228,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 1);
 
           boolean condition = (v == 1);
@@ -1259,7 +1259,7 @@ public class JDLobClobLocator extends JDTestcase {
         String searchString = MEDIUM_.substring(9, 12);
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 1);
 
           assertCondition(v == 10, "v = " + v + " SB 10 searchString=" + searchString);
@@ -1285,7 +1285,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           String searchString = MEDIUM_.substring(9, 12);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 7);
 
           assertCondition(v == 10, "v = " + v + " SB 10 searchString=" + searchString);
@@ -1311,7 +1311,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           String searchString = MEDIUM_.substring(8, 12);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 9);
 
           assertCondition(v == 9, "v = " + v + " SB 9");
@@ -1338,7 +1338,7 @@ public class JDLobClobLocator extends JDTestcase {
           int length = MEDIUM_.length();
           String searchString = MEDIUM_.substring(length - 5, length);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 1);
 
           assertCondition(v == length - 4, "v = " + v + " SB " + (length - 4));
@@ -1366,7 +1366,7 @@ public class JDLobClobLocator extends JDTestcase {
           int length = MEDIUM_.length();
           String searchString = MEDIUM_.substring(length - 1, length);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) length);
 
           assertCondition(v == length, "v = " + v + " SB " + length);
@@ -1391,7 +1391,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "", (long) 1);
 
           assertCondition(v == 1);
@@ -1416,7 +1416,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "", (long) 9);
 
           assertCondition(v == 9);
@@ -1441,7 +1441,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           int length = MEDIUM_.length();
           long v = JDReflectionUtil.callMethod_L(clob, "position", "", (long) length);
 
@@ -1466,7 +1466,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           Class<?>[] argClasses = new Class[2];
           argClasses[0] = Clob.class;
           argClasses[1] = Long.TYPE;
@@ -1495,7 +1495,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob("Test"), (long) -1);
 
           failed("Didn't throw SQLException" + v);
@@ -1518,7 +1518,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob("Test"), (long) 0);
 
           failed("Didn't throw SQLException" + v);
@@ -1542,7 +1542,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob("Test"),
               (long) MEDIUM_.length() + 1);
 
@@ -1566,7 +1566,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob("This is only a test"),
               (long) 1);
           assertCondition(v == -1, "v = " + v + " SB -1");
@@ -1591,7 +1591,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           String searchString = MEDIUM_.substring(1, 5);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(searchString), (long) 12);
           assertCondition(v == -1, "v = " + v + " SB -1");
         } catch (Exception e) {
@@ -1615,7 +1615,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           String searchString = MEDIUM_.substring(0, 10);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(searchString), (long) 1);
 
           assertCondition(v == 1);
@@ -1640,7 +1640,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           String findString = MEDIUM_.substring(14, 17);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(findString), (long) 1);
 
           assertCondition(v == 15, "v = " + v + " SB 15");
@@ -1666,7 +1666,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           String findString = MEDIUM_.substring(9, 13);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(findString), (long) 7);
 
           assertCondition(v == 10, "v = " + v + " SB 10");
@@ -1692,7 +1692,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           String findString = MEDIUM_.substring(8, 12);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(findString), (long) 9);
 
           assertCondition(v == 9, "v=" + v + " sb 9");
@@ -1719,7 +1719,7 @@ public class JDLobClobLocator extends JDTestcase {
           int length = MEDIUM_.length();
           String findString = MEDIUM_.substring(length - 1, length);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(findString), (long) 1);
 
           assertCondition(v == length,
@@ -1747,7 +1747,7 @@ public class JDLobClobLocator extends JDTestcase {
           int length = MEDIUM_.length();
           String findString = MEDIUM_.substring(length - 4, length);
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(findString),
               (long) length - 6);
 
@@ -1773,7 +1773,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(""), (long) 1);
 
           assertCondition(v == 1);
@@ -1798,7 +1798,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(""), (long) 9);
 
           assertCondition(v == 9);
@@ -1823,7 +1823,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs1_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(""),
               (long) MEDIUM_.length());
 
@@ -1859,10 +1859,10 @@ public class JDLobClobLocator extends JDTestcase {
           Object clob3 = JDReflectionUtil.callMethod_O(rs, getMethod, "C_CLOB");
 
           if ((JDLobGraphicData.checkResults(mediumClob,
-              (String) JDReflectionUtil.callMethod_O(clob1, "getSubstring",(long) 1,
+              (String) JDReflectionUtil.callMethod_O(clob1, "getSubString",(long) 1,
                   (int) JDReflectionUtil.callMethod_L(clob1, "length"))))
               && (JDLobGraphicData.checkResults(medium2Clob,
-                  (String) JDReflectionUtil.callMethod_O(clob2, "getSubstring",(long) 1,
+                  (String) JDReflectionUtil.callMethod_O(clob2, "getSubString",(long) 1,
                       (int) JDReflectionUtil.callMethod_L(clob2, "length"))))
               && (JDLobGraphicData.checkResults(largeClob, (String) JDReflectionUtil.callMethod_O(clob3, "getSubString",
                   (long) 1, (int) JDReflectionUtil.callMethod_L(clob3, "length")))))
@@ -2055,7 +2055,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "setString", (long) -1, "Really small objects");
         failed("Didn't throw SQLException");
       } catch (Exception e) {
@@ -2081,7 +2081,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "setString", (long) 0, "Really small object.");
         failed("Didn't throw SQLException");
       } catch (Exception e) {
@@ -2111,7 +2111,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "setString", (long) MEDIUM_.length() + 1, ASSIGNMENT1_);
         succeeded();
       } catch (Exception e) {
@@ -2136,7 +2136,7 @@ public class JDLobClobLocator extends JDTestcase {
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
         String expected = new String(ASSIGNMENT1_);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, expected);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
@@ -2168,7 +2168,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, ASSIGNMENT1_);
         succeeded();
       } catch (Exception e) {
@@ -2189,7 +2189,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, ASSIGNMENT1_);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
@@ -2227,7 +2227,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, ASSIGNMENT1_);
         int length = ASSIGNMENT1_.length();
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -2257,7 +2257,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, ASSIGNMENT_CHAR4_);
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K3
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -2303,7 +2303,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 10, ASSIGNMENT_CHAR5_);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         assertCondition(written == 5, "written=" + written + " sb 5");
@@ -2327,7 +2327,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 8, ASSIGNMENT_CHAR7_);
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -2361,7 +2361,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) -1, "Really green objects", 0, 20); /* @C5 */
         failed("Didn't throw SQLException");
       } catch (Exception e) {
@@ -2388,7 +2388,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) 0, "Really shiny object.", 0, 20); /* @C5 */
         failed("Didn't throw SQLException");
       } catch (Exception e) {
@@ -2418,7 +2418,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) MEDIUM_.length() + 1, "Really shiny objects", 0,
             20); /* @C5 */
         succeeded();
@@ -2443,7 +2443,7 @@ public class JDLobClobLocator extends JDTestcase {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
         String expected = "Really really scary objects";
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, expected, 0, 27);/* @C5 */
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
@@ -2483,7 +2483,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really small objects", 0, 20); /* @C5 */
         // failed ("Didn't throw SQLException");
         succeeded();
@@ -2514,7 +2514,7 @@ public class JDLobClobLocator extends JDTestcase {
         String expected = "Really tiny objects.";
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, expected, 0, 20); /* @C5 */
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
@@ -2545,7 +2545,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really small", 0, 12); /* @C5 */
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -2584,7 +2584,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, ASSIGNMENT_CHAR4_, 0, 4); /* @C5 */
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -2620,7 +2620,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 10, ASSIGNMENT_CHAR7_);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         assertCondition(written == 7, "written=" + written + " sb 7");
@@ -2643,7 +2643,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 8, ASSIGNMENT_CHAR7_, 0, 7); /* @C5 */
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K3
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -2677,7 +2677,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) -1);
         failed("Didn't throw SQLException");
         rs2_.close();
@@ -2708,7 +2708,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 25);
         rs2_.close();
         succeeded();
@@ -2731,7 +2731,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE_;
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 2);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
@@ -2764,7 +2764,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE_;
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 1);
         byte[] b = new byte[] { (byte) 65, (byte) 66, (byte) 67 };
         w.write(b);
@@ -2804,7 +2804,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE_;
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 2);
         byte[] b = new byte[] { (byte) 32, (byte) 33, (byte) 34 };
         w.write(b);
@@ -2852,7 +2852,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 24);
         w.close();
         rs2_.close();
@@ -2877,7 +2877,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 0);
         failed("Didn't throw SQLException" + w);
         rs2_.close();
@@ -2905,7 +2905,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) -1);
         failed("Didn't throw SQLException" + w);
         rs2_.close();
@@ -2933,7 +2933,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE_;
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         String cbuf = "How are you doing???";
         w.write(cbuf);
@@ -2968,7 +2968,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE_;
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 2);
         String cbuf = "How are you today???";
         w.write(cbuf);
@@ -3007,7 +3007,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 24);
         w.close();
         rs2_.close();
@@ -3031,7 +3031,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 0);
         failed("Didn't throw SQLException" + w);
         rs2_.close();
@@ -3059,7 +3059,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) -1);
         failed("Didn't throw SQLException" + w);
         rs2_.close();
@@ -3086,7 +3086,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(2);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
         rs2_.close();
@@ -3114,7 +3114,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(2);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.close();
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
@@ -3141,7 +3141,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(2);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 2, "New updates");
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.close();
@@ -3171,7 +3171,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         String expected = new String("february");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, expected);
@@ -3207,7 +3207,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         String expected = new String("april");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, expected);
@@ -3243,7 +3243,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         String expected = new String("february");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, expected);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3278,7 +3278,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         String expected = new String("april");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, expected);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3313,7 +3313,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) MEDIUM_.length() + 1, "Really shiny objects", -1, 20); // @C4
         failed("Didn't throw SQLException");
       } catch (Exception e) {
@@ -3341,7 +3341,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) MEDIUM_.length() + 1, null, 0, 20); // @C4
         failed("Didn't throw SQLException");
       } catch (Exception e) {
@@ -3369,7 +3369,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) MEDIUM_.length() + 1, "Really shiny objects",
             "Really shiny objects".length() + 1, 20); // @C4
         failed("Didn't throw SQLException");
@@ -3424,10 +3424,10 @@ public class JDLobClobLocator extends JDTestcase {
           PreparedStatement ps2 = connection_.prepareStatement("SELECT * FROM " + filename + "");
           rs = ps2.executeQuery();
           rs.next();
-          Object clob = JDReflectionUtil.callMethod_O(rs, getMethod, 2);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs, getMethod, 2);
           long length = JDReflectionUtil.callMethod_L(clob, "length");
-          String myString = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, 10);
-          String myString2 = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 37991, 10);
+          String myString = (String) clob.getSubString((long) 1, 10);
+          String myString2 = (String) clob.getSubString((long) 37991, 10);
           rs.close();
           statement2_.executeUpdate("DROP TABLE " + filename);
           assertCondition(myString.equals("SSSSSSSSSS") && myString2.equals("SSSSSSSSSS") && (length == 38000));
@@ -3487,10 +3487,10 @@ public class JDLobClobLocator extends JDTestcase {
           PreparedStatement ps2 = connection_.prepareStatement("SELECT * FROM " + filename + "");
           rs = ps2.executeQuery();
           rs.next();
-          Object clob = JDReflectionUtil.callMethod_O(rs, getMethod, 2);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs, getMethod, 2);
           long length = JDReflectionUtil.callMethod_L(clob, "length");
-          String myString = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, 10);
-          String myString2 = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 37991, 10);
+          String myString = (String) clob.getSubString((long) 1, 10);
+          String myString2 = (String) clob.getSubString((long) 37991, 10);
           rs.close();
           statement2_.executeUpdate("DROP TABLE " + filename + "");
           assertCondition(myString.equals("SSSSSSSSSS") && myString2.equals("SSSSSSSSSS") && (length == 38000));
@@ -3522,7 +3522,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really huge objects.");
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3555,7 +3555,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really small");
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3588,7 +3588,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, ASSIGNMENT_CHAR4_);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3621,7 +3621,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 14, ASSIGNMENT_CHAR7_);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3653,7 +3653,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really tiny objects.", 0, 20);// @C4
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3685,7 +3685,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really small", 0, 12); // @C4
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3717,7 +3717,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, ASSIGNMENT_CHAR4_, 0, 4);// @C4
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3749,7 +3749,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE_);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 14, ASSIGNMENT_CHAR7_, 0, 7); // @C4
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -3783,7 +3783,7 @@ public class JDLobClobLocator extends JDTestcase {
           statement_.executeQuery("Select 'VAR107' FROM SYSIBM.SYSDUMMY1");
           rs3_ = statement3_.executeQuery("SELECT * FROM " + TABLE3_);
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String beginningString = DBCLOB_MEDIUM_.substring(0, 7);
           long v = JDReflectionUtil.callMethod_L(clob, "position", beginningString, (long) 1);
 
@@ -3833,7 +3833,7 @@ public class JDLobClobLocator extends JDTestcase {
                                                                      // on each
                                                                      // other
         rs2_.absolute(1); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", 0L);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
@@ -3869,7 +3869,7 @@ public class JDLobClobLocator extends JDTestcase {
         rs2_.close();
         rs2_ = statement2_.executeQuery("SELECT * FROM " + TABLE4_); // @K5C
         rs2_.absolute(2); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 1);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
@@ -3900,7 +3900,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE4_; // @K5C
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(3); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         w.write(66); // ASCII value of 'B' //@K5C
         w.close();
@@ -3938,7 +3938,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE4_; // @K5C
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         char c[] = { 'I', 'T', ' ', 'W', 'O', 'R', 'K', 'S', '!' };
         w.write(c);
@@ -3979,7 +3979,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE4_; // @K5C
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(5); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         char c[] = { 'H', 'U', 'R', 'R', 'A', 'Y', '!' };
         w.write(c, 0, c.length);
@@ -4021,7 +4021,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE4_; // @K5C
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(6); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         char c[] = { 'H', 'U', 'R', 'R', 'A', 'Y', '!' };
         w.write(c, 2, c.length - 2);
@@ -4063,7 +4063,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE4_; // @K5C
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(7); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         char c[] = { 'H', 'U', 'R', 'R', 'A', 'Y', '!' };
         w.write(c, -1, c.length);
@@ -4100,7 +4100,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE4_; // @K5C
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(8); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         String str = "CLOB WRITER TEST!";
         w.write(str, 5, str.length() - 5);
@@ -4141,7 +4141,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE4_; // @K5C
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(9); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         String str = "CLOB WRITER TESTING!";
         w.write(str, 1, str.length() - 2);
@@ -4185,11 +4185,11 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc20()) {
       try {
         rs1_.absolute(2);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         // Updated 9/30/2013 -- there is no way to exceed the maximum
         // size of the lob..
-        JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, (int) 0x7FFFFFFF);
-        String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, (int) MEDIUM_.length());
+        clob.getSubString((long)1, (int) 0x7FFFFFFF);
+        String v = (String) clob.getSubString((long)1, (int) MEDIUM_.length());
         assertCondition(v.equals(MEDIUM_), "Updated 9/30/2013 allow exceed max length of the current clob");
       } catch (Exception e) {
         failed(connection_, e, "Unexpected Exception Updated 9/30/2013. Allow exceed of maxlength of clob");
@@ -4215,7 +4215,7 @@ public class JDLobClobLocator extends JDTestcase {
           rs2_ = statement2_.executeQuery(statement);
           rs2_.absolute(4);
           String str = "m";
-          Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
           for (int i = 1; i < 32760; i *= 2)
             str += str;
 
@@ -4257,7 +4257,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE_;
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 2);
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
         rs2_.updateRow();
@@ -4265,7 +4265,7 @@ public class JDLobClobLocator extends JDTestcase {
 
         rs2_ = statement2_.executeQuery(statement);
         rs2_.absolute(4);
-        clob = JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
+        clob = (Clob) JDReflectionUtil.callMethod_O(rs2_, getMethod, "C_CLOB");
         long written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, "Minnesota");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         JDReflectionUtil.callMethod_V(rs2_, updateMethod, "C_CLOB", clob);
@@ -4303,7 +4303,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(1);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           InputStream v = (InputStream) JDReflectionUtil.callMethod_O(clob, "getAsciiStream");
           sb.setLength(0);
           assertCondition(compare(v, "", "8859_1", sb), DBCLOB_ADDED + " " + sb);
@@ -4332,7 +4332,7 @@ public class JDLobClobLocator extends JDTestcase {
           statement_.executeQuery("Select 'VAR121' FROM SYSIBM.SYSDUMMY1");
           sb.setLength(0);
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           InputStream v = (InputStream) JDReflectionUtil.callMethod_O(clob, "getAsciiStream");
           boolean passed = compare(v, DBCLOB_MEDIUM_, "8859_1", sb);
           assertCondition(passed, sb.toString() + DBCLOB_ADDED);
@@ -4360,7 +4360,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           statement_.executeQuery("Select 'VAR122' FROM SYSIBM.SYSDUMMY1");
           rs3_.absolute(3);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           InputStream v = (InputStream) JDReflectionUtil.callMethod_O(clob, "getAsciiStream");
           sb.setLength(0);
           boolean passed = compare(v, DBCLOB_LARGE_, "8859_1", sb);
@@ -4389,7 +4389,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
 
           rs3_.absolute(1);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           Reader v = (Reader) JDReflectionUtil.callMethod_O(clob, "getCharacterStream");
           sb.setLength(0);
           assertCondition(compare(v, "", sb), DBCLOB_ADDED + sb);
@@ -4413,7 +4413,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           statement_.executeQuery("Select 'VAR125' FROM SYSIBM.SYSDUMMY1");
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           Reader v = (Reader) JDReflectionUtil.callMethod_O(clob, "getCharacterStream");
           sb.setLength(0);
           assertCondition(compare(v, DBCLOB_MEDIUM_, sb), DBCLOB_ADDED + sb);
@@ -4437,7 +4437,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           statement_.executeQuery("Select 'VAR125' FROM SYSIBM.SYSDUMMY1");
           rs3_.absolute(3);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           Reader v = (Reader) JDReflectionUtil.callMethod_O(clob, "getCharacterStream");
           sb.setLength(0);
           assertCondition(compare(v, DBCLOB_LARGE_, sb), DBCLOB_ADDED + sb);
@@ -4460,8 +4460,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)-1, (int) 5);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          clob.getSubString((long)-1, (int) 5);
           failed("Didn't throw SQLException" + DBCLOB_ADDED);
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException", DBCLOB_ADDED);
@@ -4482,8 +4482,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 0, 5);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          clob.getSubString((long) 0, 5);
           failed("Didn't throw SQLException" + DBCLOB_ADDED);
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException", DBCLOB_ADDED);
@@ -4505,8 +4505,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)DBCLOB_MEDIUM_.length() + 2, 5);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          clob.getSubString((long)DBCLOB_MEDIUM_.length() + 2, 5);
           failed("Didn't throw SQLException" + DBCLOB_ADDED);
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException", DBCLOB_ADDED);
@@ -4527,8 +4527,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)2, -1);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          clob.getSubString((long)2, -1);
           failed("Didn't throw SQLException" + DBCLOB_ADDED);
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException", DBCLOB_ADDED);
@@ -4550,9 +4550,9 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
 
-          String s = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)4, WIDTH_ + 2);
+          String s = (String) clob.getSubString((long)4, WIDTH_ + 2);
 
           // The latest javadoc implies that this should work.
 
@@ -4586,8 +4586,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(1);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, 0);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          String v = (String) clob.getSubString((long)1, 0);
           assertCondition("".equals(v), "Expected \"\" got \"" + v + "\"" + DBCLOB_ADDED);
         } catch (Exception e) {
 
@@ -4609,8 +4609,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, DBCLOB_MEDIUM_.length());
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          String v = (String) clob.getSubString((long)1, DBCLOB_MEDIUM_.length());
           assertCondition(v.equals(DBCLOB_MEDIUM_), DBCLOB_ADDED);
         } catch (Exception e) {
           failed(connection_, e, "Unexpected Exception" + DBCLOB_ADDED);
@@ -4635,10 +4635,10 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(3);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String v = null;
 
-          v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, DBCLOB_LARGE_.length());
+          v = (String) clob.getSubString((long)1, DBCLOB_LARGE_.length());
 
           assertCondition(v.equals(DBCLOB_LARGE_), "got '" + v + "' sb '" + DBCLOB_LARGE_ + "' " + DBCLOB_ADDED);
         } catch (Exception e) {
@@ -4660,8 +4660,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)1, 6);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          String v = (String) clob.getSubString((long)1, 6);
           assertCondition(v.equals(DBCLOB_MEDIUM_.substring(0, 6)), DBCLOB_ADDED);
         } catch (Exception e) {
           failed(connection_, e, "Unexpected Exception" + DBCLOB_ADDED);
@@ -4682,8 +4682,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)6, 7);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          String v = (String) clob.getSubString((long)6, 7);
           assertCondition(v.equals(DBCLOB_MEDIUM_.substring(5, 12)), DBCLOB_ADDED);
         } catch (Exception e) {
           failed(connection_, e, "Unexpected Exception" + DBCLOB_ADDED);
@@ -4704,8 +4704,8 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
-          String v = (String) JDReflectionUtil.callMethod_O(clob, "getSubstring",(long)10, DBCLOB_MEDIUM_.length() - 9);
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          String v = (String) clob.getSubString((long)10, DBCLOB_MEDIUM_.length() - 9);
           assertCondition(v.equals(DBCLOB_MEDIUM_.substring(9)), DBCLOB_ADDED);
         } catch (Exception e) {
           failed(connection_, e, "Unexpected Exception" + DBCLOB_ADDED);
@@ -4729,7 +4729,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(1);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
 
           assertCondition(JDReflectionUtil.callMethod_L(clob, "length") == 0, DBCLOB_ADDED);
 
@@ -4756,7 +4756,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
 
           assertCondition(JDReflectionUtil.callMethod_L(clob, "length") == DBCLOB_MEDIUM_.length(), DBCLOB_ADDED);
 
@@ -4782,7 +4782,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(3);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
 
           assertCondition(JDReflectionUtil.callMethod_L(clob, "length") == DBCLOB_LARGE_.length(), DBCLOB_ADDED);
 
@@ -4805,7 +4805,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", (String) null, (long) 0);
 
           failed("Didn't throw SQLException " + v + DBCLOB_ADDED);
@@ -4828,7 +4828,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "Test", (long) -1);
 
           failed("Didn't throw SQLException " + v + DBCLOB_ADDED);
@@ -4851,7 +4851,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "Test", (long) 0);
 
           failed("Didn't throw SQLException " + v + DBCLOB_ADDED);
@@ -4875,7 +4875,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "Test", (long) DBCLOB_MEDIUM_.length() + 1);
           failed("Didn't throw SQLException " + v + DBCLOB_ADDED);
         } catch (Exception e) {
@@ -4898,7 +4898,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "Test", (long) 1);
           assertCondition(v == -1, "v = " + v + " SB -1 Looking for \"Test\". Clob.getClass() is " + clob.getClass()
               + " Clob is \"" + getClob(clob) + "\"" + DBCLOB_ADDED);
@@ -4922,7 +4922,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String searchString = DBCLOB_MEDIUM_.substring(1, 4);
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 11);
           assertCondition(v == -1, "v = " + v + " SB -1 clog.getClass() = " + clob.getClass() + DBCLOB_ADDED);
@@ -4946,7 +4946,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String searchString = DBCLOB_MEDIUM_.substring(0, 7);
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 1);
 
@@ -4977,7 +4977,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           // if( clob instanceof com.ibm.db2.jdbc.app.DB2ClobLocator)
           // System.out.println("yes");
           String searchString = DBCLOB_MEDIUM_.substring(9, 12);
@@ -5005,7 +5005,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String searchString = DBCLOB_MEDIUM_.substring(9, 12);
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 7);
 
@@ -5031,7 +5031,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String searchString = DBCLOB_MEDIUM_.substring(8, 12);
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 9);
 
@@ -5057,7 +5057,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           int searchOffset = DBCLOB_MEDIUM_.length() - 5;
           String searchString = DBCLOB_MEDIUM_.substring(searchOffset);
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 1);
@@ -5086,7 +5086,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
 
           int length = DBCLOB_MEDIUM_.length();
           String searchString = DBCLOB_MEDIUM_.substring(length - 1);
@@ -5115,7 +5115,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "", (long) 1);
 
           assertCondition(v == 1, DBCLOB_ADDED);
@@ -5140,7 +5140,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "", (long) 9);
 
           assertCondition(v == 9, DBCLOB_ADDED);
@@ -5165,7 +5165,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", "", (long) DBCLOB_MEDIUM_.length() - 1);
 
           assertCondition(v == (DBCLOB_MEDIUM_.length() - 1), DBCLOB_ADDED);
@@ -5189,7 +5189,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           Class<?>[] argClasses = new Class[2];
           argClasses[0] = Clob.class;
           argClasses[1] = Long.TYPE;
@@ -5220,7 +5220,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob("Test"), (long) -1);
 
           failed("Didn't throw SQLException" + v + DBCLOB_ADDED);
@@ -5244,7 +5244,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob("Test"), (long) 0);
 
           // if (getDriver () == JDTestDriver.DRIVER_NATIVE)
@@ -5274,7 +5274,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob("Test"),
               (long) MEDIUM_.length() + 1);
 
@@ -5304,7 +5304,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob("This is only a test"),
               (long) 1);
           assertCondition(v == -1, "v = " + v + " SB -1" + DBCLOB_ADDED);
@@ -5328,7 +5328,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String searchString = DBCLOB_MEDIUM_.substring(3, 7);
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(searchString), (long) 12);
           assertCondition(v == -1, "v = " + v + " SB -1" + DBCLOB_ADDED);
@@ -5352,7 +5352,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           String searchString = DBCLOB_MEDIUM_.substring(0, 12);
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(searchString), (long) 1);
 
@@ -5378,7 +5378,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           int length = DBCLOB_MEDIUM_.length();
           String searchString = DBCLOB_MEDIUM_.substring(length / 2, length / 2 + 3);
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(searchString), (long) 1);
@@ -5409,7 +5409,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
 
           int length = DBCLOB_MEDIUM_.length();
           String searchString = DBCLOB_MEDIUM_.substring((length / 2), (length / 2) + 3);
@@ -5443,7 +5443,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           int length = DBCLOB_MEDIUM_.length();
           String searchString = DBCLOB_MEDIUM_.substring((length / 2), (length / 2) + 3);
 
@@ -5476,7 +5476,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           int length = DBCLOB_MEDIUM_.length();
           String searchString = DBCLOB_MEDIUM_.substring(length - 1);
 
@@ -5504,7 +5504,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           int length = DBCLOB_MEDIUM_.length();
           String searchString = DBCLOB_MEDIUM_.substring(length - 4);
 
@@ -5536,7 +5536,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(""), (long) 1);
 
           // if (getDriver () == JDTestDriver.DRIVER_NATIVE)
@@ -5564,7 +5564,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(""), (long) 9);
 
           // if (getDriver () == JDTestDriver.DRIVER_NATIVE)
@@ -5592,7 +5592,7 @@ public class JDLobClobLocator extends JDTestcase {
       if (checkLobSupport()) {
         try {
           rs3_.absolute(2);
-          Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           long v = JDReflectionUtil.callMethod_L(clob, "position", new JDLobTest.JDTestClob(""),
               (long) DBCLOB_MEDIUM_.length() - 1);
 
@@ -5633,7 +5633,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkUpdateableLobsSupport()) {
       try {
         rs3_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) -1, "Really small objects");
         failed("Didn't throw SQLException" + DBCLOB_ADDED);
       } catch (Exception e) {
@@ -5657,7 +5657,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkUpdateableLobsSupport()) {
       try {
         rs3_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) 0, "Really small object.");
         failed("Didn't throw SQLException" + DBCLOB_ADDED);
       } catch (Exception e) {
@@ -5686,7 +5686,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
 
         JDReflectionUtil.callMethod_I(clob, "setString", (long) DBCLOB_MEDIUM_.length() + 1, DBCLOB_MEDIUM_SET_);
         // failed ("Didn't throw SQLException"+DBCLOB_ADDED);
@@ -5718,7 +5718,7 @@ public class JDLobClobLocator extends JDTestcase {
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
         String expected = DBCLOB_MEDIUM_SET_;
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, expected);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         rs4_.updateRow();
@@ -5751,7 +5751,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really small objects");
         // failed ("Didn't throw SQLException"+DBCLOB_ADDED);
         succeeded();
@@ -5780,7 +5780,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         String expected = DBCLOB_MEDIUM_SET_;
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, expected);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -5812,7 +5812,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         String expected = DBCLOB_MEDIUM_SET_.substring(0, 5);
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, expected);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -5842,7 +5842,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, ASSIGNMENT_DBCHAR4_);
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K3
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -5884,7 +5884,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 10, ASSIGNMENT_CHAR5_);
 
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -5911,7 +5911,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 8, ASSIGNMENT_DBCHAR7_);
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -5945,7 +5945,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) -1, "Really green objects", 0, 20); /* @C5 */
         failed("Didn't throw SQLException" + DBCLOB_ADDED);
       } catch (Exception e) {
@@ -5972,7 +5972,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) 0, "Really shiny object.", 0, 20); /* @C5 */
         failed("Didn't throw SQLException" + DBCLOB_ADDED);
       } catch (Exception e) {
@@ -6002,7 +6002,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) MEDIUM_.length() + 1, "Really shiny objects", 0,
             20); /* @C5 */
         succeeded();
@@ -6027,7 +6027,7 @@ public class JDLobClobLocator extends JDTestcase {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
         String expected = DBCLOB_MEDIUM_SET_;
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, expected, 0,
             expected.length());/* @C5 */
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -6068,7 +6068,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really small objects", 0, 20); /* @C5 */
         // failed ("Didn't throw SQLException"+DBCLOB_ADDED);
         succeeded();
@@ -6098,7 +6098,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         String expected = DBCLOB_MEDIUM_SET_;
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, expected, 0,
             expected.length()); /* @C5 */
@@ -6130,7 +6130,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, ASSIGNMENT_DBCHAR7_, 0, 7); /* @C5 */
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -6165,7 +6165,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, ASSIGNMENT_DBCHAR4_, 0, 4); /* @C5 */
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -6201,7 +6201,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 10, ASSIGNMENT_CHAR7_);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         assertCondition(true, "written=" + written);
@@ -6224,7 +6224,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 8, ASSIGNMENT_DBCHAR7_, 0, 7); /* @C5 */
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K3
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -6258,7 +6258,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) -1);
         failed("Didn't throw SQLException" + DBCLOB_ADDED);
         rs4_.close();
@@ -6289,7 +6289,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 25);
         rs4_.close();
         succeeded();
@@ -6312,7 +6312,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE3_;
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 2);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         rs4_.updateRow();
@@ -6345,7 +6345,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE3_;
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 1);
         byte[] b = new byte[] { (byte) 65, (byte) 66, (byte) 67 };
         w.write(b);
@@ -6386,7 +6386,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE3_;
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 2);
         byte[] b = new byte[] { (byte) 32, (byte) 33, (byte) 34 };
         w.write(b);
@@ -6437,7 +6437,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 24);
         rs4_.close();
         assertCondition(true, "w=" + w);
@@ -6460,7 +6460,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 0);
         failed("Didn't throw SQLException" + w + DBCLOB_ADDED);
         rs4_.close();
@@ -6488,7 +6488,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         OutputStream w = (OutputStream) JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) -1);
         failed("Didn't throw SQLException" + w + DBCLOB_ADDED);
         rs4_.close();
@@ -6516,7 +6516,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE3_;
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         String cbuf = ASSIGNMENT_DBCHAR20_;
         w.write(cbuf);
@@ -6551,7 +6551,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE3_;
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 2);
         String cbuf = ASSIGNMENT_DBCHAR20_;
         String firstChar = ASSIGNMENT_DBCHAR20_.substring(0, 1);
@@ -6592,7 +6592,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 24);
         rs4_.close();
         assertCondition(true, "w=" + w);
@@ -6615,7 +6615,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 0);
         failed("Didn't throw SQLException" + w + DBCLOB_ADDED);
         rs4_.close();
@@ -6643,7 +6643,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) -1);
         failed("Didn't throw SQLException" + w + DBCLOB_ADDED);
         rs4_.close();
@@ -6670,7 +6670,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(2);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         rs4_.updateRow();
         rs4_.close();
@@ -6698,7 +6698,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(2);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         rs4_.close();
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
@@ -6725,7 +6725,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(2);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 2, "New updates");
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         rs4_.close();
@@ -6755,7 +6755,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         String expected = new String(ASSIGNMENT_DBCHAR7_);
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, expected);
@@ -6792,7 +6792,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length"); // @K4
         String expected = ASSIGNMENT_DBCHAR20_.substring(0, 5);
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, expected);
@@ -6828,7 +6828,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         String expected = ASSIGNMENT_DBCHAR20_.substring(0, 8);
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, expected);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -6864,7 +6864,7 @@ public class JDLobClobLocator extends JDTestcase {
 
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         String expected = ASSIGNMENT_DBCHAR20_.substring(0, 5);
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, expected);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -6900,7 +6900,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) MEDIUM_.length() + 1, "Really shiny objects", -1, 20); // @C4
         failed("Didn't throw SQLException" + DBCLOB_ADDED);
       } catch (Exception e) {
@@ -6928,7 +6928,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) MEDIUM_.length() + 1, null, 0, 20); // @C4
         failed("Didn't throw SQLException" + DBCLOB_ADDED);
       } catch (Exception e) {
@@ -6956,7 +6956,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_I(clob, "setString", (long) MEDIUM_.length() + 1, "Really shiny objects",
             "Really shiny objects".length() + 1, 20); // @C4
         failed("Didn't throw SQLException" + DBCLOB_ADDED);
@@ -6997,7 +6997,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really small");
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -7032,7 +7032,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, ASSIGNMENT_DBCHAR4_);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -7067,7 +7067,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 14, ASSIGNMENT_CHAR7_);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -7101,7 +7101,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really tiny objects.", 0, 20);// @C4
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -7135,7 +7135,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "Really small", 0, 12); // @C4
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -7169,7 +7169,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, ASSIGNMENT_DBCHAR4_, 0, 4);// @C4
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -7203,7 +7203,7 @@ public class JDLobClobLocator extends JDTestcase {
       try {
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE3_);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         int written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 14, ASSIGNMENT_CHAR7_, 0, 7); // @C4
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -7247,7 +7247,7 @@ public class JDLobClobLocator extends JDTestcase {
                                                                      // on each
                                                                      // other
         rs4_.absolute(1); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 0);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         rs4_.updateRow();
@@ -7283,7 +7283,7 @@ public class JDLobClobLocator extends JDTestcase {
         rs4_.close();
         rs4_ = statement2_.executeQuery("SELECT * FROM " + TABLE5_); // @K5C
         rs4_.absolute(2); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 1);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         rs4_.updateRow();
@@ -7315,7 +7315,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE5_; // @K5C
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(3); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         w.write(ASSIGNMENT_DBCHAR1_.charAt(0));
         w.close();
@@ -7353,7 +7353,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE5_; // @K5C
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         char c[] = ASSIGNMENT_DBCHAR9_.toCharArray();
         w.write(c);
@@ -7393,7 +7393,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE5_; // @K5C
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(5); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         char c[] = ASSIGNMENT_DBCHAR7_.toCharArray();
         w.write(c, 0, c.length);
@@ -7433,7 +7433,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE5_; // @K5C
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(6); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         char c[] = ASSIGNMENT_DBCHAR7_.toCharArray();
         w.write(c, 2, c.length - 2);
@@ -7473,7 +7473,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE5_; // @K5C
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(7); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         char c[] = ASSIGNMENT_DBCHAR7_.toCharArray();
         w.write(c, -1, c.length);
@@ -7509,7 +7509,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE5_; // @K5C
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(8); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         String str = ASSIGNMENT_DBCHAR17_;
         w.write(str, 5, str.length() - 5);
@@ -7549,7 +7549,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE5_; // @K5C
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(9); // @K5C
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         Writer w = (Writer) JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
         String str = ASSIGNMENT_DBCHAR20_;
         w.write(str, 1, str.length() - 2);
@@ -7596,7 +7596,7 @@ public class JDLobClobLocator extends JDTestcase {
           rs4_ = statement2_.executeQuery(statement);
           rs4_.absolute(4);
           String str = "m";
-          Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
           for (int i = 1; i < 32760; i *= 2)
             str += str;
 
@@ -7638,7 +7638,7 @@ public class JDLobClobLocator extends JDTestcase {
         String statement = "SELECT * FROM " + TABLE3_;
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
-        Object clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         JDReflectionUtil.callMethod_V(clob, "truncate", (long) 2);
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
         rs4_.updateRow();
@@ -7646,7 +7646,7 @@ public class JDLobClobLocator extends JDTestcase {
 
         rs4_ = statement2_.executeQuery(statement);
         rs4_.absolute(4);
-        clob = JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
+        clob = (Clob) JDReflectionUtil.callMethod_O(rs4_, getMethod, "C_DBCLOB");
         long written = JDReflectionUtil.callMethod_I(clob, "setString", (long) 5, "Minnesota");
         long length1 = JDReflectionUtil.callMethod_L(clob, "length");
         JDReflectionUtil.callMethod_V(rs4_, updateMethod, "C_DBCLOB", clob);
@@ -7929,7 +7929,7 @@ public class JDLobClobLocator extends JDTestcase {
 
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         JDReflectionUtil.callMethod_V(clob, "free");
         assertCondition(true);
@@ -7950,7 +7950,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_L(clob, "length");
@@ -7980,7 +7980,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_O(clob, "getAsciiStream");
@@ -8006,7 +8006,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_O(clob, "getCharacterStream");
@@ -8032,10 +8032,10 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob = (Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
-          JDReflectionUtil.callMethod_O(clob, "getSubstring",(long) 1, 1);
+          clob.getSubString((long) 1, 1);
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -8057,7 +8057,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         Object clob2 = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
@@ -8083,7 +8083,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_L(clob, "position", "S", (long) 1);
@@ -8109,7 +8109,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_O(clob, "setAsciiStream", (long) 1);
@@ -8135,7 +8135,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_O(clob, "setCharacterStream", (long) 1);
@@ -8160,7 +8160,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "S");
@@ -8185,7 +8185,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_I(clob, "setString", (long) 1, "S", 1, 1);
@@ -8210,7 +8210,7 @@ public class JDLobClobLocator extends JDTestcase {
     if (checkJdbc40()) {
       try {
         rs1_.absolute(1);
-        Object clob = JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
+        Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs1_, getMethod, "C_CLOB");
         JDReflectionUtil.callMethod_V(clob, "free");
         try {
           JDReflectionUtil.callMethod_V(clob, "truncate", (long) 10);
@@ -8251,7 +8251,7 @@ public class JDLobClobLocator extends JDTestcase {
           rs6_ = statement2_.executeQuery("SELECT * FROM " + TABLE6_);
           rs6_.next();
 
-          Object clob = JDReflectionUtil.callMethod_O(rs6_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs6_, getMethod, "C_CLOB");
 
           if (clob instanceof com.ibm.as400.access.AS400JDBCClob) {
             notApplicable("non locator LOB used");
@@ -8309,7 +8309,7 @@ public class JDLobClobLocator extends JDTestcase {
           rs6_ = statement2_.executeQuery("SELECT * FROM " + TABLE6_);
           rs6_.next();
 
-          Object clob = JDReflectionUtil.callMethod_O(rs6_, getMethod, "C_CLOB");
+          Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs6_, getMethod, "C_CLOB");
 
           int locator = JDReflectionUtil.callMethod_I(clob, "getLocator");
 

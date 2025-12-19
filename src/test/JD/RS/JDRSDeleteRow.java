@@ -54,7 +54,7 @@ extends JDTestcase
     // Private data.
     private static final String key_            = "JDRSDeleteRow";
     private static String select_         = "SELECT * FROM "
-                                                    + JDRSTest.RSTEST_UPDATE;
+                                                    + JDRSTest.RSTEST_UPDATE+" A ORDER BY RRN(A)";
 
     private Statement           statement_;
     private Statement           statement2_;

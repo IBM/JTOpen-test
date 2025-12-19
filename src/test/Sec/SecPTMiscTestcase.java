@@ -1060,7 +1060,7 @@ public class SecPTMiscTestcase extends Testcase
 
          SecAuthTest.removeToken(pwrSys_, pt1.getToken());
        } catch (Throwable e) {
-         failed(e, "Unexpected exception.");
+         failed(e, "Unexpected exception. MFAUSER="+mfaUserid_);
        }
      }
    }
@@ -1175,7 +1175,7 @@ public class SecPTMiscTestcase extends Testcase
              }
        catch (Throwable e)
        {
-           failed(e, "Unexpected exception.");
+           failed(e, "Unexpected exception. MFAUSER="+mfaUserid_);
        }
        finally
        {
@@ -1280,7 +1280,7 @@ public class SecPTMiscTestcase extends Testcase
        }
        catch (Throwable e)
        {
-           failed(e, "Unexpected exception.");
+           failed(e, "Unexpected exception.  MFAUSER="+mfaUserid_);
        }
        finally
        {
@@ -1368,7 +1368,7 @@ public class SecPTMiscTestcase extends Testcase
       }
       catch (Throwable e)
       {
-          failed(e, "Unexpected exception.");
+          failed(e, "Unexpected exception.  MFAUSER="+mfaUserid_);
       }
       finally
       {
