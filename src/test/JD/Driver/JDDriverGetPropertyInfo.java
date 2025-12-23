@@ -87,7 +87,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     driver_ = DriverManager.getDriver(baseURL_);
 
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-      NUMBER_OF_PROPERTIES = 105;  // TLS Trust store
+      NUMBER_OF_PROPERTIES = 106;  // useSock5
       
     } else if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       int vrm_ = testDriver_.getRelease();
@@ -482,13 +482,13 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
 
         if (!methodExists(getMethodName, as400JdbcDataSourceBeanMethods)) {
           sb.append("\nMethod " + getMethodName
-              + " does not exist in As400JdbcDataSourceBeanInfo");
+              + " does not exist in AS400JDBCDataSource.getBeanMethods");
           passed = false;
         }
 
         if (!methodExists(setMethodName, as400JdbcDataSourceBeanMethods)) {
           sb.append("\nMethod " + setMethodName
-              + " does not exist in As400JdbcDataSourceBeanInfo");
+              + " does not exist in AS400JDBCDataSource.getBeanMethods");
           passed = false;
         }
 

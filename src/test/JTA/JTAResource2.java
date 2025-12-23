@@ -331,10 +331,6 @@ but not committed.
 		    error = true;
 		}
 
-		// JWE
-		  // Moved this on 8/21/02... inside transaction is between
-		  // start and end
-		  // 
 		  xar.end(xid, XAResource.TMSUCCESS);
 
 

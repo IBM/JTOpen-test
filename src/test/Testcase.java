@@ -113,6 +113,7 @@ public abstract class Testcase {
   /* In the constructors, a string password will continue to be passed */ 
   protected char[] encryptedPassword_ = null ;
   protected String proxy_ = "";
+  protected String proxy5_ = "";
   protected int runMode_ = BOTH;
   protected AS400 systemObject_ = null;
   protected AS400 pwrSys_ = null; // Access thru a SECADM uid/pwd.
@@ -2418,6 +2419,11 @@ public abstract class Testcase {
 
   }
 
+  
+  public void setProxy5(String proxy5) {
+    proxy5_ = proxy5; 
+  }
+
   /**
    * Performs setup needed before running variations.
    * 
@@ -2613,6 +2619,10 @@ public abstract class Testcase {
 
   protected boolean isProxy() {
     return (proxy_ != null && (!proxy_.equals("")));
+  }
+
+  protected boolean isProxy5() {
+    return (proxy5_ != null && (!proxy5_.equals("")));
   }
 
   protected void validateCheckdir() {

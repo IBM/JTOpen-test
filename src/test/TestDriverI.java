@@ -87,6 +87,7 @@ public interface TestDriverI
      static final int PARSE_DIRECTORY = 21;
      static final int PARSE_JNDI = 22;
      static final int PARSE_ASP = 23;
+     static final int PARSE_PROXY5 = 24;
 
 
 

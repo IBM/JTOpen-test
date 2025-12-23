@@ -481,9 +481,9 @@ public class AS400JDBCMCPDSTestcase extends Testcase
          ds.setServerName(systemObject_.getSystemName());
 
          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-         c = ds.getConnection(systemObject_.getUserId(), charPassword);
-
-         ds.setUser(systemObject_.getUserId());
+         c = ds.getConnection(userId_, charPassword);
+         
+         ds.setUser(userId_);
          ds.setPassword(charPassword);
          PasswordVault.clearPassword(charPassword);
          c2 = ds.getConnection();
@@ -495,7 +495,9 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       }
       catch(Exception e)
       {
-         failed(e, "Unexpected exception.");
+         String password = PasswordVault.decryptPasswordLeak(encryptedPassword_, "AS400JDBCMCPDSTestcase.var008");
+
+         failed(e, "Unexpected exception. userId_="+userId_+" password="+password);
       }
       finally
       {
@@ -1015,7 +1017,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
          // Return an AS400JDBCDataSource object from JNDI and get a connection.
          AS400JDBCManagedConnectionPoolDataSource jndiDataSource = (AS400JDBCManagedConnectionPoolDataSource) context_.lookup(jndiName);
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-         Connection connection = jndiDataSource.getConnection(systemObject_.getUserId(), charPassword);
+   jndiDataSource.setPrompt(false);
+         Connection connection = jndiDataSource.getConnection(userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
 
          Statement s = connection.createStatement();
@@ -1075,7 +1078,8 @@ public class AS400JDBCMCPDSTestcase extends Testcase
          jndiDataSource.setServerName(systemObject_.getSystemName());
 
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-         Connection connection = jndiDataSource.getConnection(systemObject_.getUserId(), charPassword);
+   jndiDataSource.setPrompt(false); 
+         Connection connection = jndiDataSource.getConnection(userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
 
          Statement s = connection.createStatement();
@@ -1269,9 +1273,9 @@ public class AS400JDBCMCPDSTestcase extends Testcase
          // Return an AS400JDBCDataSource object from JNDI and get a connection.
          AS400JDBCManagedConnectionPoolDataSource jndiDataSource = (AS400JDBCManagedConnectionPoolDataSource) context_.lookup(jndiName);
          jndiDataSource.setServerName(systemObject_.getSystemName());
-
+         jndiDataSource.setPrompt(false);
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-         Connection connection = jndiDataSource.getConnection(systemObject_.getUserId(), charPassword);
+         Connection connection = jndiDataSource.getConnection(userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
 
          Statement s = connection.createStatement();
@@ -1307,8 +1311,9 @@ public class AS400JDBCMCPDSTestcase extends Testcase
          // Informational msgs don't get logged unless tracing is on.
          Trace.setTraceJDBCOn(true);
          Trace.setTraceOn(true);
+         ds.setPrompt(false);
 
-         c = ds.getPooledConnection(systemObject_.getUserId(), charPassword);
+         c = ds.getPooledConnection(userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
 
          // Restore original settings.
@@ -1342,9 +1347,10 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       try
       {
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400JDBCManagedConnectionPoolDataSource ds = new AS400JDBCManagedConnectionPoolDataSource(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+         AS400JDBCManagedConnectionPoolDataSource ds = new AS400JDBCManagedConnectionPoolDataSource(systemObject_.getSystemName(), userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
          ds.setLogWriter(writer_);
+         ds.setPrompt(false);
 
          // Informational msgs don't get logged unless tracing is on.
          Trace.setTraceJDBCOn(true);
@@ -1388,8 +1394,10 @@ public class AS400JDBCMCPDSTestcase extends Testcase
       try
       {
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-         AS400JDBCManagedConnectionPoolDataSource ds = new AS400JDBCManagedConnectionPoolDataSource(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+         AS400JDBCManagedConnectionPoolDataSource ds = new AS400JDBCManagedConnectionPoolDataSource(systemObject_.getSystemName(), userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
+   ds.setPrompt(false);
+
          c= ds.getPooledConnection().getConnection();
          DatabaseMetaData dmd = c.getMetaData();
          assertCondition (dmd.getDriverName().equals("AS/400 Toolbox for Java JDBC Driver"));
@@ -1423,8 +1431,9 @@ public class AS400JDBCMCPDSTestcase extends Testcase
             
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
              AS400JDBCManagedConnectionPoolDataSource cpds = new AS400JDBCManagedConnectionPoolDataSource(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
+             cpds.setPrompt(false);
 
-             Connection c = cpds.getConnection(systemObject_.getUserId(), charPassword);
+             Connection c = cpds.getConnection(userId_, charPassword);
    PasswordVault.clearPassword(charPassword);
 
              String defaultValue = systemName1_;

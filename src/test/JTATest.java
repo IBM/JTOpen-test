@@ -233,7 +233,7 @@ dropCollections - - this does not run automatically - - it is called by JDCleanu
       verboseOut(cmdA[0]+" "+cmdA[1]);
       boolean end = false;
       /* */       
-      /* JWE -- The Runtime not longer uses the shell to parse this -- Use the flavor of exec */
+      /* The Runtime not longer uses the shell to parse this -- Use the flavor of exec */
       /* That passes the arguments */
       /* */
 

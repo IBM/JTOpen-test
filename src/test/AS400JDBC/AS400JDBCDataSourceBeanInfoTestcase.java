@@ -377,7 +377,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
      boolean passed = true; 
       try
       {
-	 int expectedCount = 117; 
+	 int expectedCount = 118; 
          AS400JDBCDataSourceBeanInfo bi = new AS400JDBCDataSourceBeanInfo();
          PropertyDescriptor[] pd = bi.getPropertyDescriptors();
          if (pd.length != expectedCount)  
@@ -403,7 +403,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
          propertyTypes.put("blockCriteria", "int");
          propertyTypes.put("blockSize", "int");
          propertyTypes.put("cursorHold", "boolean");
-         propertyTypes.put("cursorSensitivity", "java.lang.String"); //@A4C
+         propertyTypes.put("cursorSensitivity", "java.lang.String"); 
          propertyTypes.put("databaseName", "java.lang.String");
          propertyTypes.put("dataCompression", "boolean");
          propertyTypes.put("dataSourceName", "java.lang.String");
@@ -415,7 +415,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase
          propertyTypes.put("driver", "java.lang.String");
          propertyTypes.put("errors", "java.lang.String");
          propertyTypes.put("extendedDynamic", "boolean");
-         propertyTypes.put("extendedMetaData", "boolean");  //@A3A
+         propertyTypes.put("extendedMetaData", "boolean");  
          propertyTypes.put("fullOpen", "boolean");  // @W1a
          propertyTypes.put("lazyClose", "boolean");
          propertyTypes.put("libraries", "java.lang.String");
@@ -514,6 +514,8 @@ propertyTypes.put("additionalAuthenticationFactor","[C");
     propertyTypes.put("stayAlive","int"); 
     propertyTypes.put("tlsTruststore","java.lang.String"); 
     propertyTypes.put("tlsTruststorePassword","java.lang.String"); 
+propertyTypes.put("useSock5",  "boolean"); 
+
     
 
          
@@ -565,6 +567,7 @@ propertyTypes.put("additionalAuthenticationFactor","[C");
          getPropertyMethods.put("packageError", "getPackageError");
          getPropertyMethods.put("packageLibrary", "getPackageLibrary");
          getPropertyMethods.remove("password");
+         getPropertyMethods.put("portNumber", "getPortNumber"); 
          getPropertyMethods.put("prefetch", "isPrefetch");
          getPropertyMethods.put("prompt", "isPrompt");
          getPropertyMethods.put("proxyServer", "getProxyServer");
@@ -587,7 +590,7 @@ propertyTypes.put("additionalAuthenticationFactor","[C");
          getPropertyMethods.put("user", "getUser");
          getPropertyMethods.put("toolboxTrace", "getToolboxTraceCategory");
          getPropertyMethods.put("qaqqiniLibrary", "getQaqqiniLibrary");
-         getPropertyMethods.put("keepAlive", "getKeepAlive");
+         getPropertyMethods.put("keepAlive", "isKeepAlive");
          getPropertyMethods.put("receiveBufferSize", "getReceiveBufferSize");
          getPropertyMethods.put("sendBufferSize", "getSendBufferSize");
          getPropertyMethods.put("soLinger", "getSoLinger");
@@ -655,6 +658,9 @@ getPropertyMethods.put("additionalAuthenticationFactor","getAdditionalAuthentica
 getPropertyMethods.put("stayAlive","getStayAlive"); 
 getPropertyMethods.put("tlsTruststore","getTlsTruststore"); 
 getPropertyMethods.put("tlsTruststorePassword","getTlsTruststorePassword"); 
+getPropertyMethods.put("useSock5","isUseSock5"); 
+
+
          for (int i=0; i< pd.length; i++)
          {
             if (pd[i].getName().equals("password"))         // password.
@@ -683,7 +689,7 @@ getPropertyMethods.put("tlsTruststorePassword","getTlsTruststorePassword");
 		       
 		       if (pd[i].getReadMethod().getName().equals("isTcpNoDelay") &&
 			   value.equals("getTcpNoDelay") ) {
-			       // Ignore this duplicate
+			   // Ignore this mismatch 
 			   } else { 
 
 			       failMessage.append("Wrong read method for "+pd[i].getName()+": " + pd[i].getReadMethod().getName()+" not "+value+"\n");
@@ -728,6 +734,7 @@ getPropertyMethods.put("tlsTruststorePassword","getTlsTruststorePassword");
          setPropertyMethods.put("packageError", "setPackageError");
          setPropertyMethods.put("packageLibrary", "setPackageLibrary");
          setPropertyMethods.put("password", "setPassword");
+         setPropertyMethods.put("portNumber", "setPortNumber");
          setPropertyMethods.put("prefetch", "setPrefetch");
          setPropertyMethods.put("prompt", "setPrompt");
          setPropertyMethods.put("proxyServer", "setProxyServer");
@@ -804,7 +811,7 @@ setPropertyMethods.put("describeOption","setDescribeOption");
 setPropertyMethods.put("decimalDataErrors","setDecimalDataErrors");
 setPropertyMethods.put("timestampFormat","setTimestampFormat");
 setPropertyMethods.put("useDrdaMetadataVersion","setUseDrdaMetadataVersion");
-setPropertyMethods.put("portNumber","setPortNumber");
+
 
 
 
@@ -820,6 +827,7 @@ setPropertyMethods.put("additionalAuthenticationFactor","setAdditionalAuthentica
 setPropertyMethods.put("stayAlive","setStayAlive"); 
 setPropertyMethods.put("tlsTruststore","setTlsTruststore"); 
 setPropertyMethods.put("tlsTruststorePassword","setTlsTruststorePassword"); 
+setPropertyMethods.put("useSock5","setUseSock5"); 
     
 
 
@@ -898,6 +906,8 @@ setPropertyMethods2.put("serverTrace","setServerTrace");
          propertyShortDescs.put("packageLibrary", "Specifies the library for the SQL package.");
          propertyShortDescs.put("password", "Specifies the password for connecting to the system.");
          propertyShortDescs.put("prefetch", "Specifies whether to prefetch data when running a SELECT statement.");
+         propertyShortDescs.put("portNumber", "Specifies the port number used to connect to the ZDA server.");
+
          propertyShortDescs.put("prompt", "Specifies whether the user should be prompted if a user name or password is needed to connect to the system.");  //@A1C @D2C
          propertyShortDescs.put("proxyServer", "Specifies the host name and (optionally) port number of the middle-tier machine where the proxy server is running.");
          propertyShortDescs.put("remarks", "Specifies the source of the text for REMARKS columns in ResultSet objects returned by DatabaseMetaData methods.");
@@ -999,6 +1009,7 @@ propertyShortDescs.put("useDrdaMetadataVersion","Specifies if the DRDA metadata 
          propertyShortDescs.put("stayAlive","Specifies the number of seconds between pings to the Host Server.  This is used to prevent a connection from being viewed as inactive.  A value of 0 means to not send pings to keep the connection alive."); 
          propertyShortDescs.put("tlsTruststore","Specifies a file to be used as the truststore for TLS connections.");
          propertyShortDescs.put("tlsTruststorePassword","Specifies the password associated with the configured TLS truststore.");
+         propertyShortDescs.put("useSock5","Specifies that Socks5 should be used for the proxy support."); 
          
          for (int i=0; i< pd.length; i++)
          {

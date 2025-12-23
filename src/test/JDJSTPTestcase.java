@@ -1866,7 +1866,6 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
                 // Check to see if the file needs to be recompiled
                 // 
 		String destinationPath; 
-		/// JWE check here.. 
                 String base ;
                 String upperBase ;
 

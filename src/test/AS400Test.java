@@ -186,7 +186,7 @@ Creates Testcase objects for all the testcases in this component.
           proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
           namesAndVars_, runMode_, fileOutputStream_, 
           pwrSysUserID_, pwrSysPassword_);
-           
+      tc.setProxy5(proxy5_); 
 
       addTestcase(tc);
       namesAndVars_.remove("AS400NewInstance");

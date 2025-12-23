@@ -238,6 +238,8 @@ Creates the testcases.
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_,  
                                  pwrSysUserID_, pwrSysPassword_);
+        tcGGK.setProxy5(proxy5_); 
+
 	addTestcase (tcGGK);
 
 
@@ -268,6 +270,7 @@ Creates the testcases.
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_,  
                                  pwrSysUserID_, pwrSysPassword_);
+	jdStatementWarnings.setProxy5(proxy5_);
         addTestcase (jdStatementWarnings);
 
 
@@ -283,6 +286,7 @@ Creates the testcases.
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_,  
                                  pwrSysUserID_, pwrSysPassword_);
+        tcStress.setProxy5(proxy5_);
         addTestcase (tcStress);
 
 
@@ -294,6 +298,7 @@ Creates the testcases.
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_,  
                                  pwrSysUserID_, pwrSysPassword_);
+        tcStress201.setProxy5(proxy5_);
         addTestcase (tcStress201);
 
 	JDStatementStressTest202  tcStress202 = new JDStatementStressTest202 (systemObject_,
@@ -304,6 +309,7 @@ Creates the testcases.
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_,  
                                  pwrSysUserID_, pwrSysPassword_);
+        tcStress202.setProxy5(proxy5_);
         addTestcase (tcStress202);
 
 
@@ -315,6 +321,8 @@ Creates the testcases.
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_,  
                                  pwrSysUserID_, pwrSysPassword_);
+        tcStress205.setProxy5(proxy5_);
+
         addTestcase (tcStress205);
 
 
@@ -326,6 +334,8 @@ Creates the testcases.
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_,  
                                  pwrSysUserID_, pwrSysPassword_);
+        tcStress206.setProxy5(proxy5_);
+
         addTestcase (tcStress206);
 
 
@@ -338,6 +348,8 @@ Creates the testcases.
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_,  
                                  pwrSysUserID_, pwrSysPassword_);
+        tcStressCcsid.setProxy5(proxy5_);
+
         addTestcase (tcStressCcsid);
 
 

@@ -114,6 +114,7 @@ public class ProdLicTest extends TestDriver
         for (int i = 0; i < testcases.length; ++i)
         {
             testcases[i].setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, namesAndVars_, runMode_, fileOutputStream_, pwrSysUserID_, pwrSysPassword_);
+            testcases[i].setProxy5(proxy5_); 
             addTestcase(testcases[i]);
         }
     }

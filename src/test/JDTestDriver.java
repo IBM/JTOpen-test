@@ -62,8 +62,9 @@ public abstract class JDTestDriver extends TestDriver {
   public static final int SUBDRIVER_JTOPENCA = 7;
   public static final int SUBDRIVER_JTOPENSF = 8;
   public static final int SUBDRIVER_JTOPENPX = 9;
+  public static final int SUBDRIVER_JTOPENP5 = 10;
 
-  public static final int SUB_DRIVER_COUNT = 4;
+  public static final int SUB_DRIVER_COUNT = 5;
 
   public static final String DRIVER_STRING_TOOLBOX = "toolbox";
   public static final String DRIVER_STRING_NATIVE = "native";
@@ -73,6 +74,7 @@ public abstract class JDTestDriver extends TestDriver {
   public static final String DRIVER_STRING_JTOPENCA = "jtopenCA";
   public static final String DRIVER_STRING_JTOPENSF = "jtopenSF";
   public static final String DRIVER_STRING_JTOPENPX = "jtopenPX";
+  public static final String DRIVER_STRING_JTOPENP5 = "jtopenP5";
   // This field and constants can be used to determine which
   // db is being tested.
   // For now, this is taken from a Java property databaseType
@@ -461,12 +463,18 @@ public abstract class JDTestDriver extends TestDriver {
       if (systemName.equalsIgnoreCase("localhost")) 
         systemName = systemName_; 
       if (!useSecondaryUrl_) 
-        if (proxy_ == null || proxy_.length() == 0 ) { 
+        if ((proxy_ == null || proxy_.length() == 0 ) && (proxy5_ == null || proxy5_.length() == 0) ) { 
           return "jdbc:as400://" + systemName; 
         } else {
-          String url ="jdbc:as400://" + systemName +";proxy server="+proxy_; 
-          System.out.println("JDTestDriver using "+url); 
-          return url;
+          if ((proxy5_ == null || proxy5_.length() == 0)) {
+            String url ="jdbc:as400://" + systemName +";proxy server="+proxy_; 
+            System.out.println("JDTestDriver using proxy "+url); 
+             return url;
+          } else {
+            String url ="jdbc:as400://" + systemName +";use sock5=true;proxy server="+proxy5_; 
+            System.out.println("JDTestDriver using proxy5 "+url); 
+            return url;  
+          }
         }
       else
         return "jdbc:as400:" + ";secondary URL=jdbc:as400://" + systemName + 
@@ -534,7 +542,8 @@ public abstract class JDTestDriver extends TestDriver {
    * @return The base URL.
    **/
   public String getBaseURL() {
-    return getBaseURL(driver_, systemObject_, rdbName_);
+    String baseUrl = getBaseURL(driver_, systemObject_, rdbName_);
+    return baseUrl;
   }
 
   /**
@@ -652,6 +661,9 @@ public abstract class JDTestDriver extends TestDriver {
         else if (token.equalsIgnoreCase(DRIVER_STRING_JTOPENPX))
           registerSubDriver(DRIVER_CLASS_TOOLBOX, DRIVER_TOOLBOX,
               SUBDRIVER_JTOPENPX);
+        else if (token.equalsIgnoreCase(DRIVER_STRING_JTOPENP5))
+          registerSubDriver(DRIVER_CLASS_TOOLBOX, DRIVER_TOOLBOX,
+              SUBDRIVER_JTOPENP5);
         // Was the native driver specified?
         else if (token.equalsIgnoreCase(DRIVER_STRING_NATIVE))
           registerDriver(DRIVER_CLASS_NATIVE, DRIVER_NATIVE);
@@ -677,12 +689,15 @@ public abstract class JDTestDriver extends TestDriver {
           release_ = RELEASE_V7R5M0; 
         else if (token.equalsIgnoreCase("V7R6M0")) 
           release_ = RELEASE_V7R6M0; 
-         else if (token.toUpperCase().indexOf("V7R") >= 0 )
+        else if (token.toUpperCase().indexOf("V7R") >= 0 )
           release_ = RELEASE_V7R6M0_PLUS;
       
         // Was "secondary URL mode" specified?
         else if (token.equalsIgnoreCase("secondaryURL")) {
           useSecondaryUrl_ = true;
+        }
+        else {
+          System.out.println("Warning: unable to handle token:"+token); 
         }
       }
     }
@@ -877,6 +892,9 @@ public abstract class JDTestDriver extends TestDriver {
         break;
       case SUBDRIVER_JTOPENPX:
         System.out.println("Driver = JTOPENPX");
+        break;
+      case SUBDRIVER_JTOPENP5:
+        System.out.println("Driver = JTOPENP5");
         break;
       default:
         System.out.println("Driver = TOOLBOX");
@@ -1627,6 +1645,8 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
       return DRIVER_TOOLBOX;
     } else if (string.equals(DRIVER_STRING_JTOPENPX)) {
       return DRIVER_TOOLBOX;
+    } else if (string.equals(DRIVER_STRING_JTOPENP5)) {
+      return DRIVER_TOOLBOX;
     } else if (string.equals(DRIVER_STRING_JTOPENCA)) {
       return DRIVER_TOOLBOX;
     } else if (string.equals(DRIVER_STRING_JTOPENSF)) {
@@ -1655,6 +1675,8 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
       return SUBDRIVER_JTOPENSF;
     } else if (string.equals(DRIVER_STRING_JTOPENPX)) {
       return SUBDRIVER_JTOPENPX;
+    } else if (string.equals(DRIVER_STRING_JTOPENP5)) {
+      return SUBDRIVER_JTOPENP5;
     } else if (string.equals(DRIVER_STRING_NATIVE)) {
       return DRIVER_NATIVE;
     } else if (string.equals(DRIVER_STRING_JCC)) {

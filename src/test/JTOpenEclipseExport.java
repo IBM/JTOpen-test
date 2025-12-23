@@ -61,6 +61,7 @@ public class JTOpenEclipseExport extends Thread {
     // Home directory should be the base of the git repository
     String homeDirectory = System.getProperty("user.home");
     String testDirectory = currentDirectory + File.separatorChar + "src";
+    File iniDirectoryFile = new File(testDirectory + File.separatorChar + "ini");
     File testDirectoryFile = new File(testDirectory + File.separatorChar + "test");
     if (!testDirectoryFile.exists()) {
       System.out.println(prefix + "Error. directory " + testDirectory + File.separatorChar + "test"
@@ -80,6 +81,9 @@ public class JTOpenEclipseExport extends Thread {
     System.out.println(prefix + "Comparing against " + lastTimeFilename + " " + lastModifiedTimestamp.toString());
 
     Vector<String> fileList = buildFileList(testDirectoryFile, "test", lastModifiedTime);
+    Vector<String> iniList = buildFileList(iniDirectoryFile, "ini", lastModifiedTime);
+    fileList.addAll(iniList);
+
     AS400 as400 = new AS400(as400Name, userid, password.toCharArray());
     as400.setGuiAvailable(false);
     transferFiles(as400, testDirectory, fileList);

@@ -592,7 +592,7 @@ public class JTAResource extends JTATestcase {
         xar.rollback(xid);
         xac.close();
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && !useUDBDataSource) {
-          /* JWE changed to XAER_NOTA -- XID is not valid */
+          /* changed to XAER_NOTA -- XID is not valid */
           boolean condition = (errorCode == XAException.XAER_NOTA)
               && (countRows(-8432) == 0);
           if (!condition) {
@@ -733,7 +733,7 @@ public class JTAResource extends JTATestcase {
         int errorCode = 0;
         try {
           if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-            /* JWE -- HMM.. our code lets TMNOFLAGS through */
+            /*  HMM.. our code lets TMNOFLAGS through */
             /* Try a different one */
             xar.end(xid, XAResource.TMONEPHASE);
           } else {
@@ -996,7 +996,7 @@ public class JTAResource extends JTATestcase {
         xar.rollback(xid);
         xac.close();
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && !useUDBDataSource) {
-          /* JWE -- Changed to XAER_NOTA -- XID is not valid */
+          /* Changed to XAER_NOTA -- XID is not valid */
           boolean condition = (errorCode == XAException.XAER_NOTA)
               && (countRows(68432) == 0);
           if (!condition) {
