@@ -34,6 +34,7 @@ import test.PasswordVault;
 import test.JD.JDSetupCollection;
 
 import java.io.FileOutputStream;
+import java.io.PrintWriter; 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -134,7 +135,7 @@ Performs cleanup needed after running variations.
     protected void cleanup ()
     throws Exception
     {
-        cleanupSystemNamingLibraries(connection_ );
+        cleanupSystemNamingLibraries(connection_ , output_);
         connection_.close ();
         connection_ = null; 
 
@@ -1002,7 +1003,7 @@ getConnection -- test a bogus subsystem property
      * setup the libraries used by the system naming tests
      */
 
-    public  void setupSystemNamingLibraries(Connection connection, String newBaseCollection ) throws Exception {
+    public static void setupSystemNamingLibraries(Connection connection, String newBaseCollection, PrintWriter output ) throws Exception {
 	if (!systemNamingLibrariesCreated) {
 	  systemNamingLibraries = new Vector<String>();
 	    String sql = "";
@@ -1017,7 +1018,7 @@ getConnection -- test a bogus subsystem property
 		    String collection = baseCollection+i;
 		    systemNamingLibraries.addElement(collection);
 		
-		    JDSetupCollection.create(connection,collection,false, output_);
+		    JDSetupCollection.create(connection,collection,false, output);
 
 		    try {
 			sql = "DROP TABLE "+collection+".VERSION";
@@ -1079,7 +1080,7 @@ getConnection -- test a bogus subsystem property
 		systemNamingLibrariesCreated = true;
 		s.close();
 	    } catch (Exception sqlex) {
-		output_.println("setupSystemNamingLibraries: Exception caught sql="+sql);
+		output.println("setupSystemNamingLibraries: Exception caught sql="+sql);
 		throw sqlex;
 	    }
 	}
@@ -1096,14 +1097,14 @@ getConnection -- test a bogus subsystem property
   /*
    * cleanup the libaries used by the system naming tests
    */
-  public  void cleanupSystemNamingLibraries(Connection connection) throws SQLException {
+  public static void cleanupSystemNamingLibraries(Connection connection, PrintWriter output) throws SQLException {
       if (cleanupLibraries ) {
 	  if (systemNamingLibrariesCreated) {
 	      Statement s = connection.createStatement();
 
 	      for (int i = 0; i < 10; i++) {
 		  String collection = baseCollection + i;
-		  JDSetupCollection.dropCollection(s, collection, output_);
+		  JDSetupCollection.dropCollection(s, collection, output);
 	      }
 	      s.close();
 	      systemNamingLibrariesCreated = false;
@@ -1121,7 +1122,7 @@ getConnection -- test a bogus subsystem property
 
 	  try {
 	      boolean passed = true;
-	      setupSystemNamingLibraries(connection_, JDConnectionTest.COLLECTION);
+	      setupSystemNamingLibraries(connection_, JDConnectionTest.COLLECTION, output_);
         connection_.commit();
         
 	      Connection connNamingTest = testDriver_.getConnection(baseURL_, userId_,
